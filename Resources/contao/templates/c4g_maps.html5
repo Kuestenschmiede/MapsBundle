@@ -1,0 +1,35 @@
+<!-- indexer::stop -->
+
+<div class="<?php echo $this->class; ?> block"<?php echo $this->cssID; ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
+
+<?php if ($this->headline) {
+    echo '<' . $this->hl . '>' . $this->headline . '</' . $this->hl . '>';
+} ?>
+
+<?php if (!$this->mapData['mapDiv']): ?>
+<div id="<?php echo 'c4g_map_' . $this->mapData['mapId'] ?>"></div>
+<?php  endif; ?>
+
+<?php if (\Environment::get('isAjaxRequest')): ?>
+<script>
+jQuery(document).ready(function()
+{
+    c4g.maps.mapController_<?php echo $this->mapData['mapId'] ?> = new c4g.maps.MapController(
+             <?php echo json_encode($this->mapData) ?>
+        );
+});
+</script>
+<?php else: ?>
+<?php
+
+    $GLOBALS['TL_BODY']['c4gMaps' . $this->id] = \Template::generateInlineScript('jQuery(document).ready(function(){c4g.maps.mapController_' . $this->mapData['mapId'] . '=new c4g.maps.MapController(' . json_encode($this->mapData) . ');});', false);
+
+?>
+<?php endif; ?>
+
+<noscript>
+    <p>NO_JS_WARNING</p>
+</noscript>
+
+</div>
+<!-- indexer::continue -->

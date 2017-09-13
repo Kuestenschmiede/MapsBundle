@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="<?php echo $this->language; ?>">
+<head>
+
+  <meta charset="<?php echo $this->charset; ?>">
+  <title><?php echo $this->title; ?> - Contao Open Source CMS <?php echo VERSION; ?></title>
+  <base href="<?php echo $this->base; ?>">
+  <meta name="generator" content="Contao Open Source CMS">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+  <link rel="stylesheet" href="<?php
+    $objCombiner = new Combiner();
+    $objCombiner->add('system/themes/'. $this->theme .'/basic.css');
+    $objCombiner->add('system/themes/'. $this->theme .'/main.css');
+    echo $objCombiner->getCombinedFile();
+  ?>">
+  <!--[if IE]><link rel="stylesheet" href="<?php echo TL_ASSETS_URL; ?>system/themes/<?php echo $this->theme; ?>/iefixes.css"><![endif]-->
+  <?php echo $this->stylesheets; ?>
+
+  <script><?php echo $this->getLocaleString(); ?></script>
+  <script src="<?php
+    $objCombiner = new Combiner();
+    $objCombiner->add('assets/jquery/core/' . $GLOBALS['TL_ASSETS']['JQUERY'] . '/jquery.js', $GLOBALS['TL_ASSETS']['JQUERY']);
+    //$objCombiner->add('assets/mootools/mootao/Mootao.js');
+    //$objCombiner->add('assets/contao/js/core.js');
+    //$objCombiner->add('system/themes/'. $this->theme .'/hover.js');
+    echo $objCombiner->getCombinedFile();
+  ?>"></script>
+    <?php echo $this->javascripts; ?>
+  <!--[if lt IE 9]><script src="<?php echo TL_ASSETS_URL; ?>assets/html5shiv/<?php echo $GLOBALS['TL_ASSETS']['HTML5SHIV']; ?>/html5shiv.js"></script><![endif]-->
+
+</head>
+<body class="<?php echo $this->ua; ?> popup">
+
+  <div id="container">
+    <div id="main">
+
+        <!--<h1><?php echo $this->headline; ?></h1>-->
+
+
+        <fieldset id="pal_general_legend" class="tl_tbox">
+
+            <div class="w50">
+              <h3><label>X-Koordinate</label></h3>
+                <input id="c4gGeoPickerGeoX" class="tl_text" type="text" value="<?php echo $this->Input->get('geoX') ?>" name="geoX" readonly>
+                <p class="tl_help tl_tip" title="">X-Koordinate</p>
+            </div>
+
+            <div class="w50">
+                <h3><label>Y-Koordinate</label></h3>
+                <input id="c4gGeoPickerGeoY" class="tl_text" type="text" value="<?php echo $this->Input->get('geoY') ?>" name="geoY" readonly>
+                <p class="tl_help tl_tip" title="">Y-Koordinate</p>
+            </div>
+        </fieldset>
+
+      <?php if (!$this->mapData['mapDiv']): ?>
+        <div id="<?php echo 'c4g_map_' . $this->mapData['mapId'] ?>"></div>
+      <?php endif; ?>
+
+    </div>
+  </div>
+  
+  <?= implode('', $GLOBALS['TL_BODY']); ?>
+
+  <script>
+      jQuery(document).ready(function()
+  {
+    c4g.maps.mapController_<?php echo $this->mapData['mapId'] ?> = new c4g.maps.MapController(
+        <?php echo json_encode($this->mapData) ?>
+    );
+
+  });
+  </script>
+
+  <script>
+    if (window.outerWidth && window.outerWidth < 768) {
+      document.body.setStyle('width', window.outerWidth - 20);
+    }
+  </script>
+
+</body>
+</html>
