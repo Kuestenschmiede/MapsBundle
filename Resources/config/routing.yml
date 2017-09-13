@@ -2,7 +2,7 @@ con4gisMapsBundle:
     path: /con4gis/api/{_url_fragment}
     defaults:
         _scope: frontend
-        _controller: "con4gisProjectsBundle:Ajax:ajax"
+        _controller: "con4gisMapsBundle:Ajax:ajax"
     requirements:
         module: '\d+'
         action: '.*'
