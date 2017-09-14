@@ -12,7 +12,7 @@
     }
   ],
   "require": {
-    "con4gis/core": "~1.9"
+    "con4gis/core": "^2.0"
   },
   "support": {
     "issues": "https://github.com/Kuestenschmiede/MapsBundle/issues"
