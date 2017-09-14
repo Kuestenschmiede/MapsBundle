@@ -18,13 +18,9 @@
     "issues": "https://github.com/Kuestenschmiede/MapsBundle/issues"
   },
   "autoload": {
-    "classmap": [""]
-  },
-  "extra": {
-    "contao": {
-      "sources": {
-        "": "src/con4gis/MapsBundle"
-      }
+    "classmap": [""],
+    "psr-4": {
+      "con4gis\\MapsBundle\\": ""
     }
   }
 }

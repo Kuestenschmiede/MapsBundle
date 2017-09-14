@@ -119,7 +119,7 @@ $GLOBALS['TL_API']['editorService'] = 'con4gis\MapsBundle\Resources\contao\modul
 $GLOBALS['TL_API']['nominatimService'] = 'con4gis\MapsBundle\Resources\contao\modules\api\NominatimApi';
 $GLOBALS['TL_API']['reverseNominatimService'] = 'con4gis\MapsBundle\Resources\contao\modules\api\ReverseNominatimApi';
 $GLOBALS['TL_API']['routingService'] = 'con4gis\MapsBundle\Resources\contao\modules\api\RoutingApi';
-$GLOBALS['TL_API']['geopickerService'] = 'con4gis\MapsBundle\Resources\contao\modules\api\GeoPicker';
+$GLOBALS['TL_API']['geopickerService'] = 'con4gis\MapsBundle\Resources\contao\classes\GeoPicker';
 
 $apiBaseUrl = 'con4gis/api';
 

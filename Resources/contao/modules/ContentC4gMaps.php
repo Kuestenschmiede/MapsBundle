@@ -11,7 +11,7 @@
  * @link      https://www.kuestenschmiede.de
  */
 
-namespace \con4gis\MapsBundle\Resources\contao\modules;
+namespace con4gis\MapsBundle\Resources\contao\modules;
 
 /**
  * Class ContentC4gMaps
