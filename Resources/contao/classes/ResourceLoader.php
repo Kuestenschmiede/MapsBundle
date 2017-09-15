@@ -80,6 +80,10 @@ class ResourceLoader
         if ($resources['openlayers']) {
             $GLOBALS['TL_BODY']['openlayers'] = \Template::generateScriptTag('bundles/con4gismaps/vendor/OpenLayers-' . $GLOBALS['con4gis_maps_extension']['ol-version'] . '/ol' . $suffixOl . '.js', $blnXhtml) . "\n";
 
+            $GLOBALS['TL_BODY']['cesium'] = \Template::generateScriptTag('bundles/con4gismaps/vendor/ol-cesium-v1.31/Cesium/Cesium.js', $blnXhtml) . "\n";
+            $GLOBALS['TL_BODY']['olcesium'] = \Template::generateScriptTag('bundles/con4gismaps/vendor/ol-cesium-v1.31/olcesium.js', $blnXhtml) . "\n";
+
+
 //ToDo find another solution
 //            $ua = \Environment::get('agent');
 //
