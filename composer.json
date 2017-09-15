@@ -12,19 +12,15 @@
     }
   ],
   "require": {
-    "con4gis/core": "~1.9"
+    "con4gis/core": "^2.0"
   },
   "support": {
     "issues": "https://github.com/Kuestenschmiede/MapsBundle/issues"
   },
   "autoload": {
-    "classmap": [""]
-  },
-  "extra": {
-    "contao": {
-      "sources": {
-        "": "src/con4gis/MapsBundle"
-      }
+    "classmap": [""],
+    "psr-4": {
+      "con4gis\\MapsBundle\\": ""
     }
   }
 }

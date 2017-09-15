@@ -13,7 +13,7 @@
 
 namespace con4gis\MapsBundle\Resources\contao\classes;
 
-use \con4gis\CoreBundle\Resources\contao\classes\ResourceLoader;
+use con4gis\CoreBundle\Resources\contao\classes\ResourceLoader;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapBaselayersModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;

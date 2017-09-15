@@ -833,9 +833,11 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                   textID = "ROUTER_5.X_TYPE_10";
                   break;
               case "roundabout":
+              case "exit roundabout":
                   textID = "ROUTER_5.X_TYPE_11";
                   break;
               case "rotary":
+              case "exit rotary":
                   textID = "ROUTER_5.X_TYPE_12";
                   break;
               case "roundabout turn":
@@ -1020,7 +1022,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
           routerInstruction = document.createElement('div');
 
           routerInstructionsHtml = '<table class="' + c4g.maps.constant.css.ROUTER_INSTRUCTIONS_TABLE + '" cellpadding="0" cellspacing="0">';
-          if (this.options.mapController.data.router_api_selection == '1') {//OSRM-API:5.x
+          if (this.options.mapController.data.router_api_selection === '1') {//OSRM-API:5.x
               for (j = 0; j < routeResponse.routes[routeNumber].legs.length; j += 1) {
                   for (i = 0; i < routeResponse.routes[routeNumber].legs[j].steps.length; i += 1) {
                       instr = routeResponse.routes[routeNumber].legs[j].steps[i];
@@ -1048,12 +1050,10 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
 
                       // build route description
-
                       var instructiontext = this.getTypeText(instr.maneuver.type).replace(/%s/, instr.name).replace(/%m/, this.getModifierText(instr.maneuver.modifier)).replace(/%z/, instr.maneuver.exit);
                       if (instr.name.length < 1) {
                           instructiontext = instructiontext.replace(/\[.*?\]/g, '');
-                      }
-                      else {
+                      } else {
                           instructiontext = instructiontext.replace(/\[(.*)\]/, "$1");
                       }
                       routerInstructionsHtml += instructiontext;

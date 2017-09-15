@@ -44,7 +44,7 @@ if (@class_exists("tl_member")) {
             'inputType'               => 'c4g_text',
             'eval'                    => array('mandatory'=>false, 'maxlength'=>20, 'tl_class'=>'w50 wizard' ),
             'save_callback'           => array(array('tl_member_c4g_maps','setLocLon')),
-            'wizard'                  => array(array('con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink')),
+            'wizard'                  => array(array('\con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink')),
             'sql'                     => "varchar(20) NOT NULL default ''"
         );
 
@@ -55,7 +55,7 @@ if (@class_exists("tl_member")) {
             'inputType'               => 'c4g_text',
             'eval'                    => array('mandatory'=>false, 'maxlength'=>20, 'tl_class'=>'w50 wizard' ),
             'save_callback'           => array(array('tl_member_c4g_maps','setLocLat')),
-            'wizard'                  => array(array('con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink')),
+            'wizard'                  => array(array('\con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink')),
             'sql'                     => "varchar(20) NOT NULL default ''"
         );
 

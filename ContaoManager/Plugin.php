@@ -16,7 +16,6 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 class Plugin implements BundlePluginInterface
 {
-
     /**
      * Gets a list of autoload configurations for this bundle.
      *
