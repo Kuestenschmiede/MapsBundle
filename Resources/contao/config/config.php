@@ -104,7 +104,7 @@ array_insert($GLOBALS['FE_MOD']['con4gis'], 1, array
  */
 array_insert($GLOBALS['TL_CTE']['con4gis'], 1, array
     (
-        'c4g_maps' => 'ContentC4gMaps',
+        'c4g_maps' => 'con4gis\MapsBundle\Resources\contao\modules\ContentC4gMaps',
     ));
 
 /**

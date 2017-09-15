@@ -13,6 +13,8 @@
 
 namespace con4gis\MapsBundle\Resources\contao\modules;
 
+use con4gis\MapsBundle\Resources\contao\classes\MapDataConfigurator;
+
 /**
  * Class ContentC4gMaps
  * @package \con4gis\MapsBundle\Resources\contao\modules
