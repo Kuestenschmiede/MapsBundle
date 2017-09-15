@@ -409,6 +409,14 @@ class MapDataConfigurator
                 $mapData['editor']['open'] = false;
             }
 
+            // cesium
+            //
+            if ($profile->cesium) {
+                $mapData['cesium'] = array();
+                $mapData['cesium']['enable'] = $profile->cesium;
+                $mapData['cesium']['always'] = $profile->cesium_always;
+            }
+
             // expert-configs
             //
 
@@ -464,6 +472,7 @@ class MapDataConfigurator
 
         // @TODO: Check
         $mapData['addIdToDiv'] = true;
+
 
         return $mapData;
     }
