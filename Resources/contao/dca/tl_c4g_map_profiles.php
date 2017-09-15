@@ -100,10 +100,9 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
                                          '{starboard_legend:hide},starboard;'.
                                          '{information_legend},attribution,overviewmap,measuretool,graticule,scaleline,mouseposition,permalink,zoomlevel;'.
                                          '{geosearch_legend:hide},geosearch,router;'.
-                                         //'{router_legend:hide},router;'.
                                          '{geopicker_legend:hide},is_backend_geopicker_default,geopicker;'.
-                                         '{editor_legend:hide},editor,editor_styles_point,editor_styles_line,editor_styles_polygon,editor_styles_circle,editor_styles_freehand,editor_vars,editor_show_items,editor_helpurl, is_backend_editor_default;'.
-                                         '{cesium_legend:hide},cesium;' .
+                                         '{editor_legend:hide},editor,editor_styles_point,editor_styles_line,editor_styles_polygon,editor_styles_circle,editor_styles_freehand,editor_vars,editor_show_items,editor_helpurl,is_backend_editor_default;'.
+                                         '{cesium_legend:hide},cesium;'.
                                          '{expert_legend:hide},script,overpass_url,custom_div;'.
                                          '{misc_legend:hide},link_newwindow,link_open_on,hover_popups;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;'
@@ -115,7 +114,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
     (
         'mouse_nav'                   => 'mouse_nav_wheel,mouse_nav_doubleclick_zoom,mouse_nav_zoombox,mouse_nav_dragmode,mouse_nav_kinetic',
         'starboard'                   => 'starboard_open,starboard_div,starboard_label,baselayerswitcher,layerswitcher,starboard_filter,starboard_button,cluster_all',
-        'cluster_all'                 => 'cluster_distance, cluster_fillcolor, cluster_fontcolor, cluster_zoom',
+        'cluster_all'                 => 'cluster_distance,cluster_fillcolor,cluster_fontcolor,cluster_zoom',
         'baselayerswitcher'           => 'baselayerswitcher_label',
         'layerswitcher'               => 'layerswitcher_label',
         'attribution'                 => 'collapsed_attribution,cfg_logo_attribution,div_attribution,add_attribution',
@@ -124,7 +123,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
         'geosearch'                   => 'geosearch_engine,geosearch_results,geosearch_show,geosearch_div,geosearch_zoomto,geosearch_zoombounds,geosearch_animate,geosearch_markresult,geosearch_attribution',
         'geopicker'                   => 'geopicker_fieldx,geopicker_fieldy,geopicker_searchdiv,geopicker_attribution',
         'router'                      => 'router_api_selection,router_alternative,router_viaroute_url,router_attribution,router_from_locstyle,router_to_locstyle,router_point_locstyle,router_interim_locstyle',
-        'cesium'                      => '',
+        'cesium'                      => 'cesium_always',
     ),
 
     // Fields
@@ -775,7 +774,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             'exclude'                 => true,
             'default'                 => '',
             'inputType'               => 'checkbox',
-            'eval'                    => array('submitOnChange' => true),
+            'eval'                    => array('submitOnChange' => true, 'tl_class'=>'clr'),
             'sql'                     => "char(1) NOT NULL default ''"
         ),
 
@@ -1042,6 +1041,15 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             'default'                 => '',
             'inputType'               => 'checkbox',
             'eval'                    => array('submitOnChange' => true),
+            'sql'                     => "char(1) NOT NULL default ''"
+        ),
+        'cesium_always' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium_always'],
+            'exclude'                 => true,
+            'default'                 => '',
+            'inputType'               => 'checkbox',
+            'eval'                    => array(),
             'sql'                     => "char(1) NOT NULL default ''"
         ),
     )

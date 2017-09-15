@@ -200,6 +200,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_interim_locstyle'] = array('L
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_alternative'] = array('Alternative routes','Do you want to allow alternative routes?');
 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium'] = array('Use cesium', 'Use cesium');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium_always']  = array('Use cesium always', 'Do you want to use cesium always?');
 
 /**
  * References

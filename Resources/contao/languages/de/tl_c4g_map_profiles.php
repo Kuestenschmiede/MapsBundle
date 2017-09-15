@@ -201,6 +201,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_interim_locstyle'] = array('L
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_alternative'] = array('Alternativroute','Sollen Alternativrouten dargestellt werden?');
 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium'] = array('Cesium verwenden', 'Cesium verwenden');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium_always'] = array('Cesium immer verwenden', 'Soll Cesium immer aktiviert sein?');
 
 
 /**
