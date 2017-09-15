@@ -11,14 +11,12 @@
  * @link      https://www.kuestenschmiede.de
  */
 
-/**
- * Global settings
- */
-$GLOBALS['con4gis_maps_extension']['installed']  = true;
-$GLOBALS['con4gis_maps_extension']['version']    = '3.9.3-snapshot';
-$GLOBALS['con4gis_maps_extension']['ol-version'] = '4.3.2';
 
+$GLOBALS['con4gis']['maps']['installed'] = true;
+
+//ToDo umbauen
 $GLOBALS['con4gis_maps_extension']['debug'] = false;
+$GLOBALS['con4gis_maps_extension']['ol-version'] = '4.3.2';
 
 /**
  * Sourcetable definition
