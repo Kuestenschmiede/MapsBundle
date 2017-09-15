@@ -1,0 +1,86 @@
+baselayer_service:
+    path: /con4gis/api/baseLayerService/{profileId}
+    defaults:
+        _scope: frontend
+        _controller: "con4gisMapsBundle:Maps:baseLayer"
+    methods: [GET]
+    requirements:
+        profileId: \d+
+
+layer_service:
+    path: /con4gis/api/layerService/{mapId}
+    defaults:
+        _scope: frontend
+        _controller: "con4gisMapsBundle:Maps:layer"
+    methods: [GET]
+    requirements:
+        mapId: \d+
+
+editor_service:
+    path: /con4gis/api/editorService/{profileId}
+    defaults:
+        _scope: frontend
+        _controller: "con4gisMapsBundle:Maps:editor"
+    methods: [GET]
+    requirements:
+        mapId: \d+
+
+infowindow_service:
+    path: /con4gis/api/infoWindowService/{popupString}
+    defaults:
+        _scope: frontend
+        _controller: "con4gisMapsBundle:Maps:infoWindow"
+    methods: [GET]
+    requirements:
+        popupString: .*
+
+locationstyle_service:
+    path: /con4gis/api/locationStyleService/
+    defaults:
+        _scope: frontend
+        _controller: "con4gisMapsBundle:Maps:locationStyle"
+    methods: [GET]
+
+nominatim_service:
+    path: /con4gis/api/nominatimService/{profileId}
+    defaults:
+        _scope: frontend
+        _controller: "con4gisMapsBundle:Maps:nominatim"
+    methods: [GET]
+    requirements:
+        profileId: \d+
+
+reverse_nominatim_service:
+    path: /con4gis/api/reverseNominatimService/{profileId}
+    defaults:
+        _scope: frontend
+        _controller: "con4gisMapsBundle:Maps:reverseNominatim"
+    methods: [GET]
+    requirements:
+        profileId: \d+
+
+old_routing_service:
+    path: /con4gis/api/routingService/{profileId}
+    defaults:
+        _scope: frontend
+        _controller: "con4gisMapsBundle:Maps:oldRouting"
+    methods: [GET]
+    requirements:
+        profileId: \d+
+
+routing_service:
+    path: /con4gis/api/routingService/{profileId}/{locations}
+    defaults:
+        _scope: frontend
+        _controller: "con4gisMapsBundle:Maps:routing"
+    methods: [GET]
+    requirements:
+        profileId: \d+
+        locations: .*
+
+geopicker_service:
+    path: /con4gis/api/geopickerService/
+    defaults:
+        _scope: frontend
+        _controller: "con4gisMapsBundle:Maps:geopicker"
+    methods: [GET]

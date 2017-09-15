@@ -200,6 +200,9 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_point_locstyle'] = array('Loc
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_interim_locstyle'] = array('Location-Stil für Zwischenziele', 'Location-Stil für Zwischenziele');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_alternative'] = array('Alternativroute','Sollen Alternativrouten dargestellt werden?');
 
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium'] = array('Cesium verwenden', 'Cesium verwenden');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium_always'] = array('Cesium immer verwenden', 'Soll Cesium immer aktiviert sein?');
+
 
 /**
  * Reference
@@ -249,13 +252,14 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['locstyle_legend']       = 'Lokations
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['navigation_legend']     = 'Karten-Navigation';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_legend']      = 'Starboard-Einstellungen';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['information_legend']    = 'Karten-Informationen';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['expert_legend']         = 'Experteneinstellungen';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['expert_legend']         = 'Experten-Einstellungen';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['misc_legend']           = 'Sonstiges';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_legend']      = 'Suche & Router';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_legend']      = 'Geopicker-Einstellungen';
 //$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_legend']         = 'Router (OSRM)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_legend']         = 'Editor-Einstellungen';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['backend_legend']        = 'Backendeinstellungen';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['backend_legend']        = 'Backend-Einstellungen';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium_legend']         = 'Cesium-Einstellungen';
 
 /**
  * Globals

@@ -24,37 +24,13 @@ class NominatimApi extends \Frontend
     /**
      * Determines the request method and selects the appropriate data result.
      *
-     * @param  array $arrInput Fragments from request uri
+     * @param  int $intProfileId Map profile id
+     * @param  array $arrParams
      * @return mixed           JSON data
      */
-
-
-    public function generate(array $arrInput)
+    public function generate($intProfileId, $arrParams)
     {
-        // Only allow GET requests
-        if (strtoupper($_SERVER['REQUEST_METHOD']) != 'GET') {
-            HttpResultHelper::MethodNotAllowed();
-        }
-
-        // A profile id is required
-        if (count($arrInput) < 1 && !is_numeric($arrInput[0])) {
-            HttpResultHelper::BadRequest();
-        }
-
-        $intProfileId = intval($arrInput[0]);
-
-        $arrParams = array();
-
-        foreach ($_GET as $key=>$value) {
-
-            if (\Input::get($key)) {
-                $arrParams[$key] = \Input::get($key);
-            }
-
-        }
-
         return $this->getNominatimResponse($intProfileId, $arrParams);
-
     }
 
     /**
