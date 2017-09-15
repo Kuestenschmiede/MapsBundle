@@ -92,7 +92,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
     // Palettes
     'palettes' => array
     (
-        '__selector__'                => array('mouse_nav','starboard','cluster_all','baselayerswitcher','layerswitcher','attribution','hover_popups','permalink','geosearch','geopicker','router'),
+        '__selector__'                => array('mouse_nav','starboard','cluster_all','baselayerswitcher','layerswitcher','attribution','hover_popups','permalink','geosearch','geopicker','router', 'cesium'),
         'default'                     => '{general_legend},name,is_default,theme;'.
                                          '{baselayer_legend:hide},baselayers, default_baselayer;'.
                                          '{locstyle_legend:hide},locstyles;'.
@@ -103,6 +103,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
                                          //'{router_legend:hide},router;'.
                                          '{geopicker_legend:hide},is_backend_geopicker_default,geopicker;'.
                                          '{editor_legend:hide},editor,editor_styles_point,editor_styles_line,editor_styles_polygon,editor_styles_circle,editor_styles_freehand,editor_vars,editor_show_items,editor_helpurl, is_backend_editor_default;'.
+                                         '{cesium_legend:hide},cesium;' .
                                          '{expert_legend:hide},script,overpass_url,custom_div;'.
                                          '{misc_legend:hide},link_newwindow,link_open_on,hover_popups;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;'
@@ -122,7 +123,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
         'permalink'                   => 'permalink_get_param',
         'geosearch'                   => 'geosearch_engine,geosearch_results,geosearch_show,geosearch_div,geosearch_zoomto,geosearch_zoombounds,geosearch_animate,geosearch_markresult,geosearch_attribution',
         'geopicker'                   => 'geopicker_fieldx,geopicker_fieldy,geopicker_searchdiv,geopicker_attribution',
-        'router'                      => 'router_api_selection,router_alternative,router_viaroute_url,router_attribution,router_from_locstyle,router_to_locstyle,router_point_locstyle,router_interim_locstyle'
+        'router'                      => 'router_api_selection,router_alternative,router_viaroute_url,router_attribution,router_from_locstyle,router_to_locstyle,router_point_locstyle,router_interim_locstyle',
+        'cesium'                      => '',
     ),
 
     // Fields
@@ -1032,6 +1034,15 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
                 array('tl_c4g_map_profiles', 'editLocationStyle')
             ),
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
+        ),
+        'cesium' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium'],
+            'exclude'                 => true,
+            'default'                 => '',
+            'inputType'               => 'checkbox',
+            'eval'                    => array('submitOnChange' => true),
+            'sql'                     => "char(1) NOT NULL default ''"
         ),
     )
 );
