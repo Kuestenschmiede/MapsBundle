@@ -54,7 +54,7 @@ class MapsController extends Controller
     public function infoWindowAction(Request $request, $popupString)
     {
         $response = new JsonResponse();
-        if (strpos($popupString, ":") !== false) {
+        if (strpos($popupString, ":") === false) {
             $response->setStatusCode(400);
             return $response;
         } else {
