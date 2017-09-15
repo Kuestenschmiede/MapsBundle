@@ -34,7 +34,6 @@ class ResourceLoader
         // $objPage->hasJQuery;
         // $objPage->hasMooTools
         // $objPage->isMobile
-        $blnXhtml = ($objPage->outputFormat == 'xhtml');
 
         if (!is_array($resources) || empty($resources)) {
             $allByDefault = true;
@@ -78,10 +77,10 @@ class ResourceLoader
 
         // third-party scripts
         if ($resources['openlayers']) {
-            $GLOBALS['TL_BODY']['openlayers'] = \Template::generateScriptTag('bundles/con4gismaps/vendor/OpenLayers-' . $GLOBALS['con4gis_maps_extension']['ol-version'] . '/ol' . $suffixOl . '.js', $blnXhtml) . "\n";
+            $GLOBALS['TL_BODY']['openlayers'] = \Template::generateScriptTag('bundles/con4gismaps/vendor/OpenLayers-' . $GLOBALS['con4gis_maps_extension']['ol-version'] . '/ol' . $suffixOl . '.js') . "\n";
 
-            $GLOBALS['TL_BODY']['cesium'] = \Template::generateScriptTag('bundles/con4gismaps/vendor/ol-cesium-v1.31/Cesium/Cesium.js', $blnXhtml) . "\n";
-            $GLOBALS['TL_BODY']['olcesium'] = \Template::generateScriptTag('bundles/con4gismaps/vendor/ol-cesium-v1.31/olcesium.js', $blnXhtml) . "\n";
+            $GLOBALS['TL_BODY']['cesium'] = \Template::generateScriptTag('bundles/con4gismaps/vendor/ol-cesium-v1.31/Cesium/Cesium.js') . "\n";
+            $GLOBALS['TL_BODY']['olcesium'] = \Template::generateScriptTag('bundles/con4gismaps/vendor/ol-cesium-v1.31/olcesium.js') . "\n";
 
 
 //ToDo find another solution
@@ -102,31 +101,31 @@ class ResourceLoader
             // minimum CSS rules in order for maps to work properly
             $GLOBALS['TL_CSS']['c4g-maps-general'] = 'bundles/con4gismaps/css/c4g-maps-general.css';
             // need to be loaded first!
-            $GLOBALS['TL_BODY']['c4g-maps-constant'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-constant.js' . $staticOption, $blnXhtml) . "\n";
+            $GLOBALS['TL_BODY']['c4g-maps-constant'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-constant.js' . $staticOption) . "\n";
 
             // load language script
             if ($GLOBALS['TL_LANGUAGE'] == 'de') {
-                $GLOBALS['TL_BODY']['c4g-maps-constant-i18n'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-constant-i18n-de.js' . $staticOption, $blnXhtml) . "\n";
-                $GLOBALS['TL_BODY']['c4g-maps-popup-info'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-popup-info-de.js' . $staticOption, $blnXhtml) . "\n";
+                $GLOBALS['TL_BODY']['c4g-maps-constant-i18n'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-constant-i18n-de.js' . $staticOption) . "\n";
+                $GLOBALS['TL_BODY']['c4g-maps-popup-info'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-popup-info-de.js' . $staticOption) . "\n";
             }
             else if ($GLOBALS['TL_LANGUAGE'] == 'fi') {
-                $GLOBALS['TL_BODY']['c4g-maps-constant-i18n'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-constant-i18n-fi.js' . $staticOption, $blnXhtml) . "\n";
+                $GLOBALS['TL_BODY']['c4g-maps-constant-i18n'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-constant-i18n-fi.js' . $staticOption) . "\n";
                 //ToDo translate this
-                $GLOBALS['TL_BODY']['c4g-maps-popup-info'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-popup-info-en.js' . $staticOption, $blnXhtml) . "\n";
+                $GLOBALS['TL_BODY']['c4g-maps-popup-info'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-popup-info-en.js' . $staticOption) . "\n";
             }
             else {
                 // use english as fallback
-                $GLOBALS['TL_BODY']['c4g-maps-constant-i18n'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-constant-i18n-en.js' . $staticOption, $blnXhtml) . "\n";
-                $GLOBALS['TL_BODY']['c4g-maps-popup-info'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-popup-info-en.js' . $staticOption, $blnXhtml) . "\n";
+                $GLOBALS['TL_BODY']['c4g-maps-constant-i18n'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-constant-i18n-en.js' . $staticOption) . "\n";
+                $GLOBALS['TL_BODY']['c4g-maps-popup-info'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-popup-info-en.js' . $staticOption) . "\n";
             }
             
             // configuration-, utility-, core- and miscellaneous-scripts
-            $GLOBALS['TL_BODY']['c4g-maps-config'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-config.js' . $staticOption, $blnXhtml) . "\n";
-            $GLOBALS['TL_BODY']['c4g-maps-proxy'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-proxy.js' . $staticOption, $blnXhtml) . "\n";
-            $GLOBALS['TL_BODY']['c4g-maps-utils'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-utils.js' . $staticOption, $blnXhtml) . "\n";
-            $GLOBALS['TL_BODY']['c4g-maps-misc-maphover'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-misc-maphover.js' . $staticOption, $blnXhtml) . "\n";
-            $GLOBALS['TL_BODY']['c4g-maps-misc-spinner'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-misc-spinner.js' . $staticOption, $blnXhtml) . "\n";
-            $GLOBALS['TL_BODY']['c4g-maps-misc-tooltippopup'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-misc-tooltippopup.js' . $staticOption, $blnXhtml) . "\n";
+            $GLOBALS['TL_BODY']['c4g-maps-config'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-config.js' . $staticOption) . "\n";
+            $GLOBALS['TL_BODY']['c4g-maps-proxy'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-proxy.js' . $staticOption) . "\n";
+            $GLOBALS['TL_BODY']['c4g-maps-utils'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-utils.js' . $staticOption) . "\n";
+            $GLOBALS['TL_BODY']['c4g-maps-misc-maphover'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-misc-maphover.js' . $staticOption) . "\n";
+            $GLOBALS['TL_BODY']['c4g-maps-misc-spinner'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-misc-spinner.js' . $staticOption) . "\n";
+            $GLOBALS['TL_BODY']['c4g-maps-misc-tooltippopup'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-misc-tooltippopup.js' . $staticOption) . "\n";
         }
         // experimental panel loading
 
@@ -137,60 +136,60 @@ class ResourceLoader
 
         // optional scripts
         if ($resources['geopicker']) {
-            $GLOBALS['TL_BODY']['c4g-maps-interaction-geopicker'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-interaction-geopicker.js' . $staticOption, $blnXhtml) . "\n";
+            $GLOBALS['TL_BODY']['c4g-maps-interaction-geopicker'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-interaction-geopicker.js' . $staticOption) . "\n";
         }
         if ($resources['grid']) {
-            $GLOBALS['TL_BODY']['c4g-maps-control-grid'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-control-grid.js' . $staticOption, $blnXhtml) . "\n";
+            $GLOBALS['TL_BODY']['c4g-maps-control-grid'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-control-grid.js' . $staticOption) . "\n";
         }
         if ($resources['home']) {
-            $GLOBALS['TL_BODY']['c4g-maps-control-home'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-control-home.js' . $staticOption, $blnXhtml) . "\n";
+            $GLOBALS['TL_BODY']['c4g-maps-control-home'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-control-home.js' . $staticOption) . "\n";
         }
         if ($resources['position']) {
-            $GLOBALS['TL_BODY']['c4g-maps-control-position'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-control-position.js' . $staticOption, $blnXhtml) . "\n";
+            $GLOBALS['TL_BODY']['c4g-maps-control-position'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-control-position.js' . $staticOption) . "\n";
         }
         if ($resources['permalink']) {
-            $GLOBALS['TL_BODY']['c4g-maps-control-permalink'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-control-permalink.js' . $staticOption, $blnXhtml) . "\n";
+            $GLOBALS['TL_BODY']['c4g-maps-control-permalink'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-control-permalink.js' . $staticOption) . "\n";
         }
         if ($resources['zoomlevel']) {
-            $GLOBALS['TL_BODY']['c4g-maps-control-zoomlevel'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-control-zoomlevel.js' . $staticOption, $blnXhtml) . "\n";
+            $GLOBALS['TL_BODY']['c4g-maps-control-zoomlevel'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-control-zoomlevel.js' . $staticOption) . "\n";
         }
         if ($resources['geosearch']) {
-            $GLOBALS['TL_BODY']['c4g-maps-control-geosearch'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-control-geosearch.js' . $staticOption, $blnXhtml) . "\n";
+            $GLOBALS['TL_BODY']['c4g-maps-control-geosearch'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-control-geosearch.js' . $staticOption) . "\n";
         }
         if ($resources['overviewmap']) {
-            $GLOBALS['TL_BODY']['c4g-maps-control-overviewmap'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-control-overviewmap.js' . $staticOption, $blnXhtml) . "\n";
+            $GLOBALS['TL_BODY']['c4g-maps-control-overviewmap'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-control-overviewmap.js' . $staticOption) . "\n";
         }
         if ($resources['baselayerswitcher']) {
-            $GLOBALS['TL_BODY']['c4g-maps-control-starboardplugin-baselayerswitcher'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-control-starboardplugin-baselayerswitcher.js' . $staticOption, $blnXhtml) . "\n";
+            $GLOBALS['TL_BODY']['c4g-maps-control-starboardplugin-baselayerswitcher'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-control-starboardplugin-baselayerswitcher.js' . $staticOption) . "\n";
         }
         if ($resources['layerswitcher']) {
-            $GLOBALS['TL_BODY']['c4g-maps-control-starboardplugin-layerswitcher'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-control-starboardplugin-layerswitcher.js' . $staticOption, $blnXhtml) . "\n";
+            $GLOBALS['TL_BODY']['c4g-maps-control-starboardplugin-layerswitcher'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-control-starboardplugin-layerswitcher.js' . $staticOption) . "\n";
         }
         if ($resources['starboard'] || $resources['router'] || $resources['editor'] || $resources['measuretools']) {
-            $GLOBALS['TL_BODY']['c4g-maps-control-sideboard'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-control-sideboard.js' . $staticOption, $blnXhtml) . "\n";
+            $GLOBALS['TL_BODY']['c4g-maps-control-sideboard'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-control-sideboard.js' . $staticOption) . "\n";
 
             if ($resources['starboard']) {
-                $GLOBALS['TL_BODY']['c4g-maps-control-starboard'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-control-starboard.js' . $staticOption, $blnXhtml) . "\n";
+                $GLOBALS['TL_BODY']['c4g-maps-control-starboard'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-control-starboard.js' . $staticOption) . "\n";
                 if ($resources['customtab']) {
-                    $GLOBALS['TL_BODY']['c4g-maps-control-starboardplugin-customtab'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-control-starboardplugin-customtab.js' . $staticOption, $blnXhtml) . "\n";
+                    $GLOBALS['TL_BODY']['c4g-maps-control-starboardplugin-customtab'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-control-starboardplugin-customtab.js' . $staticOption) . "\n";
                 }
             }
             if ($resources['router']) {
-                $GLOBALS['TL_BODY']['c4g-maps-control-portside-router'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-control-portside-router.js' . $staticOption, $blnXhtml) . "\n";
+                $GLOBALS['TL_BODY']['c4g-maps-control-portside-router'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-control-portside-router.js' . $staticOption) . "\n";
             }
             if ($resources['editor']) {
-                $GLOBALS['TL_BODY']['c4g-maps-control-portside-editor'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-control-portside-editor.js' . $staticOption, $blnXhtml) . "\n";
+                $GLOBALS['TL_BODY']['c4g-maps-control-portside-editor'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-control-portside-editor.js' . $staticOption) . "\n";
             }
             if ($resources['measuretools']) {
-                $GLOBALS['TL_BODY']['c4g-maps-control-portside-measuretools'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-control-portside-measuretools.js' . $staticOption, $blnXhtml) . "\n";
+                $GLOBALS['TL_BODY']['c4g-maps-control-portside-measuretools'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-control-portside-measuretools.js' . $staticOption) . "\n";
             }
         }
         //ToDo make executable
         if ($resources['exporttools']) {
-            $GLOBALS['TL_BODY']['c4g-maps-control-portside-exporttools'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-control-portside-exporttools.js' . $staticOption, $blnXhtml) . "\n";
+            $GLOBALS['TL_BODY']['c4g-maps-control-portside-exporttools'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps-control-portside-exporttools.js' . $staticOption) . "\n";
         }
 
-        $GLOBALS['TL_BODY']['animatedclusterlayer'] = \Template::generateScriptTag('bundles/con4gismaps/vendor/animated_cluster/layer/animatedclusterlayer.js' . $staticOption, $blnXhtml) . "\n";
+        $GLOBALS['TL_BODY']['animatedclusterlayer'] = \Template::generateScriptTag('bundles/con4gismaps/vendor/animated_cluster/layer/animatedclusterlayer.js' . $staticOption) . "\n";
 
         // load plugins
         if ($resources['plugins']) {
@@ -210,11 +209,11 @@ class ResourceLoader
         if ($resources['core']) {
             // load map-controller last, since it is the "main" script
             // and needs (nearly) all of the above scripts
-            $GLOBALS['TL_BODY']['c4g-maps'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps.js' . $staticOption, $blnXhtml) . "\n";
+            $GLOBALS['TL_BODY']['c4g-maps'] = \Template::generateScriptTag('bundles/con4gismaps/js/c4g-maps.js' . $staticOption) . "\n";
         }
 
         if ( $GLOBALS['con4gis_projects_extension']['installed'] &&  $GLOBALS['con4gis_tracking_extension']['installed']) {
-            $GLOBALS['TL_BODY']['live-positions'] = \Template::generateScriptTag('system/modules/con4gis_projects/assets/js/C4GBrickLivePositions.js', $blnXhtml) . "\n";
+            $GLOBALS['TL_BODY']['live-positions'] = \Template::generateScriptTag('system/modules/con4gis_projects/assets/js/C4GBrickLivePositions.js') . "\n";
         }
 
         return true;
