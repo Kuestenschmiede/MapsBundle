@@ -24,37 +24,15 @@ class InfoWindowApi extends \Frontend
     /**
      * Determines the request method and selects the appropriate data result.
      *
-     * @param  array $arrInput Fragments from request uri
+     * @param  string $strInput Fragments from request uri
      * @return mixed           JSON data
      */
-    public function generate(array $arrInput)
+    public function generate($strInput)
     {
-        // Only allow GET requests
-        if (strtoupper($_SERVER['REQUEST_METHOD']) != 'GET') {
-            HttpResultHelper::MethodNotAllowed();
-        }
-
-        // A map id is required
-        if (count($arrInput) < 1) {
-            HttpResultHelper::BadRequest();
-        }
-        //$arrIds = \Input::get('ids');
-        /*if (count($arrIds) < 1) {
-            \HttpResultHelper::BadRequest();
-        }*/
-
-        if (strpos($arrInput[0], ":")!==false)
-        {
-            $arrInputExploded = explode(':', $arrInput[0]);
-            $strTable = $arrInputExploded[0];
-            $intId = $arrInputExploded[1];
-
-        } else {
-            HttpResultHelper::BadRequest();
-        }
-
-
-        return json_encode($this->getInfoWindowContent($strTable, $intId));
+        $arrInputExploded = explode(':', $strInput);
+        $strTable = $arrInputExploded[0];
+        $intId = $arrInputExploded[1];
+        return $this->getInfoWindowContent($strTable, $intId);
     }
 
     public function getPopupConfiguration($strTable, $intId, $objLayer=false)

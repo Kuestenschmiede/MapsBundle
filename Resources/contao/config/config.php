@@ -107,19 +107,6 @@ array_insert($GLOBALS['TL_CTE']['con4gis'], 1, array
         'c4g_maps' => 'con4gis\MapsBundle\Resources\contao\modules\ContentC4gMaps',
     ));
 
-/**
- * Rest-API
- */
-$GLOBALS['TL_API']['layerService'] = 'con4gis\MapsBundle\Resources\contao\modules\api\LayerApi';
-$GLOBALS['TL_API']['layerContentService'] = 'con4gis\MapsBundle\Resources\contao\modules\api\LayerContentApi';
-$GLOBALS['TL_API']['locationStyleService'] = 'con4gis\MapsBundle\Resources\contao\modules\api\LocationStyleApi';
-$GLOBALS['TL_API']['infoWindowService'] = 'con4gis\MapsBundle\Resources\contao\modules\api\InfoWindowApi';
-$GLOBALS['TL_API']['baseLayerService'] = 'con4gis\MapsBundle\Resources\contao\modules\api\BaseLayerApi';
-$GLOBALS['TL_API']['editorService'] = 'con4gis\MapsBundle\Resources\contao\modules\api\EditorApi';
-$GLOBALS['TL_API']['nominatimService'] = 'con4gis\MapsBundle\Resources\contao\modules\api\NominatimApi';
-$GLOBALS['TL_API']['reverseNominatimService'] = 'con4gis\MapsBundle\Resources\contao\modules\api\ReverseNominatimApi';
-$GLOBALS['TL_API']['routingService'] = 'con4gis\MapsBundle\Resources\contao\modules\api\RoutingApi';
-$GLOBALS['TL_API']['geopickerService'] = 'con4gis\MapsBundle\Resources\contao\classes\GeoPicker';
 
 $apiBaseUrl = 'con4gis/api';
 

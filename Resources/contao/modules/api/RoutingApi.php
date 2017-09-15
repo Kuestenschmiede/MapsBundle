@@ -27,61 +27,34 @@ class RoutingApi extends \Frontend
      * @param  array $arrInput Fragments from request uri
      * @return mixed           JSON data
      */
-
-
-    public function generate(array $arrInput)
+    public function generate($profileId, $locations)
     {
-
-        // Only allow GET requests
-        if (strtoupper($_SERVER['REQUEST_METHOD']) != 'GET') {
-            HttpResultHelper::MethodNotAllowed();
-        }
-
-        // A map id is required
-        if (count($arrInput) < 1 && !is_numeric($arrInput[0])) {
-            HttpResultHelper::BadRequest();
-        }
-
-        $arrParams = array();
         $strParams = "";
-
         foreach ($_GET as $key=>$value) {
-
-            if (\Input::get($key))
-            {
-                $arrParams[$key] = \Input::get($key);
-
-                if (strlen($strParams) > 0)
-                {
+            if (\Input::get($key)) {
+                if (strlen($strParams) > 0) {
                     $strParams .= "&";
                 }
-
-                if ($key == "loc_to" || $key == "loc_from")
-                {
+                if ($key == "loc_to" || $key == "loc_from") {
                     $strParams .= "loc=" . \Input::get($key);
-                }
-                else
-                {
+                } else {
                     $strParams .= $key . "=" . \Input::get($key);
                 }
             }
-
         }
-
-       return $this->getRoutingResponse($arrInput, $strParams);
-
+       return $this->getRoutingResponse($locations, $strParams, $profileId);
     }
 
     /**
      * Returns the layer structure for the map.
-     *
-     * @param int $id
+     * @param $arrInput
+     * @param $strParams
+     * @param $intProfileId
+     * @return string
      */
-    protected function getRoutingResponse($arrInput, $strParams)
+    protected function getRoutingResponse($arrInput, $strParams, $intProfileId)
     {
         $strRoutingUrl = "http://router.project-osrm.org/";
-        $intProfileId = intval($arrInput[0]);
-
         if ($intProfileId > 0)
         {
             $objMapsProfile = C4gMapProfilesModel::findBy('id', $intProfileId);
@@ -90,17 +63,13 @@ class RoutingApi extends \Frontend
             {
                 if ($objMapsProfile->router_viaroute_url)
                 {
-
                     $strRoutingUrl = $objMapsProfile->router_viaroute_url;
                     if(substr($strRoutingUrl,-1,1)!='/'){
                         $strRoutingUrl= $strRoutingUrl.'/';
                     }
                 }
             }
-
-
         }
-
 
         $REQUEST = new \Request();
         if ($_SERVER['HTTP_REFERER']) {
@@ -111,29 +80,15 @@ class RoutingApi extends \Frontend
         }
 
         if ($objMapsProfile && $objMapsProfile->router_api_selection == '1') {
-            $url="";
-            for($i = 1; $i< sizeof($arrInput); $i++){
+            $url = "";
+            for ($i = 0; $i< sizeof($arrInput); $i++) {
                 $url = $url. explode(",",$arrInput[$i])[1].','.explode(",",$arrInput[$i])[0].';';
             }
             $url = substr($url,0,strlen($url)-1);
-            $REQUEST->send($strRoutingUrl . 'route/v1/driving/'.$url.'?steps=true&overview=full&alternatives=true');//            $arrX = explode(",",$arrInput[1]);
-//            $arrY = explode(",",$arrInput[2]);
-//            if($arrInput[3]){
-//                $arrZ = explode(",",$arrInput[3]);
-//
-//                $REQUEST->send($strRoutingUrl . 'route/v1/driving/'.$arrX[1].','.$arrX[0].';'.$arrZ[1].','.$arrZ[0].';'.$arrY[1].','.$arrY[0].'?steps=true');
-//            }
-//            else{
-//                $REQUEST->send($strRoutingUrl . 'route/v1/driving/'.$arrX[1].','.$arrX[0].';'.$arrY[1].','.$arrY[0].'?steps=true');
-//            }
-
-
-        }
-        else {
+            $REQUEST->send($strRoutingUrl . 'route/v1/driving/'.$url.'?steps=true&overview=full&alternatives=true');
+        } else {
             $REQUEST->send($strRoutingUrl . '?' . $strParams);
         }
-
         return $REQUEST->response;
     }
-
 }

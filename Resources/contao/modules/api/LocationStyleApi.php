@@ -23,27 +23,12 @@ class LocationStyleApi
 {
     /**
      * Determines the request method and selects the appropriate data result.
-     *
-     * @param  array $arrInput Fragments from request uri
-     * @return mixed           JSON data
+     * @param $arrIds
+     * @return array
      */
-    public function generate(array $arrInput)
+    public function generate($arrIds)
     {
-        // Only allow GET requests
-        if (strtoupper($_SERVER['REQUEST_METHOD']) != 'GET') {
-            HttpResultHelper::MethodNotAllowed();
-        }
-
-        // A map id is required
-        /*if (count($arrInput) < 1 && !is_numeric($arrInput[0])) {
-            HttpResultHelper::BadRequest();
-        }*/
-        $arrIds = \Input::get('ids');
-        if (count($arrIds) < 1) {
-            HttpResultHelper::BadRequest();
-        }
-
-		return json_encode($this->getStyleData($arrIds));
+        return $this->getStyleData($arrIds);
     }
 
     /**

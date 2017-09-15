@@ -34,22 +34,9 @@ class LayerApi extends \Frontend
     protected $arrConfig = array();
     protected $arrReassignedLayer = array();
 
-    public function generate(array $arrInput)
+    public function generate($intParentId)
     {
-        // Only allow GET requests
-        if (strtoupper($_SERVER['REQUEST_METHOD']) != 'GET') {
-            HttpResultHelper::MethodNotAllowed();
-        }
-
-        // A map id is required
-        if (count($arrInput) < 1 && !is_numeric($arrInput[0])) {
-            HttpResultHelper::BadRequest();
-        }
-
         $this->import('FrontendUser', 'User');
-
-        $intParentId = intval($arrInput[0]);
-
         $arrLayers = $this->getLayerList($intParentId);
 
         if(sizeof($this->arrReassignedLayer) > 0)
@@ -100,7 +87,7 @@ class LayerApi extends \Frontend
         $return['layer'] = $this->checkAndReassignFrontendLayers($return['layer']);
 
 		
-		return json_encode($return);
+		return $return;
 
     }
 
