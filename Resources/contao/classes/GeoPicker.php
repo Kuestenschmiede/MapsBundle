@@ -101,7 +101,7 @@ class GeoPicker extends \Backend
 		$this->Template->output();
 	}
 
-	public function generate($arrInput) {
+	public function generate() {
         $this->Template = new \BackendTemplate('c4g_geopicker');
 
         $this->Template->theme = $this->getTheme();
