@@ -68,7 +68,7 @@ class ResourceLoader extends coreResourceLoader
             'exporttools' => false, //ToDo
             'plugins' => $allByDefault,
             'customtab' => $allByDefault,
-            'cecium' => $allByDefault
+            'cesium' => $allByDefault
         ),
         $resources);
 
@@ -86,9 +86,9 @@ class ResourceLoader extends coreResourceLoader
             parent::loadJavaScriptRessource('openlayers', self::VENDOR_PATH . 'OpenLayers-' . $GLOBALS['con4gis_maps_extension']['ol-version'] . '/ol' . $suffixOl . '.js');
         }
 
-        if ($resources['cecium']) {
+        if ($resources['cesium']) {
             parent::loadJavaScriptRessource('cesium', self::VENDOR_PATH . 'ol-cesium-v1.31/Cesium/Cesium.js');
-            parent::loadJavaScriptRessource('olcesium', self::VENDOR_PATH . 'ol-cesium-v1.31/Colcesium.js');
+            parent::loadJavaScriptRessource('olcesium', self::VENDOR_PATH . 'ol-cesium-v1.31/olcesium.js');
         }
 
         // core scripts (1|2)
@@ -255,7 +255,8 @@ class ResourceLoader extends coreResourceLoader
             'exporttools' => false, //ToDo profile switch,
             // @TODO BE-Switch?
             'plugins' => true,
-            'customtab' => true
+            'customtab' => true,
+            'cesium' => $profile->cesium
         );
 
         // load theme

@@ -29,7 +29,7 @@ class EditorApi extends \Frontend
      */
     public function generate($intProfileId)
     {
-        return json_encode($this->getEditorConfigForProfile($intProfileId));
+        return $this->getEditorConfigForProfile($intProfileId);
     }
 
     /**

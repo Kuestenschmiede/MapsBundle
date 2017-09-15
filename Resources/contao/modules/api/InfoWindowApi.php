@@ -32,7 +32,7 @@ class InfoWindowApi extends \Frontend
         $arrInputExploded = explode(':', $strInput);
         $strTable = $arrInputExploded[0];
         $intId = $arrInputExploded[1];
-        return json_encode($this->getInfoWindowContent($strTable, $intId));
+        return $this->getInfoWindowContent($strTable, $intId);
     }
 
     public function getPopupConfiguration($strTable, $intId, $objLayer=false)
