@@ -35,20 +35,8 @@ class BaseLayerApi extends \Frontend
     protected $arrConfig = array();
     private $mapsProfileModel;
 
-    public function generate(array $arrInput)
+    public function generate($intProfileId)
     {
-        // Only allow GET requests
-        if (strtoupper($_SERVER['REQUEST_METHOD']) != 'GET') {
-            HttpResultHelper::MethodNotAllowed();
-        }
-
-        // A map id is required
-        if (count($arrInput) < 1 && !is_numeric($arrInput[0])) {
-            HttpResultHelper::BadRequest();
-        }
-
-        $intProfileId = intval($arrInput[0]);
-
         $blnProfileBaselayerFilter = false;
         $mapsProfileModel = C4gMapProfilesModel::findById($intProfileId);
 
@@ -66,7 +54,7 @@ class BaseLayerApi extends \Frontend
         $this->arrConfig['countAll'] = sizeof($arrLayers);
         
 
-		return json_encode(array('config' => $this->arrConfig, 'baselayer' => $arrLayers));
+		return array('config' => $this->arrConfig, 'baselayer' => $arrLayers);
 
     }
 
