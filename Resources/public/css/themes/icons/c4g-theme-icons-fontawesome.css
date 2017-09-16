@@ -275,32 +275,69 @@ button.c4g-starboard-view-trigger-layerswitcher:before {
 }
 
 
-.c4g-baselayertree a.c4g-active:before {
+.c4g-baselayertree>ul>li>a.c4g-active:before {
   font-family: 'FontAwesome';
   /*content: "\f06e";*/
   content: "\f192";
 }
-.c4g-baselayertree a.c4g-inactive:before {
+.c4g-baselayertree>ul>li>a.c4g-inactive:before {
   font-family: 'FontAwesome';
   /*content: "\f070";*/
   content: "\f1db";
 }
-a.c4g-active:after {
+.c4g-layertree a.c4g-active:after {
   font-family: 'FontAwesome';
   content: "\f205";
   float:right;
 }
-a.c4g-inactive:after {
+.c4g-layertree a.c4g-inactive:after {
   font-family: 'FontAwesome';
   content: "\f204";
   float:right;
 }
-.c4g-layertree span.c4g-icon:before {
+.c4g-layertree span.c4g-icon:before ,
+.c4g-baselayertree span.c4g-icon:before {
   font-family: 'FontAwesome';
   content: "\f054";
   font-size: .8em;
 }
-.c4g-layertree .c4g-open > span {
+.c4g-baselayertree input {
+
+}
+.c4g-baselayertree input[type='range']{
+  float: right;
+}
+.c4g-baselayertree input[type=range]{
+   -webkit-appearance: none;
+ }
+
+.c4g-baselayertree input[type=range]::-webkit-slider-runnable-track {
+  width: 300px;
+  height: 5px;
+  background: #ddd;
+  border: none;
+  border-radius: 3px;
+}
+
+.c4g-baselayertree input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: rgba(0,60,136,.7);
+  margin-top: -4px;
+}
+
+.c4g-baselayertree input[type=range]:focus {
+  outline: none;
+}
+
+.c4g-baselayertree input[type=range]:focus::-webkit-slider-runnable-track {
+  background: #ccc;
+}
+.c4g-layertree .c4g-open > span,
+.c4g-baselayertree .c4g-open > span{
   transform: rotate(90deg);
 }
 .c4g-starboard-filter input {

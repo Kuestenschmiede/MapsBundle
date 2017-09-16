@@ -149,11 +149,16 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
      */
     addItems: function (itemData, wrapperElement, options) {
       var i,
+          j,
           self,
           wrapper,
           item,
           uid,
           listItem,
+          childList,
+          childItem,
+          childEntry,
+          toggle,
           entry,
           $entry,
           handleEntryClick,
@@ -173,9 +178,20 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
 
         event.preventDefault();
         itemUid = $(this).data('uid');
+          if ($(this).parent().hasClass(c4g.maps.constant.css.CLOSE)) {
+              $(this).parent().removeClass(c4g.maps.constant.css.CLOSE).addClass(c4g.maps.constant.css.OPEN);
+          } else {
+              $(this).parent().removeClass(c4g.maps.constant.css.OPEN).addClass(c4g.maps.constant.css.CLOSE);
+          }
 
         if (self.proxy.activeBaselayerId !== itemUid) {
           self.proxy.showBaseLayer(itemUid);
+          if(this.nextSibling){
+              var children = this.nextSibling.childNodes;
+              for(i = 0; i < children.length; i++){
+                  $(children[i].firstChild).addClass(c4g.maps.constant.css.ACTIVE).removeClass(c4g.maps.constant.css.INACTIVE);
+              }
+          }
         }
       }; // end of "handleEntryClick()"
 
@@ -188,14 +204,19 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
               self.baselayers[id].$entry.addClass(c4g.maps.constant.css.ACTIVE).removeClass(c4g.maps.constant.css.INACTIVE);
             } else {
               self.baselayers[id].$entry.addClass(c4g.maps.constant.css.INACTIVE).removeClass(c4g.maps.constant.css.ACTIVE);
+              if(c4g.maps.baselayers[id].overlays){
+
+              }
             }
           }
         }
       };
 
+
       wrapper = options.parseAsList ? document.createElement('ul') : document.createElement('div');
 
       if (itemData.length > 0) {
+
         for (i = 0; i < itemData.length; i += 1) {
 
           uid = itemData[i];
@@ -206,9 +227,40 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
 
           entry = document.createElement('a');
           entry.setAttribute('href', '#');
-
           entry.appendChild(document.createTextNode(c4g.maps.baselayers[uid].name));
+          if(c4g.maps.baselayers[uid].hasOverlays){
+
+
+            $(listItem).addClass(c4g.maps.constant.css.CLOSE);
+
+            childList = document.createElement('ul');
+            for(j = 0; j < c4g.maps.baselayers[uid].overlays.length; j++){
+              childItem = document.createElement('li');
+              childEntry = document.createElement('a');
+              $(childEntry).addClass(c4g.maps.constant.css.INACTIVE);
+              childEntry.appendChild(document.createTextNode(c4g.maps.baselayers[uid].overlays[j].name));
+              $(childEntry).data('id',c4g.maps.baselayers[uid].overlays[j].id);
+              toggle = document.createElement('input');
+              toggle.setAttribute('type','range');
+              toggle.setAttribute('min',0);
+              toggle.setAttribute('max',100);
+              toggle.setAttribute('value',100);
+              toggle.setAttribute('steps',10);
+              $(toggle).on('input', function (event) {
+                  self.proxy.changeOpacity($(this).parent().data('id'),this.value)
+              });
+
+              childEntry.appendChild(toggle);
+              childItem.appendChild(childEntry);
+              childList.appendChild(childItem);
+            }
+
+          }
           listItem.appendChild(entry);
+          if(childList){
+              listItem.appendChild(childList);
+              childList = undefined;
+          }
 
           $entry = $(entry);
           this.baselayers[uid].$entry = $entry;
