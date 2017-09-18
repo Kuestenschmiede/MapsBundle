@@ -16,6 +16,15 @@ layer_service:
     requirements:
         mapId: \d+
 
+layer_content_service:
+    path: /con4gis/api/layerContentService/{layerId}
+    defaults:
+        _scope: frontend
+        _controller: "con4gisMapsBundle:Maps:layerContent"
+    methods: [GET]
+    requirements:
+        layerId: \d+
+
 editor_service:
     path: /con4gis/api/editorService/{profileId}
     defaults:

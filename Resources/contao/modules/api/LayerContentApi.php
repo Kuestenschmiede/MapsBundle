@@ -40,19 +40,9 @@ class LayerContentApi extends \Controller
         $this->import('con4gis\MapsBundle\Resources\contao\modules\api\InfoWindowApi');
     }
 
-    public function generate(array $arrInput)
+    public function generate($layerId)
     {
-        // Only allow GET requests
-        if (strtoupper($_SERVER['REQUEST_METHOD']) != 'GET') {
-            HttpResultHelper::MethodNotAllowed();
-        }
-
-        // A map id is required
-        if (count($arrInput) < 1 && !is_numeric($arrInput[0])) {
-            HttpResultHelper::BadRequest();
-        }
-
-        return json_encode($this->getLayerData(intval($arrInput[0]), true));
+        return $this->getLayerData($layerId, true);
     }
 
     public function getLayerDataPublic($intId)
