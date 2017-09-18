@@ -507,10 +507,12 @@ button.ol-zoom-out {
   cursor: default;
   position: relative;
 }
-.c4g-layertree a.c4g-disabled {
+.c4g-layertree a.c4g-disabled,
+.c4g-baselayertree a.c4g-disabled {
   opacity: .5;
 }
-.c4g-layertree a:after {
+.c4g-layertree a:after,
+.c4g-baselayertree a:after {
   display: inline-block;
   float: right;
   margin-right: 5px;
@@ -522,7 +524,8 @@ button.ol-zoom-out {
 .c4g-layertree .c4g-closeable > a {
   padding-left: 10px;
 }
-.c4g-layertree span {
+.c4g-layertree span,
+.c4g-baselayertree span{
   float: left;
   padding: 10px 5px;
   position: relative;

@@ -914,7 +914,8 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
     addBaseLayers: function (baselayers) {
       var baselayer,
           uid,
-          i;
+          i,
+          j;
 
       // sort baselayer (for internal list)
       baselayers.sort(function (a, b) {
@@ -940,6 +941,14 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
           this.baselayerIds.push(uid);
           if (!c4g.maps.baselayers[uid]) {
             c4g.maps.baselayers[uid] = baselayer;
+          }
+          if(baselayer.hasOverlays){
+              if(!c4g.maps.overlays){
+                  c4g.maps.overlays = [];
+              }
+              for (j = 0; j< baselayer.overlays.length; j++){
+                  c4g.maps.overlays[baselayer.overlays[j].id] = baselayer.overlays[j];
+              }
           }
 
           // @TODO: check initial baselayer-handling
@@ -974,10 +983,153 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
 
       c4g.maps.utils.callHookFunctions(this.hook_baselayer_loaded, this.baselayerIds);
     }, // end of "addBaseLayers()"
+    showOverlayLayer: function(overlayId){
+        var self = this,
+            overlayLayerConfig,
+            layerOptions,
+            overlayLayer,
+            noUrl;
+
+        layerOptions = {};
+        overlayLayer = new ol.layer.Tile({
+            source: new ol.source.OSM()
+        });
+        if(!c4g.maps.overlays){
+            c4g.maps.overlays = [];
+        }
+        overlayLayerConfig = c4g.maps.overlays[overlayId];
+
+        switch (overlayLayerConfig.provider) {
+            case 'osm':
+                if (osmSourceConfigs[overlayLayerConfig.style]) {
+                    overlayLayer = new ol.layer.Tile({
+                        source: new ol.source.OSM(
+                            $.extend(
+                                osmSourceConfigs[overlayLayerConfig.style],
+                                layerOptions
+                            )
+                        )
+                    });
+                } else if (stamenSourceConfigs[overlayLayerConfig.style]) {
+                    // Stamen
+                    overlayLayer = new ol.layer.Tile({
+                        source: new ol.source.Stamen(
+                            $.extend(
+                                stamenSourceConfigs[overlayLayerConfig.style],
+                                layerOptions
+                            )
+                        )
+                    });
+                    // } else if (mapQuestSourceConfigs[overlayLayerConfig.style]) {
+                    //   // mapQuest
+                    //   overlayLayer = new ol.layer.Tile({
+                    //     source: new ol.source.MapQuest(mapQuestSourceConfigs[overlayLayerConfig.style])
+                    //   });
+                } else if (overlayLayerConfig.style === 'osm_custom') {
+                    // custom
+                    noUrl = true;
+                    if (overlayLayerConfig.attribution) {
+                        layerOptions.attributions = [
+                            new ol.Attribution({
+                                html: overlayLayerConfig.attribution
+                            }),
+                            ol.source.OSM.ATTRIBUTION
+                        ]
+                    }
+
+                    if (overlayLayerConfig.url) {
+                        layerOptions.url = overlayLayerConfig.url;
+                        noUrl = false;
+                    } else if (overlayLayerConfig.urls) {
+                        layerOptions.urls = overlayLayerConfig.urls;
+                        noUrl = false;
+                    }
+                    if (!noUrl) {
+                        overlayLayer = new ol.layer.Tile({
+                            source: new ol.source.XYZ(layerOptions)
+                        });
+                    } else {
+                        console.warn('custom url(s) missing -> switch to default');
+                    }
+                } else {
+                    console.warn('unsupported osm-style -> switch to default');
+                }
+                break;
+            case 'google':
+                //@todo
+                console.warn('google-maps are currently unsupported');
+                break;
+            case 'bing':
+                if (baseLayerConfig.apiKey && overlayLayerConfig.style) {
+                    overlayLayer = new ol.layer.Tile({
+                        source: new ol.source.BingMaps({
+                            culture: navigator.languages ? navigator.languages[0] : (navigator.language || navigator.userLanguage),
+                            key: overlayLayerConfig.apiKey,
+                            imagerySet: overlayLayerConfig.style
+                        })
+                    });
+                } else {
+                    console.warn('wrong bing-key or invalid imagery-set!');
+                }
+                break;
+            case 'wms':
+                overlayLayer = new ol.layer.Tile({
+                    source: new ol.source.TileWMS({
+                        url: overlayLayerConfig.url,
+                        params: {
+                            LAYERS: overlayLayerConfig.params.layers,
+                            VERSION: overlayLayerConfig.params.version,
+                            //FORMAT: overlayLayerConfig.params.format,
+                            TRANSPARENT: overlayLayerConfig.params.transparent
+                        },
+                        gutter: overlayLayerConfig.gutter,
+                        attributions: [
+                            new ol.Attribution({
+                                html: overlayLayerConfig.attribution
+                            }),
+                            ol.source.OSM.ATTRIBUTION
+                        ]
+                    }),
+                    opacity:0.5
+                    //extent: ol.proj.transformExtent([5.59334, 50.0578, 9.74158, 52.7998], 'EPSG:4326', 'EPSG:3857')
+                });
+                break;
+            case 'owm':
+                overlayLayer = new ol.layer.Tile({
+                    source: new ol.source.XYZ({
+                        url: overlayLayerConfig.url + overlayLayerConfig.app_id + '/{z}/{x}/{y}?hash=' + overlayLayerConfig.api_key,
+                        attributions: [
+                            new ol.Attribution({
+                                html: overlayLayerConfig.attribution
+                            }),
+                            ol.source.OSM.ATTRIBUTION
+                        ]
+
+                    }),
+                    //extent: ol.proj.transformExtent([5.59334, 50.0578, 9.74158, 52.7998], 'EPSG:4326', 'EPSG:3857')
+                });
+                break;
+            default:
+                console.warn('unsupported provider');
+                break;
+        }
+        c4g.maps.overlays[overlayId].vectorLayer = overlayLayer;
+        return overlayLayer;
+    },
+    changeOpacity: function (overlayId, value){
+      var layer;
+
+      layer = c4g.maps.overlays[overlayId].vectorLayer;
+      this.options.mapController.map.removeLayer(layer);
+      layer.setOpacity(value/100);
+      this.options.mapController.map.addLayer(layer);
+
+    },
 
     showBaseLayer: function (baseLayerUid) {
 
-      var baseLayerConfig,
+      var self = this,
+          baseLayerConfig,
           layers,
           baselayer,
           addBaselayer,
@@ -1360,137 +1512,15 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
         }
 
         if (baseLayerConfig.hasOverlays) {
-          baseLayerMap = newBaselayer;
-          layersWithOverlay = [];
-          layersWithOverlay.push(baseLayerMap);
 
           for (i = 0; i < baseLayerConfig.overlays.length; i += 1) {
-            overlayLayerConfig = baseLayerConfig.overlays[i];
-            layerOptions = {};
-            overlayLayer = new ol.layer.Tile({
-              source: new ol.source.OSM()
-            });
-
-            switch (overlayLayerConfig.provider) {
-              case 'osm':
-                if (osmSourceConfigs[overlayLayerConfig.style]) {
-                  overlayLayer = new ol.layer.Tile({
-                    source: new ol.source.OSM(
-                        $.extend(
-                            osmSourceConfigs[overlayLayerConfig.style],
-                            layerOptions
-                        )
-                    )
-                  });
-                } else if (stamenSourceConfigs[overlayLayerConfig.style]) {
-                  // Stamen
-                  overlayLayer = new ol.layer.Tile({
-                    source: new ol.source.Stamen(
-                        $.extend(
-                            stamenSourceConfigs[overlayLayerConfig.style],
-                            layerOptions
-                        )
-                    )
-                  });
-                // } else if (mapQuestSourceConfigs[overlayLayerConfig.style]) {
-                //   // mapQuest
-                //   overlayLayer = new ol.layer.Tile({
-                //     source: new ol.source.MapQuest(mapQuestSourceConfigs[overlayLayerConfig.style])
-                //   });
-                } else if (overlayLayerConfig.style === 'osm_custom') {
-                  // custom
-                  noUrl = true;
-                  if (overlayLayerConfig.attribution) {
-                    layerOptions.attributions = [
-                      new ol.Attribution({
-                        html: overlayLayerConfig.attribution
-                      }),
-                      ol.source.OSM.ATTRIBUTION
-                    ]
-                  }
-
-                  if (overlayLayerConfig.url) {
-                    layerOptions.url = overlayLayerConfig.url;
-                    noUrl = false;
-                  } else if (overlayLayerConfig.urls) {
-                    layerOptions.urls = overlayLayerConfig.urls;
-                    noUrl = false;
-                  }
-                  if (!noUrl) {
-                    overlayLayer = new ol.layer.Tile({
-                      source: new ol.source.XYZ(layerOptions)
-                    });
-                  } else {
-                    console.warn('custom url(s) missing -> switch to default');
-                  }
-                } else {
-                  console.warn('unsupported osm-style -> switch to default');
-                }
-                break;
-              case 'google':
-                //@todo
-                console.warn('google-maps are currently unsupported');
-                break;
-              case 'bing':
-                if (baseLayerConfig.apiKey && overlayLayerConfig.style) {
-                  overlayLayer = new ol.layer.Tile({
-                    source: new ol.source.BingMaps({
-                      culture: navigator.languages ? navigator.languages[0] : (navigator.language || navigator.userLanguage),
-                      key: overlayLayerConfig.apiKey,
-                      imagerySet: overlayLayerConfig.style
-                    })
-                  });
-                } else {
-                  console.warn('wrong bing-key or invalid imagery-set!');
-                }
-                break;
-              case 'wms':
-                overlayLayer = new ol.layer.Tile({
-                  source: new ol.source.TileWMS({
-                    url: overlayLayerConfig.url,
-                    params: {
-                      LAYERS: overlayLayerConfig.params.layers,
-                      VERSION: overlayLayerConfig.params.version,
-                      //FORMAT: overlayLayerConfig.params.format,
-                      TRANSPARENT: overlayLayerConfig.params.transparent
-                    },
-                    gutter: overlayLayerConfig.gutter,
-                    attributions: [
-                      new ol.Attribution({
-                        html: overlayLayerConfig.attribution
-                      }),
-                      ol.source.OSM.ATTRIBUTION
-                    ]
-                  }),
-                  //extent: ol.proj.transformExtent([5.59334, 50.0578, 9.74158, 52.7998], 'EPSG:4326', 'EPSG:3857')
-                });
-                break;
-              case 'owm':
-                overlayLayer = new ol.layer.Tile({
-                  source: new ol.source.XYZ({
-                    url: overlayLayerConfig.url + overlayLayerConfig.app_id + '/{z}/{x}/{y}?hash=' + overlayLayerConfig.api_key,
-                    attributions: [
-                      new ol.Attribution({
-                        html: overlayLayerConfig.attribution
-                      }),
-                      ol.source.OSM.ATTRIBUTION
-                    ]
-
-                  }),
-                  //extent: ol.proj.transformExtent([5.59334, 50.0578, 9.74158, 52.7998], 'EPSG:4326', 'EPSG:3857')
-                });
-                break;
-              default:
-                console.warn('unsupported provider');
-                break;
-            }
-
-            layersWithOverlay.push(overlayLayer);
+              if(!c4g.maps.overlays){
+                  c4g.maps.overlays = [];
+              }
+              c4g.maps.overlays[baseLayerConfig.overlays[i].id] = baseLayerConfig.overlays[i];
+              self.options.mapController.map.addLayer(self.showOverlayLayer(baseLayerConfig.overlays[i].id));
           }
 
-          newBaselayer = new ol.layer.Group({
-            layers: layersWithOverlay
-          });
         }
 
         c4g.maps.baselayers[baseLayerUid].layer = newBaselayer;

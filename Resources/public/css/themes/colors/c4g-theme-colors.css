@@ -200,7 +200,8 @@ button.c4g-draw-trigger.c4g-active {
 }
 .c4g-layertree a,
 .c4g-layertree span,
-.c4g-baselayertree a {
+.c4g-baselayertree a,
+.c4g-baselayertree span {
   color: #4c6079;
   color: rgba(0,60,136,.7);
 }
