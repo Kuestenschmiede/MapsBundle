@@ -18,7 +18,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_maps']         =   '{title_lege
                                                                     '{c4g_map_legend},c4g_map_id,c4g_map_default_mapservice,c4g_map_width,c4g_map_height,c4g_map_zoom;'.
                                                                     '{protected_legend:hide},protected;'.
                                                                     '{expert_legend:hide},guests,cssID,space';
-if ($GLOBALS['con4gis_forum_extension']['installed'])
+if ($GLOBALS['con4gis']['forum']['installed'])
 {
     $insert = '{c4g_forum_maps_legend},c4g_forum_enable_maps;{expert_legend:hide}';
     //insert c4g-maps support when forum is installed
