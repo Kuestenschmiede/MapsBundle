@@ -210,7 +210,7 @@ class ResourceLoader extends coreResourceLoader
 
         //ToDo bundle path and tracking bundle
         if ( $GLOBALS['con4gis']['projects']['installed'] &&  $GLOBALS['con4gis_tracking_extension']['installed']) {
-            parent::loadJavaScriptRessource('live-positions', 'system/modules/con4gis_projects/assets/js/C4GBrickLivePositions.js');
+            parent::loadJavaScriptRessource('live-positions', 'bundles/con4gisprojects/js/C4GBrickLivePositions.js');
         }
 
         return true;
