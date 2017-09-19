@@ -208,7 +208,8 @@ class ResourceLoader extends coreResourceLoader
             parent::loadJavaScriptRessource('c4g-maps', self::BUNDLE_JS_PATH . 'c4g-maps.js' . $staticOption);
         }
 
-        if ( $GLOBALS['con4gis_projects_extension']['installed'] &&  $GLOBALS['con4gis_tracking_extension']['installed']) {
+        //ToDo bundle path and tracking bundle
+        if ( $GLOBALS['con4gis']['projects']['installed'] &&  $GLOBALS['con4gis_tracking_extension']['installed']) {
             parent::loadJavaScriptRessource('live-positions', 'system/modules/con4gis_projects/assets/js/C4GBrickLivePositions.js');
         }
 
