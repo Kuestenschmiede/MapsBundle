@@ -14,13 +14,31 @@
   "require": {
     "con4gis/core": "^2.0"
   },
+  "conflict": {
+    "contao/core": "*",
+    "contao/manager-plugin": "<2.0 || >=3.0"
+  },
   "support": {
     "issues": "https://github.com/Kuestenschmiede/MapsBundle/issues"
   },
   "autoload": {
-    "classmap": [""],
     "psr-4": {
       "con4gis\\MapsBundle\\": ""
-    }
+    },
+    "classmap": [
+      "Resources/contao/"
+    ],
+    "exclude-from-classmap": [
+      "Resources/contao/config/",
+      "Resources/contao/dca/",
+      "Resources/contao/languages/",
+      "Resources/contao/templates/"
+    ]
+  },
+  "config": {
+    "preferred-install": "dist"
+  },
+  "extra": {
+    "contao-manager-plugin": "con4gis\\MapsBundle\\ContaoManager\\Plugin"
   }
 }

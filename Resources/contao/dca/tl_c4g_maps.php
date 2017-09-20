@@ -1180,7 +1180,7 @@ class tl_c4g_maps extends Backend
     public function getLocationTypes(DataContainer $dc)
     {
         $return = array('none','single','table','gpx','kml','geojson','osm','folder','overpass','link', 'startab');
-        if ($GLOBALS['con4gis_forum_extension']['installed'] ) {
+        if ($GLOBALS['con4gis']['forum']['installed']) {
             $return[] = 'c4gForum';
         }
         if (isset($GLOBALS['c4g_locationtypes']) && is_array($GLOBALS['c4g_locationtypes']))
@@ -1387,7 +1387,7 @@ class tl_c4g_maps extends Backend
             $GLOBALS['TL_DCA']['tl_c4g_maps']['subpalettes']['is_map'] =
                 'width,height,margin,show_locations,'.$calcExtentFields.'center_geox,center_geoy,zoom,geolocation,'.$geolocationFields.'restrict_area,'.$restrictAreaFields.',include_sublocations;';
 
-            if ($GLOBALS['con4gis_forum_extension']['installed']) {
+            if ($GLOBALS['con4gis']['forum']['installed']) {
                 $GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['overpass'] = str_replace('popup_info,routing_to', 'popup_info,popup_extend,routing_to', $GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['overpass']);
                 $GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['osm'] = str_replace('popup_info,routing_to', 'popup_info,popup_extend,routing_to', $GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['osm']);
             }
@@ -1395,7 +1395,7 @@ class tl_c4g_maps extends Backend
             // convert checkboxes to chosenfields, if there are to many locationstyles
             if (intval($objMap->be_optimize_checkboxes_limit) > 0) {
                 // subforums-options
-                if ($GLOBALS['con4gis_forum_extension']['installed']) {
+                if ($GLOBALS['con4gis']['forum']['installed']) {
                     $objForumCount = $this->Database->prepare("SELECT COUNT(id) AS entry_count FROM tl_c4g_forum WHERE enable_maps = 1")->execute();
                     if ($objForumCount->numRows > 0) {
                         if (intval($objForumCount->entry_count) > intval($objMap->be_optimize_checkboxes_limit)) {

@@ -4,7 +4,7 @@ namespace con4gis\MapsBundle\ContaoManager;
 
 use con4gis\ApiBundle\Con4gisApiBundle;
 use con4gis\CoreBundle\con4gisCoreBundle;
-use con4gis\GroupsBundle\con4gisGroupsBundle;
+use con4gis\MapsBundle\con4gisMapsBundle;
 use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\Config\ConfigInterface;
