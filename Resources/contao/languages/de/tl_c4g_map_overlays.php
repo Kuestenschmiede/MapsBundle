@@ -46,6 +46,18 @@ $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['references']['openweathermap_temp'] 
 $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['references']['openweathermap_snow']  			= 'OpenWeatherMap - Schnee';
 $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['references']['openweathermap_radar']  			= 'OpenWeatherMap - Radar';
 $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['references']['custom']     						= 'Benutzerdefiniert';
+/**
+ * wms
+ */
+
+
+$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['wms_url'] = array('URL', 'Geben Sie eine erreichbare URL an.');
+$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['wms_params_layers'] = array('Layer', 'Welche Layer sollen dargestellt werden?');
+$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['wms_params_version'] = array('Version', 'z.B. 1.1.1');
+$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['wms_params_format'] = array('Format', 'z.B. image/png');
+$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['wms_params_transparent'] = array('Transparenz', '');
+$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['wms_params_srs']  			= array('WMS Url', 'Geben Sie die Url des WMS an.');
+$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['wms_gutter']  			= array('WMS gutter','');
 
 /**
  * Buttons
