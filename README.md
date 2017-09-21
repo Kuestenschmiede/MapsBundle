@@ -3,7 +3,7 @@ con4gis-Maps
 The biggest brick of the Contao GIS-kit **con4gis**.
 
 **Git Repository:** MapsBundle  
-**Composer Vendor/Package:** [con4gis/maps](https://packagist.org/packages/con4gis/maps)
+**Composer Vendor/Package:** [con4gis/maps](https://packagist.org/packages/con4gis/maps)  
 **Website:** [maps.con4gis.org](https://maps.con4gis.org)
 
 **Contains:**
