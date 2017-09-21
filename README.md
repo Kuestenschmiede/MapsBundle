@@ -1,21 +1,25 @@
-==============
-The biggest part of the Contao GIS-kit *con4gis*.
+con4gis-Maps
+============
+The biggest part of the Contao GIS-kit **con4gis**.
+
+**Git Repository:** MapsBundle  
+**Composer Vendor/Package:** con4gis/maps
 
 **Contains:**
 - [OpenLayers 4.x] (https://github.com/openlayers/openlayers)
 
 **Requires:**
-- [Contao](https://github.com/contao/core) (***LTS 3.5.x*** or ***4.3.x***)
-    - requires [con4gis_api_bundle](https://github.com/Kuestenschmiede/con4gis_api_bundle/tree/develop) with Contao 4!
-- [con4gis_core](https://github.com/Kuestenschmiede/con4gis_core/tree/master) (*latest stable release*)
+- [Contao](https://github.com/contao/core) (***4.4.x***)   
+For Contao 3 you can use [con4igs_maps3](https://github.com/Kuestenschmiede/con4gis_maps3/releases) Extension.
+- [CoreBundle](https://github.com/Kuestenschmiede/CoreBundle/releases) (*latest stable release*)
 
 **Extendable:**
-- [con4gis_forum](https://github.com/Kuestenschmiede/con4gis_forum/tree/master) (*latest stable release*)
-- [con4gis_tracking](https://github.com/Kuestenschmiede/con4gis_tracking/tree/master) (*latest stable release*)
-- [con4gis_tracking_android](https://github.com/Kuestenschmiede/con4gis_tracking/tree/master) (*latest stable release*)
-- *(more we publish soon)*
-
-**This is still a development version. Although it works fine for most cases, not all features are implemented now.**
+- [ForumBundle](https://github.com/Kuestenschmiede/ForumBundle/releases) (*latest stable release*)
+- [TrackingBundle](https://github.com/Kuestenschmiede/TrackingBundle/releases) (*latest stable release*)
+  
+**And with all other con4gis and Contao bundles**  
+con4gis is not a connectable application. It's a collection of content 
+elements for your website. So you can build your own individual and limitless web applications.
 
 implemented features
 ----------------
@@ -54,6 +58,7 @@ implemented features
     - touch-navigation
         - pinch-rotate
         - pinch-zoom
+    - cesium view
 - configurate ***Controls***:
     - Starboard
         - BaselayerSwitcher
