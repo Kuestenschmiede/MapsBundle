@@ -1,16 +1,25 @@
 {
   "name": "con4gis/maps",
-  "description": "Include interactive maps via OpenLayers (OpenStreetMap, Bing, Mapbox, ...)",
-  "keywords": ["con4gis", "maps3", "openlayers", "map", "gis", "osm", "openstreetmap", "bing", "mapbox", "contao", "c4g"],
+  "description": "The interactive maps brick of the Contao GIS-kit con4gis.",
+  "keywords": ["con4gis", "maps", "openlayers", "osrm", "nominatim", "overpass","map", "gis", "osm", "openstreetmap", "bing", "mapbox", "contao", "c4g", "maps3", "here", "thunderforest", "MapsBundle"],
   "type": "contao-module",
   "homepage": "https://con4gis.org",
   "license": "LGPL-3.0+",
-  "authors":[
+  "authors": [
     {
-      "name":"Küstenschmiede GmbH Software & Design",
-      "homepage":"https://kuestenschmiede.de"
+      "name": "Kuestenschmiede GmbH Software & Design",
+      "homepage": "https://kuestenschmiede.de",
+      "role": "Operator"
+    },
+    {
+      "name": "con4gis community",
+      "homepage": "https://con4gis.org",
+      "role": "Developer"
     }
   ],
+  "support": {
+    "email": "support@con4gis.org"
+  },
   "require": {
     "con4gis/core": "^2.0"
   },
