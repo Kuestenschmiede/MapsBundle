@@ -1154,15 +1154,15 @@ class tl_c4g_maps extends Backend
     public function getTabSources(DataContainer $dc)
     {
         $return = array();
-        foreach ($GLOBALS['con4gis_maps_extension']['sourcetable'] as $key=>$sourcetable) {
+        foreach ($GLOBALS['con4gis']['maps']['sourcetable'] as $key=>$sourcetable) {
             if (!isset($this->firstTabSource)) {
                 $this->firstTabSource = $key;
             }
-            if (!$GLOBALS['TL_LANG']['c4g_maps']['sourcetable'][$key]['name'] && !$GLOBALS['con4gis_maps_extension']['sourcetable'][$key]['name']) {
+            if (!$GLOBALS['TL_LANG']['c4g_maps']['sourcetable'][$key]['name'] && !$GLOBALS['con4gis']['maps']['sourcetable'][$key]['name']) {
                 $return[$key] = $key;
             } else {
-                if ($GLOBALS['con4gis_maps_extension']['sourcetable'][$key]['name']) {
-                    $return[$key] = $GLOBALS['con4gis_maps_extension']['sourcetable'][$key]['name'];
+                if ($GLOBALS['con4gis']['maps']['sourcetable'][$key]['name']) {
+                    $return[$key] = $GLOBALS['con4gis']['maps']['sourcetable'][$key]['name'];
                 } else {
                     $return[$key] = $GLOBALS['TL_LANG']['c4g_maps']['sourcetable'][$key]['name'];
                 }
@@ -1219,7 +1219,7 @@ class tl_c4g_maps extends Backend
             $tabsource = $this->firstTabSource;
         }
 
-        $source = $GLOBALS['con4gis_maps_extension']['sourcetable'][$tabsource];
+        $source = $GLOBALS['con4gis']['maps']['sourcetable'][$tabsource];
         $ptable = explode(',', $source['ptable']);
         $ptable_option = explode(',', $source['ptable_option']);
         if (is_array($source) && $ptable && $ptable_option) {
@@ -1248,7 +1248,7 @@ class tl_c4g_maps extends Backend
             $tabsource = $this->firstTabSource;
         }
 
-        $source = $GLOBALS['con4gis_maps_extension']['sourcetable'][$tabsource];
+        $source = $GLOBALS['con4gis']['maps']['sourcetable'][$tabsource];
         $ptable = explode(',', $source['ptable']);
         $ptable_option = explode(',', $source['ptable_option']);
         if (is_array($source) && $ptable && $ptable_option) {
