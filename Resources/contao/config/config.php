@@ -15,8 +15,8 @@
 $GLOBALS['con4gis']['maps']['installed'] = true;
 
 //ToDo umbauen
-$GLOBALS['con4gis_maps_extension']['debug'] = true;
-$GLOBALS['con4gis_maps_extension']['ol-version'] = '4.3.3';
+$GLOBALS['con4gis_maps_extension']['debug'] = false;
+$GLOBALS['con4gis_maps_extension']['ol-version'] = '4.3.4';
 
 /**
  * Sourcetable definition

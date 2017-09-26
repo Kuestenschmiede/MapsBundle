@@ -1,6 +1,6 @@
 // OpenLayers. See https://openlayers.org/
 // License: https://raw.githubusercontent.com/openlayers/openlayers/master/LICENSE.md
-// Version: v4.3.3
+// Version: v4.3.4
 ;(function (root, factory) {
   if (typeof exports === "object") {
     module.exports = factory();
@@ -18932,7 +18932,7 @@ ol.interaction.Pointer = function(opt_options) {
   this.handlingDownUpSequence = false;
 
   /**
-   * @type {Object.<number, ol.pointer.PointerEvent>}
+   * @type {Object.<string, ol.pointer.PointerEvent>}
    * @private
    */
   this.trackedPointers_ = {};
@@ -18986,14 +18986,15 @@ ol.interaction.Pointer.prototype.updateTrackedPointers_ = function(mapBrowserEve
   if (this.isPointerDraggingEvent_(mapBrowserEvent)) {
     var event = mapBrowserEvent.pointerEvent;
 
+    var id = event.pointerId.toString();
     if (mapBrowserEvent.type == ol.MapBrowserEventType.POINTERUP) {
-      delete this.trackedPointers_[event.pointerId];
+      delete this.trackedPointers_[id];
     } else if (mapBrowserEvent.type ==
         ol.MapBrowserEventType.POINTERDOWN) {
-      this.trackedPointers_[event.pointerId] = event;
-    } else if (event.pointerId in this.trackedPointers_) {
+      this.trackedPointers_[id] = event;
+    } else if (id in this.trackedPointers_) {
       // update only when there was a pointerdown event for this pointer
-      this.trackedPointers_[event.pointerId] = event;
+      this.trackedPointers_[id] = event;
     }
     this.targetPointers = ol.obj.getValues(this.trackedPointers_);
   }
@@ -93899,7 +93900,7 @@ goog.exportProperty(
     ol.control.ZoomToExtent.prototype,
     'un',
     ol.control.ZoomToExtent.prototype.un);
-ol.VERSION = 'v4.3.3';
+ol.VERSION = 'v4.3.4';
 OPENLAYERS.ol = ol;
 
   return OPENLAYERS.ol;
