@@ -1085,7 +1085,7 @@ class tl_c4g_map_profiles extends Backend
     public function getOlSources(DataContainer $dc)
     {
         $return = array();
-        foreach ($GLOBALS['con4gis_maps_extension']['js_openlayers'] as $key=>$lib) {
+        foreach ($GLOBALS['con4gis']['maps']['js_openlayers'] as $key=>$lib) {
             $return[$key] = $lib;
         }
         return $return;

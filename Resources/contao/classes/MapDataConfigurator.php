@@ -443,17 +443,17 @@ class MapDataConfigurator
 
         // API
         //
-        $mapData['api']['baselayer'] = $GLOBALS['con4gis_maps_extension']['api']['baselayer'];
-        $mapData['api']['layer'] = $GLOBALS['con4gis_maps_extension']['api']['layer'];
-        $mapData['api']['layercontent'] = $GLOBALS['con4gis_maps_extension']['api']['layercontent'];
+        $mapData['api']['baselayer'] = $GLOBALS['con4gis']['maps']['api']['baselayer'];
+        $mapData['api']['layer'] = $GLOBALS['con4gis']['maps']['api']['layer'];
+        $mapData['api']['layercontent'] = $GLOBALS['con4gis']['maps']['api']['layercontent'];
 
-        $mapData['api']['locstyle'] = $GLOBALS['con4gis_maps_extension']['api']['locstyle'];
-        $mapData['api']['infowindow'] = $GLOBALS['con4gis_maps_extension']['api']['infowindow'];
-        $mapData['api']['editor'] = $GLOBALS['con4gis_maps_extension']['api']['editor'];
+        $mapData['api']['locstyle'] = $GLOBALS['con4gis']['maps']['api']['locstyle'];
+        $mapData['api']['infowindow'] = $GLOBALS['con4gis']['maps']['api']['infowindow'];
+        $mapData['api']['editor'] = $GLOBALS['con4gis']['maps']['api']['editor'];
 
-        $mapData['api']['geosearch'] = $GLOBALS['con4gis_maps_extension']['api']['geosearch'];
-        $mapData['api']['geosearch_reverse'] = $GLOBALS['con4gis_maps_extension']['api']['geosearch_reverse'];
-        $mapData['api']['routing'] = $GLOBALS['con4gis_maps_extension']['api']['routing'];
+        $mapData['api']['geosearch'] = $GLOBALS['con4gis']['maps']['api']['geosearch'];
+        $mapData['api']['geosearch_reverse'] = $GLOBALS['con4gis']['maps']['api']['geosearch_reverse'];
+        $mapData['api']['routing'] = $GLOBALS['con4gis']['maps']['api']['routing'];
 
 
         // load resources

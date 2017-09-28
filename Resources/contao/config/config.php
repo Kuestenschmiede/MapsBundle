@@ -13,20 +13,18 @@
 
 
 $GLOBALS['con4gis']['maps']['installed'] = true;
-
-//ToDo umbauen
-$GLOBALS['con4gis_maps_extension']['debug'] = true;
-$GLOBALS['con4gis_maps_extension']['ol-version'] = '4.3.3';
+$GLOBALS['con4gis']['maps']['debug'] = false;
+$GLOBALS['con4gis']['maps']['ol-version'] = '4.3.4';
 
 /**
  * Sourcetable definition
  */
-if (!$GLOBALS['con4gis_maps_extension']['sourcetable'])
+if (!$GLOBALS['con4gis']['maps']['sourcetable'])
 {
-    $GLOBALS['con4gis_maps_extension']['sourcetable'] = array();
+    $GLOBALS['con4gis']['maps']['sourcetable'] = array();
 }
 
-$GLOBALS['con4gis_maps_extension']['sourcetable']['tl_calendar_events'] = array
+$GLOBALS['con4gis']['maps']['sourcetable']['tl_calendar_events'] = array
 (
     'ptable'        => 'tl_calendar',
     'ptable_option' => 'title',
@@ -45,7 +43,7 @@ $GLOBALS['con4gis_maps_extension']['sourcetable']['tl_calendar_events'] = array
     'title'         => 'title'
 );
 
-$GLOBALS['con4gis_maps_extension']['sourcetable']['tl_member'] = array
+$GLOBALS['con4gis']['maps']['sourcetable']['tl_member'] = array
 (
     'geox'          => 'c4g_loc_geox',
     'geoy'          => 'c4g_loc_geoy',
@@ -108,26 +106,26 @@ array_insert($GLOBALS['TL_CTE']['con4gis'], 1, array
 
 $apiBaseUrl = 'con4gis/api';
 
-$GLOBALS['con4gis_maps_extension']['api']['baselayer'] = $apiBaseUrl . '/baseLayerService';
-$GLOBALS['con4gis_maps_extension']['api']['layer'] = $apiBaseUrl . '/layerService';
-$GLOBALS['con4gis_maps_extension']['api']['layercontent'] = $apiBaseUrl . '/layerContentService';
-$GLOBALS['con4gis_maps_extension']['api']['editor'] = $apiBaseUrl . '/editorService';
-$GLOBALS['con4gis_maps_extension']['api']['locstyle'] = $apiBaseUrl . '/locationStyleService';
-$GLOBALS['con4gis_maps_extension']['api']['infowindow'] = $apiBaseUrl . '/infoWindowService';
-$GLOBALS['con4gis_maps_extension']['api']['geosearch'] = $apiBaseUrl . '/nominatimService';
-$GLOBALS['con4gis_maps_extension']['api']['geosearch_reverse'] = $apiBaseUrl . '/reverseNominatimService';
-$GLOBALS['con4gis_maps_extension']['api']['routing'] = $apiBaseUrl . '/routingService';
-$GLOBALS['con4gis_maps_extension']['api']['geopicker'] = $apiBaseUrl . '/geopickerService';
+$GLOBALS['con4gis']['maps']['api']['baselayer'] = $apiBaseUrl . '/baseLayerService';
+$GLOBALS['con4gis']['maps']['api']['layer'] = $apiBaseUrl . '/layerService';
+$GLOBALS['con4gis']['maps']['api']['layercontent'] = $apiBaseUrl . '/layerContentService';
+$GLOBALS['con4gis']['maps']['api']['editor'] = $apiBaseUrl . '/editorService';
+$GLOBALS['con4gis']['maps']['api']['locstyle'] = $apiBaseUrl . '/locationStyleService';
+$GLOBALS['con4gis']['maps']['api']['infowindow'] = $apiBaseUrl . '/infoWindowService';
+$GLOBALS['con4gis']['maps']['api']['geosearch'] = $apiBaseUrl . '/nominatimService';
+$GLOBALS['con4gis']['maps']['api']['geosearch_reverse'] = $apiBaseUrl . '/reverseNominatimService';
+$GLOBALS['con4gis']['maps']['api']['routing'] = $apiBaseUrl . '/routingService';
+$GLOBALS['con4gis']['maps']['api']['geopicker'] = $apiBaseUrl . '/geopickerService';
 
 /**
  * Activate caching for con4gis_maps services
  */
-$GLOBALS['CON4GIS']['USE_CACHE']['SERVICES'][] = "baseLayerService";
-$GLOBALS['CON4GIS']['USE_CACHE']['SERVICES'][] = "layerService";
-$GLOBALS['CON4GIS']['USE_CACHE']['SERVICES'][] = "layerContentService";
+//$GLOBALS['CON4GIS']['USE_CACHE']['SERVICES'][] = "baseLayerService";
+//$GLOBALS['CON4GIS']['USE_CACHE']['SERVICES'][] = "layerService";
+//$GLOBALS['CON4GIS']['USE_CACHE']['SERVICES'][] = "layerContentService";
 //$GLOBALS['CON4GIS']['USE_CACHE']['SERVICES'][] = "editorService";
-$GLOBALS['CON4GIS']['USE_CACHE']['SERVICES'][] = "locationStyleService";
-////$GLOBALS['CON4GIS']['USE_CACHE']['SERVICES'][] = "infoWindowService";
+//$GLOBALS['CON4GIS']['USE_CACHE']['SERVICES'][] = "locationStyleService";
+//$GLOBALS['CON4GIS']['USE_CACHE']['SERVICES'][] = "infoWindowService";
 //$GLOBALS['CON4GIS']['USE_CACHE']['SERVICES'][] = "nominatimService";
 //$GLOBALS['CON4GIS']['USE_CACHE']['SERVICES'][] = "reverseNominatimService";
 //$GLOBALS['CON4GIS']['USE_CACHE']['SERVICES'][] = "routingService";

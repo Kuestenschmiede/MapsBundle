@@ -299,7 +299,7 @@ class LayerContentApi extends \Controller
                 $addBeWhereClause = '';
                 $and = '';
 
-                $arrConfig = $GLOBALS['con4gis_maps_extension']['sourcetable'][$sourceTable];
+                $arrConfig = $GLOBALS['con4gis']['maps']['sourcetable'][$sourceTable];
                 $ptableArr = explode(',', $arrConfig['ptable']);
                 $ptableFieldArr = explode(',', $arrConfig['ptable_field']);
                 $ptableCompareFieldArr = explode(',', $arrConfig['ptable_compare_field']);

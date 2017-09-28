@@ -267,7 +267,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_src'],
             'exclude'                 => true,
             'inputType'               => 'fileTree',
-            'eval'                    => array('fieldType'=>'radio', 'files'=>true, 'extensions'=>'gif,jpg,jpeg,png', 'tl_class'=>'clr', 'mandatory'=>true),
+            'eval'                    => array('fieldType'=>'radio', 'files'=>true, 'extensions'=>'gif,jpg,jpeg,png,svg', 'tl_class'=>'clr', 'mandatory'=>true),
             'sql'                     => "binary(16) NULL"
         ),
         'icon_size' => array
@@ -547,7 +547,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['editor_icon'],
             'exclude'                 => true,
             'inputType'               => 'fileTree',
-            'eval'                    => array('fieldType'=>'radio', 'files'=>true, 'extensions'=>'gif,jpg,jpeg,png', 'tl_class'=>'clr'),
+            'eval'                    => array('fieldType'=>'radio', 'files'=>true, 'extensions'=>'gif,jpg,jpeg,png,svg', 'tl_class'=>'clr'),
             'sql'                     => "binary(16) NULL"
         ),
         'editor_sort' => array

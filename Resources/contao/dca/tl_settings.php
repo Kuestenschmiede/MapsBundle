@@ -38,9 +38,9 @@ class tl_settings_c4g_maps extends tl_settings
     {
         $tables = array();
 
-        if (is_array($GLOBALS['con4gis_maps_extension']['sourcetable']))
+        if (is_array($GLOBALS['con4gis']['maps']['sourcetable']))
         {
-            foreach ($GLOBALS['con4gis_maps_extension']['sourcetable'] as $key=>$sourcetable) {
+            foreach ($GLOBALS['con4gis']['maps']['sourcetable'] as $key=>$sourcetable) {
                 $tables[$key] = $GLOBALS['TL_LANG']['c4g_maps']['sourcetable'][$key]['name'];
             }
         }
