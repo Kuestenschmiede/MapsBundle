@@ -1120,10 +1120,11 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
       var layer;
 
       layer = c4g.maps.overlays[overlayId].vectorLayer;
-      this.options.mapController.map.removeLayer(layer);
-      layer.setOpacity(value/100);
-      this.options.mapController.map.addLayer(layer);
-
+      if (layer) {
+          this.options.mapController.map.removeLayer(layer);
+          layer.setOpacity(value/100);
+          this.options.mapController.map.addLayer(layer);
+      }
     },
 
     showBaseLayer: function (baseLayerUid) {
