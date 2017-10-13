@@ -97,17 +97,17 @@ ol.inherits(ol.interaction.SelectCluster, ol.interaction.Select);
  * @api stable
  */
 ol.interaction.SelectCluster.prototype.setMap = function(map) 
-{	ol.interaction.Select.prototype.setMap.call (this, map);
-	var self = this;
-
-	if (this.map_ && this.map_.getView()) 
-	{	map.getView().un('change:resolution', this.clear, this);
+{	if (this.getMap())
+	{	if (this.getMap().getView()) 
+		{	this.getMap().getView().un('change:resolution', this.clear, this);
+		}
+		this.getMap().removeLayer(this.overlayLayer_);
 	}
-	if (this.map_) this.map_.removeLayer(this.overlayLayer_);
 
-	this.map_ = map;
+	// Add overlay before the select to appeare underneath
 	this.overlayLayer_.setMap(map);
-	// map.addLayer(this.overlayLayer_);
+	
+	ol.interaction.Select.prototype.setMap.call (this, map);
 
 	if (map && map.getView()) 
 	{	map.getView().on('change:resolution', this.clear, this);
@@ -161,7 +161,7 @@ ol.interaction.SelectCluster.prototype.selectCluster = function (e)
 
 	var center = feature.getGeometry().getCoordinates();
 	// Pixel size in map unit
-	var pix = this.map_.getView().getResolution();
+	var pix = this.getMap().getView().getResolution();
 	var r = pix * this.pointRadius * (0.5 + cluster.length / 4);
 	// Draw on a circle
 	if (!this.spiral || cluster.length <= this.circleMaxObjects)
@@ -242,11 +242,12 @@ ol.interaction.SelectCluster.prototype.animateCluster_ = function(center)
 			// Image style
 			var st = stylefn(feature, res);
 			for (var s=0; s<st.length; s++)
-			{	var imgs = st[s].getImage();
-				var sc;
+			{	var sc;
+				// OL < v4.3 : setImageStyle doesn't check retina
+				var imgs = ol.Map.prototype.getFeaturesAtPixel ? false : st[s].getImage();
 				if (imgs)
 				{	sc = imgs.getScale();
-					imgs.setScale(ratio); // setImageStyle don't check retina
+					imgs.setScale(ratio); 
 				}
 				// OL3 > v3.14
 				if (vectorContext.setStyle)
@@ -273,6 +274,6 @@ ol.interaction.SelectCluster.prototype.animateCluster_ = function(center)
 	}
 
 	// Start a new postcompose animation
-	this.listenerKey_ = this.map_.on('postcompose', animate, this);
-	//select.map_.renderSync();
+	this.listenerKey_ = this.getMap().on('postcompose', animate, this);
+	//select.getMap().renderSync();
 };
