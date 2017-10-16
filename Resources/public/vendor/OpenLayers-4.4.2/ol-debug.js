@@ -1,6 +1,6 @@
 // OpenLayers. See https://openlayers.org/
 // License: https://raw.githubusercontent.com/openlayers/openlayers/master/LICENSE.md
-// Version: v4.4.1
+// Version: v4.4.2
 ;(function (root, factory) {
   if (typeof exports === "object") {
     module.exports = factory();
@@ -6327,6 +6327,26 @@ ol.tilecoord.createOrUpdate = function(z, x, y, opt_tileCoord) {
  */
 ol.tilecoord.getKeyZXY = function(z, x, y) {
   return z + '/' + x + '/' + y;
+};
+
+
+/**
+ * Get the key for a tile coord.
+ * @param {ol.TileCoord} tileCoord The tile coord.
+ * @return {string} Key.
+ */
+ol.tilecoord.getKey = function(tileCoord) {
+  return ol.tilecoord.getKeyZXY(tileCoord[0], tileCoord[1], tileCoord[2]);
+};
+
+
+/**
+ * Get a tile coord given a key.
+ * @param {string} key The tile coord key.
+ * @return {ol.TileCoord} The tile coord.
+ */
+ol.tilecoord.fromKey = function(key) {
+  return key.split('/').map(Number);
 };
 
 
@@ -24299,7 +24319,7 @@ ol.renderer.Layer.prototype.manageTilePyramid = function(
   var tileQueue = frameState.tileQueue;
   var minZoom = tileGrid.getMinZoom();
   var tile, tileRange, tileResolution, x, y, z;
-  for (z = currentZ; z >= minZoom; --z) {
+  for (z = minZoom; z <= currentZ; ++z) {
     tileRange = tileGrid.getTileRangeForExtentAndZ(extent, z, tileRange);
     tileResolution = tileGrid.getResolution(z);
     for (x = tileRange.minX; x <= tileRange.maxX; ++x) {
@@ -28044,6 +28064,34 @@ ol.structs.LRUCache.prototype.get = function(key) {
 
 
 /**
+ * Remove an entry from the cache.
+ * @param {string} key The entry key.
+ * @return {T} The removed entry.
+ */
+ol.structs.LRUCache.prototype.remove = function(key) {
+  var entry = this.entries_[key];
+  ol.asserts.assert(entry !== undefined, 15); // Tried to get a value for a key that does not exist in the cache
+  if (entry === this.newest_) {
+    this.newest_ = /** @type {ol.LRUCacheEntry} */ (entry.older);
+    if (this.newest_) {
+      this.newest_.newer = null;
+    }
+  } else if (entry === this.oldest_) {
+    this.oldest_ = /** @type {ol.LRUCacheEntry} */ (entry.newer);
+    if (this.oldest_) {
+      this.oldest_.older = null;
+    }
+  } else {
+    entry.newer.older = entry.older;
+    entry.older.newer = entry.newer;
+  }
+  delete this.entries_[key];
+  --this.count_;
+  return entry.value_;
+};
+
+
+/**
  * @return {number} Count.
  */
 ol.structs.LRUCache.prototype.getCount = function() {
@@ -28092,6 +28140,15 @@ ol.structs.LRUCache.prototype.peekLast = function() {
  */
 ol.structs.LRUCache.prototype.peekLastKey = function() {
   return this.oldest_.key_;
+};
+
+
+/**
+ * Get the key of the newest item in the cache.  Throws if the cache is empty.
+ * @return {string} The newest key.
+ */
+ol.structs.LRUCache.prototype.peekFirstKey = function() {
+  return this.newest_.key_;
 };
 
 
@@ -28472,6 +28529,7 @@ ol.render.canvas.TextReplay.prototype.getImage_ = function(text, fill, stroke) {
     var fillState = this.textFillState_;
     var textState = this.textState_;
     var pixelRatio = this.pixelRatio;
+    var scale = this.textScale_ * pixelRatio;
     var align =  ol.render.replay.TEXT_ALIGN[textState.textAlign || ol.render.canvas.defaultTextAlign];
     var strokeWidth = stroke && strokeState.lineWidth ? strokeState.lineWidth : 0;
 
@@ -28479,17 +28537,17 @@ ol.render.canvas.TextReplay.prototype.getImage_ = function(text, fill, stroke) {
     var width = ol.render.canvas.TextReplay.measureTextWidths(textState.font, lines, widths);
     var lineHeight = ol.render.canvas.TextReplay.measureTextHeight(textState.font);
     var height = lineHeight * numLines;
-    var renderWidth = (width + 2 * strokeWidth);
+    var renderWidth = (width + strokeWidth);
     var context = ol.dom.createCanvasContext2D(
-        Math.ceil(renderWidth * pixelRatio),
-        Math.ceil((height + 2 * strokeWidth) * pixelRatio));
+        Math.ceil(renderWidth * scale),
+        Math.ceil((height + strokeWidth) * scale));
     label = context.canvas;
     ol.render.canvas.TextReplay.labelCache_.set(key, label);
-    context.scale(pixelRatio, pixelRatio);
+    context.scale(scale, scale);
     context.font = textState.font;
     if (stroke) {
       context.strokeStyle = strokeState.strokeStyle;
-      context.lineWidth = strokeState.lineWidth;
+      context.lineWidth = strokeWidth * (ol.has.SAFARI ? scale : 1);
       context.lineCap = strokeState.lineCap;
       context.lineJoin = strokeState.lineJoin;
       context.miterLimit = strokeState.miterLimit;
@@ -28504,16 +28562,16 @@ ol.render.canvas.TextReplay.prototype.getImage_ = function(text, fill, stroke) {
     context.textBaseline = 'top';
     context.textAlign = 'center';
     var leftRight = (0.5 - align);
-    var x = align * label.width / pixelRatio + leftRight * 2 * strokeWidth;
+    var x = align * label.width / scale + leftRight * strokeWidth;
     var i;
     if (stroke) {
       for (i = 0; i < numLines; ++i) {
-        context.strokeText(lines[i], x + leftRight * widths[i], strokeWidth + i * lineHeight);
+        context.strokeText(lines[i], x + leftRight * widths[i], 0.5 * strokeWidth + i * lineHeight);
       }
     }
     if (fill) {
       for (i = 0; i < numLines; ++i) {
-        context.fillText(lines[i], x + leftRight * widths[i], strokeWidth + i * lineHeight);
+        context.fillText(lines[i], x + leftRight * widths[i], 0.5 * strokeWidth + i * lineHeight);
       }
     }
   }
@@ -28540,12 +28598,12 @@ ol.render.canvas.TextReplay.prototype.drawTextImage_ = function(label, begin, en
   this.instructions.push([ol.render.canvas.Instruction.DRAW_IMAGE, begin, end,
     label, (anchorX - this.textOffsetX_) * pixelRatio, (anchorY - this.textOffsetY_) * pixelRatio,
     label.height, 1, 0, 0, this.textRotateWithView_, this.textRotation_,
-    this.textScale_, true, label.width
+    1, true, label.width
   ]);
   this.hitDetectionInstructions.push([ol.render.canvas.Instruction.DRAW_IMAGE, begin, end,
     label, (anchorX - this.textOffsetX_) * pixelRatio, (anchorY - this.textOffsetY_) * pixelRatio,
     label.height, 1, 0, 0, this.textRotateWithView_, this.textRotation_,
-    this.textScale_ / pixelRatio, true, label.width
+    1 / pixelRatio, true, label.width
   ]);
 };
 
@@ -28586,14 +28644,14 @@ ol.render.canvas.TextReplay.prototype.drawChars_ = function(begin, end) {
   this.instructions.push([ol.render.canvas.Instruction.DRAW_CHARS,
     begin, end, labels, baseline,
     textState.exceedLength, textState.maxAngle,
-    ol.render.canvas.TextReplay.getTextWidth.bind(widths, context, pixelRatio),
-    offsetY, this.text_, align, this.textScale_
+    ol.render.canvas.TextReplay.getTextWidth.bind(widths, context, pixelRatio * this.textScale_),
+    offsetY, this.text_, align, 1
   ]);
   this.hitDetectionInstructions.push([ol.render.canvas.Instruction.DRAW_CHARS,
     begin, end, labels, baseline,
     textState.exceedLength, textState.maxAngle,
-    ol.render.canvas.TextReplay.getTextWidth.bind(widths, context, 1),
-    offsetY, this.text_, align, this.textScale_ / pixelRatio
+    ol.render.canvas.TextReplay.getTextWidth.bind(widths, context, this.textScale_),
+    offsetY, this.text_, align, 1 / pixelRatio
   ]);
 };
 
@@ -28693,7 +28751,7 @@ ol.render.canvas.TextReplay.prototype.setTextStyle = function(textStyle) {
       strokeState.lineCap + strokeState.lineDashOffset + '|' + strokeState.lineWidth +
       strokeState.lineJoin + strokeState.miterLimit + '[' + strokeState.lineDash.join() + ']' :
       '';
-    this.textKey_ = textState.font + textState.textAlign;
+    this.textKey_ = textState.font + (textState.textAlign || '?') + this.textScale_;
     this.fillKey_ = fillState ?
       (typeof fillState.fillStyle == 'string' ? fillState.fillStyle : ('|' + ol.getUid(fillState.fillStyle))) :
       '';
@@ -74350,6 +74408,7 @@ goog.provide('ol.TileCache');
 
 goog.require('ol');
 goog.require('ol.structs.LRUCache');
+goog.require('ol.tilecoord');
 
 
 /**
@@ -74380,6 +74439,25 @@ ol.TileCache.prototype.expireCache = function(usedTiles) {
       this.pop().dispose();
     }
   }
+};
+
+
+/**
+ * Prune all tiles from the cache that don't have the same z as the newest tile.
+ */
+ol.TileCache.prototype.pruneExceptNewestZ = function() {
+  if (this.getCount() === 0) {
+    return;
+  }
+  var key = this.peekFirstKey();
+  var tileCoord = ol.tilecoord.fromKey(key);
+  var z = tileCoord[0];
+  this.forEach(function(tile) {
+    if (tile.tileCoord[0] !== z) {
+      this.remove(ol.tilecoord.getKey(tile.tileCoord));
+      tile.dispose();
+    }
+  }, this);
 };
 
 goog.provide('ol.source.Tile');
@@ -74504,7 +74582,7 @@ ol.source.Tile.prototype.forEachLoadedTile = function(projection, z, tileRange, 
   var tile, tileCoordKey, loaded;
   for (var x = tileRange.minX; x <= tileRange.maxX; ++x) {
     for (var y = tileRange.minY; y <= tileRange.maxY; ++y) {
-      tileCoordKey = this.getKeyZXY(z, x, y);
+      tileCoordKey = ol.tilecoord.getKeyZXY(z, x, y);
       loaded = false;
       if (tileCache.containsKey(tileCoordKey)) {
         tile = /** @type {!ol.Tile} */ (tileCache.get(tileCoordKey));
@@ -74552,16 +74630,6 @@ ol.source.Tile.prototype.setKey = function(key) {
     this.changed();
   }
 };
-
-
-/**
- * @param {number} z Z.
- * @param {number} x X.
- * @param {number} y Y.
- * @return {string} Key.
- * @protected
- */
-ol.source.Tile.prototype.getKeyZXY = ol.tilecoord.getKeyZXY;
 
 
 /**
@@ -74763,6 +74831,7 @@ goog.require('ol.TileState');
 goog.require('ol.TileUrlFunction');
 goog.require('ol.source.Tile');
 goog.require('ol.source.TileEventType');
+goog.require('ol.tilecoord');
 
 
 /**
@@ -74913,6 +74982,7 @@ ol.source.UrlTile.prototype.setTileLoadFunction = function(tileLoadFunction) {
  */
 ol.source.UrlTile.prototype.setTileUrlFunction = function(tileUrlFunction, opt_key) {
   this.tileUrlFunction = tileUrlFunction;
+  this.tileCache.pruneExceptNewestZ();
   if (typeof opt_key !== 'undefined') {
     this.setKey(opt_key);
   } else {
@@ -74952,7 +75022,7 @@ ol.source.UrlTile.prototype.setUrls = function(urls) {
  * @inheritDoc
  */
 ol.source.UrlTile.prototype.useTile = function(z, x, y) {
-  var tileCoordKey = this.getKeyZXY(z, x, y);
+  var tileCoordKey = ol.tilecoord.getKeyZXY(z, x, y);
   if (this.tileCache.containsKey(tileCoordKey)) {
     this.tileCache.get(tileCoordKey);
   }
@@ -74969,6 +75039,7 @@ goog.require('ol.events.EventType');
 goog.require('ol.proj');
 goog.require('ol.reproj.Tile');
 goog.require('ol.source.UrlTile');
+goog.require('ol.tilecoord');
 goog.require('ol.tilegrid');
 
 
@@ -75205,7 +75276,7 @@ ol.source.TileImage.prototype.getTile = function(z, x, y, pixelRatio, projection
     var cache = this.getTileCacheForProjection(projection);
     var tileCoord = [z, x, y];
     var tile;
-    var tileCoordKey = this.getKeyZXY.apply(this, tileCoord);
+    var tileCoordKey = ol.tilecoord.getKey(tileCoord);
     if (cache.containsKey(tileCoordKey)) {
       tile = /** @type {!ol.Tile} */ (cache.get(tileCoordKey));
     }
@@ -75253,7 +75324,7 @@ ol.source.TileImage.prototype.getTile = function(z, x, y, pixelRatio, projection
  */
 ol.source.TileImage.prototype.getTileInternal = function(z, x, y, pixelRatio, projection) {
   var tile = null;
-  var tileCoordKey = this.getKeyZXY(z, x, y);
+  var tileCoordKey = ol.tilecoord.getKeyZXY(z, x, y);
   var key = this.getKey();
   if (!this.tileCache.containsKey(tileCoordKey)) {
     tile = this.createTile_(z, x, y, pixelRatio, projection, key);
@@ -77498,6 +77569,8 @@ ol.source.Raster.prototype.updateFrameState_ = function(extent, resolution, proj
   frameState.focus = center;
   frameState.size[0] = Math.round(ol.extent.getWidth(extent) / resolution);
   frameState.size[1] = Math.round(ol.extent.getHeight(extent) / resolution);
+  frameState.time = Date.now();
+  frameState.animate = false;
 
   var viewState = frameState.viewState;
   viewState.center = center;
@@ -77551,6 +77624,11 @@ ol.source.Raster.prototype.getImage = function(extent, resolution, pixelRatio, p
   }
 
   frameState.tileQueue.loadMoreTiles(16, 16);
+
+  if (frameState.animate) {
+    requestAnimationFrame(this.changed.bind(this));
+  }
+
   return this.renderedImageCanvas_;
 };
 
@@ -78116,6 +78194,7 @@ goog.require('ol.TileState');
 goog.require('ol.dom');
 goog.require('ol.size');
 goog.require('ol.source.Tile');
+goog.require('ol.tilecoord');
 
 
 /**
@@ -78148,7 +78227,7 @@ ol.inherits(ol.source.TileDebug, ol.source.Tile);
  * @inheritDoc
  */
 ol.source.TileDebug.prototype.getTile = function(z, x, y) {
-  var tileCoordKey = this.getKeyZXY(z, x, y);
+  var tileCoordKey = ol.tilecoord.getKeyZXY(z, x, y);
   if (this.tileCache.containsKey(tileCoordKey)) {
     return /** @type {!ol.source.TileDebug.Tile_} */ (this.tileCache.get(tileCoordKey));
   } else {
@@ -78413,6 +78492,7 @@ goog.require('ol.net');
 goog.require('ol.proj');
 goog.require('ol.source.State');
 goog.require('ol.source.Tile');
+goog.require('ol.tilecoord');
 goog.require('ol.tilegrid');
 
 
@@ -78623,7 +78703,7 @@ ol.source.TileUTFGrid.prototype.handleTileJSONResponse = function(tileJSON) {
  * @inheritDoc
  */
 ol.source.TileUTFGrid.prototype.getTile = function(z, x, y, pixelRatio, projection) {
-  var tileCoordKey = this.getKeyZXY(z, x, y);
+  var tileCoordKey = ol.tilecoord.getKeyZXY(z, x, y);
   if (this.tileCache.containsKey(tileCoordKey)) {
     return /** @type {!ol.Tile} */ (this.tileCache.get(tileCoordKey));
   } else {
@@ -78648,7 +78728,7 @@ ol.source.TileUTFGrid.prototype.getTile = function(z, x, y, pixelRatio, projecti
  * @inheritDoc
  */
 ol.source.TileUTFGrid.prototype.useTile = function(z, x, y) {
-  var tileCoordKey = this.getKeyZXY(z, x, y);
+  var tileCoordKey = ol.tilecoord.getKeyZXY(z, x, y);
   if (this.tileCache.containsKey(tileCoordKey)) {
     this.tileCache.get(tileCoordKey);
   }
@@ -78972,13 +79052,6 @@ ol.source.TileWMS = function(opt_options) {
 
   /**
    * @private
-   * @type {string}
-   */
-  this.coordKeyPrefix_ = '';
-  this.resetCoordKeyPrefix_();
-
-  /**
-   * @private
    * @type {ol.Extent}
    */
   this.tmpExtent_ = ol.extent.createEmpty();
@@ -79057,14 +79130,6 @@ ol.source.TileWMS.prototype.getGetFeatureInfoUrl = function(coordinate, resoluti
  */
 ol.source.TileWMS.prototype.getGutterInternal = function() {
   return this.gutter_;
-};
-
-
-/**
- * @inheritDoc
- */
-ol.source.TileWMS.prototype.getKeyZXY = function(z, x, y) {
-  return this.coordKeyPrefix_ + ol.source.TileImage.prototype.getKeyZXY.call(this, z, x, y);
 };
 
 
@@ -79164,24 +79229,6 @@ ol.source.TileWMS.prototype.getTilePixelRatio = function(pixelRatio) {
 
 /**
  * @private
- */
-ol.source.TileWMS.prototype.resetCoordKeyPrefix_ = function() {
-  var i = 0;
-  var res = [];
-
-  if (this.urls) {
-    var j, jj;
-    for (j = 0, jj = this.urls.length; j < jj; ++j) {
-      res[i++] = this.urls[j];
-    }
-  }
-
-  this.coordKeyPrefix_ = res.join('#');
-};
-
-
-/**
- * @private
  * @return {string} The key for the current params.
  */
 ol.source.TileWMS.prototype.getKeyForParams_ = function() {
@@ -79242,22 +79289,12 @@ ol.source.TileWMS.prototype.fixedTileUrlFunction = function(tileCoord, pixelRati
 };
 
 /**
- * @inheritDoc
- */
-ol.source.TileWMS.prototype.setUrls = function(urls) {
-  ol.source.TileImage.prototype.setUrls.call(this, urls);
-  this.resetCoordKeyPrefix_();
-};
-
-
-/**
  * Update the user-provided params.
  * @param {Object} params Params.
  * @api
  */
 ol.source.TileWMS.prototype.updateParams = function(params) {
   ol.obj.assign(this.params_, params);
-  this.resetCoordKeyPrefix_();
   this.updateV13_();
   this.setKey(this.getKeyForParams_());
 };
@@ -79826,8 +79863,9 @@ goog.require('ol.TileState');
 goog.require('ol.VectorImageTile');
 goog.require('ol.VectorTile');
 goog.require('ol.size');
-goog.require('ol.tilegrid');
 goog.require('ol.source.UrlTile');
+goog.require('ol.tilecoord');
+goog.require('ol.tilegrid');
 
 
 /**
@@ -79931,7 +79969,7 @@ ol.source.VectorTile.prototype.clear = function() {
  * @inheritDoc
  */
 ol.source.VectorTile.prototype.getTile = function(z, x, y, pixelRatio, projection) {
-  var tileCoordKey = this.getKeyZXY(z, x, y);
+  var tileCoordKey = ol.tilecoord.getKeyZXY(z, x, y);
   if (this.tileCache.containsKey(tileCoordKey)) {
     return /** @type {!ol.Tile} */ (this.tileCache.get(tileCoordKey));
   } else {
@@ -95289,7 +95327,7 @@ goog.exportProperty(
     ol.control.ZoomToExtent.prototype,
     'un',
     ol.control.ZoomToExtent.prototype.un);
-ol.VERSION = 'v4.4.1';
+ol.VERSION = 'v4.4.2';
 OPENLAYERS.ol = ol;
 
   return OPENLAYERS.ol;
