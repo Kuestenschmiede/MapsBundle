@@ -986,6 +986,8 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
     showOverlayLayer: function(overlayId){
         var self = this,
             overlayLayerConfig,
+            osmSourceConfigs = c4g.maps.config.osm,
+            stamenSourceConfigs = c4g.maps.config.stamen,
             layerOptions,
             overlayLayer,
             noUrl;
