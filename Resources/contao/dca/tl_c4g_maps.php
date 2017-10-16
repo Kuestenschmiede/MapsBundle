@@ -1385,7 +1385,7 @@ class tl_c4g_maps extends Backend
             }
 
             $GLOBALS['TL_DCA']['tl_c4g_maps']['subpalettes']['is_map'] =
-                'width,height,margin,show_locations,'.$calcExtentFields.'center_geox,center_geoy,zoom,geolocation,'.$geolocationFields.'restrict_area,'.$restrictAreaFields.',include_sublocations;';
+                'width,height,margin,show_locations,'.$calcExtentFields.'center_geox,center_geoy,zoom,geolocation,'.$geolocationFields.'restrict_area,'.$restrictAreaFields.',include_sublocations';
 
             if ($GLOBALS['con4gis']['forum']['installed']) {
                 $GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['overpass'] = str_replace('popup_info,routing_to', 'popup_info,popup_extend,routing_to', $GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['overpass']);
