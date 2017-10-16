@@ -39,6 +39,7 @@ class BaseLayerApi extends \Frontend
     {
         $blnProfileBaselayerFilter = false;
         $mapsProfileModel = C4gMapProfilesModel::findById($intProfileId);
+        $this->import('FrontendUser', 'User');
 
         if ($mapsProfileModel !== null)
         {
@@ -78,7 +79,6 @@ class BaseLayerApi extends \Frontend
 
                 if ($arrFilter)
                 {
-                    $id = $objBaseLayers->id;
                     if (!in_array($objBaseLayers->id, $arrFilter))
                     {
                         continue;
