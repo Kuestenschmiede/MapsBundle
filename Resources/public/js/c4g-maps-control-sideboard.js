@@ -113,7 +113,12 @@ this.c4g.maps.control = this.c4g.maps.control || {};
             // [note] "this.blur()" does not work in IE-fullscreen-mode
             console.warn(e.name + ': ' + e.message);
           }
-          self.toggle();
+          if(capitalizedName == "Router" || capitalizedName == "Measure" || capitalizedName == "Editor"){
+              self.toggle(true);
+          }
+          else{
+              self.toggle();
+          }
         });
         this.button.title = this.options.tipLabel;
         this.element.appendChild(this.button);
@@ -418,7 +423,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       direction = this.options.direction;
       capitalizedName = c4g.maps.utils.capitalizeFirstLetter(this.options.name);
 
-      if (opt_hide) {
+      if (opt_hide ) {
         if (typeof this.preHideFunction === 'function') {
           this.preHideFunction();
         }
@@ -469,11 +474,11 @@ this.c4g.maps.control = this.c4g.maps.control || {};
      *
      * @return  {boolean}  Returns |true| on success.
      */
-    toggle: function () {
+    toggle: function (opt_hide) {
       var capitalizedName;
       capitalizedName = c4g.maps.utils.capitalizeFirstLetter(this.options.name);
       if (this.options.mapController["active" + this.identifier] === this) {
-        return this.close();
+        return this.close(opt_hide);
       }
       return this.open();
     }, // end of "toggle"

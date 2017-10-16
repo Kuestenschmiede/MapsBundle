@@ -74,9 +74,10 @@ class LocationStyleApi
             {
                 // add ressource link
                 $objFile = \FilesModel::findByUuid($value);
-                if ($objFile !== null)
-                {
+                if ($objFile !== null) {
                     $arrData[$key] =  $objFile->path;
+                } else {
+                    $arrData[$key] = "";
                 }
             }
         }

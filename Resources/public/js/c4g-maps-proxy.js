@@ -986,6 +986,8 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
     showOverlayLayer: function(overlayId){
         var self = this,
             overlayLayerConfig,
+            osmSourceConfigs = c4g.maps.config.osm,
+            stamenSourceConfigs = c4g.maps.config.stamen,
             layerOptions,
             overlayLayer,
             noUrl;
@@ -1120,10 +1122,11 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
       var layer;
 
       layer = c4g.maps.overlays[overlayId].vectorLayer;
-      this.options.mapController.map.removeLayer(layer);
-      layer.setOpacity(value/100);
-      this.options.mapController.map.addLayer(layer);
-
+      if (layer) {
+          this.options.mapController.map.removeLayer(layer);
+          layer.setOpacity(value/100);
+          this.options.mapController.map.addLayer(layer);
+      }
     },
 
     showBaseLayer: function (baseLayerUid) {
@@ -2104,14 +2107,15 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
               //console.log(clusterSource);
                 this.styleForCluster = styleForCluster;
 
-               //vectorLayer = self.getVectorLayer(clusterSource, styleForCluster);
-              vectorLayer = new ol.layer.AnimatedCluster(
+              //vectorLayer = self.getVectorLayer(clusterSource, styleForCluster);
+
+               vectorLayer = new ol.layer.AnimatedCluster(
                   {	name: 'Cluster',
                       source: clusterSource,
                       // Use a style function for cluster symbolisation
                       style: styleForCluster
                   });
-
+              
 
             } else {
               vectorLayer = self.getVectorLayer(vectorSource, c4g.maps.locationStyles[contentData.locationStyle] ? c4g.maps.locationStyles[contentData.locationStyle].style : null);
@@ -2184,7 +2188,8 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                     source: vectorSource
                   });
                   //vectorLayer = self.getVectorLayer(clusterSource, styleForCluster);
-                    vectorLayer = new ol.layer.AnimatedCluster(
+
+                  vectorLayer = new ol.layer.AnimatedCluster(
                         {	name: 'Cluster',
                             source: clusterSource,
                             // Use a style function for cluster symbolisation
@@ -2499,14 +2504,17 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                 return style;
             };
 
+            //vectorLayer = self.getVectorLayer(clusterSource, styleForCluster);
+
             vectorLayer = new ol.layer.AnimatedCluster({
                 name: 'Cluster',
                 source: clusterSource,
                 style: styleForCluster
 
             });
+
             var allLayers = proxy.options.mapController.map.getLayers().getArray();
-            var missingLayer = true
+            var missingLayer = true;
             for(i = 0; i < allLayers.length; i++){
 
                 if(allLayers[i].clusters) {

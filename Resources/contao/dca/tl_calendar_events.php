@@ -1,6 +1,7 @@
 <?php if (!defined('TL_ROOT')) die('You can not access this file directly!');
 
 use \con4gis\MapsBundle\Resources\contao\classes\GeoPicker;
+use con4gis\MapsBundle\Resources\contao\classes\Utils;
 
 /**
  * con4gis - the gis-kit
