@@ -2105,15 +2105,15 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
               //console.log(clusterSource);
                 this.styleForCluster = styleForCluster;
 
-              vectorLayer = self.getVectorLayer(clusterSource, styleForCluster);
-              /*
+              //vectorLayer = self.getVectorLayer(clusterSource, styleForCluster);
+
                vectorLayer = new ol.layer.AnimatedCluster(
                   {	name: 'Cluster',
                       source: clusterSource,
                       // Use a style function for cluster symbolisation
                       style: styleForCluster
                   });
-                */
+              
 
             } else {
               vectorLayer = self.getVectorLayer(vectorSource, c4g.maps.locationStyles[contentData.locationStyle] ? c4g.maps.locationStyles[contentData.locationStyle].style : null);
@@ -2185,15 +2185,15 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                       //threshold: 2, //minimum element count
                     source: vectorSource
                   });
-                  vectorLayer = self.getVectorLayer(clusterSource, styleForCluster);
-                  /*
-                    vectorLayer = new ol.layer.AnimatedCluster(
+                  //vectorLayer = self.getVectorLayer(clusterSource, styleForCluster);
+
+                  vectorLayer = new ol.layer.AnimatedCluster(
                         {	name: 'Cluster',
                             source: clusterSource,
                             // Use a style function for cluster symbolisation
                             style: styleForCluster
                         });
-                 */
+
                 } else {
                   vectorLayer = self.getVectorLayer(vectorSource, contentData && c4g.maps.locationStyles[contentData.locationStyle] ? c4g.maps.locationStyles[contentData.locationStyle].style : null);
                 }
@@ -2502,15 +2502,15 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                 return style;
             };
 
-            vectorLayer = self.getVectorLayer(clusterSource, styleForCluster);
-            /*
+            //vectorLayer = self.getVectorLayer(clusterSource, styleForCluster);
+
             vectorLayer = new ol.layer.AnimatedCluster({
                 name: 'Cluster',
                 source: clusterSource,
                 style: styleForCluster
 
             });
-            */
+
             var allLayers = proxy.options.mapController.map.getLayers().getArray();
             var missingLayer = true;
             for(i = 0; i < allLayers.length; i++){
