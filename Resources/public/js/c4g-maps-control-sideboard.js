@@ -113,7 +113,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
             // [note] "this.blur()" does not work in IE-fullscreen-mode
             console.warn(e.name + ': ' + e.message);
           }
-          if(capitalizedName == "Router"){
+          if(capitalizedName == "Router" || capitalizedName == "Measure" || capitalizedName == "Editor"){
               self.toggle(true);
           }
           else{
