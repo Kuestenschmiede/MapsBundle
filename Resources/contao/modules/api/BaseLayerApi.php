@@ -78,9 +78,19 @@ class BaseLayerApi extends \Frontend
 
                 if ($arrFilter)
                 {
+                    $id = $objBaseLayers->id;
                     if (!in_array($objBaseLayers->id, $arrFilter))
                     {
                         continue;
+                    }
+                    if ($objBaseLayers->protect_baselayer) {
+                        if (FE_USER_LOGGED_IN && !empty($objBaseLayers->permitted_groups)) {
+                            if (sizeof(array_intersect($this->User->groups, deserialize($objBaseLayers->permitted_groups))) <= 0) {
+                                continue;
+                            }
+                        } else {
+                            continue;
+                        }
                     }
                 }
 
