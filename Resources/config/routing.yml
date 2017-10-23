@@ -1,5 +1,5 @@
 baselayer_service:
-    path: /con4gis/api/baseLayerService/{profileId}
+    path: /con4gis/baseLayerService/{profileId}
     defaults:
         _scope: frontend
         _controller: "con4gisMapsBundle:Maps:baseLayer"
@@ -8,7 +8,7 @@ baselayer_service:
         profileId: \d+
 
 layer_service:
-    path: /con4gis/api/layerService/{mapId}
+    path: /con4gis/layerService/{mapId}
     defaults:
         _scope: frontend
         _controller: "con4gisMapsBundle:Maps:layer"
@@ -17,7 +17,7 @@ layer_service:
         mapId: \d+
 
 layer_content_service:
-    path: /con4gis/api/layerContentService/{layerId}
+    path: /con4gis/layerContentService/{layerId}
     defaults:
         _scope: frontend
         _controller: "con4gisMapsBundle:Maps:layerContent"
@@ -26,7 +26,7 @@ layer_content_service:
         layerId: \d+
 
 editor_service:
-    path: /con4gis/api/editorService/{profileId}
+    path: /con4gis/editorService/{profileId}
     defaults:
         _scope: frontend
         _controller: "con4gisMapsBundle:Maps:editor"
@@ -35,7 +35,7 @@ editor_service:
         mapId: \d+
 
 infowindow_service:
-    path: /con4gis/api/infoWindowService/{popupString}
+    path: /con4gis/infoWindowService/{popupString}
     defaults:
         _scope: frontend
         _controller: "con4gisMapsBundle:Maps:infoWindow"
@@ -44,14 +44,14 @@ infowindow_service:
         popupString: .*
 
 locationstyle_service:
-    path: /con4gis/api/locationStyleService/
+    path: /con4gis/locationStyleService/
     defaults:
         _scope: frontend
         _controller: "con4gisMapsBundle:Maps:locationStyle"
     methods: [GET]
 
 nominatim_service:
-    path: /con4gis/api/nominatimService/{profileId}
+    path: /con4gis/nominatimService/{profileId}
     defaults:
         _scope: frontend
         _controller: "con4gisMapsBundle:Maps:nominatim"
@@ -60,7 +60,7 @@ nominatim_service:
         profileId: \d+
 
 reverse_nominatim_service:
-    path: /con4gis/api/reverseNominatimService/{profileId}
+    path: /con4gis/reverseNominatimService/{profileId}
     defaults:
         _scope: frontend
         _controller: "con4gisMapsBundle:Maps:reverseNominatim"
@@ -69,7 +69,7 @@ reverse_nominatim_service:
         profileId: \d+
 
 old_routing_service:
-    path: /con4gis/api/routingService/{profileId}
+    path: /con4gis/routingService/{profileId}
     defaults:
         _scope: frontend
         _controller: "con4gisMapsBundle:Maps:oldRouting"
@@ -78,7 +78,7 @@ old_routing_service:
         profileId: \d+
 
 routing_service:
-    path: /con4gis/api/routingService/{profileId}/{locations}
+    path: /con4gis/routingService/{profileId}/{locations}
     defaults:
         _scope: frontend
         _controller: "con4gisMapsBundle:Maps:routing"
@@ -88,7 +88,7 @@ routing_service:
         locations: .*
 
 geopicker_service:
-    path: /con4gis/api/geopickerService/
+    path: /con4gis/geopickerService/
     defaults:
         _scope: frontend
         _controller: "con4gisMapsBundle:Maps:geopicker"
