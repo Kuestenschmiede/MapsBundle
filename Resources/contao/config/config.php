@@ -104,7 +104,7 @@ array_insert($GLOBALS['TL_CTE']['con4gis'], 1, array
     ));
 
 
-$apiBaseUrl = 'con4gis/api';
+$apiBaseUrl = 'con4gis';
 
 $GLOBALS['con4gis']['maps']['api']['baselayer'] = $apiBaseUrl . '/baseLayerService';
 $GLOBALS['con4gis']['maps']['api']['layer'] = $apiBaseUrl . '/layerService';
