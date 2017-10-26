@@ -2033,6 +2033,32 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                       url: requestData.url,
                       success: function (data) {
 
+                        if (data.stationResponse) {
+                          // update of stations
+                          $.each(data.features, function (index, featureData) {
+                            if (featureData.type && featureData.type === "Feature") {
+                              var feature = (new ol.format[contentData.format]()).readFeature(featureData, {
+                                dataProjection: 'EPSG:4326',
+                                featureProjection: 'EPSG:3857'
+                              });
+                              var layer = c4g.maps.layers[featureData.properties.id];
+                              var popupContent = featureData.properties.popup;
+                              console.log(layer.vectorLayer);
+                              layer.vectorLayer.getLayers().forEach(function(element, index, array) {
+                                element.setStyle(c4g.maps.locationStyles[featureData.properties.styleId].style);
+                                element.getSource().forEachFeature(function(nestedFeature) {
+                                  nestedFeature.set('popup', popupContent);
+                                });
+                              });
+                              layer.content[0].locationStyle = featureData.properties.styleId;
+                              feature.setStyle(c4g.maps.locationStyles[featureData.properties.styleId].style);
+                              self.hideLayer(layer.id);
+                              self.showLayer(layer.id);
+                              // vectorSource.addFeature(feature);
+                            }
+                          });
+                        }
+
                         if (data.features) {
 
                           refreshAjaxVars.arrNewPositionIds = [];
