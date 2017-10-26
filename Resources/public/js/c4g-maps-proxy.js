@@ -2043,7 +2043,6 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                               });
                               var layer = c4g.maps.layers[featureData.properties.id];
                               var popupContent = featureData.properties.popup;
-                              console.log(layer.vectorLayer);
                               layer.vectorLayer.getLayers().forEach(function(element, index, array) {
                                 element.setStyle(c4g.maps.locationStyles[featureData.properties.styleId].style);
                                 element.getSource().forEachFeature(function(nestedFeature) {
