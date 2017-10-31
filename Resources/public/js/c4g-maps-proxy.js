@@ -1209,28 +1209,17 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
             case 'mapbox':
               layerOptions.attributions = mapboxSourceConfigs[baseLayerConfig.mapbox_type].attributions;
               break;
-              Default:
-                  layerOptions.attributions = [
-                    ol.source.OSM.ATTRIBUTION
-                  ];
-              break;
             case 'here':
-                layerOptions.attributions = hereSourceConfigs[baseLayerConfig.here_type].attributions;
-                break;
-                Default:
-                    layerOptions.attributions = [
-                        ol.source.OSM.ATTRIBUTION
-                    ];
-                break;
+              layerOptions.attributions = hereSourceConfigs[baseLayerConfig.here_type].attributions;
+              break;
             case 'thunder':
-                layerOptions.attributions = thunderforestSourceConfigs[baseLayerConfig.thunderforest_type].attributions;
-                break;
-                Default:
-                    layerOptions.attributions = [
-                        ol.source.OSM.ATTRIBUTION
-                    ];
-                break;
-
+              layerOptions.attributions = thunderforestSourceConfigs[baseLayerConfig.thunderforest_type].attributions;
+              break;
+            default:
+              layerOptions.attributions = [
+                ol.source.OSM.ATTRIBUTION
+              ];
+              break;
           }
         }
 
@@ -2051,8 +2040,10 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                               });
                               layer.content[0].locationStyle = featureData.properties.styleId;
                               feature.setStyle(c4g.maps.locationStyles[featureData.properties.styleId].style);
-                              self.hideLayer(layer.id);
-                              self.showLayer(layer.id);
+                              if (self.activeLayerIds[layer.id]) {
+                                self.hideLayer(layer.id);
+                                self.showLayer(layer.id);
+                              }
                               // vectorSource.addFeature(feature);
                             }
                           });
