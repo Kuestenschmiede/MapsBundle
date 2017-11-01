@@ -174,8 +174,14 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
 
       handleEntryClick = function (event) {
         var itemUid,
+            siblings,
             baselayerItem;
-
+        siblings = $(this).parent().siblings();
+        for(var i = 0; i< siblings.length; i++){
+            if (siblings[i].hasClass(c4g.maps.constant.css.OPEN)) {
+                siblings[i].removeClass(c4g.maps.constant.css.OPEN).addClass(c4g.maps.constant.css.CLOSE);
+            }
+        }
         event.preventDefault();
         itemUid = $(this).data('uid');
           if ($(this).parent().hasClass(c4g.maps.constant.css.CLOSE)) {
