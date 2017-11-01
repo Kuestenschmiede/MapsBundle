@@ -13,7 +13,6 @@
 
 namespace con4gis\MapsBundle\Resources\contao\classes;
 
-use con4gis\CoreBundle\Resources\contao\classes\ResourceLoader;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapBaselayersModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
@@ -462,13 +461,11 @@ class MapDataConfigurator
         ResourceLoader::loadResourcesForModule('maps');
         // load internal scripts and themes
         if ($profileId) {
-            \con4gis\MapsBundle\Resources\contao\classes\ResourceLoader::loadResourcesForProfile($profileId, $options['type'] == 'geopicker');
+            ResourceLoader::loadResourcesForProfile($profileId, $options['type'] == 'geopicker');
         } else {
             ResourceLoader::loadResources();
             ResourceLoader::loadTheme();
         }
-
-
 
         // @TODO: Check
         $mapData['addIdToDiv'] = true;

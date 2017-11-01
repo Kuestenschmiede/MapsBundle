@@ -60,7 +60,7 @@ class GeoPicker extends \Backend
         }
 
 
-        $url = 'con4gis/api/geopickerService?rt=';
+        $url = 'con4gis/geopickerService?rt=';
 
 		return ' <a href="' . $url . REQUEST_TOKEN .
 		'" title="' . $GLOBALS['TL_LANG']['c4g_maps']['geopicker'] .

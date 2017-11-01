@@ -2093,8 +2093,6 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
 
                       }
                     });
-
-
                   });
 
                   self.requestFunctions['request_' + itemUid] = {
@@ -3136,48 +3134,48 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
       c4g.maps.layers[itemUid].vectorLayer = layerGroup;
       this.options.mapController.map.addLayer(layerGroup);
       if(layerGroup.getLayers().getArray()[0] && layerGroup.getLayers().getArray()[0].popup && layerGroup.getLayers().getArray()[0].popup.showPopupOnActive){
-          c4g.maps.popup.$content.html('');
-          c4g.maps.popup.$popup.addClass(c4g.maps.constant.css.ACTIVE).addClass(c4g.maps.constant.css.LOADING);
-          c4g.maps.popup.spinner.show();
-          var popupInfos = layerGroup.getLayers().getArray()[0].popup;
-          var layer = layerGroup.getLayers().getArray()[0];
-          var coord = features['0'].getGeometry().getCoordinates();
-          if (popupInfos.async === false) {
+        c4g.maps.popup.$content.html('');
+        c4g.maps.popup.$popup.addClass(c4g.maps.constant.css.ACTIVE).addClass(c4g.maps.constant.css.LOADING);
+        c4g.maps.popup.spinner.show();
+        var popupInfos = layerGroup.getLayers().getArray()[0].popup;
+        var layer = layerGroup.getLayers().getArray()[0];
+        var coord = features['0'].getGeometry().getCoordinates();
+        if (popupInfos.async === false) {
+          var objPopup = {};
+          objPopup.popup = popupInfos;
+          objPopup.feature = features['0'];
+          objPopup.layer = layer;
+          // Call the popup hook for plugin specific popup content
+          if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.proxy_fillPopup === 'object') {
+            c4g.maps.utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
+          }
+          self.setPopup(objPopup,self);
+        } else {
+          $.ajax({
+            dataType: "json",
+            url: self.api_infowindow_url + '/' + popupInfos.content,
+            success: function (data) {
+              var popupInfo = {
+                async: popupInfos.async,
+                content: data.content,
+                popup: popupInfos.popup,
+                routing_link: popupInfos.routing_link
+              };
+
               var objPopup = {};
-              objPopup.popup = popupInfos;
+              objPopup.popup = popupInfo;
               objPopup.feature = features['0'];
               objPopup.layer = layer;
+
               // Call the popup hook for plugin specific popup content
               if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.proxy_fillPopup === 'object') {
-                  c4g.maps.utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
+                c4g.maps.utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
               }
-              self.setPopup(objPopup,self);
-          } else {
-              $.ajax({
-                  dataType: "json",
-                  url: self.api_infowindow_url + '/' + popupInfos.content,
-                  success: function (data) {
-                      var popupInfo = {
-                          async: popupInfos.async,
-                          content: data.content,
-                          popup: popupInfos.popup,
-                          routing_link: popupInfos.routing_link
-                      };
 
-                      var objPopup = {};
-                      objPopup.popup = popupInfo;
-                      objPopup.feature = features['0'];
-                      objPopup.layer = layer;
-
-                      // Call the popup hook for plugin specific popup content
-                      if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.proxy_fillPopup === 'object') {
-                          c4g.maps.utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
-                      }
-
-                      self.setPopup(objPopup, self);
-                  }
-              });
-          }
+              self.setPopup(objPopup, self);
+            }
+          });
+        }
       }
 
       //hooks
