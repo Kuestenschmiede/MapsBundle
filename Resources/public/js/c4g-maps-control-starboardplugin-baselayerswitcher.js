@@ -178,8 +178,8 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
             baselayerItem;
         siblings = $(this).parent().siblings();
         for(var i = 0; i< siblings.length; i++){
-            if (siblings[i].hasClass(c4g.maps.constant.css.OPEN)) {
-                siblings[i].removeClass(c4g.maps.constant.css.OPEN).addClass(c4g.maps.constant.css.CLOSE);
+            if (siblings[i] && $(siblings[i]).hasClass(c4g.maps.constant.css.OPEN)) {
+                $(siblings[i]).removeClass(c4g.maps.constant.css.OPEN).addClass(c4g.maps.constant.css.CLOSE);
             }
         }
         event.preventDefault();
