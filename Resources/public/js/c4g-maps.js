@@ -674,7 +674,7 @@ this.c4g.maps = this.c4g.maps || {};
                 target: controlContainerTopRight,
                 extDiv: mapData.geosearch.div || false,
                 collapsible: true,
-                collapsed: true,
+                collapsed:  mapData.geosearch.collapsed,
                 label: ' ',
                 collapsedLabel: '',
                 // engineUrl: mapData.geosearch.engine,
@@ -684,7 +684,7 @@ this.c4g.maps = this.c4g.maps || {};
                 animate: mapData.geosearch.animate,
                 markResult: mapData.geosearch.markresult,
                 autopick: mapData.geopicker,
-                results: mapData.geosearch.results,
+                results: mapData.geosearch.results
             });
             this.map.addControl(this.controls.geosearch);
         }
