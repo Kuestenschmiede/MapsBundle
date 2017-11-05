@@ -247,7 +247,7 @@ button.ol-zoom-out {
 }
 .ol-rotate.ol-hidden {
   opacity:0;
-  visibility:hidden;
+  /*visibility:hidden;*/
   transition: opacity .25s linear,
   visibility 0s linear .25s;
 }

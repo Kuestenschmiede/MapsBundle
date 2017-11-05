@@ -34,7 +34,7 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
     CTRL_ZOOM_HOME: 'jump to initial position',
     CTRL_ZOOM_POS: 'jump to browser/device position',
     CTRL_ZOOM_SLIDER: 'Zoom slider',
-    CTRL_RESET_ROTATION: 'Resetoi kiertäminen (touch, alt+mouse)',
+    CTRL_RESET_ROTATION: 'Resetoi kiertäminen (touch, alt+strg+mouse)',
     CTRL_PORTSIDE: 'Ota käyttöön portside',
     CTRL_ROUTER: 'Ota käyttöön reititin',
     CTRL_EDITOR: 'Ota käyttöön editori',

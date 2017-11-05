@@ -34,7 +34,7 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
     CTRL_ZOOM_HOME: 'Zur ursprünglichen Position',
     CTRL_ZOOM_POS: 'Zum aktuellen Standort',
     CTRL_ZOOM_SLIDER: 'Zoom Slider',
-    CTRL_RESET_ROTATION: 'Rotation (touch, alt+mouse) zurücksetzen',
+    CTRL_RESET_ROTATION: 'Rotation (touch, alt+strg+mouse) zurücksetzen',
     CTRL_PORTSIDE: 'Portside ein-/ausblenden',
     CTRL_ROUTER: 'Router ein-/ausblenden',
     CTRL_EDITOR: 'Editor ein-/ausblenden',
