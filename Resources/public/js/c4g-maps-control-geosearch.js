@@ -84,6 +84,8 @@ this.c4g.maps.control = this.c4g.maps.control || {};
     this.config.mapController = options.mapController;
     this.config.results = options.results;
 
+    this.config.collapsed = options.collapsed;
+
     // @TODO
     // Attribution
 

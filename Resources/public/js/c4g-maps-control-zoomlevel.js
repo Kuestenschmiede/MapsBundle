@@ -38,7 +38,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
     element.innerHTML = options.mapView.getZoom();
 
     updateZoomlevel = function () {
-      element.innerHTML = options.mapView.getZoom();
+      element.innerHTML = parseInt(options.mapView.getZoom());
     };
 
     options.mapView.on('change:resolution', updateZoomlevel);

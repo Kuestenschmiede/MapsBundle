@@ -155,6 +155,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_markresult']  = array('Fun
                                                                             'Markiert nach der Suche den gefundenen Ort für eine kurze Zeit.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_attribution'] = array('Copyright für die Suche anzeigen',
                                                                             'Fügt eine Attribution des verwendeten Suchservice (Nominatim) hinzu. Deaktivierung nicht empfohlen!');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_collapsed']   = array('Suchfeld initial einklappen',
+                                                                            'Das Eingabefeld für die Sucheingabe wird erst nach Klick auf die Lupe geöffnet.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker']             = array('Geopicker anzeigen (Frontend)',
                                                                             'Zeigt einen Geopicker, wie er im Backend zur Auswahl der Koordinaten verwendet wird im Frontend an. Nützlich z.B. in einem Formular.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_fieldx']      = array('Formularfeld für die x-Koordinate',

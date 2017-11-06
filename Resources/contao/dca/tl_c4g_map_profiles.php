@@ -120,7 +120,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
         'attribution'                 => 'collapsed_attribution,cfg_logo_attribution,div_attribution,add_attribution',
         'hover_popups'                => 'hover_popups_stay',
         'permalink'                   => 'permalink_get_param',
-        'geosearch'                   => 'geosearch_engine,geosearch_results,geosearch_show,geosearch_div,geosearch_zoomto,geosearch_zoombounds,geosearch_animate,geosearch_markresult,geosearch_attribution',
+        'geosearch'                   => 'geosearch_engine,geosearch_results,geosearch_show,geosearch_div,geosearch_zoomto,geosearch_zoombounds,geosearch_animate,geosearch_markresult,geosearch_attribution,geosearch_collapsed',
         'geopicker'                   => 'geopicker_fieldx,geopicker_fieldy,geopicker_searchdiv,geopicker_attribution',
         'router'                      => 'router_api_selection,router_alternative,router_viaroute_url,router_attribution,router_from_locstyle,router_to_locstyle,router_point_locstyle,router_interim_locstyle',
         'cesium'                      => 'cesium_always',
@@ -713,6 +713,15 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
         'geosearch_attribution' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_attribution'],
+            'exclude'                 => true,
+            'default'                 => true,
+            'inputType'               => 'checkbox',
+            'sql'                     => "char(1) NOT NULL default '1'"
+        ),
+
+        'geosearch_collapsed' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_collapsed'],
             'exclude'                 => true,
             'default'                 => true,
             'inputType'               => 'checkbox',

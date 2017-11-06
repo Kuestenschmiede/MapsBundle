@@ -153,6 +153,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_markresult']  = array('Mar
                                                                             'Highlights the found location for a short time.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_attribution'] = array('Show attribution of search service',
                                                                             'Adds an attribution of the search service (Nominatim).  Deactivate only when you are sure it is allowed.');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_collapsed']   = array('Collapsed searchfield',
+                                                                            'Collapsed the searchfield by default.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker']             = array('Show geopicker (frontend)',
                                                                             'Adds a geopicker in the frontend, similar to the backend wizard to pick coordinates. Can be used together with INPUT fields in custom forms.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_fieldx']      = array('Form field for GEO latitude',

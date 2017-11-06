@@ -103,6 +103,9 @@ this.c4g.maps = this.c4g.maps || {};
       if (!input) {
         return '';
       }
+      if (typeof input !== "string") {
+        input = input + "";
+      }
 
       output = input.replace(
           /\\\\/g, '\\'

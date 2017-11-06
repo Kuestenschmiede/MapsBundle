@@ -150,7 +150,7 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
     'ROUTER_5.X_MOD_5'  : 'Leicht links',
     'ROUTER_5.X_MOD_6'  : 'Links',
     'ROUTER_5.X_MOD_7'  : 'Scharf links',
-    'ROUTER_5.X_MOD_8'  : 'Irgendwie',
+    'ROUTER_5.X_MOD_8'  : 'in der Nähe',
 
     ROUTER_FROM: 'Start',
     ROUTER_TO: 'Ziel',

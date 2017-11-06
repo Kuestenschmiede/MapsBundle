@@ -363,6 +363,7 @@ class MapDataConfigurator
                 $mapData['geosearch']['animate'] = $profile->geosearch_animate;
                 $mapData['geosearch']['markresult'] = $profile->geosearch_markresult;
                 $mapData['geosearch']['attribution'] = $profile->geosearch_attribution;
+                $mapData['geosearch']['collapsed'] = $profile->geosearch_collapsed;
 
                 if ($profile->attribution && $profile->geosearch_attribution) {
                     $mapData['attribution']['geosearch'] = $profile->geosearch_attribution;
