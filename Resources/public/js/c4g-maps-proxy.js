@@ -2039,7 +2039,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                               var popupContent = featureData.properties.popup;
                               layer.vectorLayer.getLayers().forEach(function(element, index, array) {
                                 if (!c4g.maps.locationStyles[featureData.properties.styleId]) {
-                                    self.loadLocationStyles(featureData.properties.styleId, {success: function() {
+                                    self.loadLocationStyles([featureData.properties.styleId], {success: function() {
                                         element.setStyle(c4g.maps.locationStyles[featureData.properties.styleId].style);
                                     }});
                                 } else {
@@ -2052,7 +2052,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                               layer.content[0].locationStyle = featureData.properties.styleId;
 
                               if (!c4g.maps.locationStyles[featureData.properties.styleId]) {
-                                  self.loadLocationStyles(featureData.properties.styleId, {success: function() {
+                                  self.loadLocationStyles([featureData.properties.styleId], {success: function() {
                                       feature.setStyle(c4g.maps.locationStyles[featureData.properties.styleId].style);
                                   }});
                               } else {
