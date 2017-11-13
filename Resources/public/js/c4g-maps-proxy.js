@@ -2027,7 +2027,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                       url: requestData.url,
                       success: function (data) {
 
-                        if (data.stationResponse) {
+                        if (data.renewableResponse) {
                           // update of stations
                           $.each(data.features, function (index, featureData) {
                             if (featureData.type && featureData.type === "Feature") {
@@ -2038,13 +2038,27 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                               var layer = c4g.maps.layers[featureData.properties.id];
                               var popupContent = featureData.properties.popup;
                               layer.vectorLayer.getLayers().forEach(function(element, index, array) {
-                                element.setStyle(c4g.maps.locationStyles[featureData.properties.styleId].style);
+                                if (!c4g.maps.locationStyles[featureData.properties.styleId]) {
+                                    self.loadLocationStyles(featureData.properties.styleId, {success: function() {
+                                        element.setStyle(c4g.maps.locationStyles[featureData.properties.styleId].style);
+                                    }});
+                                } else {
+                                    element.setStyle(c4g.maps.locationStyles[featureData.properties.styleId].style);
+                                }
                                 element.getSource().forEachFeature(function(nestedFeature) {
                                   nestedFeature.set('popup', popupContent);
                                 });
                               });
                               layer.content[0].locationStyle = featureData.properties.styleId;
-                              feature.setStyle(c4g.maps.locationStyles[featureData.properties.styleId].style);
+
+                              if (!c4g.maps.locationStyles[featureData.properties.styleId]) {
+                                  self.loadLocationStyles(featureData.properties.styleId, {success: function() {
+                                      feature.setStyle(c4g.maps.locationStyles[featureData.properties.styleId].style);
+                                  }});
+                              } else {
+                                  feature.setStyle(c4g.maps.locationStyles[featureData.properties.styleId].style);
+                              }
+
                               if (self.activeLayerIds[layer.id]) {
                                 self.hideLayer(layer.id);
                                 self.showLayer(layer.id);
