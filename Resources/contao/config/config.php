@@ -14,7 +14,7 @@
 
 $GLOBALS['con4gis']['maps']['installed'] = true;
 $GLOBALS['con4gis']['maps']['debug'] = false;
-$GLOBALS['con4gis']['maps']['ol-version'] = '4.4.2';
+$GLOBALS['con4gis']['maps']['ol-version'] = '4.5.0';
 
 /**
  * Sourcetable definition
