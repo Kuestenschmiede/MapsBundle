@@ -848,6 +848,7 @@ class LayerContentApi extends \Controller
                         ),
                         'projection' => $projection,
                         'label' => $objLayer->loc_label,
+                        'data_js_style_function' => $objLayer->data_js_style_function,
                         'zoom_onclick' => $objLayer -> loc_onclick_zoomto
                     );
                 } else {

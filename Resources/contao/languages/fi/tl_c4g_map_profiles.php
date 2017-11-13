@@ -108,7 +108,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['libsource']             = array('Ope
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['imagepath']             = array('Käyttäjämääritelty OpenLayers kuva polku (valinnainen)',
                                                                             'Vain kun käytetään oletus teemaa: Aseta polku omaan OpenLayera /img/ hakemistoon siltä varalta jos haluat käyttää userdefined kuvakkeita. HUOMIO: Tämä asetus ei muuta kuvakkeita OpenLayers /themes/img/directory, jonka voit vaihtaa käyttäen CSS:sää!');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['script']                = array('Custom JavaScript koodi',
-                                                                            'Javascript koodi mikä asennetaan alhaalla olevaan C4GMaps<nn> funktioon.');
+                                                                            'The JavaScript code will be added as a StyleFunction to layers (needs activation in the structure element).');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['link_newwindow']        = array('Avaa linkkejä uusiin ikkunoihin',
                                                                             'Älä avaa linkkejä samaan ikkunaan, mutta näytä linkatut sivut uudessa ikkunassa.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['link_open_on']          = array('Avaa linkkejä',

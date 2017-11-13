@@ -791,6 +791,12 @@ this.c4g.maps = this.c4g.maps || {};
         c4g.maps.utils.callHookFunctions(c4g.maps.hook.mapController_addControls, this);
       }
     // ===
+    // -----------------------------------------------
+    // execute userdefined script
+    // -----------------------------------------------
+    if ((typeof (mapData.script) != 'undefined') && (mapData.script !== '')) {
+        c4g.maps.utils.fnStyleFunction = Function("feature","data","map",mapData.script);
+    }
 
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     };

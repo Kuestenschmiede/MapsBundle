@@ -876,9 +876,8 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['data_js_style_function'],
             'exclude'                 => true,
-            'inputType'               => 'c4g_text',
-            'eval'                    => array('maxlength'=>100 ),
-            'sql'                     => "varchar(100) NOT NULL default ''"
+            'inputType'               => 'checkbox',
+            'sql'                     => "char(10) NOT NULL default ''"
         ),
         'forums' => array
         (

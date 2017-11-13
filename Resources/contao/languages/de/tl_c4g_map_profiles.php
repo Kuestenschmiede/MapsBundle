@@ -110,7 +110,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['libsource']             = array('Zu 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['imagepath']             = array('Benutzerdefinierter Pfad für OpenLayers Icons (optional)',
                                                                             'Nur beim Standard-Theme: Setzt den Pfad zu einem benutzerdefinierten OpenLayers /img/ Verzeichnis für den Fall, dass Sie OpenLayers Standardicons auswechseln möchten. ACHTUNG: Diese Einstellung betrifft NICHT Grafiken aus dem OpenLayers /themes/default/img/ Verzeichnis, die Sie über CSS austauschen können!');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['script']                = array('Eigener JavaScript-Code',
-                                                                            'Der JavaScript-Code wird am Ende der C4GMaps-Funktion eingefügt.');
+                                                                            'Der JavaScript-Code wird als StyleFunction an einen Layer angefügt, bei dem es aktiviert ist. An dieser Stelle ist lediglich der Körper der Funktion zu übergeben.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['link_newwindow']        = array('Direktlink in neuem Fenster öffnen',
                                                                             'Direktlinks nicht im selben Fenster, sondern in einem neuen Fenster öffnen.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['link_open_on']          = array('Direktlinks öffnen bei',
