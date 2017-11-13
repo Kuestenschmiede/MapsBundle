@@ -117,19 +117,6 @@ $GLOBALS['con4gis']['maps']['api']['geosearch_reverse'] = $apiBaseUrl . '/revers
 $GLOBALS['con4gis']['maps']['api']['routing'] = $apiBaseUrl . '/routingService';
 $GLOBALS['con4gis']['maps']['api']['geopicker'] = $apiBaseUrl . '/geopickerService';
 
-/**
- * Activate caching for con4gis_maps services
- */
-//$GLOBALS['CON4GIS']['USE_CACHE']['SERVICES'][] = "baseLayerService";
-//$GLOBALS['CON4GIS']['USE_CACHE']['SERVICES'][] = "layerService";
-//$GLOBALS['CON4GIS']['USE_CACHE']['SERVICES'][] = "layerContentService";
-//$GLOBALS['CON4GIS']['USE_CACHE']['SERVICES'][] = "editorService";
-//$GLOBALS['CON4GIS']['USE_CACHE']['SERVICES'][] = "locationStyleService";
-//$GLOBALS['CON4GIS']['USE_CACHE']['SERVICES'][] = "infoWindowService";
-//$GLOBALS['CON4GIS']['USE_CACHE']['SERVICES'][] = "nominatimService";
-//$GLOBALS['CON4GIS']['USE_CACHE']['SERVICES'][] = "reverseNominatimService";
-//$GLOBALS['CON4GIS']['USE_CACHE']['SERVICES'][] = "routingService";
-
 
 /**
  * Specialized Widgets for Text Input and Image Sizes

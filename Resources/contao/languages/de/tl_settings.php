@@ -13,3 +13,15 @@
 
 $GLOBALS['TL_LANG']['tl_settings']['disabledC4gMapObjects'] = array("Deaktivierte Quellen", "Wählen Sie die Quellen aus, die Sie im Backend deaktivieren möchten." );
 $GLOBALS['TL_LANG']['tl_settings']['c4g_maps_legend'] = "Karten (con4gis)";
+$GLOBALS['TL_LANG']['tl_settings']['caching'] = array("Caching aktivieren", "Caching für con4gis-Dienste aktivieren. Die Sinnhaftigkeit des Cachings ist von Fall zu Fall unterschiedlich und bedarf eigener Tests.");
+
+/** References */
+$GLOBALS['TL_LANG']['tl_settings']['references']['baseLayerService'] ='Basiskarten';
+$GLOBALS['TL_LANG']['tl_settings']['references']['layerService'] ='Kartenstrukturen';
+$GLOBALS['TL_LANG']['tl_settings']['references']['layerContentService'] ='Kartendaten';
+$GLOBALS['TL_LANG']['tl_settings']['references']['editorService'] ='Editor';
+$GLOBALS['TL_LANG']['tl_settings']['references']['locationStyleService'] ='Lokationsstile';
+$GLOBALS['TL_LANG']['tl_settings']['references']['infoWindowService'] ='Popupdaten';
+$GLOBALS['TL_LANG']['tl_settings']['references']['nominatimService'] ='Nominatim-Suche';
+$GLOBALS['TL_LANG']['tl_settings']['references']['reverseNominatimService'] ='Nominatim-Rückwärtssuche';
+$GLOBALS['TL_LANG']['tl_settings']['references']['routingService'] ='Router';

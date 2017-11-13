@@ -44,7 +44,7 @@ class MapsController extends Controller
 
     private function checkForCacheSettings($configParam) {
 
-        self::$useCache = (is_array($GLOBALS['CON4GIS']['USE_CACHE']['SERVICES']) && in_array($configParam, $GLOBALS['CON4GIS']['USE_CACHE']['SERVICES']));
+        self::$useCache = (is_array(deserialize($GLOBALS['TL_CONFIG']['caching'])) && in_array($configParam, deserialize($GLOBALS['TL_CONFIG']['caching'])));
 
     }
 
