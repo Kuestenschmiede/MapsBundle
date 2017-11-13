@@ -816,16 +816,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             'sql'                     => "varchar(10) NOT NULL default 'DEFAULT'"
         ),
 
-        'script' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['script'],
-            'exclude'                 => true,
-            'search'                  => true,
-            'inputType'               => 'textarea',
-            'eval'                    => array('style'=>'height:120px;', 'preserveTags'=>true),
-            'sql'                     => "text NULL"
-        ),
-
         'overpass_url' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overpass_url'],

@@ -80,7 +80,6 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['data_layername'] = array('Name der Ebene', '
 $GLOBALS['TL_LANG']['tl_c4g_maps']['hide_child'] = array('Kinder im Starboard ausblenden', 'Untergeordnete Kartenstrukturelemente werden im Starboard ausegblendet. Sie werden als Kinder dieses Elements aktivert und deaktiviert.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['data_hidelayer'] = array('Ebene standardmäßig ausblenden', 'Falls diese Ebene beim Einstieg in die Karte nicht angezeigt werden soll, dann setzen Sie diese Checkbox. Die Ebene ist dann nur über das Starboard auswählbar.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['showPopupOnActive'] = array('Popup bei aktiver Ebene einschalten', 'Automatische Aktivierung des Popups bei aktivierter Ebene.');
-$GLOBALS['TL_LANG']['tl_c4g_maps']['data_js_style_function'] = array('Javascript-Funktion zum Stylen', 'Aktiviert die im Profil gesetzte StyleFunction für diesen Layer.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['forums'] = array('Diskussionsforen','Wählen Sie aus den Diskussionsforen, in denen Kartenlokationen definiert werden können, diejenigen aus, die Sie berücksichtigen möchten.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['forum_jumpto'] = array('Weiterleitungsseite mit Forum','Wählen Sie hier die Seite aus, die Ihr con4gis-Forum-Frontendmodul enthält, falls Sie Links auf Themen und Beiträge im Forum aktiviert haben.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['forum_reassign_layer'] = array('Forum - in andere Ebene verschieben','Wählen Sie eine Methode, um bestimmte Foreneinträge in andere, bereits definierte Ebenen zu verschieben.');

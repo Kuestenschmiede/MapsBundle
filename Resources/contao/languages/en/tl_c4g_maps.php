@@ -81,7 +81,6 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['data_layername'] = array('Layer name', 'Ente
 $GLOBALS['TL_LANG']['tl_c4g_maps']['hide_child'] = array('Hide childs in starboard', 'Hide this elements` childs. They are activated trough this element.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['data_hidelayer'] = array('Hide layer', 'Check this if you don\'t want to show this layer by default.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['showPopupOnActive'] = array('Show Popup on active layer', 'Automatically activates the Popup, if the layer is activated.');
-$GLOBALS['TL_LANG']['tl_c4g_maps']['data_js_style_function'] = array('Javascript function for styling', 'Activates the StyleFunction set in the profile for this layer.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['forums'] = array('Forums','Please select from the map enabled forums.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['forum_jumpto'] = array('Forum page','Select the page that hosts con4gis-Forum');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['forum_reassign_layer'] = array('Reassign layer','Method for moving forum generated map entries to other layers.');

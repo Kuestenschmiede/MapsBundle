@@ -124,6 +124,9 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
                                          '{popup_legend},tooltip,popup_info;'.
                                          '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;'.
                                          '{editor_legend:hide},editor_icon,editor_sort,editor_vars,editor_collect;',
+        'style_function'              => 'name,styletype,style_function_js;'
+
+
     ),
 
     // Subpalettes
@@ -162,10 +165,10 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
             'filter'                  => true,
             'inputType'               => 'select',
             'default'                 => 'point',
-            'options'                 => array('point', 'square', 'star', 'x', 'cross', 'triangle', /*'ol_icon',*/ 'cust_icon' ),
+            'options'                 => array('point', 'square', 'star', 'x', 'cross', 'triangle', /*'ol_icon',*/ 'cust_icon','style_function' ),
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references'],
             'eval'                    => array('submitOnChange'=>'true'),
-            'sql'                     => "varchar(10) NOT NULL default ''"
+            'sql'                     => "varchar(15) NOT NULL default ''"
         ),
         'strokecolor' => array
         (
@@ -320,7 +323,14 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
             'options_callback'        => array('tl_c4g_map_locstyles','getLocStyles', 'includeBlankOption' => true),
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
         ),
-
+        'style_function_js' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['style_function_js'],
+            'exclude'                 => true,
+            'inputType'               => 'textarea',
+            'eval'                    => array('style'=>'height:120px;', 'preserveTags'=>true),
+            'sql'                     => "text NULL"
+        ),
         'line_arrows' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['line_arrows'],

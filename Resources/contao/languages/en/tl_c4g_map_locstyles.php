@@ -31,6 +31,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_scale']       = array('Scale i
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_offset']      = array('Offset for icon in pixel (X/Y)','An offset of "0" means, the upper left corner is printed on the location. X>0 => shifts icon to the right. X<0 => to the left. Y>0 => to the bottom. Y<0 => to the top.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_opacity']     = array('Icon opacity','Enter the opacity of the icon in %.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['onhover_locstyle'] = array('Location style for mouse hover','Select the location style to be used when the mouse rests over a location.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['style_function_js']   = array('Code for StyleFunction','Enter code for your custom OpenLayers StyleFunction (Enter only the function\'s body. Your function should change the feature\'s style or return an instance of ol.style)');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['line_arrows']      = array('Activate line direction arrows','Arrows for lines');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['line_arrows_back'] = array('Show back arrows','To display arrows in both directions.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['line_arrows_radius']= array('Radius of arrowheads (pixel)','Arrowheads are displayed as triangle symbols (">"). Enter the radius in pixel.');

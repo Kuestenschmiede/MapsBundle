@@ -107,8 +107,6 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['libsource']             = array('Ope
                                                                             'Choose where to take the OpenLayers JavaScript library from.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['imagepath']             = array('Userdefined OpenLayers image path (optional)',
                                                                             'Only when using default theme: set path to own OpenLayers /img/ directory in case you want to use userdefined icons. NOTE: This setting is NOT changing icons from OpenLayers /themes/default/img/ directory, which you can exchange using CSS!');
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['script']                = array('Custom JavaScript code',
-                                                                            'The JavaScript code will be added as a StyleFunction to layers (needs activation in the structure element). Please pass only the body of the function.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['link_newwindow']        = array('Open links in new window',
                                                                             'Do not open links in the same window, but display linked pages in a new window.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['link_open_on']          = array('Open links on',
