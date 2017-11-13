@@ -1031,12 +1031,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                     // custom
                     noUrl = true;
                     if (overlayLayerConfig.attribution) {
-                        layerOptions.attributions = [
-                            new ol.Attribution({
-                                html: overlayLayerConfig.attribution
-                            }),
-                            ol.source.OSM.ATTRIBUTION
-                        ]
+                        layerOptions.attributions = overlayLayerConfig.attribution + ' ' + ol.source.OSM.ATTRIBUTION;
                     }
 
                     if (overlayLayerConfig.url) {
@@ -1085,12 +1080,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                             TRANSPARENT: overlayLayerConfig.params.transparent
                         },
                         gutter: overlayLayerConfig.gutter,
-                        attributions: [
-                            new ol.Attribution({
-                                html: overlayLayerConfig.attribution
-                            }),
-                            ol.source.OSM.ATTRIBUTION
-                        ]
+                        attributions: overlayLayerConfig.attribution + ' ' + ol.source.OSM.ATTRIBUTION
                     }),
                     opacity:0.5
                     //extent: ol.proj.transformExtent([5.59334, 50.0578, 9.74158, 52.7998], 'EPSG:4326', 'EPSG:3857')
@@ -1100,13 +1090,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                 overlayLayer = new ol.layer.Tile({
                     source: new ol.source.XYZ({
                         url: overlayLayerConfig.url + overlayLayerConfig.app_id + '/{z}/{x}/{y}?hash=' + overlayLayerConfig.api_key,
-                        attributions: [
-                            new ol.Attribution({
-                                html: overlayLayerConfig.attribution
-                            }),
-                            ol.source.OSM.ATTRIBUTION
-                        ]
-
+                        attributions: overlayLayerConfig.attribution + ' ' + ol.source.OSM.ATTRIBUTION
                     }),
                     //extent: ol.proj.transformExtent([5.59334, 50.0578, 9.74158, 52.7998], 'EPSG:4326', 'EPSG:3857')
                 });
@@ -1173,21 +1157,9 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
 
         if (baseLayerConfig.attribution) {
           if (layerOptions.attributions) {
-            layerOptions.attributions.push(
-                new ol.Attribution({
-                  html: baseLayerConfig.attribution
-                })
-            );
+            layerOptions.attributions = layerOptions.attributions + ' ' + baseLayerConfig.attribution;
           } else {
-            layerOptions.attributions = [
-              ol.source.OSM.ATTRIBUTION
-            ];
-
-            layerOptions.attributions.push(
-                new ol.Attribution({
-                  html: baseLayerConfig.attribution
-                })
-            );
+            layerOptions.attributions = ol.source.OSM.ATTRIBUTION + ' ' + baseLayerConfig.attribution;
           }
         } else if (!layerOptions.attributions) {
           switch (baseLayerConfig.provider) {
@@ -1201,9 +1173,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
               } else if (osmSourceConfigs[baseLayerConfig.style]) {
                 layerOptions.attributions = osmSourceConfigs[baseLayerConfig.style].attributions;
               } else {
-                layerOptions.attributions = [
-                  ol.source.OSM.ATTRIBUTION
-                ];
+                layerOptions.attributions = ol.source.OSM.ATTRIBUTION;
               }
               break;
             case 'mapbox':
@@ -1216,9 +1186,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
               layerOptions.attributions = thunderforestSourceConfigs[baseLayerConfig.thunderforest_type].attributions;
               break;
             default:
-              layerOptions.attributions = [
-                ol.source.OSM.ATTRIBUTION
-              ];
+              layerOptions.attributions = ol.source.OSM.ATTRIBUTION;
               break;
           }
         }
@@ -1228,26 +1196,21 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
         //additional attribution
         if (this.options.mapController.data && this.options.mapController.data.attribution && this.options.mapController.data.attribution.additional) {
           if (layerOptions.attributions) {
-            var additionalAttribution = new ol.Attribution({
-              html: this.options.mapController.data.attribution.additional
-            });
+            var additionalAttribution = this.options.mapController.data.attribution.additional;
 
             var exists = false;
             for (i = 0; i < layerOptions.attributions.length; i += 1) {
-              if (layerOptions.attributions[i].getHTML().indexOf(additionalAttribution.getHTML()) != -1) {
+              if (layerOptions.attributions[i] == additionalAttribution) {
                 exists = true;
                 break;
               }
             }
 
             if (!exists) {
-              layerOptions.attributions.push(additionalAttribution);
+              layerOptions.attributions = layerOptions.attributions + ' ' + additionalAttribution;
             }
           } else {
-            layerOptions.attributions = [
-              new ol.Attribution({
-                html: this.options.mapController.data.attribution.additional
-              })]
+            layerOptions.attributions = this.options.mapController.data.attribution.additional;
           }
         }
 
@@ -1260,50 +1223,46 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
           if (this.options.mapController.data &&
               this.options.mapController.data.attribution) {
 
-            switch (geosearch_engine) {
-              case '4':
-                geosearch_attribution = ''; //con4gis mapservices
-                break;
-              case '3':
-                if (this.options.mapController.data.geosearch.custom_attribution) {
-                  geosearch_attribution = this.options.mapController.data.geosearch.custom_attribution;
-                }
-                break;
-              case '2':
-                geosearch_attribution =
-                    'Nominatim Search Courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png" alt="" />';
-                break;
-              case '1':
-              default:
-                geosearch_attribution =
-                    'Nominatim Search Courtesy of <a href="http://wiki.openstreetmap.org/wiki/Nominatim_usage_policy" target="_blank">OpenStreetMap</a>';
-                break;
-            }
-
-
-            var geosearchAttribution = new ol.Attribution({
-              html: geosearch_attribution
-            });
-
-            var exists = false;
-            if(!layerOptions.attributions){
-                layerOptions.attributions = [];
-            }
-            for (i = 0; i < layerOptions.attributions.length; i += 1) {
-              if (layerOptions.attributions[i].getHTML().indexOf(geosearchAttribution.getHTML()) != -1) {
-                exists = true;
-                break;
+              switch (geosearch_engine) {
+                  case '4':
+                      geosearch_attribution = ''; //con4gis mapservices
+                      break;
+                  case '3':
+                      if (this.options.mapController.data.geosearch.custom_attribution) {
+                          geosearch_attribution = this.options.mapController.data.geosearch.custom_attribution;
+                      }
+                      break;
+                  case '2':
+                      geosearch_attribution =
+                          'Nominatim Search Courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png" alt="" />';
+                      break;
+                  case '1':
+                  default:
+                      geosearch_attribution =
+                          'Nominatim Search Courtesy of <a href="http://wiki.openstreetmap.org/wiki/Nominatim_usage_policy" target="_blank">OpenStreetMap</a>';
+                      break;
               }
-            }
 
-            if (!exists) {
-              layerOptions.attributions.push(geosearchAttribution);
-            }
-          } else {
-            layerOptions.attributions = [
-              new ol.Attribution({
-                html: geosearchAttribution
-              })]
+
+              var geosearchAttribution = geosearch_attribution;
+
+              var exists = false;
+              if (!layerOptions.attributions) {
+                  layerOptions.attributions = [];
+              }
+              for (i = 0; i < layerOptions.attributions.length; i += 1) {
+                  if (layerOptions.attributions[i] == geosearchAttribution) {
+                      exists = true;
+                      break;
+                  }
+              }
+
+              if (!exists) {
+                  layerOptions.attributions = layerOptions.attributions + ' ' + geosearchAttribution;
+              }
+              else {
+                  layerOptions.attributions = geosearchAttribution;
+              }
           }
         }
 
@@ -1472,12 +1431,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                   TRANSPARENT: baseLayerConfig.params.transparent
                 },
                 gutter: baseLayerConfig.gutter,
-                attributions: [
-                  new ol.Attribution({
-                    html: baseLayerConfig.attribution
-                  }),
-                  ol.source.OSM.ATTRIBUTION
-                ]
+                attributions: baseLayerConfig.attribution + ' ' + ol.source.OSM.ATTRIBUTION
               }),
               //extent: ol.proj.transformExtent([5.59334, 50.0578, 9.74158, 52.7998], 'EPSG:4326', 'EPSG:3857')
             });
@@ -1486,13 +1440,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
             newBaselayer = new ol.layer.Tile({
               source: new ol.source.XYZ({
                 url: baseLayerConfig.url + baseLayerConfig.app_id + '/{z}/{x}/{y}?hash=' + baseLayerConfig.api_key,
-                attributions: [
-                  new ol.Attribution({
-                    html: baseLayerConfig.attribution
-                  }),
-                  ol.source.OSM.ATTRIBUTION
-                ]
-
+                attributions: baseLayerConfig.attribution + ' ' + ol.source.OSM.ATTRIBUTION
               }),
               //extent: ol.proj.transformExtent([5.59334, 50.0578, 9.74158, 52.7998], 'EPSG:4326', 'EPSG:3857')
             });
