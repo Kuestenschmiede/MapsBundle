@@ -72,6 +72,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['cross']       = 'Rist
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['triangle']    = 'Kolmio';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['ol_icon']     = 'OpenLayers Sisäinen kuvake';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['cust_icon']   = 'Custom kuvake';
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['style_function'] = 'Style function';
 
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['marker.png']        = 'Punainen merkki';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['marker-blue.png']   = 'Sininen merkki';

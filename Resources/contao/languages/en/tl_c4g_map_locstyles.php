@@ -72,6 +72,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['cross']       = 'Cros
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['triangle']    = 'Triangle';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['ol_icon']     = 'OpenLayers internal icon';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['cust_icon']   = 'Custom icon';
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['style_function'] = 'Style function';
 
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['marker.png']        = 'Red marker';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['marker-blue.png']   = 'Blue marker';
