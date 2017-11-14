@@ -31,6 +31,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_scale']       = array('Scale i
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_offset']      = array('Offset kuvakkeelle pikseleinä (X/Y)','offset "0" means, tarkoittaa että ylempi vasen nurkka on printattu sijaintiin. X>0 => Siirtää kuvaketta oikealle. X<0 => vasemmalle. Y>0 => alas. Y<0 => ylös.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_opacity']     = array('Kuvakkeen opasiteetti','Laita kuvakkeen opasiteetti %.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['onhover_locstyle'] = array('Sijainnin tyyli hiiren hoverille','Valitse sijainnin tyyli, jota käytetään, kun hiiri lepää sijainnin kohdalla.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['style_function_js']   = array('Code for StyleFunction','Enter code for your custom OpenLayers StyleFunction (Enter only the function\'s body. Your function should change the feature\'s style or return an instance of ol.style)');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['line_arrows']      = array('Aktivoi rivin suuntanuolet','Nuolia riville');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['line_arrows_back'] = array('Näytä back nuolet','Näyttääksesi nuolia molemmille suunnille.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['line_arrows_radius']= array('Nuolipäiden kantomatka (pixel)','Nuolipäitä näytetään kolmio symboleina(">"). Laita kantomatka pikseleinä.');
@@ -71,6 +72,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['cross']       = 'Rist
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['triangle']    = 'Kolmio';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['ol_icon']     = 'OpenLayers Sisäinen kuvake';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['cust_icon']   = 'Custom kuvake';
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['style_function'] = 'Style function';
 
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['marker.png']        = 'Punainen merkki';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['marker-blue.png']   = 'Sininen merkki';

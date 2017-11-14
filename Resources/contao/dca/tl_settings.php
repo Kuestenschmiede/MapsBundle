@@ -11,7 +11,7 @@
  * @link      https://www.kuestenschmiede.de
  */
 
-$GLOBALS['TL_DCA']['tl_settings']['palettes']['default'] .= ';{c4g_maps_legend},disabledC4gMapObjects';
+$GLOBALS['TL_DCA']['tl_settings']['palettes']['default'] .= ';{c4g_maps_legend},disabledC4gMapObjects,caching';
 
 /**
  * Add fields
@@ -21,6 +21,14 @@ $GLOBALS['TL_DCA']['tl_settings']['fields']['disabledC4gMapObjects'] = array
     'label'                   => &$GLOBALS['TL_LANG']['tl_settings']['disabledC4gMapObjects'],
     'inputType'               => 'checkbox',
     'options_callback'        => array('tl_settings_c4g_maps', 'getMapTables'),
+    'eval'                    => array('multiple'=>true)
+);
+$GLOBALS['TL_DCA']['tl_settings']['fields']['caching'] = array
+(
+    'label'                   => &$GLOBALS['TL_LANG']['tl_settings']['caching'],
+    'inputType'               => 'checkbox',
+    'options'                 => array('baseLayerService','layerService','layerContentService','editorService','locationStyleService','infoWindowService','nominatimService','reverseNominatimService','routingService'),
+    'reference'               => &$GLOBALS['TL_LANG']['tl_settings']['references'],
     'eval'                    => array('multiple'=>true)
 );
 

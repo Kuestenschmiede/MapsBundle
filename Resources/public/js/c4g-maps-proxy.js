@@ -560,6 +560,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
               c4g.maps.locationStyles[styleData.id].label = styleData.label || undefined;
               c4g.maps.locationStyles[styleData.id].minzoom = styleData.minzoom || undefined;
               c4g.maps.locationStyles[styleData.id].maxzoom = styleData.maxzoom || undefined;
+              c4g.maps.locationStyles[styleData.id].fnStyleFunction = styleData.style_function_js || undefined;
             }
           }
           if (index) {
@@ -2983,7 +2984,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
               } else if (elementContent.locationStyle) {
                 // feature has no property styleId, but elementContent has locationstyle
                 if (c4g.maps.locationStyles[elementContent.locationStyle] && c4g.maps.locationStyles[elementContent.locationStyle].style) {
-                  features[j].setStyle(c4g.maps.locationStyles[elementContent.locationStyle].style);
+                  //features[j].setStyle(c4g.maps.locationStyles[elementContent.locationStyle].style);
                 } else {
                   missingStyles.push(elementContent.locationStyle);
                   unstyledFeatures.push(features[j]);
@@ -2993,6 +2994,9 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
             }
 
             vectorStyle = c4g.maps.locationStyles[elementContent.locationStyle] && c4g.maps.locationStyles[elementContent.locationStyle].style;
+              if(c4g.maps.locationStyles[elementContent.locationStyle].fnStyleFunction) {
+                  vectorStyle = Function("feature","data","map",c4g.maps.locationStyles[elementContent.locationStyle].fnStyleFunction);
+              }
             if (missingStyles.length > 0) {
               this.loadLocationStyles(missingStyles, {
                 success: function () {

@@ -13,3 +13,16 @@
 
 $GLOBALS['TL_LANG']['tl_settings']['disabledC4gMapObjects'] = array("Deaktivoidut lähteet", "Valitse lähteet jotka haluat poistaa backendissa." );
 $GLOBALS['TL_LANG']['tl_settings']['c4g_maps_legend'] = "Kartat (con4gis)";
+
+$GLOBALS['TL_LANG']['tl_settings']['caching'] = array("Activate caching", "Activate caching for con4gis-services. Usability depends on the special case and may need testing.");
+
+/** References */
+$GLOBALS['TL_LANG']['tl_settings']['references']['baseLayerService'] ='Baselayer';
+$GLOBALS['TL_LANG']['tl_settings']['references']['layerService'] ='Map structures';
+$GLOBALS['TL_LANG']['tl_settings']['references']['layerContentService'] ='Map data';
+$GLOBALS['TL_LANG']['tl_settings']['references']['editorService'] ='editor';
+$GLOBALS['TL_LANG']['tl_settings']['references']['locationStyleService'] ='Location styles';
+$GLOBALS['TL_LANG']['tl_settings']['references']['infoWindowService'] ='Popup data';
+$GLOBALS['TL_LANG']['tl_settings']['references']['nominatimService'] ='Search';
+$GLOBALS['TL_LANG']['tl_settings']['references']['reverseNominatimService'] ='Reverse search';
+$GLOBALS['TL_LANG']['tl_settings']['references']['routingService'] ='Routing';
