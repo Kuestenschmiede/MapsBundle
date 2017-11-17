@@ -529,6 +529,18 @@ class LayerContentApi extends \Controller
                                 floatval($result->$geoxField),
                                 floatval($result->$geoyField));
                         }
+                        if ($arrConfig['linkurl'] && !$arrConfig['popup']) {
+                            $link = $arrConfig['linkurl'];
+                            $link = str_replace('[id]', $result->id, $link);
+                            $link = $this->replaceInsertTags($link);
+                            if (substr($link, 0, 1) == '(' && substr($link, -1, 1) == ')') {
+                                $link = substr($link,1);
+                                $link = substr($link,0,-1);
+                            }
+                        }
+                        else{
+                            $link = $this->replaceInsertTags($objLayer->loc_linkurl);
+                        }
 
 
                         $arrReturnData[] = array
@@ -541,7 +553,7 @@ class LayerContentApi extends \Controller
                             "cluster_fillcolor" => $objLayer->cluster_fillcolor,
                             "cluster_fontcolor" => $objLayer->cluster_fontcolor,
                             "cluster_zoom" => $objLayer->cluster_zoom,
-                            "loc_linkurl" => $this->replaceInsertTags($objLayer->loc_linkurl),
+                            "loc_linkurl" => $link,
                             "hover_location" => $objLayer->hover_location,
                             "hover_style" => $objLayer->hover_style,
                             "data" => $arrGeoJson = array
