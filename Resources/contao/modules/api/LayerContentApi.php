@@ -532,6 +532,18 @@ class LayerContentApi extends \Controller
                         if ($arrConfig['linkurl'] && !$arrConfig['popup']) {
                             $link = $arrConfig['linkurl'];
                             $link = str_replace('[id]', $result->id, $link);
+                            $matches =[];
+                            if (preg_match('/\[[a-z]+\]/', $link, $matches)) {
+                                foreach ($matches as $key => $value) {
+                                    $replacedValue = str_replace('[', '', $value);
+                                    $replacedValue = str_replace(']', '', $replacedValue);
+                                    if ($result->$replacedValue) {
+                                        $replacedValue = $result->$replacedValue;
+                                    }
+                                    $matches[$key] = $replacedValue;
+                                }
+                                $link = preg_replace(['/\[[a-z]+\]/'], $matches, $link);
+                            }
                             $link = $this->replaceInsertTags($link);
                             if (substr($link, 0, 1) == '(' && substr($link, -1, 1) == ')') {
                                 $link = substr($link,1);
