@@ -122,6 +122,7 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
 
     ROUTER_SWITCH: 'c4g-router-switch',
     ROUTER_OVER: 'c4g-router-over',
+    ROUTER_PRINT: 'c4g-router-print',
 
     ROUTER_INSTRUCTIONS_TABLE: 'c4g-router-instruction-table',
     ROUTER_INSTRUCTIONS_ITEM: 'c4g-router-instruction-item',

@@ -84,6 +84,8 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
 
     ROUTER_SWITCH:'Switch between Start and End',
     ROUTER_OVER:'Add interim goal',
+    ROUTER_PRINT:'Print route description',
+
 
     ROUTER_VIEW_LABEL_ROUTE: 'Route:',
     ROUTER_VIEW_LABEL_DISTANCE: 'Distance:',

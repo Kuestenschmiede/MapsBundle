@@ -87,6 +87,7 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
 
     ROUTER_SWITCH:'Wechsel von Start und Ziel',
     ROUTER_OVER:'Zwischenziel hinzufügen',
+    ROUTER_PRINT:'Routenbeschreibung drucken',
 
     ROUTER_VIEW_LABEL_ROUTE: 'Route:',
     ROUTER_VIEW_LABEL_DISTANCE: 'Entfernung:',

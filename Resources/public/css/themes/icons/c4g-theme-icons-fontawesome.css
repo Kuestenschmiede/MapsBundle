@@ -82,6 +82,10 @@ button.ol-full-screen-true:before {
   font-family: 'FontAwesome';
   content: "\f124";
 }
+button.c4g-router-print:before {
+  font-family: 'FontAwesome';
+  content: "\f02f";
+}
 button.c4g-router-switch:before {
   font-family: "FontAwesome";
   content: "\f0ec";
@@ -158,13 +162,13 @@ button.ol-zoom-position:before {
 }
 
 /* Portside & Starboard */
-button.c4g-portside-hide:before {
+button.c4g-portside-hide:before{
   content: "\f053";
   font-size: .6em;
   /*content: "<";*/
 }
 button.c4g-portside-close:before,
-button.c4g-starboard-close:before {
+button.c4g-starboard-close:before{
   content: "\f00d";
   font-size: .6em;
   /*content: "X";*/
