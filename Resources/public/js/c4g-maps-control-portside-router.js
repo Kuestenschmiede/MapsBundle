@@ -271,6 +271,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
           routerViewInputWrapper,
           routerViewContentWrapper,
           routerViewContentHeadline,
+          print,
           routerFromLabel,
           routerOverLabel,
           routerToLabel,
@@ -315,6 +316,12 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       switchFromTo.className = c4g.maps.constant.css.ROUTER_SWITCH;
       switchFromTo.title = c4g.maps.constant.i18n.ROUTER_SWITCH;
       this.$switchFromTo = $(switchFromTo);
+
+      print = document.createElement('button');
+      print.className = c4g.maps.constant.css.ROUTER_PRINT;
+      print.title = c4g.maps.constant.i18n.ROUTER_PRINT;
+      this.$print = $(print);
+      $(print).insertBefore(document.getElementsByClassName("c4g-portside-hide")[0]);
 
       buttonOver = document.createElement('button');
       buttonOver.className = c4g.maps.constant.css.ROUTER_OVER;
@@ -392,6 +399,17 @@ this.c4g.maps.control = this.c4g.maps.control || {};
           self.toValue = switchVarVal;
           self.recalculateRoute();
 
+      });
+      this.$print.click(function (event){
+          event.preventDefault();
+          var routingContent = document.getElementsByClassName("c4g-router-instructions-wrapper")[0];
+          if(!routingContent) return;
+          var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+          WinPrint.document.write(routingContent.innerHTML);
+          WinPrint.document.close();
+          WinPrint.focus();
+          WinPrint.print();
+          WinPrint.close();
       });
 
       this.$fromInput = $(this.fromInput);
