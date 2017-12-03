@@ -84,7 +84,7 @@
   color: #fff;
   text-shadow: 0 0 1px black;
 }
-.c4g-starboard-headline a{
+.c4g-starboard-headline-link{
   color: rgba(0,60,136,.7);
   font-family: FontAwesome;
 }

@@ -385,14 +385,16 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             'default'                 => false,
             'inputType'               => 'checkbox',
             'sql'                     => "char(1) NOT NULL default '0'"
-        ),'starboard_button' => array
+        ),
+        'starboard_button' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_button'],
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',
             'sql'                     => "char(1) NOT NULL default '0'"
-        ),'cluster_all' => array
+        ),
+        'cluster_all' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_all'],
             'exclude'                 => true,

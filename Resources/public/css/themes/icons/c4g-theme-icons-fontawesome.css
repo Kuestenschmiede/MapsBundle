@@ -289,16 +289,7 @@ button.c4g-starboard-view-trigger-layerswitcher:before {
   /*content: "\f070";*/
   content: "\f1db";
 }
-.c4g-layertree a.c4g-active:after {
-  font-family: 'FontAwesome';
-  content: "\f205";
-  float:right;
-}
-.c4g-layertree a.c4g-inactive:after {
-  font-family: 'FontAwesome';
-  content: "\f204";
-  float:right;
-}
+
 .c4g-layertree span.c4g-icon:before ,
 .c4g-baselayertree span.c4g-icon:before {
   font-family: 'FontAwesome';
@@ -364,4 +355,16 @@ button.c4g-popup-route-to:before {
   content: "\f149";
   /*content: "\f11e";*/
   margin: 0 5px 0 -3px;
+}
+.c4g-layertree a.c4g-active:after,
+.c4g-starboard-headline-link.c4g-active:after {
+  font-family: 'FontAwesome';
+  content: "\f205";
+  float:right;
+}
+.c4g-layertree a.c4g-inactive:after,
+.c4g-starboard-headline-link.c4g-inactive:after {
+  font-family: 'FontAwesome';
+  content: "\f204";
+  float:right;
 }

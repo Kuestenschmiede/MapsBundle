@@ -49,7 +49,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
           $(contentHeadline).addClass("c4g-starboard-headline");
           contentHeadlineLink = document.createElement('a');
           contentHeadlineLink.onclick = function () {
-              if (this.className === "c4g-active") {
+              if ($(this).hasClass("c4g-active") !== false) {
                   for (var i = 0; i < self.proxy.layerIds.length; i++) {
                       self.proxy.hideLayer(self.proxy.layerIds[i]);
                   }
@@ -64,7 +64,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
                   $(this).addClass("c4g-active");
               }
           };
-          $(contentHeadlineLink).addClass("c4g-inactive");
+          $(contentHeadlineLink).addClass("c4g-inactive c4g-starboard-headline-link");
           contentHeadlineLink.innerHTML = (this.starboard.options.layerSwitcherTitle || c4g.maps.constant.i18n.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER);
           contentHeadlineLink.innerHTML = contentHeadlineLink.innerHTML+' ';
           contentHeadline.appendChild(contentHeadlineLink);
