@@ -277,8 +277,8 @@ class ResourceLoader extends coreResourceLoader
 
         if (!$theme) {
             // load default theme
-            parent::loadCssRessource('c4g-maps-icons', self::BUNDLE_CSS_PATH . 'themes/icons/c4g-theme-icons-fontawesome.css');
-            parent::loadCssRessource('c4g-maps-theme', self::BUNDLE_CSS_PATH . 'themes/buttons/c4g-theme-buttons-openlayers.css');
+            parent::loadCssRessource('c4g-maps-icons', self::BUNDLE_CSS_PATH . 'themes/icons/c4g-theme-icons.css');
+            parent::loadCssRessource('c4g-maps-theme', self::BUNDLE_CSS_PATH . 'themes/buttons/c4g-theme-buttons.css');
             parent::loadCssRessource('c4g-maps-colors', self::BUNDLE_CSS_PATH . 'themes/colors/c4g-theme-colors.css');
             parent::loadCssRessource('c4g-maps-effects', self::BUNDLE_CSS_PATH . 'themes/effects/c4g-theme-effects.css');
             return true;
