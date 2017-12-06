@@ -248,7 +248,7 @@ class tl_c4g_map_themes extends Backend
 
     private function getFileArray($subDir) {
         $result = array();
-        $maps3Path = TL_ROOT . '/bundles/con4gismaps/css/themes/'.$subDir.'/';
+        $maps3Path = TL_ROOT . '/web/bundles/con4gismaps/css/themes/'.$subDir.'/';
 
         if (is_dir($maps3Path)) {
             $file = \scan($maps3Path);
