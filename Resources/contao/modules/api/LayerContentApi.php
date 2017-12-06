@@ -581,6 +581,7 @@ class LayerContentApi extends \Controller
                                     'popup' => array(
                                         'async' => false,
                                         'content' => $popupContent,
+                                        'routing_link' => $objLayer->routing_to
                                     ),
                                     'tooltip' => $result->$tooltipField,
                                     'label' => $result->$labelField,
