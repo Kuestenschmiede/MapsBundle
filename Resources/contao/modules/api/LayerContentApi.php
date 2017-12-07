@@ -580,11 +580,11 @@ class LayerContentApi extends \Controller
                                     'projection' => 'EPSG:4326',
                                     'popup' => array(
                                         'async' => false,
-                                        'content' => $popupContent,
+                                        'content' =>  \Contao\Controller::replaceInsertTags($popupContent),
                                         'routing_link' => $objLayer->routing_to
                                     ),
-                                    'tooltip' => $result->$tooltipField,
-                                    'label' => $result->$labelField,
+                                    'tooltip' =>  \Contao\Controller::replaceInsertTags($result->$tooltipField),
+                                    'label' =>  \Contao\Controller::replaceInsertTags($result->$labelField),
                                     'zoom_onclick' => $objLayer -> loc_onclick_zoomto
                                 ),
                             ),
@@ -824,12 +824,12 @@ class LayerContentApi extends \Controller
                         'projection' => 'EPSG:4326',
                         'popup' => array(
                             'async' => $popup_async,
-                            'content' => $popup_content,
+                            'content' =>  \Contao\Controller::replaceInsertTags($popup_content),
                             'routing_link' => $objLayer->routing_to,
                             'showPopupOnActive'=> $objLayer->showPopupOnActive
                         ),
-                        'tooltip' => $objLayer->tooltip,
-                        'label' => $objLayer->loc_label,
+                        'tooltip' =>  \Contao\Controller::replaceInsertTags($objLayer->tooltip),
+                        'label' =>  \Contao\Controller::replaceInsertTags($objLayer->loc_label),
                         'zoom_onclick' => $objLayer -> loc_onclick_zoomto,
                         'loc_linkurl' => $this->replaceInsertTags($objLayer->loc_linkurl),
                         "hover_location" => $objLayer->hover_location,
@@ -868,7 +868,7 @@ class LayerContentApi extends \Controller
                     $arrGeoJson['properties'] = array(
                         'popup' => array(
                             'async' => $popup_async,
-                            'content' => $popup_content,
+                            'content' =>  \Contao\Controller::replaceInsertTags($popup_content),
                             'routing_link' => $objLayer->routing_to
                         ),
                         'projection' => $projection,

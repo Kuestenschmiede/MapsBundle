@@ -296,7 +296,7 @@ class MapDataConfigurator
             if ($profile->starboard) {
                 $mapData['starboard']['enable'] = $profile->starboard;
                 $mapData['starboard']['open'] = $profile->starboard_open;
-                $mapData['starboard']['label'] = $profile->starboard_label;
+                $mapData['starboard']['label'] = \Contao\Controller::replaceInsertTags($profile->starboard_label);
                 $mapData['starboard']['div'] = $profile->starboard_div;
                 $mapData['starboard']['filter'] = $profile->starboard_filter;
                 $mapData['starboard']['button'] = $profile->starboard_button;
@@ -307,10 +307,10 @@ class MapDataConfigurator
                 $mapData['cluster_zoom'] = $profile->cluster_zoom;
                 // Baselayerswitcher
                 $mapData['baselayerswitcher']['enable'] = $profile->baselayerswitcher;
-                $mapData['baselayerswitcher']['label'] = $profile->baselayerswitcher_label;
+                $mapData['baselayerswitcher']['label'] = \Contao\Controller::replaceInsertTags($profile->baselayerswitcher_label);
                 // Layerswitcher
                 $mapData['layerswitcher']['enable'] = $profile->layerswitcher;
-                $mapData['layerswitcher']['label'] = $profile->layerswitcher_label;
+                $mapData['layerswitcher']['label'] = \Contao\Controller::replaceInsertTags($profile->layerswitcher_label);
             }
 
             // map-tools
@@ -336,7 +336,7 @@ class MapDataConfigurator
                     $mapData['attribution']['div'] = $profile->div_attribution;
                 }
                 if ($profile->add_attribution) {
-                    $mapData['attribution']['additional'] = $profile->add_attribution;
+                    $mapData['attribution']['additional'] = \Contao\Controller::replaceInsertTags($profile->add_attribution);
                 }
             }
             $mapData['overviewmap'] = $profile->overviewmap;
@@ -354,7 +354,7 @@ class MapDataConfigurator
                 $mapData['geosearch']['geosearch_engine'] = $profile->geosearch_engine;
                 $mapData['geosearch']['enable'] = ($profile->geosearch && $profile->geosearch_show);
                 if ($profile->geosearch_customengine_attribution) {
-                    $mapData['geosearch']['custom_attribution'] = $profile->geosearch_customengine_attribution;
+                    $mapData['geosearch']['custom_attribution'] = \Contao\Controller::replaceInsertTags($profile->geosearch_customengine_attribution);
                 }
                 $mapData['geosearch']['results'] = $profile->geosearch_results;
                 $mapData['geosearch']['div'] = $profile->geosearch_div;
@@ -362,11 +362,11 @@ class MapDataConfigurator
                 $mapData['geosearch']['zoombounds'] = $profile->geosearch_zoombounds;
                 $mapData['geosearch']['animate'] = $profile->geosearch_animate;
                 $mapData['geosearch']['markresult'] = $profile->geosearch_markresult;
-                $mapData['geosearch']['attribution'] = $profile->geosearch_attribution;
+                $mapData['geosearch']['attribution'] = \Contao\Controller::replaceInsertTags($profile->geosearch_attribution);
                 $mapData['geosearch']['collapsed'] = $profile->geosearch_collapsed;
 
                 if ($profile->attribution && $profile->geosearch_attribution) {
-                    $mapData['attribution']['geosearch'] = $profile->geosearch_attribution;
+                    $mapData['attribution']['geosearch'] = \Contao\Controller::replaceInsertTags($profile->geosearch_attribution);
                 }
             }
 
@@ -387,9 +387,9 @@ class MapDataConfigurator
                 $mapData['router_viaroute_precision'] = $profile->router_viaroute_url ? 1e5 : 1e6;
                 if ($profile->router_attribution)
                 {
-                    $mapData['router_attribution'] = $profile->router_attribution;
+                    $mapData['router_attribution'] = \Contao\Controller::replaceInsertTags($profile->router_attribution);
                     if ($profile->attribution) {
-                        $mapData['attribution']['router'] = $profile->router_attribution;
+                        $mapData['attribution']['router'] = \Contao\Controller::replaceInsertTags($profile->router_attribution);
                     }
                 }
                 $mapData['router_from_locstyle'] = $profile->router_from_locstyle;

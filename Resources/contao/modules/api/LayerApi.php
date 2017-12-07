@@ -36,14 +36,16 @@ class LayerApi extends \Frontend
 
     public function generate($intParentId)
     {
+
         $this->import('FrontendUser', 'User');
+
         $arrLayers = $this->getLayerList($intParentId);
 
         if(sizeof($this->arrReassignedLayer) > 0)
         {
             foreach ($arrLayers as $index=>$layer)
             {
-                $strLayerName = $layer['name'];
+                $strLayerName =  \Contao\Controller::replaceInsertTags($layer['name']);
                 if (array_key_exists($strLayerName, $this->arrReassignedLayer))
                 {
                     foreach ($this->arrReassignedLayer[$strLayerName] as $reassignedLayer)
@@ -61,7 +63,7 @@ class LayerApi extends \Frontend
                 {
                     foreach ($layer['childs'] as $childIndex=>$childLayer)
                     {
-                        $strChildLayerName = $childLayer['name'];
+                        $strChildLayerName =  \Contao\Controller::replaceInsertTags($childLayer['name']);
                         if (array_key_exists($strChildLayerName, $this->arrReassignedLayer))
                         {
                             foreach ($this->arrReassignedLayer[$strChildLayerName] as $reassignedLayer)
@@ -387,7 +389,7 @@ class LayerApi extends \Frontend
         $arrLayerData = array();
         $arrLayerData['id'] = $objLayer->id;
         $arrLayerData['pid'] = $objLayer->pid;
-        $arrLayerData['name'] = $stringClass::decodeEntities($objLayer->name);
+        $arrLayerData['name'] =  \Contao\Controller::replaceInsertTags($stringClass::decodeEntities($objLayer->name));
         $arrLayerData['zoom_locations'] = $objLayer->zoom_locations;
 
         // check parent hide status
@@ -409,7 +411,7 @@ class LayerApi extends \Frontend
 
         if ($objLayer->data_layername)
         {
-            $arrLayerData['name'] = $stringClass::decodeEntities($objLayer->data_layername);
+            $arrLayerData['name'] = \Contao\Controller::replaceInsertTags($stringClass::decodeEntities($objLayer->data_layername));
             $arrLayerData['display'] = true;
             $arrLayerData['hide_child'] = $objLayer->hide_child;
         }
@@ -429,9 +431,9 @@ class LayerApi extends \Frontend
             $linkedLayer = C4gMapsModel::findByPk($objLayer->link_id);
             // check if linked element is overpass request and assign correct content values
             if ($linkedLayer->location_type == "overpass") {
-                $arrLayerData['content'] = $this->getContentForType($linkedLayer);
+                $arrLayerData['content'] = \Contao\Controller::replaceInsertTags($this->getContentForType($linkedLayer));
             } else {
-                $arrLayerData['content'] = $this->getContentForType($objLayer);
+                $arrLayerData['content'] = \Contao\Controller::replaceInsertTags($this->getContentForType($objLayer));
                 $arrLayerData['hide'] = $objLayer->data_hidelayer;
             }
             // set zooms of links
@@ -444,7 +446,7 @@ class LayerApi extends \Frontend
                 );
             }
         } else {
-            $arrLayerData['content'] = $this->getContentForType($objLayer);
+            $arrLayerData['content'] = \Contao\Controller::replaceInsertTags($this->getContentForType($objLayer));
         }
         if ($objLayer->location_type === 'startab') {
             $arrLayerData['awesomeicon'] = $objLayer->awesomeicon;
@@ -567,7 +569,7 @@ class LayerApi extends \Frontend
             while($dbValues->next()) {
                 $child = array();
                 $child['link_id'] = $dbValues->id;
-                $child['name'] = $dbValues->name;
+                $child['name'] = \Contao\Controller::replaceInsertTags($dbValues->name);
                 $child['id'] = uniqid();
                 $child['pid'] = $layer['id'];
                 $child['display'] = $layer['display'];

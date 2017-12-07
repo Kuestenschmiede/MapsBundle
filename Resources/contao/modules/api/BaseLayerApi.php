@@ -53,7 +53,6 @@ class BaseLayerApi extends \Frontend
         $arrLayers = $this->getBaseLayerList($blnProfileBaselayerFilter ? $arrProfileBaselayerFilter : false);
 
         $this->arrConfig['countAll'] = sizeof($arrLayers);
-        
 
 		return array('config' => $this->arrConfig, 'baselayer' => $arrLayers);
 
@@ -129,7 +128,7 @@ class BaseLayerApi extends \Frontend
 
         $arrOverlayData['id'] = $objOverlay->id;
         $arrOverlayData['pid'] = $objOverlay->pid;
-        $arrOverlayData['name'] = $stringClass::decodeEntities($objOverlay->name);
+        $arrOverlayData['name'] =  \Contao\Controller::replaceInsertTags($stringClass::decodeEntities($objOverlay->name));
 
         $arrOverlayData['provider'] = $objOverlay->provider;
 
@@ -184,7 +183,7 @@ class BaseLayerApi extends \Frontend
         $arrBaseLayer = array();
 
         $arrBaseLayer['id'] = $objBaseLayer->id;
-        $arrBaseLayer['name'] = $stringClass::decodeEntities($objBaseLayer->display_name ?: $objBaseLayer->name);
+        $arrBaseLayer['name'] =  \Contao\Controller::replaceInsertTags($stringClass::decodeEntities($objBaseLayer->display_name ?: $objBaseLayer->name));
 
         $arrBaseLayer['provider'] = $objBaseLayer->provider;
         switch ($objBaseLayer->provider) {

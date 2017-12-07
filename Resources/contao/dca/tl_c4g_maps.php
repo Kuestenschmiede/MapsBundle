@@ -845,8 +845,8 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['data_layername'],
             'exclude'                 => true,
             'inputType'               => 'text',
-            'eval'                    => array('maxlength'=>100),
-            'sql'                     => "varchar(100) NOT NULL default ''"
+            'eval'                    => array('maxlength'=>254),
+            'sql'                     => "varchar(254) NOT NULL default ''"
         ),
         'data_hidelayer' => array
         (

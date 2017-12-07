@@ -42,13 +42,13 @@ class InfoWindowApi extends \Frontend
         if ($objLayer->popupType == "popup_info")
         {
             $objLayer->popup_info = '${FNfnStandardInfoPopup}';
-            $arrData['content'] = $objLayer->popup_info;
+            $arrData['content'] = \Contao\Controller::replaceInsertTags($objLayer->popup_info);
             $arrData['routing_link'] = $objLayer->routing_to;
             $arrData['async'] = false;
         }
         else if ($objLayer->popup_info)
         {
-            $arrData['content'] = $objLayer->popup_info;
+            $arrData['content'] = \Contao\Controller::replaceInsertTags($objLayer->popup_info);
             $arrData['routing_link'] = $objLayer->routing_to;
             $arrData['async'] = false;
         }

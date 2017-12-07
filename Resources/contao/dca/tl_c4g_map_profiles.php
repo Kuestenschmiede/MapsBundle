@@ -368,16 +368,16 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_label'],
             'exclude'                 => true,
             'inputType'               => 'text',
-            'eval'                    => array('maxlength'=>30),
-            'sql'                     => "varchar(30) NOT NULL default ''"
+            'eval'                    => array('maxlength'=>254),
+            'sql'                     => "varchar(254) NOT NULL default ''"
         ),
         'starboard_div' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_div'],
             'exclude'                 => true,
             'inputType'               => 'text',
-            'eval'                    => array('maxlength'=>30),
-            'sql'                     => "varchar(30) NOT NULL default ''"
+            'eval'                    => array('maxlength'=>254),
+            'sql'                     => "varchar(254) NOT NULL default ''"
         ),
         'starboard_filter' => array
         (
@@ -451,8 +451,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayerswitcher_label'],
             'exclude'                 => true,
             'inputType'               => 'text',
-            'eval'                    => array('maxlength'=>30),
-            'sql'                     => "varchar(30) NOT NULL default ''"
+            'eval'                    => array('maxlength'=>254),
+            'sql'                     => "varchar(254) NOT NULL default ''"
         ),
         'layerswitcher' => array
         (
@@ -468,8 +468,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['layerswitcher_label'],
             'exclude'                 => true,
             'inputType'               => 'text',
-            'eval'                    => array('maxlength'=>30),
-            'sql'                     => "varchar(30) NOT NULL default ''"
+            'eval'                    => array('maxlength'=>254),
+            'sql'                     => "varchar(254) NOT NULL default ''"
         ),
 
         'measuretool' => array

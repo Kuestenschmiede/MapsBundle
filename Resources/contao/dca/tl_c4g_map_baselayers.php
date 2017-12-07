@@ -182,8 +182,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] = array
             'filter'                  => true,
             'flag'                    => 1,
             'inputType'               => 'text',
-            'eval'                    => array('mandatory'=>true, 'maxlength'=>50, 'tl_class'=>'w50'),
-            'sql'                     => "varchar(100) NOT NULL default ''"
+            'eval'                    => array('mandatory'=>true, 'maxlength'=>254, 'tl_class'=>'w50'),
+            'sql'                     => "varchar(254) NOT NULL default ''"
         ),
 
         'display_name' => array
@@ -192,8 +192,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] = array
             'exclude'                 => true,
             'search'                  => true,
             'inputType'               => 'text',
-            'eval'                    => array('maxlength'=>50, 'tl_class'=>'w50'),
-            'sql'                     => "varchar(100) NOT NULL default ''"
+            'eval'                    => array('maxlength'=>254, 'tl_class'=>'w50'),
+            'sql'                     => "varchar(254) NOT NULL default ''"
         ),
 
         'provider' => array
