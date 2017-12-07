@@ -62,6 +62,7 @@ this.c4g.maps = this.c4g.maps || {};
             editor: {},
             measuretools: {},
             exporttools: {},
+            infopage: {},
             starboard: {},
             layerswitcher: {},
             baselayerswitcher: {},
@@ -632,6 +633,15 @@ this.c4g.maps = this.c4g.maps || {};
                 target: controlContainerTopLeft
             });
             this.map.addControl(this.controls.rotate);
+        }
+        // infopage
+        if (mapData.infopage && typeof c4g.maps.control.Infopage === 'function') {
+            this.controls.infopage = new c4g.maps.control.Infopage({
+                tipLabel: c4g.maps.constant.i18n.CTRL_INFOPAGE,
+                target: controlContainerTopLeft,
+                mapController: this
+            });
+            this.map.addControl(this.controls.infopage);
         }
         // scaleline
         if (mapData.scaleline) {

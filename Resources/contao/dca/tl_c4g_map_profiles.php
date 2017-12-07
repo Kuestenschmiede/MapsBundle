@@ -100,11 +100,12 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
                                          '{starboard_legend:hide},starboard;'.
                                          '{information_legend},attribution,overviewmap,measuretool,graticule,scaleline,mouseposition,permalink,zoomlevel;'.
                                          '{geosearch_legend:hide},geosearch,router;'.
+                                         '{info_legend:hide},infopage;'.
+                                         '{click_legend:hide},link_newwindow,link_open_on,hover_popups;'.
                                          '{geopicker_legend:hide},is_backend_geopicker_default,geopicker;'.
                                          '{editor_legend:hide},editor,editor_styles_point,editor_styles_line,editor_styles_polygon,editor_styles_circle,editor_styles_freehand,editor_vars,editor_show_items,editor_helpurl,is_backend_editor_default;'.
                                          '{cesium_legend:hide},cesium;'.
                                          '{expert_legend:hide},script,overpass_url,custom_div;'.
-                                         '{misc_legend:hide},link_newwindow,link_open_on,hover_popups;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;'
     ),
 
@@ -835,6 +836,16 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             'inputType'               => 'text',
             'eval'                    => array('maxlength'=>30),
             'sql'                     => "varchar(30) NOT NULL default 'c4g_brick_map'"
+        ),
+
+        'infopage' => array
+        (
+            'label'					=> &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['infopage'],
+            'search'				=> true,
+            'inputType'				=> 'textarea',
+            'eval'                  => array('mandatory'=>false, 'rte'=>'tinyMCE', 'helpwizard'=>true),
+            'explanation'           => 'insertTags',
+            'sql'                   => "text NULL"
         ),
 
         'link_newwindow' => array

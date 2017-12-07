@@ -40,6 +40,7 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
     CTRL_EDITOR: 'Toggle editor',
     CTRL_MEASURETOOLS: 'Toggle measuretools',
     CTRL_EXPORTTOOLS: 'Toggle exporttools',
+    CTRL_INFOPAGE: 'Toggle infopage',
     CTRL_ZOOMLEVEL: 'Zoom',
     CTRL_MOUSECOORDS: 'Lon/Lat',
     CTRL_GEOSEARCH: 'Toggle geosearch',
@@ -177,6 +178,9 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
 
     EXPORTTOOLS: 'Exporttools',
     EXPORTTOOLS_VIEW_TRIGGER_PRINT: 'Print mapview',
+
+    INFOPAGE: 'Infopage',
+    INFOPAGE_VIEW_TRIGGER: 'Show informations',
 
     SEARCH_NOT_FOUND: 'Location not found. Sorry... :(',
 

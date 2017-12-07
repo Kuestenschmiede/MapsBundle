@@ -518,6 +518,13 @@ button.c4g-measuretools-view-trigger-draw-circle:before {
 }
 
 /*
+ * Infobuttons
+ */
+.c4g-infopage.c4g-portside-control button:before {
+  content: "I";
+}
+
+/*
  * Bottom left controls
  */
 

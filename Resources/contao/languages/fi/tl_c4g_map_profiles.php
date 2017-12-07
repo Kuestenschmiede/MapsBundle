@@ -246,12 +246,15 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['navigation_legend']     = 'Kartan na
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_legend']      = 'Starboard asetukset';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['information_legend']    = 'Kartan tietoa';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['expert_legend']         = 'Expertin asetukset';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['misc_legend']           = 'Sekalainen';
+//$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['misc_legend']           = 'Sekalainen';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_legend']      = 'Etsi & Router';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_legend']      = 'Geopicker';
 //$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_legend']         = 'Reititin (OSRM)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_legend']         = 'Editorin asetukset';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['backend_legend']        = 'Backend asetukset';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['info_legend']           = 'Information page';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['click_legend']          = 'Click settings';
+
 
 /**
  * Globals

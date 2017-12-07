@@ -109,6 +109,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['libsource']             = array('Zu 
                                                                             'Wählen Sie die Herkunft der OpenLayers JavaScript Bibliothek aus.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['imagepath']             = array('Benutzerdefinierter Pfad für OpenLayers Icons (optional)',
                                                                             'Nur beim Standard-Theme: Setzt den Pfad zu einem benutzerdefinierten OpenLayers /img/ Verzeichnis für den Fall, dass Sie OpenLayers Standardicons auswechseln möchten. ACHTUNG: Diese Einstellung betrifft NICHT Grafiken aus dem OpenLayers /themes/default/img/ Verzeichnis, die Sie über CSS austauschen können!');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['infopage']              = array('Inhalt der Infoseite',
+                                                                            'Sobald Sie dieses Feld befüllen, wird der Infobutton in der Karte angezeigt.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['link_newwindow']        = array('Direktlink in neuem Fenster öffnen',
                                                                             'Direktlinks nicht im selben Fenster, sondern in einem neuen Fenster öffnen.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['link_open_on']          = array('Direktlinks öffnen bei',
@@ -253,7 +255,9 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['navigation_legend']     = 'Karten-Na
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_legend']      = 'Starboard-Einstellungen';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['information_legend']    = 'Karten-Informationen';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['expert_legend']         = 'Experten-Einstellungen';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['misc_legend']           = 'Sonstiges';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['info_legend']           = 'Informationsseite (Legende)';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['click_legend']          = 'Einstellungen zum Klick-Verhalten';
+//$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['misc_legend']         = 'Sonstige Einstellungen';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_legend']      = 'Suche & Router';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_legend']      = 'Geopicker-Einstellungen';
 //$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_legend']         = 'Router (OSRM)';

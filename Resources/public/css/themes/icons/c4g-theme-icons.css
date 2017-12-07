@@ -122,6 +122,14 @@ button.c4g-router-over:before {
   font-family: 'FontAwesome';
   content: "\f02f";
 }
+.c4g-infopage.c4g-open > button:before {
+  font-family: 'FontAwesome';
+  content: "\f129";
+}
+.c4g-infopage.c4g-close > button:before {
+  font-family: 'FontAwesome';
+  content: "\f129";
+}
 .c4g-starboard-control.c4g-open button:before {
   font-family: 'FontAwesome';
   content: "\f005";
@@ -227,11 +235,14 @@ button.c4g-exporttools-print:before {
   font-family: 'FontAwesome';
   content: "\f02f";
 }
+button.c4g-infopage-view-trigger:before {
+  font-family: 'FontAwesome';
+  content: "\f129";
+}
 button.c4g-starboard-view-trigger-starboardplugin:before {
   font-family: 'FontAwesome';
   content: "\f0ea";
 }
-
 /* Geosearch */
 button.c4g-geosearch-start:before {
   font-family: 'FontAwesome';

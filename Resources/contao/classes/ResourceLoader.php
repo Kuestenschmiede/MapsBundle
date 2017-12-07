@@ -66,6 +66,7 @@ class ResourceLoader extends coreResourceLoader
             'editor' => $allByDefault,
             'measuretools' => $allByDefault,
             'exporttools' => false, //ToDo
+            'infopage' => $allByDefault,
             'plugins' => $allByDefault,
             'customtab' => $allByDefault,
             'cesium' => $allByDefault
@@ -179,6 +180,9 @@ class ResourceLoader extends coreResourceLoader
             if ($resources['measuretools']) {
                 parent::loadJavaScriptRessource('c4g-maps-control-portside-measuretools', self::BUNDLE_JS_PATH . 'c4g-maps-control-portside-measuretools.js' . $staticOption);
             }
+            if ($resources['infopage']) {
+                parent::loadJavaScriptRessource('c4g-maps-control-portside-infopage', self::BUNDLE_JS_PATH . 'c4g-maps-control-portside-infopage.js' . $staticOption);
+            }
         }
         //ToDo make executable
         if ($resources['exporttools']) {
@@ -254,6 +258,7 @@ class ResourceLoader extends coreResourceLoader
             'editor' => ($profile->editor),
             'measuretools' => ($profile->measuretool),
             'exporttools' => false, //ToDo profile switch,
+            'infopage' => ($profile->infopage),
             // @TODO BE-Switch?
             'plugins' => true,
             'customtab' => true,

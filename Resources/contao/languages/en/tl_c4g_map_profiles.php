@@ -251,13 +251,16 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['navigation_legend']     = 'Map navig
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_legend']      = 'Starboard settings';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['information_legend']    = 'Map information';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['expert_legend']         = 'Expert settings';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['misc_legend']           = 'Miscellaneous';
+//$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['misc_legend']           = 'Miscellaneous';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_legend']      = 'Search & Router';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_legend']      = 'Geopicker';
 //$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_legend']         = 'Router (OSRM)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_legend']         = 'Editor settings';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['backend_legend']        = 'Backend settings';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium_legend']         = 'Cesium settings';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['info_legend']           = 'Information page';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['click_legend']          = 'Click settings';
+
 
 /**
  * Globals
