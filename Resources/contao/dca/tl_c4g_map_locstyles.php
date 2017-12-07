@@ -170,23 +170,22 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
             'eval'                    => array('submitOnChange'=>'true'),
             'sql'                     => "varchar(15) NOT NULL default ''"
         ),
-        'strokecolor' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['strokecolor'],
-            'default'                 => 'ee0016',
-            'inputType'               => 'text',
-            'eval'                    => array('maxlength'=>6, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard', 'mandatory'=>true ),
-            'wizard'                  => array(array('tl_c4g_map_locstyles', 'getColorPicker')),
-            'sql'                     => "varchar(6) NOT NULL default ''"
-        ),
         'strokewidth' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['strokewidth'],
             'inputType'               => 'inputUnit',
             'default'                 => '2',
             'options'                 => array('px'),
-            'eval'                    => array('rgxp'=>'digit', 'mandatory'=>true),
+            'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'long', 'mandatory'=>true),
             'sql'                     => "varchar(100) NOT NULL default ''"
+        ),
+        'strokecolor' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['strokecolor'],
+            'default'                 => 'ee0016',
+            'inputType'               => 'text',
+            'eval'                    => array('maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'long wizard', 'mandatory'=>true ),
+            'sql'                     => "varchar(6) NOT NULL default ''"
         ),
         'strokeopacity' => array
         (
@@ -194,7 +193,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
             'inputType'               => 'inputUnit',
             'default'                 => '100',
             'options'                 => array('%'),
-            'eval'                    => array('rgxp'=>'prcnt', 'tl_class'=>'w50', 'mandatory'=>true),
+            'eval'                    => array('rgxp'=>'prcnt', 'tl_class'=>'long', 'mandatory'=>true),
             'sql'                     => "varchar(100) NOT NULL default ''"
         ),
         'fillcolor' => array
@@ -202,8 +201,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['fillcolor'],
             'inputType'               => 'text',
             'default'                 => 'ee0011',
-            'eval'                    => array('maxlength'=>6, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard', 'mandatory'=>true),
-            'wizard'                  => array(array('tl_c4g_map_locstyles', 'getColorPicker')),
+            'eval'                    => array('maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'long wizard', 'mandatory'=>true),
             'sql'                     => "varchar(6) NOT NULL default ''"
         ),
         'fillopacity' => array
@@ -212,7 +210,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
             'inputType'               => 'inputUnit',
             'default'                 => '50',
             'options'                 => array('%'),
-            'eval'                    => array('rgxp'=>'prcnt', 'tl_class'=>'w50', 'mandatory'=>true),
+            'eval'                    => array('rgxp'=>'prcnt', 'tl_class'=>'long', 'mandatory'=>true),
             'sql'                     => "varchar(100) NOT NULL default ''"
         ),
         'radius' => array
@@ -421,8 +419,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['font_color'],
             'default'                 => '',
             'inputType'               => 'text',
-            'eval'                    => array('maxlength'=>6, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'),
-            'wizard'                  => array(array('tl_c4g_map_locstyles', 'getColorPicker')),
+            'eval'                    => array('maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'),
             'sql'                     => "varchar(6) NOT NULL default ''"
         ),
         'font_size' => array
@@ -438,8 +435,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_outl_color'],
             'default'                 => 'ee0016',
             'inputType'               => 'text',
-            'eval'                    => array('maxlength'=>6, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'),
-            'wizard'                  => array(array('tl_c4g_map_locstyles', 'getColorPicker')),
+            'eval'                    => array('maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'),
             'sql'                     => "varchar(6) NOT NULL default ''"
         ),
         'label_outl_width' => array
@@ -624,25 +620,5 @@ class tl_c4g_map_locstyles extends Backend
             $return[$locStyles->id] = $locStyles->name;
         }
         return $return;
-    }
-
-    /**
-     * Color picker wizard
-     * @param object
-     * @return string
-     */
-    public function getColorPicker(DataContainer $dc)
-    {
-        return ' ' . $this->generateImage('pickcolor.gif', $GLOBALS['TL_LANG']['MSC']['colorpicker'], 'style="vertical-align:top;cursor:pointer" id="moo_'.$dc->field.'"') . '
-            <script>
-                new MooRainbow("moo_'.$dc->field.'", {
-                    id:"ctrl_' . $dc->field . '",
-                    startColor:((cl = $("ctrl_' . $dc->field . '").value.hexToRgb(true)) ? cl : [255, 0, 0]),
-                    imgPath:"assets/mootools/colorpicker/1.4/images/",
-                    onComplete: function(color) {
-                      $("ctrl_' . $dc->field . '").value = color.hex.replace("#", "");
-                    }
-                });
-            </script>';
     }
 }

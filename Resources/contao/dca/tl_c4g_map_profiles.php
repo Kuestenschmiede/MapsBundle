@@ -417,8 +417,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_fillcolor'],
             'inputType'               => 'text',
             'default'                 => '4975A8',
-            'eval'                    => array('maxlength'=>6, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard', 'mandatory'=>true),
-            'wizard'                  => array(array('tl_c4g_map_profiles', 'getColorPicker')),
+            'eval'                    => array('maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard', 'mandatory'=>true),
             'sql'                     => "varchar(6) NOT NULL default '4975A8'"
         ),
         'cluster_fontcolor' => array
@@ -426,8 +425,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_fontcolor'],
             'default'                 => 'ffffff',
             'inputType'               => 'text',
-            'eval'                    => array('maxlength'=>6, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'),
-            'wizard'                  => array(array('tl_c4g_map_profiles', 'getColorPicker')),
+            'eval'                    => array('maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'),
             'sql'                     => "varchar(6) NOT NULL default 'ffffff'"
         ),
         'cluster_zoom' => array
@@ -1237,19 +1235,5 @@ class tl_c4g_map_profiles extends Backend
             $return[$themes->id] = $themes->name;
         }
         return $return;
-    }
-    public function getColorPicker(DataContainer $dc)
-    {
-        return ' ' . $this->generateImage('pickcolor.gif', $GLOBALS['TL_LANG']['MSC']['colorpicker'], 'style="vertical-align:top;cursor:pointer" id="moo_'.$dc->field.'"') . '
-            <script>
-                new MooRainbow("moo_'.$dc->field.'", {
-                    id:"ctrl_' . $dc->field . '",
-                    startColor:((cl = $("ctrl_' . $dc->field . '").value.hexToRgb(true)) ? cl : [255, 0, 0]),
-                    imgPath:"assets/mootools/colorpicker/1.4/images/",
-                    onComplete: function(color) {
-                      $("ctrl_' . $dc->field . '").value = color.hex.replace("#", "");
-                    }
-                });
-            </script>';
     }
 }
