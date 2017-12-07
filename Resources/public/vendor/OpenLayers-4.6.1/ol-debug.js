@@ -1,6 +1,6 @@
 // OpenLayers. See https://openlayers.org/
 // License: https://raw.githubusercontent.com/openlayers/openlayers/master/LICENSE.md
-// Version: v4.6.0
+// Version: v4.6.1
 ;(function (root, factory) {
   if (typeof exports === "object") {
     module.exports = factory();
@@ -14739,18 +14739,20 @@ ol.geom.flat.interiorpoint.linearRings = function(flatCoordinates, offset,
   /** @type {Array.<number>} */
   var intersections = [];
   // Calculate intersections with the horizontal line
-  var end = ends[0];
-  x1 = flatCoordinates[end - stride];
-  y1 = flatCoordinates[end - stride + 1];
-  for (i = offset; i < end; i += stride) {
-    x2 = flatCoordinates[i];
-    y2 = flatCoordinates[i + 1];
-    if ((y <= y1 && y2 <= y) || (y1 <= y && y <= y2)) {
-      x = (y - y1) / (y2 - y1) * (x2 - x1) + x1;
-      intersections.push(x);
+  for (var r = 0, rr = ends.length; r < rr; ++r) {
+    var end = ends[r];
+    x1 = flatCoordinates[end - stride];
+    y1 = flatCoordinates[end - stride + 1];
+    for (i = offset; i < end; i += stride) {
+      x2 = flatCoordinates[i];
+      y2 = flatCoordinates[i + 1];
+      if ((y <= y1 && y2 <= y) || (y1 <= y && y <= y2)) {
+        x = (y - y1) / (y2 - y1) * (x2 - x1) + x1;
+        intersections.push(x);
+      }
+      x1 = x2;
+      y1 = y2;
     }
-    x1 = x2;
-    y1 = y2;
   }
   // Find the longest segment of the horizontal line that has its center point
   // inside the linear ring.
@@ -46538,11 +46540,14 @@ ol.style.Text = function(opt_options) {
    */
   this.placement_ = options.placement !== undefined ? options.placement : ol.style.TextPlacement.POINT;
 
+  //TODO Use options.overflow directly after removing @deprecated exceedLength
+  var overflow = options.overflow === undefined ? options.exceedLength : options.overflow;
+
   /**
    * @private
    * @type {boolean}
    */
-  this.overflow_ = options.overflow !== undefined ? options.overflow : false;
+  this.overflow_ = overflow !== undefined ? overflow : false;
 
   /**
    * @private
@@ -96425,7 +96430,7 @@ goog.exportProperty(
     ol.control.ZoomToExtent.prototype,
     'un',
     ol.control.ZoomToExtent.prototype.un);
-ol.VERSION = 'v4.6.0';
+ol.VERSION = 'v4.6.1';
 OPENLAYERS.ol = ol;
 
   return OPENLAYERS.ol;
