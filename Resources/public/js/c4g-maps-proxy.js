@@ -1141,7 +1141,29 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
 
       baseLayerConfig = c4g.maps.baselayers[baseLayerUid];
 
-      if ((typeof baseLayerConfig !== "undefined") && !baseLayerConfig.layer) {
+        /**
+         * Cesium integration
+         */
+        if (typeof baseLayerConfig !== "undefined") {
+            var mapData = this.options.mapController.data;
+            if (mapData.cesium && mapData.cesium.enable) {
+                if (!this.ol3d) {
+                    this.ol3d = new olcs.OLCesium({map: this.options.mapController.map});
+                }
+                if (mapData.cesium.always || (baseLayerConfig.cesium)) {
+                    this.ol3d.setEnabled(true);
+                } else {
+                    if (this.ol3d.getEnabled()) {
+                        this.ol3d.setEnabled(false);
+                        c4g.maps.utils.redrawMapView(this.options.mapController);
+                    }
+
+                }
+
+            }
+        }
+
+        if ((typeof baseLayerConfig !== "undefined") && !baseLayerConfig.layer) {
         // create layer
         osmSourceConfigs = c4g.maps.config.osm;
         stamenSourceConfigs = c4g.maps.config.stamen;

@@ -272,7 +272,7 @@ class BaseLayerApi extends \Frontend
         if (!empty($objBaseLayer->sorting)) {
             $arrBaseLayer['sort'] = $objBaseLayer->sorting;
         }
-
+        $arrBaseLayer['cesium']= $objBaseLayer->cesium;
         return $arrBaseLayer;
     }
 

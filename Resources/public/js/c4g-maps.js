@@ -264,20 +264,6 @@ this.c4g.maps = this.c4g.maps || {};
                 target: mapData.mapDiv,
                 view: view
             });
-
-            if (mapData.cesium && mapData.cesium.enable) {
-                this.ol3d = new olcs.OLCesium({map: this.map});
-
-                if (mapData.cesium.always) {
-                    this.ol3d.setEnabled(true);
-                }
-
-            }
-
-            /*var scene = this.ol3d.getCesiumScene();
-            scene.terrainProvider = new Cesium.CesiumTerrainProvider({
-                url: 'https://assets.agi.com/stk-terrain/world'
-            });*/
         }
 
         mapData.map = this.map;
