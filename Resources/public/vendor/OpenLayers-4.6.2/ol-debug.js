@@ -1,6 +1,6 @@
 // OpenLayers. See https://openlayers.org/
 // License: https://raw.githubusercontent.com/openlayers/openlayers/master/LICENSE.md
-// Version: v4.6.1
+// Version: v4.6.2
 ;(function (root, factory) {
   if (typeof exports === "object") {
     module.exports = factory();
@@ -30873,11 +30873,11 @@ ol.renderer.canvas.VectorLayer.prototype.composeFrame = function(frameState, lay
     ol.render.canvas.rotateAtOffset(replayContext, -rotation,
         width / 2, height / 2);
     replayGroup.replay(replayContext, transform, rotation, skippedFeatureUids);
-    if (vectorSource.getWrapX() && projection.canWrapX()) {
+    if (vectorSource.getWrapX() && projection.canWrapX() &&
+        !ol.extent.containsExtent(projectionExtent, extent)) {
       var startX = extent[0];
       var worldWidth = ol.extent.getWidth(projectionExtent);
       var world = 0;
-      startX -= worldWidth;
       var offsetX;
       while (startX < projectionExtent[0]) {
         --world;
@@ -30888,7 +30888,6 @@ ol.renderer.canvas.VectorLayer.prototype.composeFrame = function(frameState, lay
       }
       world = 0;
       startX = extent[2];
-      startX += worldWidth;
       while (startX > projectionExtent[2]) {
         ++world;
         offsetX = worldWidth * world;
@@ -31018,7 +31017,8 @@ ol.renderer.canvas.VectorLayer.prototype.prepareFrame = function(frameState, lay
       vectorLayerRenderBuffer * resolution);
   var projectionExtent = viewState.projection.getExtent();
 
-  if (vectorSource.getWrapX() && viewState.projection.canWrapX()) {
+  if (vectorSource.getWrapX() && viewState.projection.canWrapX() &&
+      !ol.extent.containsExtent(projectionExtent, frameState.extent)) {
     // For the replay group, we need an extent that intersects the real world
     // (-180° to +180°). To support geometries in a coordinate range from -540°
     // to +540°, we add at least 1 world width on each side of the projection
@@ -96430,7 +96430,7 @@ goog.exportProperty(
     ol.control.ZoomToExtent.prototype,
     'un',
     ol.control.ZoomToExtent.prototype.un);
-ol.VERSION = 'v4.6.1';
+ol.VERSION = 'v4.6.2';
 OPENLAYERS.ol = ol;
 
   return OPENLAYERS.ol;
