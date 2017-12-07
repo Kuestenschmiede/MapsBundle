@@ -88,8 +88,8 @@ class ResourceLoader extends coreResourceLoader
         }
 
         if ($resources['cesium']) {
-            parent::loadJavaScriptRessource('cesium', self::VENDOR_PATH . 'ol-cesium-v1.32/Cesium/Cesium.js');
-            parent::loadJavaScriptRessource('olcesium', self::VENDOR_PATH . 'ol-cesium-v1.32/olcesium.js');
+            parent::loadJavaScriptRessource('cesium', self::VENDOR_PATH . 'ol-cesium-v1.33/Cesium/Cesium.js');
+            parent::loadJavaScriptRessource('olcesium', self::VENDOR_PATH . 'ol-cesium-v1.33/olcesium.js');
         }
 
         // core scripts (1|2)
