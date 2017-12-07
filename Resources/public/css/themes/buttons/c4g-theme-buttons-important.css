@@ -648,9 +648,9 @@ h4.c4g-router-instructions-header > em {
 .ol-attribution:not(.ol-collapsed) button:hover:after {
   display: none;
 }
-.ol-attribution.ol-logo-only ul {
-  display: block;
-}
+/*.ol-attribution.ol-logo-only ul {*/
+  /*display: block;*/
+/*}*/
 .ol-attribution.ol-uncollapsible {
   bottom: 0;
   right: 0;
@@ -660,13 +660,13 @@ h4.c4g-router-instructions-header > em {
 
   border-radius: 4px 0 0;
 }
-.ol-attribution.ol-logo-only {
-  bottom: .4em;
-  height: 1.1em;
-  line-height: 1em;
-  background: 0 0;
-}
-.ol-attribution.ol-logo-only button,
+/*.ol-attribution.ol-logo-only {*/
+  /*bottom: .4em;*/
+  /*height: 1.1em;*/
+  /*line-height: 1em;*/
+  /*background: 0 0;*/
+/*}*/
+/*.ol-attribution.ol-logo-only button,*/
 .ol-attribution.ol-uncollapsible button {
   display: none;
 }
