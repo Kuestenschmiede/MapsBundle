@@ -2,11 +2,6 @@
   display: none;
 }
 
-
-.c4g_map button, .c4g_map .button, .c4g_map input[type="submit"], .c4g_map input[type="reset"], .c4g_map input[type="button"] {
-    position: inherit!important;
-}
-
 /*
  *  Controls - general
  */
@@ -481,8 +476,8 @@ button.ol-zoom-out {
   overflow: visible;
   position: relative;
   margin: 0;
-  height: 4em;
-  width: 26px;
+  height: 4em!important;
+  width: 26px!important;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
@@ -592,7 +587,7 @@ h4.c4g-router-instructions-header > em {
   padding-right: 5px;
   border: none;
   margin-top: 1px;
-  height: 36px!important;
+  height: 32px!important;
   display: block;
   float: left;
   border-radius: 3px 0 0 3px;

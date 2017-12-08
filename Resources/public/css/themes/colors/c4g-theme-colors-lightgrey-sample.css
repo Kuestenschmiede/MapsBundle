@@ -1,4 +1,4 @@
-﻿
+
 /*
  *  Controls - general
  */
@@ -84,7 +84,10 @@
 .c4g-starboard-headline {
   color: white;
   text-shadow: 0 0 1px black;
-
+}
+.c4g-starboard-headline-link {
+    color: #000;
+    text-shadow: 0 0 1px white;
 }
 .c4g-portside-top-toolbar {
   border-color: white;    
