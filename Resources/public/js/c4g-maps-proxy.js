@@ -902,7 +902,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
           // @TODO error-messages
           //   1) Visible message 4 users (i18n)
           //   2) Technical console.warn
-          console.warn('An error occured while trying to load the baselayers...');
+          console.warn('An error occured while trying to load the baselayers. Do you have configured a default profile with baselayers?');
           self.options.mapController.spinner.hide();
           return false;
         })

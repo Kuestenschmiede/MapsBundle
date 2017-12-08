@@ -158,11 +158,6 @@ this.c4g.maps = this.c4g.maps || {};
             }
         }
 
-        // set default baseLayer
-        // defaultBaseLayer = new ol.layer.Tile({
-        //     source: new ol.source.OSM()
-        // });
-
         if (mapData.minZoom && mapData.minZoom > 0) {
             minZoom = mapData.minZoom;
         } else {
