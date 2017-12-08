@@ -25,8 +25,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['osm_style_url3'] 		= array('OSM UR
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['osm_style_url4'] 		= array('OSM URL 4', 'Anna neljäs URL OpenStreetMap-tyyliä varten.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['osm_keyname']    		= array('OSM näppäinnimi', 'Anna sisäinen OSM näppäinnimi (valinnainen).');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['mapbox_type']   		= array('Mapbox API', 'Valitse mapboxin API tyyppi.');
-$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['here_type']   			= array('HERE', 'Bitte wählen Sie den Kartenstil aus.');
-$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['thunderforest_type']      = array('Thunderforest', 'Bitte wählen Sie den Kartenstil aus.');
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['here_type']   		= array('HERE', 'Bitte wählen Sie den Kartenstil aus.');
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['thunderforest_type']  = array('Thunderforest', 'Bitte wählen Sie den Kartenstil aus.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['bing_style']     		= array('Bing Maps tyyli', 'Valitse jokin annetuista Bing Maps tyyleistä.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['bing_key']       		= array('Bing sovellusavain', 'Kirjoita Bing sovellusavain tähän. Saat sen täältä: http://bingmapsportal.com/.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['google_style']   		= array('Google Maps tyyli', 'Anna jokin annetuista Google Maps tyyleistä.');
@@ -37,6 +37,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['protect_baselayer'] 	= array('Prot
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['permitted_groups'] 	= array('Sallitut ryhmät', 'Ryhmät joille pohjakerros on näkyvissä.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['api_key']       		= array('Pääsy Token / API Avain', 'Aseta avain käyttäjätilillesi.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['app_id']       		= array('Style ID / Avain', 'Lisää avain hakemukseesi.');
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['cesium']              = array('Activate cesium', 'If cesium enabled on map profile you can activate the globe for this map.');
 
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['wms_url'] = array('URL', '');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['wms_params_layers'] = array('Kerros', '');
@@ -121,3 +122,4 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['overlays']   = array('Päällys ke
  */
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['general_legend']			= 'Yleinen';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['protection_legend']	    = 'Pääsyn suojaus';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['cesium_legend']           = 'Cesium settings';

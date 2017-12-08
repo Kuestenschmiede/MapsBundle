@@ -202,8 +202,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_point_locstyle'] = array('Loc
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_interim_locstyle'] = array('Location-Stil für Zwischenziele', 'Location-Stil für Zwischenziele');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_alternative'] = array('Alternativroute','Sollen Alternativrouten dargestellt werden?');
 
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium'] = array('Cesium verwenden', 'Cesium verwenden');
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium_always'] = array('Cesium immer verwenden', 'Soll Cesium immer aktiviert sein?');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium'] = array('Cesium verwenden', 'Mit Cesium wird die 2D Karte in einen Globus umgewandelt.');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium_always'] = array('Cesium immer verwenden', 'Soll Cesium für jede Basiskarte aktiviert sein? Falls nicht, kann Cesium auch für einzelne Karten in den Basiskarteneinstellungen aktiviert werden.');
 
 
 /**

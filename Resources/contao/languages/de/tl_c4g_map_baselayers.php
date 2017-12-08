@@ -38,6 +38,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['protect_baselayer'] 		= array('Die
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['permitted_groups'] 		= array('Berechtigte Gruppen', 'Die Gruppen, für die diese Basiskarte sichtbar ist.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['api_key']       			= array('Access Token / API Key', 'Bitte geben Sie hier den Schlüssel zu Ihrem Nutzerkonto an.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['app_id']       			= array('Style ID / Anwendungsschlüssel', 'Bitte geben Sie hier den Identifikationsschlüssel für Ihre Voreinstellungen an (z.B. bei Mapbox kontoname/style).');
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['cesium']                  = array('Cesium einschalten', 'Wenn im Kartenrofil Cesium aktiviert ist, kann über diesen Schalter eine einzelne Basikarte als Globus dargestellt werden.');
 
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['wms_url'] = array('URL', 'Geben Sie eine erreichbare URL an.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['wms_params_layers'] = array('Layer', 'Welche Layer sollen dargestellt werden?');
@@ -119,3 +120,4 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['overlays']   = array('Overlaykarte
  */
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['general_legend']		= 'Allgemeine Daten';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['protection_legend']	= 'Zugriffsschutz';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['cesium_legend']       = 'Cesium Einstellungen';

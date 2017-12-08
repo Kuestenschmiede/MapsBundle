@@ -37,6 +37,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['protect_baselayer'] 	= array('Prot
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['permitted_groups'] 	= array('Permitted groups', 'The groups for which the base layer is visible.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['api_key']       		= array('Access Token / API Key', 'Please insert key for your user account.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['app_id']       		= array('Style ID / Key', 'Please insert key for your application.');
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['cesium']              = array('Activate cesium', 'If cesium enabled on map profile you can activate the globe for this map.');
 
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['wms_url'] = array('URL', '');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['wms_params_layers'] = array('Layer', '');
@@ -120,3 +121,4 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['overlays']   = array('Overlay laye
  */
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['general_legend']			= 'General';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['protection_legend']	    = 'Access protection';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['cesium_legend']           = 'Cesium settings';

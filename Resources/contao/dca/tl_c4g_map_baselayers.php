@@ -114,23 +114,23 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] = array
     'palettes' => array
     (
         '__selector__'                => array('provider','osm_style','protect_baselayer'),
-        'default'                     => '{general_legend},name,display_name,provider,attribution,minzoomlevel,maxzoomlevel,cesium;'.
+        'default'                     => '{general_legend},name,display_name,provider,attribution,minzoomlevel,maxzoomlevel;{cesium_legend:hide},cesium;'.
                                          '{protection_legend:hide},protect_baselayer;',
-        'osm'                         => '{general_legend},name,display_name,provider,osm_style,attribution,minzoomlevel,maxzoomlevel,cesium;'.
+        'osm'                         => '{general_legend},name,display_name,provider,osm_style,attribution,minzoomlevel,maxzoomlevel;{cesium_legend:hide},cesium;'.
                                          '{protection_legend:hide},protect_baselayer;',
-        'mapbox'                      => '{general_legend},name,display_name,provider,mapbox_type,app_id,api_key,attribution,minzoomlevel,maxzoomlevel,cesium;'.
+        'mapbox'                      => '{general_legend},name,display_name,provider,mapbox_type,app_id,api_key,attribution,minzoomlevel,maxzoomlevel;{cesium_legend:hide},cesium;'.
                                          '{protection_legend:hide},protect_baselayer;',
-        'here'                        => '{general_legend},name,display_name,provider,here_type,app_id,api_key,attribution,minzoomlevel,maxzoomlevel,cesium;'.
+        'here'                        => '{general_legend},name,display_name,provider,here_type,app_id,api_key,attribution,minzoomlevel,maxzoomlevel;{cesium_legend:hide},cesium;'.
                                          '{protection_legend:hide},protect_baselayer;',
-        'thunder'                     => '{general_legend},name,display_name,provider,thunderforest_type,api_key,attribution,minzoomlevel,maxzoomlevel,cesium;'.
+        'thunder'                     => '{general_legend},name,display_name,provider,thunderforest_type,api_key,attribution,minzoomlevel,maxzoomlevel;{cesium_legend:hide},cesium;'.
                                          '{protection_legend:hide},protect_baselayer;',
-//        'google'                      => '{general_legend},name,display_name,provider,google_style,attribution,minzoomlevel,maxzoomlevel,cesium;'.
+//        'google'                      => '{general_legend},name,display_name,provider,google_style,attribution,minzoomlevel,maxzoomlevel;{cesium_legend:hide},cesium;'.
 //                                         '{protection_legend:hide},protect_baselayer;',
-        'bing'                        => '{general_legend},name,display_name,provider,bing_style,bing_key,attribution,minzoomlevel,maxzoomlevel,cesium;'.
+        'bing'                        => '{general_legend},name,display_name,provider,bing_style,bing_key,attribution,minzoomlevel,maxzoomlevel;{cesium_legend:hide},cesium;'.
                                          '{protection_legend:hide},protect_baselayer;',
-        'wms'                         => '{general_legend},name,display_name,provider,wms_url,wms_params_layers,wms_params_version,wms_params_format,wms_params_transparent,wms_gutter,attribution,minzoomlevel,maxzoomlevel,cesium;'.
+        'wms'                         => '{general_legend},name,display_name,provider,wms_url,wms_params_layers,wms_params_version,wms_params_format,wms_params_transparent,wms_gutter,attribution,minzoomlevel,maxzoomlevel;{cesium_legend:hide},cesium;'.
                                          '{protection_legend:hide},protect_baselayer;',
-        'owm'                         => '{general_legend},name,display_name,provider,app_id,api_key,attribution,minzoomlevel,maxzoomlevel,cesium;'.
+        'owm'                         => '{general_legend},name,display_name,provider,app_id,api_key,attribution,minzoomlevel,maxzoomlevel;{cesium_legend:hide},cesium;'.
                                          '{protection_legend:hide},protect_baselayer;',
     ),
 
@@ -481,7 +481,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] = array
         ),
         'cesium' => array
         (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['cesium_always'],
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['cesium'],
             'exclude'                 => true,
             'default'                 => '',
             'inputType'               => 'checkbox',

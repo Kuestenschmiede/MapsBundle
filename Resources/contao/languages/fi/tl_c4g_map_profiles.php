@@ -196,8 +196,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_point_locstyle'] = array('Loc
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_interim_locstyle'] = array('Locstyle for interim-locations', '\'Locstyle for interim-locations');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_alternative'] = array('Alternative routes','Do you want to allow alternative routes?');
 
-
-
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium'] = array('Use cesium', 'With cesium you can transform the 2D map in a globe.');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium_always']  = array('Use cesium always', 'Do you want to use cesium for every basemap? If not you can activate single maps in the basemap settings.');
 
 /**
  * References
@@ -254,7 +254,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_legend']         = 'Editorin 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['backend_legend']        = 'Backend asetukset';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['info_legend']           = 'Information page';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['click_legend']          = 'Click settings';
-
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium_legend']         = 'Cesium settings';
 
 /**
  * Globals
