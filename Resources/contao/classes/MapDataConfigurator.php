@@ -102,6 +102,16 @@ class MapDataConfigurator
         if (!$profile) {
             if (!$options['type'] == 'geopicker') {
                 $profile = C4gMapProfilesModel::findBy('is_backend_geopicker_default',1);
+                if (!$profile) {
+                    $profile = C4gMapProfilesModel::findBy('is_default',1);
+                    if (!$profile) {
+                        $profiles = C4gMapProfilesModel::findAll();
+                        if ($profiles && (count($profiles) > 0)) {
+                            $length = count($profiles);
+                            $profile = $profiles[$length-1];
+                        }
+                    }
+                }
             }
             if ($profile) {
                 $profileId = $profile->id;

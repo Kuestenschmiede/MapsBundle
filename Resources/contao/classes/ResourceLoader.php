@@ -234,7 +234,13 @@ class ResourceLoader extends coreResourceLoader
             if (!$profile) {
                 $profile = C4gMapProfilesModel::findBy('is_default',1);
                 if (!$profile) {
-                    return false;
+                    $profiles = C4gMapProfilesModel::findAll();
+                    if ($profiles && (count($profiles) > 0)) {
+                        $length = count($profiles);
+                        $profile = $profiles[$length-1];
+                    } else {
+                        return;
+                    }
                 }
             }
         }
@@ -339,7 +345,13 @@ class ResourceLoader extends coreResourceLoader
         if (!$profile) {
             $profile = C4gMapProfilesModel::findBy('is_default',1);
             if (!$profile) {
-                return;
+                $profiles = C4gMapProfilesModel::findAll();
+                if ($profiles && (!empty($profiles))) {
+                    $length = count($profiles);
+                    $profile = $profiles[$length-1];
+                } else {
+                    return;
+                }
             }
         }
         self::loadResourcesForProfile($profile->id, true, $profile);
