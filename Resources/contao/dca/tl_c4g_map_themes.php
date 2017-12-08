@@ -278,10 +278,12 @@ class tl_c4g_map_themes extends Backend
         }
 
         $dir = TL_ROOT . '/files/con4gis/examples/themes/'.$subDir.'/';
-        if (!file_exists($dir)) {
-            mkdir($dir, 0777, true);
-            $this->copyFolder($maps3Path,$dir);
+        if (file_exists($dir)) {
+            rmdir($dir);
         }
+
+        mkdir($dir, 0777, true);
+        $this->copyFolder($maps3Path,$dir);
 
         return $result;
     }

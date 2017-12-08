@@ -71,15 +71,3 @@ input,
   -o-transition: background .5s, color .5s, text-shadow .5s;
   transition: background .5s, color .5s, text-shadow .5s;
 }
-
-/*.c4g-starboard-container {*/
-  /*transition-property: height, width, top, right;*/
-  /*transition-duration: 0.5s;*/
-  /*transition-timing-function: ease;*/
-/*}*/
-
-/*.c4g-portside-container {*/
-  /*transition-property: height, width, top, left;*/
-  /*transition-duration: 0.5s;*/
-  /*transition-timing-function: ease;*/
-/*}*/

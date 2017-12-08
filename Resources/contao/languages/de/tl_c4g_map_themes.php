@@ -37,4 +37,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_themes']['external_icons']  = array('Eigene Icon
 // Palettes
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['theme_legend']   = 'Kartenthema-Einstellungen';
 
-$GLOBALS['TL_LANG']['tl_c4g_map_themes']['example_info']   = 'Beispieldateien unter /files/con4gis/examples/themes';
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['example_info']   =
+    'Beispieldateien wurden Ihnen unter /files/con4gis/examples/themes zur Verfügung gestellt.<br>'.
+    'Sollten Sie Dateien im Files Verzeichnis nutzen wollen, dann denken Sie daran diese zu veröffentlichen.<br>'.
+    'Achtung! Der Beispielorder wird immer wieder mit aktuellen Daten überschrieben. Kopieren Sie sich die Dateien für Ihr eigenes Theme.';
