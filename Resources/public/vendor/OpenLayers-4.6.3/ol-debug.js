@@ -1,6 +1,6 @@
 // OpenLayers. See https://openlayers.org/
 // License: https://raw.githubusercontent.com/openlayers/openlayers/master/LICENSE.md
-// Version: v4.6.2
+// Version: v4.6.3
 ;(function (root, factory) {
   if (typeof exports === "object") {
     module.exports = factory();
@@ -25732,8 +25732,9 @@ ol.renderer.canvas.ImageLayer.prototype.prepareFrame = function(frameState, laye
         projection = sourceProjection;
       }
     }
-    if (this.vectorRenderer_) {
-      var context = this.vectorRenderer_.context;
+    var vectorRenderer = this.vectorRenderer_;
+    if (vectorRenderer) {
+      var context = vectorRenderer.context;
       var imageFrameState = /** @type {olx.FrameState} */ (ol.obj.assign({}, frameState, {
         size: [
           ol.extent.getWidth(renderedExtent) / viewResolution,
@@ -25743,12 +25744,12 @@ ol.renderer.canvas.ImageLayer.prototype.prepareFrame = function(frameState, laye
           rotation: 0
         }))
       }));
-      if (this.vectorRenderer_.prepareFrame(imageFrameState, layerState)) {
+      if (vectorRenderer.prepareFrame(imageFrameState, layerState) && vectorRenderer.replayGroupChanged) {
         context.canvas.width = imageFrameState.size[0] * pixelRatio;
         context.canvas.height = imageFrameState.size[1] * pixelRatio;
-        this.vectorRenderer_.composeFrame(imageFrameState, layerState, context);
+        vectorRenderer.composeFrame(imageFrameState, layerState, context);
+        this.image_ = new ol.ImageCanvas(renderedExtent, viewResolution, pixelRatio, context.canvas);
       }
-      this.image_ = new ol.ImageCanvas(renderedExtent, viewResolution, pixelRatio, context.canvas);
     } else {
       image = imageSource.getImage(
           renderedExtent, viewResolution, pixelRatio, projection);
@@ -30762,6 +30763,12 @@ ol.renderer.canvas.VectorLayer = function(vectorLayer) {
   this.replayGroup_ = null;
 
   /**
+   * A new replay group had to be created by `prepareFrame()`
+   * @type {boolean}
+   */
+  this.replayGroupChanged = true;
+
+  /**
    * @type {CanvasRenderingContext2D}
    */
   this.context = ol.dom.createCanvasContext2D();
@@ -31035,6 +31042,7 @@ ol.renderer.canvas.VectorLayer.prototype.prepareFrame = function(frameState, lay
       this.renderedRevision_ == vectorLayerRevision &&
       this.renderedRenderOrder_ == vectorLayerRenderOrder &&
       ol.extent.containsExtent(this.renderedExtent_, extent)) {
+    this.replayGroupChanged = false;
     return true;
   }
 
@@ -31092,6 +31100,7 @@ ol.renderer.canvas.VectorLayer.prototype.prepareFrame = function(frameState, lay
   this.renderedExtent_ = extent;
   this.replayGroup_ = replayGroup;
 
+  this.replayGroupChanged = true;
   return true;
 };
 
@@ -96430,7 +96439,7 @@ goog.exportProperty(
     ol.control.ZoomToExtent.prototype,
     'un',
     ol.control.ZoomToExtent.prototype.un);
-ol.VERSION = 'v4.6.2';
+ol.VERSION = 'v4.6.3';
 OPENLAYERS.ol = ol;
 
   return OPENLAYERS.ol;

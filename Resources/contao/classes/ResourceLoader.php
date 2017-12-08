@@ -77,9 +77,11 @@ class ResourceLoader extends coreResourceLoader
         if ($GLOBALS['con4gis']['maps']['debug']) {
             $staticOption = '';
             $suffixOl = '-debug';
+            $suffixCesium = '';
         } else {
             $staticOption = '';
             $suffixOl = '';
+            $suffixCesium = '';
         }
 
         // third-party scripts
@@ -88,8 +90,8 @@ class ResourceLoader extends coreResourceLoader
         }
 
         if ($resources['cesium']) {
-            parent::loadJavaScriptRessource('cesium', self::VENDOR_PATH . 'ol-cesium-v1.33/Cesium/Cesium.js');
-            parent::loadJavaScriptRessource('olcesium', self::VENDOR_PATH . 'ol-cesium-v1.33/olcesium.js');
+            parent::loadJavaScriptRessource('cesium', self::VENDOR_PATH . 'ol-cesium-'.$GLOBALS['con4gis']['maps']['ol-cesium-version'].'/Cesium/Cesium.js');
+            parent::loadJavaScriptRessource('olcesium', self::VENDOR_PATH . 'ol-cesium-'.$GLOBALS['con4gis']['maps']['ol-cesium-version'].'/olcesium' . $suffixCesium . '.js');
         }
 
         // core scripts (1|2)
