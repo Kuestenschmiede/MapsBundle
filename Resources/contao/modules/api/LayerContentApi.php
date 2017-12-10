@@ -580,7 +580,7 @@ class LayerContentApi extends \Controller
                                     'projection' => 'EPSG:4326',
                                     'popup' => array(
                                         'async' => false,
-                                        'content' =>  \Contao\Controller::replaceInsertTags($popupContent),
+                                        'content' =>  $popupContent,
                                         'routing_link' => $objLayer->routing_to
                                     ),
                                     'tooltip' =>  \Contao\Controller::replaceInsertTags($result->$tooltipField),
@@ -824,7 +824,7 @@ class LayerContentApi extends \Controller
                         'projection' => 'EPSG:4326',
                         'popup' => array(
                             'async' => $popup_async,
-                            'content' =>  \Contao\Controller::replaceInsertTags($popup_content),
+                            'content' =>  $popup_content,
                             'routing_link' => $objLayer->routing_to,
                             'showPopupOnActive'=> $objLayer->showPopupOnActive
                         ),
@@ -868,7 +868,7 @@ class LayerContentApi extends \Controller
                     $arrGeoJson['properties'] = array(
                         'popup' => array(
                             'async' => $popup_async,
-                            'content' =>  \Contao\Controller::replaceInsertTags($popup_content),
+                            'content' =>  $popup_content,
                             'routing_link' => $objLayer->routing_to
                         ),
                         'projection' => $projection,

@@ -431,9 +431,9 @@ class LayerApi extends \Frontend
             $linkedLayer = C4gMapsModel::findByPk($objLayer->link_id);
             // check if linked element is overpass request and assign correct content values
             if ($linkedLayer->location_type == "overpass") {
-                $arrLayerData['content'] = \Contao\Controller::replaceInsertTags($this->getContentForType($linkedLayer));
+                $arrLayerData['content'] = $this->getContentForType($linkedLayer);
             } else {
-                $arrLayerData['content'] = \Contao\Controller::replaceInsertTags($this->getContentForType($objLayer));
+                $arrLayerData['content'] = $this->getContentForType($objLayer);
                 $arrLayerData['hide'] = $objLayer->data_hidelayer;
             }
             // set zooms of links
@@ -446,7 +446,7 @@ class LayerApi extends \Frontend
                 );
             }
         } else {
-            $arrLayerData['content'] = \Contao\Controller::replaceInsertTags($this->getContentForType($objLayer));
+            $arrLayerData['content'] = $this->getContentForType($objLayer);
         }
         if ($objLayer->location_type === 'startab') {
             $arrLayerData['awesomeicon'] = $objLayer->awesomeicon;
