@@ -22,9 +22,9 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] = array
     (
         'dataContainer'               => 'Table',
         'enableVersioning'            => true,
-        'onsubmit_callback'             => array(
-            array('\con4gis\CoreBundle\Resources\contao\classes\C4GAutomator', 'purgeApiCache')
-        ),
+//        'onsubmit_callback'             => array(
+//            array('\con4gis\CoreBundle\Resources\contao\classes\C4GAutomator', 'purgeApiCache')
+//        ),
         'sql'                         => array
         (
             'keys' => array
@@ -237,7 +237,7 @@ class tl_c4g_map_themes extends Backend
         if(!$handle)
             return false;
 
-        while ($file = @readdir ($handle))
+        while ($file = @readdir($handle))
         {
             copy($source.$file, $dest.$file);
         }
@@ -277,13 +277,22 @@ class tl_c4g_map_themes extends Backend
 
         }
 
-        $dir = TL_ROOT . '/files/con4gis/examples/themes/'.$subDir.'/';
-        if (file_exists($dir)) {
-            rmdir($dir);
+        try {
+            $dir = TL_ROOT . '/files/con4gis/examples/themes/'.$subDir.'/';
+            if (is_dir($dir)) {
+                foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path)) as $filename) {
+                    if ($filename->isDir()) continue;
+                    unlink($filename);
+                }
+                rmdir($dir);
+            }
+
+            mkdir($dir, 0777, true);
+            $this->copyFolder($maps3Path,$dir);
+        }catch(Exception $e) {
+            //do nothing
         }
 
-        mkdir($dir, 0777, true);
-        $this->copyFolder($maps3Path,$dir);
 
         return $result;
     }
