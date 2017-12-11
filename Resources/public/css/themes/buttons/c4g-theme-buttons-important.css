@@ -735,6 +735,8 @@ button.c4g-popup-close {
   background: none;
   box-shadow: none;
   text-shadow: none;
+  padding: 0!important;
+  margin: 0!important;
 }
 button.c4g-popup-route-from,
 button.c4g-popup-route-to {
