@@ -190,6 +190,13 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
               $(this).parent().removeClass(c4g.maps.constant.css.OPEN).addClass(c4g.maps.constant.css.CLOSE);
           }
 
+          if (self.proxy.options.mapController.rightSlideElements) {
+              self.proxy.options.mapController.rightSlideElements.forEach(function (element) {
+                  $(element).css('right', self.starboard.container.offsetWidth);
+              });
+          }
+          $(self.starboard.element).css('right', self.starboard.container.offsetWidth);
+
         if (self.proxy.activeBaselayerId !== itemUid) {
           self.proxy.showBaseLayer(itemUid);
           if(this.nextSibling){
