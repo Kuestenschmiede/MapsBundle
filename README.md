@@ -38,6 +38,7 @@ implemented features
         - MapBox (Studio & Classic Styles)
         - HERE (6 Styles)
         - Thunderforest (9 Styles)
+        - Klokan (OpenMapTiles & TileHosting Styles)
         - Custom
     - Bing (3 Styles)
     - other

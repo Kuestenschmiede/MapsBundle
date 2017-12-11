@@ -144,6 +144,29 @@ this.c4g.maps.config = this.c4g.maps.config || {};
   };
 
     /**
+     * klokanSourceDefinitions
+     */
+    //ToDo not ready
+    c4g.maps.config.klokan = {
+
+        OpenMapTiles: {
+            attributions: '© <a target="_blank" href="https://openmaptiles.org/">OpenMapTiles</a>' + ' ' +
+            ol.source.OSM.ATTRIBUTION,
+            minZoom: 0,
+            maxZoom: 22
+        },
+
+        TileHosting: {
+            format: new ol.format.MVT(),
+            tileGrid:  ol.tilegrid.createXYZ({tileSize: 512, maxZoom: 22}),
+            attributions: '© <a target="_blank" href="https://tilehosting.com/">TileHosting</a>' + ' ' +
+            ol.source.OSM.ATTRIBUTION,
+            minZoom: 0,
+            maxZoom: 22
+        }
+    };
+
+    /**
      * hereSourceDefinitions
      */
     c4g.maps.config.here = {
