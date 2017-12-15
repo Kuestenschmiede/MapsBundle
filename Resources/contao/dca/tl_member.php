@@ -1,4 +1,6 @@
-<?php if (!defined('TL_ROOT')) die('You can not access this file directly!');
+<?php use con4gis\MapsBundle\Resources\contao\classes\Utils;
+
+if (!defined('TL_ROOT')) die('You can not access this file directly!');
 
 /**
  * con4gis - the gis-kit
