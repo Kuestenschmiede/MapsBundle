@@ -372,7 +372,7 @@ class LayerContentApi extends \Controller
                 $geoyField = $geoy;
                 $geolocation = '';
                 if (!$geox && !$geoy) {
-                   $geolocation = $arrConfig['geolocation'];
+                    $geolocation = $arrConfig['geolocation'];
                 }
                 $tooltipField = $arrConfig['tooltip'];
                 $labelField = $arrConfig['label'];
@@ -553,50 +553,60 @@ class LayerContentApi extends \Controller
                         else{
                             $link = $this->replaceInsertTags($objLayer->loc_linkurl);
                         }
+                        $event = false;
+                        for($i = 0; $i < count($arrReturnData); $i++){
+                            if($arrReturnData[0]['data']['geometry']['coordinates'] == $coordinates)
+                            {
+                                $arrReturnData[0]['data']['properties']['popup']['content'] .= $popupContent;
+                                $event = true;
+                            }
+                        }
 
-
-                        $arrReturnData[] = array
-                        (
-                            "id" => $result->id,
-                            "type" => 'GeoJSON',
-                            "format" => "GeoJSON",
-                            "origType" => "table",
-                            "locationStyle" => $locstyle,
-                            "cluster_fillcolor" => $objLayer->cluster_fillcolor,
-                            "cluster_fontcolor" => $objLayer->cluster_fontcolor,
-                            "cluster_zoom" => $objLayer->cluster_zoom,
-                            "loc_linkurl" => $link,
-                            "hover_location" => $objLayer->hover_location,
-                            "hover_style" => $objLayer->hover_style,
-                            "data" => $arrGeoJson = array
+                        if(!$event){
+                            $arrReturnData[] = array
                             (
-                                'type' => 'Feature',
-                                'geometry' => array(
-                                    'type' => 'Point',
-                                    'coordinates' => $coordinates,
-                                ),
-                                'properties' => array
+                                "id" => $result->id,
+                                "type" => 'GeoJSON',
+                                "format" => "GeoJSON",
+                                "origType" => "table",
+                                "locationStyle" => $locstyle,
+                                "cluster_fillcolor" => $objLayer->cluster_fillcolor,
+                                "cluster_fontcolor" => $objLayer->cluster_fontcolor,
+                                "cluster_zoom" => $objLayer->cluster_zoom,
+                                "loc_linkurl" => $link,
+                                "hover_location" => $objLayer->hover_location,
+                                "hover_style" => $objLayer->hover_style,
+                                "data" => $arrGeoJson = array
                                 (
-                                    'projection' => 'EPSG:4326',
-                                    'popup' => array(
-                                        'async' => false,
-                                        'content' =>  $popupContent,
-                                        'routing_link' => $objLayer->routing_to
+                                    'type' => 'Feature',
+                                    'geometry' => array(
+                                        'type' => 'Point',
+                                        'coordinates' => $coordinates,
                                     ),
-                                    'tooltip' =>  \Contao\Controller::replaceInsertTags($result->$tooltipField),
-                                    'label' =>  \Contao\Controller::replaceInsertTags($result->$labelField),
-                                    'zoom_onclick' => $objLayer -> loc_onclick_zoomto
+                                    'properties' => array
+                                    (
+                                        'projection' => 'EPSG:4326',
+                                        'popup' => array(
+                                            'async' => false,
+                                            'content' =>  $popupContent,
+                                            'routing_link' => $objLayer->routing_to
+                                        ),
+                                        'tooltip' =>  \Contao\Controller::replaceInsertTags($result->$tooltipField),
+                                        'label' =>  \Contao\Controller::replaceInsertTags($result->$labelField),
+                                        'zoom_onclick' => $objLayer -> loc_onclick_zoomto
+                                    ),
                                 ),
-                            ),
-                            "settings" => array
-                            (
-                                "loadAsync" => false,
-                                "refresh" => false,
-                                "crossOrigine" => false,
-                                "boundingBox" => false,
-                                "cluster" => $objLayer->cluster_locations ? ($objLayer->cluster_distance ? $objLayer->cluster_distance : 20) : false,
-                            )
-                        );
+                                "settings" => array
+                                (
+                                    "loadAsync" => false,
+                                    "refresh" => false,
+                                    "crossOrigine" => false,
+                                    "boundingBox" => false,
+                                    "cluster" => $objLayer->cluster_locations ? ($objLayer->cluster_distance ? $objLayer->cluster_distance : 20) : false,
+                                )
+                            );
+                        }
+
                     }
                 }
                 break;
