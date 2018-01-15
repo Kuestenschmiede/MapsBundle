@@ -298,13 +298,30 @@ class LayerContentApi extends \Controller
                 $qAnd = '';
                 $addBeWhereClause = '';
                 $and = '';
+                $qIn = '';
 
                 $arrConfig = $GLOBALS['con4gis']['maps']['sourcetable'][$sourceTable];
                 $ptableArr = explode(',', $arrConfig['ptable']);
+                $ctableArr = explode(',', $arrConfig['ctable']);
                 $ptableFieldArr = explode(',', $arrConfig['ptable_field']);
                 $ptableCompareFieldArr = explode(',', $arrConfig['ptable_compare_field']);
                 $ptableBlobArr = explode(',', $arrConfig['ptable_blob']);
 
+                //check child values
+                if($arrConfig['ctable'] && $arrConfig['ctable_option']) {
+                    foreach($ctableArr as $key=>$ctable) {
+                        $queryChild ="SELECT ".$arrConfig['ctable_option']." FROM ".$arrConfig['ctable']." WHERE id=".$objLayer->tab_pid1;
+                        $child = \Database::getInstance()->prepare($queryChild)->execute()->fetchAssoc();
+                        $sqlquery = "SELECT tid FROM ".$arrConfig['ctable']." WHERE ".$arrConfig['ctable_option']."=?";
+                        $idsfromChild= \Database::getInstance()->prepare($sqlquery)->execute($child[$arrConfig['ctable_option']])->fetchAllAssoc();
+                        $qIn .= 'AND id IN(';
+                        foreach($idsfromChild as $value){
+                            $qIn .= $value['tid'] . ',';
+                        }
+                        $qIn = rtrim($qIn,',') . ')';
+
+                    }
+                }
                 //check parent values
                 if ($arrConfig['ptable']) {
 
@@ -363,7 +380,7 @@ class LayerContentApi extends \Controller
                     $sourceTable = $arrConfig['sourcetable'];
                 }
 
-                $query = "SELECT * FROM `$sourceTable`". $qWhere . $pidOption . $qAnd . $whereClause . $addBeWhereClause;
+                $query = "SELECT * FROM `$sourceTable`". $qWhere . $pidOption . $qAnd . $whereClause . $addBeWhereClause . $qAnd . $qIn;
                 $result = \Database::getInstance()->prepare($query)->execute();
 
                 $geox = $arrConfig['geox'];
