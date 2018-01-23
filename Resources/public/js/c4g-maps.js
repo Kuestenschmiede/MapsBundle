@@ -63,6 +63,7 @@ this.c4g.maps = this.c4g.maps || {};
             measuretools: {},
             exporttools: {},
             infopage: {},
+            gamepanel: {},
             starboard: {},
             layerswitcher: {},
             baselayerswitcher: {},
@@ -623,6 +624,15 @@ this.c4g.maps = this.c4g.maps || {};
                 mapController: this
             });
             this.map.addControl(this.controls.infopage);
+        }
+        // gamepanel
+        if (mapData.gamepanel && typeof c4g.maps.control.Gamepanel === 'function') {
+            this.controls.gamepanel = new c4g.maps.control.Gamepanel({
+                tipLabel: c4g.maps.constant.i18n.CTRL_INFOPAGE,
+                target: controlContainerTopLeft,
+                mapController: this
+            });
+            this.map.addControl(this.controls.gamepanel);
         }
         // scaleline
         if (mapData.scaleline) {
