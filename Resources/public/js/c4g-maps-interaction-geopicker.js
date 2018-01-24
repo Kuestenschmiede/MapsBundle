@@ -211,7 +211,7 @@ this.c4g.maps.interaction = this.c4g.maps.interaction || {};
 
     handleEvent: function (mapBrowserEvent) {
       if (mapBrowserEvent.type === "singleclick") {
-        if (!this.options.disableClickEvent) {
+        if (!this.options.disableClickEvent && !this.options.mapContainer.data.geopicker.disabled) {
           return !this.pick(mapBrowserEvent.coordinate);
         }
       }

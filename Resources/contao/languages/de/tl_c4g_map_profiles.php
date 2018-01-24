@@ -167,6 +167,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_searchdiv']   = array('DIV
                                                                             'DIV zur Positionierung des Geopickers. Muss manuell auf der Seite erzeugt werden, z.B. mit einem HTML Formularfeld.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_attribution'] = array('Copyright für Geopicker anzeigen',
                                                                             'Fügt eine Attribution des verwendeten Suchservice (Nominatim) hinzu. Deaktivierung nicht empfohlen!');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_disabled']    = array('Geopicker deaktivieren',
+                                                                            'Wenn Sie nur eine Position anzeigen wollen, können Sie den Geopicker hiermit deaktivieren.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_anonymous']   = array('Geopicker anonymisieren',
                                                                             'Der Geopicker wird so manipuliert, dass eine genaue Bestimmung der Position nicht mehr möglich ist.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['custom_div']            = array('DIV für den Kartenbereich',
