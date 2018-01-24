@@ -719,6 +719,15 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
             'sql'                     => "int(10) unsigned NOT NULL default '0'",
             'eval'                    => array('tl_class'=>'clr', 'chosen'=>true, 'includeBlankOption' => true)
         ),
+//        'tab_tag' => array
+//        (
+//            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['tab_tag'],
+//            'exclude'                 => true,
+//            'inputType'               => 'select',
+//            'options_callback'        => array('tl_c4g_maps','getTabTag'),
+//            'sql'                     => "char(10) unsigned NOT NULL default ''",
+//            'eval'                    => array('tl_class'=>'clr', 'chosen'=>true, 'includeBlankOption' => true)
+//        ),
         'tab_labeldisplay' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['tab_labeldisplay'],
@@ -1240,19 +1249,86 @@ class tl_c4g_maps extends Backend
 
         $source = $GLOBALS['con4gis']['maps']['sourcetable'][$tabsource];
         $ptable = explode(',', $source['ptable']);
+        $ctable = explode(',', $source['ctable']);
+        $ctable_option = explode(',', $source['ctable_option']);
         $ptable_option = explode(',', $source['ptable_option']);
+        $ptype = $source['ptype'];
+        $sqlwhere = $source['ctable_where'];
         if (is_array($source) && $ptable && $ptable_option) {
             if (($ptable[1]) && ($ptable_option[1])) {
-                $obj = $this->Database->prepare(
-                    "SELECT id, ".$ptable_option[1]." FROM ".$ptable[1])->execute();
+                if($ptype == 'tag')
+                {
+                    $obj = $this->Database->prepare(
+                        "SELECT id, ".$ptable_option[1]." FROM ".$ptable[1]." WHERE ".$sqlwhere[1])->execute();
+                }
+                else
+                {
+                    $obj = $this->Database->prepare(
+                        "SELECT id, ".$ptable_option[1]." FROM ".$ptable[1])->execute();
+                }
                 while ($obj->next()) {
                     $name = $ptable_option[1];
                     $return[$obj->id] = $obj->$name;
+
                 }
+                $return = array_unique($return);
+                return $return;
+            }
+            else if (($ctable[0]) && ($ctable_option[0])) {
+                if($ptype == 'tag')
+                {
+                    $obj = $this->Database->prepare(
+                        "SELECT id, ".$ctable_option[0]." FROM ".$ctable[0]." WHERE ".$sqlwhere)->execute();
+                }
+                else
+                {
+                    $obj = $this->Database->prepare(
+                        "SELECT id, ".$ctable_option[0]." FROM ".$ctable[0])->execute();
+                }
+                while ($obj->next()) {
+                    $name = $ctable_option[0];
+                    $return[$obj->id] = $obj->$name;
+
+                }
+                $return = array_unique($return);
                 return $return;
             }
         }
+
+
     }
+
+//    public function getTabTag(DataContainer $dc)
+//    {
+//        if ($dc->activeRecord->tab_source<>'') {
+//            $tabsource = $dc->activeRecord->tab_source;
+//        } else {
+//            $tabsource = $this->firstTabSource;
+//        }
+//        $id = $dc->activeRecord->tab_pid;
+//        $objEvent = $this->Database->prepare("SELECT * FROM tl_calendar_events WHERE pid = ?")->execute($id);
+//        $stringSQL = "SELECT DISTINCT tag FROM tl_tag WHERE from_table = ?";
+//        while($objEvent->next())
+//        {
+//            if(substr($stringSQL,-1)=='?')
+//            {
+//                $stringSQL .= " AND tid = ".$objEvent->id;
+//            }
+//            else
+//            {
+//                $stringSQL .= " OR tid = ".$objEvent->id;
+//            }
+//
+//        }
+//
+//        $obj = $this->Database->prepare($stringSQL)->execute($tabsource,$dc->activeRecord->id);
+//        while ($obj->next()) {
+//
+//            $return[$obj->tag] = $obj->tag;
+//        }
+//        return $return;
+//
+//    }
 
 
     /**

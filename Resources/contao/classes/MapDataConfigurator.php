@@ -387,6 +387,7 @@ class MapDataConfigurator
                 $mapData['geopicker']['type'] = 'frontend';
                 $mapData['geopicker']['input_geo_x'] = '#' . $profile->geopicker_fieldx;
                 $mapData['geopicker']['input_geo_y'] = '#' . $profile->geopicker_fieldy;
+                $mapData['geopicker']['anonymous'] = $profile->geopicker_anonymous;
             }
 
 

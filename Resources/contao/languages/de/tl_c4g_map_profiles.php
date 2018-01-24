@@ -167,6 +167,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_searchdiv']   = array('DIV
                                                                             'DIV zur Positionierung des Geopickers. Muss manuell auf der Seite erzeugt werden, z.B. mit einem HTML Formularfeld.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_attribution'] = array('Copyright für Geopicker anzeigen',
                                                                             'Fügt eine Attribution des verwendeten Suchservice (Nominatim) hinzu. Deaktivierung nicht empfohlen!');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_anonymous']   = array('Geopicker anonymisieren',
+                                                                            'Der Geopicker wird so manipuliert, dass eine genaue Bestimmung der Position nicht mehr möglich ist.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['custom_div']            = array('DIV für den Kartenbereich',
                                                                             'DIV zur Umpositionierung des Kartenbereichs. Mit Hilfe dieser Einstellung lässt sich die Karte z.B. mitten in ein Formular hinein verschieben. Das DIV muss manuell auf der Seite erzeugt werden, z.B. mit einem HTML Inhaltselement oder HTML Formularfeld.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overpass_url']          = array('Alternative URL der Overpass-API (<a href="http://overpass-api.de/" target="_blank">Website des voreingestellten API-Server Anbieters</a>)',
