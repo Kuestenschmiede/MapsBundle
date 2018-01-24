@@ -28,7 +28,10 @@ if (!$GLOBALS['con4gis']['maps']['sourcetable'])
 $GLOBALS['con4gis']['maps']['sourcetable']['tl_calendar_events'] = array
 (
     'ptable'        => 'tl_calendar',
+    'ctable'        => 'tl_tag',
     'ptable_option' => 'title',
+    'ctable_option' => 'tag',
+    'ptype'         => 'tag',
     'geox'          => 'c4g_loc_geox',
     'geoy'          => 'c4g_loc_geoy',
     'label'         => 'c4g_loc_label',
@@ -40,8 +43,10 @@ $GLOBALS['con4gis']['maps']['sourcetable']['tl_calendar_events'] = array
      */
     'linkurl'       => '{{event_url::[id]}}',
     'sqlwhere'      => 'published = 1',
+    'ctable_where'      => 'from_table ="tl_calendar_events"',
     'alias_getparam'=> 'events',
-    'title'         => 'title'
+    'title'         => 'title',
+    'tags'          => 'tags'
 );
 
 $GLOBALS['con4gis']['maps']['sourcetable']['tl_member'] = array
