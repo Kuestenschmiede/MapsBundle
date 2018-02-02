@@ -1248,6 +1248,10 @@ class tl_c4g_maps extends Backend
         }
 
         $source = $GLOBALS['con4gis']['maps']['sourcetable'][$tabsource];
+        if($GLOBALS['BE_FFL']['tag'])
+        {
+            $source = $GLOBALS['con4gis']['maps']['sourcetable'][$tabsource.'_with_tags'];
+        }
         $ptable = explode(',', $source['ptable']);
         $ctable = explode(',', $source['ctable']);
         $ctable_option = explode(',', $source['ctable_option']);

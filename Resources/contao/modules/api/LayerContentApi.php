@@ -301,6 +301,10 @@ class LayerContentApi extends \Controller
                 $qIn = '';
 
                 $arrConfig = $GLOBALS['con4gis']['maps']['sourcetable'][$sourceTable];
+                if($GLOBALS['BE_FFL']['tag'])
+                {
+                    $arrConfig = $GLOBALS['con4gis']['maps']['sourcetable'][$sourceTable.'_with_tags'];
+                }
                 $ptableArr = explode(',', $arrConfig['ptable']);
                 $ctableArr = explode(',', $arrConfig['ctable']);
                 $ptableFieldArr = explode(',', $arrConfig['ptable_field']);
