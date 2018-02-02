@@ -301,6 +301,10 @@ class LayerContentApi extends \Controller
                 $qIn = '';
 
                 $arrConfig = $GLOBALS['con4gis']['maps']['sourcetable'][$sourceTable];
+                if($GLOBALS['BE_FFL']['tag'])
+                {
+                    $arrConfig = $GLOBALS['con4gis']['maps']['sourcetable'][$sourceTable.'_with_tags'];
+                }
                 $ptableArr = explode(',', $arrConfig['ptable']);
                 $ctableArr = explode(',', $arrConfig['ctable']);
                 $ptableFieldArr = explode(',', $arrConfig['ptable_field']);
@@ -314,7 +318,7 @@ class LayerContentApi extends \Controller
                         $child = \Database::getInstance()->prepare($queryChild)->execute()->fetchAssoc();
                         $sqlquery = "SELECT tid FROM ".$arrConfig['ctable']." WHERE ".$arrConfig['ctable_option']."=?";
                         $idsfromChild= \Database::getInstance()->prepare($sqlquery)->execute($child[$arrConfig['ctable_option']])->fetchAllAssoc();
-                        $qIn .= 'AND id IN(';
+                        $qIn .= ' AND id IN(';
                         foreach($idsfromChild as $value){
                             $qIn .= $value['tid'] . ',';
                         }
@@ -379,8 +383,26 @@ class LayerContentApi extends \Controller
                 if ($arrConfig['sourcetable']) {
                     $sourceTable = $arrConfig['sourcetable'];
                 }
+                $stmt = '';
 
-                $query = "SELECT * FROM `$sourceTable`". $qWhere . $pidOption . $qAnd . $whereClause . $addBeWhereClause . $qAnd . $qIn;
+                if ($objLayer->tab_filter_alias) {
+                    //$alias = $this->getInput()->get($arrConfig['alias_getparam']);
+                    $alias = $_SERVER['HTTP_REFERER'];
+                    $strC = substr_count($alias,'/');
+                    $arrUrl = explode('/',$alias);
+                    $alias = explode('.',$arrUrl[$strC])[0];
+                    if ($alias) {
+                        if (is_numeric($alias)) {
+                            $stmt .= ' AND (( alias = "'.$alias.'" ) OR ( id = '.$alias.' ))';
+                        }
+                        else {
+                            $stmt .= ' AND (alias = "'.$alias.'")';
+                        }
+                    }
+                }
+
+
+                $query = "SELECT * FROM `$sourceTable`". $qWhere . $pidOption . $qAnd . $whereClause . $addBeWhereClause  . $qIn. $stmt;
                 $result = \Database::getInstance()->prepare($query)->execute();
 
                 $geox = $arrConfig['geox'];
