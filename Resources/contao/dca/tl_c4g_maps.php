@@ -197,7 +197,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
         'protect_element'             => 'permitted_groups',
         'popup_extend'                => 'forums',
         'is_map'                      => '',  // is set in updateDCA
-        'cluster_locations'           => 'cluster_distance, cluster_fillcolor, cluster_fontcolor, cluster_zoom'
+        'cluster_locations'           => 'cluster_distance, cluster_fillcolor, cluster_fontcolor, cluster_zoom,cluster_popup'
     ),
 
     // Fields
@@ -1028,7 +1028,15 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
             'inputType'               => 'c4g_text',
             'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'clr'),
             'sql'                     => "int(10) unsigned NOT NULL default '17'"
+        ),'cluster_popup' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_popup'],
+            'exclude'                 => true,
+            'default'                 => false,
+            'inputType'               => 'checkbox',
+            'sql'                     => "char(1) NOT NULL default ''"
         ),
+
         'zoom_locations' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['zoom_locations'],

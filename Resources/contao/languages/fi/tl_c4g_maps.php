@@ -99,6 +99,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_distance'] = array('Cluster etäisyy
 $GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_fillcolor'] = array('Fill color', 'Select the fill color of the cluster bubble.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_fontcolor'] = array('Font color', 'Select the font color of the cluster bubble.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_zoom'] = array('Maximal zoom', 'Select the maximal zoomlevel. The cluster is splitted on click afterwards ');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_popup'] = array('Popup for clusters', 'Instead of splitting the cluster, a shared popup is openend on click.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['zoom_locations'] = array('Zoom to locations','On activating the locations in the starboard, the view is focused on the locations and potential childrens. This does not work with data from asynchronous requests (e.g. Overpass).');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['hover_location'] = array('Hover on locations','Change the location style on hover above a location.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['hover_style'] = array('Location style on hover','Pick the location style to show on hover.');

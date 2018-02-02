@@ -593,13 +593,25 @@ class LayerContentApi extends \Controller
                             $link = $this->replaceInsertTags($objLayer->loc_linkurl);
                         }
                         $event = false;
-                        for($i = 0; $i < count($arrReturnData); $i++){
-                            if($arrReturnData[0]['data']['geometry']['coordinates'] == $coordinates)
-                            {
-                                $arrReturnData[0]['data']['properties']['popup']['content'] .= $popupContent;
-                                $event = true;
+                        if($objLayer->cluster_popup != 1)
+                        {
+                            for($i = 0; $i < count($arrReturnData); $i++){
+                                if($arrReturnData[$i]['data']['geometry']['coordinates'] == $coordinates)
+                                {
+                                    if(substr($arrReturnData[$i]['data']['properties']['popup']['content'],0,3) != '<ul')
+                                    {
+                                        $arrReturnData[$i]['data']['properties']['popup']['content'] = '<ul><li>'.$arrReturnData[$i]['data']['properties']['popup']['content'].'</li>';
+                                    }
+                                    if(substr($arrReturnData[$i]['data']['properties']['popup']['content'],-4) == 'ul>'){
+                                        $arrReturnData[$i]['data']['properties']['popup']['content'] = str_replace('</ul>','',$arrReturnData[$i]['data']['properties']['popup']['content']);
+                                    }
+                                    $arrReturnData[$i]['data']['properties']['popup']['content'] .= $popupContent.'</li></ul>';
+                                    $arrReturnData[$i]['data']['properties']['tooltip'] .= ', '.\Contao\Controller::replaceInsertTags($result->$tooltipField);
+                                    $event = true;
+                                }
                             }
                         }
+
 
                         if(!$event){
                             $arrReturnData[] = array
@@ -612,6 +624,7 @@ class LayerContentApi extends \Controller
                                 "cluster_fillcolor" => $objLayer->cluster_fillcolor,
                                 "cluster_fontcolor" => $objLayer->cluster_fontcolor,
                                 "cluster_zoom" => $objLayer->cluster_zoom,
+                                "cluster_popup" => $objLayer->cluster_popup,
                                 "loc_linkurl" => $link,
                                 "hover_location" => $objLayer->hover_location,
                                 "hover_style" => $objLayer->hover_style,
@@ -1055,6 +1068,7 @@ class LayerContentApi extends \Controller
                     "cluster_fillcolor" => $objLayer->cluster_fillcolor,
                     "cluster_fontcolor" => $objLayer->cluster_fontcolor,
                     "cluster_zoom" => $objLayer->cluster_zoom,
+                    "cluster_popup" => $objLayer->cluster_popup,
                     "loc_linkurl" => $this->replaceInsertTags($objLayer->loc_linkurl),
                     "hover_location" => $objLayer->hover_location,
                     "hover_style" => $objLayer->hover_style,
