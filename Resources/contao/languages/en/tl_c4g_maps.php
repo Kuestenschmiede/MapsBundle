@@ -50,6 +50,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['locstyle'] = array('Location style', 'The lo
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_only_in_parent'] = array('Display location only as child of a parent map', 'If you do NOT select this option, the location is displayed also if this item is displayed as a map.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_label'] = array('Label', 'Label to be displayed on map together with the location marker.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['tooltip'] = array('Tooltip', 'Tooltip to be displayed when mouse hovers the location.');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['tooltip'] = array('Length of the tooltip', 'Number of characters, before the tooltip is cut of.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['enablePopup'] = array('Activate popup', 'With the checkbox you can enable the popup for this structure element.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popup_info'] = array('Popup information', 'Information to be displayed in a popup after clicking with the mouse on a location or via mouse hover (depending on the map profile settings).');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popup_extend'] = array('Extend popup information with forumpost', 'Gives the ability to render additional popup information from a forumpost.');

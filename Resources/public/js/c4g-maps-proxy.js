@@ -1694,6 +1694,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
 
         layer.popup = data.popup || data.properties.popup || false;
         layer.tooltip = data.tooltip || data.properties.tooltip || false;
+        layer.tooltip_length = data.tooltip_length || data.properties.tooltip_length || false;
         layer.label = data.label || data.properties.label || false;
         layer.zoom_onclick = data.zoom_onclick || data.properties.zoom_onclick || false;
       };

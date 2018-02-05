@@ -106,11 +106,14 @@ this.c4g.maps.misc = this.c4g.maps.misc || {};
         var hovered,
             clustered,
             tooltipContent,
+            tooltipHelper,
+            features,
+            tooltipLength,
             resolution,
             canvas,
             mapData = this.options.mapController.data,
-            proxy = this.options.mapController.proxy,
-            features;
+            proxy = this.options.mapController.proxy;
+
 
         clustered = false;
         hovered = self.map.forEachFeatureAtPixel(event.pixel,
@@ -255,18 +258,34 @@ this.c4g.maps.misc = this.c4g.maps.misc || {};
         } else if (hovered.layer && hovered.layer.tooltip) {
           tooltipContent = hovered.layer.tooltip;
         }
-        else if (clustered && hovered.feature.get('features')){
+        if (clustered && hovered.feature.get('features')){
             features = hovered.feature.get('features');
-            if(features[0].get('tooltip')){
+            if(features[0].get('tooltip') && features[0].get('tooltip_length')){
                 tooltipContent = features[0].get('tooltip');
+                tooltipLength = parseInt(features[0].get('tooltip_length'));
                 for(var i = 1; i<features.length; i++){
                     if(features[i].get('tooltip') && features[i].get('tooltip') != ''){
                         tooltipContent = tooltipContent + ', ' + features[i].get('tooltip');
                     }
                 }
-                if(tooltipContent.length >25)
+                if(tooltipContent.length > tooltipLength + 3)
                 {
-                    if(tooltipContent = tooltipContent.slice(0, 28)){
+                    if(tooltipContent = tooltipContent.slice(0, tooltipLength)){
+                        tooltipContent = tooltipContent + '...';
+                    }
+
+                }
+            }
+            else if(hovered.layer.tooltip && hovered.layer.tooltip_length){
+                tooltipHelper = tooltipContent;
+                tooltipContent = c4g.maps.utils.replaceAllPlaceholders(tooltipHelper, features[0], hovered.layer);
+                tooltipLength = parseInt(hovered.layer.tooltip_length);
+                for(i = 1; i<features.length; i++){
+                    tooltipContent = tooltipContent + ', ' + c4g.maps.utils.replaceAllPlaceholders(tooltipHelper, features[i], hovered.layer);
+                }
+                if(tooltipContent.length > tooltipLength +3)
+                {
+                    if(tooltipContent = tooltipContent.slice(0, tooltipLength)){
                         tooltipContent = tooltipContent + '...';
                     }
 
@@ -277,13 +296,14 @@ this.c4g.maps.misc = this.c4g.maps.misc || {};
 
         if (tooltipContent) {
           tooltipContent = c4g.maps.utils.decodeGeoJsonProperty(tooltipContent);
-          //if (!clustered) {
-            // replace placeholders if possible
-            tooltipContent = c4g.maps.utils.replaceAllPlaceholders(tooltipContent, hovered.feature, hovered.layer);
-          // } else {
-          //   //ToDo summery for tooltips
-          //   tooltipContent = '';
-          // }
+
+          // replace placeholders if possible
+            if(hovered.feature.get('features')){
+
+
+            }
+          tooltipContent = c4g.maps.utils.replaceAllPlaceholders(tooltipContent, hovered.feature, hovered.layer);
+
 
           if (tooltipContent.trim()) {
             // popup config

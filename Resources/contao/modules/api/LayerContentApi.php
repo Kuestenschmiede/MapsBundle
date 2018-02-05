@@ -138,6 +138,7 @@ class LayerContentApi extends \Controller
                             "content" => "tl_c4g_maps" . ":" . $objLayer->id
                         )*/
                         "tooltip" => $objLayer->tooltip,
+                        "tooltip_length" => $objLayer->tooltip_length,
                         "label" => $objLayer->loc_label,
                         "zoom_onclick" => $objLayer -> loc_onclick_zoomto
                     ),
@@ -175,6 +176,7 @@ class LayerContentApi extends \Controller
                             "async" => $objLayer->popup_async
                         ),
                         "tooltip" => $objLayer->tooltip,
+                        "tooltip_length" => $objLayer->tooltip_length,
                         "label" => $objLayer->loc_label,
                         "zoom_onclick" => $objLayer -> loc_onclick_zoomto,
                         "url" => $this->getUrl($objLayer)
@@ -222,6 +224,7 @@ class LayerContentApi extends \Controller
                             "async" => $objLayer->popup_async
                         ),
                         "tooltip" => $objLayer->tooltip,
+                        "tooltip_length" => $objLayer->tooltip_length,
                         "label" => $objLayer->loc_label,
                         "zoom_onclick" => $objLayer -> loc_onclick_zoomto,
                         "url" => $this->getUrl($objLayer)
@@ -269,6 +272,7 @@ class LayerContentApi extends \Controller
                             "content" => "tl_c4g_maps" . ":" . $objLayer->id
                         ),
                         "tooltip" => $objLayer->tooltip,
+                        "tooltip_length" => $objLayer->tooltip_length,
                         "label" => $objLayer->loc_label,
                         'zoom_onclick' => $objLayer->loc_onclick_zoomto
                     ),
@@ -644,6 +648,7 @@ class LayerContentApi extends \Controller
                                             'routing_link' => $objLayer->routing_to
                                         ),
                                         'tooltip' =>  \Contao\Controller::replaceInsertTags($result->$tooltipField),
+                                        "tooltip_length" => $objLayer->tooltip_length,
                                         'label' =>  \Contao\Controller::replaceInsertTags($result->$labelField),
                                         'zoom_onclick' => $objLayer -> loc_onclick_zoomto
                                     ),
@@ -891,6 +896,7 @@ class LayerContentApi extends \Controller
                             'showPopupOnActive'=> $objLayer->showPopupOnActive
                         ),
                         'tooltip' =>  \Contao\Controller::replaceInsertTags($objLayer->tooltip),
+                        "tooltip_length" => $objLayer->tooltip_length,
                         'label' =>  \Contao\Controller::replaceInsertTags($objLayer->loc_label),
                         'zoom_onclick' => $objLayer -> loc_onclick_zoomto,
                         'loc_linkurl' => $this->replaceInsertTags($objLayer->loc_linkurl),
@@ -1079,6 +1085,7 @@ class LayerContentApi extends \Controller
                             "async" => false
                         ),
                         "tooltip" => $objLayer->tooltip,
+                        "tooltip_length" => $objLayer->tooltip_length,
                         "label" => $objLayer->loc_label,
                         'zoom_onclick' => $objLayer -> loc_onclick_zoomto,
                         "url" => utf8_encode($folder)."/".utf8_encode($fileInfo['basename']),

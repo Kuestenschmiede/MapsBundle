@@ -48,6 +48,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['locstyle'] = array('Sijainnin tyyli', 'Sijai
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_only_in_parent'] = array('Näytä sijaini vain parentin childina', 'Jos et valitse tätä vaihtoehtoa, sijainti näytetään myös jos kohde on näytettynä kartalla.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_label'] = array('Label', 'Merkitse näytettäväksi kartalla sijainnin merkkaajan kanssa.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['tooltip'] = array('Työkaluohje', 'Työkaluohje näytetään, kun hiiri leijuu sijainnin kohdalla.');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['tooltip'] = array('Length of the tooltip', 'Number of characters, before the tooltip is cut of.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['enablePopup'] = array('Activate popup', 'With the checkbox you can enable the popup for this structure element.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popup_info'] = array('Popup tietoa', 'Tiedot näytetään popupissa sen jälkeen, kun hiirellä ollaan napsautettu sijaintia tai kun hiiri leijuu sijainnin kohdalla (Riippuen kartan profiili asetuksista).');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popup_extend'] = array('Laajenna popup tietoa foorumi viestissä', 'Antaa kyvyn renderöidä ylimääräisen popup tiedon foorumiviestissä.');
