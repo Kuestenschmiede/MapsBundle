@@ -109,7 +109,8 @@ this.c4g.maps.misc = this.c4g.maps.misc || {};
             resolution,
             canvas,
             mapData = this.options.mapController.data,
-            proxy = this.options.mapController.proxy;
+            proxy = this.options.mapController.proxy,
+            features;
 
         clustered = false;
         hovered = self.map.forEachFeatureAtPixel(event.pixel,
@@ -145,7 +146,9 @@ this.c4g.maps.misc = this.c4g.maps.misc || {};
           if (hovered.feature.get('features')[1]) {
             clustered = true;
           }
-          hovered.feature = hovered.feature.get('features')[0];
+          else{
+              hovered.feature = hovered.feature.get('features')[0];
+          }
         }
         if(hovered.feature.getGeometry() && hovered.feature.getGeometry() instanceof ol.geom.LineString){
             return false;
@@ -252,16 +255,35 @@ this.c4g.maps.misc = this.c4g.maps.misc || {};
         } else if (hovered.layer && hovered.layer.tooltip) {
           tooltipContent = hovered.layer.tooltip;
         }
+        else if (clustered && hovered.feature.get('features')){
+            features = hovered.feature.get('features');
+            if(features[0].get('tooltip')){
+                tooltipContent = features[0].get('tooltip');
+                for(var i = 1; i<features.length; i++){
+                    if(features[i].get('tooltip') && features[i].get('tooltip') != ''){
+                        tooltipContent = tooltipContent + ', ' + features[i].get('tooltip');
+                    }
+                }
+                if(tooltipContent.length >25)
+                {
+                    if(tooltipContent = tooltipContent.slice(0, 28)){
+                        tooltipContent = tooltipContent + '...';
+                    }
+
+                }
+            }
+
+        }
 
         if (tooltipContent) {
           tooltipContent = c4g.maps.utils.decodeGeoJsonProperty(tooltipContent);
-          if (!clustered) {
+          //if (!clustered) {
             // replace placeholders if possible
             tooltipContent = c4g.maps.utils.replaceAllPlaceholders(tooltipContent, hovered.feature, hovered.layer);
-          } else {
-            //ToDo summery for tooltips
-            tooltipContent = '';
-          }
+          // } else {
+          //   //ToDo summery for tooltips
+          //   tooltipContent = '';
+          // }
 
           if (tooltipContent.trim()) {
             // popup config
