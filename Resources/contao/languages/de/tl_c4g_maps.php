@@ -100,7 +100,8 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_locations'] = array('Lokationen clus
 $GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_distance'] = array('Cluster-Distanz','Ab welcher Entfernung in Pixeln soll geclustert werden? (Standard beträgt 20px)');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_fillcolor'] = array('Füllfarbe', 'Wählen Sie die Füllfarbe der Clusterblasen aus.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_fontcolor'] = array('Schriftfarbe', 'Wählen Sie die Schriftfarbe der Clusterblasen aus.');
-$GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_zoom'] = array('Minimale Zoomstufe (Spinne)', 'Wählen Sie die Zoomstufe, bis zu der hereingezoomt wird. Ab dieser Stufe werden die Cluster per Klick aufgelöst und verteilt dargestellt.');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_zoom'] = array('Minimale Zoomstufe (Spinne)', 'Wählen Sie die Zoomstufe, bis zu der hereingezoomt wird. Ab dieser Stufe werden die Cluster per Klick aufgelöst und verteilt dargestellt oder das Popup geöffnet.');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_popup'] = array('Popup beim Clustern', 'Statt das Cluster aufzulösen wird ein gemeinsames Popup erstellt und geöffnet.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['zoom_locations'] = array('Zoom auf Lokationen','Beim Aktivieren der Lokationen im Starboard wird auf sie und eventuelle Kindelemente gezoomt. Dies funktioniert nicht mit Lokationen aus asynchronen Abfragen (z.B. Overpass).');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['hover_location'] = array('Hover-Effekt bei Lokationen','Ändern des Lokationsstils beim Hovern über einer Lokation');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['hover_style'] = array('Lokationsstil bei Hover-Effekt','Lokationsstil, der beim Hovern über die Lokation angezeigt werden soll.');
@@ -118,6 +119,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['copy']   = array('Kartenstrukturelement dupl
 $GLOBALS['TL_LANG']['tl_c4g_maps']['copyChilds']   = array('Kartenstrukturelement inklusive Unterelemente duplizieren', 'Kartenstrukturelement ID %s inklusive Unterelemente duplizieren');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['cut']    = array('Kartenstrukturelement verschieben', 'Kartenstrukturelement ID %s verschieben');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['delete'] = array('Kartenstrukturelement löschen', 'Kartenstrukturelement ID %s löschen');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['toggle'] = array('Kartenstrukturelement veröffentlichen/unveröffentlichen', 'Kartenstrukturelement ID %s veröffentlichen/unveröffentlichen');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['toggle'] = array('Kartenstrukturelement veröffentlichen/unveröffentlichen', 'Kartenstrukturelement ID %s veröffentlichen/unveröffentlichen');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['show']   = array('Details', 'Die Details des Kartenstrukturelements ID %s anzeigen');
 

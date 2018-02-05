@@ -167,59 +167,85 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
         if (!(fFeatures && fFeatures.length === 1)) {
           // cluster multiple POI
           if (fFeatures) {
+              if(fFeatures[0].get('cluster_popup') == 1)
+              {
+                  map.getView().setCenter(clickEvent.coordinate);
+                  currentZoom = map.getView().getZoom();
+                  minZoom = self.options.mapController.data.cluster_all ? self.options.mapController.data.cluster_zoom : fFeatures['0'].get('cluster_zoom');
+                  if(currentZoom >= minZoom)
+                  {
+                      setPopup =[];
+                      setPopup.content = '';
+                      setPopup.async = false;
+                      for(var i = 0; i < fFeatures.length; i++){
+                          setPopup.content = setPopup.content.concat(fFeatures[i].get('popup').content);
+                      }
+                      feature = fFeatures[0].clone();
+                      feature.set('popup',setPopup);
+                  }
+                  else
+                  {
+                      map.getView().setZoom(currentZoom+1);
+                  }
+
+              }
+              else {
 
 
-              feature.setStyle(new ol.style.Style({
-                  image: new ol.style.Circle({
-                      fill: new ol.style.Fill({
-                          opacity: 0
-                      }),
-                      radius: 0
-                  })
-              }));
+                  feature.setStyle(new ol.style.Style({
+                      image: new ol.style.Circle({
+                          fill: new ol.style.Fill({
+                              opacity: 0
+                          }),
+                          radius: 0
+                      })
+                  }));
                   feature = false;
 
-            // animation
-            map.getView().animate({
-              start: +new Date(),
-              duration: 1000,
-              resolution: map.getView().getResolution(),
-              center: [0, 0]
-              //rotation: Math.PI
-            });
+                  // animation
+                  map.getView().animate({
+                      start: +new Date(),
+                      duration: 1000,
+                      resolution: map.getView().getResolution(),
+                      center: [0, 0]
+                      //rotation: Math.PI
+                  });
 
-              currentZoom = map.getView().getZoom();
-              newCenter = map.getCoordinateFromPixel(clickEvent.pixel);
-              minZoom = self.options.mapController.data.cluster_all ? self.options.mapController.data.cluster_zoom : fFeatures['0'].get('cluster_zoom');
+                  currentZoom = map.getView().getZoom();
+                  newCenter = map.getCoordinateFromPixel(clickEvent.pixel);
+                  minZoom = self.options.mapController.data.cluster_all ? self.options.mapController.data.cluster_zoom : fFeatures['0'].get('cluster_zoom');
 
-              //ToDo remove with structure element param
-              if(currentZoom>=minZoom){
+                  //ToDo remove with structure element param
+                  if (currentZoom >= minZoom) {
 
-              //if (currentZoom >= map.getView().getMaxZoom()) {
-                //open the cluster after zooming
-                  var pix = map.getView().getResolution();
-                  var max = fFeatures.length;
-                  var r = pix * 12 * (0.5 + max / 4);
-                  for (var i=0; i<max; i++)
-                  { var a = 2*Math.PI*i/max;
-                      if (max==2 || max == 4) a += Math.PI/4;
-                      var p = [ newCenter[0]+r*Math.sin(a), newCenter[1]+r*Math.cos(a) ];
-                      var coordinate = ol.proj.toLonLat(p);
-                      var f = [];
-                      f.push(fFeatures[i]);
-                      var cf = new ol.Feature({ geometry: new ol.geom.Point(p),
-                                                features: f});
-                      cf.setStyle(styleCluster);
-                      layer.getSource().addFeature(cf);
-                      map.getView().setCenter(newCenter);
+                      //if (currentZoom >= map.getView().getMaxZoom()) {
+                      //open the cluster after zooming
+                      var pix = map.getView().getResolution();
+                      var max = fFeatures.length;
+                      var r = pix * 12 * (0.5 + max / 4);
+                      for (var i = 0; i < max; i++) {
+                          var a = 2 * Math.PI * i / max;
+                          if (max == 2 || max == 4) a += Math.PI / 4;
+                          var p = [newCenter[0] + r * Math.sin(a), newCenter[1] + r * Math.cos(a)];
+                          var coordinate = ol.proj.toLonLat(p);
+                          var f = [];
+                          f.push(fFeatures[i]);
+                          var cf = new ol.Feature({
+                              geometry: new ol.geom.Point(p),
+                              features: f
+                          });
+                          cf.setStyle(styleCluster);
+                          layer.getSource().addFeature(cf);
+                          map.getView().setCenter(newCenter);
+                      }
+                  } else {
+                      currentZoom += 1;
                   }
-              } else {
-                  currentZoom += 1;
+
+
+                  map.getView().setCenter(newCenter);
+                  map.getView().setZoom(currentZoom);
               }
-
-
-            map.getView().setCenter(newCenter);
-            map.getView().setZoom(currentZoom);
           }
         } else if ((fFeatures && fFeatures.length === 1)) {
           feature = fFeatures[0];
@@ -1901,6 +1927,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                         }
                         rFeatures[j].set('c4g_type', 'osm');
                         rFeatures[j].set('cluster_zoom', contentData.cluster_zoom);
+                        rFeatures[j].set('cluster_popup', contentData.cluster_popup);
                         rFeatures[j].set('loc_linkurl', contentData.loc_linkurl);
                         rFeatures[j].set('hover_location', contentData.hover_location);
                         rFeatures[j].set('hover_style', contentData.hover_style);
@@ -2169,6 +2196,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                 dataProjection: dataProjection
               })[0];
               contentFeature.set('cluster_zoom', contentData.cluster_zoom);
+              contentFeature.set('cluster_popup', contentData.cluster_popup);
               contentFeature.set('loc_linkurl', contentData.loc_linkurl);
               contentFeature.set('hover_location', contentData.hover_location);
               contentFeature.set('hover_style', contentData.hover_style);
