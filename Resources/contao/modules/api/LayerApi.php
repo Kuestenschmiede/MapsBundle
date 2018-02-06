@@ -34,7 +34,7 @@ class LayerApi extends \Frontend
     protected $arrConfig = array();
     protected $arrReassignedLayer = array();
 
-    public function generate($intParentId)
+    public function generate($intParentId, $bbox)
     {
 
         $this->import('FrontendUser', 'User');
@@ -83,13 +83,47 @@ class LayerApi extends \Frontend
         $this->arrConfig['countAll'] = sizeof($arrLayers);
         $return = array(
             'config' => $this->arrConfig,
-            'layer' => $arrLayers,
+            'layer' => $this->filterGeometryForBBox($arrLayers),
+            //'layer' => $arrLayers,
             'foreignLayers' => $this->checkAndFetchMissingLinkedLayers($arrLayers)
         );
         $return['layer'] = $this->checkAndReassignFrontendLayers($return['layer']);
 
-		
+
+
 		return $return;
+
+    }
+    protected function filterGeometryForBBox($layers)
+    {
+        $arrLayers =[];
+
+        foreach ($layers as $layer)
+        {
+            if($layer['content'] != [])
+            {
+                $arrContent = [];
+                foreach($layer['content'] as $content)
+                {
+                    if(($geo = $content['data']['geometry']) && $geo['type'] == "Point"){
+                        if(($geo['coordinates'][0] > 8 && $geo['coordinates'][0] < 9)&&($geo['coordinates'][1] > 52 && $geo['coordinates'][1] < 53))
+                        {
+                            $arrContent[] = $content;
+                        }
+                    }
+                }
+                $layer['content'] = $arrContent;
+                if($layer['content'] != []){
+                    $arrLayers[] = $layer;
+                }
+            }
+            if($layer['childs'] != [])
+            {
+                $layer['childs'] = $this->filterGeometryForBBox($layer['childs']);
+                $arrLayers[] = $layer;
+            }
+        }
+        return $arrLayers;
 
     }
 
