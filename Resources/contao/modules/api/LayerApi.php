@@ -34,7 +34,7 @@ class LayerApi extends \Frontend
     protected $arrConfig = array();
     protected $arrReassignedLayer = array();
 
-    public function generate($intParentId)
+    public function generate($intParentId, $bbox)
     {
 
         $this->import('FrontendUser', 'User');
@@ -83,13 +83,69 @@ class LayerApi extends \Frontend
         $this->arrConfig['countAll'] = sizeof($arrLayers);
         $return = array(
             'config' => $this->arrConfig,
+            //'layer' => $this->filterGeometryForBBox($arrLayers),
             'layer' => $arrLayers,
             'foreignLayers' => $this->checkAndFetchMissingLinkedLayers($arrLayers)
         );
+        foreach($return['layer'] as $key => $layer)
+        {
+            $objLayer = C4gMapsModel::findByPk($layer['id']);
+            if ($objLayer->poim_reassign_layer)
+            {
+                $return['layer'][$key] = $this->forceChildsInContent($layer);
+            }
+        }
         $return['layer'] = $this->checkAndReassignFrontendLayers($return['layer']);
 
-		
-		return $return;
+        return $return;
+    }
+    protected function forceChildsInContent($layer)
+    {
+        if($layer['childs'][1]) {
+            $arrContent = [];
+            foreach ($layer['childs'] as $child) {
+                $arrContent[] = $child['content'][0];
+            }
+            $layer['content'] = $arrContent;
+            unset($layer['childs']);
+            $layer['hasChilds'] = false;
+        }
+        else {
+            $layer['childs'][0] = $this->forceChildsInContent($layer['childs'][0]);
+        }
+        return $layer;
+    }
+
+    protected function filterGeometryForBBox($layers)
+    {
+        $arrLayers =[];
+
+        foreach ($layers as $layer)
+        {
+            if($layer['content'] != [])
+            {
+                $arrContent = [];
+                foreach($layer['content'] as $content)
+                {
+                    if(($geo = $content['data']['geometry']) && $geo['type'] == "Point"){
+                        if(($geo['coordinates'][0] > 8 && $geo['coordinates'][0] < 9)&&($geo['coordinates'][1] > 52 && $geo['coordinates'][1] < 53))
+                        {
+                            $arrContent[] = $content;
+                        }
+                    }
+                }
+                $layer['content'] = $arrContent;
+                if($layer['content'] != []){
+                    $arrLayers[] = $layer;
+                }
+            }
+            if($layer['childs'] != [])
+            {
+                $layer['childs'] = $this->filterGeometryForBBox($layer['childs']);
+                $arrLayers[] = $layer;
+            }
+        }
+        return $arrLayers;
 
     }
 
@@ -313,14 +369,15 @@ class LayerApi extends \Frontend
                             foreach($overpassLayers as &$overpassLayer) {
                                 $overpassLayer['childs'] = array();
                                 $overpassLayer['childsCount'] = 0;
-                                foreach($poiGroup['childs'] as $key=>$poi) {
-                                    $poi['pid'] = $overpassLayer['id'];
-                                    $poi['id'] = C4GBrickCommon::calcLayerID(C4GBrickCommon::getLayerIDParam($poi['id'], 'id'), $poi['pid'], 99 + $overpassLayer['childsCount']);
-                                    $poi['key'] = $poi['id'];
-                                    $overpassLayer['childs'][] = $poi;
-                                    $overpassLayer['hasChilds'] = true;
-                                    $overpassLayer['childsCount']++;
-                                }
+                                $poiGroup['pid'] = $overpassLayer['id'];
+                                $overpassLayer['childs'][] = $poiGroup;
+                                $overpassLayer['hasChilds'] = true;
+//                                    $poi['id'] = C4GBrickCommon::calcLayerID(C4GBrickCommon::getLayerIDParam($poi['id'], 'id'), $poi['pid'], 99 + $overpassLayer['childsCount']);
+//                                    $poi['key'] = $poi['id'];
+//                                    $overpassLayer['childs'][] = $poi;
+//                                    $overpassLayer['hasChilds'] = true;
+//                                    $overpassLayer['childsCount']++;
+//                                }
                             }
                             unset ($layer['childs'][$grpKey]);
                             $layer['childsCount']--;
