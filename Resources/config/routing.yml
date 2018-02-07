@@ -8,16 +8,7 @@ baselayer_service:
         profileId: \d+
 
 layer_service:
-    path: /con4gis/layerService/{mapId}/
-    defaults:
-        _scope: frontend
-        _controller: "con4gisMapsBundle:Maps:layer"
-    methods: [GET]
-    requirements:
-        mapId: \d+
-
-content_service:
-    path: /con4gis/contentService/{layerId}/{bbox}/
+    path: /con4gis/layerService/{mapId}/{bbox}/
     defaults:
         _scope: frontend
         _controller: "con4gisMapsBundle:Maps:layer"
