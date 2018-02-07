@@ -80,7 +80,7 @@ class MapsController extends Controller
         return $response;
     }
 
-    public function layerAction(Request $request, $mapId, $bbox)
+    public function layerAction(Request $request, $mapId)
     {
         $response = new JsonResponse();
         $layerApi = new LayerApi();
@@ -92,7 +92,7 @@ class MapsController extends Controller
         }
 
         if (!self::$outputFromCache) {
-            $this->responseData = $layerApi->generate($mapId, $bbox);
+            $this->responseData = $layerApi->generate($mapId);
             $this->storeDataInCache($request);
         }
 

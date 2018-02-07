@@ -1636,7 +1636,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
 
       $.ajax({
 	      dataType: self.options.mapController.data.jsonp ? "jsonp" : "json",
-	      url: self.api_layer_url +'/[52;8,53,9]'
+	      url: self.api_layer_url
 	    })
 
       .done(function (data) {
