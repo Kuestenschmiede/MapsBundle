@@ -34,7 +34,7 @@ class LayerApi extends \Frontend
     protected $arrConfig = array();
     protected $arrReassignedLayer = array();
 
-    public function generate($intParentId, $bbox)
+    public function generate($intParentId)
     {
 
         $this->import('FrontendUser', 'User');
@@ -101,18 +101,25 @@ class LayerApi extends \Frontend
     }
     protected function forceChildsInContent($layer)
     {
-        if($layer['childs'][1]) {
-            $arrContent = [];
-            foreach ($layer['childs'] as $child) {
-                $arrContent[] = $child['content'][0];
+        $arrChilds =[];
+        foreach($layer['childs'] as $key => $child)
+        {
+            if($child['childs'] && $child['childs'][0]['content'] && $child['childs'][0]['content'] != []) {
+                $arrContent = [];
+                foreach ($child['childs'] as $children) {
+                    $arrContent[] = $children['content'][0];
+                }
+                $child['content'] = $arrContent;
+                unset($child['childs']);
+                unset($child['childsCount']);
+                $child['hasChilds'] = false;
+                $arrChilds[] = $child;
             }
-            $layer['content'] = $arrContent;
-            unset($layer['childs']);
-            $layer['hasChilds'] = false;
+            else {
+                $child['childs'] = $this->forceChildsInContent($layer['childs'][0]);
+            }
         }
-        else {
-            $layer['childs'][0] = $this->forceChildsInContent($layer['childs'][0]);
-        }
+        $layer['childs'] = $arrChilds;
         return $layer;
     }
 
