@@ -278,10 +278,14 @@ this.c4g.maps.misc = this.c4g.maps.misc || {};
             }
             else if(hovered.layer.tooltip && hovered.layer.tooltip_length){
                 tooltipHelper = tooltipContent;
-                tooltipContent = c4g.maps.utils.replaceAllPlaceholders(tooltipHelper, features[0], hovered.layer);
+                tooltipContent = '';
                 tooltipLength = parseInt(hovered.layer.tooltip_length);
-                for(i = 1; i<features.length; i++){
-                    tooltipContent = tooltipContent + ', ' + c4g.maps.utils.replaceAllPlaceholders(tooltipHelper, features[i], hovered.layer);
+                for(i = 0; i<features.length; i++){
+                    var singleTooltip = c4g.maps.utils.replaceAllPlaceholders(tooltipHelper, features[i], hovered.layer);
+                    if(singleTooltip != ''){
+                        if(tooltipContent == '') tooltipContent = singleTooltip;
+                        else tooltipContent = tooltipContent + ', ' + singleTooltip;
+                    }
                 }
                 if(tooltipContent.length > tooltipLength +3)
                 {
