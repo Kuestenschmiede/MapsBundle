@@ -24,6 +24,14 @@ layer_content_service:
     methods: [GET]
     requirements:
         layerId: \d+
+layer_content_data_service:
+    path: /con4gis/layerContentDataService/{layerId}/{extent}
+    defaults:
+        _scope: frontend
+        _controller: "con4gisMapsBundle:Maps:layerContentData"
+    methods: [GET]
+    requirements:
+        layerId: \d+
 
 editor_service:
     path: /con4gis/editorService/{profileId}

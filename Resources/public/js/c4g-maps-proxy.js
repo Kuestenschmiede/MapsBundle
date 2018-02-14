@@ -51,6 +51,8 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
     this.api_baselayer_url = this.options.mapController.data.api.baselayer + '/' + mapData.profile;
     this.api_layer_url = this.options.mapController.data.api.layer + '/' + this.mapId;
     this.api_layercontent_url = this.options.mapController.data.api.layercontent;
+    //this.api_layercontentdata_url = this.options.mapController.data.api.layercontentdata;
+    this.api_layercontentdata_url = "con4gis/layerContentDataService";
     this.api_locstyle_url = this.options.mapController.data.api.locstyle;
     this.api_infowindow_url = this.options.mapController.data.api.infowindow;
 
@@ -1701,621 +1703,714 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
 
       if (c4g.maps.layers[itemUid].content) {
         layers = [];
-
-      for (i = 0; i < c4g.maps.layers[itemUid].content.length; i += 1) {
-          contentData = c4g.maps.layers[itemUid].content[i];
-          styleForCluster = function (feature, resolution) {
-
-            var size,
-                style,
-                fFeatures,
-                iconOffset,
-                radius,
-                k,
-                fillcolor,
-                fontcolor;
-
-            if (contentData && contentData.locationStyle && c4g.maps.locationStyles[contentData.locationStyle]) {
-              style = c4g.maps.locationStyles[contentData.locationStyle].style(feature, resolution);
-
-              if (!style) {
-                style = [];
-                self.fittingExtends[itemUid] = vectorSource.getExtent();
-              }
-
-              if (feature !== undefined && feature !== null && feature.self !== window) {
-                if(feature.get('features')){
-                    fFeatures = feature.get('features');
-                }
-                else{
-                    fFeatures = [];
-                    fFeatures[0] = feature;
-                }
-                size = fFeatures.length;
-                if (size > 1) {
-                  if (fFeatures[0].getStyle() && size < 1000) { // limit for performance
-                    style[0] = fFeatures[0].getStyle()[0];
-                    for (k = 0; k < fFeatures.length; k += 1) {
-                      if (!fFeatures[k].getStyle()) {
-                        style = c4g.maps.locationStyles[contentData.locationStyle].style(fFeatures[0], resolution);
-                        break;
-                      }
-                    }
-                  } else {
-                    style = c4g.maps.locationStyles[contentData.locationStyle].style(fFeatures[0], resolution);
-                  }
-                  if (!style) {
-                    style = [];
-                  }
-
-                  // calculate bubble-offset
-                  iconOffset = [0, 0];
-                  if (style[0]) {
-                    if (typeof style[0].getImage().getRadius === "function") {
-                      radius = parseInt(style[0].getImage().getRadius(), 10);
-                      if (radius) {
-                        iconOffset = [0, radius];
-                      }
-                    } else if (typeof style[0].getImage().getAnchor === "function") {
-                      iconOffset = style[0].getImage().getAnchor() || [0, 0];
-                    }
-                  }
-
-                  fillcolor = c4g.maps.utils.getRgbaFromHexAndOpacity('4975A8',{
-                      unit: '%',
-                      value: 70
-                  });
-
-                  if (contentData.cluster_fillcolor) {
-                    fillcolor = c4g.maps.utils.getRgbaFromHexAndOpacity(contentData.cluster_fillcolor,{
-                        unit: '%',
-                        value: 70
-                    });
-                  }
-                  fontcolor = '#FFFFFF';
-
-                  style.push(
-                      new ol.style.Style({
-                        text: new ol.style.Text({
-                          text: "●",
-                          font: "60px sans-serif",
-                          offsetX: -1 * iconOffset[0],
-                          offsetY: -1 * iconOffset[1],
-                          fill: new ol.style.Fill({
-                            color: fillcolor
-                          })
-                        })
-                      })
-                  );
-                  style.push(
-                      new ol.style.Style({
-                        text: new ol.style.Text({
-                          text: size.toString(),
-                          offsetX: -1 * iconOffset[0],
-                          offsetY: -1 * iconOffset[1] + 3,
-                          fill: new ol.style.Fill({
-                            color: fontcolor
-                          })
-                        })
-                      })
-                  );
-                } else if (size === 1 && fFeatures[0].getStyle()) {
-                  return fFeatures[0].getStyle();
-                }
-              }
-
-            }
-            return style;
-          }; // end of styleForCluster()
-
-          if (contentData && (contentData.type === "urlData")) {
-
-            requestData = {};
-            requestData.url = contentData.data.url;
-            if (contentData.data.params) {
-              requestData.params = decodeURIComponent(contentData.data.params);
-            }
-
-            if (contentData.settings.boundingBox) {
-              requestContentData = contentData;
+          if(c4g.maps.layers[itemUid].content_async){
               requestVectorSource = new ol.source.Vector({
-                loader: function (extent, resolution, projection) {
-                  var boundingArray,
-                      strBoundingBox,
-                      url;
-
-                  boundingArray = ol.proj.transformExtent(extent, projection, 'EPSG:4326');
-                  strBoundingBox = '<bbox-query s="' + boundingArray[1] + '" n="' + boundingArray[3] + '" w="' + boundingArray[0] + '" e="' + boundingArray[2] + '"/>';
-                  url = requestData.url;
-
-                  if (requestData.params) {
-                    url += '?data=' + encodeURIComponent(requestData.params.replace(/\(bbox\)/g, strBoundingBox));
-                  }
-
-                  if (c4g.maps.requests === undefined) {
-                    c4g.maps.requests = {};
-                  }
-                  if (c4g.maps.requests['layerRequest' + itemUid] !== undefined) {
-                    c4g.maps.requests['layerRequest' + itemUid].abort();
-                  }
-
-                  c4g.maps.requests['layerRequest' + itemUid] = jQuery.ajax({
-                    url: url
-                  }).done(function (response) {
-                    var j,
-                        format,
-                        centerPoint,
-                        rFeatures,
-                        osmNodes,
-                        osmNds,
-                        nodeIdx,
-                        ndIdx,
-                        infoNodes,
-                        newTag,
-                        ref,
-                        lineExtent;
-
-                    delete c4g.maps.requests['layerRequest' + itemUid];
-
-                    // preprocessing the osm_xml to find relation-nodes with information
-                    if (response && response.children && response.children[0]) {
-                      // 1) find nodes with data
-                      osmNodes = response.children[0].getElementsByTagName('node');
-                      if (osmNodes) {
-                        infoNodes = {};
-                        for (nodeIdx in osmNodes) {
-                          if (osmNodes.hasOwnProperty(nodeIdx) && osmNodes[nodeIdx] && osmNodes[nodeIdx].children && osmNodes[nodeIdx].children.length > 0) {
-                            infoNodes[osmNodes[nodeIdx].getAttribute('id')] = osmNodes[nodeIdx];
-                            // infoNodes[osmNodes[nodeIdx].getAttribute('id')] = nodeIdx;
-                          }
-                        }
+                  loader: function (extent, resolution, projection) {
+                      var boundingArray,
+                          strBoundingBox,
+                          url;
+                      self.options.mapController.spinner.show();
+                      boundingArray = ol.proj.transformExtent(extent, projection, 'EPSG:4326');
+                      strBoundingBox = boundingArray[0]+','+boundingArray[1]+';'+boundingArray[2]+','+boundingArray[3];
+                      if (c4g.maps.requests === undefined) {
+                          c4g.maps.requests = {};
+                      }
+                      if (c4g.maps.requests['layerDataRequest' + itemUid] !== undefined) {
+                          c4g.maps.requests['layerDataRequest' + itemUid].abort();
                       }
 
-                      // 2) check and handle relations
-                      osmNds = response.children[0].getElementsByTagName('nd');
-                      if (osmNds) {
-                        for (ndIdx in osmNds) {
-                          if (ndIdx) {
-                            if (osmNds.hasOwnProperty(ndIdx) && osmNds[ndIdx]) {
-                              try {
-
-                                ref = osmNds[ndIdx].getAttribute('ref');
-                                if (infoNodes && ref && infoNodes[ref]) {
-                                  if (requestContentData && requestContentData.settings) {
-                                    if (requestContentData.settings.showAdditionalGeometries) {
-                                      // mark as additional information
-                                      if (response) {
-                                        newTag = response.createElement('tag');
-                                        if (newTag && osmNds[ndIdx].parentElement && osmNds[ndIdx].parentElement.getAttribute('id')) {
-                                          newTag.setAttribute('k', 'c4g_osm_ref');
-                                          newTag.setAttribute('v', osmNds[ndIdx].parentElement.getAttribute('id'));
-                                          infoNodes[ref].appendChild(newTag);
-                                        }
-                                      }
-                                    } else {
-                                      // remove additional information
-                                      infoNodes[ref].innerHTML = '';
-                                    }
+                      c4g.maps.requests['layerDataRequest' + itemUid] = jQuery.ajax({
+                          url: self.api_layercontentdata_url + '/' + c4g.maps.layers[itemUid].id +'/'+strBoundingBox,
+                          success :function (data){
+                              if(data.length > 0 && !contentFeatures){
+                                  contentFeatures = [];
+                              }
+                              loopData:
+                              for(i = 0; i < data.length; i++){
+                                  contentData = data[i];
+                                  for(j = 0; j < contentFeatures.length; j++){
+                                      if(contentData.id === contentFeatures[j].id) continue loopData;
                                   }
-                                }
-                              } catch (e) {
-                                console.warn('Could not check and handle relations.');
+                                  var resultCoordinate = ol.proj.transform([parseFloat(contentData.data.geometry.coordinates[0]), parseFloat(contentData.data.geometry.coordinates[1])], 'EPSG:4326', 'EPSG:3857')
+                                  var point = new ol.geom.Point(resultCoordinate);
+                                  contentFeature = new ol.Feature(point);
+                                  contentFeature.setId(contentData.id);
+                                  contentFeature.set('cluster_zoom', contentData.cluster_zoom);
+                                  contentFeature.set('cluster_popup', contentData.cluster_popup);
+                                  contentFeature.set('loc_linkurl', contentData.loc_linkurl);
+                                  contentFeature.set('hover_location', contentData.hover_location);
+                                  contentFeature.set('hover_style', contentData.hover_style);
+                                  contentFeature.set('popup', contentData.data.properties.popup);
+                                  contentFeature.set('zoom_onclick', contentData.zoom_onclick);
+                                  if(contentData.locationStyle && c4g.maps.locationStyles[contentData.locationStyle]){
+                                      contentFeature.setStyle(c4g.maps.locationStyles[contentData.locationStyle]);
+                                      contentFeatures.push(contentFeature);
+                                  }
+                                  else{
+                                      if(!unstyledFeatures){unstyledFeatures =[];}
+                                      if(!missingStyles){missingStyles = [];}
+                                      contentFeature.set('styleId',contentData.locationStyle);
+                                      unstyledFeatures.push(contentFeature);
+                                      missingStyles.push(contentData.locationStyle);
+                                  }
+
                               }
-                            }
+                              self.loadLocationStyles(missingStyles, {success: function() {
+                                  for(i = 0; i < unstyledFeatures.length; i++){
+                                      var styleId =unstyledFeatures[i].get('styleId');
+                                      unstyledFeatures[i].setStyle(c4g.maps.locationStyles[styleId].style);
+                                      requestVectorSource.addFeature(unstyledFeatures[i]);
+                                  }
+
+                              }});
+                              if(data.length > 0){
+                                  requestVectorSource.addFeatures(contentFeatures);
+                              }
+                          },
+                          complete: function () {
+                              self.options.mapController.spinner.hide();
                           }
-                        }
-                      }
-                    }
-                    // import osm_xml
-                    format = new ol.format.OSMXML();
-                    if (format && response) {
-                      try {
-                        rFeatures = format.readFeatures(response, {featureProjection: projection});
-                      } catch (e) {
-                        console.warn('Can not read feature.');
-                        //console.log(e.stack);
-                      }
-                    }
-
-                    // postprocessing features
-                    if (rFeatures && rFeatures.length > 0) {
-                      for (j = 0; j < rFeatures.length; j += 1) {
-
-                        if (rFeatures[j].getGeometry().getType() === "Point") {
-                          rFeatures[j].set('osm_type', 'node');
-                        } else {
-                          rFeatures[j].set('osm_type', 'way');
-                        }
-                        rFeatures[j].set('c4g_type', 'osm');
-                        rFeatures[j].set('cluster_zoom', contentData.cluster_zoom);
-                        rFeatures[j].set('cluster_popup', contentData.cluster_popup);
-                        rFeatures[j].set('loc_linkurl', contentData.loc_linkurl);
-                        rFeatures[j].set('hover_location', contentData.hover_location);
-                        rFeatures[j].set('hover_style', contentData.hover_style);
-                        rFeatures[j].set('zoom_onclick', contentData.data.zoom_onclick);
-                        rFeatures[j].set('label', contentData.data.label);
-
-                        if (requestContentData.settings.forceNodes) {
-                          // convert tracks and areas to points
-                          if (rFeatures[j].getGeometry().getType() === "Polygon") {
-                            centerPoint = rFeatures[j].getGeometry().getInteriorPoint().getCoordinates();
-                            rFeatures[j].setGeometry(
-                                new ol.geom.Point(centerPoint)
-                            );
-                          } else if (rFeatures[j].getGeometry().getType() === "LineString") {
-                            // @TODO: prüfen ob dies korrekter mittelpunkt ist
-                            lineExtent = rFeatures[j].getGeometry().getExtent();
-                            centerPoint = ol.extent.getCenter(lineExtent);
-                            rFeatures[j].setGeometry(
-                                new ol.geom.Point(centerPoint)
-                            );
-                          }
-                        }
-                        if (rFeatures[j].get('c4g_osm_ref')) {
-                          // if (requestContentData.settings.showAdditionalGeometries) {
-                          if (requestContentData.settings.additionalStyle) {
-                            // @TODO: load and attach style
-                          } else {
-                            rFeatures[j].setStyle(c4g.maps.utils.reduceStyle(requestContentData.locationStyle));
-                          }
-                          // } else {
-                          //   continue;
-                          // }
-                        }
-                      }
-                      try {
-                        requestVectorSource.addFeatures(rFeatures);
-                      } catch (e) {
-                        console.warn('Could not add features to source. The "forceNodes"-option should be used.');
-                      }
-                    }
-                    self.combineLayers(self);
-                  }); // end of AJAX
-
-                },
-                strategy: ol.loadingstrategy.bbox
+                      })
+                  },
+                  strategy: ol.loadingstrategy.bbox
               });
-
-              vectorSource = requestVectorSource;
-            } else {
-
-              if (typeof ol.format[contentData.format] === "function") {
-
-                //StaticVector
-                vectorSource = new ol.source.Vector({
-                  format: new ol.format[contentData.format](),
-                  url: requestData.url,
-                  projection: 'EPSG:3857',
-                  strategy: ol.loadingstrategy.all
-                });
-
-                if (contentData.settings && contentData.settings.refresh === true) {
-                  if (c4g.maps.requests === undefined) {
-                    c4g.maps.requests = {};
-                  }
-
-                  refreshInterval = (typeof contentData.settings.interval === 'number') ? contentData.settings.interval : 10000;
-                  /* do it with better ajax-handling
-                   c4g.maps.requests['layerRequest' + itemUid] = window.setInterval(function () {
-                   vectorSource.clear();
-                   }, refreshInterval);
-                   */
-
-                  // Anfang Einschub neue AJAX-Layer
-                  refreshAjaxVars.blnHasPositionIds = false;
-                  refreshAjaxVars.arrPositionIds = [];
-                  refreshAjaxVars.objFeatures = {};
-
-                  vectorSource.set('refreshInterval', refreshInterval);
-
-                  vectorSource.set('refreshFunction', function () {
-
-                    if (!vectorSource.get('hasIds')) {
-                      vectorSource.forEachFeature(function (feature) {
-                        if (feature.get('positionId')) {
-                          refreshAjaxVars.blnHasPositionIds = true;
-                          refreshAjaxVars.arrPositionIds.push(feature.get('positionId'));
-                          refreshAjaxVars.objFeatures[feature.get('positionId')] = feature;
-                        }
-                      });
-                      if (refreshAjaxVars.blnHasPositionIds) {
-                        vectorSource.set('hasIds', true);
-                      }
-                    }
-
-                    $.ajax({
-                      url: requestData.url,
-                      success: function (data) {
-
-                        if (data.renewableResponse) {
-                          // update of stations
-                          $.each(data.features, function (index, featureData) {
-                            if (featureData.type && featureData.type === "Feature") {
-                              var feature = (new ol.format[contentData.format]()).readFeature(featureData, {
-                                dataProjection: 'EPSG:4326',
-                                featureProjection: 'EPSG:3857'
-                              });
-                              var layer = c4g.maps.layers[featureData.properties.id];
-                              var popupContent = featureData.properties.popup;
-                              layer.vectorLayer.getLayers().forEach(function(element, index, array) {
-                                if (!c4g.maps.locationStyles[featureData.properties.styleId]) {
-                                    self.loadLocationStyles([featureData.properties.styleId], {success: function() {
-                                        element.setStyle(c4g.maps.locationStyles[featureData.properties.styleId].style);
-                                    }});
-                                } else {
-                                    element.setStyle(c4g.maps.locationStyles[featureData.properties.styleId].style);
-                                }
-                                element.getSource().forEachFeature(function(nestedFeature) {
-                                  nestedFeature.set('popup', popupContent);
-                                });
-                              });
-                              layer.content[0].locationStyle = featureData.properties.styleId;
-
-                              if (!c4g.maps.locationStyles[featureData.properties.styleId]) {
-                                  self.loadLocationStyles([featureData.properties.styleId], {success: function() {
-                                      feature.setStyle(c4g.maps.locationStyles[featureData.properties.styleId].style);
-                                  }});
-                              } else {
-                                  feature.setStyle(c4g.maps.locationStyles[featureData.properties.styleId].style);
-                              }
-
-                              if (self.activeLayerIds[layer.id]) {
-                                self.hideLayer(layer.id);
-                                self.showLayer(layer.id);
-                              }
-                              // vectorSource.addFeature(feature);
-                            }
-                          });
-                        }
-
-                        if (data.features) {
-
-                          refreshAjaxVars.arrNewPositionIds = [];
-                          refreshAjaxVars.objNewFeatures = {};
-
-                          $.each(data.features, function (index, featureData) {
-                            if (featureData.type && featureData.type == "Feature") {
-                              refreshAjaxVars.feature = (new ol.format[contentData.format]()).readFeature(featureData, {
-                                dataProjection: 'EPSG:4326',
-                                featureProjection: 'EPSG:3857'
-                              });
-                              refreshAjaxVars.feature.set('cluster_zoom', contentData.cluster_zoom);
-                              refreshAjaxVars.feature.set('loc_linkurl', contentData.loc_linkurl);
-                              refreshAjaxVars.feature.set('hover_location', contentData.hover_location);
-                              refreshAjaxVars.feature.set('hover_style', contentData.hover_style);
-                              if (refreshAjaxVars.feature.get('positionId')) {
-                                refreshAjaxVars.arrNewPositionIds.push(refreshAjaxVars.feature.get('positionId'));
-                                refreshAjaxVars.objNewFeatures[refreshAjaxVars.feature.get('positionId')] = refreshAjaxVars.feature;
-                              }
-                            }
-                          });
-
-                          $.each(refreshAjaxVars.arrPositionIds, function (index, positionId) {
-                            if (refreshAjaxVars.arrNewPositionIds.indexOf(positionId) == -1) {
-                              // positions id in neuer antwort nicht mehr enthalten -> lösche feature
-                              if (typeof refreshAjaxVars.objFeatures[positionId] !== "undefined") {
-                                vectorSource.removeFeature(refreshAjaxVars.objFeatures[positionId]);
-                                delete(refreshAjaxVars.arrPositionIds[index]);
-                              }
-                            }
-                          });
-
-                          $.each(refreshAjaxVars.arrNewPositionIds, function (index, positionId) {
-                            if (refreshAjaxVars.arrPositionIds.indexOf(positionId) == -1) {
-                              // positions id ist noch nicht vorhanden -> neues feature
-                              refreshAjaxVars.arrPositionIds.push(positionId);
-                              refreshAjaxVars.objFeatures[positionId] = refreshAjaxVars.objNewFeatures[positionId];
-                              vectorSource.addFeature(refreshAjaxVars.objNewFeatures[positionId]);
-                            }
-                          });
-                        }
-
-                      }
-                    });
-                  });
-
-                  self.requestFunctions['request_' + itemUid] = {
-                    'function': vectorSource.get('refreshFunction'),
-                    'interval': refreshInterval
-                  };
-
-
-                  // Ende Einschub neue AJAX-Layer
-
-                }
-
-              } else {
-                console.warn('Format type ' + contentData.format + ' in ol.format not found.');
-              }
-            }
-
-            if (contentData.settings.cluster) {
-
               clusterSource = new ol.source.Cluster({
-                distance: 40,
-                //threshold: 2, //minimum element count
-                source: vectorSource,
-                zoom: contentData.cluster_zoom
+                  distance: 40,
+                  style: c4g.maps.locationStyles[1].style,
+                  //threshold: 2, //minimum element count
+                  source: requestVectorSource
               });
-              //console.log(clusterSource);
-                this.styleForCluster = styleForCluster;
 
-              //vectorLayer = self.getVectorLayer(clusterSource, styleForCluster);
 
-               vectorLayer = new ol.layer.AnimatedCluster(
+              vectorLayer = new ol.layer.AnimatedCluster(
                   {	name: 'Cluster',
                       source: clusterSource,
                       // Use a style function for cluster symbolisation
                       style: styleForCluster
                   });
-              
+              layers.push(vectorLayer);
 
-            } else {
-              vectorLayer = self.getVectorLayer(vectorSource, c4g.maps.locationStyles[contentData.locationStyle] ? c4g.maps.locationStyles[contentData.locationStyle].style : null);
-            }
 
-            /* Fit to extend */
-            if (contentData.settings && contentData.settings.fitToExtend) {
 
-              self.fittingExtends = self.fittingExtends || {};
-
-              vectorSource.on('change', function () {
-
-                // check currently stored id's
-                for (i in self.fittingExtends) {
-                  if (self.fittingExtends.hasOwnProperty(i)) {
-                    if (typeof self.activeLayerIds[i] === "undefined" || self.activeLayerIds[0] == "invisible") {
-                      delete self.fittingExtends[i];
-                    }
-                  }
-                }
-
-                self.fittingExtends[itemUid] = vectorSource.getExtent();//vectorSource.getFeatures();
-                c4g.maps.utils.fitToExtents(self.fittingExtends, self.options.mapController.map);
-              });
-
-            }
-            // end of fit to extend
-
-            fnAttachDataToLayer(vectorLayer, contentData.data);
-            layers.push(vectorLayer);
-          } else if ((c4g.maps.layers[itemUid].type === "table") || (c4g.maps.layers[itemUid].type === "link")) {
-            var layerContent = c4g.maps.layers[itemUid].content;
-            contentData = layerContent[0];
-            var contentFeatures = [];
-            if (contentData && contentData.data.properties && contentData.data.properties.projection) {
-              dataProjection = contentData.data.properties.projection;
-              featureProjection = this.options.mapController.map.getView().getProjection();
-            } else {
-              dataProjection = undefined;
-            }
-
-            // force all nodes into one layer
-            for (var key = 0; key < layerContent.length; key++) {
-              var contentFeature = new ol.format[layerContent[key].format]({}).readFeatures(layerContent[key].data, {
-                featureProjection: featureProjection,
-                dataProjection: dataProjection
-              })[0];
-              contentFeature.set('cluster_zoom', contentData.cluster_zoom);
-              contentFeature.set('cluster_popup', contentData.cluster_popup);
-              contentFeature.set('loc_linkurl', contentData.loc_linkurl);
-              contentFeature.set('hover_location', contentData.hover_location);
-              contentFeature.set('hover_style', contentData.hover_style);
-              contentFeature.set('popup', layerContent[key].data.properties.popup);
-              contentFeature.set('zoom_onclick', contentData.zoom_onclick);
-              contentFeatures.push(contentFeature);
-            }
-
-            if(i+1 === c4g.maps.layers[itemUid].content.length){
-                vectorSource = new ol.source.Vector({
-                  features: contentFeatures,
-                  projection: 'EPSG:3857',
-                  format: new ol.format.GeoJSON(),
-
-                });
-                if (contentData && contentData.settings && contentData.settings.cluster) {
-                  clusterSource = new ol.source.Cluster({
-                    distance: 40,
-                    zoom: contentData.cluster_zoom,
-
-                      //threshold: 2, //minimum element count
-                    source: vectorSource
-                  });
-                  //vectorLayer = self.getVectorLayer(clusterSource, styleForCluster);
-
-                  vectorLayer = new ol.layer.AnimatedCluster(
-                        {	name: 'Cluster',
-                            source: clusterSource,
-                            // Use a style function for cluster symbolisation
-                            style: styleForCluster
-                        });
-
-                } else {
-                  vectorLayer = self.getVectorLayer(vectorSource, contentData && c4g.maps.locationStyles[contentData.locationStyle] ? c4g.maps.locationStyles[contentData.locationStyle].style : null);
-                }
-                layers.push(vectorLayer);
-            }
-            //return;
-          } else {
-            if (c4g.maps.layers[itemUid].content.length > 1) {
-              //TODO: refactoren und kürzen!
-              // we have overpass request with reassigned forum layers
-              // forum layers can not be drawn via the normal drawLayer, because they do not have a Uid
-              if (contentData && (typeof ol.format[contentData.format] === "function")) {
-                if (contentData.data.properties && contentData.data.properties.projection) {
-                  dataProjection = contentData.data.properties.projection;
-                  featureProjection = this.options.mapController.map.getView().getProjection();
-                } else {
-                  dataProjection = undefined;
-                }
-
-                features = (new ol.format[contentData.format]({})).readFeatures(contentData.data, {
-                  featureProjection: featureProjection,
-                  dataProjection: dataProjection
-                });
-
-                var missingStyles = [];
-                var unstyledFeatures = [];
-                for (var j = 0; j < features.length; j += 1) {
-                  if (features[j].get('styleId')) {
-                    if (c4g.maps.locationStyles[features[j].get('styleId')] && c4g.maps.locationStyles[features[j].get('styleId')].style) {
-                      features[j].setStyle(c4g.maps.locationStyles[features[j].get('styleId')].style);
-                    } else {
-                      missingStyles.push(features[j].get('styleId'));
-                      unstyledFeatures.push(features[j]);
-                    }
-                  }
-                }
-
-                vectorStyle = c4g.maps.locationStyles[contentData.locationStyle] && c4g.maps.locationStyles[contentData.locationStyle].style;
-
-                if (missingStyles.length > 0) {
-                  //TODO there are unstyled features because some styles were not loaded
-                } else {
-                  vectorSource = new ol.source.Vector({
-                    features: features,
-                    projection: 'EPSG:3857',
-                    format: new ol.format.GeoJSON()
-                  });
-                    clusterSource = new ol.source.Cluster({
-                        distance: 40,
-                        zoom: contentData.cluster_zoom,
-
-                        //threshold: 2, //minimum element count
-                        source: vectorSource
-                    });//zu bearbeiten
-                  vectorLayer = this.getVectorLayer(clusterSource, vectorStyle);
-                  if (contentData.data && contentData.data.properties) {
-                    if (contentData.data.properties.popup) {
-                      vectorLayer.popup = contentData.data.properties.popup;
-                    }
-                    if (contentData.data.properties.tooltip) {
-                      vectorLayer.tooltip = contentData.data.properties.tooltip;
-                    }
-                    if (contentData.data.properties.label) {
-                      vectorLayer.label = contentData.data.properties.label;
-                    }
-                    if (contentData.data.properties.onclick_zoom) {
-                      vectorLayer.onclick_zoom = contentData.data.properties.onclick_zoom;
-                    }
-                  }
-                  layers.push(vectorLayer);
-                }
-
-              } else {
-                if (contentData) {
-                  console.warn('Format type ' + contentData.format + ' in ol.format not found.');
-                } else {
-                  //no contentData, maybe a link
-                }
-              }
-            } else {
-              // normal, not overpass layer
-              self.drawLayer(itemUid);
-              return;
-            }
           }
-        }
+          else{
+              for (i = 0; i < c4g.maps.layers[itemUid].content.length; i += 1) {
+                  contentData = c4g.maps.layers[itemUid].content[i];
+                  styleForCluster = function (feature, resolution) {
+
+                      var size,
+                          style,
+                          fFeatures,
+                          iconOffset,
+                          radius,
+                          k,
+                          fillcolor,
+                          fontcolor;
+
+                      if (contentData && contentData.locationStyle && c4g.maps.locationStyles[contentData.locationStyle]) {
+                          style = c4g.maps.locationStyles[contentData.locationStyle].style(feature, resolution);
+
+                          if (!style) {
+                              style = [];
+                              self.fittingExtends[itemUid] = vectorSource.getExtent();
+                          }
+
+                          if (feature !== undefined && feature !== null && feature.self !== window) {
+                              if(feature.get('features')){
+                                  fFeatures = feature.get('features');
+                              }
+                              else{
+                                  fFeatures = [];
+                                  fFeatures[0] = feature;
+                              }
+                              size = fFeatures.length;
+                              if (size > 1) {
+                                  if (fFeatures[0].getStyle() && size < 1000) { // limit for performance
+                                      style[0] = fFeatures[0].getStyle()[0];
+                                      for (k = 0; k < fFeatures.length; k += 1) {
+                                          if (!fFeatures[k].getStyle()) {
+                                              style = c4g.maps.locationStyles[contentData.locationStyle].style(fFeatures[0], resolution);
+                                              break;
+                                          }
+                                      }
+                                  } else {
+                                      style = c4g.maps.locationStyles[contentData.locationStyle].style(fFeatures[0], resolution);
+                                  }
+                                  if (!style) {
+                                      style = [];
+                                  }
+
+                                  // calculate bubble-offset
+                                  iconOffset = [0, 0];
+                                  if (style[0]) {
+                                      if (typeof style[0].getImage().getRadius === "function") {
+                                          radius = parseInt(style[0].getImage().getRadius(), 10);
+                                          if (radius) {
+                                              iconOffset = [0, radius];
+                                          }
+                                      } else if (typeof style[0].getImage().getAnchor === "function") {
+                                          iconOffset = style[0].getImage().getAnchor() || [0, 0];
+                                      }
+                                  }
+
+                                  fillcolor = c4g.maps.utils.getRgbaFromHexAndOpacity('4975A8',{
+                                      unit: '%',
+                                      value: 70
+                                  });
+
+                                  if (contentData.cluster_fillcolor) {
+                                      fillcolor = c4g.maps.utils.getRgbaFromHexAndOpacity(contentData.cluster_fillcolor,{
+                                          unit: '%',
+                                          value: 70
+                                      });
+                                  }
+                                  fontcolor = '#FFFFFF';
+
+                                  style.push(
+                                      new ol.style.Style({
+                                          text: new ol.style.Text({
+                                              text: "●",
+                                              font: "60px sans-serif",
+                                              offsetX: -1 * iconOffset[0],
+                                              offsetY: -1 * iconOffset[1],
+                                              fill: new ol.style.Fill({
+                                                  color: fillcolor
+                                              })
+                                          })
+                                      })
+                                  );
+                                  style.push(
+                                      new ol.style.Style({
+                                          text: new ol.style.Text({
+                                              text: size.toString(),
+                                              offsetX: -1 * iconOffset[0],
+                                              offsetY: -1 * iconOffset[1] + 3,
+                                              fill: new ol.style.Fill({
+                                                  color: fontcolor
+                                              })
+                                          })
+                                      })
+                                  );
+                              } else if (size === 1 && fFeatures[0].getStyle()) {
+                                  return fFeatures[0].getStyle();
+                              }
+                          }
+
+                      }
+                      return style;
+                  }; // end of styleForCluster()
+
+                  if (contentData && (contentData.type === "urlData")) {
+
+                      requestData = {};
+                      requestData.url = contentData.data.url;
+                      if (contentData.data.params) {
+                          requestData.params = decodeURIComponent(contentData.data.params);
+                      }
+
+                      if (contentData.settings.boundingBox) {
+                          requestContentData = contentData;
+                          requestVectorSource = new ol.source.Vector({
+                              loader: function (extent, resolution, projection) {
+                                  var boundingArray,
+                                      strBoundingBox,
+                                      url;
+
+                                  boundingArray = ol.proj.transformExtent(extent, projection, 'EPSG:4326');
+                                  strBoundingBox = '<bbox-query s="' + boundingArray[1] + '" n="' + boundingArray[3] + '" w="' + boundingArray[0] + '" e="' + boundingArray[2] + '"/>';
+                                  url = requestData.url;
+
+                                  if (requestData.params) {
+                                      url += '?data=' + encodeURIComponent(requestData.params.replace(/\(bbox\)/g, strBoundingBox));
+                                  }
+
+                                  if (c4g.maps.requests === undefined) {
+                                      c4g.maps.requests = {};
+                                  }
+                                  if (c4g.maps.requests['layerRequest' + itemUid] !== undefined) {
+                                      c4g.maps.requests['layerRequest' + itemUid].abort();
+                                  }
+
+                                  c4g.maps.requests['layerRequest' + itemUid] = jQuery.ajax({
+                                      url: url
+                                  }).done(function (response) {
+                                      var j,
+                                          format,
+                                          centerPoint,
+                                          rFeatures,
+                                          osmNodes,
+                                          osmNds,
+                                          nodeIdx,
+                                          ndIdx,
+                                          infoNodes,
+                                          newTag,
+                                          ref,
+                                          lineExtent;
+
+                                      delete c4g.maps.requests['layerRequest' + itemUid];
+
+                                      // preprocessing the osm_xml to find relation-nodes with information
+                                      if (response && response.children && response.children[0]) {
+                                          // 1) find nodes with data
+                                          osmNodes = response.children[0].getElementsByTagName('node');
+                                          if (osmNodes) {
+                                              infoNodes = {};
+                                              for (nodeIdx in osmNodes) {
+                                                  if (osmNodes.hasOwnProperty(nodeIdx) && osmNodes[nodeIdx] && osmNodes[nodeIdx].children && osmNodes[nodeIdx].children.length > 0) {
+                                                      infoNodes[osmNodes[nodeIdx].getAttribute('id')] = osmNodes[nodeIdx];
+                                                      // infoNodes[osmNodes[nodeIdx].getAttribute('id')] = nodeIdx;
+                                                  }
+                                              }
+                                          }
+
+                                          // 2) check and handle relations
+                                          osmNds = response.children[0].getElementsByTagName('nd');
+                                          if (osmNds) {
+                                              for (ndIdx in osmNds) {
+                                                  if (ndIdx) {
+                                                      if (osmNds.hasOwnProperty(ndIdx) && osmNds[ndIdx]) {
+                                                          try {
+
+                                                              ref = osmNds[ndIdx].getAttribute('ref');
+                                                              if (infoNodes && ref && infoNodes[ref]) {
+                                                                  if (requestContentData && requestContentData.settings) {
+                                                                      if (requestContentData.settings.showAdditionalGeometries) {
+                                                                          // mark as additional information
+                                                                          if (response) {
+                                                                              newTag = response.createElement('tag');
+                                                                              if (newTag && osmNds[ndIdx].parentElement && osmNds[ndIdx].parentElement.getAttribute('id')) {
+                                                                                  newTag.setAttribute('k', 'c4g_osm_ref');
+                                                                                  newTag.setAttribute('v', osmNds[ndIdx].parentElement.getAttribute('id'));
+                                                                                  infoNodes[ref].appendChild(newTag);
+                                                                              }
+                                                                          }
+                                                                      } else {
+                                                                          // remove additional information
+                                                                          infoNodes[ref].innerHTML = '';
+                                                                      }
+                                                                  }
+                                                              }
+                                                          } catch (e) {
+                                                              console.warn('Could not check and handle relations.');
+                                                          }
+                                                      }
+                                                  }
+                                              }
+                                          }
+                                      }
+                                      // import osm_xml
+                                      format = new ol.format.OSMXML();
+                                      if (format && response) {
+                                          try {
+                                              rFeatures = format.readFeatures(response, {featureProjection: projection});
+                                          } catch (e) {
+                                              console.warn('Can not read feature.');
+                                              //console.log(e.stack);
+                                          }
+                                      }
+
+                                      // postprocessing features
+                                      if (rFeatures && rFeatures.length > 0) {
+                                          for (j = 0; j < rFeatures.length; j += 1) {
+
+                                              if (rFeatures[j].getGeometry().getType() === "Point") {
+                                                  rFeatures[j].set('osm_type', 'node');
+                                              } else {
+                                                  rFeatures[j].set('osm_type', 'way');
+                                              }
+                                              rFeatures[j].set('c4g_type', 'osm');
+                                              rFeatures[j].set('cluster_zoom', contentData.cluster_zoom);
+                                              rFeatures[j].set('cluster_popup', contentData.cluster_popup);
+                                              rFeatures[j].set('loc_linkurl', contentData.loc_linkurl);
+                                              rFeatures[j].set('hover_location', contentData.hover_location);
+                                              rFeatures[j].set('hover_style', contentData.hover_style);
+                                              rFeatures[j].set('zoom_onclick', contentData.data.zoom_onclick);
+                                              rFeatures[j].set('label', contentData.data.label);
+
+                                              if (requestContentData.settings.forceNodes) {
+                                                  // convert tracks and areas to points
+                                                  if (rFeatures[j].getGeometry().getType() === "Polygon") {
+                                                      centerPoint = rFeatures[j].getGeometry().getInteriorPoint().getCoordinates();
+                                                      rFeatures[j].setGeometry(
+                                                          new ol.geom.Point(centerPoint)
+                                                      );
+                                                  } else if (rFeatures[j].getGeometry().getType() === "LineString") {
+                                                      // @TODO: prüfen ob dies korrekter mittelpunkt ist
+                                                      lineExtent = rFeatures[j].getGeometry().getExtent();
+                                                      centerPoint = ol.extent.getCenter(lineExtent);
+                                                      rFeatures[j].setGeometry(
+                                                          new ol.geom.Point(centerPoint)
+                                                      );
+                                                  }
+                                              }
+                                              if (rFeatures[j].get('c4g_osm_ref')) {
+                                                  // if (requestContentData.settings.showAdditionalGeometries) {
+                                                  if (requestContentData.settings.additionalStyle) {
+                                                      // @TODO: load and attach style
+                                                  } else {
+                                                      rFeatures[j].setStyle(c4g.maps.utils.reduceStyle(requestContentData.locationStyle));
+                                                  }
+                                                  // } else {
+                                                  //   continue;
+                                                  // }
+                                              }
+                                          }
+                                          try {
+                                              requestVectorSource.addFeatures(rFeatures);
+                                          } catch (e) {
+                                              console.warn('Could not add features to source. The "forceNodes"-option should be used.');
+                                          }
+                                      }
+                                      self.combineLayers(self);
+                                  }); // end of AJAX
+
+                              },
+                              strategy: ol.loadingstrategy.bbox
+                          });
+
+                          vectorSource = requestVectorSource;
+                      } else {
+
+                          if (typeof ol.format[contentData.format] === "function") {
+
+                              //StaticVector
+                              vectorSource = new ol.source.Vector({
+                                  format: new ol.format[contentData.format](),
+                                  url: requestData.url,
+                                  projection: 'EPSG:3857',
+                                  strategy: ol.loadingstrategy.all
+                              });
+
+                              if (contentData.settings && contentData.settings.refresh === true) {
+                                  if (c4g.maps.requests === undefined) {
+                                      c4g.maps.requests = {};
+                                  }
+
+                                  refreshInterval = (typeof contentData.settings.interval === 'number') ? contentData.settings.interval : 10000;
+                                  /* do it with better ajax-handling
+                                   c4g.maps.requests['layerRequest' + itemUid] = window.setInterval(function () {
+                                   vectorSource.clear();
+                                   }, refreshInterval);
+                                   */
+
+                                  // Anfang Einschub neue AJAX-Layer
+                                  refreshAjaxVars.blnHasPositionIds = false;
+                                  refreshAjaxVars.arrPositionIds = [];
+                                  refreshAjaxVars.objFeatures = {};
+
+                                  vectorSource.set('refreshInterval', refreshInterval);
+
+                                  vectorSource.set('refreshFunction', function () {
+
+                                      if (!vectorSource.get('hasIds')) {
+                                          vectorSource.forEachFeature(function (feature) {
+                                              if (feature.get('positionId')) {
+                                                  refreshAjaxVars.blnHasPositionIds = true;
+                                                  refreshAjaxVars.arrPositionIds.push(feature.get('positionId'));
+                                                  refreshAjaxVars.objFeatures[feature.get('positionId')] = feature;
+                                              }
+                                          });
+                                          if (refreshAjaxVars.blnHasPositionIds) {
+                                              vectorSource.set('hasIds', true);
+                                          }
+                                      }
+
+                                      $.ajax({
+                                          url: requestData.url,
+                                          success: function (data) {
+
+                                              if (data.renewableResponse) {
+                                                  // update of stations
+                                                  $.each(data.features, function (index, featureData) {
+                                                      if (featureData.type && featureData.type === "Feature") {
+                                                          var feature = (new ol.format[contentData.format]()).readFeature(featureData, {
+                                                              dataProjection: 'EPSG:4326',
+                                                              featureProjection: 'EPSG:3857'
+                                                          });
+                                                          var layer = c4g.maps.layers[featureData.properties.id];
+                                                          var popupContent = featureData.properties.popup;
+                                                          layer.vectorLayer.getLayers().forEach(function(element, index, array) {
+                                                              if (!c4g.maps.locationStyles[featureData.properties.styleId]) {
+                                                                  self.loadLocationStyles([featureData.properties.styleId], {success: function() {
+                                                                      element.setStyle(c4g.maps.locationStyles[featureData.properties.styleId].style);
+                                                                  }});
+                                                              } else {
+                                                                  element.setStyle(c4g.maps.locationStyles[featureData.properties.styleId].style);
+                                                              }
+                                                              element.getSource().forEachFeature(function(nestedFeature) {
+                                                                  nestedFeature.set('popup', popupContent);
+                                                              });
+                                                          });
+                                                          layer.content[0].locationStyle = featureData.properties.styleId;
+
+                                                          if (!c4g.maps.locationStyles[featureData.properties.styleId]) {
+                                                              self.loadLocationStyles([featureData.properties.styleId], {success: function() {
+                                                                  feature.setStyle(c4g.maps.locationStyles[featureData.properties.styleId].style);
+                                                              }});
+                                                          } else {
+                                                              feature.setStyle(c4g.maps.locationStyles[featureData.properties.styleId].style);
+                                                          }
+
+                                                          if (self.activeLayerIds[layer.id]) {
+                                                              self.hideLayer(layer.id);
+                                                              self.showLayer(layer.id);
+                                                          }
+                                                          // vectorSource.addFeature(feature);
+                                                      }
+                                                  });
+                                              }
+
+                                              if (data.features) {
+
+                                                  refreshAjaxVars.arrNewPositionIds = [];
+                                                  refreshAjaxVars.objNewFeatures = {};
+
+                                                  $.each(data.features, function (index, featureData) {
+                                                      if (featureData.type && featureData.type == "Feature") {
+                                                          refreshAjaxVars.feature = (new ol.format[contentData.format]()).readFeature(featureData, {
+                                                              dataProjection: 'EPSG:4326',
+                                                              featureProjection: 'EPSG:3857'
+                                                          });
+                                                          refreshAjaxVars.feature.set('cluster_zoom', contentData.cluster_zoom);
+                                                          refreshAjaxVars.feature.set('loc_linkurl', contentData.loc_linkurl);
+                                                          refreshAjaxVars.feature.set('hover_location', contentData.hover_location);
+                                                          refreshAjaxVars.feature.set('hover_style', contentData.hover_style);
+                                                          if (refreshAjaxVars.feature.get('positionId')) {
+                                                              refreshAjaxVars.arrNewPositionIds.push(refreshAjaxVars.feature.get('positionId'));
+                                                              refreshAjaxVars.objNewFeatures[refreshAjaxVars.feature.get('positionId')] = refreshAjaxVars.feature;
+                                                          }
+                                                      }
+                                                  });
+
+                                                  $.each(refreshAjaxVars.arrPositionIds, function (index, positionId) {
+                                                      if (refreshAjaxVars.arrNewPositionIds.indexOf(positionId) == -1) {
+                                                          // positions id in neuer antwort nicht mehr enthalten -> lösche feature
+                                                          if (typeof refreshAjaxVars.objFeatures[positionId] !== "undefined") {
+                                                              vectorSource.removeFeature(refreshAjaxVars.objFeatures[positionId]);
+                                                              delete(refreshAjaxVars.arrPositionIds[index]);
+                                                          }
+                                                      }
+                                                  });
+
+                                                  $.each(refreshAjaxVars.arrNewPositionIds, function (index, positionId) {
+                                                      if (refreshAjaxVars.arrPositionIds.indexOf(positionId) == -1) {
+                                                          // positions id ist noch nicht vorhanden -> neues feature
+                                                          refreshAjaxVars.arrPositionIds.push(positionId);
+                                                          refreshAjaxVars.objFeatures[positionId] = refreshAjaxVars.objNewFeatures[positionId];
+                                                          vectorSource.addFeature(refreshAjaxVars.objNewFeatures[positionId]);
+                                                      }
+                                                  });
+                                              }
+
+                                          }
+                                      });
+                                  });
+
+                                  self.requestFunctions['request_' + itemUid] = {
+                                      'function': vectorSource.get('refreshFunction'),
+                                      'interval': refreshInterval
+                                  };
+
+
+                                  // Ende Einschub neue AJAX-Layer
+
+                              }
+
+                          } else {
+                              console.warn('Format type ' + contentData.format + ' in ol.format not found.');
+                          }
+                      }
+
+                      if (contentData.settings.cluster) {
+
+                          clusterSource = new ol.source.Cluster({
+                              distance: 40,
+                              //threshold: 2, //minimum element count
+                              source: vectorSource,
+                              zoom: contentData.cluster_zoom
+                          });
+                          //console.log(clusterSource);
+                          this.styleForCluster = styleForCluster;
+
+                          //vectorLayer = self.getVectorLayer(clusterSource, styleForCluster);
+
+                          vectorLayer = new ol.layer.AnimatedCluster(
+                              {	name: 'Cluster',
+                                  source: clusterSource,
+                                  // Use a style function for cluster symbolisation
+                                  style: styleForCluster
+                              });
+
+
+                      } else {
+                          vectorLayer = self.getVectorLayer(vectorSource, c4g.maps.locationStyles[contentData.locationStyle] ? c4g.maps.locationStyles[contentData.locationStyle].style : null);
+                      }
+
+                      /* Fit to extend */
+                      if (contentData.settings && contentData.settings.fitToExtend) {
+
+                          self.fittingExtends = self.fittingExtends || {};
+
+                          vectorSource.on('change', function () {
+
+                              // check currently stored id's
+                              for (i in self.fittingExtends) {
+                                  if (self.fittingExtends.hasOwnProperty(i)) {
+                                      if (typeof self.activeLayerIds[i] === "undefined" || self.activeLayerIds[0] == "invisible") {
+                                          delete self.fittingExtends[i];
+                                      }
+                                  }
+                              }
+
+                              self.fittingExtends[itemUid] = vectorSource.getExtent();//vectorSource.getFeatures();
+                              c4g.maps.utils.fitToExtents(self.fittingExtends, self.options.mapController.map);
+                          });
+
+                      }
+                      // end of fit to extend
+
+                      fnAttachDataToLayer(vectorLayer, contentData.data);
+                      layers.push(vectorLayer);
+                  } else if ((c4g.maps.layers[itemUid].type === "table") || (c4g.maps.layers[itemUid].type === "link")) {
+                      var layerContent = c4g.maps.layers[itemUid].content;
+                      contentData = layerContent[0];
+                      var contentFeatures = [];
+                      if (contentData && contentData.data.properties && contentData.data.properties.projection) {
+                          dataProjection = contentData.data.properties.projection;
+                          featureProjection = this.options.mapController.map.getView().getProjection();
+                      } else {
+                          dataProjection = undefined;
+                      }
+
+                      // force all nodes into one layer
+                      for (var key = 0; key < layerContent.length; key++) {
+                          var contentFeature = new ol.format[layerContent[key].format]({}).readFeatures(layerContent[key].data, {
+                              featureProjection: featureProjection,
+                              dataProjection: dataProjection
+                          })[0];
+                          contentFeature.set('cluster_zoom', contentData.cluster_zoom);
+                          contentFeature.set('cluster_popup', contentData.cluster_popup);
+                          contentFeature.set('loc_linkurl', contentData.loc_linkurl);
+                          contentFeature.set('hover_location', contentData.hover_location);
+                          contentFeature.set('hover_style', contentData.hover_style);
+                          contentFeature.set('popup', layerContent[key].data.properties.popup);
+                          contentFeature.set('zoom_onclick', contentData.zoom_onclick);
+                          contentFeatures.push(contentFeature);
+                      }
+
+                      if(i+1 === c4g.maps.layers[itemUid].content.length){
+                          vectorSource = new ol.source.Vector({
+                              features: contentFeatures,
+                              projection: 'EPSG:3857',
+                              format: new ol.format.GeoJSON(),
+
+                          });
+                          if (contentData && contentData.settings && contentData.settings.cluster) {
+                              clusterSource = new ol.source.Cluster({
+                                  distance: 40,
+                                  zoom: contentData.cluster_zoom,
+
+                                  //threshold: 2, //minimum element count
+                                  source: vectorSource
+                              });
+                              //vectorLayer = self.getVectorLayer(clusterSource, styleForCluster);
+
+                              vectorLayer = new ol.layer.AnimatedCluster(
+                                  {	name: 'Cluster',
+                                      source: clusterSource,
+                                      // Use a style function for cluster symbolisation
+                                      style: styleForCluster
+                                  });
+
+                          } else {
+                              vectorLayer = self.getVectorLayer(vectorSource, contentData && c4g.maps.locationStyles[contentData.locationStyle] ? c4g.maps.locationStyles[contentData.locationStyle].style : null);
+                          }
+                          layers.push(vectorLayer);
+                      }
+                      //return;
+                  } else {
+                      if (c4g.maps.layers[itemUid].content.length > 1) {
+                          //TODO: refactoren und kürzen!
+                          // we have overpass request with reassigned forum layers
+                          // forum layers can not be drawn via the normal drawLayer, because they do not have a Uid
+                          if (contentData && (typeof ol.format[contentData.format] === "function")) {
+                              if (contentData.data.properties && contentData.data.properties.projection) {
+                                  dataProjection = contentData.data.properties.projection;
+                                  featureProjection = this.options.mapController.map.getView().getProjection();
+                              } else {
+                                  dataProjection = undefined;
+                              }
+
+                              features = (new ol.format[contentData.format]({})).readFeatures(contentData.data, {
+                                  featureProjection: featureProjection,
+                                  dataProjection: dataProjection
+                              });
+
+                              var missingStyles = [];
+                              var unstyledFeatures = [];
+                              for (var j = 0; j < features.length; j += 1) {
+                                  if (features[j].get('styleId')) {
+                                      if (c4g.maps.locationStyles[features[j].get('styleId')] && c4g.maps.locationStyles[features[j].get('styleId')].style) {
+                                          features[j].setStyle(c4g.maps.locationStyles[features[j].get('styleId')].style);
+                                      } else {
+                                          missingStyles.push(features[j].get('styleId'));
+                                          unstyledFeatures.push(features[j]);
+                                      }
+                                  }
+                              }
+
+                              vectorStyle = c4g.maps.locationStyles[contentData.locationStyle] && c4g.maps.locationStyles[contentData.locationStyle].style;
+
+                              if (missingStyles.length > 0) {
+                                  //TODO there are unstyled features because some styles were not loaded
+                              } else {
+                                  vectorSource = new ol.source.Vector({
+                                      features: features,
+                                      projection: 'EPSG:3857',
+                                      format: new ol.format.GeoJSON()
+                                  });
+                                  clusterSource = new ol.source.Cluster({
+                                      distance: 40,
+                                      zoom: contentData.cluster_zoom,
+
+                                      //threshold: 2, //minimum element count
+                                      source: vectorSource
+                                  });//zu bearbeiten
+                                  vectorLayer = this.getVectorLayer(clusterSource, vectorStyle);
+                                  if (contentData.data && contentData.data.properties) {
+                                      if (contentData.data.properties.popup) {
+                                          vectorLayer.popup = contentData.data.properties.popup;
+                                      }
+                                      if (contentData.data.properties.tooltip) {
+                                          vectorLayer.tooltip = contentData.data.properties.tooltip;
+                                      }
+                                      if (contentData.data.properties.label) {
+                                          vectorLayer.label = contentData.data.properties.label;
+                                      }
+                                      if (contentData.data.properties.onclick_zoom) {
+                                          vectorLayer.onclick_zoom = contentData.data.properties.onclick_zoom;
+                                      }
+                                  }
+                                  layers.push(vectorLayer);
+                              }
+
+                          } else {
+                              if (contentData) {
+                                  console.warn('Format type ' + contentData.format + ' in ol.format not found.');
+                              } else {
+                                  //no contentData, maybe a link
+                              }
+                          }
+                      } else {
+                          // normal, not overpass layer
+                          self.drawLayer(itemUid);
+                          return;
+                      }
+                  }
+              }
+
+          }
+
 
         // add vector layer group
         layerGroup = new ol.layer.Group({
@@ -2327,39 +2422,73 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
         self.combine(self);
 
       } else {
-        self.options.mapController.spinner.show();
-        jQuery.ajax({
-          dataType: self.options.mapController.data.jsonp ? "jsonp" : "json",
-          url: self.api_layercontent_url + '/' + c4g.maps.layers[itemUid].id,
-          success: function (data) {
-            var j,
-                newLocationStyles;
+        // if(c4g.maps.layers[itemUid].content_async){
+        //     self.options.mapController.spinner.show();
+        //     requestVectorSource = new ol.source.Vector({
+        //         loader: function (extent, resolution, projection) {
+        //             var boundingArray,
+        //                 strBoundingBox,
+        //                 url;
+        //             if (c4g.maps.requests === undefined) {
+        //                 c4g.maps.requests = {};
+        //             }
+        //             if (c4g.maps.requests['layerDataRequest' + itemUid] !== undefined) {
+        //                 c4g.maps.requests['layerDataRequest' + itemUid].abort();
+        //             }
+        //
+        //             c4g.maps.requests['layerDataRequest' + itemUid] = jQuery.ajax({
+        //                 url: self.api_layercontentdata_url + '/' + c4g.maps.layers[itemUid].id,
+        //                 success :function (data){
+        //                     if(data.lenth > 0){
+        //                         console.log("Läuft");
+        //                     }
+        //                 },
+        //                 complete: function () {
+        //                     self.options.mapController.spinner.hide();
+        //                 }
+        //             })
+        //         },
+        //         strategy: ol.loadingstrategy.bbox
+        //     });
+        //
+        //
+        // }
+        // else{
+            self.options.mapController.spinner.show();
+            jQuery.ajax({
+                dataType: self.options.mapController.data.jsonp ? "jsonp" : "json",
+                url: self.api_layercontent_url + '/' + c4g.maps.layers[itemUid].id,
+                success: function (data) {
+                    var j,
+                        newLocationStyles;
 
-            if (data.length > 0) {
-              newLocationStyles = [];
+                    if (data.length > 0) {
+                        newLocationStyles = [];
 
-              for (j = 0; j < data.length; j += 1) {
+                        for (j = 0; j < data.length; j += 1) {
 
-                c4g.maps.layers[itemUid].content = c4g.maps.layers[itemUid].content || [];
+                            c4g.maps.layers[itemUid].content = c4g.maps.layers[itemUid].content || [];
 
-                c4g.maps.layers[itemUid].content.push(data[j]);
-                newLocationStyles.push(data[j].locationStyle);
+                            c4g.maps.layers[itemUid].content.push(data[j]);
+                            newLocationStyles.push(data[j].locationStyle);
 
-              }
+                        }
 
-              self.checkLocationStyles({
-                success: function () {
-                  // @TODO: check this!
-                  self.loadLayerContent(itemUid);
+                        self.checkLocationStyles({
+                            success: function () {
+                                // @TODO: check this!
+                                self.loadLayerContent(itemUid);
+                            }
+                        });
+
+                    }
+                },
+                complete: function () {
+                    self.options.mapController.spinner.hide();
                 }
-              });
+            });
+        //}
 
-            }
-          },
-          complete: function () {
-            self.options.mapController.spinner.hide();
-          }
-        });
       }
     }, // end of "loadLayerContent()"
     combineLayers: function(proxy){
