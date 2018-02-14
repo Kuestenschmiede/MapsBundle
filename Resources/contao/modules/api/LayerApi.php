@@ -379,12 +379,6 @@ class LayerApi extends \Frontend
                                 $poiGroup['pid'] = $overpassLayer['id'];
                                 $overpassLayer['childs'][] = $poiGroup;
                                 $overpassLayer['hasChilds'] = true;
-//                                    $poi['id'] = C4GBrickCommon::calcLayerID(C4GBrickCommon::getLayerIDParam($poi['id'], 'id'), $poi['pid'], 99 + $overpassLayer['childsCount']);
-//                                    $poi['key'] = $poi['id'];
-//                                    $overpassLayer['childs'][] = $poi;
-//                                    $overpassLayer['hasChilds'] = true;
-//                                    $overpassLayer['childsCount']++;
-//                                }
                             }
                             unset ($layer['childs'][$grpKey]);
                             $layer['childsCount']--;

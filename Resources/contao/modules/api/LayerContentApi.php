@@ -316,18 +316,20 @@ class LayerContentApi extends \Controller
                 $ptableBlobArr = explode(',', $arrConfig['ptable_blob']);
 
                 //check child values
-                if($arrConfig['ctable'] && $arrConfig['ctable_option']) {
+                if($objLayer->tab_pid1 && $arrConfig['ctable'] && $arrConfig['ctable_option']) {
                     foreach($ctableArr as $key=>$ctable) {
-                        $queryChild ="SELECT ".$arrConfig['ctable_option']." FROM ".$arrConfig['ctable']." WHERE id=".$objLayer->tab_pid1;
+                        $queryChild = "SELECT ".$arrConfig['ctable_option']." FROM ".$arrConfig['ctable']." WHERE id=".$objLayer->tab_pid1;
                         $child = \Database::getInstance()->prepare($queryChild)->execute()->fetchAssoc();
                         $sqlquery = "SELECT tid FROM ".$arrConfig['ctable']." WHERE ".$arrConfig['ctable_option']."=?";
-                        $idsfromChild= \Database::getInstance()->prepare($sqlquery)->execute($child[$arrConfig['ctable_option']])->fetchAllAssoc();
-                        $qIn .= ' AND id IN(';
-                        foreach($idsfromChild as $value){
-                            $qIn .= $value['tid'] . ',';
-                        }
-                        $qIn = rtrim($qIn,',') . ')';
+                        $idsfromChild = \Database::getInstance()->prepare($sqlquery)->execute($child[$arrConfig['ctable_option']])->fetchAllAssoc();
 
+                        if ($idsfromChild && count($idsfromChild) > 0) {
+                            $qIn .= ' AND id IN(';
+                            foreach($idsfromChild as $value){
+                                $qIn .= $value['tid'] . ',';
+                            }
+                            $qIn = rtrim($qIn,',') . ')';
+                        }
                     }
                 }
                 //check parent values
