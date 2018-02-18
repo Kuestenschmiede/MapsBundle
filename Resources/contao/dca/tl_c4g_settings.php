@@ -11,31 +11,33 @@
  * @link      https://www.kuestenschmiede.de
  */
 
-$GLOBALS['TL_DCA']['tl_settings']['palettes']['default'] .= ';{c4g_maps_legend},disabledC4gMapObjects,caching';
+$GLOBALS['TL_DCA']['tl_c4g_settings']['palettes']['default'] .= '{c4g_maps_legend},disabledC4gMapObjects,caching;';
 
 /**
  * Add fields
  */
-$GLOBALS['TL_DCA']['tl_settings']['fields']['disabledC4gMapObjects'] = array
+$GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['disabledC4gMapObjects'] = array
 (
-    'label'                   => &$GLOBALS['TL_LANG']['tl_settings']['disabledC4gMapObjects'],
+    'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_settings']['disabledC4gMapObjects'],
     'inputType'               => 'checkbox',
     'options_callback'        => array('tl_settings_c4g_maps', 'getMapTables'),
-    'eval'                    => array('multiple'=>true)
+    'eval'                    => array('multiple'=>true),
+    'sql'                     => "blob NULL"
 );
-$GLOBALS['TL_DCA']['tl_settings']['fields']['caching'] = array
+$GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['caching'] = array
 (
-    'label'                   => &$GLOBALS['TL_LANG']['tl_settings']['caching'],
+    'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_settings']['caching'],
     'inputType'               => 'checkbox',
     'options'                 => array('baseLayerService','layerService','layerContentService','editorService','locationStyleService','infoWindowService','nominatimService','reverseNominatimService','routingService'),
-    'reference'               => &$GLOBALS['TL_LANG']['tl_settings']['references'],
-    'eval'                    => array('multiple'=>true)
+    'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_settings']['references'],
+    'eval'                    => array('multiple'=>true),
+    'sql'                     => "blob NULL"
 );
 
 /**
  * Class tl_settings_c4g_maps
  */
-class tl_settings_c4g_maps extends tl_settings
+class tl_settings_c4g_maps extends tl_c4g_settings
 {
     /**
      * Return available Map tables

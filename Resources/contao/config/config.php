@@ -83,7 +83,7 @@ $GLOBALS['con4gis']['maps']['sourcetable']['tl_member'] = array
 /**
  * Backend Modules
  */
-array_insert($GLOBALS['BE_MOD']['con4gis'], 1, array
+array_insert($GLOBALS['BE_MOD']['con4gis'], 2, array
     (
         'c4g_map_baselayers' => array
         (
