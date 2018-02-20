@@ -114,7 +114,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
     'subpalettes' => array
     (
         'mouse_nav'                   => 'mouse_nav_wheel,mouse_nav_doubleclick_zoom,mouse_nav_zoombox,mouse_nav_dragmode,mouse_nav_kinetic',
-        'starboard'                   => 'starboard_open,starboard_div,starboard_label,baselayerswitcher,layerswitcher,starboard_filter,starboard_button,cluster_all',
+        'starboard'                   => 'starboard_open,starboard_div,starboard_label,baselayerswitcher,layerswitcher,starboard_filter,starboard_button,cluster_all,async_content',
         'cluster_all'                 => 'cluster_distance,cluster_fillcolor,cluster_fontcolor,cluster_zoom',
         'baselayerswitcher'           => 'baselayerswitcher_label',
         'layerswitcher'               => 'layerswitcher_label',
@@ -436,6 +436,14 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             'inputType'               => 'c4g_text',
             'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'clr'),
             'sql'                     => "int(10) unsigned NOT NULL default '17'"
+        ),
+        'async_content' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['async_content'],
+            'exclude'                 => true,
+            'default'                 => false,
+            'inputType'               => 'checkbox',
+            'sql'                     => "char(1) NOT NULL default ''"
         ),
         'baselayerswitcher' => array
         (

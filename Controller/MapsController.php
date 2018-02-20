@@ -14,6 +14,7 @@ use con4gis\MapsBundle\Resources\contao\modules\api\EditorApi;
 use con4gis\MapsBundle\Resources\contao\modules\api\InfoWindowApi;
 use con4gis\MapsBundle\Resources\contao\modules\api\LayerApi;
 use con4gis\MapsBundle\Resources\contao\modules\api\LayerContentApi;
+use con4gis\MapsBundle\Resources\contao\modules\api\LayerContentDataApi;
 use con4gis\MapsBundle\Resources\contao\modules\api\LocationStyleApi;
 use con4gis\MapsBundle\Resources\contao\modules\api\NominatimApi;
 use con4gis\MapsBundle\Resources\contao\modules\api\ReverseNominatimApi;
@@ -105,6 +106,14 @@ class MapsController extends Controller
         $response = new JsonResponse();
         $layerApi = new LayerContentApi();
         $this->responseData = $layerApi->generate($layerId);
+        $response->setData($this->responseData);
+        return $response;
+    }
+    public function layerContentDataAction(Request $request, $layerId, $extent)
+    {
+        $response = new JsonResponse();
+        $layerDataApi = new LayerContentDataApi();
+        $this->responseData = $layerDataApi->generate($layerId,$extent);
         $response->setData($this->responseData);
         return $response;
     }

@@ -88,7 +88,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_fontcolor']     = array('Fon
                                                                             'Select the font color of the cluster bubble.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_zoom']          = array('Maximal zoom',
                                                                             'Select the maximal zoomlevel. The cluster is splitted on click afterwards ');
-
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['async_content']         = array('Load location asynchronous',
+                                                                            'Simple locations are loaded asynchronous in order to enhance initial performance.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayerswitcher']     = array('Näytä pohjakerroksen-vaihtaja',
                                                                             'Näytä pohjakerros-vaihtaja jotta voit muuttaa pohjakerrokset.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayerswitcher_label'] = array('Kuvaus pohjakerroksista starboardissa',

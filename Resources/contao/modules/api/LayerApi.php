@@ -14,6 +14,7 @@
 namespace con4gis\MapsBundle\Resources\contao\modules\api;
 
 use con4gis\CoreBundle\Resources\contao\classes\HttpResultHelper;
+use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use con4gis\ProjectsBundle\Classes\Common\C4GBrickCommon;
 use Contao\StringUtil;
@@ -83,7 +84,6 @@ class LayerApi extends \Frontend
         $this->arrConfig['countAll'] = sizeof($arrLayers);
         $return = array(
             'config' => $this->arrConfig,
-            //'layer' => $this->filterGeometryForBBox($arrLayers),
             'layer' => $arrLayers,
             'foreignLayers' => $this->checkAndFetchMissingLinkedLayers($arrLayers)
         );
@@ -96,8 +96,62 @@ class LayerApi extends \Frontend
             }
         }
         $return['layer'] = $this->checkAndReassignFrontendLayers($return['layer']);
+        $mapLayer = C4gMapsModel::findById($intParentId);
+        $mapProfile = C4gMapProfilesModel::findById($mapLayer->profile);
+        if($mapProfile->async_content == '1'){
+            $this->Database->prepare("DELETE FROM tl_c4g_map_layer_content")->execute();
+            foreach($return['layer'] as $key => $layer){
+                $return['layer'][$key] = $this->saveLayerContent($layer);
+            }
+        }
 
         return $return;
+    }
+    protected function saveLayerContent($layer)
+    {
+        $this->Database->prepare("DELETE FROM tl_c4g_map_layer_content WHERE pid=?")->execute($layer['id']);
+        if($layer['childs']){
+            foreach($layer['childs'] as $key => $child)
+            {
+                $layer['childs'][$key] = $this->saveLayerContent($child);
+            }
+        }
+        if($layer['content']){
+            foreach($layer['content'] as $key => $content)
+            {
+                if(!$content['data'] || !$content['data']['geometry'] || !$content['data']['geometry']['coordinates'] || count($content['data']['geometry']['coordinates']) != 2)continue;
+                $set['pid'] = $layer['id'];
+                $set['type'] = $content['type'];
+                $set['format'] = $content['format'];
+                $set['origType'] = $content['origType'];
+                $set['locStyle'] = $content['locationStyle'];
+                $set['datatype'] = $content['data']['type'];
+                $set['geotype'] = $content['data']['geometry']['type'];
+                $set['geox'] = $content['data']['geometry']['coordinates'][0];
+                $set['geoy'] = $content['data']['geometry']['coordinates'][1];
+                $set['projection'] = $content['data']['properties']['projection'];
+                $set['popup_content'] = $content['data']['properties']['popup']['content'];
+                $set['popup_routing_link'] = $content['data']['properties']['popup']['routing_link'];
+                $set['popup_async'] = false;
+                $set['tooltip'] = $content['data']['properties']['tooltip'];
+                $set['tooltip_length'] = $content['data']['properties']['tooltip_length'];
+                $set['label'] = $content['data']['properties']['label'];
+                $set['loc_linkurl'] = $content['data']['properties']['loc_linkurl'];
+                $set['hover_location'] = $content['data']['properties']['hover_location'];
+                $set['hover_style'] = $content['data']['properties']['hover_style'];
+                $set['cluster_fillcolor'] = $content['cluster_fillcolor'];
+                $set['cluster_distance'] = $content['cluster_distance'];
+                $set['cluster_fontcolor'] = $content['cluster_fontcolor'];
+                $set['cluster_zoom'] = $content['cluster_zoom'];
+                $set['cluster_popup'] = $content['cluster_popup'];
+                $this->Database->prepare("INSERT INTO tl_c4g_map_layer_content %s")->set($set)->execute();
+                unset($layer['content'][$key]);
+            }
+            if(!$layer['content']){
+                $layer['content_async'] = true;
+            }
+        }
+        return $layer;
     }
     protected function forceChildsInContent($layer)
     {
@@ -121,39 +175,6 @@ class LayerApi extends \Frontend
         }
         $layer['childs'] = $arrChilds;
         return $layer;
-    }
-
-    protected function filterGeometryForBBox($layers)
-    {
-        $arrLayers =[];
-
-        foreach ($layers as $layer)
-        {
-            if($layer['content'] != [])
-            {
-                $arrContent = [];
-                foreach($layer['content'] as $content)
-                {
-                    if(($geo = $content['data']['geometry']) && $geo['type'] == "Point"){
-                        if(($geo['coordinates'][0] > 8 && $geo['coordinates'][0] < 9)&&($geo['coordinates'][1] > 52 && $geo['coordinates'][1] < 53))
-                        {
-                            $arrContent[] = $content;
-                        }
-                    }
-                }
-                $layer['content'] = $arrContent;
-                if($layer['content'] != []){
-                    $arrLayers[] = $layer;
-                }
-            }
-            if($layer['childs'] != [])
-            {
-                $layer['childs'] = $this->filterGeometryForBBox($layer['childs']);
-                $arrLayers[] = $layer;
-            }
-        }
-        return $arrLayers;
-
     }
 
     protected function checkAndFetchMissingLinkedLayers($layers)
