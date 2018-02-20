@@ -79,6 +79,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_fontcolor']     = array('Sch
                                                                             'Wählen Sie die Schriftfarbe der Clusterblasen aus.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_zoom']          = array('Minimale Zoomstufe (Spinne)',
                                                                             'Wählen Sie die Zoomstufe, bis zu der hereingezoomt wird. Ab dieser Stufe werden die Cluster per Klick aufgelöst und verteilt dargestellt.');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['async_content']         = array('Lokationen asynchron nachladen',
+                                                                            'Einfache Lokationen werden asynchron nachgeladen, um die initiale Performance zu verbessern.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayerswitcher']     = array('Basiskarten-Auswahl anzeigen',
                                                                             'Wenn Sie diese Checkbox auswählen, wird im Starboard die Auswahlliste der Basiskarten angezeigt.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayerswitcher_label']   = array('Bezeichnung der Basiskarten im Starboard',

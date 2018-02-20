@@ -94,7 +94,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_layer_content'] = array
         ),
         'popup_async' => array
         (
-            'sql'                     => "char(1)"
+            'sql'                     => "varchar(100)"
         ),
         'tooltip' => array
         (

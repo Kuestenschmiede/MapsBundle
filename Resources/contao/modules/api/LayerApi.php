@@ -14,6 +14,7 @@
 namespace con4gis\MapsBundle\Resources\contao\modules\api;
 
 use con4gis\CoreBundle\Resources\contao\classes\HttpResultHelper;
+use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use con4gis\ProjectsBundle\Classes\Common\C4GBrickCommon;
 use Contao\StringUtil;
@@ -95,9 +96,13 @@ class LayerApi extends \Frontend
             }
         }
         $return['layer'] = $this->checkAndReassignFrontendLayers($return['layer']);
-        $this->Database->prepare("DELETE FROM tl_c4g_map_layer_content")->execute();
-        foreach($return['layer'] as $key => $layer){
-            $return['layer'][$key] = $this->saveLayerContent($layer);
+        $mapLayer = C4gMapsModel::findById($intParentId);
+        $mapProfile = C4gMapProfilesModel::findById($mapLayer->profile);
+        if($mapProfile->async_content == '1'){
+            $this->Database->prepare("DELETE FROM tl_c4g_map_layer_content")->execute();
+            foreach($return['layer'] as $key => $layer){
+                $return['layer'][$key] = $this->saveLayerContent($layer);
+            }
         }
 
         return $return;
@@ -127,7 +132,7 @@ class LayerApi extends \Frontend
                 $set['projection'] = $content['data']['properties']['projection'];
                 $set['popup_content'] = $content['data']['properties']['popup']['content'];
                 $set['popup_routing_link'] = $content['data']['properties']['popup']['routing_link'];
-                $set['popup_async'] = $content['data']['properties']['popup']['async'];
+                $set['popup_async'] = false;
                 $set['tooltip'] = $content['data']['properties']['tooltip'];
                 $set['tooltip_length'] = $content['data']['properties']['tooltip_length'];
                 $set['label'] = $content['data']['properties']['label'];

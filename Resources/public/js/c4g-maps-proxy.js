@@ -295,7 +295,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                       c4g.maps.popup.$popup.addClass(c4g.maps.constant.css.ACTIVE).addClass(c4g.maps.constant.css.LOADING);
                       c4g.maps.popup.spinner.show();
 
-                      if (popupInfos.async === false) {
+                      if (popupInfos.async === false || popupInfos.async == '0') {
                           objPopup = {};
                           objPopup.popup = popupInfos;
                           objPopup.feature = feature;
@@ -1742,8 +1742,9 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                                   contentFeature.set('hover_style', contentData.hover_style);
                                   contentFeature.set('popup', contentData.data.properties.popup);
                                   contentFeature.set('zoom_onclick', contentData.zoom_onclick);
-                                  if(contentData.locationStyle && c4g.maps.locationStyles[contentData.locationStyle]){
-                                      contentFeature.setStyle(c4g.maps.locationStyles[contentData.locationStyle]);
+                                  contentFeature.set('locationStyle', contentData.locationStyle);
+                                  if(contentData.locationStyle && c4g.maps.locationStyles[contentData.locationStyle] && c4g.maps.locationStyles[contentData.locationStyle].style){
+                                      contentFeature.setStyle(c4g.maps.locationStyles[contentData.locationStyle].style);
                                       contentFeatures.push(contentFeature);
                                   }
                                   else{
@@ -1755,14 +1756,17 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                                   }
 
                               }
-                              self.loadLocationStyles(missingStyles, {success: function() {
-                                  for(i = 0; i < unstyledFeatures.length; i++){
-                                      var styleId =unstyledFeatures[i].get('styleId');
-                                      unstyledFeatures[i].setStyle(c4g.maps.locationStyles[styleId].style);
-                                      requestVectorSource.addFeature(unstyledFeatures[i]);
-                                  }
+                              if(missingStyles){
+                                  self.loadLocationStyles(missingStyles, {success: function() {
+                                      for(i = 0; i < unstyledFeatures.length; i++){
+                                          var styleId =unstyledFeatures[i].get('styleId');
+                                          unstyledFeatures[i].setStyle(c4g.maps.locationStyles[styleId].style);
+                                          requestVectorSource.addFeature(unstyledFeatures[i]);
+                                      }
 
-                              }});
+                                  }});
+                              }
+
                               if(data.length > 0){
                                   requestVectorSource.addFeatures(contentFeatures);
                               }
@@ -1774,20 +1778,24 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                   },
                   strategy: ol.loadingstrategy.bbox
               });
-              clusterSource = new ol.source.Cluster({
-                  distance: 40,
-                  style: c4g.maps.locationStyles[1].style,
-                  //threshold: 2, //minimum element count
-                  source: requestVectorSource
-              });
+              // clusterSource = new ol.source.Cluster({
+              //     distance: 40,
+              //     //threshold: 2, //minimum element count
+              //     source: requestVectorSource
+              // });
+              vectorLayer = new ol.layer.Vector(
+                  {
+                      name: 'Layer',
+                      source: requestVectorSource
+                  }
+              );
 
-
-              vectorLayer = new ol.layer.AnimatedCluster(
-                  {	name: 'Cluster',
-                      source: clusterSource,
-                      // Use a style function for cluster symbolisation
-                      style: styleForCluster
-                  });
+              // vectorLayer = new ol.layer.AnimatedCluster(
+              //     {	name: 'Cluster',
+              //         source: clusterSource,
+              //         // Use a style function for cluster symbolisation
+              //         style: styleForCluster
+              //     });
               layers.push(vectorLayer);
 
 

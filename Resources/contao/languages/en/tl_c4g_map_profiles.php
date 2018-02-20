@@ -87,8 +87,9 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_fillcolor']     = array('Fil
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_fontcolor']     = array('Font color',
                                                                             'Select the font color of the cluster bubble.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_zoom']          = array('Maximal zoom',
-                                                                    'Select the maximal zoomlevel. The cluster is splitted on click afterwards ');
-
+                                                                            'Select the maximal zoomlevel. The cluster is splitted on click afterwards ');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['async_content']         = array('Load location asynchronous',
+                                                                            'Simple locations are loaded asynchronous in order to enhance initial performance.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayerswitcher']     = array('Show Baselayer-Switcher',
                                                                             'Show Baselayer-Switcher to allow to change the base layers.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayerswitcher_label']   = array('Description of base layers in the starboard',
