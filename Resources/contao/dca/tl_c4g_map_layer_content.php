@@ -7,7 +7,7 @@
  * @package   con4gis
  * @author    con4gis contributors (see "authors.txt")
  * @license   GNU/LGPL http://opensource.org/licenses/lgpl-3.0.html
- * @copyright Küstenschmiede GmbH Software & Design 2011 - 2017.
+ * @copyright Küstenschmiede GmbH Software & Design 2011 - 2018.
  * @link      https://www.kuestenschmiede.de
  */
 
@@ -47,30 +47,30 @@ $GLOBALS['TL_DCA']['tl_c4g_map_layer_content'] = array
         ),
         'pid' => array
         (
-            'sql'                     => "varchar(100) unsigned"
+            'sql'                     => "varchar(100)"
         ),
         'type' => array
         (
-            'sql'                     => "varchar(100) "
+            'sql'                     => "varchar(100)"
         ),
         'format' => array
         (
-            'sql'                     => "varchar(100) "
+            'sql'                     => "varchar(100)"
         ),
         'origType' => array
         (
-            'sql'                     => "varchar(100) "
+            'sql'                     => "varchar(100)"
         ),
         'locstyle' => array(
             'sql'                     => "int(10)"
         ),
         'datatype' => array
         (
-            'sql'                     => "varchar(100) "
+            'sql'                     => "varchar(100)"
         ),
         'geotype' => array
         (
-            'sql'                     => "varchar(100) "
+            'sql'                     => "varchar(100)"
         ),
         'geox' => array
         (
@@ -82,7 +82,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_layer_content'] = array
         ),
         'projection' => array
         (
-            'sql'                     => "varchar(100) "
+            'sql'                     => "varchar(100)"
         ),
         'popup_content' => array
         (
