@@ -109,7 +109,7 @@ class LayerApi extends \Frontend
     }
     protected function saveLayerContent($layer)
     {
-        $this->Database->prepare("DELETE FROM tl_c4g_map_layer_content WHERE pid=?")->execute($layer['id']);
+//        $this->Database->prepare("DELETE FROM tl_c4g_map_layer_content WHERE pid=?")->execute($layer['id']);
         if($layer['childs']){
             foreach($layer['childs'] as $key => $child)
             {
