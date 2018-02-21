@@ -21,4 +21,4 @@ $GLOBALS['TL_LANG']['tl_member']['c4g_locstyle']   = array('Lokationsstil', 'Üb
 /**
  * Legend
  */
-$GLOBALS['TL_LANG']['tl_member']['c4g_maps_legend'] = 'Karten (con4gis)';
+$GLOBALS['TL_LANG']['tl_member']['c4g_maps_legend'] = 'Standort (con4gis-Maps)';

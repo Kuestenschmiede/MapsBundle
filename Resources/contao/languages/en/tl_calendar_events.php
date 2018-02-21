@@ -22,4 +22,4 @@ $GLOBALS['TL_LANG']['tl_calendar_events']['c4g_locstyle'] = array('Location styl
 /**
  * Legend
  */
-$GLOBALS['TL_LANG']['tl_calendar_events']['c4g_maps_legend'] = 'Maps (con4gis)';
+$GLOBALS['TL_LANG']['tl_calendar_events']['c4g_maps_legend'] = 'Location (con4gis-Maps)';
