@@ -19,6 +19,7 @@ use con4gis\MapsBundle\Resources\contao\modules\api\LocationStyleApi;
 use con4gis\MapsBundle\Resources\contao\modules\api\NominatimApi;
 use con4gis\MapsBundle\Resources\contao\modules\api\ReverseNominatimApi;
 use con4gis\MapsBundle\Resources\contao\modules\api\RoutingApi;
+use Contao\Database;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -45,7 +46,10 @@ class MapsController extends Controller
 
     private function checkForCacheSettings($configParam) {
 
-        self::$useCache = (is_array(deserialize($GLOBALS['TL_CONFIG']['caching'])) && in_array($configParam, deserialize($GLOBALS['TL_CONFIG']['caching'])));
+        $this->container->get('contao.framework')->initialize();
+        $cacheSettings = Database::getInstance()->execute("SELECT * FROM tl_c4g_settings LIMIT 1")->fetchAllAssoc();
+        $cacheSettings = $cacheSettings[0]['caching'];
+        self::$useCache = (is_array(deserialize($cacheSettings)) && in_array($configParam, deserialize($cacheSettings)));
 
     }
 
