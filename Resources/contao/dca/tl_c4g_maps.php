@@ -711,7 +711,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
         ),
         'async_content' => array
         (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map']['async_content'],
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['async_content'],
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',
