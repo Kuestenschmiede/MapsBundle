@@ -58,6 +58,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_linkurl'] = array('Suora linkki', 'Anna 
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_onclick_zoomto'] = array('Hiireä napsauttamalla zoomaus tasolle', 'Anna zoomaustaso siihen, mitä zoomataan, kun klikataan kartan rakenne kohdetta. Toimii vain, kun ei ole suoraa linkkiä.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_minzoom'] = array('Minimi zoomaustaso', 'Anna minimi zoomaustaso siihen, mitkä kohteet näkyvät. 0 tarkoittaa, että ei rajoitusta.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_maxzoom'] = array('Maksimi zoomaustaso', 'Anna maksimi zoomaustaso siihen, mitkä kohteet näkyvät. 0 tarkoittaa, että ei rajoitusta.');
+$GLOBALS['TL_LANG']['tl_c4g_map_']['async_content'] = array('Load location asynchronous', 'Simple locations are loaded asynchronous in order to enhance initial performance.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['tab_source'] = array('Lähdetaulukko', 'Valitse jokin käytettävistä lähdetaulukoista. Pystyt lisäämään omia taulukoita, katso config.php.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['tab_pid'] = array('Parent taulukon entry', 'Jos parent taulukko on määritelty kokoonpanoon, niin valitse entry josta haluat sijainnit ottaa.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['tab_pid1'] = array('Second entry of parent table (optional)', 'If a parent table is defined in the configuration, then select the entry you want to take the locations from.');
