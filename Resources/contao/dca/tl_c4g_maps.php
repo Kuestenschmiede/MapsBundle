@@ -140,7 +140,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
         'table'                      =>  '{general_legend},name,profile,profile_mobile,published;'.
                                          '{map_legend},is_map;'.
-                                         '{location_legend},location_type,data_layername,hide_child,data_hidelayer,tab_source,tab_pid,tab_pid1,tab_labeldisplay,tab_tooltipdisplay,tab_directlink,tab_force_target_blank,tab_whereclause,tab_orderby,tab_filter_alias,locstyle,routing_to,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,cluster_locations,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
+                                         '{location_legend},location_type,data_layername,hide_child,data_hidelayer,tab_source,tab_pid,tab_pid1,tab_labeldisplay,tab_tooltipdisplay,tab_directlink,tab_force_target_blank,tab_whereclause,tab_orderby,tab_filter_alias,locstyle,routing_to,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,cluster_locations,async_content,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
                                          '{protection_legend:hide},protect_element;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
         'gpx'                        =>  '{general_legend},name,profile,profile_mobile,published;'.
@@ -708,6 +708,14 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
             'options_callback'        => array('tl_c4g_maps','getTabSources'),
             'eval'                    => array('submitOnChange' => true),
             'sql'                     => "varchar(100) NOT NULL default ''"
+        ),
+        'async_content' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map']['async_content'],
+            'exclude'                 => true,
+            'default'                 => false,
+            'inputType'               => 'checkbox',
+            'sql'                     => "char(1) NOT NULL default ''"
         ),
         'tab_pid' => array
         (

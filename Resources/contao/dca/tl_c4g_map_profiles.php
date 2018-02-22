@@ -437,14 +437,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'clr'),
             'sql'                     => "int(10) unsigned NOT NULL default '17'"
         ),
-        'async_content' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['async_content'],
-            'exclude'                 => true,
-            'default'                 => false,
-            'inputType'               => 'checkbox',
-            'sql'                     => "char(1) NOT NULL default ''"
-        ),
         'baselayerswitcher' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayerswitcher'],

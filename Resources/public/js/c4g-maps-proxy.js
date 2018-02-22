@@ -1703,7 +1703,89 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
 
       if (c4g.maps.layers[itemUid].content) {
         layers = [];
-          if(c4g.maps.layers[itemUid].content_async){
+          if(c4g.maps.layers[itemUid].async_content){
+              styleForCluster = function(feature, resolution){
+                  var styleId,
+                      style,
+                      iconOffset,
+                      radius,
+                      fillcolor,
+                      fontcolor;
+                  if(feature && feature.get('features')){
+                      if(styleId = feature.get('features')[0].get('locationStyle')){
+                          if(c4g.maps.locationStyles[styleId] && c4g.maps.locationStyles[styleId].style){
+                              style = c4g.maps.locationStyles[styleId].style(feature.get('features')[0],resolution);
+                          }
+                      }
+                      if(!style){
+                          style = [];
+                      }
+                      if(feature.get('features').length > 1){
+                          // calculate bubble-offset
+                          iconOffset = [0, 0];
+                          if (style[0]) {
+                              if (typeof style[0].getImage().getRadius === "function") {
+                                  radius = parseInt(style[0].getImage().getRadius(), 10);
+                                  if (radius) {
+                                      iconOffset = [0, radius];
+                                  }
+                              } else if (typeof style[0].getImage().getAnchor === "function") {
+                                  iconOffset = style[0].getImage().getAnchor() || [0, 0];
+                              }
+                          }
+
+                          fillcolor = c4g.maps.utils.getRgbaFromHexAndOpacity('4975A8',{
+                              unit: '%',
+                              value: 70
+                          });
+
+                          if(contentData.cluster_fillcolor) {
+                              fillcolor = c4g.maps.utils.getRgbaFromHexAndOpacity(contentData.cluster_fillcolor,{
+                                  unit: '%',
+                                  value: 70
+                              });
+                          }
+                          if(feature.get('features')[0].get('cluster_fillcolor')){
+                              fillcolor = c4g.maps.utils.getRgbaFromHexAndOpacity(feature.get('features')[0].get('cluster_fillcolor'),{
+                                  unit: '%',
+                                  value: 70
+                              });
+                          }
+                          fontcolor = '#FFFFFF';
+
+                          style.push(
+                              new ol.style.Style({
+                                  text: new ol.style.Text({
+                                      text: "●",
+                                      font: "60px sans-serif",
+                                      offsetX: -1 * iconOffset[0],
+                                      offsetY: -1 * iconOffset[1],
+                                      fill: new ol.style.Fill({
+                                          color: fillcolor
+                                      })
+                                  })
+                              })
+                          );
+                          style.push(
+                              new ol.style.Style({
+                                  text: new ol.style.Text({
+                                      text: feature.get('features').length.toString(),
+                                      offsetX: -1 * iconOffset[0],
+                                      offsetY: -1 * iconOffset[1] + 3,
+                                      fill: new ol.style.Fill({
+                                          color: fontcolor
+                                      })
+                                  })
+                              })
+                          );
+                      }
+
+                  }
+
+                  if(style){
+                      return style;
+                  }
+              };
               requestVectorSource = new ol.source.Vector({
                   loader: function (extent, resolution, projection) {
                       var boundingArray,
@@ -1737,6 +1819,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                                   contentFeature.setId(contentData.id);
                                   contentFeature.set('cluster_zoom', contentData.cluster_zoom);
                                   contentFeature.set('cluster_popup', contentData.cluster_popup);
+                                  contentFeature.set('cluster_fillcolor', contentData.cluster_fillcolor);
                                   contentFeature.set('loc_linkurl', contentData.loc_linkurl);
                                   contentFeature.set('hover_location', contentData.hover_location);
                                   contentFeature.set('hover_style', contentData.hover_style);
@@ -1778,24 +1861,27 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                   },
                   strategy: ol.loadingstrategy.bbox
               });
-              // clusterSource = new ol.source.Cluster({
-              //     distance: 40,
-              //     //threshold: 2, //minimum element count
-              //     source: requestVectorSource
-              // });
-              vectorLayer = new ol.layer.Vector(
-                  {
-                      name: 'Layer',
-                      source: requestVectorSource
-                  }
-              );
-
-              // vectorLayer = new ol.layer.AnimatedCluster(
-              //     {	name: 'Cluster',
-              //         source: clusterSource,
-              //         // Use a style function for cluster symbolisation
-              //         style: styleForCluster
-              //     });
+              clusterSource = new ol.source.Cluster({
+                  distance: 40,
+                  //threshold: 2, //minimum element count
+                  source: requestVectorSource
+              });
+              if(c4g.maps.layers[itemUid].cluster){
+                  vectorLayer = new ol.layer.AnimatedCluster(
+                      {	name: 'Cluster',
+                          source: clusterSource,
+                          // Use a style function for cluster symbolisation
+                          style: styleForCluster
+                      });
+              }
+              else{
+                  vectorLayer = new ol.layer.Vector(
+                      {
+                          name: 'Layer',
+                          source: requestVectorSource
+                      }
+                  );
+              }
               layers.push(vectorLayer);
 
 
