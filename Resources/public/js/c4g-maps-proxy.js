@@ -1752,6 +1752,12 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                               });
                           }
                           fontcolor = '#FFFFFF';
+                          if(feature.get('features')[0].get('cluster_fontcolor')){
+                              fontcolor = c4g.maps.utils.getRgbaFromHexAndOpacity(feature.get('features')[0].get('cluster_fontcolor'),{
+                                  unit: '%',
+                                  value: 100
+                              });
+                          }
 
                           style.push(
                               new ol.style.Style({
@@ -1820,6 +1826,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                                   contentFeature.set('cluster_zoom', contentData.cluster_zoom);
                                   contentFeature.set('cluster_popup', contentData.cluster_popup);
                                   contentFeature.set('cluster_fillcolor', contentData.cluster_fillcolor);
+                                  contentFeature.set('cluster_fontcolor', contentData.cluster_fontcolor);
                                   contentFeature.set('loc_linkurl', contentData.loc_linkurl);
                                   contentFeature.set('hover_location', contentData.hover_location);
                                   contentFeature.set('hover_style', contentData.hover_style);
@@ -1846,7 +1853,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                                           unstyledFeatures[i].setStyle(c4g.maps.locationStyles[styleId].style);
                                           requestVectorSource.addFeature(unstyledFeatures[i]);
                                       }
-
+                                      missingStyles = undefined;
                                   }});
                               }
 
@@ -1959,6 +1966,12 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                                       });
                                   }
                                   fontcolor = '#FFFFFF';
+                                  if (contentData.cluster_fontcolor) {
+                                      fontcolor = c4g.maps.utils.getRgbaFromHexAndOpacity(contentData.cluster_fontcolor,{
+                                          unit: '%',
+                                          value: 100
+                                      });
+                                  }
 
                                   style.push(
                                       new ol.style.Style({
