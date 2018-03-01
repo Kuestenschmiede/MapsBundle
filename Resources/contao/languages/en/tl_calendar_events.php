@@ -7,7 +7,7 @@
  * @package   con4gis
  * @author    con4gis contributors (see "authors.txt")
  * @license   GNU/LGPL http://opensource.org/licenses/lgpl-3.0.html
- * @copyright Küstenschmiede GmbH Software & Design 2011 - 2017.
+ * @copyright Küstenschmiede GmbH Software & Design 2011 - 2018
  * @link      https://www.kuestenschmiede.de
  */
 
@@ -22,4 +22,4 @@ $GLOBALS['TL_LANG']['tl_calendar_events']['c4g_locstyle'] = array('Location styl
 /**
  * Legend
  */
-$GLOBALS['TL_LANG']['tl_calendar_events']['c4g_maps_legend'] = 'Maps (con4gis)';
+$GLOBALS['TL_LANG']['tl_calendar_events']['c4g_maps_legend'] = 'Location (con4gis-Maps)';

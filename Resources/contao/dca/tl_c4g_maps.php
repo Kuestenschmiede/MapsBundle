@@ -7,7 +7,7 @@
  * @package   con4gis
  * @author    con4gis contributors (see "authors.txt")
  * @license   GNU/LGPL http://opensource.org/licenses/lgpl-3.0.html
- * @copyright Küstenschmiede GmbH Software & Design 2011 - 2017.
+ * @copyright Küstenschmiede GmbH Software & Design 2011 - 2018
  * @link      https://www.kuestenschmiede.de
  */
 
@@ -135,37 +135,37 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
         'single'                      => '{general_legend},name,profile,profile_mobile,published;'.
                                          '{map_legend},is_map;'.
-                                         '{location_legend},location_type,data_layername,hide_child,data_hidelayer,loc_geox,loc_geoy,locstyle,loc_only_in_parent,loc_label,tooltip,enablePopup,showPopupOnActive,popup_info,routing_to,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
+                                         '{location_legend},location_type,data_layername,hide_child,data_hidelayer,loc_geox,loc_geoy,locstyle,loc_only_in_parent,loc_label,tooltip, tooltip_length,enablePopup,showPopupOnActive,popup_info,routing_to,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
                                          '{protection_legend:hide},protect_element;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
         'table'                      =>  '{general_legend},name,profile,profile_mobile,published;'.
                                          '{map_legend},is_map;'.
-                                         '{location_legend},location_type,data_layername,hide_child,data_hidelayer,tab_source,tab_pid,tab_pid1,tab_labeldisplay,tab_tooltipdisplay,tab_directlink,tab_force_target_blank,tab_whereclause,tab_orderby,tab_filter_alias,locstyle,routing_to,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,cluster_locations,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
+                                         '{location_legend},location_type,data_layername,hide_child,data_hidelayer,tab_source,tab_pid,tab_pid1,tab_labeldisplay,tab_tooltipdisplay,tab_directlink,tab_force_target_blank,tab_whereclause,tab_orderby,tab_filter_alias,locstyle,routing_to,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,cluster_locations,async_content,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
                                          '{protection_legend:hide},protect_element;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
         'gpx'                        =>  '{general_legend},name,profile,profile_mobile,published;'.
                                          '{map_legend},is_map;'.
-                                         '{location_legend},location_type,data_layername,hide_child,data_hidelayer,data_file,data_url,locstyle,loc_label,tooltip,enablePopup,popup_info,popup_async,routing_to,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
+                                         '{location_legend},location_type,data_layername,hide_child,data_hidelayer,data_file,data_url,locstyle,loc_label,tooltip, tooltip_length,enablePopup,popup_info,popup_async,routing_to,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
                                          '{protection_legend:hide},protect_element;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
         'kml'                        =>  '{general_legend},name,profile,profile_mobile,published;'.
                                          '{map_legend},is_map;'.
-                                         '{location_legend},location_type,data_layername,hide_child,data_hidelayer,data_file,data_url,loc_label,tooltip,enablePopup,popup_info,popup_async,routing_to,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
+                                         '{location_legend},location_type,data_layername,hide_child,data_hidelayer,data_file,data_url,loc_label,tooltip, tooltip_length,enablePopup,popup_info,popup_async,routing_to,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
                                          '{protection_legend:hide},protect_element;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
         'geojson'                    =>  '{general_legend},name,profile,profile_mobile,published;'.
                                          '{map_legend},is_map;'.
-                                         '{location_legend},location_type,data_layername,hide_child,data_hidelayer,data_file,data_url,data_content,data_projection,locstyle,loc_label,tooltip,enablePopup,popup_info,routing_to,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
+                                         '{location_legend},location_type,data_layername,hide_child,data_hidelayer,data_file,data_url,data_content,data_projection,locstyle,loc_label,tooltip, tooltip_length,enablePopup,popup_info,routing_to,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
                                          '{protection_legend:hide},protect_element;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
         'osm'                        =>  '{general_legend},name,profile,profile_mobile,published;'.
                                          '{map_legend},is_map;'.
-                                         '{location_legend},location_type,data_layername,hide_child,data_hidelayer,data_file,data_url,data_forcenodes,locstyle,loc_label,tooltip,enablePopup,popupType,popup_info,routing_to,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,cluster_locations,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
+                                         '{location_legend},location_type,data_layername,hide_child,data_hidelayer,data_file,data_url,data_forcenodes,locstyle,loc_label,tooltip, tooltip_length,enablePopup,popupType,popup_info,routing_to,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,cluster_locations,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
                                          '{protection_legend:hide},protect_element;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
         'overpass'                   =>  '{general_legend},name,profile,profile_mobile,published;'.
                                          '{map_legend},is_map;'.
-                                         '{location_legend},location_type,data_layername,hide_child,data_hidelayer,ovp_request,ovp_bbox_limited,data_forcenodes,data_additionalgeometries,locstyle,loc_label,tooltip,enablePopup,popupType,popup_info,routing_to,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,cluster_locations,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
+                                         '{location_legend},location_type,data_layername,hide_child,data_hidelayer,ovp_request,ovp_bbox_limited,data_forcenodes,data_additionalgeometries,locstyle,loc_label,tooltip, tooltip_length,enablePopup,popupType,popup_info,routing_to,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,cluster_locations,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
                                          '{protection_legend:hide},protect_element;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
         'link'                       =>  '{general_legend},name,profile,profile_mobile,published;'.
@@ -175,7 +175,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
         'c4gForum'                   =>  '{general_legend},name,profile,profile_mobile,published;'.
                                          '{map_legend},is_map;'.
-                                         '{location_legend},location_type,data_layername,hide_child,data_hidelayer,forums,forum_jumpto,forum_reassign_layer,loc_label,tooltip,enablePopup,popup_info,routing_to,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,hide_when_in_tab,cssClass;'.
+                                         '{location_legend},location_type,data_layername,hide_child,data_hidelayer,forums,forum_jumpto,forum_reassign_layer,loc_label,tooltip, tooltip_length,enablePopup,popup_info,routing_to,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,hide_when_in_tab,cssClass;'.
                                          '{protection_legend:hide},protect_element;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
         'startab'                    =>  '{general_legend},name,profile,profile_mobile,published;' .
@@ -184,7 +184,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
         'folder'                     =>  '{general_legend},name,profile,profile_mobile,published;'.
                                          '{map_legend},is_map;'.
-                                         '{location_legend},location_type,data_layername,hide_child,data_hidelayer,data_folder,locstyle,loc_label,tooltip,enablePopup,popup_info,routing_to,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,hide_when_in_tab,cssClass;'.
+                                         '{location_legend},location_type,data_layername,hide_child,data_hidelayer,data_folder,locstyle,loc_label,tooltip, tooltip_length,enablePopup,popup_info,routing_to,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,hide_when_in_tab,cssClass;'.
                                          '{protection_legend:hide},protect_element;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
     ),
@@ -197,7 +197,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
         'protect_element'             => 'permitted_groups',
         'popup_extend'                => 'forums',
         'is_map'                      => '',  // is set in updateDCA
-        'cluster_locations'           => 'cluster_distance, cluster_fillcolor, cluster_fontcolor, cluster_zoom'
+        'cluster_locations'           => 'cluster_distance, cluster_fillcolor, cluster_fontcolor, cluster_zoom,cluster_popup'
     ),
 
     // Fields
@@ -592,6 +592,14 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
             'eval'                    => array('tl_class'=>'long'),
             'sql'                     => "varchar(100) NOT NULL default ''"
         ),
+        'tooltip_length' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['tooltip_length'],
+            'inputType'               => 'c4g_text',
+            'default'                 => '30',
+            'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'clr'),
+            'sql'                     => "int(100) NOT NULL default '30'"
+        ),
         'enablePopup' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['enablePopup'],
@@ -701,6 +709,14 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
             'eval'                    => array('submitOnChange' => true),
             'sql'                     => "varchar(100) NOT NULL default ''"
         ),
+        'async_content' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['async_content'],
+            'exclude'                 => true,
+            'default'                 => false,
+            'inputType'               => 'checkbox',
+            'sql'                     => "char(1) NOT NULL default ''"
+        ),
         'tab_pid' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['tab_pid'],
@@ -719,6 +735,15 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
             'sql'                     => "int(10) unsigned NOT NULL default '0'",
             'eval'                    => array('tl_class'=>'clr', 'chosen'=>true, 'includeBlankOption' => true)
         ),
+//        'tab_tag' => array
+//        (
+//            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['tab_tag'],
+//            'exclude'                 => true,
+//            'inputType'               => 'select',
+//            'options_callback'        => array('tl_c4g_maps','getTabTag'),
+//            'sql'                     => "char(10) unsigned NOT NULL default ''",
+//            'eval'                    => array('tl_class'=>'clr', 'chosen'=>true, 'includeBlankOption' => true)
+//        ),
         'tab_labeldisplay' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['tab_labeldisplay'],
@@ -1019,7 +1044,15 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
             'inputType'               => 'c4g_text',
             'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'clr'),
             'sql'                     => "int(10) unsigned NOT NULL default '17'"
+        ),'cluster_popup' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_popup'],
+            'exclude'                 => true,
+            'default'                 => false,
+            'inputType'               => 'checkbox',
+            'sql'                     => "char(1) NOT NULL default ''"
         ),
+
         'zoom_locations' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['zoom_locations'],
@@ -1239,20 +1272,91 @@ class tl_c4g_maps extends Backend
         }
 
         $source = $GLOBALS['con4gis']['maps']['sourcetable'][$tabsource];
+        if($GLOBALS['BE_FFL']['tag'])
+        {
+            $source = $GLOBALS['con4gis']['maps']['sourcetable'][$tabsource.'_with_tags'];
+        }
         $ptable = explode(',', $source['ptable']);
+        $ctable = explode(',', $source['ctable']);
+        $ctable_option = explode(',', $source['ctable_option']);
         $ptable_option = explode(',', $source['ptable_option']);
+        $ptype = $source['ptype'];
+        $sqlwhere = $source['ctable_where'];
         if (is_array($source) && $ptable && $ptable_option) {
             if (($ptable[1]) && ($ptable_option[1])) {
-                $obj = $this->Database->prepare(
-                    "SELECT id, ".$ptable_option[1]." FROM ".$ptable[1])->execute();
+                if($ptype == 'tag')
+                {
+                    $obj = $this->Database->prepare(
+                        "SELECT id, ".$ptable_option[1]." FROM ".$ptable[1]." WHERE ".$sqlwhere[1])->execute();
+                }
+                else
+                {
+                    $obj = $this->Database->prepare(
+                        "SELECT id, ".$ptable_option[1]." FROM ".$ptable[1])->execute();
+                }
                 while ($obj->next()) {
                     $name = $ptable_option[1];
                     $return[$obj->id] = $obj->$name;
+
                 }
+                $return = array_unique($return);
+                return $return;
+            }
+            else if (($ctable[0]) && ($ctable_option[0])) {
+                if($ptype == 'tag')
+                {
+                    $obj = $this->Database->prepare(
+                        "SELECT id, ".$ctable_option[0]." FROM ".$ctable[0]." WHERE ".$sqlwhere)->execute();
+                }
+                else
+                {
+                    $obj = $this->Database->prepare(
+                        "SELECT id, ".$ctable_option[0]." FROM ".$ctable[0])->execute();
+                }
+                while ($obj->next()) {
+                    $name = $ctable_option[0];
+                    $return[$obj->id] = $obj->$name;
+
+                }
+                $return = array_unique($return);
                 return $return;
             }
         }
+
+
     }
+
+//    public function getTabTag(DataContainer $dc)
+//    {
+//        if ($dc->activeRecord->tab_source<>'') {
+//            $tabsource = $dc->activeRecord->tab_source;
+//        } else {
+//            $tabsource = $this->firstTabSource;
+//        }
+//        $id = $dc->activeRecord->tab_pid;
+//        $objEvent = $this->Database->prepare("SELECT * FROM tl_calendar_events WHERE pid = ?")->execute($id);
+//        $stringSQL = "SELECT DISTINCT tag FROM tl_tag WHERE from_table = ?";
+//        while($objEvent->next())
+//        {
+//            if(substr($stringSQL,-1)=='?')
+//            {
+//                $stringSQL .= " AND tid = ".$objEvent->id;
+//            }
+//            else
+//            {
+//                $stringSQL .= " OR tid = ".$objEvent->id;
+//            }
+//
+//        }
+//
+//        $obj = $this->Database->prepare($stringSQL)->execute($tabsource,$dc->activeRecord->id);
+//        while ($obj->next()) {
+//
+//            $return[$obj->tag] = $obj->tag;
+//        }
+//        return $return;
+//
+//    }
 
 
     /**

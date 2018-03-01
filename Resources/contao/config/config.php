@@ -7,7 +7,7 @@
  * @package   con4gis
  * @author    con4gis contributors (see "authors.txt")
  * @license   GNU/LGPL http://opensource.org/licenses/lgpl-3.0.html
- * @copyright Küstenschmiede GmbH Software & Design 2011 - 2017.
+ * @copyright Küstenschmiede GmbH Software & Design 2011 - 2018
  * @link      https://www.kuestenschmiede.de
  */
 
@@ -15,7 +15,7 @@
 $GLOBALS['con4gis']['maps']['installed'] = true;
 $GLOBALS['con4gis']['maps']['debug'] = false;
 $GLOBALS['con4gis']['maps']['ol-version'] = '4.6.4';
-$GLOBALS['con4gis']['maps']['ol-cesium-version'] = 'v1.33';
+$GLOBALS['con4gis']['maps']['ol-cesium-version'] = 'v1.34';
 
 /**
  * Sourcetable definition
@@ -44,6 +44,32 @@ $GLOBALS['con4gis']['maps']['sourcetable']['tl_calendar_events'] = array
     'title'         => 'title'
 );
 
+$GLOBALS['con4gis']['maps']['sourcetable']['tl_calendar_events_with_tags'] = array
+(
+    'ptable'        => 'tl_calendar',
+    'ctable'        => 'tl_tag',
+    'ptable_option' => 'title',
+    'ctable_option' => 'tag',
+    'ptype'         => 'tag',
+    'geox'          => 'c4g_loc_geox',
+    'geoy'          => 'c4g_loc_geoy',
+    'label'         => 'c4g_loc_label',
+    'locstyle'      => 'c4g_locstyle',
+    'tooltip'       => 'title',
+    'popup'         => '{{event::[id]}},[startDate:date]',
+    /** other example with start- and endDate ->
+     * 'popup'         => '{{event::[id]}},(,[startDate:date],-,[endDate:date],)',
+     */
+    'linkurl'       => '{{event_url::[id]}}',
+    'sqlwhere'      => 'published = 1',
+    'ctable_where'      => 'from_table ="tl_calendar_events"',
+    'alias_getparam'=> 'events',
+    'title'         => 'title',
+    'tags'          => 'tags'
+);
+
+
+
 $GLOBALS['con4gis']['maps']['sourcetable']['tl_member'] = array
 (
     'geox'          => 'c4g_loc_geox',
@@ -57,7 +83,7 @@ $GLOBALS['con4gis']['maps']['sourcetable']['tl_member'] = array
 /**
  * Backend Modules
  */
-array_insert($GLOBALS['BE_MOD']['con4gis'], 1, array
+array_insert($GLOBALS['BE_MOD']['con4gis'], 2, array
     (
         'c4g_map_baselayers' => array
         (

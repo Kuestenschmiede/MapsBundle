@@ -7,7 +7,7 @@
  * @package   con4gis
  * @author    con4gis contributors (see "authors.txt")
  * @license   GNU/LGPL http://opensource.org/licenses/lgpl-3.0.html
- * @copyright Küstenschmiede GmbH Software & Design 2011 - 2017.
+ * @copyright Küstenschmiede GmbH Software & Design 2011 - 2018
  * @link      https://www.kuestenschmiede.de
  */
 
@@ -79,6 +79,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_fontcolor']     = array('Sch
                                                                             'Wählen Sie die Schriftfarbe der Clusterblasen aus.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_zoom']          = array('Minimale Zoomstufe (Spinne)',
                                                                             'Wählen Sie die Zoomstufe, bis zu der hereingezoomt wird. Ab dieser Stufe werden die Cluster per Klick aufgelöst und verteilt dargestellt.');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['async_content']         = array('Lokationen asynchron nachladen',
+                                                                            'Einfache Lokationen werden asynchron nachgeladen, um die initiale Performance zu verbessern.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayerswitcher']     = array('Basiskarten-Auswahl anzeigen',
                                                                             'Wenn Sie diese Checkbox auswählen, wird im Starboard die Auswahlliste der Basiskarten angezeigt.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayerswitcher_label']   = array('Bezeichnung der Basiskarten im Starboard',
@@ -167,6 +169,10 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_searchdiv']   = array('DIV
                                                                             'DIV zur Positionierung des Geopickers. Muss manuell auf der Seite erzeugt werden, z.B. mit einem HTML Formularfeld.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_attribution'] = array('Copyright für Geopicker anzeigen',
                                                                             'Fügt eine Attribution des verwendeten Suchservice (Nominatim) hinzu. Deaktivierung nicht empfohlen!');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_disabled']    = array('Geopicker deaktivieren',
+                                                                            'Wenn Sie nur eine Position anzeigen wollen, können Sie den Geopicker hiermit deaktivieren.');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_anonymous']   = array('Geopicker anonymisieren',
+                                                                            'Der Geopicker wird so manipuliert, dass eine genaue Bestimmung der Position nicht mehr möglich ist.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['custom_div']            = array('DIV für den Kartenbereich',
                                                                             'DIV zur Umpositionierung des Kartenbereichs. Mit Hilfe dieser Einstellung lässt sich die Karte z.B. mitten in ein Formular hinein verschieben. Das DIV muss manuell auf der Seite erzeugt werden, z.B. mit einem HTML Inhaltselement oder HTML Formularfeld.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overpass_url']          = array('Alternative URL der Overpass-API (<a href="http://overpass-api.de/" target="_blank">Website des voreingestellten API-Server Anbieters</a>)',

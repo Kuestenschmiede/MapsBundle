@@ -2,6 +2,7 @@
 
 use \con4gis\MapsBundle\Resources\contao\classes\GeoPicker;
 use con4gis\MapsBundle\Resources\contao\classes\Utils;
+use Contao\CoreBundle\DataContainer\PaletteManipulator;
 
 /**
  * con4gis - the gis-kit
@@ -10,7 +11,7 @@ use con4gis\MapsBundle\Resources\contao\classes\Utils;
  * @package   con4gis
  * @author    con4gis contributors (see "authors.txt")
  * @license   GNU/LGPL http://opensource.org/licenses/lgpl-3.0.html
- * @copyright Küstenschmiede GmbH Software & Design 2011 - 2017.
+ * @copyright Küstenschmiede GmbH Software & Design 2011 - 2018
  * @link      https://www.kuestenschmiede.de
  */
 
@@ -21,31 +22,14 @@ if (@class_exists("tl_calendar_events")) {
      */
     $disabledObjects = deserialize($GLOBALS['TL_CONFIG']['disabledC4gMapObjects'], true);
 
+
     if (!in_array('tl_calendar_events', $disabledObjects)) {
 
-        //Neu
-        foreach( $GLOBALS['TL_DCA']['tl_calendar_events']['palettes'] as $name => $palette )
-        {
-            if ($name == '__selector__')
-                continue;
-
-            $GLOBALS['TL_DCA']['tl_calendar_events']['palettes'][$name] = str_replace(
-                array(
-                    ';{expert_legend'
-                ),
-                array(
-                    ';{c4g_maps_legend},c4g_loc_geox,c4g_loc_geoy,c4g_loc_label,c4g_locstyle;{expert_legend'
-                    ),
-                $palette
-                );
-        }
-
-        //Alt
-        //foreach ($GLOBALS['TL_DCA']['tl_calendar_events']['palettes'] as $key=>$palette) {
-            //if ($key != '__selector__') {
-                //$palette = str_replace(';{expert_legend', ';{c4g_maps_legend},c4g_loc_geox,c4g_loc_geoy,c4g_loc_label,c4g_locstyle;{expert_legend', $palette);
-            //}
-        //}
+        // Palettes
+        PaletteManipulator::create()
+            ->addLegend('c4g_maps_legend', 'expert_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_BEFORE)
+            ->addField(array('c4g_loc_geox', 'c4g_loc_geoy', 'c4g_loc_label', 'c4g_locstyle'), 'c4g_maps_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_APPEND)
+            ->applyToPalette('default', 'tl_calendar_events');
 
         $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['c4g_loc_geox'] = array
         (

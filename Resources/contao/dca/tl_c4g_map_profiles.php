@@ -7,7 +7,7 @@
  * @package   con4gis
  * @author    con4gis contributors (see "authors.txt")
  * @license   GNU/LGPL http://opensource.org/licenses/lgpl-3.0.html
- * @copyright Küstenschmiede GmbH Software & Design 2011 - 2017.
+ * @copyright Küstenschmiede GmbH Software & Design 2011 - 2018
  * @link      https://www.kuestenschmiede.de
  */
 
@@ -114,7 +114,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
     'subpalettes' => array
     (
         'mouse_nav'                   => 'mouse_nav_wheel,mouse_nav_doubleclick_zoom,mouse_nav_zoombox,mouse_nav_dragmode,mouse_nav_kinetic',
-        'starboard'                   => 'starboard_open,starboard_div,starboard_label,baselayerswitcher,layerswitcher,starboard_filter,starboard_button,cluster_all',
+        'starboard'                   => 'starboard_open,starboard_div,starboard_label,baselayerswitcher,layerswitcher,starboard_filter,starboard_button,cluster_all,async_content',
         'cluster_all'                 => 'cluster_distance,cluster_fillcolor,cluster_fontcolor,cluster_zoom',
         'baselayerswitcher'           => 'baselayerswitcher_label',
         'layerswitcher'               => 'layerswitcher_label',
@@ -122,7 +122,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
         'hover_popups'                => 'hover_popups_stay',
         'permalink'                   => 'permalink_get_param',
         'geosearch'                   => 'geosearch_engine,geosearch_results,geosearch_show,geosearch_div,geosearch_zoomto,geosearch_zoombounds,geosearch_animate,geosearch_markresult,geosearch_attribution,geosearch_collapsed',
-        'geopicker'                   => 'geopicker_fieldx,geopicker_fieldy,geopicker_searchdiv,geopicker_attribution',
+        'geopicker'                   => 'geopicker_fieldx,geopicker_fieldy,geopicker_searchdiv,geopicker_attribution,geopicker_disabled,geopicker_anonymous',
         'router'                      => 'router_api_selection,router_alternative,router_viaroute_url,router_attribution,router_from_locstyle,router_to_locstyle,router_point_locstyle,router_interim_locstyle',
         'cesium'                      => 'cesium_always',
     ),
@@ -776,6 +776,26 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             'default'                 => true,
             'inputType'               => 'checkbox',
             'sql'                     => "char(1) NOT NULL default '1'"
+        ),
+
+        'geopicker_disabled' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_disabled'],
+            'exclude'                 => true,
+            'default'                 => '',
+            'inputType'               => 'checkbox',
+            'eval'                    => array('submitOnChange' => false),
+            'sql'                     => "char(1) NOT NULL default ''"
+        ),
+
+        'geopicker_anonymous' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_anonymous'],
+            'exclude'                 => true,
+            'default'                 => '',
+            'inputType'               => 'checkbox',
+            'eval'                    => array('submitOnChange' => false),
+            'sql'                     => "char(1) NOT NULL default ''"
         ),
 
         'router' => array

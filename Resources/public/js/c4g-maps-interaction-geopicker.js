@@ -16,7 +16,11 @@ this.c4g.maps.interaction = this.c4g.maps.interaction || {};
     var mapData,
         mapContainer,
         lat,
-        lon;
+        lon,
+        latIdx,
+        lonIdx,
+        latRnd,
+        lonRnd;
 
     this.options = options || {};
 
@@ -42,9 +46,36 @@ this.c4g.maps.interaction = this.c4g.maps.interaction || {};
       lat = this.$fieldGeoY.val();
       lon = this.$fieldGeoX.val();
 
+      if (mapData.geopicker.anonymous) {
+          this.$fieldGeoY.remove();
+          this.$fieldGeoX.remove();
+
+          latIdx = lat.indexOf('.');
+          lonIdx = lon.indexOf('.');
+          lat = lat.replace(/\D/g, "");
+          lon = lon.replace(/\D/g, "");
+          latRnd = Math.round((Math.random() * (99999999999 - 1)) + 1);
+          lonRnd = Math.round((Math.random() * (99999999999 - 1)) + 1);
+          if (latRnd > 49999999999) {
+              lat = parseInt(lat) - latRnd;
+          } else {
+              lat = parseInt(lat) + latRnd;
+          }
+          if (lonRnd < 50000000000) {
+              lon = parseInt(lon) - lonRnd;
+          } else {
+              lon = parseInt(lon) + lonRnd;
+          }
+          lat = lat + "";
+          lon = lon + "";
+          lat = lat.substr(0, latIdx) + '.' + lat.substr(latIdx, lat.length - latIdx);
+          lon = lon.substr(0, lonIdx) + '.' + lon.substr(lonIdx, lon.length - lonIdx);
+      }
+
       this.opticLayerFeature = new ol.Feature({
         geometry: new ol.geom.Point(ol.proj.fromLonLat([parseFloat(lon), parseFloat(lat)])),
-        pickerColor: [0, 180, 100, 1]
+        pickerColor: [0, 180, 100, 1],
+        anonymous: mapData.geopicker.anonymous
       });
 
       this.opticLayerSource.addFeature(this.opticLayerFeature);
@@ -75,7 +106,8 @@ this.c4g.maps.interaction = this.c4g.maps.interaction || {};
 
     geoPickerStyleFunction: function (feature, projection, getId) {
       var color,
-          white;
+          white,
+          result;
 
       if (getId) {
         return -1;
@@ -88,60 +120,69 @@ this.c4g.maps.interaction = this.c4g.maps.interaction || {};
         color = [200, 0, 0, 0.7];
       }
 
-      return [
-        new ol.style.Style({
-          image: new ol.style.Circle({
-            radius: 2,
-            fill: new ol.style.Fill({
-              color: color
-            }),
-            stroke: new ol.style.Stroke({
-              color: white,
-              width: 2
-            })
-          }),
-          zIndex: Infinity
-        }),
-        new ol.style.Style({
-          image: new ol.style.Circle({
-            radius: 20,
-            stroke: new ol.style.Stroke({
-              color: white,
-              width: 4
-            })
-          }),
-          zIndex: Infinity
-        }),
-        new ol.style.Style({
-          image: new ol.style.Circle({
-            radius: 20,
-            stroke: new ol.style.Stroke({
-              color: color,
-              width: 2
-            })
-          }),
-          zIndex: Infinity
-        }),
-        new ol.style.Style({
-          image: new ol.style.Circle({
-            radius: 40,
-            stroke: new ol.style.Stroke({
-              color: white,
-              width: 4
-            })
-          }),
-          zIndex: Infinity
-        }),
-        new ol.style.Style({
-          image: new ol.style.Circle({
-            radius: 40,
-            stroke: new ol.style.Stroke({
-              color: color,
-              width: 2
-            })
-          }),
-          zIndex: Infinity
-        }),
+      result = [];
+      if (feature && typeof feature.get === 'function' && !feature.get('anonymous')) {
+          result.push(
+              new ol.style.Style({
+                  image: new ol.style.Circle({
+                      radius: 2,
+                      fill: new ol.style.Fill({
+                          color: color
+                      }),
+                      stroke: new ol.style.Stroke({
+                          color: white,
+                          width: 2
+                      })
+                  }),
+                  zIndex: Infinity
+              }));
+          result.push(
+              new ol.style.Style({
+                  image: new ol.style.Circle({
+                      radius: 20,
+                      stroke: new ol.style.Stroke({
+                          color: white,
+                          width: 4
+                      })
+                  }),
+                  zIndex: Infinity
+              }));
+          result.push(
+              new ol.style.Style({
+                  image: new ol.style.Circle({
+                      radius: 20,
+                      stroke: new ol.style.Stroke({
+                          color: color,
+                          width: 2
+                      })
+                  }),
+                  zIndex: Infinity
+              }));
+          result.push(
+              new ol.style.Style({
+                  image: new ol.style.Circle({
+                      radius: 40,
+                      stroke: new ol.style.Stroke({
+                          color: white,
+                          width: 4
+                      })
+                  }),
+                  zIndex: Infinity
+              }));
+          result.push(
+              new ol.style.Style({
+                  image: new ol.style.Circle({
+                      radius: 40,
+                      stroke: new ol.style.Stroke({
+                          color: color,
+                          width: 2
+                      })
+                  }),
+                  zIndex: Infinity
+              }));
+      }
+
+      result.push(
         new ol.style.Style({
           image: new ol.style.Circle({
             radius: 60,
@@ -151,7 +192,9 @@ this.c4g.maps.interaction = this.c4g.maps.interaction || {};
             })
           }),
           zIndex: Infinity
-        }),
+        }));
+
+      result.push(
         new ol.style.Style({
           image: new ol.style.Circle({
             radius: 60,
@@ -161,13 +204,14 @@ this.c4g.maps.interaction = this.c4g.maps.interaction || {};
             })
           }),
           zIndex: Infinity
-        })
-      ];
+        }));
+
+      return result;
     },
 
     handleEvent: function (mapBrowserEvent) {
       if (mapBrowserEvent.type === "singleclick") {
-        if (!this.options.disableClickEvent) {
+        if (!this.options.disableClickEvent && !this.options.mapContainer.data.geopicker.disabled) {
           return !this.pick(mapBrowserEvent.coordinate);
         }
       }

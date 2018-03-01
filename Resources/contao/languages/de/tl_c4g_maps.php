@@ -7,7 +7,7 @@
  * @package   con4gis
  * @author    con4gis contributors (see "authors.txt")
  * @license   GNU/LGPL http://opensource.org/licenses/lgpl-3.0.html
- * @copyright Küstenschmiede GmbH Software & Design 2011 - 2017.
+ * @copyright Küstenschmiede GmbH Software & Design 2011 - 2018
  * @link      https://www.kuestenschmiede.de
  */
 
@@ -48,6 +48,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['locstyle'] = array('Lokationsstil', 'Über d
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_only_in_parent'] = array('Lokation nur in übergeordneten Karten anzeigen', 'Wenn Sie diese Checkbox NICHT setzen, dann wird diese Lokation auch angezeigt, sobald Sie dieses Element als Karte darstellen lassen.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_label'] = array('Label', 'Geben Sie hier ein Label ein, das auf der Karte bei der Lokation mit angezeigt wird.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['tooltip'] = array('Tooltip', 'Kurze Information, die angezeigt wird, wenn sich der Mauszeiger über der Lokation befindet.');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['tooltip_length'] = array('Länge des Tooltips', 'Anzahl der Zeichen, nach der das Tooltip abgeschnitten wird.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['enablePopup'] = array('Popup aktivieren', 'Setzen Sie diese Checkbox um das Popup für dieses Element zu aktivieren.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popup_info'] = array('Popup Information', 'Wird eine Popup-Information gesetzt, so wird sie durch einen Mausklick oder via Hover (abhängig von der Einstellung im Kartenprofil) auf der Lokation angezeigt.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popup_extend'] = array('Popup Information durch Forenbeitrag erweitern', 'Ermöglicht es zusätzliche Popup-Information aus einem Forenbeitrag zu generieren.');
@@ -57,6 +58,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_linkurl'] = array('Direktverlinkung', 'G
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_onclick_zoomto'] = array('Zoomen bei Mausklick auf Zoomstufe', 'Geben Sie die Zoomstufe ein, auf die bei Mausklick gezoomt werden soll. Funktioniert nur, wenn keine Direktverlinkung angegeben ist.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_minzoom'] = array('Mindest-Zoomstufe', 'Geben Sie die Zoomstufe ein, ab der die Elemente des Karteneintrags angezeigt werden. 0=keine Einschränkung.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_maxzoom'] = array('Maximale Zoomstufe', 'Geben Sie die Zoomstufe ein, bis zu der die Elemente des Karteneintrags angezeigt werden. 0=keine Einschränkung.');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['async_content'] = array('Lokationen asynchron nachladen', 'Einfache Lokationen werden asynchron nachgeladen, um die initiale Performance zu verbessern.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['tab_source'] = array('Quelltabelle', 'Wählen Sie die Quelltabelle aus, aus der die anzuzeigenden Lokationen geladen werden. Sie können eigene Tabellen hinzuprogrammieren, siehe CONFIG.PHP.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['tab_pid']  = array('Eintrag aus Elterntabelle (optional)', 'Falls eine Elterntabelle vorhanden ist, wählen Sie hier den Eintrag der Elterntabelle aus, auf den die Auswahl eingeschränkt werden soll.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['tab_pid1'] = array('Zweiter Eintrag aus Elterntabelle (optional)', 'Falls eine Elterntabelle vorhanden ist, wählen Sie hier den Eintrag der Elterntabelle aus, auf den die Auswahl eingeschränkt werden soll.');
@@ -100,7 +102,8 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_locations'] = array('Lokationen clus
 $GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_distance'] = array('Cluster-Distanz','Ab welcher Entfernung in Pixeln soll geclustert werden? (Standard beträgt 20px)');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_fillcolor'] = array('Füllfarbe', 'Wählen Sie die Füllfarbe der Clusterblasen aus.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_fontcolor'] = array('Schriftfarbe', 'Wählen Sie die Schriftfarbe der Clusterblasen aus.');
-$GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_zoom'] = array('Minimale Zoomstufe (Spinne)', 'Wählen Sie die Zoomstufe, bis zu der hereingezoomt wird. Ab dieser Stufe werden die Cluster per Klick aufgelöst und verteilt dargestellt.');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_zoom'] = array('Minimale Zoomstufe (Spinne)', 'Wählen Sie die Zoomstufe, bis zu der hereingezoomt wird. Ab dieser Stufe werden die Cluster per Klick aufgelöst und verteilt dargestellt oder das Popup geöffnet.');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_popup'] = array('Popup beim Clustern', 'Statt das Cluster aufzulösen wird ein gemeinsames Popup erstellt und geöffnet.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['zoom_locations'] = array('Zoom auf Lokationen','Beim Aktivieren der Lokationen im Starboard wird auf sie und eventuelle Kindelemente gezoomt. Dies funktioniert nicht mit Lokationen aus asynchronen Abfragen (z.B. Overpass).');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['hover_location'] = array('Hover-Effekt bei Lokationen','Ändern des Lokationsstils beim Hovern über einer Lokation');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['hover_style'] = array('Lokationsstil bei Hover-Effekt','Lokationsstil, der beim Hovern über die Lokation angezeigt werden soll.');
@@ -118,6 +121,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['copy']   = array('Kartenstrukturelement dupl
 $GLOBALS['TL_LANG']['tl_c4g_maps']['copyChilds']   = array('Kartenstrukturelement inklusive Unterelemente duplizieren', 'Kartenstrukturelement ID %s inklusive Unterelemente duplizieren');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['cut']    = array('Kartenstrukturelement verschieben', 'Kartenstrukturelement ID %s verschieben');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['delete'] = array('Kartenstrukturelement löschen', 'Kartenstrukturelement ID %s löschen');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['toggle'] = array('Kartenstrukturelement veröffentlichen/unveröffentlichen', 'Kartenstrukturelement ID %s veröffentlichen/unveröffentlichen');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['toggle'] = array('Kartenstrukturelement veröffentlichen/unveröffentlichen', 'Kartenstrukturelement ID %s veröffentlichen/unveröffentlichen');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['show']   = array('Details', 'Die Details des Kartenstrukturelements ID %s anzeigen');
 

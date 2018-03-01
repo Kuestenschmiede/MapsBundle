@@ -7,7 +7,7 @@
  * @package   con4gis
  * @author    con4gis contributors (see "authors.txt")
  * @license   GNU/LGPL http://opensource.org/licenses/lgpl-3.0.html
- * @copyright Küstenschmiede GmbH Software & Design 2011 - 2017.
+ * @copyright Küstenschmiede GmbH Software & Design 2011 - 2018
  * @link      https://www.kuestenschmiede.de
  */
 
@@ -18,6 +18,8 @@ $GLOBALS['TL_LANG']['CTE']['c4g_maps'] 					= array('Map (con4gis)','Kartan inte
 
 $GLOBALS['TL_LANG']['c4g_maps']['sourcetable']['tl_calendar_events']['name'] 	= 'Tapahtumat';
 $GLOBALS['TL_LANG']['c4g_maps']['sourcetable']['tl_calendar_events']['parent'] 	= 'Kalenteri';
+$GLOBALS['TL_LANG']['c4g_maps']['sourcetable']['tl_calendar_events_with_tags']['name'] = 'Events with tags';
+$GLOBALS['TL_LANG']['c4g_maps']['sourcetable']['tl_calendar_events_with_tags']['parent'] = 'Calendar with tags';
 
 $GLOBALS['TL_LANG']['c4g_maps']['geox_invalid'] 		= 'Arvo -180.0 ja 180.0 välillä odotettavissa!';
 $GLOBALS['TL_LANG']['c4g_maps']['geoy_invalid'] 		= 'Arvo -90.0 ja 90.0 odotettavissa!';

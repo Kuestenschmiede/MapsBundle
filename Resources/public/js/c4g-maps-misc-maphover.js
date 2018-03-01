@@ -106,10 +106,14 @@ this.c4g.maps.misc = this.c4g.maps.misc || {};
         var hovered,
             clustered,
             tooltipContent,
+            tooltipHelper,
+            features,
+            tooltipLength,
             resolution,
             canvas,
             mapData = this.options.mapController.data,
             proxy = this.options.mapController.proxy;
+
 
         clustered = false;
         hovered = self.map.forEachFeatureAtPixel(event.pixel,
@@ -145,7 +149,9 @@ this.c4g.maps.misc = this.c4g.maps.misc || {};
           if (hovered.feature.get('features')[1]) {
             clustered = true;
           }
-          hovered.feature = hovered.feature.get('features')[0];
+          else{
+              hovered.feature = hovered.feature.get('features')[0];
+          }
         }
         if(hovered.feature.getGeometry() && hovered.feature.getGeometry() instanceof ol.geom.LineString){
             return false;
@@ -252,16 +258,56 @@ this.c4g.maps.misc = this.c4g.maps.misc || {};
         } else if (hovered.layer && hovered.layer.tooltip) {
           tooltipContent = hovered.layer.tooltip;
         }
+        if (clustered && hovered.feature.get('features')){
+            features = hovered.feature.get('features');
+            if(features[0].get('tooltip') && features[0].get('tooltip_length')){
+                tooltipContent = features[0].get('tooltip');
+                tooltipLength = parseInt(features[0].get('tooltip_length'));
+                for(var i = 1; i<features.length; i++){
+                    if(features[i].get('tooltip') && features[i].get('tooltip') != ''){
+                        tooltipContent = tooltipContent + ', ' + features[i].get('tooltip');
+                    }
+                }
+                if(tooltipContent.length > tooltipLength + 3)
+                {
+                    if(tooltipContent = tooltipContent.slice(0, tooltipLength)){
+                        tooltipContent = tooltipContent + '...';
+                    }
+
+                }
+            }
+            else if(hovered.layer.tooltip && hovered.layer.tooltip_length){
+                tooltipHelper = tooltipContent;
+                tooltipContent = '';
+                tooltipLength = parseInt(hovered.layer.tooltip_length);
+                for(i = 0; i<features.length; i++){
+                    var singleTooltip = c4g.maps.utils.replaceAllPlaceholders(tooltipHelper, features[i], hovered.layer);
+                    if(singleTooltip != ''){
+                        if(tooltipContent == '') tooltipContent = singleTooltip;
+                        else tooltipContent = tooltipContent + ', ' + singleTooltip;
+                    }
+                }
+                if(tooltipContent.length > tooltipLength +3)
+                {
+                    if(tooltipContent = tooltipContent.slice(0, tooltipLength)){
+                        tooltipContent = tooltipContent + '...';
+                    }
+
+                }
+            }
+
+        }
 
         if (tooltipContent) {
           tooltipContent = c4g.maps.utils.decodeGeoJsonProperty(tooltipContent);
-          if (!clustered) {
-            // replace placeholders if possible
-            tooltipContent = c4g.maps.utils.replaceAllPlaceholders(tooltipContent, hovered.feature, hovered.layer);
-          } else {
-            //ToDo summery for tooltips
-            tooltipContent = '';
-          }
+
+          // replace placeholders if possible
+            if(hovered.feature.get('features')){
+
+
+            }
+          tooltipContent = c4g.maps.utils.replaceAllPlaceholders(tooltipContent, hovered.feature, hovered.layer);
+
 
           if (tooltipContent.trim()) {
             // popup config

@@ -7,7 +7,7 @@
  * @package   con4gis
  * @author    con4gis contributors (see "authors.txt")
  * @license   GNU/LGPL http://opensource.org/licenses/lgpl-3.0.html
- * @copyright Küstenschmiede GmbH Software & Design 2011 - 2017.
+ * @copyright Küstenschmiede GmbH Software & Design 2011 - 2018
  * @link      https://www.kuestenschmiede.de
  */
 
@@ -387,6 +387,8 @@ class MapDataConfigurator
                 $mapData['geopicker']['type'] = 'frontend';
                 $mapData['geopicker']['input_geo_x'] = '#' . $profile->geopicker_fieldx;
                 $mapData['geopicker']['input_geo_y'] = '#' . $profile->geopicker_fieldy;
+                $mapData['geopicker']['anonymous'] = $profile->geopicker_anonymous;
+                $mapData['geopicker']['disabled']  = $profile->geopicker_disabled;
             }
 
 

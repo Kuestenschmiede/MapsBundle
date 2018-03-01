@@ -7,13 +7,14 @@
  * @package   con4gis
  * @author    con4gis contributors (see "authors.txt")
  * @license   GNU/LGPL http://opensource.org/licenses/lgpl-3.0.html
- * @copyright Küstenschmiede GmbH Software & Design 2011 - 2017.
+ * @copyright Küstenschmiede GmbH Software & Design 2011 - 2018
  * @link      https://www.kuestenschmiede.de
  */
 
 namespace con4gis\MapsBundle\Resources\contao\modules\api;
 
 use con4gis\CoreBundle\Resources\contao\classes\HttpResultHelper;
+use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use con4gis\ProjectsBundle\Classes\Common\C4GBrickCommon;
 use Contao\StringUtil;
@@ -86,11 +87,95 @@ class LayerApi extends \Frontend
             'layer' => $arrLayers,
             'foreignLayers' => $this->checkAndFetchMissingLinkedLayers($arrLayers)
         );
+        foreach($return['layer'] as $key => $layer)
+        {
+            $objLayer = C4gMapsModel::findByPk($layer['id']);
+            if ($objLayer->poim_reassign_layer)
+            {
+                $return['layer'][$key] = $this->forceChildsInContent($layer);
+            }
+        }
         $return['layer'] = $this->checkAndReassignFrontendLayers($return['layer']);
 
-		
-		return $return;
 
+
+        $this->Database->prepare("DELETE FROM tl_c4g_map_layer_content")->execute();
+        foreach($return['layer'] as $key => $layer){
+            $return['layer'][$key] = $this->saveLayerContent($layer);
+        }
+
+
+        return $return;
+    }
+    protected function saveLayerContent($layer)
+    {
+        if($layer['childs']){
+            foreach($layer['childs'] as $key => $child)
+            {
+                $layer['childs'][$key] = $this->saveLayerContent($child);
+            }
+        }
+        if($layer['async_content'] == 1) {
+            if ($layer['content']) {
+                foreach ($layer['content'] as $key => $content) {
+                    if (!$content['data'] || !$content['data']['geometry'] || !$content['data']['geometry']['coordinates'] || count($content['data']['geometry']['coordinates']) != 2) continue;
+                    $set['pid'] = $layer['id'];
+                    $set['type'] = $content['type'];
+                    $set['format'] = $content['format'];
+                    $set['origType'] = $content['origType'];
+                    $set['locStyle'] = $content['locationStyle'];
+                    $set['datatype'] = $content['data']['type'];
+                    $set['geotype'] = $content['data']['geometry']['type'];
+                    $set['geox'] = $content['data']['geometry']['coordinates'][0];
+                    $set['geoy'] = $content['data']['geometry']['coordinates'][1];
+                    $set['projection'] = $content['data']['properties']['projection'];
+                    $set['popup_content'] = $content['data']['properties']['popup']['content'];
+                    $set['popup_routing_link'] = $content['data']['properties']['popup']['routing_link'];
+                    $set['popup_async'] = $content['data']['properties']['popup']['async'];
+                    $set['tooltip'] = $content['data']['properties']['tooltip'];
+                    $set['tooltip_length'] = $content['data']['properties']['tooltip_length'];
+                    $set['label'] = $content['data']['properties']['label'];
+                    $set['loc_linkurl'] = $content['data']['properties']['loc_linkurl'];
+                    $set['hover_location'] = $content['data']['properties']['hover_location'];
+                    $set['hover_style'] = $content['data']['properties']['hover_style'];
+                    $set['cluster_fillcolor'] = $content['cluster_fillcolor'];
+                    $set['cluster_distance'] = $content['cluster_distance'];
+                    $set['cluster_fontcolor'] = $content['cluster_fontcolor'];
+                    $set['cluster_zoom'] = $content['cluster_zoom'];
+                    $set['cluster_popup'] = $content['cluster_popup'];
+                    if($content['settings']['cluster']){
+                        $layer['cluster'] = $content['settings']['cluster'];
+                    }
+                    $this->Database->prepare("INSERT INTO tl_c4g_map_layer_content %s")->set($set)->execute();
+                    unset($layer['content'][$key]);
+                }
+            }
+        }
+
+        return $layer;
+    }
+    protected function forceChildsInContent($layer)
+    {
+        $arrChilds =[];
+        foreach($layer['childs'] as $key => $child)
+        {
+            if($child['childs'] && $child['childs'][0]['content'] && $child['childs'][0]['content'] != []) {
+                $arrContent = [];
+                foreach ($child['childs'] as $children) {
+                    $arrContent[] = $children['content'][0];
+                }
+                $child['content'] = $arrContent;
+                unset($child['childs']);
+                unset($child['childsCount']);
+                $child['hasChilds'] = false;
+                $arrChilds[] = $child;
+            }
+            else {
+                $child['childs'] = $this->forceChildsInContent($layer['childs'][0]);
+            }
+        }
+        $layer['childs'] = $arrChilds;
+        return $layer;
     }
 
     protected function checkAndFetchMissingLinkedLayers($layers)
@@ -313,14 +398,9 @@ class LayerApi extends \Frontend
                             foreach($overpassLayers as &$overpassLayer) {
                                 $overpassLayer['childs'] = array();
                                 $overpassLayer['childsCount'] = 0;
-                                foreach($poiGroup['childs'] as $key=>$poi) {
-                                    $poi['pid'] = $overpassLayer['id'];
-                                    $poi['id'] = C4GBrickCommon::calcLayerID(C4GBrickCommon::getLayerIDParam($poi['id'], 'id'), $poi['pid'], 99 + $overpassLayer['childsCount']);
-                                    $poi['key'] = $poi['id'];
-                                    $overpassLayer['childs'][] = $poi;
-                                    $overpassLayer['hasChilds'] = true;
-                                    $overpassLayer['childsCount']++;
-                                }
+                                $poiGroup['pid'] = $overpassLayer['id'];
+                                $overpassLayer['childs'][] = $poiGroup;
+                                $overpassLayer['hasChilds'] = true;
                             }
                             unset ($layer['childs'][$grpKey]);
                             $layer['childsCount']--;
@@ -391,6 +471,7 @@ class LayerApi extends \Frontend
         $arrLayerData['pid'] = $objLayer->pid;
         $arrLayerData['name'] =  \Contao\Controller::replaceInsertTags($stringClass::decodeEntities($objLayer->name));
         $arrLayerData['zoom_locations'] = $objLayer->zoom_locations;
+        $arrLayerData['async_content'] = $objLayer->async_content;
 
         // check parent hide status
         $parentLayer = C4gMapsModel::findById($objLayer->pid);

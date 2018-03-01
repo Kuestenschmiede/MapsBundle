@@ -7,7 +7,7 @@
  * @package   con4gis
  * @author    con4gis contributors (see "authors.txt")
  * @license   GNU/LGPL http://opensource.org/licenses/lgpl-3.0.html
- * @copyright Küstenschmiede GmbH Software & Design 2011 - 2017.
+ * @copyright Küstenschmiede GmbH Software & Design 2011 - 2018
  * @link      https://www.kuestenschmiede.de
  */
 
@@ -138,6 +138,7 @@ class LayerContentApi extends \Controller
                             "content" => "tl_c4g_maps" . ":" . $objLayer->id
                         )*/
                         "tooltip" => $objLayer->tooltip,
+                        "tooltip_length" => $objLayer->tooltip_length,
                         "label" => $objLayer->loc_label,
                         "zoom_onclick" => $objLayer -> loc_onclick_zoomto
                     ),
@@ -175,6 +176,7 @@ class LayerContentApi extends \Controller
                             "async" => $objLayer->popup_async
                         ),
                         "tooltip" => $objLayer->tooltip,
+                        "tooltip_length" => $objLayer->tooltip_length,
                         "label" => $objLayer->loc_label,
                         "zoom_onclick" => $objLayer -> loc_onclick_zoomto,
                         "url" => $this->getUrl($objLayer)
@@ -222,6 +224,7 @@ class LayerContentApi extends \Controller
                             "async" => $objLayer->popup_async
                         ),
                         "tooltip" => $objLayer->tooltip,
+                        "tooltip_length" => $objLayer->tooltip_length,
                         "label" => $objLayer->loc_label,
                         "zoom_onclick" => $objLayer -> loc_onclick_zoomto,
                         "url" => $this->getUrl($objLayer)
@@ -269,6 +272,7 @@ class LayerContentApi extends \Controller
                             "content" => "tl_c4g_maps" . ":" . $objLayer->id
                         ),
                         "tooltip" => $objLayer->tooltip,
+                        "tooltip_length" => $objLayer->tooltip_length,
                         "label" => $objLayer->loc_label,
                         'zoom_onclick' => $objLayer->loc_onclick_zoomto
                     ),
@@ -298,13 +302,36 @@ class LayerContentApi extends \Controller
                 $qAnd = '';
                 $addBeWhereClause = '';
                 $and = '';
+                $qIn = '';
 
                 $arrConfig = $GLOBALS['con4gis']['maps']['sourcetable'][$sourceTable];
+                if($GLOBALS['BE_FFL']['tag'])
+                {
+                    $arrConfig = $GLOBALS['con4gis']['maps']['sourcetable'][$sourceTable.'_with_tags'];
+                }
                 $ptableArr = explode(',', $arrConfig['ptable']);
+                $ctableArr = explode(',', $arrConfig['ctable']);
                 $ptableFieldArr = explode(',', $arrConfig['ptable_field']);
                 $ptableCompareFieldArr = explode(',', $arrConfig['ptable_compare_field']);
                 $ptableBlobArr = explode(',', $arrConfig['ptable_blob']);
 
+                //check child values
+                if($objLayer->tab_pid1 && $arrConfig['ctable'] && $arrConfig['ctable_option']) {
+                    foreach($ctableArr as $key=>$ctable) {
+                        $queryChild = "SELECT ".$arrConfig['ctable_option']." FROM ".$arrConfig['ctable']." WHERE id=".$objLayer->tab_pid1;
+                        $child = \Database::getInstance()->prepare($queryChild)->execute()->fetchAssoc();
+                        $sqlquery = "SELECT tid FROM ".$arrConfig['ctable']." WHERE ".$arrConfig['ctable_option']."=?";
+                        $idsfromChild = \Database::getInstance()->prepare($sqlquery)->execute($child[$arrConfig['ctable_option']])->fetchAllAssoc();
+
+                        if ($idsfromChild && count($idsfromChild) > 0) {
+                            $qIn .= ' AND id IN(';
+                            foreach($idsfromChild as $value){
+                                $qIn .= $value['tid'] . ',';
+                            }
+                            $qIn = rtrim($qIn,',') . ')';
+                        }
+                    }
+                }
                 //check parent values
                 if ($arrConfig['ptable']) {
 
@@ -362,8 +389,26 @@ class LayerContentApi extends \Controller
                 if ($arrConfig['sourcetable']) {
                     $sourceTable = $arrConfig['sourcetable'];
                 }
+                $stmt = '';
 
-                $query = "SELECT * FROM `$sourceTable`". $qWhere . $pidOption . $qAnd . $whereClause . $addBeWhereClause;
+                if ($objLayer->tab_filter_alias) {
+                    //$alias = $this->getInput()->get($arrConfig['alias_getparam']);
+                    $alias = $_SERVER['HTTP_REFERER'];
+                    $strC = substr_count($alias,'/');
+                    $arrUrl = explode('/',$alias);
+                    $alias = explode('.',$arrUrl[$strC])[0];
+                    if ($alias) {
+                        if (is_numeric($alias)) {
+                            $stmt .= ' AND (( alias = "'.$alias.'" ) OR ( id = '.$alias.' ))';
+                        }
+                        else {
+                            $stmt .= ' AND (alias = "'.$alias.'")';
+                        }
+                    }
+                }
+
+
+                $query = "SELECT * FROM `$sourceTable`". $qWhere . $pidOption . $qAnd . $whereClause . $addBeWhereClause  . $qIn. $stmt;
                 $result = \Database::getInstance()->prepare($query)->execute();
 
                 $geox = $arrConfig['geox'];
@@ -554,13 +599,25 @@ class LayerContentApi extends \Controller
                             $link = $this->replaceInsertTags($objLayer->loc_linkurl);
                         }
                         $event = false;
-                        for($i = 0; $i < count($arrReturnData); $i++){
-                            if($arrReturnData[0]['data']['geometry']['coordinates'] == $coordinates)
-                            {
-                                $arrReturnData[0]['data']['properties']['popup']['content'] .= $popupContent;
-                                $event = true;
+                        if($objLayer->cluster_popup != 1)
+                        {
+                            for($i = 0; $i < count($arrReturnData); $i++){
+                                if($arrReturnData[$i]['data']['geometry']['coordinates'] == $coordinates)
+                                {
+                                    if(substr($arrReturnData[$i]['data']['properties']['popup']['content'],0,3) != '<ul')
+                                    {
+                                        $arrReturnData[$i]['data']['properties']['popup']['content'] = '<ul><li>'.$arrReturnData[$i]['data']['properties']['popup']['content'].'</li>';
+                                    }
+                                    if(substr($arrReturnData[$i]['data']['properties']['popup']['content'],-4) == 'ul>'){
+                                        $arrReturnData[$i]['data']['properties']['popup']['content'] = str_replace('</ul>','',$arrReturnData[$i]['data']['properties']['popup']['content']);
+                                    }
+                                    $arrReturnData[$i]['data']['properties']['popup']['content'] .= $popupContent.'</li></ul>';
+                                    $arrReturnData[$i]['data']['properties']['tooltip'] .= ', '.\Contao\Controller::replaceInsertTags($result->$tooltipField);
+                                    $event = true;
+                                }
                             }
                         }
+
 
                         if(!$event){
                             $arrReturnData[] = array
@@ -573,6 +630,7 @@ class LayerContentApi extends \Controller
                                 "cluster_fillcolor" => $objLayer->cluster_fillcolor,
                                 "cluster_fontcolor" => $objLayer->cluster_fontcolor,
                                 "cluster_zoom" => $objLayer->cluster_zoom,
+                                "cluster_popup" => $objLayer->cluster_popup,
                                 "loc_linkurl" => $link,
                                 "hover_location" => $objLayer->hover_location,
                                 "hover_style" => $objLayer->hover_style,
@@ -592,6 +650,7 @@ class LayerContentApi extends \Controller
                                             'routing_link' => $objLayer->routing_to
                                         ),
                                         'tooltip' =>  \Contao\Controller::replaceInsertTags($result->$tooltipField),
+                                        "tooltip_length" => $objLayer->tooltip_length,
                                         'label' =>  \Contao\Controller::replaceInsertTags($result->$labelField),
                                         'zoom_onclick' => $objLayer -> loc_onclick_zoomto
                                     ),
@@ -839,6 +898,7 @@ class LayerContentApi extends \Controller
                             'showPopupOnActive'=> $objLayer->showPopupOnActive
                         ),
                         'tooltip' =>  \Contao\Controller::replaceInsertTags($objLayer->tooltip),
+                        "tooltip_length" => $objLayer->tooltip_length,
                         'label' =>  \Contao\Controller::replaceInsertTags($objLayer->loc_label),
                         'zoom_onclick' => $objLayer -> loc_onclick_zoomto,
                         'loc_linkurl' => $this->replaceInsertTags($objLayer->loc_linkurl),
@@ -1016,6 +1076,7 @@ class LayerContentApi extends \Controller
                     "cluster_fillcolor" => $objLayer->cluster_fillcolor,
                     "cluster_fontcolor" => $objLayer->cluster_fontcolor,
                     "cluster_zoom" => $objLayer->cluster_zoom,
+                    "cluster_popup" => $objLayer->cluster_popup,
                     "loc_linkurl" => $this->replaceInsertTags($objLayer->loc_linkurl),
                     "hover_location" => $objLayer->hover_location,
                     "hover_style" => $objLayer->hover_style,
@@ -1026,6 +1087,7 @@ class LayerContentApi extends \Controller
                             "async" => false
                         ),
                         "tooltip" => $objLayer->tooltip,
+                        "tooltip_length" => $objLayer->tooltip_length,
                         "label" => $objLayer->loc_label,
                         'zoom_onclick' => $objLayer -> loc_onclick_zoomto,
                         "url" => utf8_encode($folder)."/".utf8_encode($fileInfo['basename']),

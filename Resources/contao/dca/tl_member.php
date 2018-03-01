@@ -1,4 +1,5 @@
 <?php use con4gis\MapsBundle\Resources\contao\classes\Utils;
+use Contao\CoreBundle\DataContainer\PaletteManipulator;
 
 if (!defined('TL_ROOT')) die('You can not access this file directly!');
 
@@ -9,7 +10,7 @@ if (!defined('TL_ROOT')) die('You can not access this file directly!');
  * @package   con4gis
  * @author    con4gis contributors (see "authors.txt")
  * @license   GNU/LGPL http://opensource.org/licenses/lgpl-3.0.html
- * @copyright Küstenschmiede GmbH Software & Design 2011 - 2017.
+ * @copyright Küstenschmiede GmbH Software & Design 2011 - 2018
  * @link      https://www.kuestenschmiede.de
  */
 
@@ -22,22 +23,10 @@ if (@class_exists("tl_member")) {
 
     if (!in_array('tl_member', $disabledObjects)) {
 
-        //Neu
-        foreach( $GLOBALS['TL_DCA']['tl_member']['palettes'] as $name => $palette )
-        {
-            if ($name == '__selector__')
-                continue;
-
-            $GLOBALS['TL_DCA']['tl_member']['palettes'][$name] = str_replace(
-                array(
-                    ';{homedir_legend'
-                ),
-                array(
-                    ';{c4g_maps_legend},c4g_loc_geox,c4g_loc_geoy,c4g_loc_label,c4g_locstyle;{homedir_legend'
-                ),
-                $palette
-            );
-        }
+        PaletteManipulator::create()
+            ->addLegend('c4g_maps_legend', 'homedir_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_BEFORE)
+            ->addField(array('c4g_loc_geox', 'c4g_loc_geoy', 'c4g_loc_label', 'c4g_locstyle'), 'c4g_maps_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_APPEND)
+            ->applyToPalette('default', 'tl_member');
 
         $GLOBALS['TL_DCA']['tl_member']['fields']['c4g_loc_geox'] = array
         (

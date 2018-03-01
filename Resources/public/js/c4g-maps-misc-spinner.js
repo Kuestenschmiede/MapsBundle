@@ -69,7 +69,7 @@ this.c4g.maps.misc = this.c4g.maps.misc || {};
      */
     hide: function () {
       if ($(this.element).hasClass(c4g.maps.constant.css.HIDE)) {
-        console.warn('Spinner is already hidden.');
+        //console.warn('Spinner is already hidden.');
       } else {
         if (this.additionalActivationCounter === 0) {
           $(this.element).addClass(c4g.maps.constant.css.HIDE);

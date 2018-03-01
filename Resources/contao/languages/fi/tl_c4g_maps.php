@@ -7,7 +7,7 @@
  * @package   con4gis
  * @author    con4gis contributors (see "authors.txt")
  * @license   GNU/LGPL http://opensource.org/licenses/lgpl-3.0.html
- * @copyright Küstenschmiede GmbH Software & Design 2011 - 2017.
+ * @copyright Küstenschmiede GmbH Software & Design 2011 - 2018
  * @link      https://www.kuestenschmiede.de
  */
 
@@ -48,6 +48,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['locstyle'] = array('Sijainnin tyyli', 'Sijai
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_only_in_parent'] = array('Näytä sijaini vain parentin childina', 'Jos et valitse tätä vaihtoehtoa, sijainti näytetään myös jos kohde on näytettynä kartalla.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_label'] = array('Label', 'Merkitse näytettäväksi kartalla sijainnin merkkaajan kanssa.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['tooltip'] = array('Työkaluohje', 'Työkaluohje näytetään, kun hiiri leijuu sijainnin kohdalla.');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['tooltip_length'] = array('Length of the tooltip', 'Number of characters, before the tooltip is cut of.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['enablePopup'] = array('Activate popup', 'With the checkbox you can enable the popup for this structure element.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popup_info'] = array('Popup tietoa', 'Tiedot näytetään popupissa sen jälkeen, kun hiirellä ollaan napsautettu sijaintia tai kun hiiri leijuu sijainnin kohdalla (Riippuen kartan profiili asetuksista).');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popup_extend'] = array('Laajenna popup tietoa foorumi viestissä', 'Antaa kyvyn renderöidä ylimääräisen popup tiedon foorumiviestissä.');
@@ -57,6 +58,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_linkurl'] = array('Suora linkki', 'Anna 
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_onclick_zoomto'] = array('Hiireä napsauttamalla zoomaus tasolle', 'Anna zoomaustaso siihen, mitä zoomataan, kun klikataan kartan rakenne kohdetta. Toimii vain, kun ei ole suoraa linkkiä.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_minzoom'] = array('Minimi zoomaustaso', 'Anna minimi zoomaustaso siihen, mitkä kohteet näkyvät. 0 tarkoittaa, että ei rajoitusta.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_maxzoom'] = array('Maksimi zoomaustaso', 'Anna maksimi zoomaustaso siihen, mitkä kohteet näkyvät. 0 tarkoittaa, että ei rajoitusta.');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['async_content'] = array('Load location asynchronous', 'Simple locations are loaded asynchronous in order to enhance initial performance.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['tab_source'] = array('Lähdetaulukko', 'Valitse jokin käytettävistä lähdetaulukoista. Pystyt lisäämään omia taulukoita, katso config.php.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['tab_pid'] = array('Parent taulukon entry', 'Jos parent taulukko on määritelty kokoonpanoon, niin valitse entry josta haluat sijainnit ottaa.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['tab_pid1'] = array('Second entry of parent table (optional)', 'If a parent table is defined in the configuration, then select the entry you want to take the locations from.');
@@ -99,6 +101,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_distance'] = array('Cluster etäisyy
 $GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_fillcolor'] = array('Fill color', 'Select the fill color of the cluster bubble.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_fontcolor'] = array('Font color', 'Select the font color of the cluster bubble.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_zoom'] = array('Maximal zoom', 'Select the maximal zoomlevel. The cluster is splitted on click afterwards ');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_popup'] = array('Popup for clusters', 'Instead of splitting the cluster, a shared popup is openend on click.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['zoom_locations'] = array('Zoom to locations','On activating the locations in the starboard, the view is focused on the locations and potential childrens. This does not work with data from asynchronous requests (e.g. Overpass).');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['hover_location'] = array('Hover on locations','Change the location style on hover above a location.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['hover_style'] = array('Location style on hover','Pick the location style to show on hover.');

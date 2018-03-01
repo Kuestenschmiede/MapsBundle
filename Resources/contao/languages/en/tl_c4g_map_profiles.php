@@ -7,7 +7,7 @@
  * @package   con4gis
  * @author    con4gis contributors (see "authors.txt")
  * @license   GNU/LGPL http://opensource.org/licenses/lgpl-3.0.html
- * @copyright Küstenschmiede GmbH Software & Design 2011 - 2017.
+ * @copyright Küstenschmiede GmbH Software & Design 2011 - 2018
  * @link      https://www.kuestenschmiede.de
  */
 
@@ -87,8 +87,9 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_fillcolor']     = array('Fil
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_fontcolor']     = array('Font color',
                                                                             'Select the font color of the cluster bubble.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_zoom']          = array('Maximal zoom',
-                                                                    'Select the maximal zoomlevel. The cluster is splitted on click afterwards ');
-
+                                                                            'Select the maximal zoomlevel. The cluster is splitted on click afterwards ');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['async_content']         = array('Load location asynchronous',
+                                                                            'Simple locations are loaded asynchronous in order to enhance initial performance.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayerswitcher']     = array('Show Baselayer-Switcher',
                                                                             'Show Baselayer-Switcher to allow to change the base layers.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayerswitcher_label']   = array('Description of base layers in the starboard',
@@ -163,6 +164,10 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_searchdiv']   = array('DIV
                                                                             'Enter the ID of an existing DIV element where you want to put the geopicking fields into. May be defined e.g. in an HTML form field.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_attribution'] = array('Show attribution of geocoding service',
                                                                             'Adds an attribution of the search service (Nominatim).  Deactivate only when you are sure it is allowed.');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_disabled']    = array('Disable geopicker',
+                                                                            'Just show position with disabled geopicker.');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_anonymous']   = array('Make geopicker anonymous',
+                                                                            'With the geopicker anonymisation you can not identify the exact position.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['custom_div']            = array('DIV for map',
                                                                             'Enter the ID of an existing DIV element if you want to put the map somewhere else on your page.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overpass_url']          = array('URL of Overpass-API (<a href="http://overpass-api.de/" target="_blank">Website of the default API-Server provider</a>)',
