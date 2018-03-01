@@ -874,6 +874,10 @@ class LayerContentApi extends \Controller
                 $popup_async = false;
             }
         }
+        else if(!$objLayer->popup_async && $objLayer->popup_info){
+            $popup_async = false;
+            $popup_content = $objLayer->popup_info;
+        }
 
         switch ($objLayer->location_type) {
             case "single":

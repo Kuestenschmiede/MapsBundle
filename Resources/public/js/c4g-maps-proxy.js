@@ -419,7 +419,9 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
               if (router) {
                   c4g.maps.popup.$content.append(routeButtonWrapper);
               }
-              c4g.maps.popup.popup.setPosition(feature.getGeometry().getCoordinates());
+              if(feature.getGeometry() && feature.getGeometry() instanceof ol.geom.Point){
+                  c4g.maps.popup.popup.setPosition(feature.getGeometry().getCoordinates());
+              }
           } else {
               // hide popup if there is no valid content left
               c4g.maps.popup.$popup.removeClass(c4g.maps.constant.css.ACTIVE);
@@ -3262,6 +3264,8 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
               // features[j].setId(c4g.maps.utils.getUniqueId());
               // features[j].set('projection', this.options.mapController.map.getView().getProjection());
               // features[j].set('projection', "EPSG:4326");
+                features[j].set('hover_location', elementContent.hover_location);
+                features[j].set('hover_style', elementContent.hover_style);
               if (features[j].get('styleId')) {
                 if (c4g.maps.locationStyles[features[j].get('styleId')] && c4g.maps.locationStyles[features[j].get('styleId')].style) {
                   features[j].setStyle(c4g.maps.locationStyles[features[j].get('styleId')].style);

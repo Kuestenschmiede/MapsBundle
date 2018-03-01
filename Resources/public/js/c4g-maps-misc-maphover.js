@@ -186,7 +186,12 @@ this.c4g.maps.misc = this.c4g.maps.misc || {};
                 self.lastFeatureStyle = self.lastLayerStyle(self.lastHoveredFeature);
                 //TODO get onhover style from db (vllt schon in proxy drin?)
                 if(hovered.feature.get('hover_style') && c4g.maps.locationStyles[hovered.feature.get("hover_style")]){
-                    hovered.feature.setStyle(c4g.maps.locationStyles[hovered.feature.get("hover_style")].style(hovered.feature));
+                    if(c4g.maps.locationStyles[hovered.feature.get("hover_style")].fnStyleFunction){
+                        hovered.feature.setStyle(Function("feature","data","map",c4g.maps.locationStyles[hovered.feature.get("hover_style")].fnStyleFunction)(hovered.feature));
+                    }
+                    else{
+                        hovered.feature.setStyle(c4g.maps.locationStyles[hovered.feature.get("hover_style")].style(hovered.feature));
+                    }
                 }
 
             }
@@ -212,7 +217,12 @@ this.c4g.maps.misc = this.c4g.maps.misc || {};
                         self.lastHoveredFeature = null;
                         return null;
                     }
-                    hovered.feature.setStyle(c4g.maps.locationStyles[hovered.feature.get("hover_style")].style(hovered.feature));
+                    if(c4g.maps.locationStyles[hovered.feature.get("hover_style")].fnStyleFunction){
+                        hovered.feature.setStyle(Function("feature","data","map",c4g.maps.locationStyles[hovered.feature.get("hover_style")].fnStyleFunction)(hovered.feature));
+                    }
+                    else{
+                        hovered.feature.setStyle(c4g.maps.locationStyles[hovered.feature.get("hover_style")].style(hovered.feature));
+                    }
                 }
 
             }
@@ -336,6 +346,11 @@ this.c4g.maps.misc = this.c4g.maps.misc || {};
             return
           }
           var coord = hovered.feature.getGeometry().getCoordinates();
+          if(!coord ||(coord && coord[0] && coord[0].length)){
+              var extent = hovered.feature.getGeometry().getExtent();
+              coord = self.map.getCoordinateFromPixel(event.pixel);
+              coord = [(extent[0]+extent[2])/2,(extent[1]+extent[3])/2];
+          }
 
             c4g.maps.popup.popup.setPosition(coord);
 
