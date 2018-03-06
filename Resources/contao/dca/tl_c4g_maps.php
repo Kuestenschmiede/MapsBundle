@@ -929,7 +929,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['ovp_request'],
             'exclude'                 => true,
             'inputType'               => 'textarea',
-            'eval'                    => array(allowHtml=>true, preserveTags=>true),
+            'eval'                    => array('allowHtml'=>true, 'preserveTags'=>true),
             'sql'                     => "text NULL"
         ),
         'ovp_bbox_limited' => array
