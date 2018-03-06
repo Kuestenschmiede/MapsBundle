@@ -5,6 +5,7 @@ namespace con4gis\MapsBundle\ContaoManager;
 use con4gis\ApiBundle\Con4gisApiBundle;
 use con4gis\CoreBundle\con4gisCoreBundle;
 use con4gis\MapsBundle\con4gisMapsBundle;
+use Contao\CalendarBundle\ContaoCalendarBundle;
 use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\Config\ConfigInterface;
@@ -37,7 +38,7 @@ class Plugin implements RoutingPluginInterface, BundlePluginInterface
     {
         return [
             BundleConfig::create(con4gisMapsBundle::class)
-                ->setLoadAfter([con4gisCoreBundle::class])
+                ->setLoadAfter([ContaoCalendarBundle::class, con4gisCoreBundle::class])
         ];
     }
 }

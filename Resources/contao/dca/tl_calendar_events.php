@@ -26,10 +26,16 @@ if (@class_exists("tl_calendar_events")) {
     if (!in_array('tl_calendar_events', $disabledObjects)) {
 
         // Palettes
-        PaletteManipulator::create()
-            ->addLegend('c4g_maps_legend', 'expert_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_BEFORE)
-            ->addField(array('c4g_loc_geox', 'c4g_loc_geoy', 'c4g_loc_label', 'c4g_locstyle'), 'c4g_maps_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_APPEND)
-            ->applyToPalette('default', 'tl_calendar_events');
+        try {
+            PaletteManipulator::create()
+                ->addLegend('c4g_maps_legend', 'expert_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_BEFORE)
+                ->addField(array('c4g_loc_geox', 'c4g_loc_geoy', 'c4g_loc_label', 'c4g_locstyle'), 'c4g_maps_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_APPEND)
+                ->applyToPalette('default', 'tl_calendar_events');
+        } catch (\Exception $e) {
+            //test after error report
+            //error >= Contao 4.4.14
+            //do nothing
+        }
 
         $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['c4g_loc_geox'] = array
         (
