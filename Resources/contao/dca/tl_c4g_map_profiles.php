@@ -164,7 +164,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             'exclude'                 => true,
             'inputType'               => 'select',
             'options_callback'        => array('tl_c4g_map_profiles', 'getAllThemes'),
-            'eval'                    => array('tl_class'=>'clr', 'includeBlankOption' => true, blankOptionLabel => $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['default_theme']),
+            'eval'                    => array('tl_class'=>'clr', 'includeBlankOption' => true, 'blankOptionLabel' => $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['default_theme']),
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references'],
             'sql'                     => "char(10) NOT NULL default ''"
         ),
