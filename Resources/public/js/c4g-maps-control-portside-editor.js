@@ -866,9 +866,22 @@ this.c4g.maps.control = this.c4g.maps.control || {};
             //
             self.options.mapController.map.on('pointermove',
                 function (event) {
-                  if (enableInstantMeasureCheckbox && enableInstantMeasureCheckbox.checked && activeSketch && activeTooltip) {
-                    activeTooltip.setPosition(event.coordinate);
-                    activeTooltip.setContent(c4g.maps.utils.measureGeometry(activeSketch.getGeometry(), true).htmlValue);
+                  if (enableInstantMeasureCheckbox && enableInstantMeasureCheckbox.checked && activeSketch) {
+                      if(activeTooltip && c4g.maps.utils.measureGeometry(activeSketch.getGeometry(), true).rawValue && c4g.maps.utils.measureGeometry(activeSketch.getGeometry(), true).rawValue == "0.00"){
+                          activeTooltip.close();
+                          activeTooltip = null;
+                      }
+                      else if(!activeTooltip && c4g.maps.utils.measureGeometry(activeSketch.getGeometry(), true).rawValue && c4g.maps.utils.measureGeometry(activeSketch.getGeometry(), true).rawValue != "0.00"){
+                          activeTooltip = new c4g.maps.misc.TooltipPopUp({
+                              map: self.options.mapController.map,
+                              position: event.coordinate,
+                              horizontal: true
+                          });
+                      }
+                      if(activeTooltip){
+                          activeTooltip.setPosition(event.coordinate);
+                          activeTooltip.setContent(c4g.maps.utils.measureGeometry(activeSketch.getGeometry(), true).htmlValue);
+                      }
                   }
                 }, self);
 
