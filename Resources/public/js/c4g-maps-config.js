@@ -16,7 +16,7 @@ this.c4g.maps.config = this.c4g.maps.config || {};
         ol.source.OSM.ATTRIBUTION,
       minZoom: 0,
       maxZoom: 19,
-      url: 'http://{a-c}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png'
+      url: 'https://{a-c}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png'
     },
 
     German: {
@@ -25,7 +25,7 @@ this.c4g.maps.config = this.c4g.maps.config || {};
       crossOrigin: null,
       minZoom: 0,
       maxZoom: 19,
-      url: 'http://{a-c}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png'
+      url: 'https://{a-c}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png'
     },
 
     GermanTransport: {
@@ -42,7 +42,7 @@ this.c4g.maps.config = this.c4g.maps.config || {};
         ol.source.OSM.ATTRIBUTION,
       minZoom: 0,
       maxZoom: 19,
-      url: 'http://{a-c}.tile.opencyclemap.org/landscape/{z}/{x}/{y}.png'
+      url: 'https://{a-c}.tile.opencyclemap.org/landscape/{z}/{x}/{y}.png'
     },
 
     Mapnik: {
