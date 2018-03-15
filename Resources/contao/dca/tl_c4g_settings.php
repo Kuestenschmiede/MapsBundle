@@ -37,7 +37,7 @@ $GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['caching'] = array
 /**
  * Class tl_settings_c4g_maps
  */
-class tl_settings_c4g_maps extends tl_c4g_settings
+class tl_settings_c4g_maps
 {
     /**
      * Return available Map tables
