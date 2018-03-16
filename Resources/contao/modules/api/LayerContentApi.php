@@ -349,7 +349,7 @@ class LayerContentApi extends \Controller
                         $ptableCompareField = $ptableCompareFieldArr[$key];
 
                         //if there is a compare Field instead of the id field (parent table) we have change the parent id
-                        if ($sourcePid && $ptableCompareField && ($ptableCompareField != 'id')) {
+                        if ($ptable && $sourcePid && $ptableCompareField && ($ptableCompareField != 'id')) {
                             $query = "SELECT * FROM `$ptable` WHERE id = $sourcePid";
                             $result = \Database::getInstance()->prepare($query)->limit(1)->execute();
                             $sourcePid = intval($result->$ptableCompareField);
@@ -407,9 +407,10 @@ class LayerContentApi extends \Controller
                     }
                 }
 
-
-                $query = "SELECT * FROM `$sourceTable`". $qWhere . $pidOption . $qAnd . $whereClause . $addBeWhereClause  . $qIn. $stmt;
-                $result = \Database::getInstance()->prepare($query)->execute();
+                if ($sourceTable) {
+                    $query = "SELECT * FROM `$sourceTable`". $qWhere . $pidOption . $qAnd . $whereClause . $addBeWhereClause  . $qIn. $stmt;
+                    $result = \Database::getInstance()->prepare($query)->execute();
+                }
 
                 $geox = $arrConfig['geox'];
                 $geoy = $arrConfig['geoy'];
@@ -421,6 +422,10 @@ class LayerContentApi extends \Controller
                 }
                 $tooltipField = $arrConfig['tooltip'];
                 $labelField = $arrConfig['label'];
+
+                if (!$result) {
+                    break;
+                }
 
                 while($result->next())
                 {
