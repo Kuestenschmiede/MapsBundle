@@ -79,7 +79,9 @@ class MapsController extends Controller
 
         if (!self::$outputFromCache) {
             $this->responseData = $baseLayerApi->generate($profileId);
-            $this->storeDataInCache($request);
+            if (self::$useCache) {
+                $this->storeDataInCache($request);
+            }
         }
 
         $response->setData($this->responseData);
@@ -112,7 +114,9 @@ class MapsController extends Controller
 
         if (!self::$outputFromCache) {
             $this->responseData = $layerApi->generate($mapId);
-            $this->storeDataInCache($request);
+            if (self::$useCache) {
+                $this->storeDataInCache($request);
+            }
         }
 
         $response->setData($this->responseData);
@@ -174,7 +178,9 @@ class MapsController extends Controller
 
             if (!self::$outputFromCache) {
                 $this->responseData = $locStyleApi->generate($arrIds);
-                $this->storeDataInCache($request);
+                if (self::$useCache) {
+                    $this->storeDataInCache($request);
+                }
             }
 
             $response->setData($this->responseData);
