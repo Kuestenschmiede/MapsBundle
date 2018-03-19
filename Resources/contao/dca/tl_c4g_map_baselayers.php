@@ -119,11 +119,11 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] = array
         'osm'                         => '{general_legend},name,display_name,provider,osm_style,attribution,minzoomlevel,maxzoomlevel;{cesium_legend:hide},cesium;'.
                                          '{protection_legend:hide},protect_baselayer;',
         'mapbox'                      => '{general_legend},name,display_name,provider,mapbox_type,app_id,api_key,attribution,minzoomlevel,maxzoomlevel;{cesium_legend:hide},cesium;'.
-                                         '{protection_legend:hide},protect_baselayer;',
+                                         '{protection_legend:hide},hide_in_be,protect_baselayer;',
         'here'                        => '{general_legend},name,display_name,provider,here_type,app_id,api_key,attribution,minzoomlevel,maxzoomlevel;{cesium_legend:hide},cesium;'.
-                                         '{protection_legend:hide},protect_baselayer;',
+                                         '{protection_legend:hide},hide_in_be,protect_baselayer;',
         'thunder'                     => '{general_legend},name,display_name,provider,thunderforest_type,api_key,attribution,minzoomlevel,maxzoomlevel;{cesium_legend:hide},cesium;'.
-                                         '{protection_legend:hide},protect_baselayer;',
+                                         '{protection_legend:hide},hide_in_be,protect_baselayer;',
 //        'google'                      => '{general_legend},name,display_name,provider,google_style,attribution,minzoomlevel,maxzoomlevel;{cesium_legend:hide},cesium;'.
 //                                         '{protection_legend:hide},protect_baselayer;',
         'bing'                        => '{general_legend},name,display_name,provider,bing_style,bing_key,attribution,minzoomlevel,maxzoomlevel;{cesium_legend:hide},cesium;'.
@@ -446,6 +446,15 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] = array
         'protect_baselayer' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['protect_baselayer'],
+            'exclude'                 => true,
+            'default'                 => false,
+            'inputType'               => 'checkbox',
+            'eval'                    => array('submitOnChange' => true),
+            'sql'                     => "char(1) NOT NULL default ''"
+        ),
+        'hide_in_be' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['hide_in_be'],
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',

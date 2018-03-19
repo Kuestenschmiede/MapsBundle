@@ -10,6 +10,7 @@ namespace con4gis\MapsBundle\Controller;
 
 use con4gis\MapsBundle\Resources\contao\classes\GeoPicker;
 use con4gis\MapsBundle\Resources\contao\modules\api\BaseLayerApi;
+use con4gis\MapsBundle\Resources\contao\modules\api\BaseLayerTileApi;
 use con4gis\MapsBundle\Resources\contao\modules\api\EditorApi;
 use con4gis\MapsBundle\Resources\contao\modules\api\InfoWindowApi;
 use con4gis\MapsBundle\Resources\contao\modules\api\LayerApi;
@@ -82,6 +83,19 @@ class MapsController extends Controller
         }
 
         $response->setData($this->responseData);
+        return $response;
+    }
+    public function baseLayerTileAction(Request $request, $baseLayerId, $z, $x, $y)
+    {
+        $baseLayerTileApi = new BaseLayerTileApi();
+
+//        if (!self::$outputFromCache) {
+            $this->responseData = $baseLayerTileApi->generate($baseLayerId, $z, $x, $y);
+            //$this->storeDataInCache($request);
+//        }
+
+        $response = new Response($this->responseData);
+        //$response->headers->set('Content-Type', 'application/png');
         return $response;
     }
 

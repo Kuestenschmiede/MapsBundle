@@ -216,19 +216,40 @@ class BaseLayerApi extends \Frontend
                 $arrBaseLayer['url'] = 'https://api.mapbox.com/styles/v1/';
                 $arrBaseLayer['url_classic'] = 'https://api.tiles.mapbox.com/v4/';
                 $arrBaseLayer['mapbox_type'] = $objBaseLayer->mapbox_type;
-                $arrBaseLayer['app_id'] = $objBaseLayer->app_id;
-                $arrBaseLayer['api_key'] = $objBaseLayer->api_key;
+                if($objBaseLayer->hide_in_be)
+                {
+                    $arrBaseLayer['hide_in_be'] = $objBaseLayer->hide_in_be;
+                }
+                else
+                {
+                    $arrBaseLayer['app_id'] = $objBaseLayer->app_id;
+                    $arrBaseLayer['api_key'] = $objBaseLayer->api_key;
+                }
                 break;
             case 'here':
                 $arrBaseLayer['style'] = $objBaseLayer->here_type;
                 $arrBaseLayer['here_type'] = 'HERE';
-                $arrBaseLayer['app_id'] = $objBaseLayer->app_id;
-                $arrBaseLayer['api_key'] = $objBaseLayer->api_key;
+                if($objBaseLayer->hide_in_be)
+                {
+                    $arrBaseLayer['hide_in_be'] = $objBaseLayer->hide_in_be;
+                }
+                else
+                {
+                    $arrBaseLayer['app_id'] = $objBaseLayer->app_id;
+                    $arrBaseLayer['api_key'] = $objBaseLayer->api_key;
+                }
                 break;
             case 'thunder':
                 $arrBaseLayer['style'] = $objBaseLayer->thunderforest_type;
                 $arrBaseLayer['thunderforest_type'] = 'Thunderforest';
-                $arrBaseLayer['api_key'] = $objBaseLayer->api_key;
+                if($objBaseLayer->hide_in_be)
+                {
+                    $arrBaseLayer['hide_in_be'] = $objBaseLayer->hide_in_be;
+                }
+                else
+                {
+                    $arrBaseLayer['api_key'] = $objBaseLayer->api_key;
+                }
                 break;
             case 'google':
                 $arrBaseLayer['style'] = $objBaseLayer->google_style;

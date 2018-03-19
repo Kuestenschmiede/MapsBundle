@@ -1362,7 +1362,6 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
 
                 if (baseLayerConfig.mapbox_type === 'Mapbox') {
                   layerOptions.url = baseLayerConfig.url + baseLayerConfig.app_id + '/tiles/{z}/{x}/{y}?access_token=' + baseLayerConfig.api_key;
-
                   newBaselayer = new ol.layer.Tile({
                     source: new ol.source.XYZ($.extend(
                         mapboxSourceConfigs[baseLayerConfig.mapbox_type],
@@ -1378,7 +1377,15 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                     ))
                   });
                 }
-              } else {
+              }else if(baseLayerConfig.hide_in_be){
+                  layerOptions.url = "con4gis/baseLayerTileService/" + baseLayerConfig.id + "/{z}/{x}/{y}";
+                  newBaselayer = new ol.layer.Tile({
+                      source: new ol.source.XYZ($.extend(
+                          mapboxSourceConfigs[baseLayerConfig.mapbox_type],
+                          layerOptions))
+                  });
+              }
+              else {
                 console.warn('wrong mapbox configuration!');
               }
               break;
@@ -1415,7 +1422,16 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                       mapboxSourceConfigs[baseLayerConfig.here_type],
                       layerOptions))
                   });
-              } else {
+              }
+              else if(baseLayerConfig.hide_in_be){
+                  layerOptions.url = layerOptions.url = "con4gis/baseLayerTileService/" + baseLayerConfig.id + "/{z}/{x}/{y}";
+                  newBaselayer = new ol.layer.Tile({
+                      source: new ol.source.XYZ($.extend(
+                          mapboxSourceConfigs[baseLayerConfig.here_type],
+                          layerOptions))
+                  });
+              }
+              else {
                   console.warn('wrong HERE configuration!');
               }
               break;
@@ -1431,7 +1447,15 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                             mapboxSourceConfigs[baseLayerConfig.thunderforest_type],
                             layerOptions))
                     });
-                } else {
+                }else if(baseLayerConfig.hide_in_be){
+                    layerOptions.url = "con4gis/baseLayerTileService/" + baseLayerConfig.id + "/{z}/{x}/{y}";
+                    newBaselayer = new ol.layer.Tile({
+                        source: new ol.source.XYZ($.extend(
+                            mapboxSourceConfigs[baseLayerConfig.thunderforest_type],
+                            layerOptions))
+                    });
+                }
+                else {
                     console.warn('wrong Thunderforest configuration!');
                 }
                 break;

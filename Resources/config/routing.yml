@@ -7,6 +7,15 @@ baselayer_service:
     requirements:
         profileId: \d+
 
+baselayer_tile_service:
+    path: /con4gis/baseLayerTileService/{baseLayerId}/{z}/{x}/{y}
+    defaults:
+        _scope: frontend
+        _controller: "con4gisMapsBundle:Maps:baseLayerTile"
+    methods: [GET]
+    requirements:
+        baseLayerId: \d+
+
 layer_service:
     path: /con4gis/layerService/{mapId}
     defaults:
