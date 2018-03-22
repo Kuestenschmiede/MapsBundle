@@ -128,6 +128,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] = array
 //                                         '{protection_legend:hide},protect_baselayer;',
         'bing'                        => '{general_legend},name,display_name,provider,bing_style,bing_key,attribution,minzoomlevel,maxzoomlevel;{cesium_legend:hide},cesium;'.
                                          '{protection_legend:hide},protect_baselayer;',
+        'klokan'                      => '{general_legend},name,display_name,provider,klokan_type,url,api_key,attribution,minzoomlevel,maxzoomlevel;{cesium_legend:hide},cesium;'.
+                                         '{protection_legend:hide},protect_baselayer;',
         'wms'                         => '{general_legend},name,display_name,provider,wms_url,wms_params_layers,wms_params_version,wms_params_format,wms_params_transparent,wms_gutter,attribution,minzoomlevel,maxzoomlevel;{cesium_legend:hide},cesium;'.
                                          '{protection_legend:hide},protect_baselayer;',
         'owm'                         => '{general_legend},name,display_name,provider,app_id,api_key,attribution,minzoomlevel,maxzoomlevel;{cesium_legend:hide},cesium;'.
@@ -140,7 +142,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] = array
     // Subpalettes
     'subpalettes' => array
     (
-        'protect_baselayer'           => 'permitted_groups',
+        'protect_baselayer' => 'permitted_groups',
         'osm_style_Mapnik' => '',
         'osm_style_CycleMap' => '',
         'osm_style_German' => '',
@@ -208,6 +210,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] = array
                                                'thunder' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_thunderforest'],
                                                //'google' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_google'],
                                                'bing' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_bing'],
+                                               'klokan' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_klokan'],
                                                'wms' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_wms'],
                                               ),
             'eval'                    => array('submitOnChange'=>true, 'tl_class'=>'clr'),
@@ -283,7 +286,25 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] = array
             'default'                 => 'Mapbox',
             'options'                 => array(
                 'Mapbox'              => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapbox'],
-                'MapboxClassic'       => $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapbox_classic'],
+                'MapboxClassic'       => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapbox_classic'],
+            ),
+            'eval'                    => array('submitOnChange' => true),
+            'sql'                     => "varchar(30) NOT NULL default ''"
+        ),
+        'klokan_type' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['klokan_type'],
+            'filter'                  => false,
+            'inputType'               => 'select',
+            'default'                 => 'OpenMapTiles',
+            'options'                 => array(
+                'OpenMapTiles'        => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_klokan_openmaptiles'],
+                'basic'               => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_klokan_tilehosting_basic'],
+                'bright'              => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_klokan_tilehosting_bright'],
+                'darkmatter'          => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_klokan_tilehosting_darkmatter'],
+                'positron'            => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_klokan_tilehosting_positron'],
+                'streets'             => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_klokan_tilehosting_streets'],
+                'hybrid'              => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_klokan_tilehosting_hybrid'],
             ),
             'eval'                    => array('submitOnChange' => true),
             'sql'                     => "varchar(30) NOT NULL default ''"
@@ -295,12 +316,12 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] = array
             'inputType'               => 'select',
             'default'                 => 'normal',
             'options'                 => array(
-                'normal'              => $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_here_normal'],
-                'transit'             => $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_here_transit'],
-                'pedestrian'          => $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_here_pedestrian'],
-                'terrain'             => $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_here_terrain'],
-                'satellite'           => $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_here_satellite'],
-                'hybrid'              => $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_here_hybrid'],
+                'normal'              => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_here_normal'],
+                'transit'             => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_here_transit'],
+                'pedestrian'          => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_here_pedestrian'],
+                'terrain'             => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_here_terrain'],
+                'satellite'           => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_here_satellite'],
+                'hybrid'              => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_here_hybrid'],
             ),
             'eval'                    => array('submitOnChange' => false),
             'sql'                     => "varchar(30) NOT NULL default ''"
@@ -470,7 +491,14 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] = array
             'eval'                    => array('mandatory'=>false, 'multiple'=>true),
             'sql'                     => "blob NULL"
         ),
-
+        'url' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['url'],
+            'filter'                  => false,
+            'inputType'               => 'text',
+            'eval'                    => array('decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'long'),
+            'sql'                     => "varchar(255) NOT NULL default ''"
+        ),
         'api_key' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['api_key'],

@@ -226,6 +226,17 @@ class BaseLayerApi extends \Frontend
                     $arrBaseLayer['api_key'] = $objBaseLayer->api_key;
                 }
                 break;
+            case 'klokan':
+                $arrBaseLayer['url'] = $objBaseLayer->url;
+                $klokan_type = $objBaseLayer->klokan_type;
+                if ($klokan_type != 'OpenMapTiles') {
+                    $klokan_type = 'TileHosting';
+                }
+                $arrBaseLayer['style'] = $objBaseLayer->klokan_type;
+                $arrBaseLayer['klokan_type'] = $klokan_type;
+                $arrBaseLayer['app_id'] = $objBaseLayer->app_id;
+                $arrBaseLayer['api_key'] = $objBaseLayer->api_key;
+                break;
             case 'here':
                 $arrBaseLayer['style'] = $objBaseLayer->here_type;
                 $arrBaseLayer['here_type'] = 'HERE';
