@@ -92,6 +92,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_klokan_tilehosting_street
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_klokan_tilehosting_topo']  = 'Topo (www.tilehosting.com)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_klokan_tilehosting_hybrid']  = 'Satellite Hybrid (www.tilehosting.com)';
 
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['style_url'] = array('Manuelle Style-Url','Bitte geben Sie hier die Style_url für den eigenen Server ein');
+
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_here_normal']        = 'Normal (here.com)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_here_transit']       = 'Transit (here.com)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_here_pedestrian']    = 'Pedestrian (here.com)';

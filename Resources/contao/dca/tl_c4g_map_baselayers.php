@@ -113,7 +113,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] = array
     // Palettes
     'palettes' => array
     (
-        '__selector__'                => array('provider','osm_style','protect_baselayer'),
+        '__selector__'                => array('provider','osm_style','protect_baselayer','klokan_type'),
         'default'                     => '{general_legend},name,display_name,provider,attribution,minzoomlevel,maxzoomlevel;{cesium_legend:hide},cesium;'.
                                          '{protection_legend:hide},protect_baselayer;',
         'osm'                         => '{general_legend},name,display_name,provider,osm_style,attribution,minzoomlevel,maxzoomlevel;{cesium_legend:hide},cesium;'.
@@ -128,7 +128,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] = array
 //                                         '{protection_legend:hide},protect_baselayer;',
         'bing'                        => '{general_legend},name,display_name,provider,bing_style,bing_key,attribution,minzoomlevel,maxzoomlevel;{cesium_legend:hide},cesium;'.
                                          '{protection_legend:hide},protect_baselayer;',
-        'klokan'                      => '{general_legend},name,display_name,provider,klokan_type,url,api_key,attribution,minzoomlevel,maxzoomlevel;{cesium_legend:hide},cesium;'.
+        'klokan'                      => '{general_legend},name,display_name,provider,klokan_type,url,attribution,minzoomlevel,maxzoomlevel;{cesium_legend:hide},cesium;'.
                                          '{protection_legend:hide},protect_baselayer;',
         'wms'                         => '{general_legend},name,display_name,provider,wms_url,wms_params_layers,wms_params_version,wms_params_format,wms_params_transparent,wms_gutter,attribution,minzoomlevel,maxzoomlevel;{cesium_legend:hide},cesium;'.
                                          '{protection_legend:hide},protect_baselayer;',
@@ -154,8 +154,16 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] = array
         'osm_style_Terrain'=> '',
         'osm_style_Watercolor'=> '',
         'osm_style_osm_custom' => 'osm_style_url1,osm_style_url2,osm_style_url3,osm_style_url4,osm_keyname',
+        'klokan_type_OpenMapTiles' => 'style_url',
+        'klokan_type_basic'      => 'api_key',
+        'klokan_type_bright'      => 'api_key',
+        'klokan_type_darkmatter'      => 'api_key',
+        'klokan_type_positron'      => 'api_key',
+        'klokan_type_voyager'      => 'api_key',
+        'klokan_type_streets'      => 'api_key',
+        'klokan_type_topo'      => 'api_key',
+        'klokan_type_hybrid'      => 'api_key',
     ),
-
     // Fields
     'fields' => array
     (
@@ -309,6 +317,13 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] = array
                 'hybrid'              => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_klokan_tilehosting_hybrid'],
             ),
             'eval'                    => array('submitOnChange' => true),
+            'sql'                     => "varchar(30) NOT NULL default ''"
+        ),
+        'style_url' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['style_url'],
+            'inputType'               => 'text',
+            'default'                 => 'dark-matter',
             'sql'                     => "varchar(30) NOT NULL default ''"
         ),
         'here_type' => array

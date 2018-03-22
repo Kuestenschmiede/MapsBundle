@@ -35,6 +35,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['minzoomlevel']   		= array('Custom
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['maxzoomlevel']   		= array('Kirjoita custom maksimi zoomlevel tähän jos tarvitsee (19 tarkoittaa kartan maksimi zoomleveliä)');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['protect_baselayer'] 	= array('Protect API Key', 'Prevents the delivery of the API Key to the frontend. Requests to load baselayers are loaded over the own server (May slow loading of baselayer).');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['hide_in_be']       	= array('Protect this base layer', 'Make this base layer only visible to selected groups.');
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['style_url']           = array('Custom style-url','Please enter your custom style-url for the server');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['permitted_groups'] 	= array('Sallitut ryhmät', 'Ryhmät joille pohjakerros on näkyvissä.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['api_key']       		= array('Pääsy Token / API Avain', 'Aseta avain käyttäjätilillesi.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['app_id']       		= array('Style ID / Avain', 'Lisää avain hakemukseesi.');
