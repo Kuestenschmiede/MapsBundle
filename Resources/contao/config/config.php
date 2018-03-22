@@ -68,6 +68,19 @@ $GLOBALS['con4gis']['maps']['sourcetable']['tl_calendar_events_with_tags'] = arr
     'title'         => 'title',
     'tags'          => 'tags'
 );
+$GLOBALS['con4gis']['maps']['sourcetable']['tl_content'] = array
+(
+    'geox'          => 'c4g_loc_geox',
+    'geoy'          => 'c4g_loc_geoy',
+    'label'         => 'c4g_loc_label',
+    'locstyle'      => 'c4g_locstyle',
+    'tooltip'       => 'title',
+    'popup'         => '{{event::[id]}},[startDate:date]',
+    /** other example with start- and endDate ->
+     * 'popup'         => '{{event::[id]}},(,[startDate:date],-,[endDate:date],)',
+     */
+    'title'         => 'title'
+);
 
 
 

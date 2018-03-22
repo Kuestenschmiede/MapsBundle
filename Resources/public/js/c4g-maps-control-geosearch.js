@@ -818,6 +818,81 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                 } else {
                   mapView.setCenter(resultCoordinate);
                 }
+                var pixel = map.getPixelFromCoordinate(resultCoordinate);
+                var feature = map.forEachFeatureAtPixel(pixel,
+                      function (feature, layer) {
+                          return feature;
+                });
+                var layer = map.forEachFeatureAtPixel(pixel,
+                      function (feature, layer) {
+                          return layer;
+                });
+                var popupInfos ={};
+                if (feature && feature.get('popup')) {
+                      // single POI
+                      popupInfos = feature.get('popup');
+                } else if (layer && layer.popup) {
+                      popupInfos = layer.popup;
+                } else {
+                      feature = false;
+                }
+                  if (feature) {
+                      var geometry = feature.getGeometry();
+                      if (geometry instanceof ol.geom.Point) {
+                          var coord = geometry.getCoordinates();
+                      } else {
+                          var coord = resultCoordinate;
+                      }
+
+                      c4g.maps.popup.popup.setPosition(coord);
+                      if (popupInfos.content) {
+                          c4g.maps.popup.$content.html('');
+                          c4g.maps.popup.$popup.addClass(c4g.maps.constant.css.ACTIVE).addClass(c4g.maps.constant.css.LOADING);
+                          c4g.maps.popup.spinner.show();
+
+                          if (popupInfos.async === false || popupInfos.async == '0') {
+                              var objPopup = {};
+                              objPopup.popup = popupInfos;
+                              objPopup.feature = feature;
+                              objPopup.layer = layer;
+                              // Call the popup hook for plugin specific popup content
+                              if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.proxy_fillPopup === 'object') {
+                                  c4g.maps.utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
+                              }
+                              c4g.maps.mapController_10.proxy.setPopup(objPopup,c4g.maps.mapController_10.proxy);
+                          } else {
+                              $.ajax({
+                                  dataType: "json",
+                                  url: self.api_infowindow_url + '/' + popupInfos.content,
+                                  success: function (data) {
+                                      var popupInfo = {
+                                          async: popupInfos.async,
+                                          content: data.content,
+                                          popup: popupInfos.popup,
+                                          routing_link: popupInfos.routing_link
+                                      };
+
+                                      objPopup = {};
+                                      objPopup.popup = popupInfo;
+                                      objPopup.feature = feature;
+                                      objPopup.layer = layer;
+
+                                      // Call the popup hook for plugin specific popup content
+                                      if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.proxy_fillPopup === 'object') {
+                                          c4g.maps.utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
+                                      }
+
+                                      self.setPopup(objPopup,self);
+                                  }
+                              });
+                          }
+                      } else {
+                          c4g.maps.popup.$popup.removeClass(c4g.maps.constant.css.ACTIVE);
+                      }
+
+                  } else {
+                      c4g.maps.popup.$popup.removeClass(c4g.maps.constant.css.ACTIVE);
+                  }
 
                 if (self.config.autopick && self.config.mapController.geopicker && typeof self.config.mapController.geopicker.pick === 'function') {
                   self.config.mapController.geopicker.pick(resultCoordinate);

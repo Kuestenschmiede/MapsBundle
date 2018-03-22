@@ -97,7 +97,7 @@ class MapsController extends Controller
 //        }
 
         $response = new Response($this->responseData);
-        //$response->headers->set('Content-Type', 'application/png');
+        $response->headers->set('Content-Type', 'application/png');
         return $response;
     }
 

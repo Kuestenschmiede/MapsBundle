@@ -5,6 +5,14 @@ this.c4g.maps.backend = this.c4g.maps.backend || {};
 
 (function (c4g) {
   'use strict';
+  window.onload = function(){
+    var sortData =document.getElementsByClassName("btn primary");
+    for(var i = 0; i < sortData.length; i++){
+      alert(sortData[i].innerHTML);
+    }
+
+  };
+
 
   /**
    * c4gmaps helper functions
