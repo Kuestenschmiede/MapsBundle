@@ -150,6 +150,9 @@ this.c4g.maps.config = this.c4g.maps.config || {};
     c4g.maps.config.klokan = {
 
         OpenMapTiles: {
+            format: new ol.format.MVT(),
+            tileGrid:  ol.tilegrid.createXYZ({tileSize: 512, maxZoom: 22}), //ToDo maxZoom from configuration
+            tilePixelRatio: 8,
             attributions: '© <a target="_blank" href="https://openmaptiles.org/">OpenMapTiles</a>' + ' ' +
             ol.source.OSM.ATTRIBUTION,
             minZoom: 0,
@@ -158,7 +161,8 @@ this.c4g.maps.config = this.c4g.maps.config || {};
 
         TileHosting: {
             format: new ol.format.MVT(),
-            tileGrid:  ol.tilegrid.createXYZ({tileSize: 512, maxZoom: 22}),
+            tileGrid:  ol.tilegrid.createXYZ({tileSize: 512, maxZoom: 22}), //ToDo maxZoom from configuration
+            tilePixelRatio: 8,
             attributions: '© <a target="_blank" href="https://tilehosting.com/">TileHosting</a>' + ' ' +
             ol.source.OSM.ATTRIBUTION,
             minZoom: 0,
