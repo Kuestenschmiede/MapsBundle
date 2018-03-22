@@ -1395,26 +1395,35 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
               }
               break;
             case 'klokan':
-                //ToDo not ready
                 if (baseLayerConfig.api_key && baseLayerConfig.klokan_type) {
 
                     if (baseLayerConfig.klokan_type === 'OpenMapTiles') {
-                        layerOptions.url = baseLayerConfig.url + '/data/v3/{z}/{x}/{y}.pbf?key='+baseLayerConfig.api_key;
-
-                        newBaselayer = new ol.layer.Tile({
-                            source: new ol.source.XYZ($.extend(
-                                klokanSourceConfigs[baseLayerConfig.klokan_type],
-                                layerOptions))
-                        });
-                    } else {
-                        layerOptions.url = baseLayerConfig.url + '/styles/'+baseLayerConfig.style+'/style.json?key='+baseLayerConfig.api_key;
-
+                        layerOptions.url = baseLayerConfig.url + '{z}/{x}/{y}.pbf';
                         newBaselayer = new ol.layer.VectorTile({
                             source: new ol.source.VectorTile($.extend(
                                 klokanSourceConfigs[baseLayerConfig.klokan_type],
                                 layerOptions))
                         });
 
+                        //ToDo style url
+                        fetch(baseLayerConfig.url + '/styles/'+baseLayerConfig.style+'/style.json').then(function(response) {
+                            response.json().then(function(glStyle) {
+                                olms.applyStyle(newBaselayer, glStyle, 'openmaptiles');
+                            });
+                        });
+                    } else {
+                        layerOptions.url = baseLayerConfig.url + '/data/v3/{z}/{x}/{y}.pbf?key='+baseLayerConfig.api_key;
+                        newBaselayer = new ol.layer.VectorTile({
+                            source: new ol.source.VectorTile($.extend(
+                                klokanSourceConfigs[baseLayerConfig.klokan_type],
+                                layerOptions))
+                        });
+
+                        fetch(baseLayerConfig.url + '/styles/'+baseLayerConfig.style+'/style.json?key='+baseLayerConfig.api_key).then(function(response) {
+                            response.json().then(function(glStyle) {
+                                olms.applyStyle(newBaselayer, glStyle, 'openmaptiles');
+                            });
+                        });
                     }
                 } else {
                     console.warn('wrong klokan configuration!');

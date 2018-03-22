@@ -69,7 +69,8 @@ class ResourceLoader extends coreResourceLoader
             'infopage' => $allByDefault,
             'plugins' => $allByDefault,
             'customtab' => $allByDefault,
-            'cesium' => $allByDefault
+            'cesium' => $allByDefault,
+            'olms' => $allByDefault,
         ),
         $resources);
 
@@ -87,12 +88,15 @@ class ResourceLoader extends coreResourceLoader
         // third-party scripts
         if ($resources['openlayers']) {
             parent::loadJavaScriptRessource('openlayers', self::VENDOR_PATH . 'OpenLayers-' . $GLOBALS['con4gis']['maps']['ol-version'] . '/ol' . $suffixOl . '.js');
-            parent::loadJavaScriptRessource('olms', self::VENDOR_PATH . 'olms/olms.js');
         }
 
         if ($resources['cesium']) {
             parent::loadJavaScriptRessource('cesium', self::VENDOR_PATH . 'ol-cesium-'.$GLOBALS['con4gis']['maps']['ol-cesium-version'].'/Cesium/Cesium.js');
             parent::loadJavaScriptRessource('olcesium', self::VENDOR_PATH . 'ol-cesium-'.$GLOBALS['con4gis']['maps']['ol-cesium-version'].'/olcesium' . $suffixCesium . '.js');
+        }
+
+        if ($resources['olms']) {
+            parent::loadJavaScriptRessource('olms', self::VENDOR_PATH . 'ol-mapbox-style-'.$GLOBALS['con4gis']['maps']['olms-version'].'/olms.js');
         }
 
         // core scripts (1|2)
@@ -271,7 +275,8 @@ class ResourceLoader extends coreResourceLoader
             // @TODO BE-Switch?
             'plugins' => true,
             'customtab' => true,
-            'cesium' => $profile->cesium
+            'cesium' => $profile->cesium,
+            'olms' => true //ToDo basemap check
         );
 
         // load theme
