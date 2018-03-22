@@ -26,6 +26,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['osm_style_url4'] 			= array('OSM U
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['osm_style_zoomlevels']  	= array('OSM Zoom-Stufen', 'Bitte geben Sie die Anzahl der verfügbaren Zoom-Stufen des OpenStreetMap-Kartenstils an (optional).');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['osm_keyname']    			= array('OSM Keyname', 'Bitte geben Sie den internen OSM Keyname an (optional).');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['mapbox_type']   			= array('Mapbox API', 'Bitte wählen Sie die Mapbox API Version aus.');
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['klokan_type']   			= array('Klokan API', 'Bitte wählen Sie die Klokan API Version aus.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['here_type']   			= array('HERE', 'Bitte wählen Sie den Kartenstil aus.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['thunderforest_type']      = array('Thunderforest', 'Bitte wählen Sie den Kartenstil aus.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['bing_style']     			= array('Bing Maps Kartenstil', 'Bitte wählen Sie den Kartenstil von Bing Maps aus.');
@@ -37,6 +38,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['maxzoomlevel']   			= array('Benut
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['protect_baselayer'] 		= array('Diese Basiskarte schützen', 'Macht diese Basiskarte nur für ausgewählte Gruppen sichtbar.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['hide_in_be']       		= array('API-Key schützen', 'API-Keys werden nicht ans Frontend ausgeliefert und die Anfrage zur Basiskarte wird über den eigenen Server geleitet (Kann das Laden des Layers verlangsamen).');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['permitted_groups'] 		= array('Berechtigte Gruppen', 'Die Gruppen, für die diese Basiskarte sichtbar ist.');
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['url'] 	        		= array('URL', 'Geben Sie die Serveradresse ein.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['api_key']       			= array('Access Token / API Key', 'Bitte geben Sie hier den Schlüssel zu Ihrem Nutzerkonto an.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['app_id']       			= array('Style ID / Anwendungsschlüssel', 'Bitte geben Sie hier den Identifikationsschlüssel für Ihre Voreinstellungen an (z.B. bei Mapbox kontoname/style).');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['cesium']                  = array('Cesium einschalten', 'Wenn im Kartenrofil Cesium aktiviert ist, kann über diesen Schalter eine einzelne Basikarte als Globus dargestellt werden.');
@@ -58,6 +60,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapbox'] = 'Mapbox';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_thunderforest'] = 'Thunderforest';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_google'] = 'Google Maps';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_bing']   = 'Bing Maps';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_klokan'] = 'Klokan';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_wms']    = 'WMS';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_owm']    = 'OpenWeatherMap';
 
@@ -78,6 +81,14 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm_custom'] 			= 'Benutz
 
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapbox']             = 'Mapbox Studio Style bzw. style url (mapbox.com)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapbox_classic']     = 'Mapbox Studio Classic, Editor bzw. map ID (mapbox.com)';
+
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_klokan_openmaptiles'] = 'OpenMapTiles (www.openmaptiles.org)';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_klokan_tilehosting_basic']  = 'KlokanTech Basic (www.tilehosting.com)';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_klokan_tilehosting_bright'] = 'OSM Bright (www.tilehosting.com)';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_klokan_tilehosting_darkmatter']  = 'Dark Matter (www.tilehosting.com)';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_klokan_tilehosting_positron']  = 'Positron (www.tilehosting.com)';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_klokan_tilehosting_streets']  = 'KlokanTech Streets (www.tilehosting.com)';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_klokan_tilehosting_hybrid']  = 'KlokanTech Satellite Hybrid (www.tilehosting.com)';
 
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_here_normal']        = 'Normal (here.com)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_here_transit']       = 'Transit (here.com)';

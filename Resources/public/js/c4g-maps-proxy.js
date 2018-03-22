@@ -1157,6 +1157,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
           stamenSourceConfigs,
           //mapQuestSourceConfigs,
           mapboxSourceConfigs,
+          klokanSourceConfigs,
           hereSourceConfigs,
           thunderforestSourceConfigs,
           newBaselayer,
@@ -1178,6 +1179,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
         stamenSourceConfigs = c4g.maps.config.stamen;
         //mapQuestSourceConfigs = c4g.maps.config.mapquest;
         mapboxSourceConfigs = c4g.maps.config.mapbox;
+        klokanSourceConfigs = c4g.maps.config.klokan;
         hereSourceConfigs = c4g.maps.config.here;
         thunderforestSourceConfigs = c4g.maps.config.thunderforest;
 
@@ -1210,6 +1212,9 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
               break;
             case 'mapbox':
               layerOptions.attributions = mapboxSourceConfigs[baseLayerConfig.mapbox_type].attributions;
+              break;
+            case 'klokan':
+              layerOptions.attributions = klokanSourceConfigs[baseLayerConfig.klokan_type].attributions;
               break;
             case 'here':
               layerOptions.attributions = hereSourceConfigs[baseLayerConfig.here_type].attributions;
@@ -1389,6 +1394,32 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                 console.warn('wrong mapbox configuration!');
               }
               break;
+            case 'klokan':
+                //ToDo not ready
+                if (baseLayerConfig.api_key && baseLayerConfig.klokan_type) {
+
+                    if (baseLayerConfig.klokan_type === 'OpenMapTiles') {
+                        layerOptions.url = baseLayerConfig.url + '/data/v3/{z}/{x}/{y}.pbf?key='+baseLayerConfig.api_key;
+
+                        newBaselayer = new ol.layer.Tile({
+                            source: new ol.source.XYZ($.extend(
+                                klokanSourceConfigs[baseLayerConfig.klokan_type],
+                                layerOptions))
+                        });
+                    } else {
+                        layerOptions.url = baseLayerConfig.url + '/styles/'+baseLayerConfig.style+'/style.json?key='+baseLayerConfig.api_key;
+
+                        newBaselayer = new ol.layer.VectorTile({
+                            source: new ol.source.VectorTile($.extend(
+                                klokanSourceConfigs[baseLayerConfig.klokan_type],
+                                layerOptions))
+                        });
+
+                    }
+                } else {
+                    console.warn('wrong klokan configuration!');
+                }
+                break;
             case 'here':
               if (baseLayerConfig.api_key && baseLayerConfig.app_id && baseLayerConfig.here_type) {
 
@@ -1419,7 +1450,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
 
                   newBaselayer = new ol.layer.Tile({
                   source: new ol.source.XYZ($.extend(
-                      mapboxSourceConfigs[baseLayerConfig.here_type],
+                      hereSourceConfigs[baseLayerConfig.here_type],
                       layerOptions))
                   });
               }
@@ -1444,7 +1475,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
 
                     newBaselayer = new ol.layer.Tile({
                         source: new ol.source.XYZ($.extend(
-                            mapboxSourceConfigs[baseLayerConfig.thunderforest_type],
+                            thunderforestSourceConfigs[baseLayerConfig.thunderforest_type],
                             layerOptions))
                     });
                 }else if(baseLayerConfig.hide_in_be){
