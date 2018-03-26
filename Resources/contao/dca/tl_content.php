@@ -220,7 +220,7 @@ class tl_content_c4g_maps extends Backend
     {
         if ($varValue != 0)
         {
-            if (!Utils::validateLon($varValue))
+            if (!\con4gis\MapsBundle\Resources\contao\classes\Utils::validateLon($varValue))
             {
                 throw new \Exception($GLOBALS['TL_LANG']['c4g_maps']['geox_invalid']);
             }
@@ -235,7 +235,7 @@ class tl_content_c4g_maps extends Backend
     {
         if ($varValue != 0)
         {
-            if (!Utils::validateLat($varValue))
+            if (!\con4gis\MapsBundle\Resources\contao\classes\Utils::validateLat($varValue))
             {
                 throw new \Exception($GLOBALS['TL_LANG']['c4g_maps']['geoy_invalid']);
             }

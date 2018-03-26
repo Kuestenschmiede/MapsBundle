@@ -13,7 +13,7 @@
 
 
 $GLOBALS['con4gis']['maps']['installed'] = true;
-$GLOBALS['con4gis']['maps']['debug'] = true;
+$GLOBALS['con4gis']['maps']['debug'] = false;
 $GLOBALS['con4gis']['maps']['ol-version'] = '4.6.5';
 $GLOBALS['con4gis']['maps']['ol-cesium-version'] = 'v1.35';
 $GLOBALS['con4gis']['maps']['olms-version'] = '2.10.4';
@@ -74,7 +74,22 @@ $GLOBALS['con4gis']['maps']['sourcetable']['tl_content'] = array
     'geoy'          => 'c4g_loc_geoy',
     'label'         => 'c4g_loc_label',
     'locstyle'      => 'c4g_locstyle',
-    'tooltip'       => 'title',
+    'tooltip'       => 'headline',
+    'popup'         => '{{event::[id]}},[startDate:date]',
+    /** other example with start- and endDate ->
+     * 'popup'         => '{{event::[id]}},(,[startDate:date],-,[endDate:date],)',
+     */
+    'title'         => 'title'
+);
+$GLOBALS['con4gis']['maps']['sourcetable']['tl_content_with_tags'] = array
+(
+    'ctable'        => 'tl_tag',
+    'ctable_option' => 'tag',
+    'geox'          => 'c4g_loc_geox',
+    'geoy'          => 'c4g_loc_geoy',
+    'label'         => 'c4g_loc_label',
+    'locstyle'      => 'c4g_locstyle',
+    'tooltip'       => 'headline',
     'popup'         => '{{event::[id]}},[startDate:date]',
     /** other example with start- and endDate ->
      * 'popup'         => '{{event::[id]}},(,[startDate:date],-,[endDate:date],)',

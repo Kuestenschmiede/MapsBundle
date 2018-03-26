@@ -18,6 +18,8 @@ use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
 use con4gis\CoreBundle\Resources\contao\classes\HttpResultHelper;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapLocstylesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
+use Contao\ContentModel;
+use Contao\Controller;
 use Contao\StringUtil;
 
 if (!defined('TL_ROOT')) die('You cannot access this file directly!');
@@ -305,7 +307,7 @@ class LayerContentApi extends \Controller
                 $qIn = '';
 
                 $arrConfig = $GLOBALS['con4gis']['maps']['sourcetable'][$sourceTable];
-                if($GLOBALS['BE_FFL']['tag'])
+                if($GLOBALS['BE_FFL']['tag'] && $GLOBALS['con4gis']['maps']['sourcetable'][$sourceTable.'_with_tags'])
                 {
                     $arrConfig = $GLOBALS['con4gis']['maps']['sourcetable'][$sourceTable.'_with_tags'];
                 }
@@ -324,11 +326,17 @@ class LayerContentApi extends \Controller
                         $idsfromChild = \Database::getInstance()->prepare($sqlquery)->execute($child[$arrConfig['ctable_option']])->fetchAllAssoc();
 
                         if ($idsfromChild && count($idsfromChild) > 0) {
-                            $qIn .= ' AND id IN(';
+                            $qIn .= ' id IN(';
                             foreach($idsfromChild as $value){
                                 $qIn .= $value['tid'] . ',';
                             }
                             $qIn = rtrim($qIn,',') . ')';
+                            if(!$qWhere){
+                                $qWhere= " WHERE ";
+                            }
+                            else{
+                                $qAndIn = " AND ";
+                            }
                         }
                     }
                 }
@@ -408,7 +416,7 @@ class LayerContentApi extends \Controller
                 }
 
                 if ($sourceTable) {
-                    $query = "SELECT * FROM `$sourceTable`". $qWhere . $pidOption . $qAnd . $whereClause . $addBeWhereClause  . $qIn. $stmt;
+                    $query = "SELECT * FROM `$sourceTable`". $qWhere . $pidOption . $qAnd . $whereClause . $addBeWhereClause . $qAndIn . $qIn. $stmt;
                     $result = \Database::getInstance()->prepare($query)->execute();
                 }
 
@@ -651,10 +659,10 @@ class LayerContentApi extends \Controller
                                         'projection' => 'EPSG:4326',
                                         'popup' => array(
                                             'async' => false,
-                                            'content' =>  $popupContent,
+                                            'content' =>  Controller::getContentElement($result->id) ? Controller::getContentElement($result->id) : $popupContent,
                                             'routing_link' => $objLayer->routing_to
                                         ),
-                                        'tooltip' =>  \Contao\Controller::replaceInsertTags($result->$tooltipField),
+                                        'tooltip' =>  unserialize($result->$tooltipField)['value']? unserialize($result->$tooltipField)['value']:\Contao\Controller::replaceInsertTags($result->$tooltipField),
                                         "tooltip_length" => $objLayer->tooltip_length,
                                         'label' =>  \Contao\Controller::replaceInsertTags($result->$labelField),
                                         'zoom_onclick' => $objLayer -> loc_onclick_zoomto
