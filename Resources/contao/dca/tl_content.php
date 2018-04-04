@@ -87,7 +87,7 @@ if (@class_exists("tl_content")) {
         try {
            PaletteManipulator::create()
                 ->addLegend('c4g_maps_legend', 'expert_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_BEFORE)
-                ->addField(array('c4g_loc_geox', 'c4g_loc_geoy', 'c4g_loc_label', 'c4g_locstyle'), 'c4g_maps_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_APPEND)
+                ->addField(array('c4g_loc_geox', 'c4g_loc_geoy', 'c4g_loc_tooltip', 'c4g_loc_label', 'c4g_locstyle'), 'c4g_maps_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_APPEND)
                 ->applyToPalette('text', 'tl_content');
             error_log('try');
         } catch (\Exception $e) {
@@ -115,6 +115,15 @@ if (@class_exists("tl_content")) {
             'save_callback' => array(array('tl_content_c4g_maps', 'setLocLat')),
             'wizard' => array(array('\con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink')),
             'sql' => "varchar(20) NOT NULL default ''"
+        );
+
+        $GLOBALS['TL_DCA']['tl_content']['fields']['c4g_loc_tooltip'] = array
+        (
+            'label' => &$GLOBALS['TL_LANG']['tl_content']['c4g_loc_tooltip'],
+            'exclude' => true,
+            'inputType' => 'text',
+            'eval' => array('tl_class' => 'clr'),
+            'sql' => "varchar(254) NOT NULL default ''"
         );
 
         $GLOBALS['TL_DCA']['tl_content']['fields']['c4g_loc_label'] = array

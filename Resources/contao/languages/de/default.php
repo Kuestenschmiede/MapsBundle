@@ -20,6 +20,10 @@ $GLOBALS['TL_LANG']['c4g_maps']['sourcetable']['tl_calendar_events']['name'] 		=
 $GLOBALS['TL_LANG']['c4g_maps']['sourcetable']['tl_calendar_events']['parent'] 		= 'Kalender';
 $GLOBALS['TL_LANG']['c4g_maps']['sourcetable']['tl_calendar_events_with_tags']['name'] = 'Events mit Tags';
 $GLOBALS['TL_LANG']['c4g_maps']['sourcetable']['tl_calendar_events_with_tags']['parent'] = 'Kalender mit Tags';
+$GLOBALS['TL_LANG']['c4g_maps']['sourcetable']['tl_content']['name'] 		= 'Inhaltselemente';
+$GLOBALS['TL_LANG']['c4g_maps']['sourcetable']['tl_content']['parent'] 		= 'Artikel';
+$GLOBALS['TL_LANG']['c4g_maps']['sourcetable']['tl_content_with_tags']['name'] = 'Inhaltselemente mit Tags';
+$GLOBALS['TL_LANG']['c4g_maps']['sourcetable']['tl_content_with_tags']['parent'] = 'Artikel mit Tags';
 $GLOBALS['TL_LANG']['c4g_maps']['sourcetable']['tl_member']['name']                 = 'Mitglieder';
 
 $GLOBALS['TL_LANG']['c4g_maps']['geox_invalid'] 		= 'Wert zwischen -180.0 und 180.0 erwartet!';

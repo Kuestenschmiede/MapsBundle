@@ -20,6 +20,10 @@ $GLOBALS['TL_LANG']['c4g_maps']['sourcetable']['tl_calendar_events']['name'] 	= 
 $GLOBALS['TL_LANG']['c4g_maps']['sourcetable']['tl_calendar_events']['parent'] 	= 'Calendar';
 $GLOBALS['TL_LANG']['c4g_maps']['sourcetable']['tl_calendar_events_with_tags']['name'] = 'Events with tags';
 $GLOBALS['TL_LANG']['c4g_maps']['sourcetable']['tl_calendar_events_with_tags']['parent'] = 'Calendar with tags';
+$GLOBALS['TL_LANG']['c4g_maps']['sourcetable']['tl_content']['name'] 		= 'Content elements';
+$GLOBALS['TL_LANG']['c4g_maps']['sourcetable']['tl_content']['parent'] 		= 'Article';
+/*$GLOBALS['TL_LANG']['c4g_maps']['sourcetable']['tl_content_with_tags']['name'] = 'Content elements with tags';
+$GLOBALS['TL_LANG']['c4g_maps']['sourcetable']['tl_content_with_tags']['parent'] = 'Article with tags';*/
 $GLOBALS['TL_LANG']['c4g_maps']['sourcetable']['tl_member']['name'] 	= 'Members';
 
 $GLOBALS['TL_LANG']['c4g_maps']['geox_invalid'] 		= 'Value between -180.0 and 180.0 expected!';

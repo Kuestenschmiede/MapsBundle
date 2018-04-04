@@ -23,6 +23,7 @@ $GLOBALS['TL_LANG']['tl_content']['c4g_map_zoom'] = array('Zoomlevel', 'Custom z
 $GLOBALS['TL_LANG']['tl_content']['c4g_map_default_mapservice'] = array('Default base layer', 'Choose from the available base layers, which are defined at the map profile of the chosen map. If none is defined, OpenStreetMap Mapnik is taken by default.');
 $GLOBALS['TL_LANG']['tl_content']['c4g_loc_geox'] = array('GEO latitude', 'Enter the GEO X-coordinate (latitude, WGS-84) of the location.');
 $GLOBALS['TL_LANG']['tl_content']['c4g_loc_geoy'] = array('GEO longitude', 'Enter the GEO Y-coordinate (longitude, WGS-84) of the location.');
+$GLOBALS['TL_LANG']['tl_content']['c4g_loc_tooltip']  = array('Tooltip', 'Shows this text as tooltip.');
 $GLOBALS['TL_LANG']['tl_content']['c4g_loc_label'] = array('Label', 'Enter a label, which is to be displayed near the location of the map.');
 $GLOBALS['TL_LANG']['tl_content']['c4g_locstyle'] = array('Location style', 'Select a location style from the list, which is defined on map profile level. In case you don\'t define a style here it is taken from the map entry.');
 

@@ -74,13 +74,11 @@ $GLOBALS['con4gis']['maps']['sourcetable']['tl_content'] = array
     'geoy'          => 'c4g_loc_geoy',
     'label'         => 'c4g_loc_label',
     'locstyle'      => 'c4g_locstyle',
-    'tooltip'       => 'headline',
+    'tooltip'       => 'c4g_loc_tooltip',
     'popup'         => '{{event::[id]}},[startDate:date]',
-    /** other example with start- and endDate ->
-     * 'popup'         => '{{event::[id]}},(,[startDate:date],-,[endDate:date],)',
-     */
     'title'         => 'title'
 );
+/*
 $GLOBALS['con4gis']['maps']['sourcetable']['tl_content_with_tags'] = array
 (
     'ctable'        => 'tl_tag',
@@ -91,11 +89,8 @@ $GLOBALS['con4gis']['maps']['sourcetable']['tl_content_with_tags'] = array
     'locstyle'      => 'c4g_locstyle',
     'tooltip'       => 'headline',
     'popup'         => '{{event::[id]}},[startDate:date]',
-    /** other example with start- and endDate ->
-     * 'popup'         => '{{event::[id]}},(,[startDate:date],-,[endDate:date],)',
-     */
     'title'         => 'title'
-);
+);*/
 
 
 
