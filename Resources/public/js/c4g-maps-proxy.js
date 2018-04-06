@@ -1769,7 +1769,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
 
       if (c4g.maps.layers[itemUid].content) {
         layers = [];
-          if(c4g.maps.layers[itemUid].async_content){
+          if(c4g.maps.layers[itemUid].async_content == 1){
               styleForCluster = function(feature, resolution){
                   var styleId,
                       style,
