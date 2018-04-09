@@ -36,10 +36,12 @@
  *  Tooltips
  */
 .ol-control button[title]:after {
+  display: none;
   text-shadow: 0 0 2px #fff;
 }
 .ol-control button[title]:focus:after,
 .ol-control button[title]:hover:after {
+  display: none;
   background: #fff;
   background: rgba(255,255,255,.6);
   color: #000;
