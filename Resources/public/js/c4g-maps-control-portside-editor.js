@@ -1319,7 +1319,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
           if (features[i].getGeometry() instanceof ol.geom.Point) {
             points.push(features[i]);
           } else if (features[i].getGeometry() instanceof ol.geom.LineString) {
-            if (features.options.type.toLowerCase() == 'freehand') {
+            if (features.options && features.options.type && features.options.type.toLowerCase() == 'freehand') {
                 freehand.push(features[i]);
             } else {
                 lines.push(features[i]);

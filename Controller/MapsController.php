@@ -8,6 +8,7 @@
 
 namespace con4gis\MapsBundle\Controller;
 
+use con4gis\MapsBundle\Resources\contao\classes\GeoEditor;
 use con4gis\MapsBundle\Resources\contao\classes\GeoPicker;
 use con4gis\MapsBundle\Resources\contao\modules\api\BaseLayerApi;
 use con4gis\MapsBundle\Resources\contao\modules\api\BaseLayerTileApi;
@@ -146,6 +147,14 @@ class MapsController extends Controller
         $editorApi = new EditorApi();
         $returnData = $editorApi->generate($profileId);
         $response->setData($returnData);
+        return $response;
+
+    }
+    public function beEditorAction(Request $request)
+    {
+        $geopicker = new GeoEditor();
+        $strResponse = $geopicker->run();
+        $response = new Response($strResponse['data'], 200, array('Content-Type: Document'));
         return $response;
     }
 
