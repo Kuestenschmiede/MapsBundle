@@ -75,7 +75,6 @@ $GLOBALS['con4gis']['maps']['sourcetable']['tl_content'] = array
     'label'         => 'c4g_loc_label',
     'locstyle'      => 'c4g_locstyle',
     'tooltip'       => 'c4g_loc_tooltip',
-    'popup'         => '{{event::[id]}},[startDate:date]',
     'title'         => 'title'
 );
 /*

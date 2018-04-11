@@ -659,12 +659,12 @@ class LayerContentApi extends \Controller
                                         'projection' => 'EPSG:4326',
                                         'popup' => array(
                                             'async' => false,
-                                            'content' =>  Controller::getContentElement($result->id) ? Controller::getContentElement($result->id) : $popupContent,
+                                            'content' =>  Controller::getContentElement($result->id) ? Controller::replaceInsertTags(Controller::getContentElement($result->id)) : $popupContent,
                                             'routing_link' => $objLayer->routing_to
                                         ),
                                         'tooltip' =>  unserialize($result->$tooltipField)['value']? unserialize($result->$tooltipField)['value']:\Contao\Controller::replaceInsertTags($result->$tooltipField),
                                         "tooltip_length" => $objLayer->tooltip_length,
-                                        'label' =>  \Contao\Controller::replaceInsertTags($result->$labelField),
+                                        'label' =>  Controller::replaceInsertTags($result->$labelField),
                                         'zoom_onclick' => $objLayer -> loc_onclick_zoomto
                                     ),
                                 ),

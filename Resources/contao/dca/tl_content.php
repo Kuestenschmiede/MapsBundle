@@ -88,7 +88,10 @@ if (@class_exists("tl_content")) {
            PaletteManipulator::create()
                 ->addLegend('c4g_maps_legend', 'expert_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_BEFORE)
                 ->addField(array('c4g_loc_geox', 'c4g_loc_geoy', 'c4g_loc_tooltip', 'c4g_loc_label', 'c4g_locstyle'), 'c4g_maps_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_APPEND)
-                ->applyToPalette('text', 'tl_content');
+                ->applyToPalette('text', 'tl_content')
+                ->applyToPalette('html', 'tl_content')
+                ->applyToPalette('module', 'tl_content')
+                ->applyToPalette('youtube', 'tl_content');
             error_log('try');
         } catch (\Exception $e) {
             error_log('catch');
