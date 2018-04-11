@@ -633,6 +633,8 @@ class LayerContentApi extends \Controller
 
 
                         if(!$event){
+                            $popupContent =Controller::getContentElement($result->id) ? Controller::replaceInsertTags(Controller::getContentElement($result->id)) : $popupContent;
+                            $popupContent = str_replace('TL_FILES_URL','',$popupContent);
                             $arrReturnData[] = array
                             (
                                 "id" => $result->id,
@@ -659,7 +661,7 @@ class LayerContentApi extends \Controller
                                         'projection' => 'EPSG:4326',
                                         'popup' => array(
                                             'async' => false,
-                                            'content' =>  Controller::getContentElement($result->id) ? Controller::replaceInsertTags(Controller::getContentElement($result->id)) : $popupContent,
+                                            'content' =>  $popupContent,
                                             'routing_link' => $objLayer->routing_to
                                         ),
                                         'tooltip' =>  unserialize($result->$tooltipField)['value']? unserialize($result->$tooltipField)['value']:\Contao\Controller::replaceInsertTags($result->$tooltipField),
