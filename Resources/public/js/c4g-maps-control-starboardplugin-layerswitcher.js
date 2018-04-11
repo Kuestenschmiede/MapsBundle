@@ -665,6 +665,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
       } else {
         $(entry).css('font-weight', 'normal');
       }
+      this.starboard.update();
       return true;
     },
 
