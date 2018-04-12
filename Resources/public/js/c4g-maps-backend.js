@@ -49,7 +49,7 @@ this.c4g.maps.backend = this.c4g.maps.backend || {};
 
       options.url = href;
 
-      minWidth = 768;
+      minWidth = 360;
       maxWidth = (window.getSize().x - 50).toInt();
       if (!options.width || options.width > maxWidth || options.width < minWidth) {
         options.width = (maxWidth >= minWidth) ? maxWidth : minWidth;
@@ -113,7 +113,7 @@ this.c4g.maps.backend = this.c4g.maps.backend || {};
       options = opt_options || {};
 
       options.url = href;
-      options.width = '768';
+      options.width = '360';
 
       max = (window.getSize().y - 180).toInt();
       if (!options.height || options.height > max) {
