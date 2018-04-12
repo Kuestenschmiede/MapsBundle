@@ -75,6 +75,13 @@
   width: 1.375em;
   line-height: .5em;
 }
+.ol-control button[title]:after {
+  display: none;
+}
+.ol-control button[title]:focus:after,
+.ol-control button[title]:hover:after {
+  display: none;
+}
 
 /*
  *  Control-container
