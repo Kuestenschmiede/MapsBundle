@@ -80,7 +80,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['ovp_request'] = array('Anfrage an Overpass A
 $GLOBALS['TL_LANG']['tl_c4g_maps']['ovp_bbox_limited'] = array('Anfrage an Overpass API auf den angezeigten Kartenbereich (BBOX) beschränken.', 'Sendet die Anfrage immer, wenn sich der Kartenausschnitt durch Benutzereingaben ändert. In der Anfrage muss an geeigneter Stelle der Platzhalter "(bbox)" eingetragen sein. Dieser wird dann durch ein "bbox-query"-Tag ersetzt.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['data_layername'] = array('Bezeichnung im Starboard', 'Falls Sie die Daten dieser Ebene im Starboard schaltbar machen möchten, dann geben Sie hier den Namen ein, der im Starboard angezeigt werden soll.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['hide_child'] = array('Kinder im Starboard ausblenden', 'Untergeordnete Kartenstrukturelemente werden im Starboard ausegblendet. Sie werden als Kinder dieses Elements aktivert und deaktiviert.');
-$GLOBALS['TL_LANG']['tl_c4g_maps']['data_hidelayer'] = array('Ebene standardmäßig ausblenden', 'Falls diese Ebene beim Einstieg in die Karte nicht angezeigt werden soll, dann setzen Sie diese Checkbox. Die Ebene ist dann nur über das Starboard auswählbar.');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['data_hidelayer'] = array('Initial ausblenden', 'Falls dieses Element initial in der Karte nicht angezeigt werden soll, dann setzen Sie die Checkbox. Die Ebene wird dann erst nach Aktivierung im Starboard auf der Karte sichtbar.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['showPopupOnActive'] = array('Popup bei aktiver Ebene einschalten', 'Automatische Aktivierung des Popups bei aktivierter Ebene.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['forums'] = array('Diskussionsforen','Wählen Sie aus den Diskussionsforen, in denen Kartenlokationen definiert werden können, diejenigen aus, die Sie berücksichtigen möchten.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['forum_jumpto'] = array('Weiterleitungsseite mit Forum','Wählen Sie hier die Seite aus, die Ihr con4gis-Forum-Frontendmodul enthält, falls Sie Links auf Themen und Beiträge im Forum aktiviert haben.');
@@ -110,7 +110,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['hover_style'] = array('Lokationsstil bei Hov
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popupType'] = array("Art der Popup-Generierung","Art der Popup-Generierung");
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popupTemplate'] = array("Popup Template","Popupinformationen aus einem Template laden");
 $GLOBALS['TL_LANG']['tl_c4g_maps']['awesomeicon'] = array("Icon für den Reiter", "Hier können Sie einen Unicode eingeben, der in ein Awesome-Font Icon umgewandelt wird (http://fontawesome.io/icons/).");
-$GLOBALS['TL_LANG']['tl_c4g_maps']['hide_when_in_tab'] = array("Ausblenden wenn in Starboard-Reiter", "Wenn Sie diese Checkbox setzen, wird die Ebene im Starboard nicht angezeigt, wenn es in einem eigenen Starboardreiter liegt. Das ist hilfreich, wenn Sie das Elternelement einer bereits vorhandenen Strukturebene im Reiter nicht anzeigen wollen.");
+$GLOBALS['TL_LANG']['tl_c4g_maps']['hide_when_in_tab'] = array("Ausblenden wenn im Starboard-Reiter", "Wenn Sie diese Checkbox setzen, wird die Ebene im Starboard nicht angezeigt, wenn es in einem eigenen Starboardreiter liegt. Das ist hilfreich, wenn Sie das Elternelement einer bereits vorhandenen Strukturebene im Reiter nicht anzeigen wollen.");
 $GLOBALS['TL_LANG']['tl_c4g_maps']['cssClass'] = array("CSS Klasse", "Die CSS Klasse wird am Listenelement im Starboard gesetzt.");
 /**
  * Buttons
@@ -160,7 +160,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['MERC']      = 'Spherical Merca
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['WGS84']     = 'WGS-84 (EPSG:4326)';
 
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['NO']       = 'Nicht verschieben';
-$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['THREAD']   = 'Verschieben, wenn der Themenname einem Ebenennamen entspricht';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['THREAD']   = 'Verschieben, wenn der Themenname einem Namen in der Starboardstruktur entspricht';
 
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['popupType']['text'] = "Text";
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['popupType']['template'] = "Template-Datei";
