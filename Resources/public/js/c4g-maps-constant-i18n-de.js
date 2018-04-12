@@ -44,6 +44,7 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
     CTRL_ZOOMLEVEL: 'Zoom',
     CTRL_MOUSECOORDS: 'Lon/Lat',
     CTRL_GEOSEARCH: 'Suche ein-/ausblenden',
+    CTRL_START_SEARCH: 'Suche starten',
     CTRL_OVERVIEWMAP: 'Übersichtskarte ein-/ausblenden',
     CTRL_SIDEBOARD: 'Sideboard ein-/ausblenden',
     CTRL_STARBOARD: 'Starboard ein-/ausblenden',

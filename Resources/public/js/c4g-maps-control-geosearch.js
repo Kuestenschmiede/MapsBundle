@@ -139,8 +139,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
     // search-button
     searchButton = document.createElement('button');
     searchButton.className = c4g.maps.constant.css.GEOSEARCH_START;
-    // @TODO
-    searchButton.title = 'start search';
+    searchButton.title = c4g.maps.constant.i18n.CTRL_START_SEARCH;
     searchWrapper.appendChild(searchButton);
 
       $(searchButton).click(function () {

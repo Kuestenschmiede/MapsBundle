@@ -44,6 +44,7 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
     CTRL_ZOOMLEVEL: 'Zoomaa',
     CTRL_MOUSECOORDS: 'Lon/Lat',
     CTRL_GEOSEARCH: 'Ota käyttöön geosearch',
+    CTRL_START_SEARCH: 'start search',
     CTRL_OVERVIEWMAP: 'Ota käyttöön yleiskuvakartta',
     CTRL_SIDEBOARD: 'Ota käyttöön sideboard',
     CTRL_STARBOARD: 'Ota käyttöön starboard',
