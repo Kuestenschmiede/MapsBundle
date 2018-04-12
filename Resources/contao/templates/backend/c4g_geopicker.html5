@@ -40,13 +40,13 @@
 
         <fieldset id="pal_general_legend" class="tl_tbox">
 
-            <div class="w50">
+            <div class="w50" style="margin-left:16px" >
               <h3><label>X-Koordinate</label></h3>
                 <input id="c4gGeoPickerGeoX" class="tl_text" type="text" value="<?php echo $this->Input->get('geoX') ?>" name="geoX" readonly>
                 <p class="tl_help tl_tip" title="">X-Koordinate</p>
             </div>
 
-            <div class="w50">
+            <div class="w50" style="margin-left:16px" >
                 <h3><label>Y-Koordinate</label></h3>
                 <input id="c4gGeoPickerGeoY" class="tl_text" type="text" value="<?php echo $this->Input->get('geoY') ?>" name="geoY" readonly>
                 <p class="tl_help tl_tip" title="">Y-Koordinate</p>
