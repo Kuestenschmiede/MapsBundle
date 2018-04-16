@@ -1113,7 +1113,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                         gutter: overlayLayerConfig.gutter,
                         attributions: overlayLayerConfig.attribution + ' ' + ol.source.OSM.ATTRIBUTION
                     }),
-                    opacity:0.5
+                    opacity:1
                     //extent: ol.proj.transformExtent([5.59334, 50.0578, 9.74158, 52.7998], 'EPSG:4326', 'EPSG:3857')
                 });
                 break;

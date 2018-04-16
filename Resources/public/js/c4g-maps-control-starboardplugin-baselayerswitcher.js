@@ -244,7 +244,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
           if(c4g.maps.baselayers[uid].hasOverlays){
 
 
-            $(listItem).addClass(c4g.maps.constant.css.CLOSE);
+            //$(listItem).addClass(c4g.maps.constant.css.CLOSE);
 
             childList = document.createElement('ul');
             for(j = 0; j < c4g.maps.baselayers[uid].overlays.length; j++){
@@ -280,8 +280,10 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
 
           if (this.starboard.options.mapController.data.default_baselayer && parseInt(uid, 10) === parseInt(this.starboard.options.mapController.data.default_baselayer, 10)) {
             $entry.addClass(c4g.maps.constant.css.ACTIVE);
+           listItem.addClass(c4g.maps.constant.OPEN);
           } else {
             $entry.addClass(c4g.maps.constant.css.INACTIVE);
+            listItem.addClass(c4g.maps.constant.OPEN);
           }
 
           $entry.data('uid', uid);
