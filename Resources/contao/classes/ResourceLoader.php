@@ -69,7 +69,7 @@ class ResourceLoader extends coreResourceLoader
             'infopage' => $allByDefault,
             'plugins' => $allByDefault,
             'customtab' => $allByDefault,
-            'cesium' => $allByDefault,
+            'cesium' => false, //Default
             'olms' => $allByDefault,
         ),
         $resources);
