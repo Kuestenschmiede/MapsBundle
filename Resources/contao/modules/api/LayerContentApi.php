@@ -633,8 +633,11 @@ class LayerContentApi extends \Controller
 
 
                         if(!$event){
-                            $popupContent =Controller::getContentElement($result->id) ? Controller::replaceInsertTags(Controller::getContentElement($result->id)) : $popupContent;
-                            $popupContent = str_replace('TL_FILES_URL','',$popupContent);
+                            if($sourceTable == 'tl_content'){
+                                $popupContent = Controller::getContentElement($result->id) ? Controller::replaceInsertTags(Controller::getContentElement($result->id)) : $popupContent;
+                                $popupContent = str_replace('TL_FILES_URL','',$popupContent);
+                            }
+
                             $arrReturnData[] = array
                             (
                                 "id" => $result->id,

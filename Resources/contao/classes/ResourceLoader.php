@@ -196,8 +196,8 @@ class ResourceLoader extends coreResourceLoader
             parent::loadJavaScriptRessource('c4g-maps-control-portside-exporttools', self::BUNDLE_JS_PATH . 'c4g-maps-control-portside-exporttools.js' . $staticOption);
         }
 
-        parent::loadJavaScriptRessource('ol-ext', self::VENDOR_PATH . 'ol3-ext-2.0.1/ol-ext.min.js' . $staticOption);
-        parent::loadCssRessource('ol-ext', self::VENDOR_PATH . 'ol3-ext-2.0.1/ol-ext-min.js' . $staticOption);
+        parent::loadJavaScriptRessource('ol-ext', self::VENDOR_PATH . 'ol3-ext-2.0.1/ol-ext.js' . $staticOption);
+        parent::loadCssRessource('ol-ext', self::VENDOR_PATH . 'ol3-ext-2.0.1/ol-ext.min.css' . $staticOption);
 
         // load plugins
         if ($resources['plugins']) {
