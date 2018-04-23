@@ -15,7 +15,7 @@
 $GLOBALS['con4gis']['maps']['installed'] = true;
 $GLOBALS['con4gis']['maps']['debug'] = false;
 $GLOBALS['con4gis']['maps']['ol-version'] = '4.6.5';
-$GLOBALS['con4gis']['maps']['ol-cesium-version'] = 'v1.35';
+$GLOBALS['con4gis']['maps']['ol-cesium-version'] = 'v1.36';
 $GLOBALS['con4gis']['maps']['olms-version'] = '2.10.4';
 
 /**
