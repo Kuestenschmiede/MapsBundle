@@ -105,10 +105,10 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] = array
     'palettes' => array
     (
         '__selector__'                => array('provider'),
-        'default'                     => 'name,provider,attribution',
-        'custom'                      => 'name,provider,url1,url2,url3,url4,attribution',
-        'wms'                         => 'name,provider,wms_url,wms_params_layers,wms_params_version,wms_params_format,wms_params_transparent,wms_params_srs,wms_gutter,attribution',
-        'owm'                         => 'name,provider,api_key,app_id,api_port,attribution',
+        'default'                     => 'name,provider,opacity,attribution',
+        'custom'                      => 'name,provider,url1,url2,url3,url4,opacity,attribution',
+        'wms'                         => 'name,provider,wms_url,wms_params_layers,wms_params_version,wms_params_format,wms_params_transparent,wms_params_srs,wms_gutter,opacity,attribution',
+        'owm'                         => 'name,provider,api_key,app_id,api_port,opacity,attribution',
     ),
 
     // Fields
@@ -273,6 +273,15 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] = array
             'inputType'               => 'text',
             'eval'                    => array('decodeEntities'=>true, 'maxlength'=>100, 'tl_class'=>'long', 'mandatory'=>'true'),
             'sql'                     => "varchar(100) NOT NULL default ''"
+        ),
+        'opacity' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['opacity'],
+            'exclude'                 => true,
+            'inputType'               => 'text',
+            'default'                 => '100',
+            'eval'                    => array('tl_class'=>'clr','rgxp'=>'prcnt'),
+            'sql'                     => "int(20) NOT NULL default '100'"
         ),
 
         'api_port' => array

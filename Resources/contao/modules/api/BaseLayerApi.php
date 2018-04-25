@@ -159,7 +159,6 @@ class BaseLayerApi extends \Frontend
                 $arrOverlayData['params']['format'] = $objOverlay->wms_params_format;
                 $arrOverlayData['params']['transparent'] = $objOverlay->wms_params_transparent ? TRUE : FALSE;
                 $arrOverlayData['params']['srs'] = $objOverlay->wms_params_srs;
-
                 $arrOverlayData['gutter'] = $objOverlay->wms_gutter;
                 break;
             case 'owm':
@@ -169,7 +168,7 @@ class BaseLayerApi extends \Frontend
                 $arrOverlayData['api_key'] = $objOverlay->api_key;
                 break;
         }
-
+        $arrOverlayData['opacity']     = $objOverlay->opacity;
         $arrOverlayData['attribution'] = $objOverlay->attribution;
 
 

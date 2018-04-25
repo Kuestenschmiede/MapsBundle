@@ -21,6 +21,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['url2'] 			= array('URL 2', 'Anna toi
 $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['url3'] 			= array('URL 3', 'Anna kolmas URL laattoja varten käyttäen muotoa "http://path.to/overlaytiles/${z}/${x}/${y}.ext".');
 $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['url4'] 			= array('URL 4', 'Anna neljäs URL laattoja varten käyttäen muotoa "http://path.to/overlaytiles/${z}/${x}/${y}.ext".');
 $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['attribution'] 	= array('Custom nimeäminen', 'Anna custom nimeäminen tänne jos tarvitsee (valinnainen).');
+$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['opacity']       = array('Initial opacity', 'Set the initial opacity, which can be modified in the starboard.');
 $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['api_key']    	= array('API Key, AppID', 'Aseta avain käyttäjätilillesi.');
 $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['app_id']     	= array('Key', 'Aseta avain hakemukseesi.');
 $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['api_port']      = array('Port', 'Please insert the api port.');

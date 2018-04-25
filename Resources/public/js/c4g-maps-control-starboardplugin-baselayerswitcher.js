@@ -257,7 +257,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
               toggle.setAttribute('type','range');
               toggle.setAttribute('min',0);
               toggle.setAttribute('max',100);
-              toggle.setAttribute('value',100);
+              toggle.setAttribute('value',c4g.maps.baselayers[uid].overlays[j].opacity);
               toggle.setAttribute('steps',10);
               $(toggle).on('input', function (event) {
                   self.proxy.changeOpacity($(this).parent().data('id'),this.value)

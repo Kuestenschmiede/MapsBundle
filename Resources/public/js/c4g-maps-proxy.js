@@ -1113,7 +1113,6 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                         gutter: overlayLayerConfig.gutter,
                         attributions: overlayLayerConfig.attribution + ' ' + ol.source.OSM.ATTRIBUTION
                     }),
-                    opacity:1
                     //extent: ol.proj.transformExtent([5.59334, 50.0578, 9.74158, 52.7998], 'EPSG:4326', 'EPSG:3857')
                 });
                 break;
@@ -1130,6 +1129,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                 console.warn('unsupported provider');
                 break;
         }
+        overlayLayer.setOpacity(parseInt(overlayLayerConfig.opacity)/100);
         c4g.maps.overlays[overlayId].vectorLayer = overlayLayer;
         return overlayLayer;
     },
