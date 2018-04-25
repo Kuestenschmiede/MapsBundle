@@ -150,6 +150,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_animate']     = array('Ota
                                                                             'Lennä löydetty sijainti.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_markresult']  = array('Merkkaa löydetty sijainti',
                                                                             'Korosta löydetty sijainti lyhyen ajan.');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_popup']       = array('Open popup',
+                                                                            'Opens the popup for a feature at the location of the search (Works best with polygons).');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_attribution'] = array('Näytä hakupalvelun attribuutit',
                                                                             'Lisää hakupalvelun (Nominatiimin) attribuutin. Deaktivoi vain jos olet varma, että se on sallittua.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker']             = array('Näytä geopicker (frontend)',

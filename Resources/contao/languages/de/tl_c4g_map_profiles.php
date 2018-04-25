@@ -155,6 +155,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_animate']     = array('Suc
                                                                             'Die Karte führt nach der Suche einen animierten Flug zu dem gefundenen Ort durch.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_markresult']  = array('Fund hervorheben',
                                                                             'Markiert nach der Suche den gefundenen Ort für eine kurze Zeit.');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_popup']       = array('Popup öffnen',
+                                                                            'Öffnet nach dem Suchen das Popup einer am Suchziel liegenden Lokation (Funktioniert am Besten mit Polygonen).');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_attribution'] = array('Copyright für die Suche anzeigen',
                                                                             'Fügt eine Attribution des verwendeten Suchservice (Nominatim) hinzu. Deaktivierung nicht empfohlen!');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_collapsed']   = array('Suchfeld initial einklappen',

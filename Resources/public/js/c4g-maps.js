@@ -674,6 +674,7 @@ this.c4g.maps = this.c4g.maps || {};
                 quicksearch: true,
                 animate: mapData.geosearch.animate,
                 markResult: mapData.geosearch.markresult,
+                popup: mapData.geosearch.popup,
                 autopick: mapData.geopicker,
                 results: mapData.geosearch.results
             });

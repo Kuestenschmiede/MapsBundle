@@ -150,6 +150,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_animate']     = array('Ena
                                                                             'Fly to found location.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_markresult']  = array('Mark found location',
                                                                             'Highlights the found location for a short time.');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_popup']       = array('Open popup',
+                                                                            'Opens the popup for a feature at the location of the search (Works best with polygons).');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_attribution'] = array('Show attribution of search service',
                                                                             'Adds an attribution of the search service (Nominatim).  Deactivate only when you are sure it is allowed.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_collapsed']   = array('Collapsed searchfield',
