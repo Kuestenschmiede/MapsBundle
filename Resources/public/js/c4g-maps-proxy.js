@@ -978,7 +978,10 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                   c4g.maps.overlays = [];
               }
               for (j = 0; j< baselayer.overlays.length; j++){
-                  c4g.maps.overlays[baselayer.overlays[j].id] = baselayer.overlays[j];
+                  if(!c4g.maps.overlays[baselayer.overlays[j].id]){
+                      c4g.maps.overlays[baselayer.overlays[j].id] = baselayer.overlays[j];
+                  }
+
               }
           }
 
@@ -1661,11 +1664,6 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
       }
 
       if (typeof baseLayerConfig !== "undefined") {
-          if(this.activeBaselayerId && c4g.maps.baselayers[this.activeBaselayerId].hasOverlays){
-              for(i = 0; i < c4g.maps.baselayers[this.activeBaselayerId].overlays.length; i++){
-                  self.options.mapController.map.removeLayer(c4g.maps.baselayers[this.activeBaselayerId].overlays[i].vectorLayer);
-              }
-          }
           this.activeBaselayerId = baseLayerConfig.id;
 
         c4g.maps.utils.callHookFunctions(this.hook_baselayer_visibility, baseLayerConfig);
