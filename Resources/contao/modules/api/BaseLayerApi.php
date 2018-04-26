@@ -157,7 +157,7 @@ class BaseLayerApi extends \Frontend
                 $arrOverlayData['params']['layers'] = $objOverlay->wms_params_layers;
                 $arrOverlayData['params']['version'] = $objOverlay->wms_params_version;
                 $arrOverlayData['params']['format'] = $objOverlay->wms_params_format;
-                $arrOverlayData['params']['transparent'] = $objOverlay->wms_params_transparent ? TRUE : FALSE;
+                $arrOverlayData['params']['transparent'] = $objOverlay->wms_params_transparent ? true : false;
                 $arrOverlayData['params']['srs'] = $objOverlay->wms_params_srs;
                 $arrOverlayData['gutter'] = $objOverlay->wms_gutter;
                 break;
