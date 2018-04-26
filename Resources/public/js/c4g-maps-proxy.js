@@ -1134,7 +1134,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
         }
         overlayLayer.setOpacity(parseInt(overlayLayerConfig.opacity)/100);
         c4g.maps.overlays[overlayId].vectorLayer = overlayLayer;
-        return overlayLayer;
+        return c4g.maps.overlays[overlayId].vectorLayer;
     },
     changeOpacity: function (overlayId, value){
       var layer;
