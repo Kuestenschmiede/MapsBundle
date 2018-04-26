@@ -973,6 +973,12 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
           if (!c4g.maps.baselayers[uid]) {
             c4g.maps.baselayers[uid] = baselayer;
           }
+
+          // @TODO: check initial baselayer-handling
+          if (this.options.mapController.data.baselayer && parseInt(uid, 10) === parseInt(this.options.mapController.data.baselayer, 10)) {
+              this.showBaseLayer(uid);
+          }
+
           if(baselayer.hasOverlays){
               if(!c4g.maps.overlays){
                   c4g.maps.overlays = [];
@@ -980,14 +986,10 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
               for (j = 0; j< baselayer.overlays.length; j++){
                   if(!c4g.maps.overlays[baselayer.overlays[j].id]){
                       c4g.maps.overlays[baselayer.overlays[j].id] = baselayer.overlays[j];
+                      this.options.mapController.map.addLayer(this.showOverlayLayer(baselayer.overlays[j].id));
                   }
-
+                  this.changeOpacity(baselayer.overlays[j].id, baselayer.overlays[j].opacity);
               }
-          }
-
-          // @TODO: check initial baselayer-handling
-          if (this.options.mapController.data.baselayer && parseInt(uid, 10) === parseInt(this.options.mapController.data.baselayer, 10)) {
-            this.showBaseLayer(uid);
           }
         }
       }
