@@ -403,6 +403,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
 
             } else if (self.config.zoomlevel >= 0) {
+
                 map.getView().animate({
                     zoom: 8,
                     duration: animationDuration / 2
@@ -421,6 +422,9 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         }
         else {
             map.getView().setCenter(resultCoordinate);
+            if (self.config.zoomlevel >= 0) {
+                map.getView().setZoom(self.config.zoomlevel);
+            }
         }
         if (markResult) {
             var addMarker,
