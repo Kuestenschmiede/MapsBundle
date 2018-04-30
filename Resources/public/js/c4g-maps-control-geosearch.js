@@ -865,7 +865,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                                 if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.proxy_fillPopup === 'object') {
                                     c4g.maps.utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
                                 }
-                                self.config.mapController.proxy.setPopup(objPopup,c4g.maps.mapController_10.proxy);
+                                self.config.mapController.proxy.setPopup(objPopup,self.config.mapController.proxy);
                             } else {
                                 $.ajax({
                                     dataType: "json",
