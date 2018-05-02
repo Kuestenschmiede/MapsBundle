@@ -206,7 +206,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
         event.preventDefault();
 
         itemUid = $(this).data('uid');
-        layerItem = c4g.maps.layers[itemUid];
+        layerItem = self.proxy.layerController.arrLayers[itemUid];
 
         if (self.proxy.activeLayerIds[itemUid]) {
           // hide layer
@@ -245,7 +245,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
                 extent,
                 center,
                 key;
-            layerItem = c4g.maps.layers[itemUid];
+            layerItem = self.proxy.layerController.arrLayers[itemUid];
             if (layerItem && layerItem.zoom_locations === "1") {
                 if (layerItem.hasChilds) {
                     for (key in layerItem.childs) {
@@ -411,7 +411,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
       if (itemData && itemData.length > 0) {
         for (i = 0; i < itemData.length; i += 1) {
           uid = itemData[i];
-          layer = c4g.maps.layers[uid];
+          layer = self.proxy.layerController.arrLayers[uid];
           item = {};
           this.layers[uid] = item;
           // renderSpecial is set when a layer is rendered in its own tab
@@ -640,7 +640,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
           self;
       self = this;
       childActive = 0;
-      layer = c4g.maps.layers[layerUid];
+      layer = self.proxy.layerController.arrLayers[layerUid];
       if (layer && layer.childs && layer.childs.length > 0) {
         // layer has childs
         layer.childs.forEach(function (child) {
@@ -674,11 +674,11 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
           parentEntry,
           parentLayer;
 
-      layer = c4g.maps.layers[layerUid];
+      layer = this.proxy.layerController.arrLayers[layerUid];
       if (layer.pid != this.starboard.options.mapController.data.mapId) {
         // the layer has parents
         // by this we can access only the single span where the parent entry is in
-        parentLayer = c4g.maps.layers[layer.pid];
+        parentLayer = this.proxy.layerController.arrLayers[layer.pid];
         if (parentLayer) {
           parentEntry = entry.parentNode.parentNode.parentNode.getElementsByTagName('a')[0];
           if (parentEntry) {

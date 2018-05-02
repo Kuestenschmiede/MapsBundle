@@ -127,7 +127,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
       if (this.proxy.baselayers_loaded) {
         fnDrawContent(this.proxy.baselayerIds);
       } else {
-        this.proxy.hook_baselayer_loaded.push(fnDrawContent);
+        this.proxy.hook_baselayer_loaded=(fnDrawContent);
       }
     }, // end of "loadContent()"
 

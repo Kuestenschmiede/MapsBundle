@@ -106,7 +106,7 @@ this.c4g.maps = this.c4g.maps || {};
         if (window.MooTools && Browser.Document) {
             Document = Browser.Document;
         }
-        this.proxy = new c4g.maps.Proxy({mapController: this});
+        this.proxy = new MapProxy({mapController: this});
 
         // check permalink
         if (mapData.permalink.enable) {
@@ -237,13 +237,16 @@ this.c4g.maps = this.c4g.maps || {};
         } else {
             // initialize Map
             //
+
             if (mapData.default_baselayer) {
-                this.proxy.hook_baselayer_loaded.push(function (baselayerIds) {
+                let hookie = this.proxy.hook_baselayer_loaded;
+                hookie.push(function (baselayerIds) {
                     if (mapData.baselayer && baselayerIds.indexOf(mapData.baselayer.toString()) > -1) {
                         mapData.default_baselayer = mapData.baselayer;
                     }
                     self.proxy.showBaseLayer(mapData.default_baselayer);
                 });
+                this.proxy.hook_baselayer_loaded = hookie;
             }
             this.map = new ol.Map({
                 controls: controls,

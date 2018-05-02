@@ -3,67 +3,242 @@ this.c4g = this.c4g || {};
 this.c4g.maps = this.c4g.maps || {};
 this.c4g.maps.hook = this.c4g.maps.hook || {};
 
-(function ($, c4g) {
   'use strict';
 
-  c4g.maps.Proxy = function (options) {
-    var mapData;
+  class MapProxy {
+      constructor(options){
+          var mapData;
 
-    this.options = $.extend({
-      mapController: false
-    }, options);
-    if (!this.options.mapController) {
-      return false;
-    }
+          this._options = jQuery.extend({
+              mapController: false
+          }, options);
+          if (!this._options.mapController) {
+              return false;
+          }
 
-    c4g.maps.locationStyles = c4g.maps.locationStyles || {};
-    c4g.maps.editorStyles = c4g.maps.editorStyles || {};
-    c4g.maps.layers = c4g.maps.layers || {};
-    c4g.maps.baselayers = c4g.maps.baselayers || {};
+          c4g.maps.locationStyles = c4g.maps.locationStyles || {};
+          c4g.maps.editorStyles = c4g.maps.editorStyles || {};
+          c4g.maps.layers = c4g.maps.layers || {};
+          c4g.maps.baselayers = c4g.maps.baselayers || {};
 
-    //c4g.maps.hook.proxy_fillPopup = [];
+          //c4g.maps.hook.proxy_fillPopup = [];
 
-    this.hook_baselayer_loaded = [];
-    this.hook_baselayer_visibility = [];
-    this.hook_layer_loaded = [];
-    this.hook_layer_visibility = [];
-    this.hook_map_click = [];
-    this.hook_map_zoom = [];
+          this._hook_baselayer_loaded = [];
+          this._hook_baselayer_visibility = [];
+          this._hook_layer_loaded = [];
+          this._hook_layer_visibility = [];
+          this._hook_map_click = [];
+          this._hook_map_zoom = [];
 
-    // add global hook for accessibility when there is no proxy reference
-    c4g.maps.hook.proxy_layer_loaded = c4g.maps.hook.proxy_layer_loaded || [];
+          // add global hook for accessibility when there is no proxy reference
+          c4g.maps.hook.proxy_layer_loaded = c4g.maps.hook.proxy_layer_loaded || [];
 
-    this.baselayerIds = [];
-    this.activeBaselayerId = undefined;
-    this.layerIds = [];
-    this.activeLayerIds = {};
+          this._baselayerIds = [];
+          this._activeBaselayerId = undefined;
+          this._layerIds = [];
+          this._activeLayerIds = {};
 
-    this.requestFunctions = {};
-    this.request = {};
+          this._requestFunctions = {};
+          this._request = {};
 
-    this.baselayers_loaded = false;
-    this.layers_loaded = false;
+          this._baselayers_loaded = false;
+          this._layers_loaded = false;
 
-    mapData = this.options.mapController.data;
+          mapData = this.options.mapController.data;
 
-    this.mapId = mapData.id;
+          this._mapId = mapData.id;
 
-    this.api_baselayer_url = this.options.mapController.data.api.baselayer + '/' + mapData.profile;
-    this.api_layer_url = this.options.mapController.data.api.layer + '/' + this.mapId;
-    this.api_layercontent_url = this.options.mapController.data.api.layercontent;
-    //this.api_layercontentdata_url = this.options.mapController.data.api.layercontentdata;
-    this.api_layercontentdata_url = "con4gis/layerContentDataService";
-    this.api_locstyle_url = this.options.mapController.data.api.locstyle;
-    this.api_infowindow_url = this.options.mapController.data.api.infowindow;
+          this._api_baselayer_url = this.options.mapController.data.api.baselayer + '/' + mapData.profile;
+          this._api_layer_url = this.options.mapController.data.api.layer + '/' + this._mapId;
+          this._api_layercontent_url = this.options.mapController.data.api.layercontent;
+          //this.api_layercontentdata_url = this.options.mapController.data.api.layercontentdata;
+          this._api_layercontentdata_url = "con4gis/layerContentDataService";
+          this._api_locstyle_url = this.options.mapController.data.api.locstyle;
+          this._api_infowindow_url = this.options.mapController.data.api.infowindow;
+          this._options = options;
 
 
 
-    // this.initialize();
-  };
+          // this.initialize();
+      }
 
-  c4g.maps.Proxy.prototype = $.extend(c4g.maps.Proxy.prototype, {
+      get options() {
+          return this._options;
+      }
 
-    initialize: function () {
+      set options(value) {
+          this._options = value;
+      }
+
+      get hook_baselayer_loaded() {
+          return this._hook_baselayer_loaded;
+      }
+
+      set hook_baselayer_loaded(value) {
+          this._hook_baselayer_loaded = value;
+      }
+
+      get hook_baselayer_visibility() {
+          return this._hook_baselayer_visibility;
+      }
+
+      set hook_baselayer_visibility(value) {
+          this._hook_baselayer_visibility = value;
+      }
+
+      get hook_layer_loaded() {
+          return this._hook_layer_loaded;
+      }
+
+      set hook_layer_loaded(value) {
+          this._hook_layer_loaded = value;
+      }
+
+      get hook_layer_visibility() {
+          return this._hook_layer_visibility;
+      }
+
+      set hook_layer_visibility(value) {
+          this._hook_layer_visibility = value;
+      }
+
+      get hook_map_click() {
+          return this._hook_map_click;
+      }
+
+      set hook_map_click(value) {
+          this._hook_map_click = value;
+      }
+
+      get hook_map_zoom() {
+          return this._hook_map_zoom;
+      }
+
+      set hook_map_zoom(value) {
+          this._hook_map_zoom = value;
+      }
+
+      get baselayerIds() {
+          return this._baselayerIds;
+      }
+
+      set baselayerIds(value) {
+          this._baselayerIds = value;
+      }
+
+      get activeBaselayerId() {
+          return this._activeBaselayerId;
+      }
+
+      set activeBaselayerId(value) {
+          this._activeBaselayerId = value;
+      }
+
+      get layerIds() {
+          return this._layerIds;
+      }
+
+      set layerIds(value) {
+          this._layerIds = value;
+      }
+
+      get activeLayerIds() {
+          return this._activeLayerIds;
+      }
+
+      set activeLayerIds(value) {
+          this._activeLayerIds = value;
+      }
+
+      get requestFunctions() {
+          return this._requestFunctions;
+      }
+
+      set requestFunctions(value) {
+          this._requestFunctions = value;
+      }
+
+      get request() {
+          return this._request;
+      }
+
+      set request(value) {
+          this._request = value;
+      }
+
+      get baselayers_loaded() {
+          return this._baselayers_loaded;
+      }
+
+      set baselayers_loaded(value) {
+          this._baselayers_loaded = value;
+      }
+
+      get layers_loaded() {
+          return this._layers_loaded;
+      }
+
+      set layers_loaded(value) {
+          this._layers_loaded = value;
+      }
+
+      get mapId() {
+          return this._mapId;
+      }
+
+      set mapId(value) {
+          this._mapId = value;
+      }
+
+      get api_baselayer_url() {
+          return this._api_baselayer_url;
+      }
+
+      set api_baselayer_url(value) {
+          this._api_baselayer_url = value;
+      }
+
+      get api_layer_url() {
+          return this._api_layer_url;
+      }
+
+      set api_layer_url(value) {
+          this._api_layer_url = value;
+      }
+
+      get api_layercontent_url() {
+          return this._api_layercontent_url;
+      }
+
+      set api_layercontent_url(value) {
+          this._api_layercontent_url = value;
+      }
+
+      get api_layercontentdata_url() {
+          return this._api_layercontentdata_url;
+      }
+
+      set api_layercontentdata_url(value) {
+          this._api_layercontentdata_url = value;
+      }
+
+      get api_locstyle_url() {
+          return this._api_locstyle_url;
+      }
+
+      set api_locstyle_url(value) {
+          this._api_locstyle_url = value;
+      }
+
+      get api_infowindow_url() {
+          return this._api_infowindow_url;
+      }
+
+      set api_infowindow_url(value) {
+          this._api_infowindow_url = value;
+      }
+
+      initialize() {
       var self,
           map;
 
@@ -71,7 +246,8 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
       map = this.options.mapController.map;
 
       this.loadBaseLayers();
-      this.loadLayers();
+      this.layerController = new C4gLayerController(this);
+      this.layerController.loadLayers();
       this.addPopUp();
 
       //TODO check this, nearly the same as below
@@ -84,9 +260,9 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
 
           // check layer zoom-bounds
           // @TODO: Use "self.activeLayerIds = false" ?
-          for (layerId in self.activeLayerIds) {
-            if (self.activeLayerIds.hasOwnProperty(layerId)) {
-              layer = c4g.maps.layers[layerId];
+          for (layerId in self._activeLayerIds) {
+            if (self._activeLayerIds.hasOwnProperty(layerId)) {
+              layer = self.layerController.arrLayers[layerId];
               if (self.checkLayerIsActiveForZoom(layerId)) {
                 if (layer.isInactive) {
                   self.showLayer(layerId);
@@ -98,7 +274,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
           }
 
           // hooks
-          c4g.maps.utils.callHookFunctions(self.hook_map_zoom);
+          c4g.maps.utils.callHookFunctions(self._hook_map_zoom);
         }); // end of "zoom-observer"
       }); // end of "zoom-observer"
 
@@ -111,8 +287,8 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
 
         // check layer zoom-bounds
         // @TODO: Use "self.activeLayerIds = false" ?
-        for (layerId in self.activeLayerIds) {
-          if (self.activeLayerIds.hasOwnProperty(layerId)) {
+        for (layerId in self._activeLayerIds) {
+          if (self._activeLayerIds.hasOwnProperty(layerId)) {
             layer = c4g.maps.layers[layerId];
             if (self.checkLayerIsActiveForZoom(layerId)) {
               if (layer.isInactive) {
@@ -125,7 +301,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
         }
 
         // hooks
-        c4g.maps.utils.callHookFunctions(self.hook_map_zoom);
+        c4g.maps.utils.callHookFunctions(self._hook_map_zoom);
       }); // end of "zoom-observer"
 
       // click-observer
@@ -306,9 +482,9 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                           }
                           self.setPopup(objPopup,self);
                       } else {
-                          $.ajax({
+                          jQuery.ajax({
                               dataType: "json",
-                              url: self.api_infowindow_url + '/' + popupInfos.content,
+                              url: self._api_infowindow_url + '/' + popupInfos.content,
                               success: function (data) {
                                   var popupInfo = {
                                       async: popupInfos.async,
@@ -340,7 +516,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
               }
 
               // hooks
-              c4g.maps.utils.callHookFunctions(self.hook_map_click, clickEvent);
+              c4g.maps.utils.callHookFunctions(self._hook_map_click, clickEvent);
           }
       }); // end of "click-observer"
 
@@ -350,16 +526,16 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
         // });
 
 
-    }, // end of "initial"*
-      combine : function (proxy){
+    } // end of "initial"*
+      combine(proxy){
           var func = function(event) {
               proxy.combineLayers(proxy);
               proxy.options.mapController.map.un('postrender',func);
           };
           proxy.options.mapController.map.on('postrender', func)
-      },
+      }
 
-      setPopup : function (popupConfig,proxy) {
+      setPopup(popupConfig,proxy) {
           var feature,
               layer,
               popupContent,
@@ -429,10 +605,10 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
 
           c4g.maps.popup.$popup.removeClass(c4g.maps.constant.css.LOADING);
           c4g.maps.popup.spinner.hide();
-      }, // end of "setPopup()"
+      } // end of "setPopup()"
 
 
-    addPopUp: function () {
+    addPopUp() {
 
       var popUpElement,
           popUpCloseElement,
@@ -441,7 +617,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
 
 
       popUpElement = document.createElement('div');
-      popUpElement.setAttribute('id', 'c4g_popup_' + this.options.mapController.data.mapId);
+      popUpElement.setAttribute('id', 'c4g_popup_' + this.options.mapController.data._mapId);
       popUpElement.className = 'c4g-popup-wrapper';
 
       popUpCloseElement = document.createElement('button');
@@ -476,10 +652,10 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
 
       this.options.mapController.map.addOverlay(popup);
 
-      c4g.maps.popup.$popup = $(c4g.maps.popup.popup.getElement());
-      c4g.maps.popup.$content = $('.c4g-popup-content', c4g.maps.popup.$popup);
+      c4g.maps.popup.$popup = jQuery(c4g.maps.popup.popup.getElement());
+      c4g.maps.popup.$content = jQuery('.c4g-popup-content', c4g.maps.popup.$popup);
 
-    }, // end of "addPopUp()"
+    } // end of "addPopUp()"
 
 
     /**
@@ -489,7 +665,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
      *
      * @return  {[type]}               [description]
      */
-    checkLocationStyles: function (opt_options) {
+    checkLocationStyles(opt_options) {
 
       var options,
           neededLayerStyles,
@@ -545,9 +721,9 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
           options.success();
         }
       }
-    }, // end of "checkLocationStyles()"
+    } // end of "checkLocationStyles()"
 
-    loadLocationStyles: function (arrIds, opt_options) {
+    loadLocationStyles(arrIds, opt_options) {
       var options,
           self = this,
           complete = {},
@@ -568,9 +744,9 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
           success[index] = false;
         }
         // get locationstyles over API
-        $.ajax({
+        jQuery.ajax({
           dataType: self.options.mapController.data.jsonp ? "jsonp" : "json",
-          url: self.api_locstyle_url,
+          url: self._api_locstyle_url,
           data: {
             ids: styleIds
           }
@@ -643,9 +819,9 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
         makeAjax(arrIds);
       }
       //});
-    }, // end of "loadLocationStyles()"
+    } // end of "loadLocationStyles()"
 
-    getStyleFunction: function (styleData) {
+    getStyleFunction(styleData) {
       var self,
           styleFunction,
           imageStyle,
@@ -894,9 +1070,9 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
       };
 
       return styleFunction;
-    }, // end of "getStyleFunction()"
+    } // end of "getStyleFunction()"
 
-    getStyleEditorConfig: function (styleData) {
+    getStyleEditorConfig(styleData) {
       var editorConfig;
 
       // create editor-config
@@ -911,16 +1087,16 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
       }
 
       return editorConfig;
-    }, // end of "getStyleEditorConfig()"
+    }// end of "getStyleEditorConfig()"
 
-    loadBaseLayers: function () {
+    loadBaseLayers() {
       var self;
 
       self = this;
 
-      $.ajax({
+      jQuery.ajax({
 	      dataType: self.options.mapController.data.jsonp ? "jsonp" : "json",
-	      url: self.api_baselayer_url
+	      url: self._api_baselayer_url
 	    })
         .done(function (data) {
           if (data.baselayer) {
@@ -940,9 +1116,9 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
           //self.options.mapController.spinner.hide();
         });
 
-    }, // end of "loadBaseLayers()"
+    }// end of "loadBaseLayers()"
 
-    addBaseLayers: function (baselayers) {
+    addBaseLayers(baselayers) {
       var baselayer,
           uid,
           i,
@@ -969,7 +1145,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
           baselayer = baselayers[i];
 
           uid = baselayer.id || c4g.maps.utils.getUniqueId();
-          this.baselayerIds.push(uid);
+          this._baselayerIds.push(uid);
           if (!c4g.maps.baselayers[uid]) {
             c4g.maps.baselayers[uid] = baselayer;
           }
@@ -994,7 +1170,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
         }
       }
 
-      if (!this.activeBaselayerId) {
+      if (!this._activeBaselayerId) {
         // no baselayer was activated
         if (baselayers.length > 0 && baselayers[0].id) {
           // take first baselayer if possible
@@ -1002,7 +1178,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
         } else {
           // otherwise build default baselayer
           uid = 0;
-          this.baselayerIds.push(uid);
+          this._baselayerIds.push(uid);
           if (!c4g.maps.baselayers[uid]) {
             c4g.maps.baselayers[uid] = {
               id: 0,
@@ -1015,11 +1191,11 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
         this.showBaseLayer(uid);
 
       }
-      this.baselayers_loaded = true;
+      this._baselayers_loaded = true;
 
-      c4g.maps.utils.callHookFunctions(this.hook_baselayer_loaded, this.baselayerIds);
-    }, // end of "addBaseLayers()"
-    showOverlayLayer: function(overlayId){
+      c4g.maps.utils.callHookFunctions(this._hook_baselayer_loaded, this._baselayerIds);
+    } // end of "addBaseLayers()"
+    showOverlayLayer(overlayId){
         var self = this,
             overlayLayerConfig,
             osmSourceConfigs = c4g.maps.config.osm,
@@ -1042,7 +1218,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                 if (osmSourceConfigs[overlayLayerConfig.style]) {
                     overlayLayer = new ol.layer.Tile({
                         source: new ol.source.OSM(
-                            $.extend(
+                            jQuery.extend(
                                 osmSourceConfigs[overlayLayerConfig.style],
                                 layerOptions
                             )
@@ -1052,7 +1228,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                     // Stamen
                     overlayLayer = new ol.layer.Tile({
                         source: new ol.source.Stamen(
-                            $.extend(
+                            jQuery.extend(
                                 stamenSourceConfigs[overlayLayerConfig.style],
                                 layerOptions
                             )
@@ -1137,8 +1313,8 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
         overlayLayer.setOpacity(parseInt(overlayLayerConfig.opacity)/100);
         c4g.maps.overlays[overlayId].vectorLayer = overlayLayer;
         return c4g.maps.overlays[overlayId].vectorLayer;
-    },
-    changeOpacity: function (overlayId, value){
+    }
+    changeOpacity(overlayId, value){
       var layer;
 
       layer = c4g.maps.overlays[overlayId].vectorLayer;
@@ -1147,17 +1323,16 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
           layer.setOpacity(value/100);
           this.options.mapController.map.addLayer(layer);
       }
-    },
+    }
 
-    showBaseLayer: function (baseLayerUid) {
+    showBaseLayer(baseLayerUid) {
 
-      var self = this,
+      let self = this,
           baseLayerConfig,
           layers,
           baselayer,
           addBaselayer,
           baseLayers,
-          baselayerId,
           osmSourceConfigs,
           stamenSourceConfigs,
           //mapQuestSourceConfigs,
@@ -1169,10 +1344,6 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
           layerOptions,
           noUrl,
           i,
-          baseLayerMap,
-          layersWithOverlay,
-          overlayLayerConfig,
-          overlayLayer,
           view;
 
       baseLayerConfig = c4g.maps.baselayers[baseLayerUid];
@@ -1238,9 +1409,9 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
         //additional attribution
         if (this.options.mapController.data && this.options.mapController.data.attribution && this.options.mapController.data.attribution.additional) {
           if (layerOptions.attributions) {
-            var additionalAttribution = this.options.mapController.data.attribution.additional;
+            let additionalAttribution = this.options.mapController.data.attribution.additional;
 
-            var exists = false;
+            exists = false;
             for (i = 0; i < layerOptions.attributions.length; i += 1) {
               if (layerOptions.attributions[i] == additionalAttribution) {
                 exists = true;
@@ -1325,7 +1496,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
             if (osmSourceConfigs[baseLayerConfig.style]) {
               newBaselayer = new ol.layer.Tile({
                 source: new ol.source.OSM(
-                    $.extend(
+                    jQuery.extend(
                         osmSourceConfigs[baseLayerConfig.style],
                         layerOptions
                     )
@@ -1335,7 +1506,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
               // Stamen
               newBaselayer = new ol.layer.Tile({
                 source: new ol.source.Stamen(
-                    $.extend(
+                    jQuery.extend(
                         stamenSourceConfigs[baseLayerConfig.style],
                         layerOptions
                     )
@@ -1373,7 +1544,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                 if (baseLayerConfig.mapbox_type === 'Mapbox') {
                   layerOptions.url = baseLayerConfig.url + baseLayerConfig.app_id + '/tiles/{z}/{x}/{y}?access_token=' + baseLayerConfig.api_key;
                   newBaselayer = new ol.layer.Tile({
-                    source: new ol.source.XYZ($.extend(
+                    source: new ol.source.XYZ(jQuery.extend(
                         mapboxSourceConfigs[baseLayerConfig.mapbox_type],
                         layerOptions))
                   });
@@ -1381,7 +1552,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                   layerOptions.url = baseLayerConfig.url_classic + baseLayerConfig.app_id + '/{z}/{x}/{y}.png?access_token=' + baseLayerConfig.api_key;
 
                   newBaselayer = new ol.layer.Tile({
-                    source: new ol.source.XYZ($.extend(
+                    source: new ol.source.XYZ(jQuery.extend(
                         mapboxSourceConfigs[baseLayerConfig.mapbox_type],
                         layerOptions
                     ))
@@ -1390,7 +1561,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
               }else if(baseLayerConfig.hide_in_be){
                   layerOptions.url = "con4gis/baseLayerTileService/" + baseLayerConfig.id + "/{z}/{x}/{y}";
                   newBaselayer = new ol.layer.Tile({
-                      source: new ol.source.XYZ($.extend(
+                      source: new ol.source.XYZ(jQuery.extend(
                           mapboxSourceConfigs[baseLayerConfig.mapbox_type],
                           layerOptions))
                   });
@@ -1405,7 +1576,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                     if (baseLayerConfig.klokan_type === 'OpenMapTiles') {
                         layerOptions.url = baseLayerConfig.url + '{z}/{x}/{y}.pbf';
                         newBaselayer = new ol.layer.VectorTile({
-                            source: new ol.source.VectorTile($.extend(
+                            source: new ol.source.VectorTile(jQuery.extend(
                                 klokanSourceConfigs[baseLayerConfig.klokan_type],
                                 layerOptions))
                         });
@@ -1419,7 +1590,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                     } else {
                         layerOptions.url = baseLayerConfig.url + '/data/v3/{z}/{x}/{y}.pbf?key='+baseLayerConfig.api_key;
                         newBaselayer = new ol.layer.VectorTile({
-                            source: new ol.source.VectorTile($.extend(
+                            source: new ol.source.VectorTile(jQuery.extend(
                                 klokanSourceConfigs[baseLayerConfig.klokan_type],
                                 layerOptions))
                         });
@@ -1463,7 +1634,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                   }
 
                   newBaselayer = new ol.layer.Tile({
-                  source: new ol.source.XYZ($.extend(
+                  source: new ol.source.XYZ(jQuery.extend(
                       hereSourceConfigs[baseLayerConfig.here_type],
                       layerOptions))
                   });
@@ -1471,7 +1642,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
               else if(baseLayerConfig.hide_in_be){
                   layerOptions.url = layerOptions.url = "con4gis/baseLayerTileService/" + baseLayerConfig.id + "/{z}/{x}/{y}";
                   newBaselayer = new ol.layer.Tile({
-                      source: new ol.source.XYZ($.extend(
+                      source: new ol.source.XYZ(jQuery.extend(
                           mapboxSourceConfigs[baseLayerConfig.here_type],
                           layerOptions))
                   });
@@ -1488,14 +1659,14 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                     }
 
                     newBaselayer = new ol.layer.Tile({
-                        source: new ol.source.XYZ($.extend(
+                        source: new ol.source.XYZ(jQuery.extend(
                             thunderforestSourceConfigs[baseLayerConfig.thunderforest_type],
                             layerOptions))
                     });
                 }else if(baseLayerConfig.hide_in_be){
                     layerOptions.url = "con4gis/baseLayerTileService/" + baseLayerConfig.id + "/{z}/{x}/{y}";
                     newBaselayer = new ol.layer.Tile({
-                        source: new ol.source.XYZ($.extend(
+                        source: new ol.source.XYZ(jQuery.extend(
                             mapboxSourceConfigs[baseLayerConfig.thunderforest_type],
                             layerOptions))
                     });
@@ -1666,9 +1837,9 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
       }
 
       if (typeof baseLayerConfig !== "undefined") {
-          this.activeBaselayerId = baseLayerConfig.id;
+          this._activeBaselayerId = baseLayerConfig.id;
 
-        c4g.maps.utils.callHookFunctions(this.hook_baselayer_visibility, baseLayerConfig);
+        c4g.maps.utils.callHookFunctions(this._hook_baselayer_visibility, baseLayerConfig);
 
           /**
            * Cesium integration
@@ -1692,26 +1863,26 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
               }
           }
       }
-    }, // end of "showBaseLayer()"
+    } // end of "showBaseLayer()"
 
-    loadLayers: function () {
+    loadLayers () {
       var self;
 
       self = this;
-      if (this.mapId === 0) {
+      if (this._mapId === 0) {
         return false;
       }
 
-      $.ajax({
+      jQuery.ajax({
 	      dataType: self.options.mapController.data.jsonp ? "jsonp" : "json",
-	      url: self.api_layer_url
+	      url: self._api_layer_url
 	    })
 
       .done(function (data) {
         self.addLayers(data.layer, data.foreignLayers);
-        self.layers_loaded = true;
-        c4g.maps.utils.callHookFunctions(self.hook_layer_loaded, self.layerIds);
-        c4g.maps.utils.callHookFunctions(c4g.maps.hook.proxy_layer_loaded, {layerIds: self.layerIds, proxy: self});
+        self._layers_loaded = true;
+        c4g.maps.utils.callHookFunctions(self._hook_layer_loaded, self._layerIds);
+        c4g.maps.utils.callHookFunctions(c4g.maps.hook.proxy_layer_loaded, {layerIds: self._layerIds, proxy: self});
         self.checkLocationStyles({
           success: function () {
             self.drawLayerInitial();
@@ -1730,10 +1901,10 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
         // self.starboard.spinner.hide();
       });
 
-    }, // end of "loadLayer()"
+    } // end of "loadLayer()"
 
     // @TODO: may needs a rewrite
-    loadLayerContent: function (itemUid) {
+    loadLayerContent(itemUid) {
 
       var self = this,
           i,
@@ -1767,9 +1938,9 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
         layer.zoom_onclick = data.zoom_onclick || data.properties.zoom_onclick || false;
       };
 
-      if (c4g.maps.layers[itemUid].content) {
+      if (this.layerController.arrLayers[itemUid].content) {
         layers = [];
-          if(c4g.maps.layers[itemUid].async_content == 1){
+          if(this.layerController.arrLayers[itemUid].async_content == 1){
               styleForCluster = function(feature, resolution){
                   var styleId,
                       style,
@@ -1874,7 +2045,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                       }
 
                       c4g.maps.requests['layerDataRequest' + itemUid] = jQuery.ajax({
-                          url: self.api_layercontentdata_url + '/' + c4g.maps.layers[itemUid].id +'/'+strBoundingBox,
+                          url: self._api_layercontentdata_url + '/' + self.layerController.arrLayers[itemUid].id +'/'+strBoundingBox,
                           success :function (data){
                               if(data.length > 0 && !contentFeatures){
                                   contentFeatures = [];
@@ -1939,7 +2110,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                   //threshold: 2, //minimum element count
                   source: requestVectorSource
               });
-              if(c4g.maps.layers[itemUid].cluster){
+              if(this.layerController.arrLayers[itemUid].cluster){
                   vectorLayer = new ol.layer.AnimatedCluster(
                       {	name: 'Cluster',
                           source: clusterSource,
@@ -1961,8 +2132,8 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
 
           }
           else{
-              for (i = 0; i < c4g.maps.layers[itemUid].content.length; i += 1) {
-                  contentData = c4g.maps.layers[itemUid].content[i];
+              for (i = 0; i < this.layerController.arrLayers[itemUid].content.length; i += 1) {
+                  contentData = this.layerController.arrLayers[itemUid].content[i];
                   styleForCluster = function (feature, resolution) {
 
                       var size,
@@ -2288,13 +2459,13 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                                           }
                                       }
 
-                                      $.ajax({
+                                      jQuery.ajax({
                                           url: requestData.url,
                                           success: function (data) {
 
                                               if (data.renewableResponse) {
                                                   // update of stations
-                                                  $.each(data.features, function (index, featureData) {
+                                                  jQuery.each(data.features, function (index, featureData) {
                                                       if (featureData.type && featureData.type === "Feature") {
                                                           var feature = (new ol.format[contentData.format]()).readFeature(featureData, {
                                                               dataProjection: 'EPSG:4326',
@@ -2324,7 +2495,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                                                               feature.setStyle(c4g.maps.locationStyles[featureData.properties.styleId].style);
                                                           }
 
-                                                          if (self.activeLayerIds[layer.id]) {
+                                                          if (self._activeLayerIds[layer.id]) {
                                                               self.hideLayer(layer.id);
                                                               self.showLayer(layer.id);
                                                           }
@@ -2338,7 +2509,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                                                   refreshAjaxVars.arrNewPositionIds = [];
                                                   refreshAjaxVars.objNewFeatures = {};
 
-                                                  $.each(data.features, function (index, featureData) {
+                                                  jQuery.each(data.features, function (index, featureData) {
                                                       if (featureData.type && featureData.type == "Feature") {
                                                           refreshAjaxVars.feature = (new ol.format[contentData.format]()).readFeature(featureData, {
                                                               dataProjection: 'EPSG:4326',
@@ -2355,7 +2526,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                                                       }
                                                   });
 
-                                                  $.each(refreshAjaxVars.arrPositionIds, function (index, positionId) {
+                                                  jQuery.each(refreshAjaxVars.arrPositionIds, function (index, positionId) {
                                                       if (refreshAjaxVars.arrNewPositionIds.indexOf(positionId) == -1) {
                                                           // positions id in neuer antwort nicht mehr enthalten -> lösche feature
                                                           if (typeof refreshAjaxVars.objFeatures[positionId] !== "undefined") {
@@ -2365,7 +2536,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                                                       }
                                                   });
 
-                                                  $.each(refreshAjaxVars.arrNewPositionIds, function (index, positionId) {
+                                                  jQuery.each(refreshAjaxVars.arrNewPositionIds, function (index, positionId) {
                                                       if (refreshAjaxVars.arrPositionIds.indexOf(positionId) == -1) {
                                                           // positions id ist noch nicht vorhanden -> neues feature
                                                           refreshAjaxVars.arrPositionIds.push(positionId);
@@ -2379,7 +2550,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                                       });
                                   });
 
-                                  self.requestFunctions['request_' + itemUid] = {
+                                  self._requestFunctions['request_' + itemUid] = {
                                       'function': vectorSource.get('refreshFunction'),
                                       'interval': refreshInterval
                                   };
@@ -2429,7 +2600,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                               // check currently stored id's
                               for (i in self.fittingExtends) {
                                   if (self.fittingExtends.hasOwnProperty(i)) {
-                                      if (typeof self.activeLayerIds[i] === "undefined" || self.activeLayerIds[0] == "invisible") {
+                                      if (typeof self._activeLayerIds[i] === "undefined" || self._activeLayerIds[0] == "invisible") {
                                           delete self.fittingExtends[i];
                                       }
                                   }
@@ -2444,8 +2615,8 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
 
                       fnAttachDataToLayer(vectorLayer, contentData.data);
                       layers.push(vectorLayer);
-                  } else if ((c4g.maps.layers[itemUid].type === "table") || (c4g.maps.layers[itemUid].type === "link")) {
-                      var layerContent = c4g.maps.layers[itemUid].content;
+                  } else if ((this.layerController.arrLayers[itemUid].type === "table") || (this.layerController.arrLayers[itemUid].type === "link")) {
+                      var layerContent = this.layerController.arrLayers[itemUid].content;
                       contentData = layerContent[0];
                       var contentFeatures = [];
                       if (contentData && contentData.data.properties && contentData.data.properties.projection) {
@@ -2471,7 +2642,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                           contentFeatures.push(contentFeature);
                       }
 
-                      if(i+1 === c4g.maps.layers[itemUid].content.length){
+                      if(i+1 === this.layerController.arrLayers[itemUid].content.length){
                           vectorSource = new ol.source.Vector({
                               features: contentFeatures,
                               projection: 'EPSG:3857',
@@ -2502,7 +2673,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                       }
                       //return;
                   } else {
-                      if (c4g.maps.layers[itemUid].content.length > 1) {
+                      if (this.layerController.arrLayers[itemUid].content.length > 1) {
                           //TODO: refactoren und kürzen!
                           // we have overpass request with reassigned forum layers
                           // forum layers can not be drawn via the normal drawLayer, because they do not have a Uid
@@ -2589,8 +2760,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
         layerGroup = new ol.layer.Group({
           layers: layers
         });
-
-        c4g.maps.layers[itemUid].vectorLayer = layerGroup;
+        this.layerController.arrLayers[itemUid].vectorLayer = layerGroup;
         self.options.mapController.map.addLayer(layerGroup);
         self.combine(self);
 
@@ -2630,7 +2800,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
             self.options.mapController.spinner.show();
             jQuery.ajax({
                 dataType: self.options.mapController.data.jsonp ? "jsonp" : "json",
-                url: self.api_layercontent_url + '/' + c4g.maps.layers[itemUid].id,
+                url: self._api_layercontent_url + '/' + self.layerController.arrLayers[itemUid].id,
                 success: function (data) {
                     var j,
                         newLocationStyles;
@@ -2640,9 +2810,9 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
 
                         for (j = 0; j < data.length; j += 1) {
 
-                            c4g.maps.layers[itemUid].content = c4g.maps.layers[itemUid].content || [];
+                            self.layerController.arrLayers[itemUid].content = self.layerController.arrLayers[itemUid].content || [];
 
-                            c4g.maps.layers[itemUid].content.push(data[j]);
+                            self.layerController.arrLayers[itemUid].content.push(data[j]);
                             newLocationStyles.push(data[j].locationStyle);
 
                         }
@@ -2663,8 +2833,8 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
         //}
 
       }
-    }, // end of "loadLayerContent()"
-    combineLayers: function(proxy){
+    } // end of "loadLayerContent()"
+    combineLayers(proxy){
 
         var i,
             j,
@@ -2688,7 +2858,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
 
         if(proxy.options.mapController.data.cluster_all === '1'){
             contentData = proxy.options.mapController.data;
-            for( i in proxy.activeLayerIds) {//loop to get all layers
+            for( i in proxy._activeLayerIds) {//loop to get all layers
                 layers = c4g.maps.layers[i];
 
                 if(layers.type === "gpx"){
@@ -2865,9 +3035,9 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
 
 
 
-      },//end of combineLayers
+      }//end of combineLayers
 
-    addLayers: function (layers, foreignLayers) {
+    addLayers(layers, foreignLayers) {
       var i,
           j,
           k,
@@ -2990,7 +3160,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
             uid = layer.id || c4g.maps.utils.getUniqueId();
             c4g.maps.layers[uid] = layer;
             layer.isInactive = false;
-            this.layerIds.push(layer.id);
+            this._layerIds.push(layer.id);
 
             if (layer.display) {
               isVisible = true;
@@ -3011,7 +3181,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
             }
 
             if ((layer.hide !== "1") || (visible)) {
-              this.activeLayerIds[layer.id] = 'invisible';
+              this._activeLayerIds[layer.id] = 'invisible';
             }
 
           }
@@ -3021,9 +3191,9 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
 
 
       return isVisible;
-    }, // end of "addLayers()"
+    } // end of "addLayers()"
 
-    showLayer: function (layerUid) {
+    showLayer(layerUid) {
       var layer,
           mapLayers,
           addLayer,
@@ -3035,7 +3205,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
       layer = c4g.maps.layers[layerUid];
 
       if (activeForZoom) {
-          if (this.activeLayerIds[layerUid] !== 'visible') {
+          if (this._activeLayerIds[layerUid] !== 'visible') {
               //if (layer.link_id) {
               //  this.activeLayerIds[layer.link_id] = 'visible';
               //} else
@@ -3073,9 +3243,9 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                               this.setPopup(objPopup, this);
                           } else {
                               var self = this;
-                              $.ajax({
+                              jQuery.ajax({
                                   dataType: "json",
-                                  url: self.api_infowindow_url + '/' + popupInfos.content,
+                                  url: self._api_infowindow_url + '/' + popupInfos.content,
                                   success: function (data) {
                                       var popupInfo = {
                                           async: popupInfos.async,
@@ -3104,7 +3274,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
               } else {
                   this.loadLayerContent(layerUid);
               }
-              this.activeLayerIds[layerUid] = 'visible';
+              this._activeLayerIds[layerUid] = 'visible';
           }
           else {
               //if (layer.link_id) {
@@ -3114,7 +3284,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
               //}
           }
       }
-      this.activeLayerIds[layerUid] = 'visible';
+      this._activeLayerIds[layerUid] = 'visible';
 
       if (layer && layer.hasChilds && activeForZoom) {
         for (i = 0; i < layer.childs.length; i += 1) {
@@ -3126,19 +3296,19 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
         layer.isInactive = false;
       }
 
-      if (typeof this.requestFunctions['request_' + layerUid] !== "undefined") {
+      if (typeof this._requestFunctions['request_' + layerUid] !== "undefined") {
 
         if (c4g.maps.requests && typeof c4g.maps.requests['layer_request_' + layerUid] === "undefined") {
-          c4g.maps.requests['layer_request_' + layerUid] = window.setInterval(this.requestFunctions['request_' + layerUid].function, this.requestFunctions['request_' + layerUid].interval);
+          c4g.maps.requests['layer_request_' + layerUid] = window.setInterval(this._requestFunctions['request_' + layerUid].function, this._requestFunctions['request_' + layerUid].interval);
         }
 
       }
       this.combineLayers(this);
       // hooks
-      c4g.maps.utils.callHookFunctions(this.hook_layer_visibility, layerUid);
-    }, // end of "showLayer()"
+      c4g.maps.utils.callHookFunctions(this._hook_layer_visibility, layerUid);
+    } // end of "showLayer()"
 
-    hideLayer: function (layerUid, keepLayer) {
+    hideLayer(layerUid, keepLayer) {
 
       var layer,
           i,
@@ -3152,9 +3322,9 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
 
       // check if layer is listed as "active"
       // otherwise there is nothing to remove or change
-      if (this.activeLayerIds[layerUid]) {
+      if (this._activeLayerIds[layerUid]) {
         // remove layer from map (if it was visible before)
-        if (this.activeLayerIds[layerUid] === 'visible' && layer.vectorLayer) {
+        if (this._activeLayerIds[layerUid] === 'visible' && layer.vectorLayer) {
           // [info]: do not use "layer.vectorLayer.setVisible(false);"
           //         see "showLayer()" for more information
           this.options.mapController.map.removeLayer(layer.vectorLayer);
@@ -3162,9 +3332,9 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
         // only mark as "invisible" if "keepLayer" is "true"
         // this is needed for the zoom-bounds
         if (keepLayer) {
-          this.activeLayerIds[layerUid] = 'invisible';
+          this._activeLayerIds[layerUid] = 'invisible';
         } else {
-          delete this.activeLayerIds[layerUid];
+          delete this._activeLayerIds[layerUid];
         }
       }
 
@@ -3178,7 +3348,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
         }
       }
       if(layer.isInactive){
-          c4g.maps.utils.callHookFunctions(this.hook_layer_visibility, layerUid);
+          c4g.maps.utils.callHookFunctions(this._hook_layer_visibility, layerUid);
           return
       }
       layer.isInactive = true;
@@ -3196,20 +3366,20 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
       this.combineLayers(this);
       this.options.mapController.map.getView().setCenter([this.options.mapController.map.getView().getCenter()[0]+0.001,this.options.mapController.map.getView().getCenter()[1]]);
       // hooks
-      c4g.maps.utils.callHookFunctions(this.hook_layer_visibility, layerUid);
-    }, // end of "hideLayer()"
+      c4g.maps.utils.callHookFunctions(this._hook_layer_visibility, layerUid);
+    } // end of "hideLayer()"
 
-    checkLayerIsActiveForZoom: function (layerId, opt_zoom) {
+    checkLayerIsActiveForZoom(layerId, opt_zoom) {
       var layer,
           zoom,
           layerContent,
           locstyle;
 
-      if (!c4g.maps.layers[layerId]) {
+      if (!this.layerController.arrLayers[layerId]) {
         return false;
       }
 
-      layer = c4g.maps.layers[layerId];
+      layer = this.layerController.arrLayers[layerId];
 
       if (opt_zoom) {
         zoom = opt_zoom;
@@ -3248,10 +3418,10 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
       }
 
       return true;
-    }, // end of "checkLayerIsActive()"
+    } // end of "checkLayerIsActive()"
 
     // @TODO: move to utils?
-    getVectorLayer: function (source, style) {
+    getVectorLayer(source, style) {
       var fnStyle;
 
       // make sure that the style is a function
@@ -3267,9 +3437,9 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
         source: source,
         style: fnStyle
       });
-    }, // end of "getVectorLayer()"
+    }// end of "getVectorLayer()"
 
-    drawLayer: function (itemUid) {
+    drawLayer(itemUid) {
 
       var self,
           element,
@@ -3288,7 +3458,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
           layerGroup;
 
       self = this;
-      element = c4g.maps.layers[itemUid];
+      element = this.layerController.arrLayers[itemUid];
 
       // if (!element.hide) {
 
@@ -3350,7 +3520,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
             }
 
             vectorStyle = c4g.maps.locationStyles[elementContent.locationStyle] && c4g.maps.locationStyles[elementContent.locationStyle].style;
-              if(c4g.maps.locationStyles[elementContent.locationStyle].fnStyleFunction) {
+              if(c4g.maps.locationStyles[elementContent.locationStyle] && c4g.maps.locationStyles[elementContent.locationStyle].fnStyleFunction) {
                   vectorStyle = Function("feature","data","map",c4g.maps.locationStyles[elementContent.locationStyle].fnStyleFunction);
               }
             if (missingStyles.length > 0) {
@@ -3376,8 +3546,8 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                   fVectorLayer = self.getVectorLayer(fVectorSource, vectorStyle);
 
                   // layers.push(vectorLayer);
-                  if (c4g.maps.layers[itemUid].fVectorLayer) {
-                    fLayerGroup = c4g.maps.layers[itemUid].vectorLayer;
+                  if (self.layerController.arrLayers[itemUid].fVectorLayer) {
+                    fLayerGroup = self.layerController.arrLayers[itemUid].vectorLayer;
                     fLayers = fLayerGroup.getLayers();
 
                     if (elementContent.data && elementContent.data.properties) {
@@ -3415,7 +3585,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                     fLayerGroup = new ol.layer.Group({
                       layers: [fVectorLayer]
                     });
-                    c4g.maps.layers[itemUid].vectorLayer = fLayerGroup;
+                      self.layerController.arrLayers[itemUid].vectorLayer = fLayerGroup;
                     self.options.mapController.map.addLayer(fLayerGroup);
                   }
                 }
@@ -3458,7 +3628,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
         layers: layers
       });
 
-      c4g.maps.layers[itemUid].vectorLayer = layerGroup;
+      this.layerController.arrLayers[itemUid].vectorLayer = layerGroup;
       this.options.mapController.map.addLayer(layerGroup);
       if(layerGroup.getLayers().getArray()[0] && layerGroup.getLayers().getArray()[0].popup && layerGroup.getLayers().getArray()[0].popup.showPopupOnActive){
         c4g.maps.popup.$content.html('');
@@ -3478,9 +3648,9 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
           }
           self.setPopup(objPopup,self);
         } else {
-          $.ajax({
+          jQuery.ajax({
             dataType: "json",
-            url: self.api_infowindow_url + '/' + popupInfos.content,
+            url: self._api_infowindow_url + '/' + popupInfos.content,
             success: function (data) {
               var popupInfo = {
                 async: popupInfos.async,
@@ -3507,14 +3677,14 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
 
       //hooks
       // }
-    }, // end of "drawLayer()"
+    } // end of "drawLayer()"
 
-    drawLayerInitial: function () {
+    drawLayerInitial() {
       var layerId,
           layer;
 
-      for (layerId in this.activeLayerIds) {
-        if (this.activeLayerIds.hasOwnProperty(layerId)) {
+      for (layerId in this._activeLayerIds) {
+        if (this._activeLayerIds.hasOwnProperty(layerId)) {
           this.showLayer(layerId);
         }
       }
@@ -3528,6 +3698,4 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
       }
     } // end of "drawLayerInitial()"
 
-  });
-
-}(jQuery, this.c4g));
+  }
