@@ -3314,7 +3314,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
           i,
           j;
 
-      layer = c4g.maps.layers[layerUid];
+      layer = this.layerController.arrLayers[layerUid];
       if (!layer) {
         //console.warn('Cannot hide unknown layer (' + layerUid + ')');
         return false;

@@ -1,4 +1,11 @@
 class C4gLayer{
+    get display() {
+        return this._display;
+    }
+
+    set display(value) {
+        this._display = value;
+    }
     constructor(layerArr) {
         this._id = layerArr['id'];
         this._pid = layerArr['pid'];
@@ -10,6 +17,7 @@ class C4gLayer{
         this._name = layerArr['name'];
         this._type = layerArr['type'];
         this._zoom_locations = layerArr['zoom_locations'];
+        this._display = layerArr['display'];
     }
     get id() {
         return this._id;
