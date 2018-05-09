@@ -91,7 +91,7 @@ class C4gLayerController{
                 layerid = layer.tabId;
                 layericon = layer.awesomeicon;
                 c4g.maps.starboardTabs = c4g.maps.starboardTabs || {};
-                starboard = this._proxy.options.mapController.controls.starboard;
+                starboard = self._proxy.options.mapController.controls.starboard;
                 starboard.hook_layerswitcher_loaded.push(function(){
                     c4g.maps.starboardTabs[layerid] = new c4g.maps.control.starboardplugin.Customtab(starboard, {
                         name: layername,
@@ -116,7 +116,7 @@ class C4gLayerController{
                 parentId = layer.pid;
                 parentIds = {};
                 // build parent-ids chain
-                while (this.arrLayers[parentId]) {
+                while (self.arrLayers[parentId]) {
                     if (parentIds[parentId]) {
                         console.warn('Caught endless-loop (ID: ' + layer.id + ')');
                         break;
@@ -149,7 +149,7 @@ class C4gLayerController{
                                 child.tabId = fLayer.tabId;
                                 child.renderSpecial = true;
                                 // set renderSpecial to remove it from normal layerswitcher
-                                this.arrLayers[child.id] = child;
+                                self.arrLayers[child.id] = child;
                                 if (child.hasChilds) {
                                     // recursive call
                                     fnHandleChilds(child);

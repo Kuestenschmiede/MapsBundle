@@ -257,7 +257,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
         for (i = 0; i < itemData.length; i += 1) {
           uid = itemData[i];
           //layer = this.plugin.customTabs[this.tabId].drawnFeatures[uid];
-          layer = c4g.maps.layers[uid];
+          layer = this.proxy.layerController.arrLayers[uid];
           // skip layer if it doesn't belong to this tab
           if (!(layer.renderSpecial == true && (layer.tabId == this.tabId))) {
             continue;
