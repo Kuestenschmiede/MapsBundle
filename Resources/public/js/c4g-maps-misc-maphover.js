@@ -111,8 +111,8 @@ this.c4g.maps.misc = this.c4g.maps.misc || {};
             tooltipLength,
             resolution,
             canvas,
-            mapData = this.options.mapController.data,
-            proxy = this.options.mapController.proxy;
+            mapData = self.options.mapController.data,
+            proxy = self.options.mapController.proxy;
 
 
         clustered = false;

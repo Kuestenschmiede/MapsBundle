@@ -1,4 +1,19 @@
 class C4gLayerController{
+    get proxy() {
+        return this._proxy;
+    }
+
+    set proxy(value) {
+        this._proxy = value;
+    }
+
+    get mapController() {
+        return this._mapController;
+    }
+
+    set mapController(value) {
+        this._mapController = value;
+    }
     constructor(proxy){
         this._proxy = proxy;
         this._mapController = proxy.options.mapController;
@@ -104,7 +119,7 @@ class C4gLayerController{
 
         if (layers && layers.length > 0) {
             for (i = 0; i < layers.length; i += 1) {
-                layer = layers[i];
+                layer = new C4gLayer(layers[i]);//layers[i];
                 linkItems = false;
                 //console.log(layer);
                 if (typeof layer.content === "object") {

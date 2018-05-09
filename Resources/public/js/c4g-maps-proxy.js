@@ -18,7 +18,6 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
 
           c4g.maps.locationStyles = c4g.maps.locationStyles || {};
           c4g.maps.editorStyles = c4g.maps.editorStyles || {};
-          c4g.maps.layers = c4g.maps.layers || {};
           c4g.maps.baselayers = c4g.maps.baselayers || {};
 
           //c4g.maps.hook.proxy_fillPopup = [];
@@ -290,13 +289,14 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
         for (layerId in self._activeLayerIds) {
           if (self._activeLayerIds.hasOwnProperty(layerId)) {
             layer = c4g.maps.layers[layerId];
-            if (self.checkLayerIsActiveForZoom(layerId)) {
-              if (layer.isInactive) {
-                self.showLayer(layerId);
+              layer = self.layerController.arrLayers[layerId];
+              if (self.checkLayerIsActiveForZoom(layerId)) {
+                  if (layer.isInactive) {
+                      self.showLayer(layerId);
+                  }
+              } else {
+                  self.hideLayer(layerId, true);
               }
-            } else {
-              self.hideLayer(layerId, true);
-            }
           }
         }
 
@@ -712,7 +712,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
         }
       };
 
-      getLayerStyles(c4g.maps.layers);
+      getLayerStyles(this.layerController._arrLayers);
 
       if (neededLayerStyles.length > 0) {
         this.loadLocationStyles(neededLayerStyles, options);
@@ -2471,7 +2471,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                                                               dataProjection: 'EPSG:4326',
                                                               featureProjection: 'EPSG:3857'
                                                           });
-                                                          var layer = c4g.maps.layers[featureData.properties.id];
+                                                          var layer = self.layerController._arrLayers[featureData.properties.id];
                                                           var popupContent = featureData.properties.popup;
                                                           layer.vectorLayer.getLayers().forEach(function(element, index, array) {
                                                               if (!c4g.maps.locationStyles[featureData.properties.styleId]) {
@@ -3037,161 +3037,161 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
 
       }//end of combineLayers
 
-    addLayers(layers, foreignLayers) {
-      var i,
-          j,
-          k,
-          p,
-          self,
-          isVisible,
-          layer,
-          storedItem,
-          linkItems,
-          uid,
-          currentZoom,
-          fnHandleAndAppendLayerChilds,
-          endlessLoopId,
-          parentId,
-          parentIds,
-          permalinkedLayers,
-          child,
-          fnHandleChilds,
-          key,
-          starboard,
-          fnAddToHook;
-
-      self = this;
-      isVisible = false;
-
-      c4g.maps.layers = c4g.maps.layers || {};
-
-      permalinkedLayers = this.options.mapController.data.layers || [];
-
-      fnHandleAndAppendLayerChilds = function (objItem) {
-        var toggle,
-            entryWrapper;
-
-        if (objItem.hasChilds) {
-          objItem.visibleChilds = self.addLayers(objItem.childs, foreignLayers);
-        }
-      }; // end of "fnHandleAndAppendLayerChilds()"
-
-      // wrapper function to avoid closure accessibility
-      fnAddToHook = function(layer) {
-        var layername, layerid, layericon;
-
-        if (layer.childs && layer.childs.length > 0) {
-          layername = layer.name;
-          layerid = layer.tabId;
-          layericon = layer.awesomeicon;
-          c4g.maps.starboardTabs = c4g.maps.starboardTabs || {};
-          starboard = self.options.mapController.controls.starboard;
-          starboard.hook_layerswitcher_loaded.push(function(){
-            c4g.maps.starboardTabs[layerid] = new c4g.maps.control.starboardplugin.Customtab(starboard, {
-              name: layername,
-              tabId: layerid,
-              awesomeicon: layericon
-            });
-          });
-        }
-      };
-
-      if (layers && layers.length > 0) {
-        for (i = 0; i < layers.length; i += 1) {
-          layer = layers[i];
-          linkItems = false;
-          //console.log(layer);
-          if (typeof layer.content === "object") {
-            layer.content = c4g.maps.utils.objectToArray(layer.content);
-          }
-
-          // endless-loop prevention
-          //
-          parentId = layer.pid;
-          parentIds = {};
-          // build parent-ids chain
-          while (c4g.maps.layers[parentId]) {
-            if (parentIds[parentId]) {
-              console.warn('Caught endless-loop (ID: ' + layer.id + ')');
-              break;
-            }
-            parentIds[parentId] = true;
-            parentId = c4g.maps.layers[parentId].pid;
-          }
-
-          if (layer.content && layer.content[0] && layer.content[0].cssClass) {
-            layer.cssClass = layer.content[0].cssClass;
-          }
-
-
-          if (!parentIds[parentId]) {
-
-            // prepare layer data if they are a new starboard tab
-            if (layer.type === "startab") {
-              layer.editable = true;
-              layer.renderSpecial = true;
-              layer.tabId = layer.id;
-              if (!layer.layername) {
-                layer.display = true;
-              }
-              // iterate childs and tell them to not load in layerswitcher
-              fnHandleChilds = function(fLayer) {
-                var count;
-                for (count = 0; count < fLayer.childs.length; count++) {
-                  child = fLayer.childs[count];
-                  child.editable = true;
-                  child.tabId = fLayer.tabId;
-                  child.renderSpecial = true;
-                  // set renderSpecial to remove it from normal layerswitcher
-                  c4g.maps.layers[child.id] = child;
-                  if (child.hasChilds) {
-                    // recursive call
-                    fnHandleChilds(child);
-                  }
-                }
-              }; // end of fnHandleChilds
-
-              if (layer.hasChilds) {
-                fnHandleChilds(layer);
-              }
-              fnAddToHook(layer);
-            }
-
-            uid = layer.id || c4g.maps.utils.getUniqueId();
-            c4g.maps.layers[uid] = layer;
-            layer.isInactive = false;
-            this._layerIds.push(layer.id);
-
-            if (layer.display) {
-              isVisible = true;
-              fnHandleAndAppendLayerChilds(layer);
-            } else if (layer.pid && c4g.maps.layers[layer.pid]) {
-              // set hide when layers are not displayed in the starboard
-              layer.hide = c4g.maps.layers[layer.pid].hide;
-            }
-
-            var visible = false;
-            if (permalinkedLayers.length > 0) {
-              for (p = 0; p < permalinkedLayers.length; p += 1) {
-                if (permalinkedLayers[p] == layer.id) {
-                  visible = true;
-                  break;
-                }
-              }
-            }
-
-            if ((layer.hide !== "1") || (visible)) {
-              this._activeLayerIds[layer.id] = 'invisible';
-            }
-
-          }
-        } // end of for-loop
-        // wrapperElement.appendChild(wrapper);
-      }
-
-
-      return isVisible;
-    } // end of "addLayers()"
+    // addLayers(layers, foreignLayers) {
+    //   var i,
+    //       j,
+    //       k,
+    //       p,
+    //       self,
+    //       isVisible,
+    //       layer,
+    //       storedItem,
+    //       linkItems,
+    //       uid,
+    //       currentZoom,
+    //       fnHandleAndAppendLayerChilds,
+    //       endlessLoopId,
+    //       parentId,
+    //       parentIds,
+    //       permalinkedLayers,
+    //       child,
+    //       fnHandleChilds,
+    //       key,
+    //       starboard,
+    //       fnAddToHook;
+    //
+    //   self = this;
+    //   isVisible = false;
+    //
+    //   c4g.maps.layers = c4g.maps.layers || {};
+    //
+    //   permalinkedLayers = this.options.mapController.data.layers || [];
+    //
+    //   fnHandleAndAppendLayerChilds = function (objItem) {
+    //     var toggle,
+    //         entryWrapper;
+    //
+    //     if (objItem.hasChilds) {
+    //       objItem.visibleChilds = self.addLayers(objItem.childs, foreignLayers);
+    //     }
+    //   }; // end of "fnHandleAndAppendLayerChilds()"
+    //
+    //   // wrapper function to avoid closure accessibility
+    //   fnAddToHook = function(layer) {
+    //     var layername, layerid, layericon;
+    //
+    //     if (layer.childs && layer.childs.length > 0) {
+    //       layername = layer.name;
+    //       layerid = layer.tabId;
+    //       layericon = layer.awesomeicon;
+    //       c4g.maps.starboardTabs = c4g.maps.starboardTabs || {};
+    //       starboard = self.options.mapController.controls.starboard;
+    //       starboard.hook_layerswitcher_loaded.push(function(){
+    //         c4g.maps.starboardTabs[layerid] = new c4g.maps.control.starboardplugin.Customtab(starboard, {
+    //           name: layername,
+    //           tabId: layerid,
+    //           awesomeicon: layericon
+    //         });
+    //       });
+    //     }
+    //   };
+    //
+    //   if (layers && layers.length > 0) {
+    //     for (i = 0; i < layers.length; i += 1) {
+    //       layer = layers[i];
+    //       linkItems = false;
+    //       //console.log(layer);
+    //       if (typeof layer.content === "object") {
+    //         layer.content = c4g.maps.utils.objectToArray(layer.content);
+    //       }
+    //
+    //       // endless-loop prevention
+    //       //
+    //       parentId = layer.pid;
+    //       parentIds = {};
+    //       // build parent-ids chain
+    //       while (c4g.maps.layers[parentId]) {
+    //         if (parentIds[parentId]) {
+    //           console.warn('Caught endless-loop (ID: ' + layer.id + ')');
+    //           break;
+    //         }
+    //         parentIds[parentId] = true;
+    //         parentId = c4g.maps.layers[parentId].pid;
+    //       }
+    //
+    //       if (layer.content && layer.content[0] && layer.content[0].cssClass) {
+    //         layer.cssClass = layer.content[0].cssClass;
+    //       }
+    //
+    //
+    //       if (!parentIds[parentId]) {
+    //
+    //         // prepare layer data if they are a new starboard tab
+    //         if (layer.type === "startab") {
+    //           layer.editable = true;
+    //           layer.renderSpecial = true;
+    //           layer.tabId = layer.id;
+    //           if (!layer.layername) {
+    //             layer.display = true;
+    //           }
+    //           // iterate childs and tell them to not load in layerswitcher
+    //           fnHandleChilds = function(fLayer) {
+    //             var count;
+    //             for (count = 0; count < fLayer.childs.length; count++) {
+    //               child = fLayer.childs[count];
+    //               child.editable = true;
+    //               child.tabId = fLayer.tabId;
+    //               child.renderSpecial = true;
+    //               // set renderSpecial to remove it from normal layerswitcher
+    //               c4g.maps.layers[child.id] = child;
+    //               if (child.hasChilds) {
+    //                 // recursive call
+    //                 fnHandleChilds(child);
+    //               }
+    //             }
+    //           }; // end of fnHandleChilds
+    //
+    //           if (layer.hasChilds) {
+    //             fnHandleChilds(layer);
+    //           }
+    //           fnAddToHook(layer);
+    //         }
+    //
+    //         uid = layer.id || c4g.maps.utils.getUniqueId();
+    //         c4g.maps.layers[uid] = layer;
+    //         layer.isInactive = false;
+    //         this._layerIds.push(layer.id);
+    //
+    //         if (layer.display) {
+    //           isVisible = true;
+    //           fnHandleAndAppendLayerChilds(layer);
+    //         } else if (layer.pid && c4g.maps.layers[layer.pid]) {
+    //           // set hide when layers are not displayed in the starboard
+    //           layer.hide = c4g.maps.layers[layer.pid].hide;
+    //         }
+    //
+    //         var visible = false;
+    //         if (permalinkedLayers.length > 0) {
+    //           for (p = 0; p < permalinkedLayers.length; p += 1) {
+    //             if (permalinkedLayers[p] == layer.id) {
+    //               visible = true;
+    //               break;
+    //             }
+    //           }
+    //         }
+    //
+    //         if ((layer.hide !== "1") || (visible)) {
+    //           this._activeLayerIds[layer.id] = 'invisible';
+    //         }
+    //
+    //       }
+    //     } // end of for-loop
+    //     // wrapperElement.appendChild(wrapper);
+    //   }
+    //
+    //
+    //   return isVisible;
+    // } // end of "addLayers()"
 
     showLayer(layerUid) {
       var layer,
@@ -3314,7 +3314,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
           i,
           j;
 
-      layer = this.layerController.arrLayers[layerUid];
+      layer = c4g.maps.layers[layerUid];
       if (!layer) {
         //console.warn('Cannot hide unknown layer (' + layerUid + ')');
         return false;
@@ -3688,9 +3688,9 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
           this.showLayer(layerId);
         }
       }
-      for (var l in c4g.maps.layers) {
-        if (c4g.maps.layers.hasOwnProperty(l)) {
-          layer = c4g.maps.layers[l];
+      for (let l in this.layerController._arrLayers) {
+        if (this.layerController._arrLayers.hasOwnProperty(l)) {
+          layer = this.layerController._arrLayers[l];
           if (layer.hide === "1") {
             this.hideLayer(layer.id);
           }

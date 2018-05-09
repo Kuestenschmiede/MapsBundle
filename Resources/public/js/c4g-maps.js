@@ -269,7 +269,7 @@ this.c4g.maps = this.c4g.maps || {};
       // set extent to make all locations visible if wanted
         if (mapData.calc_extent === "LOCATIONS") {
             displayAllLocations = function (layerIds) {
-                var layers = c4g.maps.layers,
+                var layers = self.proxy.layerController._arrLayers,
                     layer,
                     geometry,
                     coords,
