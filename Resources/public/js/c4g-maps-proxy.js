@@ -3289,9 +3289,9 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
       }
       this._activeLayerIds[layerUid] = 'visible';
 
-      if (layer && layer.hasChilds && activeForZoom) {
-        for (i = 0; i < layer.childs.length; i += 1) {
-          this.showLayer(layer.childs[i].id);
+      if (layer && layer._hasChilds && activeForZoom) {
+        for (i = 0; i < layer._childs.length; i += 1) {
+          this.showLayer(layer._childs[i].id);
         }
       }
 
@@ -3345,9 +3345,9 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
 
 
       //ToDo loading problem
-      if (layer && layer.hasChilds) {
-        for (i = 0; i < layer.childs.length; i += 1) {
-          this.hideLayer(layer.childs[i].id);
+      if (layer && layer._hasChilds) {
+        for (i = 0; i < layer._childs.length; i += 1) {
+          this.hideLayer(layer._childs[i].id);
         }
       }
       if(layer.isInactive){
