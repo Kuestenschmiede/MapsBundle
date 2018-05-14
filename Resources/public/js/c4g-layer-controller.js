@@ -87,9 +87,10 @@ class C4gLayerController{
             var toggle,
                 entryWrapper;
 
-            if (objItem._hasChilds) {
-                objItem._visibleChilds = self.addLayers(objItem._childs, foreignLayers);
+            if (objItem.hasChilds) {
+                objItem.visibleChilds = self.addLayers(objItem._childs, foreignLayers);
             }
+            console.log("called fnHandleAndAppendLayerChilds");
         }; // end of "fnHandleAndAppendLayerChilds()"
 
         // wrapper function to avoid closure accessibility
@@ -153,10 +154,11 @@ class C4gLayerController{
                         // iterate childs and tell them to not load in layerswitcher
                         fnHandleChilds = function(fLayer) {
                             for (let count = 0; count < fLayer.childs.length; count++) {
-                                child = new C4gLayer(fLayer.childs[count]);
-                                child.editable = true;
-                                child.tabId = fLayer.tabId;
-                                child.renderSpecial = true;
+                              let childArr = fLayer.childs[count];
+                              childArr.editable = true;
+                              childArr.tabId = fLayer.tabId;
+                              childArr.renderSpecial = true;
+                              child = new C4gLayer(childArr);
                                 // set renderSpecial to remove it from normal layerswitcher
                                 self.arrLayers[child.id] = child;
                                 if (child.hasChilds) {
@@ -201,9 +203,9 @@ class C4gLayerController{
 
                 }
             } // end of for-loop
+
             // wrapperElement.appendChild(wrapper);
         }
-
 
         return isVisible;
     } // end of "addLayers()"

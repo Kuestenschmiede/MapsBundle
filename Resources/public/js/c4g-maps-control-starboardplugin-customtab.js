@@ -451,36 +451,6 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
       }
     }, // end of "hideLayer()"
 
-    // functions for later use in the project hooks
-
-    //hasFeature: function(source, feat, opt_dbcompare) {
-    //  var ret = false;
-    //
-    //  ret = source.forEachFeature(function(feature) {
-    //    if (feature.get('uid') == feat.get('uid')) {
-    //      return true;
-    //    } else if (opt_dbcompare) {
-    //      if (feature.get('databaseId') !== undefined && feat.get('databaseId') !== undefined) {
-    //        if (feature.get('databaseId') == feat.get('databaseId')) {
-    //          return true;
-    //        }
-    //      }
-    //    }
-    //  });
-    //  return ret;
-    //}, // end of "hasFeature()"
-    //
-    //addFeatureToTree: function(feature, options) {
-
-    //}, // end of "addFeatureToTree()"
-    //
-    //deleteFeature: function(featureUid) {
-
-    //}, // end of "deleteFeature()"
-    //
-    //renameFeature: function(feature, options) {
-
-    //} // end of "renameFeature()"
 
   }); // end of "add methods"
 

@@ -3,7 +3,7 @@ class C4gLayer{
     return this._display;
   }
 
-    this._name = layerArr['name'];
+
   set display(value) {
     this._display = value;
   }
@@ -21,16 +21,19 @@ class C4gLayer{
     this._hasChilds = layerArr['hasChilds'];
     this._childs = layerArr['childs'];
     this._childsCount = layerArr['childsCount'];
-    this._renderSpecial = false;
+    this._renderSpecial = layerArr['renderSpecial'];
     this._editable = true;
-    this._tabId = 0;
+    this._type = layerArr['type'];
+    this._name = layerArr['name'];
+    // TODO gute default werte?
+    this._tabId = layerArr['tabId'];
     this._layername = layerArr['layername'];
+    this._visibleChilds = [];
   }
   get id() {
     return this._id;
   }
-    this._type = layerArr['type'];
-    // TODO gute default werte?
+
 
   set id(value) {
     this._id = value;
@@ -163,5 +166,13 @@ class C4gLayer{
 
   set layername(value) {
     this._layername = value;
+  }
+
+  get visibleChilds() {
+    return this._visibleChilds;
+  }
+
+  set visibleChilds(value) {
+    this._visibleChilds = value;
   }
 }
