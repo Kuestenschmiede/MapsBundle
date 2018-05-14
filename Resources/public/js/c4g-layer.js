@@ -3,6 +3,7 @@ class C4gLayer{
     return this._display;
   }
 
+    this._name = layerArr['name'];
   set display(value) {
     this._display = value;
   }
@@ -14,7 +15,6 @@ class C4gLayer{
     this._cssClass = layerArr['cssClass'];
     this._hide = layerArr['hide'];
     this._hide_child = layerArr['hide_child'];
-    this._name = layerArr['name'];
     this._type = layerArr['type'];
     this._zoom_locations = layerArr['zoom_locations'];
     this._display = layerArr['display'];
@@ -22,8 +22,6 @@ class C4gLayer{
     this._childs = layerArr['childs'];
     this._childsCount = layerArr['childsCount'];
     this._renderSpecial = false;
-    this._type = layerArr['type'];
-    // TODO gute default werte?
     this._editable = true;
     this._tabId = 0;
     this._layername = layerArr['layername'];
@@ -31,6 +29,8 @@ class C4gLayer{
   get id() {
     return this._id;
   }
+    this._type = layerArr['type'];
+    // TODO gute default werte?
 
   set id(value) {
     this._id = value;
