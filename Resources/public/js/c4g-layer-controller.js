@@ -90,7 +90,6 @@ class C4gLayerController{
             if (objItem.hasChilds) {
                 objItem.visibleChilds = self.addLayers(objItem._childs, foreignLayers);
             }
-            console.log("called fnHandleAndAppendLayerChilds");
         }; // end of "fnHandleAndAppendLayerChilds()"
 
         // wrapper function to avoid closure accessibility
