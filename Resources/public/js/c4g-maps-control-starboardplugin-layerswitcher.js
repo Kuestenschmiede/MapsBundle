@@ -248,9 +248,9 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
             layerItem = self.proxy.layerController.arrLayers[itemUid];
             if (layerItem && layerItem.zoom_locations === "1") {
                 if (layerItem.hasChilds) {
-                    for (key in layerItem.childs) {
-                        if (layerItem.childs.hasOwnProperty(key)) {
-                            layer = layerItem.childs[key];
+                    for (key in layerItem._childs) {
+                        if (layerItem._childs.hasOwnProperty(key)) {
+                            layer = layerItem._childs[key];
                             if(layer.type == "overpass"){
                                 continue
                             }
@@ -440,7 +440,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
             $entry.data('uid', uid);
             $entry.click(fnHandleEntryClick);
 
-            if (layer.visibleChilds) {
+            if (layer._visibleChilds) {
               toggle = document.createElement('span');
 
               if(layer.hide_child !='1'){
@@ -641,9 +641,9 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
       self = this;
       childActive = 0;
       layer = self.proxy.layerController.arrLayers[layerUid];
-      if (layer && layer.childs && layer.childs.length > 0) {
+      if (layer && layer._childs && layer._childs.length > 0) {
         // layer has childs
-        layer.childs.forEach(function (child) {
+        layer._childs.forEach(function (child) {
           if (self.proxy.activeLayerIds[child.id]) {
             childActive = childActive + 1;
           } else {

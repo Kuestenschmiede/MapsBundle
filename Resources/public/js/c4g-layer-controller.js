@@ -92,8 +92,8 @@ class C4gLayerController{
             var toggle,
                 entryWrapper;
 
-            if (objItem.hasChilds) {
-                objItem.visibleChilds = self.addLayers(objItem.childs, foreignLayers);
+            if (objItem._hasChilds) {
+                objItem._visibleChilds = self.addLayers(objItem._childs, foreignLayers);
             }
         }; // end of "fnHandleAndAppendLayerChilds()"
 
