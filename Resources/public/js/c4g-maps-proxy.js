@@ -1162,9 +1162,10 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
               for (j = 0; j< baselayer.overlays.length; j++){
                   if(!c4g.maps.overlays[baselayer.overlays[j].id]){
                       c4g.maps.overlays[baselayer.overlays[j].id] = baselayer.overlays[j];
-                      this.options.mapController.map.addLayer(this.showOverlayLayer(baselayer.overlays[j].id));
+                      c4g.maps.overlays[baselayer.overlays[j].id].vectorLayer = this.showOverlayLayer(baselayer.overlays[j].id);
                   }
-                  this.changeOpacity(baselayer.overlays[j].id, baselayer.overlays[j].opacity);
+
+
               }
           }
         }
@@ -1730,7 +1731,9 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                   c4g.maps.overlays = [];
               }
               c4g.maps.overlays[baseLayerConfig.overlays[i].id] = baseLayerConfig.overlays[i];
-              self.options.mapController.map.addLayer(self.showOverlayLayer(baseLayerConfig.overlays[i].id));
+              if(this.options.mapController.data.baselayer && parseInt(baseLayerConfig.id, 10) === parseInt(this.activeBaselayerId, 10)) {
+                  self.options.mapController.map.addLayer(self.showOverlayLayer(baseLayerConfig.overlays[i].id));
+              }
           }
 
         }
@@ -2111,7 +2114,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                   source: requestVectorSource
               });
               if(this.layerController.arrLayers[itemUid].cluster){
-                  vectorLayer = new ol.layer.AnimatedCluster(
+                  vectorLayer = new ol.layer.Vector(
                       {	name: 'Cluster',
                           source: clusterSource,
                           // Use a style function for cluster symbolisation
@@ -2578,7 +2581,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
 
                           //vectorLayer = self.getVectorLayer(clusterSource, styleForCluster);
 
-                          vectorLayer = new ol.layer.AnimatedCluster(
+                          vectorLayer = new ol.layer.Vector(
                               {	name: 'Cluster',
                                   source: clusterSource,
                                   // Use a style function for cluster symbolisation
@@ -3012,7 +3015,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
 
             //vectorLayer = self.getVectorLayer(clusterSource, styleForCluster);
 
-            vectorLayer = new ol.layer.AnimatedCluster({
+            vectorLayer = new ol.layer.Vector({
                 name: 'Cluster',
                 source: clusterSource,
                 style: styleForCluster

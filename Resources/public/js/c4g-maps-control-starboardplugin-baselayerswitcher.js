@@ -179,6 +179,11 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
         siblings = $(this).parent().siblings();
         for(var i = 0; i< siblings.length; i++){
             if (siblings[i] && $(siblings[i]).hasClass(c4g.maps.constant.css.OPEN)) {
+                if(c4g.maps.baselayers[self.proxy.activeBaselayerId] && c4g.maps.baselayers[self.proxy.activeBaselayerId].hasOverlays){
+                  for(let j = 0; j < c4g.maps.baselayers[self.proxy.activeBaselayerId].overlays.length; j++){
+                    self.proxy._options.mapController.map.removeLayer(c4g.maps.baselayers[self.proxy.activeBaselayerId].overlays[j].vectorLayer);
+                  }
+                }
                 $(siblings[i]).removeClass(c4g.maps.constant.css.OPEN).addClass(c4g.maps.constant.css.CLOSE);
             }
         }
@@ -199,6 +204,12 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
 
         if (self.proxy.activeBaselayerId !== itemUid) {
           self.proxy.showBaseLayer(itemUid);
+          if(c4g.maps.baselayers[itemUid].hasOverlays){
+              for(let j = 0;j < c4g.maps.baselayers[itemUid].overlays.length; j++){
+                  self.proxy.changeOpacity(c4g.maps.baselayers[itemUid].overlays[j].id,c4g.maps.baselayers[itemUid].overlays[j].opacity);
+              }
+          }
+
           if(this.nextSibling){
               var children = this.nextSibling.childNodes;
               for(i = 0; i < children.length; i++){
@@ -217,11 +228,6 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
               self.baselayers[id].$entry.addClass(c4g.maps.constant.css.ACTIVE).removeClass(c4g.maps.constant.css.INACTIVE);
             } else {
               self.baselayers[id].$entry.addClass(c4g.maps.constant.css.INACTIVE).removeClass(c4g.maps.constant.css.ACTIVE);
-              if(c4g.maps.baselayers[id].overlays){
-                  /*for(j = 0; j < c4g.maps.baselayers[id].overlays.length; j++) {
-                      self.proxy.changeOpacity(c4g.maps.baselayers[id].overlays[j].id, c4g.maps.baselayers[id].overlays[j].opacity);
-                  }*/
-              }
             }
           }
         }
@@ -239,14 +245,11 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
 
           listItem = options.parseAsList ? document.createElement('li') : document.createElement('div');
           this.baselayers[uid].entryWrapper = listItem;
-
           entry = document.createElement('a');
           entry.setAttribute('href', '#');
           entry.appendChild(document.createTextNode(c4g.maps.baselayers[uid].name));
           if(c4g.maps.baselayers[uid].hasOverlays){
 
-
-            //$(listItem).addClass(c4g.maps.constant.css.CLOSE);
 
             childList = document.createElement('ul');
             for(j = 0; j < c4g.maps.baselayers[uid].overlays.length; j++){
@@ -265,7 +268,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
                   self.proxy.changeOpacity($(this).parent().data('id'),this.value)
               });
 
-              self.proxy.changeOpacity(c4g.maps.baselayers[uid].overlays[j].id,c4g.maps.baselayers[uid].overlays[j].opacity);
+
 
               childEntry.appendChild(toggle);
               childItem.appendChild(childEntry);
@@ -284,10 +287,15 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
 
           if (this.starboard.options.mapController.data.default_baselayer && parseInt(uid, 10) === parseInt(this.starboard.options.mapController.data.default_baselayer, 10)) {
             $entry.addClass(c4g.maps.constant.css.ACTIVE);
-            $(listItem).addClass(c4g.maps.constant.OPEN);
+            $(listItem).addClass(c4g.maps.constant.css.OPEN);
+              if(c4g.maps.baselayers[uid].hasOverlays){
+                  for(let j = 0;j < c4g.maps.baselayers[uid].overlays.length; j++){
+                      self.proxy.changeOpacity(c4g.maps.baselayers[uid].overlays[j].id,c4g.maps.baselayers[uid].overlays[j].opacity);
+                  }
+              }
           } else {
             $entry.addClass(c4g.maps.constant.css.INACTIVE);
-            $(listItem).addClass(c4g.maps.constant.OPEN);
+            $(listItem).addClass(c4g.maps.constant.css.CLOSE);
           }
 
           $entry.data('uid', uid);
