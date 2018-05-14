@@ -353,7 +353,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
 
 
                 extent = ol.extent.boundingExtent(coordinates);
-                if(extent[0]=="Infinity"||extent[0]=="-Infinity"){
+                if (extent[0] === "Infinity" || extent[0] === "-Infinity") {
                     return
                 }
                 self.proxy.options.mapController.map.getView().fit(extent, self.proxy.options.mapController.map.getSize());
@@ -443,7 +443,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
             if (layer.visibleChilds) {
               toggle = document.createElement('span');
 
-              if(layer.hide_child !='1'){
+              if (layer.hide_child !== '1') {
                   $(listItem).addClass(c4g.maps.constant.css.CLOSE);
                   $(toggle).addClass(c4g.maps.constant.css.ICON);
               }
@@ -464,7 +464,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
               childWrapper = options.parseAsList ? document.createElement('ul') : document.createElement('div');
               item.childWrappers = item.childWrappers || [];
               item.childWrappers.push(childWrapper);
-                if(layer.hide_child !='1') {
+                if (layer.hide_child !== '1') {
                     listItem.appendChild(childWrapper);
                 }
             }
@@ -482,10 +482,11 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
               // is child-element
               pWrapper = this.layers[layer.pid].childWrappers;
               pWrapper[pWrapper.length - 1].appendChild(listItem);
+
             } else if (parseInt(layer.pid, 10) == 0) {
               // layer is map itself with a layer
               toggle = document.createElement('span');
-              if(layer.hide_child !='1') {
+              if(layer.hide_child !== '1') {
                   $(listItem).addClass(c4g.maps.constant.css.CLOSE);
               }
               $(toggle).addClass(c4g.maps.constant.css.ICON);

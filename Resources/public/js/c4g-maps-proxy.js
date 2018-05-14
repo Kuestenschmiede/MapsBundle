@@ -712,7 +712,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
         }
       };
 
-      getLayerStyles(this.layerController._arrLayers);
+      getLayerStyles(this.layerController.arrLayers);
 
       if (neededLayerStyles.length > 0) {
         this.loadLocationStyles(neededLayerStyles, options);
@@ -2471,7 +2471,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                                                               dataProjection: 'EPSG:4326',
                                                               featureProjection: 'EPSG:3857'
                                                           });
-                                                          var layer = self.layerController._arrLayers[featureData.properties.id];
+                                                          var layer = self.layerController.arrLayers[featureData.properties.id];
                                                           var popupContent = featureData.properties.popup;
                                                           layer.vectorLayer.getLayers().forEach(function(element, index, array) {
                                                               if (!c4g.maps.locationStyles[featureData.properties.styleId]) {
@@ -3688,9 +3688,9 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
           this.showLayer(layerId);
         }
       }
-      for (let l in this.layerController._arrLayers) {
-        if (this.layerController._arrLayers.hasOwnProperty(l)) {
-          layer = this.layerController._arrLayers[l];
+      for (let l in this.layerController.arrLayers) {
+        if (this.layerController.arrLayers.hasOwnProperty(l)) {
+          layer = this.layerController.arrLayers[l];
           if (layer.hide === "1") {
             this.hideLayer(layer.id);
           }

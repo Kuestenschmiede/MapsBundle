@@ -27,39 +27,34 @@ class C4gLayerController{
         this._arrLayers = value;
     }
     loadLayers () {
-        let self = this;
-        if (this._mapId === 0) {
-            return false;
-        }
+      let self = this;
+      if (this._mapId === 0) {
+        return false;
+      }
 
-        jQuery.ajax({
-            dataType: this._mapController.data.jsonp ? "jsonp" : "json",
-            url: this._proxy._api_layer_url
-        })
-
-            .done(function (data) {
-                self.addLayers(data.layer, data.foreignLayers);
-                self._proxy._layers_loaded = true;
-                c4g.maps.utils.callHookFunctions(self._proxy._hook_layer_loaded, self._proxy._layerIds);
-                c4g.maps.utils.callHookFunctions(c4g.maps.hook.proxy_layer_loaded, {layerIds: self._proxy._layerIds, proxy: self._proxy});
-                self._proxy.checkLocationStyles({
-                    success: function () {
-                        self._proxy.drawLayerInitial();
-                    }
-                });
-                return true;
-            })
-            .fail(function () {
-                // @TODO: error-messages
-                //   1) Visible message 4 users (i18n)
-                //   2) Technical console.warn
-                console.warn('An error occured while trying to load the layers...');
-                return false;
-            })
-            .always(function () {
-                // this._proxy.starboard.spinner.hide();
-            });
-
+      jQuery.ajax({
+        dataType: this._mapController.data.jsonp ? "jsonp" : "json",
+        url: this._proxy._api_layer_url
+      }).done(function (data) {
+        self.addLayers(data.layer, data.foreignLayers);
+        self._proxy._layers_loaded = true;
+        c4g.maps.utils.callHookFunctions(self._proxy._hook_layer_loaded, self._proxy._layerIds);
+        c4g.maps.utils.callHookFunctions(c4g.maps.hook.proxy_layer_loaded, {layerIds: self._proxy._layerIds, proxy: self._proxy});
+        self._proxy.checkLocationStyles({
+          success: function () {
+            self._proxy.drawLayerInitial();
+          }
+        });
+        return true;
+      }).fail(function () {
+        // @TODO: error-messages
+        //   1) Visible message 4 users (i18n)
+        //   2) Technical console.warn
+        console.warn('An error occured while trying to load the layers...');
+        return false;
+      }).always(function () {
+        // this._proxy.starboard.spinner.hide();
+      });
     } // end of "loadLayer()"
     addLayers(layers, foreignLayers) {
         var i,
@@ -157,9 +152,8 @@ class C4gLayerController{
                         }
                         // iterate childs and tell them to not load in layerswitcher
                         fnHandleChilds = function(fLayer) {
-                            var count;
-                            for (count = 0; count < fLayer.childs.length; count++) {
-                                child = fLayer.childs[count];
+                            for (let count = 0; count < fLayer.childs.length; count++) {
+                                child = new C4gLayer(fLayer.childs[count]);
                                 child.editable = true;
                                 child.tabId = fLayer.tabId;
                                 child.renderSpecial = true;

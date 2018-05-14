@@ -1,101 +1,167 @@
 class C4gLayer{
-    get display() {
-        return this._display;
-    }
+  get display() {
+    return this._display;
+  }
 
-    set display(value) {
-        this._display = value;
-    }
-    constructor(layerArr) {
-        this._id = layerArr['id'];
-        this._pid = layerArr['pid'];
-        this._async_content = layerArr['async_content'];
-        this._content = layerArr['content'];
-        this._cssClass = layerArr['cssClass'];
-        this._hide = layerArr['hide'];
-        this._hide_child = layerArr['hide_child'];
-        this._name = layerArr['name'];
-        this._type = layerArr['type'];
-        this._zoom_locations = layerArr['zoom_locations'];
-        this._display = layerArr['display'];
-    }
-    get id() {
-        return this._id;
-    }
+  set display(value) {
+    this._display = value;
+  }
+  constructor(layerArr) {
+    this._id = layerArr['id'];
+    this._pid = layerArr['pid'];
+    this._async_content = layerArr['async_content'];
+    this._content = layerArr['content'];
+    this._cssClass = layerArr['cssClass'];
+    this._hide = layerArr['hide'];
+    this._hide_child = layerArr['hide_child'];
+    this._name = layerArr['name'];
+    this._type = layerArr['type'];
+    this._zoom_locations = layerArr['zoom_locations'];
+    this._display = layerArr['display'];
+    this._hasChilds = layerArr['hasChilds'];
+    this._childs = layerArr['childs'];
+    this._childsCount = layerArr['childsCount'];
+    this._renderSpecial = false;
+    this._type = layerArr['type'];
+    // TODO gute default werte?
+    this._editable = true;
+    this._tabId = 0;
+    this._layername = layerArr['layername'];
+  }
+  get id() {
+    return this._id;
+  }
 
-    set id(value) {
-        this._id = value;
-    }
+  set id(value) {
+    this._id = value;
+  }
 
-    get pid() {
-        return this._pid;
-    }
+  get pid() {
+    return this._pid;
+  }
 
-    set pid(value) {
-        this._pid = value;
-    }
+  set pid(value) {
+    this._pid = value;
+  }
 
-    get async_content() {
-        return this._async_content;
-    }
+  get async_content() {
+    return this._async_content;
+  }
 
-    set async_content(value) {
-        this._async_content = value;
-    }
+  set async_content(value) {
+    this._async_content = value;
+  }
 
-    get content() {
-        return this._content;
-    }
+  get content() {
+    return this._content;
+  }
 
-    set content(value) {
-        this._content = value;
-    }
+  set content(value) {
+    this._content = value;
+  }
 
-    get cssClass() {
-        return this._cssClass;
-    }
+  get cssClass() {
+    return this._cssClass;
+  }
 
-    set cssClass(value) {
-        this._cssClass = value;
-    }
+  set cssClass(value) {
+    this._cssClass = value;
+  }
 
-    get hide() {
-        return this._hide;
-    }
+  get hide() {
+    return this._hide;
+  }
 
-    set hide(value) {
-        this._hide = value;
-    }
+  set hide(value) {
+    this._hide = value;
+  }
 
-    get hide_child() {
-        return this._hide_child;
-    }
+  get hide_child() {
+    return this._hide_child;
+  }
 
-    set hide_child(value) {
-        this._hide_child = value;
-    }
+  set hide_child(value) {
+    this._hide_child = value;
+  }
 
-    get name() {
-        return this._name;
-    }
+  get name() {
+    return this._name;
+  }
 
-    set name(value) {
-        this._name = value;
-    }
+  set name(value) {
+    this._name = value;
+  }
 
-    get type() {
-        return this._type;
-    }
+  get type() {
+    return this._type;
+  }
 
-    set type(value) {
-        this._type = value;
-    }
+  set type(value) {
+    this._type = value;
+  }
 
-    get zoom_locations() {
-        return this._zoom_locations;
-    }
+  get zoom_locations() {
+    return this._zoom_locations;
+  }
 
-    set zoom_locations(value) {
-        this._zoom_locations = value;
-    }
+  set zoom_locations(value) {
+    this._zoom_locations = value;
+  }
+
+
+  get hasChilds() {
+    return this._hasChilds;
+  }
+
+  set hasChilds(value) {
+    this._hasChilds = value;
+  }
+
+  get childs() {
+    return this._childs;
+  }
+
+  set childs(value) {
+    this._childs = value;
+  }
+
+  get childsCount() {
+    return this._childsCount;
+  }
+
+  set childsCount(value) {
+    this._childsCount = value;
+  }
+
+  get renderSpecial() {
+    return this._renderSpecial;
+  }
+
+  set renderSpecial(value) {
+    this._renderSpecial = value;
+  }
+
+  get editable() {
+    return this._editable;
+  }
+
+  set editable(value) {
+    this._editable = value;
+  }
+
+  get tabId() {
+    return this._tabId;
+  }
+
+  set tabId(value) {
+    this._tabId = value;
+  }
+
+  get layername() {
+    return this._layername;
+  }
+
+  set layername(value) {
+    this._layername = value;
+  }
 }
