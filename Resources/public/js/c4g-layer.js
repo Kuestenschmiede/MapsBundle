@@ -28,7 +28,7 @@ class C4gLayer{
     // TODO gute default werte?
     this._tabId = layerArr['tabId'];
     this._layername = layerArr['layername'];
-    this._visibleChilds = [];
+    this._visibleChilds = false;
   }
   get id() {
     return this._id;
