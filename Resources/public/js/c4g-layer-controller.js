@@ -116,8 +116,6 @@ class C4gLayerController{
       for (i = 0; i < layers.length; i += 1) {
         if (this.arrLayers[layers[i].id]) {
           layer = this.arrLayers[layers[i].id];
-          console.log("schon da");
-          console.log(layer);
         } else {
           layer = new C4gLayer(layers[i]);//layers[i];
         }
