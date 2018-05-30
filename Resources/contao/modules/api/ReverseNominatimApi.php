@@ -79,7 +79,7 @@ class ReverseNominatimApi extends \Frontend
                 $url_path = $arr_url["path"];
                 $url_query = $arr_url["query"];
                 if (!$objMapsProfile->geosearch_customengine_url) {
-                    $strSearchUrl = 'http://nominatim.openstreetmap.org/reverse';
+                    $strSearchUrl = 'https://nominatim.openstreetmap.org/reverse';
                 } else {
                     if (strpos($url_path, "search") !== false) {
                         $url_path = str_replace('search', 'reverse', $url_path);
@@ -114,7 +114,7 @@ class ReverseNominatimApi extends \Frontend
                 break;
             case '1':
             default:
-                $strSearchUrl = 'http://nominatim.openstreetmap.org/reverse';
+                $strSearchUrl = 'https://nominatim.openstreetmap.org/reverse';
                 break;
         }
 
