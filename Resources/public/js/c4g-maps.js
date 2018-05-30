@@ -217,7 +217,7 @@ this.c4g.maps = this.c4g.maps || {};
         if (mapData.geopicker && mapData.geopicker.type === "backend") {
             if (mapData.default_baselayer) {
                 this.proxy.hook_baselayer_loaded.push(function (baselayerIds) {
-                    self.proxy.showBaseLayer(mapData.default_baselayer);
+                    self.proxy.baselayerController.showBaseLayer(mapData.default_baselayer);
                 });
             } // end inner if
             this.map = new ol.Map({
@@ -244,7 +244,7 @@ this.c4g.maps = this.c4g.maps || {};
                     if (mapData.baselayer && baselayerIds.indexOf(mapData.baselayer.toString()) > -1) {
                         mapData.default_baselayer = mapData.baselayer;
                     }
-                    self.proxy.showBaseLayer(mapData.default_baselayer);
+                    self.proxy.baselayerController.showBaseLayer(mapData.default_baselayer);
                 });
                 this.proxy.hook_baselayer_loaded = hookie;
             }

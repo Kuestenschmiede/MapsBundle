@@ -1,4 +1,9 @@
 class C4gLayerController{
+  constructor(proxy){
+      this._proxy = proxy;
+      this._mapController = proxy.options.mapController;
+      this._arrLayers = [];
+  }
   get proxy() {
     return this._proxy;
   }
@@ -14,11 +19,7 @@ class C4gLayerController{
   set mapController(value) {
     this._mapController = value;
   }
-  constructor(proxy){
-    this._proxy = proxy;
-    this._mapController = proxy.options.mapController;
-    this._arrLayers = [];
-  }
+  
   get arrLayers() {
     return this._arrLayers;
   }
@@ -28,21 +29,21 @@ class C4gLayerController{
   }
   loadLayers () {
     let self = this;
-    if (this._mapId === 0) {
+    if (this.mapId === 0) {
       return false;
     }
 
     jQuery.ajax({
-      dataType: this._mapController.data.jsonp ? "jsonp" : "json",
-      url: this._proxy._api_layer_url
+      dataType: this.mapController.data.jsonp ? "jsonp" : "json",
+      url: this.proxy.api_layer_url
     }).done(function (data) {
       self.addLayers(data.layer, data.foreignLayers);
-      self._proxy._layers_loaded = true;
-      c4g.maps.utils.callHookFunctions(self._proxy._hook_layer_loaded, self._proxy._layerIds);
-      c4g.maps.utils.callHookFunctions(c4g.maps.hook.proxy_layer_loaded, {layerIds: self._proxy._layerIds, proxy: self._proxy});
-      self._proxy.checkLocationStyles({
+      self.proxy.layers_loaded = true;
+      c4g.maps.utils.callHookFunctions(self.proxy.hook_layer_loaded, self.proxy.layerIds);
+      c4g.maps.utils.callHookFunctions(c4g.maps.hook.proxy_layer_loaded, {layerIds: self.proxy.layerIds, proxy: self.proxy});
+      self.proxy.checkLocationStyles({
         success: function () {
-          self._proxy.drawLayerInitial();
+          self.proxy.drawLayerInitial();
         }
       });
       return true;
@@ -53,7 +54,7 @@ class C4gLayerController{
       console.warn('An error occured while trying to load the layers...');
       return false;
     }).always(function () {
-      // this._proxy.starboard.spinner.hide();
+      // this.proxy.starboard.spinner.hide();
     });
   } // end of "loadLayer()"
   addLayers(layers, foreignLayers) {
@@ -81,14 +82,14 @@ class C4gLayerController{
     let self = this;
     isVisible = false;
 
-    permalinkedLayers = this._mapController.data.layers || [];
+    permalinkedLayers = this.mapController.data.layers || [];
 
     fnHandleAndAppendLayerChilds = function (objItem) {
       var toggle,
         entryWrapper;
 
       if (objItem.hasChilds) {
-        objItem.visibleChilds = self.addLayers(objItem._childs, foreignLayers);
+        objItem.visibleChilds = self.addLayers(objItem.childs, foreignLayers);
       }
     }; // end of "fnHandleAndAppendLayerChilds()"
 
@@ -101,7 +102,7 @@ class C4gLayerController{
         layerid = layer.tabId;
         layericon = layer.awesomeicon;
         c4g.maps.starboardTabs = c4g.maps.starboardTabs || {};
-        starboard = self._proxy.options.mapController.controls.starboard;
+        starboard = self.proxy.options.mapController.controls.starboard;
         starboard.hook_layerswitcher_loaded.push(function(){
           c4g.maps.starboardTabs[layerid] = new c4g.maps.control.starboardplugin.Customtab(starboard, {
             name: layername,
@@ -186,7 +187,7 @@ class C4gLayerController{
           uid = layer.id || c4g.maps.utils.getUniqueId();
           this.arrLayers[uid] = layer;
           layer.isInactive = false;
-          this._proxy.layerIds.push(layer.id);
+          this.proxy.layerIds.push(layer.id);
 
           if (layer.display) {
             isVisible = true;
@@ -207,7 +208,7 @@ class C4gLayerController{
           }
 
           if ((layer.hide !== "1") || (visible)) {
-            this._proxy.activeLayerIds[layer.id] = 'invisible';
+            this.proxy.activeLayerIds[layer.id] = 'invisible';
           }
 
         }

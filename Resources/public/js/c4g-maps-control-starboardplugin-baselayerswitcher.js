@@ -125,7 +125,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
       } // end of "fnDrawContent()"
 
       if (this.proxy.baselayers_loaded) {
-        fnDrawContent(this.proxy.baselayerIds);
+        fnDrawContent(this.proxy.baselayerController.baselayerIds);
       } else {
         this.proxy.hook_baselayer_loaded=(fnDrawContent);
       }
@@ -203,10 +203,10 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
           $(self.starboard.element).css('right', self.starboard.container.offsetWidth);
 
         if (self.proxy.activeBaselayerId !== itemUid) {
-          self.proxy.showBaseLayer(itemUid);
-          if(c4g.maps.baselayers[itemUid].hasOverlays){
-              for(let j = 0;j < c4g.maps.baselayers[itemUid].overlays.length; j++){
-                  self.proxy.changeOpacity(c4g.maps.baselayers[itemUid].overlays[j].id,c4g.maps.baselayers[itemUid].overlays[j].opacity);
+          self.proxy.baselayerController.showBaseLayer(itemUid);
+          if(self.proxy.baselayerController.arrBaselayers[itemUid].hasOverlays){
+              for(let j = 0;j < self.proxy.baselayerController.arrBaselayers[itemUid].overlays.length; j++){
+                  self.proxy.changeOpacity(self.proxy.baselayerController.arrBaselayers[itemUid].overlays[j].id,self.proxy.baselayerController.arrBaselayers[itemUid].overlays[j].opacity);
               }
           }
 
@@ -247,22 +247,22 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
           this.baselayers[uid].entryWrapper = listItem;
           entry = document.createElement('a');
           entry.setAttribute('href', '#');
-          entry.appendChild(document.createTextNode(c4g.maps.baselayers[uid].name));
-          if(c4g.maps.baselayers[uid].hasOverlays){
+          entry.appendChild(document.createTextNode(self.proxy.baselayerController.arrBaselayers[uid].name));
+          if(self.proxy.baselayerController.arrBaselayers[uid].hasOverlays && false){
 
 
             childList = document.createElement('ul');
-            for(j = 0; j < c4g.maps.baselayers[uid].overlays.length; j++){
+            for(j = 0; j < self.proxy.baselayerController.arrBaselayers[uid].overlays.length; j++){
               childItem = document.createElement('li');
               childEntry = document.createElement('a');
               $(childEntry).addClass(c4g.maps.constant.css.INACTIVE);
-              childEntry.appendChild(document.createTextNode(c4g.maps.baselayers[uid].overlays[j].name));
-              $(childEntry).data('id',c4g.maps.baselayers[uid].overlays[j].id);
+              childEntry.appendChild(document.createTextNode(self.proxy.baselayerController.arrBaselayers[uid].overlays[j].name));
+              $(childEntry).data('id',self.proxy.baselayerController.arrBaselayers[uid].overlays[j].id);
               toggle = document.createElement('input');
               toggle.setAttribute('type','range');
               toggle.setAttribute('min',0);
               toggle.setAttribute('max',100);
-              toggle.setAttribute('value',c4g.maps.baselayers[uid].overlays[j].opacity);
+              toggle.setAttribute('value',self.proxy.baselayerController.arrBaselayers[uid].overlays[j].opacity);
               toggle.setAttribute('steps',10);
               $(toggle).on('input', function (event) {
                   self.proxy.changeOpacity($(this).parent().data('id'),this.value)
@@ -288,9 +288,9 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
           if (this.starboard.options.mapController.data.default_baselayer && parseInt(uid, 10) === parseInt(this.starboard.options.mapController.data.default_baselayer, 10)) {
             $entry.addClass(c4g.maps.constant.css.ACTIVE);
             $(listItem).addClass(c4g.maps.constant.css.OPEN);
-              if(c4g.maps.baselayers[uid].hasOverlays){
-                  for(let j = 0;j < c4g.maps.baselayers[uid].overlays.length; j++){
-                      self.proxy.changeOpacity(c4g.maps.baselayers[uid].overlays[j].id,c4g.maps.baselayers[uid].overlays[j].opacity);
+              if(self.proxy.baselayerController.arrBaselayers[uid].hasOverlays){
+                  for(let j = 0;j < self.proxy.baselayerController.arrBaselayers[uid].overlays.length; j++){
+                      self.proxy.changeOpacity(self.proxy.baselayerController.arrBaselayers[uid].overlays[j].id,self.proxy.baselayerController.arrBaselayers[uid].overlays[j].opacity);
                   }
               }
           } else {
