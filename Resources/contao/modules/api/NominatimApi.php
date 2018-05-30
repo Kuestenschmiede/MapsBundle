@@ -71,7 +71,7 @@ class NominatimApi extends \Frontend
             case '3':
                 if (!$objMapsProfile->geosearch_customengine_url)
                 {
-                    $strSearchUrl = 'http://nominatim.openstreetmap.org/search';
+                    $strSearchUrl = 'https://nominatim.openstreetmap.org/search';
                 }
                 else
                 {
@@ -91,7 +91,7 @@ class NominatimApi extends \Frontend
                 break;
             case '1':
             default:
-                $strSearchUrl = 'http://nominatim.openstreetmap.org/search';
+                $strSearchUrl = 'https://nominatim.openstreetmap.org/search';
                 break;
         }
 
