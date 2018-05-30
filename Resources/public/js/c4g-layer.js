@@ -29,7 +29,12 @@ class C4gLayer{
     this._tabId = layerArr['tabId'];
     this._layername = layerArr['layername'];
     this._visibleChilds = false;
+    this._vectorLayer = null;
+    if (layerArr.projectId) {
+      this.projectId = layerArr.projectId;
+    }
   }
+
   get id() {
     return this._id;
   }
@@ -174,5 +179,13 @@ class C4gLayer{
 
   set visibleChilds(value) {
     this._visibleChilds = value;
+  }
+
+  get vectorLayer() {
+    return this._vectorLayer;
+  }
+
+  set vectorLayer(value) {
+    this._vectorLayer = value;
   }
 }
