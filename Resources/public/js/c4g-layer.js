@@ -30,7 +30,11 @@ class C4gLayer{
     this._layername = layerArr['layername'];
     this._visibleChilds = false;
     this._vectorLayer = null;
+    if (layerArr.projectId) {
+      this.projectId = layerArr.projectId;
+    }
   }
+
   get id() {
     return this._id;
   }
