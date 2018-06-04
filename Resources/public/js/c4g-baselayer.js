@@ -1,5 +1,5 @@
 class C4gBaselayer{
-    constructor(baselayerArr) {
+    constructor(baselayerArr, controller) {
         this._id = baselayerArr['id'];
         this._pid = baselayerArr['pid'];
         this._name = baselayerArr['name'];
@@ -15,7 +15,7 @@ class C4gBaselayer{
         this._bing_style = baselayerArr['bing_style'];
         this._style = baselayerArr['style'];
         this._attribution = baselayerArr['attribution'];
-        this._params = baselayerArr['params']
+        this._params = baselayerArr['params'];
         this._wms_gutter = baselayerArr['wms_gutter'];
         this._minzoomlevel = baselayerArr['minzoomlevel'];
         this._maxzoomlevel = baselayerArr['maxzoomlevel'];
@@ -32,7 +32,9 @@ class C4gBaselayer{
         this._style_url = baselayerArr['style_url'];
         this._hasOverlays = baselayerArr['hasOverlays'];
         this._overlays = baselayerArr['overlays'];
+        this._overlayController = new C4gOverlayController(this);
         this._layer = false;
+        this._controller = controller
     }
 
 
@@ -307,5 +309,21 @@ class C4gBaselayer{
 
     set layer(value) {
         this._layer = value;
+    }
+
+    get overlayController() {
+        return this._overlayController;
+    }
+
+    set overlayController(value) {
+        this._overlayController = value;
+    }
+
+    get controller() {
+        return this._controller;
+    }
+
+    set controller(value) {
+        this._controller = value;
     }
 }

@@ -173,50 +173,55 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
       }
 
       handleEntryClick = function (event) {
-        var itemUid,
+          event.preventDefault();
+
+          var itemUid,
             siblings,
             baselayerItem;
-        siblings = $(this).parent().siblings();
-        for(var i = 0; i< siblings.length; i++){
-            if (siblings[i] && $(siblings[i]).hasClass(c4g.maps.constant.css.OPEN)) {
-                if(c4g.maps.baselayers[self.proxy.activeBaselayerId] && c4g.maps.baselayers[self.proxy.activeBaselayerId].hasOverlays){
-                  for(let j = 0; j < c4g.maps.baselayers[self.proxy.activeBaselayerId].overlays.length; j++){
-                    self.proxy._options.mapController.map.removeLayer(c4g.maps.baselayers[self.proxy.activeBaselayerId].overlays[j].vectorLayer);
+          siblings = $(this).parent().siblings();
+          for(var i = 0; i< siblings.length; i++){
+              if (siblings[i] && $(siblings[i]).hasClass(c4g.maps.constant.css.OPEN)) {
+                  if(self.proxy.baselayerController.arrBaselayers[self.proxy.activeBaselayerId] && self.proxy.baselayerController.arrBaselayers[self.proxy.activeBaselayerId].hasOverlays){
+                    for(let j in self.proxy.baselayerController.arrBaselayers[self.proxy.activeBaselayerId].overlayController.arrOverlays){
+                      if(self.proxy.baselayerController.arrBaselayers[self.proxy.activeBaselayerId].overlayController.arrOverlays.hasOwnProperty(j))
+                      self.proxy._options.mapController.map.removeLayer(self.proxy.baselayerController.arrBaselayers[self.proxy.activeBaselayerId].overlayController.arrOverlays[j].layer);
+                    }
+                  }
+                  $(siblings[i]).removeClass(c4g.maps.constant.css.OPEN).addClass(c4g.maps.constant.css.CLOSE);
+              }
+          }
+          itemUid = $(this).data('uid');
+            if ($(this).parent().hasClass(c4g.maps.constant.css.CLOSE)) {
+                $(this).parent().removeClass(c4g.maps.constant.css.CLOSE).addClass(c4g.maps.constant.css.OPEN);
+            } else {
+                $(this).parent().removeClass(c4g.maps.constant.css.OPEN).addClass(c4g.maps.constant.css.CLOSE);
+            }
+
+            if (self.proxy.options.mapController.rightSlideElements) {
+                self.proxy.options.mapController.rightSlideElements.forEach(function (element) {
+                    $(element).css('right', self.starboard.container.offsetWidth);
+                });
+            }
+            $(self.starboard.element).css('right', self.starboard.container.offsetWidth);
+
+          if (self.proxy.activeBaselayerId !== itemUid) {
+            self.proxy.baselayerController.showBaseLayer(itemUid);
+            if(self.proxy.baselayerController.arrBaselayers[itemUid].hasOverlays){
+                for(let j in self.proxy.baselayerController.arrBaselayers[itemUid].overlayController.arrOverlays){
+                  if(self.proxy.baselayerController.arrBaselayers[itemUid].overlayController.arrOverlays.hasOwnProperty()){
+                      self.proxy.baselayerController.arrBaselayers[itemUid].overlayController.arrOverlays[j].changeOpacity(self.proxy.baselayerController.arrBaselayers[itemUid].overlayController.arrOverlays[j].opacity);
                   }
                 }
-                $(siblings[i]).removeClass(c4g.maps.constant.css.OPEN).addClass(c4g.maps.constant.css.CLOSE);
             }
-        }
-        event.preventDefault();
-        itemUid = $(this).data('uid');
-          if ($(this).parent().hasClass(c4g.maps.constant.css.CLOSE)) {
-              $(this).parent().removeClass(c4g.maps.constant.css.CLOSE).addClass(c4g.maps.constant.css.OPEN);
-          } else {
-              $(this).parent().removeClass(c4g.maps.constant.css.OPEN).addClass(c4g.maps.constant.css.CLOSE);
-          }
+            $(this).addClass(c4g.maps.constant.css.ACTIVE).removeClass(c4g.maps.constant.css.INACTIVE);
 
-          if (self.proxy.options.mapController.rightSlideElements) {
-              self.proxy.options.mapController.rightSlideElements.forEach(function (element) {
-                  $(element).css('right', self.starboard.container.offsetWidth);
-              });
+            // if(this.nextSibling){
+            //     var children = this.nextSibling.childNodes;
+            //     for(i = 0; i < children.length; i++){
+            //         $(children[i].firstChild).addClass(c4g.maps.constant.css.ACTIVE).removeClass(c4g.maps.constant.css.INACTIVE);
+            //     }
+            // }
           }
-          $(self.starboard.element).css('right', self.starboard.container.offsetWidth);
-
-        if (self.proxy.activeBaselayerId !== itemUid) {
-          self.proxy.baselayerController.showBaseLayer(itemUid);
-          if(self.proxy.baselayerController.arrBaselayers[itemUid].hasOverlays){
-              for(let j = 0;j < self.proxy.baselayerController.arrBaselayers[itemUid].overlays.length; j++){
-                  self.proxy.changeOpacity(self.proxy.baselayerController.arrBaselayers[itemUid].overlays[j].id,self.proxy.baselayerController.arrBaselayers[itemUid].overlays[j].opacity);
-              }
-          }
-
-          if(this.nextSibling){
-              var children = this.nextSibling.childNodes;
-              for(i = 0; i < children.length; i++){
-                  $(children[i].firstChild).addClass(c4g.maps.constant.css.ACTIVE).removeClass(c4g.maps.constant.css.INACTIVE);
-              }
-          }
-        }
       }; // end of "handleEntryClick()"
 
       handleChangeBaselayerVisibility = function (baselayerConfig) {
@@ -248,7 +253,8 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
           entry = document.createElement('a');
           entry.setAttribute('href', '#');
           entry.appendChild(document.createTextNode(self.proxy.baselayerController.arrBaselayers[uid].name));
-          if(self.proxy.baselayerController.arrBaselayers[uid].hasOverlays && false){
+          $(entry).data('id', uid);
+          if(self.proxy.baselayerController.arrBaselayers[uid].hasOverlays){
 
 
             childList = document.createElement('ul');
@@ -258,6 +264,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
               $(childEntry).addClass(c4g.maps.constant.css.INACTIVE);
               childEntry.appendChild(document.createTextNode(self.proxy.baselayerController.arrBaselayers[uid].overlays[j].name));
               $(childEntry).data('id',self.proxy.baselayerController.arrBaselayers[uid].overlays[j].id);
+              $(childEntry).data('pid',uid);
               toggle = document.createElement('input');
               toggle.setAttribute('type','range');
               toggle.setAttribute('min',0);
@@ -265,7 +272,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
               toggle.setAttribute('value',self.proxy.baselayerController.arrBaselayers[uid].overlays[j].opacity);
               toggle.setAttribute('steps',10);
               $(toggle).on('input', function (event) {
-                  self.proxy.changeOpacity($(this).parent().data('id'),this.value)
+                  self.proxy.baselayerController.arrBaselayers[$(this).parent().data('pid')].overlayController.arrOverlays[$(this).parent().data('id')].changeOpacity(this.value)
               });
 
 
@@ -289,8 +296,11 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
             $entry.addClass(c4g.maps.constant.css.ACTIVE);
             $(listItem).addClass(c4g.maps.constant.css.OPEN);
               if(self.proxy.baselayerController.arrBaselayers[uid].hasOverlays){
-                  for(let j = 0;j < self.proxy.baselayerController.arrBaselayers[uid].overlays.length; j++){
-                      self.proxy.changeOpacity(self.proxy.baselayerController.arrBaselayers[uid].overlays[j].id,self.proxy.baselayerController.arrBaselayers[uid].overlays[j].opacity);
+                  for(let j in self.proxy.baselayerController.arrBaselayers[uid].overlayController.arrOverlays){
+                        if(self.proxy.baselayerController.arrBaselayers[uid].overlayController.arrOverlays.hasOwnProperty(j)){
+                            self.proxy.baselayerController.arrBaselayers[uid].overlayController.arrOverlays[j].changeOpacity(self.proxy.baselayerController.arrBaselayers[uid].overlayController.arrOverlays[j].opacity);
+                        }
+
                   }
               }
           } else {

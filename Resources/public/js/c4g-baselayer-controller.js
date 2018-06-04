@@ -96,7 +96,7 @@ class C4gBaselayerController {
                 uid = baselayer.id || c4g.maps.utils.getUniqueId();
                 this._baselayerIds.push(uid);
                 if (!this.arrBaselayers[uid]) {
-                    this.arrBaselayers[uid] = new C4gBaselayer(baselayer);
+                    this.arrBaselayers[uid] = new C4gBaselayer(baselayer, this);
                 }
 
                 // @TODO: check initial baselayer-handling
@@ -104,17 +104,12 @@ class C4gBaselayerController {
                     this.showBaseLayer(uid);
                 }
 
-                if(baselayer.hasOverlays && false){
-                    if(!c4g.maps.overlays){
-                        c4g.maps.overlays = [];
-                    }
-                    for (j = 0; j< baselayer.overlays.length; j++){
-                        if(!c4g.maps.overlays[baselayer.overlays[j].id]){
-                            c4g.maps.overlays[baselayer.overlays[j].id] = baselayer.overlays[j];
-                            c4g.maps.overlays[baselayer.overlays[j].id].vectorLayer = this.showOverlayLayer(baselayer.overlays[j].id);
+                if(this.arrBaselayers[uid].hasOverlays){
+                    for (j = 0; j< this.arrBaselayers[uid].overlays.length; j++){
+                        if(!this.arrBaselayers[uid].overlayController.arrOverlays[this.arrBaselayers[uid].overlays[j].id]){
+                            this.arrBaselayers[uid].overlayController.arrOverlays[this.arrBaselayers[uid].overlays[j].id] = new C4gOverlay(this.arrBaselayers[uid].overlays[j], this.mapController);
+                            this.arrBaselayers[uid].overlayController.arrOverlays[this.arrBaselayers[uid].overlays[j].id].layer = this.arrBaselayers[uid].overlayController.showOverlayLayer(this.arrBaselayers[uid].overlays[j].id);
                         }
-
-
                     }
                 }
             }
@@ -316,7 +311,7 @@ class C4gBaselayerController {
                     if (osmSourceConfigs[baseLayerConfig.style]) {
                         newBaselayer = new ol.layer.Tile({
                             source: new ol.source.OSM(
-                                jQuery.extend(
+                                $.extend(
                                     osmSourceConfigs[baseLayerConfig.style],
                                     layerOptions
                                 )
@@ -326,7 +321,7 @@ class C4gBaselayerController {
                         // Stamen
                         newBaselayer = new ol.layer.Tile({
                             source: new ol.source.Stamen(
-                                jQuery.extend(
+                                $.extend(
                                     stamenSourceConfigs[baseLayerConfig.style],
                                     layerOptions
                                 )
@@ -364,7 +359,7 @@ class C4gBaselayerController {
                         if (baseLayerConfig.mapbox_type === 'Mapbox') {
                             layerOptions.url = baseLayerConfig.url + baseLayerConfig.app_id + '/tiles/{z}/{x}/{y}?access_token=' + baseLayerConfig.api_key;
                             newBaselayer = new ol.layer.Tile({
-                                source: new ol.source.XYZ(jQuery.extend(
+                                source: new ol.source.XYZ($.extend(
                                     mapboxSourceConfigs[baseLayerConfig.mapbox_type],
                                     layerOptions))
                             });
@@ -372,7 +367,7 @@ class C4gBaselayerController {
                             layerOptions.url = baseLayerConfig.url_classic + baseLayerConfig.app_id + '/{z}/{x}/{y}.png?access_token=' + baseLayerConfig.api_key;
 
                             newBaselayer = new ol.layer.Tile({
-                                source: new ol.source.XYZ(jQuery.extend(
+                                source: new ol.source.XYZ($.extend(
                                     mapboxSourceConfigs[baseLayerConfig.mapbox_type],
                                     layerOptions
                                 ))
@@ -381,7 +376,7 @@ class C4gBaselayerController {
                     }else if(baseLayerConfig.hide_in_be){
                         layerOptions.url = "con4gis/baseLayerTileService/" + baseLayerConfig.id + "/{z}/{x}/{y}";
                         newBaselayer = new ol.layer.Tile({
-                            source: new ol.source.XYZ(jQuery.extend(
+                            source: new ol.source.XYZ($.extend(
                                 mapboxSourceConfigs[baseLayerConfig.mapbox_type],
                                 layerOptions))
                         });
@@ -454,7 +449,7 @@ class C4gBaselayerController {
                         }
 
                         newBaselayer = new ol.layer.Tile({
-                            source: new ol.source.XYZ(jQuery.extend(
+                            source: new ol.source.XYZ($.extend(
                                 hereSourceConfigs[baseLayerConfig.here_type],
                                 layerOptions))
                         });
@@ -462,7 +457,7 @@ class C4gBaselayerController {
                     else if(baseLayerConfig.hide_in_be){
                         layerOptions.url = layerOptions.url = "con4gis/baseLayerTileService/" + baseLayerConfig.id + "/{z}/{x}/{y}";
                         newBaselayer = new ol.layer.Tile({
-                            source: new ol.source.XYZ(jQuery.extend(
+                            source: new ol.source.XYZ($.extend(
                                 mapboxSourceConfigs[baseLayerConfig.here_type],
                                 layerOptions))
                         });
@@ -542,20 +537,27 @@ class C4gBaselayerController {
                     console.warn('unsupported provider');
                     break;
             }
-
-            if (baseLayerConfig.hasOverlays) {
-
-                for (i = 0; i < baseLayerConfig.overlays.length; i += 1) {
-                    if(!c4g.maps.overlays){
-                        c4g.maps.overlays = [];
-                    }
-                    c4g.maps.overlays[baseLayerConfig.overlays[i].id] = baseLayerConfig.overlays[i];
-                    if(this.mapController.data.baselayer && parseInt(baseLayerConfig.id, 10) === parseInt(this.proxy.activeBaselayerId, 10)) {
-                        self.mapController.map.addLayer(self.showOverlayLayer(baseLayerConfig.overlays[i].id));
+            if(baseLayerConfig.hasOverlays){
+                for (i = 0; i< baseLayerConfig.overlays.length; i++){
+                    if(!baseLayerConfig.overlayController.arrOverlays[baseLayerConfig.overlays[i].id]){
+                        baseLayerConfig.overlayController.arrOverlays[baseLayerConfig.overlays[i].id] = new C4gOverlay(baseLayerConfig.overlays[i],this.mapController);
+                        baseLayerConfig.overlayController.arrOverlays[baseLayerConfig.overlays[i].id].layer = baseLayerConfig.overlayController.showOverlayLayer(baseLayerConfig.overlays[i].id);
                     }
                 }
-
             }
+            // if (baseLayerConfig.hasOverlays) {
+            //
+            //     for (i = 0; i < baseLayerConfig.overlays.length; i += 1) {
+            //         if(!c4g.maps.overlays){
+            //             c4g.maps.overlays = [];
+            //         }
+            //         c4g.maps.overlays[baseLayerConfig.overlays[i].id] = baseLayerConfig.overlays[i];
+            //         if(this.mapController.data.baselayer && parseInt(baseLayerConfig.id, 10) === parseInt(this.proxy.activeBaselayerId, 10)) {
+            //             self.mapController.map.addLayer(self.showOverlayLayer(baseLayerConfig.overlays[i].id));
+            //         }
+            //     }
+            //
+            // }
 
             this.arrBaselayers[baseLayerUid].layer = newBaselayer;
         }
@@ -661,7 +663,7 @@ class C4gBaselayerController {
         if (typeof baseLayerConfig !== "undefined") {
             this.proxy.activeBaselayerId = baseLayerConfig.id;
 
-            c4g.maps.utils.callHookFunctions(this.hook_baselayer_visibility, baseLayerConfig);
+            c4g.maps.utils.callHookFunctions(this.proxy.hook_baselayer_visibility, baseLayerConfig);
 
             /**
              * Cesium integration

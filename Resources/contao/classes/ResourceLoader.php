@@ -134,6 +134,8 @@ class ResourceLoader extends coreResourceLoader
             parent::loadJavaScriptRessource('c4g-layer-controller', self::BUNDLE_JS_PATH . 'c4g-layer-controller.js' . $staticOption);
             parent::loadJavaScriptRessource('c4g-baselayer', self::BUNDLE_JS_PATH . 'c4g-baselayer.js' . $staticOption);
             parent::loadJavaScriptRessource('c4g-baselayer-controller', self::BUNDLE_JS_PATH . 'c4g-baselayer-controller.js' . $staticOption);
+            parent::loadJavaScriptRessource('c4g-overlay', self::BUNDLE_JS_PATH . 'c4g-overlay.js' . $staticOption);
+            parent::loadJavaScriptRessource('c4g-overlay-controller', self::BUNDLE_JS_PATH . 'c4g-overlay-controller.js' . $staticOption);
         }
         // experimental panel loading
 
