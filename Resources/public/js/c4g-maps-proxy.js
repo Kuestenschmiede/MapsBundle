@@ -3098,10 +3098,24 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
             if (elementContent.format === "OSMXML") {
               continue;
             }
-            features = (new ol.format[elementContent.format]({})).readFeatures(elementContent.data, {
-              featureProjection: featureProjection,
-              dataProjection: dataProjection
-            });
+
+            if (elementContent.data.geometry && elementContent.data.geometry.type === "Circle") {
+              // draw circle geometries
+              features = [];
+              let feature = new ol.Feature(
+                new ol.geom.Circle(
+                  ol.proj.fromLonLat(elementContent.data.geometry.center),
+                  parseFloat(elementContent.data.geometry.radius)
+                ));
+              feature.set('styleId', elementContent.locationStyle);
+              features.push(feature);
+            } else {
+              // remaining geometries
+              features = (new ol.format[elementContent.format]({})).readFeatures(elementContent.data, {
+                featureProjection: featureProjection,
+                dataProjection: dataProjection
+              });
+            }
 
             missingStyles = [];
             unstyledFeatures = [];
@@ -3209,6 +3223,9 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
               });
 
               vectorLayer = this.getVectorLayer(vectorSource, vectorStyle);
+              if (elementContent.id === 40000000770083) {
+                  console.log(vectorLayer);
+              }
 
               if (elementContent.data && elementContent.data.properties) {
                 if (elementContent.data.properties.popup) {
