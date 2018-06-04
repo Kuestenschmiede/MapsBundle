@@ -439,7 +439,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
       if (this.proxy.activeLayerIds[itemUid]) {
         return true;
       } else {
-        this.proxy.showLayer(itemUid);
+        this.proxy.layerController.showLayer(itemUid);
       }
     }, // end of "showLayer()"
 
@@ -447,7 +447,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
       if (!this.proxy.activeLayerIds[itemUid]) {
         return true;
       } else {
-        this.proxy.hideLayer(itemUid);
+        this.proxy.layerController.hideLayer(itemUid);
       }
     }, // end of "hideLayer()"
 

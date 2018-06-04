@@ -786,6 +786,24 @@ this.c4g.maps = this.c4g.maps || {};
       return object;
     }, // end of objectToArray()
 
+    getVectorLayer(source, style) {
+        var fnStyle;
+
+        // make sure that the style is a function
+        if (typeof style === 'function') {
+            fnStyle = style;
+        } else if (style !== undefined) {
+            fnStyle = function () {
+                return style;
+            };
+        }
+
+        return new ol.layer.Vector({
+            source: source,
+            style: fnStyle
+        });
+    },// end of "getVectorLayer()"
+
     redrawMapView: function (mapController) {
       var mapData = mapController.data;
       var controlContainerTopLeft = document.createElement('div');

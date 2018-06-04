@@ -239,14 +239,12 @@ this.c4g.maps = this.c4g.maps || {};
             //
 
             if (mapData.default_baselayer) {
-                let hookie = this.proxy.hook_baselayer_loaded;
-                hookie.push(function (baselayerIds) {
+                this.proxy.hook_baselayer_loaded.push(function (baselayerIds) {
                     if (mapData.baselayer && baselayerIds.indexOf(mapData.baselayer.toString()) > -1) {
                         mapData.default_baselayer = mapData.baselayer;
                     }
                     self.proxy.baselayerController.showBaseLayer(mapData.default_baselayer);
                 });
-                this.proxy.hook_baselayer_loaded = hookie;
             }
             this.map = new ol.Map({
                 controls: controls,

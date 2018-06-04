@@ -51,14 +51,14 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
           contentHeadlineLink.onclick = function () {
               if ($(this).hasClass("c4g-active") !== false) {
                   for (var i = 0; i < self.proxy.layerIds.length; i++) {
-                      self.proxy.hideLayer(self.proxy.layerIds[i]);
+                      self.proxy.layerController.hideLayer(self.proxy.layerIds[i]);
                   }
                   $(this).removeClass("c4g-active");
                   $(this).addClass("c4g-inactive");
               }
               else {
                   for (var i = 0; i < self.proxy.layerIds.length; i++) {
-                      self.proxy.showLayer(self.proxy.layerIds[i]);
+                      self.proxy.layerController.showLayer(self.proxy.layerIds[i]);
                   }
                   $(this).removeClass("c4g-inactive");
                   $(this).addClass("c4g-active");
@@ -210,18 +210,18 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
 
         if (self.proxy.activeLayerIds[itemUid]) {
           // hide layer
-          self.proxy.hideLayer(itemUid);
+          self.proxy.layerController.hideLayer(itemUid);
           if (parseInt(layer.pid, 10) == 0) {
             // hide all childs, because clicked layer is the map itself
             for (var id in self.proxy.activeLayerIds) {
               if (self.proxy.activeLayerIds.hasOwnProperty(id)) {
-                self.proxy.hideLayer(id);
+                self.proxy.layerController.hideLayer(id);
               }
             }
           }
         } else {
           // show layer
-          self.proxy.showLayer(itemUid);
+          self.proxy.layerController.showLayer(itemUid);
           //zooom to extent
           zoomToExtent(itemUid);
 

@@ -25,7 +25,6 @@ class C4gLayer{
     this._editable = true;
     this._type = layerArr['type'];
     this._name = layerArr['name'];
-    // TODO gute default werte?
     this._tabId = layerArr['tabId'];
     this._layername = layerArr['layername'];
     this._visibleChilds = false;
@@ -33,6 +32,7 @@ class C4gLayer{
     if (layerArr.projectId) {
       this.projectId = layerArr.projectId;
     }
+    this._awesomeicon = layerArr['awesomeicon']
   }
 
   get id() {
@@ -187,5 +187,13 @@ class C4gLayer{
 
   set vectorLayer(value) {
     this._vectorLayer = value;
+  }
+
+  get awesomeicon() {
+      return this._awesomeicon;
+  }
+
+  set awesomeicon(value) {
+      this._awesomeicon = value;
   }
 }

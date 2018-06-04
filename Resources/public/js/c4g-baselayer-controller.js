@@ -138,7 +138,7 @@ class C4gBaselayerController {
         }
         this.proxy.baselayers_loaded = true;
 
-        c4g.maps.utils.callHookFunctions(this.hook_baselayer_loaded, this._baselayerIds);
+        c4g.maps.utils.callHookFunctions(this.proxy.hook_baselayer_loaded, this._baselayerIds);
     } // end of "addBaseLayers()"
     showBaseLayer(baseLayerUid) {
 
