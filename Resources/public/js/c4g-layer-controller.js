@@ -1115,7 +1115,7 @@ class C4gLayerController{
             self.mapController.spinner.show();
             jQuery.ajax({
                 dataType: self.mapController.data.jsonp ? "jsonp" : "json",
-                url: self.api_layercontent_url + '/' + self.arrLayers[itemUid].id,
+                url: self.proxy.api_layercontent_url + '/' + self.arrLayers[itemUid].id,
                 success: function (data) {
                     var j,
                         newLocationStyles;
