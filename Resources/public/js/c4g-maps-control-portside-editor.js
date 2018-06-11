@@ -86,8 +86,8 @@ this.c4g.maps.control = this.c4g.maps.control || {};
           // get the styleId of the current feature
           styleId = feature.get('styleId');
           // and execute the appropriate function
-          if (c4g.maps.locationStyles[styleId]) {
-            return c4g.maps.locationStyles[styleId].style(feature, projection);
+          if (self.proxy.locationStyleController.arrLocStyles[styleId]) {
+            return self.proxy.locationStyleController.arrLocStyles[styleId].style(feature, projection);
           }
         }
         return false;
@@ -260,8 +260,8 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                 // get the styleId of the current feature
                 styleId = feature.get('styleId');
                 // and execute the appropriate function
-                if (c4g.maps.locationStyles[styleId]) {
-                  styleArray = c4g.maps.locationStyles[styleId].style(feature, projection);
+                if (self.proxy.locationStyleController.arrLocStyles[styleId]) {
+                  styleArray = self.proxy.locationStyleController.arrLocStyles[styleId].style(feature, projection);
 
                   if (typeof styleArray[0].getImage === 'function' && styleArray[0].getImage() instanceof ol.style.Icon) {
                     styleRadius = 5;
@@ -738,8 +738,8 @@ this.c4g.maps.control = this.c4g.maps.control || {};
             name;
 
         // Style "shortcut"
-        style = c4g.maps.locationStyles[styleId].style()[0];
-        editorStyle = c4g.maps.locationStyles[styleId].editor;
+        style = self.proxy.locationStyleController.arrLocStyles[styleId].style()[0];
+        editorStyle = self.proxy.locationStyleController.arrLocStyles[styleId].editor;
 
         featureIdCount = 0;
 
@@ -770,12 +770,12 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         // Create interactionView
         //   "addView" will be used for this, because the functionality
         //   ist mostly equal
-        name = c4g.maps.locationStyles[styleId].name.replace("&#40;", "(").replace("&#41;", ")");
+        name = self.proxy.locationStyleController.arrLocStyles[styleId].name.replace("&#40;", "(").replace("&#41;", ")");
         interactionView = self.addView({
-          name: 'draw:' + (c4g.maps.locationStyles[styleId].tooltip || name),
+          name: 'draw:' + (self.proxy.locationStyleController.arrLocStyles[styleId].tooltip || name),
           triggerConfig: {
             label: styleTriggerLabel,
-            tipLabel: c4g.maps.locationStyles[styleId].tooltip || name,
+            tipLabel: self.proxy.locationStyleController.arrLocStyles[styleId].tooltip || name,
             className: c4g.maps.constant.css.EDITOR_DRAW_TRIGGER,
             target: drawContent
           },
@@ -896,8 +896,8 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
                   // name the feature
                   featureIdCount += 1;
-                  name = c4g.maps.locationStyles[styleId].name.replace("&#40;", "(").replace("&#41;", ")");
-                  activeSketch.set('tooltip', (c4g.maps.locationStyles[styleId].tooltip || name) + ' (' + featureIdCount + ')');
+                  name = self.proxy.locationStyleController.arrLocStyles[styleId].name.replace("&#40;", "(").replace("&#41;", ")");
+                  activeSketch.set('tooltip', (self.proxy.locationStyleController.arrLocStyles[styleId].tooltip || name) + ' (' + featureIdCount + ')');
                   // add styleId
                   activeSketch.set('styleId', styleId);
                   // add measurements to the feature
@@ -908,7 +908,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                   if (options.type.toLowerCase() === 'circle') {
                       activeSketch.set('measuredRadius', c4g.maps.utils.measureGeometry(activeSketch.getGeometry()));
                   }
-                  //activeSketch.setStyle(c4g.maps.locationStyles[styleId].style);
+                  //activeSketch.setStyle(self.proxy.locationStyleController.arrLocStyles[styleId].style);
                   // add editor-vars
                   vars = editorStyle.vars;
                   editorVars = [];
@@ -1004,7 +1004,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                 styleIds;
 
             // prepare
-            locationStyles = c4g.maps.locationStyles;
+            locationStyles = self.proxy.locationStyleController.arrLocStyles;
             styleIds = arrStyleIds || options.styleIds;
             if (!styleIds || !locationStyles) {
               return false;
@@ -1047,15 +1047,15 @@ this.c4g.maps.control = this.c4g.maps.control || {};
           }; // end of "sortAndAddStyles"
 
           // Make sure that all needed styles are loaded
-          if (!c4g.maps.locationStyles) {
+          if (!self.proxy.locationStyleController.arrLocStyles) {
             // no styles are loaded, so load all styles
-            c4g.maps.locationStyles = {};
+            self.proxy.locationStyleController.arrLocStyles = {};
             neededStyles = options.styleIds;
           } else {
             // check wich styles are missing
             for (i = 0; i < options.styleIds.length; i += 1) {
               styleId = options.styleIds[i];
-              if (!c4g.maps.locationStyles[styleId] || !c4g.maps.locationStyles[styleId].style) {
+              if (!self.proxy.locationStyleController.arrLocStyles[styleId] || !self.proxy.locationStyleController.arrLocStyles[styleId].style) {
                 neededStyles.push(styleId);
               }
             }
@@ -1065,7 +1065,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
             if (!self.proxy) {
               console.warn('Could not load locStyles, as the map-proxy was not initiallized.');
             }
-            self.proxy.loadLocationStyles(
+            self.proxy.locationStyleController.loadLocationStyles(
                 neededStyles,
                 {
                   success: function () {
@@ -1188,7 +1188,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       for (i = 0; i < featureCollection.length; i += 1) {
         styleId = featureCollection[i].get('styleId');
 
-        if ((!c4g.maps.locationStyles[styleId] || !c4g.maps.locationStyles[styleId].style) && $.inArray(styleId, neededStyles) === -1) {
+        if ((!self.proxy.locationStyleController.arrLocStyles[styleId] || !self.proxy.locationStyleController.arrLocStyles[styleId].style) && $.inArray(styleId, neededStyles) === -1) {
           neededStyles.push(styleId);
         }
       }
@@ -1206,7 +1206,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
           console.warn('Could not load locStyles, as the map-proxy was not initiallized.');
           return false;
         }
-        self.proxy.loadLocationStyles(
+        self.proxy.locationStyleController.loadLocationStyles(
             neededStyles,
             {
               success: function () {
@@ -1334,7 +1334,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
           return false;
         }
 
-        if (styleId && (!c4g.maps.locationStyles[styleId] || !c4g.maps.locationStyles[styleId].style) && $.inArray(styleId, neededStyles) === -1) {
+        if (styleId && (!self.proxy.locationStyleController.arrLocStyles[styleId] || !self.proxy.locationStyleController.arrLocStyles[styleId].style) && $.inArray(styleId, neededStyles) === -1) {
           neededStyles.push(styleId);
         }
 
@@ -1360,7 +1360,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
           console.warn('Could not load locStyles, as the map-proxy was not initiallized.');
           return false;
         }
-        self.proxy.loadLocationStyles(
+        self.proxy.locationStyleController.loadLocationStyles(
             neededStyles,
             {
               success: function () {

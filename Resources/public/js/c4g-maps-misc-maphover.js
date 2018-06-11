@@ -185,12 +185,12 @@ this.c4g.maps.misc = this.c4g.maps.misc || {};
                 self.lastLayerStyle = hovered.layer.getStyle();
                 self.lastFeatureStyle = self.lastLayerStyle(self.lastHoveredFeature);
                 //TODO get onhover style from db (vllt schon in proxy drin?)
-                if(hovered.feature.get('hover_style') && c4g.maps.locationStyles[hovered.feature.get("hover_style")]){
-                    if(c4g.maps.locationStyles[hovered.feature.get("hover_style")].fnStyleFunction){
-                        hovered.feature.setStyle(Function("feature","data","map",c4g.maps.locationStyles[hovered.feature.get("hover_style")].fnStyleFunction)(hovered.feature));
+                if(hovered.feature.get('hover_style') && proxy.locationStyleController.arrLocStyles[hovered.feature.get("hover_style")]){
+                    if(proxy.locationStyleController.arrLocStyles[hovered.feature.get("hover_style")].fnStyleFunction){
+                        hovered.feature.setStyle(Function("feature","data","map",proxy.locationStyleController.arrLocStyles[hovered.feature.get("hover_style")].fnStyleFunction)(hovered.feature));
                     }
                     else{
-                        hovered.feature.setStyle(c4g.maps.locationStyles[hovered.feature.get("hover_style")].style(hovered.feature));
+                        hovered.feature.setStyle(proxy.locationStyleController.arrLocStyles[hovered.feature.get("hover_style")].style(hovered.feature));
                     }
                 }
 
@@ -210,18 +210,18 @@ this.c4g.maps.misc = this.c4g.maps.misc || {};
                 self.lastLayerStyle = hovered.layer.getStyle();
                 self.lastFeatureStyle = self.lastLayerStyle(self.lastHoveredFeature);
                 if(hovered.feature.get('hover_style') ){
-                    if(!c4g.maps.locationStyles[hovered.feature.get("hover_style")]){
+                    if(!proxy.locationStyleController.arrLocStyles[hovered.feature.get("hover_style")]){
                         var arrIds = [];
                         arrIds.push(hovered.feature.get("hover_style"));
-                        proxy.loadLocationStyles(arrIds);
+                        proxy.locationStyleController.loadLocationStyles(arrIds);
                         self.lastHoveredFeature = null;
                         return null;
                     }
-                    if(c4g.maps.locationStyles[hovered.feature.get("hover_style")].fnStyleFunction){
-                        hovered.feature.setStyle(Function("feature","data","map",c4g.maps.locationStyles[hovered.feature.get("hover_style")].fnStyleFunction)(hovered.feature));
+                    if(proxy.locationStyleController.arrLocStyles[hovered.feature.get("hover_style")].fnStyleFunction){
+                        hovered.feature.setStyle(Function("feature","data","map",proxy.locationStyleController.arrLocStyles[hovered.feature.get("hover_style")].fnStyleFunction)(hovered.feature));
                     }
                     else{
-                        hovered.feature.setStyle(c4g.maps.locationStyles[hovered.feature.get("hover_style")].style(hovered.feature));
+                        hovered.feature.setStyle(proxy.locationStyleController.arrLocStyles[hovered.feature.get("hover_style")].style(hovered.feature));
                     }
                 }
 
@@ -246,25 +246,25 @@ this.c4g.maps.misc = this.c4g.maps.misc || {};
         } else if (hovered.feature && typeof hovered.feature.getStyleFunction &&
             typeof hovered.feature.getStyleFunction === 'function' &&
             typeof hovered.feature.getStyleFunction() === 'function' &&
-            c4g.maps.locationStyles &&
-            c4g.maps.locationStyles[hovered.feature.getStyleFunction()(resolution)] &&
-            c4g.maps.locationStyles[hovered.feature.getStyleFunction()(resolution)].tooltip) {
-          tooltipContent = c4g.maps.locationStyles[hovered.feature.getStyleFunction()(resolution)].tooltip;
+            proxy.locationStyleController.arrLocStyles &&
+            proxy.locationStyleController.arrLocStyles[hovered.feature.getStyleFunction()(resolution)] &&
+            proxy.locationStyleController.arrLocStyles[hovered.feature.getStyleFunction()(resolution)].tooltip) {
+          tooltipContent = proxy.locationStyleController.arrLocStyles[hovered.feature.getStyleFunction()(resolution)].tooltip;
           // @TODO: Check
         } else if (hovered.layer && typeof hovered.layer.getStyleFunction &&
             typeof hovered.layer.getStyleFunction === 'function' &&
             typeof hovered.layer.getStyleFunction() === 'function' &&
-            c4g.maps.locationStyles &&
-            c4g.maps.locationStyles[hovered.layer.getStyleFunction()()] &&
-            c4g.maps.locationStyles[hovered.layer.getStyleFunction()()].tooltip) {
-          tooltipContent = c4g.maps.locationStyles[hovered.layer.getStyleFunction()()].tooltip;
+            proxy.locationStyleController.arrLocStyles &&
+            proxy.locationStyleController.arrLocStyles[hovered.layer.getStyleFunction()()] &&
+            proxy.locationStyleController.arrLocStyles[hovered.layer.getStyleFunction()()].tooltip) {
+          tooltipContent = proxy.locationStyleController.arrLocStyles[hovered.layer.getStyleFunction()()].tooltip;
         } else if (hovered.layer &&
             typeof hovered.layer.getStyleFunction === 'function' &&
             typeof hovered.layer.getStyleFunction() === 'function' &&
-            c4g.maps.locationStyles &&
-            c4g.maps.locationStyles[hovered.layer.getStyleFunction()(null, null, 1)] &&
-            c4g.maps.locationStyles[hovered.layer.getStyleFunction()(null, null, 1)].tooltip) {
-          tooltipContent = c4g.maps.locationStyles[hovered.layer.getStyleFunction()(null, null, 1)].tooltip;
+            proxy.locationStyleController.arrLocStyles &&
+            proxy.locationStyleController.arrLocStyles[hovered.layer.getStyleFunction()(null, null, 1)] &&
+            proxy.locationStyleController.arrLocStyles[hovered.layer.getStyleFunction()(null, null, 1)].tooltip) {
+          tooltipContent = proxy.locationStyleController.arrLocStyles[hovered.layer.getStyleFunction()(null, null, 1)].tooltip;
         } else if (hovered.layer && hovered.layer.tooltip) {
           tooltipContent = hovered.layer.tooltip;
         }

@@ -56,7 +56,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
 
       // check and load location styles via map-proxy
-      this.options.mapController.proxy.loadLocationStyles([
+      this.options.mapController.proxy.locationStyleController.loadLocationStyles([
         this.options.mapController.data.router_from_locstyle,
         this.options.mapController.data.router_to_locstyle,
         this.options.mapController.data.router_point_locstyle
@@ -139,8 +139,8 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       this.routerHintLayer = new ol.layer.Vector({
         source: this.routingHintSource,
         style: function (feature, resolution) {
-          // console.log(c4g.maps.locationStyles[self.options.mapController.data.router_point_locstyle].style);
-          return c4g.maps.locationStyles[self.options.mapController.data.router_point_locstyle].style(feature, resolution);
+          // console.log(self.proxy.locationStyleController.arrLocStyles[self.options.mapController.data.router_point_locstyle].style);
+          return self.proxy.locationStyleController.arrLocStyles[self.options.mapController.data.router_point_locstyle].style(feature, resolution);
         }
       });
 
@@ -533,15 +533,16 @@ this.c4g.maps.control = this.c4g.maps.control || {};
     },
 
     recalculateRoute: function () {
-      var tmpFeature;
+      var tmpFeature,
+      proxy = this.options.mapController.proxy;
 
       this.locationsSource.clear();
       if (this.fromValue) {
         tmpFeature = new ol.Feature({
           geometry: this.fromValue.clone().transform('EPSG:4326', 'EPSG:3857')
         });
-        if (this.options.mapController.data.router_from_locstyle && c4g.maps.locationStyles[this.options.mapController.data.router_from_locstyle]) {
-          tmpFeature.setStyle(c4g.maps.locationStyles[this.options.mapController.data.router_from_locstyle].style);
+        if (this.options.mapController.data.router_from_locstyle && proxy.locationStyleController.arrLocStyles[this.options.mapController.data.router_from_locstyle]) {
+          tmpFeature.setStyle(proxy.locationStyleController.arrLocStyles[this.options.mapController.data.router_from_locstyle].style);
         }
         this.locationsSource.addFeature(tmpFeature);
       }
@@ -549,8 +550,8 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         tmpFeature = new ol.Feature({
           geometry: this.toValue.clone().transform('EPSG:4326', 'EPSG:3857')
         });
-        if (this.options.mapController.data.router_to_locstyle && c4g.maps.locationStyles[this.options.mapController.data.router_to_locstyle]) {
-          tmpFeature.setStyle(c4g.maps.locationStyles[this.options.mapController.data.router_to_locstyle].style);
+        if (this.options.mapController.data.router_to_locstyle && proxy.locationStyleController.arrLocStyles[this.options.mapController.data.router_to_locstyle]) {
+          tmpFeature.setStyle(proxy.locationStyleController.arrLocStyles[this.options.mapController.data.router_to_locstyle].style);
         }
         this.locationsSource.addFeature(tmpFeature);
       }
@@ -559,8 +560,8 @@ this.c4g.maps.control = this.c4g.maps.control || {};
               tmpFeature = new ol.Feature({
                   geometry: this.overValue[propt].clone().transform('EPSG:4326', 'EPSG:3857')
               });
-              if (this.options.mapController.data.router_interim_locstyle && c4g.maps.locationStyles[this.options.mapController.data.router_interim_locstyle]) {
-                  tmpFeature.setStyle(c4g.maps.locationStyles[this.options.mapController.data.router_interim_locstyle].style);
+              if (this.options.mapController.data.router_interim_locstyle && proxy.locationStyleController.arrLocStyles[this.options.mapController.data.router_interim_locstyle]) {
+                  tmpFeature.setStyle(proxy.locationStyleController.arrLocStyles[this.options.mapController.data.router_interim_locstyle].style);
               }
               this.locationsSource.addFeature(tmpFeature);
           }
