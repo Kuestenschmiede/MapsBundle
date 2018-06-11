@@ -1,7 +1,7 @@
 class C4gLocationStyleController{
     constructor(proxy){
         this._proxy = proxy;
-        this._mapController = proxy.mapController;
+        this._mapController = proxy.options.mapController;
         this._arrLocStyles = [];
     }
 
@@ -64,7 +64,7 @@ class C4gLocationStyleController{
                 if (data.length > 0) {
                     for (i = 0; i < data.length; i += 1) {
                         styleData = data[i];
-                        self._arrLocStyles[styleData.id] = new C4gLocationStyle(styleData);
+                        self._arrLocStyles[styleData.id] = new C4gLocationStyle(styleData, self);
                     }
                 }
                 if (index) {
