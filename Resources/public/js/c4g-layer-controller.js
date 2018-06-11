@@ -980,12 +980,6 @@ class C4gLayerController{
                                         // Use a style function for cluster symbolisation
                                         style: styleForCluster
                                     });
-                                vectorLayer = new ol.layer.Vector(
-                                    {	name: 'Cluster',
-                                        source: clusterSource,
-                                        // Use a style function for cluster symbolisation
-                                        style: styleForCluster
-                                    });
 
                             } else {
                                 vectorLayer = c4g.maps.utils.getVectorLayer(vectorSource, contentData && self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle] ? self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style : null);
