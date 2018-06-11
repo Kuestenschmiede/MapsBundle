@@ -16,7 +16,6 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
               return false;
           }
 
-          c4g.maps.locationStyles = c4g.maps.locationStyles || {};
           c4g.maps.editorStyles = c4g.maps.editorStyles || {};
 
           //c4g.maps.hook.proxy_fillPopup = [];
@@ -247,6 +246,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
       this.baselayerController.loadBaseLayers();
       this.layerController = new C4gLayerController(this);
       this.layerController.loadLayers();
+      this.locationStyleController = new C4gLocationStyleController(this);
       this.addPopUp();
 
       //TODO check this, nearly the same as below
@@ -609,7 +609,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
 
     addPopUp() {
 
-      var popUpElement,
+      let popUpElement,
           popUpCloseElement,
           popUpContent,
           popup;
@@ -628,7 +628,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
       popUpElement.appendChild(popUpCloseElement);
       popUpElement.appendChild(popUpContent);
 
-      $(popUpCloseElement).click(function (event) {
+      jQuery(popUpCloseElement).click(function (event) {
         event.preventDefault();
         c4g.maps.popup.$popup.removeClass(c4g.maps.constant.css.ACTIVE);
       });
@@ -668,7 +668,8 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
 
       var options,
           neededLayerStyles,
-          getLayerStyles;
+          getLayerStyles,
+          self = this;
 
       if (opt_options && typeof opt_options === "object") {
         options = opt_options;
@@ -676,7 +677,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
         options = {};
       }
 
-      c4g.maps.locationStyles = c4g.maps.locationStyles || {};
+        this.locationStyleController.arrLocStyles= this.locationStyleController.arrLocStyles || {};
 
       neededLayerStyles = [];
       getLayerStyles = function (layers) {
@@ -698,8 +699,8 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                       && element.content[i].locationStyle !== "0"
                       && neededLayerStyles.indexOf(element.content[i].locationStyle) === -1
                       && (
-                          !c4g.maps.locationStyles[element.content[i].locationStyle]
-                          || c4g.maps.locationStyles[element.content[i].locationStyle].style === undefined
+                          !self.locationStyleController.arrLocStyles[element.content[i].locationStyle]
+                          || self.locationStyleController.arrLocStyles[element.content[i].locationStyle].style === undefined
                       )
                   ) {
                     neededLayerStyles.push(element.content[i].locationStyle);
@@ -714,7 +715,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
       getLayerStyles(this.layerController.arrLayers);
 
       if (neededLayerStyles.length > 0) {
-        this.loadLocationStyles(neededLayerStyles, options);
+        this.locationStyleController.loadLocationStyles(neededLayerStyles, options);
       } else {
         if (options.success && typeof options.success === "function") {
           options.success();
@@ -722,371 +723,6 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
       }
     } // end of "checkLocationStyles()"
 
-    loadLocationStyles(arrIds, opt_options) {
-      var options,
-          self = this,
-          complete = {},
-          success = {},
-          count = 1;
-
-      if (opt_options && typeof opt_options === "object") {
-        options = opt_options;
-      } else {
-        options = {};
-      }
-
-      this.options.mapController.spinner.show();
-
-      var makeAjax = function(styleIds, index) {
-        if (index) {
-          complete[index] = false;
-          success[index] = false;
-        }
-        // get locationstyles over API
-        jQuery.ajax({
-          dataType: self.options.mapController.data.jsonp ? "jsonp" : "json",
-          url: self.api_locstyle_url,
-          data: {
-            ids: styleIds
-          }
-        }).done(function (data) {
-          var i,
-              styleData,
-              successful = true;
-
-          if (data.length > 0) {
-            for (i = 0; i < data.length; i += 1) {
-              styleData = data[i];
-              c4g.maps.locationStyles[styleData.id] = {};
-              c4g.maps.locationStyles[styleData.id].style = self.getStyleFunction(styleData);
-              c4g.maps.locationStyles[styleData.id].editor = self.getStyleEditorConfig(styleData);
-              c4g.maps.locationStyles[styleData.id].name = styleData.name || undefined;
-              c4g.maps.locationStyles[styleData.id].tooltip = styleData.tooltip || undefined;
-              c4g.maps.locationStyles[styleData.id].label = styleData.label || undefined;
-              c4g.maps.locationStyles[styleData.id].minzoom = styleData.minzoom || undefined;
-              c4g.maps.locationStyles[styleData.id].maxzoom = styleData.maxzoom || undefined;
-              c4g.maps.locationStyles[styleData.id].fnStyleFunction = styleData.style_function_js || undefined;
-            }
-          }
-          if (index) {
-            success[index] = true;
-            for (var key in success) {
-              if (success.hasOwnProperty(key)) {
-                if (!success[key]) {
-                  successful = false;
-                  break;
-                }
-              }
-            }
-          }
-          if (options.success && typeof options.success === "function" && (index ? successful : true)) {
-            options.success();
-          }
-        }).complete(function (jXhr, strStatus) {
-          var completed = true;
-
-          if (index) {
-            complete[index] = true;
-            for (var key in complete) {
-              if (complete.hasOwnProperty(key)) {
-                if (!complete[key]) {
-                  completed = false;
-                  break;
-                }
-              }
-            }
-          }
-          if (options.complete && typeof options.complete === "function" && (index ? completed : true)) {
-            options.complete();
-          }
-          if (!$(self.options.mapController.spinner.element).hasClass(c4g.maps.constant.css.HIDE)) {
-            self.options.mapController.spinner.hide();
-          }
-        }).fail(function (jqXHR, textStatus, errorThrown ) {
-          console.warn(errorThrown);
-        });
-      };
-
-      // split arrIds if it's too long
-      if (arrIds.length > 100) {
-        var n = 100;
-        while(arrIds.length > 0) {
-          makeAjax(arrIds.splice(0, n), count);
-          count++;
-        }
-      } else {
-        makeAjax(arrIds);
-      }
-      //});
-    } // end of "loadLocationStyles()"
-
-    getStyleFunction(styleData) {
-      var self,
-          styleFunction,
-          imageStyle,
-          strokeStyle,
-          fillStyle,
-          textStyle,
-          textStyleOutline;
-
-      self = this;
-
-      // general
-      strokeStyle = new ol.style.Stroke({
-        color: c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.strokecolor, styleData.strokeopacity),
-        width: parseInt(styleData.strokewidth.value, 10)
-      });
-      fillStyle = new ol.style.Fill({
-        color: c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.fillcolor, styleData.fillopacity)
-      });
-
-      // image
-      switch (styleData.styletype) {
-        case 'square':
-          imageStyle = new ol.style.RegularShape({
-            fill: fillStyle,
-            stroke: strokeStyle,
-            points: 4,
-            radius: styleData.radius.value || 10,
-            angle: Math.PI / 4
-          });
-          break;
-        case 'star':
-          imageStyle = new ol.style.RegularShape({
-            fill: fillStyle,
-            stroke: strokeStyle,
-            radius1: styleData.radius.value || 10,
-            radius2: styleData.radius.value ? Math.floor(styleData.radius.value * 0.5) : 4,
-            points: 5,
-            angle: 0
-          });
-        break;
-        case 'x':
-          imageStyle = new ol.style.RegularShape({
-            fill: fillStyle,
-            stroke: strokeStyle,
-            points: 4,
-            radius: styleData.radius.value || 10,
-            radius2: 0,
-            angle: Math.PI / 4
-          });
-          break;
-        case 'cross':
-          imageStyle = new ol.style.RegularShape({
-            fill: fillStyle,
-            stroke: strokeStyle,
-            points: 4,
-            radius: styleData.radius.value || 10,
-            radius2: 0,
-            angle: 0
-          });
-          break;
-        case 'triangle':
-          imageStyle = new ol.style.RegularShape({
-            fill: fillStyle,
-            stroke: strokeStyle,
-            points: 3,
-            radius: styleData.radius.value || 10,
-            rotation: Math.PI / 4,
-            angle: 0
-          });
-          break;
-        case 'ol_icon': // fallthrough
-        case 'cust_icon':
-          if (styleData.icon_src) {
-            imageStyle = new ol.style.Icon({
-              //anchor: [(-1 * (styleData.icon_offset[0] || 0)), (-1 * (styleData.icon_offset[1] || 0))],
-              //anchorXUnits: 'pixels',
-              //anchorYUnits: 'pixels',
-              opacity: parseFloat(styleData.icon_opacity.value, 10) / 100,
-              src: (self.options.mapController.data.icon_source ? self.options.mapController.data.icon_source : '') + styleData.icon_src,
-              size: [parseInt(styleData.icon_size[0], 10), parseInt(styleData.icon_size[1], 10)],
-              scale: parseFloat(styleData.icon_scale, 10),
-            });
-            break;
-          } // fallthrough
-        case 'point':
-          imageStyle = new ol.style.Circle({
-            fill: fillStyle,
-            stroke: strokeStyle,
-            radius: styleData.radius.value || 7
-          });
-          break;
-        default:
-          imageStyle = new ol.style.Circle({
-            fill: fillStyle,
-            stroke: strokeStyle,
-            radius: styleData.radius.value || 7
-          });
-      }
-
-      // build function
-      styleFunction = function (feature, projection, getId) {
-        var stylesArray,
-            label,
-            arrowSize,
-            arrowSizeUnit,
-            segmentLength,
-            arrows_minzoom,
-            start_pixel,
-            end_pixel;
-
-        if (getId) {
-          return styleData.id;
-        }
-
-        // check if this is a feature.styleFunction
-        if (!(feature instanceof ol.Feature)) {
-          projection = feature;
-          feature = this;
-        }
-
-        stylesArray = [];
-
-        if (feature && typeof feature.get === 'function' && feature.get('label')) {
-          label = feature.get('label');
-        } else if (styleData.label) {
-          label = styleData.label;
-        } else {
-          label = false;
-        }
-        // label
-        if (label) {
-          if (styleData.label_outl_color && styleData.label_outl_width.value) {
-            textStyleOutline = new ol.style.Stroke({
-              color: c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.label_outl_color, {
-                unit: '%',
-                value: 100
-              }),
-              width: parseInt(styleData.label_outl_width.value, 10)
-            });
-          }
-          if (!styleData.label_offset) {
-            styleData.label_offset = [0, 0, "px"];
-          }
-
-          textStyle = new ol.style.Text({
-            text: label,
-            font: (styleData.font_weight || 'normal') + ' ' + (styleData.font_style || 'normal') + ' ' + (styleData.font_size || '13') + 'px ' + (styleData.font_family || 'sans-serif'),
-            // scale: parseInt(styleData.font_size || 0, 10) || undefined,
-            offsetX: parseInt(styleData.label_offset[0] || 0, 10),
-            offsetY: parseInt(styleData.label_offset[1] || 0, 10),
-            textAlign: styleData.label_align_hor,
-            textBaseline: styleData.label_align_ver,
-            fill: new ol.style.Fill({
-              color: c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.font_color, styleData.font_opacity)
-            }),
-            stroke: textStyleOutline
-          });
-        }
-
-        // create style-object
-        // we need this check because textStyle is a var accessible from closure and will be set even if no label is set
-        if (label) {
-          stylesArray.push(
-              new ol.style.Style({
-                image: imageStyle,
-                text: textStyle,
-                stroke: strokeStyle,
-                fill: fillStyle
-              })
-          );
-        } else {
-          stylesArray.push(
-              new ol.style.Style({
-                image: imageStyle,
-                stroke: strokeStyle,
-                fill: fillStyle
-              })
-          );
-        }
-
-
-        // add line-arrows
-        if (
-            styleData.line_arrows
-            && feature
-            && (typeof feature.getGeometry === 'function')
-            && !(feature.getGeometry() instanceof ol.geom.Point)
-            && typeof feature.getGeometry().forEachSegment === 'function'
-        ) {
-          arrowSize = (styleData.line_arrows_radius) ? (parseInt(styleData.line_arrows_radius.value, 10) * 2) : 0;
-          arrowSizeUnit = arrowSize + styleData.line_arrows_radius.unit;
-          feature.getGeometry().forEachSegment(function (start, end) {
-            //if minzoom is 0 (unlimited), hide arrows if they are bigger than the segment
-            arrows_minzoom = parseInt(styleData.line_arrows_minzoom, 10);
-            start_pixel = self.options.mapController.map.getPixelFromCoordinate(start);
-            end_pixel = self.options.mapController.map.getPixelFromCoordinate(end);
-            //distance between start and end
-            segmentLength = Math.sqrt(Math.pow(end_pixel[1] - start_pixel[1], 2) + Math.pow(end_pixel[0] - start_pixel[0], 2));
-
-            if (
-                (arrows_minzoom < 0 && arrowSize + parseInt(styleData.strokewidth.value, 10) < segmentLength)
-                || (arrows_minzoom >= 0 && self.options.mapController.map.getView().getZoom() >= arrows_minzoom)
-            ) {
-              // forward arrows
-              stylesArray.push(
-                  new ol.style.Style({
-                    geometry: new ol.geom.Point(end),
-                    text: new ol.style.Text({
-                      text: "ᐳ",
-                      font: arrowSizeUnit + " sans-serif",
-                      offsetX: 0,
-                      offsetY: 1,
-                      fill: fillStyle,
-                      stroke: strokeStyle,
-                      textAlign: 'right',
-                      rotateWithView: true,
-                      rotation: -Math.atan2((end[1] - start[1]), (end[0] - start[0]))
-                    })
-                  })
-              );
-              // backward arrows (if wanted)
-              if (styleData.line_arrows_back) {
-                stylesArray.push(
-                    new ol.style.Style({
-                      geometry: new ol.geom.Point(start),
-                      text: new ol.style.Text({
-                        text: "ᐳ",
-                        font: arrowSizeUnit + " sans-serif",
-                        offsetX: 0,
-                        offsetY: -1,
-                        fill: fillStyle,
-                        stroke: strokeStyle,
-                        textAlign: 'right',
-                        rotateWithView: true,
-                        rotation: -Math.atan2((start[1] - end[1]), (start[0] - end[0]))
-                      })
-                    })
-                );
-              }
-
-            }
-          });
-        }
-
-        return stylesArray;
-      };
-
-      return styleFunction;
-    } // end of "getStyleFunction()"
-
-    getStyleEditorConfig(styleData) {
-      var editorConfig;
-
-      // create editor-config
-      editorConfig = {};
-      editorConfig.collect = styleData.editor_collect || undefined;
-      editorConfig.iconSrc = styleData.editor_icon || undefined;
-      editorConfig.vars = styleData.editor_vars || undefined;
-
-      editorConfig.sort = styleData.editor_sort || false;
-      if (editorConfig.sort) {
-        editorConfig.sort = parseInt(editorConfig.sort, 10) || false;
-      }
-
-      return editorConfig;
-    }// end of "getStyleEditorConfig()"
 
 
     // @TODO: may needs a rewrite
@@ -1146,10 +782,10 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
                         if(feature[j].get("features")){
                             for(i = 0; i < feature[j].get("features").length; i++){//loop for clustered features
                                 if(layerGroups[k].content[j]){
-                                    style = c4g.maps.locationStyles[layerGroups[k].content[j].locationStyle];
+                                    style = this.locationStyleController.arrLocStyles[layerGroups[k].content[j].locationStyle];
                                 }
                                 else if(layerGroups[k].content[0]){
-                                    style = c4g.maps.locationStyles[layerGroups[k].content[0].locationStyle];
+                                    style = this.locationStyleController.arrLocStyles[layerGroups[k].content[0].locationStyle];
                                 }
 
                                 feature[j].get("features")[i].setStyle(style.style);
@@ -1319,7 +955,7 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
           for (var i = 0; i < layer.content.length; i++) {
             layerContent = layer.content[i];
             if (layerContent.locationStyle) {
-              locstyle = c4g.maps.locationStyles[layerContent.locationStyle];
+              locstyle = this.locationStyleController.arrLocStyles[layerContent.locationStyle];
               // TODO check all locstyles and take the most constraining zoom value
               if (locstyle) {
                 layer.zoom = {};

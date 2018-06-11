@@ -265,8 +265,8 @@ class C4gLayerController{
                         fontcolor;
                     if(feature && feature.get('features')){
                         if(styleId = feature.get('features')[0].get('locationStyle')){
-                            if(c4g.maps.locationStyles[styleId] && c4g.maps.locationStyles[styleId].style){
-                                style = c4g.maps.locationStyles[styleId].style(feature.get('features')[0],resolution);
+                            if(self.proxy.locationStyleController.arrLocStyles[styleId] && self.proxy.locationStyleController.arrLocStyles[styleId].style){
+                                style = self.proxy.locationStyleController.arrLocStyles[styleId].style(feature.get('features')[0],resolution);
                             }
                         }
                         if(!style){
@@ -385,8 +385,8 @@ class C4gLayerController{
                                         contentFeature.set('popup', contentData.data.properties.popup);
                                         contentFeature.set('zoom_onclick', contentData.zoom_onclick);
                                         contentFeature.set('locationStyle', contentData.locationStyle);
-                                        if(contentData.locationStyle && c4g.maps.locationStyles[contentData.locationStyle] && c4g.maps.locationStyles[contentData.locationStyle].style){
-                                            contentFeature.setStyle(c4g.maps.locationStyles[contentData.locationStyle].style);
+                                        if(contentData.locationStyle && self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle] && self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style){
+                                            contentFeature.setStyle(self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style);
                                             contentFeatures.push(contentFeature);
                                         }
                                         else{
@@ -399,10 +399,10 @@ class C4gLayerController{
 
                                     }
                                 if(missingStyles){
-                                    self.loadLocationStyles(missingStyles, {success: function() {
+                                    self.proxy.locationStyleController.loadLocationStyles(missingStyles, {success: function() {
                                             for(i = 0; i < unstyledFeatures.length; i++){
                                                 var styleId =unstyledFeatures[i].get('styleId');
-                                                unstyledFeatures[i].setStyle(c4g.maps.locationStyles[styleId].style);
+                                                unstyledFeatures[i].setStyle(self.proxy.locationStyleController.arrLocStyles[styleId].style);
                                                 requestVectorSource.addFeature(unstyledFeatures[i]);
                                             }
                                             missingStyles = undefined;
@@ -460,8 +460,8 @@ class C4gLayerController{
                             fillcolor,
                             fontcolor;
 
-                        if (contentData && contentData.locationStyle && c4g.maps.locationStyles[contentData.locationStyle]) {
-                            style = c4g.maps.locationStyles[contentData.locationStyle].style(feature, resolution);
+                        if (contentData && contentData.locationStyle && self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle]) {
+                            style = self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style(feature, resolution);
 
                             if (!style) {
                                 style = [];
@@ -482,12 +482,12 @@ class C4gLayerController{
                                         style[0] = fFeatures[0].getStyle()[0];
                                         for (k = 0; k < fFeatures.length; k += 1) {
                                             if (!fFeatures[k].getStyle()) {
-                                                style = c4g.maps.locationStyles[contentData.locationStyle].style(fFeatures[0], resolution);
+                                                style = self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style(fFeatures[0], resolution);
                                                 break;
                                             }
                                         }
                                     } else {
-                                        style = c4g.maps.locationStyles[contentData.locationStyle].style(fFeatures[0], resolution);
+                                        style = self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style(fFeatures[0], resolution);
                                     }
                                     if (!style) {
                                         style = [];
@@ -789,12 +789,12 @@ class C4gLayerController{
                                                             var layer = self.arrLayers[featureData.properties.id];
                                                             var popupContent = featureData.properties.popup;
                                                             layer.vectorLayer.getLayers().forEach(function(element, index, array) {
-                                                                if (!c4g.maps.locationStyles[featureData.properties.styleId]) {
-                                                                    self.loadLocationStyles([featureData.properties.styleId], {success: function() {
-                                                                            element.setStyle(c4g.maps.locationStyles[featureData.properties.styleId].style);
+                                                                if (!self.proxy.locationStyleController.arrLocStyles[featureData.properties.styleId]) {
+                                                                    self.proxy.locationStyleController.loadLocationStyles([featureData.properties.styleId], {success: function() {
+                                                                            element.setStyle(self.proxy.locationStyleController.arrLocStyles[featureData.properties.styleId].style);
                                                                         }});
                                                                 } else {
-                                                                    element.setStyle(c4g.maps.locationStyles[featureData.properties.styleId].style);
+                                                                    element.setStyle(self.proxy.locationStyleController.arrLocStyles[featureData.properties.styleId].style);
                                                                 }
                                                                 element.getSource().forEachFeature(function(nestedFeature) {
                                                                     nestedFeature.set('popup', popupContent);
@@ -802,12 +802,12 @@ class C4gLayerController{
                                                             });
                                                             layer.content[0].locationStyle = featureData.properties.styleId;
 
-                                                            if (!c4g.maps.locationStyles[featureData.properties.styleId]) {
-                                                                self.loadLocationStyles([featureData.properties.styleId], {success: function() {
-                                                                        feature.setStyle(c4g.maps.locationStyles[featureData.properties.styleId].style);
+                                                            if (!self.proxy.locationStyleController.arrLocStyles[featureData.properties.styleId]) {
+                                                                self.proxy.locationStyleController.loadLocationStyles([featureData.properties.styleId], {success: function() {
+                                                                        feature.setStyle(self.proxy.locationStyleController.arrLocStyles[featureData.properties.styleId].style);
                                                                     }});
                                                             } else {
-                                                                feature.setStyle(c4g.maps.locationStyles[featureData.properties.styleId].style);
+                                                                feature.setStyle(self.proxy.locationStyleController.arrLocStyles[featureData.properties.styleId].style);
                                                             }
 
                                                             if (self.proxy.activeLayerIds[layer.id]) {
@@ -902,7 +902,7 @@ class C4gLayerController{
 
 
                         } else {
-                            vectorLayer = c4g.maps.utils.getVectorLayer(vectorSource, c4g.maps.locationStyles[contentData.locationStyle] ? c4g.maps.locationStyles[contentData.locationStyle].style : null);
+                            vectorLayer = c4g.maps.utils.getVectorLayer(vectorSource, self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle] ? self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style : null);
                         }
 
                         /* Fit to extend */
@@ -980,9 +980,15 @@ class C4gLayerController{
                                         // Use a style function for cluster symbolisation
                                         style: styleForCluster
                                     });
+                                vectorLayer = new ol.layer.Vector(
+                                    {	name: 'Cluster',
+                                        source: clusterSource,
+                                        // Use a style function for cluster symbolisation
+                                        style: styleForCluster
+                                    });
 
                             } else {
-                                vectorLayer = c4g.maps.utils.getVectorLayer(vectorSource, contentData && c4g.maps.locationStyles[contentData.locationStyle] ? c4g.maps.locationStyles[contentData.locationStyle].style : null);
+                                vectorLayer = c4g.maps.utils.getVectorLayer(vectorSource, contentData && self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle] ? self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style : null);
                             }
                             layers.push(vectorLayer);
                         }
@@ -1009,8 +1015,8 @@ class C4gLayerController{
                                 var unstyledFeatures = [];
                                 for (var j = 0; j < features.length; j += 1) {
                                     if (features[j].get('styleId')) {
-                                        if (c4g.maps.locationStyles[features[j].get('styleId')] && c4g.maps.locationStyles[features[j].get('styleId')].style) {
-                                            features[j].setStyle(c4g.maps.locationStyles[features[j].get('styleId')].style);
+                                        if (self.proxy.locationStyleController.arrLocStyles[features[j].get('styleId')] && self.proxy.locationStyleController.arrLocStyles[features[j].get('styleId')].style) {
+                                            features[j].setStyle(self.proxy.locationStyleController.arrLocStyles[features[j].get('styleId')].style);
                                         } else {
                                             missingStyles.push(features[j].get('styleId'));
                                             unstyledFeatures.push(features[j]);
@@ -1018,7 +1024,7 @@ class C4gLayerController{
                                     }
                                 }
 
-                                vectorStyle = c4g.maps.locationStyles[contentData.locationStyle] && c4g.maps.locationStyles[contentData.locationStyle].style;
+                                vectorStyle = self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle] && self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style;
 
                                 if (missingStyles.length > 0) {
                                     //TODO there are unstyled features because some styles were not loaded
@@ -1388,16 +1394,16 @@ class C4gLayerController{
                         features[j].set('hover_location', elementContent.hover_location);
                         features[j].set('hover_style', elementContent.hover_style);
                         if (features[j].get('styleId')) {
-                            if (c4g.maps.locationStyles[features[j].get('styleId')] && c4g.maps.locationStyles[features[j].get('styleId')].style) {
-                                features[j].setStyle(c4g.maps.locationStyles[features[j].get('styleId')].style);
+                            if (self.proxy.locationStyleController.arrLocStyles[features[j].get('styleId')] && self.proxy.locationStyleController.arrLocStyles[features[j].get('styleId')].style) {
+                                features[j].setStyle(self.proxy.locationStyleController.arrLocStyles[features[j].get('styleId')].style);
                             } else {
                                 missingStyles.push(features[j].get('styleId'));
                                 unstyledFeatures.push(features[j]);
                             }
                         } else if (elementContent.locationStyle) {
                             // feature has no property styleId, but elementContent has locationstyle
-                            if (c4g.maps.locationStyles[elementContent.locationStyle] && c4g.maps.locationStyles[elementContent.locationStyle].style) {
-                                //features[j].setStyle(c4g.maps.locationStyles[elementContent.locationStyle].style);
+                            if (self.proxy.locationStyleController.arrLocStyles[elementContent.locationStyle] && self.proxy.locationStyleController.arrLocStyles[elementContent.locationStyle].style) {
+                                //features[j].setStyle(self.proxy.locationStyleController.arrLocStyles[elementContent.locationStyle].style);
                             } else {
                                 missingStyles.push(elementContent.locationStyle);
                                 unstyledFeatures.push(features[j]);
@@ -1406,12 +1412,12 @@ class C4gLayerController{
                         }
                     }
 
-                    vectorStyle = c4g.maps.locationStyles[elementContent.locationStyle] && c4g.maps.locationStyles[elementContent.locationStyle].style;
-                    if(c4g.maps.locationStyles[elementContent.locationStyle] && c4g.maps.locationStyles[elementContent.locationStyle].fnStyleFunction) {
-                        vectorStyle = Function("feature","data","map",c4g.maps.locationStyles[elementContent.locationStyle].fnStyleFunction);
+                    vectorStyle = self.proxy.locationStyleController.arrLocStyles[elementContent.locationStyle] && self.proxy.locationStyleController.arrLocStyles[elementContent.locationStyle].style;
+                    if(self.proxy.locationStyleController.arrLocStyles[elementContent.locationStyle] && self.proxy.locationStyleController.arrLocStyles[elementContent.locationStyle].fnStyleFunction) {
+                        vectorStyle = Function("feature","data","map",self.proxy.locationStyleController.arrLocStyles[elementContent.locationStyle].fnStyleFunction);
                     }
                     if (missingStyles.length > 0) {
-                        this.loadLocationStyles(missingStyles, {
+                        this.proxy.locationStyleController.loadLocationStyles(missingStyles, {
                             success: function () {
                                 var f,
                                     fLayerGroup,
@@ -1419,8 +1425,8 @@ class C4gLayerController{
                                     fVectorLayer,
                                     fVectorSource;
                                 for (f = 0; f < unstyledFeatures.length; f += 1) {
-                                    if (c4g.maps.locationStyles[unstyledFeatures[f].get('styleId')]) {
-                                        unstyledFeatures[f].setStyle(c4g.maps.locationStyles[unstyledFeatures[f].get('styleId')].style);
+                                    if (self.proxy.locationStyleController.arrLocStyles[unstyledFeatures[f].get('styleId')]) {
+                                        unstyledFeatures[f].setStyle(self.proxy.locationStyleController.arrLocStyles[unstyledFeatures[f].get('styleId')].style);
                                     }
                                 }
 
