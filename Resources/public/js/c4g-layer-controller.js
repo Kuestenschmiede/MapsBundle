@@ -1374,10 +1374,23 @@ class C4gLayerController{
                     if (elementContent.format === "OSMXML") {
                         continue;
                     }
+                  if (elementContent.data.geometry && elementContent.data.geometry.type === "Circle") {
+                    // draw circle geometries
+                    features = [];
+                    let feature = new ol.Feature(
+                      new ol.geom.Circle(
+                        ol.proj.fromLonLat(elementContent.data.geometry.center),
+                        parseFloat(elementContent.data.geometry.radius)
+                      ));
+                    feature.set('styleId', elementContent.locationStyle);
+                    features.push(feature);
+                  } else {
+                    // remaining geometries
                     features = (new ol.format[elementContent.format]({})).readFeatures(elementContent.data, {
-                        featureProjection: featureProjection,
-                        dataProjection: dataProjection
+                      featureProjection: featureProjection,
+                      dataProjection: dataProjection
                     });
+                  }
 
                     missingStyles = [];
                     unstyledFeatures = [];
