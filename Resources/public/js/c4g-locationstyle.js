@@ -180,7 +180,7 @@ class C4gLocationStyle{
                         //anchorXUnits: 'pixels',
                         //anchorYUnits: 'pixels',
                         opacity: parseFloat(styleData.icon_opacity.value, 10) / 100,
-                        src: (self.options.mapController.data.icon_source ? self.options.mapController.data.icon_source : '') + styleData.icon_src,
+                        src: (self.controller.mapController.data.icon_source ? self.controller.mapController.data.icon_source : '') + styleData.icon_src,
                         size: [parseInt(styleData.icon_size[0], 10), parseInt(styleData.icon_size[1], 10)],
                         scale: parseFloat(styleData.icon_scale, 10),
                     });
@@ -296,14 +296,14 @@ class C4gLocationStyle{
                 feature.getGeometry().forEachSegment(function (start, end) {
                     //if minzoom is 0 (unlimited), hide arrows if they are bigger than the segment
                     arrows_minzoom = parseInt(styleData.line_arrows_minzoom, 10);
-                    start_pixel = self.options.mapController.map.getPixelFromCoordinate(start);
-                    end_pixel = self.options.mapController.map.getPixelFromCoordinate(end);
+                    start_pixel = self.controller.mapController.map.getPixelFromCoordinate(start);
+                    end_pixel = self.controller.mapController.map.getPixelFromCoordinate(end);
                     //distance between start and end
                     segmentLength = Math.sqrt(Math.pow(end_pixel[1] - start_pixel[1], 2) + Math.pow(end_pixel[0] - start_pixel[0], 2));
 
                     if (
                         (arrows_minzoom < 0 && arrowSize + parseInt(styleData.strokewidth.value, 10) < segmentLength)
-                        || (arrows_minzoom >= 0 && self.options.mapController.map.getView().getZoom() >= arrows_minzoom)
+                        || (arrows_minzoom >= 0 && self.controller.mapController.map.getView().getZoom() >= arrows_minzoom)
                     ) {
                         // forward arrows
                         stylesArray.push(
