@@ -723,10 +723,6 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
       }
     } // end of "checkLocationStyles()"
 
-
-
-    // @TODO: may needs a rewrite
-
     combineLayers(proxy){
 
         var i,
