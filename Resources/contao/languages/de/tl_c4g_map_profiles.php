@@ -113,6 +113,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['imagepath']             = array('Ben
                                                                             'Nur beim Standard-Theme: Setzt den Pfad zu einem benutzerdefinierten OpenLayers /img/ Verzeichnis für den Fall, dass Sie OpenLayers Standardicons auswechseln möchten. ACHTUNG: Diese Einstellung betrifft NICHT Grafiken aus dem OpenLayers /themes/default/img/ Verzeichnis, die Sie über CSS austauschen können!');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['infopage']              = array('Inhalt der Infoseite',
                                                                             'Sobald Sie dieses Feld befüllen, wird der Infobutton in der Karte angezeigt.');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['account']               = array('Accountbutton',
+                                                                            'Sobald Sie ein Frontendmodul auswählen, wird der Accountbutton dargestellt.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['link_newwindow']        = array('Direktlink in neuem Fenster öffnen',
                                                                             'Direktlinks nicht im selben Fenster, sondern in einem neuen Fenster öffnen.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['link_open_on']          = array('Direktlinks öffnen bei',

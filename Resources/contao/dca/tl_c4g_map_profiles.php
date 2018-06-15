@@ -98,7 +98,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
                                          '{locstyle_legend:hide},locstyles;'.
                                          '{navigation_legend},zoom_panel,zoom_panel_button,zoom_panel_slider,mouse_nav,touch_nav,keyboard_nav,fullscreen;'.
                                          '{starboard_legend:hide},starboard;'.
-                                         '{information_legend},attribution,overviewmap,measuretool,graticule,scaleline,mouseposition,permalink,zoomlevel;'.
+                                         '{information_legend},attribution,overviewmap,measuretool,graticule,scaleline,mouseposition,permalink,zoomlevel,account;'.
                                          '{geosearch_legend:hide},geosearch,router;'.
                                          '{info_legend:hide},infopage;'.
                                          '{click_legend:hide},link_newwindow,link_open_on,hover_popups;'.
@@ -598,6 +598,20 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             'default'                 => false,
             'inputType'               => 'checkbox',
             'sql'                     => "char(1) NOT NULL default ''"
+        ),
+
+        'account' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['account'],
+            'exclude'                 => true,
+            'inputType'               => 'select',
+            'options_callback'        => array('tl_c4g_map_profiles', 'getModules'),
+            'eval'                    => array('includeBlankOption'=>true, 'mandatory'=>false, 'chosen'=>true, 'submitOnChange'=>false, 'tl_class'=>'w50 wizard'),
+            'wizard' => array
+            (
+                array('tl_c4g_map_profiles', 'editModule')
+            ),
+            'sql'                     => "int(10) unsigned NOT NULL default '0'"
         ),
 
         'geosearch' => array
@@ -1264,4 +1278,35 @@ class tl_c4g_map_profiles extends Backend
         }
         return $return;
     }
+
+    /**
+     * Return the edit module wizard
+     *
+     * @param DataContainer $dc
+     *
+     * @return string
+     */
+    public function editModule(DataContainer $dc)
+    {
+        return ($dc->value < 1) ? '' : ' <a href="contao/main.php?do=themes&amp;table=tl_module&amp;act=edit&amp;id=' . $dc->value . '&amp;popup=1&amp;nb=1&amp;rt=' . REQUEST_TOKEN . '" title="' . sprintf(StringUtil::specialchars($GLOBALS['TL_LANG']['tl_content']['editalias'][1]), $dc->value) . '" onclick="Backend.openModalIframe({\'title\':\'' . StringUtil::specialchars(str_replace("'", "\\'", sprintf($GLOBALS['TL_LANG']['tl_content']['editalias'][1], $dc->value))) . '\',\'url\':this.href});return false">' . Image::getHtml('alias.svg', $GLOBALS['TL_LANG']['tl_content']['editalias'][0]) . '</a>';
+    }
+
+    /**
+     * Get all modules and return them as array
+     *
+     * @return array
+     */
+    public function getModules()
+    {
+        $arrModules = array();
+        $objModules = $this->Database->execute("SELECT m.id, m.name, t.name AS theme FROM tl_module m LEFT JOIN tl_theme t ON m.pid=t.id ORDER BY t.name, m.name");
+
+        while ($objModules->next())
+        {
+            $arrModules[$objModules->theme][$objModules->id] = $objModules->name . ' (ID ' . $objModules->id . ')';
+        }
+
+        return $arrModules;
+    }
+
 }

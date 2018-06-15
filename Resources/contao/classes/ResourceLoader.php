@@ -57,6 +57,7 @@ class ResourceLoader extends coreResourceLoader
             'position' => $allByDefault,
             'permalink' => $allByDefault,
             'zoomlevel' => $allByDefault,
+            'account' => $allByDefault,
             'geosearch' => $allByDefault,
             'overviewmap' => $allByDefault,
             'baselayerswitcher' => $allByDefault,
@@ -198,6 +199,9 @@ class ResourceLoader extends coreResourceLoader
             if ($resources['infopage']) {
                 parent::loadJavaScriptRessource('c4g-maps-control-portside-infopage', self::BUNDLE_JS_PATH . 'c4g-maps-control-portside-infopage.js' . $staticOption);
             }
+            if ($resources['account']) {
+                parent::loadJavaScriptRessource('c4g-maps-control-portside-account', self::BUNDLE_JS_PATH . 'c4g-maps-control-portside-account.js' . $staticOption);
+            }
         }
         //ToDo make executable
         if ($resources['exporttools']) {
@@ -281,6 +285,7 @@ class ResourceLoader extends coreResourceLoader
             'measuretools' => ($profile->measuretool),
             'exporttools' => false, //ToDo profile switch,
             'infopage' => ($profile->infopage),
+            'account' => ($profile->account),
             // @TODO BE-Switch?
             'plugins' => true,
             'customtab' => true,

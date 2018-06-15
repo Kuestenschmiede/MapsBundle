@@ -525,10 +525,17 @@ button.c4g-measuretools-view-trigger-draw-circle:before {
 }
 
 /*
- * Infobuttons
+ * Infobutton
  */
 .c4g-infopage.c4g-portside-control button:before {
   content: "I";
+}
+
+/*
+ * Accountbutton
+ */
+.c4g-account.c4g-portside-control button:before {
+  content: "A";
 }
 
 /*

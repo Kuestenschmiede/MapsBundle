@@ -56,7 +56,7 @@
 }
 .c4g-graticule.c4g-enabled button:before {
   font-family: 'FontAwesome';
-  content: "\f096";
+  content: "\f00a";
 }
 .ol-attribution button:before {
   font-family: 'FontAwesome';
@@ -129,6 +129,14 @@ button.c4g-router-over:before {
 .c4g-infopage.c4g-close > button:before {
   font-family: 'FontAwesome';
   content: "\f129";
+}
+.c4g-account.c4g-open > button:before {
+  font-family: 'FontAwesome';
+  content: "\f007";
+}
+.c4g-account.c4g-close > button:before {
+  font-family: 'FontAwesome';
+  content: "\f007";
 }
 .c4g-starboard-control.c4g-open button:before {
   font-family: 'FontAwesome';
@@ -238,6 +246,10 @@ button.c4g-exporttools-print:before {
 button.c4g-infopage-view-trigger:before {
   font-family: 'FontAwesome';
   content: "\f129";
+}
+button.c4g-account-view-trigger:before {
+  font-family: 'FontAwesome';
+  content: "\f007";
 }
 button.c4g-starboard-view-trigger-starboardplugin:before {
   font-family: 'FontAwesome';
