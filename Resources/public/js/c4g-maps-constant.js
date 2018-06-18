@@ -68,6 +68,8 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
     EXPORTTOOLS_PRINT: 'c4g-exporttools-print',
     INFOPAGE_VIEW_TRIGGER: 'c4g-infopage-view-trigger',
     INFOPAGE: 'c4g-infopage',
+    ACCOUNT_VIEW_TRIGGER: 'c4g-account-view-trigger',
+    ACCOUNT: 'c4g-account',
     OVERVIEWMAP: 'c4g-overviewmap',
     OVERVIEWMAP_WRAPPER: 'c4g-overviewmap-wrapper',
     PERMALINK: 'c4g-permalink',

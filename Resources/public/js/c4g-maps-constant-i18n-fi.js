@@ -41,6 +41,7 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
     CTRL_MEASURETOOLS: 'Ota käyttöön mittatyökalut',
     CTRL_EXPORTTOOLS: 'Ota käyttöön vientityökalut',
     CTRL_INFOPAGE: 'Infopage',
+    CTRL_ACCOUNT: 'Account',
     CTRL_ZOOMLEVEL: 'Zoomaa',
     CTRL_MOUSECOORDS: 'Lon/Lat',
     CTRL_GEOSEARCH: 'Ota käyttöön geosearch',
@@ -181,6 +182,9 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
 
     INFOPAGE: 'Infopage',
     INFOPAGE_VIEW_TRIGGER: 'Show informations',
+
+    ACCOUNT: 'Account',
+    ACCOUNT_VIEW_TRIGGER: 'Show account',
 
     SEARCH_NOT_FOUND: 'Sijaintia ei löytynyt. pahoittelemme... :(',
 

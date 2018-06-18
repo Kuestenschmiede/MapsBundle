@@ -63,6 +63,7 @@ this.c4g.maps = this.c4g.maps || {};
             measuretools: {},
             exporttools: {},
             infopage: {},
+            account: {},
             starboard: {},
             layerswitcher: {},
             baselayerswitcher: {},
@@ -387,6 +388,7 @@ this.c4g.maps = this.c4g.maps || {};
 
         // add interactions ===
         //
+
         // mouse navigation
         if (mapData.mouse_nav) {
             // drag pan and kinetic scrolling
@@ -465,6 +467,19 @@ this.c4g.maps = this.c4g.maps || {};
         // add controls ===
         this.controls = {};
         //
+
+
+        // account
+        if (mapData.account && typeof c4g.maps.control.Account === 'function') {
+            this.controls.account = new c4g.maps.control.Account({
+                tipLabel: c4g.maps.constant.i18n.CTRL_ACCOUNT,
+                target: controlContainerTopLeft,
+                mapController: this
+            });
+            this.map.addControl(this.controls.account);
+        }
+
+
         // zoom-controls
         if (mapData.zoom_panel || mapData.zoom_slider) {
             this.controls.zoom = new ol.control.Zoom({

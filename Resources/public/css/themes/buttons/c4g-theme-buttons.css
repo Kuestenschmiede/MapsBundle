@@ -328,6 +328,22 @@ button.ol-zoom-out {
   border: none;
   border-radius: 2px;
 }
+.c4g-portside-container .formbody button, .c4g-portside-container .c4g_brick_dialog button {
+  display: inherit;
+  vertical-align: inherit;
+  height: inherit;
+  width: inherit;
+  margin: inherit;
+  padding: inherit;
+
+  font-size: inherit;
+  text-decoration: inherit;
+  text-align: inherit;
+  line-height: inherit;
+
+  border: inherit;
+  border-radius: inherit;
+}
 .c4g-starboard-container button[title]:hover:after,
 .c4g-starboard-container button[title]:focus:after,
 .c4g-portside-container button[title]:hover:after,

@@ -41,6 +41,7 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
     CTRL_MEASURETOOLS: 'Messwerkzeuge ein-/ausblenden',
     CTRL_EXPORTTOOLS: 'Exportwerkzeuge ein-/ausblenden',
     CTRL_INFOPAGE: 'Infoseite ein-/ausblenden',
+    CTRL_ACCOUNT: 'Account ein-/ausblenden',
     CTRL_ZOOMLEVEL: 'Zoom',
     CTRL_MOUSECOORDS: 'Lon/Lat',
     CTRL_GEOSEARCH: 'Suche ein-/ausblenden',
@@ -184,6 +185,9 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
 
     INFOPAGE: 'Informationen',
     INFOPAGE_VIEW_TRIGGER: 'Informationen anzeigen',
+    ACCOUNT: 'Account',
+    ACCOUNT_VIEW_TRIGGER: 'Account anzeigen',
+
     SEARCH_NOT_FOUND: 'Die Lokation konnte nicht gefunden werden. Bitte versuchen Sie eine andere Eingabe.',
 
     NONE: '' // last line
