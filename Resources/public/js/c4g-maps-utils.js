@@ -436,7 +436,7 @@ this.c4g.maps = this.c4g.maps || {};
         return false;
       }
 
-      sphere = new ol.Sphere(6378137);
+      //sphere = new ol.Sphere(6378137);
       result = {};
 
       if (geometry instanceof ol.geom.LineString || (geometry instanceof ol.geom.Polygon && opt_forceLineMeasure)) {
@@ -449,7 +449,7 @@ this.c4g.maps = this.c4g.maps || {};
         for (i = 0; i < coordinates.length - 1; i += 1) {
           coord1 = ol.proj.transform(coordinates[i], 'EPSG:3857', 'EPSG:4326');
           coord2 = ol.proj.transform(coordinates[i + 1], 'EPSG:3857', 'EPSG:4326');
-          value += sphere.haversineDistance(coord1, coord2);
+          value += ol.sphere.getDistance(coord1, coord2, 6378137);
         }
         result.rawValue = (Math.round(value * 100) / 100).toFixed(2);
         if (value > 1000) {
@@ -461,9 +461,9 @@ this.c4g.maps = this.c4g.maps || {};
         }
 
       } else if (geometry instanceof ol.geom.Polygon) {
-        geometry = /** @type {ol.geom.Polygon} */(geometry.clone().transform('EPSG:3857', 'EPSG:4326'));
-        coordinates = geometry.getLinearRing(0).getCoordinates();
-        value = Math.abs(sphere.geodesicArea(coordinates));
+        //geometry = /** @type {ol.geom.Polygon} */(geometry.clone().transform('EPSG:3857', 'EPSG:4326'));
+        //coordinates = geometry.getLinearRing(0).getCoordinates();
+        value = Math.abs(ol.sphere.getArea(geometry));
         result.rawValue = (Math.round(value * 100) / 100).toFixed(2);
         if (value > 10000) {
           result.htmlValue = (Math.round(value / 1000000 * 100) / 100).toFixed(2) +
@@ -477,10 +477,11 @@ this.c4g.maps = this.c4g.maps || {};
           var center = geometry.getCenter();
           var radius = geometry.getRadius();
           var edgeCoordinate = [center[0] + radius, center[1]];
-          var wgs84Sphere = new ol.Sphere(6378137);
-          var value = wgs84Sphere.haversineDistance(
+          //var wgs84Sphere = new ol.Sphere(6378137);
+          var value = ol.sphere.getDistance(
               ol.proj.transform(center, 'EPSG:3857', 'EPSG:4326'),
-              ol.proj.transform(edgeCoordinate, 'EPSG:3857', 'EPSG:4326')
+              ol.proj.transform(edgeCoordinate, 'EPSG:3857', 'EPSG:4326'),
+              6378137
           );
 
           result.rawValue = (Math.round(value * 100) / 100).toFixed(2);

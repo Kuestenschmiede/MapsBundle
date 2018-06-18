@@ -97,6 +97,7 @@ class ResourceLoader extends coreResourceLoader
         }
 
         if ($resources['olms']) {
+            parent::loadJavaScriptRessource('olms', "https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL");
             parent::loadJavaScriptRessource('olms', self::VENDOR_PATH . 'ol-mapbox-style-'.$GLOBALS['con4gis']['maps']['olms-version'].'/olms.js');
         }
 
@@ -208,8 +209,8 @@ class ResourceLoader extends coreResourceLoader
             parent::loadJavaScriptRessource('c4g-maps-control-portside-exporttools', self::BUNDLE_JS_PATH . 'c4g-maps-control-portside-exporttools.js' . $staticOption);
         }
 
-        parent::loadJavaScriptRessource('ol-ext', self::VENDOR_PATH . 'ol3-ext-2.0.1/ol-ext.js' . $staticOption);
-        parent::loadCssRessource('ol-ext', self::VENDOR_PATH . 'ol3-ext-2.0.1/ol-ext.min.css' . $staticOption);
+        parent::loadJavaScriptRessource('ol-ext', self::VENDOR_PATH .'ol-ext-'.$GLOBALS['con4gis']['maps']['ol-ext'] .'/ol-ext.js' . $staticOption);
+        parent::loadCssRessource('ol-ext', self::VENDOR_PATH .'ol-ext-'.$GLOBALS['con4gis']['maps']['ol-ext'] .'/ol-ext.min.css' . $staticOption);
 
         // load plugins
         if ($resources['plugins']) {

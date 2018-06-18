@@ -264,14 +264,17 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
       var self,
           contentContainerOuterHeight,
-          containerOffsetWidth,
-          capitalizedName;
+          containerOffsetWidth;
 
       self = this;
-      capitalizedName = c4g.maps.utils.capitalizeFirstLetter(this.options.name);
+
+      /*
+      if (this.options && this.options.name) {
+          capitalizedName = c4g.maps.utils.capitalizeFirstLetter(this.options.name);
+      }*/
 
       contentContainerOuterHeight = $(this.wrapper).height() - ($(this.titleBar).outerHeight(true) + $(this.statusBar).outerHeight(true));
-      if (this.options.direction === 'left') {
+      if (this.options.direction != "undefined" && this.options.direction === 'left') {
         if (this !== this.options.mapController["active" + this.identifier]) {
           containerOffsetWidth = 0;
         }
