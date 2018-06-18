@@ -1003,7 +1003,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
               $(self.routerInstructionsWrapper).empty();
           }
 
-          routerInstructionsHeader = document.createElement('h4');
+          routerInstructionsHeader = document.createElement('div');
           routerInstructionsHeader.className = c4g.maps.constant.css.ROUTER_INSTRUCTIONS_HEADER;
 
           if (routeResponse) {

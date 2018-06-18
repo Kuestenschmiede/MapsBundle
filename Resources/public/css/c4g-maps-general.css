@@ -247,7 +247,7 @@ button.c4g-geosearch-start:before {
   position: absolute;
   top: 0;
   height: 100%;
-  min-width: 350px;
+  min-width: 240px;
   max-width: 42%;
   background: #FFFFFF;
   z-index: 600;
@@ -266,13 +266,13 @@ button.c4g-geosearch-start:before {
 .c4g-portside-wrapper {
   position: relative;
   height: 100%;
-  margin: 0 3px 0 45px;
-  font-size: 0.85em;
+  margin: 0 0 0 46px;
+  font-size: 1.00em;
 }
 .c4g-starboard-wrapper {
   position: relative;
   height: 100%;
-  font-size: 0.85em;
+  font-size: 1.00em;
   text-align: left;
 }
 .c4g-starboard-wrapper > div,
@@ -282,7 +282,7 @@ button.c4g-geosearch-start:before {
 }
 .c4g-portside-wrapper > .c4g-portside-titlebar,
 .c4g-starboard-wrapper > .c4g-starboard-titlebar {
-  margin: 1px 3px 5px 3px;
+  margin: 0px 3px 5px 3px;
 }
 .c4g-starboard-titlebar,
 .c4g-portside-titlebar{
@@ -296,6 +296,8 @@ button.c4g-geosearch-start:before {
 .c4g-portside-top-toolbar,
 .c4g-portside-bottom-toolbar {
   min-height: 30px;
+  display: inline-flex;
+  justify-content:space-around;
 }
 
 .c4g-portside-titlebar,
@@ -590,7 +592,6 @@ button.c4g-measuretools-view-trigger-draw-circle:before {
 .ol-attribution ul {
   margin: 0 26px -40px 0;
   padding: 0 .5em;
-  font-size: .7rem;
   line-height: 1.4em;
   max-width: 480px;
   height:auto;
@@ -601,7 +602,7 @@ button.c4g-measuretools-view-trigger-draw-circle:before {
   line-height: inherit;
 }
 .ol-attribution li a {
-  vertical-align: middle;
+  /*vertical-align: middle;*/
 }
 .ol-attribution li:not(:last-child):after {
   content: " ";

@@ -98,14 +98,14 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
                                          '{locstyle_legend:hide},locstyles;'.
                                          '{navigation_legend},zoom_panel,zoom_panel_button,zoom_panel_slider,mouse_nav,touch_nav,keyboard_nav,fullscreen;'.
                                          '{starboard_legend:hide},starboard;'.
-                                         '{information_legend},attribution,overviewmap,measuretool,graticule,scaleline,mouseposition,permalink,zoomlevel,account;'.
+                                         '{information_legend},attribution,overviewmap,measuretool,graticule,scaleline,mouseposition,permalink,zoomlevel;'.
                                          '{geosearch_legend:hide},geosearch,router;'.
                                          '{info_legend:hide},infopage;'.
                                          '{click_legend:hide},link_newwindow,link_open_on,hover_popups;'.
                                          '{geopicker_legend:hide},is_backend_geopicker_default,geopicker;'.
                                          '{editor_legend:hide},editor,editor_styles_point,editor_styles_line,editor_styles_polygon,editor_styles_circle,editor_styles_freehand,editor_vars,editor_show_items,editor_helpurl,is_backend_editor_default;'.
                                          '{cesium_legend:hide},cesium;'.
-                                         '{expert_legend:hide},script,overpass_url,custom_div;'.
+                                         '{expert_legend:hide},script,overpass_url,custom_div,account;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;'
     ),
 

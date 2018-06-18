@@ -47,8 +47,9 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
 
       contentWrapper = document.createElement('div');
 
-      contentHeadline = document.createElement('h4');
+      contentHeadline = document.createElement('div');
       contentHeadline.innerHTML = (this.starboard.options.baselayerSwitcherTitle || c4g.maps.constant.i18n.STARBOARD_VIEW_TRIGGER_BASELAYERSWITCHER);
+      contentHeadline.className = 'contentHeadline';
       contentWrapper.appendChild(contentHeadline);
 
       this.contentDiv = document.createElement('div');

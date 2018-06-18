@@ -63,8 +63,9 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
       self = this;
       contentWrapper = document.createElement('div');
 
-      contentHeadline = document.createElement('h4');
+      contentHeadline = document.createElement('div');
       contentHeadline.innerHTML = this.name || 'Starboardplugin';
+      contentHeadline.className = 'contentHeadline';
       contentWrapper.appendChild(contentHeadline);
 
       this.contentDiv = document.createElement('div');

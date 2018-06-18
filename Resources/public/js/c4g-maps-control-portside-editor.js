@@ -225,8 +225,9 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
       selectContentWrapper = document.createElement('div');
 
-      selectContentHeadline = document.createElement('h4');
+      selectContentHeadline = document.createElement('div');
       selectContentHeadline.innerHTML = c4g.maps.constant.i18n.EDITOR_VIEW_TRIGGER_SELECT;
+      selectContentHeadline.className = 'contentHeadline';
       selectContentWrapper.appendChild(selectContentHeadline);
 
       selectContent = document.createElement('div');
