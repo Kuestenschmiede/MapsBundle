@@ -795,6 +795,20 @@ this.c4g.maps = this.c4g.maps || {};
             this.map.addControl(this.controls.permalink);
         }
 
+        //themeData
+        if (mapData.themeData) {
+            var mainColor = c4g.maps.utils.getRgbaFromHexAndOpacity(mapData.themeData['maincolor'], mapData.themeData['mainopacity']);
+            var fontColor = c4g.maps.utils.getRgbaFromHexAndOpacity(mapData.themeData['fontcolor'], mapData.themeData['fontopacity']);
+            var shadowColor = c4g.maps.utils.getRgbaFromHexAndOpacity(mapData.themeData['shadowcolor'], mapData.themeData['shadowopacity']);
+            domMapDiv = document.getElementById(mapData.mapDiv);
+
+            if (domMapDiv && domMapDiv.style) {
+                domMapDiv.style.setProperty('--main-color', mainColor);
+                domMapDiv.style.setProperty('--font-color', fontColor);
+                domMapDiv.style.setProperty('--shadow-color', shadowColor);
+            }
+        }
+
       if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.mapController_addControls === 'object') {
         c4g.maps.utils.callHookFunctions(c4g.maps.hook.mapController_addControls, this);
       }

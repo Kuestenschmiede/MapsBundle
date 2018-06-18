@@ -36,5 +36,9 @@ $GLOBALS['TL_LANG']['tl_c4g_map_themes']['external_icons']  = array('Custom icon
 
 // Palettes
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['theme_legend']   = 'Theme settings';
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['buttons_legend'] = 'Buttons';
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['colors_legend']  = 'Colors';
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['effects_legend'] = 'Effects';
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['icons_legend']   = 'Icons';
 
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['example_info']   = 'Examples: /files/con4gis/examples/themes';

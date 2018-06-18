@@ -222,11 +222,11 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium_always'] = array('Cesium imme
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['CLICK'] = 'einfachem Mausklick';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['DBLCL'] = 'Maus-Doppelklick';
 
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['dark']            = 'Dark Theme (angepasst)';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['modern']          = 'Modern Trans Theme';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['metro']           = 'Metro Theme';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['blue']            = 'Blue Theme (basierend auf dem angepassten Dark-Theme)';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['red']             = 'Red Theme (basierend auf dem angepassten Dark-Theme)';
+//$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['dark']            = 'Dark Theme (angepasst)';
+//$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['modern']          = 'Modern Trans Theme';
+//$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['metro']           = 'Metro Theme';
+//$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['blue']            = 'Blue Theme (basierend auf dem angepassten Dark-Theme)';
+//$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['red']             = 'Red Theme (basierend auf dem angepassten Dark-Theme)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['default_theme']   = 'con4gis Standard-Theme';
 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_mouse_nav_dragmode']['0'] = 'Aus';

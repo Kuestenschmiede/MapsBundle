@@ -1,5 +1,5 @@
 :root {
-  --font-color: white;//rgba(255,255,255,.7);
+  --font-color: white;
   --main-color: rgba(24, 61, 93,.8);
   --shadow-color: rgba(0,155,222,.5);
 }
@@ -78,15 +78,12 @@
 .c4g-portside-headline,
 .c4g-starboard-headline {
   color: var(--font-color);
-  /*text-shadow: 0 0 1px;*/
 }
 .c4g-starboard-headline-link{
   color: var(--main-color);
-  /*font-family: FontAwesome;*/
 }
 .c4g-portside-top-toolbar {
   border-color: var(--font-color);
-  /*box-shadow: 0 -1px 0 0 var(--main-color);*/
 }
 .c4g-editor-draw-options,
 .c4g-starboard-content-container .contentHeadline,
@@ -97,8 +94,6 @@
 .c4g-portside-content-container,
 .c4g-starboard-content-container {
   background: var(--font-color);
-
-  /*box-shadow: inset 0 0 0 1px var(--font-color);*/
 }
 .c4g-portside-container button,
 .c4g-starboard-container button {
@@ -111,13 +106,11 @@
 .c4g-starboard-container button:focus,
 .c4g-starboard-container button:hover {
   color: var(--shadow-color);
-  //text-shadow: 0 0 1px var(--shadow-color);
   background-color: var(--main-color);
 }
 .c4g-portside-container button[title]:after,
 .c4g-starboard-container button[title]:after {
   color: var(--main-color);
-  //text-shadow: 0 0 1px var(--shadow-color);
   border-color: var(--font-color);
   background-color: var(--font-color);
 }
@@ -129,7 +122,6 @@ button.c4g-draw-trigger:focus,
 button.c4g-draw-trigger:hover {
   background-color: var(--font-color);
   border-color: var(--main-color);
-  /*box-shadow: 0 0 0 1px var(--font-color);*/
 }
 button.c4g-draw-trigger.c4g-active {
   background: var(--main-color);
@@ -140,14 +132,11 @@ button.c4g-draw-trigger.c4g-active {
 .c4g-portside-content-container h4,
 .c4g-starboard-content-container h4 {
   color: var(--main-color);
-  //text-shadow: 0 0 1px var(--shadow-color);
   border-color: var(--main-color);
   background-color: var(--font-color);
-  /*box-shadow: 0 1px 0 0 var(--font-color);*/
 }
 .c4g-starboard-content-container h4 a {
     color: inherit;
-    //text-shadow: 0 0 1px var(--shadow-color);
     border-color: inherit;
 }
 .c4g-portside-container h4 button:hover {
@@ -156,15 +145,11 @@ button.c4g-draw-trigger.c4g-active {
 .c4g-portside-content-container p,
 .c4g-starboard-content-container p {
   color: var(--main-color);
-  //text-shadow: 0 0 1px var(--shadow-color);
 }
 .c4g-content-select input {
   color: var(--main-color);
-  //text-shadow: 0 0 1px var(--font-color);
   border-color: var(--main-color);
   background-color: var(--font-color);
-  /*box-shadow: inset 1px 1px 0 0 var(--main-color),*/
-              /*1px 1px 0 0 var(--shadow-color);*/
 }
 .c4g-content-select input:hover {
   background-color: var(--font-color);
@@ -178,7 +163,6 @@ button.c4g-draw-trigger.c4g-active {
 .c4g-starboard-statusbar {
   border-color: #abc;
   border-color: var(--font-color);
-  /*box-shadow: 0 -1px 0 0 var(--shadow-color);*/
 }
 
 .c4g-portside-viewtriggerbar button.c4g-active,
@@ -187,18 +171,6 @@ button.c4g-draw-trigger.c4g-active {
   background-color: var(--font-color);
 }
 
-.c4g-layertree li,
-.c4g-baselayertree li {
-  /*border-color: var(--main-color);*/
-  /*background-color:  var(--shadow-color);*/
-  /*box-shadow: 0 1px 0 0 var(--shadow-color);*/
-}
-.c4g-layertree li ul li,
-.c4g-baselayertree li ul li {
-  /*border-color: var(--main-color);*/
-  /*background-color:  var(--shadow-color);*/
-  /*box-shadow: inset 1px 1px 0 0 var(--shadow-color);*/
-}
 .c4g-layertree a,
 .c4g-layertree span,
 .c4g-baselayertree a,
@@ -214,12 +186,8 @@ button.c4g-draw-trigger.c4g-active {
 .c4g-baselayertree a:before {
   border-color: var(--main-color);
 }
-.c4g-baselayertree a:before {
-  /*box-shadow: 1px 0 0 var(--font-color);*/
-}
 .c4g-layertree span:hover {
   color: var(--shadow-color);
-  //text-shadow: 0 0 1px var(--shadow-color);
 }
 .c4g-starboard-filter-match > a {
   color: var(--main-color);
@@ -230,15 +198,11 @@ button.c4g-draw-trigger.c4g-active {
  */
 .c4g-router-input-wrapper {
   color: var(--font-color);
-  //text-shadow: 0 0 1px var(--shadow-color);
 }
 .c4g-router-input-wrapper > input {
   color: var(--main-color);
-  //text-shadow: 0 0 1px var(--shadow-color);
   border-color: var(--main-color);
   background-color: var(--font-color);
-  /*box-shadow: inset 1px 1px 0 0 var(--main-color),*/
-              /*1px 1px 0 0 var(--shadow-color);*/
 }
 .c4g-router-input-wrapper > button,
 .c4g-router-input-wrapper > button:hover {
@@ -251,15 +215,12 @@ button.c4g-draw-trigger.c4g-active {
 }
 .c4g-router-instruction-table {
   color: var(--main-color);
-  //text-shadow: 0 1px var(--shadow-color);
 }
 .c4g-router-instruction-table td {
   border-color: rgba(0,60,136,.3);
-  /*box-shadow: 0 1px 0 0 var(--shadow-color);*/
 }
 .c4g-router-attribution-wrapper {
   color: var(--font-color);
-  //text-shadow: 0 0 1px var(--shadow-color);
 }
 .c4g-router-attribution-wrapper a {
   color: var(--font-color);
@@ -275,7 +236,6 @@ button.c4g-router-input-clear {
 .c4g-geosearch input {
   color: var(--main-color);
   background-color: var(--font-color);
-  /*box-shadow: inset 0 0 3px var(--main-color);*/
 }
 .c4g-geosearch input:hover,
 .c4g-geosearch input:focus {
@@ -287,7 +247,6 @@ button.c4g-router-input-clear {
  */
 .c4g-overviewmap .ol-overviewmap-box {
   border-color: var(--font-color);
-  /*box-shadow: 0 0 10px var(--main-color);*/
 }
 
 
@@ -296,7 +255,6 @@ button.c4g-router-input-clear {
  */
 .ol-attribution ul {
   color: var(--font-color);
-  //text-shadow: 0 0 2px var(--shadow-color);
 }
 .ol-attribution a {
   color: var(--font-color);
@@ -309,12 +267,6 @@ button.c4g-router-input-clear {
 /*
  * Permalink
  */
-div.c4g-permalink-popup {
-  /*background: var(--main-color);*/
-}
-div.c4g-permalink-popup:hover {
-  /*background: var(--main-color);*/
-}
 .c4g-permalink-popup button.c4g-copy {
   border-radius: 0;
 }
@@ -324,7 +276,6 @@ div.c4g-permalink-popup:hover {
 .c4g-permalink-popup input {
   color: var(--font-color);
   background-color: var(--main-color);
-  /*box-shadow: inset 0 0 3px var(--shadow-color);*/
 }
 .c4g-permalink-popup input:hover,
 .c4g-permalink-popup input:focus {
@@ -340,7 +291,6 @@ div.c4g-active.c4g-popup-wrapper {
   background-color: var(--font-color);
   border-color: var(--font-color);
 
-  /*box-shadow: inset 0 0 0 1px var(--shadow-color);*/
   -webkit-filter: drop-shadow(0 1px 4px var(--main-color));
   filter: drop-shadow(0 1px 4px var(--main-color));
 }
@@ -359,7 +309,6 @@ button.c4g-popup-close {
 }
 button.c4g-popup-close:hover {
   color: var(--font-color);
-  //text-shadow: 0 0 3px var(--shadow-color);
   background-color: transparent;
 }
 button.c4g-popup-route-from,
@@ -371,7 +320,6 @@ button.c4g-popup-route-to {
 button.c4g-popup-route-from:hover,
 button.c4g-popup-route-to:hover {
     background-color: var(--font-color);
-    /*box-shadow: 0 0 3px var(--shadow-color);*/
 }
 
 /*

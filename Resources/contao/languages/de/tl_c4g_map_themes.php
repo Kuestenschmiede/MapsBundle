@@ -21,21 +21,35 @@ $GLOBALS['TL_LANG']['tl_c4g_map_themes']['show']    = array('Kartenthema anzeige
  * Fields
  */
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['name']    = array('Name', 'Bitte geben Sie den Namen des Kartenthemas an.');
+
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['buttons'] = array('Buttons', 'Wählen Sie einen Stil für die Buttons aus.');
-$GLOBALS['TL_LANG']['tl_c4g_map_themes']['custom_buttons'] = array('Benutzerdefinierte Buttons', 'Wählen Sie diese Option, wenn Sie eine eigene CSS-Datei verwenden wollen.');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['custom_buttons'] = array('Eigene Button-CSS', 'Wählen Sie diese Option, wenn Sie eine eigene CSS-Datei verwenden wollen.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['external_buttons']  = array('Eigene Buttons', 'Laden Sie Ihre eigene CSS-Datei hoch (Beispiele unter files/con4gis).');
+
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['colors']  = array('Farben', 'Wählen Sie einen Stil für die Farben aus.');
-$GLOBALS['TL_LANG']['tl_c4g_map_themes']['custom_colors'] = array('Benutzerdefinierte Farben', 'Wählen Sie diese Option, wenn Sie eine eigene CSS-Datei verwenden wollen.');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['custom_colors'] = array('Eigene Farben-CSS', 'Wählen Sie diese Option, wenn Sie eine eigene CSS-Datei verwenden wollen.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['external_colors']  = array('Eigene Farben', 'Laden Sie Ihre eigene CSS-Datei hoch (Beispiele unter files/con4gis).');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['maincolor']  = array('Hauptfarbe', 'Die Farbe überschreibt die CSS-Einstellungen.');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['mainopacity']  = array('Deckkraft der Hauptfarbe', 'Überschreibt die CSS-Einstellungen.');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['fontcolor']  = array('Schriftfarbe', 'Die Farbe überschreibt die CSS-Einstellungen.');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['fontopacity']  = array('Deckkraft der Schriftfarbe', 'Überschreibt die CSS-Einstellungen.');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['shadowcolor']  = array('Schattenfarbe', 'Die Farbe überschreibt die CSS-Einstellungen.');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['shadowopacity']  = array('Deckkraft der Schattenfarbe', 'Überschreibt die CSS-Einstellungen.');
+
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['effects'] = array('Effekte', 'Wählen Sie einen Stil für die Effekte aus.');
-$GLOBALS['TL_LANG']['tl_c4g_map_themes']['custom_effects'] = array('Benutzerdefinierte Effekte', 'Wählen Sie diese Option, wenn Sie eine eigene CSS-Datei verwenden wollen.');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['custom_effects'] = array('Eigene Effekte-CSS', 'Wählen Sie diese Option, wenn Sie eine eigene CSS-Datei verwenden wollen.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['external_effects']  = array('Eigene Effekte', 'Laden Sie Ihre eigene CSS-Datei hoch (Beispiele unter files/con4gis).');
+
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['icons']   = array('Icons', 'Wählen Sie einen Stil für die Icons aus.');
-$GLOBALS['TL_LANG']['tl_c4g_map_themes']['custom_icons'] = array('Benutzerdefinierte Icons', 'Wählen Sie diese Option, wenn Sie eine eigene CSS-Datei verwenden wollen.');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['custom_icons'] = array('Eigene Icon-CSS', 'Wählen Sie diese Option, wenn Sie eine eigene CSS-Datei verwenden wollen.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['external_icons']  = array('Eigene Icons', 'Laden Sie Ihre eigene CSS-Datei hoch (Beispiele unter files/con4gis).');
 
 // Palettes
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['theme_legend']   = 'Kartenthema-Einstellungen';
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['buttons_legend'] = 'Bedienelemente';
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['colors_legend']  = 'Farben';
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['effects_legend'] = 'Effekte';
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['icons_legend']   = 'Icons';
 
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['example_info']   =
     'Beispieldateien wurden Ihnen unter /files/con4gis/examples/themes zur Verfügung gestellt.<br>'.

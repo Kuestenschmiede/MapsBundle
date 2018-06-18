@@ -482,10 +482,10 @@ class MapDataConfigurator
         ResourceLoader::loadResourcesForModule('maps');
         // load internal scripts and themes
         if ($profileId) {
-            ResourceLoader::loadResourcesForProfile($profileId, $options['type'] == 'geopicker');
+            $mapData['themeData'] = ResourceLoader::loadResourcesForProfile($profileId, $options['type'] == 'geopicker');
         } else {
             ResourceLoader::loadResources();
-            ResourceLoader::loadTheme();
+            $mapData['themeData'] = ResourceLoader::loadTheme();
         }
 
         // @TODO: Check

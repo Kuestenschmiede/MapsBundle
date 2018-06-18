@@ -297,7 +297,7 @@ class ResourceLoader extends coreResourceLoader
         // load theme
         self::loadResources($resources);
         // check & load Theme
-        self::loadTheme($profile->theme);
+        return self::loadTheme($profile->theme);
     }
 
     /**
@@ -350,8 +350,15 @@ class ResourceLoader extends coreResourceLoader
             parent::loadCssRessource('c4g-maps-effects', self::BUNDLE_CSS_PATH . 'themes/effects/' . $theme->effects);
         }
 
+        $themeData = array();
+        $themeData['maincolor'] = $theme->maincolor;
+        $themeData['mainopacity'] = $theme->mainopacity;
+        $themeData['fontcolor'] = $theme->fontcolor;
+        $themeData['fontopacity'] = $theme->fontopacity;
+        $themeData['shadowcolor'] = $theme->shadowcolor;
+        $themeData['shadowopacity'] = $theme->shadowopacity;
 
-        return true;
+        return $themeData;
     }
 
     /**
