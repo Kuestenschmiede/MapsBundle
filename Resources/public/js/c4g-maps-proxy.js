@@ -264,10 +264,10 @@ class MapProxy {
             layer = self.layerController.arrLayers[layerId];
             if (self.checkLayerIsActiveForZoom(layerId)) {
               if (layer.isInactive) {
-                self.showLayer(layerId);
+                self.layerController.showLayer(layerId);
               }
             } else {
-              self.hideLayer(layerId, true);
+              self.layerController.hideLayer(layerId, true);
             }
           }
         }
@@ -291,10 +291,10 @@ class MapProxy {
           layer = self.layerController.arrLayers[layerId];
           if (self.checkLayerIsActiveForZoom(layerId)) {
             if (layer.isInactive) {
-              self.showLayer(layerId);
+              self.layerController.showLayer(layerId);
             }
           } else {
-            self.hideLayer(layerId, true);
+            self.layerController.hideLayer(layerId, true);
           }
         }
       }
