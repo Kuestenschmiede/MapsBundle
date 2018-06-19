@@ -318,6 +318,8 @@ class ResourceLoader extends coreResourceLoader
             return true;
         }
 
+        $themeData = array();
+
         /**
          * If custom stylesheet were uploaded, load them. If not, load the selected builtin style.
          */
@@ -341,6 +343,25 @@ class ResourceLoader extends coreResourceLoader
             parent::loadCssRessource('c4g-maps-colors', $objFile->path);
         } else if ($theme->colors) {
             parent::loadCssRessource('c4g-maps-colors', self::BUNDLE_CSS_PATH . 'themes/colors/' . $theme->colors);
+
+            if ($theme->maincolor) {
+                $themeData['maincolor'] = $theme->maincolor;
+            }
+            if ($theme->mainopacity) {
+                $themeData['mainopacity'] = $theme->mainopacity;
+            }
+            if ($theme->fontcolor) {
+                $themeData['fontcolor'] = $theme->fontcolor;
+            }
+            if ($theme->fontopacity) {
+                $themeData['fontopacity'] = $theme->fontopacity;
+            }
+            if ($theme->shadowcolor) {
+                $themeData['shadowcolor'] = $theme->shadowcolor;
+            }
+            if ($theme->shadowopacity) {
+                $themeData['shadowopacity'] = $theme->shadowopacity;
+            }
         }
 
         if ($theme->custom_effects) {
@@ -349,14 +370,6 @@ class ResourceLoader extends coreResourceLoader
         } else if ($theme->effects) {
             parent::loadCssRessource('c4g-maps-effects', self::BUNDLE_CSS_PATH . 'themes/effects/' . $theme->effects);
         }
-
-        $themeData = array();
-        $themeData['maincolor'] = $theme->maincolor;
-        $themeData['mainopacity'] = $theme->mainopacity;
-        $themeData['fontcolor'] = $theme->fontcolor;
-        $themeData['fontopacity'] = $theme->fontopacity;
-        $themeData['shadowcolor'] = $theme->shadowcolor;
-        $themeData['shadowopacity'] = $theme->shadowopacity;
 
         return $themeData;
     }
