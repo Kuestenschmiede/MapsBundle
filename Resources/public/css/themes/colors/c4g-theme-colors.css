@@ -129,17 +129,17 @@ button.c4g-draw-trigger.c4g-active {
 }
 
 .c4g-editor-draw-options,
-.c4g-portside-content-container h4,
-.c4g-starboard-content-container h4 {
+.c4g-portside-content-container .contentHeadline,
+.c4g-starboard-content-container .contentHeadline {
   color: var(--main-color);
   border-color: var(--main-color);
   background-color: var(--font-color);
 }
-.c4g-starboard-content-container h4 a {
+.c4g-starboard-content-container .contentHeadline a {
     color: inherit;
     border-color: inherit;
 }
-.c4g-portside-container h4 button:hover {
+.c4g-portside-container .contentHeadline button:hover {
   background-color: var(--main-color);
 }
 .c4g-portside-content-container p,

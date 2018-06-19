@@ -22,7 +22,7 @@
   height: 36px; /*1.974em;*/
   width: 36px; /*1.974em;*/
   line-height: .5em;
-  border: none;
+  /*border: none;*/
   border-radius: 2px;
 }
 .ol-control button::-moz-focus-inner {

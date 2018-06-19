@@ -13,7 +13,7 @@
  *  full-screen fixes
  *  - cannot be grouped
  */
-.mod_c4g_maps > div:full-screen {
+.mod_c4g_maps > div:fullscreen {
   width: 100% !important;
   height: 100% !important;
   margin: 0 !important;
