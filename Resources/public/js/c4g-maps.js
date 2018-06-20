@@ -796,16 +796,18 @@ this.c4g.maps = this.c4g.maps || {};
         }
 
         //themeData
-        if (mapData.themeData && (mapData.themeData.length > 0)) {
-            var mainColor = c4g.maps.utils.getRgbaFromHexAndOpacity(mapData.themeData['maincolor'], mapData.themeData['mainopacity']);
-            var fontColor = c4g.maps.utils.getRgbaFromHexAndOpacity(mapData.themeData['fontcolor'], mapData.themeData['fontopacity']);
-            var shadowColor = c4g.maps.utils.getRgbaFromHexAndOpacity(mapData.themeData['shadowcolor'], mapData.themeData['shadowopacity']);
-            domMapDiv = document.getElementById(mapData.mapDiv);
+        if (mapData.themeData) {
+            if (mapData.themeData['maincolor']) {
+                var mainColor = c4g.maps.utils.getRgbaFromHexAndOpacity(mapData.themeData['maincolor'], mapData.themeData['mainopacity']);
+                var fontColor = c4g.maps.utils.getRgbaFromHexAndOpacity(mapData.themeData['fontcolor'], mapData.themeData['fontopacity']);
+                var shadowColor = c4g.maps.utils.getRgbaFromHexAndOpacity(mapData.themeData['shadowcolor'], mapData.themeData['shadowopacity']);
+                domMapDiv = document.getElementById(mapData.mapDiv);
 
-            if (domMapDiv && domMapDiv.style) {
-                domMapDiv.style.setProperty('--main-color', mainColor);
-                domMapDiv.style.setProperty('--font-color', fontColor);
-                domMapDiv.style.setProperty('--shadow-color', shadowColor);
+                if (domMapDiv && domMapDiv.style) {
+                    domMapDiv.style.setProperty('--main-color', mainColor);
+                    domMapDiv.style.setProperty('--font-color', fontColor);
+                    domMapDiv.style.setProperty('--shadow-color', shadowColor);
+                }
             }
         }
 
