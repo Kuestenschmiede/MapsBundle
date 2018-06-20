@@ -150,14 +150,10 @@ button.c4g-router-over:before {
 button.ol-zoom-in:before {
   font-family: 'FontAwesome';
   content: "\f067";
-  font-size: .6em;
-  /*content: "+";*/
 }
 button.ol-zoom-out:before {
   font-family: 'FontAwesome';
   content: "\f068";
-  font-size: .6em;
-  /*content: "-";*/
 }
 .ol-zoom-extent button:before,
 button.ol-zoom-extent:before {
@@ -180,13 +176,13 @@ button.ol-zoom-position:before {
 /* Portside & Starboard */
 button.c4g-portside-hide:before{
   content: "\f053";
-  font-size: .6em;
+  /*font-size: .6em;*/
   /*content: "<";*/
 }
 button.c4g-portside-close:before,
 button.c4g-starboard-close:before{
   content: "\f00d";
-  font-size: .6em;
+  /*font-size: .6em;*/
   /*content: "X";*/
 }
 
@@ -317,7 +313,7 @@ button.c4g-starboard-view-trigger-layerswitcher:before {
 .c4g-baselayertree span.c4g-icon:before {
   font-family: 'FontAwesome';
   content: "\f054";
-  font-size: .8em;
+  /*font-size: .8em;*/
 }
 .c4g-baselayertree input {
 

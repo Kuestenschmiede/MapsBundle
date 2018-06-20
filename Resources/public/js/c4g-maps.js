@@ -809,6 +809,11 @@ this.c4g.maps = this.c4g.maps || {};
                     domMapDiv.style.setProperty('--shadow-color', shadowColor);
                 }
             }
+
+            if (mapData.themeData['buttonradius']) {
+                domMapDiv.style.setProperty('--button-radius-percent', mapData.themeData['buttonradius']+'%');
+                domMapDiv.style.setProperty('--button-radius-pixel', mapData.themeData['buttonradius']+'px');
+            }
         }
 
       if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.mapController_addControls === 'object') {

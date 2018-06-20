@@ -366,7 +366,6 @@ li.c4g-close ul {
 }
 button.c4g-starboard-close:before {
   content: "X";
-  font-size: 0.6em;
 }
 button.c4g-starboard-view-trigger-baselayerswitcher:before {
   content: "B";
@@ -376,11 +375,9 @@ button.c4g-starboard-view-trigger-layerswitcher:before {
 }
 button.c4g-portside-hide:before {
   content: "<";
-  font-size: 0.6em;
 }
 button.c4g-portside-close:before {
   content: "X";
-  font-size: 0.6em;
 }
 
 .c4g-starboard-bottom-toolbar .c4g-open {
@@ -404,12 +401,10 @@ button.c4g-portside-close:before {
 }
 button.ol-zoom-in:before {
   content: "+";
-  font-size: 0.6em;
 }
 
 button.ol-zoom-out:before {
   content: "-";
-  font-size: 0.6em;
 }
 
 button.ol-zoom-extent:before,

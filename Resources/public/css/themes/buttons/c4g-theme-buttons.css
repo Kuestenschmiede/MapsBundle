@@ -1,3 +1,8 @@
+:root {
+  --button-radius-percent: 100%;
+  --button-radius-pixel: 100px;
+}
+
 .ol-unsupported {
   display: none;
 }
@@ -8,8 +13,9 @@
  */
 .ol-control {
   position: absolute;
-  border-radius: 4px;
+  border-radius: var(--button-radius-percent);
   padding: 2px;
+  border: none;
 }
 .ol-control button,
 .c4g-control button {
@@ -23,7 +29,7 @@
   width: 36px; /*1.974em;*/
   line-height: .5em;
   /*border: none;*/
-  border-radius: 2px;
+  border-radius: var(--button-radius-percent);
 }
 .ol-control button::-moz-focus-inner {
   border: none;
@@ -58,7 +64,7 @@
   line-height: 1.2em;
   white-space: nowrap;
 
-  border: 3px solid;
+  border: 2px solid;
   border-left-width: 0;
   border-radius: 0 4px 4px 0;
 
@@ -83,6 +89,12 @@
   top: 2.05em;
 }
 
+.ol-zoom-with-slider {
+  border: none;
+  border-radius: var(--button-radius-pixel);
+  background-color: transparent;
+}
+
 .ol-zoom-with-slider.ol-control button[title]:hover:after,
 .ol-zoom-with-slider.ol-control button[title]:focus:after {
   top: 1.1em;
@@ -92,13 +104,14 @@
   margin-top: 204px;
 }
 .ol-zoomslider {
-  background-color: transparent;
-  top: 42px; /*2.3em;*/
+  background-color: transparent!important;
+  top: 86px;
   left: .2em;
   height: 200px;
   z-index: 620;
+  /*border: none;*/
+  /*border-radius: 0 0 100% 100%;*/
 }
-
 .ol-touch .ol-zoom-with-slider .ol-zoom-out {
   margin-top: 212px;
 }
@@ -227,20 +240,19 @@ div.ol-zoom-slider,
 }
 
 button.ol-zoom-in {
-  border-radius: 2px 2px 0 0;
+  border-radius: var(--button-radius-percent);
 }
 button.ol-zoom-out {
-  border-radius: 0 0 2px 2px;
+  border-radius: var(--button-radius-percent);
 }
 .ol-zoom-with-extent .ol-zoom-extent,
-.ol-zoom-with-home .ol-zoom-home,
-.ol-zoom-with-position .ol-zoom-position{
-  border-radius: 0;
+.ol-zoom-with-home .ol-zoom-home {
+  border-radius: var(--button-radius-percent);
 }
-.ol-zoom-with-slider .ol-zoom-slider {
-  border-radius: 0;
+.ol-zoom-with-position {
+  border: none;
+  border-radius: var(--button-radius-pixel);
 }
-
 .ol-rotate {
   transition: opacity .25s linear,
               visibility 0s linear;
@@ -274,8 +286,8 @@ button.ol-zoom-out {
 }
 
 .c4g-control-container-bottom-left-sub {
-  margin-top: .2em;
-  padding: 0 .2em;
+  margin-top: .4em;
+  padding: 0 .4em;
   font-size: smaller;
   border-radius: 4px;
 }
@@ -593,6 +605,9 @@ button.c4g-router-input-clear {
 /*
  *  Geosearch
  */
+.c4g-geosearch {
+  border-radius: var(--button-radius-percent);
+}
 .c4g-geosearch input {
   outline-style: none;
   height: 1.42em;
@@ -602,33 +617,41 @@ button.c4g-router-input-clear {
   padding-right: 5px;
   border: none;
   margin-top: 1px;
+  margin-left: 2px;
+  margin-right: 2px;
   height: 32px;
   display: block;
   float: left;
-  border-radius: 3px 0 0 3px;
+  border-radius: var(--button-radius-pixel);
 }
 .c4g-geosearch button.c4g-geosearch-start{
   display: inline-block;
-  border-radius: 0 3px 3px 0;
+  /*border-radius: 0 3px 3px 0;*/
   /*margin-top: 5px;*/
-  border-radius: 0;
+  border-radius: var(--button-radius-percent);
   /* margin-top: -5px; */
   display: block;
   float: left;
   /*margin-top: 0;*/
 }
+.c4g-geosearch.c4g-open, .c4g-geosearch.c4g-open:hover {
+  background: none;
+}
 .c4g-geosearch.c4g-open button.c4g-geosearch-trigger{
-  border-radius: 0 3px 3px 0;
+  border-radius: var(--button-radius-percent);
   /*margin-top: 0;*/
 }
-
+.searchResultButton {
+  border-radius: var(--button-radius-pixel)!important;
+  padding: 8px!important;
+}
 
 /*
  *  Overview-map
  */
 .c4g-overviewmap{
-  min-height: 38px;
-  min-width: 38px;
+  height: 38px;
+  width: 38px;
 }
 .c4g-overviewmap button {
   position: absolute;
@@ -638,12 +661,16 @@ button.c4g-router-input-clear {
 }
 .c4g-overviewmap .ol-overviewmap-box {
   border: 1px solid;
+  border-radius: var(--button-radius-percent);
 }
 
 
 /*
  *  Attributions
  */
+.ol-attribution {
+  border-radius: var(--button-radius-percent);
+}
 .ol-attribution img {
   margin-top: -.2em;
   max-height: 1.6em;
@@ -705,6 +732,9 @@ div.c4g-permalink-popup input[type='text'] {
 div.c4g-permalink-popup button {
   display: inline-block;
   margin: 3px;
+}
+div.c4g-permalink-popup button.c4g-refresh {
+  border-radius: var(--button-radius-percent);
 }
 div.c4g-permalink-popup button.c4g-copy {
   margin: 3px 0;

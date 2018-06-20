@@ -92,7 +92,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] = array
     'palettes' => array
     (
         '__selector__' => array('custom_buttons', 'custom_colors', 'custom_effects', 'custom_icons'),
-        'default' => '{theme_legend}, name, {buttons_legend}, buttons, custom_buttons, {colors_legend}, colors, maincolor, mainopacity, fontcolor, fontopacity, shadowcolor, shadowopacity, custom_colors, {effects_legend}, effects, custom_effects, {icons_legend}, icons, custom_icons',
+        'default' => '{theme_legend}, name; {buttons_legend}, buttons, buttonradius, custom_buttons; {colors_legend}, colors, maincolor, mainopacity, fontcolor, fontopacity, shadowcolor, shadowopacity, custom_colors; {effects_legend}, effects, custom_effects; {icons_legend}, icons, custom_icons',
     ),
 
     //Subpalettes
@@ -132,7 +132,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] = array
             'label'                     => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['buttons'],
             'inputType'                 => 'select',
             'options_callback'          => array('tl_c4g_map_themes', 'getButtonOptions'),
-            'eval'                      => array('mandatory' => false, 'includeBlankOption' => true),
+            'eval'                      => array('mandatory' => false, 'includeBlankOption' => false),
             'sql'                       => "blob NULL"
         ),
         'custom_buttons' => array
@@ -150,12 +150,21 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] = array
             'eval'                      => array('mandatory' => false, 'filesOnly' => true, 'extensions' => 'css', 'fieldType' => 'radio'),
             'sql'                       => "blob NULL"
         ),
+        'buttonradius' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['buttonradius'],
+            'inputType'               => 'inputUnit',
+            'default'                 => '100',
+            'options'                 => array('%'),
+            'eval'                    => array('rgxp'=>'prcnt', 'tl_class'=>'long', 'mandatory'=>true),
+            'sql'                     => "varchar(100) NOT NULL default ''"
+        ),
         'colors' => array
         (
             'label'                     => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['colors'],
             'inputType'                 => 'select',
             'options_callback'          => array('tl_c4g_map_themes', 'getColorOptions'),
-            'eval'                      => array('mandatory' => false, 'multiple' => false, 'includeBlankOption' => true),
+            'eval'                      => array('mandatory' => false, 'multiple' => false, 'includeBlankOption' => false),
             'sql'                       => "blob NULL"
         ),
         'custom_colors' => array
@@ -229,7 +238,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] = array
             'label'                     => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['effects'],
             'inputType'                 => 'select',
             'options_callback'          => array('tl_c4g_map_themes', 'getEffectOptions'),
-            'eval'                      => array('mandatory' => false, 'multiple' => false, 'includeBlankOption' => true),
+            'eval'                      => array('mandatory' => false, 'multiple' => false, 'includeBlankOption' => false),
             'sql'                       => "blob NULL"
         ),
         'custom_effects' => array
@@ -252,7 +261,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] = array
             'label'                     => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['icons'],
             'inputType'                 => 'select',
             'options_callback'          => array('tl_c4g_map_themes', 'getIconOptions'),
-            'eval'                      => array('mandatory' => false, 'multiple' => false, 'includeBlankOption' => true),
+            'eval'                      => array('mandatory' => false, 'multiple' => false, 'includeBlankOption' => false),
             'sql'                       => "blob NULL"
         ),
         'custom_icons' => array
@@ -278,21 +287,21 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] = array
  */
 class tl_c4g_map_themes extends Backend
 {
-    private function copyFolder($source, $dest)
-    {
-        $handle = @opendir($source);
-
-        if(!$handle)
-            return false;
-
-        while ($file = @readdir($handle))
-        {
-            copy($source.$file, $dest.$file);
-        }
-
-        @closedir($handle);
-
-    }
+//    private function copyFolder($source, $dest)
+//    {
+//        $handle = @opendir($source);
+//
+//        if(!$handle)
+//            return false;
+//
+//        while ($file = @readdir($handle))
+//        {
+//            copy($source.$file, $dest.$file);
+//        }
+//
+//        @closedir($handle);
+//
+//    }
 
     private function getFileArray($subDir) {
         $result = array();
@@ -325,21 +334,21 @@ class tl_c4g_map_themes extends Backend
 
         }
 
-        try {
-            $dir = TL_ROOT . '/files/con4gis/examples/themes/'.$subDir.'/';
-            if (is_dir($dir)) {
-                foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path)) as $filename) {
-                    if ($filename->isDir()) continue;
-                    unlink($filename);
-                }
-                rmdir($dir);
-            }
-
-            mkdir($dir, 0777, true);
-            $this->copyFolder($maps3Path,$dir);
-        }catch(Exception $e) {
-            //do nothing
-        }
+//        try {
+//            $dir = TL_ROOT . '/files/con4gis/examples/themes/'.$subDir.'/';
+//            if (is_dir($dir)) {
+//                foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir)) as $filename) {
+//                    if ($filename->isDir()) continue;
+//                    unlink($filename);
+//                }
+//                rmdir($dir);
+//            }
+//
+//            mkdir($dir, 0777, true);
+//            $this->copyFolder($maps3Path,$dir);
+//        }catch(Exception $e) {
+//            //do nothing
+//        }
 
 
         return $result;
@@ -362,7 +371,7 @@ class tl_c4g_map_themes extends Backend
 
     public function getIconOptions()
     {
-        \Contao\Message::addInfo($GLOBALS['TL_LANG']['tl_c4g_map_themes']['example_info']);
+//        \Contao\Message::addInfo($GLOBALS['TL_LANG']['tl_c4g_map_themes']['example_info']);
         return $this->getFileArray('icons');
     }
 }
