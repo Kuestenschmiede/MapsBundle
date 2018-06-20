@@ -235,18 +235,19 @@ button.c4g-router-input-clear {
  */
 .c4g-geosearch input {
   color: var(--main-color);
-  background-color: var(--font-color);
+  background-color: var(--shadow-color);
+  /*border-color: var(--shadow-color);*/
 }
-.c4g-geosearch input:hover,
-.c4g-geosearch input:focus {
-  background-color: var(--font-color);
-}
+/*.c4g-geosearch input:hover,*/
+/*.c4g-geosearch input:focus {*/
+  /*background-color: var(--font-color);*/
+/*}*/
 
 /*
  *  Overview-map
  */
 .c4g-overviewmap .ol-overviewmap-box {
-  border-color: var(--font-color);
+  border-color: var(--main-color);
 }
 
 
@@ -267,12 +268,6 @@ button.c4g-router-input-clear {
 /*
  * Permalink
  */
-.c4g-permalink-popup button.c4g-copy {
-  border-radius: 0;
-}
-.c4g-permalink-popup button.c4g-refresh {
-  border-radius: 0 3px 3px 0;
-}
 .c4g-permalink-popup input {
   color: var(--font-color);
   background-color: var(--main-color);
