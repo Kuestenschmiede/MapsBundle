@@ -101,6 +101,12 @@
   border-color: var(--shadow-color);
   background-color: var(--main-color);
 }
+.c4g-starboard-titlebar .c4g-starboard-buttonbar button,
+.c4g-portside-titlebar .c4g-portside-buttonbar button {
+  color: var(--main-color);
+  border-color: var(--shadow-color);
+  background-color: var(--font-color);
+}
 .c4g-portside-container button:focus,
 .c4g-portside-container button:hover,
 .c4g-starboard-container button:focus,
@@ -110,9 +116,9 @@
 }
 .c4g-portside-container button[title]:after,
 .c4g-starboard-container button[title]:after {
-  color: var(--main-color);
+  color: var(--font-color);
   border-color: var(--font-color);
-  background-color: var(--font-color);
+  background-color: transparent;
 }
 button.c4g-draw-trigger {
   background-color: transparent;
@@ -146,10 +152,10 @@ button.c4g-draw-trigger.c4g-active {
 .c4g-starboard-content-container p {
   color: var(--main-color);
 }
-.c4g-content-select input {
-  color: var(--main-color);
-  border-color: var(--main-color);
-  background-color: var(--font-color);
+.c4g-content-select input ,.c4g-portside-top-toolbar select, .c4g-portside-top-toolbar button {
+  color: var(--font-color);
+  border-color: var(--font-color);
+  background-color: var(--shadow-color);
 }
 .c4g-content-select input:hover {
   background-color: var(--font-color);
@@ -161,8 +167,9 @@ button.c4g-draw-trigger.c4g-active {
 
 .c4g-portside-statusbar,
 .c4g-starboard-statusbar {
-  border-color: #abc;
-  border-color: var(--font-color);
+  border-color: var(--main-color);
+  background-color: transparent;
+  color: transparent;
 }
 
 .c4g-portside-viewtriggerbar button.c4g-active,
@@ -206,7 +213,9 @@ button.c4g-draw-trigger.c4g-active {
 }
 .c4g-router-input-wrapper > button,
 .c4g-router-input-wrapper > button:hover {
-  background-color: transparent;
+  color: var(--main-color);
+  border-color: var(--shadow-color);
+  background-color: var(--font-color);
 }
 .c4g-router-input-wrapper > input:hover,
 .c4g-router-input-wrapper > input:active,
@@ -329,7 +338,8 @@ button.c4g-popup-route-to:hover {
 }
 
 .c4g-panel-content-wrapper {
-  background: var(--font-color);
+  background: var(--main-color);
+  color: var(--font-color);
 }
 
 .c4g-panel-slidebutton {

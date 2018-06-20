@@ -175,15 +175,13 @@ button.ol-zoom-position:before {
 
 /* Portside & Starboard */
 button.c4g-portside-hide:before{
-  content: "\f053";
-  /*font-size: .6em;*/
-  /*content: "<";*/
+  font-family: 'FontAwesome';
+  content: "\f060";
 }
 button.c4g-portside-close:before,
 button.c4g-starboard-close:before{
+  font-family: 'FontAwesome';
   content: "\f00d";
-  /*font-size: .6em;*/
-  /*content: "X";*/
 }
 
 button.c4g-editor-feature-modify:before {
@@ -300,12 +298,10 @@ button.c4g-starboard-view-trigger-layerswitcher:before {
 
 .c4g-baselayertree>ul>li>a.c4g-active:before {
   font-family: 'FontAwesome';
-  /*content: "\f06e";*/
   content: "\f192";
 }
 .c4g-baselayertree>ul>li>a.c4g-inactive:before {
   font-family: 'FontAwesome';
-  /*content: "\f070";*/
   content: "\f1db";
 }
 
@@ -313,7 +309,6 @@ button.c4g-starboard-view-trigger-layerswitcher:before {
 .c4g-baselayertree span.c4g-icon:before {
   font-family: 'FontAwesome';
   content: "\f054";
-  /*font-size: .8em;*/
 }
 .c4g-baselayertree input {
 

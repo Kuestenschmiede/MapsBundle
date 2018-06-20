@@ -313,12 +313,13 @@ button.ol-zoom-out {
 .c4g-starboard-titlebar .c4g-starboard-buttonbar button,
 .c4g-portside-titlebar .c4g-portside-buttonbar button {
   display: inline-block;
-  width: 32px;
-  height: 32px;
-  margin-bottom: .2em;
-  line-height: .7em;
-  padding-bottom: .1em;
-  text-align: center;
+  /*width: 32px;*/
+  /*height: 32px;*/
+  /*margin-bottom: .2em;*/
+  /*line-height: .7em;*/
+  /*padding-bottom: .1em;*/
+  /*text-align: center;*/
+  /*border-radius: var(--button-radius-percent);*/
 }
 .c4g-portside-top-toolbar {
   /*border-top: 1px solid;*/
@@ -326,19 +327,16 @@ button.ol-zoom-out {
 .c4g-starboard-container button,
 .c4g-portside-container button {
   display: inline-block;
-  vertical-align: bottom;
-  height: 1.375em;
-  width: 1.375em;
+  vertical-align: middle;
+  height: 24px;
+  width: 24px;
   margin: 1px;
-  padding: 0;
-
-  font-size: 1.14em;
+  padding: 1px;
+  font-size: 0.7em;
   text-decoration: none;
   text-align: center;
   line-height: .2em;
-
-  border: none;
-  border-radius: 2px;
+  border-radius: var(--button-radius-percent);
 }
 .c4g-portside-container .formbody button, .c4g-portside-container .c4g_brick_dialog button {
   display: inherit;
@@ -369,22 +367,23 @@ button.ol-zoom-out {
   left: 0;
   right: 0;
 
-  margin: 0 4px;
-  padding: 2px 0;
+  /*margin: 0 4px;*/
+  /*padding: 2px 0;*/
   height: auto;
-  max-height: 24px;
+  /*max-height: 24px;*/
 
-  font-size: .8em;
-  line-height: 1.2em;
+  /*font-size: .8em;*/
+  /*line-height: 1.2em;*/
   white-space: nowrap;
+  font: inherit;
 
   /*border: 1px solid;
   border-bottom-width: 0;*/
-  border-radius: 3px 3px 0 0;
+  /*border-radius: 3px 3px 0 0;*/
 
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
+  /*-webkit-box-sizing: border-box;*/
+  /*-moz-box-sizing: border-box;*/
+  /*box-sizing: border-box;*/
 }
 
 .c4g-starboard-viewtriggerbar,
@@ -398,6 +397,8 @@ button.ol-zoom-out {
   width: 2em;
   margin: -2px 3px 2px 0;
   border-radius: 3px;
+  border: 0;
+  font-size: 1.0em;
 }
 .c4g-starboard-viewtriggerbar {
   text-align: right;
@@ -467,6 +468,34 @@ button.ol-zoom-out {
   padding: 5px;
   border: 1px solid;
   outline: none;
+}
+.c4g-portside-top-toolbar {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 0px;
+}
+.c4g-portside-top-toolbar select {
+  border: 0;
+  background: transparent;
+  padding: 0px;
+  margin-top: 1px;
+  margin-bottom: 1px;
+  height: 32px;
+  min-width: 190px;
+  font-weight: bold;
+}
+.c4g-portside-top-toolbar button {
+  border: 0;
+  background: transparent;
+  padding: 0px;
+  margin-top: 1px;
+  margin-bottom: 1px;
+  margin-left: 3px;
+  margin-right: 0px;
+  border-radius: 0;
+  height: 32px;
+  width: 32px;
 }
 .c4g-content-select .contentHeadline input {
   width: 200px;

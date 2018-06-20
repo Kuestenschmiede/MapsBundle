@@ -249,7 +249,7 @@ button.c4g-geosearch-start:before {
   height: 100%;
   min-width: 240px;
   max-width: 42%;
-  background: #FFFFFF;
+  /*background: #FFFFFF;*/
   z-index: 600;
 }
 
@@ -267,12 +267,12 @@ button.c4g-geosearch-start:before {
   position: relative;
   height: 100%;
   margin: 0 0 0 46px;
-  font-size: 1.00em;
+  font-size: 14px;
 }
 .c4g-starboard-wrapper {
   position: relative;
   height: 100%;
-  font-size: 1.00em;
+  font-size: 14px;
   text-align: left;
 }
 .c4g-starboard-wrapper > div,
@@ -295,7 +295,7 @@ button.c4g-geosearch-start:before {
 
 .c4g-portside-top-toolbar,
 .c4g-portside-bottom-toolbar {
-  min-height: 30px;
+  /*min-height: 30px;*/
   display: inline-flex;
   justify-content:space-around;
 }
@@ -318,6 +318,11 @@ button.c4g-geosearch-start:before {
 .c4g-portside-content-container {
   overflow-wrap: break-word;
   overflow-y: auto;
+}
+
+.c4g-portside-content-container .c4g_brick_dialog {
+  padding-left: 8px;
+  padding-right: 8px;
 }
 
 li.c4g-close ul {
@@ -439,8 +444,8 @@ button.ol-zoom-position:before{
  * Popups
  */
 .c4g-popup-wrapper {
-  background: #ffffff;
-  border: 1px solid blue;
+  /*background: #ffffff;*/
+  border: 1px solid;
   border-radius: 5px;
   position: relative;
   display: none;
@@ -670,7 +675,7 @@ div.c4g-permalink-popup input[type='text'] {
   width: 100%;
   height: auto;
   z-index: 1000;
-  background-color: #00b0e8;
+  /*background-color: #00b0e8;*/
   transition: 0.5s;
   max-height: 125px;
   margin-right: 1em;
@@ -710,7 +715,7 @@ div.c4g-permalink-popup input[type='text'] {
   vertical-align: middle;
   margin-top: 20px;
   border: 1px solid;
-  color: ghostwhite;
+  /*color: ghostwhite;*/
 }
 
 button.c4g-panel-button {
@@ -735,7 +740,7 @@ input.c4g-panel-button {
   border: 1px solid skyblue;
   height: 30px;
   vertical-align: middle;
-  color: ghostwhite;
+  /*color: ghostwhite;*/
   transition: none;
 }
 
