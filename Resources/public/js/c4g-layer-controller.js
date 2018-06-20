@@ -2,7 +2,7 @@ class C4gLayerController{
   constructor(proxy){
     this._proxy = proxy;
     this._mapController = proxy.options.mapController;
-    this._arrLayers = [];
+    this._arrLayers = {};
   }
   get proxy() {
     return this._proxy;
