@@ -80,10 +80,13 @@ button.c4g-router-print:before {
   content: "\f02f";
 }
 button.c4g-router-switch:before {
-  content: "\f0ec";
+  content: "\f0dc";
 }
 button.c4g-router-over:before {
   content: "\f067";
+}
+button.c4g-router-input-clear:before {
+  content: "\f1f8";
 }
 .c4g-router.c4g-close > button:before {
   content: "\f124";
@@ -248,7 +251,7 @@ button.c4g-starboard-view-trigger-baselayerswitcher:before {
   content: "\f279";
 }
 button.c4g-starboard-view-trigger-layerswitcher:before {
-  content: "\f002";
+  content: "\f02d";
 }
 
 
@@ -312,11 +315,11 @@ button.c4g-popup-close:before {
   content: "\f00d";
 }
 button.c4g-popup-route-from:before {
-  content: "\f148";
+  content: "\f024";
   margin: 0 5px 0 -3px;
 }
 button.c4g-popup-route-to:before {
-  content: "\f149";
+  content: "\f11e";
   margin: 0 5px 0 -3px;
 }
 .c4g-layertree a.c4g-active:after,

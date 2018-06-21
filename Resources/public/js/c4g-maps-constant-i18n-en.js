@@ -82,7 +82,7 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
     ROUTER_FROM_LABEL: 'Start',
     ROUTER_TO_LABEL: 'End',
     ROUTER_CLEAR_TITLE: 'Delete',
-    ROUTER_CLEAR_HTML: 'X',
+    ROUTER_CLEAR_HTML: '',
     ROUTER_Label_Interim: 'Interim Goals',
 
     ROUTER_SWITCH:'Switch between Start and End',

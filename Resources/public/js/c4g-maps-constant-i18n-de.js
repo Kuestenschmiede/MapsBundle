@@ -81,12 +81,12 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
     SIDEBOARD: 'Sideboard',
 
     ROUTER_VIEW_ADDRESS_INPUT: 'Route finden',
-    ROUTER_FROM_LABEL: 'Start-Adresse',
-    ROUTER_OVER_LABEL: 'Zwischen-Adresse',
-    ROUTER_TO_LABEL: 'Ziel-Adresse',
+    ROUTER_FROM_LABEL: 'Start',
+    ROUTER_OVER_LABEL: 'Zwischenziel',
+    ROUTER_TO_LABEL: 'Ziel',
     ROUTER_CLEAR_TITLE: 'Löschen',
-    ROUTER_CLEAR_HTML: 'X',
-    ROUTER_Label_Interim: 'Zwischenziele',
+    ROUTER_CLEAR_HTML: '',
+    ROUTER_Label_Interim: 'Zwischenziel',
 
     ROUTER_SWITCH:'Wechsel von Start und Ziel',
     ROUTER_OVER:'Zwischenziel hinzufügen',

@@ -140,7 +140,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         source: this.routingHintSource,
         style: function (feature, resolution) {
           // console.log(self.proxy.locationStyleController.arrLocStyles[self.options.mapController.data.router_point_locstyle].style);
-          return self.proxy.locationStyleController.arrLocStyles[self.options.mapController.data.router_point_locstyle].style(feature, resolution);
+          return (!self.proxy) || self.proxy.locationStyleController.arrLocStyles[self.options.mapController.data.router_point_locstyle].style(feature, resolution);
         }
       });
 
@@ -317,22 +317,28 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       switchFromTo.title = c4g.maps.constant.i18n.ROUTER_SWITCH;
       this.$switchFromTo = $(switchFromTo);
 
+      buttonOver = document.createElement('button');
+      buttonOver.className = c4g.maps.constant.css.ROUTER_OVER;
+      buttonOver.title = c4g.maps.constant.i18n.ROUTER_OVER;
+      this.$buttonOver = $(buttonOver);
+
       print = document.createElement('button');
       print.className = c4g.maps.constant.css.ROUTER_PRINT;
       print.title = c4g.maps.constant.i18n.ROUTER_PRINT;
       this.$print = $(print);
-      $(print).insertBefore(document.getElementsByClassName("c4g-portside-hide")[0]);
 
-      buttonOver = document.createElement('button');
-      buttonOver.className = c4g.maps.constant.css.ROUTER_OVER;
-      buttonOver.title = c4g.maps.constant.i18n.ROUTER_OVER;
-      this.$buttonOver =$(buttonOver);
+      this.routerButtonBar = document.createElement('div');
+      this.routerButtonBar.className = c4g.maps.constant.css.ROUTER_BUTTONBAR;
+      this.routerButtonBar.appendChild(switchFromTo);
+      this.routerButtonBar.appendChild(buttonOver);
+      this.routerButtonBar.appendChild(print);
+
+        // $(print).insertBefore(document.getElementsByClassName("c4g-portside-hide")[0]);
+
 
       this.fromInputWrapper.appendChild(routerFromLabel);
       this.fromInputWrapper.appendChild(this.fromInput);
       this.fromInputWrapper.appendChild(routerFromClear);
-      this.fromInputWrapper.appendChild(buttonOver);
-      this.fromInputWrapper.appendChild(switchFromTo);
       if (buttonOver && this.options.mapController.data.router_api_selection == '0'){
           this.$buttonOver.hide();
       }
@@ -422,6 +428,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         }
       });
 
+      routerViewInputWrapper.appendChild(this.routerButtonBar);
       routerViewInputWrapper.appendChild(this.fromInputWrapper);
 
 

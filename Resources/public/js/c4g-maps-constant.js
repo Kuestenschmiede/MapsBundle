@@ -120,6 +120,7 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
     ROUTER_INPUT_FROM: 'c4g-router-input-from',
     ROUTER_INPUT_TO: 'c4g-router-input-to',
     ROUTER_INPUT_CLEAR: 'c4g-router-input-clear',
+    ROUTER_BUTTONBAR: 'c4g-router-buttonbar',
     ROUTER_ATTRIBUTION_WRAPPER: 'c4g-router-attribution-wrapper',
     ROUTER_INSTRUCTIONS_WRAPPER: 'c4g-router-instructions-wrapper',
     ROUTER_INSTRUCTIONS_HEADER: 'c4g-router-instructions-header',

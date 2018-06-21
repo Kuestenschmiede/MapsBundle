@@ -475,7 +475,7 @@ button.ol-zoom-out {
   width: 100%;
   padding: 0px;
 }
-.c4g-portside-top-toolbar select {
+.c4g-portside-top-toolbar select, .c4g-portside-top-toolbar input {
   border: 0;
   background: transparent;
   padding: 0px;
@@ -603,18 +603,26 @@ button.ol-zoom-out {
  * Router
  */
 .c4g-router-input-wrapper {
-  margin-bottom: 5px;
+  margin: 5px;
+  display: flex;
+  justify-content: flex-start;
 }
 .c4g-router-input-wrapper > input {
   box-sizing: border-box;
-  width: 99%;
   padding: 5px;
-  border: 1px solid;
-  outline: none;
 }
-button.c4g-router-input-clear {
-  margin-left: -26px;
-  line-height: 18px;
+.c4g-router-input-wrapper > label {
+  margin-right: 5px;
+  vertical-align: middle;
+  margin-top: auto;
+  margin-bottom: auto;
+  min-width: 100px;
+}
+.c4g-router-buttonbar {
+  text-align: left;
+}
+.c4g-router-buttonbar button {
+  border-radius: var(--button-radius-percent);
 }
 .c4g-router-instructions-header > em {
   float: right;

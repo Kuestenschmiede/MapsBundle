@@ -156,7 +156,7 @@ button.c4g-draw-trigger.c4g-active {
 .c4g-starboard-content-container p {
   color: var(--main-color);
 }
-.c4g-content-select input ,.c4g-portside-top-toolbar select, .c4g-portside-top-toolbar button {
+.c4g-content-select input ,.c4g-portside-top-toolbar select, .c4g-portside-top-toolbar input, .c4g-portside-top-toolbar button, .c4g-router-input-wrapper button, .c4g-router-input-wrapper input {
   color: var(--font-color);
   border-color: var(--font-color);
   background-color: var(--shadow-color);
@@ -210,22 +210,6 @@ button.c4g-draw-trigger.c4g-active {
 .c4g-router-input-wrapper {
   color: var(--font-color);
 }
-.c4g-router-input-wrapper > input {
-  color: var(--main-color);
-  border-color: var(--main-color);
-  background-color: var(--font-color);
-}
-.c4g-router-input-wrapper > button,
-.c4g-router-input-wrapper > button:hover {
-  color: var(--main-color);
-  border-color: var(--shadow-color);
-  background-color: var(--font-color);
-}
-.c4g-router-input-wrapper > input:hover,
-.c4g-router-input-wrapper > input:active,
-.c4g-router-input-wrapper > input:focus {
-  background-color: var(--font-color);
-}
 .c4g-router-instruction-table {
   color: var(--main-color);
 }
@@ -238,10 +222,6 @@ button.c4g-draw-trigger.c4g-active {
 .c4g-router-attribution-wrapper a {
   color: var(--font-color);
 }
-button.c4g-router-input-clear {
-  color: var(--main-color);
-}
-
 
 /*
  *  Geosearch

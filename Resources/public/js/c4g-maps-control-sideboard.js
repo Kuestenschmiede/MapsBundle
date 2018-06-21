@@ -274,7 +274,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       }*/
 
       contentContainerOuterHeight = $(this.wrapper).height() - ($(this.titleBar).outerHeight(true) + $(this.statusBar).outerHeight(true));
-      if (this.options.direction != "undefined" && this.options.direction === 'left') {
+      if (this.options && this.options.direction && this.options.direction != "undefined" && this.options.direction === 'left') {
         if (this !== this.options.mapController["active" + this.identifier]) {
           containerOffsetWidth = 0;
         }
