@@ -180,7 +180,7 @@ class C4gLocationStyle{
                         //anchorXUnits: 'pixels',
                         //anchorYUnits: 'pixels',
                         opacity: parseFloat(styleData.icon_opacity.value, 10) / 100,
-                        src: (self.controller.mapController.data.icon_source ? self.controller.mapController.data.icon_source : '') + styleData.icon_src,
+                        src: /*(self.controller.mapController.data.icon_source ? self.controller.mapController.data.icon_source : '') + */styleData.icon_src,
                         size: [parseInt(styleData.icon_size[0], 10), parseInt(styleData.icon_size[1], 10)],
                         scale: parseFloat(styleData.icon_scale, 10),
                     });

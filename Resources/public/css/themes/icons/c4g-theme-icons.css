@@ -1,8 +1,9 @@
-﻿/*!
- *  based on:
- *  Font Awesome 4.6.3 by @davegandy - http://fontawesome.io - @fontawesome
- *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
- */
+﻿@import url("../../../../../bundles/con4giscore/vendor/fontawesome/web-fonts-with-css/css/fontawesome-all.css");
+@font-face {
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-style: normal;
+}
 
 .mod_c4g_maps input[type='checkbox'] + label,
 .c4g-layertree a:after,
@@ -11,262 +12,219 @@
 .c4g-control button,
 .c4g-icon {
   display: inline-block;
-  font: normal normal normal 14px/1 FontAwesome;
+  font: normal normal normal 14px/1 'Font Awesome 5 Free';
   font-size: inherit;
-  font-weight: 100;
+  font-weight: 900;
   text-rendering: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+.c4g-portside-container button,
+.c4g-starboard-container button {
+  font: normal normal normal 14px/1 'Font Awesome 5 Free';
+  font-size: inherit;
+  font-weight: 900;
+}
+
 /* General icons */
 .c4g-spinner span.c4g-icon:before {
-  font-family: 'FontAwesome';
   content: "\f01e";
 }
 .mod_c4g_maps input[type='checkbox'] {
   display: none;
 }
 .mod_c4g_maps input[type='checkbox'] + label:before {
-  font-family: 'FontAwesome';
   content: "\f204";
   margin-right: 5px;
 }
 .mod_c4g_maps input[type='checkbox']:checked + label:before {
-  font-family: 'FontAwesome';
   content: "\f205";
 }
 
 /* Viewport controls */
 .c4g-permalink button:before {
-  font-family: 'FontAwesome';
   content: "\f0c1";
 }
 .c4g-permalink-popup button.c4g-copy:before {
-  font-family: 'FontAwesome';
   content: "\f0ea";
 }
 .c4g-permalink-popup button.c4g-refresh:before {
-  font-family: 'FontAwesome';
   content: "\f021";
 }
 .c4g-graticule button:before {
-  font-family: 'FontAwesome';
   content: "\f00a";
 }
 .c4g-graticule.c4g-enabled button:before {
-  font-family: 'FontAwesome';
   content: "\f00a";
 }
 .ol-attribution button:before {
-  font-family: 'FontAwesome';
   content: "\f101";
 }
 .ol-attribution.ol-collapsed button:before {
-  font-family: 'FontAwesome';
   content: "\f1f9";
 }
 span.ol-compass:before {
-  font-family: 'FontAwesome';
-  content: "\f176";
+  content: "\f062";
 }
 button.ol-full-screen-false:before {
-  font-family: 'FontAwesome';
   content: "\f065";
 }
 button.ol-full-screen-true:before {
-  font-family: 'FontAwesome';
   content: "\f066";
 }
 .c4g-router.c4g-open > button:before {
-  font-family: 'FontAwesome';
   content: "\f124";
 }
 button.c4g-router-print:before {
-  font-family: 'FontAwesome';
   content: "\f02f";
 }
 button.c4g-router-switch:before {
-  font-family: "FontAwesome";
   content: "\f0ec";
 }
 button.c4g-router-over:before {
-  font-family: "FontAwesome";
   content: "\f067";
 }
 .c4g-router.c4g-close > button:before {
-  font-family: 'FontAwesome';
   content: "\f124";
 }
 .c4g-editor.c4g-open > button:before {
-  font-family: 'FontAwesome';
+  font-weight: 100;
   content: "\f044";
 }
 .c4g-editor.c4g-close > button:before {
-  font-family: 'FontAwesome';
-  content: "\f040";
+  content: "\f044";
 }
 .c4g-measure.c4g-open > button:before {
-  font-family: 'FontAwesome';
-  content: "\f201";
+  font-weight: 100;
+  content: "\f545";
 }
 .c4g-measure.c4g-close > button:before {
-  font-family: 'FontAwesome';
-  content: "\f201";
+  content: "\f545";
 }
 .c4g-export.c4g-open > button:before {
-  font-family: 'FontAwesome';
+  font-weight: 100;
   content: "\f02f";
 }
 .c4g-export.c4g-close > button:before {
-  font-family: 'FontAwesome';
   content: "\f02f";
 }
 .c4g-infopage.c4g-open > button:before {
-  font-family: 'FontAwesome';
+  font-weight: 100;
   content: "\f129";
 }
 .c4g-infopage.c4g-close > button:before {
-  font-family: 'FontAwesome';
   content: "\f129";
 }
 .c4g-account.c4g-open > button:before {
-  font-family: 'FontAwesome';
+  font-weight: 100;
   content: "\f007";
 }
 .c4g-account.c4g-close > button:before {
-  font-family: 'FontAwesome';
   content: "\f007";
 }
 .c4g-starboard-control.c4g-open button:before {
-  font-family: 'FontAwesome';
+  font-weight: 100;
   content: "\f005";
 }
 .c4g-starboard-control.c4g-close button:before {
-  font-family: 'FontAwesome';
-  content: "\f006";
+  content: "\f005";
 }
 
 button.ol-zoom-in:before {
-  font-family: 'FontAwesome';
   content: "\f067";
 }
 button.ol-zoom-out:before {
-  font-family: 'FontAwesome';
   content: "\f068";
 }
 .ol-zoom-extent button:before,
 button.ol-zoom-extent:before {
-  font-family: 'FontAwesome';
   content: "\f0ac";
 }
 
 .ol-zoom-home button:before,
 button.ol-zoom-home:before {
-  font-family: 'FontAwesome';
   content: "\f015";
 }
 
 .ol-zoom-position button:before,
 button.ol-zoom-position:before {
-  font-family: 'FontAwesome';
   content: "\f05b";
 }
 
 /* Portside & Starboard */
 button.c4g-portside-hide:before{
-  font-family: 'FontAwesome';
   content: "\f060";
 }
 button.c4g-portside-close:before,
 button.c4g-starboard-close:before{
-  font-family: 'FontAwesome';
   content: "\f00d";
 }
 
 button.c4g-editor-feature-modify:before {
-  font-family: 'FontAwesome';
   content: "\f0ad";
 }
 button.c4g-editor-feature-apply:before {
-  font-family: 'FontAwesome';
   content: "\f00c";
 }
 button.c4g-editor-feature-delete:before {
-  font-family: 'FontAwesome';
   content: "\f1f8";
 }
 
 button.c4g-measuretools-view-trigger-select:before,
 button.c4g-editor-view-trigger-select:before {
-  font-family: 'FontAwesome';
   content: "\f245";
 }
 button.c4g-editor-view-trigger-draw-point:before {
-  font-family: 'FontAwesome';
   content: "\f041";
 }
 button.c4g-measuretools-view-trigger-draw-line:before,
 button.c4g-editor-view-trigger-draw-line:before {
-  font-family: 'FontAwesome';
   content: "\f1e0";
 }
 button.c4g-measuretools-view-trigger-draw-polygon:before,
 button.c4g-editor-view-trigger-draw-polygon:before {
-  font-family: 'FontAwesome';
   content: "\f04d";
 }
 button.c4g-measuretools-view-trigger-draw-circle:before,
 button.c4g-editor-view-trigger-draw-circle:before {
-  font-family: 'FontAwesome';
   content: "\f111";
 }
 button.c4g-measuretools-view-trigger-draw-freehand:before {
-  font-family: 'FontAwesome';
   content: "\f040";
 }
 button.c4g-editor-view-trigger-draw-freehand:before {
-  font-family: 'FontAwesome';
   content: "\f1fc";
 }
 button.c4g-exporttools-view-trigger-print:before {
-  font-family: 'FontAwesome';
   content: "\f02f";
 }
 button.c4g-exporttools-print:before {
-  font-family: 'FontAwesome';
   content: "\f02f";
 }
 button.c4g-infopage-view-trigger:before {
-  font-family: 'FontAwesome';
   content: "\f129";
 }
 button.c4g-account-view-trigger:before {
-  font-family: 'FontAwesome';
   content: "\f007";
 }
 button.c4g-starboard-view-trigger-starboardplugin:before {
-  font-family: 'FontAwesome';
   content: "\f0ea";
 }
 /* Geosearch */
 button.c4g-geosearch-start:before {
-  font-family: 'FontAwesome';
   content: "\f002";
 }
 .c4g-geosearch.c4g-open button.c4g-geosearch-trigger:before {
-  font-family: 'FontAwesome';
   content: "\f101";
 }
 .c4g-geosearch.c4g-close button.c4g-geosearch-trigger:before {
-  font-family: 'FontAwesome';
   content: "\f002";
 }
 
 /* Overviemap */
 .c4g-overviewmap span.c4g-icon:before {
-  font-family: 'FontAwesome';
-  content: "\f14c";
+  content: "\f0ac";
 }
 .c4g-overviewmap span.c4g-icon {
   width: 1em;
@@ -280,34 +238,29 @@ button.c4g-geosearch-start:before {
 
 /* Starboard */
 /*.c4g-starboard-containerelement-titlebar span.c4g-icon:before {
-  font-family: 'FontAwesome';
+  font-family: 'Font Awesome 5 Free';
   content: "\f054";
 }
 .c4g-starboard-containerelement.c4g-open > .c4g-starboard-containerelement-titlebar span.c4g-icon {
   transform: rotate(90deg);
 }*/
 button.c4g-starboard-view-trigger-baselayerswitcher:before {
-  font-family: 'FontAwesome';
-  content: "\f278";
+  content: "\f279";
 }
 button.c4g-starboard-view-trigger-layerswitcher:before {
-  font-family: 'FontAwesome';
-  content: "\f0ca";
+  content: "\f002";
 }
 
 
 .c4g-baselayertree>ul>li>a.c4g-active:before {
-  font-family: 'FontAwesome';
   content: "\f192";
 }
 .c4g-baselayertree>ul>li>a.c4g-inactive:before {
-  font-family: 'FontAwesome';
   content: "\f1db";
 }
 
 .c4g-layertree span.c4g-icon:before ,
 .c4g-baselayertree span.c4g-icon:before {
-  font-family: 'FontAwesome';
   content: "\f054";
 }
 .c4g-baselayertree input {
@@ -350,35 +303,33 @@ button.c4g-starboard-view-trigger-layerswitcher:before {
   transform: rotate(90deg);
 }
 .c4g-starboard-filter input {
-  font-family: FontAwesome, sans-serif;
+  font-family: 'Font Awesome 5 Free', sans-serif;
+  font-weight: 900;
 }
 
 /* PopUp */
 button.c4g-popup-close:before {
-  font-family: 'FontAwesome';
   content: "\f00d";
 }
 button.c4g-popup-route-from:before {
-  font-family: 'FontAwesome';
   content: "\f148";
-  /*content: "\f124";*/
   margin: 0 5px 0 -3px;
 }
 button.c4g-popup-route-to:before {
-  font-family: 'FontAwesome';
   content: "\f149";
-  /*content: "\f11e";*/
   margin: 0 5px 0 -3px;
 }
 .c4g-layertree a.c4g-active:after,
 .c4g-starboard-headline-link.c4g-active:after {
-  font-family: 'FontAwesome';
+  font-family: 'Font Awesome 5 Free', sans-serif;
   content: "\f205";
   float:right;
+  font-weight: 900;
 }
 .c4g-layertree a.c4g-inactive:after,
 .c4g-starboard-headline-link.c4g-inactive:after {
-  font-family: 'FontAwesome';
+  font-family: 'Font Awesome 5 Free', sans-serif;
   content: "\f204";
   float:right;
+  font-weight: 900;
 }

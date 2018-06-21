@@ -701,7 +701,7 @@ button.c4g-router-input-clear {
  *  Attributions
  */
 .ol-attribution {
-  border-radius: var(--button-radius-percent);
+  border-radius: var(--button-radius-pixel);
 }
 .ol-attribution img {
   margin-top: -.2em;

@@ -537,7 +537,8 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
             dv.className = "c4g-starboard-filter c4g-content-select";
             var filter = document.createElement('input');
             filter.type = 'text';
-            filter.placeholder = "\uf002";  // Font Awesome
+            filter.style = "font-family:'Font Awesome 5 Free'!important;";
+            filter.placeholder = "&#xf00d";  // Font Awesome
             dv.appendChild(filter);
             filter.onkeyup = function() {
                 function filter_ulli(element, showSubtree) {

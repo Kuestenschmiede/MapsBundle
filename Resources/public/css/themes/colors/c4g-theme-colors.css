@@ -120,6 +120,10 @@
   border-color: var(--font-color);
   background-color: transparent;
 }
+.c4g-portside-container .c4g_brick_dialog input {
+  color: var(--main-color);
+}
+
 button.c4g-draw-trigger {
   background-color: transparent;
   border: 1px solid transparent;
