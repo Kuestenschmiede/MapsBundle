@@ -249,7 +249,7 @@ button.ol-zoom-out {
 .ol-zoom-with-home .ol-zoom-home {
   border-radius: var(--button-radius-percent);
 }
-.ol-zoom-with-position {
+.ol-zoom-with-position,.ol-zoom-with-extent, .ol-zoom-with-home {
   border: none;
   border-radius: var(--button-radius-pixel);
 }
