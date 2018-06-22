@@ -244,10 +244,11 @@ button.c4g-geosearch-start:before {
   transform: rotate(90deg);
 }*/
 button.c4g-starboard-view-trigger-baselayerswitcher:before {
-  content: "\f5a0";
+  content: "\f279";
+  /*font-weight: 100;*/
 }
 button.c4g-starboard-view-trigger-layerswitcher:before {
-  content: "\f558";
+  content: "\f0ae";
 }
 
 
