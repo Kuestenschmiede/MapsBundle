@@ -256,12 +256,12 @@ button.c4g-geosearch-start:before {
   position: relative;
   height: 100%;
   margin: 0 0 0 46px;
-  font-size: 14px;
+  font-size: 16px;
 }
 .c4g-starboard-wrapper {
   position: relative;
   height: 100%;
-  font-size: 14px;
+  font-size: 16px;
   text-align: left;
 }
 .c4g-starboard-wrapper > div,

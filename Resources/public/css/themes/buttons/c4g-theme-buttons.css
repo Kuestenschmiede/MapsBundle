@@ -483,8 +483,8 @@ button.ol-zoom-out {
   margin-top: 1px;
   margin-bottom: 1px;
   height: 32px;
-  min-width: 190px;
-  font-weight: bold;
+  /*min-width: 100%;*/
+  /*font-weight: bold;*/
 }
 .c4g-portside-top-toolbar button {
   border: 0;
@@ -604,7 +604,7 @@ button.ol-zoom-out {
  * Router
  */
 .c4g-router-input-wrapper {
-  margin: 5px;
+  /*margin-left: 5px;*/
   display: flex;
   justify-content: flex-start;
 }
