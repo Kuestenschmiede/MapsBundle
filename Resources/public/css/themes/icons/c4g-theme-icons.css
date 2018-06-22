@@ -104,14 +104,12 @@ button.c4g-router-input-clear:before {
   content: "\f545";
 }
 .c4g-export.c4g-open > button:before {
-  font-weight: 100;
   content: "\f02f";
 }
 .c4g-export.c4g-close > button:before {
   content: "\f02f";
 }
 .c4g-infopage.c4g-open > button:before {
-  font-weight: 100;
   content: "\f129";
 }
 .c4g-infopage.c4g-close > button:before {
