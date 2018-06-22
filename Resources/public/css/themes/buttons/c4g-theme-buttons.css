@@ -393,12 +393,13 @@ button.ol-zoom-out {
 }
 .c4g-starboard-viewtriggerbar button,
 .c4g-portside-viewtriggerbar button {
-  height: 2em;
-  width: 2em;
+  height: 32px;
+  width: 32px;
   margin: -2px 3px 2px 0;
   border-radius: 3px;
   border: 0;
-  font-size: 1.0em;
+  font-size: 18px;
+  /*font-size: 1.0em;*/
 }
 .c4g-starboard-viewtriggerbar {
   text-align: right;
@@ -408,8 +409,8 @@ button.ol-zoom-out {
 }
 .c4g-starboard-viewtriggerbar button.c4g-active,
 .c4g-portside-viewtriggerbar button.c4g-active {
-  height: 2.1em;
-  width: 2.1em;
+  height: 36px;
+  width: 36px;
   border-radius: 0 0 3px 3px;
 }
 .c4g-starboard-viewtriggerbar button.c4g-active {
