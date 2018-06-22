@@ -68,7 +68,7 @@ span.ol-compass:before {
   content: "\f062";
 }
 button.ol-full-screen-false:before {
-  content: "\f065";
+  content: "\f31e";
 }
 button.ol-full-screen-true:before {
   content: "\f066";
@@ -177,7 +177,7 @@ button.c4g-editor-view-trigger-select:before {
   content: "\f245";
 }
 button.c4g-editor-view-trigger-draw-point:before {
-  content: "\f041";
+  content: "\f276";
 }
 button.c4g-measuretools-view-trigger-draw-line:before,
 button.c4g-editor-view-trigger-draw-line:before {
@@ -192,10 +192,10 @@ button.c4g-editor-view-trigger-draw-circle:before {
   content: "\f111";
 }
 button.c4g-measuretools-view-trigger-draw-freehand:before {
-  content: "\f040";
+  content: "\f303";
 }
 button.c4g-editor-view-trigger-draw-freehand:before {
-  content: "\f1fc";
+  content: "\f303";
 }
 button.c4g-exporttools-view-trigger-print:before {
   content: "\f02f";
