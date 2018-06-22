@@ -104,14 +104,12 @@ button.c4g-router-input-clear:before {
   content: "\f545";
 }
 .c4g-export.c4g-open > button:before {
-  font-weight: 100;
   content: "\f02f";
 }
 .c4g-export.c4g-close > button:before {
   content: "\f02f";
 }
 .c4g-infopage.c4g-open > button:before {
-  font-weight: 100;
   content: "\f129";
 }
 .c4g-infopage.c4g-close > button:before {
@@ -246,10 +244,11 @@ button.c4g-geosearch-start:before {
   transform: rotate(90deg);
 }*/
 button.c4g-starboard-view-trigger-baselayerswitcher:before {
-  content: "\f5a0";
+  content: "\f279";
+  /*font-weight: 100;*/
 }
 button.c4g-starboard-view-trigger-layerswitcher:before {
-  content: "\f558";
+  content: "\f0ae";
 }
 
 
@@ -257,7 +256,8 @@ button.c4g-starboard-view-trigger-layerswitcher:before {
   content: "\f192";
 }
 .c4g-baselayertree>ul>li>a.c4g-inactive:before {
-  content: "\f1db";
+  font-weight: 100;
+  content: "\f192";
 }
 
 .c4g-layertree span.c4g-icon:before ,
