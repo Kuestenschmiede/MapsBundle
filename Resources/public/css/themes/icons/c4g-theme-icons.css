@@ -1,4 +1,4 @@
-﻿@import url("../../../../../bundles/con4giscore/vendor/fontawesome/web-fonts-with-css/css/fontawesome-all.css");
+﻿@import url("../../../../../bundles/con4giscore/vendor/fontawesome/css/all.css");
 @font-face {
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
@@ -92,14 +92,12 @@ button.c4g-router-input-clear:before {
   content: "\f124";
 }
 .c4g-editor.c4g-open > button:before {
-  font-weight: 100;
-  content: "\f044";
+  content: "\f5ae";
 }
 .c4g-editor.c4g-close > button:before {
-  content: "\f044";
+  content: "\f5ae";
 }
 .c4g-measure.c4g-open > button:before {
-  font-weight: 100;
   content: "\f545";
 }
 .c4g-measure.c4g-close > button:before {
@@ -248,10 +246,10 @@ button.c4g-geosearch-start:before {
   transform: rotate(90deg);
 }*/
 button.c4g-starboard-view-trigger-baselayerswitcher:before {
-  content: "\f279";
+  content: "\f5a0";
 }
 button.c4g-starboard-view-trigger-layerswitcher:before {
-  content: "\f02d";
+  content: "\f558";
 }
 
 
