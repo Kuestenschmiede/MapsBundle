@@ -281,40 +281,47 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       }
 
       // Top-Toolbar
-      if (this.topToolbar.innerHTML) {
-        // this.topToolbar.style.display = 'block';
-        this.topToolbar.style.display = '';
-        contentContainerOuterHeight -= $(this.topToolbar).outerHeight(true);
-      } else {
-        this.topToolbar.style.display = 'none';
+      if (this.topToolbar) {
+          if (this.topToolbar.innerHTML) {
+              // this.topToolbar.style.display = 'block';
+              this.topToolbar.style.display = '';
+              contentContainerOuterHeight -= $(this.topToolbar).outerHeight(true);
+          } else {
+              this.topToolbar.style.display = 'none';
+          }
       }
 
       // Bottom-toolbar
-      if (this.bottomToolbar.innerHTML) {
-        // this.bottomToolbar.style.display = 'block';
-        this.bottomToolbar.style.display = '';
-        contentContainerOuterHeight -= $(this.bottomToolbar).outerHeight(true);
-      } else {
-        this.bottomToolbar.style.display = 'none';
+      if (this.bottomToolbar) {
+          if (this.bottomToolbar.innerHTML) {
+              // this.bottomToolbar.style.display = 'block';
+              this.bottomToolbar.style.display = '';
+              contentContainerOuterHeight -= $(this.bottomToolbar).outerHeight(true);
+          } else {
+              this.bottomToolbar.style.display = 'none';
+          }
       }
 
       // Content-container
       $(this.contentContainer).outerHeight(contentContainerOuterHeight);
 
       // Correct width
-      if (this.options.mapController["active" + this.identifier] === this) {
-        //this.container.style.width = 'auto';
-        containerOffsetWidth = this.container.offsetWidth;
-        this.options.mapController[this.options.direction + "SlideElements"].forEach(function (element) {
-          $(element).css(self.options.direction, containerOffsetWidth);
-        });
+      if (this.options) {
+          if (this.options.mapController["active" + this.identifier] === this) {
+              //this.container.style.width = 'auto';
+              containerOffsetWidth = this.container.offsetWidth;
+              this.options.mapController[this.options.direction + "SlideElements"].forEach(function (element) {
+                  $(element).css(self.options.direction, containerOffsetWidth);
+              });
 
-        //only move the toggle button on starboard elements
-        if (this.options.direction === 'right') {
-          $(this.element).css(this.options.direction, containerOffsetWidth);
-        }
+              //only move the toggle button on starboard elements
+              if (this.options.direction === 'right') {
+                  $(this.element).css(this.options.direction, containerOffsetWidth);
+              }
 
+          }
       }
+
       // this is needed because the css has transition-effects
       window.setTimeout(function () {
         //if ((self.options.direction === 'right') || self.options.mapController["active" + self.identifier] === self && containerOffsetWidth !== self.container.offsetWidth) {
