@@ -502,7 +502,7 @@ class LayerApi extends \Frontend
         }
 
         // hide when element is rendered in starboard tab
-        if ($objLayer->hide_when_in_tab == 1) {
+        if ($objLayer->hide_when_in_tab) {
             $arrLayerData['hide_when_in_tab'] = true;
         }
 

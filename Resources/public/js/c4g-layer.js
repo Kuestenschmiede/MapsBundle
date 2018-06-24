@@ -29,6 +29,8 @@ class C4gLayer{
     this._layername = layerArr['layername'];
     this._visibleChilds = false;
     this._vectorLayer = null;
+    this._hideWhenInTab = layerArr['hide_when_in_tab'];
+
     if (layerArr.projectId) {
       this.projectId = layerArr.projectId;
     }
@@ -196,4 +198,12 @@ class C4gLayer{
   set awesomeicon(value) {
       this._awesomeicon = value;
   }
+
+    get hideWhenInTab() {
+        return this._hideWhenInTab;
+    }
+
+    set hideWhenInTab(value) {
+        this._hideWhenInTab = value;
+    }
 }

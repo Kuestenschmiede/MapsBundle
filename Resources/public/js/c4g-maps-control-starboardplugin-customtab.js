@@ -268,7 +268,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
             continue;
           }
           // check if layer wants to be displayed in starboard tab
-          if (layer.hide_when_in_tab) {
+          if (layer.hideWhenInTab === true) {
             continue;
           }
           if (layer.hide === "1") {
