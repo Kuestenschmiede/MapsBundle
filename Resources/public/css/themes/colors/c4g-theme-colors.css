@@ -130,12 +130,14 @@ button.c4g-draw-trigger {
 }
 button.c4g-draw-trigger:focus,
 button.c4g-draw-trigger:hover {
-  background-color: var(--font-color);
-  border-color: var(--main-color);
+  background-color: transparent;
+  border-color: var(--font-color);
+  border-size: 0;
 }
 button.c4g-draw-trigger.c4g-active {
-  background: var(--main-color);
-  border-radius: 0;
+  background-color: transparent;
+  border-color: var(--font-color);
+  border-size: 0;
 }
 
 .c4g-editor-draw-options,
