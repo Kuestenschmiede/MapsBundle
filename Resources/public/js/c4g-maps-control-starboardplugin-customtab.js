@@ -89,11 +89,19 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
       selector = 'button.c4g-starboard-view-trigger-starboardplugin-' + self.tabId;
       //ToDo möglicherweise standard icon ?
       if (this.awesomeicon.length > 0) {
+          var styleEl = document.createElement('style'),
+              styleSheet;
+
+          // Append style element to head
+          document.head.appendChild(styleEl);
+
+          // Grab style sheet
+          styleSheet = styleEl.sheet;
         // catch firefox, because FF does not know "addRule"
-        if (document.styleSheets[0].addRule && typeof document.styleSheets[0].addRule === 'function') {
-          document.styleSheets[0].addRule(selector + ':before', 'content: "\\'+ this.awesomeicon +'";');
+        if (styleSheet.addRule && typeof document.styleSheets[0].addRule === 'function') {
+            styleSheet.addRule(selector + ':before', 'content: "\\'+ this.awesomeicon +'";');
         } else {
-          document.styleSheets[0].insertRule(selector + ':before { content: "\\'+ this.awesomeicon +'";}', 0);
+            styleSheet.insertRule(selector + ':before { content: "\\'+ this.awesomeicon +'";}', 0);
         }
 
       }
@@ -334,17 +342,14 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
         } // end of for-loop
         // Starboard Filter
         if (this.starboard.options.filter) {
-          var link = document.createElement('link');
-          link.href = "bundles/con4giscore/vendor/fontawesome/css/all.css";
-          link.rel="stylesheet";
 
           var dv = document.createElement('div');
           dv.className = "c4g-starboard-filter c4g-content-select";
           var filter = document.createElement('input');
           filter.type = 'text';
           // filter.className = 'c4g-starboard-filter';
-          filter.style = "font-family:'Font Awesome 5 Free'!important; font-weight: 900;";
-          filter.placeholder = "&#xf00d";  // Font Awesome
+          //ToDo fix filter icon on placeholder
+          filter.placeholder = "";//\\f0b0";  Font Awesome
           dv.appendChild(filter);
           filter.onkeyup = function () {
             function filter_ulli(element, showSubtree) {
