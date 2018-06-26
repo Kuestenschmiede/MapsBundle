@@ -296,7 +296,7 @@ button.c4g-geosearch-start:before {
 }
 .c4g-portside-titlebar span,
 .c4g-starboard-titlebar span {
-  margin: 0px 2px;
+  margin: 2.5px 2px;
 }
 .c4g-starboard-titlebar span,
 .c4g-portside-titlebar .c4g-portside-buttonbar {

@@ -92,10 +92,11 @@ button.c4g-router-input-clear:before {
   content: "\f124";
 }
 .c4g-editor.c4g-open > button:before {
-  content: "\f5ae";
+  content: "\f044";
+  font-weight: 100;
 }
 .c4g-editor.c4g-close > button:before {
-  content: "\f5ae";
+  content: "\f044";
 }
 .c4g-measure.c4g-open > button:before {
   content: "\f545";
@@ -238,17 +239,8 @@ button.c4g-geosearch-start:before {
   transform: rotate(180deg);
 }
 
-/* Starboard */
-/*.c4g-starboard-containerelement-titlebar span.c4g-icon:before {
-  font-family: 'Font Awesome 5 Free';
-  content: "\f054";
-}
-.c4g-starboard-containerelement.c4g-open > .c4g-starboard-containerelement-titlebar span.c4g-icon {
-  transform: rotate(90deg);
-}*/
 button.c4g-starboard-view-trigger-baselayerswitcher:before {
   content: "\f279";
-  /*font-weight: 100;*/
 }
 button.c4g-starboard-view-trigger-layerswitcher:before {
   content: "\f0ae";
@@ -336,4 +328,7 @@ button.c4g-popup-route-to:before {
   content: "\f204";
   float:right;
   font-weight: 900;
+}
+.c4g-portside-container .c4g_brick_dialog #send-dialog::before {
+  content: "\f060";
 }

@@ -33,7 +33,6 @@
  */
 .ol-control button[title]:after {
   display: none;
-  //text-shadow: 0 0 2px var(--shadow-color);
 }
 .ol-control button[title]:focus:after,
 .ol-control button[title]:hover:after {
@@ -48,7 +47,6 @@
  */
 .c4g-spinner span {
   color: rgba(0,60,136,.7);
-  //text-shadow: 0 0 2px var(--font-color), 0 0 5px var(--main-color);
 }
 
 
@@ -98,8 +96,8 @@
 .c4g-portside-container button,
 .c4g-starboard-container button {
   color: var(--main-color);
-  border-color: var(--main-color);
-  background-color: var(--shadow-color);
+  border-color: var(--shadow-color);
+  background-color: var(--font-color);
 }
 .c4g-starboard-titlebar .c4g-starboard-buttonbar button,
 .c4g-portside-titlebar .c4g-portside-buttonbar button {
@@ -122,6 +120,11 @@
 }
 .c4g-portside-container .c4g_brick_dialog input {
   color: var(--main-color);
+}
+.c4g-portside-container .c4g_brick_dialog #send-dialog {
+  color: var(--main-color);
+  border-color: var(--shadow-color);
+  background-color: var(--font-color);
 }
 
 button.c4g-draw-trigger {
@@ -159,17 +162,14 @@ button.c4g-draw-trigger.c4g-active {
   color: var(--main-color);
 }
 .c4g-content-select input ,.c4g-portside-top-toolbar select, .c4g-portside-top-toolbar input, .c4g-portside-top-toolbar button, .c4g-router-input-wrapper button, .c4g-router-input-wrapper input {
-  color: var(--font-color);
-  border-color: var(--main-color);
-  background-color: var(--shadow-color);
+  color: var(--main-color);
+  border-color: var(--shadow-color);
+  background-color: var(--font-color);
 }
-/*.c4g-content-select input:hover {*/
-  /*background-color: var(--font-color);*/
-/*}*/
 .c4g-content-select input:focus {
-  color: var(--font-color);
+  color: var(--main-color);
   border-color: var(--main-color);
-  background-color: var(--shadow-color);
+  background-color: var(--font-color);
 }
 
 .c4g-portside-statusbar,
@@ -203,8 +203,24 @@ button.c4g-draw-trigger.c4g-active {
 .c4g-layertree span:hover {
   color: var(--shadow-color);
 }
-.c4g-starboard-filter-match > a {
-  color: var(--main-color);
+/*.c4g-starboard-filter-match > a {*/
+  /*color: var(--main-color);*/
+/*}*/
+.c4g-starboard-filter input[type=text]{
+  border-color: var(--shadow-color);
+}
+
+.c4g-starboard-filter input[type=text]:focus{
+  border-color: var(--main-color);
+  /*box-shadow:0 0 8px 0 var(--main-color);*/
+}
+
+.c4g-starboard-filter i{
+  color:var(--shadow-color);
+}
+
+.c4g-starboard-filter input[type=text]:focus + i{
+  color:var(--main-color);
 }
 
 /*
@@ -231,13 +247,9 @@ button.c4g-draw-trigger.c4g-active {
  */
 .c4g-geosearch input {
   color: var(--main-color);
-  background-color: var(--shadow-color);
-  /*border-color: var(--shadow-color);*/
+  background-color: var(--font-color);
+  border-color: var(--shadow-color);
 }
-/*.c4g-geosearch input:hover,*/
-/*.c4g-geosearch input:focus {*/
-  /*background-color: var(--font-color);*/
-/*}*/
 
 /*
  *  Overview-map
@@ -331,4 +343,19 @@ button.c4g-popup-route-to:hover {
 
 .c4g-panel-slidebutton {
   background-color: var(--main-color);
+}
+.c4g-portside-wrapper .formbody label {
+  color: var(--main-color);
+}
+
+.c4g-portside-wrapper .formbody input {
+  background-color: var(--font-color);
+  border-color:  var(--shadow-color);
+  color:  var(--main-color);
+}
+
+.c4g-portside-wrapper .formbody .submit {
+  background-color: var(--main-color);
+  border-color:  var(--shadow-color);
+  color:  var(--font-color);
 }

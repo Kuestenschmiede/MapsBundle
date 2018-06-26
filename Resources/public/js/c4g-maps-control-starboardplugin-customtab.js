@@ -342,15 +342,16 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
         } // end of for-loop
         // Starboard Filter
         if (this.starboard.options.filter) {
-
           var dv = document.createElement('div');
           dv.className = "c4g-starboard-filter c4g-content-select";
           var filter = document.createElement('input');
           filter.type = 'text';
-          // filter.className = 'c4g-starboard-filter';
-          //ToDo fix filter icon on placeholder
-          filter.placeholder = "";//\\f0b0";  Font Awesome
+          filter.placeholder = ""; //Font Awesome
+          var i = document.createElement('i');
+          i.className = 'fas fa-filter';
+          i.setAttribute("aria-hidden", "true");
           dv.appendChild(filter);
+          dv.appendChild(i);
           filter.onkeyup = function () {
             function filter_ulli(element, showSubtree) {
 
