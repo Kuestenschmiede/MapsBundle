@@ -97,9 +97,9 @@
 }
 .c4g-portside-container button,
 .c4g-starboard-container button {
-  color: var(--font-color);
-  border-color: var(--shadow-color);
-  background-color: var(--main-color);
+  color: var(--main-color);
+  border-color: var(--main-color);
+  background-color: var(--shadow-color);
 }
 .c4g-starboard-titlebar .c4g-starboard-buttonbar button,
 .c4g-portside-titlebar .c4g-portside-buttonbar button {
@@ -160,15 +160,16 @@ button.c4g-draw-trigger.c4g-active {
 }
 .c4g-content-select input ,.c4g-portside-top-toolbar select, .c4g-portside-top-toolbar input, .c4g-portside-top-toolbar button, .c4g-router-input-wrapper button, .c4g-router-input-wrapper input {
   color: var(--font-color);
-  border-color: var(--font-color);
+  border-color: var(--main-color);
   background-color: var(--shadow-color);
 }
-.c4g-content-select input:hover {
-  background-color: var(--font-color);
-}
+/*.c4g-content-select input:hover {*/
+  /*background-color: var(--font-color);*/
+/*}*/
 .c4g-content-select input:focus {
+  color: var(--font-color);
   border-color: var(--main-color);
-  background-color: var(--font-color);
+  background-color: var(--shadow-color);
 }
 
 .c4g-portside-statusbar,

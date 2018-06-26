@@ -169,6 +169,9 @@ button.c4g-editor-feature-apply:before {
 button.c4g-editor-feature-delete:before {
   content: "\f1f8";
 }
+button.c4g-btn-edit-data:before {
+  content: "\f1c0";
+}
 
 button.c4g-measuretools-view-trigger-select:before,
 button.c4g-editor-view-trigger-select:before {
