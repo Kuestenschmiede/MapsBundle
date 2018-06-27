@@ -132,18 +132,16 @@
 
 button.c4g-draw-trigger {
   background-color: transparent;
-  border: 1px solid transparent;
+  border: 0px solid transparent;
 }
 button.c4g-draw-trigger:focus,
 button.c4g-draw-trigger:hover {
   background-color: transparent;
-  border-color: var(--font-color);
-  border-size: 0;
+  border-color: transparent;
 }
 button.c4g-draw-trigger.c4g-active {
   background-color: transparent;
-  border-color: var(--font-color);
-  border-size: 0;
+  border-color: transparent;
 }
 
 .c4g-editor-draw-options,
