@@ -1,7 +1,7 @@
 /**
  * ol-ext - A set of cool extensions for OpenLayers (ol) in node modules structure
  * @description ol3,openlayers,popup,menu,symbol,renderer,filter,canvas,interaction,split,statistic,charts,pie,LayerSwitcher,toolbar,animation
- * @version v2.0.3
+ * @version v2.0.4
  * @author Jean-Marc Viglino
  * @see https://github.com/Viglino/ol-ext#,
  * @license BSD-3-Clause
@@ -25,90 +25,105 @@
  *	@param {Element | string | undefined} options.target Specify a target if you want the control to be rendered outside of the map's viewport.
  *	@param {string | undefined} options.label Text label to use for the search button, default "search"
  *	@param {string | undefined} options.placeholder placeholder, default "Search..."
+ *	@param {string | undefined} options.inputLabel label for the input, default none
+ *	@param {string | undefined} options.noCollapse prevent collapsing on input blur, default false
  *	@param {number | undefined} options.typing a delay on each typing to start searching (ms) use -1 to prevent autocompletion, default 300.
  *	@param {integer | undefined} options.minLength minimum length to start searching, default 1
  *	@param {integer | undefined} options.maxItems maximum number of items to display in the autocomplete list, default 10
+ *	@param {integer | undefined} options.maxHistory maximum number of items to display in history. Set -1 if you don't want history, default maxItems
  *	@param {function} options.getTitle a function that takes a feature and return the name to display in the index.
  *	@param {function} options.autocomplete a function that take a search string and callback function to send an array
  */
-ol.control.Search = function(options)
-{	var self = this;
+ol.control.Search = function(options) {
+  var self = this;
 	if (!options) options = {};
 	if (options.typing == undefined) options.typing = 300;
+  // Class name for history
+  this._classname = options.className || 'search';
 	var element = document.createElement("DIV");
 	var classNames = (options.className||"")+ " ol-search";
-	if (!options.target)
-	{	classNames += " ol-unselectable ol-control ol-collapsed";
+	if (!options.target) {
+    classNames += " ol-unselectable ol-control ol-collapsed";
 		this.button = document.createElement("BUTTON");
 		this.button.setAttribute("type", "button");
 		this.button.setAttribute("title", options.label||"search");
-		this.button.addEventListener("click", function()
-			{	element.classList.toggle("ol-collapsed");
-				if (!element.classList.contains("ol-collapsed"))
-				{	element.querySelector("input.search").focus();
-					var listElements = element.querySelectorAll("li");
-					for (var i = 0; i < listElements.length; i++) {
-						listElements[i].classList.remove("select");
-					}
-				}
-			});
+		this.button.addEventListener("click", function() {
+      element.classList.toggle("ol-collapsed");
+      if (!element.classList.contains("ol-collapsed")) {
+        element.querySelector("input.search").focus();
+        var listElements = element.querySelectorAll("li");
+        for (var i = 0; i < listElements.length; i++) {
+          listElements[i].classList.remove("select");
+        }
+        // Display history
+        if (!input.value) {
+          self.drawList_();
+        }
+      }
+    });
 		element.appendChild(this.button);
 	}
 	element.setAttribute('class', classNames);
+	// Input label
+	if (options.inputLabel) {
+		var label = document.createElement("LABEL");
+		label.innerText = options.inputLabel;
+		element.appendChild(label);
+	}
 	// Search input
 	var tout, cur="";
-	var input = document.createElement("INPUT");
+	var input = this._input = document.createElement("INPUT");
 	input.setAttribute("type", "search");
 	input.setAttribute("class", "search");
 	input.setAttribute("placeholder", options.placeholder||"Search...");
-	input.addEventListener("change", function(e)
-		{ self.dispatchEvent({ type:"change:input", input:e, value:input.value });
-		});
-	var doSearch = function(e)
-	{	// console.log(e.type+" "+e.key)'
+	input.addEventListener("change", function(e) {
+    self.dispatchEvent({ type:"change:input", input:e, value:input.value });
+  });
+	var doSearch = function(e) {
+    // console.log(e.type+" "+e.key)'
 		var li  = element.querySelector("ul.autocomplete li.select");
 		var	val = input.value;
 		// move up/down
-		if (e.key=='ArrowDown' || e.key=='ArrowUp' || e.key=='Down' || e.key=='Up')
-		{	if (li)
-			{ li.classList.remove("select");
+		if (e.key=='ArrowDown' || e.key=='ArrowUp' || e.key=='Down' || e.key=='Up') {
+      if (li) {
+        li.classList.remove("select");
 				li = (/Down/.test(e.key)) ? li.nextElementSibling : li.previousElementSibling;
 				if (li) li.classList.add("select");
 			}
 			else element.querySelector("ul.autocomplete li").classList.add("select");
 		}
 		// Clear input
-		else if (e.type=='input' && !val)
-		{	self.drawList_();
+		else if (e.type=='input' && !val) {
+      self.drawList_();
 		}
 		// Select in the list
-		else if (li && (e.type=="search" || e.key =="Enter"))
-		{	if (element.classList.contains("ol-control")) input.blur();
+		else if (li && (e.type=="search" || e.key =="Enter")) {
+      if (element.classList.contains("ol-control")) input.blur();
 			li.classList.remove("select");
 			cur = val;
-			self.select(self._list[li.getAttribute("data-search")]);
+			self._handleSelect(self._list[li.getAttribute("data-search")]);
 		}
 		// Search / autocomplete
 		else if ( (e.type=="search" || e.key =='Enter')
-			|| (cur!=val && options.typing>=0))
-		{	// current search
+			|| (cur!=val && options.typing>=0)) {
+      // current search
 			cur = val;
-			if (cur)
-			{	// prevent searching on each typing
+			if (cur) {
+        // prevent searching on each typing
 				if (tout) clearTimeout(tout);
-				tout = setTimeout(function()
-				{	if (cur.length >= self.get("minLength"))
-				{	var s = self.autocomplete (cur, function(auto) { self.drawList_(auto); });
-					if (s) self.drawList_(s);
-				}
-				else self.drawList_();
+				tout = setTimeout(function() {
+          if (cur.length >= self.get("minLength")) {
+            var s = self.autocomplete (cur, function(auto) { self.drawList_(auto); });
+					  if (s) self.drawList_(s);
+          }
+          else self.drawList_();
 				}, options.typing);
 			}
 			else self.drawList_();
 		}
 		// Clear list selection
-		else
-		{	var li = element.querySelector("ul.autocomplete li");
+		else {
+      var li = element.querySelector("ul.autocomplete li");
 			if (li) li.classList.remove('select');
 		}
 	};
@@ -117,26 +132,32 @@ ol.control.Search = function(options)
 	input.addEventListener("cut", doSearch);
 	input.addEventListener("paste", doSearch);
 	input.addEventListener("input", doSearch);
-	input.addEventListener('blur', function()
-		{	setTimeout(function(){ element.classList.add('ol-collapsed') }, 200);
+	if (!options.noCollapse) {
+		input.addEventListener('blur', function() {
+			setTimeout(function(){ element.classList.add('ol-collapsed') }, 200);
 		});
-	input.addEventListener('focus', function()
-		{	element.classList.remove('ol-collapsed');
+		input.addEventListener('focus', function() {
+			element.classList.remove('ol-collapsed');
 		});
+	}
 	element.appendChild(input);
 	// Autocomplete list
 	var ul = document.createElement('UL');
 	ul.classList.add('autocomplete');
 	element.appendChild(ul);
-	ol.control.Control.call(this,
-		{	element: element,
-			target: options.target
-		});
+	ol.control.Control.call(this, {
+    element: element,
+    target: options.target
+  });
 	if (typeof (options.getTitle)=='function') this.getTitle = options.getTitle;
 	if (typeof (options.autocomplete)=='function') this.autocomplete = options.autocomplete;
 	// Options
 	this.set('minLength', options.minLength || 1);
-	this.set('maxItems', options.maxItems || 10);
+  this.set('maxItems', options.maxItems || 10);
+  this.set('maxHistory', options.maxHistory || options.maxItems || 10);
+  // History
+	this.restoreHistory();
+	this.drawList_();
 };
 ol.inherits(ol.control.Search, ol.control.Control);
 /** Returns the text to be displayed in the menu
@@ -144,21 +165,26 @@ ol.inherits(ol.control.Search, ol.control.Control);
 *	@return {string} the text to be displayed in the index, default f.name
 *	@api
 */
-ol.control.Search.prototype.getTitle = function (f)
-{	return f.name || "No title";
+ol.control.Search.prototype.getTitle = function (f) {
+  return f.name || "No title";
 };
 /** Force search to refresh
  */
-ol.control.Search.prototype.search = function ()
-{	var search = this.element.querySelector("input.search");
+ol.control.Search.prototype.search = function () {
+  var search = this.element.querySelector("input.search");
 	this._triggerCustomEvent('search', search);
 };
-ol.control.Search.prototype._triggerCustomEvent = function (eventName, element)
-{ var event;
-	if (window.CustomEvent)
-	{ event = new CustomEvent(eventName);
-	} else
-	{ event = document.createEvent("CustomEvent");
+/** Trigger custom event on elemebt
+ * @param {*} eventName 
+ * @param {*} element 
+ * @private
+ */
+ol.control.Search.prototype._triggerCustomEvent = function (eventName, element) {
+  var event;
+	if (window.CustomEvent) {
+    event = new CustomEvent(eventName);
+	} else {
+    event = document.createEvent("CustomEvent");
 		event.initCustomEvent(eventName, true, true, {});
 	}
 	element.dispatchEvent(event);
@@ -168,8 +194,8 @@ ol.control.Search.prototype._triggerCustomEvent = function (eventName, element)
 *	@param {boolean} search to start a search
 *	@api
 */
-ol.control.Search.prototype.setInput = function (value, search)
-{	var input = this.element.querySelector("input.search");
+ol.control.Search.prototype.setInput = function (value, search) {
+  var input = this.element.querySelector("input.search");
 	input.value = value;
 	if (search) this._triggerCustomEvent("keyup", input);
 };
@@ -177,8 +203,75 @@ ol.control.Search.prototype.setInput = function (value, search)
 *	@param {any} f the feature, as passed in the autocomplete
 *	@api
 */
-ol.control.Search.prototype.select = function (f)
-{	this.dispatchEvent({ type:"select", search:f });
+ol.control.Search.prototype.select = function (f) {
+  this.dispatchEvent({ type:"select", search:f });
+};
+/**
+ * Save history and select
+ * @param {*} f 
+ * @private
+ */
+ol.control.Search.prototype._handleSelect = function (f) {
+	if (!f) return;
+  // Save input in history
+  var hist = this.get('history');
+  // Prevent error on stringify
+  try {
+    var fstr = JSON.stringify(f);
+    for (var i=hist.length-1; i>=0; i--) {
+      if (!hist[i] || JSON.stringify(hist[i]) === fstr) {
+        hist.splice(i,1);
+      }
+    }
+  } catch (e) {
+    for (var i=hist.length-1; i>=0; i--) {
+      if (hist[i] === f) {
+        hist.splice(i,1);
+      }
+    }
+	};
+	hist.unshift(f);
+	while (hist.length > (this.get('maxHistory')||10)) {
+		hist.pop();
+	} 
+	this.saveHistory();
+  // Select feature
+	this.select(f);
+	//this.drawList_();
+};
+/** Save history (in the localstorage)
+ */
+ol.control.Search.prototype.saveHistory = function () {
+  if (this.get('maxHistory')>=0) {
+    try {
+      localStorage["ol@search-"+this._classname] = JSON.stringify(this.get('history'));
+    } catch (e) {};
+  } else {
+    localStorage.removeItem("ol@search-"+this._classname);
+  }
+};
+/** Restore history (from the localstorage) 
+ */
+ol.control.Search.prototype.restoreHistory = function () {
+  try {
+    this.set('history', JSON.parse(localStorage["ol@search-"+this._classname]) );
+  } catch(e) {
+    this.set('history', []);
+  }
+};
+/**
+ * Remove previous history
+ */
+ol.control.Search.prototype.clearHistory = function () {
+  this.set('history', []);
+	this.saveHistory();
+	this.drawList_();
+};
+/**
+ * Get history table
+ */
+ol.control.Search.prototype.getHistory = function () {
+  return this.get('history');
 };
 /** Autocomplete function
 * @param {string} s search string
@@ -196,25 +289,38 @@ ol.control.Search.prototype.autocomplete = function (s, cback) {
 * @private
 */
 ol.control.Search.prototype.drawList_ = function (auto) {
+	var self = this;
 	var ul = this.element.querySelector("ul.autocomplete");
 	ul.innerHTML = '';
-	if (!auto) return;
-	var self = this;
-	var max = Math.min (self.get("maxItems"),auto.length);
 	this._list = [];
+	if (!auto) {
+    var input = this.element.querySelector("input.search");
+    var value = input.value;
+    if (!value) {
+      auto = this.get('history');
+    } else {
+      return;
+    }
+    ul.setAttribute('class', 'autocomplete history');
+  } else {
+    ul.setAttribute('class', 'autocomplete');
+  }
+	var max = Math.min (self.get("maxItems"),auto.length);
 	for (var i=0; i<max; i++) {	
-		if (!i || !self.equalFeatures(auto[i], auto[i-1])) {
-			var li = document.createElement("LI");
-			li.setAttribute("data-search", i);
-			this._list.push(auto[i]);
-			li.addEventListener("click", function(e)
-				{	self.select(self._list[e.currentTarget.getAttribute("data-search")]);
+		if (auto[i]) {
+			if (!i || !self.equalFeatures(auto[i], auto[i-1])) {
+				var li = document.createElement("LI");
+				li.setAttribute("data-search", i);
+				this._list.push(auto[i]);
+				li.addEventListener("click", function(e) {
+					self._handleSelect(self._list[e.currentTarget.getAttribute("data-search")]);
 				});
-			li.innerHTML = self.getTitle(auto[i]);
-			ul.appendChild(li);
+				li.innerHTML = self.getTitle(auto[i]);
+				ul.appendChild(li);
+			}
 		}
 	}
-	if (this.get("copy")) {
+	if (max && this.get("copy")) {
 		var li = document.createElement("LI");
 		li.classList.add("copy");
 		li.innerHTML = this.get("copy");
@@ -241,7 +347,7 @@ ol.control.Search.prototype.equalFeatures = function (f1, f2) {
  * @constructor
  * @extends {ol.control.Search}
  * @fires select
- * @param {Object=} Control options.
+ * @param {any} options extend ol.control.Search options
  *	@param {string} options.className control class name
  *	@param {Element | string | undefined} options.target Specify a target if you want the control to be rendered outside of the map's viewport.
  *	@param {string | undefined} options.label Text label to use for the search button, default "search"
@@ -252,9 +358,11 @@ ol.control.Search.prototype.equalFeatures = function (f1, f2) {
  *  @param {function | undefined} options.handleResponse Handle server response to pass the features array to the list
  *
  *	@param {string|undefined} options.url Url of the search api
+ *	@param {string | undefined} options.authentication: basic authentication for the search API as btoa("login:pwd")
  */
 ol.control.SearchJSON = function(options)
 {	options = options || {};
+	options.className = options.className || 'JSON';
 	delete options.autocomplete;
 	options.minLength = options.minLength || 3;
 	options.typing = options.typing || 800;
@@ -269,6 +377,7 @@ ol.control.SearchJSON = function(options)
 		url = parser.href;
 	}
 	this.set('url', url);
+	this._auth = options.authentication;
 	// Overwrite handleResponse
 	if (typeof(options.handleResponse)==='function') this.handleResponse = options.handleResponse;
 };
@@ -279,34 +388,55 @@ ol.inherits(ol.control.SearchJSON, ol.control.Search);
 */
 ol.control.SearchJSON.prototype.autocomplete = function (s, cback)
 {	var data = this.requestData(s);
-	var self = this;
 	var url = encodeURI(this.get('url'));
 	var parameters = '';
 	for (var index in data) {
 		parameters += (parameters) ? '&' : '?';
 		if (data.hasOwnProperty(index)) parameters += index + '=' + data[index];
 	}
+	this.ajax(url + parameters, 
+		function (resp) {
+			if (resp.status >= 200 && resp.status < 400) {
+				var data = JSON.parse(resp.response);
+				cback(this.handleResponse(data));
+			} else {
+				console.log(url + parameters, arguments);
+			}
+		}, function(){
+			console.log(url + parameters, arguments);
+		});
+};
+/** Send an ajax request (GET)
+ * @param {string} url
+ * @param {function} onsuccess callback
+ * @param {function} onerror callback
+ */
+ol.control.SearchJSON.prototype.ajax = function (url, onsuccess, onerror){
+	var self = this;
+	// Abort previous request
 	if (this._request) {
 		this._request.abort();
 	}
+	// New request
 	var ajax = this._request = new XMLHttpRequest();
-	ajax.open('GET', url + parameters, true);
+	ajax.open('GET', url, true);
+	if (this._auth) {
+		ajax.setRequestHeader("Authorization", "Basic " + this._auth);
+	}
 	this.element.classList.add('searching');
-	ajax.onload = function () {
-		self.element.classList.remove('searching');
-		self._request = null;
-		if (this.status >= 200 && this.status < 400) {
-			var data = JSON.parse(this.response);
-			cback(self.handleResponse(data));
-		} else {
-			console.log(url + parameters, arguments);
-		}
-	};
-	ajax.onerror = function () {
+	// Load complete
+	ajax.onload = function() {
 		self._request = null;
 		self.element.classList.remove('searching');
-		console.log(url + parameters, arguments);
+		onsuccess.call(self, this);
 	};
+	// Oops, TODO do something ?
+	ajax.onerror = function() {
+		self._request = null;
+		self.element.classList.remove('searching');
+		if (onerror) onerror.call(self);
+	};
+	// GO!
 	ajax.send();
 };
 /**
@@ -354,6 +484,7 @@ ol.control.SearchJSON.prototype.handleResponse = function (response) {
  */
 ol.control.SearchPhoton = function(options)
 {	options = options || {};
+	options.className = options.className || 'photon';
 	options.url = options.url || "http://photon.komoot.de/api/";
 	ol.control.SearchJSON.call(this, options);
 	this.set('lang', options.lang);
@@ -429,6 +560,135 @@ ol.control.SearchPhoton.prototype.select = function (f)
 	this.dispatchEvent({ type:"select", search:f, coordinate: c });
 };
 /** */
+
+/*	Copyright (c) 2017 Jean-Marc VIGLINO,
+	released under the CeCILL-B license (French BSD license)
+	(http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt).
+*/
+/**
+ * Search places using the French National Base Address (BAN) API.
+ *
+ * @constructor
+ * @extends {ol.control.SearchJSON}
+ * @fires select
+ * @param {any} options extend ol.control.SearchJSON options
+ *	@param {string} options.className control class name
+ *	@param {boolean | undefined} options.apiKey the service api key.
+ *	@param {string | undefined} options.authentication: basic authentication for the service API as btoa("login:pwd")
+ *	@param {Element | string | undefined} options.target Specify a target if you want the control to be rendered outside of the map's viewport.
+ *	@param {string | undefined} options.label Text label to use for the search button, default "search"
+ *	@param {string | undefined} options.placeholder placeholder, default "Search..."
+ *	@param {number | undefined} options.typing a delay on each typing to start searching (ms), default 500.
+ *	@param {integer | undefined} options.minLength minimum length to start searching, default 3
+ *	@param {integer | undefined} options.maxItems maximum number of items to display in the autocomplete list, default 10
+ *
+ *	@param {StreetAddress|PositionOfInterest|CadastralParcel|Commune} options.type type of search. Using Commune will return the INSEE code, default StreetAddress,PositionOfInterest
+ * @see {@link https://geoservices.ign.fr/documentation/geoservices/geocodage.html}
+ */
+ol.control.SearchGeoportail = function(options) {
+  options = options || {};
+  options.className = options.className || 'IGNF';
+  options.typing = options.typing || 500;
+  options.url = "http://wxs.ign.fr/"+options.apiKey+"/ols/apis/completion";
+  ol.control.SearchJSON.call(this, options);
+	this.set("copy","<a href='https://www.geoportail.gouv.fr/' target='new'>&copy; IGN-Géoportail</a>");
+  this.set('type', options.type || 'StreetAddress,PositionOfInterest');
+};
+ol.inherits(ol.control.SearchGeoportail, ol.control.SearchJSON);
+/** Returns the text to be displayed in the menu
+ *	@param {ol.Feature} f the feature
+ *	@return {string} the text to be displayed in the index
+ *	@api
+ */
+ol.control.SearchGeoportail.prototype.getTitle = function (f) {
+    var title = f.fulltext;
+    return (title);
+};
+/** 
+ * @param {string} s the search string
+ * @return {Object} request data (as key:value)
+ * @api
+ */
+ol.control.SearchGeoportail.prototype.requestData = function (s) {
+	return { 
+        text: s, 
+        type: this.get('type')==='Commune' ? 'PositionOfInterest' : this.get('type') || 'StreetAddress,PositionOfInterest', 
+        maximumResponses: this.get('maxItems')
+    };
+};
+/**
+ * Handle server response to pass the features array to the display list
+ * @param {any} response server response
+ * @return {Array<any>} an array of feature
+ * @api
+ */
+ol.control.SearchGeoportail.prototype.handleResponse = function (response) {
+  var response = response.results;
+  if (this.get('type') === 'Commune') {
+    for (var i=response.length-1; i>=0; i--) {
+      if ( response[i].kind 
+        && (response[i].classification>5 || response[i].kind=="Département") ) {
+        response.splice(i,1);
+      }
+    }
+	}
+	return response;
+};
+/** A ligne has been clicked in the menu > dispatch event
+ *	@param {any} f the feature, as passed in the autocomplete
+ *	@api
+ */
+ol.control.SearchGeoportail.prototype.select = function (f){
+  if (f.x || f.y) {
+    var c = [Number(f.x), Number(f.y)];
+    // Add coordinate to the event
+    try {
+        c = ol.proj.transform (c, 'EPSG:4326', this.getMap().getView().getProjection());
+    } catch(e) {};
+    // Get insee commune ?
+    if (this.get('type')==='Commune') {
+      this.searchCommune(f, function () {
+        this.dispatchEvent({ type:"select", search:f, coordinate: c });
+      });
+    } else {
+      this.dispatchEvent({ type:"select", search:f, coordinate: c });
+    }
+  } else {
+    this.searchCommune(f);
+  }
+};
+/** Search if no position and get the INSEE code
+ * @param {string} s le nom de la commune
+ */
+ol.control.SearchGeoportail.prototype.searchCommune = function (f, cback) {
+  var request = '<?xml version="1.0" encoding="UTF-8"?>'
+	+'<XLS xmlns:xls="http://www.opengis.net/xls" xmlns:gml="http://www.opengis.net/gml" xmlns="http://www.opengis.net/xls" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="http://www.opengis.net/xls http://schemas.opengis.net/ols/1.2/olsAll.xsd">'
+		+'<RequestHeader/>'
+		+'<Request requestID="1" version="1.2" methodName="LocationUtilityService">'
+			+'<GeocodeRequest returnFreeForm="false">'
+				+'<Address countryCode="PositionOfInterest">'
+				+'<freeFormAddress>'+f.fulltext+'+</freeFormAddress>'
+				+'</Address>'
+			+'</GeocodeRequest>'
+		+'</Request>'
+	+'</XLS>'
+  var url = this.get('url').replace('ols/apis/completion','geoportail/ols')+"?xls="+encodeURIComponent(request);
+  this.ajax (url, function(resp) {
+    var xml = resp.response;
+    if (xml) {
+      xml = xml.replace(/\n|\r/g,'');
+      var p = (xml.replace(/.*<gml:pos\>(.*)<\/gml:pos>.*/, "$1")).split(' ');
+      f.x = Number(p[1]);
+      f.y = Number(p[0]);
+      f.kind = (xml.replace(/.*<Place type="Nature">([^<]*)<\/Place>.*/, "$1"));
+      f.insee = (xml.replace(/.*<Place type="INSEE">([^<]*)<\/Place>.*/, "$1"));
+      if (f.x || f.y) {
+        if (cback) cback.call(this, [f]);
+        else this._handleSelect(f);
+      }
+    }
+  });
+};
 
 /*	Copyright (c) 2015 Jean-Marc VIGLINO, 
 	released under the CeCILL-B license (French BSD license)
@@ -1258,7 +1518,7 @@ ol.control.Button = function(options)
 	var bt = $("<button>").html(options.html || "")
 				.attr('type','button')
 				.attr('title', options.title)
-				.on("click", function(e)
+				.on("touchstart click", function(e)
 				{	if (e && e.preventDefault)
 					{	e.preventDefault();
 						e.stopPropagation();
@@ -2223,12 +2483,101 @@ ol.control.GeoBookmark.prototype.addBookmark = function(name, position, zoom, pe
   this.setBookmarks(bmark);
 };
 
+/*	Copyright (c) 2016 Jean-Marc VIGLINO,
+	released under the CeCILL-B license (French BSD license)
+	(http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt).
+*/
+/** Control bar for OL3
+ * The control bar is a container for other controls. It can be used to create toolbars.
+ * Control bars can be nested and combined with ol.control.Toggle to handle activate/deactivate.
+ *
+ * @constructor
+ * @extends {ol.control.Control}
+ * @param {Object=} options Control options.
+ *	@param {String} options.className class of the control
+ *	@param {String} options.centerLabel label for center button, default center
+ */
+ol.control.GeolocationBar = function(options) {
+  if (!options) options = {};
+  options.className = options.className || 'ol-geobar';
+  ol.control.Bar.call(this, options);
+  this.setPosition(options.position || 'bottom-right');
+  var element = $(this.element);
+  // Geolocation draw interaction
+  var interaction = new ol.interaction.GeolocationDraw({	
+    source: options.source,
+    zoom: options.zoom,
+    followTrack: true,
+    minAccuracy: options.minAccuracy || 10000
+  });
+  this._geolocBt = new ol.control.Toggle ({
+    className: 'geolocBt',
+    interaction: interaction,
+    onToggle: function(b) {
+      interaction.pause(true);
+      interaction.setFollowTrack(true);
+      element.removeClass('pauseTrack');
+    }
+  });
+  this.addControl(this._geolocBt);
+  this._geolocBt.setActive(false);
+  // Buttons
+  var bar = new ol.control.Bar();
+  this.addControl(bar);
+  var centerBt = new ol.control.TextButton ({
+    className: 'centerBt',
+    html: options.centerLabel ||'center',
+    handleClick: function(b) {
+      interaction.setFollowTrack('auto');
+    }
+  });
+  bar.addControl(centerBt);
+  var startBt = new ol.control.Button ({
+    className: 'startBt',
+    handleClick: function(){
+      interaction.pause(false);
+      interaction.setFollowTrack('auto');
+      element.addClass('pauseTrack');
+    }
+  });
+  bar.addControl(startBt);
+  var pauseBt = new ol.control.Button ({
+    className: 'pauseBt',
+    handleClick: function(){
+      interaction.pause(true);      
+      interaction.setFollowTrack('auto');
+      element.removeClass('pauseTrack');
+    }
+  });
+  bar.addControl(pauseBt);
+  interaction.on('follow', function(e) {
+    if (e.following) {
+      element.removeClass('centerTrack');
+    } else {
+      element.addClass('centerTrack');
+    }
+  });
+  // Activate
+  this._geolocBt.on('change:active', function(e) {
+    if (e.active) {
+      element.addClass('ol-active');
+    } else {
+      element.removeClass('ol-active');
+    }
+  });
+};
+ol.inherits(ol.control.GeolocationBar, ol.control.Bar);
+/** Get the ol.interaction.GeolocationDraw associatedwith the bar
+ * 
+ */
+ol.control.GeolocationBar.prototype.getInteraction = function () {
+  return this._geolocBt.getInteraction();
+};
+
 /*	Copyright (c) 2016 Jean-Marc VIGLINO, 
 	released under the CeCILL-B license (French BSD license)
 	(http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt).
 */
-//TODO: replace ol.animation.pan with new {ol.interaction.Interaction.pan}
-//
 /**
  * OpenLayers 3 lobe Overview Control.
  * The globe can rotate with map (follow.) 
@@ -2353,30 +2702,11 @@ ol.control.Globe.prototype.setCenter = function (center, show)
 	{	var map = this.ovmap_;
 		var p = map.getPixelFromCoordinate(center);
 		var h = $(this.element).height();
-		if (map.getView().animate)
-		{	setTimeout(function()
-			{	self.pointer_.css({ 'top': Math.min(Math.max(p[1],0),h) , 'left': "50%" } )
-					.removeClass("hidden");
-			}, 800);
-			map.getView().animate({ center: [center[0],0] });
-		}
-		//TODO: Old version (<3.20)
-		else
-		{	var pan = ol.animation.pan(
-			{	duration: 800,
-				source: map.getView().getCenter()
-			});
-			map.beforeRender(function(map, frameState)
-			{	var b = pan(map, frameState);
-				if (!b && show!==false) 
-				{	self.pointer_
-						.css({ 'top': Math.min(Math.max(p[1],0),h) , 'left': "50%" } )
-						.removeClass("hidden");
-				}
-				return b;
-			});
-			map.getView().setCenter([center[0],0]);
-		}
+		setTimeout(function() {
+			self.pointer_.css({ 'top': Math.min(Math.max(p[1],0),h) , 'left': "50%" } )
+				.removeClass("hidden");
+		}, 800);
+		map.getView().animate({ center: [center[0],0] });
 	}
 };
 
@@ -3112,8 +3442,6 @@ ol.control.Overlay.prototype.setClass = function (className)
 	released under the CeCILL-B license (French BSD license)
 	(http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt).
 */
-//TODO: replace ol.animation.pan with new {ol.interaction.Interaction.pan}
-//
 /**
  * OpenLayers 3 Layer Overview Control.
  * The overview can rotate with map. 
@@ -3225,47 +3553,23 @@ ol.control.Overview = function(options)
 		}
 	}
 	// Click on the preview center the map
-	this.ovmap_.addInteraction (new ol.interaction.Pointer(
-	{	handleDownEvent: function(evt)
-		{	//TODO: Old version OL3
-			if (ol.animation) 
-			{	var pan;
-				if (options.panAnimation !==false)
-				{	if (options.panAnimation=="elastic" || options.elasticPan) 
-					{	pan = ol.animation.pan(
-						{	duration: 1000,
-							easing: ol.easing.elasticFn(2,0.3),
-							source: self.getMap().getView().getCenter()
-						});
-					}
-					else
-					{	pan = ol.animation.pan(
-						{	duration: 300,
-							source: self.getMap().getView().getCenter()
-						});
-					}
+	this.ovmap_.addInteraction (new ol.interaction.Pointer({
+		handleDownEvent: function(evt) {
+			if (options.panAnimation !==false) {
+				if (options.panAnimation=="elastic" || options.elasticPan) {
+					self.getMap().getView().animate({
+						center: evt.coordinate,
+						easing: ol.easing.elasticFn(2,0.3),
+						duration: 1000
+					});
+				} else {
+					self.getMap().getView().animate({
+						center: evt.coordinate,
+						duration: 300
+					});
 				}
-				self.getMap().beforeRender(pan);
-				self.getMap().getView().setCenter(evt.coordinate);
 			}
-			else
-			{	if (options.panAnimation !==false)
-				{	if (options.panAnimation=="elastic" || options.elasticPan) 
-					{	self.getMap().getView().animate(
-						{	center: evt.coordinate,
-							easing: ol.easing.elasticFn(2,0.3),
-							duration: 1000
-						});
-					}
-					else
-					{	self.getMap().getView().animate(
-						{	center: evt.coordinate,
-							duration: 300
-						});
-					}
-				}
-				else self.getMap().getView().setCenter(evt.coordinate);
-			}
+			else self.getMap().getView().setCenter(evt.coordinate);
 			return false;
 		}
 	}));
@@ -3276,13 +3580,13 @@ ol.inherits(ol.control.Overview, ol.control.Control);
 */
 ol.control.Overview.prototype.getOverviewMap = function()
 {	return this.ovmap_;
-}
+};
 /** Toggle overview map
 */
 ol.control.Overview.prototype.toggleMap = function()
 {	$(this.element).toggleClass("ol-collapsed");
 	this.ovmap_.updateSize();
-}
+};
 /** Set overview map position
 *	@param {top|bottom-left|right} 
 */
@@ -3291,7 +3595,7 @@ ol.control.Overview.prototype.setPosition = function(align)
 	else $(this.element).removeClass("ol-control-top");
 	if (/right/.test(align)) $(this.element).addClass("ol-control-right");
 	else $(this.element).removeClass("ol-control-right");
-}
+};
 /**
  * Set the map instance the control associated with.
  * @param {ol.Map} map The map instance.
@@ -3339,7 +3643,7 @@ ol.control.Overview.prototype.calcExtent_ = function(extent)
 	{	f.setGeometry (new ol.geom.Point( center ));
 	}
 	source.addFeature(f);
-}
+};
 /**
 *	@private
 */
@@ -3375,7 +3679,7 @@ ol.control.Overview.prototype.setView = function(e)
 		default: break;
 	}
 	this.calcExtent_();
-}
+};
 
 /*	Copyright (c) 2015 Jean-Marc VIGLINO, 
 	released under the CeCILL-B license (French BSD license)
@@ -3960,6 +4264,7 @@ ol.control.SearchBAN = function(options)
 {	options = options || {};
     options.typing = options.typing || 500;
     options.url = options.url || "https://api-adresse.data.gouv.fr/search/";
+    options.className = options.className || 'BAN';
     ol.control.SearchPhoton.call(this, options);
     this.set("copy","<a href='https://adresse.data.gouv.fr/' target='new'>&copy; BAN-data.gouv.fr</a>");
 };
@@ -4009,12 +4314,13 @@ ol.control.SearchBAN.prototype.select = function (f){
  *	@param {function} options.getTitle a function that takes a feature and return the name to display in the index, default return the property 
  *	@param {function | undefined} options.getSearchString a function that take a feature and return a text to be used as search string, default geTitle() is used as search string
  */
-ol.control.SearchFeature = function(options)
-{	if (!options) options = {};
-	ol.control.Search.call(this, options);
-	if (typeof(options.getSearchString)=="function") this.getSearchString = options.getSearchString;
-	this.set('property', options.property || 'name');
-	this.source_ = options.source;
+ol.control.SearchFeature = function(options) {
+  if (!options) options = {};
+  options.className = options.className || 'feature';
+  ol.control.Search.call(this, options);
+  if (typeof(options.getSearchString)=="function") this.getSearchString = options.getSearchString;
+  this.set('property', options.property || 'name');
+  this.source_ = options.source;
 };
 ol.inherits(ol.control.SearchFeature, ol.control.Search);
 /** Returns the text to be displayed in the menu
@@ -4055,22 +4361,271 @@ ol.control.SearchFeature.prototype.setSource = function (source) {
 * @api
 */
 ol.control.SearchFeature.prototype.autocomplete = function (s) {
-	var result = [];
-	if (this.source_) {
-		// regexp
-		s = s.replace(/^\*/,'');
-		var rex = new RegExp(s, 'i');
-		// The source
-		var features = this.source_.getFeatures();
-		var max = this.get('maxItems')
-		for (var i=0, f; f=features[i]; i++) {
-			if (rex.test(this.getSearchString(f))) {
-				result.push(f);
-				if ((--max)<=0) break;
-			}
+  var result = [];
+  if (this.source_) {
+    // regexp
+    s = s.replace(/^\*/,'');
+    var rex = new RegExp(s, 'i');
+    // The source
+    var features = this.source_.getFeatures();
+    var max = this.get('maxItems')
+    for (var i=0, f; f=features[i]; i++) {
+      var att = this.getSearchString(f);
+      if (att !== undefined && rex.test(att)) {
+        result.push(f);
+        if ((--max)<=0) break;
+      }
+    }
+  }
+  return result;
+};
+
+/*	Copyright (c) 2017 Jean-Marc VIGLINO,
+	released under the CeCILL-B license (French BSD license)
+	(http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt).
+*/
+/**
+ * Search places using the French National Base Address (BAN) API.
+ *
+ * @constructor
+ * @extends {ol.control.SearchJSON}
+ * @fires select
+ * @param {any} options extend ol.control.SearchJSON options
+ *	@param {string} options.className control class name
+ *	@param {boolean | undefined} options.apiKey the service api key.
+ *	@param {string | undefined} options.authentication: basic authentication for the service API as btoa("login:pwd")
+ *	@param {Element | string | undefined} options.target Specify a target if you want the control to be rendered outside of the map's viewport.
+ *	@param {string | undefined} options.label Text label to use for the search button, default "search"
+ *	@param {string | undefined} options.placeholder placeholder, default "Search..."
+ *	@param {number | undefined} options.typing a delay on each typing to start searching (ms), default 500.
+ *	@param {integer | undefined} options.minLength minimum length to start searching, default 3
+ *	@param {integer | undefined} options.maxItems maximum number of items to display in the autocomplete list, default 10
+ *
+ *	@param {Number} options.pageSize item per page for parcelle list paging, use -1 for no paging, default 5
+ * @see {@link https://geoservices.ign.fr/documentation/geoservices/geocodage.html}
+ */
+ol.control.SearchGeoportailParcelle = function(options) {
+	var self = this;
+	options.type = "Commune";
+	options.className = options.className ? options.className+" IGNF-parcelle" : "IGNF-parcelle";
+	options.inputLabel = "Commune";
+	options.noCollapse = true;
+	options.placeholder = options.placeholder || "Choisissez une commune...";
+	ol.control.SearchGeoportail.call(this, options);
+	this.set('copy', null);
+	var element = this.element;
+	// Add parcel form
+	var div = document.createElement("DIV");
+	element.appendChild(div);
+	var label = document.createElement("LABEL");
+	label.innerText = 'Préfixe'
+	div.appendChild(label);
+	var label = document.createElement("LABEL");
+	label.innerText = 'Section'
+	div.appendChild(label);
+	var label = document.createElement("LABEL");
+	label.innerText = 'Numéro'
+	div.appendChild(label);
+	div.appendChild(document.createElement("BR"));
+	// Input
+	this._inputParcelle = {
+		prefix: document.createElement("INPUT"),
+		section: document.createElement("INPUT"),
+		numero: document.createElement("INPUT")
+  };
+  this._inputParcelle.prefix.setAttribute('maxlength',3);
+  this._inputParcelle.section.setAttribute('maxlength',2);
+	this._inputParcelle.numero.setAttribute('maxlength',4);
+  // Delay search
+  var tout;
+	var doSearch = function(e) {
+    if (tout) clearTimeout(tout);
+    tout = setTimeout(function() {
+        self.autocompleteParcelle();
+    }, options.typing || 0);
+	}
+	// Add inputs
+	for (var i in this._inputParcelle) {
+		div.appendChild(this._inputParcelle[i]);
+		this._inputParcelle[i].addEventListener("keyup", doSearch);
+	}
+	this.activateParcelle(false);
+  // Autocomplete list
+	var ul = document.createElement('UL');
+	ul.classList.add('autocomplete-parcelle');
+	element.appendChild(ul);
+	ul = document.createElement('UL');
+	ul.classList.add('autocomplete-page');
+	element.appendChild(ul);
+	// Show/hide list on fcus/blur	
+	this._input.addEventListener('blur', function() {
+		setTimeout(function(){ element.classList.add('ol-collapsed-list') }, 200);
+	});
+	this._input.addEventListener('focus', function() {
+    element.classList.remove('ol-collapsed-list');
+    self._listParcelle([]);
+    if (self._commune) {
+      self._commune = null;
+      self._input.value = '';
+      self.drawList_();
+		}
+		self.activateParcelle(false);
+	});
+	this.on('select', this.selectCommune, this);
+	this.set('pageSize', options.pageSize || 5);
+};
+ol.inherits(ol.control.SearchGeoportailParcelle, ol.control.SearchGeoportail);
+/** Select a commune => start searching parcelle  
+ * @param {any} e 
+ * @private
+ */
+ol.control.SearchGeoportailParcelle.prototype.selectCommune = function(e) {
+	this._commune = e.search.insee;
+	this._input.value = e.search.insee + ' - ' + e.search.fulltext;
+	this.activateParcelle(true);
+  this._inputParcelle.numero.focus();
+  this.autocompleteParcelle();
+};
+/** Activate parcelle inputs
+ * @param {bolean} b
+ */
+ol.control.SearchGeoportailParcelle.prototype.activateParcelle = function(b) {
+	for (var i in this._inputParcelle) {
+		this._inputParcelle[i].readOnly = !b;
+	}
+	if (b) {
+		this._inputParcelle.section.parentElement.classList.add('ol-active');
+	} else {
+		this._inputParcelle.section.parentElement.classList.remove('ol-active');		
+	}
+};
+/** Send search request for the parcelle  
+ * @param {any} e 
+ * @private
+ */
+ol.control.SearchGeoportailParcelle.prototype.autocompleteParcelle = function(e) {
+  var self = this;
+	// Add 0 to fit the format
+	function complete (s, n, c)
+	{	if (!s) return s;
+		c = c || "0";
+		while (s.length < n) s = c+s;
+		return s.replace(/\*/g,'_');
+	}
+	// The selected commune
+	var commune = this._commune;
+	var prefix = complete (this._inputParcelle.prefix.value, 3);
+	if (prefix === '000') {
+		prefix = '___';
+	}
+	// Get parcelle number
+	var section = complete (this._inputParcelle.section.value, 2);
+	var numero = complete (this._inputParcelle.numero.value, 4, "0");
+	var search = commune + (prefix||'___') + (section||"__") + (numero ?  numero : section ? "____":"0001");
+	// Request
+	var request = '<?xml version="1.0" encoding="UTF-8"?>'
+	+'<XLS xmlns:xls="http://www.opengis.net/xls" xmlns:gml="http://www.opengis.net/gml" xmlns="http://www.opengis.net/xls" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="http://www.opengis.net/xls http://schemas.opengis.net/ols/1.2/olsAll.xsd">'
+		+'<RequestHeader/>'
+		+'<Request requestID="1" version="1.2" methodName="LocationUtilityService">'
+			+'<GeocodeRequest returnFreeForm="false">'
+				+'<Address countryCode="CadastralParcel">'
+				+'<freeFormAddress>'+search+'+</freeFormAddress>'
+				+'</Address>'
+			+'</GeocodeRequest>'
+		+'</Request>'
+  +'</XLS>'
+	var url = this.get('url').replace('ols/apis/completion','geoportail/ols?xls=')+encodeURIComponent(request);
+	// Geocode
+	this.ajax(url, function(resp) {
+		// XML to JSON
+    var parser = new DOMParser();
+    var xmlDoc = parser.parseFromString(resp.response,"text/xml");
+    var parcelles = xmlDoc.getElementsByTagName('GeocodedAddress');
+    var jsonResp = []
+    for (var i=0, parc; parc= parcelles[i]; i++) {
+			var node = parc.getElementsByTagName('gml:pos')[0] || parc.getElementsByTagName('pos')[0];
+      var p = node.childNodes[0].nodeValue.split(' ');
+      var att = parc.getElementsByTagName('Place');
+      var json = { 
+        lon: Number(p[1]), 
+        lat: Number(p[0])
+      };
+      for (var k=0, a; a=att[k]; k++) {
+        json[a.attributes.type.value] = a.childNodes[0].nodeValue;
+      }
+      jsonResp.push(json);
+    }
+    self._listParcelle(jsonResp);
+	}, function() {
+		console.log('oops')
+	});
+};
+/**
+ * Draw the autocomplete list
+ * @param {*} resp 
+ * @private
+ */
+ol.control.SearchGeoportailParcelle.prototype._listParcelle = function(resp) {
+  var self = this;
+  var ul = this.element.querySelector("ul.autocomplete-parcelle");
+  ul.innerHTML='';
+  var page = this.element.querySelector("ul.autocomplete-page");
+  page.innerHTML='';
+	this._listParc = [];
+	// Show page i
+	function showPage(i) {
+		var l = ul.children;
+		var visible = "ol-list-"+i;
+		for (k=0; k<l.length; k++) {
+			l[k].style.display = (l[k].className===visible) ? '' : 'none';
+		}
+		l = page.children;
+		for (k=0; k<l.length; k++) {
+			l[k].className = (l[k].innerText==i) ? 'selected' : '';
+		}
+		page.style.display = l.length>1 ? '' : 'none';
+	}
+	// Sort table
+	resp.sort(function(a,b) {
+		var na = a.INSEE+a.CommuneAbsorbee+a.Section+a.Numero;
+		var nb = b.INSEE+b.CommuneAbsorbee+b.Section+b.Numero;
+		return na===nb ? 0 : na<nb ? -1 : 1;
+	});
+	// Show list
+	var n = this.get('pageSize');
+  for (var i=0, r; r = resp[i]; i++) {
+    var li = document.createElement("LI");
+    li.setAttribute("data-search", i);
+		if (n>0) li.classList.add("ol-list-"+Math.floor(i/n));
+    this._listParc.push(r);
+    li.addEventListener("click", function(e) {
+      self._handleParcelle(self._listParc[e.currentTarget.getAttribute("data-search")]);
+    });
+    li.innerHTML = r.INSEE+r.CommuneAbsorbee+r.Section+r.Numero;
+		ul.appendChild(li);
+		//
+		if (n>0 && !(i%n)) {
+			li = document.createElement("LI");
+			li.innerText = Math.floor(i/n);
+			li.addEventListener("click", function(e) {
+				showPage(e.currentTarget.innerText);
+			});
+			page.appendChild(li);
 		}
 	}
-	return result;
+	if (n>0) showPage(0);
+};
+/**
+ * Handle parcelle section
+ * @param {*} parc 
+ * @private
+ */
+ol.control.SearchGeoportailParcelle.prototype._handleParcelle = function(parc) {
+  this.dispatchEvent({ 
+    type:"parcelle", 
+    search: parc, 
+    coordinate: ol.proj.fromLonLat([parc.lon, parc.lat], this.getMap().getView().getProjection())
+  });
 };
 
 /*	Copyright (c) 2017 Jean-Marc VIGLINO,
@@ -4098,6 +4653,7 @@ ol.control.SearchFeature.prototype.autocomplete = function (s) {
  */
 ol.control.SearchNominatim = function(options)
 {	options = options || {};
+    options.className = options.className || 'nominatim';
     options.typing = options.typing || 500;
     options.url = options.url || "https://nominatim.openstreetmap.org/search";
     ol.control.SearchJSON.call(this, options);
@@ -4490,15 +5046,15 @@ ol.inherits(ol.control.TextButton, ol.control.Button);
  * @extends {ol.control.Control}
  * @fires change:active, change:disable
  * @param {Object=} options Control options.
- *		className {String} class of the control
- *		title {String} title of the control
- *		html {String} html to insert in the control
- *		interaction {ol.interaction} interaction associated with the control
- *		active {bool} the control is created active, default false
- *		disable {bool} the control is created disabled, default false
- *		bar {ol.control.Bar} a subbar associated with the control (drawn when active if control is nested in a ol.control.Bar)
- *		autoActive {bool} the control will activate when shown in an ol.control.Bar, default false
- *		onToggle {function} callback when control is clicked (or use change:active event)
+ *	@param {String} options.className class of the control
+ *	@param {String} options.title title of the control
+ *	@param {String} options.html html to insert in the control
+ *	@param {ol.interaction} options.interaction interaction associated with the control
+ *	@param {bool} options.active the control is created active, default false
+ *	@param {bool} options.disable the control is created disabled, default false
+ *	@param {ol.control.Bar} options.bar a subbar associated with the control (drawn when active if control is nested in a ol.control.Bar)
+ *	@param {bool} options.autoActive the control will activate when shown in an ol.control.Bar, default false
+ *	@param {function} options.onToggle callback when control is clicked (or use change:active event)
  */
 ol.control.Toggle = function(options)
 {	options = options || {};
@@ -6468,7 +7024,8 @@ ol.interaction.DrawHole.prototype.removeLastPoint = function()
  * @return {ol.Feature}
  */
 ol.interaction.DrawHole.prototype.getPolygon = function()
-{	return this._select.getFeatures().item(0);
+{	return this._polygon;
+	// return this._select.getFeatures().item(0).getGeometry();
 };
 /**
  * Get current feature to add a hole and start drawing
@@ -6479,7 +7036,7 @@ ol.interaction.DrawHole.prototype._startDrawing = function(e)
 {	var map = this.getMap();
 	var layersFilter = this.layers_;
 	this._feature = e.feature;
-	coord = e.feature.getGeometry().getCoordinates()[0][0];
+	var coord = e.feature.getGeometry().getCoordinates()[0][0];
 	// Check object under the pointer
 	var features = map.getFeaturesAtPixel(
 		map.getPixelFromCoordinate(coord),
@@ -6488,15 +7045,31 @@ ol.interaction.DrawHole.prototype._startDrawing = function(e)
 	);
 	var current = null;
 	if (features)
-	{	if (features[0].getGeometry().getType() !== "Polygon") current = null;
-		else if (features[0].getGeometry().intersectsCoordinate(coord)) current = features[0];
+	{	var poly = features[0].getGeometry();
+		if (poly.getType() === "Polygon"
+			&& poly.intersectsCoordinate(coord)) {
+				this._polygonIndex = false;
+				this._polygon = poly;
+				current = features[0];
+			}
+		else if (poly.getType() === "MultiPolygon"
+			&& poly.intersectsCoordinate(coord)) {
+				for (var i=0, p; p=poly.getPolygon(i); i++) {
+					if (p.intersectsCoordinate(coord)) {
+						this._polygonIndex = i;
+						this._polygon = p;
+						current = features[0];
+						break;
+					}
+				}
+			}
 		else current = null;
 	}
-	else current = null;
+	console.log(this._polygonIndex)
+	this._select.getFeatures().clear();
 	if (!current)
 	{	this.setActive(false);
 		this.setActive(true);
-		this._select.getFeatures().clear();
 	}
 	else
 	{	this._select.getFeatures().push(current);
@@ -6508,8 +7081,29 @@ ol.interaction.DrawHole.prototype._startDrawing = function(e)
  * @private
  */
 ol.interaction.DrawHole.prototype._finishDrawing = function(e)
-{	var c = e.feature.getGeometry().getCoordinates()[0];
-	if (c.length > 3) this.getPolygon().getGeometry().appendLinearRing(new ol.geom.LinearRing(c));
+{	// The feature is the hole
+	e.hole = e.feature;
+	// Get the current feature
+	e.feature = this._select.getFeatures().item(0);
+	// Create the hole
+	var c = e.hole.getGeometry().getCoordinates()[0];
+	if (c.length > 3) {
+		if (this._polygonIndex!==false) {
+			var geom = e.feature.getGeometry();
+			var newGeom = new ol.geom.MultiPolygon();
+			for (var i=0, pi; pi=geom.getPolygon(i); i++) {
+				if (i===this._polygonIndex) {
+					pi.appendLinearRing(new ol.geom.LinearRing(c));
+					newGeom.appendPolygon(pi);
+				}
+				else newGeom.appendPolygon(pi);
+			}
+			e.feature.setGeometry(newGeom);
+		} else {
+			this.getPolygon().appendLinearRing(new ol.geom.LinearRing(c));
+		}
+	}
+	// reset
 	this._feature = null;
 	this._select.getFeatures().clear();
 };
@@ -6522,7 +7116,7 @@ ol.interaction.DrawHole.prototype._finishDrawing = function(e)
  */
 ol.interaction.DrawHole.prototype._geometryFn = function(coordinates, geometry)
 {	var coord = coordinates[0].pop();
-	if (!this.getPolygon() || this.getPolygon().getGeometry().intersectsCoordinate(coord))
+	if (!this.getPolygon() || this.getPolygon().intersectsCoordinate(coord))
 	{	this.lastOKCoord = [coord[0],coord[1]];
 	}
 	coordinates[0].push([this.lastOKCoord[0],this.lastOKCoord[1]]);
@@ -7302,10 +7896,10 @@ ol.interaction.Flashlight.prototype.postcompose_ = function(e)
  * @constructor
  * @extends {ol.interaction.Interaction}
  * @fires drawstart, drawend, drawing, tracking, follow
- * @param {olx.interaction.GeolocationDrawOption} options
+ * @param {any} options
  *	@param { ol.Collection.<ol.Feature> | undefined } option.features Destination collection for the drawn features.
  *	@param { ol.source.Vector | undefined } options.source Destination source for the drawn features.
- *	@param {ol.geom.GeometryType} options.type Drawing type ('Point', 'LineString', 'Polygon'). Required.
+ *	@param {ol.geom.GeometryType} options.type Drawing type ('Point', 'LineString', 'Polygon'), default LineString.
  *	@param {Number | undefined} options.minAccuracy minimum accuracy underneath a new point will be register (if no condition), default 20
  *	@param {function | undefined} options.condition a function that take a ol.Geolocation object and return a boolean to indicate whether location should be handled or not, default return true if accuraty < minAccuraty
  *	@param {Object} options.attributes a list of attributes to register as Point properties: {accuracy:true,accuracyGeometry:true,heading:true,speed:true}, default none.
@@ -7318,7 +7912,7 @@ ol.interaction.GeolocationDraw = function(options)
 {	if (!options) options={};
 	var self = this;
 	// Geolocation
-	var geoloc = this.geolocation = new ol.Geolocation(/** @type {olx.GeolocationOptions} */
+	var geoloc = this.geolocation = new ol.Geolocation(
 	({	projection: "EPSG:4326",
 		trackingOptions: 
 		{	maximumAge: 10000,
@@ -7466,6 +8060,12 @@ ol.interaction.GeolocationDraw.prototype.stop = function()
 */
 ol.interaction.GeolocationDraw.prototype.pause = function(b)
 {	this.pause_ = b!==false;
+};
+/** Is paused
+* @return {boolean} b 
+*/
+ol.interaction.GeolocationDraw.prototype.isPaused = function()
+{	return this.pause_;
 };
 /** Enable following the track on the map
 * @param {boolean|auto|position|visible} follow, 
@@ -7756,6 +8356,150 @@ ol.interaction.LongTouch = function(options)
 	});
 };
 ol.inherits(ol.interaction.LongTouch, ol.interaction.Interaction);
+
+/*	Copyright (c) 2016 Jean-Marc VIGLINO, 
+	released under the CeCILL-B license (French BSD license)
+	(http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt).
+*/
+/** Modify interaction with a popup to delet a point on touch device
+ * @constructor
+ * @fires showpopup
+ * @fires hidepopup
+ * @extends {ol.interaction.Modify}
+ * @param {olx.interaction.ModifyOptions} options
+ *  @param {String|undefined} options.title title to display, default "remove point"
+ *  @param {Boolean|undefined} options.usePopup use a popup, default true
+ */
+ol.interaction.ModifyTouch = function(options) {
+  var self = this;
+  if (!options) options = {};
+  this._popup = new ol.Overlay.Popup ({
+    popupClass: options.calssName || 'modifytouch',
+    positioning: 'bottom-rigth',
+    offsetBox: 10
+  });
+  this._source = options.source;
+  this._features = options.features;
+  // popup content
+  var a = document.createElement('a');
+  a.appendChild(document.createTextNode(options.title || "remove point"));
+  a.onclick = function() {
+    self.removePoint();
+  };
+  this.setPopupContent(a);
+  var pixelTolerance = options.pixelTolerance || 0;
+  var searchDist = pixelTolerance +5;
+  // Check if there is a feature to select
+  options.condition = function(e) {
+		var features = this.getMap().getFeaturesAtPixel(e.pixel,{
+		  hitTolerance: searchDist
+    });
+    var found = false;
+		if (features) {
+      var search = this._features;
+      if (!search) {
+        var p0 = [e.pixel[0] - searchDist, e.pixel[1] - searchDist]
+        var p1 = [e.pixel[0] + searchDist, e.pixel[1] + searchDist]
+        p0 = this.getMap().getCoordinateFromPixel(p0);
+        p1 = this.getMap().getCoordinateFromPixel(p1);
+        var ext = ol.extent.boundingExtent([p0,p1]);
+        search = this._source.getFeaturesInExtent(ext);
+      } 
+      if (search.getArray) search = search.getArray();
+      for (var i=0, f; f=features[i]; i++) {
+        if (search.indexOf(f) >= 0) break;
+      }
+      if (f) {
+        var p0 = e.pixel;
+        var p1 = f.getGeometry().getClosestPoint(e.coordinate);
+        p1 = this.getMap().getPixelFromCoordinate(p1);
+        var dx = p0[0] - p1[0];
+        var dy = p0[1] - p1[1];
+        found = (Math.sqrt(dx*dx+dy*dy) < searchDist);
+      }
+    }
+    // Show popup if any
+    this.showDeleteBt(found ? { type:'show', feature:f, coordinate: e.coordinate } : { type:'hide' });
+    // Prevent click on the popup
+    e.preventDefault();
+    e.stopPropagation();
+		return true;
+  };
+  // Hide popup on insert
+	options.insertVertexCondition = function(e) {
+		this.showDeleteBt({ type:'hide' });
+		return true;
+  }
+  ol.interaction.Modify.call(this, options);
+  this.on(['modifystart','modifyend'], function(){
+		this.showDeleteBt({ type:'hide', modifying: true });
+  });
+  // Use a popup ?
+  this.set('usePopup', options.usePopup !== false);
+};
+ol.inherits(ol.interaction.ModifyTouch, ol.interaction.Modify);
+/**
+ * Remove the interaction from its current map, if any,  and attach it to a new
+ * map, if any. Pass `null` to just remove the interaction from the current map.
+ * @param {ol.Map} map Map.
+ * @api stable
+ */
+ol.interaction.ModifyTouch.prototype.setMap = function(map) {	
+  if (this.getMap()) {
+    this.getMap().removeOverlay(this._popup);
+  }
+	ol.interaction.Modify.prototype.setMap.call (this, map);
+  if (this.getMap()) {
+    this.getMap().addOverlay(this._popup);
+  }
+};
+/** Activate the interaction and remove popup
+ * @param {Boolean} b
+ */
+ol.interaction.ModifyTouch.prototype.setActive = function(b) {	
+  ol.interaction.Modify.prototype.setActive.call (this, b);
+  this.showDeleteBt({ type:'hide' });
+};
+/**
+ * Remove the current point
+ */
+ol.interaction.ModifyTouch.prototype.removePoint = function() {	
+  // Prevent touch + click on popup 
+  if (new Date() - this._timeout < 200) return;
+  // Remove point
+  ol.interaction.Modify.prototype.removePoint.call (this);
+  this.showDeleteBt({ type:'hide' });
+}
+/**
+ * Show the delete button (menu)
+ * @param {Event} e
+ * @api stable
+ */
+ol.interaction.ModifyTouch.prototype.showDeleteBt = function(e) {
+  if (this.get('usePopup') && e.type==='show') {
+    this._popup.show(e.coordinate, this._menu);
+  } else {
+    this._popup.hide();
+  }
+  e.type += 'popup';
+  this.dispatchEvent(e);
+  // Date if popup start a timeout to prevent touch + click on the popup
+  this._timeout = new Date();
+};
+/**
+ * Change the popup content
+ * @param {DOMElement} html 
+ */
+ol.interaction.ModifyTouch.prototype.setPopupContent = function(html) {
+  this._menu = html;
+}
+/**
+ * Get the popup content
+ * @return {DOMElement}
+ */
+ol.interaction.ModifyTouch.prototype.getPopupContent = function() {
+  return this._menu;
+}
 
 /*	Copyright (c) 2016 Jean-Marc VIGLINO, 
 	released under the CeCILL-B license (French BSD license)
@@ -8714,7 +9458,7 @@ ol.interaction.Split.prototype.getClosestFeature = function(e)
 	for (var i=0; i<this.sources_.length; i++)
 	{	var source = this.sources_[i];
 		f = source.getClosestFeatureToCoordinate(e.coordinate);
-		if (f.getGeometry().splitAt, this.tolerance_) 
+		if (f.getGeometry().splitAt) 
 		{	c = f.getGeometry().getClosestPoint(e.coordinate);
 			g = new ol.geom.LineString([e.coordinate,c]);
 			d = g.getLength() / e.frameState.viewState.resolution;
@@ -9697,7 +10441,7 @@ ol.interaction.Transform.prototype.select = function(feature, add) {
 	else this.selection_ = [feature];
 	this.ispt_ = (this.selection_.length===1 ? (this.selection_[0].getGeometry().getType() == "Point") : false);
 	this.drawSketch_();
-	this.dispatchEvent({ type:'select', feature: feature });
+	this.dispatchEvent({ type:'select', feature: feature, features: this.selection_ });
 }
 /**
  * @param {ol.MapBrowserEvent} evt Map browser event.
@@ -9756,9 +10500,16 @@ ol.interaction.Transform.prototype.handleDownEvent_ = function(evt) {
     }
 		this.ispt_ = this.selection_.length===1 ? (this.selection_[0].getGeometry().getType() == "Point") : false;
 		this.drawSketch_();
-		this.dispatchEvent({ type:'select', feature: this.selection_, pixel: evt.pixel, coordinate: evt.coordinate });
+		this.dispatchEvent({ type:'select', feature: feature, features: this.selection_, pixel: evt.pixel, coordinate: evt.coordinate });
 		return false;
 	}
+};
+/**
+ * Get features to transform
+ * @return {Array<ol.Feature>}
+ */
+ol.interaction.Transform.prototype.getFeatures = function() {
+	return this.selection_;
 };
 /**
  * Get the rotation center
@@ -9766,7 +10517,7 @@ ol.interaction.Transform.prototype.handleDownEvent_ = function(evt) {
  */
 ol.interaction.Transform.prototype.getCenter = function() {
 	return this.get('center');
-}
+};
 /**
  * Set the rotation center
  * @param {ol.coordinates|undefined} c the center point, default center on the objet
@@ -11400,13 +12151,15 @@ popup.hide();
  *	@param {bool} options.closeBox popup has a close box, default false.
  *	@param {function|undefined} options.onclose: callback function when popup is closed
  *	@param {function|undefined} options.onshow callback function when popup is shown
+ *	@param {Number|Array<number>} options.offsetBox an offset box
  *	@param {ol.OverlayPositioning | string | undefined} options.positionning 
  *		the 'auto' positioning var the popup choose its positioning to stay on the map.
  * @api stable
  */
 ol.Overlay.Popup = function (options)
 {	var self = this;
-	this.offsetBox = options.offsetBox;
+	if (typeof(options.offsetBox)==='number') this.offsetBox = [options.offsetBox,options.offsetBox,options.offsetBox,options.offsetBox];
+	else this.offsetBox = options.offsetBox;
 	// Popup div
 	var d = $("<div>").addClass('ol-overlaycontainer-stopevent');
 	options.element = d.get(0);
@@ -11561,6 +12314,10 @@ ol.Overlay.Popup.prototype.show = function (coordinate, html)
 			this.setPositioning_(pos[0]+"-"+pos[1]);
 			if (this.offsetBox)
 			{	this.setOffset([this.offsetBox[pos[1]=="left"?2:0], this.offsetBox[pos[0]=="top"?3:1] ]);
+			}
+		} else {
+			if (this.offsetBox){
+				this.setOffset(this.offsetBox);
 			}
 		}
 		// Show
@@ -11866,19 +12623,163 @@ ol.coordinate.findSegment = function (pt, coords) {
 		}
 	}
 	return { index: -1 };
-}
+};
+/* Use 
+*/
+/*	Copyright (c) 2016 Jean-Marc VIGLINO, 
+	released under the CeCILL-B license (French BSD license)
+	(http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt).
+	Usefull function to handle geometric operations
+*/
+/**
+ * Split a Polygon geom with horizontal lines
+ * @param {Array<ol.coordinate>} geom 
+ * @param {Number} y the y to split
+ * @param {Number} n contour index
+ * @return {Array<Array<ol.coordinate>>}
+ */
+ol.coordinate.splitH = function (geom, y, n) {
+  var x, abs;
+  var list = [];
+  for (var i=0; i<geom.length-1; i++) {
+    // Hole separator?
+    if (!geom[i].length || !geom[i+1].length) continue;
+    // Intersect
+    if (geom[i][1]<=y && geom[i+1][1]>y || geom[i][1]>=y && geom[i+1][1]<y) {
+      abs = (y-geom[i][1]) / (geom[i+1][1]-geom[i][1]);
+      x = abs * (geom[i+1][0]-geom[i][0]) + geom[i][0];
+      list.push ({ contour: n, index: i, pt: [x,y], abs: abs });
+    }
+  }
+  // Sort x
+  list.sort(function(a,b) { return a.pt[0] - b.pt[0] });
+  // Horizontal segement
+  var result = [];
+  for (var j=0; j<list.length-1; j += 2) {
+    result.push([list[j], list[j+1]])
+  }
+  return result;
+};
+/**
+ * Calculate a MultiPolyline to fill a Polygon with a scribble effect that appears hand-made
+ * @param {} options
+ *  @param {Number} options.interval interval beetween lines
+ *  @param {Number} options.angle hatch angle in radian, default PI/2
+ * @return {ol.geom.MultiLineString|null} the resulting MultiLineString geometry or null if none
+ */
+ol.geom.MultiPolygon.prototype.scribbleFill = function (options) {
+  var scribbles = [];
+  var poly = this.getPolygons();
+  for (var i=0, p; p=poly[i]; i++) {
+    var mls = p.scribbleFill(options);
+    if (mls) scribbles.push(mls);
+  } 
+  if (!scribbles.length) return null;
+  // Merge scribbles
+  var scribble = scribbles[0];
+  for (var i=0, s; s=scribbles[i]; i++) {
+    ls = s.getLineStrings();
+    for (k=0; k<ls.length; k++) {
+      scribble.appendLineString(ls[k]);
+    }
+  }
+  return scribble;
+};
+/**
+ * Calculate a MultiPolyline to fill a Polygon with a scribble effect that appears hand-made
+ * @param {} options
+ *  @param {Number} options.interval interval beetween lines
+ *  @param {Number} options.angle hatch angle in radian, default PI/2
+ * @return {ol.geom.MultiLineString|null} the resulting MultiLineString geometry or null if none
+ */
+ol.geom.Polygon.prototype.scribbleFill = function (options) {
+	var step = options.interval;
+  var angle = options.angle || Math.PI/2;
+  // Geometry + rotate
+	var geom = this.clone();
+	geom.rotate(angle, [0,0]);
+  var coords = geom.getCoordinates();
+  // Merge holes
+  var coord = coords[0];
+  for (var i=1; i<coords.length; i++) {
+    // Add a separator
+    coord.push([]);
+    // Add the hole
+    coord = coord.concat(coords[i]);
+  }
+  // Extent 
+	var ext = geom.getExtent();
+	// Split polygon with horizontal lines
+  var lines = [];
+	for (var y = (Math.floor(ext[1]/step)+1)*step; y<ext[3]; y += step) {
+    var l = ol.coordinate.splitH(coord, y, i);
+    lines = lines.concat(l);
+  }
+  if (!lines.length) return null;
+  // Order lines on segment index
+  var mod = coord.length-1;
+	var first = lines[0][0].index;
+	for (var k=0, l; l=lines[k]; k++) {
+		lines[k][0].index = (lines[k][0].index-first+mod) % mod;
+		lines[k][1].index = (lines[k][1].index-first+mod) % mod;
+	}
+  var scribble = [];
+  while(true) {
+    for (var k=0, l; l=lines[k]; k++) {
+      if (!l[0].done) break;
+    }
+    if (!l) break;
+    var scrib = [];
+    while (l) {
+      l[0].done = true;
+      scrib.push(l[0].pt);
+      scrib.push(l[1].pt);
+      var nexty = l[0].pt[1] + step;
+      var d0 = Infinity;
+      var l2 = null;
+      while (lines[k]) {
+        if (lines[k][0].pt[1] > nexty) break;
+        if (lines[k][0].pt[1] === nexty) {
+          var d = Math.min(
+            (lines[k][0].index - l[0].index + mod) % mod,
+            (l[0].index - lines[k][0].index + mod) % mod
+          );
+          var d2 = Math.min(
+            (l[1].index - l[0].index + mod) % mod,
+            (l[0].index - l[1].index + mod) % mod
+          );
+          if (d<d0 && d<d2) {
+            d0 = d;
+            if (!lines[k][0].done) l2 = lines[k];
+            else l2 = null;
+          }
+        }
+        k++;
+      }
+      l = l2;
+    }
+    if (scrib.length) {
+      scribble.push(scrib);
+    }
+  }
+  // Return the scribble as MultiLineString
+  if (!scribble.length) return null;
+  var mline = new ol.geom.MultiLineString(scribble);
+  mline.rotate(-angle,[0,0]);
+	return mline.cspline({ pointsPerSeg:8, tension:.9 });
+};
+// import('ol-ext/geom/Scribble')
 /*	Copyright (c) 2015 Jean-Marc VIGLINO, 
 	released under the CeCILL-B license (French BSD license)
 	(http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt).
 */
-/** Pulse a point on postcompose
+/** Pulse an extent on postcompose
 *	@param {ol.coordinates} point to pulse
-*	@param {ol.pulse.options} pulse options param
-*		- projection {ol.projection||String} projection of coords
-*		- duration {Number} animation duration in ms, default 2000
-*		- easing {ol.easing} easing function, default ol.easing.upAndDown
-*		- width {Number} line width, default 2
-*		- color {ol.color} line color, default red
+*	@param {ol.pulse.options} options pulse options param
+*	  @param {ol.projectionLike|undefined} options.projection projection of coords, default no transform
+*	  @param {Number} options.duration animation duration in ms, default 2000
+*	  @param {ol.easing} options.easing easing function, default ol.easing.upAndDown
+*	  @param {ol.style.Stroke} options.style stroke style, default 2px red
 */
 ol.Map.prototype.animExtent = function(extent, options)
 {	var listenerKey;
@@ -11891,8 +12792,8 @@ ol.Map.prototype.animExtent = function(extent, options)
 	var start = new Date().getTime();
 	var duration = options.duration || 1000;
 	var easing = options.easing || ol.easing.upAndDown;
-	var width = options.lineWidth || 2;
-	var color = options.color || 'red';
+	var width = options.style ? options.style.getWidth() || 2 : 2;
+	var color = options.style ? options.style.getColr() || 'red' : 'red';
 	// Animate function
 	function animate(event) 
 	{	var frameState = event.frameState;
@@ -11928,9 +12829,9 @@ ol.Map.prototype.animExtent = function(extent, options)
 *	@see https://en.wikipedia.org/wiki/Cubic_Hermite_spline#Cardinal_spline
 *
 * @param {} options
-*	- tension {Number} a [0,1] number / can be interpreted as the "length" of the tangent, default 0.5
-*	- resolution {Number} size of segment to split
-*	- pointsPerSeg {Interger} number of points per segment to add if no resolution is provided, default add 10 points per segment
+*	@param {Number} options.tension a [0,1] number / can be interpreted as the "length" of the tangent, default 0.5
+*	@param {Number} options.resolution size of segment to split
+*	@param {Interger} options.pointsPerSeg number of points per segment to add if no resolution is provided, default add 10 points per segment
 */
 /** Cache cspline calculation
 */
@@ -11953,28 +12854,28 @@ ol.geom.Geometry.prototype.cspline = function(options)
 ol.geom.GeometryCollection.prototype.calcCSpline_ = function(options)
 {	var g=[], g0=this.getGeometries();
 	for (var i=0; i<g0.length; i++)
-	{	g.push(g0[i].cspline());
+	{	g.push(g0[i].cspline(options));
 	}
 	return new ol.geom.GeometryCollection(g);
 }
 ol.geom.MultiLineString.prototype.calcCSpline_ = function(options)
-{	var g=[], g0=this.getLineStrings();
-	for (var i=0; i<g0.length; i++)
-	{	g.push(g0[i].cspline().getCoordinates());
+{	var g=[], lines = this.getLineStrings();
+	for (var i=0; i<lines.length; i++)
+	{	g.push(lines[i].cspline(options).getCoordinates());
 	}
 	return new ol.geom.MultiLineString(g);
 }
 ol.geom.Polygon.prototype.calcCSpline_ = function(options)
 {	var g=[], g0=this.getCoordinates();
 	for (var i=0; i<g0.length; i++)
-	{	g.push((new ol.geom.LineString(g0[i])).cspline().getCoordinates());
+	{	g.push((new ol.geom.LineString(g0[i])).cspline(options).getCoordinates());
 	}
 	return new ol.geom.Polygon(g);
 }
 ol.geom.MultiPolygon.prototype.calcCSpline_ = function(options)
 {	var g=[], g0=this.getPolygons();
 	for (var i=0; i<g0.length; i++)
-	{	g.push(g0[i].cspline().getCoordinates());
+	{	g.push(g0[i].cspline(options).getCoordinates());
 	}
 	return new ol.geom.MultiPolygon(g);
 }
@@ -12040,7 +12941,7 @@ ol.geom.LineString.prototype.calcCSpline_ = function(options)
 			x = c1 * pts[i][0]	+ c2 * pts[i+1][0] + c3 * t1x + c4 * t2x;
 			y = c1 * pts[i][1]	+ c2 * pts[i+1][1] + c3 * t1y + c4 * t2y;
 			//store points in array
-			res.push([x,y]);
+			if (x && y) res.push([x,y]);
 		}
 	}
 	return new ol.geom.LineString(res);

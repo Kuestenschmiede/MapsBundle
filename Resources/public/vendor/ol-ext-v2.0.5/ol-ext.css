@@ -374,6 +374,82 @@
 }
 
 
+.ol-control.ol-bar.ol-geobar .ol-control {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.ol-control.ol-bar.ol-geobar .ol-bar {
+  display: none;
+}
+.ol-bar.ol-geobar.ol-active .ol-bar {
+  display: inline-block;
+}
+
+.ol-bar.ol-geobar .geolocBt button:before,
+.ol-bar.ol-geobar .geolocBt button:after {
+  content: "";
+  display: block;
+  position: absolute;
+  border: 1px solid transparent;
+  border-width: 0.3em 0.8em 0 0.2em;
+  border-color: #fff transparent transparent;
+  -webkit-transform: rotate(-30deg);
+  transform: rotate(-30deg);
+  top: .45em;
+  left: 0.15em;
+  font-size: 1.2em;
+}
+.ol-bar.ol-geobar .geolocBt button:after {
+  border-width: 0 0.8em .3em 0.2em;
+  border-color: transparent transparent #fff;
+	-webkit-transform: rotate(-61deg);
+	transform: rotate(-61deg);
+}
+
+.ol-bar.ol-geobar .startBt button:before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 1em;
+  height: 1em;
+  background-color: #800;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+}
+.ol-bar.ol-geobar .pauseBt button:before,
+.ol-bar.ol-geobar .pauseBt button:after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: .25em;
+  height: 1em;
+  background-color: #fff;
+  top: 50%;
+  left: 35%;
+  -webkit-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+}
+.ol-bar.ol-geobar .pauseBt button:after {
+  left: 65%;
+}
+
+.ol-control.ol-bar.ol-geobar .centerBt,
+.ol-control.ol-bar.ol-geobar .pauseBt,
+.ol-bar.ol-geobar.pauseTrack .startBt,
+.ol-bar.ol-geobar.centerTrack .startBt,
+.ol-bar.ol-geobar.centerTrack.pauseTrack .pauseBt,
+.ol-bar.ol-geobar.centerTrack .pauseBt {
+  display: none;
+}
+.ol-bar.ol-geobar.pauseTrack .pauseBt,
+.ol-bar.ol-geobar.centerTrack .centerBt{
+  display: inline-block;
+}
+
 .ol-control.ol-globe
 {	position: absolute;
 	left: 0.5em;
@@ -1484,9 +1560,11 @@
 .ol-touch .ol-search ul
 {   font-size: 1.5em;
 }
-.ol-control.ol-search.ol-collapsed ul,
-.ol-control.ol-search.ol-collapsed input
+.ol-control.ol-search.ol-collapsed > *
 {	display: none;
+}
+.ol-control.ol-search.ol-collapsed > button {
+	display: block;
 }
 
 .ol-search ul
@@ -1553,6 +1631,63 @@
 	0% { left:0; right: 95%; }
 	50% {	left: 30%; right: 30%; }
 	100% {	left: 95%; right: 0; }
+}
+
+
+.ol-search.IGNF-parcelle input {
+	width: 13.5em;
+}
+.ol-search.IGNF-parcelle input:-moz-read-only {
+	background: #ccc;
+	opacity: .8;
+}
+.ol-search.IGNF-parcelle input:read-only {
+	background: #ccc;
+	opacity: .8;
+}
+.ol-search.IGNF-parcelle.ol-collapsed-list > ul.autocomplete {
+	display: none;
+}
+
+.ol-search.IGNF-parcelle label {
+  display: block;
+  clear: both;
+}
+.ol-search.IGNF-parcelle > div * {
+  width: 5em;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  display: inline-block;
+  margin: .1em;
+  font-size: 1em;
+}
+.ol-search.IGNF-parcelle ul.autocomplete-page {
+  margin-top:.5em;
+  width:100%;
+  text-align: center;
+  display: none;
+}
+.ol-search.IGNF-parcelle.ol-collapsed-list ul.autocomplete-parcelle,
+.ol-search.IGNF-parcelle.ol-collapsed-list ul.autocomplete-page {
+  display: block;
+}
+.ol-search.IGNF-parcelle.ol-collapsed ul.autocomplete-page,
+.ol-search.IGNF-parcelle.ol-collapsed ul.autocomplete-parcelle,
+.ol-search.IGNF-parcelle ul.autocomplete-parcelle {
+  display: none;
+}
+.ol-search.IGNF-parcelle ul.autocomplete-page li {
+	display: inline-block;
+  color: #fff;
+  background: rgba(0,60,136,.5);
+  border-radius: 50%;
+  width: 1.3em;
+  height: 1.3em;
+  padding: .1em;
+  margin: 0 .1em;
+}
+.ol-search.IGNF-parcelle ul.autocomplete-page li.selected {
+  background: rgba(0,60,136,1);
 }
 .ol-swipe
 {	position: absolute;
@@ -1765,23 +1900,23 @@
 }
 
 /** ol.popup */
-.ol-popup 
-{	font-size:0.9em;
+.ol-popup {
+  font-size:0.9em;
 	-webkit-user-select: none;  
 	-moz-user-select: none;    
 	-ms-user-select: none;      
 	user-select: none;
 }
-.ol-popup .content
-{	overflow:hidden;
+.ol-popup .content {
+  overflow:hidden;
 	cursor: default;
 	padding: 0.25em 0.5em;
 }
-.ol-popup.hasclosebox .content 
-{	margin-right: 1.7em;
+.ol-popup.hasclosebox .content {
+  margin-right: 1.7em;
 }
-.ol-popup .content:after
-{	clear: both;
+.ol-popup .content:after {
+  clear: both;
 	content: "";
 	display: block;
 	font-size: 0;
@@ -1789,8 +1924,8 @@
 }
 
 /** Anchor position */
-.ol-popup .anchor 
-{	display:block;
+.ol-popup .anchor {
+  display:block;
 	width:0px;
 	height:0px;
 	background:red;
@@ -1799,12 +1934,12 @@
     pointer-events: none;
 }
 .ol-popup .anchor:after,
-.ol-popup .anchor:before
-{	position:absolute;
+.ol-popup .anchor:before {
+  position:absolute;
 }
 .ol-popup-right .anchor:after,
-.ol-popup-right .anchor:before
-{	right:0;
+.ol-popup-right .anchor:before {
+  right:0;
 }
 .ol-popup-top .anchor { top:0; }
 .ol-popup-bottom .anchor { bottom:0; }
@@ -1818,16 +1953,19 @@
 	top:50%; 
 	margin-top: 0!important;
 }
-.ol-popup-center.ol-popup-middle .anchor { display:none; }
+.ol-popup-center.ol-popup-middle .anchor { 
+  display:none; 
+}
 
 /** Add a shadow to the popup */
-.ol-popup.shadow 
-{	-webkit-box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.5);	box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.5);
+.ol-popup.shadow {
+  -webkit-box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.5);
+          box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.5);
 }
 
 /** Close box */
-.ol-popup .closeBox 
-{	background-color: rgba(0, 60, 136, 0.5);
+.ol-popup .closeBox {
+  background-color: rgba(0, 60, 136, 0.5);
 	color: #fff;
 	border: 0;
 	border-radius: 2px;
@@ -1842,16 +1980,16 @@
 	position: relative;
 	display:none;
 }
-.ol-popup.hasclosebox .closeBox 
-{	display:block;
+.ol-popup.hasclosebox .closeBox {
+  display:block;
 }
 
-.ol-popup .closeBox:hover
-{	background-color: rgba(0, 60, 136, 0.7);
+.ol-popup .closeBox:hover {
+  background-color: rgba(0, 60, 136, 0.7);
 }
 /* the X */
-.ol-popup .closeBox:after
-{	content: "\00d7";
+.ol-popup .closeBox:after {
+  content: "\00d7";
 	font-size:1.5em;
 	top: 50%;
 	left: 0;
@@ -1861,6 +1999,19 @@
 	line-height: 1em;
 	margin: -0.5em 0;
 	position: absolute;
+}
+
+/** Modify touch poup */
+.ol-popup.modifytouch {
+	background-color: #eee;
+}
+.ol-popup.modifytouch .content {	
+	padding: 0 0.25em;
+	font-size: 0.85em;
+	white-space: nowrap;
+}
+.ol-popup.modifytouch .content a {
+  text-decoration: none;
 }
 
 /** Tool tips popup*/
