@@ -59,7 +59,7 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
     EDITOR_ENABLE_FREEHAND_DRAW: 'Freihand zeichnen',
     EDITOR_FEATURE_APPLY: 'Editieren beenden',
     EDITOR_FEATURE_DELETE: 'Element löschen',
-    EDITOR_FEATURE_MODIFY: 'Element editieren',
+    EDITOR_FEATURE_MODIFY: 'Element editieren / verschieben',
     EDITOR_SELECT_INFO: 'Zur Auswahl ein Element auf der Karte anklicken.',
     EDITOR_SELECT_INFO_ADDITIONAL: '[Strg] + [Klick] für Mehrfachauswahl <br>[Shift] halten für Auswahlbox',
     EDITOR_VIEW_TRIGGER_SELECT: 'Auswahl Modus',

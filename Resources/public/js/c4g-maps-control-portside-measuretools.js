@@ -73,12 +73,18 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       this.viewMeasureRadius = this.addMeasureView({type: 'Circle'});
       this.viewMeasureFreehand = this.addMeasureView({type: 'Freehand'});
 
+      // add content headline
+      this.contentHeadline = document.createElement('div');
+      this.contentHeadline.className = 'contentHeadline';
+      this.contentHeadline.innerHTML = c4g.maps.constant.i18n.MEASURETOOLS_VIEW_TRIGGER_SELECT;
+      this.contentContainer.appendChild(this.contentHeadline);
+
       // set content-section
       this.mainSectionInfo = document.createElement('p');
       this.mainSectionInfo.innerHTML = c4g.maps.constant.i18n.MEASURETOOLS_INFO;
       this.mainSectionInfo.innerHTML += '<br><br><sub>' + c4g.maps.constant.i18n.MEASURETOOLS_INFO_ADDITIONAL + '<sub>';
       this.mainSection.appendChild(this.mainSectionInfo);
-      this.contentContainer.setElement(this.mainSection);
+      this.contentContainer.appendChild(this.mainSection);
 
       this.spinner.hide();
       return true;
@@ -228,14 +234,19 @@ this.c4g.maps.control = this.c4g.maps.control || {};
           featureIdCount = 1;
 
           if (options.type.toLowerCase() === 'freehand') {
+              self.contentHeadline.innerHTML = c4g.maps.constant.i18n.MEASURETOOLS_VIEW_TRIGGER_DRAW_FREEHAND;
               source = self.measureFreehandLayer.getSource();
           } else if (options.type.toLowerCase() === 'circle') {
+              self.contentHeadline.innerHTML = c4g.maps.constant.i18n.MEASURETOOLS_VIEW_TRIGGER_DRAW_CIRCLE;
               source = self.measureCircleLayer.getSource();
           } else if (options.type.toLowerCase() === 'polygon') {
-            source = self.measurePolygonLayer.getSource();
+              self.contentHeadline.innerHTML = c4g.maps.constant.i18n.MEASURETOOLS_VIEW_TRIGGER_DRAW_POLYGON;
+              source = self.measurePolygonLayer.getSource();
           } else {
-            source = self.measureLineLayer.getSource();
+              self.contentHeadline.innerHTML = c4g.maps.constant.i18n.MEASURETOOLS_VIEW_TRIGGER_DRAW_LINESTRING;
+              source = self.measureLineLayer.getSource();
           }
+
           features = new ol.Collection();
 
           olType = options.type;
@@ -353,15 +364,15 @@ this.c4g.maps.control = this.c4g.maps.control || {};
             }
 
             if (measureRadius) {
-                //ToDo implement perimeter and surface area
-                //paragraphElement = document.createElement('p');
-                //strongElement = document.createElement('strong');
-                // strongElement.innerHTML = c4g.maps.constant.i18n.SURFACEAREA + ': ';
-                //paragraphElement.appendChild(strongElement);
-                //spanElement = document.createElement('span');
-                //spanElement.innerHTML = '...';
-                //paragraphElement.appendChild(spanElement);
-                //listElement.appendChild(paragraphElement);
+                paragraphElement = document.createElement('p');
+                paragraphElement.className = 'c4g_maps_portside_measure_paragraph_surfacearea';
+                strongElement = document.createElement('strong');
+                strongElement.innerHTML = c4g.maps.constant.i18n.SURFACEAREA + ': ';
+                paragraphElement.appendChild(strongElement);
+                spanElement = document.createElement('span');
+                spanElement.innerHTML = '...';
+                paragraphElement.appendChild(spanElement);
+                listElement.appendChild(paragraphElement);
                 feature.set('listElementValueRadius', spanElement);
             }
 

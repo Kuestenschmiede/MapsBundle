@@ -274,29 +274,26 @@ button.c4g-geosearch-start:before {
 }
 .c4g-starboard-titlebar,
 .c4g-portside-titlebar{
-  height: 30px;
+  /*height: 30px;*/
+  line-height: 2;
+  font-size: 1.4em;
 }
 .c4g-starboard-statusbar,
 .c4g-portside-statusbar {
   height: 18px;
 }
 
-.c4g-portside-top-toolbar,
-.c4g-portside-bottom-toolbar {
-  /*min-height: 30px;*/
-  display: inline-flex;
-  justify-content:space-around;
-}
+/*.c4g-portside-top-toolbar,*/
+/*.c4g-portside-bottom-toolbar {*/
+  /*!*min-height: 30px;*!*/
+  /*display: inline-flex;*/
+  /*justify-content:space-around;*/
+/*}*/
 
-.c4g-portside-titlebar,
-.c4g-starboard-titlebar {
-  line-height: 2;
-  font-size: 18px;
-}
-.c4g-portside-titlebar span,
-.c4g-starboard-titlebar span {
-  margin: 2.5px 2px;
-}
+/*.c4g-portside-titlebar span,*/
+/*.c4g-starboard-titlebar span {*/
+  /*margin: 2.5px 2px;*/
+/*}*/
 .c4g-starboard-titlebar span,
 .c4g-portside-titlebar .c4g-portside-buttonbar {
   float: right;

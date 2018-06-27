@@ -58,14 +58,42 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
       var self,
         contentWrapper,
         contentHeadline,
+        contentHeadlineLink,
         selector;
 
       self = this;
       contentWrapper = document.createElement('div');
-
       contentHeadline = document.createElement('div');
-      contentHeadline.innerHTML = this.name || 'Starboardplugin';
       contentHeadline.className = 'contentHeadline';
+
+      if(!this.starboard.options.button) {
+          contentHeadline.innerHTML = (this.starboard.options.layerSwitcherTitle || c4g.maps.constant.i18n.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER);
+      }
+      else {
+          $(contentHeadline).addClass("c4g-starboard-headline");
+          contentHeadlineLink = document.createElement('a');
+          contentHeadlineLink.onclick = function () {
+              if ($(this).hasClass("c4g-active") !== false) {
+                  for (var i = 0; i < self.proxy.layerIds.length; i++) {
+                      self.proxy.layerController.hideLayer(self.proxy.layerIds[i]);
+                  }
+                  $(this).removeClass("c4g-active");
+                  $(this).addClass("c4g-inactive");
+              }
+              else {
+                  for (var i = 0; i < self.proxy.layerIds.length; i++) {
+                      self.proxy.layerController.showLayer(self.proxy.layerIds[i]);
+                  }
+                  $(this).removeClass("c4g-inactive");
+                  $(this).addClass("c4g-active");
+              }
+          };
+          $(contentHeadlineLink).addClass("c4g-inactive c4g-starboard-headline-link");
+          contentHeadlineLink.innerHTML = (this.starboard.options.layerSwitcherTitle || c4g.maps.constant.i18n.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER);
+          contentHeadlineLink.innerHTML = contentHeadlineLink.innerHTML+' ';
+          contentHeadline.appendChild(contentHeadlineLink);
+      }
+
       contentWrapper.appendChild(contentHeadline);
 
       this.contentDiv = document.createElement('div');

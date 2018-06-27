@@ -101,6 +101,11 @@
   border-color: var(--shadow-color);
   background-color: var(--main-color);
 }
+.c4g-starboard-buttonbar,
+.c4g-portside-buttonbar {
+  border-color: var(--font-color);
+}
+
 .c4g-starboard-titlebar .c4g-starboard-buttonbar button,
 .c4g-portside-titlebar .c4g-portside-buttonbar button {
   color: var(--main-color);
@@ -182,7 +187,7 @@ button.c4g-draw-trigger.c4g-active {
 
 .c4g-starboard-viewtriggerbar,
 .c4g-portside-viewtriggerbar {
-  border-color: var(--main-color);
+  border-color: var(--font-color);
 }
 
 .c4g-portside-viewtriggerbar button.c4g-active,

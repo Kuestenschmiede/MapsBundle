@@ -161,6 +161,11 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       this.titleBar = document.createElement('div');
       this.titleBar.className = 'c4g-' + this.cssname + '-titlebar';
       this.wrapper.appendChild(this.titleBar);
+        // Bottom-Toolbar
+        this.bottomToolbar = this.addSection({
+            className: 'c4g-' + this.cssname + '-bottom-toolbar c4g-close',
+            target: this.wrapper
+        });
       // Top-Toolbar
       this.topToolbar = this.addSection({
         className: 'c4g-' + this.cssname + '-top-toolbar',
@@ -172,11 +177,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         target: this.wrapper
       });
 
-      // Bottom-Toolbar
-      this.bottomToolbar = this.addSection({
-        className: 'c4g-' + this.cssname + '-bottom-toolbar c4g-close',
-        target: this.wrapper
-      });
+
       // Statusbar
       this.statusBar = document.createElement('div');
       this.statusBar.className = 'c4g-' + this.cssname + '-statusbar c4g-close';

@@ -306,6 +306,10 @@ button.ol-zoom-out {
   font-weight: bold;
 }
 
+/*.c4g-starboard-buttonbar,*/
+/*.c4g-portside-buttonbar {*/
+  /*border-bottom: 1px solid;*/
+/*}*/
 
 /*
  *  Portside & Starboard
@@ -335,7 +339,7 @@ button.ol-zoom-out {
   font-size: 0.8em;
   text-decoration: none;
   text-align: center;
-  line-height: .2em;
+  /*line-height: .2em;*/
   border-radius: var(--button-radius-percent);
 }
 .c4g-portside-container .formbody button, .c4g-portside-container .c4g_brick_dialog button {
@@ -405,32 +409,32 @@ button.ol-zoom-out {
 .c4g-portside-viewtriggerbar {
   width: 100%;
   vertical-align: bottom;
-  /*border-top: 1px solid;*/
+  border-top: 1px solid;
 }
 .c4g-starboard-viewtriggerbar button,
 .c4g-portside-viewtriggerbar button {
   height: 32px;
   width: 32px;
-  margin: 0 0 2px 3px;
+  /*margin: 0 0 2px 3px;*/
+  margin-top: 0;
   border-radius: 0 0 3px 3px;
   border: 0;
   font-size: 18px;
 }
-.c4g-starboard-viewtriggerbar {
-  text-align: right;
-}
+/*.c4g-starboard-viewtriggerbar {*/
+  /*text-align: right;*/
+/*}*/
 
-.c4g-starboard-content-container,
-.c4g-portside-content-container {
-  border-bottom: 1px solid;
-}
+/*.c4g-starboard-content-container,*/
+/*.c4g-portside-content-container {*/
+  /*border-bottom: 1px solid;*/
+/*}*/
 
 .c4g-editor-draw-options,
 .c4g-starboard-content-container .contentHeadline,
 .c4g-portside-content-container .contentHeadline {
   margin: 0;
   padding: 10px 5px;
-  border-bottom: 1px solid;
   font-size: 1.4em;
 }
 .c4g_maps_portside_measure_element{
@@ -455,18 +459,18 @@ button.ol-zoom-out {
 .c4g-portside-content-container p {
   margin: 10px 5px;
   color: rgba(0,60,136,.7);
-  text-shadow: 0 0 1px white;
+  /*text-shadow: 0 0 1px white;*/
 }
 .c4g_maps_portside_measure_paragraph {
   color: rgba(0,60,136,.7);
-  text-shadow: 0 0 1px white;
+  /*text-shadow: 0 0 1px white;*/
   margin-top: 0px!important;
   padding-bottom: 0px!important;
   font-weight: bold;
 }
 .c4g_maps_portside_measure_paragraph_surfacearea {
   color: rgba(0,60,136,.7);
-  text-shadow: 0 0 1px white;
+  /*text-shadow: 0 0 1px white;*/
   margin-top: 0px!important;
   padding-bottom: 0px!important;
   font-weight: bold;
@@ -700,7 +704,6 @@ button.ol-zoom-out {
 }
 .c4g-router-instruction-table td {
   padding: 5px;
-  border-bottom: 1px solid;
 }
 .c4g-router-attribution-wrapper {
   font-size: 9px;
