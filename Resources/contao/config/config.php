@@ -14,10 +14,10 @@
 
 $GLOBALS['con4gis']['maps']['installed'] = true;
 $GLOBALS['con4gis']['maps']['debug'] = false;
-$GLOBALS['con4gis']['maps']['ol-version'] = '5.0.0-beta';
+$GLOBALS['con4gis']['maps']['ol-version'] = '5.0.0';
 $GLOBALS['con4gis']['maps']['ol-cesium-version'] = 'v2.0';
 $GLOBALS['con4gis']['maps']['olms-version'] = '3.0.0-beta';
-$GLOBALS['con4gis']['maps']['ol-ext'] = 'v2.0.4';
+$GLOBALS['con4gis']['maps']['ol-ext'] = 'v2.0.5';
 
 /**
  * Sourcetable definition
