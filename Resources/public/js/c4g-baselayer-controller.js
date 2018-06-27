@@ -571,19 +571,24 @@ class C4gBaselayerController {
             if (typeof this.arrBaselayers[baseLayerUid] !== "undefined") {
                 baselayer = this.arrBaselayers[baseLayerUid].layer;
 
-                addBaselayer = true;
-                baseLayers.forEach(function (element, index, array) {
-                    if (element === baselayer) {
-                        element.setVisible(true);
-                        addBaselayer = false;
-                    } else {
-                        element.setVisible(false);
-                    }
-                }, this);
+                if (baselayer) {
+                    addBaselayer = true;
+                    baseLayers.forEach(function (element, index, array) {
+                        if (element && (element === baselayer)) {
+                            element.setVisible(true);
+                            addBaselayer = false;
+                        } else if (element) {
+                            element.setVisible(false);
+                        } else {
+                            addBaselayer = false;
+                        }
+                    }, this);
 
-                if (addBaselayer) {
-                    baseLayers.push(baselayer);
+                    if (addBaselayer) {
+                        baseLayers.push(baselayer);
+                    }
                 }
+
                 view = this.mapController.map.getView();
                 var zoom = view.getZoom();
                 var center = view.getCenter();

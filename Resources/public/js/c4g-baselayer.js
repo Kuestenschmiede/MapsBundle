@@ -28,6 +28,7 @@ class C4gBaselayer{
         this._cesium = baselayerArr['cesium'];
         this._hide_in_be = baselayerArr['hide_in_be'];
         this._url = baselayerArr['url'];
+        this._urls = baselayerArr['urls'];
         this._klokan_type = baselayerArr['klokan_type'];
         this._style_url = baselayerArr['style_url'];
         this._hasOverlays = baselayerArr['hasOverlays'];
@@ -269,6 +270,14 @@ class C4gBaselayer{
 
     set url(value) {
         this._url = value;
+    }
+
+    get urls() {
+        return this._urls;
+    }
+
+    set urls(value) {
+        this._urls = value;
     }
 
     get klokan_type() {
