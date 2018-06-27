@@ -330,5 +330,8 @@ button.c4g-popup-route-to:before {
   font-weight: 900;
 }
 .c4g-portside-container .c4g_brick_dialog #send-dialog::before {
-  content: "\f060";
+  content: "\f0c7";
+}
+.c4g-portside-container .c4g_brick_dialog #cancel-dialog::before {
+  content: "\f05e";
 }

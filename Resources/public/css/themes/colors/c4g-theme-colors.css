@@ -121,7 +121,8 @@
 .c4g-portside-container .c4g_brick_dialog input {
   color: var(--main-color);
 }
-.c4g-portside-container .c4g_brick_dialog #send-dialog {
+.c4g-portside-container .c4g_brick_dialog #send-dialog,
+.c4g-portside-container .c4g_brick_dialog #cancel-dialog{
   color: var(--main-color);
   border-color: var(--shadow-color);
   background-color: var(--font-color);

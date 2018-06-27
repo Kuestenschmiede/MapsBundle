@@ -354,18 +354,20 @@ button.ol-zoom-out {
   border: inherit;
   border-radius: inherit;
 }
-.c4g-portside-container .c4g_brick_dialog #send-dialog {
+.c4g-portside-container .c4g_brick_dialog #send-dialog, .c4g-portside-container .c4g_brick_dialog #cancel-dialog {
   width: 32px;
   height: 32px;
-  font-size: 1.8em;
+  font-size: 1.0em;
   border: 2px solid;
   border-radius: var(--button-radius-percent);
   border-style: outset;
-  /*margin: 2px;*/
-  padding: 0;
+  margin: 2px;
+  padding: 6px;
   vertical-align: middle;
   text-align: center;
   line-height: .2em;
+  display: inline-flex;
+  text-decoration: none;
 }
 .c4g-starboard-container button[title]:hover:after,
 .c4g-starboard-container button[title]:focus:after,
