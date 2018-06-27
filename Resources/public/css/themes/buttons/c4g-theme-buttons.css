@@ -405,31 +405,24 @@ button.ol-zoom-out {
 .c4g-portside-viewtriggerbar {
   width: 100%;
   vertical-align: bottom;
+  /*border-top: 1px solid;*/
 }
 .c4g-starboard-viewtriggerbar button,
 .c4g-portside-viewtriggerbar button {
   height: 32px;
   width: 32px;
-  margin: -2px 3px 2px 0;
-  border-radius: 3px;
+  margin: 0 0 2px 3px;
+  border-radius: 0 0 3px 3px;
   border: 0;
   font-size: 18px;
-  /*font-size: 1.0em;*/
 }
 .c4g-starboard-viewtriggerbar {
   text-align: right;
 }
-.c4g-starboard-viewtriggerbar button {
-  margin: 0 0 2px 3px;
-}
-.c4g-starboard-viewtriggerbar button.c4g-active,
-.c4g-portside-viewtriggerbar button.c4g-active {
-  height: 36px;
-  width: 36px;
-  border-radius: 0 0 3px 3px;
-}
-.c4g-starboard-viewtriggerbar button.c4g-active {
-  margin: -2px 0 2px 3px;
+
+.c4g-starboard-content-container,
+.c4g-portside-content-container {
+  border-bottom: 1px solid;
 }
 
 .c4g-editor-draw-options,
@@ -550,7 +543,7 @@ button.ol-zoom-out {
   margin-top: 1px;
   margin-bottom: 1px;
   height: 32px;
-  min-width: 240px;
+  /*min-width: 240px;*/
 }
 .c4g-portside-top-toolbar button {
   border: 0;
@@ -595,10 +588,10 @@ button.ol-zoom-out {
   transition:.3s;
 }
 
-.c4g-starboard-statusbar,
-.c4g-portside-statusbar {
-  border-top: 1px solid;
-}
+/*.c4g-starboard-statusbar,*/
+/*.c4g-portside-statusbar {*/
+  /*border-top: 1px solid;*/
+/*}*/
 .c4g-starboard-control {
   top: 50%;
   right: 0;

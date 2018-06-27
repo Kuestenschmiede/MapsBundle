@@ -1,6 +1,6 @@
 :root {
-  --font-color: white;
-  --main-color: rgba(24, 61, 93,.8);
+  --font-color: rgba(255,255,255,.8);
+  --main-color: rgba(24, 61, 93,.7);
   --shadow-color: rgba(0,155,222,.5);
 }
 
@@ -25,6 +25,7 @@
 .c4g-portside-wrapper,
 .c4g-starboard-wrapper {
   background-color: var(--main-color);
+  color: var(--font-color);
 }
 
 
@@ -71,14 +72,15 @@
  */
 .c4g-portside-container,
 .c4g-starboard-container {
-  background-color: var(--shadow-color);
+  background-color: transparent;/*var(--shadow-color);*/
 }
 .c4g-portside-headline,
 .c4g-starboard-headline {
   color: var(--font-color);
+  background-color: transparent;/*var(--main-color);*/
 }
 .c4g-starboard-headline-link{
-  color: var(--main-color);
+  color: var(--font-color);
 }
 .c4g-portside-top-toolbar {
   border-color: var(--font-color);
@@ -87,17 +89,17 @@
 .c4g-starboard-content-container .contentHeadline,
 .c4g-portside-content-container .contentHeadline {
   border-color: var(--main-color);
-  color: var(--main-color);
+  color: var(--font-color);
 }
 .c4g-portside-content-container,
 .c4g-starboard-content-container {
-  background: var(--font-color);
+  background: transparent;/*var(--font-color);*/
 }
 .c4g-portside-container button,
 .c4g-starboard-container button {
-  color: var(--main-color);
+  color: var(--font-color);
   border-color: var(--shadow-color);
-  background-color: var(--font-color);
+  background-color: var(--main-color);
 }
 .c4g-starboard-titlebar .c4g-starboard-buttonbar button,
 .c4g-portside-titlebar .c4g-portside-buttonbar button {
@@ -147,9 +149,9 @@ button.c4g-draw-trigger.c4g-active {
 .c4g-editor-draw-options,
 .c4g-portside-content-container .contentHeadline,
 .c4g-starboard-content-container .contentHeadline {
-  color: var(--main-color);
+  color: var(--font-color);
   border-color: var(--main-color);
-  background-color: var(--font-color);
+  background-color: transparent;/*var(--font-color);*/
 }
 .c4g-starboard-content-container .contentHeadline a {
     color: inherit;
@@ -160,7 +162,7 @@ button.c4g-draw-trigger.c4g-active {
 }
 .c4g-portside-content-container p,
 .c4g-starboard-content-container p {
-  color: var(--main-color);
+  color: var(--font-color);
 }
 .c4g-content-select input ,.c4g-portside-top-toolbar select, .c4g-portside-top-toolbar input, .c4g-portside-top-toolbar button, .c4g-router-input-wrapper button, .c4g-router-input-wrapper input {
   color: var(--main-color);
@@ -180,6 +182,11 @@ button.c4g-draw-trigger.c4g-active {
   color: transparent;
 }
 
+.c4g-starboard-viewtriggerbar,
+.c4g-portside-viewtriggerbar {
+  border-color: var(--main-color);
+}
+
 .c4g-portside-viewtriggerbar button.c4g-active,
 .c4g-starboard-viewtriggerbar button.c4g-active {
   color: var(--main-color);
@@ -190,12 +197,12 @@ button.c4g-draw-trigger.c4g-active {
 .c4g-layertree span,
 .c4g-baselayertree a,
 .c4g-baselayertree span {
-  color: var(--main-color);
+  color: var(--font-color);
 }
 .c4g-baselayertree a.c4g-active,
 .c4g-layertree a:hover,
 .c4g-baselayertree a:hover {
-  background-color: var(--font-color);
+  background-color: var(--shadow-color);
 }
 .c4g-layertree a:after,
 .c4g-baselayertree a:before {
@@ -231,10 +238,13 @@ button.c4g-draw-trigger.c4g-active {
   color: var(--font-color);
 }
 .c4g-router-instruction-table {
-  color: var(--main-color);
+  color: var(--font-color);
+}
+.c4g-router-instruction-table img {
+  background-color: var(--font-color);
 }
 .c4g-router-instruction-table td {
-  border-color: rgba(0,60,136,.3);
+  border-color: var(--main-color);
 }
 .c4g-router-attribution-wrapper {
   color: var(--font-color);
