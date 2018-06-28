@@ -73,12 +73,6 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       this.viewMeasureRadius = this.addMeasureView({type: 'Circle'});
       this.viewMeasureFreehand = this.addMeasureView({type: 'Freehand'});
 
-      // add content headline
-      this.contentHeadline = document.createElement('div');
-      this.contentHeadline.className = 'contentHeadline';
-      this.contentHeadline.innerHTML = c4g.maps.constant.i18n.MEASURETOOLS_VIEW_TRIGGER_SELECT;
-      this.contentContainer.appendChild(this.contentHeadline);
-
       // set content-section
       this.mainSectionInfo = document.createElement('p');
       this.mainSectionInfo.innerHTML = c4g.maps.constant.i18n.MEASURETOOLS_INFO;
@@ -176,11 +170,12 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         name: 'select',
         triggerConfig: {
           tipLabel: c4g.maps.constant.i18n.MEASURETOOLS_VIEW_TRIGGER_SELECT,
-          className: c4g.maps.constant.css.MEASURETOOLS_VIEW_TRIGGER_SELECT
+          className: c4g.maps.constant.css.MEASURETOOLS_VIEW_TRIGGER_SELECT,
+          withHeadline: true
         },
         sectionElements: [
           {section: this.contentContainer, element: this.mainSection},
-          {section: this.bottomToolbar, element: this.viewTriggerBar}
+          {section: this.topToolbar, element: this.viewTriggerBar}
         ]
       });
 
@@ -213,10 +208,11 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         name: 'draw:' + options.type.toLowerCase(),
         triggerConfig: {
           tipLabel: c4g.maps.constant.i18n[TRIGGER_DRAW],
-          className: c4g.maps.constant.css[TRIGGER_DRAW]
+          className: c4g.maps.constant.css[TRIGGER_DRAW],
+          withHeadline: true
         },
         sectionElements: [
-          {section: self.bottomToolbar, element: self.viewTriggerBar}
+          {section: self.topToolbar, element: self.viewTriggerBar}
         ],
         initFunction: function () {
           var featureIdCount,
@@ -234,16 +230,12 @@ this.c4g.maps.control = this.c4g.maps.control || {};
           featureIdCount = 1;
 
           if (options.type.toLowerCase() === 'freehand') {
-              self.contentHeadline.innerHTML = c4g.maps.constant.i18n.MEASURETOOLS_VIEW_TRIGGER_DRAW_FREEHAND;
               source = self.measureFreehandLayer.getSource();
           } else if (options.type.toLowerCase() === 'circle') {
-              self.contentHeadline.innerHTML = c4g.maps.constant.i18n.MEASURETOOLS_VIEW_TRIGGER_DRAW_CIRCLE;
               source = self.measureCircleLayer.getSource();
           } else if (options.type.toLowerCase() === 'polygon') {
-              self.contentHeadline.innerHTML = c4g.maps.constant.i18n.MEASURETOOLS_VIEW_TRIGGER_DRAW_POLYGON;
               source = self.measurePolygonLayer.getSource();
           } else {
-              self.contentHeadline.innerHTML = c4g.maps.constant.i18n.MEASURETOOLS_VIEW_TRIGGER_DRAW_LINESTRING;
               source = self.measureLineLayer.getSource();
           }
 

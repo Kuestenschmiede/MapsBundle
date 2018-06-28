@@ -761,7 +761,7 @@ input.c4g-panel-button {
     bottom: 0;
     z-index: 610;
     min-height: 240px;
-    height: 40%;
+    height: 50%;
     top: auto;
   }
   .c4g-portside-wrapper {

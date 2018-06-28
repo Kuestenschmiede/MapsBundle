@@ -1,6 +1,6 @@
 :root {
-  --font-color: rgba(255,255,255,.8);
-  --main-color: rgba(24, 61, 93,.7);
+  --font-color: rgba(255,255,255,.9);
+  --main-color: rgba(24, 61, 93,.8);
   --shadow-color: rgba(0,155,222,.5);
 }
 
@@ -85,11 +85,15 @@
 .c4g-portside-top-toolbar {
   border-color: var(--font-color);
 }
-.c4g-editor-draw-options,
 .c4g-starboard-content-container .contentHeadline,
 .c4g-portside-content-container .contentHeadline {
   border-color: var(--main-color);
   color: var(--font-color);
+}
+.c4g-editor-draw-options {
+  border-color: var(--shadow-color);
+  color: var(--font-color);
+  background-color: var(--main-color);
 }
 .c4g-portside-content-container,
 .c4g-starboard-content-container {
@@ -149,7 +153,6 @@ button.c4g-draw-trigger.c4g-active {
   border-color: transparent;
 }
 
-.c4g-editor-draw-options,
 .c4g-portside-content-container .contentHeadline,
 .c4g-starboard-content-container .contentHeadline {
   color: var(--font-color);
@@ -169,7 +172,7 @@ button.c4g-draw-trigger.c4g-active {
 }
 .c4g-content-select input ,.c4g-portside-top-toolbar select, .c4g-portside-top-toolbar input, .c4g-portside-top-toolbar button, .c4g-router-input-wrapper button, .c4g-router-input-wrapper input {
   color: var(--main-color);
-  border-color: var(--shadow-color);
+  border-color: transparent;/*var(--shadow-color);*/
   background-color: var(--font-color);
 }
 .c4g-content-select input:focus {
@@ -187,7 +190,13 @@ button.c4g-draw-trigger.c4g-active {
 
 .c4g-starboard-viewtriggerbar,
 .c4g-portside-viewtriggerbar {
-  border-color: var(--font-color);
+  border-color: var(--shadow-color);
+}
+.c4g-starboard-viewtriggerbar button,
+.c4g-portside-viewtriggerbar button {
+  color: var(--font-color);
+  border-color: var(--shadow-color);
+  background-color: var(--main-color);
 }
 
 .c4g-portside-viewtriggerbar button.c4g-active,
@@ -359,7 +368,7 @@ button.c4g-popup-route-to:hover {
   background-color: var(--main-color);
 }
 .c4g-portside-wrapper .formbody label {
-  color: var(--main-color);
+  color: var(--font-color);
 }
 
 .c4g-portside-wrapper .formbody input {

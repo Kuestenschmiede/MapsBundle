@@ -62,11 +62,12 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
         name: 'layerswitcher',
         triggerConfig: {
           tipLabel: (this.starboard.options.baselayerSwitcherTitle || c4g.maps.constant.i18n.STARBOARD_VIEW_TRIGGER_BASELAYERSWITCHER),
-          className: c4g.maps.constant.css.STARBOARD_VIEW_TRIGGER_BASELAYERSWITCHER
+          className: c4g.maps.constant.css.STARBOARD_VIEW_TRIGGER_BASELAYERSWITCHER,
+          withHeadline: false
         },
         sectionElements: [
           {section: self.starboard.contentContainer, element: contentWrapper},
-          {section: self.starboard.bottomToolbar, element: self.starboard.viewTriggerBar}
+          {section: self.starboard.topToolbar, element: self.starboard.viewTriggerBar}
         ]
       });
     },

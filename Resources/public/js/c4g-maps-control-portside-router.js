@@ -480,7 +480,8 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         name: 'router-view',
         triggerConfig: {
           tipLabel: c4g.maps.constant.i18n.ROUTER_VIEW_ADDRESS_INPUT,
-          className: c4g.maps.constant.css.ROUTER_VIEW_ADDRESS_INPUT
+          className: c4g.maps.constant.css.ROUTER_VIEW_ADDRESS_INPUT,
+          withHeadline: false
         },
         sectionElements: [
           {section: this.topToolbar, element: routerViewInputWrapper},

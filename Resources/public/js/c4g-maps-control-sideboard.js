@@ -161,31 +161,39 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       this.titleBar = document.createElement('div');
       this.titleBar.className = 'c4g-' + this.cssname + '-titlebar';
       this.wrapper.appendChild(this.titleBar);
-        // Bottom-Toolbar
-        this.bottomToolbar = this.addSection({
-            className: 'c4g-' + this.cssname + '-bottom-toolbar c4g-close',
-            target: this.wrapper
-        });
+
+      // Triggerbar
+      this.viewTriggerBar = document.createElement('div');
+      this.viewTriggerBar.className = 'c4g-' + this.cssname + '-viewtriggerbar';
+
       // Top-Toolbar
       this.topToolbar = this.addSection({
         className: 'c4g-' + this.cssname + '-top-toolbar',
         target: this.wrapper
       });
+
       // Content-Container
       this.contentContainer = this.addSection({
         className: 'c4g-' + this.cssname + '-content-container',
         target: this.wrapper
       });
 
+      // add content headline
+      this.contentHeadline = document.createElement('div');
+      this.contentHeadline.className = 'contentHeadline';
+      this.contentHeadline.innerHTML = '';
+      this.contentContainer.appendChild(this.contentHeadline);
 
-      // Statusbar
+      // Bottom-Toolbar
+      this.bottomToolbar = this.addSection({
+          className: 'c4g-' + this.cssname + '-bottom-toolbar c4g-close',
+          target: this.wrapper
+      });
+
+       // Statusbar
       this.statusBar = document.createElement('div');
       this.statusBar.className = 'c4g-' + this.cssname + '-statusbar c4g-close';
       this.wrapper.appendChild(this.statusBar);
-
-      // Triggerbar
-      this.viewTriggerBar = document.createElement('div');
-      this.viewTriggerBar.className = 'c4g-' + this.cssname + '-viewtriggerbar';
 
       // Add spinner
       this.spinner = new c4g.maps.misc.Spinner({
@@ -256,7 +264,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
     /**
      *   Update the sideboards html-elements
      *   resizes the content-container
-     *   and the bottom-toolbar
+     *   and the top-toolbar
      *
      * @param  {event-object}  opt_event  *optional*  Just needed by the ol-bind-method,
      *                                                but not used in the function
@@ -325,9 +333,9 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
       // this is needed because the css has transition-effects
       window.setTimeout(function () {
-        //if ((self.options.direction === 'right') || self.options.mapController["active" + self.identifier] === self && containerOffsetWidth !== self.container.offsetWidth) {
-        //  self.update();
-        //}
+        // if ((self.options.direction === 'right') || self.options.mapController["active" + self.identifier] === self && containerOffsetWidth !== self.container.offsetWidth) {
+        //   self.update();
+        // }
 
       }, 500);
 
@@ -647,6 +655,10 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
       view.activate = function (opt_openSideboard) {
         var i;
+
+        if (options.triggerConfig.withHeadline) {
+            self.contentHeadline.innerHTML = options.triggerConfig.tipLabel;
+        }
 
         // open Sideboard if closed
         if (opt_openSideboard && !self.isOpen()) {

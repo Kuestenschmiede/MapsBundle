@@ -248,11 +248,12 @@ button.c4g-starboard-view-trigger-layerswitcher:before {
 
 
 .c4g-baselayertree>ul>li>a.c4g-active:before {
+  font-weight: 100;
   content: "\f192";
 }
 .c4g-baselayertree>ul>li>a.c4g-inactive:before {
   font-weight: 100;
-  content: "\f192";
+  content: "\f111";
 }
 
 .c4g-layertree span.c4g-icon:before ,

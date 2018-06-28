@@ -76,11 +76,12 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         name: 'account',
         triggerConfig: {
           tipLabel: c4g.maps.constant.i18n.ACCOUNT_VIEW_TRIGGER,
-          className: c4g.maps.constant.css.ACCOUNT_VIEW_TRIGGER
+          className: c4g.maps.constant.css.ACCOUNT_VIEW_TRIGGER,
+          withHeadline: false
         },
         sectionElements: [
           {section: this.contentContainer, element: this.mainSection},
-          {section: this.bottomToolbar, element: this.viewTriggerBar}
+          {section: this.topToolbar, element: this.viewTriggerBar}
         ]
       });
 
@@ -104,9 +105,10 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         triggerConfig: {
           tipLabel: 'Account',//c4g.maps.constant.i18n[TRIGGER_DRAW],
           className: 'c4g_account_trigger',//c4g.maps.constant.css[TRIGGER_DRAW]
+          withHeadline: false
         },
         sectionElements: [
-          {section: self.bottomToolbar, element: self.viewTriggerBar}
+          {section: self.topToolbar, element: self.viewTriggerBar}
         ],
         initFunction: function () {
 

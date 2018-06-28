@@ -242,11 +242,12 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         name: 'select',
         triggerConfig: {
           tipLabel: c4g.maps.constant.i18n.EDITOR_VIEW_TRIGGER_SELECT,
-          className: c4g.maps.constant.css.EDITOR_VIEW_TRIGGER_SELECT
+          className: c4g.maps.constant.css.EDITOR_VIEW_TRIGGER_SELECT,
+          withHeadline: true
         },
         sectionElements: [
           {section: this.contentContainer, element: selectContentWrapper},
-          {section: this.bottomToolbar, element: this.viewTriggerBar}
+          {section: this.topToolbar, element: this.viewTriggerBar}
         ],
         initFunction: function () {
           selectInteraction = new ol.interaction.Select({
@@ -778,11 +779,12 @@ this.c4g.maps.control = this.c4g.maps.control || {};
             label: styleTriggerLabel,
             tipLabel: self.proxy.locationStyleController.arrLocStyles[styleId].tooltip || name,
             className: c4g.maps.constant.css.EDITOR_DRAW_TRIGGER,
-            target: drawContent
+            target: drawContent,
+            withHeadline: true
           },
           sectionElements: [
             {section: self.contentContainer, element: drawContent},
-            {section: self.bottomToolbar, element: self.viewTriggerBar}
+            {section: self.topToolbar, element: self.viewTriggerBar}
           ],
           initFunction: function () {
             var interactionStyleImage,
@@ -975,11 +977,12 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         name: 'draw:' + options.type.toLowerCase(),
         triggerConfig: {
           tipLabel: c4g.maps.constant.i18n[TRIGGER_DRAW],
-          className: c4g.maps.constant.css[TRIGGER_DRAW]
+          className: c4g.maps.constant.css[TRIGGER_DRAW],
+          withHeadline: true
         },
         sectionElements: [
           {section: self.contentContainer, element: drawContent},
-          {section: self.bottomToolbar, element: self.viewTriggerBar}
+          {section: self.topToolbar, element: self.viewTriggerBar}
         ],
         initFunction: function () {
           var i,

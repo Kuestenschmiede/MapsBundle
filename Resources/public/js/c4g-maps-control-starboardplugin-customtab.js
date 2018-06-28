@@ -104,11 +104,12 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
         name: self.name,
         triggerConfig: {
           tipLabel: self.name,
-          className: 'c4g-starboard-view-trigger-starboardplugin-' + self.tabId
+          className: 'c4g-starboard-view-trigger-starboardplugin-' + self.tabId,
+          withHeadline: false
         },
         sectionElements: [
           {section: self.starboard.contentContainer, element: contentWrapper},
-          {section: self.starboard.bottomToolbar, element: self.starboard.viewTriggerBar}
+          {section: self.starboard.topToolbar, element: self.starboard.viewTriggerBar}
         ]
       });
       if (this.awesomeicon.substring(0, 1) === "\\") {

@@ -119,11 +119,12 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         name: 'print',
         triggerConfig: {
           tipLabel: c4g.maps.constant.i18n.EXPORTTOOLS_VIEW_TRIGGER_PRINT,
-          className: c4g.maps.constant.css.EXPORTTOOLS_VIEW_TRIGGER_PRINT
+          className: c4g.maps.constant.css.EXPORTTOOLS_VIEW_TRIGGER_PRINT,
+          withHeadline: false
         },
         sectionElements: [
           {section: this.contentContainer, element: this.mainSection},
-          {section: this.bottomToolbar, element: this.viewTriggerBar}
+          {section: this.topToolbar, element: this.viewTriggerBar}
         ]
       });
 
@@ -152,9 +153,10 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         triggerConfig: {
           tipLabel: 'Exporttools',//c4g.maps.constant.i18n[TRIGGER_DRAW],
           className: 'c4g_exporttools_trigger',//c4g.maps.constant.css[TRIGGER_DRAW]
+          withHeadline: false
         },
         sectionElements: [
-          {section: self.bottomToolbar, element: self.viewTriggerBar}
+          {section: self.topToolbar, element: self.viewTriggerBar}
         ],
         initFunction: function () {
 
