@@ -8,6 +8,8 @@
 
 namespace con4gis\MapsBundle\Controller;
 
+use con4gis\CoreBundle\Controller\BaseController;
+use con4gis\MapsBundle\Classes\Events\LoadLayersEvent;
 use con4gis\MapsBundle\Resources\contao\classes\GeoEditor;
 use con4gis\MapsBundle\Resources\contao\classes\GeoPicker;
 use con4gis\MapsBundle\Resources\contao\modules\api\BaseLayerApi;
@@ -28,44 +30,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use con4gis\CoreBundle\Resources\contao\classes\C4GApiCache;
 
-class MapsController extends Controller
+class MapsController extends BaseController
 {
 
-    private static $useCache = false;
+    protected static $useCache = false;
 
-    private static $outputFromCache = false;
+    protected static $outputFromCache = false;
 
-    private $responseData = "";
-
-    private function getCacheRequest(Request $request) {
-        return $request->getRequestUri();
-    }
-
-    private function getCacheFragments(Request $request) {
-
-        return ['request' => $request->query->all()];
-    }
-
-    private function checkForCacheSettings($configParam) {
-
-        $this->container->get('contao.framework')->initialize();
-        $cacheSettings = Database::getInstance()->execute("SELECT * FROM tl_c4g_settings LIMIT 1")->fetchAllAssoc();
-        $cacheSettings = $cacheSettings[0]['caching'];
-        self::$useCache = (is_array(deserialize($cacheSettings)) && in_array($configParam, deserialize($cacheSettings)));
-
-    }
-
-    private function checkAndStoreCachedData(Request $request) {
-        if (($returnData = C4GApiCache::getCacheData($this->getCacheRequest($request), $this->getCacheFragments($request)))  !== false)
-        {
-            self::$outputFromCache = true;
-            $this->responseData = $returnData;
-        }
-    }
-
-    private function storeDataInCache(Request $request) {
-        C4GApiCache::putCacheData($this->getCacheRequest($request), $this->getCacheFragments($request), $this->responseData);
-    }
+    protected $responseData = "";
 
     public function baseLayerAction(Request $request, $profileId)
     {
@@ -105,7 +77,7 @@ class MapsController extends Controller
     public function layerAction(Request $request, $mapId)
     {
         $response = new JsonResponse();
-        $layerApi = new LayerApi();
+        $this->initialize();
 
         $this->checkForCacheSettings('layerService');
 
@@ -114,7 +86,8 @@ class MapsController extends Controller
         }
 
         if (!self::$outputFromCache) {
-            $this->responseData = $layerApi->generate($mapId);
+            $layerService = $this->container->get('con4gis.layer_service');
+            $this->responseData = $layerService->generate($mapId);
             if (self::$useCache) {
                 $this->storeDataInCache($request);
             }
