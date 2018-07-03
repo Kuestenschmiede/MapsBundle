@@ -331,14 +331,6 @@ this.c4g.maps.control = this.c4g.maps.control || {};
           }
       }
 
-      // this is needed because the css has transition-effects
-      window.setTimeout(function () {
-        // if ((self.options.direction === 'right') || self.options.mapController["active" + self.identifier] === self && containerOffsetWidth !== self.container.offsetWidth) {
-        //   self.update();
-        // }
-
-      }, 500);
-
     }, // end of "update"
 
     /**
