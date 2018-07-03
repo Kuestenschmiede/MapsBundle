@@ -210,9 +210,8 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
             self.proxy.baselayerController.showBaseLayer(itemUid);
             if(self.proxy.baselayerController.arrBaselayers[itemUid].hasOverlays){
                 for(let j in self.proxy.baselayerController.arrBaselayers[itemUid].overlayController.arrOverlays){
-                  if(self.proxy.baselayerController.arrBaselayers[itemUid].overlayController.arrOverlays.hasOwnProperty()){
-                      self.proxy.baselayerController.arrBaselayers[itemUid].overlayController.arrOverlays[j].changeOpacity(self.proxy.baselayerController.arrBaselayers[itemUid].overlayController.arrOverlays[j].opacity);
-                  }
+                  if(self.proxy.baselayerController.arrBaselayers[itemUid].overlayController.arrOverlays.hasOwnProperty(j)){
+                      self.proxy._options.mapController.map.addLayer(self.proxy.baselayerController.arrBaselayers[itemUid].overlayController.arrOverlays[j].layer);                  }
                 }
             }
             $(this).addClass(c4g.maps.constant.css.ACTIVE).removeClass(c4g.maps.constant.css.INACTIVE);
@@ -259,11 +258,19 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
           if(self.proxy.baselayerController.arrBaselayers[uid].hasOverlays){
 
 
-            childList = document.createElement('ul');
+            childList = document.createElement('ul');options.parseAsList ? document.createElement('ul') : document.createElement('div');
             for(j = 0; j < self.proxy.baselayerController.arrBaselayers[uid].overlays.length; j++){
-              childItem = document.createElement('li');
+              childItem = options.parseAsList ? document.createElement('li') : document.createElement('div');
               childEntry = document.createElement('a');
-              $(childEntry).addClass(c4g.maps.constant.css.INACTIVE);
+              if(self.proxy._activeBaselayerId == uid){
+                  $(childEntry).addClass(c4g.maps.constant.css.ACTIVE);
+                  let overlayId = self.proxy.baselayerController.arrBaselayers[uid].overlays[j].id;
+                  self.proxy.baselayerController.arrBaselayers[uid].overlayController.arrOverlays[overlayId].changeOpacity(self.proxy.baselayerController.arrBaselayers[uid].overlays[j].opacity);
+              }
+              else{
+                  $(childEntry).addClass(c4g.maps.constant.css.INACTIVE);
+              }
+
               childEntry.appendChild(document.createTextNode(self.proxy.baselayerController.arrBaselayers[uid].overlays[j].name));
               $(childEntry).data('id',self.proxy.baselayerController.arrBaselayers[uid].overlays[j].id);
               $(childEntry).data('pid',uid);

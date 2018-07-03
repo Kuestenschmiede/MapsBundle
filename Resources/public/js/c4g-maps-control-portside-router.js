@@ -140,7 +140,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         source: this.routingHintSource,
         style: function (feature, resolution) {
           // console.log(self.proxy.locationStyleController.arrLocStyles[self.options.mapController.data.router_point_locstyle].style);
-          return (!self.proxy) || self.proxy.locationStyleController.arrLocStyles[self.options.mapController.data.router_point_locstyle].style(feature, resolution);
+          return (!self.options.mapController.proxy) || self.options.mapController.proxy.locationStyleController.arrLocStyles[self.options.mapController.data.router_point_locstyle].style(feature, resolution);
         }
       });
 
