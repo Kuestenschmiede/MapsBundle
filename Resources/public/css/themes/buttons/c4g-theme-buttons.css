@@ -434,7 +434,10 @@ button.ol-zoom-out {
   vertical-align: bottom;
   border-top: 2px solid;
   margin-bottom: 10px;
-  text-align: center;
+  text-align: left;
+}
+.c4g-starboard-viewtriggerbar {
+  text-align: right;
 }
 .c4g-starboard-viewtriggerbar button,
 .c4g-portside-viewtriggerbar button {
@@ -450,15 +453,11 @@ button.ol-zoom-out {
   /*text-align: right;*/
 /*}*/
 
-/*.c4g-starboard-content-container,*/
-/*.c4g-portside-content-container {*/
-  /*border-bottom: 1px solid;*/
-/*}*/
-
 .c4g-editor-draw-options,
 .c4g-starboard-content-container .contentHeadline,
 .c4g-portside-content-container .contentHeadline {
-  margin: 0;
+  margin-left: 5px;
+  margin-right: 5px;
   /*padding: 10px 5px;*/
   font-size: 1.25em;
 }
@@ -710,6 +709,10 @@ button.ol-zoom-out {
 .c4g-router-buttonbar button {
   border-radius: var(--button-radius-percent);
 }
+.c4g-router-instructions-header {
+  margin-left: 5px;
+  margin-right: 5px;
+}
 .c4g-router-instructions-header > em {
   float: right;
   font-weight: normal;
@@ -760,8 +763,10 @@ button.ol-zoom-out {
   border-radius: var(--button-radius-percent);
 }
 .searchResultButton {
-  border-radius: var(--button-radius-pixel)!important;
-  padding: 8px!important;
+  border-radius: 0px!important;
+  padding: 0px!important;
+  padding-left: 2px!important;
+  padding-right: 2px!important;
 }
 
 /*
@@ -788,6 +793,9 @@ button.ol-zoom-out {
  */
 .ol-attribution {
   border-radius: 4px;
+}
+.ol-attribution.ol-collapsed {
+  border-radius: var(--button-radius-percent);
 }
 .ol-attribution img {
   margin-top: -.2em;
@@ -955,6 +963,21 @@ div.c4g-horizontal.c4g-tooltip-popup:before {
   font-size: 2em;
 }
 
+.c4g-starboard-content-container::-webkit-scrollbar,
+.c4g-portside-content-container::-webkit-scrollbar {
+  width: calc(var(--button-size)/2);
+}
+
+.c4g-starboard-content-container::-webkit-scrollbar-track,
+.c4g-portside-content-container::-webkit-scrollbar-track {
+  border-radius: var(--button-radius-pixel);
+}
+
+/* Handle */
+.c4g-starboard-content-container::-webkit-scrollbar-thumb,
+.c4g-portside-content-container::-webkit-scrollbar-thumb {
+  border-radius: var(--button-radius-pixel);
+}
 
 /*
  *  Media-querys

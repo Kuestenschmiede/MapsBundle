@@ -255,7 +255,7 @@ button.c4g-geosearch-start:before {
 .c4g-portside-wrapper {
   position: relative;
   height: 100%;
-  margin: 0 0 0 46px;
+  margin: 0 0 0 48px;
   font-size: 16px;
 }
 .c4g-starboard-wrapper {
@@ -754,7 +754,7 @@ input.c4g-panel-button {
   .c4g-portside-container {
     min-width: 0;
     visibility: visible;
-    /*width: 100%;*/
+    width: 100%;
     left: 0;
     position: absolute;
     max-width: none;
