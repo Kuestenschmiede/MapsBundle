@@ -32,13 +32,6 @@ use con4gis\CoreBundle\Resources\contao\classes\C4GApiCache;
 
 class MapsController extends BaseController
 {
-
-    protected static $useCache = false;
-
-    protected static $outputFromCache = false;
-
-    protected $responseData = "";
-
     public function baseLayerAction(Request $request, $profileId)
     {
         $response = new JsonResponse();
