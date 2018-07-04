@@ -214,7 +214,8 @@ button.c4g-draw-trigger.c4g-active {
 .c4g-baselayertree a.c4g-active,
 .c4g-layertree a:hover,
 .c4g-baselayertree a:hover {
-  background-color: var(--shadow-color);
+  background-color: var(--font-color);
+  color: var(--main-color);
 }
 .c4g-layertree a:after,
 .c4g-baselayertree a:before {
