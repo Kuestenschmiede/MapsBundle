@@ -41,7 +41,7 @@
  *  Z-Indexes
  */
 .ol-control {
-  z-index: 500;
+  z-index: 100;
 }
 
 .ol-dragbox {
@@ -203,7 +203,7 @@ button.c4g-geosearch-start:before {
   display: none !important;
 }
 .c4g-overviewmap > button {
-  z-index: 510;
+  z-index: 110;
 }
 .c4g-overviewmap .ol-overviewmap {
   overflow: hidden;
@@ -239,7 +239,7 @@ button.c4g-geosearch-start:before {
   min-width: 240px;
   max-width: 42%;
   /*background: #FFFFFF;*/
-  z-index: 600;
+  z-index: 120;
 }
 
 /* important for browser zoom  */
@@ -249,7 +249,7 @@ button.c4g-geosearch-start:before {
 }
 
 .c4g-control-container-top-left {
-  z-index: 610;
+  z-index: 170;
 }
 
 .c4g-portside-wrapper {
@@ -659,7 +659,7 @@ div.c4g-permalink-popup input[type='text'] {
   position: absolute;
   width: 100%;
   height: auto;
-  z-index: 1000;
+  z-index: 150;
   /*background-color: #00b0e8;*/
   transition: 0.5s;
   max-height: 125px;
@@ -759,7 +759,7 @@ input.c4g-panel-button {
     position: absolute;
     max-width: none;
     bottom: 0;
-    z-index: 610;
+    z-index: 115;
     min-height: 240px;
     height: 50%;
     top: auto;

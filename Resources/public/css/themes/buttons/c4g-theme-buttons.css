@@ -59,7 +59,7 @@
  */
 .ol-control button[title]:hover:after,
 .ol-control button[title]:focus:after {
-  z-index: 1100;
+  z-index: 160;
   content: attr(title);
 
   clip: auto;
@@ -120,7 +120,7 @@
   top: 86px;
   left: .2em;
   height: 200px;
-  z-index: 620;
+  z-index: 120;
   /*border: none;*/
   /*border-radius: 0 0 100% 100%;*/
 }
@@ -389,7 +389,7 @@ button.ol-zoom-out {
 .c4g-starboard-container button[title]:focus:after,
 .c4g-portside-container button[title]:hover:after,
 .c4g-portside-container button[title]:focus:after {
-  z-index: 1100;
+  z-index: 160;
   content: attr(title);
 
   clip: auto;
