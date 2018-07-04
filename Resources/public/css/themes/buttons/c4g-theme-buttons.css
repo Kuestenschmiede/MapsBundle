@@ -40,7 +40,7 @@
   height: 36px; /*1.974em;*/
   width: 36px; /*1.974em;*/
   line-height: .5em;
-  /*border: none;*/
+  border: none;
   border-radius: var(--button-radius-percent);
 }
 .ol-control button::-moz-focus-inner {
@@ -376,7 +376,7 @@ button.ol-zoom-out {
   font-size: 1.0em;
   border: 2px solid;
   border-radius: var(--button-radius-percent);
-  border-style: outset;
+  /*border-style: outset;*/
   margin: 2px;
   padding: 6px;
   vertical-align: middle;
@@ -552,7 +552,7 @@ button.ol-zoom-out {
   height: 32px;
   border: 2px solid;
   border-radius: var(--button-radius-pixel);
-  border-style: outset;
+  /*border-style: outset;*/
   font-size: 18px;
   padding: 5px;
   margin-top: 5px;
