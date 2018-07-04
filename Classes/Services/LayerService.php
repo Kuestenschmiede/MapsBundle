@@ -208,11 +208,12 @@ class LayerService
                         $layerData['childsCount'] = sizeof($childLayerList);
                         $layerData['childs'] = $childLayerList;
                     }
-
                     // HOOK: add custom logic
                     $layerData = $this->addCustomLogic($layerData);
-                    unset($layerData['raw']);
-                    $missingLayers[$layerData['id']] = $layerData;
+                    if (is_array($layerData) && count($layerData) > 0) {
+                        unset($layerData['raw']);
+                        $missingLayers[$layerData['id']] = $layerData;
+                    }
                 }
             }
         }
@@ -320,6 +321,7 @@ class LayerService
                         }
                     } else if ($objLayers->location_type == 'folder') {
                         $folder = $this->getFolder($objLayers);
+                        // TODO was soll diese Variable und der entsprechende IF-Fall?
                         $noneFolder = false;
                         if ($folder != '') {
                             if ($noneFolder) {
@@ -347,8 +349,11 @@ class LayerService
 
                     // HOOK: add custom logic
                     $arrLayerData = $this->addCustomLogic($arrLayerData);
-                    unset($arrLayerData['raw']);
-                    $arrLayer[] = $arrLayerData;
+                    // only add if there is a result
+                    if (is_array($arrLayerData) && count($arrLayerData) > 0) {
+                        unset($arrLayerData['raw']);
+                        $arrLayer[] = $arrLayerData;
+                    }
                 }
             }
 //            $arrLayer = $this->checkAndReassignFrontendLayers($arrLayer);

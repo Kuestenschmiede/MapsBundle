@@ -347,7 +347,9 @@ this.c4g.maps = this.c4g.maps || {};
       var bigint, r, g, b, a;
 
       bigint = parseInt(hex, 16);
-      opt_opacity = parseInt(opt_opacity);
+      if (opt_opacity && opt_opacity.value) {
+        opt_opacity.value = parseInt(opt_opacity.value);
+      }
 
       if (opt_opacity && typeof opt_opacity !== 'number') {
         if (typeof opt_opacity === 'object' && opt_opacity.value) {
