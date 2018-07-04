@@ -482,19 +482,13 @@ button.ol-zoom-out {
 }
 .c4g-portside-content-container p {
   margin: 10px 5px;
-  color: rgba(0,60,136,.7);
-  /*text-shadow: 0 0 1px white;*/
 }
 .c4g_maps_portside_measure_paragraph {
-  color: rgba(0,60,136,.7);
-  /*text-shadow: 0 0 1px white;*/
   margin-top: 0px!important;
   padding-bottom: 0px!important;
   font-weight: bold;
 }
 .c4g_maps_portside_measure_paragraph_surfacearea {
-  color: rgba(0,60,136,.7);
-  /*text-shadow: 0 0 1px white;*/
   margin-top: 0px!important;
   padding-bottom: 0px!important;
   font-weight: bold;
@@ -979,32 +973,32 @@ div.c4g-horizontal.c4g-tooltip-popup:before {
   border-radius: var(--button-radius-pixel);
 }
 
-input[type=range]::-webkit-slider-runnable-track {
+.c4g-baselayertree .c4g-overlay-toggle::-webkit-slider-runnable-track {
   border-radius: var(--button-radius-pixel);
 }
-input[type=range]::-webkit-slider-thumb {
+.c4g-baselayertree .c4g-overlay-toggle::-webkit-slider-thumb {
   height: var(--button-size);
   width: var(--button-size);
   border-radius: var(--button-radius-percent);
 }
-input[type=range]:focus::-webkit-slider-runnable-track {
+.c4g-baselayertree .c4g-overlay-toggle:focus::-webkit-slider-runnable-track {
   background: var(--font-color);
 }
-input[type=range]::-moz-range-track {
+.c4g-baselayertree .c4g-overlay-toggle::-moz-range-track {
   border-radius: var(--button-radius-percent);
 }
-input[type=range]::-moz-range-thumb {
+.c4g-baselayertree .c4g-overlay-toggle::-moz-range-thumb {
   height: var(--button-size);
   width: var(--button-size);
   border-radius: var(--button-radius-percent);
 }
-input[type=range]::-ms-fill-lower {
+.c4g-baselayertree .c4g-overlay-toggle::-ms-fill-lower {
   border-radius: var(--button-radius-pixel);
 }
-input[type=range]::-ms-fill-upper {
+.c4g-baselayertree .c4g-overlay-toggle::-ms-fill-upper {
   border-radius: var(--button-radius-pixel);
 }
-input[type=range]::-ms-thumb {
+.c4g-baselayertree .c4g-overlay-toggle::-ms-thumb {
   height: var(--button-size);
   width: var(--button-size);
   border-radius: var(--button-radius-percent);

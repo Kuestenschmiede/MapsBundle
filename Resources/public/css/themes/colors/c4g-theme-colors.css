@@ -397,51 +397,60 @@ button.c4g-popup-route-to:hover {
   background-color: var(--shadow-color);
 }
 
-input[type=range]::-webkit-slider-runnable-track {
+.c4g-baselayertree .c4g-overlay-toggle::-webkit-slider-runnable-track {
   box-shadow: 1px 1px 1px var(--shadow-color);
   background: var(--font-color)!important;
   border: 0px solid var(--shadow-color);
 }
-input[type=range]::-webkit-slider-thumb {
+.c4g-baselayertree .c4g-overlay-toggle::-webkit-slider-thumb {
   box-shadow: 0px 0px 0px var(--shadow-color);
-  background: var(--main-color);
+  background: var(--shadow-color);
 }
-input[type=range]:focus::-webkit-slider-runnable-track {
+.c4g-baselayertree .c4g-overlay-toggle:focus::-webkit-slider-runnable-track {
   background: var(--font-color);
 }
-input[type=range]::-moz-range-track {
+.c4g-baselayertree .c4g-overlay-toggle::-moz-range-track {
   box-shadow: 1px 1px 1px var(--shadow-color);
   background: var(--font-color);
   border: 0px solid var(--shadow-color);
 }
-input[type=range]::-moz-range-thumb {
+.c4g-baselayertree .c4g-overlay-toggle::-moz-range-thumb {
   box-shadow: 0px 0px 0px var(--shadow-color);
   border: 1px solid var(--shadow-color);
-  background: var(--main-color);
+  background: var(--shadow-color);
 }
-input[type=range]::-ms-track {
+.c4g-baselayertree .c4g-overlay-toggle::-ms-track {
   background: transparent;
   border-color: transparent;
   color: transparent;
 }
-input[type=range]::-ms-fill-lower {
+.c4g-baselayertree .c4g-overlay-toggle::-ms-fill-lower {
   background: var(--shadow-color);
   border: 0px solid var(--shadow-color);
   box-shadow: 1px 1px 1px var(--shadow-color);
 }
-input[type=range]::-ms-fill-upper {
-  background: var(--main-color);
+.c4g-baselayertree .c4g-overlay-toggle::-ms-fill-upper {
+  background: var(--shadow-color);
   border: 0px solid var(--shadow-color);
   box-shadow: 1px 1px 1px var(--shadow-color);
 }
-input[type=range]::-ms-thumb {
+.c4g-baselayertree .c4g-overlay-toggle::-ms-thumb {
   box-shadow: 0px 0px 0px var(--shadow-color);
   border: 1px solid var(--shadow-color);
   background: var(--shadow-color);
 }
-input[type=range]:focus::-ms-fill-lower {
+.c4g-baselayertree .c4g-overlay-toggle:focus::-ms-fill-lower {
   background: var(--shadow-color);
 }
-input[type=range]:focus::-ms-fill-upper {
+.c4g-baselayertree .c4g-overlay-toggle:focus::-ms-fill-upper {
   background: var(--shadow-color);
+}
+.c4g-portside-content-container p {
+  color: var(--font-color);
+}
+.c4g_maps_portside_measure_paragraph {
+  color: var(--font-color);
+}
+.c4g_maps_portside_measure_paragraph_surfacearea {
+  color: var(--font-color);
 }
