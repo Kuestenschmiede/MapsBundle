@@ -290,7 +290,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
             } else if (feature.getGeometry() instanceof ol.geom.Circle) {
               strLabel = c4g.maps.constant.i18n.RADIUS;
               strType = c4g.maps.constant.i18n.CIRCLE;
-              measureArea = false;
+              measureArea = true;
               measureRadius = true;
             } else {
               //freehand ist LineString too
@@ -356,15 +356,15 @@ this.c4g.maps.control = this.c4g.maps.control || {};
             }
 
             if (measureRadius) {
-                paragraphElement = document.createElement('p');
-                paragraphElement.className = 'c4g_maps_portside_measure_paragraph_surfacearea';
-                strongElement = document.createElement('strong');
-                strongElement.innerHTML = c4g.maps.constant.i18n.SURFACEAREA + ': ';
-                paragraphElement.appendChild(strongElement);
-                spanElement = document.createElement('span');
-                spanElement.innerHTML = '...';
-                paragraphElement.appendChild(spanElement);
-                listElement.appendChild(paragraphElement);
+                // paragraphElement = document.createElement('p');
+                // paragraphElement.className = 'c4g_maps_portside_measure_paragraph_surfacearea';
+                // strongElement = document.createElement('strong');
+                // strongElement.innerHTML = c4g.maps.constant.i18n.SURFACEAREA + ': ';
+                // paragraphElement.appendChild(strongElement);
+                // spanElement = document.createElement('span');
+                // spanElement.innerHTML = '...';
+                // paragraphElement.appendChild(spanElement);
+                // listElement.appendChild(paragraphElement);
                 feature.set('listElementValueRadius', spanElement);
             }
 
@@ -400,6 +400,11 @@ this.c4g.maps.control = this.c4g.maps.control || {};
               feature.set('measuredRadius', radius);
               feature.get('listElementValueRadius').innerHTML = radius.htmlValue;
               newContent += radius.htmlValue;
+
+              area = c4g.maps.utils.measureGeometry(feature.getGeometry(), false, true);
+              feature.set('measuredArea', area);
+              feature.get('listElementValueArea').innerHTML = area.htmlValue;
+              // newContent += area.htmlValue;
             } else if (feature.get('geometryType') === 'polygon') {
                 area = c4g.maps.utils.measureGeometry(feature.getGeometry());
                 feature.set('measuredArea', area);

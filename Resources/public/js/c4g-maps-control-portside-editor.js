@@ -570,11 +570,11 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                     paragraphElement.innerHTML += '<strong>' + c4g.maps.constant.i18n.SURFACEAREA + ':</strong> ' + selectedFeature.get('measuredArea').htmlValue;
                     selectContent.appendChild(paragraphElement);
                   }
-                    if (selectedFeature.get('measuredRadius')) {
-                        paragraphElement = document.createElement('p');
-                        paragraphElement.innerHTML += '<strong>' + c4g.maps.constant.i18n.RADIUS + ':</strong> ' + selectedFeature.get('measuredRadius').htmlValue;
-                        selectContent.appendChild(paragraphElement);
-                    }
+                  if (selectedFeature.get('measuredRadius')) {
+                      paragraphElement = document.createElement('p');
+                      paragraphElement.innerHTML += '<strong>' + c4g.maps.constant.i18n.RADIUS + ':</strong> ' + selectedFeature.get('measuredRadius').htmlValue;
+                      selectContent.appendChild(paragraphElement);
+                  }
                   // check and append editor-vars
                   editorVars = selectedFeature.get('editorVars');
                   for (j = 0; j < editorVars.length; j += 1) {

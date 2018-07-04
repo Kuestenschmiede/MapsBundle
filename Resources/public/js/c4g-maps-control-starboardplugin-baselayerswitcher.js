@@ -275,6 +275,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
               $(childEntry).data('id',self.proxy.baselayerController.arrBaselayers[uid].overlays[j].id);
               $(childEntry).data('pid',uid);
               toggle = document.createElement('input');
+              toggle.className = 'c4g-overlay-toggle';
               toggle.setAttribute('type','range');
               toggle.setAttribute('min',0);
               toggle.setAttribute('max',100);

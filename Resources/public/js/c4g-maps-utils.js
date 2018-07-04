@@ -426,7 +426,7 @@ this.c4g.maps = this.c4g.maps || {};
      *
      * @return  {array<string>|number}                                       [description]
      */
-    measureGeometry: function (geometry, opt_forceLineMeasure) {
+    measureGeometry: function (geometry, opt_forceLineMeasure, opt_forceSurfaceMeasure) {
       var value,
           sphere,
           coordinates,
@@ -475,6 +475,29 @@ this.c4g.maps = this.c4g.maps || {};
           result.htmlValue = result.rawValue +
               ' ' + 'm<sup>2</sup>';
         }
+
+      } else if (geometry instanceof ol.geom.Circle && opt_forceSurfaceMeasure) {
+          var center = geometry.getCenter();
+          var radius = geometry.getRadius();
+          var edgeCoordinate = [center[0] + radius, center[1]];
+          //var wgs84Sphere = new ol.Sphere(6378137);
+          var value = ol.sphere.getDistance(
+              ol.proj.transform(center, 'EPSG:3857', 'EPSG:4326'),
+              ol.proj.transform(edgeCoordinate, 'EPSG:3857', 'EPSG:4326'),
+              6378137
+          );
+
+          value = Math.PI * Math.sqrt(value);
+
+          result.rawValue = (Math.round(value * 100) / 100).toFixed(2);
+          if (value > 10000) {
+              result.htmlValue = (Math.round(value / 1000000 * 100) / 100).toFixed(2) +
+                  ' ' + 'km<sup>2</sup>';
+          } else {
+              result.htmlValue = result.rawValue +
+                  ' ' + 'm<sup>2</sup>';
+          }
+
 
       } else if (geometry instanceof ol.geom.Circle) {
           var center = geometry.getCenter();
