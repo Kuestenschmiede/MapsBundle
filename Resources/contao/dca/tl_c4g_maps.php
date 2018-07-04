@@ -46,6 +46,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
             'mode'                    => 5,
             'icon'                    => 'bundels/con4gisMapsBundle/images/core.png',
             'fields'                  => array('name'),
+            'panelLayout'             => 'filter;sort,search,limit',
             'flag'                    => 1
         ),
         'label' => array
@@ -205,7 +206,8 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
     (
         'id' => array
         (
-            'sql'                     => "int(10) unsigned NOT NULL auto_increment"
+            'sql'                     => "int(10) unsigned NOT NULL auto_increment",
+            'search'                  => true
         ),
         'pid' => array
         (
@@ -225,7 +227,8 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
             'exclude'                 => true,
             'inputType'               => 'c4g_text',
             'eval'                    => array('mandatory'=>true, 'maxlength'=>255 ),
-            'sql'                     => "varchar(100) NOT NULL default ''"
+            'sql'                     => "varchar(100) NOT NULL default ''",
+            'search'                  => true
         ),
         'profile' => array
         (
@@ -871,7 +874,8 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
             'exclude'                 => true,
             'inputType'               => 'text',
             'eval'                    => array('maxlength'=>254),
-            'sql'                     => "varchar(254) NOT NULL default ''"
+            'sql'                     => "varchar(254) NOT NULL default ''",
+            'search'                  => true
         ),
         'data_hidelayer' => array
         (
