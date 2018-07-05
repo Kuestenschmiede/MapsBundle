@@ -429,14 +429,12 @@ button.ol-zoom-position:before{
  * Popups
  */
 .c4g-popup-wrapper {
-  /*background: #ffffff;*/
   border: 1px solid;
   border-radius: 5px;
   position: relative;
   display: none;
   z-index: 90;
-  max-width: 720px;
-  /*margin: 8px;*/
+  /*max-width: 720px;*/
 }
 .c4g-popup-wrapper.c4g-active {
   display: block;
@@ -457,6 +455,15 @@ button.ol-zoom-position:before{
 }
 button.c4g-popup-close:before {
   content: "X";
+}
+
+.c4g_popup_header_featurename {
+  font-size: 1.4em;
+}
+
+.c4g_popup_header_featuretype {
+  font-weight: bold;
+  font-size: 1.2em;
 }
 
 /*

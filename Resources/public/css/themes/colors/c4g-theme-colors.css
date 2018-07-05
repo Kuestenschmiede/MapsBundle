@@ -172,7 +172,7 @@ button.c4g-draw-trigger.c4g-active {
 }
 .c4g-content-select input ,.c4g-portside-top-toolbar select, .c4g-portside-top-toolbar input, .c4g-portside-top-toolbar button, .c4g-router-input-wrapper button, .c4g-router-input-wrapper input {
   color: var(--main-color);
-  border-color: transparent;/*var(--shadow-color);*/
+  border-color: var(--shadow-color);
   background-color: var(--font-color);
 }
 .c4g-content-select input:focus {
@@ -314,29 +314,41 @@ button.c4g-draw-trigger.c4g-active {
  */
 div.c4g-tooltip-popup,
 div.c4g-active.c4g-popup-wrapper {
-  color: inherit;
-  background-color: var(--font-color);
-  border-color: var(--font-color);
+  color: var(--font-color);
+  background-color: var(--main-color);
+  border-color: var(--shadow-color);
 
-  -webkit-filter: drop-shadow(0 1px 4px var(--main-color));
-  filter: drop-shadow(0 1px 4px var(--main-color));
+  -webkit-filter: drop-shadow(0 1px 4px var(--shadow-color));
+  filter: drop-shadow(0 1px 4px var(--shadow-color));
 }
 div.c4g-tooltip-popup:before,
 div.c4g-popup-wrapper:before {
-  border-top-color: var(--font-color);
+  border-top-color: var(--main-color);
 }
+.c4g_popup_header_featurename {
+  color: var(--font-color);
+}
+
+.c4g_popup_header_featuretype {
+  color: var(--shadow-color);
+}
+
+.c4g-popup-wrapper a {
+  color: var(--font-color);
+}
+
 div.c4g-horizontal.c4g-tooltip-popup:before {
   border-top-color: transparent;
-  border-right-color: var(--font-color);
+  border-right-color: var(--main-color);
 }
 
 button.c4g-popup-close {
-  color: var(--main-color);
-  background-color: transparent;
+  color: var(--font-color);
+  background-color: var(--main-color);
 }
 button.c4g-popup-close:hover {
   color: var(--font-color);
-  background-color: transparent;
+  background-color: var(--main-color);
 }
 button.c4g-popup-route-from,
 button.c4g-popup-route-to {
@@ -347,6 +359,14 @@ button.c4g-popup-route-to {
 button.c4g-popup-route-from:hover,
 button.c4g-popup-route-to:hover {
     background-color: var(--font-color);
+}
+/*.c4g-popup-route-wrapper {*/
+  /*color: var(--main-color);*/
+  /*background-color: var(--font-color);*/
+  /*border-color: var(--shadow-color);*/
+/*}*/
+.c4g-popup-route-from,.c4g-popup-route-to {
+  color: var(--main-color);
 }
 
 /*
