@@ -1,6 +1,6 @@
 :root {
-  --button-radius-percent: 100%;
-  --button-radius-pixel: 100px;
+  --button-radius-percent: 0%;
+  --button-radius-pixel: 0px;
   --button-size: 36px;
   --font-size: 16px;
 }

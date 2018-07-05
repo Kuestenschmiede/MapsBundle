@@ -154,7 +154,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] = array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['buttonradius'],
             'inputType'               => 'inputUnit',
-            'default'                 => '100',
+            'default'                 => '0',
             'options'                 => array('%'),
             'eval'                    => array('rgxp'=>'prcnt', 'tl_class'=>'long', 'mandatory'=>true),
             'sql'                     => "varchar(100) NOT NULL default ''"
