@@ -677,10 +677,34 @@ class C4gBaselayerController {
                 var mapData = this.mapController.data;
                 if (mapData.cesium && mapData.cesium.enable) {
                     if (!this.ol3d) {
-                        this.ol3d = new olcs.OLCesium({map: this.mapController.map});
+                        this.ol3d = new OLCesium({
+                            map: this.mapController.map/*,
+                            time() {
+                                const val = timeElt.value;
+                                if (ol3d.getCesiumScene().globe.enableLighting && val) {
+                                    const d = new Date();
+                                    d.setUTCHours(val);
+                                    return Cesium.JulianDate.fromDate(d);
+                                }
+                                return Cesium.JulianDate.now();
+                            }*/});
                     }
                     if (mapData.cesium.always || (baseLayerConfig.cesium)) {
+                        /*const scene = ol3d.getCesiumScene();
+                        const terrainProvider = new Cesium.CesiumTerrainProvider({
+                            url: '//assets.agi.com/stk-terrain/world',
+                            requestVertexNormals: true
+                        });
+                        scene.terrainProvider = terrainProvider;*/
                         this.ol3d.setEnabled(true);
+                        /*window['toggleTime'] = function() {
+                            scene.globe.enableLighting = !scene.globe.enableLighting;
+                            if (timeElt.style.display == 'none') {
+                                timeElt.style.display = 'inline-block';
+                            } else {
+                                timeElt.style.display = 'none';
+                            }
+                        };*/
                     } else {
                         if (this.ol3d.getEnabled()) {
                             this.ol3d.setEnabled(false);
