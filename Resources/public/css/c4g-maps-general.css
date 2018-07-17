@@ -816,7 +816,31 @@ input.c4g-panel-button {
   cursor: pointer;
   animate: 0.2s;
 }
-.c4g-baselayertree .c4g-overlay-toggle::-ms-thumb {
+input[type=range]::-ms-fill-lower {
+  background: rgba(0,60,136,.7);
+  border: 0px solid rgba(0,60,136,.7);
+  border-radius: 2px;
+  box-shadow: 1px 1px 1px rgba(0,60,136,.7);
+}
+input[type=range]::-ms-fill-upper {
+  background: #103A5D;
+  border: 0px solid rgba(0,60,136,.7);
+  border-radius: 2px;
+  box-shadow: 1px 1px 1px rgba(0,60,136,.7);
+}
+input[type=range]::-ms-thumb {
   margin-top: 1px;
+  box-shadow: 0px 0px 0px rgba(0,60,136,.7);
+  border: 1px solid rgba(0,60,136,.7);
+  height: 26px;
+  width: 26px;
+  border-radius: 15px;
+  background: rgba(0,60,136,.7);
   cursor: pointer;
+}
+input[type=range]:focus::-ms-fill-lower {
+  background: rgba(0,60,136,.7);
+}
+input[type=range]:focus::-ms-fill-upper {
+  background: rgba(0,60,136,.7);
 }
