@@ -298,7 +298,7 @@ class C4gLocationStyle{
                     arrows_minzoom = parseInt(styleData.line_arrows_minzoom, 10);
                     start_pixel = self.controller.mapController.map.getPixelFromCoordinate(start);
                     end_pixel = self.controller.mapController.map.getPixelFromCoordinate(end);
-                    //distance between start and end
+                    // euclid-distance between start and end
                     segmentLength = Math.sqrt(Math.pow(end_pixel[1] - start_pixel[1], 2) + Math.pow(end_pixel[0] - start_pixel[0], 2));
 
                     if (
