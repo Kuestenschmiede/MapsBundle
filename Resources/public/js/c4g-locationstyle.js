@@ -231,11 +231,12 @@ class C4gLocationStyle{
             } else {
                 label = false;
             }
+            let defaultColor = self.controller.mapController.data.default_label_color;
             // label
             if (label) {
                 if (styleData.label_outl_color && styleData.label_outl_width.value) {
                     textStyleOutline = new ol.style.Stroke({
-                        color: c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.label_outl_color, {
+                        color: c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.label_outl_color || defaultColor, {
                             unit: '%',
                             value: 100
                         }),
@@ -255,7 +256,7 @@ class C4gLocationStyle{
                     textAlign: styleData.label_align_hor,
                     textBaseline: styleData.label_align_ver,
                     fill: new ol.style.Fill({
-                        color: c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.font_color, styleData.font_opacity)
+                        color: c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.font_color || defaultColor, styleData.font_opacity)
                     }),
                     stroke: textStyleOutline
                 });

@@ -420,6 +420,10 @@ class MapDataConfigurator
 
             }
 
+            if ($profile->label_color) {
+                $mapData['default_label_color'] = $profile->label_color;
+            }
+
             // editor
             //
             if ($profile->editor) {

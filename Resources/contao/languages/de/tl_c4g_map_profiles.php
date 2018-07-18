@@ -31,6 +31,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['default_baselayer']            = arr
 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['locstyles']             = array('Lokationsstile',
                                                                             'Wählen Sie die Lokationsstile, die in Kartenstrukturelementen dieses Profils auswählbar sein sollen. Standard: alle');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['label_color']             = array('Label-Farbe',
+    'Wählen Sie die Standardfarbe für Labels aus. Dies kann durch die Einstellung am Lokationsstil überschrieben werden.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['zoom_panel']            = array('Steuerelement zum Zoomen',
                                                                             'Erzeugen von Buttons zum Hinein- und Herauszoomen.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['zoom_panel_button']     = array('Zusatzbutton im Steuerelement zum Zoomen',
