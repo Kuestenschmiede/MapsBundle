@@ -28,7 +28,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
     //set headline, since the definition above does not work for headline
     if (!this.options.headline || this.options.headline.length === 0) {
-      this.options.headline = c4g.maps.constant.i18n.STARBOARD;
+      //this.options.headline = c4g.maps.constant.i18n.STARBOARD;
     }
 
     this.hook_layerswitcher_loaded = this.hook_layerswitcher_loaded || [];

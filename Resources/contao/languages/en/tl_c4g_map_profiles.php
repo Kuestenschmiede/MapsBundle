@@ -71,7 +71,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard']             = array('Ena
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_open']        = array('Open starboard',
                                                                             'Initially opens the starboard.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_label']       = array('Starboard titel',
-                                                                            'Default "Starboard"');
+                                                                            '');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_div']         = array('DIV for Starboard',
                                                                             'Enter the ID of an existing DIV element if you want to put the Starboard somewhere else on your page.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_filter']      = array('Activate starboard filter',

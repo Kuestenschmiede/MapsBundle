@@ -43,7 +43,6 @@ this.c4g.maps.control = this.c4g.maps.control || {};
     //this.cssname = this.identifier.charAt(0).toLowerCase() + this.identifier.slice(1);
     this.initialized = false;
     this.options.tipLabel = this.options.tipLabel || this.options.headline || c4g.maps.constant.i18n.CTRL_SIDEBOARD;
-    this.options.headline = this.options.headline || c4g.maps.constant.i18n.SIDEBOARD;
     this.container = document.createElement('div');
     this.element = document.createElement('div');
     this.button = undefined;
@@ -206,7 +205,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       // Headline
       this.headline = document.createElement('span');
       this.headline.className = 'c4g-' + this.cssname + '-headline';
-      this.headline.innerHTML = this.options.headline || c4g.maps.constant.i18n.SIDEBOARD;
+      this.headline.innerHTML = this.options.headline;
       this.titleBar.appendChild(this.headline);
       // Buttonbar
       titleButtonBar = document.createElement('div');

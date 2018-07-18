@@ -62,7 +62,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard']             = array('Sta
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_open']        = array('Starboard automatisch öffnen',
                                                                             'Wenn Sie diese Checkbox auswählen, dann wird das Starboard sofort geöffnet angezeigt.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_label']       = array('Starboard Überschrift',
-                                                                            'Standard: "Starboard"');
+                                                                            '');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_div']         = array('DIV für das Starboard',
                                                                             'DIV zur Positionierung des Starboards außerhalb der Karte. Muss manuell auf der Seite erzeugt werden, z.B. mit einem HTML Inhaltselement.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_filter']      = array('Starboardfilter aktivieren',

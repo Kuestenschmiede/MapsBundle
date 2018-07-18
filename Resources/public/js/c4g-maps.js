@@ -705,7 +705,6 @@ this.c4g.maps = this.c4g.maps || {};
             this.map.addControl(this.controls.overviewmap);
         }
 
-        starboard_label = c4g.maps.constant.i18n.CTRL_STARBOARD;
         if (mapData.starboard.label) {
             starboard_label = c4g.maps.constant.i18n.CTRL_STARBOARD.replace('Starboard', mapData.starboard.label).replace('starboard', mapData.starboard.label);
         }
@@ -719,7 +718,7 @@ this.c4g.maps = this.c4g.maps || {};
           this.controls.starboard = new c4g.maps.control.Starboard({
             create: mapData.starboard.enable || false,
             headline: mapData.starboard.label,
-            tipLabel: starboard_label,
+            tipLabel: starboard_label || false,
             mapController: this,
             extDiv: mapData.starboard.div,
             defaultOpen: mapData.starboard.open,
