@@ -938,7 +938,18 @@ class LayerContentApi extends \Controller
                     $objLayer->data_file = $objFile ? (TL_ROOT . '/' . $objFile->path) : false;
                     $data = file_exists($objLayer->data_file) ? file_get_contents($objLayer->data_file) : false;
                 }
-                // @TODO: URL resource?
+                else if($objLayer->data_url){
+                    $REQUEST = new \Request();
+                    if ($_SERVER['HTTP_REFERER']) {
+                        $REQUEST->setHeader('Referer', $_SERVER['HTTP_REFERER']);
+                    }
+                    if ($_SERVER['HTTP_USER_AGENT']) {
+                        $REQUEST->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
+                    }
+                    $REQUEST->send($objLayer->data_url);
+
+                    $data = $REQUEST->response;
+                }
 
                 // use data_content if other method failed
                 $data = $data ?: $objLayer->data_content;

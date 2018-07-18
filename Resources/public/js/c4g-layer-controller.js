@@ -974,7 +974,7 @@ class C4gLayerController{
                 });
                 //vectorLayer = c4g.maps.utils.getVectorLayer(clusterSource, styleForCluster);
 
-                vectorLayer = new ol.layer.AnimatedCluster(
+                vectorLayer = new ol.layer.Vector(
                   {	name: 'Cluster',
                     source: clusterSource,
                     // Use a style function for cluster symbolisation
@@ -1132,7 +1132,7 @@ class C4gLayerController{
 
             }
 
-            self.checkLocationStyles({
+            self.proxy.checkLocationStyles({
               success: function () {
                 // @TODO: check this!
                 self.loadLayerContent(itemUid);
