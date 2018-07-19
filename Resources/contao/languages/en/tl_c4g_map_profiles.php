@@ -176,8 +176,10 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overpass_url']          = array('URL
                                                                             'Default: http://overpass-api.de/api/interpreter');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router']                = array('Activate routing (Please check the <a href="https://github.com/DennisOSRM/Project-OSRM/wiki/Api-usage-policy" target="_blank">terms of use</a> for default API!)',
                                                                             'Adds an additional button to activate routing functionality.');
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_viaroute_url']   = array('Alternative URL of OSRM-API',
-                                                                            'Default: http://router.project-osrm.org/viaroute');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_viaroute_url']   = array('Alternative URL of ORS- or OSRM-API',
+                                                                            'Default: http://router.project-osrm.org/viaroute or https://api.openrouteservice.org/directions?');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_api_key']        = array('API-Key',
+                                                                            'Enter your API-key here. You can generate the key <a href="https://openrouteservice.org/sign-up/" target="_blank">here</a>.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_attribution']    = array('Override OSRM attribution',
                                                                             'Only override the attribution if you use another API-server, or put the attribution somewhere prominent else on your page!');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_styles_point']   = array('Location styles for POIs',
@@ -199,7 +201,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_helpurl']        = array('Hel
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['be_optimize_checkboxes_limit']      = array('Limit for optimization of large checkbox-lists',
                                                                             'Defines how much entries must be there after the checkbox-lists will be converted to chosenfields. (0 = do not convert)');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_api_selection'] = array('Selection of API-version',
-                                                                            'Old API only works with own servers');
+                                                                            'Old OSRM-API only works with own servers');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_from_locstyle'] = array('Locstyle for start-location');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_to_locstyle'] = array('Locstyle for goal-location');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_point_locstyle'] = array('Locstyle for on-the-fly hints');
@@ -231,8 +233,9 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine']['2'] =
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine']['3'] = 'Custom';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine']['4'] = 'con4gis mapservices (<a href="https://con4gis.org/kartendienste.html" target="_blank">usage policy</a>)';
 
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_api_selection']['0'] = 'OSRM (API 4.x)';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_api_selection']['1'] = 'OSRM (API 5.x)';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_api_selection']['0'] = 'OpenSourceRoutingMachine (API 4.x)';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_api_selection']['1'] = 'OpenSourceRoutingMachine (API 5.x)';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_api_selection']['2'] = 'OpenRouteService (API 5.x)';
 
 /**
  * Buttons

@@ -186,7 +186,9 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overpass_url']          = array('Alt
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router']                = array('Router aktivieren (Beachten Sie bitte die <a href="https://github.com/DennisOSRM/Project-OSRM/wiki/Api-usage-policy" target="_blank">Nutzungsbedingungen des Standard-Anbieters</a>!)',
                                                                             'Fügt einen zusätzlichen Schalter in die Karte ein, über den der Router aktiviert werden kann. Unterstützt wird zurzeit nur die alte OSRM API.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_viaroute_url']   = array('Alternative URL (verfplichtend für OSRM-API 4)',
-                                                                            'Geben Sie hier die URL des OSRM Servers ein, wenn Sie z.B. einen eigenen OSRM Server nutzen möchten. Standardmäßig wird http://router.project-osrm.org/viaroute (veraltet!) verwendet.');
+                                                                            'Geben Sie hier die URL des ORS oder OSRM Servers ein, wenn Sie z.B. einen eigenen Server nutzen möchten. Standardmäßig wird http://router.project-osrm.org/ oder https://api.openrouteservice.org/directions verwendet.');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_api_key']        = array('API-Key',
+                                                                            'Geben Sie hier Ihren ORS-API-Key ein. Den Key können Sie <a href="https://openrouteservice.org/sign-up/" target="_blank">hier</a> generieren.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_attribution']    = array('Copyright für Router überschreiben',
                                                                             'Überschreibt die Standard-Attribution. Dies ist nur dann empfehlenswert, wenn Sie einen alternativen API-Server nutzen, oder die Attribution an einer anderen, offensichtlichen Stelle, auf der Seite platziert haben!');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_styles_point']   = array('Lokationsstile für POIs',
@@ -244,8 +246,10 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine']['1'] =
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine']['2'] = 'Nominatim bei MapQuest (<a href="http://developer.mapquest.com/web/products/open/nominatim" target="_blank">Nutzungsbestimmungen</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine']['3'] = 'Benutzerdefiniert';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine']['4'] = 'con4gis Kartendienste (<a href="https://con4gis.org/kartendienste.html" target="_blank">Nutzungsbestimmungen</a>)';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_api_selection']['0'] = 'OSRM (API 4.x)';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_api_selection']['1'] = 'OSRM (API 5.x)';
+
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_api_selection']['0'] = 'OpenSourceRoutingMachine (API 4.x)';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_api_selection']['1'] = 'OpenSourceRroutingMachine (API 5.x)';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_api_selection']['2'] = 'OpenRouteService';
 
 
 /**

@@ -604,7 +604,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
           }
 
       }
-        if (this.options.mapController.data.router_api_selection == '1'){//OSRM-API:5.x
+        if (this.options.mapController.data.router_api_selection == '1' || this.options.mapController.data.router_api_selection == '2'){//OSRM-API:5.x
             url = self.routingApi + '/' + fromCoord ;
 
             if(overPoint){
@@ -630,7 +630,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
             return '';
 
-        } else {//OSRM-API:<5
+        } else{//OSRM-API:<5
             url = self.routingApi + '?output=json&instructions=true&alt=false&loc_from=' + fromCoord + '&loc_to=' + toCoord;
             this.spinner.show();
 
@@ -679,7 +679,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
           this.routingAltWaySource.clear();
           mapView = this.options.mapController.map.getView();
 
-          if (this.options.mapController.data.router_api_selection == '1') {//OSRM-API:5.x
+          if (this.options.mapController.data.router_api_selection == '1' ||this.options.mapController.data.router_api_selection == '2' ) {//OSRM-API:5.x
               wayPolyline = new ol.format.Polyline();
 
               // add route
@@ -820,6 +820,55 @@ this.c4g.maps.control = this.c4g.maps.control || {};
           }
 
           return "bundles/con4gismaps/vendor/osrm/images/" + image;
+      },
+      getInstructionIconORS: function(intType){
+        let image;
+        switch(intType){
+            case 0:
+                image = "turn-left.png";
+                break;
+            case 1:
+                image = "turn-right.png";
+                break;
+            case 2:
+                image = "sharp-left.png";
+                break;
+            case 3:
+                image = "sharp-right.png";
+                break;
+            case 4:
+                image = "slight-left.png";
+                break;
+            case 5:
+                image = "slight-right.png";
+                break;
+            case 6:
+                image = "continue.png";
+                break;
+            case 7:
+                image = "round-about.png";
+                break;
+            case 8:
+                image = "round-about.png";
+                break;
+            case 9:
+                image = "u-turn.png";
+                break;
+            case 10:
+                image = "target.png";
+                break;
+            case 11:
+                image = "head.png";
+                break;
+            case 12:
+                image = "slight-left.png";
+                break;
+            case 13:
+                image = "slight-right.png";
+                break;
+
+        }
+          return document.getElementsByTagName('base')[0].href + "bundles/con4gismaps/vendor/osrm/images/" + image;
       },
 
       getTypeText: function(strType) {
@@ -1028,7 +1077,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                   total_time = this.toHumanTime(routeResponse.routes[routeNumber].duration);
               }
 
-          else {//OSRM-API:<5
+          else if(this.options.mapController.data.router_api_selection == '0') {//OSRM-API:<5
               if (routeResponse.route_name) {
                   route_name_0 = routeResponse.route_name[0];
                   route_name_1 = routeResponse.route_name[1];
@@ -1099,7 +1148,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                   }
               }
 
-          } else {//OSRM-API:<5
+          } else if(this.options.mapController.data.router_api_selection === '0'){//OSRM-API:<5
               for (i = 0; i < routeResponse.route_instructions.length; i += 1) {
                   instr = routeResponse.route_instructions[i];
                   rowstyle = c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_ODD;
@@ -1136,6 +1185,49 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                   routerInstructionsHtml += "</td>";
 
                   routerInstructionsHtml += "</tr>";
+              }
+          }
+          else if(this.options.mapController.data.router_api_selection === '2' || true){//OpenRouteService
+              for (j = 0; j < routeResponse.routes[routeNumber].segments.length; j += 1) {
+                  for (i = 0; i < routeResponse.routes[routeNumber].segments[j].steps.length; i += 1) {
+                      instr = routeResponse.routes[routeNumber].segments[j].steps[i];
+
+                      strType = instr.type;
+
+                      rowstyle = c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_ODD;
+
+                      if (i % 2 === 0) {
+                          rowstyle = c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_EVEN;
+                      }
+
+                      rowstyle += " " + c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM;
+
+                      routerInstructionsHtml += '<tr class="' + rowstyle + '">';
+
+                      routerInstructionsHtml += '<td class="' + c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_DIRECTION + '">';
+                      routerInstructionsHtml += '<img class="' + c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_ICON + '" src="' + this.getInstructionIconORS(strType) + '" alt=""/>';
+                      routerInstructionsHtml += '</td>';
+
+
+                      routerInstructionsHtml += '<td class="' + c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_TEXT + '" data-pos="' + instr.maneuver.location + '">';
+
+
+                      // build route description
+
+                      routerInstructionsHtml += instr.instruction;
+
+
+                      routerInstructionsHtml += '</div>';
+                      routerInstructionsHtml += "</td>";
+
+                      routerInstructionsHtml += '<td class="' + c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_DISTANCE + '">';
+                      // if (i !== routeResponse.routes[routeNumber].legs[0].steps.length - 1) {
+                      //     routerInstructionsHtml += this.toHumanDistance(instr.distance);
+                      // }
+                      routerInstructionsHtml += "</td>";
+
+                      routerInstructionsHtml += "</tr>";
+                  }
               }
           }
 

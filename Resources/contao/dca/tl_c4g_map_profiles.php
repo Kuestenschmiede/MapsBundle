@@ -123,7 +123,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
         'permalink'                   => 'permalink_get_param',
         'geosearch'                   => 'geosearch_engine,geosearch_results,geosearch_show,geosearch_div,geosearch_zoomto,geosearch_zoombounds,geosearch_animate,geosearch_markresult,geosearch_popup,geosearch_attribution,geosearch_collapsed',
         'geopicker'                   => 'geopicker_fieldx,geopicker_fieldy,geopicker_searchdiv,geopicker_attribution,geopicker_disabled,geopicker_anonymous',
-        'router'                      => 'router_api_selection,router_alternative,router_viaroute_url,router_attribution,router_from_locstyle,router_to_locstyle,router_point_locstyle,router_interim_locstyle',
+        'router'                      => 'router_api_selection,router_viaroute_url,router_api_key,router_attribution,router_alternative,router_from_locstyle,router_to_locstyle,router_point_locstyle,router_interim_locstyle',
         'cesium'                      => 'cesium_always',
     ),
 
@@ -1028,7 +1028,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             'exclude'                 => true,
             'inputType'               => 'select',
             'default'                 => '1',
-            'options'                 => array('0','1'),
+            'options'                 => array('0','1','2'),
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_api_selection'],
             'eval'                    => array('tl_class'=>'clr long'),
             'sql'                     => "char(1) NOT NULL default '1'"
@@ -1042,6 +1042,14 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             'inputType'               => 'checkbox',
             'eval'                    => array('submitOnChange' => true),
             'sql'                     => "char(1) NOT NULL default ''"
+        ),
+        'router_api_key' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_api_key'],
+            'exclude'                 => true,
+            'inputType'               => 'text',
+            'eval'                    => array('rgxp'=>'url', 'decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'long'),
+            'sql'                     => "varchar(255) NOT NULL default ''"
         ),
         'router_from_locstyle' => array
         (
