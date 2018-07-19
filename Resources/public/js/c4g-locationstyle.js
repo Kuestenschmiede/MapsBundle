@@ -231,11 +231,12 @@ class C4gLocationStyle{
             } else {
                 label = false;
             }
+            let defaultColor = self.controller.mapController.data.default_label_color;
             // label
             if (label) {
                 if (styleData.label_outl_color && styleData.label_outl_width.value) {
                     textStyleOutline = new ol.style.Stroke({
-                        color: c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.label_outl_color, {
+                        color: c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.label_outl_color || defaultColor, {
                             unit: '%',
                             value: 100
                         }),
@@ -255,7 +256,7 @@ class C4gLocationStyle{
                     textAlign: styleData.label_align_hor,
                     textBaseline: styleData.label_align_ver,
                     fill: new ol.style.Fill({
-                        color: c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.font_color, styleData.font_opacity)
+                        color: c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.font_color || defaultColor, styleData.font_opacity)
                     }),
                     stroke: textStyleOutline
                 });
@@ -298,7 +299,7 @@ class C4gLocationStyle{
                     arrows_minzoom = parseInt(styleData.line_arrows_minzoom, 10);
                     start_pixel = self.controller.mapController.map.getPixelFromCoordinate(start);
                     end_pixel = self.controller.mapController.map.getPixelFromCoordinate(end);
-                    //distance between start and end
+                    // euclid-distance between start and end
                     segmentLength = Math.sqrt(Math.pow(end_pixel[1] - start_pixel[1], 2) + Math.pow(end_pixel[0] - start_pixel[0], 2));
 
                     if (

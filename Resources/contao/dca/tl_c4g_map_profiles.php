@@ -95,7 +95,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
         '__selector__'                => array('mouse_nav','starboard','cluster_all','baselayerswitcher','layerswitcher','attribution','hover_popups','permalink','geosearch','geopicker','router', 'cesium'),
         'default'                     => '{general_legend},name,is_default,theme;'.
                                          '{baselayer_legend:hide},baselayers, default_baselayer;'.
-                                         '{locstyle_legend:hide},locstyles;'.
+                                         '{locstyle_legend:hide},locstyles, label_color;'.
                                          '{navigation_legend},zoom_panel,zoom_panel_button,zoom_panel_slider,mouse_nav,touch_nav,keyboard_nav,fullscreen;'.
                                          '{starboard_legend:hide},starboard;'.
                                          '{information_legend},attribution,overviewmap,measuretool,graticule,scaleline,mouseposition,permalink,zoomlevel;'.
@@ -219,6 +219,15 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             'options_callback'        => array('tl_c4g_map_profiles','getAllLocStyles'),
             'eval'                    => array('mandatory'=>false, 'multiple'=>true),
             'sql'                     => "blob NULL"
+        ),
+
+        'label_color' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['label_color'],
+            'default'                 => '',
+            'inputType'               => 'text',
+            'eval'                    => array('maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'long wizard'),
+            'sql'                     => "varchar(6) NOT NULL default ''"
         ),
 
         'zoom_panel' => array

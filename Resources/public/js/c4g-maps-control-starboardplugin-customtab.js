@@ -310,7 +310,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
           }
           if (layer.hide === "1") {
             if (this.proxy.activeLayerIds[layer.id]) {
-              this.hideLayer(layer.id);
+              // this.hideLayer(layer.id);
             }
           }
           item = {};
