@@ -519,14 +519,51 @@ this.c4g.maps.control = this.c4g.maps.control || {};
     },
 
     getAttribution: function () {
-      var self = this,
+      let self = this,
+          attributionSearch,
+          attributionRouter,
+          attributionRouterHost,
           attributionWrapper,
           attributionHtml;
+      switch(self.options.mapController.data.router_api_selection){
+          case "0":
+              attributionRouter = '<a target="_blank" href="http://project-osrm.org/">Project OSRM</a>';
+              break;
+          case "1":
+              attributionRouter = '<a target="_blank" href="http://project-osrm.org/">Project OSRM</a>';
+              break;
+          case "2":
+              attributionRouter = '<a target="_blank" href="https://openrouteservice.org/">openrouteservice</a>';
+              break;
+      }
+      switch(self.options.mapController.data.geosearch.geosearch_engine){
+          case "1": //OSM
+              attributionSearch = '- Geocoder by <a target="_blank" href="https://nominatim.openstreetmap.org/">OpenStreetMap</a> ';
+              break;
+          case "2": //Mapquest
+              attributionSearch = '- Geocoder by <a target="_blank" href="http://www.mapquest.com/">MapQuest</a> ';
+              break;
+          case "3": //custom
+              attributionSearch = '- Nominatim-Geocoder ';
+              break;
+          case "4": //con4gis
+              attributionSearch = '- Geocoder by <a target="_blank" href="https://www.con4gis.org/kartendienste.html">con4gis</a> ';
+              break;
+      }
+        switch(self.options.mapController.data.router_api_selection){
+            case "0":
+                attributionRouterHost = '- OSRM hosting by <a target="_blank" href="http://algo2.iti.kit.edu/">KIT</a>';
+                break;
+            case "1":
+                attributionRouterHost = '- OSRM hosting by <a target="_blank" href="http://algo2.iti.kit.edu/">KIT</a>';
+                break;
+            case "2":
+                attributionRouterHost = '\'- ORS hosting by <a target="_blank" href="https://www.geog.uni-heidelberg.de/gis/heigit_en.html">HeiGIT</a>\'';
+                break;
+        }
 
       //ToDo check params
-      attributionHtml = 'Routing by <a target="_blank" href="http://project-osrm.org/">Project OSRM</a> ' +
-          '- Geocoder by <a target="_blank" href="http://www.mapquest.com/">MapQuest</a> ' + '- OSRM hosting by <a target="_blank" href="http://algo2.iti.kit.edu/">KIT</a>';
-
+      attributionHtml = attributionRouter + attributionSearch + attributionRouterHost;
       attributionWrapper = document.createElement('div');
       attributionWrapper.className = c4g.maps.constant.css.ROUTER_ATTRIBUTION_WRAPPER;
 
@@ -1090,6 +1127,10 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
 
           }
+          else if (this.options.mapController.data.router_api_selection == '2'){//OSR-API
+                  total_time = this.toHumanTime(routeResponse.routes[routeNumber].summary.duration);
+                  total_distance = this.toHumanDistance(routeResponse.routes[routeNumber].summary.distance);
+              }
 
           routerInstructionsHeader.innerHTML = '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_ROUTE + '</label> <em>' + route_name_0 + ' &#8594; ' + route_name_1 + '</em><br>' + '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_DISTANCE + '</label> <em>' + total_distance + '</em><br>' + '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_TIME + '</label> <em>' + total_time + '</em><br>';
 
@@ -1208,8 +1249,12 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                       routerInstructionsHtml += '<img class="' + c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_ICON + '" src="' + this.getInstructionIconORS(strType) + '" alt=""/>';
                       routerInstructionsHtml += '</td>';
 
-
-                      routerInstructionsHtml += '<td class="' + c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_TEXT + '" data-pos="' + instr.maneuver.location + '">';
+                      if(instr.maneuver){
+                          routerInstructionsHtml += '<td class="' + c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_TEXT + '" data-pos="' + instr.maneuver.location + '">';
+                      }
+                      else{
+                          routerInstructionsHtml += '<td class="' + c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_TEXT + '" data-pos="' + 0 + '">';
+                      }
 
 
                       // build route description

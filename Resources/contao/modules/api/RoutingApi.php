@@ -101,7 +101,7 @@ class RoutingApi extends \Frontend
                 $coordinates .=  explode(",",$arrInput[$i])[1].','.explode(",",$arrInput[$i])[0].'|';
             }
             $coordinates = substr($coordinates,0,strlen($coordinates)-1);
-            $profile = "&profile=driving-car&format=json&language=de&geometry_format=encodedpolyline&maneuvers=true,preference=fastest";
+            $profile = "&profile=driving-car&format=json&language=de&geometry_format=encodedpolyline&maneuvers=true&preference=fastest";
             $url = $strRoutingUrl.$apiKey.$coordinates.$profile;
             $REQUEST = new \Request();
             if ($_SERVER['HTTP_REFERER']) {
@@ -112,20 +112,20 @@ class RoutingApi extends \Frontend
             }
             $REQUEST->send($url);
             $response = $REQUEST->response;
-//            if($objMapsProfile->router_alternative == "1"){
-//                $REQUEST2 = new \Request();
-//                if ($_SERVER['HTTP_REFERER']) {
-//                    $REQUEST->setHeader('Referer', $_SERVER['HTTP_REFERER']);
-//                }
-//                if ($_SERVER['HTTP_USER_AGENT']) {
-//                    $REQUEST->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
-//                }
-//                $url = str_replace("preference=fastest","preference=shortest",$url);
-//                $REQUEST2->send($url);
-//                $response = \GuzzleHttp\json_decode($response, true);
-//                $response['routes'][1] = \GuzzleHttp\json_decode($REQUEST2->response, true)['routes'][0];
-//                $response = \GuzzleHttp\json_encode($response);
-//            }
+            if($objMapsProfile->router_alternative == "1"){
+                $REQUEST2 = new \Request();
+                if ($_SERVER['HTTP_REFERER']) {
+                    $REQUEST2->setHeader('Referer', $_SERVER['HTTP_REFERER']);
+                }
+                if ($_SERVER['HTTP_USER_AGENT']) {
+                    $REQUEST2->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
+                }
+                $url = str_replace("preference=fastest","preference=shortest",$url);
+                $REQUEST2->send($url);
+                $response = \GuzzleHttp\json_decode($response, true);
+                $response['routes'][1] = \GuzzleHttp\json_decode($REQUEST2->response, true)['routes'][0];
+                $response = \GuzzleHttp\json_encode($response);
+            }
 
 
         }
