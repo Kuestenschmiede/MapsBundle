@@ -17,7 +17,7 @@ $GLOBALS['con4gis']['maps']['debug'] = false;
 $GLOBALS['con4gis']['maps']['ol-version'] = '5.1.3';
 $GLOBALS['con4gis']['maps']['ol-cesium-version'] = 'v2.1';
 $GLOBALS['con4gis']['maps']['olms-version'] = 'v3.0.1';
-$GLOBALS['con4gis']['maps']['ol-ext'] = 'v2.0.5';
+$GLOBALS['con4gis']['maps']['ol-ext'] = 'v3.0.0';
 
 /**
  * Sourcetable definition
