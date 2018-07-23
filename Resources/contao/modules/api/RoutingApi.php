@@ -27,7 +27,7 @@ class RoutingApi extends \Frontend
      * @param  array $arrInput Fragments from request uri
      * @return mixed           JSON data
      */
-    public function generate($profileId, $locations)
+    public function generate($profileId, $locations, $profile = null)
     {
         $strParams = "";
         foreach ($_GET as $key=>$value) {
@@ -42,7 +42,7 @@ class RoutingApi extends \Frontend
                 }
             }
         }
-       return $this->getRoutingResponse($locations, $strParams, $profileId);
+       return $this->getRoutingResponse($locations, $strParams, $profileId, $profile);
     }
 
     /**
@@ -52,7 +52,7 @@ class RoutingApi extends \Frontend
      * @param $intProfileId
      * @return string
      */
-    protected function getRoutingResponse($arrInput, $strParams, $intProfileId)
+    protected function getRoutingResponse($arrInput, $strParams, $intProfileId, $profile)
     {
         $objMapsProfile = C4gMapProfilesModel::findBy('id', $intProfileId);
         if($objMapsProfile->router_api_selection == '1' || $objMapsProfile->router_api_selection == '0'){
@@ -101,7 +101,7 @@ class RoutingApi extends \Frontend
                 $coordinates .=  explode(",",$arrInput[$i])[1].','.explode(",",$arrInput[$i])[0].'|';
             }
             $coordinates = substr($coordinates,0,strlen($coordinates)-1);
-            $profile = "&profile=driving-car&format=json&language=de&geometry_format=encodedpolyline&maneuvers=true&preference=fastest";
+            $profile = "&profile=".$profile."&format=json&language=de&geometry_format=encodedpolyline&maneuvers=true&preference=fastest";
             $url = $strRoutingUrl.$apiKey.$coordinates.$profile;
             $REQUEST = new \Request();
             if ($_SERVER['HTTP_REFERER']) {

@@ -193,7 +193,10 @@ class MapsController extends BaseController
         $response = new Response();
         $routingApi = new RoutingApi();
         $locations = explode('/', $locations);
-        $returnData = $routingApi->generate($profileId, $locations);
+        if($request->query->get('profile')){
+            $profile = $request->query->get('profile');
+        }
+        $returnData = $routingApi->generate($profileId, $locations, $profile);
         $response->setContent($returnData);
         $response->headers->set('Content-Type', 'application/json');
         return $response;

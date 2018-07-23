@@ -1103,6 +1103,17 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             ),
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
         ),
+        'router_profiles' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_profiles'],
+            'exclude'                 => true,
+            'default'                 => array('0','1','2','3'),
+            'inputType'               => 'select',
+            'options'                 => array('0','1','2','3'),
+            'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles'],
+            'eval'                    => array('mandatory'=>false, 'multiple'=>true,'chosen'=>true),
+            'sql'                     => "blob NULL"
+        ),
         'cesium' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium'],
@@ -1226,6 +1237,9 @@ class tl_c4g_map_profiles extends Backend
             if($objProfile->router_api_selection == 2){
                 $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['router'] =
                     str_replace('router_api_selection,','router_api_selection,router_api_key,',
+                        $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['router']);
+                $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['router'] =
+                    str_replace('router_interim_locstyle','router_interim_locstyle,router_profiles',
                         $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['router']);
             }
 

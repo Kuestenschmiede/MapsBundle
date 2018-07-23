@@ -417,6 +417,9 @@ class MapDataConfigurator
                 $mapData['router_interim_locstyle'] = $profile->router_interim_locstyle;
                 $mapData['router_api_selection'] = $profile->router_api_selection;
                 $mapData['router_alternative'] = $profile->router_alternative;
+                if($profile->router_profiles){
+                    $mapData['router_profiles'] = unserialize($profile->router_profiles);
+                }
 
             }
 

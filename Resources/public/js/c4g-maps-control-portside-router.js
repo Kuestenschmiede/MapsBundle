@@ -266,12 +266,13 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
     addUserInterface: function () {
 
-      var self,
+      let self,
           routerView,
           routerViewInputWrapper,
           routerViewContentWrapper,
           routerViewContentHeadline,
           print,
+          routeProfile =[],
           routerFromLabel,
           routerOverLabel,
           routerToLabel,
@@ -327,6 +328,9 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       print.title = c4g.maps.constant.i18n.ROUTER_PRINT;
       this.$print = $(print);
 
+
+
+
       this.routerButtonBar = document.createElement('div');
       this.routerButtonBar.className = c4g.maps.constant.css.ROUTER_BUTTONBAR;
       this.routerButtonBar.appendChild(switchFromTo);
@@ -334,6 +338,73 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       this.routerButtonBar.appendChild(print);
 
         // $(print).insertBefore(document.getElementsByClassName("c4g-portside-hide")[0]);
+
+        //@ToDO add ORS-profile
+        if(this.options.mapController.data.router_api_selection == '2'){
+            this.routeProfile = document.createElement('div');
+            this.routeProfile.addClass(c4g.maps.constant.css.ROUTER_PROFILE_WRAPPER);
+            if(this.options.mapController.data.router_profiles.indexOf('0')>-1){
+                routeProfile.car = document.createElement('button');
+                routeProfile.car.addClass(c4g.maps.constant.css.ROUTER_PROFILE_CAR);
+                this.$routeProfileCar = $(routeProfile.car);
+                this.routeProfile.appendChild(routeProfile.car);
+                this.$routeProfileCar.click(function(event){
+                    self.clearSiblings(this);
+                    self.routeProfile.active = 'driving-car';
+                    self.recalculateRoute();
+                });
+            }
+
+            if(this.options.mapController.data.router_profiles.indexOf('1')>-1) {
+                routeProfile.hgv = document.createElement('button');
+                routeProfile.hgv.addClass(c4g.maps.constant.css.ROUTER_PROFILE_HGV);
+                this.routeProfile.appendChild(routeProfile.hgv);
+                this.$routeProfileHgv = $(routeProfile.hgv);
+
+                this.$routeProfileHgv.click(function(event){
+                    self.clearSiblings(this);
+                    self.routeProfile.active = 'driving-hgv';
+                    self.recalculateRoute();
+                });
+            }
+            if(this.options.mapController.data.router_profiles.indexOf('2')>-1){
+                routeProfile.bike = document.createElement('button');
+                routeProfile.bike.addClass(c4g.maps.constant.css.ROUTER_PROFILE_BIKE);
+                this.$routeProfileBike = $(routeProfile.bike);
+                this.routeProfile.appendChild(routeProfile.bike);
+                this.$routeProfileBike.click(function(event){
+                    self.clearSiblings(this);
+                    self.routeProfile.active = 'cycling-regular';
+                    self.recalculateRoute();
+                });
+            }
+            if(this.options.mapController.data.router_profiles.indexOf('2')>-1){
+                routeProfile.foot = document.createElement('button');
+                routeProfile.foot.addClass(c4g.maps.constant.css.ROUTER_PROFILE_FOOT);
+                this.$routeProfileFoot = $(routeProfile.foot);
+                this.routeProfile.appendChild(routeProfile.foot);
+                this.$routeProfileFoot.click(function(event){
+                    self.clearSiblings(this);
+                    self.routeProfile.active = 'foot-walking';
+                    self.recalculateRoute();
+                });
+            }
+            this.clearSiblings = function(element){
+                let siblings = $(element).parent().children();
+                for(let i = 0; i < siblings.length ; i++){
+                    siblings[i].removeClass(c4g.maps.constant.css.ACTIVE);
+                }
+                $(element).addClass(c4g.maps.constant.css.ACTIVE);
+            };
+            for(let profile in routeProfile){
+                if(routeProfile.hasOwnProperty(profile)){
+                    $(routeProfile[profile]).trigger('click');
+                    break;
+                }
+            }
+
+        }
+
 
 
       this.fromInputWrapper.appendChild(routerFromLabel);
@@ -408,9 +479,9 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       });
       this.$print.click(function (event){
           event.preventDefault();
-          var routingContent = document.getElementsByClassName("c4g-router-instructions-wrapper")[0];
+          let routingContent = document.getElementsByClassName("c4g-router-instructions-wrapper")[0];
           if(!routingContent) return;
-          var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+          let WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
           WinPrint.document.write(routingContent.innerHTML);
           WinPrint.document.close();
           WinPrint.focus();
@@ -429,8 +500,10 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       });
 
       routerViewInputWrapper.appendChild(this.routerButtonBar);
+      if(this.routeProfile){
+          routerViewInputWrapper.appendChild(this.routeProfile);
+      }
       routerViewInputWrapper.appendChild(this.fromInputWrapper);
-
 
       this.toInputWrapper = document.createElement('div');
       this.toInputWrapper.className = c4g.maps.constant.css.ROUTER_INPUT_WRAPPER;
@@ -641,7 +714,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
           }
 
       }
-        if (this.options.mapController.data.router_api_selection == '1' || this.options.mapController.data.router_api_selection == '2'){//OSRM-API:5.x
+        if (this.options.mapController.data.router_api_selection == '1' || this.options.mapController.data.router_api_selection == '2'){//OSRM-API:5.x or ORS- API
             url = self.routingApi + '/' + fromCoord ;
 
             if(overPoint){
@@ -649,6 +722,9 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                 url +='/'+overCoord[i];
             }
             url +='/'+toCoord;
+            if(this.routeProfile.active){
+                url += '?profile='+this.routeProfile.active;
+            }
             this.spinner.show();
 
             $.ajax({
