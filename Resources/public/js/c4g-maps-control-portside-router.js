@@ -391,7 +391,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
             this.clearSiblings = function(element){
                 let siblings = $(element).parent().children();
                 for(let i = 0; i < siblings.length ; i++){
-                    siblings[i].removeClass(c4g.maps.constant.css.ACTIVE);
+                    $(siblings[i]).removeClass(c4g.maps.constant.css.ACTIVE);
                 }
                 $(element).addClass(c4g.maps.constant.css.ACTIVE);
             };
@@ -1207,7 +1207,14 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                   total_distance = this.toHumanDistance(routeResponse.routes[routeNumber].summary.distance);
               }
 
-          routerInstructionsHeader.innerHTML = '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_ROUTE + '</label> <em>' + route_name_0 + ' &#8594; ' + route_name_1 + '</em><br>' + '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_DISTANCE + '</label> <em>' + total_distance + '</em><br>' + '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_TIME + '</label> <em>' + total_time + '</em><br>';
+          if(route_name_0 && route_name_1){
+              routerInstructionsHeader.innerHTML = '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_ROUTE + '</label> <em>' + route_name_0 + ' &#8594; ' + route_name_1 + '</em><br>' + '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_DISTANCE + '</label> <em>' + total_distance + '</em><br>' + '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_TIME + '</label> <em>' + total_time + '</em><br>';
+          }
+          else{
+              routerInstructionsHeader.innerHTML = '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_DISTANCE + '</label> <em>' + total_distance + '</em><br>' + '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_TIME + '</label> <em>' + total_time + '</em><br>';
+          }
+
+
 
           self.routerInstructionsWrapper.appendChild(routerInstructionsHeader);
 
