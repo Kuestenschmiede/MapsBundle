@@ -101,7 +101,14 @@ class RoutingApi extends \Frontend
                 $coordinates .=  explode(",",$arrInput[$i])[1].','.explode(",",$arrInput[$i])[0].'|';
             }
             $coordinates = substr($coordinates,0,strlen($coordinates)-1);
-            $profile = "&profile=".$profile."&format=json&language=de&geometry_format=encodedpolyline&maneuvers=true&preference=fastest";
+            $language = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+            if(!substr_count('cn, de, en, es, ru, dk, fr, it, nl, br, se, tr, gr',$language)){
+                $language = $GLOBALS['TL_LANGUAGE'];
+                if(!substr_count('cn, de, en, es, ru, dk, fr, it, nl, br, se, tr, gr',$language)){
+                    $language = "en";
+                }
+            }
+            $profile = "&profile=".$profile."&format=json&language=".$language."&geometry_format=encodedpolyline&maneuvers=true&preference=fastest";
             $url = $strRoutingUrl.$apiKey.$coordinates.$profile;
             $REQUEST = new \Request();
             if ($_SERVER['HTTP_REFERER']) {
