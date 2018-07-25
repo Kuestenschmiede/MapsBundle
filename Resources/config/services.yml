@@ -1,5 +1,6 @@
 services:
     con4gis.layer_service:
         class: con4gis\MapsBundle\Classes\Services\LayerService
+        public: true
         arguments:
             - "@event_dispatcher"
