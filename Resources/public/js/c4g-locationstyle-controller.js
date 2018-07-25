@@ -78,10 +78,10 @@ class C4gLocationStyleController{
                         }
                     }
                 }
-                if (options.success && typeof options.success === "function" && (index ? successful : true)) {
-                    options.success();
+                if (options.done && typeof options.done === "function" && (index ? successful : true)) {
+                    options.done();
                 }
-            }).complete(function (jXhr, strStatus) {
+            }).always(function (jXhr, strStatus) {
                 var completed = true;
 
                 if (index) {
@@ -95,8 +95,8 @@ class C4gLocationStyleController{
                         }
                     }
                 }
-                if (options.complete && typeof options.complete === "function" && (index ? completed : true)) {
-                    options.complete();
+                if (options.always && typeof options.always === "function" && (index ? completed : true)) {
+                    options.always();
                 }
                 if (!$(self.proxy.options.mapController.spinner.element).hasClass(c4g.maps.constant.css.HIDE)) {
                     self.proxy.options.mapController.spinner.hide();

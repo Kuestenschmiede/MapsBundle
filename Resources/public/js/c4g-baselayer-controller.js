@@ -43,9 +43,8 @@ class C4gBaselayerController {
 
         self = this;
 
-        jQuery.ajax({
-            dataType: this.mapController.data.jsonp ? "jsonp" : "json",
-            url: this.proxy.api_baselayer_url
+        jQuery.ajax(this.proxy.api_baselayer_url,{
+            dataType: this.mapController.data.jsonp ? "jsonp" : "json"
         })
             .done(function (data) {
                 if (data.baselayer) {

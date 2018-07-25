@@ -1072,10 +1072,10 @@ this.c4g.maps.control = this.c4g.maps.control || {};
             self.proxy.locationStyleController.loadLocationStyles(
                 neededStyles,
                 {
-                  success: function () {
+                  done: function () {
                     sortAndAddStyles();
                   },
-                  complete: function () {
+                  always: function () {
                     // Hide loading-animation
                     self.spinner.hide();
                     self.update();
@@ -1213,14 +1213,14 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         self.proxy.locationStyleController.loadLocationStyles(
             neededStyles,
             {
-              success: function () {
+              done: function () {
                 importFeatures();
                 // Call hook functions on load
                 if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.editor_onLoad === 'object') {
                   c4g.maps.utils.callHookFunctions(c4g.maps.hook.editor_onLoad, loadData);
                 }
               },
-              complete: function () {
+              always: function () {
                 // Hide loading-animation
                 self.spinner.hide();
               }
@@ -1367,10 +1367,10 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         self.proxy.locationStyleController.loadLocationStyles(
             neededStyles,
             {
-              success: function () {
+              done: function () {
                 importFeatures();
               },
-              complete: function () {
+              always: function () {
                 // Hide loading-animation
                 self.spinner.hide();
               }

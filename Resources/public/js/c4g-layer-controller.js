@@ -33,16 +33,16 @@ class C4gLayerController{
       return false;
     }
 
-    jQuery.ajax({
-      dataType: this.mapController.data.jsonp ? "jsonp" : "json",
-      url: this.proxy.api_layer_url
+    jQuery.ajax(this.proxy.api_layer_url,{
+      dataType: this.mapController.data.jsonp ? "jsonp" : "json"
+
     }).done(function (data) {
       self.addLayers(data.layer, data.foreignLayers);
       self.proxy.layers_loaded = true;
       c4g.maps.utils.callHookFunctions(self.proxy.hook_layer_loaded, self.proxy.layerIds);
       c4g.maps.utils.callHookFunctions(c4g.maps.hook.proxy_layer_loaded, {layerIds: self.proxy.layerIds, proxy: self.proxy});
       self.proxy.checkLocationStyles({
-        success: function () {
+        done: function () {
           self.drawLayerInitial();
         }
       });
@@ -361,7 +361,7 @@ class C4gLayerController{
 
             c4g.maps.requests['layerDataRequest' + itemUid] = jQuery.ajax({
               url: self.api_layercontentdata_url + '/' + self.arrLayers[itemUid].id +'/'+strBoundingBox,
-              success :function (data){
+              done: function (data){
                 if(data.length > 0 && !contentFeatures){
                   contentFeatures = [];
                 }
@@ -399,7 +399,7 @@ class C4gLayerController{
 
                   }
                 if(missingStyles){
-                  self.proxy.locationStyleController.loadLocationStyles(missingStyles, {success: function() {
+                  self.proxy.locationStyleController.loadLocationStyles(missingStyles, {done: function() {
                       for(i = 0; i < unstyledFeatures.length; i++){
                         var styleId =unstyledFeatures[i].get('styleId');
                         unstyledFeatures[i].setStyle(self.proxy.locationStyleController.arrLocStyles[styleId].style);
@@ -413,7 +413,7 @@ class C4gLayerController{
                   requestVectorSource.addFeatures(contentFeatures);
                 }
               },
-              complete: function () {
+              always: function () {
                 self.mapController.spinner.hide();
               }
             })
@@ -776,7 +776,7 @@ class C4gLayerController{
 
                     jQuery.ajax({
                       url: requestData.url,
-                      success: function (data) {
+                      done: function (data) {
 
                         if (data.renewableResponse) {
                           // update of stations
@@ -790,7 +790,7 @@ class C4gLayerController{
                               var popupContent = featureData.properties.popup;
                               layer.vectorLayer.getLayers().forEach(function(element, index, array) {
                                 if (!self.proxy.locationStyleController.arrLocStyles[featureData.properties.styleId]) {
-                                  self.proxy.locationStyleController.loadLocationStyles([featureData.properties.styleId], {success: function() {
+                                  self.proxy.locationStyleController.loadLocationStyles([featureData.properties.styleId], {done: function() {
                                       element.setStyle(self.proxy.locationStyleController.arrLocStyles[featureData.properties.styleId].style);
                                     }});
                                 } else {
@@ -803,7 +803,7 @@ class C4gLayerController{
                               layer.content[0].locationStyle = featureData.properties.styleId;
 
                               if (!self.proxy.locationStyleController.arrLocStyles[featureData.properties.styleId]) {
-                                self.proxy.locationStyleController.loadLocationStyles([featureData.properties.styleId], {success: function() {
+                                self.proxy.locationStyleController.loadLocationStyles([featureData.properties.styleId], {done: function() {
                                     feature.setStyle(self.proxy.locationStyleController.arrLocStyles[featureData.properties.styleId].style);
                                   }});
                               } else {
@@ -1096,12 +1096,12 @@ class C4gLayerController{
       //
       //             c4g.maps.requests['layerDataRequest' + itemUid] = jQuery.ajax({
       //                 url: self.api_layercontentdata_url + '/' + c4g.maps.layers[itemUid].id,
-      //                 success :function (data){
+      //                 done :function (data){
       //                     if(data.lenth > 0){
       //                         console.log("Läuft");
       //                     }
       //                 },
-      //                 complete: function () {
+      //                 always: function () {
       //                     self.mapController.spinner.hide();
       //                 }
       //             })
@@ -1116,7 +1116,7 @@ class C4gLayerController{
       jQuery.ajax({
         dataType: self.mapController.data.jsonp ? "jsonp" : "json",
         url: self.proxy.api_layercontent_url + '/' + self.arrLayers[itemUid].id,
-        success: function (data) {
+        done: function (data) {
           var j,
             newLocationStyles;
 
@@ -1133,7 +1133,7 @@ class C4gLayerController{
             }
 
             self.proxy.checkLocationStyles({
-              success: function () {
+              done: function () {
                 // @TODO: check this!
                 self.loadLayerContent(itemUid);
               }
@@ -1141,7 +1141,7 @@ class C4gLayerController{
 
           }
         },
-        complete: function () {
+        always: function () {
           self.mapController.spinner.hide();
         }
       });
@@ -1264,7 +1264,7 @@ class C4gLayerController{
                 jQuery.ajax({
                   dataType: "json",
                   url: self.api_infowindow_url + '/' + popupInfos.content,
-                  success: function (data) {
+                  done: function (data) {
                     var popupInfo = {
                       async: popupInfos.async,
                       content: data.content,
@@ -1425,7 +1425,7 @@ class C4gLayerController{
           }
           if (missingStyles.length > 0) {
             this.proxy.locationStyleController.loadLocationStyles(missingStyles, {
-              success: function () {
+              done: function () {
                 var f,
                   fLayerGroup,
                   fLayers,
@@ -1551,7 +1551,7 @@ class C4gLayerController{
         jQuery.ajax({
           dataType: "json",
           url: self.api_infowindow_url + '/' + popupInfos.content,
-          success: function (data) {
+          done: function (data) {
             var popupInfo = {
               async: popupInfos.async,
               content: data.content,

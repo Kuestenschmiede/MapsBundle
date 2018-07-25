@@ -870,7 +870,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                                 $.ajax({
                                     dataType: "json",
                                     url: self.api_infowindow_url + '/' + popupInfos.content,
-                                    success: function (data) {
+                                    done: function (data) {
                                         var popupInfo = {
                                             async: popupInfos.async,
                                             content: data.content,

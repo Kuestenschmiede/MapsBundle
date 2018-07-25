@@ -373,7 +373,7 @@ this.c4g.maps.misc = this.c4g.maps.misc || {};
                     $.ajax({
                         dataType: "json",
                         url: proxy.api_infowindow_url + '/' + popupInfos.content,
-                        success: function (data) {
+                        done: function (data) {
                             var popupInfo = {
                                 async: popupInfos.async,
                                 content: data.content,

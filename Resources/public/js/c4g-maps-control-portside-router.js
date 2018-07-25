@@ -728,14 +728,14 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
             $.ajax({
                 'url': url,
-                'success': function (response) {
+                'done': function (response) {
                     self.response = response;
                     if (response) {
                         self.showRoute(response);
                     }
 
                 }
-            }).done(function () {
+            }).always(function () {
                 self.spinner.hide();
                 self.update();
             });
@@ -748,14 +748,14 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
             $.ajax({
                 'url': url,
-                'success': function (response) {
+                'done': function (response) {
 
                     if (response) {
                         self.showRoute(response);
                     }
 
                 }
-            }).done(function () {
+            }).always(function () {
                 self.spinner.hide();
                 self.update();
             });
@@ -1489,7 +1489,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
       $.ajax({
         'url': url,
-        'success': function (response) {
+        'done': function (response) {
 
           if (response) {
             var value = "";
@@ -1529,7 +1529,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
           }
 
         }
-      }).done(function () {
+      }).always(function () {
         self.spinner.hide();
       });
 
@@ -1560,7 +1560,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
       $.ajax({
         'url': url,
-        'success': function (response) {
+        'done': function (response) {
 
           if (response.length > 0) {
             if(value ==="overValue"){
@@ -1583,7 +1583,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
           self.recalculateRoute();
         },
-        'error': function () {
+        'fail': function () {
           alert(c4g.maps.constant.i18n.ROUTER_VIEW_ALERT_GEOCODING);
         }
       });

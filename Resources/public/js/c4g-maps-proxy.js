@@ -490,7 +490,7 @@ class MapProxy {
               jQuery.ajax({
                 dataType: "json",
                 url: self.api_infowindow_url + '/' + popupInfos.content,
-                success: function (data) {
+                done: function (data) {
                   var popupInfo = {
                     async: popupInfos.async,
                     content: data.content,
@@ -723,8 +723,8 @@ class MapProxy {
     if (neededLayerStyles.length > 0) {
       this.locationStyleController.loadLocationStyles(neededLayerStyles, options);
     } else {
-      if (options.success && typeof options.success === "function") {
-        options.success();
+      if (options.done && typeof options.done === "function") {
+        options.done();
       }
     }
   } // end of "checkLocationStyles()"
