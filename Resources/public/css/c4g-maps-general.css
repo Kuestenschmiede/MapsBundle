@@ -281,6 +281,7 @@ button.c4g-geosearch-start:before {
 .c4g-starboard-statusbar,
 .c4g-portside-statusbar {
   height: 18px;
+  border-bottom: 2px solid;
 }
 
 /*.c4g-portside-top-toolbar,*/

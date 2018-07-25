@@ -193,7 +193,7 @@ button.c4g-draw-trigger.c4g-active {
 
 .c4g-portside-statusbar,
 .c4g-starboard-statusbar {
-  border-color: var(--main-color);
+  border-color: var(--shadow-color);
   background-color: transparent;
   color: transparent;
 }
