@@ -123,7 +123,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
         'permalink'                   => 'permalink_get_param',
         'geosearch'                   => 'geosearch_engine,geosearch_results,geosearch_show,geosearch_div,geosearch_zoomto,geosearch_zoombounds,geosearch_animate,geosearch_markresult,geosearch_popup,geosearch_attribution,geosearch_collapsed',
         'geopicker'                   => 'geopicker_fieldx,geopicker_fieldy,geopicker_searchdiv,geopicker_attribution,geopicker_disabled,geopicker_anonymous',
-        'router'                      => 'router_api_selection,router_viaroute_url,router_api_key,router_attribution,router_alternative,router_from_locstyle,router_to_locstyle,router_point_locstyle,router_interim_locstyle',
+        'router'                      => 'router_api_selection,router_viaroute_url,router_attribution,router_alternative,router_from_locstyle,router_to_locstyle,router_point_locstyle,router_interim_locstyle',
         'cesium'                      => 'cesium_always',
     ),
 
@@ -1030,7 +1030,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             'default'                 => '1',
             'options'                 => array('0','1','2'),
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_api_selection'],
-            'eval'                    => array('tl_class'=>'clr long'),
+            'eval'                    => array('tl_class'=>'clr long','submitOnChange' => true),
             'sql'                     => "char(1) NOT NULL default '1'"
 
         ),
@@ -1103,6 +1103,17 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             ),
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
         ),
+        'router_profiles' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_profiles'],
+            'exclude'                 => true,
+            'default'                 => array('0','1','2','3'),
+            'inputType'               => 'select',
+            'options'                 => array('0','1','2','3'),
+            'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles'],
+            'eval'                    => array('mandatory'=>false, 'multiple'=>true,'chosen'=>true),
+            'sql'                     => "blob NULL"
+        ),
         'cesium' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium'],
@@ -1129,7 +1140,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
  */
 class tl_c4g_map_profiles extends Backend
 {
-
     public function set_default($varValue, DataContainer $dc)
     {
         if ($varValue) {
@@ -1198,7 +1208,7 @@ class tl_c4g_map_profiles extends Backend
         if (!$dc->id) {
             return;
         }
-        $objProfile = $this->Database->prepare("SELECT zoom_panel, geosearch_engine, be_optimize_checkboxes_limit FROM tl_c4g_map_profiles WHERE id=?")
+        $objProfile = $this->Database->prepare("SELECT zoom_panel, geosearch_engine, be_optimize_checkboxes_limit, router_api_selection FROM tl_c4g_map_profiles WHERE id=?")
         ->limit(1)
         ->execute($dc->id);
         if ($objProfile->numRows > 0) {
@@ -1221,6 +1231,16 @@ class tl_c4g_map_profiles extends Backend
                 $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['geosearch'] =
                     str_replace(',geosearch_div,',',geosearch_key,geosearch_div,',
                         $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['geosearch']);
+            }
+
+
+            if($objProfile->router_api_selection == 2){
+                $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['router'] =
+                    str_replace('router_api_selection,','router_api_selection,router_api_key,',
+                        $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['router']);
+                $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['router'] =
+                    str_replace('router_interim_locstyle','router_interim_locstyle,router_profiles',
+                        $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['router']);
             }
 
 

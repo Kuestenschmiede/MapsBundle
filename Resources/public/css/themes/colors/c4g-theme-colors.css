@@ -175,6 +175,16 @@ button.c4g-draw-trigger.c4g-active {
   border-color: var(--shadow-color);
   background-color: var(--font-color);
 }
+.c4g-router-profile-wrapper button {
+  color: var(--font-color);
+  border-color: var(--shadow-color);
+  background-color: var(--main-color);
+}
+
+.c4g-router-profile-wrapper button.c4g-active {
+  color: var(--shadow-color);
+}
+
 .c4g-content-select input:focus {
   color: var(--main-color);
   border-color: var(--main-color);

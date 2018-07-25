@@ -180,6 +180,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_viaroute_url']   = array('Alt
                                                                             'Default: http://router.project-osrm.org/viaroute or https://api.openrouteservice.org/directions?');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_api_key']        = array('API-Key',
                                                                             'Enter your API-key here. You can generate the key <a href="https://openrouteservice.org/sign-up/" target="_blank">here</a>.');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_profiles']       = array('Router-profiles',
+                                                                            'Enter the profiles for OpenRouteService');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_attribution']    = array('Override OSRM attribution',
                                                                             'Only override the attribution if you use another API-server, or put the attribution somewhere prominent else on your page!');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_styles_point']   = array('Location styles for POIs',
@@ -237,6 +239,10 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_api_selection']['0
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_api_selection']['1'] = 'OpenSourceRoutingMachine (API 5.x)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_api_selection']['2'] = 'OpenRouteService (API 5.x)';
 
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles']['0'] = 'Car';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles']['1'] = 'Truck';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles']['2'] = 'Bicycle';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles']['3'] = 'Pedestrian';
 /**
  * Buttons
  */

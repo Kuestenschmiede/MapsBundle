@@ -266,12 +266,13 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
     addUserInterface: function () {
 
-      var self,
+      let self,
           routerView,
           routerViewInputWrapper,
           routerViewContentWrapper,
           routerViewContentHeadline,
           print,
+          routeProfile =[],
           routerFromLabel,
           routerOverLabel,
           routerToLabel,
@@ -327,6 +328,9 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       print.title = c4g.maps.constant.i18n.ROUTER_PRINT;
       this.$print = $(print);
 
+
+
+
       this.routerButtonBar = document.createElement('div');
       this.routerButtonBar.className = c4g.maps.constant.css.ROUTER_BUTTONBAR;
       this.routerButtonBar.appendChild(switchFromTo);
@@ -334,6 +338,72 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       this.routerButtonBar.appendChild(print);
 
         // $(print).insertBefore(document.getElementsByClassName("c4g-portside-hide")[0]);
+
+        if(this.options.mapController.data.router_api_selection == '2'){
+            this.routeProfile = document.createElement('div');
+            $(this.routeProfile).addClass(c4g.maps.constant.css.ROUTER_PROFILE_WRAPPER);
+            if(this.options.mapController.data.router_profiles.indexOf('0')>-1){
+                routeProfile.car = document.createElement('button');
+                $(routeProfile.car).addClass(c4g.maps.constant.css.ROUTER_PROFILE_CAR);
+                this.$routeProfileCar = $(routeProfile.car);
+                this.routeProfile.appendChild(routeProfile.car);
+                this.$routeProfileCar.click(function(event){
+                    self.clearSiblings(this);
+                    self.routeProfile.active = 'driving-car';
+                    self.recalculateRoute();
+                });
+            }
+
+            if(this.options.mapController.data.router_profiles.indexOf('1')>-1) {
+                routeProfile.hgv = document.createElement('button');
+                $(routeProfile.hgv).addClass(c4g.maps.constant.css.ROUTER_PROFILE_HGV);
+                this.routeProfile.appendChild(routeProfile.hgv);
+                this.$routeProfileHgv = $(routeProfile.hgv);
+
+                this.$routeProfileHgv.click(function(event){
+                    self.clearSiblings(this);
+                    self.routeProfile.active = 'driving-hgv';
+                    self.recalculateRoute();
+                });
+            }
+            if(this.options.mapController.data.router_profiles.indexOf('2')>-1){
+                routeProfile.bike = document.createElement('button');
+                $(routeProfile.bike).addClass(c4g.maps.constant.css.ROUTER_PROFILE_BIKE);
+                this.$routeProfileBike = $(routeProfile.bike);
+                this.routeProfile.appendChild(routeProfile.bike);
+                this.$routeProfileBike.click(function(event){
+                    self.clearSiblings(this);
+                    self.routeProfile.active = 'cycling-regular';
+                    self.recalculateRoute();
+                });
+            }
+            if(this.options.mapController.data.router_profiles.indexOf('2')>-1){
+                routeProfile.foot = document.createElement('button');
+                $(routeProfile.foot).addClass(c4g.maps.constant.css.ROUTER_PROFILE_FOOT);
+                this.$routeProfileFoot = $(routeProfile.foot);
+                this.routeProfile.appendChild(routeProfile.foot);
+                this.$routeProfileFoot.click(function(event){
+                    self.clearSiblings(this);
+                    self.routeProfile.active = 'foot-walking';
+                    self.recalculateRoute();
+                });
+            }
+            this.clearSiblings = function(element){
+                let siblings = $(element).parent().children();
+                for(let i = 0; i < siblings.length ; i++){
+                    $(siblings[i]).removeClass(c4g.maps.constant.css.ACTIVE);
+                }
+                $(element).addClass(c4g.maps.constant.css.ACTIVE);
+            };
+            for(let profile in routeProfile){
+                if(routeProfile.hasOwnProperty(profile)){
+                    $(routeProfile[profile]).trigger('click');
+                    break;
+                }
+            }
+
+        }
+
 
 
       this.fromInputWrapper.appendChild(routerFromLabel);
@@ -408,9 +478,9 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       });
       this.$print.click(function (event){
           event.preventDefault();
-          var routingContent = document.getElementsByClassName("c4g-router-instructions-wrapper")[0];
+          let routingContent = document.getElementsByClassName("c4g-router-instructions-wrapper")[0];
           if(!routingContent) return;
-          var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+          let WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
           WinPrint.document.write(routingContent.innerHTML);
           WinPrint.document.close();
           WinPrint.focus();
@@ -429,8 +499,10 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       });
 
       routerViewInputWrapper.appendChild(this.routerButtonBar);
+      if(this.routeProfile){
+          routerViewInputWrapper.appendChild(this.routeProfile);
+      }
       routerViewInputWrapper.appendChild(this.fromInputWrapper);
-
 
       this.toInputWrapper = document.createElement('div');
       this.toInputWrapper.className = c4g.maps.constant.css.ROUTER_INPUT_WRAPPER;
@@ -519,14 +591,51 @@ this.c4g.maps.control = this.c4g.maps.control || {};
     },
 
     getAttribution: function () {
-      var self = this,
+      let self = this,
+          attributionSearch,
+          attributionRouter,
+          attributionRouterHost,
           attributionWrapper,
           attributionHtml;
+      switch(self.options.mapController.data.router_api_selection){
+          case "0":
+              attributionRouter = '<a target="_blank" href="http://project-osrm.org/">Project OSRM</a>';
+              break;
+          case "1":
+              attributionRouter = '<a target="_blank" href="http://project-osrm.org/">Project OSRM</a>';
+              break;
+          case "2":
+              attributionRouter = '<a target="_blank" href="https://openrouteservice.org/">openrouteservice</a>';
+              break;
+      }
+      switch(self.options.mapController.data.geosearch.geosearch_engine){
+          case "1": //OSM
+              attributionSearch = '- Geocoder by <a target="_blank" href="https://nominatim.openstreetmap.org/">OpenStreetMap</a> ';
+              break;
+          case "2": //Mapquest
+              attributionSearch = '- Geocoder by <a target="_blank" href="http://www.mapquest.com/">MapQuest</a> ';
+              break;
+          case "3": //custom
+              attributionSearch = '- Nominatim-Geocoder ';
+              break;
+          case "4": //con4gis
+              attributionSearch = '- Geocoder by <a target="_blank" href="https://www.con4gis.org/kartendienste.html">con4gis</a> ';
+              break;
+      }
+        switch(self.options.mapController.data.router_api_selection){
+            case "0":
+                attributionRouterHost = '- OSRM hosting by <a target="_blank" href="http://algo2.iti.kit.edu/">KIT</a>';
+                break;
+            case "1":
+                attributionRouterHost = '- OSRM hosting by <a target="_blank" href="http://algo2.iti.kit.edu/">KIT</a>';
+                break;
+            case "2":
+                attributionRouterHost = '\'- ORS hosting by <a target="_blank" href="https://www.geog.uni-heidelberg.de/gis/heigit_en.html">HeiGIT</a>\'';
+                break;
+        }
 
       //ToDo check params
-      attributionHtml = 'Routing by <a target="_blank" href="http://project-osrm.org/">Project OSRM</a> ' +
-          '- Geocoder by <a target="_blank" href="http://www.mapquest.com/">MapQuest</a> ' + '- OSRM hosting by <a target="_blank" href="http://algo2.iti.kit.edu/">KIT</a>';
-
+      attributionHtml = attributionRouter + attributionSearch + attributionRouterHost;
       attributionWrapper = document.createElement('div');
       attributionWrapper.className = c4g.maps.constant.css.ROUTER_ATTRIBUTION_WRAPPER;
 
@@ -604,7 +713,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
           }
 
       }
-        if (this.options.mapController.data.router_api_selection == '1' || this.options.mapController.data.router_api_selection == '2'){//OSRM-API:5.x
+        if (this.options.mapController.data.router_api_selection == '1' || this.options.mapController.data.router_api_selection == '2'){//OSRM-API:5.x or ORS- API
             url = self.routingApi + '/' + fromCoord ;
 
             if(overPoint){
@@ -612,6 +721,9 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                 url +='/'+overCoord[i];
             }
             url +='/'+toCoord;
+            if(this.routeProfile && this.routeProfile.active){
+                url += '?profile='+this.routeProfile.active;
+            }
             this.spinner.show();
 
             $.ajax({
@@ -1090,8 +1202,19 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
 
           }
+          else if (this.options.mapController.data.router_api_selection == '2'){//OSR-API
+                  total_time = this.toHumanTime(routeResponse.routes[routeNumber].summary.duration);
+                  total_distance = this.toHumanDistance(routeResponse.routes[routeNumber].summary.distance);
+              }
 
-          routerInstructionsHeader.innerHTML = '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_ROUTE + '</label> <em>' + route_name_0 + ' &#8594; ' + route_name_1 + '</em><br>' + '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_DISTANCE + '</label> <em>' + total_distance + '</em><br>' + '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_TIME + '</label> <em>' + total_time + '</em><br>';
+          if(route_name_0 && route_name_1){
+              routerInstructionsHeader.innerHTML = '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_ROUTE + '</label> <em>' + route_name_0 + ' &#8594; ' + route_name_1 + '</em><br>' + '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_DISTANCE + '</label> <em>' + total_distance + '</em><br>' + '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_TIME + '</label> <em>' + total_time + '</em><br>';
+          }
+          else{
+              routerInstructionsHeader.innerHTML = '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_DISTANCE + '</label> <em>' + total_distance + '</em><br>' + '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_TIME + '</label> <em>' + total_time + '</em><br>';
+          }
+
+
 
           self.routerInstructionsWrapper.appendChild(routerInstructionsHeader);
 
@@ -1187,7 +1310,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                   routerInstructionsHtml += "</tr>";
               }
           }
-          else if(this.options.mapController.data.router_api_selection === '2' || true){//OpenRouteService
+          else if(this.options.mapController.data.router_api_selection === '2' ){//OpenRouteService
               for (j = 0; j < routeResponse.routes[routeNumber].segments.length; j += 1) {
                   for (i = 0; i < routeResponse.routes[routeNumber].segments[j].steps.length; i += 1) {
                       instr = routeResponse.routes[routeNumber].segments[j].steps[i];
@@ -1208,8 +1331,12 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                       routerInstructionsHtml += '<img class="' + c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_ICON + '" src="' + this.getInstructionIconORS(strType) + '" alt=""/>';
                       routerInstructionsHtml += '</td>';
 
-
-                      routerInstructionsHtml += '<td class="' + c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_TEXT + '" data-pos="' + instr.maneuver.location + '">';
+                      if(instr.maneuver){
+                          routerInstructionsHtml += '<td class="' + c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_TEXT + '" data-pos="' + instr.maneuver.location + '">';
+                      }
+                      else{
+                          routerInstructionsHtml += '<td class="' + c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_TEXT + '" data-pos="' + 0 + '">';
+                      }
 
 
                       // build route description
@@ -1221,9 +1348,9 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                       routerInstructionsHtml += "</td>";
 
                       routerInstructionsHtml += '<td class="' + c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_DISTANCE + '">';
-                      // if (i !== routeResponse.routes[routeNumber].legs[0].steps.length - 1) {
-                      //     routerInstructionsHtml += this.toHumanDistance(instr.distance);
-                      // }
+                      if (i !== routeResponse.routes[routeNumber].segments[0].steps.length - 1) {
+                          routerInstructionsHtml += this.toHumanDistance(instr.distance);
+                      }
                       routerInstructionsHtml += "</td>";
 
                       routerInstructionsHtml += "</tr>";
@@ -1262,7 +1389,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                   self.options.mapController.map.getView().setCenter(currentCoordinates);
               }
           }
-          if(self.routingWaySource && self.options.mapController.data.router_api_selection == '1'){
+          if(self.routingWaySource && self.options.mapController.data.router_api_selection >= '1'){
               self.routingHintSource.clear();
               var coordLonLat = element.data('pos');
               var stringlonlat = coordLonLat.split(",");
@@ -1288,7 +1415,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                 self.routingHintSource.addFeature(currentHintFeature);
             }
         }
-        if (self.routingWaySource && self.routingWaySource.getFeatures() && self.options.mapController.data.router_api_selection == '1') {
+        if (self.routingWaySource && self.routingWaySource.getFeatures() && self.options.mapController.data.router_api_selection >= '1') {
             var feature = self.routingWaySource.getFeatures()[0];
             if (feature) {
                 self.routingHintSource.clear();

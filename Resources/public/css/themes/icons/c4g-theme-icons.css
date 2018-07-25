@@ -79,6 +79,18 @@ button.ol-full-screen-true:before {
 button.c4g-router-print:before {
   content: "\f02f";
 }
+button.c4g-router-profile-car:before {
+  content: "\f1b9";
+}
+button.c4g-router-profile-hgv:before {
+  content: "\f207";
+}
+button.c4g-router-profile-bike:before {
+  content: "\f206";
+}
+button.c4g-router-profile-foot:before {
+  content: "\f554";
+}
 button.c4g-router-switch:before {
   content: "\f0dc";
 }

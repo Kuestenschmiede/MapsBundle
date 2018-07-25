@@ -27,7 +27,7 @@ class RoutingApi extends \Frontend
      * @param  array $arrInput Fragments from request uri
      * @return mixed           JSON data
      */
-    public function generate($profileId, $locations)
+    public function generate($profileId, $locations, $profile = null)
     {
         $strParams = "";
         foreach ($_GET as $key=>$value) {
@@ -42,7 +42,7 @@ class RoutingApi extends \Frontend
                 }
             }
         }
-       return $this->getRoutingResponse($locations, $strParams, $profileId);
+       return $this->getRoutingResponse($locations, $strParams, $profileId, $profile);
     }
 
     /**
@@ -52,7 +52,7 @@ class RoutingApi extends \Frontend
      * @param $intProfileId
      * @return string
      */
-    protected function getRoutingResponse($arrInput, $strParams, $intProfileId)
+    protected function getRoutingResponse($arrInput, $strParams, $intProfileId, $profile)
     {
         $objMapsProfile = C4gMapProfilesModel::findBy('id', $intProfileId);
         if($objMapsProfile->router_api_selection == '1' || $objMapsProfile->router_api_selection == '0'){
@@ -101,7 +101,14 @@ class RoutingApi extends \Frontend
                 $coordinates .=  explode(",",$arrInput[$i])[1].','.explode(",",$arrInput[$i])[0].'|';
             }
             $coordinates = substr($coordinates,0,strlen($coordinates)-1);
-            $profile = "&profile=driving-car&format=json&language=de&geometry_format=encodedpolyline&maneuvers=true,preference=fastest";
+            $language = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+            if(!substr_count('cn, de, en, es, ru, dk, fr, it, nl, br, se, tr, gr',$language)){
+                $language = $GLOBALS['TL_LANGUAGE'];
+                if(!substr_count('cn, de, en, es, ru, dk, fr, it, nl, br, se, tr, gr',$language)){
+                    $language = "en";
+                }
+            }
+            $profile = "&profile=".$profile."&format=json&language=".$language."&geometry_format=encodedpolyline&maneuvers=true&preference=fastest";
             $url = $strRoutingUrl.$apiKey.$coordinates.$profile;
             $REQUEST = new \Request();
             if ($_SERVER['HTTP_REFERER']) {
@@ -112,20 +119,20 @@ class RoutingApi extends \Frontend
             }
             $REQUEST->send($url);
             $response = $REQUEST->response;
-//            if($objMapsProfile->router_alternative == "1"){
-//                $REQUEST2 = new \Request();
-//                if ($_SERVER['HTTP_REFERER']) {
-//                    $REQUEST->setHeader('Referer', $_SERVER['HTTP_REFERER']);
-//                }
-//                if ($_SERVER['HTTP_USER_AGENT']) {
-//                    $REQUEST->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
-//                }
-//                $url = str_replace("preference=fastest","preference=shortest",$url);
-//                $REQUEST2->send($url);
-//                $response = \GuzzleHttp\json_decode($response, true);
-//                $response['routes'][1] = \GuzzleHttp\json_decode($REQUEST2->response, true)['routes'][0];
-//                $response = \GuzzleHttp\json_encode($response);
-//            }
+            if($objMapsProfile->router_alternative == "1"){
+                $REQUEST2 = new \Request();
+                if ($_SERVER['HTTP_REFERER']) {
+                    $REQUEST2->setHeader('Referer', $_SERVER['HTTP_REFERER']);
+                }
+                if ($_SERVER['HTTP_USER_AGENT']) {
+                    $REQUEST2->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
+                }
+                $url = str_replace("preference=fastest","preference=shortest",$url);
+                $REQUEST2->send($url);
+                $response = \GuzzleHttp\json_decode($response, true);
+                $response['routes'][1] = \GuzzleHttp\json_decode($REQUEST2->response, true)['routes'][0];
+                $response = \GuzzleHttp\json_encode($response);
+            }
 
 
         }
