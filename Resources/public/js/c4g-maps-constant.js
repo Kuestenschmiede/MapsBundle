@@ -134,6 +134,9 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
     ROUTER_PROFILE_HGV: 'c4g-router-profile-hgv',
     ROUTER_PROFILE_BIKE: 'c4g-router-profile-bike',
     ROUTER_PROFILE_FOOT: 'c4g-router-profile-foot',
+    ROUTER_PROFILE_WHEELCHAIR: 'c4g-router-profile-wheelchair',
+
+
 
     ROUTER_INSTRUCTIONS_TABLE: 'c4g-router-instruction-table',
     ROUTER_INSTRUCTIONS_ITEM: 'c4g-router-instruction-item',

@@ -181,6 +181,7 @@ button.c4g-draw-trigger.c4g-active {
   background-color: var(--main-color);
 }
 
+.c4g-router-profile-wrapper .c4g-active button,
 .c4g-router-profile-wrapper button.c4g-active {
   color: var(--shadow-color);
 }

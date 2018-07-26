@@ -418,7 +418,11 @@ class MapDataConfigurator
                 $mapData['router_api_selection'] = $profile->router_api_selection;
                 $mapData['router_alternative'] = $profile->router_alternative;
                 if($profile->router_profiles){
-                    $mapData['router_profiles'] = unserialize($profile->router_profiles);
+                    $router_profiles = array_flip(unserialize($profile->router_profiles));
+                    foreach($router_profiles as $key => $router_profile){
+                        $router_profiles[$key] = $GLOBALS['TL_LANG']['c4g_maps']['router_profiles'][$key];
+                    }
+                    $mapData['router_profiles'] = $router_profiles;
                 }
 
             }

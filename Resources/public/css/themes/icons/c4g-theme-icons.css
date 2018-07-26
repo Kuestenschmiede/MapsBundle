@@ -83,13 +83,16 @@ button.c4g-router-profile-car:before {
   content: "\f1b9";
 }
 button.c4g-router-profile-hgv:before {
-  content: "\f207";
+  content: "\f0d1";
 }
 button.c4g-router-profile-bike:before {
   content: "\f206";
 }
 button.c4g-router-profile-foot:before {
   content: "\f554";
+}
+button.c4g-router-profile-wheelchair:before {
+  content: "\f193";
 }
 button.c4g-router-switch:before {
   content: "\f0dc";

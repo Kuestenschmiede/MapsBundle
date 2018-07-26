@@ -260,6 +260,10 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       if(self.options.mapController.map.getInteractions().getArray()['9']){
           self.options.mapController.map.getInteractions().getArray()['9'].setActive(true);
       }
+      else{
+          self.options.mapController.map.getInteractions().getArray()['8'].setActive(true)
+      }
+
 
     },
 
@@ -342,19 +346,19 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         if(this.options.mapController.data.router_api_selection == '2'){
             this.routeProfile = document.createElement('div');
             $(this.routeProfile).addClass(c4g.maps.constant.css.ROUTER_PROFILE_WRAPPER);
-            if(this.options.mapController.data.router_profiles.indexOf('0')>-1){
+            if(this.options.mapController.data.router_profiles['0']){
                 routeProfile.car = document.createElement('button');
                 $(routeProfile.car).addClass(c4g.maps.constant.css.ROUTER_PROFILE_CAR);
                 this.$routeProfileCar = $(routeProfile.car);
                 this.routeProfile.appendChild(routeProfile.car);
                 this.$routeProfileCar.click(function(event){
                     self.clearSiblings(this);
-                    self.routeProfile.active = 'driving-car';
+                    self.routeProfile.active = '0';
                     self.recalculateRoute();
                 });
             }
 
-            if(this.options.mapController.data.router_profiles.indexOf('1')>-1) {
+            if(this.options.mapController.data.router_profiles['1']) {
                 routeProfile.hgv = document.createElement('button');
                 $(routeProfile.hgv).addClass(c4g.maps.constant.css.ROUTER_PROFILE_HGV);
                 this.routeProfile.appendChild(routeProfile.hgv);
@@ -362,31 +366,135 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
                 this.$routeProfileHgv.click(function(event){
                     self.clearSiblings(this);
-                    self.routeProfile.active = 'driving-hgv';
+                    self.routeProfile.active = '1';
                     self.recalculateRoute();
                 });
             }
-            if(this.options.mapController.data.router_profiles.indexOf('2')>-1){
+            if(this.options.mapController.data.router_profiles['2'] || this.options.mapController.data.router_profiles['3'] || this.options.mapController.data.router_profiles['4'] || this.options.mapController.data.router_profiles['5'] || this.options.mapController.data.router_profiles['6'] || this.options.mapController.data.router_profiles['7']){
+                // routeProfile.bike = document.createElement('button');
+                // $(routeProfile.bike).addClass(c4g.maps.constant.css.ROUTER_PROFILE_BIKE);
+                // this.$routeProfileBike = $(routeProfile.bike);
+                // this.routeProfile.appendChild(routeProfile.bike);
+                // this.$routeProfileBike.click(function(event){
+                //     self.clearSiblings(this);
+                //     self.routeProfile.active = 'cycling-regular';
+                //     self.recalculateRoute();
+                // });
+
+
+                let spanBike = document.createElement('span');
                 routeProfile.bike = document.createElement('button');
-                $(routeProfile.bike).addClass(c4g.maps.constant.css.ROUTER_PROFILE_BIKE);
+                routeProfile.bike.list = document.createElement('ul');
                 this.$routeProfileBike = $(routeProfile.bike);
-                this.routeProfile.appendChild(routeProfile.bike);
+                for(let i = 2; i < 8; i++){
+                    if(this.options.mapController.data.router_profiles[i]){
+                        let child = document.createElement('li');
+                        if(!this.$routeProfileBike.data('profile')){
+                            this.$routeProfileBike.data('profile',i)
+                        }
+                        child.innerHTML = this.options.mapController.data.router_profiles[i];
+                        $(child).data('profile', [i]);
+                        $(child).click(function(event){
+                            $(this).addClass(c4g.maps.constant.css.ACTIVE);
+                            self.routeProfile.active = $(this).data('profile');
+                            if(this.nextSibling && $(this.nextSibling).hasClass(c4g.maps.constant.css.ACTIVE)){
+                                $(this.nextSibling).removeClass(c4g.maps.constant.css.ACTIVE);
+                            }
+                            else if(this.previousSibling && $(this.previousSibling).hasClass(c4g.maps.constant.css.ACTIVE)){
+                                $(this.previousSibling).removeClass(c4g.maps.constant.css.ACTIVE);
+                            }
+                            self.recalculateRoute();
+                        });
+                        routeProfile.bike.list.appendChild(child);
+                    }
+                }
+                routeProfile.bike.list.style.display= 'none';
+
+                $(routeProfile.bike).addClass(c4g.maps.constant.css.ROUTER_PROFILE_BIKE);
+
+                spanBike.appendChild(routeProfile.bike);
+                spanBike.appendChild(routeProfile.bike.list);
+                this.routeProfile.appendChild(spanBike);
                 this.$routeProfileBike.click(function(event){
-                    self.clearSiblings(this);
-                    self.routeProfile.active = 'cycling-regular';
+                    self.clearSiblings($(this).parent());
+                    self.routeProfile.active = $(this).data('profile');
                     self.recalculateRoute();
+                    let siblings = $(this).parent().children();
+                    siblings[1].style.display = 'inline';
+
+                });
+                $(spanBike).hover(function(event){
+                    let siblings = $(this).children();
+                    for(let i = 0; i < siblings.length ; i++){
+                        if(siblings[i] != this.firstChild && $(this).hasClass(c4g.maps.constant.css.ACTIVE)){
+                            if(event.type == "mouseenter"){
+                                siblings[i].style.display = 'inline';
+                            }
+                            else{
+                                siblings[i].style.display = 'none';
+                            }
+
+                        }
+                    }
                 });
             }
-            if(this.options.mapController.data.router_profiles.indexOf('2')>-1){
+            if(this.options.mapController.data.router_profiles['8'] || this.options.mapController.data.router_profiles['9']){
+                let spanFoot = document.createElement('span');
                 routeProfile.foot = document.createElement('button');
-                $(routeProfile.foot).addClass(c4g.maps.constant.css.ROUTER_PROFILE_FOOT);
+                routeProfile.foot.list = document.createElement('ul');
                 this.$routeProfileFoot = $(routeProfile.foot);
-                this.routeProfile.appendChild(routeProfile.foot);
+                for(let i = 8; i < 10; i++){
+                    if(this.options.mapController.data.router_profiles[i]){
+                        if(!this.$routeProfileBike.data('profile')){
+                            this.$routeProfileBike.data('profile',i)
+                        }
+                        let child = document.createElement('li');
+                        child.innerHTML = this.options.mapController.data.router_profiles[i];
+                        $(child).data('profile', [i]);
+                        $(child).click(function(event){
+                            $(this).addClass(c4g.maps.constant.css.ACTIVE);
+                            self.routeProfile.active = $(this).data('profile');
+                            if(this.nextSibling && $(this.nextSibling).hasClass(c4g.maps.constant.css.ACTIVE)){
+                                $(this.nextSibling).removeClass(c4g.maps.constant.css.ACTIVE);
+                            }
+                            else if(this.previousSibling && $(this.previousSibling).hasClass(c4g.maps.constant.css.ACTIVE)){
+                                $(this.previousSibling).removeClass(c4g.maps.constant.css.ACTIVE);
+                            }
+                            self.recalculateRoute();
+                        });
+                        routeProfile.foot.list.appendChild(child);
+                    }
+                }
+                routeProfile.foot.list.style.display= 'none';
+
+                $(routeProfile.foot).addClass(c4g.maps.constant.css.ROUTER_PROFILE_FOOT);
+
+                spanFoot.appendChild(routeProfile.foot);
+                spanFoot.appendChild(routeProfile.foot.list);
+                this.routeProfile.appendChild(spanFoot);
                 this.$routeProfileFoot.click(function(event){
-                    self.clearSiblings(this);
-                    self.routeProfile.active = 'foot-walking';
+                    self.clearSiblings($(this).parent());
+                    self.routeProfile.active = $(this).data('profile');
                     self.recalculateRoute();
+                    let siblings = $(this).parent().children();
+                    siblings[1].style.display = 'inline';
+
                 });
+                $(spanFoot).hover(function(event){
+                    let siblings = $(this).children();
+                    for(let i = 0; i < siblings.length ; i++){
+                        if(siblings[i] != this.firstChild && $(this).hasClass(c4g.maps.constant.css.ACTIVE)){
+                            if(event.type == "mouseenter"){
+                                siblings[i].style.display = 'inline';
+                            }
+                            else{
+                                siblings[i].style.display = 'none';
+                            }
+
+                        }
+                    }
+                });
+
             }
             this.clearSiblings = function(element){
                 let siblings = $(element).parent().children();
@@ -746,16 +854,16 @@ this.c4g.maps.control = this.c4g.maps.control || {};
             url = self.routingApi + '?output=json&instructions=true&alt=false&loc_from=' + fromCoord + '&loc_to=' + toCoord;
             this.spinner.show();
 
-            $.ajax({
-                'url': url,
-                'done': function (response) {
+            jQuery.ajax({
+                'url': url})
+            .done(function (response) {
 
-                    if (response) {
-                        self.showRoute(response);
-                    }
-
+                if (response) {
+                    self.showRoute(response);
                 }
-            }).always(function () {
+
+            })
+            .always(function () {
                 self.spinner.hide();
                 self.update();
             });
