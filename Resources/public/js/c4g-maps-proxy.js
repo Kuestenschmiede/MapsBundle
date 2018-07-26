@@ -427,13 +427,13 @@ class MapProxy {
       } else if ((fFeatures && fFeatures.length === 1)) {
         feature = fFeatures[0];
       }
-
-      if (self.options.mapController.controls.editor.open) {
-        // do not show popup when editor is open
-        // but call click hooks
-        c4g.maps.utils.callHookFunctions(self.hook_map_click, clickEvent);
-        return false;
-      }
+    //@ToDo rewrite without destroying router ;)
+      // if (self.options.mapController.controls.editor.open) { //ist immer true und zerschießt so das click event des Routers (kein hook)
+      //   // do not show popup when editor is open
+      //   // but call click hooks
+      //   c4g.maps.utils.callHookFunctions(self.hook_map_click, clickEvent);
+      //   return false;
+      // }
       popupInfos = {};
       if (feature && feature.get('popup')) {
         // single POI
