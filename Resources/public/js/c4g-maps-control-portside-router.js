@@ -726,16 +726,16 @@ this.c4g.maps.control = this.c4g.maps.control || {};
             }
             this.spinner.show();
 
-            $.ajax({
-                'url': url,
-                'done': function (response) {
+            jQuery.ajax({
+                'url': url})
+            .done(function (response) {
                     self.response = response;
                     if (response) {
                         self.showRoute(response);
                     }
 
-                }
-            }).always(function () {
+                })
+            .always(function () {
                 self.spinner.hide();
                 self.update();
             });
@@ -1487,49 +1487,49 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       url = this.geoReverseSearchApi + '?format=json&lat=' + value[1] + '&lon=' + value[0];
       this.spinner.show();
 
-      $.ajax({
-        'url': url,
-        'done': function (response) {
+      jQuery.ajax({
+        'url': url})
+          .done(function (response) {
 
-          if (response) {
-            var value = "";
-            if (response.address) {
-              if (response.address.city) {
-                value = response.address.city;
-                if (response.address.road) {
-                  value = ', ' + value;
-                }
+              if (response) {
+                  var value = "";
+                  if (response.address) {
+                      if (response.address.city) {
+                          value = response.address.city;
+                          if (response.address.road) {
+                              value = ', ' + value;
+                          }
+                      }
+                      if (response.address.town) {
+                          value = response.address.town;
+                          if (response.address.road) {
+                              value = ', ' + value;
+                          }
+                      }
+                      if (response.address.road) {
+                          if (response.address.house_number) {
+                              value = ' ' + response.address.house_number + value;
+                          }
+                          value = response.address.road + value;
+                      }
+                  }
+
+                  if (value === "") {
+                      value = response.display_name;
+                  }
+                  $input.val(value);
+
+                  if ($input.attr('name') === "routingFrom") {
+                      self.$routerFromClear.show();
+                  } else if ($input.attr('name') === "routingTo") {
+                      self.$routerToClear.show();
+                  }
+
+                  self.recalculateRoute();
               }
-              if (response.address.town) {
-                value = response.address.town;
-                if (response.address.road) {
-                  value = ', ' + value;
-                }
-              }
-              if (response.address.road) {
-                if (response.address.house_number) {
-                  value = ' ' + response.address.house_number + value;
-                }
-                value = response.address.road + value;
-              }
-            }
 
-            if (value === "") {
-              value = response.display_name;
-            }
-            $input.val(value);
-
-            if ($input.attr('name') === "routingFrom") {
-              self.$routerFromClear.show();
-            } else if ($input.attr('name') === "routingTo") {
-              self.$routerToClear.show();
-            }
-
-            self.recalculateRoute();
-          }
-
-        }
-      }).always(function () {
+          })
+      .always(function () {
         self.spinner.hide();
       });
 
@@ -1558,35 +1558,36 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
       url = self.geoSearchApi + '?format=json&limit=1&q=' + encodeURI($input.val()) + viewbox;
 
-      $.ajax({
-        'url': url,
-        'done': function (response) {
+      jQuery.ajax({
+        'url': url
+      }).done(function (response) {
 
           if (response.length > 0) {
-            if(value ==="overValue"){
-                if (!self.overValue) {
-                    self.overValue={};
-                }
-                self.overValue[self.index]=new ol.geom.Point([parseFloat(response[0].lon), parseFloat(response[0].lat)]);
-                self.$buttonOver.prop("disabled",false);
-            }
-            else{
-                self[value] = new ol.geom.Point(
-                    [parseFloat(response[0].lon), parseFloat(response[0].lat)]
-                );
-            }
+              if(value ==="overValue"){
+                  if (!self.overValue) {
+                      self.overValue={};
+                  }
+                  self.overValue[self.index]=new ol.geom.Point([parseFloat(response[0].lon), parseFloat(response[0].lat)]);
+                  self.$buttonOver.prop("disabled",false);
+              }
+              else{
+                  self[value] = new ol.geom.Point(
+                      [parseFloat(response[0].lon), parseFloat(response[0].lat)]
+                  );
+              }
           } else {
-            alert(c4g.maps.constant.i18n.ROUTER_VIEW_ALERT_ADDRESS);
-            self.clearInput($input);
-            delete self[value];
+              alert(c4g.maps.constant.i18n.ROUTER_VIEW_ALERT_ADDRESS);
+              self.clearInput($input);
+              delete self[value];
           }
 
           self.recalculateRoute();
-        },
-        'fail': function () {
+      })
+      .error(function () {
           alert(c4g.maps.constant.i18n.ROUTER_VIEW_ALERT_GEOCODING);
-        }
       });
+
+
 
       return "";
 
