@@ -194,7 +194,7 @@ class MapsController extends BaseController
         $response = new Response();
         $routingApi = new RoutingApi();
         $locations = explode('/', $locations);
-        if($request->query->get('profile')){
+        if($request->query->get('profile') !== null){
             $profile = $request->query->get('profile');
         }
         $returnData = $routingApi->generate($profileId, $locations, $profile);

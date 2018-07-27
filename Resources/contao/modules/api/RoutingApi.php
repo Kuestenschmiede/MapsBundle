@@ -93,20 +93,6 @@ class RoutingApi extends \Frontend
             $response = $REQUEST->response;
         }
         else{
-            $valuesProfile = array(
-                0 => 'driving-car',
-                1 => 'driving-hgv',
-                2 => 'cycling-regular',
-                3 => 'cycling-road',
-                4 => 'cycling-safe',
-                5 => 'cycling-mountain',
-                6 => 'cycling-tour',
-                7 => 'cycling-electric',
-                8 => 'foot-walking',
-                9 => 'foot-hiking',
-                10 => 'wheelchair',
-
-            );
             $valuesProfile = ["driving-car" , "driving-hgv" , "cycling-regular" , "cycling-road" , "cycling-safe" , "cycling-mountain" , "cycling-tour" , "cycling-electric" , "foot-walking" , "foot-hiking" , "wheelchair"];
             $strRoutingUrl = "https://api.openrouteservice.org/directions?";
             $objMapsProfile = C4gMapProfilesModel::findBy('id', $intProfileId);
@@ -123,7 +109,9 @@ class RoutingApi extends \Frontend
                     $language = "en";
                 }
             }
-            $profile = "&profile=".$valuesProfile[$profile]."&format=json&language=".$language."&geometry_format=encodedpolyline&maneuvers=true&preference=fastest";
+            $profile = $valuesProfile[$profile] ? $valuesProfile[$profile] : 'driving-car';
+
+            $profile = "&profile=".$profile."&format=json&language=".$language."&geometry_format=encodedpolyline&maneuvers=true&preference=fastest";
             $url = $strRoutingUrl.$apiKey.$coordinates.$profile;
             $REQUEST = new \Request();
             if ($_SERVER['HTTP_REFERER']) {

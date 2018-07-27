@@ -94,6 +94,14 @@ button.c4g-router-profile-foot:before {
 button.c4g-router-profile-wheelchair:before {
   content: "\f193";
 }
+span.c4g-active ul li:before{
+  font: normal normal normal 14px/1 'Font Awesome 5 Free';
+  content:"\f111";
+}
+span.c4g-active ul li.c4g-active:before{
+  font: normal normal normal 14px/1 'Font Awesome 5 Free';
+  content:"\f192";
+}
 button.c4g-router-switch:before {
   content: "\f0dc";
 }

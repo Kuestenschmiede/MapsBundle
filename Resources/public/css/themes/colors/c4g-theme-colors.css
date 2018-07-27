@@ -180,6 +180,16 @@ button.c4g-draw-trigger.c4g-active {
   border-color: var(--shadow-color);
   background-color: var(--main-color);
 }
+span.c4g-active ul {
+  background-color: var(--main-color);
+  color: var(--font-color);
+}
+span.c4g-active ul li{
+  background-color: var(--main-color);
+}
+span.c4g-active ul li.c4g-active{
+  background-color: var(--shadow-color);
+}
 
 .c4g-router-profile-wrapper .c4g-active button,
 .c4g-router-profile-wrapper button.c4g-active {
