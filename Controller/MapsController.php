@@ -80,7 +80,7 @@ class MapsController extends BaseController
 
         if (!self::$outputFromCache) {
             // TODO use Dependency Injection
-            $layerService = $this->container->get('con4gis.layer_service');
+            $layerService = $this->get('con4gis.layer_service');
             $this->responseData = $layerService->generate($mapId);
             if (self::$useCache) {
                 $this->storeDataInCache($request);
