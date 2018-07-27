@@ -494,11 +494,11 @@ class C4gBaselayerController {
                     console.warn('google-maps are currently unsupported');
                     break;
                 case 'bing':
-                    if (baseLayerConfig.apiKey && baseLayerConfig.style) {
+                    if (baseLayerConfig.api_key && baseLayerConfig.style) {
                         newBaselayer = new ol.layer.Tile({
                             source: new ol.source.BingMaps({
                                 culture: navigator.languages ? navigator.languages[0] : (navigator.language || navigator.userLanguage),
-                                key: baseLayerConfig.apiKey,
+                                key: baseLayerConfig.api_key,
                                 imagerySet: baseLayerConfig.style
                             })
                         });

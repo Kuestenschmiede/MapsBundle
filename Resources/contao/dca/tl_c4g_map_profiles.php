@@ -1109,7 +1109,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             'exclude'                 => true,
             'default'                 => array('0','2','8'),
             'inputType'               => 'select',
-            'options'                 => array('0','1','2','3','4','5','6','7','8','9','10'),
+            'options'                 => array('0','1','2','3','4','5','6','8','9','10'),
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles'],
             'eval'                    => array('mandatory'=>false, 'multiple'=>true,'chosen'=>true),
             'sql'                     => "blob NULL"

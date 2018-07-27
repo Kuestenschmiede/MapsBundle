@@ -371,17 +371,6 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                 });
             }
             if(this.options.mapController.data.router_profiles['2'] || this.options.mapController.data.router_profiles['3'] || this.options.mapController.data.router_profiles['4'] || this.options.mapController.data.router_profiles['5'] || this.options.mapController.data.router_profiles['6'] || this.options.mapController.data.router_profiles['7']){
-                // routeProfile.bike = document.createElement('button');
-                // $(routeProfile.bike).addClass(c4g.maps.constant.css.ROUTER_PROFILE_BIKE);
-                // this.$routeProfileBike = $(routeProfile.bike);
-                // this.routeProfile.appendChild(routeProfile.bike);
-                // this.$routeProfileBike.click(function(event){
-                //     self.clearSiblings(this);
-                //     self.routeProfile.active = 'cycling-regular';
-                //     self.recalculateRoute();
-                // });
-
-
                 let spanBike = document.createElement('span');
                 routeProfile.bike = document.createElement('button');
                 routeProfile.bike.list = document.createElement('ul');
@@ -389,26 +378,18 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                 for(let i = 2; i < 8; i++){
                     if(this.options.mapController.data.router_profiles[i]){
                         let child = document.createElement('li');
-                        if(!this.$routeProfileBike.data('profile')){
-                            this.$routeProfileBike.data('profile',i)
-                        }
                         child.innerHTML = this.options.mapController.data.router_profiles[i];
                         $(child).data('profile', [i]);
                         $(child).click(function(event){
-                            $(this).addClass(c4g.maps.constant.css.ACTIVE);
-                            self.routeProfile.active = $(this).data('profile');
-                            if(this.nextSibling && $(this.nextSibling).hasClass(c4g.maps.constant.css.ACTIVE)){
-                                $(this.nextSibling).removeClass(c4g.maps.constant.css.ACTIVE);
-                            }
-                            else if(this.previousSibling && $(this.previousSibling).hasClass(c4g.maps.constant.css.ACTIVE)){
-                                $(this.previousSibling).removeClass(c4g.maps.constant.css.ACTIVE);
-                            }
-                            self.recalculateRoute();
+                            self.childClick($(child));
                         });
+                        if(!this.$routeProfileBike.data('profile')){
+                            this.$routeProfileBike.data('profile',i);
+                            $(child).addClass(c4g.maps.constant.css.ACTIVE);
+                        }
                         routeProfile.bike.list.appendChild(child);
                     }
                 }
-                routeProfile.bike.list.style.display= 'none';
 
                 $(routeProfile.bike).addClass(c4g.maps.constant.css.ROUTER_PROFILE_BIKE);
 
@@ -419,23 +400,6 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                     self.clearSiblings($(this).parent());
                     self.routeProfile.active = $(this).data('profile');
                     self.recalculateRoute();
-                    let siblings = $(this).parent().children();
-                    siblings[1].style.display = 'inline';
-
-                });
-                $(spanBike).hover(function(event){
-                    let siblings = $(this).children();
-                    for(let i = 0; i < siblings.length ; i++){
-                        if(siblings[i] != this.firstChild && $(this).hasClass(c4g.maps.constant.css.ACTIVE)){
-                            if(event.type == "mouseenter"){
-                                siblings[i].style.display = 'inline';
-                            }
-                            else{
-                                siblings[i].style.display = 'none';
-                            }
-
-                        }
-                    }
                 });
             }
             if(this.options.mapController.data.router_profiles['8'] || this.options.mapController.data.router_profiles['9']){
@@ -445,27 +409,19 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                 this.$routeProfileFoot = $(routeProfile.foot);
                 for(let i = 8; i < 10; i++){
                     if(this.options.mapController.data.router_profiles[i]){
-                        if(!this.$routeProfileBike.data('profile')){
-                            this.$routeProfileBike.data('profile',i)
-                        }
                         let child = document.createElement('li');
                         child.innerHTML = this.options.mapController.data.router_profiles[i];
                         $(child).data('profile', [i]);
                         $(child).click(function(event){
-                            $(this).addClass(c4g.maps.constant.css.ACTIVE);
-                            self.routeProfile.active = $(this).data('profile');
-                            if(this.nextSibling && $(this.nextSibling).hasClass(c4g.maps.constant.css.ACTIVE)){
-                                $(this.nextSibling).removeClass(c4g.maps.constant.css.ACTIVE);
-                            }
-                            else if(this.previousSibling && $(this.previousSibling).hasClass(c4g.maps.constant.css.ACTIVE)){
-                                $(this.previousSibling).removeClass(c4g.maps.constant.css.ACTIVE);
-                            }
-                            self.recalculateRoute();
+                            self.childClick($(this));
                         });
+                        if(!this.$routeProfileFoot.data('profile')){
+                            this.$routeProfileFoot.data('profile',i);
+                            $(child).addClass(c4g.maps.constant.css.ACTIVE);
+                        }
                         routeProfile.foot.list.appendChild(child);
                     }
                 }
-                routeProfile.foot.list.style.display= 'none';
 
                 $(routeProfile.foot).addClass(c4g.maps.constant.css.ROUTER_PROFILE_FOOT);
 
@@ -476,26 +432,15 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                     self.clearSiblings($(this).parent());
                     self.routeProfile.active = $(this).data('profile');
                     self.recalculateRoute();
-                    let siblings = $(this).parent().children();
-                    siblings[1].style.display = 'inline';
-
-                });
-                $(spanFoot).hover(function(event){
-                    let siblings = $(this).children();
-                    for(let i = 0; i < siblings.length ; i++){
-                        if(siblings[i] != this.firstChild && $(this).hasClass(c4g.maps.constant.css.ACTIVE)){
-                            if(event.type == "mouseenter"){
-                                siblings[i].style.display = 'inline';
-                            }
-                            else{
-                                siblings[i].style.display = 'none';
-                            }
-
-                        }
-                    }
                 });
 
             }
+            this.childClick = function($element){
+                $element.addClass(c4g.maps.constant.css.ACTIVE);
+                self.routeProfile.active = $element.data('profile');
+                self.clearSiblings($element);
+                self.recalculateRoute();
+            };
             this.clearSiblings = function(element){
                 let siblings = $(element).parent().children();
                 for(let i = 0; i < siblings.length ; i++){
@@ -503,9 +448,9 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                 }
                 $(element).addClass(c4g.maps.constant.css.ACTIVE);
             };
-            for(let profile in routeProfile){
-                if(routeProfile.hasOwnProperty(profile)){
-                    $(routeProfile[profile]).trigger('click');
+            for(let profile in this.options.mapController.data.router_profiles){
+                if(this.options.mapController.data.router_profiles.hasOwnProperty(profile)){
+                    this.routeProfile.active = profile;
                     break;
                 }
             }

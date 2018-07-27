@@ -80,7 +80,7 @@ class MapsController extends BaseController
 
         if (!self::$outputFromCache) {
             // TODO use Dependency Injection
-            $layerService = $this->container->get('con4gis.layer_service');
+            $layerService = $this->get('con4gis.layer_service');
             $this->responseData = $layerService->generate($mapId);
             if (self::$useCache) {
                 $this->storeDataInCache($request);
@@ -194,7 +194,7 @@ class MapsController extends BaseController
         $response = new Response();
         $routingApi = new RoutingApi();
         $locations = explode('/', $locations);
-        if($request->query->get('profile')){
+        if($request->query->get('profile') !== null){
             $profile = $request->query->get('profile');
         }
         $returnData = $routingApi->generate($profileId, $locations, $profile);
