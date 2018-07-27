@@ -343,146 +343,160 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
         // $(print).insertBefore(document.getElementsByClassName("c4g-portside-hide")[0]);
 
-        if(this.options.mapController.data.router_api_selection == '2'){
-            this.routeProfile = document.createElement('div');
-            $(this.routeProfile).addClass(c4g.maps.constant.css.ROUTER_PROFILE_WRAPPER);
-            if(this.options.mapController.data.router_profiles['0']){
-                routeProfile.car = document.createElement('button');
-                $(routeProfile.car).addClass(c4g.maps.constant.css.ROUTER_PROFILE_CAR);
-                this.$routeProfileCar = $(routeProfile.car);
-                this.routeProfile.appendChild(routeProfile.car);
-                this.$routeProfileCar.click(function(event){
-                    self.clearSiblings(this);
-                    self.routeProfile.active = '0';
-                    self.recalculateRoute();
-                });
+        if(this.options.mapController.data.router_api_selection == '2'){ //OpenRouteService
+            if(Object.keys(this.options.mapController.data.router_profiles).length == 1){//check for single profile and set this as  active routing profile
+                this.routeProfile = [];
+                this.routeProfile.active = Object.keys(this.options.mapController.data.router_profiles)[0];
             }
+            else if(Object.keys(this.options.mapController.data.router_profiles).length > 1){ //check for multiple profiles and add profile-changer
+                this.routeProfile = document.createElement('div');
+                $(this.routeProfile).addClass(c4g.maps.constant.css.ROUTER_PROFILE_WRAPPER);
+                if(this.options.mapController.data.router_profiles['0']){ //add button for profile driving-car
+                    routeProfile.car = document.createElement('button');
+                    $(routeProfile.car).addClass(c4g.maps.constant.css.ROUTER_PROFILE_CAR);
+                    this.$routeProfileCar = $(routeProfile.car);
+                    this.routeProfile.appendChild(routeProfile.car);
+                    this.$routeProfileCar.click(function(event){
+                        self.clearSiblings(this);
+                        self.routeProfile.active = '0';
+                        self.recalculateRoute();
+                    });
+                }
 
-            if(this.options.mapController.data.router_profiles['1']) {
-                routeProfile.hgv = document.createElement('button');
-                $(routeProfile.hgv).addClass(c4g.maps.constant.css.ROUTER_PROFILE_HGV);
-                this.routeProfile.appendChild(routeProfile.hgv);
-                this.$routeProfileHgv = $(routeProfile.hgv);
+                if(this.options.mapController.data.router_profiles['1']) { //add button for profile driving-hgv
+                    routeProfile.hgv = document.createElement('button');
+                    $(routeProfile.hgv).addClass(c4g.maps.constant.css.ROUTER_PROFILE_HGV);
+                    this.routeProfile.appendChild(routeProfile.hgv);
+                    this.$routeProfileHgv = $(routeProfile.hgv);
 
-                this.$routeProfileHgv.click(function(event){
-                    self.clearSiblings(this);
-                    self.routeProfile.active = '1';
-                    self.recalculateRoute();
-                });
-            }
-            if(this.options.mapController.data.router_profiles['2'] || this.options.mapController.data.router_profiles['3'] || this.options.mapController.data.router_profiles['4'] || this.options.mapController.data.router_profiles['5'] || this.options.mapController.data.router_profiles['6'] || this.options.mapController.data.router_profiles['7']){
-                let spanBike = document.createElement('span');
-                routeProfile.bike = document.createElement('button');
-                routeProfile.bike.list = document.createElement('ul');
-                this.$routeProfileBike = $(routeProfile.bike);
-                for(let i = 2; i < 8; i++){
-                    if(this.options.mapController.data.router_profiles[i]){
-                        let child = document.createElement('li');
-                        child.innerHTML = this.options.mapController.data.router_profiles[i];
-                        $(child).data('profile', [i]);
-                        $(child).click(function(event){
-                            self.childClick($(child));
-                        });
-                        if(!this.$routeProfileBike.data('profile')){
-                            this.$routeProfileBike.data('profile',i);
-                            $(child).addClass(c4g.maps.constant.css.ACTIVE);
+                    this.$routeProfileHgv.click(function(event){
+                        self.clearSiblings(this);
+                        self.routeProfile.active = '1';
+                        self.recalculateRoute();
+                    });
+                }
+                if(this.options.mapController.data.router_profiles['2']
+                    || this.options.mapController.data.router_profiles['3']
+                    || this.options.mapController.data.router_profiles['4']
+                    || this.options.mapController.data.router_profiles['5']
+                    || this.options.mapController.data.router_profiles['6']
+                    || this.options.mapController.data.router_profiles['7']){ //add button and dropdown for cycling profiles
+                    let spanBike = document.createElement('span');
+                    routeProfile.bike = document.createElement('button');
+                    routeProfile.bike.list = document.createElement('ul');
+                    this.$routeProfileBike = $(routeProfile.bike);
+                    for(let i = 2; i < 8; i++){ //iterate over all possible cycling profiles
+                        if(this.options.mapController.data.router_profiles[i]){
+                            let child = document.createElement('li');
+                            child.innerHTML = this.options.mapController.data.router_profiles[i];
+                            $(child).data('profile', [i]);
+                            $(child).click(function(event){
+                                self.childClick($(child));
+                            });
+                            if(!this.$routeProfileBike.data('profile')){ //add existing default profile to button
+                                this.$routeProfileBike.data('profile',i);
+                                $(child).addClass(c4g.maps.constant.css.ACTIVE);
+                            }
+                            routeProfile.bike.list.appendChild(child);
                         }
-                        routeProfile.bike.list.appendChild(child);
+                    }
+
+                    $(routeProfile.bike).addClass(c4g.maps.constant.css.ROUTER_PROFILE_BIKE);
+
+                    if(routeProfile.bike.list.children.length == 1){ //ignore dropdown list, if only one cycling profile is enabled
+                        this.routeProfile.appendChild(routeProfile.bike);
+                        this.$routeProfileBike.click(function(event){
+                            self.clearSiblings(this);
+                            self.routeProfile.active = $(this).data('profile');
+                            self.recalculateRoute();
+                        });
+                    }
+                    else{ //append with dropdown, if multiple cycling profiles are enabled
+                        spanBike.appendChild(routeProfile.bike);
+                        spanBike.appendChild(routeProfile.bike.list);
+                        this.routeProfile.appendChild(spanBike);
+                        this.$routeProfileBike.click(function(event){
+                            self.clearSiblings($(this).parent());
+                            self.routeProfile.active = $(this).data('profile');
+                            self.recalculateRoute();
+                        });
                     }
                 }
-
-                $(routeProfile.bike).addClass(c4g.maps.constant.css.ROUTER_PROFILE_BIKE);
-
-                if(routeProfile.bike.list.children.length == 1){
-                    this.routeProfile.appendChild(routeProfile.bike);
-                    this.$routeProfileBike.click(function(event){
-                        self.clearSiblings(this);
-                        self.routeProfile.active = $(this).data('profile');
-                        self.recalculateRoute();
-                    });
-                }
-                else{
-                    spanBike.appendChild(routeProfile.bike);
-                    spanBike.appendChild(routeProfile.bike.list);
-                    this.routeProfile.appendChild(spanBike);
-                    this.$routeProfileBike.click(function(event){
-                        self.clearSiblings($(this).parent());
-                        self.routeProfile.active = $(this).data('profile');
-                        self.recalculateRoute();
-                    });
-                }
-            }
-            if(this.options.mapController.data.router_profiles['8'] || this.options.mapController.data.router_profiles['9']){
-                let spanFoot = document.createElement('span');
-                routeProfile.foot = document.createElement('button');
-                routeProfile.foot.list = document.createElement('ul');
-                this.$routeProfileFoot = $(routeProfile.foot);
-                for(let i = 8; i < 10; i++){
-                    if(this.options.mapController.data.router_profiles[i]){
-                        let child = document.createElement('li');
-                        child.innerHTML = this.options.mapController.data.router_profiles[i];
-                        $(child).data('profile', [i]);
-                        $(child).click(function(event){
-                            self.childClick($(this));
-                        });
-                        if(!this.$routeProfileFoot.data('profile')){
-                            this.$routeProfileFoot.data('profile',i);
-                            $(child).addClass(c4g.maps.constant.css.ACTIVE);
+                if(this.options.mapController.data.router_profiles['8']
+                    || this.options.mapController.data.router_profiles['9']){ //add button and dropdown for walking profiles
+                    let spanFoot = document.createElement('span');
+                    routeProfile.foot = document.createElement('button');
+                    routeProfile.foot.list = document.createElement('ul');
+                    this.$routeProfileFoot = $(routeProfile.foot);
+                    for(let i = 8; i < 10; i++){ //iterate over possible profiles
+                        if(this.options.mapController.data.router_profiles[i]){
+                            let child = document.createElement('li');
+                            child.innerHTML = this.options.mapController.data.router_profiles[i];
+                            $(child).data('profile', [i]);
+                            $(child).click(function(event){
+                                self.childClick($(this));
+                            });
+                            if(!this.$routeProfileFoot.data('profile')){ //add existing default profile to button
+                                this.$routeProfileFoot.data('profile',i);
+                                $(child).addClass(c4g.maps.constant.css.ACTIVE);
+                            }
+                            routeProfile.foot.list.appendChild(child);
                         }
-                        routeProfile.foot.list.appendChild(child);
+                    }
+
+                    $(routeProfile.foot).addClass(c4g.maps.constant.css.ROUTER_PROFILE_FOOT);
+
+                    if(routeProfile.foot.list.children.length == 1){ //ignore dropdown list, if only one walking profile is enabled
+                        this.routeProfile.appendChild(routeProfile.foot);
+                        this.$routeProfileFoot.click(function(event){
+                            self.clearSiblings(this);
+                            self.routeProfile.active = $(this).data('profile');
+                            self.recalculateRoute();
+                        });
+                    }
+                    else{ //append with dropdown, if multiple walking profiles are enabled
+                        spanFoot.appendChild(routeProfile.foot);
+                        spanFoot.appendChild(routeProfile.foot.list);
+                        this.routeProfile.appendChild(spanFoot);
+                        this.$routeProfileFoot.click(function(event){
+                            self.clearSiblings($(this).parent());
+                            self.routeProfile.active = $(this).data('profile');
+                            self.recalculateRoute();
+                        });
                     }
                 }
-
-                $(routeProfile.foot).addClass(c4g.maps.constant.css.ROUTER_PROFILE_FOOT);
-
-                if(routeProfile.foot.list.children.length == 1){
-                    this.routeProfile.appendChild(routeProfile.foot);
-                    this.$routeProfileFoot.click(function(event){
+                if(this.options.mapController.data.router_profiles['10']){ //add button for profile wheelchair
+                    routeProfile.wheelchair = document.createElement('button');
+                    $(routeProfile.wheelchair).addClass(c4g.maps.constant.css.ROUTER_PROFILE_WHEELCHAIR);
+                    this.$routeProfileWheelchair = $(routeProfile.wheelchair);
+                    this.routeProfile.appendChild(routeProfile.wheelchair);
+                    this.$routeProfileWheelchair.click(function(event){
                         self.clearSiblings(this);
-                        self.routeProfile.active = $(this).data('profile');
+                        self.routeProfile.active = '10';
                         self.recalculateRoute();
                     });
                 }
-                else{
-                    spanFoot.appendChild(routeProfile.foot);
-                    spanFoot.appendChild(routeProfile.foot.list);
-                    this.routeProfile.appendChild(spanFoot);
-                    this.$routeProfileFoot.click(function(event){
-                        self.clearSiblings($(this).parent());
-                        self.routeProfile.active = $(this).data('profile');
-                        self.recalculateRoute();
-                    });
+                this.childClick = function($element){ //handle the click inside the profile dropdown
+                    self.routeProfile.active = $element.data('profile'); //activate selected profile
+                    self.clearSiblings($element);
+                    self.recalculateRoute(); //update the route
+                };
+                this.clearSiblings = function(element){ //function to adjust css-classes after changing profile
+                    let siblings = $(element).parent().children();
+                    for(let i = 0; i < siblings.length ; i++){
+                        $(siblings[i]).removeClass(c4g.maps.constant.css.ACTIVE);
+                    }
+                    $(element).addClass(c4g.maps.constant.css.ACTIVE);
+                };
+                for(let profile in this.options.mapController.data.router_profiles){ //set default value for initial routing
+                    if(this.options.mapController.data.router_profiles.hasOwnProperty(profile)){
+                        this.routeProfile.active = profile;
+                        break;
+                    }
                 }
             }
-            if(this.options.mapController.data.router_profiles['10']){
-                routeProfile.wheelchair = document.createElement('button');
-                $(routeProfile.wheelchair).addClass(c4g.maps.constant.css.ROUTER_PROFILE_WHEELCHAIR);
-                this.$routeProfileWheelchair = $(routeProfile.wheelchair);
-                this.routeProfile.appendChild(routeProfile.wheelchair);
-                this.$routeProfileWheelchair.click(function(event){
-                    self.clearSiblings(this);
-                    self.routeProfile.active = '10';
-                    self.recalculateRoute();
-                });
-            }
-            this.childClick = function($element){
-                $element.addClass(c4g.maps.constant.css.ACTIVE);
-                self.routeProfile.active = $element.data('profile');
-                self.clearSiblings($element);
-                self.recalculateRoute();
-            };
-            this.clearSiblings = function(element){
-                let siblings = $(element).parent().children();
-                for(let i = 0; i < siblings.length ; i++){
-                    $(siblings[i]).removeClass(c4g.maps.constant.css.ACTIVE);
-                }
-                $(element).addClass(c4g.maps.constant.css.ACTIVE);
-            };
-            for(let profile in this.options.mapController.data.router_profiles){
-                if(this.options.mapController.data.router_profiles.hasOwnProperty(profile)){
-                    this.routeProfile.active = profile;
-                    break;
-                }
+            else{
+                console.warn('No Router Profiles enabled')
             }
 
         }
@@ -582,7 +596,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       });
 
       routerViewInputWrapper.appendChild(this.routerButtonBar);
-      if(this.routeProfile){
+      if(this.routeProfile && this.routeProfile.children){
           routerViewInputWrapper.appendChild(this.routeProfile);
       }
       routerViewInputWrapper.appendChild(this.fromInputWrapper);
@@ -1293,8 +1307,8 @@ this.c4g.maps.control = this.c4g.maps.control || {};
           if(route_name_0 && route_name_1){
               routerInstructionsHeader.innerHTML = '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_ROUTE + '</label> <em>' + route_name_0 + ' &#8594; ' + route_name_1 + '</em><br>' + '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_DISTANCE + '</label> <em>' + total_distance + '</em><br>' + '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_TIME + '</label> <em>' + total_time + '</em><br>';
           }
-          else{
-              routerInstructionsHeader.innerHTML = '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_DISTANCE + '</label> <em>' + total_distance + '</em><br>' + '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_TIME + '</label> <em>' + total_time + '</em><br>';
+          else if(this.routeProfile.active){
+              routerInstructionsHeader.innerHTML = '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_PROFILE + '</label> <em>'+this.options.mapController.data.router_profiles[this.routeProfile.active]  + '</em><br>' + '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_DISTANCE + '</label> <em>' + total_distance + '</em><br>' + '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_TIME + '</label> <em>' + total_time + '</em><br>';
           }
 
 

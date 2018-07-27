@@ -93,6 +93,7 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
     ROUTER_VIEW_LABEL_ROUTE: 'Route:',
     ROUTER_VIEW_LABEL_DISTANCE: 'Distance:',
     ROUTER_VIEW_LABEL_TIME: 'Time:',
+    ROUTER_VIEW_LABEL_PROFILE:'Profile',
 
     ROUTER_VIEW_ALERT_ADDRESS: 'Address not found.',
     ROUTER_VIEW_ALERT_GOCODING: 'No access to geocoding.',
