@@ -393,14 +393,24 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
                 $(routeProfile.bike).addClass(c4g.maps.constant.css.ROUTER_PROFILE_BIKE);
 
-                spanBike.appendChild(routeProfile.bike);
-                spanBike.appendChild(routeProfile.bike.list);
-                this.routeProfile.appendChild(spanBike);
-                this.$routeProfileBike.click(function(event){
-                    self.clearSiblings($(this).parent());
-                    self.routeProfile.active = $(this).data('profile');
-                    self.recalculateRoute();
-                });
+                if(routeProfile.bike.list.children.length == 1){
+                    this.routeProfile.appendChild(routeProfile.bike);
+                    this.$routeProfileBike.click(function(event){
+                        self.clearSiblings(this);
+                        self.routeProfile.active = $(this).data('profile');
+                        self.recalculateRoute();
+                    });
+                }
+                else{
+                    spanBike.appendChild(routeProfile.bike);
+                    spanBike.appendChild(routeProfile.bike.list);
+                    this.routeProfile.appendChild(spanBike);
+                    this.$routeProfileBike.click(function(event){
+                        self.clearSiblings($(this).parent());
+                        self.routeProfile.active = $(this).data('profile');
+                        self.recalculateRoute();
+                    });
+                }
             }
             if(this.options.mapController.data.router_profiles['8'] || this.options.mapController.data.router_profiles['9']){
                 let spanFoot = document.createElement('span');
@@ -425,15 +435,35 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
                 $(routeProfile.foot).addClass(c4g.maps.constant.css.ROUTER_PROFILE_FOOT);
 
-                spanFoot.appendChild(routeProfile.foot);
-                spanFoot.appendChild(routeProfile.foot.list);
-                this.routeProfile.appendChild(spanFoot);
-                this.$routeProfileFoot.click(function(event){
-                    self.clearSiblings($(this).parent());
-                    self.routeProfile.active = $(this).data('profile');
+                if(routeProfile.foot.list.children.length == 1){
+                    this.routeProfile.appendChild(routeProfile.foot);
+                    this.$routeProfileFoot.click(function(event){
+                        self.clearSiblings(this);
+                        self.routeProfile.active = $(this).data('profile');
+                        self.recalculateRoute();
+                    });
+                }
+                else{
+                    spanFoot.appendChild(routeProfile.foot);
+                    spanFoot.appendChild(routeProfile.foot.list);
+                    this.routeProfile.appendChild(spanFoot);
+                    this.$routeProfileFoot.click(function(event){
+                        self.clearSiblings($(this).parent());
+                        self.routeProfile.active = $(this).data('profile');
+                        self.recalculateRoute();
+                    });
+                }
+            }
+            if(this.options.mapController.data.router_profiles['10']){
+                routeProfile.wheelchair = document.createElement('button');
+                $(routeProfile.wheelchair).addClass(c4g.maps.constant.css.ROUTER_PROFILE_WHEELCHAIR);
+                this.$routeProfileWheelchair = $(routeProfile.wheelchair);
+                this.routeProfile.appendChild(routeProfile.wheelchair);
+                this.$routeProfileWheelchair.click(function(event){
+                    self.clearSiblings(this);
+                    self.routeProfile.active = '10';
                     self.recalculateRoute();
                 });
-
             }
             this.childClick = function($element){
                 $element.addClass(c4g.maps.constant.css.ACTIVE);
