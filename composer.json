@@ -22,8 +22,8 @@
     "issues": "https://github.com/Kuestenschmiede/MapsBundle/issues"
   },
   "require": {
-    "contao/core-bundle": "4.6.x-dev",
-    "contao/calendar-bundle": "4.6.x-dev",
+    "contao/core-bundle": "^4.4",
+    "contao/calendar-bundle": "^4.4",
     "con4gis/core": "^2.3"
   },
   "conflict": {
