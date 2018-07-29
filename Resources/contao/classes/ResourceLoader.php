@@ -209,7 +209,7 @@ class ResourceLoader extends coreResourceLoader
             parent::loadJavaScriptRessource('c4g-maps-control-portside-exporttools', self::BUNDLE_JS_PATH . 'c4g-maps-control-portside-exporttools.js' . $staticOption);
         }
 
-        parent::loadJavaScriptRessource('ol-ext', self::VENDOR_PATH .'ol-ext-'.$GLOBALS['con4gis']['maps']['ol-ext'] .'/ol-ext.js' . $staticOption);
+        parent::loadJavaScriptRessource('ol-ext', self::VENDOR_PATH .'ol-ext-'.$GLOBALS['con4gis']['maps']['ol-ext'] .'/ol-ext.min.js' . $staticOption);
         parent::loadCssRessource('ol-ext', self::VENDOR_PATH .'ol-ext-'.$GLOBALS['con4gis']['maps']['ol-ext'] .'/ol-ext.min.css' . $staticOption);
 
         // load plugins
