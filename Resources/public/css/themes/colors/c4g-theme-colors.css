@@ -190,10 +190,34 @@ span.c4g-active ul li{
 span.c4g-active ul li.c4g-active{
   background-color: var(--shadow-color);
 }
+.c4g-router-profile-wrapper .c4g-active ul {
+  color: var(--main-color);
+}
 
 .c4g-router-profile-wrapper .c4g-active button,
 .c4g-router-profile-wrapper button.c4g-active {
   color: var(--shadow-color);
+}
+
+.c4g-router-profile-wrapper span.c4g-active ul {
+  border-color: var(--shadow-color);
+  background-color: var(--font-color);
+  padding: 2px;
+}
+
+.c4g-router-profile-wrapper span.c4g-active ul li {
+  color: var(--main-color);
+  background-color: var(--font-color);
+  padding: 2px;
+}
+
+.c4g-router-profile-wrapper span.c4g-active ul li::before {
+  padding: 2px;
+}
+
+.c4g-router-profile-wrapper span.c4g-active ul li.c4g-active {
+  color: var(--shadow-color);
+  background-color: var(--font-color);
 }
 
 .c4g-content-select input:focus {

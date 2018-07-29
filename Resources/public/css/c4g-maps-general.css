@@ -237,7 +237,7 @@ button.c4g-geosearch-start:before {
   top: 0;
   height: 100%;
   min-width: 240px;
-  max-width: 42%;
+  max-width: 50%;
   /*background: #FFFFFF;*/
   z-index: 120;
 }

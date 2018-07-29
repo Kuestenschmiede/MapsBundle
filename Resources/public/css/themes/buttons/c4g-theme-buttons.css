@@ -1013,6 +1013,11 @@ div.c4g-horizontal.c4g-tooltip-popup:before {
   border-radius: var(--button-radius-percent);
 }
 
+.c4g-router-profile-wrapper .c4g-active ul {
+  border-radius: var(--button-radius-pixel);
+  border: 2px solid;
+}
+
 /*
  *  Media-querys
  */
