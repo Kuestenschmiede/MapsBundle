@@ -166,7 +166,7 @@ $GLOBALS['con4gis']['maps']['api']['infowindow'] = $apiBaseUrl . '/infoWindowSer
 $GLOBALS['con4gis']['maps']['api']['geosearch'] = $apiBaseUrl . '/nominatimService';
 $GLOBALS['con4gis']['maps']['api']['geosearch_reverse'] = $apiBaseUrl . '/reverseNominatimService';
 $GLOBALS['con4gis']['maps']['api']['routing'] = $apiBaseUrl . '/routingService';
-$GLOBALS['con4gis']['maps']['api']['geopicker'] = $apiBaseUrl . '/geopickerService';
+$GLOBALS['con4gis']['maps']['api']['geopicker'] = $apiBaseUrl . '/geopickerService/';
 
 
 /**
