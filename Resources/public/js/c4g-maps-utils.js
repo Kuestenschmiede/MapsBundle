@@ -342,7 +342,7 @@ this.c4g.maps = this.c4g.maps || {};
      *
      * @return  {string}                      [description]
      */
-    getRgbaFromHexAndOpacity: function (hex, opt_opacity) {
+    getRgbaFromHexAndOpacity: function (hex, opt_opacity, opt_array) {
 
       var bigint, r, g, b, a;
 
@@ -363,6 +363,9 @@ this.c4g.maps = this.c4g.maps || {};
       g = (bigint >> 8) & 255;
       b = bigint & 255;
       a = opt_opacity ? (opt_opacity / 100) : 1;
+      if(opt_array){
+        return [r,g,b,a];
+      }
 
       return "rgba(" + r + "," + g + "," + b + "," + a + ")";
     },
