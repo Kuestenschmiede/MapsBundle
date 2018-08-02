@@ -89,8 +89,10 @@ this.c4g.maps.control = this.c4g.maps.control || {};
           titleButtonBar,
           closeButton,
           capitalizedName,
-          hideButton;
+          hideButton,
+          caching;
 
+      caching = this.options.caching;
       capitalizedName = c4g.maps.utils.capitalizeFirstLetter(this.options.name);
       self = this;
 
@@ -98,8 +100,14 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       // Do not hide when it is initialized open, or in an external div
       if (this.options.extDiv) {
         initClass = ' ' + c4g.maps.constant.css.OPEN;
+        // if (caching) {
+        //     c4g.maps.utils.storeValue(this.options.name, '1');
+        // }
       } else {
         initClass = ' ' + c4g.maps.constant.css.CLOSE;
+        // if (caching) {
+        //     c4g.maps.utils.storeValue(this.options.name, '0');
+        // }
         this.options.mapController["active" + this.identifier] = this.options.mapController["active" + this.identifier] || false;
 
         this.button = document.createElement('button');
@@ -253,7 +261,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       this.options.mapController.map.on('change:size', this.update, this);
 
       // Show open if desired
-      if (this.options.defaultOpen) {
+      if ((this.options.defaultOpen) || (this.options.caching && (c4g.maps.utils.getValue(this.options.name) == '1'))) {
         this.open();
       }
 
@@ -340,11 +348,9 @@ this.c4g.maps.control = this.c4g.maps.control || {};
      */
     open: function (opt_options) {
       var containerOffsetWidth,
-          capitalizedName,
           self;
 
       self = this;
-      capitalizedName = c4g.maps.utils.capitalizeFirstLetter(this.options.name);
 
       // Call initialize-functions, if existent
       if (!this.initialized) {
@@ -406,6 +412,9 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         $(this.container).css('visibility', 'visible');
 
         this.update();
+        if (this.options.caching) {
+          c4g.maps.utils.storeValue(this.options.name, '1');
+        }
         return true;
       }
       return false;
@@ -427,11 +436,9 @@ this.c4g.maps.control = this.c4g.maps.control || {};
      */
     close: function (opt_hide, opt_openOtherSideboard) {
       var containerOffsetWidth,
-          direction,
-          capitalizedName;
+          direction;
 
       direction = this.options.direction;
-      capitalizedName = c4g.maps.utils.capitalizeFirstLetter(this.options.name);
 
       if (opt_hide ) {
         if (typeof this.preHideFunction === 'function') {
@@ -474,6 +481,9 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         // Remove active Sideboardentry
         this.options.mapController["active" + this.identifier] = false;
 
+        if (this.options.caching) {
+            c4g.maps.utils.storeValue(this.options.name, '0');
+        }
         return true;
       }
       return false;

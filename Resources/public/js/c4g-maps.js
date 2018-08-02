@@ -474,6 +474,7 @@ this.c4g.maps = this.c4g.maps || {};
             this.controls.account = new c4g.maps.control.Account({
                 tipLabel: c4g.maps.constant.i18n.CTRL_ACCOUNT,
                 target: controlContainerTopLeft,
+                caching: mapData.caching,
                 mapController: this
             });
             this.map.addControl(this.controls.account);
@@ -576,6 +577,7 @@ this.c4g.maps = this.c4g.maps || {};
             this.controls.router = new c4g.maps.control.Router({
                 tipLabel: c4g.maps.constant.i18n.CTRL_ROUTER,
                 target: controlContainerTopLeft,
+                caching: mapData.caching,
                 mapController: this
             });
             this.map.addControl(this.controls.router);
@@ -588,6 +590,7 @@ this.c4g.maps = this.c4g.maps || {};
                 target: mapData.editor.target || controlContainerTopLeft,
                 initOpen: mapData.editor.open || false,
                 dataField: mapData.editor.data_field || false,
+                caching: mapData.caching,
                 mapController: this
             });
             this.map.addControl(this.controls.editor);
@@ -597,6 +600,7 @@ this.c4g.maps = this.c4g.maps || {};
             this.controls.measuretools = new c4g.maps.control.Measuretools({
                 tipLabel: c4g.maps.constant.i18n.CTRL_MEASURETOOLS,
                 target: controlContainerTopLeft,
+                caching: mapData.caching,
                 mapController: this
             });
             this.map.addControl(this.controls.measuretools);
@@ -606,6 +610,7 @@ this.c4g.maps = this.c4g.maps || {};
             this.controls.exporttools = new c4g.maps.control.Exporttools({
                 tipLabel: c4g.maps.constant.i18n.CTRL_EXPORTTOOLS,
                 target: controlContainerTopLeft,
+                caching: mapData.caching,
                 mapController: this
             });
             this.map.addControl(this.controls.exporttools);
@@ -616,6 +621,7 @@ this.c4g.maps = this.c4g.maps || {};
                 label: ' ',
                 disableLabel: ' ',
                 tipLabel: c4g.maps.constant.i18n.CTRL_GRID,
+                caching: mapData.caching,
                 target: controlContainerTopLeft
             });
             this.map.addControl(this.controls.graticule);
@@ -636,6 +642,7 @@ this.c4g.maps = this.c4g.maps || {};
             this.controls.infopage = new c4g.maps.control.Infopage({
                 tipLabel: c4g.maps.constant.i18n.CTRL_INFOPAGE,
                 target: controlContainerTopLeft,
+                caching: mapData.caching,
                 mapController: this
             });
             this.map.addControl(this.controls.infopage);
@@ -692,6 +699,7 @@ this.c4g.maps = this.c4g.maps || {};
                 markResult: mapData.geosearch.markresult,
                 popup: mapData.geosearch.popup,
                 autopick: mapData.geopicker,
+                caching: mapData.caching,
                 results: mapData.geosearch.results
             });
             this.map.addControl(this.controls.geosearch);
@@ -714,11 +722,12 @@ this.c4g.maps = this.c4g.maps || {};
         enableStarboard = false;
       }
 
-        if (c4g.maps.control && c4g.maps.control.Starboard && typeof c4g.maps.control.Starboard === 'function' && enableStarboard) {
+      if (c4g.maps.control && c4g.maps.control.Starboard && typeof c4g.maps.control.Starboard === 'function' && enableStarboard) {
           this.controls.starboard = new c4g.maps.control.Starboard({
             create: mapData.starboard.enable || false,
             headline: mapData.starboard.label,
             tipLabel: starboard_label || false,
+            caching: mapData.caching,
             mapController: this,
             extDiv: mapData.starboard.div,
             defaultOpen: mapData.starboard.open,
