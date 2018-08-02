@@ -865,7 +865,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                                 if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.proxy_fillPopup === 'object') {
                                     c4g.maps.utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
                                 }
-                                self.config.mapController.proxy.setPopup(objPopup,self.config.mapController.proxy);
+                                self.config.mapController.proxy.setPopup(objPopup);
                             } else {
                                 $.ajax({
                                     dataType: "json",
@@ -888,7 +888,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                                             c4g.maps.utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
                                         }
 
-                                        self.setPopup(objPopup,self);
+                                        self.setPopup(objPopup);
                                     }
                                 });
                             }
