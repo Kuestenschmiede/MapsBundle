@@ -360,7 +360,7 @@ class C4gLayerController{
             }
 
             c4g.maps.requests['layerDataRequest' + itemUid] = jQuery.ajax({
-              url: self.api_layercontentdata_url + '/' + self.arrLayers[itemUid].id +'/'+strBoundingBox,
+              url: self.proxy.api_layercontentdata_url + '/' + self.arrLayers[itemUid].id +'/'+strBoundingBox,
               done: function (data){
                 if(data.length > 0 && !contentFeatures){
                   contentFeatures = [];

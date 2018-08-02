@@ -14,6 +14,8 @@ use con4gis\MapsBundle\Classes\Events\LoadLayersEvent;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use con4gis\MapsBundle\Resources\contao\modules\api\LayerContentApi;
 use Contao\Database;
+use Contao\FrontendUser;
+use Contao\System;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class LayerService
@@ -275,8 +277,10 @@ class LayerService
 
                 // do not return protected layers, to users without permission
                 if ($objLayers->protect_element) {
-                    if (FE_USER_LOGGED_IN && !empty($objLayers->permitted_groups)) {
-                        if (sizeof(array_intersect($this->User->groups, deserialize($objLayers->permitted_groups))) <= 0) {
+                    if (System::getContainer()->get("contao.security.token_checker")->hasFrontendUser() && !empty($objLayers->permitted_groups)) {
+                        $permittedGroups = deserialize($objLayers->permitted_groups);
+                        $userGroups = FrontendUser::getInstance()->groups;
+                        if (sizeof(array_intersect($userGroups, $permittedGroups)) <= 0) {
                             continue;
                         }
                     } else {
