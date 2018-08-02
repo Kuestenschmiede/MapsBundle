@@ -222,6 +222,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_alternative'] = array('Altern
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium'] = array('Cesium verwenden', 'Mit Cesium wird die 2D Karte in einen Globus umgewandelt.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium_always'] = array('Cesium immer verwenden', 'Soll Cesium für jede Basiskarte aktiviert sein? Falls nicht, kann Cesium auch für einzelne Karten in den Basiskarteneinstellungen aktiviert werden.');
 
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['caching'] = array('Kartensituation merken', 'Buttonstatus u.Ä. werden im Browser zwischengespeichert.');
 
 /**
  * Reference

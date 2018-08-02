@@ -136,6 +136,7 @@ class MapDataConfigurator
                 $mapData['mouseposition'] = false;
                 $mapData['zoomlevel'] = 1;
                 $mapData['account'] = 0;
+                $mapData['caching'] = 0;
             }
         }
         $mapData['profile'] = $profileId;
@@ -362,6 +363,10 @@ class MapDataConfigurator
                 $mapData['account'] = \Contao\Controller::replaceInsertTags("{{insert_module::".$profile->account."}}", false);
             } else {
                 $maptData['account'] = '';
+            }
+
+            if ($profile->caching) {
+                $mapData['caching'] = 1;
             }
 
             // geosearch

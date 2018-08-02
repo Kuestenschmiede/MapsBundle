@@ -880,9 +880,13 @@ this.c4g.maps = this.c4g.maps || {};
         });
         mapController.map.addControl(mapController.controls.mouseposition);
       }
+    },
+    getValue: function (key) {
+        return localStorage[key] || '';
+    },
+    storeValue: function (key, value) {
+      localStorage[key] = value; // only strings
     }
-
-
   });
 
 }(jQuery, this.c4g));

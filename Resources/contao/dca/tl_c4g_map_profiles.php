@@ -105,7 +105,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
                                          '{geopicker_legend:hide},is_backend_geopicker_default,geopicker;'.
                                          '{editor_legend:hide},editor,editor_styles_point,editor_styles_line,editor_styles_polygon,editor_styles_circle,editor_styles_freehand,editor_vars,editor_show_items,editor_helpurl,is_backend_editor_default;'.
                                          '{cesium_legend:hide},cesium;'.
-                                         '{expert_legend:hide},script,overpass_url,custom_div,account;'.
+                                         '{expert_legend:hide},script,overpass_url,custom_div,account,caching;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;'
     ),
 
@@ -1130,6 +1130,15 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             'default'                 => '',
             'inputType'               => 'checkbox',
             'eval'                    => array(),
+            'sql'                     => "char(1) NOT NULL default ''"
+        ),
+        'caching' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['caching'],
+            'exclude'                 => true,
+            'default'                 => '',
+            'inputType'               => 'checkbox',
+            'eval'                    => array('submitOnChange' => false),
             'sql'                     => "char(1) NOT NULL default ''"
         ),
     )
