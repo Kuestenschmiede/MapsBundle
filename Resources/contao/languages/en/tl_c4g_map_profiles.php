@@ -213,6 +213,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_alternative'] = array('Altern
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium'] = array('Use cesium', 'With cesium you can transform the 2D map in a globe.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium_always']  = array('Use cesium always', 'Do you want to use cesium for every basemap? If not you can activate single maps in the basemap settings.');
 
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['caching'] = array('Remember button states', 'With this switch you can cache button states.');
+
 /**
  * References
  */
