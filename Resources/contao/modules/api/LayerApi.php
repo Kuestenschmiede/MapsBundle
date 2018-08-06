@@ -546,44 +546,6 @@ class LayerApi extends \Frontend
         $objLayerContentApi = new LayerContentApi();
         switch ($objLayer->location_type)
         {
-//            case "poim":
-//                if ($objLayer->poim_reassign_layer) {
-//                    $arrReassignedRawLayer = $objLayerContentApi->getLayerDataPublic($objLayer->id);
-//
-//                    //loop over all forum layers
-//                    foreach ($arrReassignedRawLayer as $index=>$reassignedLayer)
-//                    {
-//                        $found = false;
-//                        $strReassignName = $reassignedLayer['threadName'];
-//                        $layer = $this->arrReassignedLayer[$strReassignName];
-//                        if ($layer && is_array($layer)) {
-//                            $this->arrReassignedLayer[$strReassignName][] = $reassignedLayer;
-//                            $found = true;
-//                        } else if (!$layer) {
-//                            // lookup in child elements if the layer is there
-//                            foreach ($this->arrReassignedLayer as $index_child=>$reassignedLayer_child)
-//                            {
-//                                $layer_child = $reassignedLayer_child[$strReassignName];
-//                                if ($layer_child && is_array($layer_child)) {
-//                                    // found layer
-//                                    $reassignedLayer_child[$strReassignName][] = $reassignedLayer;
-//                                    $found = true;
-//                                    break;
-//                                }
-//                            }
-//                        }
-//
-//                        if (!$found) {
-//                            //since the layer was not found, insert it at first level
-//                            $this->arrReassignedLayer[$strReassignName] = array();
-//                            $this->arrReassignedLayer[$strReassignName][] = $reassignedLayer;
-//                        }
-//                    }
-//
-//                    return false;
-//                } else {
-//                    return $objLayerContentApi->getLayerDataPublic($objLayer->id);
-//                }
             // TODO: make Hook instead and let con4gis-Forum handle this?
             case "c4gForum":
                 if ($objLayer->forum_reassign_layer && $objLayer->forum_reassign_layer=="THREAD") {
