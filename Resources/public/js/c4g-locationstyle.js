@@ -174,32 +174,32 @@ class C4gLocationStyle{
                 break;
             case 'ol_icon': // fallthrough
             case 'cust_icon':
-                if (styleData.icon_src) {
-                    if (styleData.icon_src.search(".svg") >-1){
+                if (styleData.iconType) {
+                    if (styleData.iconType == "vector" && styleData.svgSrc){
                         let imgSizeX = 1000;
-                        let imgSizeY = parseInt(styleData.icon_size[1])/ parseInt(styleData.icon_size[0])*imgSizeX
-                        let imgScale = (parseInt(styleData.icon_size[0]) / imgSizeX) * parseFloat(styleData.icon_scale, 10);
-                        let color = c4g.maps.utils.getRgbaFromHexAndOpacity("ff0000", 50, true);
-                        imageStyle = new ol.style.Icon({
-                            src: styleData.icon_src,
-                            opacity: parseFloat(styleData.icon_opacity.value, 10) / 100,
-                            imgSize:[imgSizeX,imgSizeY],
-                            scale: imgScale,
-                            //color: new ol.color.asArray(color)
-                        });
+                        let imgSizeY = parseInt(styleData.svgSize[1])/ parseInt(styleData.svgSize[0])*imgSizeX;
+                        let imgScale = (parseInt(styleData.svgSize[0]) / imgSizeX);
+                        if(styleData.fillcolor){
+                            let color = c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.fillcolor, 50, true);
+                            imageStyle = new ol.style.Icon({
+                                src: styleData.svgSrc,
+                                opacity: parseFloat(styleData.icon_opacity.value, 10) / 100,
+                                imgSize:[imgSizeX,imgSizeY],
+                                scale: imgScale,
+                                color: new ol.color.asArray(color)
+                            });
+                        }
+                        else{
+                            imageStyle = new ol.style.Icon({
+                                src: styleData.svgSrc,
+                                opacity: parseFloat(styleData.icon_opacity.value, 10) / 100,
+                                imgSize:[imgSizeX,imgSizeY],
+                                scale: imgScale,
+                            });
+                        }
+
                     }
-                    else{
-                        // let imgSizeX = 1000;
-                        // let imgSizeY = parseInt(styleData.icon_size[1])/ parseInt(styleData.icon_size[0])*imgSizeX
-                        // let imgScale = (parseInt(styleData.icon_size[0]) / imgSizeX) * parseFloat(styleData.icon_scale, 10);
-                        // let color = c4g.maps.utils.getRgbaFromHexAndOpacity("ff0000", 50, true);
-                        // imageStyle = new ol.style.Icon({
-                        //     src: styleData.icon_src,
-                        //     opacity: parseFloat(styleData.icon_opacity.value, 10) / 100,
-                        //     // imgSize:[imgSizeX,imgSizeY],
-                        //     // scale: imgScale,
-                        //     //color: new ol.color.asArray(color)
-                        // });
+                    else if(styleData.iconType == "pixel" && styleData.icon_src){
                         imageStyle = new ol.style.Icon({
                             //anchor: [(-1 * (styleData.icon_offset[0] || 0)), (-1 * (styleData.icon_offset[1] || 0))],
                             //anchorXUnits: 'pixels',
