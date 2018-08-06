@@ -25,7 +25,10 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['radius']           = array('Radius'
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['ol_icon']          = array('OpenLayers Icon','Select from the internal OpenLayers icons.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['ol_icon_size']     = array('Icon size','Size of the icon. Is scaled when needed.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['ol_icon_offset']   = array('Offset for icon in pixel (X/Y)','An offset of "0" means, the upper left corner is printed on the location. X>0 => shifts icon to the right. X<0 => to the left. Y>0 => to the bottom. Y<0 => to the top.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['iconType']         = array('Type of icon','Choose, whether you want to use a raster icon or a vector icon.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['svgSrc']           = array('SVG source','Select the svg to be displayed for the location from the list.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_src']         = array('Icon source','Select the icon to be displayed for the location from the list.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['svgSize']          = array('SVG size','Choose the size of the SVG in pixels.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_size']        = array('Icon size','Size of the icon. Is scaled when needed.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_scale']       = array('Scale icon','1.0 = 100%');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_offset']      = array('Offset for icon in pixel (X/Y)','An offset of "0" means, the upper left corner is printed on the location. X>0 => shifts icon to the right. X<0 => to the left. Y>0 => to the bottom. Y<0 => to the top.');
@@ -89,6 +92,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['bottom']            =
 
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['bubble']            = 'Bubble';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['cloud']             = 'Cloud';
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['vector']            = 'Vector';
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['pixel']             = 'Raster';
 
 /**
  * Buttons

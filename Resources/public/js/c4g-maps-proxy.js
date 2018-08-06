@@ -484,7 +484,7 @@ class MapProxy {
               if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.proxy_fillPopup === 'object') {
                 c4g.maps.utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
               }
-              self.setPopup(objPopup,self);
+              self.setPopup(objPopup);
             } else {
               jQuery.ajax({
                 dataType: "json",
@@ -507,7 +507,7 @@ class MapProxy {
                     c4g.maps.utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
                   }
 
-                  self.setPopup(objPopup,self);
+                  self.setPopup(objPopup);
                 }
               });
             }
@@ -539,7 +539,7 @@ class MapProxy {
     proxy.options.mapController.map.on('postrender', func)
   }
 
-  setPopup(popupConfig,proxy) {
+  setPopup(popupConfig) {
     var feature,
       layer,
       popupContent,
@@ -549,7 +549,8 @@ class MapProxy {
       routeFromButtonSpan,
       routeToButton,
       routeToButtonSpan,
-      routingHandler;
+      routingHandler,
+      self = this;
 
     feature = popupConfig.feature;
     layer = popupConfig.layer;
@@ -558,11 +559,11 @@ class MapProxy {
 
     // @TODO: check for route-option & display "route-to"
     // NOTE: does not work async this way
-    if (proxy.options.mapController.controls.router && popupConfig.popup.routing_link) {
-      router = proxy.options.mapController.controls.router;
+    if (this.options.mapController.controls.router && popupConfig.popup.routing_link) {
+      router = this.options.mapController.controls.router;
 
       routingHandler = function (event) {
-        if (proxy.options.mapController.activePortside !== router) {
+        if (self.options.mapController.activePortside !== router) {
           router.open();
         }
 
@@ -577,7 +578,7 @@ class MapProxy {
 
       routeFromButton = document.createElement('button');
       routeFromButton.className = c4g.maps.constant.css.ICON + ' ' + c4g.maps.constant.css.POPUP_ROUTE_FROM;
-      $(routeFromButton).click(routingHandler);
+      jQuery(routeFromButton).click(routingHandler);
       routeButtonWrapper.appendChild(routeFromButton);
 
       routeFromButtonSpan = document.createElement('span');
@@ -586,7 +587,7 @@ class MapProxy {
 
       routeToButton = document.createElement('button');
       routeToButton.className = c4g.maps.constant.css.ICON + ' ' + c4g.maps.constant.css.POPUP_ROUTE_TO;
-      $(routeToButton).click(routingHandler);
+      jQuery(routeToButton).click(routingHandler);
       routeButtonWrapper.appendChild(routeToButton);
 
       routeToButtonSpan = document.createElement('span');

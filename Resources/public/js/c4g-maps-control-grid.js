@@ -35,7 +35,6 @@ this.c4g.maps.control = this.c4g.maps.control || {};
     options = $.extend({
       className: c4g.maps.constant.css.GRATICULE,
       switchable: true,
-      // enabled: false,
       tipLabel: c4g.maps.constant.i18n.CTRL_GRID,
       label: '#',
       disableLabel: '[]'
@@ -47,12 +46,18 @@ this.c4g.maps.control = this.c4g.maps.control || {};
     var enable = function () {
       objGrid.setMap(self.getMap());
       $(element).addClass(c4g.maps.constant.css.ENABLED);
+      // if (options.caching) {
+      //     c4g.maps.utils.storeValue('grid', '1');
+      // }
     };
 
     // function to disable the grid
     var disable = function () {
       objGrid.setMap(null);
       $(element).removeClass(c4g.maps.constant.css.ENABLED);
+      // if (options.caching) {
+      //     c4g.maps.utils.storeValue('grid', '0');
+      // }
     };
 
     // function to toggle the grid
@@ -87,6 +92,12 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       element: element,
       target: options.target
     });
+
+    // if (options.caching && (c4g.maps.utils.getValue('grid') == '1')) {
+    //     objGrid.setMap(self.getMap());
+    //     $(element).addClass(c4g.maps.constant.css.ENABLED);
+    // }
+
   };
   ol.inherits(c4g.maps.control.Grid, ol.control.Control);
 

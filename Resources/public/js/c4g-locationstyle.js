@@ -174,16 +174,43 @@ class C4gLocationStyle{
                 break;
             case 'ol_icon': // fallthrough
             case 'cust_icon':
-                if (styleData.icon_src) {
-                    imageStyle = new ol.style.Icon({
-                        //anchor: [(-1 * (styleData.icon_offset[0] || 0)), (-1 * (styleData.icon_offset[1] || 0))],
-                        //anchorXUnits: 'pixels',
-                        //anchorYUnits: 'pixels',
-                        opacity: parseFloat(styleData.icon_opacity.value, 10) / 100,
-                        src: /*(self.controller.mapController.data.icon_source ? self.controller.mapController.data.icon_source : '') + */styleData.icon_src,
-                        size: [parseInt(styleData.icon_size[0], 10), parseInt(styleData.icon_size[1], 10)],
-                        scale: parseFloat(styleData.icon_scale, 10),
-                    });
+                if (styleData.iconType) {
+                    if (styleData.iconType == "vector" && styleData.svgSrc){
+                        let imgSizeX = 1000;
+                        let imgSizeY = parseInt(styleData.svgSize[1])/ parseInt(styleData.svgSize[0])*imgSizeX;
+                        let imgScale = (parseInt(styleData.svgSize[0]) / imgSizeX);
+                        if(styleData.fillcolor){
+                            let color = c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.fillcolor, 50, true);
+                            imageStyle = new ol.style.Icon({
+                                src: styleData.svgSrc,
+                                opacity: parseFloat(styleData.icon_opacity.value, 10) / 100,
+                                imgSize:[imgSizeX,imgSizeY],
+                                scale: imgScale,
+                                color: new ol.color.asArray(color)
+                            });
+                        }
+                        else{
+                            imageStyle = new ol.style.Icon({
+                                src: styleData.svgSrc,
+                                opacity: parseFloat(styleData.icon_opacity.value, 10) / 100,
+                                imgSize:[imgSizeX,imgSizeY],
+                                scale: imgScale,
+                            });
+                        }
+
+                    }
+                    else if(styleData.iconType == "pixel" && styleData.icon_src){
+                        imageStyle = new ol.style.Icon({
+                            //anchor: [(-1 * (styleData.icon_offset[0] || 0)), (-1 * (styleData.icon_offset[1] || 0))],
+                            //anchorXUnits: 'pixels',
+                            //anchorYUnits: 'pixels',
+                            opacity: parseFloat(styleData.icon_opacity.value, 10) / 100,
+                            src: /*(self.controller.mapController.data.icon_source ? self.controller.mapController.data.icon_source : '') + */styleData.icon_src,
+                            size: [parseInt(styleData.icon_size[0], 10), parseInt(styleData.icon_size[1], 10)],
+                            scale: parseFloat(styleData.icon_scale, 10),
+                        });
+                    }
+
                     break;
                 } // fallthrough
             case 'point':
@@ -352,6 +379,7 @@ class C4gLocationStyle{
 
         return styleFunction;
     } // end of "getStyleFunction()"
+
 
     getStyleEditorConfig(styleData) {
         var editorConfig;
