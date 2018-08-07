@@ -213,6 +213,17 @@ class C4gLocationStyle{
 
                     break;
                 } // fallthrough
+            case 'photo' :
+                imageStyle = new ol.style.Photo({
+                    kind: styleData.photoKind,
+                    crop: true,
+                    opacity: parseFloat(styleData.icon_opacity.value, 10) / 100,
+                    radius: parseFloat(styleData.radius.value,10),
+                    shadow: true,
+                    stroke: strokeStyle,
+                    src: styleData.icon_src
+                });
+                break;
             case 'point':
                 imageStyle = new ol.style.Circle({
                     fill: fillStyle,
