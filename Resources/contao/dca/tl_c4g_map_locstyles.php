@@ -124,7 +124,12 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
                                          '{popup_legend},tooltip,popup_info;'.
                                          '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;'.
                                          '{editor_legend:hide},editor_icon,editor_sort,editor_vars,editor_collect;',
-        'style_function'              => 'name,styletype,style_function_js;'
+        'style_function'              => 'name,styletype,style_function_js;',
+        'photo'                       => 'name,styletype,radius,photoKind,icon_src,strokecolor,icon_opacity;'.
+                                         '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,font_opacity,font_style,font_weight;'.
+                                         '{popup_legend},tooltip,popup_info;'.
+                                         '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;'.
+                                         '{editor_legend:hide},editor_icon,editor_sort,editor_vars,editor_collect;'
 
 
     ),
@@ -167,7 +172,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
             'filter'                  => true,
             'inputType'               => 'select',
             'default'                 => 'point',
-            'options'                 => array('point', 'square', 'star', 'x', 'cross', 'triangle', /*'ol_icon',*/ 'cust_icon','style_function' ),
+            'options'                 => array('point', 'square', 'star', 'x', 'cross', 'triangle', /*'ol_icon',*/ 'cust_icon','style_function','photo' ),
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references'],
             'eval'                    => array('submitOnChange'=>'true'),
             'sql'                     => "varchar(15) NOT NULL default ''"
@@ -345,7 +350,17 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
             'eval'                    => array('rgxp'=>'prcnt', 'tl_class'=>'clr', 'mandatory'=>true),
             'sql'                     => "varchar(100) NOT NULL default ''"
         ),
-
+        'photoKind' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['photoKind'],
+            'exclude'                 => true,
+            'default'                 => 'popup_default',
+            'inputType'               => 'select',
+            'options'                 => array('default','square','round','anchored','folio'),
+            'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references'],
+            'eval'                    => array('mandatore'=>true),
+            'sql'                     => "varchar(64) NOT NULL default ''"
+        ),
         'onhover_locstyle' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['onhover_locstyle'],
