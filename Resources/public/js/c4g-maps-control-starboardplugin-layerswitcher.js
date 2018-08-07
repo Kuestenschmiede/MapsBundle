@@ -35,16 +35,25 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
           contentWrapper,
           contentHeadline,
           contentHeadlineLink,
-          contentInfo;
+          contentInfo,
+          layerSwitcherTitle;
+
+      layerSwitcherTitle = this.starboard.options.layerSwitcherTitle;
+
+      /* ToDo show layer name on tab
+      if (layer.renderSpecial && layer.name) {
+          layerSwitcherTitle = layer.name;
+      }*/
 
       self = this;
+
 
       contentWrapper = document.createElement('div');
       contentHeadline = document.createElement('div');
       contentHeadline.className = 'contentHeadline';
 
       if(!this.starboard.options.button) {
-          contentHeadline.innerHTML = (this.starboard.options.layerSwitcherTitle || c4g.maps.constant.i18n.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER);
+          contentHeadline.innerHTML = (layerSwitcherTitle || c4g.maps.constant.i18n.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER);
       }
       else {
           $(contentHeadline).addClass("c4g-starboard-headline");
@@ -66,7 +75,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
               }
           };
           $(contentHeadlineLink).addClass("c4g-inactive c4g-starboard-headline-link");
-          contentHeadlineLink.innerHTML = (this.starboard.options.layerSwitcherTitle || c4g.maps.constant.i18n.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER);
+          contentHeadlineLink.innerHTML = (layerSwitcherTitle || c4g.maps.constant.i18n.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER);
           contentHeadlineLink.innerHTML = contentHeadlineLink.innerHTML+' ';
           contentHeadline.appendChild(contentHeadlineLink);
       }
@@ -82,7 +91,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
       self.view = self.starboard.addView({
         name: 'layerswitcher',
         triggerConfig: {
-          tipLabel: (this.starboard.options.layerSwitcherTitle || c4g.maps.constant.i18n.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER),
+          tipLabel: (layerSwitcherTitle || c4g.maps.constant.i18n.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER),
           className: c4g.maps.constant.css.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER,
           withHeadline: false
         },
