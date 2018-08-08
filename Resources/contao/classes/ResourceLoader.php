@@ -13,8 +13,10 @@
 
 namespace con4gis\MapsBundle\Resources\contao\classes;
 use con4gis\CoreBundle\Resources\contao\classes\ResourceLoader as coreResourceLoader;
+use con4gis\MapsBundle\Classes\Events\LoadMapResourcesEvent;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapThemesModel;
+use Contao\System;
 
 /**
  * Class ResourceLoader
@@ -237,6 +239,10 @@ class ResourceLoader extends coreResourceLoader
         if ( $GLOBALS['con4gis']['projects']['installed'] &&  $GLOBALS['con4gis']['tracking']['installed']) {
             parent::loadJavaScriptRessource('live-positions', 'bundles/con4gisprojects/js/C4GBrickLivePositions.js');
         }
+
+        $eventDispatcher = System::getContainer()->get('event_dispatcher');
+        $event = new LoadMapResourcesEvent();
+        $eventDispatcher->dispatch($event::NAME, $event);
 
         return true;
     }
