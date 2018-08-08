@@ -76,7 +76,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['x']           = 'X';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['cross']       = 'Kreuz';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['triangle']    = 'Dreieck';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['ol_icon']     = 'OpenLayers Standardicon';
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['cust_icon']   = 'Eigenes Icon';
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['cust_icon']   = 'Eigenes Icon - Pixel';
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['cust_icon_svg']   = 'Eigenes Icon - Vektor';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['style_function']   = 'Style function';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['photo']       = 'Photo';
 

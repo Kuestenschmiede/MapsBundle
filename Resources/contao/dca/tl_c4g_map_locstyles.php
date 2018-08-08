@@ -107,7 +107,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
     // Palettes
     'palettes' => array
     (
-        '__selector__'                => array('styletype','line_arrows','iconType'),
+        '__selector__'                => array('styletype','line_arrows'),
         'default'                     => 'name,styletype,strokewidth,strokecolor,strokeopacity,fillcolor,fillopacity,radius;'.
                                          '{arrow_legend},line_arrows;'.
                                          '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,font_opacity,font_style,font_weight;'.
@@ -119,7 +119,12 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
                                          '{popup_legend},tooltip,popup_info;'.
                                          '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;'.
                                          '{editor_legend:hide},editor_icon,editor_sort,editor_vars;',
-        'cust_icon'                   => 'name,styletype,iconType,icon_offset,icon_opacity;'.
+        'cust_icon'                   => 'name,styletype,icon_src, icon_scale, icon_size,icon_offset,icon_opacity;'.
+                                         '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,font_opacity,font_style,font_weight;'.
+                                         '{popup_legend},tooltip,popup_info;'.
+                                         '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;'.
+                                         '{editor_legend:hide},editor_icon,editor_sort,editor_vars,editor_collect;',
+        'cust_icon_svg'                   => 'name,styletype,svgSrc, svgSize, fillcolor ,icon_offset,icon_opacity;'.
                                          '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,font_opacity,font_style,font_weight;'.
                                          '{popup_legend},tooltip,popup_info;'.
                                          '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;'.
@@ -137,9 +142,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
     // Subpalettes
     'subpalettes' => array
     (
-        'line_arrows'                 => 'line_arrows_back,line_arrows_radius,line_arrows_minzoom',
-        'iconType_pixel'                       => 'icon_src, icon_scale, icon_size',
-        'iconType_vector'                      => 'svgSrc, svgSize, fillcolor'
+        'line_arrows'                 => 'line_arrows_back,line_arrows_radius,line_arrows_minzoom'
     ),
 
 
@@ -172,7 +175,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
             'filter'                  => true,
             'inputType'               => 'select',
             'default'                 => 'point',
-            'options'                 => array('point', 'square', 'star', 'x', 'cross', 'triangle', /*'ol_icon',*/ 'cust_icon','style_function','photo' ),
+            'options'                 => array('point', 'square', 'star', 'x', 'cross', 'triangle', /*'ol_icon',*/ 'cust_icon','cust_icon_svg','style_function','photo' ),
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references'],
             'eval'                    => array('submitOnChange'=>'true'),
             'sql'                     => "varchar(15) NOT NULL default ''"
@@ -208,7 +211,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['fillcolor'],
             'inputType'               => 'text',
             'default'                 => 'ee0011',
-            'eval'                    => array('maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'long wizard', 'mandatory'=>true),
+            'eval'                    => array('maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'long wizard'),
             'sql'                     => "varchar(6) NOT NULL default ''"
         ),
         'fillopacity' => array
@@ -271,17 +274,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
             'sql'                     => "varchar(100) NOT NULL default ''"
         ),
 
-        'iconType' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['iconType'],
-            'exclude'                 => true,
-            'default'                 => '',
-            'options'                 => array('vector','pixel'),
-            'inputType'               => 'select',
-            'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references'],
-            'eval'                    => array('submitOnChange' => true),
-            'sql'                     => "varchar(100) NOT NULL default ''"
-        ),
+
         'icon_src' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_src'],
