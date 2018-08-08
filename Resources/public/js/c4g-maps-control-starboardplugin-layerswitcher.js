@@ -40,13 +40,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
 
       layerSwitcherTitle = this.starboard.options.layerSwitcherTitle;
 
-      /* ToDo show layer name on tab
-      if (layer.renderSpecial && layer.name) {
-          layerSwitcherTitle = layer.name;
-      }*/
-
       self = this;
-
 
       contentWrapper = document.createElement('div');
       contentHeadline = document.createElement('div');

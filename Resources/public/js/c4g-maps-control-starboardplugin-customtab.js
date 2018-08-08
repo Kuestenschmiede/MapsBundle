@@ -59,15 +59,22 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
         contentWrapper,
         contentHeadline,
         contentHeadlineLink,
-        selector;
+        selector,
+        layerSwitcherTitle;
 
       self = this;
       contentWrapper = document.createElement('div');
       contentHeadline = document.createElement('div');
       contentHeadline.className = 'contentHeadline';
 
+      layerSwitcherTitle = this.starboard.options.layerSwitcherTitle;
+
+      if (self.name) {
+          layerSwitcherTitle = self.name;
+      }
+
       if(!this.starboard.options.button) {
-          contentHeadline.innerHTML = (this.starboard.options.layerSwitcherTitle || c4g.maps.constant.i18n.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER);
+        contentHeadline.innerHTML = (layerSwitcherTitle || c4g.maps.constant.i18n.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER);
       }
       else {
           $(contentHeadline).addClass("c4g-starboard-headline");
@@ -89,7 +96,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
               }
           };
           $(contentHeadlineLink).addClass("c4g-inactive c4g-starboard-headline-link");
-          contentHeadlineLink.innerHTML = (this.starboard.options.layerSwitcherTitle || c4g.maps.constant.i18n.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER);
+          contentHeadlineLink.innerHTML = (layerSwitcherTitle || c4g.maps.constant.i18n.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER);
           contentHeadlineLink.innerHTML = contentHeadlineLink.innerHTML+' ';
           contentHeadline.appendChild(contentHeadlineLink);
       }
