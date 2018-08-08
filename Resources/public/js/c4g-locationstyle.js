@@ -210,9 +210,8 @@ class C4gLocationStyle{
                             scale: parseFloat(styleData.icon_scale, 10),
                         });
                     }
-
-                    break;
                 } // fallthrough
+                break;
             case 'photo' :
                 imageStyle = new ol.style.Photo({
                     kind: styleData.photoKind,
