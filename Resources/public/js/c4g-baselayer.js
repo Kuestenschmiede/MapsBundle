@@ -21,7 +21,7 @@ class C4gBaselayer{
         this._maxzoomlevel = baselayerArr['maxzoomlevel'];
         this._protect_baselayer = baselayerArr['protect_baselayer'];
         this._permitted_groups = baselayerArr['permitted_groups'];
-        this._api_key = baselayerArr['apiKey'];
+        this._api_key = baselayerArr['apiKey'] ? baselayerArr['apiKey'] : baselayerArr['api_key'];
         this._app_id = baselayerArr['app_id'];
         this._thunderforest_type = baselayerArr['thunderforest_type'];
         this._here_type = baselayerArr['here_type'];

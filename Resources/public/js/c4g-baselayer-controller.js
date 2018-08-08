@@ -201,7 +201,7 @@ class C4gBaselayerController {
                         }
                         break;
                     case 'mapbox':
-                        layerOptions.attributions = mapboxSourceConfigs[baseLayerConfig.mapbox_type].attributions;
+                        layerOptions.attributions = mapboxSourceConfigs[baseLayerConfig._mapbox_type].attributions;
                         break;
                     case 'klokan':
                         layerOptions.attributions = klokanSourceConfigs[baseLayerConfig.klokan_type].attributions;
@@ -353,21 +353,21 @@ class C4gBaselayerController {
                     }
                     break;
                 case 'mapbox':
-                    if (baseLayerConfig.api_key && baseLayerConfig.app_id && baseLayerConfig.mapbox_type) {
+                    if (baseLayerConfig.api_key && baseLayerConfig.app_id && baseLayerConfig._mapbox_type) {
 
-                        if (baseLayerConfig.mapbox_type === 'Mapbox') {
+                        if (baseLayerConfig._mapbox_type === 'Mapbox') {
                             layerOptions.url = baseLayerConfig.url + baseLayerConfig.app_id + '/tiles/{z}/{x}/{y}?access_token=' + baseLayerConfig.api_key;
                             newBaselayer = new ol.layer.Tile({
-                                source: new ol.source.XYZ($.extend(
-                                    mapboxSourceConfigs[baseLayerConfig.mapbox_type],
-                                    layerOptions))
+                                source: new ol.source.XYZ(
+                                    jQuery.extend(mapboxSourceConfigs[baseLayerConfig._mapbox_type], layerOptions)
+                                )
                             });
                         } else {
                             layerOptions.url = baseLayerConfig.url_classic + baseLayerConfig.app_id + '/{z}/{x}/{y}.png?access_token=' + baseLayerConfig.api_key;
 
                             newBaselayer = new ol.layer.Tile({
                                 source: new ol.source.XYZ($.extend(
-                                    mapboxSourceConfigs[baseLayerConfig.mapbox_type],
+                                    mapboxSourceConfigs[baseLayerConfig._mapbox_type],
                                     layerOptions
                                 ))
                             });
