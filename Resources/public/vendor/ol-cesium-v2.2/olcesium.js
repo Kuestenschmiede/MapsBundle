@@ -1,14 +1,5 @@
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("ol/Observable.js"), require("ol/Overlay.js"), require("ol/array.js"), require("ol/dom.js"), require("ol/easing.js"), require("ol/events.js"), require("ol/extent.js"), require("ol/geom/Geometry.js"), require("ol/geom/Point.js"), require("ol/geom/Polygon.js"), require("ol/geom/SimpleGeometry.js"), require("ol/layer/Group.js"), require("ol/layer/Image.js"), require("ol/layer/Layer.js"), require("ol/layer/Tile.js"), require("ol/layer/Vector.js"), require("ol/math.js"), require("ol/proj.js"), require("ol/source/Cluster.js"), require("ol/source/Image.js"), require("ol/source/ImageWMS.js"), require("ol/source/TileImage.js"), require("ol/source/TileWMS.js"), require("ol/source/Vector.js"), require("ol/style/Icon.js"), require("ol/util.js"));
-	else if(typeof define === 'function' && define.amd)
-		define(["ol/Observable.js", "ol/Overlay.js", "ol/array.js", "ol/dom.js", "ol/easing.js", "ol/events.js", "ol/extent.js", "ol/geom/Geometry.js", "ol/geom/Point.js", "ol/geom/Polygon.js", "ol/geom/SimpleGeometry.js", "ol/layer/Group.js", "ol/layer/Image.js", "ol/layer/Layer.js", "ol/layer/Tile.js", "ol/layer/Vector.js", "ol/math.js", "ol/proj.js", "ol/source/Cluster.js", "ol/source/Image.js", "ol/source/ImageWMS.js", "ol/source/TileImage.js", "ol/source/TileWMS.js", "ol/source/Vector.js", "ol/style/Icon.js", "ol/util.js"], factory);
-	else if(typeof exports === 'object')
-		exports["olcs"] = factory(require("ol/Observable.js"), require("ol/Overlay.js"), require("ol/array.js"), require("ol/dom.js"), require("ol/easing.js"), require("ol/events.js"), require("ol/extent.js"), require("ol/geom/Geometry.js"), require("ol/geom/Point.js"), require("ol/geom/Polygon.js"), require("ol/geom/SimpleGeometry.js"), require("ol/layer/Group.js"), require("ol/layer/Image.js"), require("ol/layer/Layer.js"), require("ol/layer/Tile.js"), require("ol/layer/Vector.js"), require("ol/math.js"), require("ol/proj.js"), require("ol/source/Cluster.js"), require("ol/source/Image.js"), require("ol/source/ImageWMS.js"), require("ol/source/TileImage.js"), require("ol/source/TileWMS.js"), require("ol/source/Vector.js"), require("ol/style/Icon.js"), require("ol/util.js"));
-	else
-		root["olcs"] = factory(root["ol/Observable.js"], root["ol/Overlay.js"], root["ol/array.js"], root["ol/dom.js"], root["ol/easing.js"], root["ol/events.js"], root["ol/extent.js"], root["ol/geom/Geometry.js"], root["ol/geom/Point.js"], root["ol/geom/Polygon.js"], root["ol/geom/SimpleGeometry.js"], root["ol/layer/Group.js"], root["ol/layer/Image.js"], root["ol/layer/Layer.js"], root["ol/layer/Tile.js"], root["ol/layer/Vector.js"], root["ol/math.js"], root["ol/proj.js"], root["ol/source/Cluster.js"], root["ol/source/Image.js"], root["ol/source/ImageWMS.js"], root["ol/source/TileImage.js"], root["ol/source/TileWMS.js"], root["ol/source/Vector.js"], root["ol/style/Icon.js"], root["ol/util.js"]);
-})(window, function(__WEBPACK_EXTERNAL_MODULE_ol_Observable_js__, __WEBPACK_EXTERNAL_MODULE_ol_Overlay_js__, __WEBPACK_EXTERNAL_MODULE_ol_array_js__, __WEBPACK_EXTERNAL_MODULE_ol_dom_js__, __WEBPACK_EXTERNAL_MODULE_ol_easing_js__, __WEBPACK_EXTERNAL_MODULE_ol_events_js__, __WEBPACK_EXTERNAL_MODULE_ol_extent_js__, __WEBPACK_EXTERNAL_MODULE_ol_geom_Geometry_js__, __WEBPACK_EXTERNAL_MODULE_ol_geom_Point_js__, __WEBPACK_EXTERNAL_MODULE_ol_geom_Polygon_js__, __WEBPACK_EXTERNAL_MODULE_ol_geom_SimpleGeometry_js__, __WEBPACK_EXTERNAL_MODULE_ol_layer_Group_js__, __WEBPACK_EXTERNAL_MODULE_ol_layer_Image_js__, __WEBPACK_EXTERNAL_MODULE_ol_layer_Layer_js__, __WEBPACK_EXTERNAL_MODULE_ol_layer_Tile_js__, __WEBPACK_EXTERNAL_MODULE_ol_layer_Vector_js__, __WEBPACK_EXTERNAL_MODULE_ol_math_js__, __WEBPACK_EXTERNAL_MODULE_ol_proj_js__, __WEBPACK_EXTERNAL_MODULE_ol_source_Cluster_js__, __WEBPACK_EXTERNAL_MODULE_ol_source_Image_js__, __WEBPACK_EXTERNAL_MODULE_ol_source_ImageWMS_js__, __WEBPACK_EXTERNAL_MODULE_ol_source_TileImage_js__, __WEBPACK_EXTERNAL_MODULE_ol_source_TileWMS_js__, __WEBPACK_EXTERNAL_MODULE_ol_source_Vector_js__, __WEBPACK_EXTERNAL_MODULE_ol_style_Icon_js__, __WEBPACK_EXTERNAL_MODULE_ol_util_js__) {
-return /******/ (function(modules) { // webpackBootstrap
+var olcs_unused_var =
+/******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -135,6 +126,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _olcs_OLCesium_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./olcs/OLCesium.js */ "./src/olcs/OLCesium.js");
 
 /* harmony default export */ __webpack_exports__["default"] = (_olcs_OLCesium_js__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+const olcs = window['olcs'] = {};
+olcs.OLCesium = _olcs_OLCesium_js__WEBPACK_IMPORTED_MODULE_0__["default"];
 
 
 /***/ }),
@@ -669,19 +663,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var goog_asserts_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! goog/asserts.js */ "./src/goog/asserts.js");
 /* harmony import */ var ol_Observable_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ol/Observable.js */ "ol/Observable.js");
 /* harmony import */ var ol_Observable_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(ol_Observable_js__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var ol_events_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ol/events.js */ "ol/events.js");
-/* harmony import */ var ol_events_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(ol_events_js__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var ol_math_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ol/math.js */ "ol/math.js");
-/* harmony import */ var ol_math_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(ol_math_js__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var ol_proj_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ol/proj.js */ "ol/proj.js");
-/* harmony import */ var ol_proj_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(ol_proj_js__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _core_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./core.js */ "./src/olcs/core.js");
+/* harmony import */ var _math_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./math.js */ "./src/olcs/math.js");
+/* harmony import */ var ol_proj_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ol/proj.js */ "ol/proj.js");
+/* harmony import */ var ol_proj_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(ol_proj_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _core_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./core.js */ "./src/olcs/core.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
  * @module olcs.Camera
  */
-
 
 
 
@@ -801,6 +791,8 @@ var Camera = function () {
 
 
   Camera.prototype.setView_ = function setView_(view) {
+    var _this2 = this;
+
     if (this.view_) {
       Object(ol_Observable_js__WEBPACK_IMPORTED_MODULE_1__["unByKey"])(this.viewListenKey_);
       this.viewListenKey_ = null;
@@ -808,14 +800,16 @@ var Camera = function () {
 
     this.view_ = view;
     if (view) {
-      var toLonLat = ol_proj_js__WEBPACK_IMPORTED_MODULE_4__["getTransform"](view.getProjection(), 'EPSG:4326');
-      var fromLonLat = ol_proj_js__WEBPACK_IMPORTED_MODULE_4__["getTransform"]('EPSG:4326', view.getProjection());
+      var toLonLat = ol_proj_js__WEBPACK_IMPORTED_MODULE_3__["getTransform"](view.getProjection(), 'EPSG:4326');
+      var fromLonLat = ol_proj_js__WEBPACK_IMPORTED_MODULE_3__["getTransform"]('EPSG:4326', view.getProjection());
       goog_asserts_js__WEBPACK_IMPORTED_MODULE_0__["default"].assert(toLonLat && fromLonLat);
 
       this.toLonLat_ = toLonLat;
       this.fromLonLat_ = fromLonLat;
 
-      this.viewListenKey_ = ol_events_js__WEBPACK_IMPORTED_MODULE_2__["listen"](view, 'propertychange', this.handleViewEvent_, this);
+      this.viewListenKey_ = view.on('propertychange', function () {
+        return _this2.handleViewEvent_;
+      });
 
       this.readFromView();
     } else {
@@ -949,7 +943,7 @@ var Camera = function () {
     var ll = this.toLonLat_(position);
     goog_asserts_js__WEBPACK_IMPORTED_MODULE_0__["default"].assert(ll);
 
-    var carto = new Cesium.Cartographic(ol_math_js__WEBPACK_IMPORTED_MODULE_3__["toRadians"](ll[0]), ol_math_js__WEBPACK_IMPORTED_MODULE_3__["toRadians"](ll[1]), this.getAltitude());
+    var carto = new Cesium.Cartographic(Object(_math_js__WEBPACK_IMPORTED_MODULE_2__["toRadians"])(ll[0]), Object(_math_js__WEBPACK_IMPORTED_MODULE_2__["toRadians"])(ll[1]), this.getAltitude());
 
     this.cam_.setView({
       destination: Cesium.Ellipsoid.WGS84.cartographicToCartesian(carto)
@@ -970,7 +964,7 @@ var Camera = function () {
     }
     var carto = Cesium.Ellipsoid.WGS84.cartesianToCartographic(this.cam_.position);
 
-    var pos = this.fromLonLat_([ol_math_js__WEBPACK_IMPORTED_MODULE_3__["toDegrees"](carto.longitude), ol_math_js__WEBPACK_IMPORTED_MODULE_3__["toDegrees"](carto.latitude)]);
+    var pos = this.fromLonLat_([Object(_math_js__WEBPACK_IMPORTED_MODULE_2__["toDegrees"])(carto.longitude), Object(_math_js__WEBPACK_IMPORTED_MODULE_2__["toDegrees"])(carto.latitude)]);
     goog_asserts_js__WEBPACK_IMPORTED_MODULE_0__["default"].assert(pos);
     return pos;
   };
@@ -1019,7 +1013,7 @@ var Camera = function () {
     var ll = this.toLonLat_(center);
     goog_asserts_js__WEBPACK_IMPORTED_MODULE_0__["default"].assert(ll);
 
-    var carto = new Cesium.Cartographic(ol_math_js__WEBPACK_IMPORTED_MODULE_3__["toRadians"](ll[0]), ol_math_js__WEBPACK_IMPORTED_MODULE_3__["toRadians"](ll[1]));
+    var carto = new Cesium.Cartographic(Object(_math_js__WEBPACK_IMPORTED_MODULE_2__["toRadians"])(ll[0]), Object(_math_js__WEBPACK_IMPORTED_MODULE_2__["toRadians"])(ll[1]));
     if (this.scene_.globe) {
       var height = this.scene_.globe.getHeight(carto);
       carto.height = height || 0;
@@ -1061,7 +1055,7 @@ var Camera = function () {
     goog_asserts_js__WEBPACK_IMPORTED_MODULE_0__["default"].assert(ll);
 
     var resolution = this.view_.getResolution();
-    this.distance_ = this.calcDistanceForResolution(resolution || 0, ol_math_js__WEBPACK_IMPORTED_MODULE_3__["toRadians"](ll[1]));
+    this.distance_ = this.calcDistanceForResolution(resolution || 0, Object(_math_js__WEBPACK_IMPORTED_MODULE_2__["toRadians"])(ll[1]));
 
     this.updateCamera_();
   };
@@ -1082,7 +1076,7 @@ var Camera = function () {
     // target & distance
     var ellipsoid = Cesium.Ellipsoid.WGS84;
     var scene = this.scene_;
-    var target = _core_js__WEBPACK_IMPORTED_MODULE_5__["default"].pickCenterPoint(scene);
+    var target = _core_js__WEBPACK_IMPORTED_MODULE_4__["default"].pickCenterPoint(scene);
 
     var bestTarget = target;
     if (!bestTarget) {
@@ -1095,7 +1089,7 @@ var Camera = function () {
     }
     this.distance_ = Cesium.Cartesian3.distance(bestTarget, this.cam_.position);
     var bestTargetCartographic = ellipsoid.cartesianToCartographic(bestTarget);
-    this.view_.setCenter(this.fromLonLat_([ol_math_js__WEBPACK_IMPORTED_MODULE_3__["toDegrees"](bestTargetCartographic.longitude), ol_math_js__WEBPACK_IMPORTED_MODULE_3__["toDegrees"](bestTargetCartographic.latitude)]));
+    this.view_.setCenter(this.fromLonLat_([Object(_math_js__WEBPACK_IMPORTED_MODULE_2__["toDegrees"])(bestTargetCartographic.longitude), Object(_math_js__WEBPACK_IMPORTED_MODULE_2__["toDegrees"])(bestTargetCartographic.latitude)]));
 
     // resolution
     this.view_.setResolution(this.calcResolutionForDistance(this.distance_, bestTargetCartographic ? bestTargetCartographic.latitude : 0));
@@ -2815,14 +2809,6 @@ var OLCesium = function () {
       synchronizers[_i].synchronize();
     }
 
-    if (this.isOverMap_) {
-      // if in "stacked mode", hide everything except canvas (including credits)
-      var credits = this.canvas_.nextElementSibling;
-      if (credits) {
-        credits.style.display = 'none';
-      }
-    }
-
     /**
      * Time of the last rendered frame, as returned by `performance.now()`.
      * @type {number}
@@ -3691,7 +3677,7 @@ var RasterSynchronizer = function (_olcsAbstractSynchron) {
 
 
   RasterSynchronizer.prototype.convertLayerToCesiumImageries = function convertLayerToCesiumImageries(olLayer, viewProj) {
-    var result = _core_js__WEBPACK_IMPORTED_MODULE_5__["default"].tileLayerToImageryLayer(olLayer, viewProj);
+    var result = _core_js__WEBPACK_IMPORTED_MODULE_5__["default"].tileLayerToImageryLayer(this.map, olLayer, viewProj);
     return result ? [result] : null;
   };
 
@@ -4743,12 +4729,13 @@ exports.extentToRectangle = function (extent, projection) {
 /**
  * Creates Cesium.ImageryLayer best corresponding to the given ol.layer.Layer.
  * Only supports raster layers
+ * @param {!ol.Map} olMap
  * @param {!ol.layer.Base} olLayer
  * @param {!ol.proj.Projection} viewProj Projection of the view.
  * @return {?Cesium.ImageryLayer} null if not possible (or supported)
  * @api
  */
-exports.tileLayerToImageryLayer = function (olLayer, viewProj) {
+exports.tileLayerToImageryLayer = function (olMap, olLayer, viewProj) {
 
   if (!(olLayer instanceof ol_layer_Tile_js__WEBPACK_IMPORTED_MODULE_2___default.a) && !(olLayer instanceof ol_layer_Image_js__WEBPACK_IMPORTED_MODULE_3___default.a)) {
     return null;
@@ -4783,7 +4770,7 @@ exports.tileLayerToImageryLayer = function (olLayer, viewProj) {
     }
 
     if (exports.isCesiumProjection(projection)) {
-      provider = new _core_OLImageryProvider_js__WEBPACK_IMPORTED_MODULE_9__["default"](source, viewProj);
+      provider = new _core_OLImageryProvider_js__WEBPACK_IMPORTED_MODULE_9__["default"](olMap, source, viewProj);
     }
     // Projection not supported by Cesium
     else {
@@ -5043,13 +5030,14 @@ var OLImageryProvider /* should not extend Cesium.ImageryProvider */ = function 
   /**
    * Special class derived from Cesium.ImageryProvider
    * that is connected to the given ol.source.TileImage.
+   * @param {!ol.Map} olMap
    * @param {!ol.source.TileImage} source
    * @param {ol.proj.Projection=} opt_fallbackProj Projection to assume if the
    *                                               projection of the source is not defined.
    * @constructor
    * @extends {Cesium.ImageryProvider}
    */
-  function OLImageryProvider(source, opt_fallbackProj) {
+  function OLImageryProvider(olMap, source, opt_fallbackProj) {
     var _this = this;
 
     _classCallCheck(this, OLImageryProvider);
@@ -5083,12 +5071,6 @@ var OLImageryProvider /* should not extend Cesium.ImageryProvider */ = function 
     this.ready_ = false;
 
     /**
-     * @type {?Cesium.Credit}
-     * @private
-     */
-    this.credit_ = null;
-
-    /**
      * @type {?Cesium.TilingScheme}
      * @private
      */
@@ -5099,6 +5081,12 @@ var OLImageryProvider /* should not extend Cesium.ImageryProvider */ = function 
      * @private
      */
     this.rectangle_ = null;
+
+    /**
+     * @type {!ol.Map}
+     * @private
+     */
+    this.map_ = olMap;
 
     var proxy = this.source_.get('olcs.proxy');
     if (proxy) {
@@ -5129,7 +5117,7 @@ var OLImageryProvider /* should not extend Cesium.ImageryProvider */ = function 
    */
 
 
-  OLImageryProvider.prototype.handleSourceChanged_ = function handleSourceChanged_() {
+  OLImageryProvider.prototype.handleSourceChanged_ = function handleSourceChanged_(frameState) {
     if (!this.ready_ && this.source_.getState() == 'ready') {
       this.projection_ = _util_js__WEBPACK_IMPORTED_MODULE_1__["default"].getSourceProjection(this.source_) || this.fallbackProj_;
       if (this.projection_ == ol_proj_js__WEBPACK_IMPORTED_MODULE_0__["get"]('EPSG:4326')) {
@@ -5141,43 +5129,39 @@ var OLImageryProvider /* should not extend Cesium.ImageryProvider */ = function 
       }
       this.rectangle_ = this.tilingScheme_.rectangle;
 
-      this.credit_ = OLImageryProvider.createCreditForSource(this.source_);
       this.ready_ = true;
     }
   };
 
   /**
-   * Try to create proper Cesium.Credit for the given ol.source.Source as closely as possible.
-   * @param {!ol.source.Source} source
-   * @return {?Cesium.Credit}
-   */
-
-
-  OLImageryProvider.createCreditForSource = function createCreditForSource(source) {
-    var text = '';
-    var attributions = source.getAttributions();
-    if (typeof attributions === 'function') {
-      attributions = attributions();
-    }
-    if (attributions) {
-      attributions.forEach(function (htmlOrAttr) {
-        var html = typeof htmlOrAttr === 'string' ? htmlOrAttr : htmlOrAttr.getHTML();
-        text += html;
-      });
-    }
-
-    return text.length > 0 ? new Cesium.Credit(text, true) : null;
-  };
-
-  /**
-   * TODO: attributions for individual tile ranges
+   * Generates the proper attributions for a given position and zoom
+   * level.
    * @export
    * @override
    */
 
 
   OLImageryProvider.prototype.getTileCredits = function getTileCredits(x, y, level) {
-    return undefined;
+    var olExtent = this.map_.getView().calculateExtent(this.map_.getSize());
+    var zoom = this.tilingScheme_ instanceof Cesium.GeographicTilingScheme ? level + 1 : level;
+
+    var frameState = {
+      viewState: { zoom: zoom },
+      extent: olExtent
+    };
+
+    var attributionsFunction = this.source_.getAttributions();
+    if (!attributionsFunction) {
+      return [];
+    }
+    var attributions = attributionsFunction(frameState);
+    if (!Array.isArray(attributions)) {
+      attributions = [attributions];
+    }
+
+    return attributions.map(function (html) {
+      return new Cesium.Credit(html, true);
+    });
   };
 
   /**
@@ -5286,13 +5270,6 @@ Object.defineProperties(OLImageryProvider.prototype, {
     }
   },
 
-  'credit': {
-    'get': /** @this {olcs.core.OLImageryProvider} */
-    function get() {
-      return this.credit_;
-    }
-  },
-
   'proxy': {
     'get': /** @this {olcs.core.OLImageryProvider} */
     function get() {
@@ -5393,6 +5370,39 @@ var VectorLayerCounterpart = function () {
 
 /***/ }),
 
+/***/ "./src/olcs/math.js":
+/*!**************************!*\
+  !*** ./src/olcs/math.js ***!
+  \**************************/
+/*! exports provided: toDegrees, toRadians */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "toDegrees", function() { return toDegrees; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "toRadians", function() { return toRadians; });
+/**
+ * Converts radians to to degrees.
+ *
+ * @param {number} angleInRadians Angle in radians.
+ * @return {number} Angle in degrees.
+ */
+function toDegrees(angleInRadians) {
+  return angleInRadians * 180 / Math.PI;
+}
+
+/**
+ * Converts degrees to radians.
+ *
+ * @param {number} angleInDegrees Angle in degrees.
+ * @return {number} Angle in radians.
+ */
+function toRadians(angleInDegrees) {
+  return angleInDegrees * Math.PI / 180;
+}
+
+/***/ }),
+
 /***/ "./src/olcs/util.js":
 /*!**************************!*\
   !*** ./src/olcs/util.js ***!
@@ -5470,291 +5480,279 @@ exports.getSourceProjection = function (source) {
 /***/ }),
 
 /***/ "ol/Observable.js":
-/*!***********************************!*\
-  !*** external "ol/Observable.js" ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_ol_Observable_js__;
-
-/***/ }),
-
-/***/ "ol/Overlay.js":
 /*!********************************!*\
-  !*** external "ol/Overlay.js" ***!
+  !*** external "ol.Observable" ***!
   \********************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE_ol_Overlay_js__;
+module.exports = ol.Observable;
+
+/***/ }),
+
+/***/ "ol/Overlay.js":
+/*!*****************************!*\
+  !*** external "ol.Overlay" ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ol.Overlay;
 
 /***/ }),
 
 /***/ "ol/array.js":
-/*!******************************!*\
-  !*** external "ol/array.js" ***!
-  \******************************/
+/*!***************************!*\
+  !*** external "ol.array" ***!
+  \***************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE_ol_array_js__;
+module.exports = ol.array;
 
 /***/ }),
 
 /***/ "ol/dom.js":
-/*!****************************!*\
-  !*** external "ol/dom.js" ***!
-  \****************************/
+/*!*************************!*\
+  !*** external "ol.dom" ***!
+  \*************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE_ol_dom_js__;
+module.exports = ol.dom;
 
 /***/ }),
 
 /***/ "ol/easing.js":
-/*!*******************************!*\
-  !*** external "ol/easing.js" ***!
-  \*******************************/
+/*!****************************!*\
+  !*** external "ol.easing" ***!
+  \****************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE_ol_easing_js__;
+module.exports = ol.easing;
 
 /***/ }),
 
 /***/ "ol/events.js":
-/*!*******************************!*\
-  !*** external "ol/events.js" ***!
-  \*******************************/
+/*!****************************!*\
+  !*** external "ol.events" ***!
+  \****************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE_ol_events_js__;
+module.exports = ol.events;
 
 /***/ }),
 
 /***/ "ol/extent.js":
-/*!*******************************!*\
-  !*** external "ol/extent.js" ***!
-  \*******************************/
+/*!****************************!*\
+  !*** external "ol.extent" ***!
+  \****************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE_ol_extent_js__;
+module.exports = ol.extent;
 
 /***/ }),
 
 /***/ "ol/geom/Geometry.js":
-/*!**************************************!*\
-  !*** external "ol/geom/Geometry.js" ***!
-  \**************************************/
+/*!***********************************!*\
+  !*** external "ol.geom.Geometry" ***!
+  \***********************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE_ol_geom_Geometry_js__;
+module.exports = ol.geom.Geometry;
 
 /***/ }),
 
 /***/ "ol/geom/Point.js":
-/*!***********************************!*\
-  !*** external "ol/geom/Point.js" ***!
-  \***********************************/
+/*!********************************!*\
+  !*** external "ol.geom.Point" ***!
+  \********************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE_ol_geom_Point_js__;
+module.exports = ol.geom.Point;
 
 /***/ }),
 
 /***/ "ol/geom/Polygon.js":
-/*!*************************************!*\
-  !*** external "ol/geom/Polygon.js" ***!
-  \*************************************/
+/*!**********************************!*\
+  !*** external "ol.geom.Polygon" ***!
+  \**********************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE_ol_geom_Polygon_js__;
+module.exports = ol.geom.Polygon;
 
 /***/ }),
 
 /***/ "ol/geom/SimpleGeometry.js":
-/*!********************************************!*\
-  !*** external "ol/geom/SimpleGeometry.js" ***!
-  \********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_ol_geom_SimpleGeometry_js__;
-
-/***/ }),
-
-/***/ "ol/layer/Group.js":
-/*!************************************!*\
-  !*** external "ol/layer/Group.js" ***!
-  \************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_ol_layer_Group_js__;
-
-/***/ }),
-
-/***/ "ol/layer/Image.js":
-/*!************************************!*\
-  !*** external "ol/layer/Image.js" ***!
-  \************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_ol_layer_Image_js__;
-
-/***/ }),
-
-/***/ "ol/layer/Layer.js":
-/*!************************************!*\
-  !*** external "ol/layer/Layer.js" ***!
-  \************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_ol_layer_Layer_js__;
-
-/***/ }),
-
-/***/ "ol/layer/Tile.js":
-/*!***********************************!*\
-  !*** external "ol/layer/Tile.js" ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_ol_layer_Tile_js__;
-
-/***/ }),
-
-/***/ "ol/layer/Vector.js":
-/*!*************************************!*\
-  !*** external "ol/layer/Vector.js" ***!
-  \*************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_ol_layer_Vector_js__;
-
-/***/ }),
-
-/***/ "ol/math.js":
-/*!*****************************!*\
-  !*** external "ol/math.js" ***!
-  \*****************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_ol_math_js__;
-
-/***/ }),
-
-/***/ "ol/proj.js":
-/*!*****************************!*\
-  !*** external "ol/proj.js" ***!
-  \*****************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_ol_proj_js__;
-
-/***/ }),
-
-/***/ "ol/source/Cluster.js":
-/*!***************************************!*\
-  !*** external "ol/source/Cluster.js" ***!
-  \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_ol_source_Cluster_js__;
-
-/***/ }),
-
-/***/ "ol/source/Image.js":
-/*!*************************************!*\
-  !*** external "ol/source/Image.js" ***!
-  \*************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_ol_source_Image_js__;
-
-/***/ }),
-
-/***/ "ol/source/ImageWMS.js":
-/*!****************************************!*\
-  !*** external "ol/source/ImageWMS.js" ***!
-  \****************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_ol_source_ImageWMS_js__;
-
-/***/ }),
-
-/***/ "ol/source/TileImage.js":
 /*!*****************************************!*\
-  !*** external "ol/source/TileImage.js" ***!
+  !*** external "ol.geom.SimpleGeometry" ***!
   \*****************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE_ol_source_TileImage_js__;
+module.exports = ol.geom.SimpleGeometry;
 
 /***/ }),
 
-/***/ "ol/source/TileWMS.js":
-/*!***************************************!*\
-  !*** external "ol/source/TileWMS.js" ***!
-  \***************************************/
+/***/ "ol/layer/Group.js":
+/*!*********************************!*\
+  !*** external "ol.layer.Group" ***!
+  \*********************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE_ol_source_TileWMS_js__;
+module.exports = ol.layer.Group;
 
 /***/ }),
 
-/***/ "ol/source/Vector.js":
+/***/ "ol/layer/Image.js":
+/*!*********************************!*\
+  !*** external "ol.layer.Image" ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ol.layer.Image;
+
+/***/ }),
+
+/***/ "ol/layer/Layer.js":
+/*!*********************************!*\
+  !*** external "ol.layer.Layer" ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ol.layer.Layer;
+
+/***/ }),
+
+/***/ "ol/layer/Tile.js":
+/*!********************************!*\
+  !*** external "ol.layer.Tile" ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ol.layer.Tile;
+
+/***/ }),
+
+/***/ "ol/layer/Vector.js":
+/*!**********************************!*\
+  !*** external "ol.layer.Vector" ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ol.layer.Vector;
+
+/***/ }),
+
+/***/ "ol/proj.js":
+/*!**************************!*\
+  !*** external "ol.proj" ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ol.proj;
+
+/***/ }),
+
+/***/ "ol/source/Cluster.js":
+/*!************************************!*\
+  !*** external "ol.source.Cluster" ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ol.source.Cluster;
+
+/***/ }),
+
+/***/ "ol/source/Image.js":
+/*!**********************************!*\
+  !*** external "ol.source.Image" ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ol.source.Image;
+
+/***/ }),
+
+/***/ "ol/source/ImageWMS.js":
+/*!*************************************!*\
+  !*** external "ol.source.ImageWMS" ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ol.source.ImageWMS;
+
+/***/ }),
+
+/***/ "ol/source/TileImage.js":
 /*!**************************************!*\
-  !*** external "ol/source/Vector.js" ***!
+  !*** external "ol.source.TileImage" ***!
   \**************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE_ol_source_Vector_js__;
+module.exports = ol.source.TileImage;
 
 /***/ }),
 
-/***/ "ol/style/Icon.js":
+/***/ "ol/source/TileWMS.js":
+/*!************************************!*\
+  !*** external "ol.source.TileWMS" ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ol.source.TileWMS;
+
+/***/ }),
+
+/***/ "ol/source/Vector.js":
 /*!***********************************!*\
-  !*** external "ol/style/Icon.js" ***!
+  !*** external "ol.source.Vector" ***!
   \***********************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE_ol_style_Icon_js__;
+module.exports = ol.source.Vector;
+
+/***/ }),
+
+/***/ "ol/style/Icon.js":
+/*!********************************!*\
+  !*** external "ol.style.Icon" ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ol.style.Icon;
 
 /***/ }),
 
 /***/ "ol/util.js":
-/*!*****************************!*\
-  !*** external "ol/util.js" ***!
-  \*****************************/
+/*!**************************!*\
+  !*** external "ol.util" ***!
+  \**************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE_ol_util_js__;
+module.exports = ol.util;
 
 /***/ })
 
 /******/ });
-});
 //# sourceMappingURL=olcesium.js.map
