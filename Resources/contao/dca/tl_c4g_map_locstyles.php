@@ -291,7 +291,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
             'inputType'               => 'imageSize',
 //            'options'                 => array('px'),
             'options'                  => $imageSizes,
-            'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'w50', 'mandatory'=>true),
+            'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'long', 'mandatory'=>true),
             'sql'                     => "varchar(100) NOT NULL default ''"
         ),
         'svgSize' => array
@@ -302,7 +302,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
             'inputType'               => 'imageSize',
 //            'options'                 => array('px'),
             'options'                  => $imageSizes,
-            'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'w50', 'mandatory'=>true),
+            'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'long', 'mandatory'=>true),
             'sql'                     => "varchar(100) NOT NULL default ''"
         ),
         'svgSrc' => array
@@ -320,7 +320,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
             'exclude'                 => true,
             'flag'                    => 1,
             'inputType'               => 'text',
-            'eval'                    => array('tl_class'=>'w50', 'rgxp'=>'digit', 'mandatory'=>true),
+            'eval'                    => array('tl_class'=>'long', 'rgxp'=>'digit', 'mandatory'=>true),
             'sql'                     => "float(3,2) NOT NULL default '1.00'"
         ),
         'icon_offset' => array
