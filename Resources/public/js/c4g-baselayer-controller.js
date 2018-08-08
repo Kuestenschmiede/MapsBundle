@@ -366,7 +366,7 @@ class C4gBaselayerController {
                             layerOptions.url = baseLayerConfig.url_classic + baseLayerConfig.app_id + '/{z}/{x}/{y}.png?access_token=' + baseLayerConfig.api_key;
 
                             newBaselayer = new ol.layer.Tile({
-                                source: new ol.source.XYZ($.extend(
+                                source: new ol.source.XYZ(jQuery.extend(
                                     mapboxSourceConfigs[baseLayerConfig._mapbox_type],
                                     layerOptions
                                 ))
