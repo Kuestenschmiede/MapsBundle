@@ -256,7 +256,10 @@ span.c4g-active ul li.c4g-active{
 .c4g-baselayertree span {
   color: var(--font-color);
 }
-.c4g-baselayertree a.c4g-active,
+.c4g-baselayertree a.c4g-active {
+  background-color: var(--shadow-color);
+  color: var(--font-color);
+}
 .c4g-layertree a:hover,
 .c4g-baselayertree a:hover {
   background-color: var(--font-color);
