@@ -503,14 +503,15 @@ this.c4g.maps = this.c4g.maps || {};
                 this.map.addControl(this.controls.zoomslider);
             }
         }
-        if (mapData.zoom_extent && !mapData.zoom_slider) {
+        if (mapData.zoom_extent &! mapData.zoom_slider) {
             this.controls.zoom_extent = new ol.control.ZoomToExtent({
                 label: ' ',
                 tipLabel: c4g.maps.constant.i18n.CTRL_ZOOM_EXT,
                 target: controlContainerTopLeft
             });
             this.map.addControl(this.controls.zoom_extent);
-        } else if (mapData.zoom_home && !mapData.zoom_slider) {
+        }
+        if (mapData.zoom_home &! mapData.zoom_slider) {
             this.controls.zoom_home = new c4g.maps.control.Home({
                 label: ' ',
                 disableLabel: ' ',
@@ -519,7 +520,8 @@ this.c4g.maps = this.c4g.maps || {};
                 mapController: this
             });
             this.map.addControl(this.controls.zoom_home);
-        } else if (mapData.zoom_position && !mapData.zoom_slider) {
+        }
+        if (mapData.zoom_position &! mapData.zoom_slider) {
             this.controls.zoom_position = new c4g.maps.control.Position({
                 label: ' ',
                 disableLabel: ' ',
@@ -529,16 +531,22 @@ this.c4g.maps = this.c4g.maps || {};
             });
             this.map.addControl(this.controls.zoom_position);
         }
+
+
         // combined zoom-controls
         if (mapData.zoom_slider) {
             $('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM).addClass(c4g.maps.constant.css.OL_ZOOM_WITH_SLIDER).removeClass(c4g.maps.constant.css.OL_ZOOM);
             $('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM_IN).after($('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM_SLIDER + ' button').addClass(c4g.maps.constant.css.OL_ZOOM_SLIDER));
             $('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM_SLIDER + '.' + c4g.maps.constant.css.OL_CONTROL).remove();
-        } else if (mapData.zoom_panel && mapData.zoom_extent) {
+        }
+
+        if (mapData.zoom_panel && mapData.zoom_extent) {
             $('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM).addClass(c4g.maps.constant.css.OL_ZOOM_WITH_EXT).removeClass(c4g.maps.constant.css.OL_ZOOM);
             $('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM_IN).after($('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM_EXT + ' button').addClass(c4g.maps.constant.css.OL_ZOOM_EXT));
             $('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM_EXT + '.' + c4g.maps.constant.css.OL_CONTROL).remove();
-        } else if (mapData.zoom_panel && mapData.zoom_home) {
+        }
+
+        if (mapData.zoom_panel && mapData.zoom_home) {
             $('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM).addClass(c4g.maps.constant.css.OL_ZOOM_WITH_HOME).removeClass(c4g.maps.constant.css.OL_ZOOM);
             $('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM_IN).after($('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM_HOME + ' button').addClass(c4g.maps.constant.css.OL_ZOOM_HOME));
             removeElement = controlContainerTopLeft.querySelector('.' + c4g.maps.constant.css.OL_ZOOM_HOME + '.' + c4g.maps.constant.css.OL_UNSELECTABLE + '.button');
@@ -549,7 +557,9 @@ this.c4g.maps = this.c4g.maps || {};
                     //ie 11 error
                 }
             }
-        } else if (mapData.zoom_panel && mapData.zoom_position) {
+        }
+
+        if (mapData.zoom_panel && mapData.zoom_position) {
             $('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM).addClass(c4g.maps.constant.css.OL_ZOOM_WITH_POS).removeClass(c4g.maps.constant.css.OL_ZOOM);
             $('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM_IN).after($('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM_POS + ' button').addClass(c4g.maps.constant.css.OL_ZOOM_POS));
             $('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM_POS + '.' + c4g.maps.constant.css.OL_CONTROL).remove();
@@ -562,6 +572,7 @@ this.c4g.maps = this.c4g.maps || {};
                 }
             }
         }
+
         // fullscreen
         if (mapData.fullscreen) {
             this.controls.fullscreen = new ol.control.FullScreen({

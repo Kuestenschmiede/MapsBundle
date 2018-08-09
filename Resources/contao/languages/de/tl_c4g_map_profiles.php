@@ -38,7 +38,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['zoom_panel']            = array('Ste
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['zoom_panel_button']     = array('Zusatzbutton im Steuerelement zum Zoomen',
                                                                             'Erzeugt einen Zusatzbutton im Zoom-Steuerelement. Ein Klick auf das Icon zoomt an die ausgewählte Position. Hinweis: mit Slider steht die Komponente nicht zur Verfügung.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['zoom_panel_slider']     = array('Slider zum Zoomen',
-                                                                            'Erzeugt einen Slider mit Steuerelementen zum Zoomen. Das Welt-Icon wird hierbei ignoriert.');
+                                                                            'Erzeugt einen Slider mit Steuerelementen zum Zoomen. Hiermit werden alle anderen Zoom-Button ausgeblendet.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouse_nav']             = array('Navigation mit der Maus',
                                                                             'Aktiviert die Möglichkeit, mit Hilfe der Maus zu zoomen und den angezeigten Kartenausschnitt zu verschieben.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouse_nav_wheel']       = array('Mausrad zum Zoomen benutzen',
@@ -245,6 +245,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_zoom_panel_button']['0'] 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_zoom_panel_button']['1'] = 'mit Welt-Icon (zoomt zurück in die kleinstmögliche Zoomstufe)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_zoom_panel_button']['2'] = 'mit Haus-Icon (zoomt zurück in die voreingestellte Position der Karte)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_zoom_panel_button']['3'] = 'mit Positions-Icon (zoomt auf sicheren Seiten zur aktuellen Geräteposition)';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_zoom_panel_button']['4'] = 'mit Favoriten-Icon (zoomt nach Auswahl auf eine Deiner Lieblingspositionen)';
 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine']['1'] = 'Nominatim bei Openstreetmap (<a href="https://operations.osmfoundation.org/policies/nominatim/" target="_blank">Nutzungsbestimmungen</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine']['2'] = 'Nominatim bei MapQuest (<a href="http://developer.mapquest.com/web/products/open/nominatim" target="_blank">Nutzungsbestimmungen</a>)';

@@ -245,11 +245,11 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             'exclude'                 => true,
             'default'                 => true,
             'default'                 => '',
-            'inputType'               => 'radio',
-            'options'                 => array('0','1','2','3'),
-            //'eval'                    => array('submitOnChange' => true),
+            'inputType'               => 'checkbox',
+            'options'                 => array('1','2','3','4'),
+            'eval'                    => array('multiple' => true),
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_zoom_panel_button'],
-            'sql'                     => "char(1) NOT NULL default '0'"
+            'sql'                     => "blob NULL"
         ),
 
         'zoom_panel_slider' => array

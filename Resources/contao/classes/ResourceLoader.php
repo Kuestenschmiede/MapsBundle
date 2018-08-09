@@ -271,6 +271,32 @@ class ResourceLoader extends coreResourceLoader
             }
         }
 
+        /*$zoom_extent = false;*/
+        $zoom_home = false;
+        $zoom_position = false;
+        $zoom_favorite = false;
+
+        if ($profile->zoom_panel_button) {
+            $zoom_pane_buttons = array_flip(unserialize($profile->zoom_panel_button));
+            foreach($zoom_pane_buttons as $key => $zoom_panel_button){
+                switch ($zoom_panel_button) {
+                    case '4':
+                        $zoom_favorite = true;
+                        break;
+                    case '3':
+                        $zoom_position = true;
+                        break;
+                    case '2':
+                        $zoom_home = true;
+                        break;
+                    /*case '1':
+                        $zoom_extent = true;
+                        break;*/
+                    default:
+                }
+            }
+        }
+
         // check which resources are needed
         $resources = array
         (
@@ -279,8 +305,8 @@ class ResourceLoader extends coreResourceLoader
             'openlayers' => true,
             'geopicker' => ($profile->geopicker || $geopicker),
             'grid' => ($profile->graticule),
-            'home' => ($profile->zoom_panel_button && $profile->zoom_panel_button == 2),
-            'position' => ($profile->zoom_panel_button && $profile->zoom_panel_button == 3),
+            'home' => $zoom_home,
+            'position' => $zoom_position,
             'permalink' => ($profile->permalink),
             'zoomlevel' => ($profile->zoomlevel),
             'geosearch' => ($profile->geosearch && $profile->geosearch_show),
