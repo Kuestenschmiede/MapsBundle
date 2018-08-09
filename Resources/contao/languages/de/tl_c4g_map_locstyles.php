@@ -26,8 +26,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['radius']           = array('Radius'
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['ol_icon']          = array('OpenLayers Icon','Bitte wählen Sie aus den verfügbaren OpenLayers Standardicons aus.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['ol_icon_size']     = array('Größe des Icons','Die Größe des Icons auf der Karte. Wird gegebenenfalls skaliert.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['ol_icon_offset']   = array('Positionsversatz des Icons (X/Y) in Pixel','Bei einem Versatz von "0" befindet sich die obere linke Ecke des Icons an der angegebenen Geo-Lokation. X=Positiv => nach rechts. X=negativ => nach links. Y=positiv => nach unten. Y=negativ => nach oben.');
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['iconType']         = array('Typ des Icons','Wählen Sie aus, ob Sie eine Raster- oder Vektorgrafik verwenden wollen.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['svgSrc']           = array('SVG Quelle','Wählen Sie bitte hier das anzuzeigende SVG-Icon aus.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['givenSvgWidth']    = array('Größeneinstellung des SVG','Wählen Sie bitte hier, ob in der SVG-Datei die Größe mit "width" und "height" angegeben ist.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_src']         = array('Icon Quelle','Wählen Sie bitte hier das anzuzeigende Icon aus.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_size']        = array('Größe des Icons','Bitte geben Sie hier die Originalmaße der Bilddatei an. Wenn Sie das Icon in einer anderen Größe als das Original anzeigen wollen, nutzen Sie bitte die "Icon skalieren"-Option.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['svgSize']          = array('Größe des SVG','Geben Sie hier die Größe an, in der Sie das SVG auf der Karte darstellen wollen.');
@@ -103,6 +103,10 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['default']           =
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['round']             = 'Kreis';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['anchored']          = 'Verankert';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['folio']             = 'Portfolio';
+
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['true']              = 'Bekannte Größe';
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['none']              = 'Unbekannte Größe';
+
 
 /**
  * Buttons
