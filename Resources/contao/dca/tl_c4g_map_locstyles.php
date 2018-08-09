@@ -232,15 +232,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
             'eval'                    => array('rgxp'=>'digit', 'mandatory'=>true),
             'sql'                     => "varchar(100) NOT NULL default ''"
         ),
-//        'radius2' => array
-//        (
-//            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['radius2'],
-//            'inputType'               => 'inputUnit',
-//            'default'                 => '3',
-//            'options'                 => array('px'),
-//            'eval'                    => array('rgxp'=>'digit', 'mandatory'=>true),
-//            'sql'                     => "varchar(100) NOT NULL default ''"
-//        ),
         'ol_icon' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['ol_icon'],
@@ -273,8 +264,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
             'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'w50', 'mandatory'=>false),
             'sql'                     => "varchar(100) NOT NULL default ''"
         ),
-
-
         'icon_src' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_src'],
@@ -331,7 +320,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
             'inputType'               => 'imageSize',
 //            'options'                 => array('px'),
             'options'                  => $imageSizes,
-            'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'w50'),
+            'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'long'),
             'sql'                     => "varchar(100) NOT NULL default ''"
         ),
         'icon_opacity' => array
