@@ -188,28 +188,51 @@ class C4gLocationStyle{
                     break;
                  // fallthrough7
             case 'cust_icon_svg':
-                    let imgSizeX = 1000;
-                    let imgSizeY = parseInt(styleData.svgSize[1])/ parseInt(styleData.svgSize[0])*imgSizeX;
-                    let imgScale = (parseInt(styleData.svgSize[0]) / imgSizeX);
-                    let color;
+                    if(styleData.givenSvgWidth =="true" && styleData.icon_scale && styleData.icon_size){
 
-                    if(styleData.fillcolor) {
-                        color = c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.fillcolor, 50, true);
-                        imageStyle = new ol.style.Icon({
-                            src: styleData.svgSrc,
-                            opacity: parseFloat(styleData.icon_opacity.value, 10) / 100,
-                            size:[imgSizeX,imgSizeY],
-                            scale: imgScale,
-                            color: new ol.color.asArray(color)
-                        });
+                        if(styleData.fillcolor) {
+                            let color = c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.fillcolor, 50, true);
+                            imageStyle = new ol.style.Icon({
+                                src: styleData.svgSrc,
+                                opacity: parseFloat(styleData.icon_opacity.value, 10) / 100,
+                                size:[styleData.icon_size[0],styleData.icon_size[1]],
+                                scale: styleData.icon_scale,
+                                color: new ol.color.asArray(color)
+                            });
+                        }
+                        else{
+                            imageStyle = new ol.style.Icon({
+                                src: styleData.svgSrc,
+                                opacity: parseFloat(styleData.icon_opacity.value, 10) / 100,
+                                size:[styleData.icon_size[0],styleData.icon_size[1]],
+                                scale: styleData.icon_scale
+                            });
+                        }
                     }
-                    else{
-                        imageStyle = new ol.style.Icon({
-                            src: styleData.svgSrc,
-                            opacity: parseFloat(styleData.icon_opacity.value, 10) / 100,
-                            size:[imgSizeX,imgSizeY],
-                            scale: imgScale
-                        });
+                    else if(styleData.givenSvgWidth =="none" && styleData.svgSize){
+                        let imgSizeX = 2000;
+                        let imgSizeY = parseInt(styleData.svgSize[1])/ parseInt(styleData.svgSize[0])*imgSizeX;
+                        let imgScale = (parseInt(styleData.svgSize[0]) / imgSizeX);
+                        if(styleData.fillcolor){
+                            let color = c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.fillcolor, 50, true);
+                            imageStyle = new ol.style.Icon({
+                                src: styleData.svgSrc,
+                                opacity: parseFloat(styleData.icon_opacity.value, 10) / 100,
+                                imgSize:[imgSizeX,imgSizeY],
+                                scale: imgScale,
+                                color: new ol.color.asArray(color)
+                            });
+                        }
+                        else{
+                            imageStyle = new ol.style.Icon({
+                                src: styleData.svgSrc,
+                                opacity: parseFloat(styleData.icon_opacity.value, 10) / 100,
+                                imgSize:[imgSizeX,imgSizeY],
+                                scale: imgScale
+                            });
+                        }
+
+
                     }
                     break;
             case 'photo' :
