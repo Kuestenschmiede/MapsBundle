@@ -452,15 +452,17 @@ button.c4g-popup-route-to:hover {
   color:  var(--font-color);
 }
 
+.c4g-control-container-top-left::-webkit-scrollbar-track,
 .c4g-starboard-content-container::-webkit-scrollbar-track,
 .c4g-portside-content-container::-webkit-scrollbar-track {
   background-color: var(--font-color);
 }
+.c4g-control-container-top-left::-webkit-scrollbar-thumb,
 .c4g-starboard-content-container::-webkit-scrollbar-thumb,
 .c4g-portside-content-container::-webkit-scrollbar-thumb {
   background-color: var(--shadow-color);
 }
-
+.c4g-control-container-top-left::-webkit-scrollbar-thumb:hover,
 .c4g-starboard-content-container::-webkit-scrollbar-thumb:hover,
 .c4g-portside-content-container::-webkit-scrollbar-thumb:hover {
   background-color: var(--shadow-color);

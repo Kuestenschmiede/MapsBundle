@@ -966,17 +966,17 @@ div.c4g-horizontal.c4g-tooltip-popup:before {
   font-size: 2em;
 }
 
+.c4g-control-container-top-left::-webkit-scrollbar,
 .c4g-starboard-content-container::-webkit-scrollbar,
 .c4g-portside-content-container::-webkit-scrollbar {
   width: calc(var(--button-size)/2);
 }
-
+.c4g-control-container-top-left::-webkit-scrollbar-track,
 .c4g-starboard-content-container::-webkit-scrollbar-track,
 .c4g-portside-content-container::-webkit-scrollbar-track {
   border-radius: var(--button-radius-pixel);
 }
-
-/* Handle */
+.c4g-control-container-top-left::-webkit-scrollbar-thumb,
 .c4g-starboard-content-container::-webkit-scrollbar-thumb,
 .c4g-portside-content-container::-webkit-scrollbar-thumb {
   border-radius: var(--button-radius-pixel);
