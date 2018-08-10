@@ -277,21 +277,15 @@ class ResourceLoader extends coreResourceLoader
         $zoom_position = false;
 
         if ($profile->zoom_panel_button) {
-            $zoom_pane_buttons = array_flip(unserialize($profile->zoom_panel_button));
+            $zoom_pane_buttons = unserialize($profile->zoom_panel_button);
             foreach($zoom_pane_buttons as $key => $zoom_panel_button){
                 switch ($zoom_panel_button) {
                     case '3':
-                        $zoom_favorite = true;
-                        break;
-                    case '2':
                         $zoom_position = true;
                         break;
-                    case '1':
+                    case '2':
                         $zoom_home = true;
                         break;
-                    /*case '1':
-                        $zoom_extent = true;
-                        break;*/
                     default:
                 }
             }
