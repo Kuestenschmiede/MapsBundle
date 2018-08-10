@@ -168,6 +168,7 @@ $GLOBALS['con4gis']['maps']['api']['geosearch_reverse'] = $apiBaseUrl . '/revers
 $GLOBALS['con4gis']['maps']['api']['routing'] = $apiBaseUrl . '/routingService';
 $GLOBALS['con4gis']['maps']['api']['geopicker'] = $apiBaseUrl . '/geopickerService/';
 
+$GLOBALS['con4gis']['api-caching'] = array('baseLayerService','layerService','layerContentService','editorService','locationStyleService','infoWindowService','nominatimService','reverseNominatimService','routingService');
 
 /**
  * Specialized Widgets for Text Input and Image Sizes
