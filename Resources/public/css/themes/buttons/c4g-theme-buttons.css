@@ -202,7 +202,7 @@
 }
 .c4g-control-container-bottom-left {
   position: absolute;
-  bottom: 2.3em;
+  bottom: 3em;
   /* do not change "left"-value! */
   left: 0px;
   margin-left: .4em;
@@ -304,7 +304,7 @@ button.ol-zoom-out {
 .c4g-control-container-bottom-left-sub {
   margin-top: .4em;
   padding: 0 .4em;
-  font-size: smaller;
+  font-size: 12px;
   border-radius: 4px;
 }
 .c4g-control-container-bottom-left-sub div {
@@ -973,7 +973,7 @@ div.c4g-horizontal.c4g-tooltip-popup:before {
 .c4g-control-container-top-left::-webkit-scrollbar,
 .c4g-starboard-content-container::-webkit-scrollbar,
 .c4g-portside-content-container::-webkit-scrollbar {
-  width: calc(var(--button-size)/2);
+  width: 12px/*calc(var(--button-size)/2.2)*/;
 }
 .c4g-control-container-top-left::-webkit-scrollbar-track,
 .c4g-starboard-content-container::-webkit-scrollbar-track,
@@ -1033,6 +1033,8 @@ div.c4g-horizontal.c4g-tooltip-popup:before {
 .ol-control.ol-bookmark,
 .ol-control.c4g-geobookmarks {
   top: 3em;
-  right: 3px;
+  /*right: 3px;*/
   left: initial;
+  right: 0;
+  margin-right: .2em;
 }
