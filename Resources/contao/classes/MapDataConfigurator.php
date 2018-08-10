@@ -121,7 +121,6 @@ class MapDataConfigurator
                 $mapData['zoom_slider'] = false;
                 $mapData['zoom_extent'] = false;
                 $mapData['zoom_home'] = false;
-                $mapData['zoom_favorite'] = false;
                 $mapData['zoom_position'] = false;
                 $mapData['mouse_nav']['wheel_zoom'] = true;
                 $mapData['mouse_nav']['doubleclick_zoom'] = true;
@@ -263,19 +262,19 @@ class MapDataConfigurator
             $mapData['zoom_panel']  = $profile->zoom_panel;
 
             if ($profile->zoom_panel_button) {
-                $zoom_pane_buttons = array_flip(unserialize($profile->zoom_panel_button));
-                foreach($zoom_pane_buttons as $key => $zoom_panel_button){
+                $zoom_panel_buttons = array_flip(unserialize($profile->zoom_panel_button));
+                foreach($zoom_panel_buttons as $key => $zoom_panel_button){
                     switch ($zoom_panel_button) {
-                        case '4':
+                        case '3':
                             $mapData['zoom_favorite'] = true;
                             break;
-                        case '3':
+                        case '2':
                             $mapData['zoom_position'] = true;
                             break;
-                        case '2':
+                        case '1':
                             $mapData['zoom_home'] = true;
                             break;
-                        case '1':
+                        case '0':
                             $mapData['zoom_extent'] = true;
                             break;
                         default:
@@ -360,6 +359,7 @@ class MapDataConfigurator
                 }
             }
             $mapData['overviewmap'] = $profile->overviewmap;
+            $mapData['geobookmarks'] = $profile->geobookmarks;
             $mapData['scaleline'] = $profile->scaleline;
             $mapData['mouseposition'] = $profile->mouseposition;
             $mapData['permalink']['enable'] = $profile->permalink;

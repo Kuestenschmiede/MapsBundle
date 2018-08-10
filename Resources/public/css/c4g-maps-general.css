@@ -389,7 +389,8 @@ button.c4g-portside-close:before {
 
 .ol-zoom-with-extent button,
 .ol-zoom-with-home button,
-.ol-zoom-with-position button{
+.ol-zoom-with-position button/*,
+.ol-zoom-with-favorite*/ {
   display: block;
 }
 button.ol-zoom-in:before {

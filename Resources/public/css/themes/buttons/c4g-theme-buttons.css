@@ -97,7 +97,7 @@
 .ol-zoom-with-home.ol-control button[title]:hover:after,
 .ol-zoom-with-home.ol-control button[title]:focus:after,
 .ol-zoom-with-position.ol-control button[title]:hover:after,
-.ol-zoom-with-position.ol-control button[title]:focus:after{
+.ol-zoom-with-position.ol-control button[title]:focus:after {
   top: 2.05em;
 }
 
@@ -258,10 +258,14 @@ button.ol-zoom-out {
   border-radius: var(--button-radius-percent);
 }
 .ol-zoom-with-extent .ol-zoom-extent,
-.ol-zoom-with-home .ol-zoom-home {
+.ol-zoom-with-home .ol-zoom-home,
+.ol-zoom-with-position .ol-zoom-position {
   border-radius: var(--button-radius-percent);
 }
-.ol-zoom-with-position,.ol-zoom-with-extent, .ol-zoom-with-home {
+/*.ol-zoom-with-favorite,*/
+.ol-zoom-with-position,
+.ol-zoom-with-extent,
+.ol-zoom-with-home {
   border: none;
   border-radius: var(--button-radius-pixel);
 }
@@ -1025,4 +1029,10 @@ div.c4g-horizontal.c4g-tooltip-popup:before {
   .ol-control {
     display: none;
   }
+}
+.ol-control.ol-bookmark,
+.ol-control.c4g-geobookmarks {
+  top: 3em;
+  right: 3px;
+  left: initial;
 }

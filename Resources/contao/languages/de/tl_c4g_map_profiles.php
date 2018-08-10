@@ -99,6 +99,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor']                = array('Edi
                                                                             'Blendet einen Schalter ein, der den Editor auf der Karte anzeigt, mit dem Punkte, Strecken und Flächen auf die Karte gezeichnet werden können.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overviewmap']           = array('Übersichtskarte',
                                                                             'Schafft die Möglichkeit, über einen Schalter, rechts unten auf der Karte, eine Umgebungskarte einzublenden.');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geobookmarks']          = array('Favoriten (beta)',
+                                                                            'Damit kannst Du favorisierte Kartenposition im Browser speichern.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['scaleline']             = array('Maßstabsleiste',
                                                                             'Zeigt eine Leiste, die den aktuellen Kartenmaßstab visuell darstellt.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouseposition']         = array('Maus-Koordinaten',
@@ -241,11 +243,11 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_mouse_nav_dragmode']['0']
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_mouse_nav_dragmode']['1'] = 'Karte drehen';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_mouse_nav_dragmode']['2'] = 'Karte drehen und zoomen';
 
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_zoom_panel_button']['0'] = 'Aus';
+//$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_zoom_panel_button']['0'] = 'Aus';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_zoom_panel_button']['1'] = 'mit Welt-Icon (zoomt zurück in die kleinstmögliche Zoomstufe)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_zoom_panel_button']['2'] = 'mit Haus-Icon (zoomt zurück in die voreingestellte Position der Karte)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_zoom_panel_button']['3'] = 'mit Positions-Icon (zoomt auf sicheren Seiten zur aktuellen Geräteposition)';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_zoom_panel_button']['4'] = 'mit Favoriten-Icon (zoomt nach Auswahl auf eine Deiner Lieblingspositionen)';
+//$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_zoom_panel_button']['4'] = 'mit Favoriten-Icon (zoomt nach Auswahl auf eine Deiner Lieblingspositionen)';
 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine']['1'] = 'Nominatim bei Openstreetmap (<a href="https://operations.osmfoundation.org/policies/nominatim/" target="_blank">Nutzungsbestimmungen</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine']['2'] = 'Nominatim bei MapQuest (<a href="http://developer.mapquest.com/web/products/open/nominatim" target="_blank">Nutzungsbestimmungen</a>)';

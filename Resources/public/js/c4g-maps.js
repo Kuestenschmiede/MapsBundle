@@ -480,7 +480,6 @@ this.c4g.maps = this.c4g.maps || {};
             this.map.addControl(this.controls.account);
         }
 
-
         // zoom-controls
         if (mapData.zoom_panel || mapData.zoom_slider) {
             this.controls.zoom = new ol.control.Zoom({
@@ -532,7 +531,6 @@ this.c4g.maps = this.c4g.maps || {};
             this.map.addControl(this.controls.zoom_position);
         }
 
-
         // combined zoom-controls
         if (mapData.zoom_slider) {
             $('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM).addClass(c4g.maps.constant.css.OL_ZOOM_WITH_SLIDER).removeClass(c4g.maps.constant.css.OL_ZOOM);
@@ -583,6 +581,7 @@ this.c4g.maps = this.c4g.maps || {};
             });
             this.map.addControl(this.controls.fullscreen);
         }
+
         // router
         if (mapData.router_enable && typeof c4g.maps.control.Router === 'function') {
             this.controls.router = new c4g.maps.control.Router({
@@ -658,6 +657,7 @@ this.c4g.maps = this.c4g.maps || {};
             });
             this.map.addControl(this.controls.infopage);
         }
+
         // scaleline
         if (mapData.scaleline) {
             this.controls.scaleline = new ol.control.ScaleLine({
@@ -665,6 +665,7 @@ this.c4g.maps = this.c4g.maps || {};
             });
             this.map.addControl(this.controls.scaleline);
         }
+
         // zoom-level & mouse-position
         if (mapData.zoomlevel || mapData.mouseposition) {
           // wrapper for zoom-level and mouse-position
@@ -714,6 +715,18 @@ this.c4g.maps = this.c4g.maps || {};
                 results: mapData.geosearch.results
             });
             this.map.addControl(this.controls.geosearch);
+        }
+
+        // geobookmarks - not ready
+        if (mapData.geobookmarks) {
+            this.controls.geobookmarks = new ol.control.GeoBookmark({
+                label: ' ',
+                tipLabel: c4g.maps.constant.i18n.CTRL_GEOBOOKMARKS,
+                placeholder: c4g.maps.constant.i18n.GEOBOOKMARKS_PLACEHOLDER,
+                namespace: 'c4g_geobookmarks'/*,
+                className: c4g.maps.constant.css.GEOBOOKMARKS*/ //ToDo implement for own styling
+            });
+            this.map.addControl(this.controls.geobookmarks);
         }
 
         // overview-map

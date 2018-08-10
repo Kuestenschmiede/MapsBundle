@@ -62,6 +62,7 @@ class ResourceLoader extends coreResourceLoader
             'account' => $allByDefault,
             'geosearch' => $allByDefault,
             'overviewmap' => $allByDefault,
+            'geobookmarks' => $allByDefault,
             'baselayerswitcher' => $allByDefault,
             'layerswitcher' => $allByDefault,
             'starboard' => $allByDefault,
@@ -274,19 +275,18 @@ class ResourceLoader extends coreResourceLoader
         /*$zoom_extent = false;*/
         $zoom_home = false;
         $zoom_position = false;
-        $zoom_favorite = false;
 
         if ($profile->zoom_panel_button) {
             $zoom_pane_buttons = array_flip(unserialize($profile->zoom_panel_button));
             foreach($zoom_pane_buttons as $key => $zoom_panel_button){
                 switch ($zoom_panel_button) {
-                    case '4':
+                    case '3':
                         $zoom_favorite = true;
                         break;
-                    case '3':
+                    case '2':
                         $zoom_position = true;
                         break;
-                    case '2':
+                    case '1':
                         $zoom_home = true;
                         break;
                     /*case '1':
@@ -311,6 +311,7 @@ class ResourceLoader extends coreResourceLoader
             'zoomlevel' => ($profile->zoomlevel),
             'geosearch' => ($profile->geosearch && $profile->geosearch_show),
             'overviewmap' => ($profile->overviewmap),
+            'geobookmarks' => ($profile->geobookmarks),
             'baselayerswitcher' => ($profile->starboard && $profile->baselayerswitcher),
             'layerswitcher' => ($profile->starboard && $profile->layerswitcher),
             'starboard' => ($profile->starboard),

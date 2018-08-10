@@ -47,6 +47,7 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
     CTRL_GEOSEARCH: 'Toggle geosearch',
     CTRL_START_SEARCH: 'start search',
     CTRL_OVERVIEWMAP: 'Toggle overviewmap',
+    CTRL_GEOBOOKMARKS: 'Manage favorites',
     CTRL_SIDEBOARD: 'Toggle sideboard',
     CTRL_STARBOARD: 'Toggle starboard',
     CTRL_ATTRIBUTION: 'Show attribution',
@@ -181,6 +182,8 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
 
     EXPORTTOOLS: 'Exporttools',
     EXPORTTOOLS_VIEW_TRIGGER_PRINT: 'Print mapview',
+
+    GEOBOOKMARKS_PLACEHOLDER: 'Enter new caption',
 
     INFOPAGE: 'Infopage',
     INFOPAGE_VIEW_TRIGGER: 'Show informations',

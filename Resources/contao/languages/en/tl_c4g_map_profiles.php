@@ -54,6 +54,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['nav_history']           = array('Nav
                                                                             'Creates "next" and "previous" buttons, similar to those of internet browsers.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overviewmap']           = array('Overview map',
                                                                             'Adds a button in the lower right corner of the map, which when pressed shows an overwiew map.');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geobookmarks']          = array('Geo bookmarks (beta)',
+                                                                            'So you can store position/zoom bookmarks in your browser');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['scaleline']             = array('Scale line',
                                                                             'Shows a line which demonstrates the scale of the map.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouseposition']         = array('Mouse coordinates',
@@ -227,11 +229,11 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_mouse_nav_dragmode']['0']
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_mouse_nav_dragmode']['1'] = 'Rotate map';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_mouse_nav_dragmode']['2'] = 'Rotate and zoom map';
 
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_zoom_panel_button']['0'] = 'Off';
+//$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_zoom_panel_button']['0'] = 'Off';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_zoom_panel_button']['1'] = 'with World-Icon (to 0 coordinate and min zoom)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_zoom_panel_button']['2'] = 'with Home-Icon (to configured map zoom)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_zoom_panel_button']['3'] = 'with Position-Icon (to browser/device position)';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_zoom_panel_button']['4'] = 'with Favorite-Icon (select one of your favorite positions)';
+//$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_zoom_panel_button']['4'] = 'with Favorite-Icon (select one of your favorite positions)';
 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine']['1'] = 'Nominatim by Openstreetmap (<a href="https://operations.osmfoundation.org/policies/nominatim/" target="_blank">usage policy</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine']['2'] = 'Nominatim by MapQuest (<a href="http://developer.mapquest.com/web/products/open/nominatim" target="_blank">usage policy</a>)';

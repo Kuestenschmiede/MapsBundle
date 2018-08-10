@@ -72,6 +72,7 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
     ACCOUNT: 'c4g-account',
     OVERVIEWMAP: 'c4g-overviewmap',
     OVERVIEWMAP_WRAPPER: 'c4g-overviewmap-wrapper',
+    GEOBOOKMARKS: 'c4g-geobookmarks',
     PERMALINK: 'c4g-permalink',
     PERMALINK_POPUP: 'c4g-permalink-popup',
     POPUP_CLOSE: 'c4g-popup-close',
