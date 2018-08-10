@@ -644,7 +644,7 @@ class C4gBaselayerController {
                 var mapData = this.mapController.data;
                 if (mapData.cesium && mapData.cesium.enable) {
                     if (!this.ol3d) {
-                        this.ol3d = new OLCesium({
+                        this.ol3d = new olcs.OLCesium({
                             map: this.mapController.map/*,
                             time() {
                                 const val = timeElt.value;

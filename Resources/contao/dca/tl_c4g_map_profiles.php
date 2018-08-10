@@ -98,7 +98,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
                                          '{locstyle_legend:hide},locstyles, label_color;'.
                                          '{navigation_legend},zoom_panel,zoom_panel_button,zoom_panel_slider,mouse_nav,touch_nav,keyboard_nav,fullscreen;'.
                                          '{starboard_legend:hide},starboard;'.
-                                         '{information_legend},attribution,overviewmap,measuretool,graticule,scaleline,mouseposition,permalink,zoomlevel;'.
+                                         '{information_legend},attribution,overviewmap,geobookmarks,measuretool,graticule,scaleline,mouseposition,permalink,zoomlevel;'.
                                          '{geosearch_legend:hide},geosearch,router;'.
                                          '{info_legend:hide},infopage;'.
                                          '{click_legend:hide},link_newwindow,link_open_on,hover_popups;'.
@@ -245,11 +245,11 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             'exclude'                 => true,
             'default'                 => true,
             'default'                 => '',
-            'inputType'               => 'radio',
-            'options'                 => array('0','1','2','3'),
-            //'eval'                    => array('submitOnChange' => true),
+            'inputType'               => 'checkbox',
+            'options'                 => array('1','2','3'),
+            'eval'                    => array('multiple' => true),
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_zoom_panel_button'],
-            'sql'                     => "char(1) NOT NULL default '0'"
+            'sql'                     => "blob NULL"
         ),
 
         'zoom_panel_slider' => array
@@ -557,6 +557,15 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
         'overviewmap' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overviewmap'],
+            'exclude'                 => true,
+            'default'                 => false,
+            'inputType'               => 'checkbox',
+            'sql'                     => "char(1) NOT NULL default ''"
+        ),
+
+        'geobookmarks' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geobookmarks'],
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',

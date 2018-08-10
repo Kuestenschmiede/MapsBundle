@@ -261,19 +261,23 @@ class MapDataConfigurator
             //
             $mapData['zoom_panel']  = $profile->zoom_panel;
 
-            switch ($profile->zoom_panel_button) {
-                case '3':
-                    $mapData['zoom_position'] = true;
-                    break;
-                case '2':
-                    $mapData['zoom_home'] = true;
-                    break;
-                case '1':
-                    $mapData['zoom_extent'] = true;
-                    break;
-                default:
+            if ($profile->zoom_panel_button) {
+                $zoom_panel_buttons = unserialize($profile->zoom_panel_button);
+                foreach($zoom_panel_buttons as $key => $zoom_panel_button){
+                    switch ($zoom_panel_button) {
+                        case '3':
+                            $mapData['zoom_position'] = true;
+                            break;
+                        case '2':
+                            $mapData['zoom_home'] = true;
+                            break;
+                        case '1':
+                            $mapData['zoom_extent'] = true;
+                            break;
+                        default:
+                    }
+                }
             }
-
 
             $mapData['zoom_slider'] = ($profile->zoom_panel_slider == 1);
             if ($profile->mouse_nav) {
@@ -352,6 +356,7 @@ class MapDataConfigurator
                 }
             }
             $mapData['overviewmap'] = $profile->overviewmap;
+            $mapData['geobookmarks'] = $profile->geobookmarks;
             $mapData['scaleline'] = $profile->scaleline;
             $mapData['mouseposition'] = $profile->mouseposition;
             $mapData['permalink']['enable'] = $profile->permalink;

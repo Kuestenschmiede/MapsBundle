@@ -47,6 +47,7 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
     CTRL_GEOSEARCH: 'Suche ein-/ausblenden',
     CTRL_START_SEARCH: 'Suche starten',
     CTRL_OVERVIEWMAP: 'Übersichtskarte ein-/ausblenden',
+    CTRL_GEOBOOKMARKS: 'Favoriten verwalten',
     CTRL_SIDEBOARD: 'Sideboard ein-/ausblenden',
     CTRL_STARBOARD: 'Starboard ein-/ausblenden',
     CTRL_ATTRIBUTION: 'Attribution anzeigen',
@@ -183,6 +184,8 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
 
     EXPORTTOOLS: 'Exportwerkzeuge',
     EXPORTTOOLS_VIEW_TRIGGER_PRINT: 'Kartenausschnitt drucken',
+
+    GEOBOOKMARKS_PLACEHOLDER: 'Neue Bezeichnung',
 
     INFOPAGE: 'Informationen',
     INFOPAGE_VIEW_TRIGGER: 'Informationen anzeigen',

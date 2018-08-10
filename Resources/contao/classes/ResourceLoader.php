@@ -62,6 +62,7 @@ class ResourceLoader extends coreResourceLoader
             'account' => $allByDefault,
             'geosearch' => $allByDefault,
             'overviewmap' => $allByDefault,
+            'geobookmarks' => $allByDefault,
             'baselayerswitcher' => $allByDefault,
             'layerswitcher' => $allByDefault,
             'starboard' => $allByDefault,
@@ -96,6 +97,7 @@ class ResourceLoader extends coreResourceLoader
         if ($resources['cesium']) {
             parent::loadJavaScriptRessource('cesium', self::VENDOR_PATH . 'ol-cesium-'.$GLOBALS['con4gis']['maps']['ol-cesium-version'].'/Cesium/Cesium.js');
             parent::loadJavaScriptRessource('olcesium', self::VENDOR_PATH . 'ol-cesium-'.$GLOBALS['con4gis']['maps']['ol-cesium-version'].'/olcesium' . $suffixCesium . '.js');
+            parent::loadCssRessource('olcesium', self::VENDOR_PATH . 'ol-cesium-'.$GLOBALS['con4gis']['maps']['ol-cesium-version'].'/olcs.css');
         }
 
         if ($resources['olms']) {
@@ -270,6 +272,25 @@ class ResourceLoader extends coreResourceLoader
             }
         }
 
+        /*$zoom_extent = false;*/
+        $zoom_home = false;
+        $zoom_position = false;
+
+        if ($profile->zoom_panel_button) {
+            $zoom_pane_buttons = unserialize($profile->zoom_panel_button);
+            foreach($zoom_pane_buttons as $key => $zoom_panel_button){
+                switch ($zoom_panel_button) {
+                    case '3':
+                        $zoom_position = true;
+                        break;
+                    case '2':
+                        $zoom_home = true;
+                        break;
+                    default:
+                }
+            }
+        }
+
         // check which resources are needed
         $resources = array
         (
@@ -278,12 +299,13 @@ class ResourceLoader extends coreResourceLoader
             'openlayers' => true,
             'geopicker' => ($profile->geopicker || $geopicker),
             'grid' => ($profile->graticule),
-            'home' => ($profile->zoom_panel_button && $profile->zoom_panel_button == 2),
-            'position' => ($profile->zoom_panel_button && $profile->zoom_panel_button == 3),
+            'home' => $zoom_home,
+            'position' => $zoom_position,
             'permalink' => ($profile->permalink),
             'zoomlevel' => ($profile->zoomlevel),
             'geosearch' => ($profile->geosearch && $profile->geosearch_show),
             'overviewmap' => ($profile->overviewmap),
+            'geobookmarks' => ($profile->geobookmarks),
             'baselayerswitcher' => ($profile->starboard && $profile->baselayerswitcher),
             'layerswitcher' => ($profile->starboard && $profile->layerswitcher),
             'starboard' => ($profile->starboard),

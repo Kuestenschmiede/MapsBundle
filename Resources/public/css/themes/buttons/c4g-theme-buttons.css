@@ -97,7 +97,7 @@
 .ol-zoom-with-home.ol-control button[title]:hover:after,
 .ol-zoom-with-home.ol-control button[title]:focus:after,
 .ol-zoom-with-position.ol-control button[title]:hover:after,
-.ol-zoom-with-position.ol-control button[title]:focus:after{
+.ol-zoom-with-position.ol-control button[title]:focus:after {
   top: 2.05em;
 }
 
@@ -120,7 +120,7 @@
   top: 86px;
   left: .2em;
   height: 200px;
-  z-index: 120;
+  z-index: 200;
   /*border: none;*/
   /*border-radius: 0 0 100% 100%;*/
 }
@@ -202,7 +202,7 @@
 }
 .c4g-control-container-bottom-left {
   position: absolute;
-  bottom: 2.3em;
+  bottom: 3em;
   /* do not change "left"-value! */
   left: 0px;
   margin-left: .4em;
@@ -258,10 +258,14 @@ button.ol-zoom-out {
   border-radius: var(--button-radius-percent);
 }
 .ol-zoom-with-extent .ol-zoom-extent,
-.ol-zoom-with-home .ol-zoom-home {
+.ol-zoom-with-home .ol-zoom-home,
+.ol-zoom-with-position .ol-zoom-position {
   border-radius: var(--button-radius-percent);
 }
-.ol-zoom-with-position,.ol-zoom-with-extent, .ol-zoom-with-home {
+/*.ol-zoom-with-favorite,*/
+.ol-zoom-with-position,
+.ol-zoom-with-extent,
+.ol-zoom-with-home {
   border: none;
   border-radius: var(--button-radius-pixel);
 }
@@ -300,7 +304,7 @@ button.ol-zoom-out {
 .c4g-control-container-bottom-left-sub {
   margin-top: .4em;
   padding: 0 .4em;
-  font-size: smaller;
+  font-size: 12px;
   border-radius: 4px;
 }
 .c4g-control-container-bottom-left-sub div {
@@ -966,17 +970,17 @@ div.c4g-horizontal.c4g-tooltip-popup:before {
   font-size: 2em;
 }
 
+.c4g-control-container-top-left::-webkit-scrollbar,
 .c4g-starboard-content-container::-webkit-scrollbar,
 .c4g-portside-content-container::-webkit-scrollbar {
-  width: calc(var(--button-size)/2);
+  width: 12px/*calc(var(--button-size)/2.2)*/;
 }
-
+.c4g-control-container-top-left::-webkit-scrollbar-track,
 .c4g-starboard-content-container::-webkit-scrollbar-track,
 .c4g-portside-content-container::-webkit-scrollbar-track {
   border-radius: var(--button-radius-pixel);
 }
-
-/* Handle */
+.c4g-control-container-top-left::-webkit-scrollbar-thumb,
 .c4g-starboard-content-container::-webkit-scrollbar-thumb,
 .c4g-portside-content-container::-webkit-scrollbar-thumb {
   border-radius: var(--button-radius-pixel);
@@ -1025,4 +1029,12 @@ div.c4g-horizontal.c4g-tooltip-popup:before {
   .ol-control {
     display: none;
   }
+}
+.ol-control.ol-bookmark,
+.ol-control.c4g-geobookmarks {
+  top: 3em;
+  /*right: 3px;*/
+  left: initial;
+  right: 0;
+  margin-right: .2em;
 }
