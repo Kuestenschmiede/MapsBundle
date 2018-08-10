@@ -1,41 +1,9 @@
 class C4gBaselayerController {
     constructor(proxy) {
-        this._proxy = proxy;
-        this._mapController = proxy.options.mapController;
-        this._arrBaselayers = [];
-        this._baselayerIds = [];
-    }
-
-    get proxy() {
-        return this._proxy;
-    }
-
-    set proxy(value) {
-        this._proxy = value;
-    }
-
-    get mapController() {
-        return this._mapController;
-    }
-
-    set mapController(value) {
-        this._mapController = value;
-    }
-
-    get arrBaselayers() {
-        return this._arrBaselayers;
-    }
-
-    set arrBaselayers(value) {
-        this._arrBaselayers = value;
-    }
-
-    get baselayerIds() {
-        return this._baselayerIds;
-    }
-
-    set baselayerIds(value) {
-        this._baselayerIds = value;
+        this.proxy = proxy;
+        this.mapController = proxy.options.mapController;
+        this.arrBaselayers = [];
+        this.baselayerIds = [];
     }
 
     loadBaseLayers() {
@@ -93,7 +61,7 @@ class C4gBaselayerController {
                 baselayer = baselayers[i];
 
                 uid = baselayer.id || c4g.maps.utils.getUniqueId();
-                this._baselayerIds.push(uid);
+                this.baselayerIds.push(uid);
                 if (!this.arrBaselayers[uid]) {
                     this.arrBaselayers[uid] = new C4gBaselayer(baselayer, this);
                 }
@@ -122,7 +90,7 @@ class C4gBaselayerController {
             } else {
                 // otherwise build default baselayer
                 uid = 0;
-                this._baselayerIds.push(uid);
+                this.baselayerIds.push(uid);
                 if (!this.arrBaselayers[uid]) {
                     this.arrBaselayers[uid] = {
                         id: 0,
@@ -137,7 +105,7 @@ class C4gBaselayerController {
         }
         this.proxy.baselayers_loaded = true;
 
-        c4g.maps.utils.callHookFunctions(this.proxy.hook_baselayer_loaded, this._baselayerIds);
+        c4g.maps.utils.callHookFunctions(this.proxy.hook_baselayer_loaded, this.baselayerIds);
     } // end of "addBaseLayers()"
     showBaseLayer(baseLayerUid) {
 
@@ -201,7 +169,7 @@ class C4gBaselayerController {
                         }
                         break;
                     case 'mapbox':
-                        layerOptions.attributions = mapboxSourceConfigs[baseLayerConfig._mapbox_type].attributions;
+                        layerOptions.attributions = mapboxSourceConfigs[baseLayerConfig.mapbox_type].attributions;
                         break;
                     case 'klokan':
                         layerOptions.attributions = klokanSourceConfigs[baseLayerConfig.klokan_type].attributions;
@@ -353,13 +321,13 @@ class C4gBaselayerController {
                     }
                     break;
                 case 'mapbox':
-                    if (baseLayerConfig.api_key && baseLayerConfig.app_id && baseLayerConfig._mapbox_type) {
+                    if (baseLayerConfig.api_key && baseLayerConfig.app_id && baseLayerConfig.mapbox_type) {
 
-                        if (baseLayerConfig._mapbox_type === 'Mapbox') {
+                        if (baseLayerConfig.mapbox_type === 'Mapbox') {
                             layerOptions.url = baseLayerConfig.url + baseLayerConfig.app_id + '/tiles/{z}/{x}/{y}?access_token=' + baseLayerConfig.api_key;
                             newBaselayer = new ol.layer.Tile({
                                 source: new ol.source.XYZ(
-                                    jQuery.extend(mapboxSourceConfigs[baseLayerConfig._mapbox_type], layerOptions)
+                                    jQuery.extend(mapboxSourceConfigs[baseLayerConfig.mapbox_type], layerOptions)
                                 )
                             });
                         } else {
@@ -367,7 +335,7 @@ class C4gBaselayerController {
 
                             newBaselayer = new ol.layer.Tile({
                                 source: new ol.source.XYZ(jQuery.extend(
-                                    mapboxSourceConfigs[baseLayerConfig._mapbox_type],
+                                    mapboxSourceConfigs[baseLayerConfig.mapbox_type],
                                     layerOptions
                                 ))
                             });

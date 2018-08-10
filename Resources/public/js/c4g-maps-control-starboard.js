@@ -68,9 +68,9 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       // creates and renders the starboard plugins
       fnRender = function() {
         // loop through layers and check if there is any normal layertree to render
-        for (key in self.options.mapController.proxy.layerController._arrLayers) {
-          if (self.options.mapController.proxy.layerController._arrLayers.hasOwnProperty(key)) {
-            layer = self.options.mapController.proxy.layerController._arrLayers[key];
+        for (key in self.options.mapController.proxy.layerController.arrLayers) {
+          if (self.options.mapController.proxy.layerController.arrLayers.hasOwnProperty(key)) {
+            layer = self.options.mapController.proxy.layerController.arrLayers[key];
             if (!layer.renderSpecial) {
               renderLayertree = true;
               break;
@@ -80,7 +80,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
         if (renderLayertree) {
           // do not display layerswitcher if there is nothing to switch
-          if (self.options.mapController.proxy.layerController._arrLayers) {
+          if (self.options.mapController.proxy.layerController.arrLayers) {
             for(let id in self.options.mapController.proxy.layerController.arrLayers) {
               if (self.options.mapController.proxy.layerController.arrLayers[id].display) {
                 displayLayerswitcher = true;

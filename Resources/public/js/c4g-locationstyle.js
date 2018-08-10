@@ -1,104 +1,16 @@
 class C4gLocationStyle{
     constructor(locStyleArr, controller){
-        this._id        = locStyleArr['id'];
-        this._style     = this.getStyleFunction(locStyleArr);
-        this._editor    = this.getStyleEditorConfig(locStyleArr);
-        this._name      = locStyleArr['name'];
-        this._tooltip   = locStyleArr['tooltip'];
-        this._label     = locStyleArr['label'];
-        this._minzoom   = locStyleArr['minzoom'];
-        this._maxzoom   = locStyleArr['maxzoom'];
-        this._fnStyleFunction = locStyleArr['style_function_js'];
-        this._controller= controller;
-        this._locStyleArr = locStyleArr;
-    }
-
-    get locStyleArr() {
-        return this._locStyleArr;
-    }
-
-    set locStyleArr(value) {
-        this._locStyleArr = value;
-    }
-
-    get controller() {
-        return this._controller;
-    }
-
-    set controller(value) {
-        this._controller = value;
-    }
-
-    get id() {
-        return this._id;
-    }
-
-    set id(value) {
-        this._id = value;
-    }
-
-    get style() {
-        return this._style;
-    }
-
-    set style(value) {
-        this._style = value;
-    }
-
-    get editor() {
-        return this._editor;
-    }
-
-    set editor(value) {
-        this._editor = value;
-    }
-
-    get name() {
-        return this._name;
-    }
-
-    set name(value) {
-        this._name = value;
-    }
-
-    get tooltip() {
-        return this._tooltip;
-    }
-
-    set tooltip(value) {
-        this._tooltip = value;
-    }
-
-    get label() {
-        return this._label;
-    }
-
-    set label(value) {
-        this._label = value;
-    }
-
-    get minzoom() {
-        return this._minzoom;
-    }
-
-    set minzoom(value) {
-        this._minzoom = value;
-    }
-
-    get maxzoom() {
-        return this._maxzoom;
-    }
-
-    set maxzoom(value) {
-        this._maxzoom = value;
-    }
-
-    get fnStyleFunction() {
-        return this._fnStyleFunction;
-    }
-
-    set fnStyleFunction(value) {
-        this._fnStyleFunction = value;
+        this.id        = locStyleArr['id'];
+        this.style     = this.getStyleFunction(locStyleArr);
+        this.editor    = this.getStyleEditorConfig(locStyleArr);
+        this.name      = locStyleArr['name'];
+        this.tooltip   = locStyleArr['tooltip'];
+        this.label     = locStyleArr['label'];
+        this.minzoom   = locStyleArr['minzoom'];
+        this.maxzoom   = locStyleArr['maxzoom'];
+        this.fnStyleFunction = locStyleArr['style_function_js'];
+        this.controller= controller;
+        this.locStyleArr = locStyleArr;
     }
 
     getStyleFunction(styleData) {

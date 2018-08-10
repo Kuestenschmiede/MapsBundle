@@ -1,32 +1,10 @@
 class C4gLayerController{
   constructor(proxy){
-    this._proxy = proxy;
-    this._mapController = proxy.options.mapController;
-    this._arrLayers = {};
+    this.proxy = proxy;
+    this.mapController = proxy.options.mapController;
+    this.arrLayers = {};
   }
-  get proxy() {
-    return this._proxy;
-  }
-
-  set proxy(value) {
-    this._proxy = value;
-  }
-
-  get mapController() {
-    return this._mapController;
-  }
-
-  set mapController(value) {
-    this._mapController = value;
-  }
-
-  get arrLayers() {
-    return this._arrLayers;
-  }
-
-  set arrLayers(value) {
-    this._arrLayers = value;
-  }
+  
   loadLayers () {
     let self = this;
     if (this.mapId === 0) {

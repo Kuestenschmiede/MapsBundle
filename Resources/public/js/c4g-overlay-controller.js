@@ -1,24 +1,9 @@
 class C4gOverlayController{
     constructor(baselayer){
-        this._baselayer = baselayer;
-        this._arrOverlays = [];
+        this.baselayer = baselayer;
+        this.arrOverlays = [];
     }
-
-    get baselayer() {
-        return this._baselayer;
-    }
-
-    set baselayer(value) {
-        this._baselayer = value;
-    }
-
-    get arrOverlays() {
-        return this._arrOverlays;
-    }
-
-    set arrOverlays(value) {
-        this._arrOverlays = value;
-    }
+    
     showOverlayLayer(overlayId){
         var self = this,
             overlayLayerConfig,
@@ -33,7 +18,7 @@ class C4gOverlayController{
             source: new ol.source.OSM()
         });
 
-        overlayLayerConfig = this._arrOverlays[overlayId];
+        overlayLayerConfig = this.arrOverlays[overlayId];
 
         switch (overlayLayerConfig.provider) {
             case 'osm':

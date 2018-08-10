@@ -9,10 +9,10 @@ class MapProxy {
   constructor(options){
     var mapData;
 
-    this._options = jQuery.extend({
+    this.options = jQuery.extend({
       mapController: false
     }, options);
-    if (!this._options.mapController) {
+    if (!this.options.mapController) {
       return false;
     }
 
@@ -20,219 +20,43 @@ class MapProxy {
 
     //c4g.maps.hook.proxy_fillPopup = [];
 
-    this._hook_baselayer_loaded = [];
-    this._hook_baselayer_visibility = [];
-    this._hook_layer_loaded = [];
-    this._hook_layer_visibility = [];
-    this._hook_map_click = [];
-    this._hook_map_zoom = [];
+    this.hook_baselayer_loaded = [];
+    this.hook_baselayer_visibility = [];
+    this.hook_layer_loaded = [];
+    this.hook_layer_visibility = [];
+    this.hook_map_click = [];
+    this.hook_map_zoom = [];
 
     // add global hook for accessibility when there is no proxy reference
     c4g.maps.hook.proxy_layer_loaded = c4g.maps.hook.proxy_layer_loaded || [];
 
-    this._baselayerIds = [];
-    this._activeBaselayerId = undefined;
-    this._layerIds = [];
-    this._activeLayerIds = {};
+    this.baselayerIds = [];
+    this.activeBaselayerId = undefined;
+    this.layerIds = [];
+    this.activeLayerIds = {};
 
-    this._requestFunctions = {};
-    this._request = {};
+    this.requestFunctions = {};
+    this.request = {};
 
-    this._baselayers_loaded = false;
-    this._layers_loaded = false;
+    this.baselayers_loaded = false;
+    this.layers_loaded = false;
 
     mapData = this.options.mapController.data;
 
-    this._mapId = mapData.id;
+    this.mapId = mapData.id;
 
-    this._api_baselayer_url = this.options.mapController.data.api.baselayer + '/' + mapData.profile;
-    this._api_layer_url = this.options.mapController.data.api.layer + '/' + this._mapId;
-    this._api_layercontent_url = this.options.mapController.data.api.layercontent;
+    this.api_baselayer_url = this.options.mapController.data.api.baselayer + '/' + mapData.profile;
+    this.api_layer_url = this.options.mapController.data.api.layer + '/' + this.mapId;
+    this.api_layercontent_url = this.options.mapController.data.api.layercontent;
     //this.api_layercontentdata_url = this.options.mapController.data.api.layercontentdata;
-    this._api_layercontentdata_url = "con4gis/layerContentDataService";
-    this._api_locstyle_url = this.options.mapController.data.api.locstyle;
-    this._api_infowindow_url = this.options.mapController.data.api.infowindow;
-    this._options = options;
+    this.api_layercontentdata_url = "con4gis/layerContentDataService";
+    this.api_locstyle_url = this.options.mapController.data.api.locstyle;
+    this.api_infowindow_url = this.options.mapController.data.api.infowindow;
+    this.options = options;
 
 
 
     // this.initialize();
-  }
-
-  get options() {
-    return this._options;
-  }
-
-  set options(value) {
-    this._options = value;
-  }
-
-  get hook_baselayer_loaded() {
-    return this._hook_baselayer_loaded;
-  }
-
-  set hook_baselayer_loaded(value) {
-    this._hook_baselayer_loaded = value;
-  }
-
-  get hook_baselayer_visibility() {
-    return this._hook_baselayer_visibility;
-  }
-
-  set hook_baselayer_visibility(value) {
-    this._hook_baselayer_visibility = value;
-  }
-
-  get hook_layer_loaded() {
-    return this._hook_layer_loaded;
-  }
-
-  set hook_layer_loaded(value) {
-    this._hook_layer_loaded = value;
-  }
-
-  get hook_layer_visibility() {
-    return this._hook_layer_visibility;
-  }
-
-  set hook_layer_visibility(value) {
-    this._hook_layer_visibility = value;
-  }
-
-  get hook_map_click() {
-    return this._hook_map_click;
-  }
-
-  set hook_map_click(value) {
-    this._hook_map_click = value;
-  }
-
-  get hook_map_zoom() {
-    return this._hook_map_zoom;
-  }
-
-  set hook_map_zoom(value) {
-    this._hook_map_zoom = value;
-  }
-
-  get baselayerIds() {
-    return this._baselayerIds;
-  }
-
-  set baselayerIds(value) {
-    this._baselayerIds = value;
-  }
-
-  get activeBaselayerId() {
-    return this._activeBaselayerId;
-  }
-
-  set activeBaselayerId(value) {
-    this._activeBaselayerId = value;
-  }
-
-  get layerIds() {
-    return this._layerIds;
-  }
-
-  set layerIds(value) {
-    this._layerIds = value;
-  }
-
-  get activeLayerIds() {
-    return this._activeLayerIds;
-  }
-
-  set activeLayerIds(value) {
-    this._activeLayerIds = value;
-  }
-
-  get requestFunctions() {
-    return this._requestFunctions;
-  }
-
-  set requestFunctions(value) {
-    this._requestFunctions = value;
-  }
-
-  get request() {
-    return this._request;
-  }
-
-  set request(value) {
-    this._request = value;
-  }
-
-  get baselayers_loaded() {
-    return this._baselayers_loaded;
-  }
-
-  set baselayers_loaded(value) {
-    this._baselayers_loaded = value;
-  }
-
-  get layers_loaded() {
-    return this._layers_loaded;
-  }
-
-  set layers_loaded(value) {
-    this._layers_loaded = value;
-  }
-
-  get mapId() {
-    return this._mapId;
-  }
-
-  set mapId(value) {
-    this._mapId = value;
-  }
-
-  get api_baselayer_url() {
-    return this._api_baselayer_url;
-  }
-
-  set api_baselayer_url(value) {
-    this._api_baselayer_url = value;
-  }
-
-  get api_layer_url() {
-    return this._api_layer_url;
-  }
-
-  set api_layer_url(value) {
-    this._api_layer_url = value;
-  }
-
-  get api_layercontent_url() {
-    return this._api_layercontent_url;
-  }
-
-  set api_layercontent_url(value) {
-    this._api_layercontent_url = value;
-  }
-
-  get api_layercontentdata_url() {
-    return this._api_layercontentdata_url;
-  }
-
-  set api_layercontentdata_url(value) {
-    this._api_layercontentdata_url = value;
-  }
-
-  get api_locstyle_url() {
-    return this._api_locstyle_url;
-  }
-
-  set api_locstyle_url(value) {
-    this._api_locstyle_url = value;
-  }
-
-  get api_infowindow_url() {
-    return this._api_infowindow_url;
-  }
-
-  set api_infowindow_url(value) {
-    this._api_infowindow_url = value;
   }
 
   initialize() {

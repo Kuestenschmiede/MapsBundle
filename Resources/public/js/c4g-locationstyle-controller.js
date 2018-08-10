@@ -1,32 +1,8 @@
 class C4gLocationStyleController{
     constructor(proxy){
-        this._proxy = proxy;
-        this._mapController = proxy.options.mapController;
-        this._arrLocStyles = [];
-    }
-
-    get proxy() {
-        return this._proxy;
-    }
-
-    set proxy(value) {
-        this._proxy = value;
-    }
-
-    get mapController() {
-        return this._mapController;
-    }
-
-    set mapController(value) {
-        this._mapController = value;
-    }
-
-    get arrLocStyles() {
-        return this._arrLocStyles;
-    }
-
-    set arrLocStyles(value) {
-        this._arrLocStyles = value;
+        this.proxy = proxy;
+        this.mapController = proxy.options.mapController;
+        this.arrLocStyles = [];
     }
 
     loadLocationStyles(arrIds, opt_options) {
@@ -64,7 +40,7 @@ class C4gLocationStyleController{
                 if (data.length > 0) {
                     for (i = 0; i < data.length; i += 1) {
                         styleData = data[i];
-                        self._arrLocStyles[styleData.id] = new C4gLocationStyle(styleData, self);
+                        self.arrLocStyles[styleData.id] = new C4gLocationStyle(styleData, self);
                     }
                 }
                 if (index) {
