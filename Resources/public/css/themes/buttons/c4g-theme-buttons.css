@@ -1018,7 +1018,7 @@ div.c4g-horizontal.c4g-tooltip-popup:before {
 }
 
 .c4g-router-profile-wrapper .c4g-active ul {
-  border-radius: var(--button-radius-pixel);
+  /*border-radius: var(--button-radius-pixel);*/
   border: 2px solid;
 }
 
