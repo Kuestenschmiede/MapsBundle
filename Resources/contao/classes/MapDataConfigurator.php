@@ -96,6 +96,13 @@ class MapDataConfigurator
                 }
             }
         }
+
+        //check for profile manipulation by another bundle
+        $profileService = \System::getContainer()->get('con4gis.profile_service');
+        if ($profileService) {
+            $profileId = $profileService->getProfileId($profileId);
+        }
+
         // get appropriate profile from database
         $profile = C4gMapProfilesModel::findByPk($profileId);
         // use default if the profile was not found

@@ -1,10 +1,16 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: cro
- * Date: 02.07.18
- * Time: 15:18
+ * con4gis - the gis-kit
+ *
+ * @version   php 7
+ * @package   con4gis
+ * @author    con4gis contributors (see "authors.txt")
+ * @license   GNU/LGPL http://opensource.org/licenses/lgpl-3.0.html
+ * @copyright Küstenschmiede GmbH Software & Design 2011 - 2018
+ * @link      https://www.kuestenschmiede.de
  */
+
 
 namespace con4gis\MapsBundle\Classes\Events;
 
@@ -30,7 +36,7 @@ class LoadLayersEvent extends Event
     /**
      * @param array $layerData
      */
-    public function setLayerData(array $layerData): void
+    public function setLayerData(array $layerData)
     {
         $this->layerData = $layerData;
     }
@@ -46,7 +52,7 @@ class LoadLayersEvent extends Event
     /**
      * @param array $additionalData
      */
-    public function setAdditionalData(array $additionalData): void
+    public function setAdditionalData(array $additionalData)
     {
         $this->additionalData = $additionalData;
     }

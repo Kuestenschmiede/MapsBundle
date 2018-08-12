@@ -17,7 +17,26 @@ namespace con4gis\MapsBundle\Classes\Events;
 
 use Symfony\Component\EventDispatcher\Event;
 
-class LoadMapResourcesEvent extends Event
+class LoadProfileEvent extends Event
 {
-    const NAME = "maps.resources.load";
+    const NAME = "maps.profile.load";
+
+    private $profileId = -1;
+
+    /**
+     * @return int
+     */
+    public function getProfileId(): int
+    {
+        return $this->profileId;
+    }
+
+    /**
+     * @param int $profileId
+     */
+    public function setProfileId(int $profileId)
+    {
+        $this->profileId = $profileId;
+    }
+
 }
