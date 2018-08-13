@@ -11,6 +11,7 @@ class C4gLayerController{
       return false;
     }
 
+    //jQuery.ajax("maps/layerService",{//this.proxy.api_layer_url,{
     jQuery.ajax(this.proxy.api_layer_url,{
       dataType: this.mapController.data.jsonp ? "jsonp" : "json"
 
@@ -404,7 +405,7 @@ class C4gLayerController{
           source: requestVectorSource
         });
         if(this.arrLayers[itemUid].cluster){
-          vectorLayer = new ol.layer.Vector(
+          vectorLayer = new ol.layer.AnimatedCluster(
             {	name: 'Cluster',
               source: clusterSource,
               // Use a style function for cluster symbolisation
@@ -871,7 +872,7 @@ class C4gLayerController{
 
               //vectorLayer = c4g.maps.utils.getVectorLayer(clusterSource, styleForCluster);
 
-              vectorLayer = new ol.layer.Vector(
+              vectorLayer = new ol.layer.AnimatedCluster(
                 {	name: 'Cluster',
                   source: clusterSource,
                   // Use a style function for cluster symbolisation
@@ -952,7 +953,7 @@ class C4gLayerController{
                 });
                 //vectorLayer = c4g.maps.utils.getVectorLayer(clusterSource, styleForCluster);
 
-                vectorLayer = new ol.layer.Vector(
+                vectorLayer = new ol.layer.AnimatedCluster(
                   {	name: 'Cluster',
                     source: clusterSource,
                     // Use a style function for cluster symbolisation
@@ -985,7 +986,7 @@ class C4gLayerController{
 
                 var missingStyles = [];
                 var unstyledFeatures = [];
-                for (var j = 0; j < features.length; j += 1) {
+                for (let j = 0; j < features.length; j += 1) {
                   if (features[j].get('styleId')) {
                     if (self.proxy.locationStyleController.arrLocStyles[features[j].get('styleId')] && self.proxy.locationStyleController.arrLocStyles[features[j].get('styleId')].style) {
                       features[j].setStyle(self.proxy.locationStyleController.arrLocStyles[features[j].get('styleId')].style);
@@ -1013,22 +1014,36 @@ class C4gLayerController{
                     //threshold: 2, //minimum element count
                     source: vectorSource
                   });//zu bearbeiten
-                  vectorLayer = c4g.maps.utils.getVectorLayer(clusterSource, vectorStyle);
-                  if (contentData.data && contentData.data.properties) {
-                    if (contentData.data.properties.popup) {
-                      vectorLayer.popup = contentData.data.properties.popup;
-                    }
-                    if (contentData.data.properties.tooltip) {
-                      vectorLayer.tooltip = contentData.data.properties.tooltip;
-                    }
-                    if (contentData.data.properties.label) {
-                      vectorLayer.label = contentData.data.properties.label;
-                    }
-                    if (contentData.data.properties.onclick_zoom) {
-                      vectorLayer.onclick_zoom = contentData.data.properties.onclick_zoom;
-                    }
+                  if(true){
+                      for (let j = 0; j < features.length; j += 1) {
+                          vectorSource = new ol.source.Vector({
+                              feature: features[j],
+                              projection: 'EPSG:3857',
+                              format: new ol.format.GeoJSON()
+                          });
+                          vectorLayer = c4g.maps.utils.getVectorLayer(clusterSource, vectorStyle);
+                          layers.push(vectorLayer);
+                      }
                   }
-                  layers.push(vectorLayer);
+                  else{
+                      vectorLayer = c4g.maps.utils.getVectorLayer(clusterSource, vectorStyle);
+                      if (contentData.data && contentData.data.properties) {
+                          if (contentData.data.properties.popup) {
+                              vectorLayer.popup = contentData.data.properties.popup;
+                          }
+                          if (contentData.data.properties.tooltip) {
+                              vectorLayer.tooltip = contentData.data.properties.tooltip;
+                          }
+                          if (contentData.data.properties.label) {
+                              vectorLayer.label = contentData.data.properties.label;
+                          }
+                          if (contentData.data.properties.onclick_zoom) {
+                              vectorLayer.onclick_zoom = contentData.data.properties.onclick_zoom;
+                          }
+                      }
+                      layers.push(vectorLayer);
+                  }
+
                 }
 
               } else {
@@ -1094,34 +1109,32 @@ class C4gLayerController{
       jQuery.ajax({
         dataType: self.mapController.data.jsonp ? "jsonp" : "json",
         url: self.proxy.api_layercontent_url + '/' + self.arrLayers[itemUid].id,
-        done: function (data) {
-          var j,
-            newLocationStyles;
+      }).done(function(data){
+          let j,
+              newLocationStyles;
 
           if (data.length > 0) {
-            newLocationStyles = [];
+              newLocationStyles = [];
 
-            for (j = 0; j < data.length; j += 1) {
+              for (j = 0; j < data.length; j += 1) {
 
-              self.arrLayers[itemUid].content = self.arrLayers[itemUid].content || [];
+                  self.arrLayers[itemUid].content = self.arrLayers[itemUid].content || [];
 
-              self.arrLayers[itemUid].content.push(data[j]);
-              newLocationStyles.push(data[j].locationStyle);
+                  self.arrLayers[itemUid].content.push(data[j]);
+                  newLocationStyles.push(data[j].locationStyle);
 
-            }
-
-            self.proxy.checkLocationStyles({
-              done: function () {
-                // @TODO: check this!
-                self.loadLayerContent(itemUid);
               }
-            });
+
+              self.proxy.checkLocationStyles({
+                  done: function () {
+                      // @TODO: check this!
+                      self.loadLayerContent(itemUid);
+                  }
+              });
 
           }
-        },
-        always: function () {
+      }).always(function () {
           self.mapController.spinner.hide();
-        }
       });
       //}
 
@@ -1188,6 +1201,18 @@ class C4gLayerController{
     // hooks
     c4g.maps.utils.callHookFunctions(this.proxy.hook_layer_visibility, layerUid);
   } // end of "hideLayer()"
+  hideChildLayer(layerUid, childUid){
+    let layer = this.arrLayers[layerUid]
+    childUid = childUid.replace(layerUid,'');
+    let childLayer = layer.vectorLayer.getLayers().getArray()[childUid]
+    childLayer.set('visible', false);
+  }
+  showChildLayer(layerUid, childUid){
+      let layer = this.arrLayers[layerUid]
+      childUid = childUid.replace(layerUid,'');
+      let childLayer = layer.vectorLayer.getLayers().getArray()[childUid]
+      childLayer.set('visible', true);
+  }
 
   showLayer(layerUid) {
     var layer,
@@ -1236,7 +1261,7 @@ class C4gLayerController{
                 if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.proxy_fillPopup === 'object') {
                   c4g.maps.utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
                 }
-                this.setPopup(objPopup, this);
+                this.proxy.setPopup(objPopup);
               } else {
                 var self = this;
                 jQuery.ajax({
@@ -1260,7 +1285,7 @@ class C4gLayerController{
                       c4g.maps.utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
                     }
 
-                    self.setPopup(objPopup,self);
+                    self.proxy.setPopup(objPopup);
                   }
                 });
               }
@@ -1399,6 +1424,7 @@ class C4gLayerController{
 
           vectorStyle = self.proxy.locationStyleController.arrLocStyles[elementContent.locationStyle] && self.proxy.locationStyleController.arrLocStyles[elementContent.locationStyle].style;
           if(self.proxy.locationStyleController.arrLocStyles[elementContent.locationStyle] && self.proxy.locationStyleController.arrLocStyles[elementContent.locationStyle].fnStyleFunction) {
+
             vectorStyle = Function("feature","data","map",self.proxy.locationStyleController.arrLocStyles[elementContent.locationStyle].fnStyleFunction);
           }
           if (missingStyles.length > 0) {
@@ -1414,88 +1440,119 @@ class C4gLayerController{
                     unstyledFeatures[f].setStyle(self.proxy.locationStyleController.arrLocStyles[unstyledFeatures[f].get('styleId')].style);
                   }
                 }
-
-                fVectorSource = new ol.source.Vector({
-                  features: features,
-                  projection: 'EPSG:3857',
-                  format: new ol.format.GeoJSON()
-                });
-
-                fVectorLayer = c4g.maps.utils.getVectorLayer(fVectorSource, vectorStyle);
-
-                // layers.push(vectorLayer);
-                if (self.arrLayers[itemUid].fVectorLayer) {
-                  fLayerGroup = self.arrLayers[itemUid].vectorLayer;
-                  fLayers = fLayerGroup.getLayers();
-
-                  if (elementContent.data && elementContent.data.properties) {
-                    if (elementContent.data.properties.popup) {
-                      fVectorLayer.popup = elementContent.data.properties.popup;
-                    }
-                    if (elementContent.data.properties.tooltip) {
-                      fVectorLayer.tooltip = elementContent.data.properties.tooltip;
-                    }
-                    if (elementContent.data.properties.label) {
-                      fVectorLayer.label = elementContent.data.properties.label;
-                    }
-                    if (elementContent.data.properties.zoom_onclick) {
-                      fVectorLayer.zoom_onclick = elementContent.data.properties.zoom_onclick;
-                    }
+                if(true){
+                  for(let i; i < features.length(); i++){
+                    fVectorSource = new ol.source.Vector({
+                        feature: features[i],
+                        projection: 'EPSG:3857',
+                        format: new ol.format.GeoJSON()
+                    });
+                    fVectorLayer = c4g.maps.utils.getVectorLayer(fVectorSource, vectorStyle);
+                    fLayers.push(fVectorLayer);
+                    fLayerGroup.setLayers(fLayers);
                   }
-
-                  fLayers.push(fVectorLayer);
-                  fLayerGroup.setLayers(fLayers);
-                } else {
-                  if (elementContent.data && elementContent.data.properties) {
-                    if (elementContent.data.properties.popup) {
-                      fVectorLayer.popup = elementContent.data.properties.popup;
-                    }
-                    if (elementContent.data.properties.tooltip) {
-                      fVectorLayer.tooltip = elementContent.data.properties.tooltip;
-                    }
-                    if (elementContent.data.properties.label) {
-                      fVectorLayer.label = elementContent.data.properties.label;
-                    }
-                    if (elementContent.data.properties.zoom_onclick) {
-                      fVectorLayer.zoom_onclick = elementContent.data.properties.zoom_onclick;
-                    }
-                  }
-                  fLayerGroup = new ol.layer.Group({
-                    layers: [fVectorLayer]
-                  });
-                  self.arrLayers[itemUid].vectorLayer = fLayerGroup;
-                  self.mapController.map.addLayer(fLayerGroup);
                 }
+                else{
+                    fVectorSource = new ol.source.Vector({
+                        features: features,
+                        projection: 'EPSG:3857',
+                        format: new ol.format.GeoJSON()
+                    });
+
+                    fVectorLayer = c4g.maps.utils.getVectorLayer(fVectorSource, vectorStyle);
+
+                    // layers.push(vectorLayer);
+                    if (self.arrLayers[itemUid].fVectorLayer) {
+                        fLayerGroup = self.arrLayers[itemUid].vectorLayer;
+                        fLayers = fLayerGroup.getLayers();
+
+                        if (elementContent.data && elementContent.data.properties) {
+                            if (elementContent.data.properties.popup) {
+                                fVectorLayer.popup = elementContent.data.properties.popup;
+                            }
+                            if (elementContent.data.properties.tooltip) {
+                                fVectorLayer.tooltip = elementContent.data.properties.tooltip;
+                            }
+                            if (elementContent.data.properties.label) {
+                                fVectorLayer.label = elementContent.data.properties.label;
+                            }
+                            if (elementContent.data.properties.zoom_onclick) {
+                                fVectorLayer.zoom_onclick = elementContent.data.properties.zoom_onclick;
+                            }
+                        }
+
+                        fLayers.push(fVectorLayer);
+                        fLayerGroup.setLayers(fLayers);
+                    } else {
+                        if (elementContent.data && elementContent.data.properties) {
+                            if (elementContent.data.properties.popup) {
+                                fVectorLayer.popup = elementContent.data.properties.popup;
+                            }
+                            if (elementContent.data.properties.tooltip) {
+                                fVectorLayer.tooltip = elementContent.data.properties.tooltip;
+                            }
+                            if (elementContent.data.properties.label) {
+                                fVectorLayer.label = elementContent.data.properties.label;
+                            }
+                            if (elementContent.data.properties.zoom_onclick) {
+                                fVectorLayer.zoom_onclick = elementContent.data.properties.zoom_onclick;
+                            }
+                        }
+                        fLayerGroup = new ol.layer.Group({
+                            layers: [fVectorLayer]
+                        });
+                        self.arrLayers[itemUid].vectorLayer = fLayerGroup;
+                        self.mapController.map.addLayer(fLayerGroup);
+                    }
+                }
+
+
               }
             });
           } else {
-            vectorSource = new ol.source.Vector({
-              features: features,
-              projection: 'EPSG:3857',
-              format: new ol.format.GeoJSON()
-            });
+            if(true) {
+                for (let i = 0; i < features.length; i++) {
+                    vectorSource = new ol.source.Vector({
+                        projection: 'EPSG:3857',
+                        format: new ol.format.GeoJSON()
+                    });
+                    vectorSource.addFeature(features[i]);
+                    vectorLayer = c4g.maps.utils.getVectorLayer(vectorSource, vectorStyle);
+                    vectorLayer.set('GEMARKUNG',features[i].get('GEMARKUNG'))
+                    vectorLayer.set('GMK__GMN',features[i].get('GMK__GMN'))
+                    layers.push(vectorLayer);
+                }
+                vectorSource = new ol.source.Vector({
+                    features: features,
+                    projection: 'EPSG:3857',
+                    format: new ol.format.GeoJSON()
+                });
+            }
+            else{
+                vectorLayer = c4g.maps.utils.getVectorLayer(vectorSource, vectorStyle);
 
-            vectorLayer = c4g.maps.utils.getVectorLayer(vectorSource, vectorStyle);
+                if (elementContent.data && elementContent.data.properties) {
+                    if (elementContent.data.properties.popup) {
+                        vectorLayer.popup = elementContent.data.properties.popup;
+                    }
+                    if (elementContent.data.properties.tooltip) {
+                        vectorLayer.tooltip = elementContent.data.properties.tooltip;
+                    }
+                    if (elementContent.data.properties.label) {
+                        vectorLayer.label = elementContent.data.properties.label;
+                    }
+                    if (elementContent.data.properties.zoom_onclick) {
+                        vectorLayer.zoom_onclick = elementContent.data.properties.zoom_onclick;
+                    }
+                }
 
-            if (elementContent.data && elementContent.data.properties) {
-              if (elementContent.data.properties.popup) {
-                vectorLayer.popup = elementContent.data.properties.popup;
-              }
-              if (elementContent.data.properties.tooltip) {
-                vectorLayer.tooltip = elementContent.data.properties.tooltip;
-              }
-              if (elementContent.data.properties.label) {
-                vectorLayer.label = elementContent.data.properties.label;
-              }
-              if (elementContent.data.properties.zoom_onclick) {
-                vectorLayer.zoom_onclick = elementContent.data.properties.zoom_onclick;
-              }
+                layers.push(vectorLayer);
+            }
             }
 
-            layers.push(vectorLayer);
           }
 
-        } else {
+        else {
           console.warn('Format type ' + elementContent.format + ' in ol.format not found.');
         }
 
@@ -1524,7 +1581,7 @@ class C4gLayerController{
         if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.proxy_fillPopup === 'object') {
           c4g.maps.utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
         }
-        self.setPopup(objPopup,self);
+        self.proxy.setPopup(objPopup);
       } else {
         jQuery.ajax({
           dataType: "json",
@@ -1547,7 +1604,7 @@ class C4gLayerController{
               c4g.maps.utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
             }
 
-            self.setPopup(objPopup, self);
+            self.proxy.setPopup(objPopup);
           }
         });
       }

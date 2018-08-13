@@ -191,6 +191,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
           $entry,
           toggle,
           fnHandleEntryClick,
+          fnChildEntryClick,
           zoomToExtent,
           layerClass;
 
@@ -237,6 +238,21 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
 
         // c4g.maps.layers[itemUid] = layerItem;
       }; // end of "fnHandleEntryClick()"
+        fnChildEntryClick = function (event) {
+            event.preventDefault();
+            let itemUid = $(this).data('uid');
+            let parent = $(this).parent().parent().parent();
+            let childs = $(parent).children();
+            let parentUid = $(childs[1]).data('uid');
+            if($(this).hasClass(c4g.maps.constant.css.ACTIVE)){
+                self.proxy.layerController.hideChildLayer(parentUid, itemUid);
+                $(this).removeClass(c4g.maps.constant.css.ACTIVE).addClass(c4g.maps.constant.css.INACTIVE);
+            }
+            else if($(this).hasClass(c4g.maps.constant.css.INACTIVE)){
+                self.proxy.layerController.showChildLayer(parentUid, itemUid);
+                $(this).removeClass(c4g.maps.constant.css.INACTIVE).addClass(c4g.maps.constant.css.ACTIVE)
+            }
+        };
 
         zoomToExtent = function(itemUid){ //function to zoom to the extent of a map structure and its children
             var layerItem,
@@ -358,7 +374,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
 
 
                 extent = ol.extent.boundingExtent(coordinates);
-                if (extent[0] === "Infinity" || extent[0] === "-Infinity") {
+                if (extent[0] === Infinity || extent[0] === -Infinity) {
                     return
                 }
                 self.proxy.options.mapController.map.getView().fit(extent, self.proxy.options.mapController.map.getSize());
@@ -445,7 +461,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
             $entry.data('uid', uid);
             $entry.click(fnHandleEntryClick);
 
-            if (layer.visibleChilds) {
+            if (layer.visibleChilds || true) {
               toggle = document.createElement('span');
 
               if (layer.hide_child !== '1') {
@@ -472,6 +488,34 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
                 if (layer.hide_child !== '1') {
                     listItem.appendChild(childWrapper);
                 }
+                if(true){
+                    let data = layer.content[0].data;
+                    for(let i = 0; i < data.features.length; i++){
+                        let feature = data.features[i];
+                        let childListItem = options.parseAsList ? document.createElement('li') : document.createElement('div');
+                        let childItem ={};
+                        childItem.entryWrappers = childItem.entryWrappers || [];
+                        childItem.entryWrappers.push(childListItem);
+                        let childEntry = document.createElement('a');
+                        childEntry.setAttribute('href', '#');
+                        childEntry.appendChild(document.createTextNode(feature.properties.GEMARKUNG));
+                        childListItem.appendChild(childEntry);
+                        let childUid = uid + "" + i;
+
+                        let $childEntry = $(childEntry);
+                        childItem.$entries = item.$entries || [];
+                        childItem.$entries.push($entry);
+                        childWrapper.appendChild(childListItem);
+                        $childEntry.data('uid', childUid);
+                        $childEntry.click(fnChildEntryClick);
+                        if (this.proxy.activeLayerIds[uid]) {
+                            $childEntry.addClass(c4g.maps.constant.css.ACTIVE);
+                        } else {
+                            $childEntry.addClass(c4g.maps.constant.css.INACTIVE);
+                        }
+                    }
+
+                }
             }
 
             if (this.proxy.activeLayerIds[uid]) {
@@ -482,7 +526,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
 
             // [info]:  In order for this to work,
             //          the parent layers need to be
-            //          listet before their childs
+            //          listed before their childs
             if (this.layers[layer.pid]) {
               // is child-element
               pWrapper = this.layers[layer.pid].childWrappers;
