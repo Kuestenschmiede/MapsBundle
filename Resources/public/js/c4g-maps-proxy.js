@@ -99,10 +99,7 @@ class MapProxy {
         // hooks
         c4g.maps.utils.callHookFunctions(self.hook_map_zoom);
 
-        if (self.options.mapController.data.caching) {
-            var coordinate = ol.proj.toLonLat(map.getView().getCenter());
-            c4g.maps.utils.storeValue('lon', coordinate[0]);
-            c4g.maps.utils.storeValue('lat', coordinate[1]);
+        if (self.options.mapController.data.caching && map.getView().getZoom()) {
             c4g.maps.utils.storeValue('zoom', map.getView().getZoom());
         }
 
@@ -135,22 +132,19 @@ class MapProxy {
       // hooks
       c4g.maps.utils.callHookFunctions(self.hook_map_zoom);
 
-      if (self.options.mapController.data.caching) {
-          var coordinate = ol.proj.toLonLat(map.getView().getCenter());
-          c4g.maps.utils.storeValue('lon', coordinate[0]);
-          c4g.maps.utils.storeValue('lat', coordinate[1]);
+      if (self.options.mapController.data.caching && map.getView().getZoom()) {
           c4g.maps.utils.storeValue('zoom', map.getView().getZoom());
       }
 
     }); // end of "zoom-observer"
 
     map.getView().on('change:center', function(evt){
-
         if (self.options.mapController.data.caching) {
             var coordinate = ol.proj.toLonLat(map.getView().getCenter());
-            c4g.maps.utils.storeValue('lon', coordinate[0]);
-            c4g.maps.utils.storeValue('lat', coordinate[1]);
-            c4g.maps.utils.storeValue('zoom', map.getView().getZoom());
+            if (coordinate) {
+                c4g.maps.utils.storeValue('lon', coordinate[0]);
+                c4g.maps.utils.storeValue('lat', coordinate[1]);
+            }
         }
     }); // end of "center-observer"
 
