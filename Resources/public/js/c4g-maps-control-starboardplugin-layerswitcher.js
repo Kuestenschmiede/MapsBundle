@@ -488,33 +488,34 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
                 if (layer.hide_child !== '1') {
                     listItem.appendChild(childWrapper);
                 }
-                if(true){
+                if(true && layer.content[0]){
                     let data = layer.content[0].data;
-                    for(let i = 0; i < data.features.length; i++){
-                        let feature = data.features[i];
-                        let childListItem = options.parseAsList ? document.createElement('li') : document.createElement('div');
-                        let childItem ={};
-                        childItem.entryWrappers = childItem.entryWrappers || [];
-                        childItem.entryWrappers.push(childListItem);
-                        let childEntry = document.createElement('a');
-                        childEntry.setAttribute('href', '#');
-                        childEntry.appendChild(document.createTextNode(feature.properties.GEMARKUNG));
-                        childListItem.appendChild(childEntry);
-                        let childUid = uid + "" + i;
+                    if (data && data.features) {
+                        for(let i = 0; i < data.features.length; i++){
+                            let feature = data.features[i];
+                            let childListItem = options.parseAsList ? document.createElement('li') : document.createElement('div');
+                            let childItem ={};
+                            childItem.entryWrappers = childItem.entryWrappers || [];
+                            childItem.entryWrappers.push(childListItem);
+                            let childEntry = document.createElement('a');
+                            childEntry.setAttribute('href', '#');
+                            childEntry.appendChild(document.createTextNode(feature.properties.GEMARKUNG));
+                            childListItem.appendChild(childEntry);
+                            let childUid = uid + "" + i;
 
-                        let $childEntry = $(childEntry);
-                        childItem.$entries = item.$entries || [];
-                        childItem.$entries.push($entry);
-                        childWrapper.appendChild(childListItem);
-                        $childEntry.data('uid', childUid);
-                        $childEntry.click(fnChildEntryClick);
-                        if (this.proxy.activeLayerIds[uid]) {
-                            $childEntry.addClass(c4g.maps.constant.css.ACTIVE);
-                        } else {
-                            $childEntry.addClass(c4g.maps.constant.css.INACTIVE);
+                            let $childEntry = $(childEntry);
+                            childItem.$entries = item.$entries || [];
+                            childItem.$entries.push($entry);
+                            childWrapper.appendChild(childListItem);
+                            $childEntry.data('uid', childUid);
+                            $childEntry.click(fnChildEntryClick);
+                            if (this.proxy.activeLayerIds[uid]) {
+                                $childEntry.addClass(c4g.maps.constant.css.ACTIVE);
+                            } else {
+                                $childEntry.addClass(c4g.maps.constant.css.INACTIVE);
+                            }
                         }
                     }
-
                 }
             }
 

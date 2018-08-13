@@ -111,6 +111,9 @@ class C4gLocationStyle{
                                 scale: styleData.icon_scale,
                                 color: new ol.color.asArray(color)
                             });
+
+                            src:
+                        }))
                         }
                         else{
                             imageStyle = new ol.style.Icon({
