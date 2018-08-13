@@ -453,6 +453,7 @@ button.ol-zoom-position:before{
 }
 .c4g-popup-route-wrapper {
   white-space: nowrap;
+  margin-top: 8px;
 }
 .c4g-tooltip-popup {
   z-index: 80;
