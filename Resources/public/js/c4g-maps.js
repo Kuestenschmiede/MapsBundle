@@ -171,6 +171,17 @@ this.c4g.maps = this.c4g.maps || {};
             maxZoom = 19;
         }
 
+        if (mapData.caching) {
+            if ((c4g.maps.utils.getValue('lon')) && (c4g.maps.utils.getValue('lat'))) {
+                mapData.center.lon = c4g.maps.utils.getValue('lon');
+                mapData.center.lat = c4g.maps.utils.getValue('lat');
+            }
+
+            if (c4g.maps.utils.getValue('zoom')) {
+                mapData.center.zoom = c4g.maps.utils.getValue('zoom');
+            }
+        }
+
         view = new ol.View({
             // projection: ol.proj.get('EPSG:4326'),
             // center: [parseFloat(mapData.center_lon), parseFloat(mapData.center_lat)],
