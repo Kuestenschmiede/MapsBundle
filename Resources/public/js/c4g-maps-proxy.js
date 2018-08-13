@@ -98,6 +98,12 @@ class MapProxy {
 
         // hooks
         c4g.maps.utils.callHookFunctions(self.hook_map_zoom);
+
+        if (self.options.mapController.data.caching && map.getView().getZoom()) {
+            c4g.maps.utils.storeValue('zoom', map.getView().getZoom());
+        }
+
+
       }); // end of "zoom-observer"
     }); // end of "zoom-observer"
 
@@ -125,7 +131,22 @@ class MapProxy {
 
       // hooks
       c4g.maps.utils.callHookFunctions(self.hook_map_zoom);
+
+      if (self.options.mapController.data.caching && map.getView().getZoom()) {
+          c4g.maps.utils.storeValue('zoom', map.getView().getZoom());
+      }
+
     }); // end of "zoom-observer"
+
+    map.getView().on('change:center', function(evt){
+        if (self.options.mapController.data.caching) {
+            var coordinate = ol.proj.toLonLat(map.getView().getCenter());
+            if (coordinate) {
+                c4g.maps.utils.storeValue('lon', coordinate[0]);
+                c4g.maps.utils.storeValue('lat', coordinate[1]);
+            }
+        }
+    }); // end of "center-observer"
 
     // click-observer
     //
@@ -251,6 +272,7 @@ class MapProxy {
       } else if ((fFeatures && fFeatures.length === 1)) {
         feature = fFeatures[0];
       }
+
       if (self.options.mapController.controls.editor && self.options.mapController.controls.editor.isOpen()) {
         // do not show popup when editor is open
         // but call click hooks
