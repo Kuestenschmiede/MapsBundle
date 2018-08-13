@@ -10,7 +10,8 @@ class C4gLocationStyleController{
             complete = {},
             success = {},
             self = this,
-            count = 1;
+            count = 1,
+            makeAjax;
 
         if (opt_options && typeof opt_options === "object") {
             options = opt_options;
@@ -20,7 +21,7 @@ class C4gLocationStyleController{
 
         this.proxy.options.mapController.spinner.show();
 
-        var makeAjax = function(styleIds, index) {
+        makeAjax = function(styleIds, index) {
             if (index) {
                 complete[index] = false;
                 success[index] = false;
