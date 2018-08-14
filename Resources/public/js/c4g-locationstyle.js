@@ -100,53 +100,64 @@ class C4gLocationStyle{
                     break;
                  // fallthrough7
             case 'cust_icon_svg':
-                    if(styleData.givenSvgWidth =="true" && styleData.icon_scale && styleData.icon_size){
+                    if(styleData.svgSrc && styleData.icon_scale && styleData.icon_size) {
+                        let canvas = document.createElement('canvas');
+                        let ctx = canvas.getContext("2d");
+
+                        let height = (styleData.icon_size[0]*styleData.icon_scale);
+                        let width  = (styleData.icon_size[1]*styleData.icon_scale);
+
+                        if (styleData.strokewidth && styleData.strokecolor) {
+                            let strokeColor = c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.strokecolor, styleData.strokeopacity, true);
+                            let fillColor = c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.fillcolor, 50, true);
+                            // height = height+styleData.strokewidth;
+                            // width  = width+styleData.strokewidth;
+                            canvas.setAttribute("height", height);
+                            canvas.setAttribute("width", width);
+                            //canvas.setStyle('border:'+styleData.strokewidth+'px solid '+strokeColor+';');
+                            canvas.setAttribute("style", 'border:'+styleData.strokewidth+'px solid '+strokeColor+';');
+                            canvas.setAttribute("class", 'test');
+                            //ctx.fillRect(0, 0, height, width);
+                            //ctx.clearRect(styleData.strokewidth, styleData.strokewidth, (height-(2*styleData.strokewidth)), (width-(2*styleData.strokewidth)));
+                            //ctx.strokeRect((height-10), (width-10), (height-10), (width-10));
+                            //ctx.strokeRect(0, 0, height+styleData.strokewidth, width+styleData.strokewidth);
+                            //ctx.fillStyle(strokeColor);
+                            //ctx.fill();
+                        }
+
+                        let img = new Image();
+                        img.onload = function() {
+                            ctx.drawImage(img, 0, 0, height, width);
+                        }
+                        img.src = styleData.svgSrc;
 
                         if (styleData.fillcolor) {
-                            let color = c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.fillcolor, 50, true);
                             imageStyle = new ol.style.Icon({
-                                src: styleData.svgSrc,
-                                opacity: parseFloat(styleData.icon_opacity.value, 10) / 100,
-                                size:[styleData.icon_size[0],styleData.icon_size[1]],
-                                scale: styleData.icon_scale,
-                                color: new ol.color.asArray(color)
+                                //src: styleData.svgSrc,
+                                img: canvas,
+                                //opacity: parseFloat(styleData.icon_opacity.value, 10) / 100,
+                                //size: [styleData.icon_size[0], styleData.icon_size[1]],
+                                imgSize: [height, width],
+                                //scale: styleData.icon_scale,
+                                //color: new ol.color.asArray(color)
                             });
                         }
-                        else{
+                        else {
                             imageStyle = new ol.style.Icon({
-                                src: styleData.svgSrc,
-                                opacity: parseFloat(styleData.icon_opacity.value, 10) / 100,
-                                size:[styleData.icon_size[0],styleData.icon_size[1]],
-                                scale: styleData.icon_scale
+                                // anchor: [0.5, 0.5],
+                                // anchorXUnits: 'fraction',
+                                // anchorYUnits: 'fraction',
+                                //src: styleData.svgSrc,
+                                img: canvas,
+                                //opacity: parseFloat(styleData.icon_opacity.value, 10) / 100,
+                                imgSize: [styleData.icon_size[0], styleData.icon_size[1]],
+                                //size: [styleData.icon_size[0], styleData.icon_size[1]],
+                                //scale: styleData.icon_scale
                             });
                         }
                     }
-                    else if(styleData.givenSvgWidth =="none" && styleData.svgSize){
-                        let imgSizeX = 2000;
-                        let imgSizeY = parseInt(styleData.svgSize[1])/ parseInt(styleData.svgSize[0])*imgSizeX;
-                        let imgScale = (parseInt(styleData.svgSize[0]) / imgSizeX);
-                        if(styleData.fillcolor){
-                            let color = c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.fillcolor, 50, true);
-                            imageStyle = new ol.style.Icon({
-                                src: styleData.svgSrc,
-                                opacity: parseFloat(styleData.icon_opacity.value, 10) / 100,
-                                imgSize:[imgSizeX,imgSizeY],
-                                scale: imgScale,
-                                color: new ol.color.asArray(color)
-                            });
-                        }
-                        else{
-                            imageStyle = new ol.style.Icon({
-                                src: styleData.svgSrc,
-                                opacity: parseFloat(styleData.icon_opacity.value, 10) / 100,
-                                imgSize:[imgSizeX,imgSizeY],
-                                scale: imgScale
-                            });
-                        }
 
-
-                    }
-                    break;
+                break;
             case 'photo' :
                 imageStyle = new ol.style.Photo({
                     kind: styleData.photoKind,
