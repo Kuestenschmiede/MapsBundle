@@ -306,6 +306,7 @@ button.c4g-geosearch-start:before {
 .c4g-portside-content-container {
   overflow-wrap: break-word;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .c4g-portside-content-container .c4g_brick_dialog {
