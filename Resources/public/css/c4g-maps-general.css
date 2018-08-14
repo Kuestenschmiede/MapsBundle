@@ -578,6 +578,7 @@ button.c4g-measuretools-view-trigger-draw-circle:before {
  */
 .c4g-attribution-logo img {
   margin: 0 5px;
+  width: 75px;
 }
 .ol-attribution > ul {
   float: left;
