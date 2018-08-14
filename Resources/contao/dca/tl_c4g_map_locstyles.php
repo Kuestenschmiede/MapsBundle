@@ -283,7 +283,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
             'flag'                    => 1,
             'inputType'               => 'text',
             'eval'                    => array('tl_class'=>'long', 'rgxp'=>'digit', 'mandatory'=>true),
-            'sql'                     => "float(3,2) NOT NULL default '1.00'"
+            'sql'                     => "float(3,3) NOT NULL default '1.000'"
         ),
         'icon_offset' => array
         (
