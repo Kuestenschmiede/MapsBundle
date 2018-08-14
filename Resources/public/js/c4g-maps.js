@@ -255,6 +255,13 @@ this.c4g.maps = this.c4g.maps || {};
                     if (mapData.baselayer && baselayerIds.indexOf(mapData.baselayer.toString()) > -1) {
                         mapData.default_baselayer = mapData.baselayer;
                     }
+
+                    if (mapData.caching) {
+                        if (c4g.maps.utils.getValue('baselayer')) {
+                            mapData.default_baselayer = c4g.maps.utils.getValue('baselayer');
+                        }
+                    }
+
                     self.proxy.baselayerController.showBaseLayer(mapData.default_baselayer);
                 });
             }

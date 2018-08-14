@@ -102,7 +102,7 @@ class C4gLocationStyle{
             case 'cust_icon_svg':
                     if(styleData.givenSvgWidth =="true" && styleData.icon_scale && styleData.icon_size){
 
-                        if(styleData.fillcolor) {
+                        if (styleData.fillcolor) {
                             let color = c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.fillcolor, 50, true);
                             imageStyle = new ol.style.Icon({
                                 src: styleData.svgSrc,
@@ -111,9 +111,6 @@ class C4gLocationStyle{
                                 scale: styleData.icon_scale,
                                 color: new ol.color.asArray(color)
                             });
-
-                            src:
-                        }))
                         }
                         else{
                             imageStyle = new ol.style.Icon({

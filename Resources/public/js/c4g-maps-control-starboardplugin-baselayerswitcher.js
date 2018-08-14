@@ -193,6 +193,11 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
               }
           }
           itemUid = $(this).data('uid');
+
+          if (self.starboard.options.caching) {
+              c4g.maps.utils.storeValue('baselayer', itemUid);
+          }
+
             if ($(this).parent().hasClass(c4g.maps.constant.css.CLOSE)) {
                 $(this).parent().removeClass(c4g.maps.constant.css.CLOSE).addClass(c4g.maps.constant.css.OPEN);
             } else {
