@@ -492,6 +492,11 @@ class LayerService
         {
             $arrLayerData['display'] = false;
         }
+        if($objLayer->split_geojson){
+            $arrLayerData['split_geojson'] = $objLayer->split_geojson;
+            $arrLayerData['geojson_attributes'] = $objLayer->geojson_attributes;
+
+        }
 
         // hide when element is rendered in starboard tab
         if ($objLayer->hide_when_in_tab) {

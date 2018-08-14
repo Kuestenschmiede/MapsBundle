@@ -1440,77 +1440,63 @@ class C4gLayerController{
                     unstyledFeatures[f].setStyle(self.proxy.locationStyleController.arrLocStyles[unstyledFeatures[f].get('styleId')].style);
                   }
                 }
-                if(true){
-                  for(let i; i < features.length(); i++){
-                    fVectorSource = new ol.source.Vector({
-                        feature: features[i],
-                        projection: 'EPSG:3857',
-                        format: new ol.format.GeoJSON()
-                    });
-                    fVectorLayer = c4g.maps.utils.getVectorLayer(fVectorSource, vectorStyle);
-                    fLayers.push(fVectorLayer);
-                    fLayerGroup.setLayers(fLayers);
+
+                  fVectorSource = new ol.source.Vector({
+                      features: features,
+                      projection: 'EPSG:3857',
+                      format: new ol.format.GeoJSON()
+                  });
+
+                  fVectorLayer = c4g.maps.utils.getVectorLayer(fVectorSource, vectorStyle);
+
+                  // layers.push(vectorLayer);
+                  if (self.arrLayers[itemUid].fVectorLayer) {
+                      fLayerGroup = self.arrLayers[itemUid].vectorLayer;
+                      fLayers = fLayerGroup.getLayers();
+
+                      if (elementContent.data && elementContent.data.properties) {
+                          if (elementContent.data.properties.popup) {
+                              fVectorLayer.popup = elementContent.data.properties.popup;
+                          }
+                          if (elementContent.data.properties.tooltip) {
+                              fVectorLayer.tooltip = elementContent.data.properties.tooltip;
+                          }
+                          if (elementContent.data.properties.label) {
+                              fVectorLayer.label = elementContent.data.properties.label;
+                          }
+                          if (elementContent.data.properties.zoom_onclick) {
+                              fVectorLayer.zoom_onclick = elementContent.data.properties.zoom_onclick;
+                          }
+                      }
+
+                      fLayers.push(fVectorLayer);
+                      fLayerGroup.setLayers(fLayers);
+                  } else {
+                      if (elementContent.data && elementContent.data.properties) {
+                          if (elementContent.data.properties.popup) {
+                              fVectorLayer.popup = elementContent.data.properties.popup;
+                          }
+                          if (elementContent.data.properties.tooltip) {
+                              fVectorLayer.tooltip = elementContent.data.properties.tooltip;
+                          }
+                          if (elementContent.data.properties.label) {
+                              fVectorLayer.label = elementContent.data.properties.label;
+                          }
+                          if (elementContent.data.properties.zoom_onclick) {
+                              fVectorLayer.zoom_onclick = elementContent.data.properties.zoom_onclick;
+                          }
+                      }
+                      fLayerGroup = new ol.layer.Group({
+                          layers: [fVectorLayer]
+                      });
+                      self.arrLayers[itemUid].vectorLayer = fLayerGroup;
+                      self.mapController.map.addLayer(fLayerGroup);
                   }
-                }
-                else{
-                    fVectorSource = new ol.source.Vector({
-                        features: features,
-                        projection: 'EPSG:3857',
-                        format: new ol.format.GeoJSON()
-                    });
-
-                    fVectorLayer = c4g.maps.utils.getVectorLayer(fVectorSource, vectorStyle);
-
-                    // layers.push(vectorLayer);
-                    if (self.arrLayers[itemUid].fVectorLayer) {
-                        fLayerGroup = self.arrLayers[itemUid].vectorLayer;
-                        fLayers = fLayerGroup.getLayers();
-
-                        if (elementContent.data && elementContent.data.properties) {
-                            if (elementContent.data.properties.popup) {
-                                fVectorLayer.popup = elementContent.data.properties.popup;
-                            }
-                            if (elementContent.data.properties.tooltip) {
-                                fVectorLayer.tooltip = elementContent.data.properties.tooltip;
-                            }
-                            if (elementContent.data.properties.label) {
-                                fVectorLayer.label = elementContent.data.properties.label;
-                            }
-                            if (elementContent.data.properties.zoom_onclick) {
-                                fVectorLayer.zoom_onclick = elementContent.data.properties.zoom_onclick;
-                            }
-                        }
-
-                        fLayers.push(fVectorLayer);
-                        fLayerGroup.setLayers(fLayers);
-                    } else {
-                        if (elementContent.data && elementContent.data.properties) {
-                            if (elementContent.data.properties.popup) {
-                                fVectorLayer.popup = elementContent.data.properties.popup;
-                            }
-                            if (elementContent.data.properties.tooltip) {
-                                fVectorLayer.tooltip = elementContent.data.properties.tooltip;
-                            }
-                            if (elementContent.data.properties.label) {
-                                fVectorLayer.label = elementContent.data.properties.label;
-                            }
-                            if (elementContent.data.properties.zoom_onclick) {
-                                fVectorLayer.zoom_onclick = elementContent.data.properties.zoom_onclick;
-                            }
-                        }
-                        fLayerGroup = new ol.layer.Group({
-                            layers: [fVectorLayer]
-                        });
-                        self.arrLayers[itemUid].vectorLayer = fLayerGroup;
-                        self.mapController.map.addLayer(fLayerGroup);
-                    }
-                }
-
 
               }
             });
           } else {
-            if(true) {
+            if(element.split_geojson) {
                 for (let i = 0; i < features.length; i++) {
                     vectorSource = new ol.source.Vector({
                         projection: 'EPSG:3857',
@@ -1518,15 +1504,23 @@ class C4gLayerController{
                     });
                     vectorSource.addFeature(features[i]);
                     vectorLayer = c4g.maps.utils.getVectorLayer(vectorSource, vectorStyle);
-                    vectorLayer.set('GEMARKUNG',features[i].get('GEMARKUNG'))
-                    vectorLayer.set('GMK__GMN',features[i].get('GMK__GMN'))
+                    for(let j = 0; j< element.geojson_attributes.split(',').length; j++){
+                      vectorLayer.set(element.geojson_attributes.split(',')[j],features[i].get(element.geojson_attributes.split(',')[j]))
+                    }
                     layers.push(vectorLayer);
+                    if (elementContent.data.properties.popup) {
+                        vectorLayer.popup = elementContent.data.properties.popup;
+                    }
+                    if (elementContent.data.properties.tooltip) {
+                        vectorLayer.tooltip = elementContent.data.properties.tooltip;
+                    }
+                    if (elementContent.data.properties.label) {
+                        vectorLayer.label = elementContent.data.properties.label;
+                    }
+                    if (elementContent.data.properties.zoom_onclick) {
+                        vectorLayer.zoom_onclick = elementContent.data.properties.zoom_onclick;
+                    }
                 }
-                vectorSource = new ol.source.Vector({
-                    features: features,
-                    projection: 'EPSG:3857',
-                    format: new ol.format.GeoJSON()
-                });
             }
             else{
                 vectorLayer = c4g.maps.utils.getVectorLayer(vectorSource, vectorStyle);

@@ -488,7 +488,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
                 if (layer.hide_child !== '1') {
                     listItem.appendChild(childWrapper);
                 }
-                if(true && layer.content[0]){
+                if(layer.split_geojson && layer.content[0]){
                     let data = layer.content[0].data;
                     if (data && data.features) {
                         for(let i = 0; i < data.features.length; i++){
@@ -499,7 +499,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
                             childItem.entryWrappers.push(childListItem);
                             let childEntry = document.createElement('a');
                             childEntry.setAttribute('href', '#');
-                            childEntry.appendChild(document.createTextNode(feature.properties.GEMARKUNG));
+                            childEntry.appendChild(document.createTextNode(feature.properties[layer.geojson_attributes.split(',')[0]]));
                             childListItem.appendChild(childEntry);
                             let childUid = uid + "" + i;
 
@@ -509,6 +509,9 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
                             childWrapper.appendChild(childListItem);
                             $childEntry.data('uid', childUid);
                             $childEntry.click(fnChildEntryClick);
+                            if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.addChilds === 'object') {
+                                c4g.maps.utils.callHookFunctions(c4g.maps.hook.addChilds);
+                            }
                             if (this.proxy.activeLayerIds[uid]) {
                                 $childEntry.addClass(c4g.maps.constant.css.ACTIVE);
                             } else {
