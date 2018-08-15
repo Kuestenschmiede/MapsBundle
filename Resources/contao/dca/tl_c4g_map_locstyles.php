@@ -592,18 +592,9 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
 class tl_c4g_map_locstyles extends Backend
 {
 
-    /**
-     * Import CSS and script for the color picker component
-     */
     public function __construct()
     {
         parent::__construct();
-
-        if (version_compare(VERSION,'2.11','<')) {
-            $GLOBALS['TL_CSS'][] = 'plugins/mootools/rainbow.css?'. MOO_RAINBOW . '|screen';
-            $GLOBALS['TL_JAVASCRIPT'][] = 'plugins/mootools/rainbow.js?' . MOO_RAINBOW;
-        }
-
     }
 
 
