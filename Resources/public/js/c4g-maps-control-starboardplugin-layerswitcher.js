@@ -461,7 +461,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
             $entry.data('uid', uid);
             $entry.click(fnHandleEntryClick);
 
-            if (layer.visibleChilds || true) {
+            if (layer.visibleChilds || layer.split_geojson) {
               toggle = document.createElement('span');
 
               if (layer.hide_child !== '1') {
@@ -516,6 +516,10 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
                                 $childEntry.addClass(c4g.maps.constant.css.ACTIVE);
                             } else {
                                 $childEntry.addClass(c4g.maps.constant.css.INACTIVE);
+                            }
+                            if(c4g.maps.hook.starboard_layer_activate && c4g.maps.hook.starboard_layer_activate.length > 0){
+                                let paramObj = {'feature': feature, 'parentItem': childListItem, 'entry':$childEntry};
+                                c4g.maps.utils.callHookFunctions(c4g.maps.hook.starboard_layer_activate, paramObj);
                             }
                         }
                     }

@@ -368,7 +368,7 @@ class MapProxy {
         }
 
         // hooks
-        c4g.maps.utils.callHookFunctions(self.hook_map_click, clickEvent);
+        c4g.maps.utils.callHookFunctions(c4g.maps.hook.hook_map_click, clickEvent);
       }
     }); // end of "click-observer"
 
