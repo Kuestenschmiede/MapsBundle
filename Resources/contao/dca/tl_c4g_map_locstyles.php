@@ -189,7 +189,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['strokecolor'],
             'default'                 => 'ee0016',
             'inputType'               => 'text',
-            'eval'                    => array('maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'long wizard', 'mandatory'=>true ),
+            'eval'                    => array('maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'long wizard', 'mandatory'=>false ),
             'sql'                     => "varchar(6) NOT NULL default ''"
         ),
         'strokeopacity' => array
@@ -198,14 +198,14 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
             'inputType'               => 'inputUnit',
             'default'                 => '100',
             'options'                 => array('%'),
-            'eval'                    => array('rgxp'=>'prcnt', 'tl_class'=>'long', 'mandatory'=>true),
+            'eval'                    => array('rgxp'=>'prcnt', 'tl_class'=>'long', 'mandatory'=>false),
             'sql'                     => "varchar(100) NOT NULL default ''"
         ),
         'fillcolor' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['fillcolor'],
             'inputType'               => 'text',
-            'default'                 => 'ee0011',
+            'default'                 => '',
             'eval'                    => array('maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'long wizard'),
             'sql'                     => "varchar(6) NOT NULL default ''"
         ),
@@ -421,7 +421,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
         'label_outl_color' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_outl_color'],
-            'default'                 => 'ee0016',
+            'default'                 => '',
             'inputType'               => 'text',
             'eval'                    => array('maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'),
             'sql'                     => "varchar(6) NOT NULL default ''"
