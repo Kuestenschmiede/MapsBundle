@@ -34,6 +34,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['svgSize']          = array('Größe
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_scale']       = array('Icon skalieren','Sie können die Größe skalieren: 1.0 = 100%');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_offset']      = array('Positionsversatz des Icons (X/Y) in Pixel','Bei einem Versatz von "0" befindet sich die obere linke Ecke des Icons an der angegebenen Geo-Lokation. X=Positiv => nach rechts. X=negativ => nach links. Y=positiv => nach unten. Y=negativ => nach oben.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_opacity']     = array('Deckkraft des Icons','Bitte wählen Sie die Deckkraft des Icons in % aus.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['iconcolor']        = array('Farbe des Icons','Hiermit können Sie die Icon-Farbe verändern.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['photoKind']        = array('Art des Photostils','Bitte wählen Sie den Photostil für den Lokationsstil ein.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['onhover_locstyle'] = array('Lokationsstil bei Maus-Hover','Wählen Sie einen Lokationsstil aus, der eingestellt wird, während sich der Maus-Cursor über der Lokation befindet.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['style_function_js']   = array('Code für StyleFunction','Geben Sie hier Code für eine eigene StyleFunciton ein (Nur den Körper der Funktion. Rückgabe eines Ol-Styles)');

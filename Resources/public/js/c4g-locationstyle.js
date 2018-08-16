@@ -101,38 +101,38 @@ class C4gLocationStyle{
                         let ctx = canvas.getContext("2d");
                         let height = (styleData.icon_size[0]*styleData.icon_scale);
                         let width  = (styleData.icon_size[1]*styleData.icon_scale);
-                        canvas.height = height+(2.5*styleData.strokewidth.value);
-                        canvas.width  = width+(2.5*styleData.strokewidth.value);
+                        canvas.height = height+(2*styleData.strokewidth.value);
+                        canvas.width  = width+(2*styleData.strokewidth.value);
                         ctx.clearRect(0, 0, canvas.width,  canvas.height);
 
                         if (styleData.fillcolor) {
                             ctx.fillStyle = c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.fillcolor, styleData.fillopacity.value);
-                            ctx.shadowBlur = 20;
-                            ctx.shadowColor = 'black';
-                            ctx.fillRect(styleData.strokewidth.value, styleData.strokewidth.value, width,  height);
+                            ctx.fillRect(0, 0, canvas.width,  canvas.height);
                         }
 
                         if (styleData.strokewidth && styleData.strokewidth.value && styleData.strokecolor) {
                             ctx.strokeStyle = c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.strokecolor, styleData.strokeopacity.value);
                             ctx.lineWidth = styleData.strokewidth.value;
-                            ctx.translate(0.5, 0.5);
                             ctx.strokeRect(0, 0, canvas.width, canvas.height);
+                            ctx.translate(0.5, 0.5);
                         }
 
-                        if (styleData.icon_opacity.value && (styleData.icon_opacity.value > 0)) {
-                            ctx.globalAlpha = (styleData.icon_opacity.value / 100);
-                        }
+                        // if (styleData.icon_opacity.value && (styleData.icon_opacity.value > 0)) {
+                        //     ctx.globalAlpha = (styleData.icon_opacity.value / 100);
+                        // }
 
                         let img = new Image();
                         img.src = styleData.svgSrc;
                         img.zIndex = 100; //Test
+
                         img.onload = function() {
-                            ctx.drawImage(img, 0, 0, width, height);
+                            ctx.drawImage(img, styleData.strokewidth.value, styleData.strokewidth.value, width, height);
                         }
 
                         imageStyle = new ol.style.Icon({
                             img: canvas,
-                            imgSize: [canvas.width, canvas.height],
+                            imgSize: [canvas.width, canvas.height]/*,
+                            opacity: (styleData.icon_opacity.value / 100)*/
                         });
                     }
 

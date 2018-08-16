@@ -181,7 +181,9 @@ class MapProxy {
         styleFunc = layer.getStyle();
         if(typeof styleFunc === "function" && styleFunc(feature, currentZoom) && styleFunc(feature, currentZoom)['0']){
           styleCluster = styleFunc(feature, currentZoom)['0'].clone();
-          styleCluster.getImage().setScale(styleCluster.getImage().getScale()*0.7);
+          if (styleCluster && styleCluster.getImage()) {
+              styleCluster.getImage().setScale(styleCluster.getImage().getScale()*0.7);
+          }
         }
       }
 
