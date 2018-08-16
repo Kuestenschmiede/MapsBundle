@@ -764,6 +764,52 @@ this.c4g.maps.control = this.c4g.maps.control || {};
             styleIcon.scale = styleImage.getScale();
           }
           styleTriggerLabel.appendChild(styleIcon);
+        } else if (svgSrc) {
+            let styleData = locstyleArray[styleId].locStyleArr;
+            if (styleData.svgSrc && styleData.icon_scale && styleData.icon_size) {
+                let canvas = document.createElement('canvas');
+                let ctx = canvas.getContext("2d");
+                let height = (styleData.icon_size[0] * styleData.icon_scale);
+                let width = (styleData.icon_size[1] * styleData.icon_scale);
+
+                let strokewidth = 0;
+                if (styleData.strokewidth) {
+                    strokewidth = styleData.strokewidth;
+                }
+
+                canvas.height = height + (2 * strokewidth);
+                canvas.width = width + (2 * strokewidth);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                if (styleData.fillcolor) {
+                    ctx.fillStyle = c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.fillcolor, styleData.fillopacity.value);
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                }
+
+                if (strokewidth && styleData.strokecolor) {
+                    ctx.strokeStyle = c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.strokecolor, styleData.strokeopacity.value);
+                    ctx.lineWidth = strokewidth;
+                    ctx.strokeRect(0, 0, canvas.width, canvas.height);
+                    ctx.translate(0.5, 0.5);
+                }
+
+                // if (styleData.icon_opacity.value && (styleData.icon_opacity.value > 0)) {
+                //     ctx.globalAlpha = (styleData.icon_opacity.value / 100);
+                // }
+
+                let img = new Image();
+                img.src = styleData.svgSrc;
+                img.zIndex = 100;
+
+                img.onload = function () {
+                    ctx.drawImage(img, strokewidth, strokewidth, width, height);
+                }
+
+                styleIcon = canvas;
+
+                styleTriggerLabel.style.width = (width * scale) + 'px';
+                styleTriggerLabel.style.height = (height * scale) + 'px';
+            }
         } else {
           styleTriggerLabel.style.background = style.getFill().getColor();
           styleTriggerLabel.style.border = '1px solid ' + style.getStroke().getColor();
