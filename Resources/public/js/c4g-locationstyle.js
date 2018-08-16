@@ -101,16 +101,21 @@ class C4gLocationStyle{
                         let ctx = canvas.getContext("2d");
                         let height = (styleData.icon_size[0]*styleData.icon_scale);
                         let width  = (styleData.icon_size[1]*styleData.icon_scale);
-                        canvas.height = height+(2*styleData.strokewidth.value);
-                        canvas.width  = width+(2*styleData.strokewidth.value);
-                        ctx.clearRect(0, 0, canvas.width,  canvas.height);
+
+                        let strokewidth = 0;
+                        if (styleData.strokewidth) {
+                            strokewidth = styleData.strokewidth;
+                        }
+                        canvas.height = height+(2*strokewidth);
+                        canvas.width  = width+(2*strokewidth);
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
                         if (styleData.fillcolor) {
                             ctx.fillStyle = c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.fillcolor, styleData.fillopacity.value);
-                            ctx.fillRect(0, 0, canvas.width,  canvas.height);
+                            ctx.fillRect(0, 0, canvas.width, canvas.height);
                         }
 
-                        if (styleData.strokewidth && styleData.strokewidth.value && styleData.strokecolor) {
+                        if (strokewidth && styleData.strokecolor) {
                             ctx.strokeStyle = c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.strokecolor, styleData.strokeopacity.value);
                             ctx.lineWidth = styleData.strokewidth.value;
                             ctx.strokeRect(0, 0, canvas.width, canvas.height);
@@ -126,7 +131,7 @@ class C4gLocationStyle{
                         img.zIndex = 100; //Test
 
                         img.onload = function() {
-                            ctx.drawImage(img, styleData.strokewidth.value, styleData.strokewidth.value, width, height);
+                            ctx.drawImage(img, strokewidth, strokewidth, width, height);
                         }
 
                         imageStyle = new ol.style.Icon({
