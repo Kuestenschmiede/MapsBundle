@@ -1013,36 +1013,24 @@ class C4gLayerController{
 
                     //threshold: 2, //minimum element count
                     source: vectorSource
-                  });//zu bearbeiten
-                  if(true){
-                      for (let j = 0; j < features.length; j += 1) {
-                          vectorSource = new ol.source.Vector({
-                              feature: features[j],
-                              projection: 'EPSG:3857',
-                              format: new ol.format.GeoJSON()
-                          });
-                          vectorLayer = c4g.maps.utils.getVectorLayer(clusterSource, vectorStyle);
-                          layers.push(vectorLayer);
+                  });
+
+                  vectorLayer = c4g.maps.utils.getVectorLayer(clusterSource, vectorStyle);
+                  if (contentData.data && contentData.data.properties) {
+                      if (contentData.data.properties.popup) {
+                          vectorLayer.popup = contentData.data.properties.popup;
+                      }
+                      if (contentData.data.properties.tooltip) {
+                          vectorLayer.tooltip = contentData.data.properties.tooltip;
+                      }
+                      if (contentData.data.properties.label) {
+                          vectorLayer.label = contentData.data.properties.label;
+                      }
+                      if (contentData.data.properties.onclick_zoom) {
+                          vectorLayer.onclick_zoom = contentData.data.properties.onclick_zoom;
                       }
                   }
-                  else{
-                      vectorLayer = c4g.maps.utils.getVectorLayer(clusterSource, vectorStyle);
-                      if (contentData.data && contentData.data.properties) {
-                          if (contentData.data.properties.popup) {
-                              vectorLayer.popup = contentData.data.properties.popup;
-                          }
-                          if (contentData.data.properties.tooltip) {
-                              vectorLayer.tooltip = contentData.data.properties.tooltip;
-                          }
-                          if (contentData.data.properties.label) {
-                              vectorLayer.label = contentData.data.properties.label;
-                          }
-                          if (contentData.data.properties.onclick_zoom) {
-                              vectorLayer.onclick_zoom = contentData.data.properties.onclick_zoom;
-                          }
-                      }
-                      layers.push(vectorLayer);
-                  }
+                  layers.push(vectorLayer);
 
                 }
 
@@ -1523,6 +1511,11 @@ class C4gLayerController{
                 }
             }
             else{
+                vectorSource = new ol.source.Vector({
+                    features: features,
+                    projection: 'EPSG:3857',
+                    format: new ol.format.GeoJSON()
+                });
                 vectorLayer = c4g.maps.utils.getVectorLayer(vectorSource, vectorStyle);
 
                 if (elementContent.data && elementContent.data.properties) {
