@@ -88,73 +88,52 @@ class C4gLocationStyle{
             case 'cust_icon':
                     if (styleData.icon_src) {
                         imageStyle = new ol.style.Icon({
-                            //anchor: [(-1 * (styleData.icon_offset[0] || 0)), (-1 * (styleData.icon_offset[1] || 0))],
-                            //anchorXUnits: 'pixels',
-                            //anchorYUnits: 'pixels',
                             opacity: parseFloat(styleData.icon_opacity.value, 10) / 100,
-                            src: /*(self.controller.mapController.data.icon_source ? self.controller.mapController.data.icon_source : '') + */styleData.icon_src,
+                            src: styleData.icon_src,
                             size: [parseInt(styleData.icon_size[0], 10), parseInt(styleData.icon_size[1], 10)],
                             scale: parseFloat(styleData.icon_scale, 10),
                         });
                     }
                     break;
-                 // fallthrough7
             case 'cust_icon_svg':
                     if(styleData.svgSrc && styleData.icon_scale && styleData.icon_size) {
                         let canvas = document.createElement('canvas');
                         let ctx = canvas.getContext("2d");
-
                         let height = (styleData.icon_size[0]*styleData.icon_scale);
                         let width  = (styleData.icon_size[1]*styleData.icon_scale);
+                        canvas.height = height+(2.5*styleData.strokewidth.value);
+                        canvas.width  = width+(2.5*styleData.strokewidth.value);
+                        ctx.clearRect(0, 0, canvas.width,  canvas.height);
 
-                        if (styleData.strokewidth && styleData.strokecolor) {
-                            let strokeColor = c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.strokecolor, styleData.strokeopacity, true);
-                            let fillColor = c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.fillcolor, 50, true);
-                            // height = height+styleData.strokewidth;
-                            // width  = width+styleData.strokewidth;
-                            canvas.setAttribute("height", height);
-                            canvas.setAttribute("width", width);
-                            //canvas.setStyle('border:'+styleData.strokewidth+'px solid '+strokeColor+';');
-                            canvas.setAttribute("style", 'border:'+styleData.strokewidth+'px solid '+strokeColor+';');
-                            canvas.setAttribute("class", 'test');
-                            //ctx.fillRect(0, 0, height, width);
-                            //ctx.clearRect(styleData.strokewidth, styleData.strokewidth, (height-(2*styleData.strokewidth)), (width-(2*styleData.strokewidth)));
-                            //ctx.strokeRect((height-10), (width-10), (height-10), (width-10));
-                            //ctx.strokeRect(0, 0, height+styleData.strokewidth, width+styleData.strokewidth);
-                            //ctx.fillStyle(strokeColor);
-                            //ctx.fill();
+                        if (styleData.fillcolor) {
+                            ctx.fillStyle = c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.fillcolor, styleData.fillopacity.value);
+                            ctx.shadowBlur = 20;
+                            ctx.shadowColor = 'black';
+                            ctx.fillRect(styleData.strokewidth.value, styleData.strokewidth.value, width,  height);
+                        }
+
+                        if (styleData.strokewidth && styleData.strokewidth.value && styleData.strokecolor) {
+                            ctx.strokeStyle = c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.strokecolor, styleData.strokeopacity.value);
+                            ctx.lineWidth = styleData.strokewidth.value;
+                            ctx.translate(0.5, 0.5);
+                            ctx.strokeRect(0, 0, canvas.width, canvas.height);
+                        }
+
+                        if (styleData.icon_opacity.value && (styleData.icon_opacity.value > 0)) {
+                            ctx.globalAlpha = (styleData.icon_opacity.value / 100);
                         }
 
                         let img = new Image();
-                        img.onload = function() {
-                            ctx.drawImage(img, 0, 0, height, width);
-                        }
                         img.src = styleData.svgSrc;
+                        img.zIndex = 100; //Test
+                        img.onload = function() {
+                            ctx.drawImage(img, 0, 0, width, height);
+                        }
 
-                        if (styleData.fillcolor) {
-                            imageStyle = new ol.style.Icon({
-                                //src: styleData.svgSrc,
-                                img: canvas,
-                                //opacity: parseFloat(styleData.icon_opacity.value, 10) / 100,
-                                //size: [styleData.icon_size[0], styleData.icon_size[1]],
-                                imgSize: [height, width],
-                                //scale: styleData.icon_scale,
-                                //color: new ol.color.asArray(color)
-                            });
-                        }
-                        else {
-                            imageStyle = new ol.style.Icon({
-                                // anchor: [0.5, 0.5],
-                                // anchorXUnits: 'fraction',
-                                // anchorYUnits: 'fraction',
-                                //src: styleData.svgSrc,
-                                img: canvas,
-                                //opacity: parseFloat(styleData.icon_opacity.value, 10) / 100,
-                                imgSize: [styleData.icon_size[0], styleData.icon_size[1]],
-                                //size: [styleData.icon_size[0], styleData.icon_size[1]],
-                                //scale: styleData.icon_scale
-                            });
-                        }
+                        imageStyle = new ol.style.Icon({
+                            img: canvas,
+                            imgSize: [canvas.width, canvas.height],
+                        });
                     }
 
                 break;
