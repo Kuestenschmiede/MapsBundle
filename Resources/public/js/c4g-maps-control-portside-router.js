@@ -56,7 +56,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
 
       // check and load location styles via map-proxy
-      this.options.mapController.proxy.loadLocationStyles([
+      this.options.mapController.proxy.locationStyleController.loadLocationStyles([
         this.options.mapController.data.router_from_locstyle,
         this.options.mapController.data.router_to_locstyle,
         this.options.mapController.data.router_point_locstyle
@@ -139,8 +139,8 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       this.routerHintLayer = new ol.layer.Vector({
         source: this.routingHintSource,
         style: function (feature, resolution) {
-          // console.log(c4g.maps.locationStyles[self.options.mapController.data.router_point_locstyle].style);
-          return c4g.maps.locationStyles[self.options.mapController.data.router_point_locstyle].style(feature, resolution);
+          // console.log(self.proxy.locationStyleController.arrLocStyles[self.options.mapController.data.router_point_locstyle].style);
+          return (!self.options.mapController.proxy) || self.options.mapController.proxy.locationStyleController.arrLocStyles[self.options.mapController.data.router_point_locstyle].style(feature, resolution);
         }
       });
 
@@ -260,18 +260,23 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       if(self.options.mapController.map.getInteractions().getArray()['9']){
           self.options.mapController.map.getInteractions().getArray()['9'].setActive(true);
       }
+      else{
+          self.options.mapController.map.getInteractions().getArray()['8'].setActive(true)
+      }
+
 
     },
 
 
     addUserInterface: function () {
 
-      var self,
+      let self,
           routerView,
           routerViewInputWrapper,
           routerViewContentWrapper,
           routerViewContentHeadline,
           print,
+          routeProfile =[],
           routerFromLabel,
           routerOverLabel,
           routerToLabel,
@@ -317,22 +322,190 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       switchFromTo.title = c4g.maps.constant.i18n.ROUTER_SWITCH;
       this.$switchFromTo = $(switchFromTo);
 
+      buttonOver = document.createElement('button');
+      buttonOver.className = c4g.maps.constant.css.ROUTER_OVER;
+      buttonOver.title = c4g.maps.constant.i18n.ROUTER_OVER;
+      this.$buttonOver = $(buttonOver);
+
       print = document.createElement('button');
       print.className = c4g.maps.constant.css.ROUTER_PRINT;
       print.title = c4g.maps.constant.i18n.ROUTER_PRINT;
       this.$print = $(print);
-      $(print).insertBefore(document.getElementsByClassName("c4g-portside-hide")[0]);
 
-      buttonOver = document.createElement('button');
-      buttonOver.className = c4g.maps.constant.css.ROUTER_OVER;
-      buttonOver.title = c4g.maps.constant.i18n.ROUTER_OVER;
-      this.$buttonOver =$(buttonOver);
+
+
+
+      this.routerButtonBar = document.createElement('div');
+      this.routerButtonBar.className = c4g.maps.constant.css.ROUTER_BUTTONBAR;
+      this.routerButtonBar.appendChild(switchFromTo);
+      this.routerButtonBar.appendChild(buttonOver);
+      this.routerButtonBar.appendChild(print);
+
+        // $(print).insertBefore(document.getElementsByClassName("c4g-portside-hide")[0]);
+
+        if(this.options.mapController.data.router_api_selection == '2'){ //OpenRouteService
+            if(Object.keys(this.options.mapController.data.router_profiles).length == 1){//check for single profile and set this as  active routing profile
+                this.routeProfile = [];
+                this.routeProfile.active = Object.keys(this.options.mapController.data.router_profiles)[0];
+            }
+            else if(Object.keys(this.options.mapController.data.router_profiles).length > 1){ //check for multiple profiles and add profile-changer
+                this.routeProfile = document.createElement('div');
+                $(this.routeProfile).addClass(c4g.maps.constant.css.ROUTER_PROFILE_WRAPPER);
+                if(this.options.mapController.data.router_profiles['0']){ //add button for profile driving-car
+                    routeProfile.car = document.createElement('button');
+                    $(routeProfile.car).addClass(c4g.maps.constant.css.ROUTER_PROFILE_CAR);
+                    this.$routeProfileCar = $(routeProfile.car);
+                    this.routeProfile.appendChild(routeProfile.car);
+                    this.$routeProfileCar.click(function(event){
+                        self.clearSiblings(this);
+                        self.routeProfile.active = '0';
+                        self.recalculateRoute();
+                    });
+                }
+
+                if(this.options.mapController.data.router_profiles['1']) { //add button for profile driving-hgv
+                    routeProfile.hgv = document.createElement('button');
+                    $(routeProfile.hgv).addClass(c4g.maps.constant.css.ROUTER_PROFILE_HGV);
+                    this.routeProfile.appendChild(routeProfile.hgv);
+                    this.$routeProfileHgv = $(routeProfile.hgv);
+
+                    this.$routeProfileHgv.click(function(event){
+                        self.clearSiblings(this);
+                        self.routeProfile.active = '1';
+                        self.recalculateRoute();
+                    });
+                }
+                if(this.options.mapController.data.router_profiles['2']
+                    || this.options.mapController.data.router_profiles['3']
+                    || this.options.mapController.data.router_profiles['4']
+                    || this.options.mapController.data.router_profiles['5']
+                    || this.options.mapController.data.router_profiles['6']
+                    || this.options.mapController.data.router_profiles['7']){ //add button and dropdown for cycling profiles
+                    let spanBike = document.createElement('span');
+                    routeProfile.bike = document.createElement('button');
+                    routeProfile.bike.list = document.createElement('ul');
+                    this.$routeProfileBike = $(routeProfile.bike);
+                    for(let i = 2; i < 8; i++){ //iterate over all possible cycling profiles
+                        if(this.options.mapController.data.router_profiles[i]){
+                            let child = document.createElement('li');
+                            child.innerHTML = this.options.mapController.data.router_profiles[i];
+                            $(child).data('profile', [i]);
+                            $(child).click(function(event){
+                                self.childClick($(child));
+                            });
+                            if(!this.$routeProfileBike.data('profile')){ //add existing default profile to button
+                                this.$routeProfileBike.data('profile',i);
+                                $(child).addClass(c4g.maps.constant.css.ACTIVE);
+                            }
+                            routeProfile.bike.list.appendChild(child);
+                        }
+                    }
+
+                    $(routeProfile.bike).addClass(c4g.maps.constant.css.ROUTER_PROFILE_BIKE);
+
+                    if(routeProfile.bike.list.children.length == 1){ //ignore dropdown list, if only one cycling profile is enabled
+                        this.routeProfile.appendChild(routeProfile.bike);
+                        this.$routeProfileBike.click(function(event){
+                            self.clearSiblings(this);
+                            self.routeProfile.active = $(this).data('profile');
+                            self.recalculateRoute();
+                        });
+                    }
+                    else{ //append with dropdown, if multiple cycling profiles are enabled
+                        spanBike.appendChild(routeProfile.bike);
+                        spanBike.appendChild(routeProfile.bike.list);
+                        this.routeProfile.appendChild(spanBike);
+                        this.$routeProfileBike.click(function(event){
+                            self.clearSiblings($(this).parent());
+                            self.routeProfile.active = $(this).data('profile');
+                            self.recalculateRoute();
+                        });
+                    }
+                }
+                if(this.options.mapController.data.router_profiles['8']
+                    || this.options.mapController.data.router_profiles['9']){ //add button and dropdown for walking profiles
+                    let spanFoot = document.createElement('span');
+                    routeProfile.foot = document.createElement('button');
+                    routeProfile.foot.list = document.createElement('ul');
+                    this.$routeProfileFoot = $(routeProfile.foot);
+                    for(let i = 8; i < 10; i++){ //iterate over possible profiles
+                        if(this.options.mapController.data.router_profiles[i]){
+                            let child = document.createElement('li');
+                            child.innerHTML = this.options.mapController.data.router_profiles[i];
+                            $(child).data('profile', [i]);
+                            $(child).click(function(event){
+                                self.childClick($(this));
+                            });
+                            if(!this.$routeProfileFoot.data('profile')){ //add existing default profile to button
+                                this.$routeProfileFoot.data('profile',i);
+                                $(child).addClass(c4g.maps.constant.css.ACTIVE);
+                            }
+                            routeProfile.foot.list.appendChild(child);
+                        }
+                    }
+
+                    $(routeProfile.foot).addClass(c4g.maps.constant.css.ROUTER_PROFILE_FOOT);
+
+                    if(routeProfile.foot.list.children.length == 1){ //ignore dropdown list, if only one walking profile is enabled
+                        this.routeProfile.appendChild(routeProfile.foot);
+                        this.$routeProfileFoot.click(function(event){
+                            self.clearSiblings(this);
+                            self.routeProfile.active = $(this).data('profile');
+                            self.recalculateRoute();
+                        });
+                    }
+                    else{ //append with dropdown, if multiple walking profiles are enabled
+                        spanFoot.appendChild(routeProfile.foot);
+                        spanFoot.appendChild(routeProfile.foot.list);
+                        this.routeProfile.appendChild(spanFoot);
+                        this.$routeProfileFoot.click(function(event){
+                            self.clearSiblings($(this).parent());
+                            self.routeProfile.active = $(this).data('profile');
+                            self.recalculateRoute();
+                        });
+                    }
+                }
+                if(this.options.mapController.data.router_profiles['10']){ //add button for profile wheelchair
+                    routeProfile.wheelchair = document.createElement('button');
+                    $(routeProfile.wheelchair).addClass(c4g.maps.constant.css.ROUTER_PROFILE_WHEELCHAIR);
+                    this.$routeProfileWheelchair = $(routeProfile.wheelchair);
+                    this.routeProfile.appendChild(routeProfile.wheelchair);
+                    this.$routeProfileWheelchair.click(function(event){
+                        self.clearSiblings(this);
+                        self.routeProfile.active = '10';
+                        self.recalculateRoute();
+                    });
+                }
+                this.childClick = function($element){ //handle the click inside the profile dropdown
+                    self.routeProfile.active = $element.data('profile'); //activate selected profile
+                    self.clearSiblings($element);
+                    self.recalculateRoute(); //update the route
+                };
+                this.clearSiblings = function(element){ //function to adjust css-classes after changing profile
+                    let siblings = $(element).parent().children();
+                    for(let i = 0; i < siblings.length ; i++){
+                        $(siblings[i]).removeClass(c4g.maps.constant.css.ACTIVE);
+                    }
+                    $(element).addClass(c4g.maps.constant.css.ACTIVE);
+                };
+                for(let profile in this.options.mapController.data.router_profiles){ //set default value for initial routing
+                    if(this.options.mapController.data.router_profiles.hasOwnProperty(profile)){
+                        this.routeProfile.active = profile;
+                        break;
+                    }
+                }
+            }
+            else{
+                console.warn('No Router Profiles enabled')
+            }
+
+        }
+
+
 
       this.fromInputWrapper.appendChild(routerFromLabel);
       this.fromInputWrapper.appendChild(this.fromInput);
       this.fromInputWrapper.appendChild(routerFromClear);
-      this.fromInputWrapper.appendChild(buttonOver);
-      this.fromInputWrapper.appendChild(switchFromTo);
       if (buttonOver && this.options.mapController.data.router_api_selection == '0'){
           this.$buttonOver.hide();
       }
@@ -402,9 +575,9 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       });
       this.$print.click(function (event){
           event.preventDefault();
-          var routingContent = document.getElementsByClassName("c4g-router-instructions-wrapper")[0];
+          let routingContent = document.getElementsByClassName("c4g-router-instructions-wrapper")[0];
           if(!routingContent) return;
-          var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+          let WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
           WinPrint.document.write(routingContent.innerHTML);
           WinPrint.document.close();
           WinPrint.focus();
@@ -422,8 +595,11 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         }
       });
 
+      routerViewInputWrapper.appendChild(this.routerButtonBar);
+      if(this.routeProfile && this.routeProfile.children){
+          routerViewInputWrapper.appendChild(this.routeProfile);
+      }
       routerViewInputWrapper.appendChild(this.fromInputWrapper);
-
 
       this.toInputWrapper = document.createElement('div');
       this.toInputWrapper.className = c4g.maps.constant.css.ROUTER_INPUT_WRAPPER;
@@ -473,7 +649,8 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         name: 'router-view',
         triggerConfig: {
           tipLabel: c4g.maps.constant.i18n.ROUTER_VIEW_ADDRESS_INPUT,
-          className: c4g.maps.constant.css.ROUTER_VIEW_ADDRESS_INPUT
+          className: c4g.maps.constant.css.ROUTER_VIEW_ADDRESS_INPUT,
+          withHeadline: false
         },
         sectionElements: [
           {section: this.topToolbar, element: routerViewInputWrapper},
@@ -511,14 +688,51 @@ this.c4g.maps.control = this.c4g.maps.control || {};
     },
 
     getAttribution: function () {
-      var self = this,
+      let self = this,
+          attributionSearch,
+          attributionRouter,
+          attributionRouterHost,
           attributionWrapper,
           attributionHtml;
+      switch(self.options.mapController.data.router_api_selection){
+          case "0":
+              attributionRouter = '<a target="_blank" href="http://project-osrm.org/">Project OSRM</a>';
+              break;
+          case "1":
+              attributionRouter = '<a target="_blank" href="http://project-osrm.org/">Project OSRM</a>';
+              break;
+          case "2":
+              attributionRouter = '<a target="_blank" href="https://openrouteservice.org/">openrouteservice</a>';
+              break;
+      }
+      switch(self.options.mapController.data.geosearch.geosearch_engine){
+          case "1": //OSM
+              attributionSearch = '- Geocoder by <a target="_blank" href="https://nominatim.openstreetmap.org/">OpenStreetMap</a> ';
+              break;
+          case "2": //Mapquest
+              attributionSearch = '- Geocoder by <a target="_blank" href="http://www.mapquest.com/">MapQuest</a> ';
+              break;
+          case "3": //custom
+              attributionSearch = '- Nominatim-Geocoder ';
+              break;
+          case "4": //con4gis
+              attributionSearch = '- Geocoder by <a target="_blank" href="https://www.con4gis.org/kartendienste.html">con4gis</a> ';
+              break;
+      }
+        switch(self.options.mapController.data.router_api_selection){
+            case "0":
+                attributionRouterHost = '- OSRM hosting by <a target="_blank" href="http://algo2.iti.kit.edu/">KIT</a>';
+                break;
+            case "1":
+                attributionRouterHost = '- OSRM hosting by <a target="_blank" href="http://algo2.iti.kit.edu/">KIT</a>';
+                break;
+            case "2":
+                attributionRouterHost = '\'- ORS hosting by <a target="_blank" href="https://www.geog.uni-heidelberg.de/gis/heigit_en.html">HeiGIT</a>\'';
+                break;
+        }
 
       //ToDo check params
-      attributionHtml = 'Routing by <a target="_blank" href="http://project-osrm.org/">Project OSRM</a> ' +
-          '- Geocoder by <a target="_blank" href="http://www.mapquest.com/">MapQuest</a> ' + '- OSRM hosting by <a target="_blank" href="http://algo2.iti.kit.edu/">KIT</a>';
-
+      attributionHtml = attributionRouter + attributionSearch + attributionRouterHost;
       attributionWrapper = document.createElement('div');
       attributionWrapper.className = c4g.maps.constant.css.ROUTER_ATTRIBUTION_WRAPPER;
 
@@ -533,15 +747,16 @@ this.c4g.maps.control = this.c4g.maps.control || {};
     },
 
     recalculateRoute: function () {
-      var tmpFeature;
+      var tmpFeature,
+      proxy = this.options.mapController.proxy;
 
       this.locationsSource.clear();
       if (this.fromValue) {
         tmpFeature = new ol.Feature({
           geometry: this.fromValue.clone().transform('EPSG:4326', 'EPSG:3857')
         });
-        if (this.options.mapController.data.router_from_locstyle && c4g.maps.locationStyles[this.options.mapController.data.router_from_locstyle]) {
-          tmpFeature.setStyle(c4g.maps.locationStyles[this.options.mapController.data.router_from_locstyle].style);
+        if (this.options.mapController.data.router_from_locstyle && proxy.locationStyleController.arrLocStyles[this.options.mapController.data.router_from_locstyle]) {
+          tmpFeature.setStyle(proxy.locationStyleController.arrLocStyles[this.options.mapController.data.router_from_locstyle].style);
         }
         this.locationsSource.addFeature(tmpFeature);
       }
@@ -549,8 +764,8 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         tmpFeature = new ol.Feature({
           geometry: this.toValue.clone().transform('EPSG:4326', 'EPSG:3857')
         });
-        if (this.options.mapController.data.router_to_locstyle && c4g.maps.locationStyles[this.options.mapController.data.router_to_locstyle]) {
-          tmpFeature.setStyle(c4g.maps.locationStyles[this.options.mapController.data.router_to_locstyle].style);
+        if (this.options.mapController.data.router_to_locstyle && proxy.locationStyleController.arrLocStyles[this.options.mapController.data.router_to_locstyle]) {
+          tmpFeature.setStyle(proxy.locationStyleController.arrLocStyles[this.options.mapController.data.router_to_locstyle].style);
         }
         this.locationsSource.addFeature(tmpFeature);
       }
@@ -559,8 +774,8 @@ this.c4g.maps.control = this.c4g.maps.control || {};
               tmpFeature = new ol.Feature({
                   geometry: this.overValue[propt].clone().transform('EPSG:4326', 'EPSG:3857')
               });
-              if (this.options.mapController.data.router_interim_locstyle && c4g.maps.locationStyles[this.options.mapController.data.router_interim_locstyle]) {
-                  tmpFeature.setStyle(c4g.maps.locationStyles[this.options.mapController.data.router_interim_locstyle].style);
+              if (this.options.mapController.data.router_interim_locstyle && proxy.locationStyleController.arrLocStyles[this.options.mapController.data.router_interim_locstyle]) {
+                  tmpFeature.setStyle(proxy.locationStyleController.arrLocStyles[this.options.mapController.data.router_interim_locstyle].style);
               }
               this.locationsSource.addFeature(tmpFeature);
           }
@@ -595,7 +810,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
           }
 
       }
-        if (this.options.mapController.data.router_api_selection == '1'){//OSRM-API:5.x
+        if (this.options.mapController.data.router_api_selection == '1' || this.options.mapController.data.router_api_selection == '2'){//OSRM-API:5.x or ORS- API
             url = self.routingApi + '/' + fromCoord ;
 
             if(overPoint){
@@ -603,38 +818,41 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                 url +='/'+overCoord[i];
             }
             url +='/'+toCoord;
+            if(this.routeProfile && this.routeProfile.active){
+                url += '?profile='+this.routeProfile.active;
+            }
             this.spinner.show();
 
-            $.ajax({
-                'url': url,
-                'success': function (response) {
+            jQuery.ajax({
+                'url': url})
+            .done(function (response) {
                     self.response = response;
                     if (response) {
                         self.showRoute(response);
                     }
 
-                }
-            }).done(function () {
+                })
+            .always(function () {
                 self.spinner.hide();
                 self.update();
             });
 
             return '';
 
-        } else {//OSRM-API:<5
+        } else{//OSRM-API:<5
             url = self.routingApi + '?output=json&instructions=true&alt=false&loc_from=' + fromCoord + '&loc_to=' + toCoord;
             this.spinner.show();
 
-            $.ajax({
-                'url': url,
-                'success': function (response) {
+            jQuery.ajax({
+                'url': url})
+            .done(function (response) {
 
-                    if (response) {
-                        self.showRoute(response);
-                    }
-
+                if (response) {
+                    self.showRoute(response);
                 }
-            }).done(function () {
+
+            })
+            .always(function () {
                 self.spinner.hide();
                 self.update();
             });
@@ -670,7 +888,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
           this.routingAltWaySource.clear();
           mapView = this.options.mapController.map.getView();
 
-          if (this.options.mapController.data.router_api_selection == '1') {//OSRM-API:5.x
+          if (this.options.mapController.data.router_api_selection == '1' ||this.options.mapController.data.router_api_selection == '2' ) {//OSRM-API:5.x
               wayPolyline = new ol.format.Polyline();
 
               // add route
@@ -811,6 +1029,55 @@ this.c4g.maps.control = this.c4g.maps.control || {};
           }
 
           return "bundles/con4gismaps/vendor/osrm/images/" + image;
+      },
+      getInstructionIconORS: function(intType){
+        let image;
+        switch(intType){
+            case 0:
+                image = "turn-left.png";
+                break;
+            case 1:
+                image = "turn-right.png";
+                break;
+            case 2:
+                image = "sharp-left.png";
+                break;
+            case 3:
+                image = "sharp-right.png";
+                break;
+            case 4:
+                image = "slight-left.png";
+                break;
+            case 5:
+                image = "slight-right.png";
+                break;
+            case 6:
+                image = "continue.png";
+                break;
+            case 7:
+                image = "round-about.png";
+                break;
+            case 8:
+                image = "round-about.png";
+                break;
+            case 9:
+                image = "u-turn.png";
+                break;
+            case 10:
+                image = "target.png";
+                break;
+            case 11:
+                image = "head.png";
+                break;
+            case 12:
+                image = "slight-left.png";
+                break;
+            case 13:
+                image = "slight-right.png";
+                break;
+
+        }
+          return document.getElementsByTagName('base')[0].href + "bundles/con4gismaps/vendor/osrm/images/" + image;
       },
 
       getTypeText: function(strType) {
@@ -1002,7 +1269,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
               $(self.routerInstructionsWrapper).empty();
           }
 
-          routerInstructionsHeader = document.createElement('h4');
+          routerInstructionsHeader = document.createElement('div');
           routerInstructionsHeader.className = c4g.maps.constant.css.ROUTER_INSTRUCTIONS_HEADER;
 
           if (routeResponse) {
@@ -1019,7 +1286,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                   total_time = this.toHumanTime(routeResponse.routes[routeNumber].duration);
               }
 
-          else {//OSRM-API:<5
+          else if(this.options.mapController.data.router_api_selection == '0') {//OSRM-API:<5
               if (routeResponse.route_name) {
                   route_name_0 = routeResponse.route_name[0];
                   route_name_1 = routeResponse.route_name[1];
@@ -1032,8 +1299,19 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
 
           }
+          else if (this.options.mapController.data.router_api_selection == '2'){//OSR-API
+                  total_time = this.toHumanTime(routeResponse.routes[routeNumber].summary.duration);
+                  total_distance = this.toHumanDistance(routeResponse.routes[routeNumber].summary.distance);
+              }
 
-          routerInstructionsHeader.innerHTML = '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_ROUTE + '</label> <em>' + route_name_0 + ' &#8594; ' + route_name_1 + '</em><br>' + '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_DISTANCE + '</label> <em>' + total_distance + '</em><br>' + '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_TIME + '</label> <em>' + total_time + '</em><br>';
+          if(route_name_0 && route_name_1){
+              routerInstructionsHeader.innerHTML = '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_ROUTE + '</label> <em>' + route_name_0 + ' &#8594; ' + route_name_1 + '</em><br>' + '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_DISTANCE + '</label> <em>' + total_distance + '</em><br>' + '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_TIME + '</label> <em>' + total_time + '</em><br>';
+          }
+          else if(this.routeProfile.active){
+              routerInstructionsHeader.innerHTML = '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_PROFILE + '</label> <em>'+this.options.mapController.data.router_profiles[this.routeProfile.active]  + '</em><br>' + '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_DISTANCE + '</label> <em>' + total_distance + '</em><br>' + '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_TIME + '</label> <em>' + total_time + '</em><br>';
+          }
+
+
 
           self.routerInstructionsWrapper.appendChild(routerInstructionsHeader);
 
@@ -1090,7 +1368,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                   }
               }
 
-          } else {//OSRM-API:<5
+          } else if(this.options.mapController.data.router_api_selection === '0'){//OSRM-API:<5
               for (i = 0; i < routeResponse.route_instructions.length; i += 1) {
                   instr = routeResponse.route_instructions[i];
                   rowstyle = c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_ODD;
@@ -1129,6 +1407,53 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                   routerInstructionsHtml += "</tr>";
               }
           }
+          else if(this.options.mapController.data.router_api_selection === '2' ){//OpenRouteService
+              for (j = 0; j < routeResponse.routes[routeNumber].segments.length; j += 1) {
+                  for (i = 0; i < routeResponse.routes[routeNumber].segments[j].steps.length; i += 1) {
+                      instr = routeResponse.routes[routeNumber].segments[j].steps[i];
+
+                      strType = instr.type;
+
+                      rowstyle = c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_ODD;
+
+                      if (i % 2 === 0) {
+                          rowstyle = c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_EVEN;
+                      }
+
+                      rowstyle += " " + c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM;
+
+                      routerInstructionsHtml += '<tr class="' + rowstyle + '">';
+
+                      routerInstructionsHtml += '<td class="' + c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_DIRECTION + '">';
+                      routerInstructionsHtml += '<img class="' + c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_ICON + '" src="' + this.getInstructionIconORS(strType) + '" alt=""/>';
+                      routerInstructionsHtml += '</td>';
+
+                      if(instr.maneuver){
+                          routerInstructionsHtml += '<td class="' + c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_TEXT + '" data-pos="' + instr.maneuver.location + '">';
+                      }
+                      else{
+                          routerInstructionsHtml += '<td class="' + c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_TEXT + '" data-pos="' + 0 + '">';
+                      }
+
+
+                      // build route description
+
+                      routerInstructionsHtml += instr.instruction;
+
+
+                      routerInstructionsHtml += '</div>';
+                      routerInstructionsHtml += "</td>";
+
+                      routerInstructionsHtml += '<td class="' + c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_DISTANCE + '">';
+                      if (i !== routeResponse.routes[routeNumber].segments[0].steps.length - 1) {
+                          routerInstructionsHtml += this.toHumanDistance(instr.distance);
+                      }
+                      routerInstructionsHtml += "</td>";
+
+                      routerInstructionsHtml += "</tr>";
+                  }
+              }
+          }
 
 
           routerInstructionsHtml += '</table>';
@@ -1161,7 +1486,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                   self.options.mapController.map.getView().setCenter(currentCoordinates);
               }
           }
-          if(self.routingWaySource && self.options.mapController.data.router_api_selection == '1'){
+          if(self.routingWaySource && self.options.mapController.data.router_api_selection >= '1'){
               self.routingHintSource.clear();
               var coordLonLat = element.data('pos');
               var stringlonlat = coordLonLat.split(",");
@@ -1187,7 +1512,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                 self.routingHintSource.addFeature(currentHintFeature);
             }
         }
-        if (self.routingWaySource && self.routingWaySource.getFeatures() && self.options.mapController.data.router_api_selection == '1') {
+        if (self.routingWaySource && self.routingWaySource.getFeatures() && self.options.mapController.data.router_api_selection >= '1') {
             var feature = self.routingWaySource.getFeatures()[0];
             if (feature) {
                 self.routingHintSource.clear();
@@ -1259,49 +1584,49 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       url = this.geoReverseSearchApi + '?format=json&lat=' + value[1] + '&lon=' + value[0];
       this.spinner.show();
 
-      $.ajax({
-        'url': url,
-        'success': function (response) {
+      jQuery.ajax({
+        'url': url})
+          .done(function (response) {
 
-          if (response) {
-            var value = "";
-            if (response.address) {
-              if (response.address.city) {
-                value = response.address.city;
-                if (response.address.road) {
-                  value = ', ' + value;
-                }
+              if (response) {
+                  var value = "";
+                  if (response.address) {
+                      if (response.address.city) {
+                          value = response.address.city;
+                          if (response.address.road) {
+                              value = ', ' + value;
+                          }
+                      }
+                      if (response.address.town) {
+                          value = response.address.town;
+                          if (response.address.road) {
+                              value = ', ' + value;
+                          }
+                      }
+                      if (response.address.road) {
+                          if (response.address.house_number) {
+                              value = ' ' + response.address.house_number + value;
+                          }
+                          value = response.address.road + value;
+                      }
+                  }
+
+                  if (value === "") {
+                      value = response.display_name;
+                  }
+                  $input.val(value);
+
+                  if ($input.attr('name') === "routingFrom") {
+                      self.$routerFromClear.show();
+                  } else if ($input.attr('name') === "routingTo") {
+                      self.$routerToClear.show();
+                  }
+
+                  self.recalculateRoute();
               }
-              if (response.address.town) {
-                value = response.address.town;
-                if (response.address.road) {
-                  value = ', ' + value;
-                }
-              }
-              if (response.address.road) {
-                if (response.address.house_number) {
-                  value = ' ' + response.address.house_number + value;
-                }
-                value = response.address.road + value;
-              }
-            }
 
-            if (value === "") {
-              value = response.display_name;
-            }
-            $input.val(value);
-
-            if ($input.attr('name') === "routingFrom") {
-              self.$routerFromClear.show();
-            } else if ($input.attr('name') === "routingTo") {
-              self.$routerToClear.show();
-            }
-
-            self.recalculateRoute();
-          }
-
-        }
-      }).done(function () {
+          })
+      .always(function () {
         self.spinner.hide();
       });
 
@@ -1330,35 +1655,36 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
       url = self.geoSearchApi + '?format=json&limit=1&q=' + encodeURI($input.val()) + viewbox;
 
-      $.ajax({
-        'url': url,
-        'success': function (response) {
+      jQuery.ajax({
+        'url': url
+      }).done(function (response) {
 
           if (response.length > 0) {
-            if(value ==="overValue"){
-                if (!self.overValue) {
-                    self.overValue={};
-                }
-                self.overValue[self.index]=new ol.geom.Point([parseFloat(response[0].lon), parseFloat(response[0].lat)]);
-                self.$buttonOver.prop("disabled",false);
-            }
-            else{
-                self[value] = new ol.geom.Point(
-                    [parseFloat(response[0].lon), parseFloat(response[0].lat)]
-                );
-            }
+              if(value ==="overValue"){
+                  if (!self.overValue) {
+                      self.overValue={};
+                  }
+                  self.overValue[self.index]=new ol.geom.Point([parseFloat(response[0].lon), parseFloat(response[0].lat)]);
+                  self.$buttonOver.prop("disabled",false);
+              }
+              else{
+                  self[value] = new ol.geom.Point(
+                      [parseFloat(response[0].lon), parseFloat(response[0].lat)]
+                  );
+              }
           } else {
-            alert(c4g.maps.constant.i18n.ROUTER_VIEW_ALERT_ADDRESS);
-            self.clearInput($input);
-            delete self[value];
+              alert(c4g.maps.constant.i18n.ROUTER_VIEW_ALERT_ADDRESS);
+              self.clearInput($input);
+              delete self[value];
           }
 
           self.recalculateRoute();
-        },
-        'error': function () {
+      })
+      .error(function () {
           alert(c4g.maps.constant.i18n.ROUTER_VIEW_ALERT_GEOCODING);
-        }
       });
+
+
 
       return "";
 

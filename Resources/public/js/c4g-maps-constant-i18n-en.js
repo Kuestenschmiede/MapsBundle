@@ -41,11 +41,13 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
     CTRL_MEASURETOOLS: 'Toggle measuretools',
     CTRL_EXPORTTOOLS: 'Toggle exporttools',
     CTRL_INFOPAGE: 'Toggle infopage',
+    CTRL_ACCOUNT: 'Toggle account',
     CTRL_ZOOMLEVEL: 'Zoom',
     CTRL_MOUSECOORDS: 'Lon/Lat',
     CTRL_GEOSEARCH: 'Toggle geosearch',
     CTRL_START_SEARCH: 'start search',
     CTRL_OVERVIEWMAP: 'Toggle overviewmap',
+    CTRL_GEOBOOKMARKS: 'Manage favorites',
     CTRL_SIDEBOARD: 'Toggle sideboard',
     CTRL_STARBOARD: 'Toggle starboard',
     CTRL_ATTRIBUTION: 'Show attribution',
@@ -81,7 +83,7 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
     ROUTER_FROM_LABEL: 'Start',
     ROUTER_TO_LABEL: 'End',
     ROUTER_CLEAR_TITLE: 'Delete',
-    ROUTER_CLEAR_HTML: 'X',
+    ROUTER_CLEAR_HTML: '',
     ROUTER_Label_Interim: 'Interim Goals',
 
     ROUTER_SWITCH:'Switch between Start and End',
@@ -92,6 +94,7 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
     ROUTER_VIEW_LABEL_ROUTE: 'Route:',
     ROUTER_VIEW_LABEL_DISTANCE: 'Distance:',
     ROUTER_VIEW_LABEL_TIME: 'Time:',
+    ROUTER_VIEW_LABEL_PROFILE:'Profile',
 
     ROUTER_VIEW_ALERT_ADDRESS: 'Address not found.',
     ROUTER_VIEW_ALERT_GOCODING: 'No access to geocoding.',
@@ -180,8 +183,13 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
     EXPORTTOOLS: 'Exporttools',
     EXPORTTOOLS_VIEW_TRIGGER_PRINT: 'Print mapview',
 
+    GEOBOOKMARKS_PLACEHOLDER: 'Enter new caption',
+
     INFOPAGE: 'Infopage',
     INFOPAGE_VIEW_TRIGGER: 'Show informations',
+
+    ACCOUNT: 'Account',
+    ACCOUNT_VIEW_TRIGGER: 'Show account',
 
     SEARCH_NOT_FOUND: 'Location not found. Sorry... :(',
 

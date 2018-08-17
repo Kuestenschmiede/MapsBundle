@@ -47,8 +47,9 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
 
       contentWrapper = document.createElement('div');
 
-      contentHeadline = document.createElement('h4');
+      contentHeadline = document.createElement('div');
       contentHeadline.innerHTML = (this.starboard.options.baselayerSwitcherTitle || c4g.maps.constant.i18n.STARBOARD_VIEW_TRIGGER_BASELAYERSWITCHER);
+      contentHeadline.className = 'contentHeadline';
       contentWrapper.appendChild(contentHeadline);
 
       this.contentDiv = document.createElement('div');
@@ -61,11 +62,12 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
         name: 'layerswitcher',
         triggerConfig: {
           tipLabel: (this.starboard.options.baselayerSwitcherTitle || c4g.maps.constant.i18n.STARBOARD_VIEW_TRIGGER_BASELAYERSWITCHER),
-          className: c4g.maps.constant.css.STARBOARD_VIEW_TRIGGER_BASELAYERSWITCHER
+          className: c4g.maps.constant.css.STARBOARD_VIEW_TRIGGER_BASELAYERSWITCHER,
+          withHeadline: false
         },
         sectionElements: [
           {section: self.starboard.contentContainer, element: contentWrapper},
-          {section: self.starboard.bottomToolbar, element: self.starboard.viewTriggerBar}
+          {section: self.starboard.topToolbar, element: self.starboard.viewTriggerBar}
         ]
       });
     },
@@ -125,7 +127,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
       } // end of "fnDrawContent()"
 
       if (this.proxy.baselayers_loaded) {
-        fnDrawContent(this.proxy.baselayerIds);
+        fnDrawContent(this.proxy.baselayerController.baselayerIds);
       } else {
         this.proxy.hook_baselayer_loaded.push(fnDrawContent);
       }
@@ -173,39 +175,59 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
       }
 
       handleEntryClick = function (event) {
-        var itemUid,
+          event.preventDefault();
+
+          var itemUid,
             siblings,
             baselayerItem;
-        siblings = $(this).parent().siblings();
-        for(var i = 0; i< siblings.length; i++){
-            if (siblings[i] && $(siblings[i]).hasClass(c4g.maps.constant.css.OPEN)) {
-                $(siblings[i]).removeClass(c4g.maps.constant.css.OPEN).addClass(c4g.maps.constant.css.CLOSE);
-            }
-        }
-        event.preventDefault();
-        itemUid = $(this).data('uid');
-          if ($(this).parent().hasClass(c4g.maps.constant.css.CLOSE)) {
-              $(this).parent().removeClass(c4g.maps.constant.css.CLOSE).addClass(c4g.maps.constant.css.OPEN);
-          } else {
-              $(this).parent().removeClass(c4g.maps.constant.css.OPEN).addClass(c4g.maps.constant.css.CLOSE);
-          }
-
-          if (self.proxy.options.mapController.rightSlideElements) {
-              self.proxy.options.mapController.rightSlideElements.forEach(function (element) {
-                  $(element).css('right', self.starboard.container.offsetWidth);
-              });
-          }
-          $(self.starboard.element).css('right', self.starboard.container.offsetWidth);
-
-        if (self.proxy.activeBaselayerId !== itemUid) {
-          self.proxy.showBaseLayer(itemUid);
-          if(this.nextSibling){
-              var children = this.nextSibling.childNodes;
-              for(i = 0; i < children.length; i++){
-                  $(children[i].firstChild).addClass(c4g.maps.constant.css.ACTIVE).removeClass(c4g.maps.constant.css.INACTIVE);
+          siblings = $(this).parent().siblings();
+          for(var i = 0; i< siblings.length; i++){
+              if (siblings[i] && $(siblings[i]).hasClass(c4g.maps.constant.css.OPEN)) {
+                  if(self.proxy.baselayerController.arrBaselayers[self.proxy.activeBaselayerId] && self.proxy.baselayerController.arrBaselayers[self.proxy.activeBaselayerId].hasOverlays){
+                    for(let j in self.proxy.baselayerController.arrBaselayers[self.proxy.activeBaselayerId].overlayController.arrOverlays){
+                      if(self.proxy.baselayerController.arrBaselayers[self.proxy.activeBaselayerId].overlayController.arrOverlays.hasOwnProperty(j))
+                      self.proxy.options.mapController.map.removeLayer(self.proxy.baselayerController.arrBaselayers[self.proxy.activeBaselayerId].overlayController.arrOverlays[j].layer);
+                    }
+                  }
+                  $(siblings[i]).removeClass(c4g.maps.constant.css.OPEN).addClass(c4g.maps.constant.css.CLOSE);
               }
           }
-        }
+          itemUid = $(this).data('uid');
+
+          if (self.starboard.options.caching) {
+              c4g.maps.utils.storeValue('baselayer', itemUid);
+          }
+
+            if ($(this).parent().hasClass(c4g.maps.constant.css.CLOSE)) {
+                $(this).parent().removeClass(c4g.maps.constant.css.CLOSE).addClass(c4g.maps.constant.css.OPEN);
+            } else {
+                $(this).parent().removeClass(c4g.maps.constant.css.OPEN).addClass(c4g.maps.constant.css.CLOSE);
+            }
+
+            if (self.proxy.options.mapController.rightSlideElements) {
+                self.proxy.options.mapController.rightSlideElements.forEach(function (element) {
+                    $(element).css('right', self.starboard.container.offsetWidth);
+                });
+            }
+            $(self.starboard.element).css('right', self.starboard.container.offsetWidth);
+
+          if (self.proxy.activeBaselayerId !== itemUid) {
+            self.proxy.baselayerController.showBaseLayer(itemUid);
+            if(self.proxy.baselayerController.arrBaselayers[itemUid].hasOverlays){
+                for(let j in self.proxy.baselayerController.arrBaselayers[itemUid].overlayController.arrOverlays){
+                  if(self.proxy.baselayerController.arrBaselayers[itemUid].overlayController.arrOverlays.hasOwnProperty(j)){
+                      self.proxy.options.mapController.map.addLayer(self.proxy.baselayerController.arrBaselayers[itemUid].overlayController.arrOverlays[j].layer);                  }
+                }
+            }
+            $(this).addClass(c4g.maps.constant.css.ACTIVE).removeClass(c4g.maps.constant.css.INACTIVE);
+
+            // if(this.nextSibling){
+            //     var children = this.nextSibling.childNodes;
+            //     for(i = 0; i < children.length; i++){
+            //         $(children[i].firstChild).addClass(c4g.maps.constant.css.ACTIVE).removeClass(c4g.maps.constant.css.INACTIVE);
+            //     }
+            // }
+          }
       }; // end of "handleEntryClick()"
 
       handleChangeBaselayerVisibility = function (baselayerConfig) {
@@ -217,11 +239,6 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
               self.baselayers[id].$entry.addClass(c4g.maps.constant.css.ACTIVE).removeClass(c4g.maps.constant.css.INACTIVE);
             } else {
               self.baselayers[id].$entry.addClass(c4g.maps.constant.css.INACTIVE).removeClass(c4g.maps.constant.css.ACTIVE);
-              if(c4g.maps.baselayers[id].overlays){
-                  /*for(j = 0; j < c4g.maps.baselayers[id].overlays.length; j++) {
-                      self.proxy.changeOpacity(c4g.maps.baselayers[id].overlays[j].id, c4g.maps.baselayers[id].overlays[j].opacity);
-                  }*/
-              }
             }
           }
         }
@@ -239,33 +256,41 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
 
           listItem = options.parseAsList ? document.createElement('li') : document.createElement('div');
           this.baselayers[uid].entryWrapper = listItem;
-
           entry = document.createElement('a');
           entry.setAttribute('href', '#');
-          entry.appendChild(document.createTextNode(c4g.maps.baselayers[uid].name));
-          if(c4g.maps.baselayers[uid].hasOverlays){
+          entry.appendChild(document.createTextNode(self.proxy.baselayerController.arrBaselayers[uid].name));
+          $(entry).data('id', uid);
+          if(self.proxy.baselayerController.arrBaselayers[uid].hasOverlays){
 
 
-            //$(listItem).addClass(c4g.maps.constant.css.CLOSE);
-
-            childList = document.createElement('ul');
-            for(j = 0; j < c4g.maps.baselayers[uid].overlays.length; j++){
-              childItem = document.createElement('li');
+            childList = document.createElement('ul');options.parseAsList ? document.createElement('ul') : document.createElement('div');
+            for(j = 0; j < self.proxy.baselayerController.arrBaselayers[uid].overlays.length; j++){
+              childItem = options.parseAsList ? document.createElement('li') : document.createElement('div');
               childEntry = document.createElement('a');
-              $(childEntry).addClass(c4g.maps.constant.css.INACTIVE);
-              childEntry.appendChild(document.createTextNode(c4g.maps.baselayers[uid].overlays[j].name));
-              $(childEntry).data('id',c4g.maps.baselayers[uid].overlays[j].id);
+              if(self.proxy.activeBaselayerId == uid){
+                  $(childEntry).addClass(c4g.maps.constant.css.ACTIVE);
+                  let overlayId = self.proxy.baselayerController.arrBaselayers[uid].overlays[j].id;
+                  self.proxy.baselayerController.arrBaselayers[uid].overlayController.arrOverlays[overlayId].changeOpacity(self.proxy.baselayerController.arrBaselayers[uid].overlays[j].opacity);
+              }
+              else{
+                  $(childEntry).addClass(c4g.maps.constant.css.INACTIVE);
+              }
+
+              childEntry.appendChild(document.createTextNode(self.proxy.baselayerController.arrBaselayers[uid].overlays[j].name));
+              $(childEntry).data('id',self.proxy.baselayerController.arrBaselayers[uid].overlays[j].id);
+              $(childEntry).data('pid',uid);
               toggle = document.createElement('input');
+              toggle.className = 'c4g-overlay-toggle';
               toggle.setAttribute('type','range');
               toggle.setAttribute('min',0);
               toggle.setAttribute('max',100);
-              toggle.setAttribute('value',c4g.maps.baselayers[uid].overlays[j].opacity);
+              toggle.setAttribute('value',self.proxy.baselayerController.arrBaselayers[uid].overlays[j].opacity);
               toggle.setAttribute('steps',10);
               $(toggle).on('input', function (event) {
-                  self.proxy.changeOpacity($(this).parent().data('id'),this.value)
+                  self.proxy.baselayerController.arrBaselayers[$(this).parent().data('pid')].overlayController.arrOverlays[$(this).parent().data('id')].changeOpacity(this.value)
               });
 
-              self.proxy.changeOpacity(c4g.maps.baselayers[uid].overlays[j].id,c4g.maps.baselayers[uid].overlays[j].opacity);
+
 
               childEntry.appendChild(toggle);
               childItem.appendChild(childEntry);
@@ -284,10 +309,18 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
 
           if (this.starboard.options.mapController.data.default_baselayer && parseInt(uid, 10) === parseInt(this.starboard.options.mapController.data.default_baselayer, 10)) {
             $entry.addClass(c4g.maps.constant.css.ACTIVE);
-            $(listItem).addClass(c4g.maps.constant.OPEN);
+            $(listItem).addClass(c4g.maps.constant.css.OPEN);
+              if(self.proxy.baselayerController.arrBaselayers[uid].hasOverlays){
+                  for(let j in self.proxy.baselayerController.arrBaselayers[uid].overlayController.arrOverlays){
+                        if(self.proxy.baselayerController.arrBaselayers[uid].overlayController.arrOverlays.hasOwnProperty(j)){
+                            self.proxy.baselayerController.arrBaselayers[uid].overlayController.arrOverlays[j].changeOpacity(self.proxy.baselayerController.arrBaselayers[uid].overlayController.arrOverlays[j].opacity);
+                        }
+
+                  }
+              }
           } else {
             $entry.addClass(c4g.maps.constant.css.INACTIVE);
-            $(listItem).addClass(c4g.maps.constant.OPEN);
+            $(listItem).addClass(c4g.maps.constant.css.CLOSE);
           }
 
           $entry.data('uid', uid);

@@ -54,6 +54,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['nav_history']           = array('Nav
                                                                             'Creates "next" and "previous" buttons, similar to those of internet browsers.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overviewmap']           = array('Overview map',
                                                                             'Adds a button in the lower right corner of the map, which when pressed shows an overwiew map.');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geobookmarks']          = array('Geo bookmarks (beta)',
+                                                                            'So you can store position/zoom bookmarks in your browser');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['scaleline']             = array('Scale line',
                                                                             'Shows a line which demonstrates the scale of the map.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouseposition']         = array('Mouse coordinates',
@@ -71,7 +73,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard']             = array('Ena
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_open']        = array('Open starboard',
                                                                             'Initially opens the starboard.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_label']       = array('Starboard titel',
-                                                                            'Default "Starboard"');
+                                                                            '');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_div']         = array('DIV for Starboard',
                                                                             'Enter the ID of an existing DIV element if you want to put the Starboard somewhere else on your page.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_filter']      = array('Activate starboard filter',
@@ -176,8 +178,12 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overpass_url']          = array('URL
                                                                             'Default: http://overpass-api.de/api/interpreter');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router']                = array('Activate routing (Please check the <a href="https://github.com/DennisOSRM/Project-OSRM/wiki/Api-usage-policy" target="_blank">terms of use</a> for default API!)',
                                                                             'Adds an additional button to activate routing functionality.');
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_viaroute_url']   = array('Alternative URL of OSRM-API',
-                                                                            'Default: http://router.project-osrm.org/viaroute');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_viaroute_url']   = array('Alternative URL of ORS- or OSRM-API',
+                                                                            'Default: http://router.project-osrm.org/viaroute or https://api.openrouteservice.org/directions?');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_api_key']        = array('API-Key',
+                                                                            'Enter your API-key here. You can generate the key <a href="https://openrouteservice.org/sign-up/" target="_blank">here</a>.');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_profiles']       = array('Router-profiles',
+                                                                            'Enter the profiles for OpenRouteService');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_attribution']    = array('Override OSRM attribution',
                                                                             'Only override the attribution if you use another API-server, or put the attribution somewhere prominent else on your page!');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_styles_point']   = array('Location styles for POIs',
@@ -199,7 +205,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_helpurl']        = array('Hel
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['be_optimize_checkboxes_limit']      = array('Limit for optimization of large checkbox-lists',
                                                                             'Defines how much entries must be there after the checkbox-lists will be converted to chosenfields. (0 = do not convert)');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_api_selection'] = array('Selection of API-version',
-                                                                            'Old API only works with own servers');
+                                                                            'Old OSRM-API only works with own servers');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_from_locstyle'] = array('Locstyle for start-location');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_to_locstyle'] = array('Locstyle for goal-location');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_point_locstyle'] = array('Locstyle for on-the-fly hints');
@@ -209,36 +215,46 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_alternative'] = array('Altern
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium'] = array('Use cesium', 'With cesium you can transform the 2D map in a globe.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium_always']  = array('Use cesium always', 'Do you want to use cesium for every basemap? If not you can activate single maps in the basemap settings.');
 
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['caching'] = array('Remember button states', 'With this switch you can cache button states.');
+
 /**
  * References
  */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['CLICK']   = 'Single mouseclick';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['DBLCL']   = 'Mouse doubleclick';
 
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['dark']            = 'Dark Theme (modified)';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['modern']          = 'Modern Trans Theme';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['metro']           = 'Metro Theme';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['blue']            = 'Blue Theme (based on modified dark-theme)';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['red']             = 'Red Theme (based on modified dark-theme)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['default_theme']   = 'con4gis Default-Theme';
 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_mouse_nav_dragmode']['0'] = 'Off';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_mouse_nav_dragmode']['1'] = 'Rotate map';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_mouse_nav_dragmode']['2'] = 'Rotate and zoom map';
 
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_zoom_panel_button']['0'] = 'Off';
+//$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_zoom_panel_button']['0'] = 'Off';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_zoom_panel_button']['1'] = 'with World-Icon (to 0 coordinate and min zoom)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_zoom_panel_button']['2'] = 'with Home-Icon (to configured map zoom)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_zoom_panel_button']['3'] = 'with Position-Icon (to browser/device position)';
+//$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_zoom_panel_button']['4'] = 'with Favorite-Icon (select one of your favorite positions)';
 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine']['1'] = 'Nominatim by Openstreetmap (<a href="https://operations.osmfoundation.org/policies/nominatim/" target="_blank">usage policy</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine']['2'] = 'Nominatim by MapQuest (<a href="http://developer.mapquest.com/web/products/open/nominatim" target="_blank">usage policy</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine']['3'] = 'Custom';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine']['4'] = 'con4gis mapservices (<a href="https://con4gis.org/kartendienste.html" target="_blank">usage policy</a>)';
 
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_api_selection']['0'] = 'OSRM (API 4.x)';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_api_selection']['1'] = 'OSRM (API 5.x)';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_api_selection']['0'] = 'OpenSourceRoutingMachine (API 4.x)';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_api_selection']['1'] = 'OpenSourceRoutingMachine (API 5.x)';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_api_selection']['2'] = 'OpenRouteService (API 5.x)';
 
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles']['0'] = 'Car';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles']['1'] = 'Heavy Vehicle';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles']['2'] = 'Bicycle';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles']['3'] = 'Roadbike';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles']['4'] = 'Bicycle (safe)';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles']['5'] = 'Moutainbike';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles']['6'] = 'Touring bicycle';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles']['7'] = 'Electric Bicycle';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles']['8'] = 'Pedestrian';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles']['9'] = 'Hiker';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles']['10']= 'Wheelchair';
 /**
  * Buttons
  */

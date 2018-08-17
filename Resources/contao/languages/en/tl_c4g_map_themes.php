@@ -24,6 +24,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_themes']['name']    = array('Name', 'Please choo
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['buttons'] = array('Buttons', 'Choose a style for the buttons.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['custom_buttons'] = array('Custom buttons', 'Check this options, if you want to use your own CSS.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['external_buttons']  = array('Custom buttons', 'Upload your own CSS-File.');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['buttonradius']  = array('Button radius', 'Button radius in percent.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['colors']  = array('Colors', 'Choose a style for the colors.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['custom_colors'] = array('Custom colors', 'Check this options, if you want to use your own CSS.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['external_colors']  = array('Custom colors', 'Upload your own CSS-File.');
@@ -36,5 +37,9 @@ $GLOBALS['TL_LANG']['tl_c4g_map_themes']['external_icons']  = array('Custom icon
 
 // Palettes
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['theme_legend']   = 'Theme settings';
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['buttons_legend'] = 'Buttons';
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['colors_legend']  = 'Colors';
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['effects_legend'] = 'Effects';
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['icons_legend']   = 'Icons';
 
-$GLOBALS['TL_LANG']['tl_c4g_map_themes']['example_info']   = 'Examples: /files/con4gis/examples/themes';
+//$GLOBALS['TL_LANG']['tl_c4g_map_themes']['example_info']   = 'Examples: /files/con4gis/examples/themes';

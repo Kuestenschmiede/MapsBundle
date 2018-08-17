@@ -14,9 +14,10 @@
 
 $GLOBALS['con4gis']['maps']['installed'] = true;
 $GLOBALS['con4gis']['maps']['debug'] = false;
-$GLOBALS['con4gis']['maps']['ol-version'] = '4.6.5';
-$GLOBALS['con4gis']['maps']['ol-cesium-version'] = 'v1.36';
-$GLOBALS['con4gis']['maps']['olms-version'] = '2.10.4';
+$GLOBALS['con4gis']['maps']['ol-version'] = '5.1.3';
+$GLOBALS['con4gis']['maps']['ol-cesium-version'] = 'v2.2';
+$GLOBALS['con4gis']['maps']['olms-version'] = 'v3.0.1';
+$GLOBALS['con4gis']['maps']['ol-ext'] = 'v3.0.1';
 
 /**
  * Sourcetable definition
@@ -160,13 +161,14 @@ $GLOBALS['con4gis']['maps']['api']['baselayer'] = $apiBaseUrl . '/baseLayerServi
 $GLOBALS['con4gis']['maps']['api']['layer'] = $apiBaseUrl . '/layerService';
 $GLOBALS['con4gis']['maps']['api']['layercontent'] = $apiBaseUrl . '/layerContentService';
 $GLOBALS['con4gis']['maps']['api']['editor'] = $apiBaseUrl . '/editorService';
-$GLOBALS['con4gis']['maps']['api']['locstyle'] = $apiBaseUrl . '/locationStyleService';
+$GLOBALS['con4gis']['maps']['api']['locstyle'] = $apiBaseUrl . '/locationStyleService/';
 $GLOBALS['con4gis']['maps']['api']['infowindow'] = $apiBaseUrl . '/infoWindowService';
 $GLOBALS['con4gis']['maps']['api']['geosearch'] = $apiBaseUrl . '/nominatimService';
 $GLOBALS['con4gis']['maps']['api']['geosearch_reverse'] = $apiBaseUrl . '/reverseNominatimService';
 $GLOBALS['con4gis']['maps']['api']['routing'] = $apiBaseUrl . '/routingService';
-$GLOBALS['con4gis']['maps']['api']['geopicker'] = $apiBaseUrl . '/geopickerService';
+$GLOBALS['con4gis']['maps']['api']['geopicker'] = $apiBaseUrl . '/geopickerService/';
 
+$GLOBALS['con4gis']['api-caching'] = array('baseLayerService','layerService','layerContentService','editorService','locationStyleService','infoWindowService','nominatimService','reverseNominatimService','routingService');
 
 /**
  * Specialized Widgets for Text Input and Image Sizes

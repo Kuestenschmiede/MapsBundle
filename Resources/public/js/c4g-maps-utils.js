@@ -342,11 +342,14 @@ this.c4g.maps = this.c4g.maps || {};
      *
      * @return  {string}                      [description]
      */
-    getRgbaFromHexAndOpacity: function (hex, opt_opacity) {
+    getRgbaFromHexAndOpacity: function (hex, opt_opacity, opt_array) {
 
       var bigint, r, g, b, a;
 
       bigint = parseInt(hex, 16);
+      if (opt_opacity && opt_opacity.value) {
+        opt_opacity.value = parseInt(opt_opacity.value);
+      }
 
       if (opt_opacity && typeof opt_opacity !== 'number') {
         if (typeof opt_opacity === 'object' && opt_opacity.value) {
@@ -360,6 +363,9 @@ this.c4g.maps = this.c4g.maps || {};
       g = (bigint >> 8) & 255;
       b = bigint & 255;
       a = opt_opacity ? (opt_opacity / 100) : 1;
+      if(opt_array){
+        return [r,g,b,a];
+      }
 
       return "rgba(" + r + "," + g + "," + b + "," + a + ")";
     },
@@ -423,7 +429,7 @@ this.c4g.maps = this.c4g.maps || {};
      *
      * @return  {array<string>|number}                                       [description]
      */
-    measureGeometry: function (geometry, opt_forceLineMeasure) {
+    measureGeometry: function (geometry, opt_forceLineMeasure, opt_forceSurfaceMeasure) {
       var value,
           sphere,
           coordinates,
@@ -436,7 +442,7 @@ this.c4g.maps = this.c4g.maps || {};
         return false;
       }
 
-      sphere = new ol.Sphere(6378137);
+      //sphere = new ol.Sphere(6378137);
       result = {};
 
       if (geometry instanceof ol.geom.LineString || (geometry instanceof ol.geom.Polygon && opt_forceLineMeasure)) {
@@ -449,7 +455,7 @@ this.c4g.maps = this.c4g.maps || {};
         for (i = 0; i < coordinates.length - 1; i += 1) {
           coord1 = ol.proj.transform(coordinates[i], 'EPSG:3857', 'EPSG:4326');
           coord2 = ol.proj.transform(coordinates[i + 1], 'EPSG:3857', 'EPSG:4326');
-          value += sphere.haversineDistance(coord1, coord2);
+          value += ol.sphere.getDistance(coord1, coord2, 6378137);
         }
         result.rawValue = (Math.round(value * 100) / 100).toFixed(2);
         if (value > 1000) {
@@ -461,9 +467,9 @@ this.c4g.maps = this.c4g.maps || {};
         }
 
       } else if (geometry instanceof ol.geom.Polygon) {
-        geometry = /** @type {ol.geom.Polygon} */(geometry.clone().transform('EPSG:3857', 'EPSG:4326'));
-        coordinates = geometry.getLinearRing(0).getCoordinates();
-        value = Math.abs(sphere.geodesicArea(coordinates));
+        //geometry = /** @type {ol.geom.Polygon} */(geometry.clone().transform('EPSG:3857', 'EPSG:4326'));
+        //coordinates = geometry.getLinearRing(0).getCoordinates();
+        value = Math.abs(ol.sphere.getArea(geometry));
         result.rawValue = (Math.round(value * 100) / 100).toFixed(2);
         if (value > 10000) {
           result.htmlValue = (Math.round(value / 1000000 * 100) / 100).toFixed(2) +
@@ -473,14 +479,38 @@ this.c4g.maps = this.c4g.maps || {};
               ' ' + 'm<sup>2</sup>';
         }
 
+      } else if (geometry instanceof ol.geom.Circle && opt_forceSurfaceMeasure) {
+          var center = geometry.getCenter();
+          var radius = geometry.getRadius();
+          var edgeCoordinate = [center[0] + radius, center[1]];
+          //var wgs84Sphere = new ol.Sphere(6378137);
+          var value = ol.sphere.getDistance(
+              ol.proj.transform(center, 'EPSG:3857', 'EPSG:4326'),
+              ol.proj.transform(edgeCoordinate, 'EPSG:3857', 'EPSG:4326'),
+              6378137
+          );
+
+          value = Math.PI * Math.sqrt(value);
+
+          result.rawValue = (Math.round(value * 100) / 100).toFixed(2);
+          if (value > 10000) {
+              result.htmlValue = (Math.round(value / 1000000 * 100) / 100).toFixed(2) +
+                  ' ' + 'km<sup>2</sup>';
+          } else {
+              result.htmlValue = result.rawValue +
+                  ' ' + 'm<sup>2</sup>';
+          }
+
+
       } else if (geometry instanceof ol.geom.Circle) {
           var center = geometry.getCenter();
           var radius = geometry.getRadius();
           var edgeCoordinate = [center[0] + radius, center[1]];
-          var wgs84Sphere = new ol.Sphere(6378137);
-          var value = wgs84Sphere.haversineDistance(
+          //var wgs84Sphere = new ol.Sphere(6378137);
+          var value = ol.sphere.getDistance(
               ol.proj.transform(center, 'EPSG:3857', 'EPSG:4326'),
-              ol.proj.transform(edgeCoordinate, 'EPSG:3857', 'EPSG:4326')
+              ol.proj.transform(edgeCoordinate, 'EPSG:3857', 'EPSG:4326'),
+              6378137
           );
 
           result.rawValue = (Math.round(value * 100) / 100).toFixed(2);
@@ -786,6 +816,24 @@ this.c4g.maps = this.c4g.maps || {};
       return object;
     }, // end of objectToArray()
 
+    getVectorLayer(source, style) {
+        var fnStyle;
+
+        // make sure that the style is a function
+        if (typeof style === 'function') {
+            fnStyle = style;
+        } else if (style !== undefined) {
+            fnStyle = function () {
+                return style;
+            };
+        }
+
+        return new ol.layer.Vector({
+            source: source,
+            style: fnStyle
+        });
+    },// end of "getVectorLayer()"
+
     redrawMapView: function (mapController) {
       var mapData = mapController.data;
       var controlContainerTopLeft = document.createElement('div');
@@ -832,9 +880,13 @@ this.c4g.maps = this.c4g.maps || {};
         });
         mapController.map.addControl(mapController.controls.mouseposition);
       }
+    },
+    getValue: function (key) {
+        return localStorage[key] || '';
+    },
+    storeValue: function (key, value) {
+      localStorage[key] = value; // only strings
     }
-
-
   });
 
 }(jQuery, this.c4g));

@@ -26,11 +26,16 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['radius']           = array('Radius'
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['ol_icon']          = array('OpenLayers Icon','Bitte wählen Sie aus den verfügbaren OpenLayers Standardicons aus.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['ol_icon_size']     = array('Größe des Icons','Die Größe des Icons auf der Karte. Wird gegebenenfalls skaliert.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['ol_icon_offset']   = array('Positionsversatz des Icons (X/Y) in Pixel','Bei einem Versatz von "0" befindet sich die obere linke Ecke des Icons an der angegebenen Geo-Lokation. X=Positiv => nach rechts. X=negativ => nach links. Y=positiv => nach unten. Y=negativ => nach oben.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['svgSrc']           = array('SVG Quelle','Wählen Sie bitte hier das anzuzeigende SVG-Icon aus.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['givenSvgWidth']    = array('Größeneinstellung des SVG','Wählen Sie bitte hier, ob in der SVG-Datei die Größe mit "width" und "height" angegeben ist.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_src']         = array('Icon Quelle','Wählen Sie bitte hier das anzuzeigende Icon aus.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_size']        = array('Größe des Icons','Bitte geben Sie hier die Originalmaße der Bilddatei an. Wenn Sie das Icon in einer anderen Größe als das Original anzeigen wollen, nutzen Sie bitte die "Icon skalieren"-Option.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['svgSize']          = array('Größe des SVG','Geben Sie hier die Größe an, in der Sie das SVG auf der Karte darstellen wollen.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_scale']       = array('Icon skalieren','Sie können die Größe skalieren: 1.0 = 100%');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_offset']      = array('Positionsversatz des Icons (X/Y) in Pixel','Bei einem Versatz von "0" befindet sich die obere linke Ecke des Icons an der angegebenen Geo-Lokation. X=Positiv => nach rechts. X=negativ => nach links. Y=positiv => nach unten. Y=negativ => nach oben.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_opacity']     = array('Deckkraft des Icons','Bitte wählen Sie die Deckkraft des Icons in % aus.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['iconcolor']        = array('Farbe des Icons','Hiermit können Sie die Icon-Farbe verändern.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['photoKind']        = array('Art des Photostils','Bitte wählen Sie den Photostil für den Lokationsstil ein.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['onhover_locstyle'] = array('Lokationsstil bei Maus-Hover','Wählen Sie einen Lokationsstil aus, der eingestellt wird, während sich der Maus-Cursor über der Lokation befindet.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['style_function_js']   = array('Code für StyleFunction','Geben Sie hier Code für eine eigene StyleFunciton ein (Nur den Körper der Funktion. Rückgabe eines Ol-Styles)');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['line_arrows']      = array('Richtungspfeile aktivieren','Stellen Sie ein, ob bei der Darstellung von Strecken Richtungspfeile angezeigt werden sollen.');
@@ -72,8 +77,10 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['x']           = 'X';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['cross']       = 'Kreuz';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['triangle']    = 'Dreieck';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['ol_icon']     = 'OpenLayers Standardicon';
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['cust_icon']   = 'Eigenes Icon';
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['cust_icon']   = 'Eigenes Icon - Pixel';
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['cust_icon_svg']   = 'Eigenes Icon - Vektor';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['style_function']   = 'Style function';
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['photo']       = 'Photo';
 
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['marker.png']        = 'Roter Marker';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['marker-blue.png']   = 'Blauer Marker';
@@ -90,6 +97,17 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['bottom']            =
 
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['bubble']            = 'Standard';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['cloud']             = 'Sprechblase';
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['vector']            = 'Vektor';
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['pixel']             = 'Raster';
+
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['default']           = 'Standard';
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['round']             = 'Kreis';
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['anchored']          = 'Verankert';
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['folio']             = 'Portfolio';
+
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['true']              = 'Bekannte Größe';
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['none']              = 'Unbekannte Größe';
+
 
 /**
  * Buttons

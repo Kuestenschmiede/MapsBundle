@@ -95,17 +95,17 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
         '__selector__'                => array('mouse_nav','starboard','cluster_all','baselayerswitcher','layerswitcher','attribution','hover_popups','permalink','geosearch','geopicker','router', 'cesium'),
         'default'                     => '{general_legend},name,is_default,theme;'.
                                          '{baselayer_legend:hide},baselayers, default_baselayer;'.
-                                         '{locstyle_legend:hide},locstyles;'.
+                                         '{locstyle_legend:hide},locstyles, label_color;'.
                                          '{navigation_legend},zoom_panel,zoom_panel_button,zoom_panel_slider,mouse_nav,touch_nav,keyboard_nav,fullscreen;'.
                                          '{starboard_legend:hide},starboard;'.
-                                         '{information_legend},attribution,overviewmap,measuretool,graticule,scaleline,mouseposition,permalink,zoomlevel;'.
+                                         '{information_legend},attribution,overviewmap,geobookmarks,measuretool,graticule,scaleline,mouseposition,permalink,zoomlevel;'.
                                          '{geosearch_legend:hide},geosearch,router;'.
                                          '{info_legend:hide},infopage;'.
                                          '{click_legend:hide},link_newwindow,link_open_on,hover_popups;'.
                                          '{geopicker_legend:hide},is_backend_geopicker_default,geopicker;'.
                                          '{editor_legend:hide},editor,editor_styles_point,editor_styles_line,editor_styles_polygon,editor_styles_circle,editor_styles_freehand,editor_vars,editor_show_items,editor_helpurl,is_backend_editor_default;'.
                                          '{cesium_legend:hide},cesium;'.
-                                         '{expert_legend:hide},script,overpass_url,custom_div;'.
+                                         '{expert_legend:hide},script,overpass_url,custom_div,account,caching;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;'
     ),
 
@@ -123,7 +123,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
         'permalink'                   => 'permalink_get_param',
         'geosearch'                   => 'geosearch_engine,geosearch_results,geosearch_show,geosearch_div,geosearch_zoomto,geosearch_zoombounds,geosearch_animate,geosearch_markresult,geosearch_popup,geosearch_attribution,geosearch_collapsed',
         'geopicker'                   => 'geopicker_fieldx,geopicker_fieldy,geopicker_searchdiv,geopicker_attribution,geopicker_disabled,geopicker_anonymous',
-        'router'                      => 'router_api_selection,router_alternative,router_viaroute_url,router_attribution,router_from_locstyle,router_to_locstyle,router_point_locstyle,router_interim_locstyle',
+        'router'                      => 'router_api_selection,router_viaroute_url,router_attribution,router_alternative,router_from_locstyle,router_to_locstyle,router_point_locstyle,router_interim_locstyle',
         'cesium'                      => 'cesium_always',
     ),
 
@@ -221,6 +221,15 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             'sql'                     => "blob NULL"
         ),
 
+        'label_color' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['label_color'],
+            'default'                 => '',
+            'inputType'               => 'text',
+            'eval'                    => array('maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'long wizard'),
+            'sql'                     => "varchar(6) NOT NULL default ''"
+        ),
+
         'zoom_panel' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['zoom_panel'],
@@ -236,11 +245,11 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             'exclude'                 => true,
             'default'                 => true,
             'default'                 => '',
-            'inputType'               => 'radio',
-            'options'                 => array('0','1','2','3'),
-            //'eval'                    => array('submitOnChange' => true),
+            'inputType'               => 'checkbox',
+            'options'                 => array('1','2','3'),
+            'eval'                    => array('multiple' => true),
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_zoom_panel_button'],
-            'sql'                     => "char(1) NOT NULL default '0'"
+            'sql'                     => "blob NULL"
         ),
 
         'zoom_panel_slider' => array
@@ -554,6 +563,15 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             'sql'                     => "char(1) NOT NULL default ''"
         ),
 
+        'geobookmarks' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geobookmarks'],
+            'exclude'                 => true,
+            'default'                 => false,
+            'inputType'               => 'checkbox',
+            'sql'                     => "char(1) NOT NULL default ''"
+        ),
+
         'scaleline' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['scaleline'],
@@ -598,6 +616,20 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             'default'                 => false,
             'inputType'               => 'checkbox',
             'sql'                     => "char(1) NOT NULL default ''"
+        ),
+
+        'account' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['account'],
+            'exclude'                 => true,
+            'inputType'               => 'select',
+            'options_callback'        => array('tl_c4g_map_profiles', 'getModules'),
+            'eval'                    => array('includeBlankOption'=>true, 'mandatory'=>false, 'chosen'=>true, 'submitOnChange'=>false, 'tl_class'=>'w50 wizard'),
+            'wizard' => array
+            (
+                array('tl_c4g_map_profiles', 'editModule')
+            ),
+            'sql'                     => "int(10) unsigned NOT NULL default '0'"
         ),
 
         'geosearch' => array
@@ -1005,9 +1037,9 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             'exclude'                 => true,
             'inputType'               => 'select',
             'default'                 => '1',
-            'options'                 => array('0','1'),
+            'options'                 => array('0','1','2'),
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_api_selection'],
-            'eval'                    => array('tl_class'=>'clr long'),
+            'eval'                    => array('tl_class'=>'clr long','submitOnChange' => true),
             'sql'                     => "char(1) NOT NULL default '1'"
 
         ),
@@ -1019,6 +1051,14 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             'inputType'               => 'checkbox',
             'eval'                    => array('submitOnChange' => true),
             'sql'                     => "char(1) NOT NULL default ''"
+        ),
+        'router_api_key' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_api_key'],
+            'exclude'                 => true,
+            'inputType'               => 'text',
+            'eval'                    => array('rgxp'=>'url', 'decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'long'),
+            'sql'                     => "varchar(255) NOT NULL default ''"
         ),
         'router_from_locstyle' => array
         (
@@ -1072,6 +1112,17 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             ),
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
         ),
+        'router_profiles' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_profiles'],
+            'exclude'                 => true,
+            'default'                 => array('0','2','8'),
+            'inputType'               => 'select',
+            'options'                 => array('0','1','2','3','4','5','6','8','9','10'),
+            'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles'],
+            'eval'                    => array('mandatory'=>false, 'multiple'=>true,'chosen'=>true),
+            'sql'                     => "blob NULL"
+        ),
         'cesium' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium'],
@@ -1090,6 +1141,15 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             'eval'                    => array(),
             'sql'                     => "char(1) NOT NULL default ''"
         ),
+        'caching' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['caching'],
+            'exclude'                 => true,
+            'default'                 => '',
+            'inputType'               => 'checkbox',
+            'eval'                    => array('submitOnChange' => false),
+            'sql'                     => "char(1) NOT NULL default ''"
+        ),
     )
 );
 
@@ -1098,7 +1158,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
  */
 class tl_c4g_map_profiles extends Backend
 {
-
     public function set_default($varValue, DataContainer $dc)
     {
         if ($varValue) {
@@ -1167,7 +1226,7 @@ class tl_c4g_map_profiles extends Backend
         if (!$dc->id) {
             return;
         }
-        $objProfile = $this->Database->prepare("SELECT zoom_panel, geosearch_engine, be_optimize_checkboxes_limit FROM tl_c4g_map_profiles WHERE id=?")
+        $objProfile = $this->Database->prepare("SELECT zoom_panel, geosearch_engine, be_optimize_checkboxes_limit, router_api_selection FROM tl_c4g_map_profiles WHERE id=?")
         ->limit(1)
         ->execute($dc->id);
         if ($objProfile->numRows > 0) {
@@ -1190,6 +1249,16 @@ class tl_c4g_map_profiles extends Backend
                 $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['geosearch'] =
                     str_replace(',geosearch_div,',',geosearch_key,geosearch_div,',
                         $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['geosearch']);
+            }
+
+
+            if($objProfile->router_api_selection == 2){
+                $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['router'] =
+                    str_replace('router_api_selection,','router_api_selection,router_api_key,',
+                        $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['router']);
+                $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['router'] =
+                    str_replace('router_interim_locstyle','router_interim_locstyle,router_profiles',
+                        $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['router']);
             }
 
 
@@ -1264,4 +1333,35 @@ class tl_c4g_map_profiles extends Backend
         }
         return $return;
     }
+
+    /**
+     * Return the edit module wizard
+     *
+     * @param DataContainer $dc
+     *
+     * @return string
+     */
+    public function editModule(DataContainer $dc)
+    {
+        return ($dc->value < 1) ? '' : ' <a href="contao/main.php?do=themes&amp;table=tl_module&amp;act=edit&amp;id=' . $dc->value . '&amp;popup=1&amp;nb=1&amp;rt=' . REQUEST_TOKEN . '" title="' . sprintf(StringUtil::specialchars($GLOBALS['TL_LANG']['tl_content']['editalias'][1]), $dc->value) . '" onclick="Backend.openModalIframe({\'title\':\'' . StringUtil::specialchars(str_replace("'", "\\'", sprintf($GLOBALS['TL_LANG']['tl_content']['editalias'][1], $dc->value))) . '\',\'url\':this.href});return false">' . Image::getHtml('alias.svg', $GLOBALS['TL_LANG']['tl_content']['editalias'][0]) . '</a>';
+    }
+
+    /**
+     * Get all modules and return them as array
+     *
+     * @return array
+     */
+    public function getModules()
+    {
+        $arrModules = array();
+        $objModules = $this->Database->execute("SELECT m.id, m.name, t.name AS theme FROM tl_module m LEFT JOIN tl_theme t ON m.pid=t.id ORDER BY t.name, m.name");
+
+        while ($objModules->next())
+        {
+            $arrModules[$objModules->theme][$objModules->id] = $objModules->name . ' (ID ' . $objModules->id . ')';
+        }
+
+        return $arrModules;
+    }
+
 }

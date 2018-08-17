@@ -63,6 +63,7 @@ this.c4g.maps = this.c4g.maps || {};
             measuretools: {},
             exporttools: {},
             infopage: {},
+            account: {},
             starboard: {},
             layerswitcher: {},
             baselayerswitcher: {},
@@ -106,7 +107,7 @@ this.c4g.maps = this.c4g.maps || {};
         if (window.MooTools && Browser.Document) {
             Document = Browser.Document;
         }
-        this.proxy = new c4g.maps.Proxy({mapController: this});
+        this.proxy = new MapProxy({mapController: this});
 
         // check permalink
         if (mapData.permalink.enable) {
@@ -170,6 +171,17 @@ this.c4g.maps = this.c4g.maps || {};
             maxZoom = 19;
         }
 
+        if (mapData.caching) {
+            if ((c4g.maps.utils.getValue('lon')) && (c4g.maps.utils.getValue('lat'))) {
+                mapData.center.lon = c4g.maps.utils.getValue('lon');
+                mapData.center.lat = c4g.maps.utils.getValue('lat');
+            }
+
+            if (c4g.maps.utils.getValue('zoom')) {
+                mapData.center.zoom = c4g.maps.utils.getValue('zoom');
+            }
+        }
+
         view = new ol.View({
             // projection: ol.proj.get('EPSG:4326'),
             // center: [parseFloat(mapData.center_lon), parseFloat(mapData.center_lat)],
@@ -217,7 +229,7 @@ this.c4g.maps = this.c4g.maps || {};
         if (mapData.geopicker && mapData.geopicker.type === "backend") {
             if (mapData.default_baselayer) {
                 this.proxy.hook_baselayer_loaded.push(function (baselayerIds) {
-                    self.proxy.showBaseLayer(mapData.default_baselayer);
+                    self.proxy.baselayerController.showBaseLayer(mapData.default_baselayer);
                 });
             } // end inner if
             this.map = new ol.Map({
@@ -237,12 +249,20 @@ this.c4g.maps = this.c4g.maps || {};
         } else {
             // initialize Map
             //
+
             if (mapData.default_baselayer) {
                 this.proxy.hook_baselayer_loaded.push(function (baselayerIds) {
                     if (mapData.baselayer && baselayerIds.indexOf(mapData.baselayer.toString()) > -1) {
                         mapData.default_baselayer = mapData.baselayer;
                     }
-                    self.proxy.showBaseLayer(mapData.default_baselayer);
+
+                    if (mapData.caching) {
+                        if (c4g.maps.utils.getValue('baselayer')) {
+                            mapData.default_baselayer = c4g.maps.utils.getValue('baselayer');
+                        }
+                    }
+
+                    self.proxy.baselayerController.showBaseLayer(mapData.default_baselayer);
                 });
             }
             this.map = new ol.Map({
@@ -266,7 +286,7 @@ this.c4g.maps = this.c4g.maps || {};
       // set extent to make all locations visible if wanted
         if (mapData.calc_extent === "LOCATIONS") {
             displayAllLocations = function (layerIds) {
-                var layers = c4g.maps.layers,
+                var layers = self.proxy.layerController.arrLayers,
                     layer,
                     geometry,
                     coords,
@@ -386,6 +406,7 @@ this.c4g.maps = this.c4g.maps || {};
 
         // add interactions ===
         //
+
         // mouse navigation
         if (mapData.mouse_nav) {
             // drag pan and kinetic scrolling
@@ -464,6 +485,19 @@ this.c4g.maps = this.c4g.maps || {};
         // add controls ===
         this.controls = {};
         //
+
+
+        // account
+        if (mapData.account && typeof c4g.maps.control.Account === 'function') {
+            this.controls.account = new c4g.maps.control.Account({
+                tipLabel: c4g.maps.constant.i18n.CTRL_ACCOUNT,
+                target: controlContainerTopLeft,
+                caching: mapData.caching,
+                mapController: this
+            });
+            this.map.addControl(this.controls.account);
+        }
+
         // zoom-controls
         if (mapData.zoom_panel || mapData.zoom_slider) {
             this.controls.zoom = new ol.control.Zoom({
@@ -486,14 +520,15 @@ this.c4g.maps = this.c4g.maps || {};
                 this.map.addControl(this.controls.zoomslider);
             }
         }
-        if (mapData.zoom_extent && !mapData.zoom_slider) {
+        if (mapData.zoom_extent &! mapData.zoom_slider) {
             this.controls.zoom_extent = new ol.control.ZoomToExtent({
                 label: ' ',
                 tipLabel: c4g.maps.constant.i18n.CTRL_ZOOM_EXT,
                 target: controlContainerTopLeft
             });
             this.map.addControl(this.controls.zoom_extent);
-        } else if (mapData.zoom_home && !mapData.zoom_slider) {
+        }
+        if (mapData.zoom_home &! mapData.zoom_slider) {
             this.controls.zoom_home = new c4g.maps.control.Home({
                 label: ' ',
                 disableLabel: ' ',
@@ -502,7 +537,8 @@ this.c4g.maps = this.c4g.maps || {};
                 mapController: this
             });
             this.map.addControl(this.controls.zoom_home);
-        } else if (mapData.zoom_position && !mapData.zoom_slider) {
+        }
+        if (mapData.zoom_position &! mapData.zoom_slider) {
             this.controls.zoom_position = new c4g.maps.control.Position({
                 label: ' ',
                 disableLabel: ' ',
@@ -512,16 +548,21 @@ this.c4g.maps = this.c4g.maps || {};
             });
             this.map.addControl(this.controls.zoom_position);
         }
+
         // combined zoom-controls
         if (mapData.zoom_slider) {
             $('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM).addClass(c4g.maps.constant.css.OL_ZOOM_WITH_SLIDER).removeClass(c4g.maps.constant.css.OL_ZOOM);
             $('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM_IN).after($('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM_SLIDER + ' button').addClass(c4g.maps.constant.css.OL_ZOOM_SLIDER));
             $('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM_SLIDER + '.' + c4g.maps.constant.css.OL_CONTROL).remove();
-        } else if (mapData.zoom_panel && mapData.zoom_extent) {
+        }
+
+        if (mapData.zoom_panel && mapData.zoom_extent) {
             $('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM).addClass(c4g.maps.constant.css.OL_ZOOM_WITH_EXT).removeClass(c4g.maps.constant.css.OL_ZOOM);
             $('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM_IN).after($('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM_EXT + ' button').addClass(c4g.maps.constant.css.OL_ZOOM_EXT));
             $('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM_EXT + '.' + c4g.maps.constant.css.OL_CONTROL).remove();
-        } else if (mapData.zoom_panel && mapData.zoom_home) {
+        }
+
+        if (mapData.zoom_panel && mapData.zoom_home) {
             $('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM).addClass(c4g.maps.constant.css.OL_ZOOM_WITH_HOME).removeClass(c4g.maps.constant.css.OL_ZOOM);
             $('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM_IN).after($('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM_HOME + ' button').addClass(c4g.maps.constant.css.OL_ZOOM_HOME));
             removeElement = controlContainerTopLeft.querySelector('.' + c4g.maps.constant.css.OL_ZOOM_HOME + '.' + c4g.maps.constant.css.OL_UNSELECTABLE + '.button');
@@ -532,7 +573,9 @@ this.c4g.maps = this.c4g.maps || {};
                     //ie 11 error
                 }
             }
-        } else if (mapData.zoom_panel && mapData.zoom_position) {
+        }
+
+        if (mapData.zoom_panel && mapData.zoom_position) {
             $('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM).addClass(c4g.maps.constant.css.OL_ZOOM_WITH_POS).removeClass(c4g.maps.constant.css.OL_ZOOM);
             $('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM_IN).after($('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM_POS + ' button').addClass(c4g.maps.constant.css.OL_ZOOM_POS));
             $('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM_POS + '.' + c4g.maps.constant.css.OL_CONTROL).remove();
@@ -545,6 +588,7 @@ this.c4g.maps = this.c4g.maps || {};
                 }
             }
         }
+
         // fullscreen
         if (mapData.fullscreen) {
             this.controls.fullscreen = new ol.control.FullScreen({
@@ -555,11 +599,13 @@ this.c4g.maps = this.c4g.maps || {};
             });
             this.map.addControl(this.controls.fullscreen);
         }
+
         // router
         if (mapData.router_enable && typeof c4g.maps.control.Router === 'function') {
             this.controls.router = new c4g.maps.control.Router({
                 tipLabel: c4g.maps.constant.i18n.CTRL_ROUTER,
                 target: controlContainerTopLeft,
+                caching: mapData.caching,
                 mapController: this
             });
             this.map.addControl(this.controls.router);
@@ -572,6 +618,7 @@ this.c4g.maps = this.c4g.maps || {};
                 target: mapData.editor.target || controlContainerTopLeft,
                 initOpen: mapData.editor.open || false,
                 dataField: mapData.editor.data_field || false,
+                caching: mapData.caching,
                 mapController: this
             });
             this.map.addControl(this.controls.editor);
@@ -581,6 +628,7 @@ this.c4g.maps = this.c4g.maps || {};
             this.controls.measuretools = new c4g.maps.control.Measuretools({
                 tipLabel: c4g.maps.constant.i18n.CTRL_MEASURETOOLS,
                 target: controlContainerTopLeft,
+                caching: mapData.caching,
                 mapController: this
             });
             this.map.addControl(this.controls.measuretools);
@@ -590,6 +638,7 @@ this.c4g.maps = this.c4g.maps || {};
             this.controls.exporttools = new c4g.maps.control.Exporttools({
                 tipLabel: c4g.maps.constant.i18n.CTRL_EXPORTTOOLS,
                 target: controlContainerTopLeft,
+                caching: mapData.caching,
                 mapController: this
             });
             this.map.addControl(this.controls.exporttools);
@@ -600,6 +649,7 @@ this.c4g.maps = this.c4g.maps || {};
                 label: ' ',
                 disableLabel: ' ',
                 tipLabel: c4g.maps.constant.i18n.CTRL_GRID,
+                caching: mapData.caching,
                 target: controlContainerTopLeft
             });
             this.map.addControl(this.controls.graticule);
@@ -620,10 +670,12 @@ this.c4g.maps = this.c4g.maps || {};
             this.controls.infopage = new c4g.maps.control.Infopage({
                 tipLabel: c4g.maps.constant.i18n.CTRL_INFOPAGE,
                 target: controlContainerTopLeft,
+                caching: mapData.caching,
                 mapController: this
             });
             this.map.addControl(this.controls.infopage);
         }
+
         // scaleline
         if (mapData.scaleline) {
             this.controls.scaleline = new ol.control.ScaleLine({
@@ -631,6 +683,7 @@ this.c4g.maps = this.c4g.maps || {};
             });
             this.map.addControl(this.controls.scaleline);
         }
+
         // zoom-level & mouse-position
         if (mapData.zoomlevel || mapData.mouseposition) {
           // wrapper for zoom-level and mouse-position
@@ -676,9 +729,22 @@ this.c4g.maps = this.c4g.maps || {};
                 markResult: mapData.geosearch.markresult,
                 popup: mapData.geosearch.popup,
                 autopick: mapData.geopicker,
+                caching: mapData.caching,
                 results: mapData.geosearch.results
             });
             this.map.addControl(this.controls.geosearch);
+        }
+
+        // geobookmarks - not ready
+        if (mapData.geobookmarks) {
+            this.controls.geobookmarks = new ol.control.GeoBookmark({
+                label: ' ',
+                tipLabel: c4g.maps.constant.i18n.CTRL_GEOBOOKMARKS,
+                placeholder: c4g.maps.constant.i18n.GEOBOOKMARKS_PLACEHOLDER,
+                namespace: 'c4g_geobookmarks'/*,
+                className: c4g.maps.constant.css.GEOBOOKMARKS*/ //ToDo implement for own styling
+            });
+            this.map.addControl(this.controls.geobookmarks);
         }
 
         // overview-map
@@ -689,7 +755,6 @@ this.c4g.maps = this.c4g.maps || {};
             this.map.addControl(this.controls.overviewmap);
         }
 
-        starboard_label = c4g.maps.constant.i18n.CTRL_STARBOARD;
         if (mapData.starboard.label) {
             starboard_label = c4g.maps.constant.i18n.CTRL_STARBOARD.replace('Starboard', mapData.starboard.label).replace('starboard', mapData.starboard.label);
         }
@@ -699,11 +764,12 @@ this.c4g.maps = this.c4g.maps || {};
         enableStarboard = false;
       }
 
-        if (c4g.maps.control && c4g.maps.control.Starboard && typeof c4g.maps.control.Starboard === 'function' && enableStarboard) {
+      if (c4g.maps.control && c4g.maps.control.Starboard && typeof c4g.maps.control.Starboard === 'function' && enableStarboard) {
           this.controls.starboard = new c4g.maps.control.Starboard({
             create: mapData.starboard.enable || false,
             headline: mapData.starboard.label,
-            tipLabel: starboard_label,
+            tipLabel: starboard_label || false,
+            caching: mapData.caching,
             mapController: this,
             extDiv: mapData.starboard.div,
             defaultOpen: mapData.starboard.open,
@@ -777,6 +843,27 @@ this.c4g.maps = this.c4g.maps || {};
                 target: controlContainerBottomRight
             });
             this.map.addControl(this.controls.permalink);
+        }
+
+        //themeData
+        if (mapData.themeData) {
+            if (mapData.themeData['maincolor']) {
+                var mainColor = c4g.maps.utils.getRgbaFromHexAndOpacity(mapData.themeData['maincolor'], mapData.themeData['mainopacity']);
+                var fontColor = c4g.maps.utils.getRgbaFromHexAndOpacity(mapData.themeData['fontcolor'], mapData.themeData['fontopacity']);
+                var shadowColor = c4g.maps.utils.getRgbaFromHexAndOpacity(mapData.themeData['shadowcolor'], mapData.themeData['shadowopacity']);
+                domMapDiv = document.getElementById(mapData.mapDiv);
+
+                if (domMapDiv && domMapDiv.style) {
+                    domMapDiv.style.setProperty('--main-color', mainColor);
+                    domMapDiv.style.setProperty('--font-color', fontColor);
+                    domMapDiv.style.setProperty('--shadow-color', shadowColor);
+                }
+            }
+
+            if (mapData.themeData['buttonradius']) {
+                domMapDiv.style.setProperty('--button-radius-percent', mapData.themeData['buttonradius']+'%');
+                domMapDiv.style.setProperty('--button-radius-pixel', mapData.themeData['buttonradius']+'px');
+            }
         }
 
       if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.mapController_addControls === 'object') {

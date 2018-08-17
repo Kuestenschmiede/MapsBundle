@@ -35,15 +35,19 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
           contentWrapper,
           contentHeadline,
           contentHeadlineLink,
-          contentInfo;
+          contentInfo,
+          layerSwitcherTitle;
+
+      layerSwitcherTitle = this.starboard.options.layerSwitcherTitle;
 
       self = this;
 
       contentWrapper = document.createElement('div');
-      contentHeadline = document.createElement('h4');
+      contentHeadline = document.createElement('div');
+      contentHeadline.className = 'contentHeadline';
 
       if(!this.starboard.options.button) {
-          contentHeadline.innerHTML = (this.starboard.options.layerSwitcherTitle || c4g.maps.constant.i18n.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER);
+          contentHeadline.innerHTML = (layerSwitcherTitle || c4g.maps.constant.i18n.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER);
       }
       else {
           $(contentHeadline).addClass("c4g-starboard-headline");
@@ -51,21 +55,21 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
           contentHeadlineLink.onclick = function () {
               if ($(this).hasClass("c4g-active") !== false) {
                   for (var i = 0; i < self.proxy.layerIds.length; i++) {
-                      self.proxy.hideLayer(self.proxy.layerIds[i]);
+                      self.proxy.layerController.hideLayer(self.proxy.layerIds[i]);
                   }
                   $(this).removeClass("c4g-active");
                   $(this).addClass("c4g-inactive");
               }
               else {
                   for (var i = 0; i < self.proxy.layerIds.length; i++) {
-                      self.proxy.showLayer(self.proxy.layerIds[i]);
+                      self.proxy.layerController.showLayer(self.proxy.layerIds[i]);
                   }
                   $(this).removeClass("c4g-inactive");
                   $(this).addClass("c4g-active");
               }
           };
           $(contentHeadlineLink).addClass("c4g-inactive c4g-starboard-headline-link");
-          contentHeadlineLink.innerHTML = (this.starboard.options.layerSwitcherTitle || c4g.maps.constant.i18n.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER);
+          contentHeadlineLink.innerHTML = (layerSwitcherTitle || c4g.maps.constant.i18n.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER);
           contentHeadlineLink.innerHTML = contentHeadlineLink.innerHTML+' ';
           contentHeadline.appendChild(contentHeadlineLink);
       }
@@ -81,12 +85,13 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
       self.view = self.starboard.addView({
         name: 'layerswitcher',
         triggerConfig: {
-          tipLabel: (this.starboard.options.layerSwitcherTitle || c4g.maps.constant.i18n.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER),
-          className: c4g.maps.constant.css.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER
+          tipLabel: (layerSwitcherTitle || c4g.maps.constant.i18n.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER),
+          className: c4g.maps.constant.css.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER,
+          withHeadline: false
         },
         sectionElements: [
           {section: self.starboard.contentContainer, element: contentWrapper},
-          {section: self.starboard.bottomToolbar, element: self.starboard.viewTriggerBar}
+          {section: self.starboard.topToolbar, element: self.starboard.viewTriggerBar}
         ]
       });
     },
@@ -186,6 +191,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
           $entry,
           toggle,
           fnHandleEntryClick,
+          fnChildEntryClick,
           zoomToExtent,
           layerClass;
 
@@ -206,22 +212,22 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
         event.preventDefault();
 
         itemUid = $(this).data('uid');
-        layerItem = c4g.maps.layers[itemUid];
+        layerItem = self.proxy.layerController.arrLayers[itemUid];
 
         if (self.proxy.activeLayerIds[itemUid]) {
           // hide layer
-          self.proxy.hideLayer(itemUid);
+          self.proxy.layerController.hideLayer(itemUid);
           if (parseInt(layer.pid, 10) == 0) {
             // hide all childs, because clicked layer is the map itself
             for (var id in self.proxy.activeLayerIds) {
               if (self.proxy.activeLayerIds.hasOwnProperty(id)) {
-                self.proxy.hideLayer(id);
+                self.proxy.layerController.hideLayer(id);
               }
             }
           }
         } else {
           // show layer
-          self.proxy.showLayer(itemUid);
+          self.proxy.layerController.showLayer(itemUid);
           //zooom to extent
           zoomToExtent(itemUid);
 
@@ -232,6 +238,21 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
 
         // c4g.maps.layers[itemUid] = layerItem;
       }; // end of "fnHandleEntryClick()"
+        fnChildEntryClick = function (event) {
+            event.preventDefault();
+            let itemUid = $(this).data('uid');
+            let parent = $(this).parent().parent().parent();
+            let childs = $(parent).children();
+            let parentUid = $(childs[1]).data('uid');
+            if($(this).hasClass(c4g.maps.constant.css.ACTIVE)){
+                self.proxy.layerController.hideChildLayer(parentUid, itemUid);
+                $(this).removeClass(c4g.maps.constant.css.ACTIVE).addClass(c4g.maps.constant.css.INACTIVE);
+            }
+            else if($(this).hasClass(c4g.maps.constant.css.INACTIVE)){
+                self.proxy.layerController.showChildLayer(parentUid, itemUid);
+                $(this).removeClass(c4g.maps.constant.css.INACTIVE).addClass(c4g.maps.constant.css.ACTIVE)
+            }
+        };
 
         zoomToExtent = function(itemUid){ //function to zoom to the extent of a map structure and its children
             var layerItem,
@@ -245,7 +266,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
                 extent,
                 center,
                 key;
-            layerItem = c4g.maps.layers[itemUid];
+            layerItem = self.proxy.layerController.arrLayers[itemUid];
             if (layerItem && layerItem.zoom_locations === "1") {
                 if (layerItem.hasChilds) {
                     for (key in layerItem.childs) {
@@ -353,7 +374,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
 
 
                 extent = ol.extent.boundingExtent(coordinates);
-                if(extent[0]=="Infinity"||extent[0]=="-Infinity"){
+                if (extent[0] === Infinity || extent[0] === -Infinity) {
                     return
                 }
                 self.proxy.options.mapController.map.getView().fit(extent, self.proxy.options.mapController.map.getSize());
@@ -411,7 +432,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
       if (itemData && itemData.length > 0) {
         for (i = 0; i < itemData.length; i += 1) {
           uid = itemData[i];
-          layer = c4g.maps.layers[uid];
+          layer = self.proxy.layerController.arrLayers[uid];
           item = {};
           this.layers[uid] = item;
           // renderSpecial is set when a layer is rendered in its own tab
@@ -440,10 +461,10 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
             $entry.data('uid', uid);
             $entry.click(fnHandleEntryClick);
 
-            if (layer.visibleChilds) {
+            if (layer.visibleChilds || layer.split_geojson) {
               toggle = document.createElement('span');
 
-              if(layer.hide_child !='1'){
+              if (layer.hide_child !== '1') {
                   $(listItem).addClass(c4g.maps.constant.css.CLOSE);
                   $(toggle).addClass(c4g.maps.constant.css.ICON);
               }
@@ -464,8 +485,44 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
               childWrapper = options.parseAsList ? document.createElement('ul') : document.createElement('div');
               item.childWrappers = item.childWrappers || [];
               item.childWrappers.push(childWrapper);
-                if(layer.hide_child !='1') {
+                if (layer.hide_child !== '1') {
                     listItem.appendChild(childWrapper);
+                }
+                if(layer.split_geojson && layer.content[0]){
+                    let data = layer.content[0].data;
+                    if (data && data.features) {
+                        for(let i = 0; i < data.features.length; i++){
+                            let feature = data.features[i];
+                            let childListItem = options.parseAsList ? document.createElement('li') : document.createElement('div');
+                            let childItem ={};
+                            childItem.entryWrappers = childItem.entryWrappers || [];
+                            childItem.entryWrappers.push(childListItem);
+                            let childEntry = document.createElement('a');
+                            childEntry.setAttribute('href', '#');
+                            childEntry.appendChild(document.createTextNode(feature.properties[layer.geojson_attributes.split(',')[0]]));
+                            childListItem.appendChild(childEntry);
+                            let childUid = uid + "" + i;
+
+                            let $childEntry = $(childEntry);
+                            childItem.$entries = item.$entries || [];
+                            childItem.$entries.push($entry);
+                            childWrapper.appendChild(childListItem);
+                            $childEntry.data('uid', childUid);
+                            $childEntry.click(fnChildEntryClick);
+                            if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.addChilds === 'object') {
+                                c4g.maps.utils.callHookFunctions(c4g.maps.hook.addChilds);
+                            }
+                            if (this.proxy.activeLayerIds[uid]) {
+                                $childEntry.addClass(c4g.maps.constant.css.ACTIVE);
+                            } else {
+                                $childEntry.addClass(c4g.maps.constant.css.INACTIVE);
+                            }
+                            if(c4g.maps.hook.starboard_layer_activate && c4g.maps.hook.starboard_layer_activate.length > 0){
+                                let paramObj = {'feature': feature, 'parentItem': childListItem, 'entry':$childEntry};
+                                c4g.maps.utils.callHookFunctions(c4g.maps.hook.starboard_layer_activate, paramObj);
+                            }
+                        }
+                    }
                 }
             }
 
@@ -477,15 +534,16 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
 
             // [info]:  In order for this to work,
             //          the parent layers need to be
-            //          listet before their childs
+            //          listed before their childs
             if (this.layers[layer.pid]) {
               // is child-element
               pWrapper = this.layers[layer.pid].childWrappers;
               pWrapper[pWrapper.length - 1].appendChild(listItem);
+
             } else if (parseInt(layer.pid, 10) == 0) {
               // layer is map itself with a layer
               toggle = document.createElement('span');
-              if(layer.hide_child !='1') {
+              if(layer.hide_child !== '1') {
                   $(listItem).addClass(c4g.maps.constant.css.CLOSE);
               }
               $(toggle).addClass(c4g.maps.constant.css.ICON);
@@ -535,8 +593,12 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
             dv.className = "c4g-starboard-filter c4g-content-select";
             var filter = document.createElement('input');
             filter.type = 'text';
-            filter.placeholder = "\uf002";  // Font Awesome
+            filter.placeholder = ""; //Font Awesome
+            var i = document.createElement('i');
+            i.className = 'fas fa-filter';
+            i.setAttribute("aria-hidden", "true");
             dv.appendChild(filter);
+            dv.appendChild(i);
             filter.onkeyup = function() {
                 function filter_ulli(element, showSubtree) {
 
@@ -640,7 +702,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
           self;
       self = this;
       childActive = 0;
-      layer = c4g.maps.layers[layerUid];
+      layer = self.proxy.layerController.arrLayers[layerUid];
       if (layer && layer.childs && layer.childs.length > 0) {
         // layer has childs
         layer.childs.forEach(function (child) {
@@ -674,11 +736,11 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
           parentEntry,
           parentLayer;
 
-      layer = c4g.maps.layers[layerUid];
+      layer = this.proxy.layerController.arrLayers[layerUid];
       if (layer.pid != this.starboard.options.mapController.data.mapId) {
         // the layer has parents
         // by this we can access only the single span where the parent entry is in
-        parentLayer = c4g.maps.layers[layer.pid];
+        parentLayer = this.proxy.layerController.arrLayers[layer.pid];
         if (parentLayer) {
           parentEntry = entry.parentNode.parentNode.parentNode.getElementsByTagName('a')[0];
           if (parentEntry) {

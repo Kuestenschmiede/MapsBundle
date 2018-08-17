@@ -86,8 +86,8 @@ this.c4g.maps.control = this.c4g.maps.control || {};
           // get the styleId of the current feature
           styleId = feature.get('styleId');
           // and execute the appropriate function
-          if (c4g.maps.locationStyles[styleId]) {
-            return c4g.maps.locationStyles[styleId].style(feature, projection);
+          if (self.proxy.locationStyleController.arrLocStyles[styleId]) {
+            return self.proxy.locationStyleController.arrLocStyles[styleId].style(feature, projection);
           }
         }
         return false;
@@ -225,8 +225,9 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
       selectContentWrapper = document.createElement('div');
 
-      selectContentHeadline = document.createElement('h4');
+      selectContentHeadline = document.createElement('div');
       selectContentHeadline.innerHTML = c4g.maps.constant.i18n.EDITOR_VIEW_TRIGGER_SELECT;
+      selectContentHeadline.className = 'contentHeadline';
       selectContentWrapper.appendChild(selectContentHeadline);
 
       selectContent = document.createElement('div');
@@ -241,11 +242,12 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         name: 'select',
         triggerConfig: {
           tipLabel: c4g.maps.constant.i18n.EDITOR_VIEW_TRIGGER_SELECT,
-          className: c4g.maps.constant.css.EDITOR_VIEW_TRIGGER_SELECT
+          className: c4g.maps.constant.css.EDITOR_VIEW_TRIGGER_SELECT,
+          withHeadline: true
         },
         sectionElements: [
           {section: this.contentContainer, element: selectContentWrapper},
-          {section: this.bottomToolbar, element: this.viewTriggerBar}
+          {section: this.topToolbar, element: this.viewTriggerBar}
         ],
         initFunction: function () {
           selectInteraction = new ol.interaction.Select({
@@ -260,8 +262,8 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                 // get the styleId of the current feature
                 styleId = feature.get('styleId');
                 // and execute the appropriate function
-                if (c4g.maps.locationStyles[styleId]) {
-                  styleArray = c4g.maps.locationStyles[styleId].style(feature, projection);
+                if (self.proxy.locationStyleController.arrLocStyles[styleId]) {
+                  styleArray = self.proxy.locationStyleController.arrLocStyles[styleId].style(feature, projection);
 
                   if (typeof styleArray[0].getImage === 'function' && styleArray[0].getImage() instanceof ol.style.Icon) {
                     styleRadius = 5;
@@ -568,11 +570,11 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                     paragraphElement.innerHTML += '<strong>' + c4g.maps.constant.i18n.SURFACEAREA + ':</strong> ' + selectedFeature.get('measuredArea').htmlValue;
                     selectContent.appendChild(paragraphElement);
                   }
-                    if (selectedFeature.get('measuredRadius')) {
-                        paragraphElement = document.createElement('p');
-                        paragraphElement.innerHTML += '<strong>' + c4g.maps.constant.i18n.RADIUS + ':</strong> ' + selectedFeature.get('measuredRadius').htmlValue;
-                        selectContent.appendChild(paragraphElement);
-                    }
+                  if (selectedFeature.get('measuredRadius')) {
+                      paragraphElement = document.createElement('p');
+                      paragraphElement.innerHTML += '<strong>' + c4g.maps.constant.i18n.RADIUS + ':</strong> ' + selectedFeature.get('measuredRadius').htmlValue;
+                      selectContent.appendChild(paragraphElement);
+                  }
                   // check and append editor-vars
                   editorVars = selectedFeature.get('editorVars');
                   for (j = 0; j < editorVars.length; j += 1) {
@@ -738,8 +740,8 @@ this.c4g.maps.control = this.c4g.maps.control || {};
             name;
 
         // Style "shortcut"
-        style = c4g.maps.locationStyles[styleId].style()[0];
-        editorStyle = c4g.maps.locationStyles[styleId].editor;
+        style = self.proxy.locationStyleController.arrLocStyles[styleId].style()[0];
+        editorStyle = self.proxy.locationStyleController.arrLocStyles[styleId].editor;
 
         featureIdCount = 0;
 
@@ -762,6 +764,52 @@ this.c4g.maps.control = this.c4g.maps.control || {};
             styleIcon.scale = styleImage.getScale();
           }
           styleTriggerLabel.appendChild(styleIcon);
+        } else if (svgSrc) {
+            let styleData = locstyleArray[styleId].locStyleArr;
+            if (styleData.svgSrc && styleData.icon_scale && styleData.icon_size) {
+                let canvas = document.createElement('canvas');
+                let ctx = canvas.getContext("2d");
+                let height = (styleData.icon_size[0] * styleData.icon_scale);
+                let width = (styleData.icon_size[1] * styleData.icon_scale);
+
+                let strokewidth = 0;
+                if (styleData.strokewidth && styleData.strokewidth.value) {
+                    strokewidth = styleData.strokewidth.value;
+                }
+
+                canvas.height = height + (2 * strokewidth);
+                canvas.width = width + (2 * strokewidth);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                if (styleData.fillcolor) {
+                    ctx.fillStyle = c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.fillcolor, styleData.fillopacity.value);
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                }
+
+                if (strokewidth && styleData.strokecolor) {
+                    ctx.strokeStyle = c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.strokecolor, styleData.strokeopacity.value);
+                    ctx.lineWidth = strokewidth;
+                    ctx.strokeRect(0, 0, canvas.width, canvas.height);
+                    ctx.translate(0.5, 0.5);
+                }
+
+                // if (styleData.icon_opacity.value && (styleData.icon_opacity.value > 0)) {
+                //     ctx.globalAlpha = (styleData.icon_opacity.value / 100);
+                // }
+
+                let img = new Image();
+                img.src = styleData.svgSrc;
+                img.zIndex = 100;
+
+                img.onload = function () {
+                    ctx.drawImage(img, strokewidth, strokewidth, width, height);
+                }
+
+                styleIcon = canvas;
+
+                styleTriggerLabel.style.width = (width * scale) + 'px';
+                styleTriggerLabel.style.height = (height * scale) + 'px';
+            }
         } else {
           styleTriggerLabel.style.background = style.getFill().getColor();
           styleTriggerLabel.style.border = '1px solid ' + style.getStroke().getColor();
@@ -770,18 +818,19 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         // Create interactionView
         //   "addView" will be used for this, because the functionality
         //   ist mostly equal
-        name = c4g.maps.locationStyles[styleId].name.replace("&#40;", "(").replace("&#41;", ")");
+        name = self.proxy.locationStyleController.arrLocStyles[styleId].name.replace("&#40;", "(").replace("&#41;", ")");
         interactionView = self.addView({
-          name: 'draw:' + (c4g.maps.locationStyles[styleId].tooltip || name),
+          name: 'draw:' + (self.proxy.locationStyleController.arrLocStyles[styleId].tooltip || name),
           triggerConfig: {
             label: styleTriggerLabel,
-            tipLabel: c4g.maps.locationStyles[styleId].tooltip || name,
+            tipLabel: self.proxy.locationStyleController.arrLocStyles[styleId].tooltip || name,
             className: c4g.maps.constant.css.EDITOR_DRAW_TRIGGER,
-            target: drawContent
+            target: drawContent,
+            withHeadline: true
           },
           sectionElements: [
             {section: self.contentContainer, element: drawContent},
-            {section: self.bottomToolbar, element: self.viewTriggerBar}
+            {section: self.topToolbar, element: self.viewTriggerBar}
           ],
           initFunction: function () {
             var interactionStyleImage,
@@ -896,8 +945,8 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
                   // name the feature
                   featureIdCount += 1;
-                  name = c4g.maps.locationStyles[styleId].name.replace("&#40;", "(").replace("&#41;", ")");
-                  activeSketch.set('tooltip', (c4g.maps.locationStyles[styleId].tooltip || name) + ' (' + featureIdCount + ')');
+                  name = self.proxy.locationStyleController.arrLocStyles[styleId].name.replace("&#40;", "(").replace("&#41;", ")");
+                  activeSketch.set('tooltip', (self.proxy.locationStyleController.arrLocStyles[styleId].tooltip || name) + ' (' + featureIdCount + ')');
                   // add styleId
                   activeSketch.set('styleId', styleId);
                   // add measurements to the feature
@@ -908,7 +957,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                   if (options.type.toLowerCase() === 'circle') {
                       activeSketch.set('measuredRadius', c4g.maps.utils.measureGeometry(activeSketch.getGeometry()));
                   }
-                  //activeSketch.setStyle(c4g.maps.locationStyles[styleId].style);
+                  //activeSketch.setStyle(self.proxy.locationStyleController.arrLocStyles[styleId].style);
                   // add editor-vars
                   vars = editorStyle.vars;
                   editorVars = [];
@@ -974,11 +1023,12 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         name: 'draw:' + options.type.toLowerCase(),
         triggerConfig: {
           tipLabel: c4g.maps.constant.i18n[TRIGGER_DRAW],
-          className: c4g.maps.constant.css[TRIGGER_DRAW]
+          className: c4g.maps.constant.css[TRIGGER_DRAW],
+          withHeadline: true
         },
         sectionElements: [
           {section: self.contentContainer, element: drawContent},
-          {section: self.bottomToolbar, element: self.viewTriggerBar}
+          {section: self.topToolbar, element: self.viewTriggerBar}
         ],
         initFunction: function () {
           var i,
@@ -1004,7 +1054,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                 styleIds;
 
             // prepare
-            locationStyles = c4g.maps.locationStyles;
+            locationStyles = self.proxy.locationStyleController.arrLocStyles;
             styleIds = arrStyleIds || options.styleIds;
             if (!styleIds || !locationStyles) {
               return false;
@@ -1047,15 +1097,15 @@ this.c4g.maps.control = this.c4g.maps.control || {};
           }; // end of "sortAndAddStyles"
 
           // Make sure that all needed styles are loaded
-          if (!c4g.maps.locationStyles) {
+          if (!self.proxy.locationStyleController.arrLocStyles) {
             // no styles are loaded, so load all styles
-            c4g.maps.locationStyles = {};
+            self.proxy.locationStyleController.arrLocStyles = {};
             neededStyles = options.styleIds;
           } else {
             // check wich styles are missing
             for (i = 0; i < options.styleIds.length; i += 1) {
               styleId = options.styleIds[i];
-              if (!c4g.maps.locationStyles[styleId] || !c4g.maps.locationStyles[styleId].style) {
+              if (!self.proxy.locationStyleController.arrLocStyles[styleId] || !self.proxy.locationStyleController.arrLocStyles[styleId].style) {
                 neededStyles.push(styleId);
               }
             }
@@ -1065,13 +1115,13 @@ this.c4g.maps.control = this.c4g.maps.control || {};
             if (!self.proxy) {
               console.warn('Could not load locStyles, as the map-proxy was not initiallized.');
             }
-            self.proxy.loadLocationStyles(
+            self.proxy.locationStyleController.loadLocationStyles(
                 neededStyles,
                 {
-                  success: function () {
+                  done: function () {
                     sortAndAddStyles();
                   },
-                  complete: function () {
+                  always: function () {
                     // Hide loading-animation
                     self.spinner.hide();
                     self.update();
@@ -1188,7 +1238,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       for (i = 0; i < featureCollection.length; i += 1) {
         styleId = featureCollection[i].get('styleId');
 
-        if ((!c4g.maps.locationStyles[styleId] || !c4g.maps.locationStyles[styleId].style) && $.inArray(styleId, neededStyles) === -1) {
+        if ((!self.proxy.locationStyleController.arrLocStyles[styleId] || !self.proxy.locationStyleController.arrLocStyles[styleId].style) && $.inArray(styleId, neededStyles) === -1) {
           neededStyles.push(styleId);
         }
       }
@@ -1206,17 +1256,17 @@ this.c4g.maps.control = this.c4g.maps.control || {};
           console.warn('Could not load locStyles, as the map-proxy was not initiallized.');
           return false;
         }
-        self.proxy.loadLocationStyles(
+        self.proxy.locationStyleController.loadLocationStyles(
             neededStyles,
             {
-              success: function () {
+              done: function () {
                 importFeatures();
                 // Call hook functions on load
                 if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.editor_onLoad === 'object') {
                   c4g.maps.utils.callHookFunctions(c4g.maps.hook.editor_onLoad, loadData);
                 }
               },
-              complete: function () {
+              always: function () {
                 // Hide loading-animation
                 self.spinner.hide();
               }
@@ -1334,7 +1384,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
           return false;
         }
 
-        if (styleId && (!c4g.maps.locationStyles[styleId] || !c4g.maps.locationStyles[styleId].style) && $.inArray(styleId, neededStyles) === -1) {
+        if (styleId && (!self.proxy.locationStyleController.arrLocStyles[styleId] || !self.proxy.locationStyleController.arrLocStyles[styleId].style) && $.inArray(styleId, neededStyles) === -1) {
           neededStyles.push(styleId);
         }
 
@@ -1360,13 +1410,13 @@ this.c4g.maps.control = this.c4g.maps.control || {};
           console.warn('Could not load locStyles, as the map-proxy was not initiallized.');
           return false;
         }
-        self.proxy.loadLocationStyles(
+        self.proxy.locationStyleController.loadLocationStyles(
             neededStyles,
             {
-              success: function () {
+              done: function () {
                 importFeatures();
               },
-              complete: function () {
+              always: function () {
                 // Hide loading-animation
                 self.spinner.hide();
               }

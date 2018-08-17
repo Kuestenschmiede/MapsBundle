@@ -96,6 +96,13 @@ class MapDataConfigurator
                 }
             }
         }
+
+        //check for profile manipulation by another bundle
+        $profileService = \System::getContainer()->get('con4gis.profile_service');
+        if ($profileService) {
+            $profileId = $profileService->getProfileId($profileId);
+        }
+
         // get appropriate profile from database
         $profile = C4gMapProfilesModel::findByPk($profileId);
         // use default if the profile was not found
@@ -135,6 +142,8 @@ class MapDataConfigurator
                 $mapData['scaleline'] = false;
                 $mapData['mouseposition'] = false;
                 $mapData['zoomlevel'] = 1;
+                $mapData['account'] = 0;
+                $mapData['caching'] = 0;
             }
         }
         $mapData['profile'] = $profileId;
@@ -259,19 +268,23 @@ class MapDataConfigurator
             //
             $mapData['zoom_panel']  = $profile->zoom_panel;
 
-            switch ($profile->zoom_panel_button) {
-                case '3':
-                    $mapData['zoom_position'] = true;
-                    break;
-                case '2':
-                    $mapData['zoom_home'] = true;
-                    break;
-                case '1':
-                    $mapData['zoom_extent'] = true;
-                    break;
-                default:
+            if ($profile->zoom_panel_button) {
+                $zoom_panel_buttons = unserialize($profile->zoom_panel_button);
+                foreach($zoom_panel_buttons as $key => $zoom_panel_button){
+                    switch ($zoom_panel_button) {
+                        case '3':
+                            $mapData['zoom_position'] = true;
+                            break;
+                        case '2':
+                            $mapData['zoom_home'] = true;
+                            break;
+                        case '1':
+                            $mapData['zoom_extent'] = true;
+                            break;
+                        default:
+                    }
+                }
             }
-
 
             $mapData['zoom_slider'] = ($profile->zoom_panel_slider == 1);
             if ($profile->mouse_nav) {
@@ -350,6 +363,7 @@ class MapDataConfigurator
                 }
             }
             $mapData['overviewmap'] = $profile->overviewmap;
+            $mapData['geobookmarks'] = $profile->geobookmarks;
             $mapData['scaleline'] = $profile->scaleline;
             $mapData['mouseposition'] = $profile->mouseposition;
             $mapData['permalink']['enable'] = $profile->permalink;
@@ -357,6 +371,15 @@ class MapDataConfigurator
                 $mapData['permalink']['get_parameter'] = $profile->permalink_get_param;
             }
             $mapData['zoomlevel'] = $profile->zoomlevel;
+            if ($profile->account) {
+                $mapData['account'] = \Contao\Controller::replaceInsertTags("{{insert_module::".$profile->account."}}", false);
+            } else {
+                $maptData['account'] = '';
+            }
+
+            if ($profile->caching) {
+                $mapData['caching'] = 1;
+            }
 
             // geosearch
             //
@@ -411,7 +434,18 @@ class MapDataConfigurator
                 $mapData['router_interim_locstyle'] = $profile->router_interim_locstyle;
                 $mapData['router_api_selection'] = $profile->router_api_selection;
                 $mapData['router_alternative'] = $profile->router_alternative;
+                if($profile->router_profiles){
+                    $router_profiles = array_flip(unserialize($profile->router_profiles));
+                    foreach($router_profiles as $key => $router_profile){
+                        $router_profiles[$key] = $GLOBALS['TL_LANG']['c4g_maps']['router_profiles'][$key];
+                    }
+                    $mapData['router_profiles'] = $router_profiles;
+                }
 
+            }
+
+            if ($profile->label_color) {
+                $mapData['default_label_color'] = $profile->label_color;
             }
 
             // editor
@@ -476,10 +510,10 @@ class MapDataConfigurator
         ResourceLoader::loadResourcesForModule('maps');
         // load internal scripts and themes
         if ($profileId) {
-            ResourceLoader::loadResourcesForProfile($profileId, $options['type'] == 'geopicker');
+            $mapData['themeData'] = ResourceLoader::loadResourcesForProfile($profileId, $options['type'] == 'geopicker');
         } else {
             ResourceLoader::loadResources();
-            ResourceLoader::loadTheme();
+            $mapData['themeData'] = ResourceLoader::loadTheme();
         }
 
         // @TODO: Check

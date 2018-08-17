@@ -31,12 +31,14 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['default_baselayer']            = arr
 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['locstyles']             = array('Lokationsstile',
                                                                             'Wählen Sie die Lokationsstile, die in Kartenstrukturelementen dieses Profils auswählbar sein sollen. Standard: alle');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['label_color']             = array('Label-Farbe',
+    'Wählen Sie die Standardfarbe für Labels aus. Dies kann durch die Einstellung am Lokationsstil überschrieben werden.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['zoom_panel']            = array('Steuerelement zum Zoomen',
                                                                             'Erzeugen von Buttons zum Hinein- und Herauszoomen.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['zoom_panel_button']     = array('Zusatzbutton im Steuerelement zum Zoomen',
                                                                             'Erzeugt einen Zusatzbutton im Zoom-Steuerelement. Ein Klick auf das Icon zoomt an die ausgewählte Position. Hinweis: mit Slider steht die Komponente nicht zur Verfügung.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['zoom_panel_slider']     = array('Slider zum Zoomen',
-                                                                            'Erzeugt einen Slider mit Steuerelementen zum Zoomen. Das Welt-Icon wird hierbei ignoriert.');
+                                                                            'Erzeugt einen Slider mit Steuerelementen zum Zoomen. Hiermit werden alle anderen Zoom-Button ausgeblendet.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouse_nav']             = array('Navigation mit der Maus',
                                                                             'Aktiviert die Möglichkeit, mit Hilfe der Maus zu zoomen und den angezeigten Kartenausschnitt zu verschieben.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouse_nav_wheel']       = array('Mausrad zum Zoomen benutzen',
@@ -62,7 +64,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard']             = array('Sta
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_open']        = array('Starboard automatisch öffnen',
                                                                             'Wenn Sie diese Checkbox auswählen, dann wird das Starboard sofort geöffnet angezeigt.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_label']       = array('Starboard Überschrift',
-                                                                            'Standard: "Starboard"');
+                                                                            '');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_div']         = array('DIV für das Starboard',
                                                                             'DIV zur Positionierung des Starboards außerhalb der Karte. Muss manuell auf der Seite erzeugt werden, z.B. mit einem HTML Inhaltselement.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_filter']      = array('Starboardfilter aktivieren',
@@ -97,6 +99,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor']                = array('Edi
                                                                             'Blendet einen Schalter ein, der den Editor auf der Karte anzeigt, mit dem Punkte, Strecken und Flächen auf die Karte gezeichnet werden können.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overviewmap']           = array('Übersichtskarte',
                                                                             'Schafft die Möglichkeit, über einen Schalter, rechts unten auf der Karte, eine Umgebungskarte einzublenden.');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geobookmarks']          = array('Favoriten (beta)',
+                                                                            'Damit kannst Du favorisierte Kartenposition im Browser speichern.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['scaleline']             = array('Maßstabsleiste',
                                                                             'Zeigt eine Leiste, die den aktuellen Kartenmaßstab visuell darstellt.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouseposition']         = array('Maus-Koordinaten',
@@ -113,6 +117,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['imagepath']             = array('Ben
                                                                             'Nur beim Standard-Theme: Setzt den Pfad zu einem benutzerdefinierten OpenLayers /img/ Verzeichnis für den Fall, dass Sie OpenLayers Standardicons auswechseln möchten. ACHTUNG: Diese Einstellung betrifft NICHT Grafiken aus dem OpenLayers /themes/default/img/ Verzeichnis, die Sie über CSS austauschen können!');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['infopage']              = array('Inhalt der Infoseite',
                                                                             'Sobald Sie dieses Feld befüllen, wird der Infobutton in der Karte angezeigt.');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['account']               = array('Accountbutton',
+                                                                            'Sobald Sie ein Frontendmodul auswählen, wird der Accountbutton dargestellt.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['link_newwindow']        = array('Direktlink in neuem Fenster öffnen',
                                                                             'Direktlinks nicht im selben Fenster, sondern in einem neuen Fenster öffnen.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['link_open_on']          = array('Direktlinks öffnen bei',
@@ -182,9 +188,14 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overpass_url']          = array('Alt
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router']                = array('Router aktivieren (Beachten Sie bitte die <a href="https://github.com/DennisOSRM/Project-OSRM/wiki/Api-usage-policy" target="_blank">Nutzungsbedingungen des Standard-Anbieters</a>!)',
                                                                             'Fügt einen zusätzlichen Schalter in die Karte ein, über den der Router aktiviert werden kann. Unterstützt wird zurzeit nur die alte OSRM API.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_viaroute_url']   = array('Alternative URL (verfplichtend für OSRM-API 4)',
-                                                                            'Geben Sie hier die URL des OSRM Servers ein, wenn Sie z.B. einen eigenen OSRM Server nutzen möchten. Standardmäßig wird http://router.project-osrm.org/viaroute (veraltet!) verwendet.');
+                                                                            'Geben Sie hier die URL des ORS oder OSRM Servers ein, wenn Sie z.B. einen eigenen Server nutzen möchten. Standardmäßig wird http://router.project-osrm.org/ oder https://api.openrouteservice.org/directions verwendet.');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_api_key']        = array('API-Key',
+                                                                            'Geben Sie hier Ihren ORS-API-Key ein. Den Key können Sie <a href="https://openrouteservice.org/sign-up/" target="_blank">hier</a> generieren.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_attribution']    = array('Copyright für Router überschreiben',
                                                                             'Überschreibt die Standard-Attribution. Dies ist nur dann empfehlenswert, wenn Sie einen alternativen API-Server nutzen, oder die Attribution an einer anderen, offensichtlichen Stelle, auf der Seite platziert haben!');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_profiles']       = array('Router-Profile',
+                                                                            'Legt die OpenRouteService-Profile fest.');
+
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_styles_point']   = array('Lokationsstile für POIs',
                                                                             'Ausgewählte Lokationsstile werden im Editor angeboten.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_styles_line']    = array('Lokationsstile für Strecken',
@@ -213,6 +224,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_alternative'] = array('Altern
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium'] = array('Cesium verwenden', 'Mit Cesium wird die 2D Karte in einen Globus umgewandelt.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium_always'] = array('Cesium immer verwenden', 'Soll Cesium für jede Basiskarte aktiviert sein? Falls nicht, kann Cesium auch für einzelne Karten in den Basiskarteneinstellungen aktiviert werden.');
 
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['caching'] = array('Kartensituation merken', 'Buttonstatus u.Ä. werden im Browser zwischengespeichert.');
 
 /**
  * Reference
@@ -220,28 +232,43 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium_always'] = array('Cesium imme
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['CLICK'] = 'einfachem Mausklick';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['DBLCL'] = 'Maus-Doppelklick';
 
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['dark']            = 'Dark Theme (angepasst)';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['modern']          = 'Modern Trans Theme';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['metro']           = 'Metro Theme';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['blue']            = 'Blue Theme (basierend auf dem angepassten Dark-Theme)';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['red']             = 'Red Theme (basierend auf dem angepassten Dark-Theme)';
+//$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['dark']            = 'Dark Theme (angepasst)';
+//$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['modern']          = 'Modern Trans Theme';
+//$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['metro']           = 'Metro Theme';
+//$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['blue']            = 'Blue Theme (basierend auf dem angepassten Dark-Theme)';
+//$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['red']             = 'Red Theme (basierend auf dem angepassten Dark-Theme)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['default_theme']   = 'con4gis Standard-Theme';
 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_mouse_nav_dragmode']['0'] = 'Aus';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_mouse_nav_dragmode']['1'] = 'Karte drehen';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_mouse_nav_dragmode']['2'] = 'Karte drehen und zoomen';
 
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_zoom_panel_button']['0'] = 'Aus';
+//$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_zoom_panel_button']['0'] = 'Aus';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_zoom_panel_button']['1'] = 'mit Welt-Icon (zoomt zurück in die kleinstmögliche Zoomstufe)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_zoom_panel_button']['2'] = 'mit Haus-Icon (zoomt zurück in die voreingestellte Position der Karte)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_zoom_panel_button']['3'] = 'mit Positions-Icon (zoomt auf sicheren Seiten zur aktuellen Geräteposition)';
+//$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_zoom_panel_button']['4'] = 'mit Favoriten-Icon (zoomt nach Auswahl auf eine Deiner Lieblingspositionen)';
 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine']['1'] = 'Nominatim bei Openstreetmap (<a href="https://operations.osmfoundation.org/policies/nominatim/" target="_blank">Nutzungsbestimmungen</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine']['2'] = 'Nominatim bei MapQuest (<a href="http://developer.mapquest.com/web/products/open/nominatim" target="_blank">Nutzungsbestimmungen</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine']['3'] = 'Benutzerdefiniert';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine']['4'] = 'con4gis Kartendienste (<a href="https://con4gis.org/kartendienste.html" target="_blank">Nutzungsbestimmungen</a>)';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_api_selection']['0'] = 'OSRM (API 4.x)';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_api_selection']['1'] = 'OSRM (API 5.x)';
+
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_api_selection']['0'] = 'OpenSourceRoutingMachine (API 4.x)';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_api_selection']['1'] = 'OpenSourceRoutingMachine (API 5.x)';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_api_selection']['2'] = 'OpenRouteService';
+
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles']['0'] = 'Auto';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles']['1'] = 'Lastwagen';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles']['2'] = 'Fahrrad';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles']['3'] = 'Rennrad';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles']['4'] = 'Fahrrad (sicher)';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles']['5'] = 'Moutainbike';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles']['6'] = 'Trekkingrad';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles']['7'] = 'Elekrofahrrad';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles']['8'] = 'FußgängerIn';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles']['9'] = 'WandererIn';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles']['10']= 'Rollstuhl';
 
 
 /**

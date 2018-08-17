@@ -28,7 +28,7 @@ $GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['caching'] = array
 (
     'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_settings']['caching'],
     'inputType'               => 'checkbox',
-    'options'                 => array('baseLayerService','layerService','layerContentService','editorService','locationStyleService','infoWindowService','nominatimService','reverseNominatimService','routingService'),
+    'options'                 => $GLOBALS['con4gis']['api-caching'],
     'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_settings']['references'],
     'eval'                    => array('multiple'=>true),
     'sql'                     => "blob NULL"

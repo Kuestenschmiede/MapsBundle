@@ -41,11 +41,13 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
     CTRL_MEASURETOOLS: 'Messwerkzeuge ein-/ausblenden',
     CTRL_EXPORTTOOLS: 'Exportwerkzeuge ein-/ausblenden',
     CTRL_INFOPAGE: 'Infoseite ein-/ausblenden',
+    CTRL_ACCOUNT: 'Account ein-/ausblenden',
     CTRL_ZOOMLEVEL: 'Zoom',
     CTRL_MOUSECOORDS: 'Lon/Lat',
     CTRL_GEOSEARCH: 'Suche ein-/ausblenden',
     CTRL_START_SEARCH: 'Suche starten',
     CTRL_OVERVIEWMAP: 'Übersichtskarte ein-/ausblenden',
+    CTRL_GEOBOOKMARKS: 'Favoriten verwalten',
     CTRL_SIDEBOARD: 'Sideboard ein-/ausblenden',
     CTRL_STARBOARD: 'Starboard ein-/ausblenden',
     CTRL_ATTRIBUTION: 'Attribution anzeigen',
@@ -58,7 +60,7 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
     EDITOR_ENABLE_FREEHAND_DRAW: 'Freihand zeichnen',
     EDITOR_FEATURE_APPLY: 'Editieren beenden',
     EDITOR_FEATURE_DELETE: 'Element löschen',
-    EDITOR_FEATURE_MODIFY: 'Element editieren',
+    EDITOR_FEATURE_MODIFY: 'Element editieren / verschieben',
     EDITOR_SELECT_INFO: 'Zur Auswahl ein Element auf der Karte anklicken.',
     EDITOR_SELECT_INFO_ADDITIONAL: '[Strg] + [Klick] für Mehrfachauswahl <br>[Shift] halten für Auswahlbox',
     EDITOR_VIEW_TRIGGER_SELECT: 'Auswahl Modus',
@@ -80,12 +82,12 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
     SIDEBOARD: 'Sideboard',
 
     ROUTER_VIEW_ADDRESS_INPUT: 'Route finden',
-    ROUTER_FROM_LABEL: 'Start-Adresse',
-    ROUTER_OVER_LABEL: 'Zwischen-Adresse',
-    ROUTER_TO_LABEL: 'Ziel-Adresse',
+    ROUTER_FROM_LABEL: 'Start',
+    ROUTER_OVER_LABEL: 'Zwischenziel',
+    ROUTER_TO_LABEL: 'Ziel',
     ROUTER_CLEAR_TITLE: 'Löschen',
-    ROUTER_CLEAR_HTML: 'X',
-    ROUTER_Label_Interim: 'Zwischenziele',
+    ROUTER_CLEAR_HTML: '',
+    ROUTER_Label_Interim: 'Zwischenziel',
 
     ROUTER_SWITCH:'Wechsel von Start und Ziel',
     ROUTER_OVER:'Zwischenziel hinzufügen',
@@ -94,6 +96,7 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
     ROUTER_VIEW_LABEL_ROUTE: 'Route:',
     ROUTER_VIEW_LABEL_DISTANCE: 'Entfernung:',
     ROUTER_VIEW_LABEL_TIME: 'Zeit:',
+    ROUTER_VIEW_LABEL_PROFILE: 'Profil:',
 
     ROUTER_VIEW_ALERT_ADDRESS: 'Adresse nicht gefunden.',
     ROUTER_VIEW_ALERT_GOCODING: 'Zugriff auf Geocoder fehlgeschlagen.',
@@ -182,8 +185,13 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
     EXPORTTOOLS: 'Exportwerkzeuge',
     EXPORTTOOLS_VIEW_TRIGGER_PRINT: 'Kartenausschnitt drucken',
 
+    GEOBOOKMARKS_PLACEHOLDER: 'Neue Bezeichnung',
+
     INFOPAGE: 'Informationen',
     INFOPAGE_VIEW_TRIGGER: 'Informationen anzeigen',
+    ACCOUNT: 'Account',
+    ACCOUNT_VIEW_TRIGGER: 'Account anzeigen',
+
     SEARCH_NOT_FOUND: 'Die Lokation konnte nicht gefunden werden. Bitte versuchen Sie eine andere Eingabe.',
 
     NONE: '' // last line

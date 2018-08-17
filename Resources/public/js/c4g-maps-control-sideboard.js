@@ -43,7 +43,6 @@ this.c4g.maps.control = this.c4g.maps.control || {};
     //this.cssname = this.identifier.charAt(0).toLowerCase() + this.identifier.slice(1);
     this.initialized = false;
     this.options.tipLabel = this.options.tipLabel || this.options.headline || c4g.maps.constant.i18n.CTRL_SIDEBOARD;
-    this.options.headline = this.options.headline || c4g.maps.constant.i18n.SIDEBOARD;
     this.container = document.createElement('div');
     this.element = document.createElement('div');
     this.button = undefined;
@@ -90,8 +89,10 @@ this.c4g.maps.control = this.c4g.maps.control || {};
           titleButtonBar,
           closeButton,
           capitalizedName,
-          hideButton;
+          hideButton,
+          caching;
 
+      caching = this.options.caching;
       capitalizedName = c4g.maps.utils.capitalizeFirstLetter(this.options.name);
       self = this;
 
@@ -99,8 +100,14 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       // Do not hide when it is initialized open, or in an external div
       if (this.options.extDiv) {
         initClass = ' ' + c4g.maps.constant.css.OPEN;
+        // if (caching) {
+        //     c4g.maps.utils.storeValue(this.options.name, '1');
+        // }
       } else {
         initClass = ' ' + c4g.maps.constant.css.CLOSE;
+        // if (caching) {
+        //     c4g.maps.utils.storeValue(this.options.name, '0');
+        // }
         this.options.mapController["active" + this.identifier] = this.options.mapController["active" + this.identifier] || false;
 
         this.button = document.createElement('button');
@@ -161,30 +168,39 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       this.titleBar = document.createElement('div');
       this.titleBar.className = 'c4g-' + this.cssname + '-titlebar';
       this.wrapper.appendChild(this.titleBar);
+
+      // Triggerbar
+      this.viewTriggerBar = document.createElement('div');
+      this.viewTriggerBar.className = 'c4g-' + this.cssname + '-viewtriggerbar';
+
       // Top-Toolbar
       this.topToolbar = this.addSection({
         className: 'c4g-' + this.cssname + '-top-toolbar',
         target: this.wrapper
       });
+
       // Content-Container
       this.contentContainer = this.addSection({
         className: 'c4g-' + this.cssname + '-content-container',
         target: this.wrapper
       });
 
+      // add content headline
+      this.contentHeadline = document.createElement('div');
+      this.contentHeadline.className = 'contentHeadline';
+      this.contentHeadline.innerHTML = '';
+      this.contentContainer.appendChild(this.contentHeadline);
+
       // Bottom-Toolbar
       this.bottomToolbar = this.addSection({
-        className: 'c4g-' + this.cssname + '-bottom-toolbar c4g-close',
-        target: this.wrapper
+          className: 'c4g-' + this.cssname + '-bottom-toolbar c4g-close',
+          target: this.wrapper
       });
-      // Statusbar
+
+       // Statusbar
       this.statusBar = document.createElement('div');
       this.statusBar.className = 'c4g-' + this.cssname + '-statusbar c4g-close';
       this.wrapper.appendChild(this.statusBar);
-
-      // Triggerbar
-      this.viewTriggerBar = document.createElement('div');
-      this.viewTriggerBar.className = 'c4g-' + this.cssname + '-viewtriggerbar';
 
       // Add spinner
       this.spinner = new c4g.maps.misc.Spinner({
@@ -197,7 +213,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       // Headline
       this.headline = document.createElement('span');
       this.headline.className = 'c4g-' + this.cssname + '-headline';
-      this.headline.innerHTML = this.options.headline || c4g.maps.constant.i18n.SIDEBOARD;
+      this.headline.innerHTML = this.options.headline;
       this.titleBar.appendChild(this.headline);
       // Buttonbar
       titleButtonBar = document.createElement('div');
@@ -245,7 +261,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       this.options.mapController.map.on('change:size', this.update, this);
 
       // Show open if desired
-      if (this.options.defaultOpen) {
+      if ((this.options.defaultOpen) || (this.options.caching && (c4g.maps.utils.getValue(this.options.name) == '1'))) {
         this.open();
       }
 
@@ -255,7 +271,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
     /**
      *   Update the sideboards html-elements
      *   resizes the content-container
-     *   and the bottom-toolbar
+     *   and the top-toolbar
      *
      * @param  {event-object}  opt_event  *optional*  Just needed by the ol-bind-method,
      *                                                but not used in the function
@@ -264,61 +280,63 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
       var self,
           contentContainerOuterHeight,
-          containerOffsetWidth,
-          capitalizedName;
+          containerOffsetWidth;
 
       self = this;
-      capitalizedName = c4g.maps.utils.capitalizeFirstLetter(this.options.name);
+
+      /*
+      if (this.options && this.options.name) {
+          capitalizedName = c4g.maps.utils.capitalizeFirstLetter(this.options.name);
+      }*/
 
       contentContainerOuterHeight = $(this.wrapper).height() - ($(this.titleBar).outerHeight(true) + $(this.statusBar).outerHeight(true));
-      if (this.options.direction === 'left') {
+      if (this.options && this.options.direction && this.options.direction != "undefined" && this.options.direction === 'left') {
         if (this !== this.options.mapController["active" + this.identifier]) {
           containerOffsetWidth = 0;
         }
       }
 
       // Top-Toolbar
-      if (this.topToolbar.innerHTML) {
-        // this.topToolbar.style.display = 'block';
-        this.topToolbar.style.display = '';
-        contentContainerOuterHeight -= $(this.topToolbar).outerHeight(true);
-      } else {
-        this.topToolbar.style.display = 'none';
+      if (this.topToolbar) {
+          if (this.topToolbar.innerHTML) {
+              // this.topToolbar.style.display = 'block';
+              this.topToolbar.style.display = '';
+              contentContainerOuterHeight -= $(this.topToolbar).outerHeight(true);
+          } else {
+              this.topToolbar.style.display = 'none';
+          }
       }
 
       // Bottom-toolbar
-      if (this.bottomToolbar.innerHTML) {
-        // this.bottomToolbar.style.display = 'block';
-        this.bottomToolbar.style.display = '';
-        contentContainerOuterHeight -= $(this.bottomToolbar).outerHeight(true);
-      } else {
-        this.bottomToolbar.style.display = 'none';
+      if (this.bottomToolbar) {
+          if (this.bottomToolbar.innerHTML) {
+              // this.bottomToolbar.style.display = 'block';
+              this.bottomToolbar.style.display = '';
+              contentContainerOuterHeight -= $(this.bottomToolbar).outerHeight(true);
+          } else {
+              this.bottomToolbar.style.display = 'none';
+          }
       }
 
       // Content-container
       $(this.contentContainer).outerHeight(contentContainerOuterHeight);
 
       // Correct width
-      if (this.options.mapController["active" + this.identifier] === this) {
-        //this.container.style.width = 'auto';
-        containerOffsetWidth = this.container.offsetWidth;
-        this.options.mapController[this.options.direction + "SlideElements"].forEach(function (element) {
-          $(element).css(self.options.direction, containerOffsetWidth);
-        });
+      if (this.options) {
+          if (this.options.mapController["active" + this.identifier] === this) {
+              //this.container.style.width = 'auto';
+              containerOffsetWidth = this.container.offsetWidth;
+              this.options.mapController[this.options.direction + "SlideElements"].forEach(function (element) {
+                  $(element).css(self.options.direction, containerOffsetWidth);
+              });
 
-        //only move the toggle button on starboard elements
-        if (this.options.direction === 'right') {
-          $(this.element).css(this.options.direction, containerOffsetWidth);
-        }
+              //only move the toggle button on starboard elements
+              if (this.options.direction === 'right') {
+                  $(this.element).css(this.options.direction, containerOffsetWidth);
+              }
 
+          }
       }
-      // this is needed because the css has transition-effects
-      window.setTimeout(function () {
-        //if ((self.options.direction === 'right') || self.options.mapController["active" + self.identifier] === self && containerOffsetWidth !== self.container.offsetWidth) {
-        //  self.update();
-        //}
-
-      }, 500);
 
     }, // end of "update"
 
@@ -330,11 +348,9 @@ this.c4g.maps.control = this.c4g.maps.control || {};
      */
     open: function (opt_options) {
       var containerOffsetWidth,
-          capitalizedName,
           self;
 
       self = this;
-      capitalizedName = c4g.maps.utils.capitalizeFirstLetter(this.options.name);
 
       // Call initialize-functions, if existent
       if (!this.initialized) {
@@ -396,6 +412,9 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         $(this.container).css('visibility', 'visible');
 
         this.update();
+        if (this.options.caching) {
+          c4g.maps.utils.storeValue(this.options.name, '1');
+        }
         return true;
       }
       return false;
@@ -417,11 +436,9 @@ this.c4g.maps.control = this.c4g.maps.control || {};
      */
     close: function (opt_hide, opt_openOtherSideboard) {
       var containerOffsetWidth,
-          direction,
-          capitalizedName;
+          direction;
 
       direction = this.options.direction;
-      capitalizedName = c4g.maps.utils.capitalizeFirstLetter(this.options.name);
 
       if (opt_hide ) {
         if (typeof this.preHideFunction === 'function') {
@@ -464,6 +481,9 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         // Remove active Sideboardentry
         this.options.mapController["active" + this.identifier] = false;
 
+        if (this.options.caching) {
+            c4g.maps.utils.storeValue(this.options.name, '0');
+        }
         return true;
       }
       return false;
@@ -636,6 +656,10 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
       view.activate = function (opt_openSideboard) {
         var i;
+
+        if (options.triggerConfig.withHeadline) {
+            self.contentHeadline.innerHTML = options.triggerConfig.tipLabel;
+        }
 
         // open Sideboard if closed
         if (opt_openSideboard && !self.isOpen()) {

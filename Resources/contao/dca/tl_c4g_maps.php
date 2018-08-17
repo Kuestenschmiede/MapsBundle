@@ -46,6 +46,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
             'mode'                    => 5,
             'icon'                    => 'bundels/con4gisMapsBundle/images/core.png',
             'fields'                  => array('name'),
+            'panelLayout'             => 'filter;sort,search,limit',
             'flag'                    => 1
         ),
         'label' => array
@@ -155,7 +156,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
         'geojson'                    =>  '{general_legend},name,profile,profile_mobile,published;'.
                                          '{map_legend},is_map;'.
-                                         '{location_legend},location_type,data_layername,hide_child,data_hidelayer,data_file,data_url,data_content,data_projection,locstyle,loc_label,tooltip, tooltip_length,enablePopup,popup_info,routing_to,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
+                                         '{location_legend},location_type,data_layername,hide_child,data_hidelayer,data_file,split_geojson,data_content,data_projection,locstyle,loc_label,tooltip, tooltip_length,enablePopup,popup_info,routing_to,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
                                          '{protection_legend:hide},protect_element;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
         'osm'                        =>  '{general_legend},name,profile,profile_mobile,published;'.
@@ -197,7 +198,8 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
         'protect_element'             => 'permitted_groups',
         'popup_extend'                => 'forums',
         'is_map'                      => '',  // is set in updateDCA
-        'cluster_locations'           => 'cluster_distance, cluster_fillcolor, cluster_fontcolor, cluster_zoom,cluster_popup'
+        'cluster_locations'           => 'cluster_distance, cluster_fillcolor, cluster_fontcolor, cluster_zoom,cluster_popup',
+        'split_geojson'               => 'geojson_attributes'
     ),
 
     // Fields
@@ -205,7 +207,8 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
     (
         'id' => array
         (
-            'sql'                     => "int(10) unsigned NOT NULL auto_increment"
+            'sql'                     => "int(10) unsigned NOT NULL auto_increment",
+            'search'                  => true
         ),
         'pid' => array
         (
@@ -225,7 +228,8 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
             'exclude'                 => true,
             'inputType'               => 'c4g_text',
             'eval'                    => array('mandatory'=>true, 'maxlength'=>255 ),
-            'sql'                     => "varchar(100) NOT NULL default ''"
+            'sql'                     => "varchar(100) NOT NULL default ''",
+            'search'                  => true
         ),
         'profile' => array
         (
@@ -820,6 +824,23 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
             'eval'                    => array( 'trailingSlash' => false, 'files' => false, 'fieldType' => 'radio' ),
             'sql'                     => "binary(16) NULL"
         ),
+        'split_geojson' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['split_geojson'],
+            'exclude'                 => true,
+            'default'                 => false,
+            'inputType'               => 'checkbox',
+            'eval'                    => array('submitOnChange' => true),
+            'sql'                     => "char(1) NOT NULL default ''"
+        ),
+        'geojson_attributes' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['geojson_attributes'],
+            'exclude'                 => true,
+            'inputType'               => 'textarea',
+            'eval'                    => array('rte'=>'tinyMCE'),
+            'sql'                     => "text NULL"
+        ),
         'data_url' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['data_url'],
@@ -871,7 +892,8 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
             'exclude'                 => true,
             'inputType'               => 'text',
             'eval'                    => array('maxlength'=>254),
-            'sql'                     => "varchar(254) NOT NULL default ''"
+            'sql'                     => "varchar(254) NOT NULL default ''",
+            'search'                  => true
         ),
         'data_hidelayer' => array
         (
@@ -1221,6 +1243,7 @@ class tl_c4g_maps extends Backend
      */
     public function getMapForums(DataContainer $dc)
     {
+        //ToDo what if forum not installed?
         $forumHelper = new \con4gis\ForumBundle\Resources\contao\classes\C4GForumHelper($this->Database);
         $forums = $forumHelper->getMapForums();
         foreach ($forums AS $forum) {

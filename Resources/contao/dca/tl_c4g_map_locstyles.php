@@ -56,7 +56,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
             'panelLayout'             => 'filter;sort,search,limit',
             'headerFields'            => array('name'),
             'flag'                    => 1,
-            'icon'                    => 'bundels/con4gisMapsBundle/images/core.png',
+            'icon'                    => 'bundels/con4gisMapsBundle/images/core.png'
         ),
         'label' => array
         (
@@ -114,17 +114,22 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
                                          '{popup_legend},tooltip,popup_info;'.
                                          '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;'.
                                          '{editor_legend:hide},editor_icon,editor_sort,editor_vars,editor_collect;',
-        'ol_icon'                     => 'name,styletype,ol_icon,ol_icon_size,ol_icon_offset,icon_opacity;'.
-                                         '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,font_opacity,font_style,font_weight;'.
-                                         '{popup_legend},tooltip,popup_info;'.
-                                         '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;'.
-                                         '{editor_legend:hide},editor_icon,editor_sort,editor_vars;',
-        'cust_icon'                   => 'name,styletype,icon_src,icon_scale,icon_size,icon_offset,icon_opacity;'.
+        'cust_icon'                   => 'name,styletype,icon_src, icon_scale, icon_size,icon_opacity;'.
                                          '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,font_opacity,font_style,font_weight;'.
                                          '{popup_legend},tooltip,popup_info;'.
                                          '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;'.
                                          '{editor_legend:hide},editor_icon,editor_sort,editor_vars,editor_collect;',
-        'style_function'              => 'name,styletype,style_function_js;'
+        'cust_icon_svg'                   => 'name, styletype, svgSrc, icon_scale, icon_size, strokewidth, strokecolor, strokeopacity, fillcolor, fillopacity;'.
+                                         '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,font_opacity,font_style,font_weight;'.
+                                         '{popup_legend},tooltip,popup_info;'.
+                                         '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;'.
+                                         '{editor_legend:hide},editor_icon,editor_sort,editor_vars,editor_collect;',
+        'style_function'              => 'name,styletype,style_function_js;',
+        'photo'                       => 'name,styletype,radius,photoKind,icon_src,strokecolor,icon_opacity;'.
+                                         '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,font_opacity,font_style,font_weight;'.
+                                         '{popup_legend},tooltip,popup_info;'.
+                                         '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;'.
+                                         '{editor_legend:hide},editor_icon,editor_sort,editor_vars,editor_collect;'
 
 
     ),
@@ -165,7 +170,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
             'filter'                  => true,
             'inputType'               => 'select',
             'default'                 => 'point',
-            'options'                 => array('point', 'square', 'star', 'x', 'cross', 'triangle', /*'ol_icon',*/ 'cust_icon','style_function' ),
+            'options'                 => array('point', 'square', 'star', 'x', 'cross', 'triangle', 'cust_icon','cust_icon_svg','style_function','photo' ),
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references'],
             'eval'                    => array('submitOnChange'=>'true'),
             'sql'                     => "varchar(15) NOT NULL default ''"
@@ -184,7 +189,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['strokecolor'],
             'default'                 => 'ee0016',
             'inputType'               => 'text',
-            'eval'                    => array('maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'long wizard', 'mandatory'=>true ),
+            'eval'                    => array('maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'long wizard', 'mandatory'=>false ),
             'sql'                     => "varchar(6) NOT NULL default ''"
         ),
         'strokeopacity' => array
@@ -193,15 +198,15 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
             'inputType'               => 'inputUnit',
             'default'                 => '100',
             'options'                 => array('%'),
-            'eval'                    => array('rgxp'=>'prcnt', 'tl_class'=>'long', 'mandatory'=>true),
+            'eval'                    => array('rgxp'=>'prcnt', 'tl_class'=>'long', 'mandatory'=>false),
             'sql'                     => "varchar(100) NOT NULL default ''"
         ),
         'fillcolor' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['fillcolor'],
             'inputType'               => 'text',
-            'default'                 => 'ee0011',
-            'eval'                    => array('maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'long wizard', 'mandatory'=>true),
+            'default'                 => '',
+            'eval'                    => array('maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'long wizard'),
             'sql'                     => "varchar(6) NOT NULL default ''"
         ),
         'fillopacity' => array
@@ -222,65 +227,32 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
             'eval'                    => array('rgxp'=>'digit', 'mandatory'=>true),
             'sql'                     => "varchar(100) NOT NULL default ''"
         ),
-//        'radius2' => array
-//        (
-//            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['radius2'],
-//            'inputType'               => 'inputUnit',
-//            'default'                 => '3',
-//            'options'                 => array('px'),
-//            'eval'                    => array('rgxp'=>'digit', 'mandatory'=>true),
-//            'sql'                     => "varchar(100) NOT NULL default ''"
-//        ),
-        'ol_icon' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['ol_icon'],
-            'exclude'                 => true,
-            'inputType'               => 'radio',
-            'options'                 => array('marker.png','marker-blue.png','marker-gold.png','marker-green.png'),
-            'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references'],
-            'eval'                    => array('mandatory'=>true),
-            'sql'                     => "varchar(100) NOT NULL default 'marker.png'"
-        ),
-        'ol_icon_size' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['ol_icon_size'],
-            'default'                 => array('21','25'),
-            'exclude'                 => true,
-            'inputType'               => 'imageSize',
-//            'options'                 => array('px'),
-            'options'                  => $imageSizes,
-            'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'w50', 'mandatory'=>true),
-            'sql'                     => "varchar(100) NOT NULL default ''"
-        ),
-        'ol_icon_offset' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['ol_icon_offset'],
-            'default'                 => array('-10','-25'),
-            'exclude'                 => true,
-            'inputType'               => 'imageSize',
-//            'options'                 => array('px'),
-            'options'                  => $imageSizes,
-            'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'w50', 'mandatory'=>false),
-            'sql'                     => "varchar(100) NOT NULL default ''"
-        ),
         'icon_src' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_src'],
             'exclude'                 => true,
             'inputType'               => 'fileTree',
-            'eval'                    => array('fieldType'=>'radio', 'files'=>true, 'extensions'=>'gif,jpg,jpeg,png,svg', 'tl_class'=>'clr', 'mandatory'=>true),
+            'eval'                    => array('fieldType'=>'radio', 'files'=>true, 'extensions'=>'gif,jpg,jpeg,png', 'tl_class'=>'clr', 'mandatory'=>true,'submitOnChange' => true),
             'sql'                     => "binary(16) NULL"
         ),
         'icon_size' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_size'],
-            'default'                 => array('16','16'),
             'exclude'                 => true,
             'inputType'               => 'imageSize',
-//            'options'                 => array('px'),
             'options'                  => $imageSizes,
-            'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'w50', 'mandatory'=>true),
+            'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'long', 'mandatory'=>true),
+//            'load_callback'           => array(array('tl_c4g_map_locstyles','setSizes')),
             'sql'                     => "varchar(100) NOT NULL default ''"
+        ),
+        'svgSrc' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['svgSrc'],
+            'exclude'                 => true,
+            'inputType'               => 'fileTree',
+            'eval'                    => array('fieldType'=>'radio', 'files'=>true, 'extensions'=>'svg', 'tl_class'=>'clr', 'mandatory'=>true,'submitOnChange' => true),
+            //'save_callback'           => array(array('tl_c4g_map_locstyles','setSizes')),
+            'sql'                     => "binary(16) NULL"
         ),
         'icon_scale' => array
         (
@@ -289,8 +261,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
             'exclude'                 => true,
             'flag'                    => 1,
             'inputType'               => 'text',
-            'eval'                    => array('tl_class'=>'w50', 'rgxp'=>'digit', 'mandatory'=>true),
-            'sql'                     => "float(3,2) NOT NULL default '1.00'"
+            'eval'                    => array('tl_class'=>'long', 'rgxp'=>'digit', 'mandatory'=>true),
+            'sql'                     => "float(3,3) NOT NULL default '1.000'"
         ),
         'icon_offset' => array
         (
@@ -298,10 +270,17 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
             'exclude'                 => true,
             'default'                 => array('0','0'),
             'inputType'               => 'imageSize',
-//            'options'                 => array('px'),
             'options'                  => $imageSizes,
-            'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'w50'),
+            'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'long'),
             'sql'                     => "varchar(100) NOT NULL default ''"
+        ),
+        'iconcolor' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['iconcolor'],
+            'inputType'               => 'text',
+            'default'                 => '',
+            'eval'                    => array('maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'long wizard'),
+            'sql'                     => "varchar(6) NOT NULL default ''"
         ),
         'icon_opacity' => array
         (
@@ -312,7 +291,17 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
             'eval'                    => array('rgxp'=>'prcnt', 'tl_class'=>'clr', 'mandatory'=>true),
             'sql'                     => "varchar(100) NOT NULL default ''"
         ),
-
+        'photoKind' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['photoKind'],
+            'exclude'                 => true,
+            'default'                 => 'popup_default',
+            'inputType'               => 'select',
+            'options'                 => array('default','square','round','anchored','folio'),
+            'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references'],
+            'eval'                    => array('mandatore'=>true),
+            'sql'                     => "varchar(64) NOT NULL default ''"
+        ),
         'onhover_locstyle' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['onhover_locstyle'],
@@ -402,7 +391,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
             'exclude'                 => true,
             'default'                 => array('0','10'),
             'inputType'               => 'imageSize',
-//            'options'                 => array('px'),
             'options'                  => $imageSizes,
             'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'clr'),
             'sql'                     => "varchar(100) NOT NULL default ''"
@@ -433,7 +421,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
         'label_outl_color' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_outl_color'],
-            'default'                 => 'ee0016',
+            'default'                 => '',
             'inputType'               => 'text',
             'eval'                    => array('maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'),
             'sql'                     => "varchar(6) NOT NULL default ''"
@@ -591,18 +579,60 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
 class tl_c4g_map_locstyles extends Backend
 {
 
-    /**
-     * Import CSS and script for the color picker component
-     */
     public function __construct()
     {
         parent::__construct();
+    }
 
-        if (version_compare(VERSION,'2.11','<')) {
-            $GLOBALS['TL_CSS'][] = 'plugins/mootools/rainbow.css?'. MOO_RAINBOW . '|screen';
-            $GLOBALS['TL_JAVASCRIPT'][] = 'plugins/mootools/rainbow.js?' . MOO_RAINBOW;
+
+    public function setSizes($varValue, DataContainer $dc)
+    {
+
+        if ($dc->activeRecord->styletype == 'cust_icon') {
+            $icon_src = $dc->activeRecord->icon_src;
+            $icon_size = $dc->activeRecord->icon_size;
+            if ($icon_src &! $icon_size) {
+                if (\Validator::isUuid($icon_src))
+                {
+                   $iconSrc = \FilesModel::findByUuid($icon_src);
+                    list($width, $height, $type, $attr) = getimagesize($iconSrc->path);
+                    $icon_size = 'a:3:{i:0;s:'.strlen($width).':"'.$width.'";i:1;s:'.strlen($height).':"'.$height.'";i:2;s:2:"px";}';
+
+                    $offsetWidth = '-'.($width / 2);
+                    $offsetHeight = '-'.($height / 2);
+                    $icon_offset = 'a:3:{i:0;s:'.strlen($offsetWidth).':"'.$offsetWidth.'";i:1;s:'.strlen($offsetHeight).':"'.$offsetHeight.'";i:2;s:2:"px";}';
+
+                    $this->Database->prepare("UPDATE tl_c4g_map_locstyles SET icon_size=?, icon_offset=? WHERE id =?")
+                        ->execute($icon_size, $icon_offset, $dc->id);
+                }
+            }
         }
 
+        if ($dc->activeRecord->styletype == 'cust_icon_svg') {
+            $icon_src = $dc->activeRecord->svgSrc;
+            $icon_size = $dc->activeRecord->icon_size;
+            if ($icon_src &! $icon_size) {
+                if (\Validator::isUuid($icon_src))
+                {
+                    $iconSrc = \FilesModel::findByUuid($icon_src);
+                    //list($width, $height, $type, $attr) = getimagesize($iconSrc->path);
+                    $size = (new Contao\ImagineSvg\Imagine)->open($iconSrc->path)->getSize();
+                    $width = $size->getWidth();
+                    $height = $size->getHeight();
+
+                    $icon_size = 'a:3:{i:0;s:'.strlen($width).':"'.$width.'";i:1;s:'.strlen($height).':"'.$height.'";i:2;s:2:"px";}';
+
+                    $offsetWidth = '-'.($width / 2);
+                    $offsetHeight = '-'.($height / 2);
+                    $icon_offset = 'a:3:{i:0;s:'.strlen($offsetWidth).':"'.$offsetWidth.'";i:1;s:'.strlen($offsetHeight).':"'.$offsetHeight.'";i:2;s:2:"px";}';
+
+                    $this->Database->prepare("UPDATE tl_c4g_map_locstyles SET icon_size=?, icon_offset=? WHERE id =?")
+                        ->execute($icon_size, $icon_offset, $dc->id);
+                }
+            }
+        }
+
+        return $varValue;
     }
 
     /**
