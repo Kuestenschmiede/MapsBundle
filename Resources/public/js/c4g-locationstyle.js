@@ -103,8 +103,8 @@ class C4gLocationStyle{
                         let width  = (styleData.icon_size[1]*styleData.icon_scale);
 
                         let strokewidth = 0;
-                        if (styleData.strokewidth) {
-                            strokewidth = styleData.strokewidth;
+                        if (styleData.strokewidth && styleData.strokewidth.value) {
+                            strokewidth = styleData.strokewidth.value;
                         }
                         canvas.height = height+(2*strokewidth);
                         canvas.width  = width+(2*strokewidth);
