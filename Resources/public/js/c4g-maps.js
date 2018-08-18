@@ -738,6 +738,7 @@ this.c4g.maps = this.c4g.maps || {};
         // geobookmarks - not ready
         if (mapData.geobookmarks) {
             this.controls.geobookmarks = new ol.control.GeoBookmark({
+                //target: controlContainerTopRight
                 label: ' ',
                 tipLabel: c4g.maps.constant.i18n.CTRL_GEOBOOKMARKS,
                 placeholder: c4g.maps.constant.i18n.GEOBOOKMARKS_PLACEHOLDER,
@@ -745,6 +746,8 @@ this.c4g.maps = this.c4g.maps || {};
                 className: c4g.maps.constant.css.GEOBOOKMARKS*/ //ToDo implement for own styling
             });
             this.map.addControl(this.controls.geobookmarks);
+            this.rightSlideElements.push('.ol-bookmark');
+
         }
 
         // overview-map
