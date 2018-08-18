@@ -73,6 +73,10 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['c4g_map_default_mapservice'] = array
     'exclude'                 => true,
     'inputType'               => 'select',
     'options_callback'        => array('tl_content_c4g_maps', 'get_baselayers'),
+    'eval'                    => array(
+                                    'mandatory'=>false,
+                                    'chosen'=>true,
+                                    'includeBlankOption'=>true),
     'sql'                     => "int(10) unsigned NOT NULL default '0'"
 
 );
