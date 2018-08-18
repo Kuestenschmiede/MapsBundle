@@ -379,19 +379,19 @@ class ResourceLoader extends coreResourceLoader
                 $themeData['maincolor'] = $theme->maincolor;
             }
             if ($theme->mainopacity) {
-                $themeData['mainopacity'] = deserialize($theme->mainopacity)['value'];
+                $themeData['mainopacity'] = deserialize($theme->mainopacity);
             }
             if ($theme->fontcolor) {
                 $themeData['fontcolor'] = $theme->fontcolor;
             }
             if ($theme->fontopacity) {
-                $themeData['fontopacity'] = deserialize($theme->fontopacity)['value'];
+                $themeData['fontopacity'] = deserialize($theme->fontopacity);
             }
             if ($theme->shadowcolor) {
                 $themeData['shadowcolor'] = $theme->shadowcolor;
             }
             if ($theme->shadowopacity) {
-                $themeData['shadowopacity'] = deserialize($theme->shadowopacity)['value'];
+                $themeData['shadowopacity'] = deserialize($theme->shadowopacity);
             }
         }
 
