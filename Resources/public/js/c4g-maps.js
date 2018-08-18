@@ -766,6 +766,10 @@ this.c4g.maps = this.c4g.maps || {};
       if (mapData.geopicker && mapData.geopicker.type === "backend") {
         enableStarboard = false;
       }
+      
+      // popup margin
+      //this.leftSlideElements.push('.ol-overlay-container');
+      this.rightSlideElements.push('.ol-overlay-container');
 
       if (c4g.maps.control && c4g.maps.control.Starboard && typeof c4g.maps.control.Starboard === 'function' && enableStarboard) {
           this.controls.starboard = new c4g.maps.control.Starboard({
