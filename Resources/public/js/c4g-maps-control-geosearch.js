@@ -351,6 +351,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       this.resultWrapper.innerHTML = '';
     },
 
+
     /**
      * @TODO
      *
@@ -362,81 +363,70 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         var self,
             map,
             animate,
-            animationDuration,
             markResult,
             result,
             resultCoordinate,
+            flyTo,
+            completeSearch,
+            animationDuration,
             zoomType;
 
-        self = this;
-        map = this.getMap();
+        flyTo = function (map, location, zoomlevel, zoombounds, boundingbox, markResult, animate) {
+            var duration = 2000;
+            var zoom = zoomlevel;//mapView.getZoom();
+            var parts = 2;
+            var called = false;
 
-        animate = this.config.animate;
-        animationDuration = 2000;
-        markResult = this.config.markResult;
+            function callback(complete) {
+                --parts;
+                if (called) {
+                    return;
+                }
+                if (parts === 0 || !complete) {
+                    called = true;
 
-        result = self.results[index];
-        resultCoordinate = ol.proj.transform([parseFloat(result.lon), parseFloat(result.lat)], 'EPSG:4326', 'EPSG:3857')
+                    if (zoombounds && boundingbox) {
+                        // translate osm-extent to ol3-extent
 
-        if (animate) {
-            if (self.config.zoombounds && result.boundingbox) {
-                // translate osm-extent to ol3-extent
+                        osmExtent = [];
+                        osmExtent.push(parseFloat(boundingbox[2]));
+                        osmExtent.push(parseFloat(boundingbox[0]));
+                        osmExtent.push(parseFloat(boundingbox[3]));
+                        osmExtent.push(parseFloat(boundingbox[1]));
 
-                var osmExtent = [];
-                osmExtent.push(parseFloat(result.boundingbox[2]));
-                osmExtent.push(parseFloat(result.boundingbox[0]));
-                osmExtent.push(parseFloat(result.boundingbox[3]));
-                osmExtent.push(parseFloat(result.boundingbox[1]));
+                        window.setTimeout(function () {
+                            mapView.fit(
+                                ol.proj.transformExtent(osmExtent, 'EPSG:4326', 'EPSG:3857'),
+                                map.getSize(),
+                                {
+                                    minZoom: mapView.get('minZoom') || 0,
+                                    maxZoom: mapView.get('maxZoom') || 19,
+                                    duration: duration / 2,
+                                    easing: ol.easing.easeOut
+                                }
+                            );
+                        }, duration)
+                    }
 
-                map.getView().animate({
-                    zoom: 8,
-                    duration: animationDuration / 2
-                });
-
-                map.getView().animate({
-                    center: resultCoordinate,
-                    duration: animationDuration
-                });
-
-                window.setTimeout(function () {
-                    map.getView().fit(
-                        ol.proj.transformExtent(osmExtent, 'EPSG:4326', 'EPSG:3857'),
-                        map.getSize(),
-                        {
-                            minZoom: map.getView().get('minZoom') || 0,
-                            maxZoom: map.getView().get('maxZoom') || 19,
-                            duration: animationDuration / 2,
-                            easing: ol.easing.easeOut
-                        }
-                    );
-                }, animationDuration)
-
-
-            } else if (self.config.zoomlevel >= 0) {
-
-                map.getView().animate({
-                    zoom: 8,
-                    duration: animationDuration / 2
-                }, {
-                    zoom: self.config.zoomlevel,
-                    duration: animationDuration / 2
-                });
-
-                map.getView().animate({
-                    center: resultCoordinate,
-                    duration: animationDuration
-                });
+                    completeSearch(markResult, animate);
+                }
             }
 
+            map.getView().animate({
+                center: location,
+                duration: duration
+            }, callback);
+            map.getView().animate({
+                zoom: zoom - 1,
+                duration: duration / 2
+            }, {
+                zoom: zoom,
+                duration: duration / 2
+            }, callback);
 
-        }
-        else {
-            map.getView().setCenter(resultCoordinate);
-            if (self.config.zoomlevel >= 0) {
-                map.getView().setZoom(self.config.zoomlevel);
-            }
-        }
-        if (markResult) {
+        };
+
+        completeSearch = function(markResult, animate) {
             var addMarker,
                 markerSource,
                 animateMarker;
@@ -527,7 +517,44 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                 addMarker();
             }
 
-        }// end of result marker & animation handling
+
+        };
+
+        self = this;
+        map = this.getMap();
+
+        result = self.results[index];
+        resultCoordinate = ol.proj.transform([parseFloat(result.lon), parseFloat(result.lat)], 'EPSG:4326', 'EPSG:3857')
+
+        if (animate) {
+            resolution = mapView.getResolution();
+            viewExtent = mapView.calculateExtent(map.getSize());
+            if (ol.extent.containsCoordinate(viewExtent, resultCoordinate)) {
+                zoomType = 'zoom';
+            } else {
+                if (Math.abs(currentCoordinate[0] - resultCoordinate[0]) > Math.abs(currentCoordinate[1] - resultCoordinate[1])) {
+                    coordDif = Math.abs(currentCoordinate[0] - resultCoordinate[0]);
+                    difContext = ol.extent.getWidth(viewExtent);
+                } else {
+                    coordDif = Math.abs(currentCoordinate[1] - resultCoordinate[1]);
+                    difContext = ol.extent.getHeight(viewExtent);
+                }
+                if (coordDif > 0) {
+                    resolution *= coordDif / difContext;
+                }
+                zoomType = 'bounce';
+            }
+
+            flyTo(map, resultCoordinate, self.config.zoomlevel, self.config.zoombounds, result.boundingbox, this.config.markResult, this.config.animate);
+        }
+        else {
+            completeSearch(this.config.markResult, this.config.animate);
+            map.getView().setCenter(resultCoordinate);
+            if (self.config.zoomlevel >= 0) {
+                map.getView().setZoom(self.config.zoomlevel);
+            }
+        }
+
     },
 
     findLocation: function (location, opt_options) {
@@ -546,6 +573,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       animate = this.config.animate;
       animationDuration = 2000;
       markResult = this.config.markResult;
+
       if (typeof opt_options === 'object') {
         if (opt_options.animate !== undefined) {
           animate = opt_options.animate;
@@ -598,241 +626,180 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                   result,
                   osmExtent,
                   resolution,
-                  zoomType;
+                  zoomType,
+                  flyTo,
+                  completeSearch;
 
               mapView = map.getView();
 
-              if (results[0]) {
+              flyTo = function (map, location, zoomlevel, zoombounds, boundingbox, markResult, animate) {
+                  var duration = 2000;
+                  var zoom = zoomlevel;//mapView.getZoom();
+                  var parts = 2;
+                  var called = false;
+
+                  function callback(complete) {
+                      --parts;
+                      if (called) {
+                          return;
+                      }
+                      if (parts === 0 || !complete) {
+                          called = true;
+
+                          if (zoombounds && boundingbox) {
+                              // translate osm-extent to ol3-extent
+
+                              osmExtent = [];
+                              osmExtent.push(parseFloat(boundingbox[2]));
+                              osmExtent.push(parseFloat(boundingbox[0]));
+                              osmExtent.push(parseFloat(boundingbox[3]));
+                              osmExtent.push(parseFloat(boundingbox[1]));
+
+                              window.setTimeout(function () {
+                                  mapView.fit(
+                                      ol.proj.transformExtent(osmExtent, 'EPSG:4326', 'EPSG:3857'),
+                                      map.getSize(),
+                                      {
+                                          minZoom: mapView.get('minZoom') || 0,
+                                          maxZoom: mapView.get('maxZoom') || 19,
+                                          duration: duration / 2,
+                                          easing: ol.easing.easeOut
+                                      }
+                                  );
+                              }, duration)
+                          }
+
+                          completeSearch(markResult, animate);
+                      }
+                  }
+
+                  map.getView().animate({
+                      center: location,
+                      duration: duration
+                  }, callback);
+                  map.getView().animate({
+                      zoom: zoom - 1,
+                      duration: duration / 2
+                  }, {
+                      zoom: zoom,
+                      duration: duration / 2
+                  }, callback);
+
+              };
+
+              completeSearch = function(markResult, animate) {
+                  // result marker & animation
+                  if (markResult) {
+                      var addMarker,
+                          markerSource,
+                          animateMarker;
+
+                      markerSource = new ol.source.Vector();
+                      map.addLayer(new ol.layer.Vector({
+                          style: new ol.style.Style(),
+                          source: markerSource
+                      }));
+
+                      addMarker = function () {
+                          markerSource.addFeature(
+                              new ol.Feature(
+                                  new ol.geom.Point(resultCoordinate)
+                              )
+                          );
+                      };
+
+                      animateMarker = function (feature) {
+                          var animationStep,
+                              start,
+                              duration,
+                              listenerKey;
+
+                          start = new Date().getTime();
+                          duration = 3000;
+
+                          animationStep = function (event) {
+                              var vectorContext,
+                                  frameState,
+                                  elapsed,
+                                  elapsedRatio,
+                                  radius,
+                                  opacity,
+                                  marker,
+                                  flashGeom;
+
+                              vectorContext = event.vectorContext;
+                              frameState = event.frameState;
+                              flashGeom = feature.getGeometry().clone();
+                              elapsed = frameState.time - start;
+                              elapsedRatio = elapsed / duration;
+                              radius = ol.easing.linear(1 - elapsedRatio) * 100;
+                              if (radius < 0) {
+                                  radius = 0;
+                              }
+                              opacity = ol.easing.linear(elapsedRatio);
+
+                              var marker = new ol.style.Style({
+                                  image: new ol.style.Circle({
+                                      radius: radius,
+                                      snapToPixel: false,
+                                      stroke: new ol.style.Stroke({
+                                          color: 'rgba(200, 0, 0, ' + opacity + ')',
+                                          width: 3,
+                                          opacity: opacity
+                                      })
+                                  })
+                              });
+
+                              vectorContext.setStyle(marker);
+                              vectorContext.drawGeometry(flashGeom, null);
+
+                              if (elapsed > duration) {
+                                  markerSource.clear();
+                                  ol.Observable.unByKey(listenerKey);
+                                  return;
+                              }
+                              // continue postcompose animation
+                              frameState.animate = true;
+                          }; // end of "animationStep"
+
+                          listenerKey = map.on('postcompose', animationStep);
+
+                      }; // end of "animateMarker"
+
+                      markerSource.on('addfeature', function (event) {
+                          animateMarker(event.feature);
+                      });
+
+                      if (animate) {
+                          if (zoomType === 'zoom') {
+                              window.setTimeout(addMarker, animationDuration / 2);
+                          } else {
+                              window.setTimeout(addMarker, animationDuration);
+                          }
+                      } else {
+                          addMarker();
+                      }
+
+                  }// end of result marker & animation handling
+
+              };
+
+                if (results[0]) {
                 result = results[0];
                 self.results=results;
                 currentCoordinate = mapView.getCenter();
                 resultCoordinate = ol.proj.transform([parseFloat(result.lon), parseFloat(result.lat)], 'EPSG:4326', 'EPSG:3857');
 
-                // pan&zoom-to-result animation
-                /*if (animate) {
-                  resolution = mapView.getResolution();
-                  viewExtent = mapView.calculateExtent(map.getSize());
-                  if (ol.extent.containsCoordinate(viewExtent, resultCoordinate)) {
-                    zoomType = 'zoom';
-                  } else {
-                    if (Math.abs(currentCoordinate[0] - resultCoordinate[0]) > Math.abs(currentCoordinate[1] - resultCoordinate[1])) {
-                      coordDif = Math.abs(currentCoordinate[0] - resultCoordinate[0]);
-                      difContext = ol.extent.getWidth(viewExtent);
-                    } else {
-                      coordDif = Math.abs(currentCoordinate[1] - resultCoordinate[1]);
-                      difContext = ol.extent.getHeight(viewExtent);
-                    }
-                    if (coordDif > 0) {
-                      resolution *= coordDif / difContext;
-                    }
-                    zoomType = 'bounce';
-                  }
-                  //console.log(animationDuration);
-                  /*mapView.animate({
-                    start: +new Date(),
-                    duration: animationDuration,
-                    resolution: resolution,
-                    center: [0, 0],
-                   //rotation: Math.PI
-                  });*/
-                  // map.beforeRender(
-                  //     ol.animation.pan({
-                  //       start: +new Date(),
-                  //       duration: animationDuration,
-                  //       source: mapView.getCenter()
-                  //     }),
-                  //     ol.animation[zoomType]({
-                  //       start: +new Date(),
-                  //       duration: animationDuration,
-                  //       resolution: resolution
-                  //     })
-                  // );
-                //} // end of pan&zoom-to-result animation handling
-
-
-                // result marker & animation
-                if (markResult) {
-                  var addMarker,
-                      markerSource,
-                      animateMarker;
-
-                  markerSource = new ol.source.Vector();
-                  map.addLayer(new ol.layer.Vector({
-                    style: new ol.style.Style(),
-                    source: markerSource
-                  }));
-
-                  addMarker = function () {
-                    markerSource.addFeature(
-                        new ol.Feature(
-                            new ol.geom.Point(resultCoordinate)
-                        )
-                    );
-                  };
-
-                  animateMarker = function (feature) {
-                    var animationStep,
-                        start,
-                        duration,
-                        listenerKey;
-
-                    start = new Date().getTime();
-                    duration = 3000;
-
-                    animationStep = function (event) {
-                      var vectorContext,
-                          frameState,
-                          elapsed,
-                          elapsedRatio,
-                          radius,
-                          opacity,
-                          marker,
-                          flashGeom;
-
-                      vectorContext = event.vectorContext;
-                      frameState = event.frameState;
-                      flashGeom = feature.getGeometry().clone();
-                      elapsed = frameState.time - start;
-                      elapsedRatio = elapsed / duration;
-                      radius = ol.easing.linear(1 - elapsedRatio) * 100;
-                      if (radius < 0) {
-                        radius = 0;
-                      }
-                      opacity = ol.easing.linear(elapsedRatio);
-
-                      var marker = new ol.style.Style({
-                        image: new ol.style.Circle({
-                          radius: radius,
-                          snapToPixel: false,
-                          stroke: new ol.style.Stroke({
-                            color: 'rgba(200, 0, 0, ' + opacity + ')',
-                            width: 3,
-                            opacity: opacity
-                          })
-                        })
-                      });
-
-                      vectorContext.setStyle(marker);
-                      vectorContext.drawGeometry(flashGeom, null);
-
-                      if (elapsed > duration) {
-                        markerSource.clear();
-                        ol.Observable.unByKey(listenerKey);
-                        return;
-                      }
-                      // continue postcompose animation
-                      frameState.animate = true;
-                    }; // end of "animationStep"
-
-                    listenerKey = map.on('postcompose', animationStep);
-
-                  }; // end of "animateMarker"
-
-                  markerSource.on('addfeature', function (event) {
-                    animateMarker(event.feature);
-                  });
-
-                  if (animate) {
-                    if (zoomType === 'zoom') {
-                      window.setTimeout(addMarker, animationDuration / 2);
-                    } else {
-                      window.setTimeout(addMarker, animationDuration);
-                    }
-                  } else {
-                    addMarker();
-                  }
-
-                }// end of result marker & animation handling
-
-
                 if (animate) {
-
-                  // pan&zoom-to-result animation
-                  /*if (animate) {
-                   resolution = mapView.getResolution();
-                   viewExtent = mapView.calculateExtent(map.getSize());
-                   if (ol.extent.containsCoordinate(viewExtent, resultCoordinate)) {
-                   zoomType = 'zoom';
-                   } else {
-                   if (Math.abs(currentCoordinate[0] - resultCoordinate[0]) > Math.abs(currentCoordinate[1] - resultCoordinate[1])) {
-                   coordDif = Math.abs(currentCoordinate[0] - resultCoordinate[0]);
-                   difContext = ol.extent.getWidth(viewExtent);
-                   } else {
-                   coordDif = Math.abs(currentCoordinate[1] - resultCoordinate[1]);
-                   difContext = ol.extent.getHeight(viewExtent);
-                   }
-                   if (coordDif > 0) {
-                   resolution *= coordDif / difContext;
-                   }
-                   zoomType = 'bounce';
-                   }*/
-
-                   /*map.beforeRender(
-                       ol.animation.pan({
-                         start: +new Date(),
-                         duration: animationDuration,
-                         source: mapView.getCenter()
-                       }),
-                       ol.animation['bounce']({
-                         start: +new Date(),
-                         duration: animationDuration,
-                         resolution: resolution
-                       })
-                   );*/
-                  //} // end of pan&zoom-to-result animation handling
-
-                  if (self.config.zoombounds && result.boundingbox) {
-                    // translate osm-extent to ol3-extent
-
-                    osmExtent = [];
-                    osmExtent.push(parseFloat(result.boundingbox[2]));
-                    osmExtent.push(parseFloat(result.boundingbox[0]));
-                    osmExtent.push(parseFloat(result.boundingbox[3]));
-                    osmExtent.push(parseFloat(result.boundingbox[1]));
-
-                    mapView.animate({
-                      zoom: 8,
-                      duration: animationDuration / 2
-                    });
-
-                    mapView.animate({
-                      center: resultCoordinate,
-                      duration: animationDuration
-                    });
-
-                    window.setTimeout(function() {
-                      mapView.fit(
-                          ol.proj.transformExtent(osmExtent, 'EPSG:4326', 'EPSG:3857'),
-                          map.getSize(),
-                          {
-                            minZoom: mapView.get('minZoom') || 0,
-                            maxZoom: mapView.get('maxZoom') || 19,
-                           duration: animationDuration / 2,
-                           easing: ol.easing.easeOut
-                          }
-                      );
-                    }, animationDuration)
-
-
-                  } else if (self.config.zoomlevel >= 0) {
-                    mapView.animate({
-                      zoom: 8,
-                      duration: animationDuration / 2
-                    }, {
-                      zoom: self.config.zoomlevel,
-                      duration: animationDuration / 2
-                    });
-
-                    mapView.animate({
-                      center: resultCoordinate,
-                      duration: animationDuration
-                    });
-                  }
-
-
+                    flyTo(map, resultCoordinate, self.config.zoomlevel, self.config.zoombounds, result.boundingbox, markResult, animate);
                 } else {
+                  completeSearch(this.config.markResult, this.config.animate);
                   mapView.setCenter(resultCoordinate);
+                  if (self.config.zoomlevel >= 0) {
+                     map.getView().setZoom(self.config.zoomlevel);
+                  }
                 }
+
                 var pixel = map.getPixelFromCoordinate(resultCoordinate);
                 var feature = map.forEachFeatureAtPixel(pixel,
                       function (feature, layer) {
