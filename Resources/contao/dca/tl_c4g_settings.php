@@ -11,7 +11,7 @@
  * @link      https://www.kuestenschmiede.de
  */
 
-$GLOBALS['TL_DCA']['tl_c4g_settings']['palettes']['default'] .= '{c4g_maps_legend},disabledC4gMapObjects,caching;';
+$GLOBALS['TL_DCA']['tl_c4g_settings']['palettes']['default'] .= '{c4g_maps_legend},disabledC4gMapObjects,defaultprofile,caching;';
 
 /**
  * Add fields

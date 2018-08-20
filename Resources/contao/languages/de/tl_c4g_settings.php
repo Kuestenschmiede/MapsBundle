@@ -14,6 +14,7 @@
 $GLOBALS['TL_LANG']['tl_c4g_settings']['disabledC4gMapObjects'] = array("Deaktivierte Quellen", "Wählen Sie die Quellen aus, die Sie im Backend deaktivieren möchten." );
 $GLOBALS['TL_LANG']['tl_c4g_settings']['c4g_maps_legend'] = "Karteneinstellungen";
 $GLOBALS['TL_LANG']['tl_c4g_settings']['caching'] = array("Caching aktivieren", "Caching für con4gis-Dienste aktivieren. Die Sinnhaftigkeit des Cachings ist von Fall zu Fall unterschiedlich und bedarf eigener Tests.");
+$GLOBALS['TL_LANG']['tl_c4g_settings']['defaultprofile'] = array("Standardprofil", "Wählen Sie ein Profil aus, welches als Standardprofil genutzt werden soll.");
 
 /** References */
 $GLOBALS['TL_LANG']['tl_c4g_settings']['references']['baseLayerService'] ='Basiskarten';
