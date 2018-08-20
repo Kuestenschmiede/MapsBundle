@@ -46,6 +46,7 @@ class LayerService
 
     public function generate($intParentId)
     {
+        Database::getInstance()->prepare("DELETE FROM tl_c4g_map_layer_content")->execute();
         $arrLayers = $this->getLayerList($intParentId);
 
         if(sizeof($this->arrReassignedLayer) > 0)
@@ -105,10 +106,10 @@ class LayerService
 
 
 
-        Database::getInstance()->prepare("DELETE FROM tl_c4g_map_layer_content")->execute();
-        foreach($return['layer'] as $key => $layer){
-            $return['layer'][$key] = $this->saveLayerContent($layer);
-        }
+//        Database::getInstance()->prepare("DELETE FROM tl_c4g_map_layer_content")->execute();
+//        foreach($return['layer'] as $key => $layer){
+//            $return['layer'][$key] = $this->saveLayerContent($layer);
+//        }
 
 
         return $return;
