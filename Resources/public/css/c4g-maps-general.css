@@ -239,7 +239,7 @@ button.c4g-geosearch-start:before {
   top: 0;
   height: 100%;
   min-width: 240px;
-  max-width: 50%;
+  max-width: 42%;
   /*background: #FFFFFF;*/
   z-index: 120;
 }
@@ -283,7 +283,7 @@ button.c4g-geosearch-start:before {
 .c4g-starboard-statusbar,
 .c4g-portside-statusbar {
   height: 18px;
-  border-bottom: 2px solid;
+  /*border-bottom: 2px solid;*/
 }
 
 /*.c4g-portside-top-toolbar,*/
