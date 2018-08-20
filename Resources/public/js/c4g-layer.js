@@ -9,6 +9,8 @@ class C4gLayer{
     this.hide = layerArr['hide'];
     this.hide_child = layerArr['hide_child'];
     this.type = layerArr['type'];
+    this.cluster = layerArr['cluster'];
+    this.zoom = layerArr['zoom'];
     this.zoom_locations = layerArr['zoom_locations'];
     this.display = layerArr['display'];
     this.hasChilds = layerArr['hasChilds'];
