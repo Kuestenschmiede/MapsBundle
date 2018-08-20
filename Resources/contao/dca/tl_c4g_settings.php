@@ -35,11 +35,11 @@ $GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['caching'] = array
 );
 $GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['defaultprofile'] = array
 (
-    'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_settings']['fields']['defaultprofile'],
+    'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_settings']['defaultprofile'],
     'exclude'                 => true,
     'inputType'               => 'select',
     'foreignKey'              => 'tl_c4g_map_profiles.name',
-    'eval'                    => array('tl_class'=>'w50',
+    'eval'                    => array('tl_class'=>'clr',
         'includeBlankOption'=>true, 'blankOptionLabel'=>&$GLOBALS['TL_LANG']['tl_c4g_maps']['default_profile'],
         'submitOnChange' => true, 'alwaysSave' => true ),
     'relation'                => array('type'=>'belongsTo', 'load'=>'eager'),
