@@ -33,6 +33,19 @@ $GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['caching'] = array
     'eval'                    => array('multiple'=>true),
     'sql'                     => "blob NULL"
 );
+$GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['defaultprofile'] = array
+(
+    'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_settings']['fields']['defaultprofile'],
+    'exclude'                 => true,
+    'inputType'               => 'select',
+    'foreignKey'              => 'tl_c4g_map_profiles.name',
+    'eval'                    => array('tl_class'=>'w50',
+        'includeBlankOption'=>true, 'blankOptionLabel'=>&$GLOBALS['TL_LANG']['tl_c4g_maps']['default_profile'],
+        'submitOnChange' => true, 'alwaysSave' => true ),
+    'relation'                => array('type'=>'belongsTo', 'load'=>'eager'),
+    'sql'                     => "int(10) unsigned NOT NULL default '0'"
+
+);
 
 /**
  * Class tl_settings_c4g_maps
