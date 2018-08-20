@@ -16,8 +16,6 @@
  */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['name']                  = array('Name',
                                                                             'Enter a name for the map profile.');
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['is_default']            = array('Default profile',
-                                                                            'Check to use this profile as default for new maps.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['is_backend_editor_default']    = array('Is this the standard profile for backend editor?',
                                                                             'If checked, it will used for the backend editor (structur element: geoJson)');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['is_backend_geopicker_default'] = array('Is this the standard profile for backend geopicker?',

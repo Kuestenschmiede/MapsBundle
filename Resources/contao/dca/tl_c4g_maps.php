@@ -1,4 +1,6 @@
-<?php if (!defined('TL_ROOT')) die('You cannot access this file directly!');
+<?php use con4gis\CoreBundle\Resources\contao\models\C4gSettingsModel;
+
+if (!defined('TL_ROOT')) die('You cannot access this file directly!');
 
 /**
  * con4gis - the gis-kit
@@ -1542,11 +1544,8 @@ class tl_c4g_maps extends Backend
             }
             if (!$varValue) {
                 // get default profile
-                $objProfile = $this->Database->prepare("SELECT id FROM tl_c4g_map_profiles WHERE is_default=1")
-                    ->limit(1)->execute();
-                if ($objProfile->numRows > 0) {
-                    $varValue = $objProfile->id;
-                }
+                $settings = C4gSettingsModel::findAll();
+                $varValue = $settings[0]->defaultprofile;
             }
         }
         return $varValue;

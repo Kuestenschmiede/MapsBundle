@@ -760,8 +760,13 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
           if (editorStyle.iconSrc && (editorStyle.iconSrc.indexOf('.') != -1)) {
             styleIcon.src = editorStyle.iconSrc;
-            styleIcon.height = styleData.editor_icon_size[0];
-            styleIcon.width = styleData.editor_icon_size[1];
+            if (styleData.editor_icon_size) {
+                styleIcon.height = styleData.editor_icon_size[0];
+                styleIcon.width = styleData.editor_icon_size[1];
+            } else {
+                styleIcon.height = '32';
+                styleIcon.width = '32';
+            }
           } else {
             styleIcon.src = styleImage.getSrc();
             styleIcon.scale = styleImage.getScale();

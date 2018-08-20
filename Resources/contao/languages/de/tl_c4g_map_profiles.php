@@ -16,8 +16,6 @@
  */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['name']                  = array('Name',
                                                                             'Bitte geben Sie den Namen des Kartenprofils an.');
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['is_default']            = array('Als Standardprofil verwenden',
-                                                                            'Setzen Sie diese Checkbox, um das Kartenprofil als Standardwert bei neu angelegten Karteneinträgen zu verwenden.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['is_backend_editor_default']    = array('Als Standardprofil für Backend-Geoeditor verwenden',
                                                                             'Setzen Sie diese Checkbox, um das Kartenprofil als Standardwert im Backend-Geoeditor zu verwenden (Kartenstrukturelement GeoJson).');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['is_backend_geopicker_default'] = array('Als Standardprofil für Backend-Geopicker verwenden',

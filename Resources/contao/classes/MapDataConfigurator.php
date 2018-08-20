@@ -13,6 +13,7 @@
 
 namespace con4gis\MapsBundle\Resources\contao\classes;
 
+use con4gis\CoreBundle\Resources\contao\models\C4gSettingsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapBaselayersModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
@@ -85,6 +86,11 @@ class MapDataConfigurator
             $profileId = $profileId['id'];
         }
 
+        if (!$profileId) {
+            $settings = C4gSettingsModel::findAll();
+            $profileId = $settings[0]->defaultprofile;
+        }
+
         // check for special-profile
         if ((FE_USER_LOGGED_IN) && ($map->use_specialprofile)) {
             $groupMatch = array_intersect($objThis->User->groups, deserialize($map->specialprofile_groups));
@@ -110,7 +116,8 @@ class MapDataConfigurator
             if (!$options['type'] == 'geopicker') {
                 $profile = C4gMapProfilesModel::findBy('is_backend_geopicker_default',1);
                 if (!$profile) {
-                    $profile = C4gMapProfilesModel::findBy('is_default',1);
+                    $settings = C4gSettingsModel::findAll();
+                    $profile = $settings[0]->defaultprofile;
                     if (!$profile) {
                         $profiles = C4gMapProfilesModel::findAll();
                         if ($profiles && (count($profiles) > 0)) {

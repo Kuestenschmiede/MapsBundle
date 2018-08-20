@@ -13,6 +13,7 @@
 
 namespace con4gis\MapsBundle\Resources\contao\classes;
 use con4gis\CoreBundle\Resources\contao\classes\ResourceLoader as coreResourceLoader;
+use con4gis\CoreBundle\Resources\contao\models\C4gSettingsModel;
 use con4gis\MapsBundle\Classes\Events\LoadMapResourcesEvent;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapThemesModel;
@@ -259,7 +260,8 @@ class ResourceLoader extends coreResourceLoader
             $profile = C4gMapProfilesModel::findByPk($profileId);
             // use default if the profile was not found
             if (!$profile) {
-                $profile = C4gMapProfilesModel::findBy('is_default',1);
+                $settings = C4gSettingsModel::findAll();
+                $profile = $settings[0]->defaultprofile;
                 if (!$profile) {
                     $profiles = C4gMapProfilesModel::findAll();
                     if ($profiles && (count($profiles) > 0)) {
@@ -415,7 +417,8 @@ class ResourceLoader extends coreResourceLoader
         $profile = C4gMapProfilesModel::findBy('is_backend_geopicker_default', 1);
         // use default if the profile was not found
         if (!$profile) {
-            $profile = C4gMapProfilesModel::findBy('is_default',1);
+            $settings = C4gSettingsModel::findAll();
+            $profile = $settings[0]->defaultprofile;
             if (!$profile) {
                 $profiles = C4gMapProfilesModel::findAll();
                 if ($profiles && (!empty($profiles))) {
