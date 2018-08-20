@@ -29,7 +29,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['ol_icon_offset']   = array('Positio
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['svgSrc']           = array('SVG Quelle','Wählen Sie bitte hier das anzuzeigende SVG-Icon aus.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['givenSvgWidth']    = array('Größeneinstellung des SVG','Wählen Sie bitte hier, ob in der SVG-Datei die Größe mit "width" und "height" angegeben ist.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_src']         = array('Icon Quelle','Wählen Sie bitte hier das anzuzeigende Icon aus.');
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_size']        = array('Größe des Icons','Bitte geben Sie hier die Originalmaße der Bilddatei an. Wenn Sie das Icon in einer anderen Größe als das Original anzeigen wollen, nutzen Sie bitte die "Icon skalieren"-Option.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_size']        = array('Größe des Icons','Bei manchen Bildformaten ist es notwendig die Originalmaße der Bilddatei anzugeben. Wenn Sie das Icon in einer anderen Größe als das Original anzeigen wollen, nutzen Sie dann bitte die "Icon skalieren"-Option.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['svgSize']          = array('Größe des SVG','Geben Sie hier die Größe an, in der Sie das SVG auf der Karte darstellen wollen.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_scale']       = array('Icon skalieren','Sie können die Größe skalieren: 1.0 = 100%');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_offset']      = array('Positionsversatz des Icons (X/Y) in Pixel','Bei einem Versatz von "0" befindet sich die obere linke Ecke des Icons an der angegebenen Geo-Lokation. X=Positiv => nach rechts. X=negativ => nach links. Y=positiv => nach unten. Y=negativ => nach oben.');
@@ -63,6 +63,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['onclick_zoomto'] 	 = array('Zoomen 
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['minzoom'] 		 = array('Mindest-Zoomstufe', 'Geben Sie die Zoomstufe ein, ab der die Elemente des Karteneintrags angezeigt werden. 0=keine Einschränkung.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['maxzoom'] 		 = array('Maximale Zoomstufe', 'Geben Sie die Zoomstufe ein, bis zu der die Elemente des Karteneintrags angezeigt werden. 0=keine Einschränkung.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['editor_icon'] 	 = array('Icon im Editor','Das Icon wird im Editor an Stelle des Standardicons verwendet.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['editor_icon_size'] = array('Größe des Editoricons','Geben Sie die gewünschte Icongröße an.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['editor_sort']      = array('Sortierung','Reihenfolge im Editor für diesen Lokationsstil.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['editor_vars'] 	 = array('Zusatzfelder','Zusatzfelder stehen im Editor zur Verfügung und können über ${Schlüssel} im Popup, Label und Tooltip in die Karte eingefügt werden.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['editor_collect'] 	 = array('Geometrien zusammenfassen','Fasst alle Geometrien dieses Lokationsstils, die miteinander im Editor bearbeitet werden, zusammen.');

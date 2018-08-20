@@ -742,6 +742,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         // Style "shortcut"
         style = self.proxy.locationStyleController.arrLocStyles[styleId].style()[0];
         editorStyle = self.proxy.locationStyleController.arrLocStyles[styleId].editor;
+        styleData = self.proxy.locationStyleController.arrLocStyles[styleId].locStyleArr;
 
         featureIdCount = 0;
 
@@ -759,13 +760,14 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
           if (editorStyle.iconSrc && (editorStyle.iconSrc.indexOf('.') != -1)) {
             styleIcon.src = editorStyle.iconSrc;
+            styleIcon.height = styleData.editor_icon_size[0];
+            styleIcon.width = styleData.editor_icon_size[1];
           } else {
             styleIcon.src = styleImage.getSrc();
             styleIcon.scale = styleImage.getScale();
           }
           styleTriggerLabel.appendChild(styleIcon);
         } else if (svgSrc) {
-            let styleData = locstyleArray[styleId].locStyleArr;
             if (styleData.svgSrc && styleData.icon_scale && styleData.icon_size) {
                 let canvas = document.createElement('canvas');
                 let ctx = canvas.getContext("2d");

@@ -113,23 +113,23 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
                                          '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,font_opacity,font_style,font_weight;'.
                                          '{popup_legend},tooltip,popup_info;'.
                                          '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;'.
-                                         '{editor_legend:hide},editor_icon,editor_sort,editor_vars,editor_collect;',
+                                         '{editor_legend:hide},editor_icon,editor_icon_size,editor_sort,editor_vars,editor_collect;',
         'cust_icon'                   => 'name,styletype,icon_src, icon_scale, icon_size,icon_opacity;'.
                                          '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,font_opacity,font_style,font_weight;'.
                                          '{popup_legend},tooltip,popup_info;'.
                                          '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;'.
-                                         '{editor_legend:hide},editor_icon,editor_sort,editor_vars,editor_collect;',
+                                         '{editor_legend:hide},editor_icon,editor_icon_size,editor_sort,editor_vars,editor_collect;',
         'cust_icon_svg'                   => 'name, styletype, svgSrc, icon_scale, icon_size, strokewidth, strokecolor, strokeopacity, fillcolor, fillopacity;'.
                                          '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,font_opacity,font_style,font_weight;'.
                                          '{popup_legend},tooltip,popup_info;'.
                                          '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;'.
-                                         '{editor_legend:hide},editor_icon,editor_sort,editor_vars,editor_collect;',
+                                         '{editor_legend:hide},editor_icon,editor_icon_size,editor_sort,editor_vars,editor_collect;',
         'style_function'              => 'name,styletype,style_function_js;',
         'photo'                       => 'name,styletype,radius,photoKind,icon_src,strokecolor,icon_opacity;'.
                                          '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,font_opacity,font_style,font_weight;'.
                                          '{popup_legend},tooltip,popup_info;'.
                                          '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;'.
-                                         '{editor_legend:hide},editor_icon,editor_sort,editor_vars,editor_collect;'
+                                         '{editor_legend:hide},editor_icon,editor_icon_size,editor_sort,editor_vars,editor_collect;'
 
 
     ),
@@ -543,6 +543,16 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
             'inputType'               => 'fileTree',
             'eval'                    => array('fieldType'=>'radio', 'files'=>true, 'extensions'=>'gif,jpg,jpeg,png,svg', 'tl_class'=>'clr'),
             'sql'                     => "binary(16) NULL"
+        ),
+        'editor_icon_size' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['editor_icon_size'],
+            'exclude'                 => true,
+            'default'                 => array('32','32'),
+            'inputType'               => 'imageSize',
+            'options'                  => $imageSizes,
+            'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'long', 'mandatory'=>true),
+            'sql'                     => "varchar(100) NOT NULL default ''"
         ),
         'editor_sort' => array
         (
