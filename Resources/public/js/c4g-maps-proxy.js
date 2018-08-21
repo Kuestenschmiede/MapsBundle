@@ -277,9 +277,11 @@ class MapProxy {
 
       if (self.options.mapController.controls.editor && self.options.mapController.controls.editor.isOpen()) {
         // do not show popup when editor is open
-        // but call click hooks
-        c4g.maps.utils.callHookFunctions(self.hook_map_click, clickEvent);
-        return false;
+        if (feature && feature.get('projectId')) {
+            // but call click hooks
+            let result = c4g.maps.utils.callHookFunctions(self.hook_map_click, clickEvent);
+            return false;
+        }
       }
       popupInfos = {};
       if (feature && feature.get('popup')) {
