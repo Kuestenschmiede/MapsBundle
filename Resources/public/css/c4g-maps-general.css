@@ -439,7 +439,7 @@ button.ol-zoom-position:before{
   position: relative;
   display: none;
   z-index: 90;
-  /*max-width: 720px;*/
+  max-width: 640px;
 }
 .c4g-popup-wrapper.c4g-active {
   display: block;
@@ -763,7 +763,11 @@ input.c4g-panel-button {
   max-height: 95%;
 }
 
-
+@media screen and (max-width: 1280px) {
+  .c4g-popup-wrapper {
+    max-width: 480px;
+  }
+}
 @media screen and (max-width: 768px) {
   .c4g-portside-container {
     min-width: 0;
@@ -787,7 +791,16 @@ input.c4g-panel-button {
   /*.searchResultButton{
     font-size: smaller;
   }*/
+  .c4g-popup-wrapper {
+    max-width: 360px;
+  }
 }
+/*
+@media screen and (max-width: 480px) {
+  .c4g-popup-wrapper {
+    max-width: 240px;
+  }
+}*/
 
 .c4g-baselayertree .c4g-overlay-toggle {
   margin-top: 5px;
