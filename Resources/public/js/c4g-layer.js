@@ -19,6 +19,7 @@ class C4gLayer{
     this.renderSpecial = layerArr['renderSpecial'];
     this.editable = true;
     this.type = layerArr['type'];
+    this.locstyle = layerArr['locstyle'];
     this.name = layerArr['name'];
     this.tabId = layerArr['tabId'];
     this.split_geojson = layerArr['split_geojson'];

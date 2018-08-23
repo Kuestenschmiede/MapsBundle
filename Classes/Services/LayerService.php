@@ -104,62 +104,8 @@ class LayerService
         }
         $return['layer'] = $this->checkAndReassignFrontendLayers($return['layer']);
 
-
-
-//        Database::getInstance()->prepare("DELETE FROM tl_c4g_map_layer_content")->execute();
-//        foreach($return['layer'] as $key => $layer){
-//            $return['layer'][$key] = $this->saveLayerContent($layer);
-//        }
-
-
         return $return;
-    }
-    protected function saveLayerContent($layer)
-    {
-        if($layer['childs']){
-            foreach($layer['childs'] as $key => $child)
-            {
-                $layer['childs'][$key] = $this->saveLayerContent($child);
-            }
-        }
-        if($layer['async_content'] == 1) {
-            if ($layer['content']) {
-                foreach ($layer['content'] as $key => $content) {
-                    if (!$content['data'] || !$content['data']['geometry'] || !$content['data']['geometry']['coordinates'] || count($content['data']['geometry']['coordinates']) != 2) continue;
-                    $set['pid'] = $layer['id'];
-                    $set['type'] = $content['type'];
-                    $set['format'] = $content['format'];
-                    $set['origType'] = $content['origType'];
-                    $set['locStyle'] = $content['locationStyle'];
-                    $set['datatype'] = $content['data']['type'];
-                    $set['geotype'] = $content['data']['geometry']['type'];
-                    $set['geox'] = $content['data']['geometry']['coordinates'][0];
-                    $set['geoy'] = $content['data']['geometry']['coordinates'][1];
-                    $set['projection'] = $content['data']['properties']['projection'];
-                    $set['popup_content'] = $content['data']['properties']['popup']['content'];
-                    $set['popup_routing_link'] = $content['data']['properties']['popup']['routing_link'];
-                    $set['popup_async'] = $content['data']['properties']['popup']['async'];
-                    $set['tooltip'] = $content['data']['properties']['tooltip'];
-                    $set['tooltip_length'] = $content['data']['properties']['tooltip_length'];
-                    $set['label'] = $content['data']['properties']['label'];
-                    $set['loc_linkurl'] = $content['data']['properties']['loc_linkurl'];
-                    $set['hover_location'] = $content['data']['properties']['hover_location'];
-                    $set['hover_style'] = $content['data']['properties']['hover_style'];
-                    $set['cluster_fillcolor'] = $content['cluster_fillcolor'];
-                    $set['cluster_distance'] = $content['cluster_distance'];
-                    $set['cluster_fontcolor'] = $content['cluster_fontcolor'];
-                    $set['cluster_zoom'] = $content['cluster_zoom'];
-                    $set['cluster_popup'] = $content['cluster_popup'];
-                    if($content['settings']['cluster']){
-                        $layer['cluster'] = $content['settings']['cluster'];
-                    }
-                    Database::getInstance()->prepare("INSERT INTO tl_c4g_map_layer_content %s")->set($set)->execute();
-                    unset($layer['content'][$key]);
-                }
-            }
-        }
 
-        return $layer;
     }
     protected function forceChildsInContent($layer)
     {
@@ -465,6 +411,16 @@ class LayerService
         $arrLayerData['name'] =  \Contao\Controller::replaceInsertTags($stringClass::decodeEntities($objLayer->name));
         $arrLayerData['zoom_locations'] = $objLayer->zoom_locations;
         $arrLayerData['async_content'] = $objLayer->async_content;
+        $arrLayerData['locstyle'] = $objLayer->locstyle;
+        if($objLayer->cluster_locations){
+            $arrLayerData['cluster'] = array(
+                'distance' => $objLayer->cluster_distance,
+                'fillcolor' => $objLayer->cluster_fillcolor,
+                'fontcolor' => $objLayer->cluster_fontcolor,
+                'zoom' => $objLayer->cluster_zoom,
+                'popup' => $objLayer->cluster_popup
+            );
+        }
 
         // check parent hide status
         $parentLayer = C4gMapsModel::findById($objLayer->pid);
@@ -584,12 +540,19 @@ class LayerService
                     return $objLayerContentApi->getLayerDataPublic($objLayer->id);
                 }
             // same function call, so fallthrough
+
+            case "table":
+                if($objLayer->async_content){
+                    return false;
+                }
+                else{
+                    return $objLayerContentApi->getLayerDataPublic($objLayer->id);
+                }
             case "link":
             case "overpass":
             case "gpx":
             case "kml":
             case "osm":
-            case "table":
             case "single":
                 return $objLayerContentApi->getLayerDataPublic($objLayer->id);
 //            case "folder":

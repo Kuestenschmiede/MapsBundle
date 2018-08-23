@@ -415,23 +415,12 @@ class LayerContentApi extends \Controller
                 if ($sourceTable) {
                     $queryCount = "SELECT COUNT(*) AS count FROM `$sourceTable`" . $qWhere . $pidOption . $qAnd . $whereClause . $addBeWhereClause . $qAndIn . $qIn . $stmt;
                     $resultCount = \Database::getInstance()->prepare($queryCount)->execute()->fetchAssoc()['count'];
-                    $countDown = 0;
-                    $countTop = 5000;
-                    if ($resultCount < $countTop) {
+
+                    if ($resultCount < 45000) {
                         $query = "SELECT * FROM `$sourceTable`" . $qWhere . $pidOption . $qAnd . $whereClause . $addBeWhereClause . $qAndIn . $qIn . $stmt;
                         $result = \Database::getInstance()->prepare($query)->execute();
                     }
-                    else{
-                        if($qWhere){
-                            $query = "SELECT * FROM `$sourceTable`" . $qWhere . $pidOption . $qAnd . $whereClause . $addBeWhereClause . $qAndIn . $qIn . $stmt . ' AND id<' . $countTop;
-                            $result = \Database::getInstance()->prepare($query)->execute();
-                        }
-                        else{
-                            $query = "SELECT * FROM `$sourceTable`" . $qWhere . $pidOption . $qAnd . $whereClause . $addBeWhereClause . $qAndIn . $qIn . $stmt . ' WHERE id<'. $countTop;
-                            $result = \Database::getInstance()->prepare($query)->execute();
-                        }
 
-                    }
                 }
 
                 $geox = $arrConfig['geox'];
@@ -448,9 +437,7 @@ class LayerContentApi extends \Controller
                 if (!$result) {
                     break;
                 }
-                while ($resultCount > $countTop) {
-                    $countDown = $countTop;
-                    $countTop = $countTop + 5000;
+
                     while ($result->next()) {
                         $locstyle = $result->c4g_locstyle;
                         if (!$locstyle) {
@@ -725,15 +712,7 @@ class LayerContentApi extends \Controller
 
                         }
                     }
-                    if($qWhere){
-                        $query = "SELECT * FROM `$sourceTable`" . $qWhere . $pidOption . $qAnd . $whereClause . $addBeWhereClause . $qAndIn . $qIn . $stmt . ' AND id<' . $countTop . ' AND id>' .$countDown;
-                        $result = \Database::getInstance()->prepare($query)->execute();
-                    }
-                    else{
-                        $query = "SELECT * FROM `$sourceTable`" . $qWhere . $pidOption . $qAnd . $whereClause . $addBeWhereClause . $qAndIn . $qIn . $stmt . ' WHERE id<'. $countTop. ' AND id>' .$countDown;
-                        $result = \Database::getInstance()->prepare($query)->execute();
-                    }
-        }
+
                 break;
             case 'link':
                 $linkContent = $this->createLayerFromLink($objLayer);
