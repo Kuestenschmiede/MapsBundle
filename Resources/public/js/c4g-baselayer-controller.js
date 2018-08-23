@@ -642,10 +642,11 @@ class C4gBaselayerController {
              */
             if (typeof baseLayerConfig !== "undefined") {
                 var mapData = this.mapController.data;
-                if (mapData.cesium && mapData.cesium.enable) {
+                if (mapData.cesium && mapData.cesium.enable && (mapData.cesium.always || baseLayerConfig.cesium)) {
                     if (!this.ol3d) {
                         this.ol3d = new olcs.OLCesium({
-                            map: this.mapController.map/*,
+                            map: this.mapController.map,
+                            createSynchronizers: false/*,
                             time() {
                                 const val = timeElt.value;
                                 if (ol3d.getCesiumScene().globe.enableLighting && val) {
@@ -656,30 +657,26 @@ class C4gBaselayerController {
                                 return Cesium.JulianDate.now();
                             }*/});
                     }
-                    if (mapData.cesium.always || (baseLayerConfig.cesium)) {
-                        /*const scene = ol3d.getCesiumScene();
-                        const terrainProvider = new Cesium.CesiumTerrainProvider({
-                            url: '//assets.agi.com/stk-terrain/world',
-                            requestVertexNormals: true
-                        });
-                        scene.terrainProvider = terrainProvider;*/
-                        this.ol3d.setEnabled(true);
-                        /*window['toggleTime'] = function() {
-                            scene.globe.enableLighting = !scene.globe.enableLighting;
-                            if (timeElt.style.display == 'none') {
-                                timeElt.style.display = 'inline-block';
-                            } else {
-                                timeElt.style.display = 'none';
-                            }
-                        };*/
-                    } else {
-                        if (this.ol3d.getEnabled()) {
-                            this.ol3d.setEnabled(false);
-                            c4g.maps.utils.redrawMapView(this.mapController);
+                    /*const scene = ol3d.getCesiumScene();
+                    const terrainProvider = new Cesium.CesiumTerrainProvider({
+                        url: '//assets.agi.com/stk-terrain/world',
+                        requestVertexNormals: true
+                    });
+                    scene.terrainProvider = terrainProvider;*/
+                    this.ol3d.setEnabled(true);
+                    /*window['toggleTime'] = function() {
+                        scene.globe.enableLighting = !scene.globe.enableLighting;
+                        if (timeElt.style.display == 'none') {
+                            timeElt.style.display = 'inline-block';
+                        } else {
+                            timeElt.style.display = 'none';
                         }
-
+                    };*/
+                } else {
+                    if (this.ol3d && this.ol3d.getEnabled()) {
+                        this.ol3d.setEnabled(false);
+                        c4g.maps.utils.redrawMapView(this.mapController);
                     }
-
                 }
             }
         }
