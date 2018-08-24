@@ -42,7 +42,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['url'] 	        	= array('URL', 'Pl
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['api_key']       		= array('Access Token / API Key', 'Please insert key for your user account.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['app_id']       		= array('Style ID / Key', 'Please insert key for your application.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['cesium']              = array('Activate cesium', 'If cesium enabled on map profile you can activate the globe for this map.');
-
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['layerGroup']              = array('Group of baselayers', 'Group of baselayers as a single one. The sorting of the layers in frontend and backend is the same.');
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['published']               = array('Veröffentlicht','Basiskarte veröffentlichen?');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['wms_url'] = array('URL', '');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['wms_params_layers'] = array('Layer', '');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['wms_params_version'] = array('Version', '');
@@ -51,7 +52,9 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['wms_params_transparent'] = array('
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['wms_params_srs'] = array('', '');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['wms_gutter'] = array('Gutter', '');
 
-
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['baselayerGroup']['baselayers']    = 'Baselayers';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['baselayerGroup']['minZoom']       = 'Minimal zoomlevel';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['baselayerGroup']['maxZoom']       = 'Maximal zoomlevel';
 /**
  * Reference
  */
@@ -64,6 +67,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_bing']   	= 'Bing Maps';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_wms']        = 'WMS';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_klokan']    	= 'Klokan';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_owm']        = 'OpenWeatherMap';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_group']      = 'Group of baselayers';
 
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm_mapnik'] 			= 'Mapnik';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm_osma']   			= 'Osmarender';

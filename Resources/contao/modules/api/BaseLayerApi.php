@@ -292,6 +292,16 @@ class BaseLayerApi extends \Frontend
                 $arrBaseLayer['app_id'] = $objBaseLayer->app_id;
                 $arrBaseLayer['api_key'] = $objBaseLayer->api_key;
                 break;
+            case 'group':
+                $layerGroup = unserialize($objBaseLayer->layerGroup);
+                foreach($layerGroup as $key => $layer){
+                    $objChildLayer = $this->Database->prepare("SELECT * FROM tl_c4g_map_baselayers WHERE id=?")->execute($layer['baselayers']);
+                    $layer['entry'] = $this->parseBaseLayer($objChildLayer);
+                    $layerGroup[$key] = $layer;
+                }
+                $arrBaseLayer['layerGroup'] = array_reverse($layerGroup);
+
+                break;
             default:
                 die('This should not have happened!');
         }

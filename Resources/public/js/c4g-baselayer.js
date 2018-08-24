@@ -33,6 +33,15 @@ class C4gBaselayer{
         this.style_url = baselayerArr['style_url'];
         this.hasOverlays = baselayerArr['hasOverlays'];
         this.overlays = baselayerArr['overlays'];
+        if(baselayerArr['layerGroup']){
+            let layerGroup = [];
+            for(let index in baselayerArr['layerGroup'] ){
+                layerGroup[index] = new C4gBaselayer(baselayerArr['layerGroup'][index]['entry']);
+                layerGroup[index]['minZoom'] = baselayerArr['layerGroup'][index]['minZoom'];
+                layerGroup[index]['maxZoom'] = baselayerArr['layerGroup'][index]['maxZoom'];
+            }
+            this.layerGroup = layerGroup;
+        }
         this.overlayController = new C4gOverlayController(this);
         this.layer = false;
         this.controller = controller

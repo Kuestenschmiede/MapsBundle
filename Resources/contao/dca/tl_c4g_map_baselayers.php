@@ -141,6 +141,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] = array
                                          '{protection_legend:hide},protect_baselayer;',
         'owm'                         => '{general_legend},name,display_name,provider,app_id,api_key,attribution,minzoomlevel,maxzoomlevel;{cesium_legend:hide},cesium;'.
                                          '{protection_legend:hide},protect_baselayer;',
+        'group'                       => '{general_legend},name,display_name,provider,attribution,layerGroup;'.
+                                         '{protection_legend:hide},protect_baselayer,published;'
     ),
 
 
@@ -227,11 +229,22 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] = array
                                                'bing' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_bing'],
                                                'klokan' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_klokan'],
                                                'wms' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_wms'],
+                                               'group' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_group']
                                               ),
             'eval'                    => array('submitOnChange'=>true, 'tl_class'=>'clr'),
             'sql'                     => "varchar(10) NOT NULL default ''"
         ),
+        'layerGroup' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['layerGroup'],
+            'exclude'                 => true,
+            'inputType'               => 'multiColumnWizard',
+            'eval'                    => array(
+                'columnsCallback'        => array('tl_c4g_map_baselayers','groupColumns')
+            ),
+            'sql'                     => 'blob NULL'
 
+        ),
         'osm_style' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['osm_style'],
@@ -636,4 +649,38 @@ class tl_c4g_map_baselayers extends Backend
             ->execute($intId);
         $this->createNewVersion('tl_c4g_map_baselayers', $intId);
     }
+    public function groupColumns( $multiColumnWizard){
+        $arrColumnBaselayers = array(
+            'label'     => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['baselayerGroup']['baselayers'],
+            'inputType' => 'select'
+        );
+        $arrBaselayers = $this->Database->prepare("SELECT * FROM tl_c4g_map_baselayers WHERE published=1")
+            ->execute()->fetchAllAssoc();
+        $arrOptions =[];
+        foreach ($arrBaselayers as $arrBaselayer){
+            $arrOptions[$arrBaselayer['id']] = $arrBaselayer['name'];
+        }
+        $arrColumnBaselayers['options'] = $arrOptions;
+        $arrColumMinZoom = array(
+            'label'     => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['baselayerGroup']['minZoom'],
+            'filter'                  => false,
+            'inputType'               => 'text',
+            'default'                 => '0',
+            'eval'                    => array('mandatory'=>'true', 'tl_class'=>'w50', 'rgxp'=>'digit')
+        );
+        $arrColumMaxZoom = array(
+            'label'     => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['baselayerGroup']['maxZoom'],
+            'filter'                  => false,
+            'inputType'               => 'text',
+            'default'                 => '18',
+            'eval'                    => array('mandatory'=>'true', 'tl_class'=>'w50', 'rgxp'=>'digit')
+        );
+        $return = array(
+            'baselayers'    => $arrColumnBaselayers,
+            'minZoom'       => $arrColumMinZoom,
+            'maxZoom'       => $arrColumMaxZoom,
+        );
+        return $return;
+    }
 }
+
