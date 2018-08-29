@@ -143,20 +143,16 @@ olcs.OLCesium = _olcs_OLCesium_js__WEBPACK_IMPORTED_MODULE_0__["default"];
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var goog_asserts_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! goog/asserts.js */ "./src/goog/asserts.js");
-/* harmony import */ var ol_util_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ol/util.js */ "ol/util.js");
-/* harmony import */ var ol_util_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(ol_util_js__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var ol_Observable_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ol/Observable.js */ "ol/Observable.js");
-/* harmony import */ var ol_Observable_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(ol_Observable_js__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var ol_events_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ol/events.js */ "ol/events.js");
-/* harmony import */ var ol_events_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(ol_events_js__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var ol_layer_Group_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ol/layer/Group.js */ "ol/layer/Group.js");
-/* harmony import */ var ol_layer_Group_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(ol_layer_Group_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var ol_Observable_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ol/Observable.js */ "ol/Observable.js");
+/* harmony import */ var ol_Observable_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(ol_Observable_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var ol_layer_Group_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ol/layer/Group.js */ "ol/layer/Group.js");
+/* harmony import */ var ol_layer_Group_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(ol_layer_Group_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _util_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./util.js */ "./src/olcs/util.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
  * @module olcs.AbstractSynchronizer
  */
-
 
 
 
@@ -203,7 +199,7 @@ var AbstractSynchronizer = function () {
     this.mapLayerGroup = map.getLayerGroup();
 
     /**
-     * Map of OpenLayers layer ids (from ol.getUid) to the Cesium ImageryLayers.
+     * Map of OpenLayers layer ids (from getUid) to the Cesium ImageryLayers.
      * Null value means, that we are unable to create equivalent layers.
      * @type {Object.<string, ?Array.<T>>}
      * @protected
@@ -211,14 +207,14 @@ var AbstractSynchronizer = function () {
     this.layerMap = {};
 
     /**
-     * Map of listen keys for OpenLayers layer layers ids (from ol.getUid).
+     * Map of listen keys for OpenLayers layer layers ids (from getUid).
      * @type {!Object.<string, Array<ol.EventsKey>>}
      * @protected
      */
     this.olLayerListenKeys = {};
 
     /**
-     * Map of listen keys for OpenLayers layer groups ids (from ol.getUid).
+     * Map of listen keys for OpenLayers layer groups ids (from getUid).
      * @type {!Object.<string, !Array.<ol.EventsKey>>}
      * @private
      */
@@ -266,12 +262,12 @@ var AbstractSynchronizer = function () {
     var _loop = function _loop() {
       var olLayerWithParents = fifo.splice(0, 1)[0];
       var olLayer = olLayerWithParents.layer;
-      var olLayerId = Object(ol_util_js__WEBPACK_IMPORTED_MODULE_1__["getUid"])(olLayer).toString();
+      var olLayerId = Object(_util_js__WEBPACK_IMPORTED_MODULE_3__["getUid"])(olLayer).toString();
       _this.olLayerListenKeys[olLayerId] = [];
       goog_asserts_js__WEBPACK_IMPORTED_MODULE_0__["default"].assert(!_this.layerMap[olLayerId]);
 
       var cesiumObjects = null;
-      if (olLayer instanceof ol_layer_Group_js__WEBPACK_IMPORTED_MODULE_4___default.a) {
+      if (olLayer instanceof ol_layer_Group_js__WEBPACK_IMPORTED_MODULE_2___default.a) {
         _this.listenForGroupChanges_(olLayer);
         if (olLayer !== _this.mapLayerGroup) {
           cesiumObjects = _this.createSingleLayerCounterparts(olLayerWithParents);
@@ -298,12 +294,12 @@ var AbstractSynchronizer = function () {
             var cesiumObjs = _this.createSingleLayerCounterparts(layerWithParents);
             if (cesiumObjs) {
               // unsubscribe event listener
-              layerWithParents.layer.un('change', onLayerChange, _this);
+              layerWithParents.layer.un('change', onLayerChange);
               _this.addCesiumObjects_(cesiumObjs, layerId, layerWithParents.layer);
               _this.orderLayers();
             }
           };
-          _this.olLayerListenKeys[olLayerId].push(ol_events_js__WEBPACK_IMPORTED_MODULE_3__["listen"](layerWithParents.layer, 'change', onLayerChange, _this));
+          _this.olLayerListenKeys[olLayerId].push(Object(_util_js__WEBPACK_IMPORTED_MODULE_3__["olcsListen"])(layerWithParents.layer, 'change', onLayerChange));
         }
       }
       // add Cesium layers
@@ -332,7 +328,9 @@ var AbstractSynchronizer = function () {
     var _this2 = this;
 
     this.layerMap[layerId] = cesiumObjects;
-    this.olLayerListenKeys[layerId].push(ol_events_js__WEBPACK_IMPORTED_MODULE_3__["listen"](layer, 'change:zIndex', this.orderLayers, this));
+    this.olLayerListenKeys[layerId].push(Object(_util_js__WEBPACK_IMPORTED_MODULE_3__["olcsListen"])(layer, 'change:zIndex', function () {
+      return _this2.orderLayers();
+    }));
     cesiumObjects.forEach(function (cesiumObject) {
       _this2.addCesiumObject(cesiumObject);
     });
@@ -349,14 +347,14 @@ var AbstractSynchronizer = function () {
   AbstractSynchronizer.prototype.removeAndDestroySingleLayer_ = function removeAndDestroySingleLayer_(layer) {
     var _this3 = this;
 
-    var uid = Object(ol_util_js__WEBPACK_IMPORTED_MODULE_1__["getUid"])(layer).toString();
+    var uid = Object(_util_js__WEBPACK_IMPORTED_MODULE_3__["getUid"])(layer).toString();
     var counterparts = this.layerMap[uid];
     if (!!counterparts) {
       counterparts.forEach(function (counterpart) {
         _this3.removeSingleCesiumObject(counterpart, false);
         _this3.destroyCesiumObject(counterpart);
       });
-      this.olLayerListenKeys[uid].forEach(ol_Observable_js__WEBPACK_IMPORTED_MODULE_2__["unByKey"]);
+      this.olLayerListenKeys[uid].forEach(ol_Observable_js__WEBPACK_IMPORTED_MODULE_1__["unByKey"]);
       delete this.olLayerListenKeys[uid];
     }
     delete this.layerMap[uid];
@@ -374,10 +372,10 @@ var AbstractSynchronizer = function () {
     if (group === this.mapLayerGroup) {
       return;
     }
-    var uid = Object(ol_util_js__WEBPACK_IMPORTED_MODULE_1__["getUid"])(group).toString();
+    var uid = Object(_util_js__WEBPACK_IMPORTED_MODULE_3__["getUid"])(group).toString();
     var keys = this.olGroupListenKeys_[uid];
     keys.forEach(function (key) {
-      Object(ol_Observable_js__WEBPACK_IMPORTED_MODULE_2__["unByKey"])(key);
+      Object(ol_Observable_js__WEBPACK_IMPORTED_MODULE_1__["unByKey"])(key);
     });
     delete this.olGroupListenKeys_[uid];
     delete this.layerMap[uid];
@@ -399,7 +397,7 @@ var AbstractSynchronizer = function () {
         while (fifo.length > 0) {
           var _olLayer = fifo.splice(0, 1)[0];
           var done = _this4.removeAndDestroySingleLayer_(_olLayer);
-          if (_olLayer instanceof ol_layer_Group_js__WEBPACK_IMPORTED_MODULE_4___default.a) {
+          if (_olLayer instanceof ol_layer_Group_js__WEBPACK_IMPORTED_MODULE_2___default.a) {
             _this4.unlistenSingleGroup_(_olLayer);
             if (!done) {
               // No counterpart for the group itself so removing
@@ -422,7 +420,7 @@ var AbstractSynchronizer = function () {
 
 
   AbstractSynchronizer.prototype.listenForGroupChanges_ = function listenForGroupChanges_(group) {
-    var uuid = Object(ol_util_js__WEBPACK_IMPORTED_MODULE_1__["getUid"])(group).toString();
+    var uuid = Object(_util_js__WEBPACK_IMPORTED_MODULE_3__["getUid"])(group).toString();
 
     goog_asserts_js__WEBPACK_IMPORTED_MODULE_0__["default"].assert(this.olGroupListenKeys_[uuid] === undefined);
 
@@ -453,7 +451,7 @@ var AbstractSynchronizer = function () {
         if (i >= 0) {
           listenKeyArray.splice(i, 1);
         }
-        Object(ol_Observable_js__WEBPACK_IMPORTED_MODULE_2__["unByKey"])(el);
+        Object(ol_Observable_js__WEBPACK_IMPORTED_MODULE_1__["unByKey"])(el);
       });
       listenAddRemove();
     }));
@@ -470,10 +468,10 @@ var AbstractSynchronizer = function () {
     var objKey = void 0;
     for (objKey in this.olGroupListenKeys_) {
       var keys = this.olGroupListenKeys_[objKey];
-      keys.forEach(ol_Observable_js__WEBPACK_IMPORTED_MODULE_2__["unByKey"]);
+      keys.forEach(ol_Observable_js__WEBPACK_IMPORTED_MODULE_1__["unByKey"]);
     }
     for (objKey in this.olLayerListenKeys) {
-      this.olLayerListenKeys[objKey].forEach(ol_Observable_js__WEBPACK_IMPORTED_MODULE_2__["unByKey"]);
+      this.olLayerListenKeys[objKey].forEach(ol_Observable_js__WEBPACK_IMPORTED_MODULE_1__["unByKey"]);
     }
     this.olGroupListenKeys_ = {};
     this.olLayerListenKeys = {};
@@ -807,8 +805,8 @@ var Camera = function () {
       this.toLonLat_ = toLonLat;
       this.fromLonLat_ = fromLonLat;
 
-      this.viewListenKey_ = view.on('propertychange', function () {
-        return _this2.handleViewEvent_;
+      this.viewListenKey_ = view.on('propertychange', function (e) {
+        return _this2.handleViewEvent_(e);
       });
 
       this.readFromView();
@@ -1242,23 +1240,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ol_geom_Polygon_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ol/geom/Polygon.js */ "ol/geom/Polygon.js");
 /* harmony import */ var ol_geom_Polygon_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(ol_geom_Polygon_js__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var goog_asserts_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! goog/asserts.js */ "./src/goog/asserts.js");
-/* harmony import */ var ol_util_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ol/util.js */ "ol/util.js");
-/* harmony import */ var ol_util_js__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(ol_util_js__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var ol_events_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ol/events.js */ "ol/events.js");
-/* harmony import */ var ol_events_js__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(ol_events_js__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var ol_extent_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ol/extent.js */ "ol/extent.js");
-/* harmony import */ var ol_extent_js__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(ol_extent_js__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var ol_geom_SimpleGeometry_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ol/geom/SimpleGeometry.js */ "ol/geom/SimpleGeometry.js");
-/* harmony import */ var ol_geom_SimpleGeometry_js__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(ol_geom_SimpleGeometry_js__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _core_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./core.js */ "./src/olcs/core.js");
-/* harmony import */ var _core_VectorLayerCounterpart_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./core/VectorLayerCounterpart.js */ "./src/olcs/core/VectorLayerCounterpart.js");
-/* harmony import */ var _util_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./util.js */ "./src/olcs/util.js");
+/* harmony import */ var ol_events_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ol/events.js */ "ol/events.js");
+/* harmony import */ var ol_events_js__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(ol_events_js__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var ol_extent_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ol/extent.js */ "ol/extent.js");
+/* harmony import */ var ol_extent_js__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(ol_extent_js__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var ol_geom_SimpleGeometry_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ol/geom/SimpleGeometry.js */ "ol/geom/SimpleGeometry.js");
+/* harmony import */ var ol_geom_SimpleGeometry_js__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(ol_geom_SimpleGeometry_js__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _core_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./core.js */ "./src/olcs/core.js");
+/* harmony import */ var _core_VectorLayerCounterpart_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./core/VectorLayerCounterpart.js */ "./src/olcs/core/VectorLayerCounterpart.js");
+/* harmony import */ var _util_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./util.js */ "./src/olcs/util.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
  * @module olcs.FeatureConverter
  */
-
 
 
 
@@ -1308,12 +1303,12 @@ var FeatureConverter = function () {
     var source = evt.target;
     goog_asserts_js__WEBPACK_IMPORTED_MODULE_5__["default"].assertInstanceof(source, ol_source_Vector_js__WEBPACK_IMPORTED_MODULE_2___default.a);
 
-    var cancellers = _util_js__WEBPACK_IMPORTED_MODULE_12__["default"].obj(source)['olcs_cancellers'];
+    var cancellers = _util_js__WEBPACK_IMPORTED_MODULE_11__["default"].obj(source)['olcs_cancellers'];
     if (cancellers) {
       var feature = evt.feature;
       if (feature) {
         // remove
-        var id = Object(ol_util_js__WEBPACK_IMPORTED_MODULE_6__["getUid"])(feature);
+        var id = Object(_util_js__WEBPACK_IMPORTED_MODULE_11__["getUid"])(feature);
         var canceller = cancellers[id];
         if (canceller) {
           canceller();
@@ -1326,7 +1321,7 @@ var FeatureConverter = function () {
             cancellers[key]();
           }
         }
-        _util_js__WEBPACK_IMPORTED_MODULE_12__["default"].obj(source)['olcs_cancellers'] = {};
+        _util_js__WEBPACK_IMPORTED_MODULE_11__["default"].obj(source)['olcs_cancellers'] = {};
       }
     }
   };
@@ -1434,7 +1429,7 @@ var FeatureConverter = function () {
       olColor = fillColor;
     }
 
-    return _core_js__WEBPACK_IMPORTED_MODULE_10__["default"].convertColorToCesium(olColor);
+    return _core_js__WEBPACK_IMPORTED_MODULE_9__["default"].convertColorToCesium(olColor);
   };
 
   /**
@@ -1559,7 +1554,7 @@ var FeatureConverter = function () {
   FeatureConverter.prototype.olCircleGeometryToCesium = function olCircleGeometryToCesium(layer, feature, olGeometry, projection, olStyle) {
     var _this = this;
 
-    olGeometry = _core_js__WEBPACK_IMPORTED_MODULE_10__["default"].olGeometryCloneTo4326(olGeometry, projection);
+    olGeometry = _core_js__WEBPACK_IMPORTED_MODULE_9__["default"].olGeometryCloneTo4326(olGeometry, projection);
     goog_asserts_js__WEBPACK_IMPORTED_MODULE_5__["default"].assert(olGeometry.getType() == 'Circle');
 
     // ol.Coordinate
@@ -1569,8 +1564,8 @@ var FeatureConverter = function () {
     point[0] += olGeometry.getRadius();
 
     // Cesium
-    center = _core_js__WEBPACK_IMPORTED_MODULE_10__["default"].ol4326CoordinateToCesiumCartesian(center);
-    point = _core_js__WEBPACK_IMPORTED_MODULE_10__["default"].ol4326CoordinateToCesiumCartesian(point);
+    center = _core_js__WEBPACK_IMPORTED_MODULE_9__["default"].ol4326CoordinateToCesiumCartesian(center);
+    point = _core_js__WEBPACK_IMPORTED_MODULE_9__["default"].ol4326CoordinateToCesiumCartesian(point);
 
     // Accurate computation of straight distance
     var radius = Cesium.Cartesian3.distance(center, point);
@@ -1588,7 +1583,7 @@ var FeatureConverter = function () {
       var width = this.extractLineWidthFromOlStyle(olStyle);
       if (width) {
         var circlePolygon = Object(ol_geom_Polygon_js__WEBPACK_IMPORTED_MODULE_4__["circular"])(olGeometry.getCenter(), radius);
-        var positions = _core_js__WEBPACK_IMPORTED_MODULE_10__["default"].ol4326CoordinateArrayToCsCartesians(circlePolygon.getLinearRing(0).getCoordinates());
+        var positions = _core_js__WEBPACK_IMPORTED_MODULE_9__["default"].ol4326CoordinateArrayToCsCartesians(circlePolygon.getLinearRing(0).getCoordinates());
         if (!Cesium.GroundPolylinePrimitive.isSupported(this.scene)) {
           var color = this.extractColorFromOlStyle(olStyle, true);
           outlinePrimitive = this.createStackedGroundCorridors(layer, feature, width, color, positions);
@@ -1702,10 +1697,10 @@ var FeatureConverter = function () {
   FeatureConverter.prototype.olLineStringGeometryToCesium = function olLineStringGeometryToCesium(layer, feature, olGeometry, projection, olStyle) {
     var _this2 = this;
 
-    olGeometry = _core_js__WEBPACK_IMPORTED_MODULE_10__["default"].olGeometryCloneTo4326(olGeometry, projection);
+    olGeometry = _core_js__WEBPACK_IMPORTED_MODULE_9__["default"].olGeometryCloneTo4326(olGeometry, projection);
     goog_asserts_js__WEBPACK_IMPORTED_MODULE_5__["default"].assert(olGeometry.getType() == 'LineString');
 
-    var positions = _core_js__WEBPACK_IMPORTED_MODULE_10__["default"].ol4326CoordinateArrayToCsCartesians(olGeometry.getCoordinates());
+    var positions = _core_js__WEBPACK_IMPORTED_MODULE_9__["default"].ol4326CoordinateArrayToCsCartesians(olGeometry.getCoordinates());
     var width = this.extractLineWidthFromOlStyle(olStyle);
 
     var outlinePrimitive = void 0;
@@ -1765,7 +1760,7 @@ var FeatureConverter = function () {
   FeatureConverter.prototype.olPolygonGeometryToCesium = function olPolygonGeometryToCesium(layer, feature, olGeometry, projection, olStyle) {
     var _this3 = this;
 
-    olGeometry = _core_js__WEBPACK_IMPORTED_MODULE_10__["default"].olGeometryCloneTo4326(olGeometry, projection);
+    olGeometry = _core_js__WEBPACK_IMPORTED_MODULE_9__["default"].olGeometryCloneTo4326(olGeometry, projection);
     goog_asserts_js__WEBPACK_IMPORTED_MODULE_5__["default"].assert(olGeometry.getType() == 'Polygon');
 
     var heightReference = this.getHeightReference(layer, feature, olGeometry);
@@ -1777,7 +1772,7 @@ var FeatureConverter = function () {
       // Create a rectangle according to the longitude and latitude curves
       var coordinates = olGeometry.getCoordinates()[0];
       // Extract the West, South, East, North coordinates
-      var extent = ol_extent_js__WEBPACK_IMPORTED_MODULE_8__["boundingExtent"](coordinates);
+      var extent = ol_extent_js__WEBPACK_IMPORTED_MODULE_7__["boundingExtent"](coordinates);
       var rectangle = Cesium.Rectangle.fromDegrees(extent[0], extent[1], extent[2], extent[3]);
 
       // Extract the average height of the vertices
@@ -1809,7 +1804,7 @@ var FeatureConverter = function () {
 
       for (var i = 0; i < rings.length; ++i) {
         var olPos = rings[i].getCoordinates();
-        var positions = _core_js__WEBPACK_IMPORTED_MODULE_10__["default"].ol4326CoordinateArrayToCsCartesians(olPos);
+        var positions = _core_js__WEBPACK_IMPORTED_MODULE_9__["default"].ol4326CoordinateArrayToCsCartesians(olPos);
         goog_asserts_js__WEBPACK_IMPORTED_MODULE_5__["default"].assert(positions && positions.length > 0);
         if (i == 0) {
           hierarchy.positions = positions;
@@ -1968,7 +1963,7 @@ var FeatureConverter = function () {
         return;
       }
       var center = olGeometry.getCoordinates();
-      var position = _core_js__WEBPACK_IMPORTED_MODULE_10__["default"].ol4326CoordinateToCesiumCartesian(center);
+      var position = _core_js__WEBPACK_IMPORTED_MODULE_9__["default"].ol4326CoordinateToCesiumCartesian(center);
       var color = void 0;
       var opacity = imageStyle.getOpacity();
       if (opacity !== undefined) {
@@ -2000,12 +1995,12 @@ var FeatureConverter = function () {
         cancelled = true;
       };
       source.on(['removefeature', 'clear'], this.boundOnRemoveOrClearFeatureListener_);
-      var cancellers = _util_js__WEBPACK_IMPORTED_MODULE_12__["default"].obj(source)['olcs_cancellers'];
+      var cancellers = _util_js__WEBPACK_IMPORTED_MODULE_11__["default"].obj(source)['olcs_cancellers'];
       if (!cancellers) {
-        cancellers = _util_js__WEBPACK_IMPORTED_MODULE_12__["default"].obj(source)['olcs_cancellers'] = {};
+        cancellers = _util_js__WEBPACK_IMPORTED_MODULE_11__["default"].obj(source)['olcs_cancellers'] = {};
       }
 
-      var fuid = Object(ol_util_js__WEBPACK_IMPORTED_MODULE_6__["getUid"])(feature);
+      var fuid = Object(_util_js__WEBPACK_IMPORTED_MODULE_11__["getUid"])(feature);
       if (cancellers[fuid]) {
         // When the feature change quickly, a canceller may still be present so
         // we cancel it here to prevent creation of a billboard.
@@ -2020,7 +2015,7 @@ var FeatureConverter = function () {
         }
       };
 
-      ol_events_js__WEBPACK_IMPORTED_MODULE_7__["listenOnce"](image, 'load', listener);
+      ol_events_js__WEBPACK_IMPORTED_MODULE_6__["listenOnce"](image, 'load', listener);
     } else {
       reallyCreateBillboard();
     }
@@ -2043,7 +2038,7 @@ var FeatureConverter = function () {
 
   FeatureConverter.prototype.olPointGeometryToCesium = function olPointGeometryToCesium(layer, feature, olGeometry, projection, style, billboards, opt_newBillboardCallback) {
     goog_asserts_js__WEBPACK_IMPORTED_MODULE_5__["default"].assert(olGeometry.getType() == 'Point');
-    olGeometry = _core_js__WEBPACK_IMPORTED_MODULE_10__["default"].olGeometryCloneTo4326(olGeometry, projection);
+    olGeometry = _core_js__WEBPACK_IMPORTED_MODULE_9__["default"].olGeometryCloneTo4326(olGeometry, projection);
 
     var modelPrimitive = null;
     var imageStyle = style.getImage();
@@ -2157,14 +2152,14 @@ var FeatureConverter = function () {
     var labels = new Cesium.LabelCollection({ scene: this.scene });
     // TODO: export and use the text draw position from OpenLayers .
     // See src/ol/render/vector.js
-    var extentCenter = ol_extent_js__WEBPACK_IMPORTED_MODULE_8__["getCenter"](geometry.getExtent());
-    if (geometry instanceof ol_geom_SimpleGeometry_js__WEBPACK_IMPORTED_MODULE_9___default.a) {
+    var extentCenter = ol_extent_js__WEBPACK_IMPORTED_MODULE_7__["getCenter"](geometry.getExtent());
+    if (geometry instanceof ol_geom_SimpleGeometry_js__WEBPACK_IMPORTED_MODULE_8___default.a) {
       var first = geometry.getFirstCoordinate();
       extentCenter[2] = first.length == 3 ? first[2] : 0.0;
     }
     var options = /** @type {Cesium.optionsLabelCollection} */{};
 
-    options.position = _core_js__WEBPACK_IMPORTED_MODULE_10__["default"].ol4326CoordinateToCesiumCartesian(extentCenter);
+    options.position = _core_js__WEBPACK_IMPORTED_MODULE_9__["default"].ol4326CoordinateToCesiumCartesian(extentCenter);
 
     options.text = text;
 
@@ -2255,7 +2250,7 @@ var FeatureConverter = function () {
     }
 
     var color = outline ? stroke.getColor() : fill.getColor();
-    color = _core_js__WEBPACK_IMPORTED_MODULE_10__["default"].convertColorToCesium(color);
+    color = _core_js__WEBPACK_IMPORTED_MODULE_9__["default"].convertColorToCesium(color);
 
     if (outline && stroke.getLineDash()) {
       return Cesium.Material.fromType('Stripe', {
@@ -2370,11 +2365,11 @@ var FeatureConverter = function () {
 
     var proj = context.projection;
     var newBillboardAddedCallback = function newBillboardAddedCallback(bb) {
-      var featureBb = context.featureToCesiumMap[Object(ol_util_js__WEBPACK_IMPORTED_MODULE_6__["getUid"])(feature)];
+      var featureBb = context.featureToCesiumMap[Object(_util_js__WEBPACK_IMPORTED_MODULE_11__["getUid"])(feature)];
       if (featureBb instanceof Array) {
         featureBb.push(bb);
       } else {
-        context.featureToCesiumMap[Object(ol_util_js__WEBPACK_IMPORTED_MODULE_6__["getUid"])(feature)] = [bb];
+        context.featureToCesiumMap[Object(_util_js__WEBPACK_IMPORTED_MODULE_11__["getUid"])(feature)] = [bb];
       }
     };
 
@@ -2458,7 +2453,7 @@ var FeatureConverter = function () {
 
     goog_asserts_js__WEBPACK_IMPORTED_MODULE_5__["default"].assertInstanceof(source, ol_source_Vector_js__WEBPACK_IMPORTED_MODULE_2___default.a);
     var features = source.getFeatures();
-    var counterpart = new _core_VectorLayerCounterpart_js__WEBPACK_IMPORTED_MODULE_11__["default"](proj, this.scene);
+    var counterpart = new _core_VectorLayerCounterpart_js__WEBPACK_IMPORTED_MODULE_10__["default"](proj, this.scene);
     var context = counterpart.context;
     for (var i = 0; i < features.length; ++i) {
       var feature = features[i];
@@ -2497,7 +2492,7 @@ var FeatureConverter = function () {
       if (!primitives) {
         continue;
       }
-      featurePrimitiveMap[Object(ol_util_js__WEBPACK_IMPORTED_MODULE_6__["getUid"])(feature)] = primitives;
+      featurePrimitiveMap[Object(_util_js__WEBPACK_IMPORTED_MODULE_11__["getUid"])(feature)] = primitives;
       counterpart.getRootPrimitive().add(primitives);
     }
 
@@ -2578,21 +2573,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var goog_asserts_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! goog/asserts.js */ "./src/goog/asserts.js");
 /* harmony import */ var ol_proj_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ol/proj.js */ "ol/proj.js");
 /* harmony import */ var ol_proj_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(ol_proj_js__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var ol_events_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ol/events.js */ "ol/events.js");
-/* harmony import */ var ol_events_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(ol_events_js__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _util_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./util.js */ "./src/olcs/util.js");
-/* harmony import */ var _core_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./core.js */ "./src/olcs/core.js");
-/* harmony import */ var _AutoRenderLoop_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./AutoRenderLoop.js */ "./src/olcs/AutoRenderLoop.js");
-/* harmony import */ var _Camera_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Camera.js */ "./src/olcs/Camera.js");
-/* harmony import */ var _RasterSynchronizer_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./RasterSynchronizer.js */ "./src/olcs/RasterSynchronizer.js");
-/* harmony import */ var _VectorSynchronizer_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./VectorSynchronizer.js */ "./src/olcs/VectorSynchronizer.js");
-/* harmony import */ var _OverlaySynchronizer_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./OverlaySynchronizer.js */ "./src/olcs/OverlaySynchronizer.js");
+/* harmony import */ var _util_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./util.js */ "./src/olcs/util.js");
+/* harmony import */ var _core_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./core.js */ "./src/olcs/core.js");
+/* harmony import */ var _AutoRenderLoop_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./AutoRenderLoop.js */ "./src/olcs/AutoRenderLoop.js");
+/* harmony import */ var _Camera_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Camera.js */ "./src/olcs/Camera.js");
+/* harmony import */ var _RasterSynchronizer_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./RasterSynchronizer.js */ "./src/olcs/RasterSynchronizer.js");
+/* harmony import */ var _VectorSynchronizer_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./VectorSynchronizer.js */ "./src/olcs/VectorSynchronizer.js");
+/* harmony import */ var _OverlaySynchronizer_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./OverlaySynchronizer.js */ "./src/olcs/OverlaySynchronizer.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
  * @module olcs.OLCesium
  */
-
 
 
 
@@ -2697,7 +2689,7 @@ var OLCesium = function () {
     if (this.isOverMap_ && options.stopOpenLayersEventsPropagation) {
       var overlayEvents = ['click', 'dblclick', 'mousedown', 'touchstart', 'MSPointerDown', 'pointerdown', 'mousewheel', 'wheel'];
       for (var i = 0, ii = overlayEvents.length; i < ii; ++i) {
-        ol_events_js__WEBPACK_IMPORTED_MODULE_3__["listen"](this.container_, overlayEvents[i], function (evt) {
+        this.container_.addEventListener(overlayEvents[i], function (evt) {
           return evt.stopPropagation();
         });
       }
@@ -2712,9 +2704,9 @@ var OLCesium = function () {
     canvasAttribute.value = fillArea;
     this.canvas_.setAttributeNode(canvasAttribute);
 
-    if (_util_js__WEBPACK_IMPORTED_MODULE_4__["default"].supportsImageRenderingPixelated()) {
+    if (_util_js__WEBPACK_IMPORTED_MODULE_3__["default"].supportsImageRenderingPixelated()) {
       // non standard CSS4
-      this.canvas_.style['imageRendering'] = _util_js__WEBPACK_IMPORTED_MODULE_4__["default"].imageRenderingValue();
+      this.canvas_.style['imageRendering'] = _util_js__WEBPACK_IMPORTED_MODULE_3__["default"].imageRenderingValue();
     }
 
     this.canvas_.oncontextmenu = function () {
@@ -2775,7 +2767,7 @@ var OLCesium = function () {
      * @type {!olcs.Camera}
      * @private
      */
-    this.camera_ = new _Camera_js__WEBPACK_IMPORTED_MODULE_7__["default"](this.scene_, this.map_);
+    this.camera_ = new _Camera_js__WEBPACK_IMPORTED_MODULE_6__["default"](this.scene_, this.map_);
 
     /**
      * @type {!Cesium.Globe}
@@ -2800,7 +2792,7 @@ var OLCesium = function () {
       dataSourceCollection: this.dataSourceCollection_
     });
 
-    var synchronizers = options.createSynchronizers ? options.createSynchronizers(this.map_, this.scene_, this.dataSourceCollection_) : [new _RasterSynchronizer_js__WEBPACK_IMPORTED_MODULE_8__["default"](this.map_, this.scene_), new _VectorSynchronizer_js__WEBPACK_IMPORTED_MODULE_9__["default"](this.map_, this.scene_), new _OverlaySynchronizer_js__WEBPACK_IMPORTED_MODULE_10__["default"](this.map_, this.scene_)];
+    var synchronizers = options.createSynchronizers ? options.createSynchronizers(this.map_, this.scene_, this.dataSourceCollection_) : [new _RasterSynchronizer_js__WEBPACK_IMPORTED_MODULE_7__["default"](this.map_, this.scene_), new _VectorSynchronizer_js__WEBPACK_IMPORTED_MODULE_8__["default"](this.map_, this.scene_), new _OverlaySynchronizer_js__WEBPACK_IMPORTED_MODULE_9__["default"](this.map_, this.scene_)];
 
     // Assures correct canvas size after initialisation
     this.handleResize_();
@@ -2996,7 +2988,7 @@ var OLCesium = function () {
     }
 
     var resolutionScale = this.resolutionScale_;
-    if (!_util_js__WEBPACK_IMPORTED_MODULE_4__["default"].supportsImageRenderingPixelated()) {
+    if (!_util_js__WEBPACK_IMPORTED_MODULE_3__["default"].supportsImageRenderingPixelated()) {
       resolutionScale *= window.devicePixelRatio || 1.0;
     }
     this.resolutionScaleChanged_ = false;
@@ -3202,7 +3194,7 @@ var OLCesium = function () {
 
   OLCesium.prototype.enableAutoRenderLoop = function enableAutoRenderLoop() {
     if (!this.autoRenderLoop_) {
-      this.autoRenderLoop_ = new _AutoRenderLoop_js__WEBPACK_IMPORTED_MODULE_6__["default"](this);
+      this.autoRenderLoop_ = new _AutoRenderLoop_js__WEBPACK_IMPORTED_MODULE_5__["default"](this);
     }
   };
 
@@ -3319,7 +3311,7 @@ Object.defineProperties(OLCesium.prototype, {
           goog_asserts_js__WEBPACK_IMPORTED_MODULE_1__["default"].assertInstanceof(geometry, ol_geom_Point_js__WEBPACK_IMPORTED_MODULE_0___default.a);
           var coo = geometry.getCoordinates();
           var coo4326 = to4326Transform(coo, undefined, coo.length);
-          return _core_js__WEBPACK_IMPORTED_MODULE_5__["default"].ol4326CoordinateToCesiumCartesian(coo4326);
+          return _core_js__WEBPACK_IMPORTED_MODULE_4__["default"].ol4326CoordinateToCesiumCartesian(coo4326);
         };
 
         // Create an invisible point entity for tracking.
@@ -3354,16 +3346,12 @@ Object.defineProperties(OLCesium.prototype, {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _SynchronizedOverlay_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SynchronizedOverlay.js */ "./src/olcs/SynchronizedOverlay.js");
-/* harmony import */ var ol_util_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ol/util.js */ "ol/util.js");
-/* harmony import */ var ol_util_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(ol_util_js__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var ol_events_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ol/events.js */ "ol/events.js");
-/* harmony import */ var ol_events_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(ol_events_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _util_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./util.js */ "./src/olcs/util.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
  * @module olcs.OverlaySynchronizer
  */
-
 
 
 
@@ -3406,7 +3394,7 @@ var OverlaySynchronizer = function () {
     this.overlayContainerStopEvent_.className = 'ol-overlaycontainer-stopevent';
     var overlayEvents = ['click', 'dblclick', 'mousedown', 'touchstart', 'MSPointerDown', 'pointerdown', 'mousewheel', 'wheel'];
     overlayEvents.forEach(function (event) {
-      ol_events_js__WEBPACK_IMPORTED_MODULE_2__["listen"](_this.overlayContainerStopEvent_, event, function (evt) {
+      _this.overlayContainerStopEvent_.addEventListener(event, function (evt) {
         return evt.stopPropagation();
       });
     });
@@ -3503,7 +3491,7 @@ var OverlaySynchronizer = function () {
       parent: overlay
     });
 
-    var overlayId = Object(ol_util_js__WEBPACK_IMPORTED_MODULE_1__["getUid"])(overlay).toString();
+    var overlayId = Object(_util_js__WEBPACK_IMPORTED_MODULE_1__["getUid"])(overlay).toString();
     this.overlayMap_[overlayId] = cesiumOverlay;
   };
 
@@ -3526,7 +3514,7 @@ var OverlaySynchronizer = function () {
 
 
   OverlaySynchronizer.prototype.removeOverlay = function removeOverlay(overlay) {
-    var overlayId = Object(ol_util_js__WEBPACK_IMPORTED_MODULE_1__["getUid"])(overlay).toString();
+    var overlayId = Object(_util_js__WEBPACK_IMPORTED_MODULE_1__["getUid"])(overlay).toString();
     var csOverlay = this.overlayMap_[overlayId];
     if (csOverlay) {
       csOverlay.destroy();
@@ -3569,12 +3557,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ol_layer_Group_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ol/layer/Group.js */ "ol/layer/Group.js");
 /* harmony import */ var ol_layer_Group_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(ol_layer_Group_js__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var goog_asserts_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! goog/asserts.js */ "./src/goog/asserts.js");
-/* harmony import */ var ol_util_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ol/util.js */ "ol/util.js");
-/* harmony import */ var ol_util_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(ol_util_js__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var ol_array_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ol/array.js */ "ol/array.js");
-/* harmony import */ var ol_array_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(ol_array_js__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _AbstractSynchronizer_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./AbstractSynchronizer.js */ "./src/olcs/AbstractSynchronizer.js");
-/* harmony import */ var _core_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./core.js */ "./src/olcs/core.js");
+/* harmony import */ var _util_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./util.js */ "./src/olcs/util.js");
+/* harmony import */ var _AbstractSynchronizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./AbstractSynchronizer.js */ "./src/olcs/AbstractSynchronizer.js");
+/* harmony import */ var _core_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./core.js */ "./src/olcs/core.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -3584,7 +3569,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 /**
  * @module olcs.RasterSynchronizer
  */
-
 
 
 
@@ -3677,7 +3661,7 @@ var RasterSynchronizer = function (_olcsAbstractSynchron) {
 
 
   RasterSynchronizer.prototype.convertLayerToCesiumImageries = function convertLayerToCesiumImageries(olLayer, viewProj) {
-    var result = _core_js__WEBPACK_IMPORTED_MODULE_5__["default"].tileLayerToImageryLayer(this.map, olLayer, viewProj);
+    var result = _core_js__WEBPACK_IMPORTED_MODULE_4__["default"].tileLayerToImageryLayer(this.map, olLayer, viewProj);
     return result ? [result] : null;
   };
 
@@ -3690,7 +3674,7 @@ var RasterSynchronizer = function (_olcsAbstractSynchron) {
     var _this2 = this;
 
     var olLayer = olLayerWithParents.layer;
-    var uid = Object(ol_util_js__WEBPACK_IMPORTED_MODULE_2__["getUid"])(olLayer).toString();
+    var uid = Object(_util_js__WEBPACK_IMPORTED_MODULE_2__["getUid"])(olLayer).toString();
     var viewProj = this.view.getProjection();
     goog_asserts_js__WEBPACK_IMPORTED_MODULE_1__["default"].assert(viewProj);
     var cesiumObjects = this.convertLayerToCesiumImageries(olLayer, viewProj);
@@ -3703,13 +3687,13 @@ var RasterSynchronizer = function (_olcsAbstractSynchron) {
           // the compiler does not seem to be able to infer this
           goog_asserts_js__WEBPACK_IMPORTED_MODULE_1__["default"].assert(cesiumObjects);
           for (var i = 0; i < cesiumObjects.length; ++i) {
-            _core_js__WEBPACK_IMPORTED_MODULE_5__["default"].updateCesiumLayerProperties(olLayerWithParents, cesiumObjects[i]);
+            _core_js__WEBPACK_IMPORTED_MODULE_4__["default"].updateCesiumLayerProperties(olLayerWithParents, cesiumObjects[i]);
           }
         }));
       });
 
       for (var i = 0; i < cesiumObjects.length; ++i) {
-        _core_js__WEBPACK_IMPORTED_MODULE_5__["default"].updateCesiumLayerProperties(olLayerWithParents, cesiumObjects[i]);
+        _core_js__WEBPACK_IMPORTED_MODULE_4__["default"].updateCesiumLayerProperties(olLayerWithParents, cesiumObjects[i]);
       }
 
       // there is no way to modify Cesium layer extent,
@@ -3719,7 +3703,7 @@ var RasterSynchronizer = function (_olcsAbstractSynchron) {
           _this2.cesiumLayers_.remove(cesiumObjects[_i], true); // destroy
           _this2.ourLayers_.remove(cesiumObjects[_i], false);
         }
-        delete _this2.layerMap[Object(ol_util_js__WEBPACK_IMPORTED_MODULE_2__["getUid"])(olLayer)]; // invalidate the map entry
+        delete _this2.layerMap[Object(_util_js__WEBPACK_IMPORTED_MODULE_2__["getUid"])(olLayer)]; // invalidate the map entry
         _this2.synchronize();
       }));
 
@@ -3758,7 +3742,7 @@ var RasterSynchronizer = function (_olcsAbstractSynchron) {
     while (queue.length > 0) {
       var olLayer = queue.splice(0, 1)[0];
       layers.push(olLayer);
-      zIndices[Object(ol_util_js__WEBPACK_IMPORTED_MODULE_2__["getUid"])(olLayer)] = olLayer.getZIndex();
+      zIndices[Object(_util_js__WEBPACK_IMPORTED_MODULE_2__["getUid"])(olLayer)] = olLayer.getZIndex();
 
       if (olLayer instanceof ol_layer_Group_js__WEBPACK_IMPORTED_MODULE_0___default.a) {
         var sublayers = olLayer.getLayers();
@@ -3769,12 +3753,12 @@ var RasterSynchronizer = function (_olcsAbstractSynchron) {
       }
     }
 
-    ol_array_js__WEBPACK_IMPORTED_MODULE_3__["stableSort"](layers, function (layer1, layer2) {
-      return zIndices[Object(ol_util_js__WEBPACK_IMPORTED_MODULE_2__["getUid"])(layer1)] - zIndices[Object(ol_util_js__WEBPACK_IMPORTED_MODULE_2__["getUid"])(layer2)];
+    Object(_util_js__WEBPACK_IMPORTED_MODULE_2__["stableSort"])(layers, function (layer1, layer2) {
+      return zIndices[Object(_util_js__WEBPACK_IMPORTED_MODULE_2__["getUid"])(layer1)] - zIndices[Object(_util_js__WEBPACK_IMPORTED_MODULE_2__["getUid"])(layer2)];
     });
 
     layers.forEach(function (olLayer) {
-      var olLayerId = Object(ol_util_js__WEBPACK_IMPORTED_MODULE_2__["getUid"])(olLayer).toString();
+      var olLayerId = Object(_util_js__WEBPACK_IMPORTED_MODULE_2__["getUid"])(olLayer).toString();
       var cesiumObjects = _this3.layerMap[olLayerId];
       if (cesiumObjects) {
         cesiumObjects.forEach(function (cesiumObject) {
@@ -3794,7 +3778,7 @@ var RasterSynchronizer = function (_olcsAbstractSynchron) {
   };
 
   return RasterSynchronizer;
-}(_AbstractSynchronizer_js__WEBPACK_IMPORTED_MODULE_4__["default"]);
+}(_AbstractSynchronizer_js__WEBPACK_IMPORTED_MODULE_3__["default"]);
 
 /* harmony default export */ __webpack_exports__["default"] = (RasterSynchronizer);
 
@@ -4152,14 +4136,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ol_layer_Image_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ol/layer/Image.js */ "ol/layer/Image.js");
 /* harmony import */ var ol_layer_Image_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(ol_layer_Image_js__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var goog_asserts_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! goog/asserts.js */ "./src/goog/asserts.js");
-/* harmony import */ var ol_util_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ol/util.js */ "ol/util.js");
-/* harmony import */ var ol_util_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(ol_util_js__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var ol_events_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ol/events.js */ "ol/events.js");
-/* harmony import */ var ol_events_js__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(ol_events_js__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var ol_layer_Vector_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ol/layer/Vector.js */ "ol/layer/Vector.js");
-/* harmony import */ var ol_layer_Vector_js__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(ol_layer_Vector_js__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _AbstractSynchronizer_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./AbstractSynchronizer.js */ "./src/olcs/AbstractSynchronizer.js");
-/* harmony import */ var _FeatureConverter_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./FeatureConverter.js */ "./src/olcs/FeatureConverter.js");
+/* harmony import */ var _util_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./util.js */ "./src/olcs/util.js");
+/* harmony import */ var ol_layer_Vector_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ol/layer/Vector.js */ "ol/layer/Vector.js");
+/* harmony import */ var ol_layer_Vector_js__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(ol_layer_Vector_js__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _AbstractSynchronizer_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./AbstractSynchronizer.js */ "./src/olcs/AbstractSynchronizer.js");
+/* harmony import */ var _FeatureConverter_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./FeatureConverter.js */ "./src/olcs/FeatureConverter.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -4169,7 +4150,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 /**
  * @module olcs.VectorSynchronizer
  */
-
 
 
 
@@ -4199,7 +4179,7 @@ var VectorSynchronizer = function (_olcsAbstractSynchron) {
      */
     var _this = _possibleConstructorReturn(this, _olcsAbstractSynchron.call(this, map, scene));
 
-    _this.converter = opt_converter || new _FeatureConverter_js__WEBPACK_IMPORTED_MODULE_9__["default"](scene);
+    _this.converter = opt_converter || new _FeatureConverter_js__WEBPACK_IMPORTED_MODULE_8__["default"](scene);
 
     /**
      * @private
@@ -4288,7 +4268,7 @@ var VectorSynchronizer = function (_olcsAbstractSynchron) {
     var _this2 = this;
 
     var olLayer = olLayerWithParents.layer;
-    if (!(olLayer instanceof ol_layer_Vector_js__WEBPACK_IMPORTED_MODULE_7___default.a)) {
+    if (!(olLayer instanceof ol_layer_Vector_js__WEBPACK_IMPORTED_MODULE_6___default.a)) {
       return null;
     }
     goog_asserts_js__WEBPACK_IMPORTED_MODULE_4__["default"].assertInstanceof(olLayer, ol_layer_Layer_js__WEBPACK_IMPORTED_MODULE_1___default.a);
@@ -4312,24 +4292,24 @@ var VectorSynchronizer = function (_olcsAbstractSynchron) {
     var olListenKeys = counterpart.olListenKeys;
 
     [olLayerWithParents.layer].concat(olLayerWithParents.parents).forEach(function (olLayerItem) {
-      olListenKeys.push(ol_events_js__WEBPACK_IMPORTED_MODULE_6__["listen"](olLayerItem, 'change:visible', function () {
+      olListenKeys.push(Object(_util_js__WEBPACK_IMPORTED_MODULE_5__["olcsListen"])(olLayerItem, 'change:visible', function () {
         _this2.updateLayerVisibility(olLayerWithParents, csPrimitives);
       }));
     });
     this.updateLayerVisibility(olLayerWithParents, csPrimitives);
 
     var onAddFeature = function (feature) {
-      goog_asserts_js__WEBPACK_IMPORTED_MODULE_4__["default"].assert(olLayer instanceof ol_layer_Vector_js__WEBPACK_IMPORTED_MODULE_7___default.a || olLayer instanceof ol_layer_Image_js__WEBPACK_IMPORTED_MODULE_3___default.a);
+      goog_asserts_js__WEBPACK_IMPORTED_MODULE_4__["default"].assert(olLayer instanceof ol_layer_Vector_js__WEBPACK_IMPORTED_MODULE_6___default.a || olLayer instanceof ol_layer_Image_js__WEBPACK_IMPORTED_MODULE_3___default.a);
       var context = counterpart.context;
       var prim = this.converter.convert(olLayer, view, feature, context);
       if (prim) {
-        featurePrimitiveMap[Object(ol_util_js__WEBPACK_IMPORTED_MODULE_5__["getUid"])(feature)] = prim;
+        featurePrimitiveMap[Object(_util_js__WEBPACK_IMPORTED_MODULE_5__["getUid"])(feature)] = prim;
         csPrimitives.add(prim);
       }
     }.bind(this);
 
     var onRemoveFeature = function (feature) {
-      var id = Object(ol_util_js__WEBPACK_IMPORTED_MODULE_5__["getUid"])(feature);
+      var id = Object(_util_js__WEBPACK_IMPORTED_MODULE_5__["getUid"])(feature);
       var context = counterpart.context;
       var bbs = context.featureToCesiumMap[id];
       if (bbs) {
@@ -4347,17 +4327,17 @@ var VectorSynchronizer = function (_olcsAbstractSynchron) {
       }
     }.bind(this);
 
-    olListenKeys.push(ol_events_js__WEBPACK_IMPORTED_MODULE_6__["listen"](source, 'addfeature', function (e) {
+    olListenKeys.push(Object(_util_js__WEBPACK_IMPORTED_MODULE_5__["olcsListen"])(source, 'addfeature', function (e) {
       goog_asserts_js__WEBPACK_IMPORTED_MODULE_4__["default"].assert(e.feature);
       onAddFeature(e.feature);
     }, this));
 
-    olListenKeys.push(ol_events_js__WEBPACK_IMPORTED_MODULE_6__["listen"](source, 'removefeature', function (e) {
+    olListenKeys.push(Object(_util_js__WEBPACK_IMPORTED_MODULE_5__["olcsListen"])(source, 'removefeature', function (e) {
       goog_asserts_js__WEBPACK_IMPORTED_MODULE_4__["default"].assert(e.feature);
       onRemoveFeature(e.feature);
     }, this));
 
-    olListenKeys.push(ol_events_js__WEBPACK_IMPORTED_MODULE_6__["listen"](source, 'changefeature', function (e) {
+    olListenKeys.push(Object(_util_js__WEBPACK_IMPORTED_MODULE_5__["olcsListen"])(source, 'changefeature', function (e) {
       var feature = e.feature;
       goog_asserts_js__WEBPACK_IMPORTED_MODULE_4__["default"].assert(feature);
       onRemoveFeature(feature);
@@ -4368,7 +4348,7 @@ var VectorSynchronizer = function (_olcsAbstractSynchron) {
   };
 
   return VectorSynchronizer;
-}(_AbstractSynchronizer_js__WEBPACK_IMPORTED_MODULE_8__["default"]);
+}(_AbstractSynchronizer_js__WEBPACK_IMPORTED_MODULE_7__["default"]);
 
 /* harmony default export */ __webpack_exports__["default"] = (VectorSynchronizer);
 
@@ -5411,11 +5391,14 @@ function toRadians(angleInDegrees) {
 /*!**************************!*\
   !*** ./src/olcs/util.js ***!
   \**************************/
-/*! exports provided: default */
+/*! exports provided: olcsListen, getUid, stableSort, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "olcsListen", function() { return olcsListen; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getUid", function() { return getUid; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "stableSort", function() { return stableSort; });
 /**
  * @module olcs.util
  */
@@ -5479,6 +5462,59 @@ exports.getSourceProjection = function (source) {
   );
 };
 
+/**
+ * @param {ol.Observable} observable
+ * @param {string} type
+ * @param {Function} listener
+ * @return {!ol.events.EventsKey}
+ */
+function olcsListen(observable, type, listener) {
+  // See https://github.com/openlayers/openlayers/pull/8481
+  // ol.events.listen is internal so we use `on` instead.
+  // And since `on` as a convoluted API (can return an EventsKey or an array of them)
+  // we use a cast here.
+  return (/** @type {!ol.events.EventsKey} */observable.on(type, listener)
+  );
+}
+
+/**
+ * Counter for getUid.
+ * @type {number}
+ */
+var uidCounter_ = 0;
+
+/**
+ * Gets a unique ID for an object. This mutates the object so that further calls
+ * with the same object as a parameter returns the same value. Unique IDs are generated
+ * as a strictly increasing sequence. Adapted from goog.getUid.
+ *
+ * @param {Object} obj The object to get the unique ID for.
+ * @return {number} The unique ID for the object.
+ */
+function getUid(obj) {
+  return obj.olcs_uid || (obj.olcs_uid = ++uidCounter_);
+}
+
+/**
+ * Sort the passed array such that the relative order of equal elements is preverved.
+ * See https://en.wikipedia.org/wiki/Sorting_algorithm#Stability for details.
+ * @param {Array<*>} arr The array to sort (modifies original).
+ * @param {!function(*, *): number} compareFnc Comparison function.
+ */
+function stableSort(arr, compareFnc) {
+  var length = arr.length;
+  var tmp = Array(arr.length);
+  for (var i = 0; i < length; i++) {
+    tmp[i] = { index: i, value: arr[i] };
+  }
+  tmp.sort(function (a, b) {
+    return compareFnc(a.value, b.value) || a.index - b.index;
+  });
+  for (var _i = 0; _i < arr.length; _i++) {
+    arr[_i] = tmp[_i].value;
+  }
+}
+
 /* harmony default export */ __webpack_exports__["default"] = (exports);
 
 /***/ }),
@@ -5502,17 +5538,6 @@ module.exports = ol.Observable;
 /***/ (function(module, exports) {
 
 module.exports = ol.Overlay;
-
-/***/ }),
-
-/***/ "ol/array.js":
-/*!***************************!*\
-  !*** external "ol.array" ***!
-  \***************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = ol.array;
 
 /***/ }),
 
@@ -5744,17 +5769,6 @@ module.exports = ol.source.Vector;
 /***/ (function(module, exports) {
 
 module.exports = ol.style.Icon;
-
-/***/ }),
-
-/***/ "ol/util.js":
-/*!**************************!*\
-  !*** external "ol.util" ***!
-  \**************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = ol.util;
 
 /***/ })
 
