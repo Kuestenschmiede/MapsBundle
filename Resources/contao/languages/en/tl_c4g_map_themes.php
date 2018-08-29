@@ -20,7 +20,9 @@ $GLOBALS['TL_LANG']['tl_c4g_map_themes']['show']    = array('Show theme', 'Show 
 /**
  * Fields
  */
-$GLOBALS['TL_LANG']['tl_c4g_map_themes']['name']    = array('Name', 'Please choose a name for the theme.');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['name']        = array('Name', 'Please choose a name for the theme.');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['useglobal']   = array('Set global', 'Some css vars, like colors, will provided outside the map.');
+
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['buttons'] = array('Buttons', 'Choose a style for the buttons.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['custom_buttons'] = array('Custom buttons', 'Check this options, if you want to use your own CSS.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['external_buttons']  = array('Custom buttons', 'Upload your own CSS-File.');

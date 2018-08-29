@@ -92,7 +92,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] = array
     'palettes' => array
     (
         '__selector__' => array('custom_buttons', 'custom_colors', 'custom_effects', 'custom_icons'),
-        'default' => '{theme_legend}, name; {buttons_legend}, buttons, buttonradius, custom_buttons; {colors_legend}, colors, maincolor, mainopacity, fontcolor, fontopacity, shadowcolor, shadowopacity, custom_colors; {effects_legend}, effects, custom_effects; {icons_legend}, icons, custom_icons',
+        'default' => '{theme_legend}, name, useglobal; {buttons_legend}, buttons, buttonradius, custom_buttons; {colors_legend}, colors, maincolor, mainopacity, fontcolor, fontopacity, shadowcolor, shadowopacity, custom_colors; {effects_legend}, effects, custom_effects; {icons_legend}, icons, custom_icons',
     ),
 
     //Subpalettes
@@ -126,6 +126,14 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] = array
             'inputType'               => 'text',
             'eval'                    => array('mandatory'=>true, 'maxlength'=>75),
             'sql'                     => "varchar(100) NOT NULL default ''"
+        ),
+        'useglobal' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['useglobal'],
+            'exclude'                 => true,
+            'default'                 => false,
+            'inputType'               => 'checkbox',
+            'sql'                     => "char(1) NOT NULL default ''"
         ),
         'buttons' => array
         (

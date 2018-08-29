@@ -395,6 +395,8 @@ class ResourceLoader extends coreResourceLoader
             if ($theme->shadowopacity) {
                 $themeData['shadowopacity'] = deserialize($theme->shadowopacity);
             }
+
+            $themeData['useglobal'] = $theme->useglobal;
         }
 
         if ($theme->custom_effects) {

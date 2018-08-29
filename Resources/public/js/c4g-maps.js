@@ -854,11 +854,15 @@ this.c4g.maps = this.c4g.maps || {};
 
         //themeData
         if (mapData.themeData) {
+            domMapDiv = document.getElementById(mapData.mapDiv);
+            if (mapData.themeData['useglobal']) {
+              domMapDiv = document.getElementById('wrapper');
+            };
+
             if (mapData.themeData['maincolor']) {
                 var mainColor = c4g.maps.utils.getRgbaFromHexAndOpacity(mapData.themeData['maincolor'], mapData.themeData['mainopacity']);
                 var fontColor = c4g.maps.utils.getRgbaFromHexAndOpacity(mapData.themeData['fontcolor'], mapData.themeData['fontopacity']);
                 var shadowColor = c4g.maps.utils.getRgbaFromHexAndOpacity(mapData.themeData['shadowcolor'], mapData.themeData['shadowopacity']);
-                domMapDiv = document.getElementById(mapData.mapDiv);
 
                 if (domMapDiv && domMapDiv.style) {
                     domMapDiv.style.setProperty('--main-color', mainColor);
