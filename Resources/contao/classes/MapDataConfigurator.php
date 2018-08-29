@@ -89,6 +89,13 @@ class MapDataConfigurator
         if (!$profileId) {
             $settings = C4gSettingsModel::findAll();
             $profileId = $settings[0]->defaultprofile;
+            if (!$profileId) {
+                $profiles = C4gMapProfilesModel::findAll();
+                if ($profiles && (count($profiles) > 0)) {
+                    $length = count($profiles);
+                    $profileId = $profiles[$length-1];
+                }
+            }
         }
 
         // check for special-profile

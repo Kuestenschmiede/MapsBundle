@@ -1,4 +1,5 @@
 <?php use con4gis\CoreBundle\Resources\contao\models\C4gSettingsModel;
+use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 
 if (!defined('TL_ROOT')) die('You cannot access this file directly!');
 
@@ -1546,6 +1547,14 @@ class tl_c4g_maps extends Backend
                 // get default profile
                 $settings = C4gSettingsModel::findAll();
                 $varValue = $settings[0]->defaultprofile;
+            }
+
+            if (!$varValue) {
+                $profiles = C4gMapProfilesModel::findAll();
+                if ($profiles && (count($profiles) > 0)) {
+                    $length = count($profiles);
+                    $varValue = $profiles[$length-1];
+                }
             }
         }
         return $varValue;
