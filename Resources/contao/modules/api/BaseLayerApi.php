@@ -76,24 +76,25 @@ class BaseLayerApi extends \Frontend
         {
             while ($objBaseLayers->next()) {
 
+                if ($objBaseLayers->published != 1)
+                {
+                    continue;
+                }
+                if ($objBaseLayers->protect_baselayer) {
+                    if (FE_USER_LOGGED_IN && !empty($objBaseLayers->permitted_groups)) {
+                        if (sizeof(array_intersect($this->User->groups, deserialize($objBaseLayers->permitted_groups))) <= 0) {
+                            continue;
+                        }
+                    } else {
+                        continue;
+                    }
+                }
+
                 if ($arrFilter)
                 {
                     if (!in_array($objBaseLayers->id, $arrFilter))
                     {
                         continue;
-                    }
-                    if ($objBaseLayers->published != 1)
-                    {
-                        continue;
-                    }
-                    if ($objBaseLayers->protect_baselayer) {
-                        if (FE_USER_LOGGED_IN && !empty($objBaseLayers->permitted_groups)) {
-                            if (sizeof(array_intersect($this->User->groups, deserialize($objBaseLayers->permitted_groups))) <= 0) {
-                                continue;
-                            }
-                        } else {
-                            continue;
-                        }
                     }
                 }
 
