@@ -69,50 +69,5 @@ class LayerContentDataApi extends \Frontend
 
         return $result;
     }
-    public function createContent($objLayer, $contentFromDB){
-        $content = array
-        (
-            'id'                => $objLayer->id,
-            'type'              => $objLayer->type,
-            'format'            => $objLayer->format,
-            'origType'          => $objLayer->origType,
-            'locationStyle'     => $contentFromDB['locstyle'] ? $contentFromDB['locstyle'] : $objLayer->locstyle,
-            'cluster_fillcolor' => $objLayer->cluster_fillcolor,
-            'cluster_fontcolor' => $objLayer->cluster_fontcolor,
-            'cluster_distance'  => $objLayer->cluster_distance,
-            'cluster_zoom'      => $objLayer->cluster_zoom,
-            'cluster_popup'     => $objLayer->cluster_popup,
-            'data'              => array
-            (
-                'type'          => $objLayer->datatype || 'GeoJSON',
-                'geometry'      => array
-                (
-                    'type'          => $objLayer->geotype || 'GeoJSON',
-                    'coordinates'   => array
-                    (
-                        '0'             => $contentFromDB['geox'],
-                        '1'             => $contentFromDB['geoy']
-                    )
-                ),
-                'properties'    => array
-                (
-                    'projection'    => $contentFromDB['projection'],
-                    'tooltip'       => $contentFromDB['tooltip'],
-                    'tooltip_length'=> $contentFromDB['tooltip_length'],
-                    'label'         => $contentFromDB['label'],
-                    'loc_linkurl'   => $contentFromDB['loc_linkurl'],
-                    'hover_loaction'=> $contentFromDB['hover_loaction'],
-                    'hover_style'   => $contentFromDB['hover_style'],
-                    'popup'         => array
-                    (
-                        'content'       =>$contentFromDB['popup_content'],
-                        'routing_link'  =>$contentFromDB['routing_link'],
-                        'async'         =>$contentFromDB['popup_async']
-                    )
 
-                ),
-            )
-        );
-        return $content;
-    }
 }

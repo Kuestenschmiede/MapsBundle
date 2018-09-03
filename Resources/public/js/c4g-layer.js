@@ -32,6 +32,9 @@ class C4gLayer{
     if (layerArr.projectId) {
       this.projectId = layerArr.projectId;
     }
+    if(layerArr.popup){
+      this.popup = layerArr.popup;
+    }
     this.awesomeicon = layerArr['awesomeicon']
   }
 }
