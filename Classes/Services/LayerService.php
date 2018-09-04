@@ -573,7 +573,7 @@ class LayerService
             while($dbValues->next()) {
                 $child = array();
                 $child['link_id'] = $dbValues->id;
-                $child['name'] = \Contao\Controller::replaceInsertTags($dbValues->name);
+                $child['name'] = \Contao\Controller::replaceInsertTags($dbValues->data_layername);
                 $child['id'] = uniqid();
                 $child['pid'] = $layer['id'];
                 $child['display'] = $layer['display'];
