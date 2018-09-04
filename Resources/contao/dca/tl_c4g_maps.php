@@ -174,7 +174,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
         'link'                       =>  '{general_legend},name,profile,profile_mobile,published;'.
                                          '{map_legend},is_map;'.
-                                         '{location_legend},location_type,data_layername,link_id;'.
+                                         '{location_legend},location_type,data_layername,data_hidelayer,link_id;'.
                                          '{protection_legend:hide},protect_element;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
         'c4gForum'                   =>  '{general_legend},name,profile,profile_mobile,published;'.
