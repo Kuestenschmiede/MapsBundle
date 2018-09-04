@@ -1002,8 +1002,13 @@ class C4gLayerController{
                               contentFeature.set('loc_linkurl', layer.loc_linkurl);
                               contentFeature.set('hover_location', layer.hover_location);
                               contentFeature.set('hover_style', layer.hover_style);
-                              //contentFeature.set('popup', layer.data.properties.popup);
+                              let popup = contentData['popup'] ? contentData['popup'] : Object.assign({},layer.popup);
+                              if(popup && popup.content && popup.content.search && popup.content.search('itemId')){
+                                popup.content = popup.content.replace('itemId',contentData['id']);
+                              }
+                              contentFeature.set('popup', popup);
                               contentFeature.set('zoom_onclick', layer.zoom_onclick);
+                              contentFeature.set('tid', contentData['id']);
                               let locstyle = contentData['locstyle'] || layer.locstyle;
                               contentFeature.set('locationStyle', locstyle);
                               if(locstyle && self.proxy.locationStyleController.arrLocStyles[locstyle] && self.proxy.locationStyleController.arrLocStyles[locstyle].style){
