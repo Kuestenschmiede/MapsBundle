@@ -1006,6 +1006,12 @@ class C4gLayerController{
                               if(popup && popup.content && popup.content.search && popup.content.search('itemId')){
                                 popup.content = popup.content.replace('itemId',contentData['id']);
                               }
+                              if(contentData['label']){
+                                   contentFeature.set('label',contentData['label'])
+                              }
+                              if(contentData['tooltip']){
+                                  contentFeature.set('tooltip',contentData['tooltip'])
+                              }
                               contentFeature.set('popup', popup);
                               contentFeature.set('zoom_onclick', layer.zoom_onclick);
                               contentFeature.set('tid', contentData['id']);
@@ -1015,12 +1021,6 @@ class C4gLayerController{
                                   contentFeature.setStyle(self.proxy.locationStyleController.arrLocStyles[locstyle].style);
                                   contentFeatures.push(contentFeature);
                               }
-                              // else if(missingStyles[locstyle]){
-                              //     if(!unstyledFeatures){unstyledFeatures =[];}
-                              //     if(!missingStyles){missingStyles = [];}
-                              //     contentFeature.set('styleId',locstyle);
-                              //     unstyledFeatures.push(contentFeature);
-                              // }
                               else{
                                   if(!unstyledFeatures){unstyledFeatures =[];}
                                   if(!missingStyles){missingStyles = [];}

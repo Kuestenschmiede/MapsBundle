@@ -144,7 +144,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
         'table'                      =>  '{general_legend},name,profile,profile_mobile,published;'.
                                          '{map_legend},is_map;'.
-                                         '{location_legend},location_type,data_layername,hide_child,data_hidelayer,tab_source,tab_pid,tab_pid1,tab_labeldisplay,tab_tooltipdisplay,tab_directlink,tab_force_target_blank,tab_whereclause,tab_orderby,tab_filter_alias,locstyle,routing_to,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,cluster_locations,async_content,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
+                                         '{location_legend},location_type,data_layername,hide_child,data_hidelayer,tab_source,tab_pid,tab_pid1,tab_labeldisplay,tab_tooltipdisplay,tab_directlink,tab_force_target_blank,tab_whereclause,tabJoinclause,tab_orderby,tab_filter_alias,locstyle,routing_to,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,cluster_locations,async_content,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
                                          '{protection_legend:hide},protect_element;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
         'gpx'                        =>  '{general_legend},name,profile,profile_mobile,published;'.
@@ -792,6 +792,14 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
         'tab_whereclause' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['tab_whereclause'],
+            'exclude'                 => true,
+            'inputType'               => 'textarea',
+            'eval'                    => array('decodeEntities'=>true), // -> hier werden die HTML Entities deaktiviert
+            'sql'                     => "text NULL"
+        ),
+        'tabJoinclause' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['tabJoinclause'],
             'exclude'                 => true,
             'inputType'               => 'textarea',
             'eval'                    => array('decodeEntities'=>true), // -> hier werden die HTML Entities deaktiviert
