@@ -844,7 +844,7 @@ class C4gLayerController{
                     });
                   });
 
-                  self.requestFunctions['request_' + itemUid] = {
+                  self.proxy.requestFunctions['request_' + itemUid] = {
                     'function': vectorSource.get('refreshFunction'),
                     'interval': refreshInterval
                   };
@@ -1308,7 +1308,7 @@ class C4gLayerController{
     if (typeof this.proxy.requestFunctions['request_' + layerUid] !== "undefined") {
 
       if (c4g.maps.requests && typeof c4g.maps.requests['layer_request_' + layerUid] === "undefined") {
-        c4g.maps.requests['layer_request_' + layerUid] = window.setInterval(this.requestFunctions['request_' + layerUid].function, this.requestFunctions['request_' + layerUid].interval);
+        c4g.maps.requests['layer_request_' + layerUid] = window.setInterval(this.proxy.requestFunctions['request_' + layerUid].function, this.proxy.requestFunctions['request_' + layerUid].interval);
       }
 
     }
