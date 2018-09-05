@@ -20,7 +20,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_themes']['show']    = array('Kartenthema anzeige
 /**
  * Fields
  */
-$GLOBALS['TL_LANG']['tl_c4g_map_themes']['name']    = array('Name', 'Bitte geben Sie den Namen des Kartenthemas an.');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['name']        = array('Name', 'Bitte geben Sie den Namen des Kartenthemas an.');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['useglobal']   = array('Einstellungen global setzen', 'Einige Einstellungen, wie Farben und Formen, werden im CSS als Variable gesetzt und können auch global, also außerhalb der Karte, zur Verfügung gestellt werden.');
 
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['buttons'] = array('Buttons-CSS', 'Wählen Sie einen Stil für die Buttons aus.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['custom_buttons'] = array('Eigene Button-CSS', 'Wählen Sie diese Option, wenn Sie eine eigene CSS-Datei verwenden wollen.');

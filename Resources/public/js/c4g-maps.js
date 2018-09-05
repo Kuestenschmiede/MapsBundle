@@ -769,7 +769,7 @@ this.c4g.maps = this.c4g.maps || {};
       
       // popup margin
       //this.leftSlideElements.push('.ol-overlay-container');
-      this.rightSlideElements.push('.ol-overlay-container');
+      //this.rightSlideElements.push('.ol-overlay-container');
 
       if (c4g.maps.control && c4g.maps.control.Starboard && typeof c4g.maps.control.Starboard === 'function' && enableStarboard) {
           this.controls.starboard = new c4g.maps.control.Starboard({
@@ -854,11 +854,15 @@ this.c4g.maps = this.c4g.maps || {};
 
         //themeData
         if (mapData.themeData) {
+            domMapDiv = document.getElementById(mapData.mapDiv);
+            if (mapData.themeData['useglobal']) {
+              domMapDiv = document.getElementById('wrapper');
+            };
+
             if (mapData.themeData['maincolor']) {
                 var mainColor = c4g.maps.utils.getRgbaFromHexAndOpacity(mapData.themeData['maincolor'], mapData.themeData['mainopacity']);
                 var fontColor = c4g.maps.utils.getRgbaFromHexAndOpacity(mapData.themeData['fontcolor'], mapData.themeData['fontopacity']);
                 var shadowColor = c4g.maps.utils.getRgbaFromHexAndOpacity(mapData.themeData['shadowcolor'], mapData.themeData['shadowopacity']);
-                domMapDiv = document.getElementById(mapData.mapDiv);
 
                 if (domMapDiv && domMapDiv.style) {
                     domMapDiv.style.setProperty('--main-color', mainColor);

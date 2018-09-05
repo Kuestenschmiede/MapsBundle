@@ -234,199 +234,9 @@ class C4gLayerController{
 
     if (this.arrLayers[itemUid].content) {
       layers = [];
-      if(this.arrLayers[itemUid].async_content == 1){
-        styleForCluster = function(feature, resolution){
-          var styleId,
-            style,
-            iconOffset,
-            radius,
-            fillcolor,
-            fontcolor;
-          if(feature && feature.get('features')){
-            if(styleId = feature.get('features')[0].get('locationStyle')){
-              if(self.proxy.locationStyleController.arrLocStyles[styleId] && self.proxy.locationStyleController.arrLocStyles[styleId].style){
-                style = self.proxy.locationStyleController.arrLocStyles[styleId].style(feature.get('features')[0],resolution);
-              }
-            }
-            if(!style){
-              style = [];
-            }
-            if(feature.get('features').length > 1){
-              // calculate bubble-offset
-              iconOffset = [0, 0];
-              if (style[0]) {
-                if (typeof style[0].getImage().getRadius === "function") {
-                  radius = parseInt(style[0].getImage().getRadius(), 10);
-                  if (radius) {
-                    iconOffset = [0, radius];
-                  }
-                } else if (typeof style[0].getImage().getAnchor === "function") {
-                  iconOffset = style[0].getImage().getAnchor() || [0, 0];
-                }
-              }
 
-              fillcolor = c4g.maps.utils.getRgbaFromHexAndOpacity('4975A8',{
-                unit: '%',
-                value: 70
-              });
-
-              if(contentData.cluster_fillcolor) {
-                fillcolor = c4g.maps.utils.getRgbaFromHexAndOpacity(contentData.cluster_fillcolor,{
-                  unit: '%',
-                  value: 70
-                });
-              }
-              if(feature.get('features')[0].get('cluster_fillcolor')){
-                fillcolor = c4g.maps.utils.getRgbaFromHexAndOpacity(feature.get('features')[0].get('cluster_fillcolor'),{
-                  unit: '%',
-                  value: 70
-                });
-              }
-              fontcolor = '#FFFFFF';
-              if(feature.get('features')[0].get('cluster_fontcolor')){
-                fontcolor = c4g.maps.utils.getRgbaFromHexAndOpacity(feature.get('features')[0].get('cluster_fontcolor'),{
-                  unit: '%',
-                  value: 100
-                });
-              }
-
-              style.push(
-                new ol.style.Style({
-                  text: new ol.style.Text({
-                    text: "●",
-                    font: "60px sans-serif",
-                    offsetX: -1 * iconOffset[0],
-                    offsetY: -1 * iconOffset[1],
-                    fill: new ol.style.Fill({
-                      color: fillcolor
-                    })
-                  })
-                })
-              );
-              style.push(
-                new ol.style.Style({
-                  text: new ol.style.Text({
-                    text: feature.get('features').length.toString(),
-                    offsetX: -1 * iconOffset[0],
-                    offsetY: -1 * iconOffset[1] + 3,
-                    fill: new ol.style.Fill({
-                      color: fontcolor
-                    })
-                  })
-                })
-              );
-            }
-
-          }
-
-          if(style){
-            return style;
-          }
-        };
-        requestVectorSource = new ol.source.Vector({
-          loader: function (extent, resolution, projection) {
-            var boundingArray,
-              strBoundingBox,
-              url;
-            self.mapController.spinner.show();
-            boundingArray = ol.proj.transformExtent(extent, projection, 'EPSG:4326');
-            strBoundingBox = boundingArray[0]+','+boundingArray[1]+';'+boundingArray[2]+','+boundingArray[3];
-            if (c4g.maps.requests === undefined) {
-              c4g.maps.requests = {};
-            }
-            if (c4g.maps.requests['layerDataRequest' + itemUid] !== undefined) {
-              c4g.maps.requests['layerDataRequest' + itemUid].abort();
-            }
-
-            c4g.maps.requests['layerDataRequest' + itemUid] = jQuery.ajax({
-              url: self.proxy.api_layercontentdata_url + '/' + self.arrLayers[itemUid].id +'/'+strBoundingBox,
-              done: function (data){
-                if(data.length > 0 && !contentFeatures){
-                  contentFeatures = [];
-                }
-                loopData:
-                  for(i = 0; i < data.length; i++){
-                    contentData = data[i];
-                    for(j = 0; j < contentFeatures.length; j++){
-                      if(contentData.id === contentFeatures[j].id) continue loopData;
-                    }
-                    var resultCoordinate = ol.proj.transform([parseFloat(contentData.data.geometry.coordinates[0]), parseFloat(contentData.data.geometry.coordinates[1])], 'EPSG:4326', 'EPSG:3857')
-                    var point = new ol.geom.Point(resultCoordinate);
-                    contentFeature = new ol.Feature(point);
-                    contentFeature.setId(contentData.id);
-                    contentFeature.set('cluster_zoom', contentData.cluster_zoom);
-                    contentFeature.set('cluster_popup', contentData.cluster_popup);
-                    contentFeature.set('cluster_fillcolor', contentData.cluster_fillcolor);
-                    contentFeature.set('cluster_fontcolor', contentData.cluster_fontcolor);
-                    contentFeature.set('loc_linkurl', contentData.loc_linkurl);
-                    contentFeature.set('hover_location', contentData.hover_location);
-                    contentFeature.set('hover_style', contentData.hover_style);
-                    contentFeature.set('popup', contentData.data.properties.popup);
-                    contentFeature.set('zoom_onclick', contentData.zoom_onclick);
-                    contentFeature.set('locationStyle', contentData.locationStyle);
-                    if(contentData.locationStyle && self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle] && self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style){
-                      contentFeature.setStyle(self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style);
-                      contentFeatures.push(contentFeature);
-                    }
-                    else{
-                      if(!unstyledFeatures){unstyledFeatures =[];}
-                      if(!missingStyles){missingStyles = [];}
-                      contentFeature.set('styleId',contentData.locationStyle);
-                      unstyledFeatures.push(contentFeature);
-                      missingStyles.push(contentData.locationStyle);
-                    }
-
-                  }
-                if(missingStyles){
-                  self.proxy.locationStyleController.loadLocationStyles(missingStyles, {done: function() {
-                      for(i = 0; i < unstyledFeatures.length; i++){
-                        var styleId =unstyledFeatures[i].get('styleId');
-                        unstyledFeatures[i].setStyle(self.proxy.locationStyleController.arrLocStyles[styleId].style);
-                        requestVectorSource.addFeature(unstyledFeatures[i]);
-                      }
-                      missingStyles = undefined;
-                    }});
-                }
-
-                if(data.length > 0){
-                  requestVectorSource.addFeatures(contentFeatures);
-                }
-              },
-              always: function () {
-                self.mapController.spinner.hide();
-              }
-            })
-          },
-          strategy: ol.loadingstrategy.bbox
-        });
-        clusterSource = new ol.source.Cluster({
-          distance: 40,
-          //threshold: 2, //minimum element count
-          source: requestVectorSource
-        });
-        if(this.arrLayers[itemUid].cluster){
-          vectorLayer = new ol.layer.AnimatedCluster(
-            {	name: 'Cluster',
-              source: clusterSource,
-              // Use a style function for cluster symbolisation
-              style: styleForCluster
-            });
-        }
-        else{
-          vectorLayer = new ol.layer.Vector(
-            {
-              name: 'Layer',
-              source: requestVectorSource
-            }
-          );
-        }
-        layers.push(vectorLayer);
-
-
-
-      }
-      else{
-        for (i = 0; i < this.arrLayers[itemUid].content.length; i += 1) {
+          var contentFeatures = [];
+          for (i = 0; i < this.arrLayers[itemUid].content.length; i += 1) {
           contentData = this.arrLayers[itemUid].content[i];
           styleForCluster = function (feature, resolution) {
 
@@ -475,12 +285,12 @@ class C4gLayerController{
                   // calculate bubble-offset
                   iconOffset = [0, 0];
                   if (style[0]) {
-                    if (typeof style[0].getImage() && typeof style[0].getImage().getRadius === "function") {
+                    if (typeof style[0].getImage() && style[0].getImage().getRadius && typeof style[0].getImage().getRadius === "function") {
                       radius = parseInt(style[0].getImage().getRadius(), 10);
                       if (radius) {
                         iconOffset = [0, radius];
                       }
-                    } else if (style[0].getImage() && typeof style[0].getImage().getAnchor === "function") {
+                    } else if (style[0].getImage() && style[0].getImage().getAnchor && typeof style[0].getImage().getAnchor === "function") {
                       iconOffset = style[0].getImage().getAnchor() || [0, 0];
                     }
                   }
@@ -912,7 +722,6 @@ class C4gLayerController{
           } else if ((this.arrLayers[itemUid].type === "table") || (this.arrLayers[itemUid].type === "link")) {
             var layerContent = this.arrLayers[itemUid].content;
             contentData = layerContent[0];
-            var contentFeatures = [];
             if (contentData && contentData.data.properties && contentData.data.properties.projection) {
               dataProjection = contentData.data.properties.projection;
               featureProjection = this.mapController.map.getView().getProjection();
@@ -921,20 +730,21 @@ class C4gLayerController{
             }
 
             // force all nodes into one layer
-            for (var key = 0; key < layerContent.length; key++) {
-              var contentFeature = new ol.format[layerContent[key].format]({}).readFeatures(layerContent[key].data, {
-                featureProjection: featureProjection,
-                dataProjection: dataProjection
-              })[0];
-              contentFeature.set('cluster_zoom', contentData.cluster_zoom);
-              contentFeature.set('cluster_popup', contentData.cluster_popup);
-              contentFeature.set('loc_linkurl', contentData.loc_linkurl);
-              contentFeature.set('hover_location', contentData.hover_location);
-              contentFeature.set('hover_style', contentData.hover_style);
-              contentFeature.set('popup', layerContent[key].data.properties.popup);
-              contentFeature.set('zoom_onclick', contentData.zoom_onclick);
-              contentFeatures.push(contentFeature);
-            }
+
+
+            var contentFeature = new ol.format[layerContent[i].format]({}).readFeatures(layerContent[i].data, {
+              featureProjection: featureProjection,
+              dataProjection: dataProjection
+            })[0];
+            contentFeature.set('cluster_zoom', contentData.cluster_zoom);
+            contentFeature.set('cluster_popup', contentData.cluster_popup);
+            contentFeature.set('loc_linkurl', contentData.loc_linkurl);
+            contentFeature.set('hover_location', contentData.hover_location);
+            contentFeature.set('hover_style', contentData.hover_style);
+            contentFeature.set('popup', layerContent[i].data.properties.popup);
+            contentFeature.set('zoom_onclick', contentData.zoom_onclick);
+            contentFeatures.push(contentFeature);
+
 
             if(i+1 === this.arrLayers[itemUid].content.length){
               vectorSource = new ol.source.Vector({
@@ -1049,7 +859,7 @@ class C4gLayerController{
           }
         }
 
-      }
+
 
 
       // add vector layer group
@@ -1060,73 +870,254 @@ class C4gLayerController{
       self.mapController.map.addLayer(layerGroup);
       //self.combine(self);
 
-    } else {
-      // if(c4g.maps.layers[itemUid].content_async){
-      //     self.mapController.spinner.show();
-      //     requestVectorSource = new ol.source.Vector({
-      //         loader: function (extent, resolution, projection) {
-      //             var boundingArray,
-      //                 strBoundingBox,
-      //                 url;
-      //             if (c4g.maps.requests === undefined) {
-      //                 c4g.maps.requests = {};
-      //             }
-      //             if (c4g.maps.requests['layerDataRequest' + itemUid] !== undefined) {
-      //                 c4g.maps.requests['layerDataRequest' + itemUid].abort();
-      //             }
-      //
-      //             c4g.maps.requests['layerDataRequest' + itemUid] = jQuery.ajax({
-      //                 url: self.api_layercontentdata_url + '/' + c4g.maps.layers[itemUid].id,
-      //                 done :function (data){
-      //                     if(data.lenth > 0){
-      //                         console.log("Läuft");
-      //                     }
-      //                 },
-      //                 always: function () {
-      //                     self.mapController.spinner.hide();
-      //                 }
-      //             })
-      //         },
-      //         strategy: ol.loadingstrategy.bbox
-      //     });
-      //
-      //
-      // }
-      // else{
-      self.mapController.spinner.show();
-      jQuery.ajax({
-        dataType: self.mapController.data.jsonp ? "jsonp" : "json",
-        url: self.proxy.api_layercontent_url + '/' + self.arrLayers[itemUid].id,
-      }).done(function(data){
-          let j,
-              newLocationStyles;
+    }
+    else if(this.arrLayers[itemUid].async_content == 1){
+          styleForCluster = function(feature, resolution){
+              var styleId,
+                  style,
+                  iconOffset,
+                  radius,
+                  fillcolor,
+                  fontcolor;
+              if(feature && feature.get('features')){
+                  if(styleId = feature.get('features')[0].get('locationStyle')){
+                      if(self.proxy.locationStyleController.arrLocStyles[styleId] && self.proxy.locationStyleController.arrLocStyles[styleId].style){
+                          style = self.proxy.locationStyleController.arrLocStyles[styleId].style(feature.get('features')[0],resolution);
+                      }
+                  }
+                  if(!style){
+                      style = [];
+                  }
+                  if(feature.get('features').length > 1){
+                      // calculate bubble-offset
+                      iconOffset = [0, 0];
+                      if (style[0]) {
+                          if (typeof style[0].getImage().getRadius === "function") {
+                              radius = parseInt(style[0].getImage().getRadius(), 10);
+                              if (radius) {
+                                  iconOffset = [0, radius];
+                              }
+                          } else if (typeof style[0].getImage().getAnchor === "function") {
+                              iconOffset = style[0].getImage().getAnchor() || [0, 0];
+                          }
+                      }
 
-          if (data.length > 0) {
-              newLocationStyles = [];
+                      fillcolor = c4g.maps.utils.getRgbaFromHexAndOpacity('4975A8',{
+                          unit: '%',
+                          value: 70
+                      });
 
-              for (j = 0; j < data.length; j += 1) {
+                      if(contentData.cluster_fillcolor) {
+                          fillcolor = c4g.maps.utils.getRgbaFromHexAndOpacity(contentData.cluster_fillcolor,{
+                              unit: '%',
+                              value: 70
+                          });
+                      }
+                      if(feature.get('features')[0].get('cluster_fillcolor')){
+                          fillcolor = c4g.maps.utils.getRgbaFromHexAndOpacity(feature.get('features')[0].get('cluster_fillcolor'),{
+                              unit: '%',
+                              value: 70
+                          });
+                      }
+                      fontcolor = '#FFFFFF';
+                      if(feature.get('features')[0].get('cluster_fontcolor')){
+                          fontcolor = c4g.maps.utils.getRgbaFromHexAndOpacity(feature.get('features')[0].get('cluster_fontcolor'),{
+                              unit: '%',
+                              value: 100
+                          });
+                      }
 
-                  self.arrLayers[itemUid].content = self.arrLayers[itemUid].content || [];
-
-                  self.arrLayers[itemUid].content.push(data[j]);
-                  newLocationStyles.push(data[j].locationStyle);
+                      style.push(
+                          new ol.style.Style({
+                              text: new ol.style.Text({
+                                  text: "●",
+                                  font: "60px sans-serif",
+                                  offsetX: -1 * iconOffset[0],
+                                  offsetY: -1 * iconOffset[1],
+                                  fill: new ol.style.Fill({
+                                      color: fillcolor
+                                  })
+                              })
+                          })
+                      );
+                      style.push(
+                          new ol.style.Style({
+                              text: new ol.style.Text({
+                                  text: feature.get('features').length.toString(),
+                                  offsetX: -1 * iconOffset[0],
+                                  offsetY: -1 * iconOffset[1] + 3,
+                                  fill: new ol.style.Fill({
+                                      color: fontcolor
+                                  })
+                              })
+                          })
+                      );
+                  }
 
               }
 
-              self.proxy.checkLocationStyles({
-                  done: function () {
-                      // @TODO: check this!
-                      self.loadLayerContent(itemUid);
+              if(style){
+                  return style;
+              }
+          };
+          requestVectorSource = new ol.source.Vector({
+              loader: function (extent, resolution, projection) {
+                  var boundingArray,
+                      strBoundingBox,
+                      url;
+                  self.mapController.spinner.show();
+                  boundingArray = ol.proj.transformExtent(extent, projection, 'EPSG:4326');
+                  strBoundingBox = boundingArray[0]+','+boundingArray[1]+';'+boundingArray[2]+','+boundingArray[3];
+                  if (c4g.maps.requests === undefined) {
+                      c4g.maps.requests = {};
                   }
-              });
+                  if (c4g.maps.requests['layerDataRequest' + itemUid] !== undefined) {
+                      c4g.maps.requests['layerDataRequest' + itemUid].abort();
+                  }
+                  if(!self.proxy.locationStyleController.arrLocStyles[self.arrLayers[itemUid].locstyle]){
+                      self.proxy.locationStyleController.loadLocationStyles([self.arrLayers[itemUid].locstyle], {done: function() {}});
+                  }
 
+                  c4g.maps.requests['layerDataRequest' + itemUid] = jQuery.ajax({
+                      url: self.proxy.api_layercontentdata_url + '/' + self.arrLayers[itemUid].id +'/'+strBoundingBox,
+                  }).done( function (data){
+                      if(data.length > 0 && !contentFeatures){
+                          contentFeatures = [];
+                      }
+                      let layer = self.arrLayers[itemUid];
+                      loopData:
+                          for(let i = 0; i < data.length; i++){
+                              contentData = data[i];
+                              for(let j = 0; j < contentFeatures.length; j++){
+                                  if(contentData.id === contentFeatures[j].id) continue loopData;
+                              }
+                              var resultCoordinate = ol.proj.transform([parseFloat(contentData['geox']), parseFloat(contentData['geoy'])], 'EPSG:4326', 'EPSG:3857')
+                              var point = new ol.geom.Point(resultCoordinate);
+                              contentFeature = new ol.Feature(point);
+                              contentFeature.setId(contentData.id);
+                              contentFeature.set('cluster_zoom', layer.cluster.zoom);
+                              contentFeature.set('cluster_popup', layer.cluster.popup);
+                              contentFeature.set('cluster_fillcolor', layer.cluster.fillcolor);
+                              contentFeature.set('cluster_fontcolor', layer.cluster.fontcolor);
+                              contentFeature.set('loc_linkurl', layer.loc_linkurl);
+                              contentFeature.set('hover_location', layer.hover_location);
+                              contentFeature.set('hover_style', layer.hover_style);
+                              let popup = contentData['popup'] ? contentData['popup'] : Object.assign({},layer.popup);
+                              if(popup && popup.content && popup.content.search && popup.content.search('itemId')){
+                                popup.content = popup.content.replace('itemId',contentData['id']);
+                              }
+                              contentFeature.set('popup', popup);
+                              contentFeature.set('zoom_onclick', layer.zoom_onclick);
+                              contentFeature.set('tid', contentData['id']);
+                              let locstyle = contentData['locstyle'] || layer.locstyle;
+                              contentFeature.set('locationStyle', locstyle);
+                              if(locstyle && self.proxy.locationStyleController.arrLocStyles[locstyle] && self.proxy.locationStyleController.arrLocStyles[locstyle].style){
+                                  contentFeature.setStyle(self.proxy.locationStyleController.arrLocStyles[locstyle].style);
+                                  contentFeatures.push(contentFeature);
+                              }
+                              // else if(missingStyles[locstyle]){
+                              //     if(!unstyledFeatures){unstyledFeatures =[];}
+                              //     if(!missingStyles){missingStyles = [];}
+                              //     contentFeature.set('styleId',locstyle);
+                              //     unstyledFeatures.push(contentFeature);
+                              // }
+                              else{
+                                  if(!unstyledFeatures){unstyledFeatures =[];}
+                                  if(!missingStyles){missingStyles = [];}
+                                  contentFeature.set('styleId',locstyle);
+                                  unstyledFeatures.push(contentFeature);
+                                  missingStyles[locstyle] = locstyle;
+                              }
+
+                          }
+                      if(missingStyles){
+                          self.proxy.locationStyleController.loadLocationStyles(missingStyles, {done: function() {
+                                  for(i = 0; i < unstyledFeatures.length; i++){
+                                      var styleId =unstyledFeatures[i].get('styleId');
+                                      unstyledFeatures[i].setStyle(self.proxy.locationStyleController.arrLocStyles[styleId].style);
+                                      requestVectorSource.addFeature(unstyledFeatures[i]);
+                                  }
+                                  missingStyles = undefined;
+                              }});
+                      }
+
+                      if(data.length > 0){
+                          requestVectorSource.addFeatures(contentFeatures);
+                      }
+                  })
+                      .always(function () {
+                          self.mapController.spinner.hide();
+                      })
+
+              },
+              strategy: ol.loadingstrategy.bbox
+          });
+          clusterSource = new ol.source.Cluster({
+              distance: 40,
+              //threshold: 2, //minimum element count
+              source: requestVectorSource
+          });
+          if(this.arrLayers[itemUid].cluster){
+              vectorLayer = new ol.layer.AnimatedCluster(
+                  {	name: 'Cluster',
+                      source: clusterSource,
+                      // Use a style function for cluster symbolisation
+                      style: styleForCluster
+                  });
           }
-      }).always(function () {
-          self.mapController.spinner.hide();
-      });
-      //}
+          else{
+              vectorLayer = new ol.layer.Vector(
+                  {
+                      name: 'Layer',
+                      source: requestVectorSource
+                  }
+              );
+          }
+          layers = layers || [];
+          layers.push(vectorLayer);
+        layerGroup = new ol.layer.Group({
+            layers: layers
+        });
+        this.arrLayers[itemUid].vectorLayer = layerGroup;
+        self.mapController.map.addLayer(layerGroup);
 
-    }
+
+      }
+       else{
+        self.mapController.spinner.show();
+        jQuery.ajax({
+          dataType: self.mapController.data.jsonp ? "jsonp" : "json",
+          url: self.proxy.api_layercontent_url + '/' + self.arrLayers[itemUid].id,
+        }).done(function(data){
+            let j,
+                newLocationStyles;
+
+            if (data.length > 0) {
+                newLocationStyles = [];
+
+                for (j = 0; j < data.length; j += 1) {
+
+                    self.arrLayers[itemUid].content = self.arrLayers[itemUid].content || [];
+
+                    self.arrLayers[itemUid].content.push(data[j]);
+                    newLocationStyles.push(data[j].locationStyle);
+  
+                }
+
+                self.proxy.checkLocationStyles({
+                    done: function () {
+                        // @TODO: check this!
+                        self.loadLayerContent(itemUid);
+                    }
+                });
+
+            }
+        }).always(function () {
+            self.mapController.spinner.hide();
+        });
+      }
+
+
   } // end of "loadLayerContent()"
 
   hideLayer(layerUid, keepLayer) {

@@ -107,39 +107,282 @@ class C4gBaselayerController {
 
         c4g.maps.utils.callHookFunctions(this.proxy.hook_baselayer_loaded, this.baselayerIds);
     } // end of "addBaseLayers()"
+    createBaseLayer(layerOptions, baseLayerConfig, sourceConfigs){
+        var newBaselayer;
+        layerOptions = layerOptions || {};
+        switch (baseLayerConfig.provider) {
+            case 'osm':
+                if (sourceConfigs.osm[baseLayerConfig.style]) {
+                    newBaselayer = new ol.layer.Tile({
+                        source: new ol.source.OSM(
+                            $.extend(
+                                sourceConfigs.osm[baseLayerConfig.style],
+                                layerOptions
+                            )
+                        )
+                    });
+                } else if (sourceConfigs.stamen[baseLayerConfig.style]) {
+                    // Stamen
+                    newBaselayer = new ol.layer.Tile({
+                        source: new ol.source.Stamen(
+                            $.extend(
+                                sourceConfigs.stamen[baseLayerConfig.style],
+                                layerOptions
+                            )
+                        )
+                    });
+                    // } else if (mapQuestSourceConfigs[baseLayerConfig.style]) {
+                    //   // mapQuest
+                    //   newBaselayer = new ol.layer.Tile({
+                    //     source: new ol.source.MapQuest(mapQuestSourceConfigs[baseLayerConfig.style])
+                    //   });
+                } else if (baseLayerConfig.style === 'osm_custom') {
+                    // custom
+                    let noUrl = true;
+                    if (baseLayerConfig.url) {
+                        layerOptions.url = baseLayerConfig.url;
+                        noUrl = false;
+                    } else if (baseLayerConfig.urls) {
+                        layerOptions.urls = baseLayerConfig.urls;
+                        noUrl = false;
+                    }
+                    if (!noUrl) {
+                        newBaselayer = new ol.layer.Tile({
+                            source: new ol.source.XYZ(layerOptions)
+                        });
+                    } else {
+                        console.warn('custom url(s) missing -> switch to default');
+                    }
+                } else {
+                    console.warn('unsupported osm-style -> switch to default');
+                }
+                break;
+            case 'mapbox':
+                if (baseLayerConfig.api_key && baseLayerConfig.app_id && baseLayerConfig.mapbox_type) {
+
+                    if (baseLayerConfig.mapbox_type === 'Mapbox') {
+                        layerOptions.url = baseLayerConfig.url + baseLayerConfig.app_id + '/tiles/{z}/{x}/{y}?access_token=' + baseLayerConfig.api_key;
+                        newBaselayer = new ol.layer.Tile({
+                            source: new ol.source.XYZ(
+                                jQuery.extend(sourceConfigs.mapbox[baseLayerConfig.mapbox_type], layerOptions)
+                            )
+                        });
+                    } else {
+                        layerOptions.url = baseLayerConfig.url_classic + baseLayerConfig.app_id + '/{z}/{x}/{y}.png?access_token=' + baseLayerConfig.api_key;
+
+                        newBaselayer = new ol.layer.Tile({
+                            source: new ol.source.XYZ(jQuery.extend(
+                                sourceConfigs.mapbox[baseLayerConfig.mapbox_type],
+                                layerOptions
+                            ))
+                        });
+                    }
+                }else if(baseLayerConfig.hide_in_be){
+                    layerOptions.url = "con4gis/baseLayerTileService/" + baseLayerConfig.id + "/{z}/{x}/{y}";
+                    newBaselayer = new ol.layer.Tile({
+                        source: new ol.source.XYZ($.extend(
+                            sourceConfigs.mapbox[baseLayerConfig.mapbox_type],
+                            layerOptions))
+                    });
+                }
+                else {
+                    console.warn('wrong mapbox configuration!');
+                }
+                break;
+            case 'klokan':
+                if (baseLayerConfig.api_key && baseLayerConfig.klokan_type) {
+
+                    if (baseLayerConfig.klokan_type === 'OpenMapTiles') {
+                        layerOptions.url = baseLayerConfig.url + '{z}/{x}/{y}.pbf';
+                        newBaselayer = new ol.layer.VectorTile({
+                            source: new ol.source.VectorTile(jQuery.extend(
+                                sourceConfigs.klokan[baseLayerConfig.klokan_type],
+                                layerOptions))
+                        });
+
+                        //ToDo style url
+                        fetch(baseLayerConfig.url + '/styles/'+baseLayerConfig.style+'/style.json').then(function(response) {
+                            response.json().then(function(glStyle) {
+                                olms.applyStyle(newBaselayer, glStyle, 'openmaptiles');
+                            });
+                        });
+                    } else {
+                        layerOptions.url = baseLayerConfig.url + '/data/v3/{z}/{x}/{y}.pbf?key='+baseLayerConfig.api_key;
+                        newBaselayer = new ol.layer.VectorTile({
+                            source: new ol.source.VectorTile(jQuery.extend(
+                                sourceConfigs.klokan[baseLayerConfig.klokan_type],
+                                layerOptions))
+                        });
+
+                        fetch(baseLayerConfig.url + '/styles/'+baseLayerConfig.style+'/style.json?key='+baseLayerConfig.api_key).then(function(response) {
+                            response.json().then(function(glStyle) {
+                                olms.applyStyle(newBaselayer, glStyle, 'openmaptiles');
+                            });
+                        });
+                    }
+                } else {
+                    console.warn('wrong klokan configuration!');
+                }
+                break;
+            case 'here':
+                if (baseLayerConfig.api_key && baseLayerConfig.app_id && baseLayerConfig.here_type) {
+
+                    if (baseLayerConfig.style == 'normal') {
+                        layerOptions.url = 'https://{1-4}.base.maps.cit.api.here.com/maptile/2.1/maptile/newest/normal.day/{z}/{x}/{y}/256/png' +
+                            '?app_id='+baseLayerConfig.app_id+'&app_code='+baseLayerConfig.api_key;
+                    } else
+                    if (baseLayerConfig.style == 'transit') {
+                        layerOptions.url = 'https://{1-4}.base.maps.cit.api.here.com/maptile/2.1/maptile/newest/normal.day.transit/{z}/{x}/{y}/256/png' +
+                            '?app_id='+baseLayerConfig.app_id+'&app_code='+baseLayerConfig.api_key;
+                    } else
+                    if (baseLayerConfig.style == 'pedestrian') {
+                        layerOptions.url = 'https://{1-4}.base.maps.cit.api.here.com/maptile/2.1/maptile/newest/pedestrian.day/{z}/{x}/{y}/256/png' +
+                            '?app_id='+baseLayerConfig.app_id+'&app_code='+baseLayerConfig.api_key;
+                    } else
+                    if (baseLayerConfig.style == 'terrain') {
+                        layerOptions.url = 'https://{1-4}.aerial.maps.cit.api.here.com/maptile/2.1/maptile/newest/terrain.day/{z}/{x}/{y}/256/png' +
+                            '?app_id='+baseLayerConfig.app_id+'&app_code='+baseLayerConfig.api_key;
+                    } else
+                    if (baseLayerConfig.style == 'satellite') {
+                        layerOptions.url = 'https://{1-4}.aerial.maps.cit.api.here.com/maptile/2.1/maptile/newest/satellite.day/{z}/{x}/{y}/256/png' +
+                            '?app_id='+baseLayerConfig.app_id+'&app_code='+baseLayerConfig.api_key;
+                    } else
+                    if (baseLayerConfig.style == 'hybrid') {
+                        layerOptions.url = 'https://{1-4}.aerial.maps.cit.api.here.com/maptile/2.1/maptile/newest/hybrid.day/{z}/{x}/{y}/256/png' +
+                            '?app_id='+baseLayerConfig.app_id+'&app_code='+baseLayerConfig.api_key;
+                    }
+
+                    newBaselayer = new ol.layer.Tile({
+                        source: new ol.source.XYZ($.extend(
+                            sourceConfigs.here[baseLayerConfig.here_type],
+                            layerOptions))
+                    });
+                }
+                else if(baseLayerConfig.hide_in_be){
+                    layerOptions.url = layerOptions.url = "con4gis/baseLayerTileService/" + baseLayerConfig.id + "/{z}/{x}/{y}";
+                    newBaselayer = new ol.layer.Tile({
+                        source: new ol.source.XYZ($.extend(
+                            sourceConfigs.mapbox[baseLayerConfig.here_type],
+                            layerOptions))
+                    });
+                }
+                else {
+                    console.warn('wrong HERE configuration!');
+                }
+                break;
+            case 'thunder':
+                if (baseLayerConfig.api_key && baseLayerConfig.thunderforest_type) {
+
+                    if (baseLayerConfig.style) {
+                        layerOptions.url = "https://tile.thunderforest.com/"+baseLayerConfig.style+"/{z}/{x}/{y}.png?apikey="+baseLayerConfig.api_key;
+                    }
+
+                    newBaselayer = new ol.layer.Tile({
+                        source: new ol.source.XYZ(jQuery.extend(
+                            sourceConfigs.thunderforest[baseLayerConfig.thunderforest_type],
+                            layerOptions))
+                    });
+                }else if(baseLayerConfig.hide_in_be){
+                    layerOptions.url = "con4gis/baseLayerTileService/" + baseLayerConfig.id + "/{z}/{x}/{y}";
+                    newBaselayer = new ol.layer.Tile({
+                        source: new ol.source.XYZ(jQuery.extend(
+                            sourceConfigs.mapbox[baseLayerConfig.thunderforest_type],
+                            layerOptions))
+                    });
+                }
+                else {
+                    console.warn('wrong Thunderforest configuration!');
+                }
+                break;
+            case 'google':
+                //@todo
+                console.warn('google-maps are currently unsupported');
+                break;
+            case 'bing':
+                if (baseLayerConfig.api_key && baseLayerConfig.style) {
+                    newBaselayer = new ol.layer.Tile({
+                        source: new ol.source.BingMaps({
+                            culture: navigator.languages ? navigator.languages[0] : (navigator.language || navigator.userLanguage),
+                            key: baseLayerConfig.api_key,
+                            imagerySet: baseLayerConfig.style
+                        })
+                    });
+                } else {
+                    console.warn('wrong bing-key or invalid imagery-set!');
+                }
+                break;
+            case 'wms':
+                newBaselayer = new ol.layer.Tile({
+                    source: new ol.source.TileWMS({
+                        url: baseLayerConfig.url,
+                        params: {
+                            LAYERS: baseLayerConfig.params.layers,
+                            VERSION: baseLayerConfig.params.version,
+                            //FORMAT: baseLayerConfig.params.format,
+                            TRANSPARENT: baseLayerConfig.params.transparent
+                        },
+                        gutter: baseLayerConfig.gutter,
+                        attributions: baseLayerConfig.attribution + ' ' + ol.source.OSM.ATTRIBUTION
+                    }),
+                    //extent: ol.proj.transformExtent([5.59334, 50.0578, 9.74158, 52.7998], 'EPSG:4326', 'EPSG:3857')
+                });
+                break;
+            case 'owm':
+                newBaselayer = new ol.layer.Tile({
+                    source: new ol.source.XYZ({
+                        url: baseLayerConfig.url + baseLayerConfig.app_id + '/{z}/{x}/{y}?hash=' + baseLayerConfig.api_key,
+                        attributions: baseLayerConfig.attribution + ' ' + ol.source.OSM.ATTRIBUTION
+                    }),
+                    //extent: ol.proj.transformExtent([5.59334, 50.0578, 9.74158, 52.7998], 'EPSG:4326', 'EPSG:3857')
+                });
+                break;
+            case 'group':
+                let baseLayerGroup = [];
+                for(let index in baseLayerConfig['layerGroup']){
+                    let element = this.createBaseLayer(null, baseLayerConfig['layerGroup'][index], sourceConfigs);
+                    let maxZoom = this.proxy.options.mapController.map.getView().getResolutionForZoom(baseLayerConfig['layerGroup'][index]['minZoom']);
+                    let minZoom = this.proxy.options.mapController.map.getView().getResolutionForZoom(baseLayerConfig['layerGroup'][index]['maxZoom']);
+                    element.setMinResolution(minZoom);
+                    element.setMaxResolution(maxZoom);
+                    baseLayerGroup.push(element);
+                }
+                newBaselayer = new ol.layer.Group({
+                    layers: baseLayerGroup
+                })
+                break;
+
+            default:
+                console.warn('unsupported provider');
+                break;
+        }
+        return newBaselayer;
+
+    }
     showBaseLayer(baseLayerUid) {
 
         let self = this,
-            baseLayerConfig,
             layers,
             baselayer,
             addBaselayer,
             baseLayers,
-            osmSourceConfigs,
-            stamenSourceConfigs,
-            //mapQuestSourceConfigs,
-            mapboxSourceConfigs,
-            klokanSourceConfigs,
-            hereSourceConfigs,
-            thunderforestSourceConfigs,
+            sourceConfigs = [],
             newBaselayer,
             layerOptions,
-            noUrl,
             i,
             view;
 
-        baseLayerConfig = this.arrBaselayers[baseLayerUid];
+        let baseLayerConfig = this.arrBaselayers[baseLayerUid];
 
 
         if ((typeof baseLayerConfig !== "undefined") && !baseLayerConfig.layer) {
             // create layer
-            osmSourceConfigs = c4g.maps.config.osm;
-            stamenSourceConfigs = c4g.maps.config.stamen;
+            sourceConfigs.osm = c4g.maps.config.osm;
+            sourceConfigs.stamen = c4g.maps.config.stamen;
             //mapQuestSourceConfigs = c4g.maps.config.mapquest;
-            mapboxSourceConfigs = c4g.maps.config.mapbox;
-            klokanSourceConfigs = c4g.maps.config.klokan;
-            hereSourceConfigs = c4g.maps.config.here;
-            thunderforestSourceConfigs = c4g.maps.config.thunderforest;
+            sourceConfigs.mapbox = c4g.maps.config.mapbox;
+            sourceConfigs.klokan = c4g.maps.config.klokan;
+            sourceConfigs.here = c4g.maps.config.here;
+            sourceConfigs.thunderforest = c4g.maps.config.thunderforest;
 
             //newBaselayer = new ol.layer.Tile({
             //  source: new ol.source.OSM()
@@ -156,29 +399,29 @@ class C4gBaselayerController {
             } else if (!layerOptions.attributions) {
                 switch (baseLayerConfig.provider) {
                     case 'osm':
-                        if (stamenSourceConfigs[baseLayerConfig.style]) {
-                            layerOptions.attributions = stamenSourceConfigs[baseLayerConfig.style].attributions;
+                        if (sourceConfigs.stamen[baseLayerConfig.style]) {
+                            layerOptions.attributions = sourceConfigs.stamen[baseLayerConfig.style].attributions;
                             /*
                                           } else if (mapQuestSourceConfigs[baseLayerConfig.style]) {
                                             layerOptions.attributions = mapQuestSourceConfigs[baseLayerConfig.style].attributions;
                             */
-                        } else if (osmSourceConfigs[baseLayerConfig.style]) {
-                            layerOptions.attributions = osmSourceConfigs[baseLayerConfig.style].attributions;
+                        } else if (sourceConfigs.osm[baseLayerConfig.style]) {
+                            layerOptions.attributions = sourceConfigs.osm[baseLayerConfig.style].attributions;
                         } else {
                             layerOptions.attributions = ol.source.OSM.ATTRIBUTION;
                         }
                         break;
                     case 'mapbox':
-                        layerOptions.attributions = mapboxSourceConfigs[baseLayerConfig.mapbox_type].attributions;
+                        layerOptions.attributions = sourceConfigs.mapbox[baseLayerConfig.mapbox_type].attributions;
                         break;
                     case 'klokan':
-                        layerOptions.attributions = klokanSourceConfigs[baseLayerConfig.klokan_type].attributions;
+                        layerOptions.attributions = sourceConfigs.klokan[baseLayerConfig.klokan_type].attributions;
                         break;
                     case 'here':
-                        layerOptions.attributions = hereSourceConfigs[baseLayerConfig.here_type].attributions;
+                        layerOptions.attributions = sourceConfigs.here[baseLayerConfig.here_type].attributions;
                         break;
                     case 'thunder':
-                        layerOptions.attributions = thunderforestSourceConfigs[baseLayerConfig.thunderforest_type].attributions;
+                        layerOptions.attributions = sourceConfigs.thunderforest[baseLayerConfig.thunderforest_type].attributions;
                         break;
                     default:
                         layerOptions.attributions = ol.source.OSM.ATTRIBUTION;
@@ -271,239 +514,7 @@ class C4gBaselayerController {
                 layerOptions.maxZoom = baseLayerConfig.maxZoom;
             }
 
-            // TODO: diese Mechanik auslagern (wird auch in c4g-maps.js verwendet und für die overlay benötigt
-
-            switch (baseLayerConfig.provider) {
-                case 'osm':
-                    if (osmSourceConfigs[baseLayerConfig.style]) {
-                        newBaselayer = new ol.layer.Tile({
-                            source: new ol.source.OSM(
-                                $.extend(
-                                    osmSourceConfigs[baseLayerConfig.style],
-                                    layerOptions
-                                )
-                            )
-                        });
-                    } else if (stamenSourceConfigs[baseLayerConfig.style]) {
-                        // Stamen
-                        newBaselayer = new ol.layer.Tile({
-                            source: new ol.source.Stamen(
-                                $.extend(
-                                    stamenSourceConfigs[baseLayerConfig.style],
-                                    layerOptions
-                                )
-                            )
-                        });
-                        // } else if (mapQuestSourceConfigs[baseLayerConfig.style]) {
-                        //   // mapQuest
-                        //   newBaselayer = new ol.layer.Tile({
-                        //     source: new ol.source.MapQuest(mapQuestSourceConfigs[baseLayerConfig.style])
-                        //   });
-                    } else if (baseLayerConfig.style === 'osm_custom') {
-                        // custom
-                        noUrl = true;
-                        if (baseLayerConfig.url) {
-                            layerOptions.url = baseLayerConfig.url;
-                            noUrl = false;
-                        } else if (baseLayerConfig.urls) {
-                            layerOptions.urls = baseLayerConfig.urls;
-                            noUrl = false;
-                        }
-                        if (!noUrl) {
-                            newBaselayer = new ol.layer.Tile({
-                                source: new ol.source.XYZ(layerOptions)
-                            });
-                        } else {
-                            console.warn('custom url(s) missing -> switch to default');
-                        }
-                    } else {
-                        console.warn('unsupported osm-style -> switch to default');
-                    }
-                    break;
-                case 'mapbox':
-                    if (baseLayerConfig.api_key && baseLayerConfig.app_id && baseLayerConfig.mapbox_type) {
-
-                        if (baseLayerConfig.mapbox_type === 'Mapbox') {
-                            layerOptions.url = baseLayerConfig.url + baseLayerConfig.app_id + '/tiles/{z}/{x}/{y}?access_token=' + baseLayerConfig.api_key;
-                            newBaselayer = new ol.layer.Tile({
-                                source: new ol.source.XYZ(
-                                    jQuery.extend(mapboxSourceConfigs[baseLayerConfig.mapbox_type], layerOptions)
-                                )
-                            });
-                        } else {
-                            layerOptions.url = baseLayerConfig.url_classic + baseLayerConfig.app_id + '/{z}/{x}/{y}.png?access_token=' + baseLayerConfig.api_key;
-
-                            newBaselayer = new ol.layer.Tile({
-                                source: new ol.source.XYZ(jQuery.extend(
-                                    mapboxSourceConfigs[baseLayerConfig.mapbox_type],
-                                    layerOptions
-                                ))
-                            });
-                        }
-                    }else if(baseLayerConfig.hide_in_be){
-                        layerOptions.url = "con4gis/baseLayerTileService/" + baseLayerConfig.id + "/{z}/{x}/{y}";
-                        newBaselayer = new ol.layer.Tile({
-                            source: new ol.source.XYZ($.extend(
-                                mapboxSourceConfigs[baseLayerConfig.mapbox_type],
-                                layerOptions))
-                        });
-                    }
-                    else {
-                        console.warn('wrong mapbox configuration!');
-                    }
-                    break;
-                case 'klokan':
-                    if (baseLayerConfig.api_key && baseLayerConfig.klokan_type) {
-
-                        if (baseLayerConfig.klokan_type === 'OpenMapTiles') {
-                            layerOptions.url = baseLayerConfig.url + '{z}/{x}/{y}.pbf';
-                            newBaselayer = new ol.layer.VectorTile({
-                                source: new ol.source.VectorTile(jQuery.extend(
-                                    klokanSourceConfigs[baseLayerConfig.klokan_type],
-                                    layerOptions))
-                            });
-
-                            //ToDo style url
-                            fetch(baseLayerConfig.url + '/styles/'+baseLayerConfig.style+'/style.json').then(function(response) {
-                                response.json().then(function(glStyle) {
-                                    olms.applyStyle(newBaselayer, glStyle, 'openmaptiles');
-                                });
-                            });
-                        } else {
-                            layerOptions.url = baseLayerConfig.url + '/data/v3/{z}/{x}/{y}.pbf?key='+baseLayerConfig.api_key;
-                            newBaselayer = new ol.layer.VectorTile({
-                                source: new ol.source.VectorTile(jQuery.extend(
-                                    klokanSourceConfigs[baseLayerConfig.klokan_type],
-                                    layerOptions))
-                            });
-
-                            fetch(baseLayerConfig.url + '/styles/'+baseLayerConfig.style+'/style.json?key='+baseLayerConfig.api_key).then(function(response) {
-                                response.json().then(function(glStyle) {
-                                    olms.applyStyle(newBaselayer, glStyle, 'openmaptiles');
-                                });
-                            });
-                        }
-                    } else {
-                        console.warn('wrong klokan configuration!');
-                    }
-                    break;
-                case 'here':
-                    if (baseLayerConfig.api_key && baseLayerConfig.app_id && baseLayerConfig.here_type) {
-
-                        if (baseLayerConfig.style == 'normal') {
-                            layerOptions.url = 'https://{1-4}.base.maps.cit.api.here.com/maptile/2.1/maptile/newest/normal.day/{z}/{x}/{y}/256/png' +
-                                '?app_id='+baseLayerConfig.app_id+'&app_code='+baseLayerConfig.api_key;
-                        } else
-                        if (baseLayerConfig.style == 'transit') {
-                            layerOptions.url = 'https://{1-4}.base.maps.cit.api.here.com/maptile/2.1/maptile/newest/normal.day.transit/{z}/{x}/{y}/256/png' +
-                                '?app_id='+baseLayerConfig.app_id+'&app_code='+baseLayerConfig.api_key;
-                        } else
-                        if (baseLayerConfig.style == 'pedestrian') {
-                            layerOptions.url = 'https://{1-4}.base.maps.cit.api.here.com/maptile/2.1/maptile/newest/pedestrian.day/{z}/{x}/{y}/256/png' +
-                                '?app_id='+baseLayerConfig.app_id+'&app_code='+baseLayerConfig.api_key;
-                        } else
-                        if (baseLayerConfig.style == 'terrain') {
-                            layerOptions.url = 'https://{1-4}.aerial.maps.cit.api.here.com/maptile/2.1/maptile/newest/terrain.day/{z}/{x}/{y}/256/png' +
-                                '?app_id='+baseLayerConfig.app_id+'&app_code='+baseLayerConfig.api_key;
-                        } else
-                        if (baseLayerConfig.style == 'satellite') {
-                            layerOptions.url = 'https://{1-4}.aerial.maps.cit.api.here.com/maptile/2.1/maptile/newest/satellite.day/{z}/{x}/{y}/256/png' +
-                                '?app_id='+baseLayerConfig.app_id+'&app_code='+baseLayerConfig.api_key;
-                        } else
-                        if (baseLayerConfig.style == 'hybrid') {
-                            layerOptions.url = 'https://{1-4}.aerial.maps.cit.api.here.com/maptile/2.1/maptile/newest/hybrid.day/{z}/{x}/{y}/256/png' +
-                                '?app_id='+baseLayerConfig.app_id+'&app_code='+baseLayerConfig.api_key;
-                        }
-
-                        newBaselayer = new ol.layer.Tile({
-                            source: new ol.source.XYZ($.extend(
-                                hereSourceConfigs[baseLayerConfig.here_type],
-                                layerOptions))
-                        });
-                    }
-                    else if(baseLayerConfig.hide_in_be){
-                        layerOptions.url = layerOptions.url = "con4gis/baseLayerTileService/" + baseLayerConfig.id + "/{z}/{x}/{y}";
-                        newBaselayer = new ol.layer.Tile({
-                            source: new ol.source.XYZ($.extend(
-                                mapboxSourceConfigs[baseLayerConfig.here_type],
-                                layerOptions))
-                        });
-                    }
-                    else {
-                        console.warn('wrong HERE configuration!');
-                    }
-                    break;
-                case 'thunder':
-                    if (baseLayerConfig.api_key && baseLayerConfig.thunderforest_type) {
-
-                        if (baseLayerConfig.style) {
-                            layerOptions.url = "https://tile.thunderforest.com/"+baseLayerConfig.style+"/{z}/{x}/{y}.png?apikey="+baseLayerConfig.api_key;
-                        }
-
-                        newBaselayer = new ol.layer.Tile({
-                            source: new ol.source.XYZ(jQuery.extend(
-                                thunderforestSourceConfigs[baseLayerConfig.thunderforest_type],
-                                layerOptions))
-                        });
-                    }else if(baseLayerConfig.hide_in_be){
-                        layerOptions.url = "con4gis/baseLayerTileService/" + baseLayerConfig.id + "/{z}/{x}/{y}";
-                        newBaselayer = new ol.layer.Tile({
-                            source: new ol.source.XYZ(jQuery.extend(
-                                mapboxSourceConfigs[baseLayerConfig.thunderforest_type],
-                                layerOptions))
-                        });
-                    }
-                    else {
-                        console.warn('wrong Thunderforest configuration!');
-                    }
-                    break;
-                case 'google':
-                    //@todo
-                    console.warn('google-maps are currently unsupported');
-                    break;
-                case 'bing':
-                    if (baseLayerConfig.api_key && baseLayerConfig.style) {
-                        newBaselayer = new ol.layer.Tile({
-                            source: new ol.source.BingMaps({
-                                culture: navigator.languages ? navigator.languages[0] : (navigator.language || navigator.userLanguage),
-                                key: baseLayerConfig.api_key,
-                                imagerySet: baseLayerConfig.style
-                            })
-                        });
-                    } else {
-                        console.warn('wrong bing-key or invalid imagery-set!');
-                    }
-                    break;
-                case 'wms':
-                    newBaselayer = new ol.layer.Tile({
-                        source: new ol.source.TileWMS({
-                            url: baseLayerConfig.url,
-                            params: {
-                                LAYERS: baseLayerConfig.params.layers,
-                                VERSION: baseLayerConfig.params.version,
-                                //FORMAT: baseLayerConfig.params.format,
-                                TRANSPARENT: baseLayerConfig.params.transparent
-                            },
-                            gutter: baseLayerConfig.gutter,
-                            attributions: baseLayerConfig.attribution + ' ' + ol.source.OSM.ATTRIBUTION
-                        }),
-                        //extent: ol.proj.transformExtent([5.59334, 50.0578, 9.74158, 52.7998], 'EPSG:4326', 'EPSG:3857')
-                    });
-                    break;
-                case 'owm':
-                    newBaselayer = new ol.layer.Tile({
-                        source: new ol.source.XYZ({
-                            url: baseLayerConfig.url + baseLayerConfig.app_id + '/{z}/{x}/{y}?hash=' + baseLayerConfig.api_key,
-                            attributions: baseLayerConfig.attribution + ' ' + ol.source.OSM.ATTRIBUTION
-                        }),
-                        //extent: ol.proj.transformExtent([5.59334, 50.0578, 9.74158, 52.7998], 'EPSG:4326', 'EPSG:3857')
-                    });
-                    break;
-
-                default:
-                    console.warn('unsupported provider');
-                    break;
-            }
+            newBaselayer = this.createBaseLayer(layerOptions, baseLayerConfig, sourceConfigs);
             if(baseLayerConfig.hasOverlays){
                 for (i = 0; i< baseLayerConfig.overlays.length; i++){
                     if(!baseLayerConfig.overlayController.arrOverlays[baseLayerConfig.overlays[i].id]){
@@ -642,10 +653,11 @@ class C4gBaselayerController {
              */
             if (typeof baseLayerConfig !== "undefined") {
                 var mapData = this.mapController.data;
-                if (mapData.cesium && mapData.cesium.enable) {
+                if (mapData.cesium && mapData.cesium.enable && (mapData.cesium.always || baseLayerConfig.cesium)) {
                     if (!this.ol3d) {
                         this.ol3d = new olcs.OLCesium({
-                            map: this.mapController.map/*,
+                            map: this.mapController.map,
+                            createSynchronizers: false/*,
                             time() {
                                 const val = timeElt.value;
                                 if (ol3d.getCesiumScene().globe.enableLighting && val) {
@@ -656,30 +668,26 @@ class C4gBaselayerController {
                                 return Cesium.JulianDate.now();
                             }*/});
                     }
-                    if (mapData.cesium.always || (baseLayerConfig.cesium)) {
-                        /*const scene = ol3d.getCesiumScene();
-                        const terrainProvider = new Cesium.CesiumTerrainProvider({
-                            url: '//assets.agi.com/stk-terrain/world',
-                            requestVertexNormals: true
-                        });
-                        scene.terrainProvider = terrainProvider;*/
-                        this.ol3d.setEnabled(true);
-                        /*window['toggleTime'] = function() {
-                            scene.globe.enableLighting = !scene.globe.enableLighting;
-                            if (timeElt.style.display == 'none') {
-                                timeElt.style.display = 'inline-block';
-                            } else {
-                                timeElt.style.display = 'none';
-                            }
-                        };*/
-                    } else {
-                        if (this.ol3d.getEnabled()) {
-                            this.ol3d.setEnabled(false);
-                            c4g.maps.utils.redrawMapView(this.mapController);
+                    /*const scene = ol3d.getCesiumScene();
+                    const terrainProvider = new Cesium.CesiumTerrainProvider({
+                        url: '//assets.agi.com/stk-terrain/world',
+                        requestVertexNormals: true
+                    });
+                    scene.terrainProvider = terrainProvider;*/
+                    this.ol3d.setEnabled(true);
+                    /*window['toggleTime'] = function() {
+                        scene.globe.enableLighting = !scene.globe.enableLighting;
+                        if (timeElt.style.display == 'none') {
+                            timeElt.style.display = 'inline-block';
+                        } else {
+                            timeElt.style.display = 'none';
                         }
-
+                    };*/
+                } else {
+                    if (this.ol3d && this.ol3d.getEnabled()) {
+                        this.ol3d.setEnabled(false);
+                        c4g.maps.utils.redrawMapView(this.mapController);
                     }
-
                 }
             }
         }

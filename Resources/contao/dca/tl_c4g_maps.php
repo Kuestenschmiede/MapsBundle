@@ -1,4 +1,7 @@
-<?php if (!defined('TL_ROOT')) die('You cannot access this file directly!');
+<?php use con4gis\CoreBundle\Resources\contao\models\C4gSettingsModel;
+use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
+
+if (!defined('TL_ROOT')) die('You cannot access this file directly!');
 
 /**
  * con4gis - the gis-kit
@@ -171,7 +174,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
         'link'                       =>  '{general_legend},name,profile,profile_mobile,published;'.
                                          '{map_legend},is_map;'.
-                                         '{location_legend},location_type,data_layername,hide_child,data_hidelayer,link_id,hide_when_in_tab,cssClass;'.
+                                         '{location_legend},location_type,data_layername,data_hidelayer,link_id;'.
                                          '{protection_legend:hide},protect_element;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
         'c4gForum'                   =>  '{general_legend},name,profile,profile_mobile,published;'.
@@ -239,7 +242,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
             'foreignKey'              => 'tl_c4g_map_profiles.name',
             'eval'                    => array('tl_class'=>'w50',
                                                'includeBlankOption'=>true, 'blankOptionLabel'=>&$GLOBALS['TL_LANG']['tl_c4g_maps']['default_profile'],
-                                               'submitOnChange' => true, 'alwaysSave' => true ),
+                                               'submitOnChange' => true, 'chosen' => true, 'alwaysSave' => true ),
             'load_callback'           => array(array('tl_c4g_maps','getDefaultProfile')),
             'relation'                => array('type'=>'belongsTo', 'load'=>'eager'),
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
@@ -251,8 +254,10 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
             'exclude'                 => true,
             'inputType'               => 'select',
             'foreignKey'              => 'tl_c4g_map_profiles.name',
-            'eval'                    => array('tl_class'=>'w50',
-                                               'includeBlankOption'=>true
+            'eval'                    => array(
+                                            'tl_class'=>'w50',
+                                            'chosen' => true,
+                                            'includeBlankOption'=>true
                                               ),
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
         ),
@@ -566,7 +571,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
             'exclude'                 => true,
             'inputType'               => 'select',
             'options_callback'        => array('tl_c4g_maps','getLocStyles'),
-            'eval'                    => array('tl_class'=>'clr'),
+            'eval'                    => array('tl_class'=>'clr', 'chosen' => true),
             'wizard' => array
             (
                 array('tl_c4g_maps', 'editLocationStyle')
@@ -710,7 +715,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
             'exclude'                 => true,
             'inputType'               => 'select',
             'options_callback'        => array('tl_c4g_maps','getTabSources'),
-            'eval'                    => array('submitOnChange' => true),
+            'eval'                    => array('submitOnChange' => true,  'chosen' => true),
             'sql'                     => "varchar(100) NOT NULL default ''"
         ),
         'async_content' => array
@@ -968,6 +973,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
             'exclude'                 => true,
             'inputType'               => 'select',
             'options_callback'        => array('tl_c4g_maps', 'get_link_items'),
+            'eval'                    => array( 'chosen' => true ),
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
         ),
         'protect_element' => array
@@ -1003,7 +1009,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
             'exclude'                 => true,
             'inputType'               => 'select',
             'foreignKey'              => 'tl_c4g_map_profiles.name',
-            'eval'                    => array('tl_class'=>'w50', 'submitOnChange' => true, 'alwaysSave' => true ),
+            'eval'                    => array('tl_class'=>'w50', 'submitOnChange' => true, 'alwaysSave' => true,  'chosen' => true ),
             'load_callback'           => array(array('tl_c4g_maps','getDefaultProfile')),
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
         ),
@@ -1014,7 +1020,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
             'inputType'               => 'select',
             'foreignKey'              => 'tl_c4g_map_profiles.name',
             'eval'                    => array('tl_class'=>'w50',
-                                               'includeBlankOption'=>true),
+                                               'includeBlankOption'=>true,  'chosen' => true),
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
         ),
         'specialprofile_groups' => array
@@ -1098,7 +1104,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
             'exclude'                 => true,
             'inputType'               => 'select',
             'options_callback'        => array('tl_c4g_maps','getLocStyles'),
-            'eval'                    => array('tl_class'=>'clr'),
+            'eval'                    => array('tl_class'=>'clr',  'chosen' => true),
             'wizard' => array
             (
                 array('tl_c4g_maps', 'editLocationStyle')
@@ -1542,10 +1548,15 @@ class tl_c4g_maps extends Backend
             }
             if (!$varValue) {
                 // get default profile
-                $objProfile = $this->Database->prepare("SELECT id FROM tl_c4g_map_profiles WHERE is_default=1")
-                    ->limit(1)->execute();
-                if ($objProfile->numRows > 0) {
-                    $varValue = $objProfile->id;
+                $settings = C4gSettingsModel::findAll();
+                $varValue = $settings[0]->defaultprofile;
+            }
+
+            if (!$varValue) {
+                $profiles = C4gMapProfilesModel::findAll();
+                if ($profiles && (count($profiles) > 0)) {
+                    $length = count($profiles);
+                    $varValue = $profiles[$length-1];
                 }
             }
         }

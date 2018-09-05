@@ -9,6 +9,8 @@ class C4gLayer{
     this.hide = layerArr['hide'];
     this.hide_child = layerArr['hide_child'];
     this.type = layerArr['type'];
+    this.cluster = layerArr['cluster'];
+    this.zoom = layerArr['zoom'];
     this.zoom_locations = layerArr['zoom_locations'];
     this.display = layerArr['display'];
     this.hasChilds = layerArr['hasChilds'];
@@ -17,6 +19,7 @@ class C4gLayer{
     this.renderSpecial = layerArr['renderSpecial'];
     this.editable = true;
     this.type = layerArr['type'];
+    this.locstyle = layerArr['locstyle'];
     this.name = layerArr['name'];
     this.tabId = layerArr['tabId'];
     this.split_geojson = layerArr['split_geojson'];
@@ -28,6 +31,9 @@ class C4gLayer{
 
     if (layerArr.projectId) {
       this.projectId = layerArr.projectId;
+    }
+    if(layerArr.popup){
+      this.popup = layerArr.popup;
     }
     this.awesomeicon = layerArr['awesomeicon']
   }

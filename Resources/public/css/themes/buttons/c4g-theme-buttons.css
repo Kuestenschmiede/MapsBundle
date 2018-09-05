@@ -9,16 +9,9 @@
   font-size: var(--font-size);
 }
 
-/* ToDo */
-/*.c4g_map .ol-viewport button {*/
-  /*height: var(--button-size);*/
-  /*width: var(--button-size);*/
-/*}*/
-
 .ol-unsupported {
   display: none;
 }
-
 
 /*
  *  Controls - general
@@ -445,13 +438,12 @@ button.ol-zoom-out {
 }
 .c4g-starboard-viewtriggerbar button,
 .c4g-portside-viewtriggerbar button {
-  height: 36px;
-  width: 36px;
-  /*margin: 0 0 2px 3px;*/
+  height: 2.2em;
+  width: 2.2em;
   margin-top: 0px;
   border-radius: 0 0 3px 3px;
   border: 0;
-  font-size: 18px;
+  font-size: 1.1em;
 }
 /*.c4g-starboard-viewtriggerbar {*/
   /*text-align: right;*/

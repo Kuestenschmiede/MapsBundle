@@ -36,7 +36,7 @@ class ProfileService
     public function getProfileId($profileId)
     {
         $event = new LoadProfileEvent();
-        $event->setProfileId($profileId);
+        $event->setProfileId(intval($profileId));
         $this->eventDispatcher->dispatch($event::NAME, $event);
         return $event->getProfileId();
     }

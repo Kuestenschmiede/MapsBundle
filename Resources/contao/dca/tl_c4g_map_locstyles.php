@@ -12,13 +12,18 @@
  */
 
 
-// set imageSize options (Contao 3&4)
 if (method_exists('\System', 'getContainer')) {
-    //contao 4
+    $filteredSizes = [];
     $imageSizes = \System::getContainer()->get('contao.image.image_sizes')->getAllOptions();
-} else {
-    //contao 3
-    $imageSizes = array('px');
+    $just = 'proportional';
+    foreach ($imageSizes as $group => $sizes) {
+        foreach ($sizes as $key => $size) {
+            if ($size == $just) {
+                $filteredSizes[$group][$key] = $size;
+            }
+        }
+    }
+    $imageSizes = $filteredSizes;
 }
 
 /**

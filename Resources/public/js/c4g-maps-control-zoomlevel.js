@@ -42,7 +42,6 @@ this.c4g.maps.control = this.c4g.maps.control || {};
     };
 
     options.mapView.on('change:resolution', updateZoomlevel);
-
     ol.control.Control.call(this, {
       element: element,
       target: options.target

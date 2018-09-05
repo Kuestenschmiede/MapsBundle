@@ -25,7 +25,7 @@
     "contao/core-bundle": "^4.4",
     "contao/calendar-bundle": "^4.4",
     "con4gis/core": "^2.3",
-    "phayes/geophp": "^2"
+    "phayes/geophp": "^1.2"
   },
   "conflict": {
     "contao/core": "*",

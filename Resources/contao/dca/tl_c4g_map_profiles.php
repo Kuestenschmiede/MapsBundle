@@ -93,7 +93,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
     'palettes' => array
     (
         '__selector__'                => array('mouse_nav','starboard','cluster_all','baselayerswitcher','layerswitcher','attribution','hover_popups','permalink','geosearch','geopicker','router', 'cesium'),
-        'default'                     => '{general_legend},name,is_default,theme;'.
+        'default'                     => '{general_legend},name,theme;'.
                                          '{baselayer_legend:hide},baselayers, default_baselayer;'.
                                          '{locstyle_legend:hide},locstyles, label_color;'.
                                          '{navigation_legend},zoom_panel,zoom_panel_button,zoom_panel_slider,mouse_nav,touch_nav,keyboard_nav,fullscreen;'.
@@ -145,17 +145,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             'inputType'               => 'text',
             'eval'                    => array('mandatory'=>true, 'maxlength'=>30, 'tl_class'=>'w50'),
             'sql'                     => "varchar(255) NOT NULL default ''"
-        ),
-
-        'is_default' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['is_default'],
-            'exclude'                 => true,
-            'default'                 => false,
-            'inputType'               => 'checkbox',
-            'eval'                    => array('tl_class'=>'w50', 'maxlength'=>30),
-            'save_callback'           => array(array('tl_c4g_map_profiles','set_default')),
-            'sql'                     => "char(1) NOT NULL default ''"
         ),
 
         'theme' => array
@@ -1158,21 +1147,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
  */
 class tl_c4g_map_profiles extends Backend
 {
-    public function set_default($varValue, DataContainer $dc)
-    {
-        if ($varValue) {
-            $this->Database->query('UPDATE tl_c4g_map_profiles SET is_default="" WHERE id <> '.$dc->id);
-        }
-        return $varValue;
-    }
-//
-//    public function set_backend_default($varValue, DataContainer $dc)
-//    {
-//        if ($varValue) {
-//            $this->Database->query('UPDATE tl_c4g_map_profiles SET is_backend_editor_default="" WHERE id <> '.$dc->id);
-//        }
-//        return $varValue;
-//    }
 
     /**
      * Return all available OpenLayers Libraries

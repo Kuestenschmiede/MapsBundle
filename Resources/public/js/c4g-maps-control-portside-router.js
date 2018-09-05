@@ -147,7 +147,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       this.locationsSource = new ol.source.Vector();
       this.locationsLayer = new ol.layer.Vector({
         source: this.locationsSource,
-        zIndex: 12
+        zIndex: 2
       });
 
       this.routerLayerGroup = new ol.layer.Group({

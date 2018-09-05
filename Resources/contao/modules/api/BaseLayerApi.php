@@ -76,20 +76,25 @@ class BaseLayerApi extends \Frontend
         {
             while ($objBaseLayers->next()) {
 
+                if ($objBaseLayers->published != 1)
+                {
+                    continue;
+                }
+                if ($objBaseLayers->protect_baselayer) {
+                    if (FE_USER_LOGGED_IN && !empty($objBaseLayers->permitted_groups)) {
+                        if (sizeof(array_intersect($this->User->groups, deserialize($objBaseLayers->permitted_groups))) <= 0) {
+                            continue;
+                        }
+                    } else {
+                        continue;
+                    }
+                }
+
                 if ($arrFilter)
                 {
                     if (!in_array($objBaseLayers->id, $arrFilter))
                     {
                         continue;
-                    }
-                    if ($objBaseLayers->protect_baselayer) {
-                        if (FE_USER_LOGGED_IN && !empty($objBaseLayers->permitted_groups)) {
-                            if (sizeof(array_intersect($this->User->groups, deserialize($objBaseLayers->permitted_groups))) <= 0) {
-                                continue;
-                            }
-                        } else {
-                            continue;
-                        }
                     }
                 }
 
@@ -287,6 +292,16 @@ class BaseLayerApi extends \Frontend
 
                 $arrBaseLayer['app_id'] = $objBaseLayer->app_id;
                 $arrBaseLayer['api_key'] = $objBaseLayer->api_key;
+                break;
+            case 'group':
+                $layerGroup = unserialize($objBaseLayer->layerGroup);
+                foreach($layerGroup as $key => $layer){
+                    $objChildLayer = $this->Database->prepare("SELECT * FROM tl_c4g_map_baselayers WHERE id=?")->execute($layer['baselayers']);
+                    $layer['entry'] = $this->parseBaseLayer($objChildLayer);
+                    $layerGroup[$key] = $layer;
+                }
+                $arrBaseLayer['layerGroup'] = array_reverse($layerGroup);
+
                 break;
             default:
                 die('This should not have happened!');

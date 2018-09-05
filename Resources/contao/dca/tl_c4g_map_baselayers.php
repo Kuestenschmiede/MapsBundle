@@ -94,6 +94,13 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] = array
                 'icon'                => 'delete.gif',
                 'attributes'          => 'onclick="if (!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\')) return false; Backend.getScrollOffset();"'
             ),
+            'toggle' => array
+            (
+                'label'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['toggle'],
+                'icon'                => 'visible.gif',
+                'attributes'          => 'onclick="Backend.getScrollOffset(); return AjaxRequest.toggleVisibility(this, %s);"',
+                'button_callback'     => array('tl_c4g_map_baselayers', 'toggleIcon')
+            ),
             'show' => array
             (
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['show'],
@@ -115,7 +122,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] = array
     (
         '__selector__'                => array('provider','osm_style','protect_baselayer','klokan_type'),
         'default'                     => '{general_legend},name,display_name,provider,attribution,minzoomlevel,maxzoomlevel;{cesium_legend:hide},cesium;'.
-                                         '{protection_legend:hide},protect_baselayer;',
+                                         '{protection_legend:hide},protect_baselayer,published;',
         'osm'                         => '{general_legend},name,display_name,provider,osm_style,attribution,minzoomlevel,maxzoomlevel;{cesium_legend:hide},cesium;'.
                                          '{protection_legend:hide},protect_baselayer;',
         'mapbox'                      => '{general_legend},name,display_name,provider,mapbox_type,app_id,api_key,attribution,minzoomlevel,maxzoomlevel;{cesium_legend:hide},cesium;'.
@@ -134,6 +141,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] = array
                                          '{protection_legend:hide},protect_baselayer;',
         'owm'                         => '{general_legend},name,display_name,provider,app_id,api_key,attribution,minzoomlevel,maxzoomlevel;{cesium_legend:hide},cesium;'.
                                          '{protection_legend:hide},protect_baselayer;',
+        'group'                       => '{general_legend},name,display_name,provider,attribution,layerGroup;'.
+                                         '{protection_legend:hide},protect_baselayer,published;'
     ),
 
 
@@ -220,11 +229,22 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] = array
                                                'bing' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_bing'],
                                                'klokan' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_klokan'],
                                                'wms' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_wms'],
+                                               'group' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_group']
                                               ),
             'eval'                    => array('submitOnChange'=>true, 'tl_class'=>'clr'),
             'sql'                     => "varchar(10) NOT NULL default ''"
         ),
+        'layerGroup' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['layerGroup'],
+            'exclude'                 => true,
+            'inputType'               => 'multiColumnWizard',
+            'eval'                    => array(
+                'columnsCallback'        => array('tl_c4g_map_baselayers','groupColumns')
+            ),
+            'sql'                     => 'blob NULL'
 
+        ),
         'osm_style' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['osm_style'],
@@ -542,6 +562,15 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] = array
             'eval'                    => array(),
             'sql'                     => "char(1) NOT NULL default ''"
         ),
+        'published' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['published'],
+            'exclude'                 => true,
+            'default'                 => true,
+            'inputType'               => 'checkbox',
+            'eval'                    => array('tl_class'=>'clr'),
+            'sql'                     => "char(1) NOT NULL default '1'"
+        ),
 
     )
 );
@@ -569,4 +598,89 @@ class tl_c4g_map_baselayers extends Backend
     {
         return \Image::getHtml('bundles/con4gismaps/images/be-icons/baselayers.png', '', $imageAttribute).' '.$label;
     }
+    public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
+    {
+        $this->import('BackendUser', 'User');
+
+        if (strlen($this->Input->get('tid')))
+        {
+            $this->toggleVisibility($this->Input->get('tid'), ($this->Input->get('state') == 0));
+            $this->redirect($this->getReferer());
+        }
+
+        // Check permissions AFTER checking the tid, so hacking attempts are logged
+        if (!$this->User->isAdmin && !$this->User->hasAccess('tl_c4g_map_baselayers::published', 'alexf'))
+        {
+            return '';
+        }
+
+        $href .= '&amp;id='.$this->Input->get('id').'&amp;tid='.$row['id'].'&amp;state='.$row[''];
+
+        if (!$row['published'])
+        {
+            $icon = 'invisible.gif';
+        }
+
+        return '<a href="'.$this->addToUrl($href).'" title="'.specialchars($title).'"'.$attributes.'>'.$this->generateImage($icon, $label).'</a> ';
+    }
+    public function toggleVisibility($intId, $blnPublished)
+    {
+        // Check permissions to publish
+        if (!$this->User->isAdmin && !$this->User->hasAccess('tl_c4g_map_baselayers::published', 'alexf'))
+        {
+            $this->log('Not enough permissions to show/hide record ID "'.$intId.'"', 'tl_c4g_map_baselayers toggleVisibility', TL_ERROR);
+            $this->redirect('contao/main.php?act=error');
+        }
+
+        $this->createInitialVersion('tl_c4g_map_baselayers', $intId);
+
+        // Trigger the save_callback
+        if (is_array($GLOBALS['TL_DCA']['tl_c4g_map_baselayers']['fields']['published']['save_callback']))
+        {
+            foreach ($GLOBALS['TL_DCA']['tl_c4g_map_baselayers']['fields']['published']['save_callback'] as $callback)
+            {
+                $this->import($callback[0]);
+                $blnPublished = $this->$callback[0]->$callback[1]($blnPublished, $this);
+            }
+        }
+
+        // Update the database
+        $this->Database->prepare("UPDATE tl_c4g_map_baselayers SET tstamp=". time() .", published='" . ($blnPublished ? '' : '1') . "' WHERE id=?")
+            ->execute($intId);
+        $this->createNewVersion('tl_c4g_map_baselayers', $intId);
+    }
+    public function groupColumns( $multiColumnWizard){
+        $arrColumnBaselayers = array(
+            'label'     => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['baselayerGroup']['baselayers'],
+            'inputType' => 'select'
+        );
+        $arrBaselayers = $this->Database->prepare("SELECT * FROM tl_c4g_map_baselayers WHERE published=1")
+            ->execute()->fetchAllAssoc();
+        $arrOptions =[];
+        foreach ($arrBaselayers as $arrBaselayer){
+            $arrOptions[$arrBaselayer['id']] = $arrBaselayer['name'];
+        }
+        $arrColumnBaselayers['options'] = $arrOptions;
+        $arrColumMinZoom = array(
+            'label'     => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['baselayerGroup']['minZoom'],
+            'filter'                  => false,
+            'inputType'               => 'text',
+            'default'                 => '0',
+            'eval'                    => array('mandatory'=>'true', 'tl_class'=>'w50', 'rgxp'=>'digit')
+        );
+        $arrColumMaxZoom = array(
+            'label'     => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['baselayerGroup']['maxZoom'],
+            'filter'                  => false,
+            'inputType'               => 'text',
+            'default'                 => '18',
+            'eval'                    => array('mandatory'=>'true', 'tl_class'=>'w50', 'rgxp'=>'digit')
+        );
+        $return = array(
+            'baselayers'    => $arrColumnBaselayers,
+            'minZoom'       => $arrColumMinZoom,
+            'maxZoom'       => $arrColumMaxZoom,
+        );
+        return $return;
+    }
 }
+
