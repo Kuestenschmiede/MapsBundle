@@ -538,6 +538,7 @@ this.c4g.maps = this.c4g.maps || {};
             });
             this.map.addControl(this.controls.zoom_home);
         }
+
         if (mapData.zoom_position &! mapData.zoom_slider) {
             this.controls.zoom_position = new c4g.maps.control.Position({
                 label: ' ',
@@ -643,6 +644,17 @@ this.c4g.maps = this.c4g.maps || {};
             });
             this.map.addControl(this.controls.exporttools);
         }
+        //
+        if (mapData.print){
+          this.controls.print = new c4g.maps.control.Print({
+            label : "",
+            tipLabel : c4g.maps.constant.i18n.CTRL_PRINT,
+            target: controlContainerTopLeft,
+            mapController: this
+          })
+          this.map.addControl(this.controls.print);
+        }
+
         // show graticule (grid)
         if (mapData.graticule) {
             this.controls.graticule = new c4g.maps.control.Grid({

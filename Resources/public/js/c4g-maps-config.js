@@ -14,6 +14,7 @@ this.c4g.maps.config = this.c4g.maps.config || {};
     CycleMap: {
       attributions: 'Style by <a target="_blank" href="http://www.opencyclemap.org/">OpenCycleMap</a>' + ' ' +
         ol.source.OSM.ATTRIBUTION,
+      crossOrigin: 'anonymous',
       minZoom: 0,
       maxZoom: 19,
       url: 'https://{a-c}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png'
@@ -22,7 +23,7 @@ this.c4g.maps.config = this.c4g.maps.config || {};
     German: {
       attributions: 'Style by <a target="_blank" href="http://www.openstreetmap.de/germanstyle.html">openstreetmap.de</a>' + ' ' +
         ol.source.OSM.ATTRIBUTION,
-      crossOrigin: null,
+      crossOrigin: 'anonymous',
       minZoom: 0,
       maxZoom: 19,
       url: 'https://{a-c}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png'
@@ -31,7 +32,7 @@ this.c4g.maps.config = this.c4g.maps.config || {};
     GermanTransport: {
       attributions: 'Style by <a target="_blank" href="http://www.memomaps.de">Memomaps</a>' + ' ' +
         ol.source.OSM.ATTRIBUTION,
-      crossOrigin: null,
+      crossOrigin: 'anonymous',
       minZoom: 0,
       maxZoom: 19,
       url: 'http://tile.memomaps.de/tilegen/{z}/{x}/{y}.png'
@@ -40,6 +41,7 @@ this.c4g.maps.config = this.c4g.maps.config || {};
     LandscapeMap: {
       attributions: 'Style by <a target="_blank" href="http://www.opencyclemap.org/">OpenCycleMap</a>' + ' ' +
         ol.source.OSM.ATTRIBUTION,
+      crossOrigin: 'anonymous',
       minZoom: 0,
       maxZoom: 19,
       url: 'https://{a-c}.tile.opencyclemap.org/landscape/{z}/{x}/{y}.png'
@@ -47,12 +49,14 @@ this.c4g.maps.config = this.c4g.maps.config || {};
 
     Mapnik: {
       attributions: ol.source.OSM.ATTRIBUTION,
+      crossOrigin: 'anonymous',
     },
 
     TransportMap: {
       attributions: 'Style by <a target="_blank" href="http://www.opencyclemap.org/">OpenCycleMap</a>' + ' ' +ol.source.OSM.ATTRIBUTION,
       minZoom: 0,
       maxZoom: 19,
+      crossOrigin: 'anonymous',
       url: 'http://{a-c}.tile2.opencyclemap.org/transport/{z}/{x}/{y}.png'
     },
 
@@ -68,35 +72,40 @@ this.c4g.maps.config = this.c4g.maps.config || {};
       attributions: ol.source.OSM.ATTRIBUTION,
       layer: 'toner',
       minZoom: 0,
-      maxZoom: 18
+      maxZoom: 18,
+      crossOrigin: 'anonymous',
     },
 
     TonerLabels: {
       attributions: ol.source.OSM.ATTRIBUTION,
       layer: 'toner-labels',
       minZoom: 0,
-      maxZoom: 18
+      maxZoom: 18,
+      crossOrigin: 'anonymous',
     },
 
     TonerLines: {
       attributions: ol.source.OSM.ATTRIBUTION,
       layer: 'toner-lines',
       minZoom: 0,
-      maxZoom: 18
+      maxZoom: 18,
+      crossOrigin: 'anonymous',
     },
 
     Terrain: {
       attributions: ol.source.OSM.ATTRIBUTION,
       layer: 'terrain',
       minZoom: 0,
-      maxZoom: 18
+      maxZoom: 18,
+      crossOrigin: 'anonymous',
     },
 
     Watercolor: {
       attributions: ol.source.OSM.ATTRIBUTION,
       layer: 'watercolor',
       minZoom: 0,
-      maxZoom: 18
+      maxZoom: 18,
+      crossOrigin: 'anonymous',
     },
 
     NONE: ''
@@ -132,14 +141,16 @@ this.c4g.maps.config = this.c4g.maps.config || {};
       attributions: '© <a target="_blank" href="https://www.mapbox.com/about/maps/">Mapbox</a>' + ' ' +
         ol.source.OSM.ATTRIBUTION,
       minZoom: 0,
-      maxZoom: 22
+      maxZoom: 22,
+      crossOrigin: 'anonymous',
     },
 
     MapboxClassic: {
       attributions: '© <a target="_blank" href="https://www.mapbox.com/about/maps/">Mapbox</a>' + ' ' +
         ol.source.OSM.ATTRIBUTION,
       minZoom: 0,
-      maxZoom: 22
+      maxZoom: 22,
+      crossOrigin: 'anonymous',
     }
   };
 
@@ -156,7 +167,8 @@ this.c4g.maps.config = this.c4g.maps.config || {};
             attributions: '© <a target="_blank" href="https://openmaptiles.org/">OpenMapTiles</a>' + ' ' +
             ol.source.OSM.ATTRIBUTION,
             minZoom: 0,
-            maxZoom: 22
+            maxZoom: 22,
+            crossOrigin: 'anonymous'
         },
 
         TileHosting: {
@@ -166,7 +178,8 @@ this.c4g.maps.config = this.c4g.maps.config || {};
             attributions: '© <a target="_blank" href="https://tilehosting.com/">TileHosting</a>' + ' ' +
             ol.source.OSM.ATTRIBUTION,
             minZoom: 0,
-            maxZoom: 22
+            maxZoom: 22,
+            crossOrigin: 'anonymous',
         }
     };
 
@@ -180,7 +193,8 @@ this.c4g.maps.config = this.c4g.maps.config || {};
             attributions: 'Map Tiles © <a target="_blank" href="https://developer.here.com">HERE</a>'+ ' ' +
                 ol.source.OSM.ATTRIBUTION,
             minZoom: 0,
-            maxZoom: 22
+            maxZoom: 22,
+            crossOrigin: 'anonymous',
         }
 
     };
@@ -195,7 +209,8 @@ this.c4g.maps.config = this.c4g.maps.config || {};
             attributions: 'Map Tiles © <a target="_blank" href="https://www.thunderforest.com/">Thunderforest</a>' + ' ' +
                 ol.source.OSM.ATTRIBUTION,
             minZoom: 0,
-            maxZoom: 19
+            maxZoom: 19,
+            crossOrigin: 'anonymous',
         }
 
     };

@@ -57,6 +57,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['nav_history']           = array('Nav
                                                                             'Erzeugt einen Vor- und einen Zurück-Schalter, vergleichbar mit denen eines Internet-Browsers.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['fullscreen']            = array('Vollbildmodus',
                                                                             'Blendet einen Schalter ein, mit dem man in den Vollbildmodus des Browsers wechseln kann (HTML5). Achtung: wird nicht von jedem Browser unterstützt!');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['print']                 = array('Kartendruck',
+                                                                            'Blendet einen Schalter ein, der einen Export der Karte als PNG ermöglicht');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard']             = array('Starboard aktivieren',
                                                                             'Wenn Sie diese Checkbox auswählen, dann bekommt die Karte ein Starboard (erreichbar über ein Stern-Symbol rechts), das es ermöglicht, zwischen den im Kartenprofil definierten Basiskarten zu wechseln. Außerdem können im Starboard ggfs. in der Kartenstruktur definierte Ebenen ein- und ausgeschaltet werden.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_open']        = array('Starboard automatisch öffnen',
