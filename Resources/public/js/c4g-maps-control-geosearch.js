@@ -793,7 +793,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                 if (animate) {
                     flyTo(map, resultCoordinate, self.config.zoomlevel, self.config.zoombounds, result.boundingbox, markResult, animate);
                 } else {
-                  completeSearch(this.config.markResult, this.config.animate);
+                  completeSearch(self.config.markResult, self.config.animate);
                   mapView.setCenter(resultCoordinate);
                   if (self.config.zoomlevel >= 0) {
                      map.getView().setZoom(self.config.zoomlevel);
