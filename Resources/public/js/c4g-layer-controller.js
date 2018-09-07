@@ -1052,12 +1052,13 @@ class C4gLayerController{
               },
               strategy: ol.loadingstrategy.bbox
           });
-          clusterSource = new ol.source.Cluster({
-              distance: 40,
+
+          if(this.arrLayers[itemUid].cluster){
+            clusterSource = new ol.source.Cluster({
+              distance: this.arrLayers[itemUid].cluster.distance || 20,
               //threshold: 2, //minimum element count
               source: requestVectorSource
-          });
-          if(this.arrLayers[itemUid].cluster){
+            });
               vectorLayer = new ol.layer.AnimatedCluster(
                   {	name: 'Cluster',
                       source: clusterSource,
