@@ -55,17 +55,17 @@ class LayerContentDataApi extends \Frontend
         $minY = explode(',',explode(';',$extent)[0])[1];
         $maxX = explode(',',explode(';',$extent)[1])[0];
         $maxY = explode(',',explode(';',$extent)[1])[1];
-        $andbewhereclause = $objLayer->tab_whereclause ? ' AND ' .$objLayer->tab_whereclause : '';
+        $andbewhereclause = $objLayer->tab_whereclause ? ' AND ' . htmlspecialchars_decode($objLayer->tab_whereclause) : '';
+        $onClause = $objLayer->tabJoinclause ? ' ' . htmlspecialchars_decode($objLayer->tabJoinclause) : '';
         $sqlLoc = " WHERE ".$arrConfig['geox'].">".$minX." AND ".$arrConfig['geox']."<".$maxX." AND ".$arrConfig['geoy'].">".$minY." AND ".$arrConfig['geoy']."<".$maxY;
-        $sqlSelect = $arrConfig['geox']." AS geox,".$arrConfig['geoy']." AS geoy";
-        $sqlSelect = $arrConfig['locstyle'] ? $sqlSelect . ", " . $arrConfig['locstyle'] . " AS locstyle" : $sqlSelect;
-        $sqlSelect = $arrConfig['label'] ? $sqlSelect . ", " . $arrConfig['label'] . " AS label" : $sqlSelect;
-        $sqlSelect = $arrConfig['tooltip'] ? $sqlSelect . ", " . $arrConfig['tooltip'] . " AS tooltip" : $sqlSelect;
+        $sqlSelect = $sourceTable.".". $arrConfig['geox']." AS geox,".$sourceTable.".".$arrConfig['geoy']." AS geoy";
+        $sqlSelect = $arrConfig['locstyle'] ? $sqlSelect . ", " .$sourceTable."." . $arrConfig['locstyle'] . " AS locstyle" : $sqlSelect;
+        $sqlSelect = $arrConfig['label'] ? $sqlSelect . ", " . $sourceTable.".". $arrConfig['label'] . " AS label" : $sqlSelect;
+        $sqlSelect = $arrConfig['tooltip'] ? $sqlSelect . ", ". $sourceTable."." . $arrConfig['tooltip'] . " AS tooltip" : $sqlSelect;
         $sqlWhere = $arrConfig['sqlwhere'] ? $arrConfig['sqlwhere'] : '';
         $sqlAnd = $sqlWhere ? ' AND ' : '';
-        $strQuery = "SELECT id,". $sqlSelect ." FROM ".$sourceTable . $sqlLoc . $sqlAnd . $sqlWhere .$andbewhereclause;
+        $strQuery = "SELECT ".$sourceTable.".id,". $sqlSelect ." FROM ".$sourceTable . $onClause . $sqlLoc . $sqlAnd . $sqlWhere . $andbewhereclause ;
         $result = \Database::getInstance()->prepare($strQuery)->execute()->fetchAllAssoc();
-        $arrContent = [];
 
         return $result;
     }

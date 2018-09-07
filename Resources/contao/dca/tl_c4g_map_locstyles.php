@@ -553,10 +553,10 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['editor_icon_size'],
             'exclude'                 => true,
-            'default'                 => array('32','32'),
+            'default'                 => array('0','0'),
             'inputType'               => 'imageSize',
             'options'                  => $imageSizes,
-            'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'long', 'mandatory'=>false),
+            'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'long'),
             'sql'                     => "varchar(100) NOT NULL default ''"
         ),
         'editor_sort' => array
