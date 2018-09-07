@@ -931,10 +931,10 @@ div.c4g-tooltip-popup:before {
   width: 0;
   border: 8px solid transparent;
 }
-div.c4g-horizontal.c4g-tooltip-popup:before {
-  bottom: -5px;
-  left: -4px;
-}
+/*div.c4g-horizontal.c4g-tooltip-popup:before {*/
+  /*bottom: -5px;*/
+  /*left: -4px;*/
+/*}*/
 .c4g-tooltip-popup button.c4g-popup-close {
   top: 5px;
   right: 5px;
