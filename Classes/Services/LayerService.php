@@ -15,6 +15,7 @@
 namespace con4gis\MapsBundle\Classes\Services;
 
 
+use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
 use con4gis\CoreBundle\Resources\contao\classes\HttpResultHelper;
 use con4gis\MapsBundle\Classes\Events\LoadLayersEvent;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
@@ -230,7 +231,7 @@ class LayerService
 
                 // do not return protected layers, to users without permission
                 if ($objLayers->protect_element) {
-                    if (System::getContainer()->get("contao.security.token_checker")->hasFrontendUser() && !empty($objLayers->permitted_groups)) {
+                    if (C4GUtils::checkFrontendUserLogin() && !empty($objLayers->permitted_groups)) {
                         $permittedGroups = deserialize($objLayers->permitted_groups);
                         $userGroups = FrontendUser::getInstance()->groups;
                         if (sizeof(array_intersect($userGroups, $permittedGroups)) <= 0) {

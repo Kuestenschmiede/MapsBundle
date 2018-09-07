@@ -24,8 +24,7 @@
   "require": {
     "contao/core-bundle": "^4.4",
     "contao/calendar-bundle": "^4.4",
-    "con4gis/core": "^2.3",
-    "phayes/geophp": "^1.2"
+    "con4gis/core": "^2.3"
   },
   "conflict": {
     "contao/core": "*",

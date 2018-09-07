@@ -320,6 +320,10 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
               // this.hideLayer(layer.id);
             }
           }
+          // check if the layer should be displayed
+          if (!layer.display) {
+            continue;
+          }
           item = {};
           this.layers[uid] = item;
           listItem = options.parseAsList ? document.createElement('li') : document.createElement('div');
