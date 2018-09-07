@@ -54,6 +54,7 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
     CTRL_GRID: 'Toggle grid',
     CTRL_PERMALINK: 'Generate Permalink',
     CTRL_FULLSCREEN: 'Toggle fullscreen-mode',
+    CTRL_PRINT: 'Export map',
 
     EDITOR: 'Editor',
     EDITOR_ENABLE_INSTANT_MEASURE: 'Measure while drawing',

@@ -226,7 +226,7 @@ button.c4g-exporttools-print:before {
   content: "\f02f";
 }
 button.c4g-print:before {
-  content: "\f02f";
+  content: "\f019";
 }
 button.c4g-infopage-view-trigger:before {
   content: "\f129";

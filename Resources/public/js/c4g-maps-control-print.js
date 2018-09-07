@@ -55,7 +55,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
     // wrapper div
     element = document.createElement('div');
-    element.className = options.className + ' ' + c4g.maps.constant.css.OL_UNSELECTABLE + ' ol-control';
+    element.className = options.className + ' ' + c4g.maps.constant.css.OL_UNSELECTABLE + ' c4g-portside-control ol-control';
 
     if (options.switchable) {
       // button
