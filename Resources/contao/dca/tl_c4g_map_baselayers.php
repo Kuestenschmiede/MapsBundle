@@ -26,7 +26,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] = array
         'ctable'                      => array('tl_c4g_map_overlays'),
         'enableVersioning'            => true,
         'onsubmit_callback'             => array(
-            array('\con4gis\CoreBundle\Resources\contao\classes\C4GAutomator', 'purgeApiCache')
+            array(\con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator::class, 'purgeBaselayerApiCache')
         ),
         'sql'                         => array
         (

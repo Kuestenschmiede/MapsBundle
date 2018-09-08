@@ -2,7 +2,7 @@ baselayer_service:
     path: /con4gis/baseLayerService/{profileId}
     defaults:
         _scope: frontend
-        _controller: "con4gisMapsBundle:Maps:baseLayer"
+        _controller: "con4gisMapsBundle:Baselayer:baseLayer"
     methods: [GET]
     requirements:
         profileId: \d+
@@ -11,7 +11,7 @@ baselayer_tile_service:
     path: /con4gis/baseLayerTileService/{baseLayerId}/{z}/{x}/{y}
     defaults:
         _scope: frontend
-        _controller: "con4gisMapsBundle:Maps:baseLayerTile"
+        _controller: "con4gisMapsBundle:Baselayer:baseLayerTile"
     methods: [GET]
     requirements:
         baseLayerId: \d+
@@ -20,7 +20,7 @@ layer_service:
     path: /con4gis/layerService/{mapId}
     defaults:
         _scope: frontend
-        _controller: "con4gisMapsBundle:Maps:layer"
+        _controller: "con4gisMapsBundle:Layer:layer"
     methods: [GET]
     requirements:
         mapId: \d+
@@ -29,7 +29,7 @@ layer_content_service:
     path: /con4gis/layerContentService/{layerId}
     defaults:
         _scope: frontend
-        _controller: "con4gisMapsBundle:Maps:layerContent"
+        _controller: "con4gisMapsBundle:Layer:layerContent"
     methods: [GET]
     requirements:
         layerId: \d+
@@ -37,7 +37,7 @@ layer_content_data_service:
     path: /con4gis/layerContentDataService/{layerId}/{extent}
     defaults:
         _scope: frontend
-        _controller: "con4gisMapsBundle:Maps:layerContentData"
+        _controller: "con4gisMapsBundle:Layer:layerContentData"
     methods: [GET]
     requirements:
         layerId: \d+
@@ -73,7 +73,7 @@ locationstyle_service:
     path: /con4gis/locationStyleService/
     defaults:
         _scope: frontend
-        _controller: "con4gisMapsBundle:Maps:locationStyle"
+        _controller: "con4gisMapsBundle:Locationstyle:locationStyle"
     methods: [GET]
 
 nominatim_service:

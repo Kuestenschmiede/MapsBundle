@@ -29,7 +29,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
         'onload_callback'             => array(
             array('tl_c4g_maps', 'updateDCA')),
         'onsubmit_callback'             => array(
-            array('\con4gis\CoreBundle\Resources\contao\classes\C4GAutomator', 'purgeApiCache')
+            array(\con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator::class, 'purgeLayerApiCache')
         ),
         'sql'                         => array
         (
@@ -1692,7 +1692,8 @@ class tl_c4g_maps extends Backend
             $icon = 'invisible.gif';
         }
 
-        \con4gis\CoreBundle\Resources\contao\classes\C4GAutomator::purgeApiCache();
+//        \con4gis\CoreBundle\Resources\contao\classes\C4GAutomator::purgeApiCache();
+        \con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator::purgeLayerApiCache();
 
         return '<a href="'.$this->addToUrl($href).'" title="'.specialchars($title).'"'.$attributes.'>'.\Image::getHtml($icon, $label).'</a> ';
     }
