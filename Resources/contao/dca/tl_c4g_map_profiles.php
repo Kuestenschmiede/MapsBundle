@@ -96,7 +96,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
         'default'                     => '{general_legend},name,theme;'.
                                          '{baselayer_legend:hide},baselayers, default_baselayer;'.
                                          '{locstyle_legend:hide},locstyles, label_color;'.
-                                         '{navigation_legend},zoom_panel,zoom_panel_button,zoom_panel_slider,mouse_nav,touch_nav,keyboard_nav,fullscreen;'.
+                                         '{navigation_legend},zoom_panel,zoom_panel_button,zoom_panel_slider,mouse_nav,touch_nav,keyboard_nav,fullscreen,print;'.
                                          '{starboard_legend:hide},starboard;'.
                                          '{information_legend},attribution,overviewmap,geobookmarks,measuretool,graticule,scaleline,mouseposition,permalink,zoomlevel;'.
                                          '{geosearch_legend:hide},geosearch,router;'.
@@ -338,6 +338,14 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
         'fullscreen' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['fullscreen'],
+            'exclude'                 => true,
+            'default'                 => false,
+            'inputType'               => 'checkbox',
+            'sql'                     => "char(1) NOT NULL default ''"
+        ),
+        'print' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['print'],
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',

@@ -54,6 +54,7 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
     CTRL_GRID: 'Gitter ein-/ausblenden',
     CTRL_PERMALINK: 'Permalink generieren',
     CTRL_FULLSCREEN: 'Vollbildmodus ein-/ausschalten',
+    CTRL_PRINT: 'Karte exportieren',
 
     EDITOR: 'Editor',
     EDITOR_ENABLE_INSTANT_MEASURE: 'Messen während des Zeichnens',

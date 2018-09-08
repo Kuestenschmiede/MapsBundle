@@ -66,6 +66,7 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
     MEASURETOOLS_VIEW_TRIGGER_DRAW_FREEHAND: 'c4g-measuretools-view-trigger-draw-freehand',
     EXPORTTOOLS_VIEW_TRIGGER_PRINT: 'c4g-exporttools-view-trigger-print',
     EXPORTTOOLS_PRINT: 'c4g-exporttools-print',
+    PRINT:'c4g-print',
     INFOPAGE_VIEW_TRIGGER: 'c4g-infopage-view-trigger',
     INFOPAGE: 'c4g-infopage',
     ACCOUNT_VIEW_TRIGGER: 'c4g-account-view-trigger',

@@ -178,6 +178,8 @@ class ResourceLoader extends coreResourceLoader
         if ($resources['overviewmap']) {
             parent::loadJavaScriptRessource('c4g-maps-control-overviewmap', self::BUNDLE_JS_PATH . 'c4g-maps-control-overviewmap.js' . $staticOption);
         }
+        parent::loadJavaScriptRessource('c4g-maps-control-print', self::BUNDLE_JS_PATH . 'c4g-maps-control-print.js' . $staticOption);
+
         if ($resources['baselayerswitcher']) {
             parent::loadJavaScriptRessource('c4g-maps-control-starboardplugin-baselayerswitcher', self::BUNDLE_JS_PATH . 'c4g-maps-control-starboardplugin-baselayerswitcher.js' . $staticOption);
         }

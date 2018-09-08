@@ -130,7 +130,7 @@ class MapProxy {
       }
 
       // hooks
-      c4g.maps.utils.callHookFunctions(self.hook_map_zoom);
+      c4g.maps.utils.callHookFunctions(c4g.maps.hook.hook_map_zoom,self);
 
       if (self.options.mapController.data.caching && map.getView().getZoom()) {
           c4g.maps.utils.storeValue('zoom', map.getView().getZoom());

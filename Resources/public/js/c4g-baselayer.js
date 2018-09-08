@@ -17,8 +17,8 @@ class C4gBaselayer{
         this.attribution = baselayerArr['attribution'];
         this.params = baselayerArr['params'];
         this.wms_gutter = baselayerArr['wms_gutter'];
-        this.minzoomlevel = baselayerArr['minzoomlevel'];
-        this.maxzoomlevel = baselayerArr['maxzoomlevel'];
+        this.minZoom = baselayerArr['minZoom'];
+        this.maxZoom = baselayerArr['maxZoom'];
         this.protect_baselayer = baselayerArr['protect_baselayer'];
         this.permitted_groups = baselayerArr['permitted_groups'];
         this.api_key = baselayerArr['apiKey'] ? baselayerArr['apiKey'] : baselayerArr['api_key'];

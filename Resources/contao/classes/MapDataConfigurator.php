@@ -327,6 +327,7 @@ class MapDataConfigurator
                 $mapData['keyboard_nav']['zoom'] = $profile->keyboard_nav;
             }
             $mapData['fullscreen'] = $profile->fullscreen;
+            $mapData['print'] = $profile->print;
 
             // Starboard
             //
