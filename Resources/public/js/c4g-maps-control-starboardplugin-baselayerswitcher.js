@@ -228,6 +228,8 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
             //         $(children[i].firstChild).addClass(c4g.maps.constant.css.ACTIVE).removeClass(c4g.maps.constant.css.INACTIVE);
             //     }
             // }
+            c4g.maps.hook.baselayer_changed = c4g.maps.hook.baselayer_changed || [];
+            c4g.maps.utils.callHookFunctions(c4g.maps.hook.baselayer_changed, itemUid);
           }
       }; // end of "handleEntryClick()"
 

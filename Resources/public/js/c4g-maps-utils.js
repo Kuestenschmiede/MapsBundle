@@ -834,6 +834,14 @@ this.c4g.maps = this.c4g.maps || {};
         });
     },// end of "getVectorLayer()"
 
+    /**
+     * Extracts the subdomain from the current request host and returns it.
+     * @returns {string | *}
+     */
+    getCurrentSubdomain() {
+      return window.location.href;
+    },
+
     redrawMapView: function (mapController) {
       var mapData = mapController.data;
       var controlContainerTopLeft = document.createElement('div');

@@ -146,6 +146,8 @@ class MapProxy {
                 c4g.maps.utils.storeValue('lat', coordinate[1]);
             }
         }
+        c4g.maps.hook.map_center_changed = c4g.maps.hook.map_center_changed || [];
+        c4g.maps.utils.callHookFunctions(c4g.maps.hook.map_center_changed, map.getView().getCenter());
     }); // end of "center-observer"
 
     // click-observer

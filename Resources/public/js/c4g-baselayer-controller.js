@@ -2,7 +2,7 @@ class C4gBaselayerController {
     constructor(proxy) {
         this.proxy = proxy;
         this.mapController = proxy.options.mapController;
-        this.arrBaselayers = [];
+        this.arrBaselayers = {};
         this.baselayerIds = [];
     }
 
