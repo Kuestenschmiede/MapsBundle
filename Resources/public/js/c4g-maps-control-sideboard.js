@@ -530,6 +530,9 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
       button = document.createElement('button');
       button.className = 'c4g-' + this.options.name + '-button' + options.className;
+      if(options.id) {
+        button.id = options.id;
+      }
 
       if (typeof options.tipLabel === 'string') {
         button.title = options.tipLabel;
