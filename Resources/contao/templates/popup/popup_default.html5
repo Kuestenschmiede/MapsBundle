@@ -1,1 +1,1 @@
-<?php $this->showTemplateVars(); ?>
+<?php $this->dumpTemplateVars(); ?>
