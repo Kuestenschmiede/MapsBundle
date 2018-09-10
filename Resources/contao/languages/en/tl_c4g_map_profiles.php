@@ -66,8 +66,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['zoomlevel']             = array('Sho
                                                                             'Displays the current zoomlevel.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['fullscreen']            = array('Fullscreen control',
                                                                             'Shows a button which switches the browser into fullscreen (HTML5). Caution: this is not supported by every browser!');
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['print']                 = array('Print map',
-                                                                            'Enables a button to export the map as PNG');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['print']                 = array('Export map',
+                                                                            'Enables a button to export the map as PNG.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard']             = array('Enable Starboard',
                                                                             'Activate starboard to allow to change the base layers and overlays.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_open']        = array('Open starboard',
