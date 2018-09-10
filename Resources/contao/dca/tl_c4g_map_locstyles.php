@@ -39,7 +39,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
         'dataContainer'               => 'Table',
         'enableVersioning'            => true,
         'onsubmit_callback'             => array(
-            array('\con4gis\CoreBundle\Resources\contao\classes\C4GAutomator', 'purgeLocationstyleApiCache')
+            array('\con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator', 'purgeLocationstyleApiCache')
         ),
         'sql'                         => array
         (
