@@ -13,6 +13,7 @@
 
 namespace con4gis\MapsBundle\Resources\contao\models;
 
+use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
 use Contao\System;
 
 /**
@@ -31,7 +32,7 @@ class C4gMapsModel extends \Model
         $arrColumns = array("$t.pid=?");
         $arrValues = array($intPid);
 
-        if (!System::getContainer()->get("contao.security.token_checker")->hasBackendUser()) {
+        if (!C4GUtils::checkBackendUserLogin()) {
             $time = time();
             $arrColumns[] = "$t.published=1";
         }
