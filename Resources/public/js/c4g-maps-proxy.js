@@ -340,27 +340,26 @@ class MapProxy {
             } else {
               jQuery.ajax({
                 dataType: "json",
-                url: self.api_infowindow_url + '/' + popupInfos.content,
-                done: function (data) {
-                  var popupInfo = {
-                    async: popupInfos.async,
-                    content: data.content,
-                    popup: popupInfos.popup,
-                    routing_link: popupInfos.routing_link
-                  };
+                url: self.api_infowindow_url + '/' + popupInfos.content
+              }).done(function(data) {
+                var popupInfo = {
+                  async: popupInfos.async,
+                  content: data.content,
+                  popup: popupInfos.popup,
+                  routing_link: popupInfos.routing_link
+                };
 
-                  objPopup = {};
-                  objPopup.popup = popupInfo;
-                  objPopup.feature = feature;
-                  objPopup.layer = layer;
+                objPopup = {};
+                objPopup.popup = popupInfo;
+                objPopup.feature = feature;
+                objPopup.layer = layer;
 
-                  // Call the popup hook for plugin specific popup content
-                  if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.proxy_fillPopup === 'object') {
-                    c4g.maps.utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
-                  }
-
-                  self.setPopup(objPopup);
+                // Call the popup hook for plugin specific popup content
+                if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.proxy_fillPopup === 'object') {
+                  c4g.maps.utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
                 }
+
+                self.setPopup(objPopup);
               });
             }
           } else {
@@ -408,7 +407,6 @@ class MapProxy {
     layer = popupConfig.layer;
 
     popupContent = c4g.maps.utils.replaceAllPlaceholders(popupConfig.popup.content, feature, layer);
-
     // @TODO: check for route-option & display "route-to"
     // NOTE: does not work async this way
     if (this.options.mapController.controls.router && popupConfig.popup.routing_link) {
