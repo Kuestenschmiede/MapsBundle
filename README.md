@@ -7,7 +7,7 @@ The interactive maps brick of the Contao GIS-kit **con4gis**.
 **Website:** [maps.con4gis.org](https://maps.con4gis.org)
 
 **Contains:**
-- [OpenLayers 4.x] (https://github.com/openlayers/openlayers)
+- [OpenLayers 5.x] (https://github.com/openlayers/openlayers)
 
 **Requires:**
 - [Contao](https://github.com/contao/core) (***4.4.x***)   
@@ -16,6 +16,7 @@ For Contao 3 you can use [con4igs_maps3](https://github.com/Kuestenschmiede/con4
 
 **Extendable:**
 - [ForumBundle](https://github.com/Kuestenschmiede/ForumBundle/releases) (*latest stable release*)
+- [ProjectsBundle](https://github.com/Kuestenschmiede/ProjectsBundle/releases) (*latest stable release*)
 - [TrackingBundle](https://github.com/Kuestenschmiede/TrackingBundle/releases) (*latest stable release*)
   
 **And with all other con4gis and Contao bundles**  
@@ -38,7 +39,7 @@ implemented features
         - MapBox (Studio & Classic Styles)
         - HERE (6 Styles)
         - Thunderforest (9 Styles)
-        - Klokan (OpenMapTiles & TileHosting Styles)
+        - Klokan Technologies (OpenMapTiles & 8 MapTiler Styles)
         - Custom
     - Bing (3 Styles)
     - other
@@ -70,10 +71,12 @@ implemented features
         - switchable select all button
         - optional structure tabs
     - Portside
-        - Router (OSRM API 4+5)
+        - Router (OSRM API 4+5, OpenRouteService)
         - Editor (waypoints, ways, areas, circles, freehand)
         - Measuretools (ways, areas, radius, freehand)
     - Attribution
+    - Export map
+    - Simple favorites (localstorage)
     - Fullscreen
     - GeoSearch
         - jumps to automaticly first result
@@ -86,7 +89,7 @@ implemented features
     - Rotation
     - ScaleLine
     - Zoom-Panel
-    - Zoom-Button for world, browser or initial position
+    - Zoom-Button for world, browser and initial position
     - Zoom-Slider
     - Zoom-Level
 - configurate ***Location types***:
@@ -99,7 +102,8 @@ implemented features
     - Other tables (pre-configured: events, members)
     - OSM files
     - OSM requests (Overpass API)
-    - build structure from directory 
+    - build structure from directory
+    - ... 
 - configurate ***Themes***:
     - default theme (sample)
     - BE themes manager (own CSS styling)
