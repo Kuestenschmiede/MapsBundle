@@ -70,7 +70,6 @@ class ResourceLoader extends coreResourceLoader
             'router' => $allByDefault,
             'editor' => $allByDefault,
             'measuretools' => $allByDefault,
-            'exporttools' => false, //ToDo
             'infopage' => $allByDefault,
             'plugins' => $allByDefault,
             'customtab' => $allByDefault,
@@ -211,10 +210,6 @@ class ResourceLoader extends coreResourceLoader
                 parent::loadJavaScriptRessource('c4g-maps-control-portside-account', self::BUNDLE_JS_PATH . 'c4g-maps-control-portside-account.js' . $staticOption);
             }
         }
-        //ToDo make executable
-        if ($resources['exporttools']) {
-            parent::loadJavaScriptRessource('c4g-maps-control-portside-exporttools', self::BUNDLE_JS_PATH . 'c4g-maps-control-portside-exporttools.js' . $staticOption);
-        }
 
         parent::loadJavaScriptRessource('ol-ext', self::VENDOR_PATH .'ol-ext-'.$GLOBALS['con4gis']['maps']['ol-ext'] .'/ol-ext.min.js' . $staticOption);
         parent::loadCssRessource('ol-ext', self::VENDOR_PATH .'ol-ext-'.$GLOBALS['con4gis']['maps']['ol-ext'] .'/ol-ext.min.css' . $staticOption);
@@ -316,7 +311,6 @@ class ResourceLoader extends coreResourceLoader
             'router' => ($profile->geosearch && $profile->router),
             'editor' => ($profile->editor),
             'measuretools' => ($profile->measuretool),
-            'exporttools' => false, //ToDo profile switch,
             'infopage' => ($profile->infopage),
             'account' => ($profile->account),
             // @TODO BE-Switch?

@@ -39,7 +39,6 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
     CTRL_ROUTER: 'Router ein-/ausblenden',
     CTRL_EDITOR: 'Editor ein-/ausblenden',
     CTRL_MEASURETOOLS: 'Messwerkzeuge ein-/ausblenden',
-    CTRL_EXPORTTOOLS: 'Exportwerkzeuge ein-/ausblenden',
     CTRL_INFOPAGE: 'Infoseite ein-/ausblenden',
     CTRL_ACCOUNT: 'Account ein-/ausblenden',
     CTRL_ZOOMLEVEL: 'Zoom',
@@ -182,9 +181,6 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
     MEASURETOOLS_VIEW_TRIGGER_DRAW_POLYGON: 'Flächen messen',
     MEASURETOOLS_VIEW_TRIGGER_DRAW_CIRCLE: 'Radius messen',
     MEASURETOOLS_VIEW_TRIGGER_DRAW_FREEHAND: 'Freihand messen',
-
-    EXPORTTOOLS: 'Exportwerkzeuge',
-    EXPORTTOOLS_VIEW_TRIGGER_PRINT: 'Kartenausschnitt drucken',
 
     GEOBOOKMARKS_PLACEHOLDER: 'Neue Bezeichnung',
 

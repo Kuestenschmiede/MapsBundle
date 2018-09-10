@@ -61,7 +61,6 @@ this.c4g.maps = this.c4g.maps || {};
             attribution: {},
             editor: {},
             measuretools: {},
-            exporttools: {},
             infopage: {},
             account: {},
             starboard: {},
@@ -633,16 +632,6 @@ this.c4g.maps = this.c4g.maps || {};
                 mapController: this
             });
             this.map.addControl(this.controls.measuretools);
-        }
-        // exporttools
-        if (mapData.exporttools.enable && typeof c4g.maps.control.Exporttools === 'function') {
-            this.controls.exporttools = new c4g.maps.control.Exporttools({
-                tipLabel: c4g.maps.constant.i18n.CTRL_EXPORTTOOLS,
-                target: controlContainerTopLeft,
-                caching: mapData.caching,
-                mapController: this
-            });
-            this.map.addControl(this.controls.exporttools);
         }
         //
         if (mapData.print){

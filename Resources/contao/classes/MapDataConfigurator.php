@@ -357,9 +357,6 @@ class MapDataConfigurator
                 $mapData['measuretools']['enable'] = $profile->measuretool;
             }
 
-            //todo first draft for map printing
-            //$mapData['exporttools']['enable'] = true;
-
             $mapData['graticule'] = $profile->graticule;
 
             // map-information

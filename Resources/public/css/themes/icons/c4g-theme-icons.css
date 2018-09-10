@@ -219,12 +219,6 @@ button.c4g-measuretools-view-trigger-draw-freehand:before {
 button.c4g-editor-view-trigger-draw-freehand:before {
   content: "\f303";
 }
-button.c4g-exporttools-view-trigger-print:before {
-  content: "\f02f";
-}
-button.c4g-exporttools-print:before {
-  content: "\f02f";
-}
 button.c4g-print:before {
   content: "\f019";
 }
