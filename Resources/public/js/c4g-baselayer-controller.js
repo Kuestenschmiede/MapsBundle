@@ -339,12 +339,15 @@ class C4gBaselayerController {
             case 'group':
                 let baseLayerGroup = [];
                 for(let index in baseLayerConfig['layerGroup']){
+                  if(baseLayerConfig['layerGroup'].hasOwnProperty(index)) {
+
                     let element = this.createBaseLayer(null, baseLayerConfig['layerGroup'][index], sourceConfigs);
                     let maxZoom = this.proxy.options.mapController.map.getView().getResolutionForZoom(baseLayerConfig['layerGroup'][index]['minZoom']);
                     let minZoom = this.proxy.options.mapController.map.getView().getResolutionForZoom(baseLayerConfig['layerGroup'][index]['maxZoom']);
                     element.setMinResolution(minZoom);
                     element.setMaxResolution(maxZoom);
                     baseLayerGroup.push(element);
+                  }
                 }
                 newBaselayer = new ol.layer.Group({
                     layers: baseLayerGroup

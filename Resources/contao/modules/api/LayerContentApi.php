@@ -18,6 +18,7 @@ use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
 use con4gis\CoreBundle\Resources\contao\classes\HttpResultHelper;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapLocstylesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
+use con4gis\MapsProjectBundle\Classes\ReplaceInsertTags;
 use Contao\ContentModel;
 use Contao\Controller;
 use Contao\Database;
@@ -912,7 +913,7 @@ class LayerContentApi extends \Controller
         if ( ($objLayer->popupType == "text") && !$objLayer->popup_info && $objLayer->locstyle) {
             $locstyle = C4gMapLocstylesModel::findByPk($objLayer->locstyle);
             if ($locstyle->popup_info) {
-                $popup_content = $locstyle->popup_info;
+                $popup_content = \Contao\Controller::replaceInsertTags($locstyle->popup_info);
                 $popup_async = false;
             } else {
                 $popup_content = '';
@@ -921,7 +922,7 @@ class LayerContentApi extends \Controller
         }
         else if(!$objLayer->popup_async && $objLayer->popup_info){
             $popup_async = false;
-            $popup_content = $objLayer->popup_info;
+            $popup_content = \Contao\Controller::replaceInsertTags($objLayer->popup_info);
         }
 
         switch ($objLayer->location_type) {

@@ -36,9 +36,11 @@ class C4gBaselayer{
         if(baselayerArr['layerGroup']){
             let layerGroup = [];
             for(let index in baselayerArr['layerGroup'] ){
-                layerGroup[index] = new C4gBaselayer(baselayerArr['layerGroup'][index]['entry']);
-                layerGroup[index]['minZoom'] = baselayerArr['layerGroup'][index]['minZoom'];
-                layerGroup[index]['maxZoom'] = baselayerArr['layerGroup'][index]['maxZoom'];
+                if(baselayerArr['layerGroup'].hasOwnProperty(index)){
+                  layerGroup[index] = new C4gBaselayer(baselayerArr['layerGroup'][index]['entry']);
+                  layerGroup[index]['minZoom'] = baselayerArr['layerGroup'][index]['minZoom'];
+                  layerGroup[index]['maxZoom'] = baselayerArr['layerGroup'][index]['maxZoom'];
+                }
             }
             this.layerGroup = layerGroup;
         }
