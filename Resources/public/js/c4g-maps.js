@@ -62,7 +62,7 @@ this.c4g.maps = this.c4g.maps || {};
             editor: {},
             measuretools: {},
             infopage: {},
-            account: {},
+            account: '',
             starboard: {},
             layerswitcher: {},
             baselayerswitcher: {},

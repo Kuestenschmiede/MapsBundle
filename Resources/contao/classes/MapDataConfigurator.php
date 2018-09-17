@@ -383,7 +383,7 @@ class MapDataConfigurator
                 $mapData['permalink']['get_parameter'] = $profile->permalink_get_param;
             }
             $mapData['zoomlevel'] = $profile->zoomlevel;
-            if ($profile->account) {
+            if ($profile->account > 0) {
                 $mapData['account'] = \Contao\Controller::replaceInsertTags("{{insert_module::".$profile->account."}}", false);
             } else {
                 $maptData['account'] = '';

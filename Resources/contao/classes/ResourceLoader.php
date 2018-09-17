@@ -206,7 +206,7 @@ class ResourceLoader extends coreResourceLoader
             if ($resources['infopage']) {
                 parent::loadJavaScriptRessource('c4g-maps-control-portside-infopage', self::BUNDLE_JS_PATH . 'c4g-maps-control-portside-infopage.js' . $staticOption);
             }
-            if ($resources['account']) {
+            if ($resources['account'] > 0) {
                 parent::loadJavaScriptRessource('c4g-maps-control-portside-account', self::BUNDLE_JS_PATH . 'c4g-maps-control-portside-account.js' . $staticOption);
             }
         }
