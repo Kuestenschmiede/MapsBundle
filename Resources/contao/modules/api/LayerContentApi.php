@@ -1004,7 +1004,10 @@ class LayerContentApi extends \Controller
                         ),
                         'projection' => $projection,
                         'label' => $objLayer->loc_label,
-                        'zoom_onclick' => $objLayer -> loc_onclick_zoomto
+                        'zoom_onclick' => $objLayer -> loc_onclick_zoomto,
+                        'tooltip' =>  \Contao\Controller::replaceInsertTags($objLayer->tooltip),
+                        "tooltip_length" => $objLayer->tooltip_length,
+                        'label' =>  \Contao\Controller::replaceInsertTags($objLayer->loc_label)
                     );
                 } else {
                     // OL3 needs a feature or feature-collection
