@@ -165,7 +165,13 @@ class C4gLayerController{
 
           uid = layer.id || c4g.maps.utils.getUniqueId();
           this.arrLayers[uid] = layer;
-          layer.isInactive = false;
+          if(this.proxy.checkLayerIsActiveForZoom(layer.id)){
+            layer.isInactive = false;
+          }
+          else{
+            layer.isInactive = true;
+          }
+
           this.proxy.layerIds.push(layer.id);
 
           if (layer.display) {
@@ -1285,7 +1291,6 @@ class C4gLayerController{
         //}
       }
     }
-    this.proxy.activeLayerIds[layerUid] = 'visible';
 
     if (layer && layer.hasChilds && activeForZoom) {
       for (i = 0; i < layer.childs.length; i += 1) {
@@ -1293,7 +1298,7 @@ class C4gLayerController{
       }
     }
 
-    if (layer) {
+    if (layer && activeForZoom) {
       layer.isInactive = false;
     }
 
