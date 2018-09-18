@@ -440,6 +440,7 @@ button.ol-zoom-position:before{
   display: none;
   z-index: 90;
   max-width: 640px;
+  line-height: 1.5em;
 }
 .c4g-popup-wrapper.c4g-active {
   display: block;
