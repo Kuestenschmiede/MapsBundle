@@ -29,7 +29,7 @@ class LayerController extends BaseController
     public function layerAction(Request $request, $mapId)
     {
         $response = new JsonResponse();
-        $this->initialize();
+        $this->initialize(false);
 
         $this->checkForCacheSettings('layerService');
 
