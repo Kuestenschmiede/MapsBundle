@@ -894,12 +894,14 @@ button.c4g-popup-close {
   outline: none;
 }
 button.c4g-popup-route-from,
-button.c4g-popup-route-to {
+button.c4g-popup-route-to,
+.c4g_brick_popup_button a {
     border: 1px solid;
     padding: 6px 10px;
     cursor: pointer;
     outline: none;
 }
+
 button.c4g-popup-route-from {
     border-right: 0;
     border-radius: 3px 0 0 3px;

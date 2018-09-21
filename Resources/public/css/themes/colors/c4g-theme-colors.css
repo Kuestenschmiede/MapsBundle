@@ -399,13 +399,15 @@ button.c4g-popup-close:hover {
   background-color: var(--main-color);
 }
 button.c4g-popup-route-from,
-button.c4g-popup-route-to {
+button.c4g-popup-route-to,
+.c4g_brick_popup_button a {
     color: var(--main-color);
     background-color: var(--font-color);
     border-color: var(--font-color);
 }
 button.c4g-popup-route-from:hover,
-button.c4g-popup-route-to:hover {
+button.c4g-popup-route-to:hover,
+.c4g_brick_popup_button a:hover {
     background-color: var(--font-color);
 }
 /*.c4g-popup-route-wrapper {*/
@@ -413,7 +415,7 @@ button.c4g-popup-route-to:hover {
   /*background-color: var(--font-color);*/
   /*border-color: var(--shadow-color);*/
 /*}*/
-.c4g-popup-route-from,.c4g-popup-route-to {
+.c4g-popup-route-from,.c4g-popup-route-to, .c4g_brick_popup_button a {
   color: var(--main-color);
 }
 
