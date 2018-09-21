@@ -733,7 +733,9 @@ this.c4g.maps.control = this.c4g.maps.control || {};
             features,
             editorStyle,
             style,
+            styleData,
             styleIcon,
+            svgSrc,
             styleImage,
             styleTriggerLabel,
             featureIdCount,
@@ -743,6 +745,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         style = self.proxy.locationStyleController.arrLocStyles[styleId].style()[0];
         editorStyle = self.proxy.locationStyleController.arrLocStyles[styleId].editor;
         styleData = self.proxy.locationStyleController.arrLocStyles[styleId].locStyleArr;
+        svgSrc = styleData.svgSrc;
 
         featureIdCount = 0;
 
