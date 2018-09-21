@@ -824,6 +824,7 @@ this.c4g.maps = this.c4g.maps || {};
             if (mapData.attribution.cfg_logo) {
                 logoLink = document.createElement('a');
                 logoLink.href = 'https://con4gis.org';
+                logoLink.title = 'built with con4gis';
                 logoLink.target = '_blank';
                 logoLink.className = c4g.maps.constant.css.ATTRIBUTION_LOGO;
                 logoGraphic = document.createElement('img');
