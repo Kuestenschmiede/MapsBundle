@@ -113,14 +113,14 @@ this.c4g.maps.control = this.c4g.maps.control || {};
     }
 
     // wrapper div
-    searchWrapper = document.createElement('div');
-    searchWrapper.className = c4g.maps.constant.css.GEOSEARCH_WRAPPER;
-    element.appendChild(searchWrapper);
+    this.searchWrapper = document.createElement('div');
+    this.searchWrapper.className = c4g.maps.constant.css.GEOSEARCH_WRAPPER;
+    element.appendChild(this.searchWrapper);
 
     // search-field
     searchInput = document.createElement('input');
     searchInput.type = 'text';
-    searchWrapper.appendChild(searchInput);
+    this.searchWrapper.appendChild(searchInput);
 
     // @TODO
     // // result-trigger
@@ -146,7 +146,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
     searchButton = document.createElement('button');
     searchButton.className = c4g.maps.constant.css.GEOSEARCH_START;
     searchButton.title = c4g.maps.constant.i18n.CTRL_START_SEARCH;
-    searchWrapper.appendChild(searchButton);
+    this.searchWrapper.appendChild(searchButton);
 
       $(searchButton).click(function () {
           try {
@@ -157,32 +157,6 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
               self.findLocation(searchInput.value);
 
-              if(document.getElementById("resultcontainer")){
-                  document.getElementById("resultcontainer").parentNode.removeChild(document.getElementById("resultcontainer"));
-              }
-              if(self.config.results){
-
-              var searchResultContainer = document.createElement('ul');
-              searchResultContainer.setAttribute("id","resultcontainer");
-              if (self.results) {
-                  for (var i = 0; i < self.results.length; i++) {
-                      var searchResult = document.createElement('li');
-                      var searchResultButton = document.createElement('button');
-                      searchResultButton.setAttribute("id", i);
-                      searchResultButton.setAttribute('class', 'searchResultButton');
-                      searchResultButton.addEventListener('click',function () {
-                          self.zoomTo(this.getAttribute("id"))
-                      });
-
-                      searchResultButton.setAttribute("name",self.results[i].display_name);
-                      searchResultButton.innerHTML =self.results[i].display_name;
-                      searchResult.appendChild(searchResultButton);
-                      searchResultContainer.appendChild(searchResult);
-
-                  }
-                  searchWrapper.appendChild(searchResultContainer);
-              }
-              }
           }
       });
 
@@ -598,7 +572,6 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         // AJAX -> @nominatim
         $.ajax({
               crossDomain: true,
-              async: false,
               dataType: "json",
               url: this.config.url,
               data: {
@@ -606,15 +579,6 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                 q: location
               }
             })
-            // $.getJSON(
-            //   this.config.url,
-            //   {
-            //     format: 'json',
-            //     q: location
-            //   }
-            // )
-            // AJAX-success
-            //
             .done(function (results) {
 
               var mapView,
@@ -888,6 +852,32 @@ this.c4g.maps.control = this.c4g.maps.control || {};
               }
               // self.resultWrapper.innerHTML = '@ console';
 
+              if(document.getElementById("resultcontainer")){
+                document.getElementById("resultcontainer").parentNode.removeChild(document.getElementById("resultcontainer"));
+              }
+              if(self.config.results){
+
+                var searchResultContainer = document.createElement('ul');
+                searchResultContainer.setAttribute("id","resultcontainer");
+                if (self.results) {
+                  for (var i = 0; i < self.results.length; i++) {
+                    var searchResult = document.createElement('li');
+                    var searchResultButton = document.createElement('button');
+                    searchResultButton.setAttribute("id", i);
+                    searchResultButton.setAttribute('class', 'searchResultButton');
+                    searchResultButton.addEventListener('click',function () {
+                      self.zoomTo(this.getAttribute("id"))
+                    });
+
+                    searchResultButton.setAttribute("name",self.results[i].display_name);
+                    searchResultButton.innerHTML =self.results[i].display_name;
+                    searchResult.appendChild(searchResultButton);
+                    searchResultContainer.appendChild(searchResult);
+
+                  }
+                  self.searchWrapper.appendChild(searchResultContainer);
+                }
+              }
             })
 
             // AJAX-failure
