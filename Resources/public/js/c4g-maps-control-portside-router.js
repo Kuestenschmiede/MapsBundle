@@ -257,14 +257,12 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       };
 
       this.options.mapController.map.on('click', self.fnMapRouterInteraction);
-      if(self.options.mapController.map.getInteractions().getArray()['9']){
-          self.options.mapController.map.getInteractions().getArray()['9'].setActive(true);
-      }
-      else{
-          self.options.mapController.map.getInteractions().getArray()['8'].setActive(true)
-      }
-
-
+      // if(self.options.mapController.map.getInteractions().getArray()['9']){
+      //     self.options.mapController.map.getInteractions().getArray()['9'].setActive(true);
+      // }
+      // else{
+      //     self.options.mapController.map.getInteractions().getArray()['8'].setActive(true)
+      // }
     },
 
 
