@@ -99,15 +99,15 @@ class C4gLocationStyle{
                     if(styleData.svgSrc && styleData.icon_scale && styleData.icon_size) {
                         let canvas = document.createElement('canvas');
                         let ctx = canvas.getContext("2d");
-                        let height = (styleData.icon_size[0]*styleData.icon_scale);
-                        let width  = (styleData.icon_size[1]*styleData.icon_scale);
+                        let width = (styleData.icon_size[0]*styleData.icon_scale);
+                        let height = (styleData.icon_size[1]*styleData.icon_scale);
 
                         let strokewidth = 0;
                         if (styleData.strokewidth && styleData.strokewidth.value) {
                             strokewidth = styleData.strokewidth.value;
                         }
-                        canvas.height = height+(2*strokewidth);
                         canvas.width  = width+(2*strokewidth);
+                        canvas.height = height+(2*strokewidth);
                         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
                         if (styleData.fillcolor) {
