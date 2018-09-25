@@ -20,7 +20,9 @@ class C4gLocationStyle{
             strokeStyle,
             fillStyle,
             textStyle,
-            textStyleOutline;
+            textStyleOutline,
+            backgroundFill,
+            backgroundStroke;
 
         self = this;
 
@@ -209,12 +211,20 @@ class C4gLocationStyle{
                         }),
                         width: parseInt(styleData.label_outl_width.value, 10)
                     });
+                    if(styleData.label_outl_box === "1"){
+                      backgroundFill = new ol.style.Fill({
+                        color: c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.label_outl_color || defaultColor, {
+                          unit: '%',
+                          value: 100
+                        })
+                      });
+                    }
                 }
                 if (!styleData.label_offset) {
                     styleData.label_offset = [0, 0, "px"];
                 }
-
-                textStyle = new ol.style.Text({
+                if(styleData.label_outl_box === "1"){
+                  textStyle = new ol.style.Text({
                     text: label,
                     font: (styleData.font_weight || 'normal') + ' ' + (styleData.font_style || 'normal') + ' ' + (styleData.font_size || '13') + 'px ' + (styleData.font_family || 'sans-serif'),
                     // scale: parseInt(styleData.font_size || 0, 10) || undefined,
@@ -223,10 +233,28 @@ class C4gLocationStyle{
                     textAlign: styleData.label_align_hor,
                     textBaseline: styleData.label_align_ver,
                     fill: new ol.style.Fill({
-                        color: c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.font_color || defaultColor, styleData.font_opacity)
+                      color: c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.font_color || defaultColor, styleData.font_opacity)
+                    }),
+                    backgroundFill: backgroundFill,
+                    backgroundStroke: textStyleOutline
+                  });
+                }
+                else{
+                  textStyle = new ol.style.Text({
+                    text: label,
+                    font: (styleData.font_weight || 'normal') + ' ' + (styleData.font_style || 'normal') + ' ' + (styleData.font_size || '13') + 'px ' + (styleData.font_family || 'sans-serif'),
+                    // scale: parseInt(styleData.font_size || 0, 10) || undefined,
+                    offsetX: parseInt(styleData.label_offset[0] || 0, 10),
+                    offsetY: parseInt(styleData.label_offset[1] || 0, 10),
+                    textAlign: styleData.label_align_hor,
+                    textBaseline: styleData.label_align_ver,
+                    fill: new ol.style.Fill({
+                      color: c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.font_color || defaultColor, styleData.font_opacity)
                     }),
                     stroke: textStyleOutline
-                });
+                  });
+                }
+
             }
 
             // create style-object

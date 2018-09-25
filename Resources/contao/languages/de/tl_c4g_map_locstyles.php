@@ -50,6 +50,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['font_family']      = array('Schrift
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['font_color']       = array('Schriftfarbe','Wählen Sie die für die Schrift des Labels zu verwendende Farbe.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['font_size']        = array('Schriftgröße','Wählen Sie die für die Schrift des Labels zu verwendende Schriftgröße.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_outl_color'] = array('Farbe Schriftrand','Falls die Schrift Ihres Labels einen Rand bekommen sollen, dann tragen Sie hier die Randfarbe ein.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_outl_box']   = array('Art des Schriftrands','Im Normalfall folgt der Schriftrand der Schrift. Mit anwählen der Checkbox wird der Hintergrund in eine einfache Box umgewandelt.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_outl_width'] = array('Breite Schriftrand','Falls die Schrift Ihres Labels einen Rand bekommen sollen, dann tragen Sie hier die Breite des Randes ein.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['font_opacity']     = array('Deckkraft der Schrift','Wählen Sie die für die Schrift des Labels zu verwendende Deckkraft.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['font_style']       = array('Schriftstil','Wählen Sie den für die Schrift des Labels zu verwendenden Stil (Notierung wie in CSS).');

@@ -115,23 +115,23 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
         '__selector__'                => array('styletype','line_arrows'),
         'default'                     => 'name,styletype,strokewidth,strokecolor,strokeopacity,fillcolor,fillopacity,radius;'.
                                          '{arrow_legend},line_arrows;'.
-                                         '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,font_opacity,font_style,font_weight;'.
+                                         '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_box,label_outl_width,font_opacity,font_style,font_weight;'.
                                          '{popup_legend},tooltip,popup_info;'.
                                          '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;'.
                                          '{editor_legend:hide},editor_icon,editor_icon_size,editor_sort,editor_vars,editor_collect;',
         'cust_icon'                   => 'name,styletype,icon_src, icon_scale, icon_size,icon_opacity;'.
-                                         '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,font_opacity,font_style,font_weight;'.
+                                         '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_box,label_outl_width,font_opacity,font_style,font_weight;'.
                                          '{popup_legend},tooltip,popup_info;'.
                                          '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;'.
                                          '{editor_legend:hide},editor_icon,editor_icon_size,editor_sort,editor_vars,editor_collect;',
         'cust_icon_svg'                   => 'name, styletype, svgSrc, icon_scale, icon_size, strokewidth, strokecolor, strokeopacity, fillcolor, fillopacity;'.
-                                         '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,font_opacity,font_style,font_weight;'.
+                                         '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_box,label_outl_width,font_opacity,font_style,font_weight;'.
                                          '{popup_legend},tooltip,popup_info;'.
                                          '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;'.
                                          '{editor_legend:hide},editor_icon,editor_icon_size,editor_sort,editor_vars,editor_collect;',
         'style_function'              => 'name,styletype,style_function_js;',
         'photo'                       => 'name,styletype,radius,photoKind,icon_src,strokecolor,icon_opacity;'.
-                                         '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,font_opacity,font_style,font_weight;'.
+                                         '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_box,label_outl_width,font_opacity,font_style,font_weight;'.
                                          '{popup_legend},tooltip,popup_info;'.
                                          '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;'.
                                          '{editor_legend:hide},editor_icon,editor_icon_size,editor_sort,editor_vars,editor_collect;'
@@ -430,6 +430,14 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
             'inputType'               => 'text',
             'eval'                    => array('maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'),
             'sql'                     => "varchar(6) NOT NULL default ''"
+        ),
+        'label_outl_box' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_outl_box'],
+            'default'                 => '',
+            'inputType'               => 'checkbox',
+            'eval'                    => array('tl_class' => 'long'),
+            'sql'                     => "int(1) default 0"
         ),
         'label_outl_width' => array
         (

@@ -49,6 +49,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['font_family']      = array('Font fa
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['font_color']       = array('Font color','The font color for the label.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['font_size']        = array('Font size','The font size for the label, to be provided like in CSS.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_outl_color'] = array('Label outline color','Enter a color for the outline of the label, if desired.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_outl_box']   = array('Sort of label outline','While the label outline usualy follows the font, with checking the box the outline is transformed to a box.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_outl_width'] = array('Label outline width','Enter a width for the outline of the label, if desired.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['font_opacity']     = array('Font opacity','The font opacity for the label in %.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['font_style']       = array('Font style','The font style for the label, to be provided like in CSS.');
