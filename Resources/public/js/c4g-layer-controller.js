@@ -1060,8 +1060,16 @@ class C4gLayerController{
           });
 
           if(this.arrLayers[itemUid].cluster){
+            let layer = self.arrLayers[itemUid];
+            let map = self.mapController.map;
+            let currentZoom = map.getView().getZoom();
+            let clusterDistance = this.arrLayers[itemUid].cluster.distance || 20;
+            if (currentZoom >= layer.cluster.zoom) {
+              clusterDistance = 0;
+            }
+
             clusterSource = new ol.source.Cluster({
-              distance: this.arrLayers[itemUid].cluster.distance || 20,
+              distance: clusterDistance,
               //threshold: 2, //minimum element count
               source: requestVectorSource
             });
