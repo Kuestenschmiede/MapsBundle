@@ -258,9 +258,9 @@ class MapProxy {
                 f.push(fFeatures[i]);
                 var cf = new ol.Feature({
                   geometry: new ol.geom.Point(p),
-                  features: f
+                  features: f,
+                  style: fFeatures[i].get('style')
                 });
-                cf.setStyle(styleCluster);
                 layer.getSource().addFeature(cf);
                 map.getView().setCenter(newCenter);
               }
