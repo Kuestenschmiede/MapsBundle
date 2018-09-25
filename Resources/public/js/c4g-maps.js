@@ -66,7 +66,8 @@ this.c4g.maps = this.c4g.maps || {};
             starboard: {},
             layerswitcher: {},
             baselayerswitcher: {},
-            geosearch: {}
+            geosearch: {},
+            additionalPanel: {}
         }, mapData);
         if (mapData.calc_extent === 'LOCATIONS') {
             mapData = $.extend({
@@ -676,8 +677,19 @@ this.c4g.maps = this.c4g.maps || {};
             });
             this.map.addControl(this.controls.infopage);
         }
+        // additional panel
+        if (mapData.additionalPanel && typeof c4g.maps.control.additionalPanel === 'function') {
+          this.controls.additionalPanel = new c4g.maps.control.additionalPanel({
+            //tipLabel: c4g.maps.constant.i18n.CTRL_INFOPAGE,
+            target: controlContainerTopLeft,
+            caching: mapData.caching,
+            mapController: this
+          });
+          this.map.addControl(this.controls.additionalPanel);
+        }
 
-        // scaleline
+
+      // scaleline
         if (mapData.scaleline) {
             this.controls.scaleline = new ol.control.ScaleLine({
                 target: controlContainerBottomLeft
