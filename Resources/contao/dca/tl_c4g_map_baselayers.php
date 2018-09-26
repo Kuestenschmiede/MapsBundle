@@ -142,7 +142,9 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] = array
         'owm'                         => '{general_legend},name,display_name,provider,app_id,api_key,attribution,minzoomlevel,maxzoomlevel;{cesium_legend:hide},cesium;'.
                                          '{protection_legend:hide},protect_baselayer;',
         'group'                       => '{general_legend},name,display_name,provider,attribution,layerGroup;'.
-                                         '{protection_legend:hide},protect_baselayer,published;'
+                                         '{protection_legend:hide},protect_baselayer,published;',
+        'custom'                      => '{general_legend},name,display_name,provider,osm_style_url1,osm_style_url2,osm_style_url3,osm_style_url4,extend,osm_keyname,attribution,minzoomlevel,maxzoomlevel;{cesium_legend:hide},cesium;'.
+                                         '{protection_legend:hide},protect_baselayer;'
     ),
 
 
@@ -229,7 +231,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] = array
                                                'bing' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_bing'],
                                                'klokan' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_klokan'],
                                                'wms' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_wms'],
-                                               'group' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_group']
+                                               'group' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_group'],
+                                               'custom' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_custom']
                                               ),
             'eval'                    => array('submitOnChange'=>true, 'tl_class'=>'clr'),
             'sql'                     => "varchar(10) NOT NULL default ''"
@@ -293,6 +296,14 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] = array
         'osm_style_url4' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['osm_style_url4'],
+            'filter'                  => false,
+            'inputType'               => 'text',
+            'eval'                    => array('decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'long'),
+            'sql'                     => "varchar(255) NOT NULL default ''"
+        ),
+        'extend' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['extend'],
             'filter'                  => false,
             'inputType'               => 'text',
             'eval'                    => array('decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'long'),

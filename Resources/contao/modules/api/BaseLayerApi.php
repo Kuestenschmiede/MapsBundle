@@ -191,6 +191,26 @@ class BaseLayerApi extends \Frontend
 
         $arrBaseLayer['provider'] = $objBaseLayer->provider;
         switch ($objBaseLayer->provider) {
+            case 'custom':
+                if (!empty($objBaseLayer->osm_style_url1) && empty($objBaseLayer->osm_style_url2)) {
+                    $arrBaseLayer['url'] = str_replace("$", "", $objBaseLayer->osm_style_url1);
+                } else {
+                    if (!empty($objBaseLayer->osm_style_url1)) {
+                        $arrBaseLayer['urls'][] = str_replace("$", "", $objBaseLayer->osm_style_url1);
+                    }
+                    if (!empty($objBaseLayer->osm_style_url2)) {
+                        $arrBaseLayer['urls'][] = str_replace("$", "", $objBaseLayer->osm_style_url2);
+                    }
+                    if (!empty($objBaseLayer->osm_style_url3)) {
+                        $arrBaseLayer['urls'][] = str_replace("$", "", $objBaseLayer->osm_style_url3);
+                    }
+                    if (!empty($objBaseLayer->osm_style_url4)) {
+                        $arrBaseLayer['urls'][] = str_replace("$", "", $objBaseLayer->osm_style_url4);
+                    }
+                }
+
+                $arrBaseLayer['extend'] = $objBaseLayer->extend;
+                break;
             case 'osm':
                 $arrBaseLayer['style'] = $objBaseLayer->osm_style;
                 if (!empty($objBaseLayer->osm_keyname)) {

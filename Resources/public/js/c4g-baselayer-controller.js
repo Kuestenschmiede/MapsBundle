@@ -111,6 +111,24 @@ class C4gBaselayerController {
         var newBaselayer;
         layerOptions = layerOptions || {};
         switch (baseLayerConfig.provider) {
+            case 'custom':
+              // custom
+              let noUrl = true;
+              if (baseLayerConfig.url) {
+                layerOptions.url = baseLayerConfig.url;
+                noUrl = false;
+              } else if (baseLayerConfig.urls) {
+                layerOptions.urls = baseLayerConfig.urls;
+                noUrl = false;
+              }
+              if (!noUrl) {
+                newBaselayer = new ol.layer.Tile({
+                  source: new ol.source.XYZ(layerOptions),
+                  extent: baseLayerConfig.extend
+                });
+              } else {
+                console.warn('custom url(s) missing -> switch to default');
+              }
             case 'osm':
                 if (sourceConfigs.osm[baseLayerConfig.style]) {
                     newBaselayer = new ol.layer.Tile({
