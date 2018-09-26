@@ -202,7 +202,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
         'popup_extend'                => 'forums',
         'is_map'                      => '',  // is set in updateDCA
         'cluster_locations'           => 'cluster_distance, cluster_fillcolor, cluster_fontcolor, cluster_zoom,cluster_popup',
-        'split_geojson'               => 'geojson_attributes'
+        'split_geojson'               => 'geojson_attributes, geojson_zoom'
     ),
 
     // Fields
@@ -853,6 +853,14 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
             'inputType'               => 'textarea',
             'eval'                    => array('rte'=>'tinyMCE'),
             'sql'                     => "text NULL"
+        ),
+        'geojson_zoom' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['geojson_zoom'],
+            'exclude'                 => true,
+            'default'                 => false,
+            'inputType'               => 'checkbox',
+            'sql'                     => "char(1) NOT NULL default ''"
         ),
         'data_url' => array
         (

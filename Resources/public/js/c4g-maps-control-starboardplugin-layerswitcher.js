@@ -261,6 +261,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
           parent = $(this).parent().parent().parent();
           let childs = $(parent).children();
           let parentUid = $(childs[1]).data('uid');
+          uid = uid.replace(parentUid,'')
           let layer = self.proxy.layerController.arrLayers[parentUid].vectorLayer;
           let singleLayer = layer.getLayers().getArray()[uid];
           let feature = singleLayer.getSource().getFeatures()[0];
@@ -516,11 +517,15 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
                             childEntry.appendChild(document.createTextNode(feature.properties[layer.geojson_attributes.split(',')[0]]));
                             childListItem.appendChild(childEntry);
                             let childUid = uid + "" + i;
-                            let childEntryButton = document.createElement('button');
-                            $(childEntryButton).addClass('c4g-geojson-button');
-                            $(childEntryButton).click(fnChildEntryShow);
-                            childEntryButton.appendChild(document.createTextNode('T'));
-                            childListItem.appendChild(childEntryButton);
+
+                            if(layer.geojson_zoom){
+                              let childEntryButton = document.createElement('button');
+                              $(childEntryButton).addClass('c4g-geojson-button');
+                              $(childEntryButton).click(fnChildEntryShow);
+                              childEntryButton.appendChild(document.createTextNode('T'));
+                              childListItem.appendChild(childEntryButton);
+                            }
+
                             let $childEntry = $(childEntry);
                             childItem.$entries = item.$entries || [];
                             childItem.$entries.push($entry);

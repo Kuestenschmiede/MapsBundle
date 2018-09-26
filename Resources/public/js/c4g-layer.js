@@ -24,6 +24,7 @@ class C4gLayer{
     this.tabId = layerArr['tabId'];
     this.split_geojson = layerArr['split_geojson'];
     this.geojson_attributes = layerArr['geojson_attributes'];
+    this.geojson_zoom = layerArr['geojson_zoom'];
     this.layername = layerArr['layername'];
     this.visibleChilds = false;
     this.vectorLayer = null;

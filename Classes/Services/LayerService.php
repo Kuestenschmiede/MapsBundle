@@ -453,6 +453,7 @@ class LayerService
         if($objLayer->split_geojson){
             $arrLayerData['split_geojson'] = $objLayer->split_geojson;
             $arrLayerData['geojson_attributes'] = $objLayer->geojson_attributes;
+            $arrLayerData['geojson_zoom'] = $objLayer->geojson_zoom;
 
         }
 
