@@ -330,20 +330,40 @@ class C4gBaselayerController {
                 }
                 break;
             case 'wms':
-                newBaselayer = new ol.layer.Tile({
+                if(baseLayerConfig.url.indexOf('https') !== -1){
+                  newBaselayer = new ol.layer.Tile({
                     source: new ol.source.TileWMS({
-                        url: baseLayerConfig.url,
-                        params: {
-                            LAYERS: baseLayerConfig.params.layers,
-                            VERSION: baseLayerConfig.params.version,
-                            //FORMAT: baseLayerConfig.params.format,
-                            TRANSPARENT: baseLayerConfig.params.transparent
-                        },
-                        gutter: baseLayerConfig.gutter,
-                        attributions: baseLayerConfig.attribution + ' ' + ol.source.OSM.ATTRIBUTION
+                      url: baseLayerConfig.url,
+                      params: {
+                        LAYERS: baseLayerConfig.params.layers,
+                        VERSION: baseLayerConfig.params.version,
+                        //FORMAT: baseLayerConfig.params.format,
+                        TRANSPARENT: baseLayerConfig.params.transparent
+                      },
+                      gutter: baseLayerConfig.gutter,
+                      attributions: baseLayerConfig.attribution + ' ' + ol.source.OSM.ATTRIBUTION,
+                      crossOrigin: 'anonymous'
                     }),
                     //extent: ol.proj.transformExtent([5.59334, 50.0578, 9.74158, 52.7998], 'EPSG:4326', 'EPSG:3857')
-                });
+                  });
+                }
+                else{
+                  newBaselayer = new ol.layer.Tile({
+                    source: new ol.source.TileWMS({
+                      url: baseLayerConfig.url,
+                      params: {
+                        LAYERS: baseLayerConfig.params.layers,
+                        VERSION: baseLayerConfig.params.version,
+                        //FORMAT: baseLayerConfig.params.format,
+                        TRANSPARENT: baseLayerConfig.params.transparent
+                      },
+                      gutter: baseLayerConfig.gutter,
+                      attributions: baseLayerConfig.attribution + ' ' + ol.source.OSM.ATTRIBUTION,
+                    }),
+                    //extent: ol.proj.transformExtent([5.59334, 50.0578, 9.74158, 52.7998], 'EPSG:4326', 'EPSG:3857')
+                  });
+                }
+
                 break;
             case 'owm':
                 newBaselayer = new ol.layer.Tile({
