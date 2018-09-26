@@ -851,7 +851,6 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['geojson_attributes'],
             'exclude'                 => true,
             'inputType'               => 'textarea',
-            'eval'                    => array('rte'=>'tinyMCE'),
             'sql'                     => "text NULL"
         ),
         'geojson_zoom' => array
