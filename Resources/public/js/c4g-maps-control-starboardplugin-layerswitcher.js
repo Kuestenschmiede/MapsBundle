@@ -192,6 +192,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
           toggle,
           fnHandleEntryClick,
           fnChildEntryClick,
+          fnChildEntryShow,
           zoomToExtent,
           layerClass;
 
@@ -253,6 +254,19 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
                 $(this).removeClass(c4g.maps.constant.css.INACTIVE).addClass(c4g.maps.constant.css.ACTIVE)
             }
         };
+        fnChildEntryShow = function (event){
+          event.preventDefault();
+          let parent = this.parentElement;
+          let uid = $(parent.firstChild).data('uid');
+          parent = $(this).parent().parent().parent();
+          let childs = $(parent).children();
+          let parentUid = $(childs[1]).data('uid');
+          let layer = self.proxy.layerController.arrLayers[parentUid].vectorLayer;
+          let singleLayer = layer.getLayers().getArray()[uid];
+          let feature = singleLayer.getSource().getFeatures()[0];
+          self.proxy.options.mapController.map.getView().fit(feature.getGeometry());
+
+        }
 
         zoomToExtent = function(itemUid){ //function to zoom to the extent of a map structure and its children
             var layerItem,
@@ -502,7 +516,11 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
                             childEntry.appendChild(document.createTextNode(feature.properties[layer.geojson_attributes.split(',')[0]]));
                             childListItem.appendChild(childEntry);
                             let childUid = uid + "" + i;
-
+                            let childEntryButton = document.createElement('button');
+                            $(childEntryButton).addClass('c4g-geojson-button');
+                            $(childEntryButton).click(fnChildEntryShow);
+                            childEntryButton.appendChild(document.createTextNode('T'));
+                            childListItem.appendChild(childEntryButton);
                             let $childEntry = $(childEntry);
                             childItem.$entries = item.$entries || [];
                             childItem.$entries.push($entry);
