@@ -353,3 +353,6 @@ button.c4g-popup-route-to:before {
 .c4g-portside-container .c4g_brick_dialog #cancel-dialog::before {
   content: "\f05e";
 }
+.c4g-geojson-button:after {
+  content: "\f59f";
+}
