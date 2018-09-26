@@ -130,7 +130,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
     // Palettes
     'palettes' => array
     (
-        '__selector__'                => array( 'is_map', 'profile','location_type', 'tab_source', 'show_locations', 'popup_extend', 'protect_element', 'use_specialprofile', 'cluster_locations'),
+        '__selector__'                => array( 'is_map', 'profile','location_type', 'tab_source', 'show_locations', 'popup_extend', 'protect_element', 'use_specialprofile', 'cluster_locations', 'split_geojson'),
         'default'                     => '{general_legend},name,profile,profile_mobile,published;'.
                                          '{map_legend},is_map;'.
                                          '{location_legend},location_type,data_layername,hide_child,data_hidelayer,cssClass,zoom_locations, hover_location,loc_minzoom,loc_maxzoom;'.
