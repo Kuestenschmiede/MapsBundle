@@ -519,28 +519,28 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
                             childEntry.appendChild(document.createTextNode(feature.properties[layer.geojson_attributes.split(',')[0]]));
                             childListItem.appendChild(childEntry);
                             let childUid = uid + "" + i;
-
-                            if(layer.geojson_zoom){
-                              let childEntryButton = document.createElement('button');
-                              $(childEntryButton).addClass('c4g-geojson-button');
-                              $(childEntryButton).click(fnChildEntryShow);
-                              childListItem.appendChild(childEntryButton);
-                            }
-
                             let $childEntry = $(childEntry);
                             childItem.$entries = item.$entries || [];
                             childItem.$entries.push($entry);
                             childWrapper.appendChild(childListItem);
                             $childEntry.data('uid', childUid);
-                            $childEntry.click(fnChildEntryClick);
-                            if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.addChilds === 'object') {
-                                c4g.maps.utils.callHookFunctions(c4g.maps.hook.addChilds);
+                            if(layer.geojson_zoom){
+                              $childEntry.click(fnChildEntryShow);
+                              $childEntry.addClass('c4g-geojson-button');
                             }
-                            if (this.proxy.activeLayerIds[uid]) {
+                            else{
+                              $childEntry.click(fnChildEntryClick);
+                              if (this.proxy.activeLayerIds[uid]) {
                                 $childEntry.addClass(c4g.maps.constant.css.ACTIVE);
-                            } else {
+                              } else {
                                 $childEntry.addClass(c4g.maps.constant.css.INACTIVE);
+                              }
                             }
+                            if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.addChilds === 'object') {
+                              c4g.maps.utils.callHookFunctions(c4g.maps.hook.addChilds);
+                            }
+
+
                             if(c4g.maps.hook.starboard_layer_activate && c4g.maps.hook.starboard_layer_activate.length > 0){
                                 let paramObj = {'feature': feature, 'parentItem': childListItem, 'entry':$childEntry};
                                 c4g.maps.utils.callHookFunctions(c4g.maps.hook.starboard_layer_activate, paramObj);
