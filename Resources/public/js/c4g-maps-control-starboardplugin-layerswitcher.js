@@ -524,7 +524,6 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
                               let childEntryButton = document.createElement('button');
                               $(childEntryButton).addClass('c4g-geojson-button');
                               $(childEntryButton).click(fnChildEntryShow);
-                              //childEntryButton.appendChild(document.createTextNode('T'));
                               childListItem.appendChild(childEntryButton);
                             }
 
