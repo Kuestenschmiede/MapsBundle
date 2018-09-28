@@ -415,6 +415,12 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         if (this.options.caching) {
           c4g.maps.utils.storeValue(this.options.name, '1');
         }
+
+        // call postOpenFunctions
+        if (typeof this.postOpenFunction === 'function') {
+          this.postOpenFunction();
+        }
+
         return true;
       }
       return false;
