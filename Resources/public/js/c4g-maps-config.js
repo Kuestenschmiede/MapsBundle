@@ -32,7 +32,6 @@ this.c4g.maps.config = this.c4g.maps.config || {};
     GermanTransport: {
       attributions: 'Style by <a target="_blank" href="http://www.memomaps.de">Memomaps</a>' + ' ' +
         ol.source.OSM.ATTRIBUTION,
-      crossOrigin: 'anonymous',
       minZoom: 0,
       maxZoom: 19,
       url: 'http://tile.memomaps.de/tilegen/{z}/{x}/{y}.png'
