@@ -680,7 +680,7 @@ this.c4g.maps = this.c4g.maps || {};
         // additional panel
         if (mapData.additionalPanel && typeof c4g.maps.control.additionalPanel === 'function') {
           this.controls.additionalPanel = new c4g.maps.control.additionalPanel({
-            //tipLabel: c4g.maps.constant.i18n.CTRL_INFOPAGE,
+            tipLabel: c4g.maps.constant.i18n.CTRL_ADDITIONALPANEL,
             target: controlContainerTopLeft,
             caching: mapData.caching,
             mapController: this

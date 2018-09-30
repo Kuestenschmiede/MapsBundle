@@ -40,6 +40,7 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
     CTRL_EDITOR: 'Toggle editor',
     CTRL_MEASURETOOLS: 'Toggle measuretools',
     CTRL_INFOPAGE: 'Toggle infopage',
+    CTRL_ADDITIONALPANEL: 'Toggle panel',
     CTRL_ACCOUNT: 'Toggle account',
     CTRL_ZOOMLEVEL: 'Zoom',
     CTRL_MOUSECOORDS: 'Lon/Lat',
@@ -184,6 +185,9 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
 
     INFOPAGE: 'Infopage',
     INFOPAGE_VIEW_TRIGGER: 'Show informations',
+
+    ADDITIONALPANEL: 'Panel',
+    ADDITIONALPANEL_VIEW_TRIGGER: 'Show panel',
 
     ACCOUNT: 'Account',
     ACCOUNT_VIEW_TRIGGER: 'Show account',

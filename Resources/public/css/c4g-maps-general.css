@@ -533,6 +533,13 @@ button.c4g-measuretools-view-trigger-draw-circle:before {
 }
 
 /*
+ * AdditionalPanel
+ */
+.c4g-additionalpanel.c4g-portside-control button:before {
+  content: "A";
+}
+
+/*
  * Accountbutton
  */
 .c4g-account.c4g-portside-control button:before {
