@@ -74,7 +74,7 @@ this.c4g.maps = this.c4g.maps || {};
                 min_gap: 25
             }, mapData);
         }
-
+        
         // center
         mapData.center = $.extend({
             lat: 52.22,

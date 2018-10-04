@@ -17,6 +17,7 @@ use con4gis\CoreBundle\Resources\contao\models\C4gSettingsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapBaselayersModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
+use Contao\Input;
 
 /**
  * Class MapDataConfigurator
@@ -515,6 +516,10 @@ class MapDataConfigurator
         $mapData['api']['geosearch_reverse'] = $GLOBALS['con4gis']['maps']['api']['geosearch_reverse'];
         $mapData['api']['routing'] = $GLOBALS['con4gis']['maps']['api']['routing'];
 
+        // check for initializing get parameters
+        if (Input::get('mapsParams')) {
+            $mapData['initialParams'] = Input::get('mapsParams');
+        }
 
         // load resources
         //
