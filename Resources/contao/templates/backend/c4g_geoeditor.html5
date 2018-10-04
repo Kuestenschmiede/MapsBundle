@@ -18,6 +18,7 @@
   <?php echo $this->stylesheets; ?>
 
   <script><?php echo $this->getLocaleString(); ?></script>
+  <script src="assets/jquery/js/jquery.min.js"></script>
   <script src="<?php
     $objCombiner = new Combiner();
     $objCombiner->add('assets/jquery/core/' . $GLOBALS['TL_ASSETS']['JQUERY'] . '/jquery.js', $GLOBALS['TL_ASSETS']['JQUERY']);
