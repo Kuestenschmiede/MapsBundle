@@ -802,8 +802,7 @@ this.c4g.maps = this.c4g.maps || {};
           });
           this.map.addControl(this.controls.starboard);
         }
-
-
+      c4g.maps.utils.callHookFunctions(c4g.maps.hook_controls);
 
         // backend-geopicker
         if (mapData.geopicker && (mapData.geopicker.type === "backend" || mapData.geopicker.type === "frontend")) {
@@ -890,9 +889,8 @@ this.c4g.maps = this.c4g.maps || {};
                 domMapDiv.style.setProperty('--button-radius-pixel', mapData.themeData['buttonradius']+'px');
             }
         }
-
       if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.mapController_addControls === 'object') {
-        c4g.maps.utils.callHookFunctions(c4g.maps.hook.mapController_addControls, this);
+          c4g.maps.utils.callHookFunctions(c4g.maps.hook.mapController_addControls, {mapController:this, Container: controlContainerTopLeft});
       }
     };
 
