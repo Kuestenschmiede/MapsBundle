@@ -371,11 +371,21 @@ class C4gLayerController{
                     url;
 
                   boundingArray = ol.proj.transformExtent(extent, projection, 'EPSG:4326');
-                  strBoundingBox = '<bbox-query s="' + boundingArray[1] + '" n="' + boundingArray[3] + '" w="' + boundingArray[0] + '" e="' + boundingArray[2] + '"/>';
+                  //different cases for Overpass_QL and old Overpass
+                  if(requestData.params.substr(0, 1) == "<"){
+                    strBoundingBox = '<bbox-query s="' + boundingArray[1] + '" n="' + boundingArray[3] + '" w="' + boundingArray[0] + '" e="' + boundingArray[2] + '"/>';
+
+                  }
+                  else{
+                    strBoundingBox =boundingArray[1] + ',' + boundingArray[0] + ',' + boundingArray[3] + ',' + boundingArray[2];
+                  }
+
                   url = requestData.url;
+                  const bboxTag = requestData.params.indexOf('(bbox)') >= 0 ? /\(bbox\)/g : /\{{bbox\}}/g
 
                   if (requestData.params) {
-                    url += '?data=' + encodeURIComponent(requestData.params.replace(/\(bbox\)/g, strBoundingBox));
+
+                    url += '?data=' + encodeURIComponent(requestData.params.replace(bboxTag, strBoundingBox));
                   }
 
                   if (c4g.maps.requests === undefined) {
@@ -390,7 +400,7 @@ class C4gLayerController{
                   }).done(function (response) {
                     var j,
                       format,
-                      centerPoint,
+                      feature,
                       rFeatures,
                       osmNodes,
                       osmNds,
@@ -398,8 +408,7 @@ class C4gLayerController{
                       ndIdx,
                       infoNodes,
                       newTag,
-                      ref,
-                      lineExtent;
+                      ref;
 
                     delete c4g.maps.requests['layerRequest' + itemUid];
 
@@ -451,69 +460,144 @@ class C4gLayerController{
                           }
                         }
                       }
-                    }
-                    // import osm_xml
-                    format = new ol.format.OSMXML();
-                    if (format && response) {
-                      try {
-                        rFeatures = format.readFeatures(response, {featureProjection: projection});
-                      } catch (e) {
-                        console.warn('Can not read feature.');
-                        //console.log(e.stack);
-                      }
-                    }
-
-                    // postprocessing features
-                    if (rFeatures && rFeatures.length > 0) {
-                      for (j = 0; j < rFeatures.length; j += 1) {
-
-                        if (rFeatures[j].getGeometry().getType() === "Point") {
-                          rFeatures[j].set('osm_type', 'node');
-                        } else {
-                          rFeatures[j].set('osm_type', 'way');
+                      // import osm_xml
+                      format = new ol.format.OSMXML();
+                      if (format && response) {
+                        try {
+                          rFeatures = format.readFeatures(response, {featureProjection: projection});
+                        } catch (e) {
+                          console.warn('Can not read feature.');
+                          //console.log(e.stack);
                         }
-                        rFeatures[j].set('c4g_type', 'osm');
-                        rFeatures[j].set('cluster_zoom', contentData.cluster_zoom);
-                        rFeatures[j].set('cluster_popup', contentData.cluster_popup);
-                        rFeatures[j].set('loc_linkurl', contentData.loc_linkurl);
-                        rFeatures[j].set('hover_location', contentData.hover_location);
-                        rFeatures[j].set('hover_style', contentData.hover_style);
-                        rFeatures[j].set('zoom_onclick', contentData.data.zoom_onclick);
-                        rFeatures[j].set('label', contentData.data.label);
+                      }
 
-                        if (requestContentData.settings.forceNodes) {
-                          // convert tracks and areas to points
-                          if (rFeatures[j].getGeometry().getType() === "Polygon") {
-                            centerPoint = rFeatures[j].getGeometry().getInteriorPoint().getCoordinates();
-                            rFeatures[j].setGeometry(
-                              new ol.geom.Point(centerPoint)
-                            );
-                          } else if (rFeatures[j].getGeometry().getType() === "LineString") {
-                            // @TODO: prüfen ob dies korrekter mittelpunkt ist
-                            lineExtent = rFeatures[j].getGeometry().getExtent();
+                      // postprocessing features
+                      if (rFeatures && rFeatures.length > 0) {
+                        for (j = 0; j < rFeatures.length; j += 1) {
+
+                          if (rFeatures[j].getGeometry().getType() === "Point") {
+                            rFeatures[j].set('osm_type', 'node');
+                          } else {
+                            rFeatures[j].set('osm_type', 'way');
+                          }
+                          rFeatures[j].set('c4g_type', 'osm');
+                          rFeatures[j].set('cluster_zoom', contentData.cluster_zoom);
+                          rFeatures[j].set('cluster_popup', contentData.cluster_popup);
+                          rFeatures[j].set('loc_linkurl', contentData.loc_linkurl);
+                          rFeatures[j].set('hover_location', contentData.hover_location);
+                          rFeatures[j].set('hover_style', contentData.hover_style);
+                          rFeatures[j].set('zoom_onclick', contentData.data.zoom_onclick);
+                          rFeatures[j].set('label', contentData.data.label);
+
+                          if (requestContentData.settings.forceNodes) {
+                            // convert tracks and areas to points
+                            if (rFeatures[j].getGeometry().getType() === "Polygon") {
+                              let centerPoint = rFeatures[j].getGeometry().getInteriorPoint().getCoordinates();
+                              rFeatures[j].setGeometry(
+                                new ol.geom.Point(centerPoint)
+                              );
+                            } else if (rFeatures[j].getGeometry().getType() === "LineString") {
+                              // @TODO: prüfen ob dies korrekter mittelpunkt ist
+                              let lineExtent = rFeatures[j].getGeometry().getExtent();
+                              centerPoint = ol.extent.getCenter(lineExtent);
+                              rFeatures[j].setGeometry(
+                                new ol.geom.Point(centerPoint)
+                              );
+                            }
+                          }
+                          if (rFeatures[j].get('c4g_osm_ref')) {
+                            // if (requestContentData.settings.showAdditionalGeometries) {
+                            if (requestContentData.settings.additionalStyle) {
+                              // @TODO: load and attach style
+                            } else {
+                              rFeatures[j].setStyle(c4g.maps.utils.reduceStyle(requestContentData.locationStyle));
+                            }
+                            // } else {
+                            //   continue;
+                            // }
+                          }
+                        }
+                      }
+
+                    }
+                    else if(response && response.elements){
+                      rFeatures = [];
+                      for(let elementId = 0; elementId < response.elements.length; elementId++){
+                        let element = response.elements[elementId];
+
+                        if(element.type == "node"){
+                          if(!element.tags){//not a feature, but part of a way
+                            continue;
+                          }
+                          let point = new ol.geom.Point([element.lon,element.lat]).transform('EPSG:4326','EPSG:3857');
+                          feature = new ol.Feature({
+                            geometry: point,
+                            id: element.id
+                          });
+                          feature.set('osm_type', 'node');
+                        }
+                        else if(element.type == "way"){
+                          let arrCoords = [];
+                          for(let i = 0; i < element.nodes.length; i++){
+                            let node = response.elements.find(function(objNode){
+                              return objNode.id === element.nodes[i];
+                            });
+                            arrCoords.push([node.lon,node.lat]);
+                          }
+                          if(arrCoords[0][0] == arrCoords[arrCoords.length-1][0] && arrCoords[0][1] == arrCoords[arrCoords.length-1][1]){ //polygon
+                            delete arrCoords[arrCoords.length-1];
+                            arrCoords.length = arrCoords.length-1;
+                            let polygon = new ol.geom.Polygon([arrCoords]);
+                            polygon.transform('EPSG:4326','EPSG:3857');
+                            if (requestContentData.settings.forceNodes) {
+                              // convert tracks and areas to points
+                              let centerPoint = feature.getGeometry().getInteriorPoint().getCoordinates();
+                              feature.setGeometry(
+                                new ol.geom.Point(centerPoint)
+                              );
+
+                            }
+                            feature = new ol.Feature({
+                              geometry: polygon,
+                              id: element.id
+                            });
+                          }
+                          else{ //linestring
+                            let lineString = new ol.geom.LineString([arrCoords]);
+                            lineString.transform('EPSG:4326','EPSG:3857');
+                            feature = new ol.Feature({
+                              geometry: lineString,
+                              id: element.id
+                            });
+                            let lineExtent = rFeatures[j].getGeometry().getExtent();
                             centerPoint = ol.extent.getCenter(lineExtent);
                             rFeatures[j].setGeometry(
                               new ol.geom.Point(centerPoint)
                             );
+
                           }
+                          feature.set('osm_type', 'way');
                         }
-                        if (rFeatures[j].get('c4g_osm_ref')) {
-                          // if (requestContentData.settings.showAdditionalGeometries) {
-                          if (requestContentData.settings.additionalStyle) {
-                            // @TODO: load and attach style
-                          } else {
-                            rFeatures[j].setStyle(c4g.maps.utils.reduceStyle(requestContentData.locationStyle));
-                          }
-                          // } else {
-                          //   continue;
-                          // }
+                        feature.set('c4g_type', 'osm');
+                        feature.set('cluster_zoom', contentData.cluster_zoom);
+                        feature.set('cluster_popup', contentData.cluster_popup);
+                        feature.set('loc_linkurl', contentData.loc_linkurl);
+                        feature.set('hover_location', contentData.hover_location);
+                        feature.set('hover_style', contentData.hover_style);
+                        feature.set('zoom_onclick', contentData.data.zoom_onclick);
+                        feature.set('label', contentData.data.label);
+                        for(let tags in element.tags){
+                          feature.set(tags, element.tags[tags]);
                         }
+                        rFeatures.push(feature);
+
                       }
-                      try {
-                        requestVectorSource.addFeatures(rFeatures);
-                      } catch (e) {
-                        console.warn('Could not add features to source. The "forceNodes"-option should be used.');
-                      }
+
+                    }
+                    try {
+                      requestVectorSource.addFeatures(rFeatures);
+                    } catch (e) {
+                      console.warn('Could not add features to source. The "forceNodes"-option should be used.');
                     }
                     //self.combineLayers(self);
                   }); // end of AJAX
