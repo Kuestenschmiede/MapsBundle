@@ -3,6 +3,8 @@ this.c4g = this.c4g || {};
 this.c4g.maps = this.c4g.maps || {};
 this.c4g.maps.misc = this.c4g.maps.misc || {};
 
+import {cssConstants} from "./c4g-maps-constant";
+
 (function ($, c4g) {
   'use strict';
 
@@ -40,18 +42,18 @@ this.c4g.maps.misc = this.c4g.maps.misc || {};
       addClassName = ' ' + this.options.className;
     }
     if (this.options.horizontal) {
-      addClassName += ' ' + c4g.maps.constant.css.HORIZONTAL;
+      addClassName += ' ' + cssConstants.HORIZONTAL;
     }
     if (this.options.closeable) {
-      addClassName += ' ' + c4g.maps.constant.css.CLOSEABLE;
+      addClassName += ' ' + cssConstants.CLOSEABLE;
     }
 
     this.element = document.createElement('div');
-    this.element.className = c4g.maps.constant.css.TOOLTIP_POPUP + addClassName;
+    this.element.className = cssConstants.TOOLTIP_POPUP + addClassName;
 
     if (this.options.closeable) {
       closeButton = document.createElement('button');
-      closeButton.className = c4g.maps.constant.css.ICON + ' ' + c4g.maps.constant.css.POPUP_CLOSE;
+      closeButton.className = cssConstants.ICON + ' ' + cssConstants.POPUP_CLOSE;
       this.element.appendChild(closeButton);
 
       $(closeButton).click(function () {
@@ -98,8 +100,8 @@ this.c4g.maps.misc = this.c4g.maps.misc || {};
      * @return  {[type]}  [description]
      */
     show: function () {
-      if ($(this.element).hasClass(c4g.maps.constant.css.HIDE)) {
-        $(this.element).removeClass(c4g.maps.constant.css.HIDE);
+      if ($(this.element).hasClass(cssConstants.HIDE)) {
+        $(this.element).removeClass(cssConstants.HIDE);
       }
     },
 
@@ -110,8 +112,8 @@ this.c4g.maps.misc = this.c4g.maps.misc || {};
      * @return  {[type]}  [description]
      */
     hide: function () {
-      if (!$(this.element).hasClass(c4g.maps.constant.css.HIDE)) {
-        $(this.element).addClass(c4g.maps.constant.css.HIDE);
+      if (!$(this.element).hasClass(cssConstants.HIDE)) {
+        $(this.element).addClass(cssConstants.HIDE);
       }
     },
 
@@ -156,3 +158,5 @@ this.c4g.maps.misc = this.c4g.maps.misc || {};
   }); // End of "add methods to TooltipPopUp"
 
 }(jQuery, this.c4g));
+
+export var TooltipPopUp = this.c4g.maps.misc.TooltipPopUp;

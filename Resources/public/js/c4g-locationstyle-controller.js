@@ -1,4 +1,7 @@
-class C4gLocationStyleController{
+import {C4gLocationStyle} from "./c4g-locationstyle";
+import {cssConstants} from "./c4g-maps-constant";
+
+export class C4gLocationStyleController{
     constructor(proxy){
         this.proxy = proxy;
         this.mapController = proxy.options.mapController;
@@ -19,7 +22,7 @@ class C4gLocationStyleController{
             options = {};
         }
 
-        this.proxy.options.mapController.spinner.show();
+        // this.proxy.options.mapController.spinner.show();
 
         makeAjax = function(styleIds, index) {
             if (index) {
@@ -75,7 +78,7 @@ class C4gLocationStyleController{
                 if (options.always && typeof options.always === "function" && (index ? completed : true)) {
                     options.always();
                 }
-                if (!$(self.proxy.options.mapController.spinner.element).hasClass(c4g.maps.constant.css.HIDE)) {
+                if (!$(self.proxy.options.mapController.spinner.element).hasClass(cssConstants.HIDE)) {
                     self.proxy.options.mapController.spinner.hide();
                 }
             }).fail(function (jqXHR, textStatus, errorThrown ) {

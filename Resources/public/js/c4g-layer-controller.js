@@ -1,8 +1,14 @@
-class C4gLayerController{
+import {C4gLayer} from "./c4g-layer"
+import {utils} from "./c4g-maps-utils"
+
+var c4g = this.c4g;
+
+export class C4gLayerController{
   constructor(proxy){
     this.proxy = proxy;
     this.mapController = proxy.options.mapController;
     this.arrLayers = {};
+    this.layerRequests = {};
   }
   
   loadLayers () {
@@ -18,8 +24,8 @@ class C4gLayerController{
     }).done(function (data) {
       self.addLayers(data.layer, data.foreignLayers);
       self.proxy.layers_loaded = true;
-      c4g.maps.utils.callHookFunctions(self.proxy.hook_layer_loaded, self.proxy.layerIds);
-      c4g.maps.utils.callHookFunctions(c4g.maps.hook.proxy_layer_loaded, {layerIds: self.proxy.layerIds, proxy: self.proxy});
+      utils.callHookFunctions(self.proxy.hook_layer_loaded, self.proxy.layerIds);
+      // utils.callHookFunctions(c4g.maps.hook.proxy_layer_loaded, {layerIds: self.proxy.layerIds, proxy: self.proxy});
       self.proxy.checkLocationStyles({
         done: function () {
           self.drawLayerInitial();
@@ -103,7 +109,7 @@ class C4gLayerController{
         linkItems = false;
         //console.log(layer);
         if (typeof layer.content === "object") {
-          layer.content = c4g.maps.utils.objectToArray(layer.content);
+          layer.content = utils.objectToArray(layer.content);
         }
 
         // endless-loop prevention
@@ -163,7 +169,7 @@ class C4gLayerController{
             fnAddToHook(layer);
           }
 
-          uid = layer.id || c4g.maps.utils.getUniqueId();
+          uid = layer.id || utils.getUniqueId();
           this.arrLayers[uid] = layer;
           if(this.proxy.checkLayerIsActiveForZoom(layer.id)){
             layer.isInactive = false;
@@ -301,20 +307,20 @@ class C4gLayerController{
                     }
                   }
 
-                  fillcolor = c4g.maps.utils.getRgbaFromHexAndOpacity('4975A8',{
+                  fillcolor = utils.getRgbaFromHexAndOpacity('4975A8',{
                     unit: '%',
                     value: 70
                   });
 
                   if (contentData.cluster_fillcolor) {
-                    fillcolor = c4g.maps.utils.getRgbaFromHexAndOpacity(contentData.cluster_fillcolor,{
+                    fillcolor = utils.getRgbaFromHexAndOpacity(contentData.cluster_fillcolor,{
                       unit: '%',
                       value: 70
                     });
                   }
                   fontcolor = '#FFFFFF';
                   if (contentData.cluster_fontcolor) {
-                    fontcolor = c4g.maps.utils.getRgbaFromHexAndOpacity(contentData.cluster_fontcolor,{
+                    fontcolor = utils.getRgbaFromHexAndOpacity(contentData.cluster_fontcolor,{
                       unit: '%',
                       value: 100
                     });
@@ -378,14 +384,14 @@ class C4gLayerController{
                     url += '?data=' + encodeURIComponent(requestData.params.replace(/\(bbox\)/g, strBoundingBox));
                   }
 
-                  if (c4g.maps.requests === undefined) {
-                    c4g.maps.requests = {};
+                  if (self.layerRequests === undefined) {
+                    self.layerRequests = {};
                   }
-                  if (c4g.maps.requests['layerRequest' + itemUid] !== undefined) {
-                    c4g.maps.requests['layerRequest' + itemUid].abort();
+                  if (self.layerRequests['layerRequest' + itemUid] !== undefined) {
+                    self.layerRequests['layerRequest' + itemUid].abort();
                   }
 
-                  c4g.maps.requests['layerRequest' + itemUid] = jQuery.ajax({
+                  self.layerRequests['layerRequest' + itemUid] = jQuery.ajax({
                     url: url
                   }).done(function (response) {
                     var j,
@@ -401,7 +407,7 @@ class C4gLayerController{
                       ref,
                       lineExtent;
 
-                    delete c4g.maps.requests['layerRequest' + itemUid];
+                    delete self.layerRequests['layerRequest' + itemUid];
 
                     // preprocessing the osm_xml to find relation-nodes with information
                     if (response && response.children && response.children[0]) {
@@ -502,7 +508,7 @@ class C4gLayerController{
                           if (requestContentData.settings.additionalStyle) {
                             // @TODO: load and attach style
                           } else {
-                            rFeatures[j].setStyle(c4g.maps.utils.reduceStyle(requestContentData.locationStyle));
+                            rFeatures[j].setStyle(utils.reduceStyle(requestContentData.locationStyle));
                           }
                           // } else {
                           //   continue;
@@ -536,13 +542,13 @@ class C4gLayerController{
                 });
 
                 if (contentData.settings && contentData.settings.refresh === true) {
-                  if (c4g.maps.requests === undefined) {
-                    c4g.maps.requests = {};
+                  if (self.layerRequests === undefined) {
+                    self.layerRequests = {};
                   }
 
                   refreshInterval = (typeof contentData.settings.interval === 'number') ? contentData.settings.interval : 10000;
                   /* do it with better ajax-handling
-                   c4g.maps.requests['layerRequest' + itemUid] = window.setInterval(function () {
+                   self.layerRequests['layerRequest' + itemUid] = window.setInterval(function () {
                    vectorSource.clear();
                    }, refreshInterval);
                    */
@@ -686,7 +692,7 @@ class C4gLayerController{
               //console.log(clusterSource);
               this.styleForCluster = styleForCluster;
 
-              //vectorLayer = c4g.maps.utils.getVectorLayer(clusterSource, styleForCluster);
+              //vectorLayer = utils.getVectorLayer(clusterSource, styleForCluster);
 
               vectorLayer = new ol.layer.AnimatedCluster(
                 {	name: 'Cluster',
@@ -697,7 +703,7 @@ class C4gLayerController{
 
 
             } else {
-              vectorLayer = c4g.maps.utils.getVectorLayer(vectorSource, self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle] ? self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style : null);
+              vectorLayer = utils.getVectorLayer(vectorSource, self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle] ? self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style : null);
             }
 
             /* Fit to extend */
@@ -717,7 +723,7 @@ class C4gLayerController{
                 }
 
                 self.fittingExtends[itemUid] = vectorSource.getExtent();//vectorSource.getFeatures();
-                c4g.maps.utils.fitToExtents(self.fittingExtends, self.mapController.map);
+                utils.fitToExtents(self.fittingExtends, self.mapController.map);
               });
 
             }
@@ -767,7 +773,7 @@ class C4gLayerController{
                   //threshold: 2, //minimum element count
                   source: vectorSource
                 });
-                //vectorLayer = c4g.maps.utils.getVectorLayer(clusterSource, styleForCluster);
+                //vectorLayer = utils.getVectorLayer(clusterSource, styleForCluster);
 
                 vectorLayer = new ol.layer.AnimatedCluster(
                   {	name: 'Cluster',
@@ -777,7 +783,7 @@ class C4gLayerController{
                   });
 
               } else {
-                vectorLayer = c4g.maps.utils.getVectorLayer(vectorSource, contentData && self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle] ? self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style : null);
+                vectorLayer = utils.getVectorLayer(vectorSource, contentData && self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle] ? self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style : null);
               }
               layers.push(vectorLayer);
             }
@@ -831,7 +837,7 @@ class C4gLayerController{
                     source: vectorSource
                   });
 
-                  vectorLayer = c4g.maps.utils.getVectorLayer(clusterSource, vectorStyle);
+                  vectorLayer = utils.getVectorLayer(clusterSource, vectorStyle);
                   if (contentData.data && contentData.data.properties) {
                       if (contentData.data.properties.popup) {
                           vectorLayer.popup = contentData.data.properties.popup;
@@ -908,26 +914,26 @@ class C4gLayerController{
                           }
                       }
 
-                      fillcolor = c4g.maps.utils.getRgbaFromHexAndOpacity('4975A8',{
+                      fillcolor = utils.getRgbaFromHexAndOpacity('4975A8',{
                           unit: '%',
                           value: 70
                       });
 
                       if(contentData.cluster_fillcolor) {
-                          fillcolor = c4g.maps.utils.getRgbaFromHexAndOpacity(contentData.cluster_fillcolor,{
+                          fillcolor = utils.getRgbaFromHexAndOpacity(contentData.cluster_fillcolor,{
                               unit: '%',
                               value: 70
                           });
                       }
                       if(feature.get('features')[0].get('cluster_fillcolor')){
-                          fillcolor = c4g.maps.utils.getRgbaFromHexAndOpacity(feature.get('features')[0].get('cluster_fillcolor'),{
+                          fillcolor = utils.getRgbaFromHexAndOpacity(feature.get('features')[0].get('cluster_fillcolor'),{
                               unit: '%',
                               value: 70
                           });
                       }
                       fontcolor = '#FFFFFF';
                       if(feature.get('features')[0].get('cluster_fontcolor')){
-                          fontcolor = c4g.maps.utils.getRgbaFromHexAndOpacity(feature.get('features')[0].get('cluster_fontcolor'),{
+                          fontcolor = utils.getRgbaFromHexAndOpacity(feature.get('features')[0].get('cluster_fontcolor'),{
                               unit: '%',
                               value: 100
                           });
@@ -974,17 +980,17 @@ class C4gLayerController{
                   self.mapController.spinner.show();
                   boundingArray = ol.proj.transformExtent(extent, projection, 'EPSG:4326');
                   strBoundingBox = boundingArray[0]+','+boundingArray[1]+';'+boundingArray[2]+','+boundingArray[3];
-                  if (c4g.maps.requests === undefined) {
-                      c4g.maps.requests = {};
+                  if (self.layerRequests === undefined) {
+                      self.layerRequests = {};
                   }
-                  if (c4g.maps.requests['layerDataRequest' + itemUid] !== undefined) {
-                      c4g.maps.requests['layerDataRequest' + itemUid].abort();
+                  if (self.layerRequests['layerDataRequest' + itemUid] !== undefined) {
+                      self.layerRequests['layerDataRequest' + itemUid].abort();
                   }
                   if(!self.proxy.locationStyleController.arrLocStyles[self.arrLayers[itemUid].locstyle]){
                       self.proxy.locationStyleController.loadLocationStyles([self.arrLayers[itemUid].locstyle], {done: function() {}});
                   }
 
-                  c4g.maps.requests['layerDataRequest' + itemUid] = jQuery.ajax({
+                  self.layerRequests['layerDataRequest' + itemUid] = jQuery.ajax({
                       url: self.proxy.api_layercontentdata_url + '/' + self.arrLayers[itemUid].id +'/'+strBoundingBox,
                   }).done( function (data){
                       if(data.length > 0 && !contentFeatures){
@@ -1175,16 +1181,16 @@ class C4gLayerController{
       }
     }
     if(layer.isInactive){
-      c4g.maps.utils.callHookFunctions(this.proxy.hook_layer_visibility, layerUid);
+      utils.callHookFunctions(this.proxy.hook_layer_visibility, layerUid);
       return
     }
     layer.isInactive = true;
 
-    if (c4g.maps.requests && typeof c4g.maps.requests['layer_request_' + layerUid] !== "undefined") {
-      if (typeof c4g.maps.requests['layer_request_' + layerUid] == "number") {
+    if (this.layerRequests && typeof this.layerRequests['layer_request_' + layerUid] !== "undefined") {
+      if (typeof this.layerRequests['layer_request_' + layerUid] == "number") {
         try {
-          window.clearInterval(c4g.maps.requests['layer_request_' + layerUid]);
-          delete c4g.maps.requests['layer_request_' + layerUid];
+          window.clearInterval(this.layerRequests['layer_request_' + layerUid]);
+          delete this.layerRequests['layer_request_' + layerUid];
         } catch (e) {
 
         }
@@ -1193,7 +1199,7 @@ class C4gLayerController{
     //this.combineLayers(this);
     this.mapController.map.getView().setCenter([this.mapController.map.getView().getCenter()[0]+0.001,this.mapController.map.getView().getCenter()[1]]);
     // hooks
-    c4g.maps.utils.callHookFunctions(this.proxy.hook_layer_visibility, layerUid);
+    utils.callHookFunctions(this.proxy.hook_layer_visibility, layerUid);
   } // end of "hideLayer()"
   hideChildLayer(layerUid, childUid){
     let layer = this.arrLayers[layerUid]
@@ -1253,7 +1259,7 @@ class C4gLayerController{
                 objPopup.layer = layer.vectorLayer.getLayers().getArray()[0];
                 // Call the popup hook for plugin specific popup content
                 if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.proxy_fillPopup === 'object') {
-                  c4g.maps.utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
+                  utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
                 }
                 this.proxy.setPopup(objPopup);
               } else {
@@ -1276,7 +1282,7 @@ class C4gLayerController{
 
                     // Call the popup hook for plugin specific popup content
                     if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.proxy_fillPopup === 'object') {
-                      c4g.maps.utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
+                      utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
                     }
 
                     self.proxy.setPopup(objPopup);
@@ -1312,14 +1318,14 @@ class C4gLayerController{
 
     if (typeof this.proxy.requestFunctions['request_' + layerUid] !== "undefined") {
 
-      if (c4g.maps.requests && typeof c4g.maps.requests['layer_request_' + layerUid] === "undefined") {
-        c4g.maps.requests['layer_request_' + layerUid] = window.setInterval(this.proxy.requestFunctions['request_' + layerUid].function, this.proxy.requestFunctions['request_' + layerUid].interval);
+      if (this.layerRequests && typeof this.layerRequests['layer_request_' + layerUid] === "undefined") {
+        this.layerRequests['layer_request_' + layerUid] = window.setInterval(this.proxy.requestFunctions['request_' + layerUid].function, this.proxy.requestFunctions['request_' + layerUid].interval);
       }
 
     }
     //this.combineLayers(this);
     // hooks
-    c4g.maps.utils.callHookFunctions(this.proxy.hook_layer_visibility, layerUid);
+    utils.callHookFunctions(this.proxy.hook_layer_visibility, layerUid);
   } // end of "showLayer()"
 
   drawLayer(itemUid) {
@@ -1391,7 +1397,7 @@ class C4gLayerController{
           missingStyles = [];
           unstyledFeatures = [];
           for (j = 0; j < features.length; j += 1) {
-            // features[j].setId(c4g.maps.utils.getUniqueId());
+            // features[j].setId(utils.getUniqueId());
             // features[j].set('projection', this.mapController.map.getView().getProjection());
             // features[j].set('projection', "EPSG:4326");
             features[j].set('hover_location', elementContent.hover_location);
@@ -1440,7 +1446,7 @@ class C4gLayerController{
                       format: new ol.format.GeoJSON()
                   });
 
-                  fVectorLayer = c4g.maps.utils.getVectorLayer(fVectorSource, vectorStyle);
+                  fVectorLayer = utils.getVectorLayer(fVectorSource, vectorStyle);
 
                   // layers.push(vectorLayer);
                   if (self.arrLayers[itemUid].fVectorLayer) {
@@ -1496,7 +1502,7 @@ class C4gLayerController{
                         format: new ol.format.GeoJSON()
                     });
                     vectorSource.addFeature(features[i]);
-                    vectorLayer = c4g.maps.utils.getVectorLayer(vectorSource, vectorStyle);
+                    vectorLayer = utils.getVectorLayer(vectorSource, vectorStyle);
                     for(let j = 0; j< element.geojson_attributes.split(',').length; j++){
                       vectorLayer.set(element.geojson_attributes.split(',')[j],features[i].get(element.geojson_attributes.split(',')[j]))
                     }
@@ -1521,7 +1527,7 @@ class C4gLayerController{
                     projection: 'EPSG:3857',
                     format: new ol.format.GeoJSON()
                 });
-                vectorLayer = c4g.maps.utils.getVectorLayer(vectorSource, vectorStyle);
+                vectorLayer = utils.getVectorLayer(vectorSource, vectorStyle);
 
                 if (elementContent.data && elementContent.data.properties) {
                     if (elementContent.data.properties.popup) {
@@ -1571,7 +1577,7 @@ class C4gLayerController{
         objPopup.layer = layer;
         // Call the popup hook for plugin specific popup content
         if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.proxy_fillPopup === 'object') {
-          c4g.maps.utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
+          utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
         }
         self.proxy.setPopup(objPopup);
       } else {
@@ -1593,7 +1599,7 @@ class C4gLayerController{
 
             // Call the popup hook for plugin specific popup content
             if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.proxy_fillPopup === 'object') {
-              c4g.maps.utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
+              utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
             }
 
             self.proxy.setPopup(objPopup);

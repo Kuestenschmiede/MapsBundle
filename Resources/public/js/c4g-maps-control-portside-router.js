@@ -3,6 +3,10 @@ this.c4g = this.c4g || {};
 this.c4g.maps = this.c4g.maps || {};
 this.c4g.maps.control = this.c4g.maps.control || {};
 
+import {Sideboard} from "./c4g-maps-control-sideboard";
+import {langConstants} from "./c4g-maps-constant-i18n-de";
+import {cssConstants} from "./c4g-maps-constant";
+
 (function ($, c4g) {
   'use strict';
 
@@ -21,7 +25,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       name: 'router',
       create: true,
       mapController: undefined,
-      headline: c4g.maps.constant.i18n.ROUTER,
+      headline: langConstants.ROUTER,
       direction: 'left'
     }, opt_options);
 
@@ -31,13 +35,13 @@ this.c4g.maps.control = this.c4g.maps.control || {};
     this.index=0;
 
     // call parent constructor
-    c4g.maps.control.Sideboard.call(this, this.options);
+    Sideboard.call(this, this.options);
   };
 
   /**
    * Inherit from "Sideboard"
    */
-  ol.inherits(c4g.maps.control.Router, c4g.maps.control.Sideboard);
+  ol.inherits(c4g.maps.control.Router, Sideboard);
 
   /**
    * Methods
@@ -294,47 +298,47 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
       // @TODO: Add router-info-text
       // routerViewContentHeadline = document.createElement('h4');
-      // routerViewContentHeadline.innerHTML = c4g.maps.constant.i18n.ROUTER_VIEW_ADDRESS_INPUT;
+      // routerViewContentHeadline.innerHTML = langConstants.ROUTER_VIEW_ADDRESS_INPUT;
       // routerViewContentWrapper.appendChild(routerViewContentHeadline);
 
       this.fromInputWrapper = document.createElement('div');
-      this.fromInputWrapper.className = c4g.maps.constant.css.ROUTER_INPUT_WRAPPER;
+      this.fromInputWrapper.className = cssConstants.ROUTER_INPUT_WRAPPER;
 
       this.fromInput = document.createElement("input");
       this.fromInput.type = "text";
-      this.fromInput.className = c4g.maps.constant.css.ROUTER_INPUT_FROM;
+      this.fromInput.className = cssConstants.ROUTER_INPUT_FROM;
       this.fromInput.id = this.fromInput.name = "routingFrom";
 
       routerFromLabel = document.createElement('label');
       routerFromLabel.setAttribute('for', 'routingFrom');
-      routerFromLabel.innerHTML = c4g.maps.constant.i18n.ROUTER_FROM_LABEL;
+      routerFromLabel.innerHTML = langConstants.ROUTER_FROM_LABEL;
 
       routerFromClear = document.createElement('button');
-      routerFromClear.className = c4g.maps.constant.css.ROUTER_INPUT_CLEAR;
-      routerFromClear.title = c4g.maps.constant.i18n.ROUTER_CLEAR_TITLE;
-      routerFromClear.innerHTML = c4g.maps.constant.i18n.ROUTER_CLEAR_HTML;
+      routerFromClear.className = cssConstants.ROUTER_INPUT_CLEAR;
+      routerFromClear.title = langConstants.ROUTER_CLEAR_TITLE;
+      routerFromClear.innerHTML = langConstants.ROUTER_CLEAR_HTML;
       this.$routerFromClear = $(routerFromClear);
 
       switchFromTo = document.createElement('button');
-      switchFromTo.className = c4g.maps.constant.css.ROUTER_SWITCH;
-      switchFromTo.title = c4g.maps.constant.i18n.ROUTER_SWITCH;
+      switchFromTo.className = cssConstants.ROUTER_SWITCH;
+      switchFromTo.title = langConstants.ROUTER_SWITCH;
       this.$switchFromTo = $(switchFromTo);
 
       buttonOver = document.createElement('button');
-      buttonOver.className = c4g.maps.constant.css.ROUTER_OVER;
-      buttonOver.title = c4g.maps.constant.i18n.ROUTER_OVER;
+      buttonOver.className = cssConstants.ROUTER_OVER;
+      buttonOver.title = langConstants.ROUTER_OVER;
       this.$buttonOver = $(buttonOver);
 
       print = document.createElement('button');
-      print.className = c4g.maps.constant.css.ROUTER_PRINT;
-      print.title = c4g.maps.constant.i18n.ROUTER_PRINT;
+      print.className = cssConstants.ROUTER_PRINT;
+      print.title = langConstants.ROUTER_PRINT;
       this.$print = $(print);
 
 
 
 
       this.routerButtonBar = document.createElement('div');
-      this.routerButtonBar.className = c4g.maps.constant.css.ROUTER_BUTTONBAR;
+      this.routerButtonBar.className = cssConstants.ROUTER_BUTTONBAR;
       this.routerButtonBar.appendChild(switchFromTo);
       this.routerButtonBar.appendChild(buttonOver);
       this.routerButtonBar.appendChild(print);
@@ -348,10 +352,10 @@ this.c4g.maps.control = this.c4g.maps.control || {};
             }
             else if(Object.keys(this.options.mapController.data.router_profiles).length > 1){ //check for multiple profiles and add profile-changer
                 this.routeProfile = document.createElement('div');
-                $(this.routeProfile).addClass(c4g.maps.constant.css.ROUTER_PROFILE_WRAPPER);
+                $(this.routeProfile).addClass(cssConstants.ROUTER_PROFILE_WRAPPER);
                 if(this.options.mapController.data.router_profiles['0']){ //add button for profile driving-car
                     routeProfile.car = document.createElement('button');
-                    $(routeProfile.car).addClass(c4g.maps.constant.css.ROUTER_PROFILE_CAR);
+                    $(routeProfile.car).addClass(cssConstants.ROUTER_PROFILE_CAR);
                     this.$routeProfileCar = $(routeProfile.car);
                     this.routeProfile.appendChild(routeProfile.car);
                     this.$routeProfileCar.click(function(event){
@@ -363,7 +367,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
                 if(this.options.mapController.data.router_profiles['1']) { //add button for profile driving-hgv
                     routeProfile.hgv = document.createElement('button');
-                    $(routeProfile.hgv).addClass(c4g.maps.constant.css.ROUTER_PROFILE_HGV);
+                    $(routeProfile.hgv).addClass(cssConstants.ROUTER_PROFILE_HGV);
                     this.routeProfile.appendChild(routeProfile.hgv);
                     this.$routeProfileHgv = $(routeProfile.hgv);
 
@@ -393,13 +397,13 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                             });
                             if(!this.$routeProfileBike.data('profile')){ //add existing default profile to button
                                 this.$routeProfileBike.data('profile',i);
-                                $(child).addClass(c4g.maps.constant.css.ACTIVE);
+                                $(child).addClass(cssConstants.ACTIVE);
                             }
                             routeProfile.bike.list.appendChild(child);
                         }
                     }
 
-                    $(routeProfile.bike).addClass(c4g.maps.constant.css.ROUTER_PROFILE_BIKE);
+                    $(routeProfile.bike).addClass(cssConstants.ROUTER_PROFILE_BIKE);
 
                     if(routeProfile.bike.list.children.length == 1){ //ignore dropdown list, if only one cycling profile is enabled
                         this.routeProfile.appendChild(routeProfile.bike);
@@ -436,13 +440,13 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                             });
                             if(!this.$routeProfileFoot.data('profile')){ //add existing default profile to button
                                 this.$routeProfileFoot.data('profile',i);
-                                $(child).addClass(c4g.maps.constant.css.ACTIVE);
+                                $(child).addClass(cssConstants.ACTIVE);
                             }
                             routeProfile.foot.list.appendChild(child);
                         }
                     }
 
-                    $(routeProfile.foot).addClass(c4g.maps.constant.css.ROUTER_PROFILE_FOOT);
+                    $(routeProfile.foot).addClass(cssConstants.ROUTER_PROFILE_FOOT);
 
                     if(routeProfile.foot.list.children.length == 1){ //ignore dropdown list, if only one walking profile is enabled
                         this.routeProfile.appendChild(routeProfile.foot);
@@ -465,7 +469,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                 }
                 if(this.options.mapController.data.router_profiles['10']){ //add button for profile wheelchair
                     routeProfile.wheelchair = document.createElement('button');
-                    $(routeProfile.wheelchair).addClass(c4g.maps.constant.css.ROUTER_PROFILE_WHEELCHAIR);
+                    $(routeProfile.wheelchair).addClass(cssConstants.ROUTER_PROFILE_WHEELCHAIR);
                     this.$routeProfileWheelchair = $(routeProfile.wheelchair);
                     this.routeProfile.appendChild(routeProfile.wheelchair);
                     this.$routeProfileWheelchair.click(function(event){
@@ -482,9 +486,9 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                 this.clearSiblings = function(element){ //function to adjust css-classes after changing profile
                     let siblings = $(element).parent().children();
                     for(let i = 0; i < siblings.length ; i++){
-                        $(siblings[i]).removeClass(c4g.maps.constant.css.ACTIVE);
+                        $(siblings[i]).removeClass(cssConstants.ACTIVE);
                     }
-                    $(element).addClass(c4g.maps.constant.css.ACTIVE);
+                    $(element).addClass(cssConstants.ACTIVE);
                 };
                 for(let profile in this.options.mapController.data.router_profiles){ //set default value for initial routing
                     if(this.options.mapController.data.router_profiles.hasOwnProperty(profile)){
@@ -522,21 +526,21 @@ this.c4g.maps.control = this.c4g.maps.control || {};
           self.$buttonOver.prop("disabled",true);
 
           self.overInputWrapper = document.createElement('div');
-          self.overInputWrapper.className = c4g.maps.constant.css.ROUTER_INPUT_WRAPPER;
+          self.overInputWrapper.className = cssConstants.ROUTER_INPUT_WRAPPER;
 
           self.overInput = document.createElement("input");
           self.overInput.type = "text";
-          self.overInput.className = c4g.maps.constant.css.ROUTER_INPUT_FROM;
+          self.overInput.className = cssConstants.ROUTER_INPUT_FROM;
           self.overInput.id = self.overInput.name = "routingOver";
 
           routerOverLabel = document.createElement('label');
           routerOverLabel.setAttribute('for', 'routingFrom');
-          routerOverLabel.innerHTML = c4g.maps.constant.i18n.ROUTER_Label_Interim;
+          routerOverLabel.innerHTML = langConstants.ROUTER_Label_Interim;
 
           routerOverClear = document.createElement('button');
-          routerOverClear.className = c4g.maps.constant.css.ROUTER_INPUT_CLEAR;
-          routerOverClear.title = c4g.maps.constant.i18n.ROUTER_CLEAR_TITLE;
-          routerOverClear.innerHTML = c4g.maps.constant.i18n.ROUTER_CLEAR_HTML;
+          routerOverClear.className = cssConstants.ROUTER_INPUT_CLEAR;
+          routerOverClear.title = langConstants.ROUTER_CLEAR_TITLE;
+          routerOverClear.innerHTML = langConstants.ROUTER_CLEAR_HTML;
           routerOverClear.id = self.index;
           self.$routerOverClear = $(routerOverClear);
 
@@ -600,21 +604,21 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       routerViewInputWrapper.appendChild(this.fromInputWrapper);
 
       this.toInputWrapper = document.createElement('div');
-      this.toInputWrapper.className = c4g.maps.constant.css.ROUTER_INPUT_WRAPPER;
+      this.toInputWrapper.className = cssConstants.ROUTER_INPUT_WRAPPER;
 
       this.toInput = document.createElement("input");
       this.toInput.type = "text";
-      this.toInput.className = c4g.maps.constant.css.ROUTER_INPUT_TO;
+      this.toInput.className = cssConstants.ROUTER_INPUT_TO;
       this.toInput.id = this.toInput.name = "routingTo";
 
       routerToLabel = document.createElement('label');
       routerToLabel.setAttribute('for', 'routingTo');
-      routerToLabel.innerHTML = c4g.maps.constant.i18n.ROUTER_TO_LABEL;
+      routerToLabel.innerHTML = langConstants.ROUTER_TO_LABEL;
 
       routerToClear = document.createElement('button');
-      routerToClear.className = c4g.maps.constant.css.ROUTER_INPUT_CLEAR;
-      routerToClear.title = c4g.maps.constant.i18n.ROUTER_CLEAR_TITLE;
-      routerToClear.innerHTML = c4g.maps.constant.i18n.ROUTER_CLEAR_HTML;
+      routerToClear.className = cssConstants.ROUTER_INPUT_CLEAR;
+      routerToClear.title = langConstants.ROUTER_CLEAR_TITLE;
+      routerToClear.innerHTML = langConstants.ROUTER_CLEAR_HTML;
       this.$routerToClear = $(routerToClear);
 
       this.toInputWrapper.appendChild(routerToLabel);
@@ -646,8 +650,8 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       routerView = this.addView({
         name: 'router-view',
         triggerConfig: {
-          tipLabel: c4g.maps.constant.i18n.ROUTER_VIEW_ADDRESS_INPUT,
-          className: c4g.maps.constant.css.ROUTER_VIEW_ADDRESS_INPUT,
+          tipLabel: langConstants.ROUTER_VIEW_ADDRESS_INPUT,
+          className: cssConstants.ROUTER_VIEW_ADDRESS_INPUT,
           withHeadline: false
         },
         sectionElements: [
@@ -732,7 +736,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       //ToDo check params
       attributionHtml = attributionRouter + attributionSearch + attributionRouterHost;
       attributionWrapper = document.createElement('div');
-      attributionWrapper.className = c4g.maps.constant.css.ROUTER_ATTRIBUTION_WRAPPER;
+      attributionWrapper.className = cssConstants.ROUTER_ATTRIBUTION_WRAPPER;
 
       attributionWrapper.innerHTML = attributionHtml;
 
@@ -1132,7 +1136,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
               default:
                   break;
           }
-          return c4g.maps.constant.i18n[textID];
+          return langConstants[textID];
       },
 
       getModifierText: function(strModifier) {
@@ -1166,7 +1170,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
               default:
                   textID = "ROUTER_5.X_MOD_8";
           }
-          return c4g.maps.constant.i18n[textID];
+          return langConstants[textID];
       },
       getDrivingInstructionIcon: function (instructionId) {
           var id,
@@ -1218,10 +1222,10 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
           var text_id = "ROUTER_" + id;
 
-          if (c4g.maps.constant.i18n[text_id] === undefined) {
+          if (langConstants[text_id] === undefined) {
               console.warn(text_id + " can't find in language files.");
           }
-          return c4g.maps.constant.i18n[text_id];
+          return langConstants[text_id];
       },
 
       getDrivingInstruction: function (instructionId) {
@@ -1261,14 +1265,14 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
           if (self.routerInstructionsWrapper === undefined) {
               self.routerInstructionsWrapper = document.createElement('div');
-              self.routerInstructionsWrapper.className = c4g.maps.constant.css.ROUTER_INSTRUCTIONS_WRAPPER;
+              self.routerInstructionsWrapper.className = cssConstants.ROUTER_INSTRUCTIONS_WRAPPER;
               self.routerViewContentWrapper.appendChild(self.routerInstructionsWrapper);
           } else {
               $(self.routerInstructionsWrapper).empty();
           }
 
           routerInstructionsHeader = document.createElement('div');
-          routerInstructionsHeader.className = c4g.maps.constant.css.ROUTER_INSTRUCTIONS_HEADER;
+          routerInstructionsHeader.className = cssConstants.ROUTER_INSTRUCTIONS_HEADER;
 
           if (routeResponse) {
               if (this.options.mapController.data.router_api_selection == '1') {//OSRM-API:5.x
@@ -1303,10 +1307,10 @@ this.c4g.maps.control = this.c4g.maps.control || {};
               }
 
           if(route_name_0 && route_name_1){
-              routerInstructionsHeader.innerHTML = '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_ROUTE + '</label> <em>' + route_name_0 + ' &#8594; ' + route_name_1 + '</em><br>' + '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_DISTANCE + '</label> <em>' + total_distance + '</em><br>' + '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_TIME + '</label> <em>' + total_time + '</em><br>';
+              routerInstructionsHeader.innerHTML = '<label>' + langConstants.ROUTER_VIEW_LABEL_ROUTE + '</label> <em>' + route_name_0 + ' &#8594; ' + route_name_1 + '</em><br>' + '<label>' + langConstants.ROUTER_VIEW_LABEL_DISTANCE + '</label> <em>' + total_distance + '</em><br>' + '<label>' + langConstants.ROUTER_VIEW_LABEL_TIME + '</label> <em>' + total_time + '</em><br>';
           }
           else if(this.routeProfile.active){
-              routerInstructionsHeader.innerHTML = '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_PROFILE + '</label> <em>'+this.options.mapController.data.router_profiles[this.routeProfile.active]  + '</em><br>' + '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_DISTANCE + '</label> <em>' + total_distance + '</em><br>' + '<label>' + c4g.maps.constant.i18n.ROUTER_VIEW_LABEL_TIME + '</label> <em>' + total_time + '</em><br>';
+              routerInstructionsHeader.innerHTML = '<label>' + langConstants.ROUTER_VIEW_LABEL_PROFILE + '</label> <em>'+this.options.mapController.data.router_profiles[this.routeProfile.active]  + '</em><br>' + '<label>' + langConstants.ROUTER_VIEW_LABEL_DISTANCE + '</label> <em>' + total_distance + '</em><br>' + '<label>' + langConstants.ROUTER_VIEW_LABEL_TIME + '</label> <em>' + total_time + '</em><br>';
           }
 
 
@@ -1315,7 +1319,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
           routerInstruction = document.createElement('div');
 
-          routerInstructionsHtml = '<table class="' + c4g.maps.constant.css.ROUTER_INSTRUCTIONS_TABLE + '" cellpadding="0" cellspacing="0">';
+          routerInstructionsHtml = '<table class="' + cssConstants.ROUTER_INSTRUCTIONS_TABLE + '" cellpadding="0" cellspacing="0">';
           if (this.options.mapController.data.router_api_selection === '1') {//OSRM-API:5.x
               for (j = 0; j < routeResponse.routes[routeNumber].legs.length; j += 1) {
                   for (i = 0; i < routeResponse.routes[routeNumber].legs[j].steps.length; i += 1) {
@@ -1325,22 +1329,22 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                       if (instr.maneuver.modifier) {
                           strMod = instr.maneuver.modifier;
                       }
-                      rowstyle = c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_ODD;
+                      rowstyle = cssConstants.ROUTER_INSTRUCTIONS_ITEM_ODD;
 
                       if (i % 2 === 0) {
-                          rowstyle = c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_EVEN;
+                          rowstyle = cssConstants.ROUTER_INSTRUCTIONS_ITEM_EVEN;
                       }
 
-                      rowstyle += " " + c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM;
+                      rowstyle += " " + cssConstants.ROUTER_INSTRUCTIONS_ITEM;
 
                       routerInstructionsHtml += '<tr class="' + rowstyle + '">';
 
-                      routerInstructionsHtml += '<td class="' + c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_DIRECTION + '">';
-                      routerInstructionsHtml += '<img class="' + c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_ICON + '" src="' + this.getInstructionIcon(strMod, strType) + '" alt=""/>';
+                      routerInstructionsHtml += '<td class="' + cssConstants.ROUTER_INSTRUCTIONS_ITEM_DIRECTION + '">';
+                      routerInstructionsHtml += '<img class="' + cssConstants.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_ICON + '" src="' + this.getInstructionIcon(strMod, strType) + '" alt=""/>';
                       routerInstructionsHtml += '</td>';
 
 
-                      routerInstructionsHtml += '<td class="' + c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_TEXT + '" data-pos="' + instr.maneuver.location + '">';
+                      routerInstructionsHtml += '<td class="' + cssConstants.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_TEXT + '" data-pos="' + instr.maneuver.location + '">';
 
 
                       // build route description
@@ -1356,7 +1360,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                       routerInstructionsHtml += '</div>';
                       routerInstructionsHtml += "</td>";
 
-                      routerInstructionsHtml += '<td class="' + c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_DISTANCE + '">';
+                      routerInstructionsHtml += '<td class="' + cssConstants.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_DISTANCE + '">';
                       if (i !== routeResponse.routes[routeNumber].legs[0].steps.length - 1) {
                           routerInstructionsHtml += this.toHumanDistance(instr.distance);
                       }
@@ -1369,21 +1373,21 @@ this.c4g.maps.control = this.c4g.maps.control || {};
           } else if(this.options.mapController.data.router_api_selection === '0'){//OSRM-API:<5
               for (i = 0; i < routeResponse.route_instructions.length; i += 1) {
                   instr = routeResponse.route_instructions[i];
-                  rowstyle = c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_ODD;
+                  rowstyle = cssConstants.ROUTER_INSTRUCTIONS_ITEM_ODD;
 
                   if (i % 2 === 0) {
-                      rowstyle = c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_EVEN;
+                      rowstyle = cssConstants.ROUTER_INSTRUCTIONS_ITEM_EVEN;
                   }
 
-                  rowstyle += " " + c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM;
+                  rowstyle += " " + cssConstants.ROUTER_INSTRUCTIONS_ITEM;
 
                   routerInstructionsHtml += '<tr class="' + rowstyle + '">';
 
-                  routerInstructionsHtml += '<td class="' + c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_DIRECTION + '">';
-                  routerInstructionsHtml += '<img class="' + c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_ICON + '" src="' + this.getDrivingInstructionIcon(instr[0]) + '" alt=""/>';
+                  routerInstructionsHtml += '<td class="' + cssConstants.ROUTER_INSTRUCTIONS_ITEM_DIRECTION + '">';
+                  routerInstructionsHtml += '<img class="' + cssConstants.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_ICON + '" src="' + this.getDrivingInstructionIcon(instr[0]) + '" alt=""/>';
                   routerInstructionsHtml += '</td>';
 
-                  routerInstructionsHtml += '<td class="' + c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_TEXT + '" data-pos="' + instr[3] + '">';
+                  routerInstructionsHtml += '<td class="' + cssConstants.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_TEXT + '" data-pos="' + instr[3] + '">';
 
                   // build route description
                   if (instr[1] !== "") {
@@ -1396,7 +1400,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                   routerInstructionsHtml += '</div>';
                   routerInstructionsHtml += "</td>";
 
-                  routerInstructionsHtml += '<td class="' + c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_DISTANCE + '">';
+                  routerInstructionsHtml += '<td class="' + cssConstants.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_DISTANCE + '">';
                   if (i !== routeResponse.route_instructions.length - 1) {
                       routerInstructionsHtml += this.toHumanDistance(instr[5]);
                   }
@@ -1412,25 +1416,25 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
                       strType = instr.type;
 
-                      rowstyle = c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_ODD;
+                      rowstyle = cssConstants.ROUTER_INSTRUCTIONS_ITEM_ODD;
 
                       if (i % 2 === 0) {
-                          rowstyle = c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_EVEN;
+                          rowstyle = cssConstants.ROUTER_INSTRUCTIONS_ITEM_EVEN;
                       }
 
-                      rowstyle += " " + c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM;
+                      rowstyle += " " + cssConstants.ROUTER_INSTRUCTIONS_ITEM;
 
                       routerInstructionsHtml += '<tr class="' + rowstyle + '">';
 
-                      routerInstructionsHtml += '<td class="' + c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_DIRECTION + '">';
-                      routerInstructionsHtml += '<img class="' + c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_ICON + '" src="' + this.getInstructionIconORS(strType) + '" alt=""/>';
+                      routerInstructionsHtml += '<td class="' + cssConstants.ROUTER_INSTRUCTIONS_ITEM_DIRECTION + '">';
+                      routerInstructionsHtml += '<img class="' + cssConstants.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_ICON + '" src="' + this.getInstructionIconORS(strType) + '" alt=""/>';
                       routerInstructionsHtml += '</td>';
 
                       if(instr.maneuver){
-                          routerInstructionsHtml += '<td class="' + c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_TEXT + '" data-pos="' + instr.maneuver.location + '">';
+                          routerInstructionsHtml += '<td class="' + cssConstants.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_TEXT + '" data-pos="' + instr.maneuver.location + '">';
                       }
                       else{
-                          routerInstructionsHtml += '<td class="' + c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_TEXT + '" data-pos="' + 0 + '">';
+                          routerInstructionsHtml += '<td class="' + cssConstants.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_TEXT + '" data-pos="' + 0 + '">';
                       }
 
 
@@ -1442,7 +1446,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                       routerInstructionsHtml += '</div>';
                       routerInstructionsHtml += "</td>";
 
-                      routerInstructionsHtml += '<td class="' + c4g.maps.constant.css.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_DISTANCE + '">';
+                      routerInstructionsHtml += '<td class="' + cssConstants.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_DISTANCE + '">';
                       if (i !== routeResponse.routes[routeNumber].segments[0].steps.length - 1) {
                           routerInstructionsHtml += this.toHumanDistance(instr.distance);
                       }
@@ -1671,7 +1675,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                   );
               }
           } else {
-              alert(c4g.maps.constant.i18n.ROUTER_VIEW_ALERT_ADDRESS);
+              alert(langConstants.ROUTER_VIEW_ALERT_ADDRESS);
               self.clearInput($input);
               delete self[value];
           }
@@ -1679,7 +1683,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
           self.recalculateRoute();
       })
       .error(function () {
-          alert(c4g.maps.constant.i18n.ROUTER_VIEW_ALERT_GEOCODING);
+          alert(langConstants.ROUTER_VIEW_ALERT_GEOCODING);
       });
 
 
@@ -1741,3 +1745,5 @@ this.c4g.maps.control = this.c4g.maps.control || {};
   });
 
 }(jQuery, this.c4g));
+
+export var Router = this.c4g.maps.control.Router;

@@ -1,4 +1,10 @@
-class C4gBaselayerController {
+import {C4gBaselayer} from "./c4g-baselayer";
+import {config} from "./c4g-maps-config";
+import {utils} from "./c4g-maps-utils";
+import {langConstants} from "./c4g-maps-constant-i18n-de";
+import {cssConstants} from "./c4g-maps-constant";
+
+export class C4gBaselayerController {
     constructor(proxy) {
         this.proxy = proxy;
         this.mapController = proxy.options.mapController;
@@ -60,7 +66,7 @@ class C4gBaselayerController {
 
                 baselayer = baselayers[i];
 
-                uid = baselayer.id || c4g.maps.utils.getUniqueId();
+                uid = baselayer.id || utils.getUniqueId();
                 this.baselayerIds.push(uid);
                 if (!this.arrBaselayers[uid]) {
                     this.arrBaselayers[uid] = new C4gBaselayer(baselayer, this);
@@ -105,7 +111,7 @@ class C4gBaselayerController {
         }
         this.proxy.baselayers_loaded = true;
 
-        c4g.maps.utils.callHookFunctions(this.proxy.hook_baselayer_loaded, this.baselayerIds);
+        utils.callHookFunctions(this.proxy.hook_baselayer_loaded, this.baselayerIds);
     } // end of "addBaseLayers()"
     createBaseLayer(layerOptions, baseLayerConfig, sourceConfigs){
         var newBaselayer;
@@ -417,13 +423,13 @@ class C4gBaselayerController {
 
         if ((typeof baseLayerConfig !== "undefined") && !baseLayerConfig.layer) {
             // create layer
-            sourceConfigs.osm = c4g.maps.config.osm;
-            sourceConfigs.stamen = c4g.maps.config.stamen;
+            sourceConfigs.osm = config.osm;
+            sourceConfigs.stamen = config.stamen;
             //mapQuestSourceConfigs = c4g.maps.config.mapquest;
-            sourceConfigs.mapbox = c4g.maps.config.mapbox;
-            sourceConfigs.klokan = c4g.maps.config.klokan;
-            sourceConfigs.here = c4g.maps.config.here;
-            sourceConfigs.thunderforest = c4g.maps.config.thunderforest;
+            sourceConfigs.mapbox = config.mapbox;
+            sourceConfigs.klokan = config.klokan;
+            sourceConfigs.here = config.here;
+            sourceConfigs.thunderforest = config.thunderforest;
 
             //newBaselayer = new ol.layer.Tile({
             //  source: new ol.source.OSM()
@@ -622,16 +628,16 @@ class C4gBaselayerController {
                     var mapData = this.mapController.data;
                     if (mapData.zoomlevel || mapData.mouseposition) {
                         var controlContainerTopLeft = document.createElement('div');
-                        controlContainerTopLeft.className = c4g.maps.constant.css.CONTROL_CONTAINER_TL + ' ' + c4g.maps.constant.css.OL_UNSELECTABLE;
+                        controlContainerTopLeft.className = cssConstants.CONTROL_CONTAINER_TL + ' ' + cssConstants.OL_UNSELECTABLE;
                         this.mapController.$overlaycontainer_stopevent.prepend(controlContainerTopLeft);
 
                         var controlContainerBottomLeft = document.createElement('div');
-                        controlContainerBottomLeft.className = c4g.maps.constant.css.CONTROL_CONTAINER_BL + ' ' + c4g.maps.constant.css.OL_UNSELECTABLE;
+                        controlContainerBottomLeft.className = cssConstants.CONTROL_CONTAINER_BL + ' ' + cssConstants.OL_UNSELECTABLE;
                         $(controlContainerTopLeft).after(controlContainerBottomLeft);
                         this.mapController.leftSlideElements.push(controlContainerBottomLeft);
 
                         var controlContainerBottomLeftSub = document.createElement('div');
-                        controlContainerBottomLeftSub.className = c4g.maps.constant.css.CONTROL_CONTAINER_BL_SUB + ' ' + c4g.maps.constant.css.OL_UNSELECTABLE;
+                        controlContainerBottomLeftSub.className = cssConstants.CONTROL_CONTAINER_BL_SUB + ' ' + cssConstants.OL_UNSELECTABLE;
 
                         var newView = new ol.View({
                             center: center,
@@ -644,7 +650,7 @@ class C4gBaselayerController {
                         });
 
                         this.mapController.map.setView(newView);
-                        c4g.maps.utils.redrawMapView(this.mapController);
+                        utils.redrawMapView(this.mapController);
 
                         // if (mapData.scaleline) {
                         //   this.mapController.map.removeControl(this.mapController.controls.scaleline);
@@ -687,7 +693,7 @@ class C4gBaselayerController {
         if (typeof baseLayerConfig !== "undefined") {
             this.proxy.activeBaselayerId = baseLayerConfig.id;
 
-            c4g.maps.utils.callHookFunctions(this.proxy.hook_baselayer_visibility, baseLayerConfig);
+            utils.callHookFunctions(this.proxy.hook_baselayer_visibility, baseLayerConfig);
 
             /**
              * Cesium integration
@@ -727,7 +733,7 @@ class C4gBaselayerController {
                 } else {
                     if (this.ol3d && this.ol3d.getEnabled()) {
                         this.ol3d.setEnabled(false);
-                        c4g.maps.utils.redrawMapView(this.mapController);
+                        utils.redrawMapView(this.mapController);
                     }
                 }
             }

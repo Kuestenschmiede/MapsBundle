@@ -3,6 +3,10 @@ this.c4g = this.c4g || {};
 this.c4g.maps = this.c4g.maps || {};
 this.c4g.maps.control = this.c4g.maps.control || {};
 
+import {cssConstants} from "./c4g-maps-constant";
+import {langConstants} from "./c4g-maps-constant-i18n-de";
+import {utils} from "./c4g-maps-utils";
+
 (function ($, c4g) {
   'use strict';
 
@@ -26,9 +30,9 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
     // default options
     this.config = $.extend({
-      className: c4g.maps.constant.css.PERMALINK,
+      className: cssConstants.PERMALINK,
       // mapController: undefined,
-      tipLabel: c4g.maps.constant.i18n.CTRL_PERMALINK,
+      tipLabel: langConstants.CTRL_PERMALINK,
       getParameter: false,
       label: 'P',
       target: undefined
@@ -40,7 +44,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
     // wrapper div
     this.element = document.createElement('div');
-    this.element.className = this.config.className + ' ' + c4g.maps.constant.css.OL_UNSELECTABLE + ' ' + c4g.maps.constant.css.OL_CONTROL;
+    this.element.className = this.config.className + ' ' + cssConstants.OL_UNSELECTABLE + ' ' + cssConstants.OL_CONTROL;
 
     // button
     button = document.createElement('button');
@@ -64,7 +68,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
     // to make sure its really the last element in the container
     this.popupAttached = false;
     this.popup = document.createElement('div');
-    this.popup.className = c4g.maps.constant.css.CONTROL + ' ' + c4g.maps.constant.css.PERMALINK_POPUP + ' ' + c4g.maps.constant.css.CLOSE;
+    this.popup.className = cssConstants.CONTROL + ' ' + cssConstants.PERMALINK_POPUP + ' ' + cssConstants.CLOSE;
 
     // textfield
     this.textfield = document.createElement('input');
@@ -73,16 +77,16 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
     // copy button
     copyButton = document.createElement('button');
-    copyButton.className = c4g.maps.constant.css.COPY + ' ' + c4g.maps.constant.css.ICON;
-    copyButton.title = c4g.maps.constant.i18n.COPY_TO_CLIPBOARD;
-    copyButton.setAttribute('data-clipboard-target', '.' + c4g.maps.constant.css.PERMALINK_POPUP + ' > input[type="text"]');
+    copyButton.className = cssConstants.COPY + ' ' + cssConstants.ICON;
+    copyButton.title = langConstants.COPY_TO_CLIPBOARD;
+    copyButton.setAttribute('data-clipboard-target', '.' + cssConstants.PERMALINK_POPUP + ' > input[type="text"]');
     this.popup.appendChild(copyButton);
     new Clipboard(copyButton);
 
     // refresh button
     refreshButton = document.createElement('button');
-    refreshButton.className = c4g.maps.constant.css.REFRESH + ' ' + c4g.maps.constant.css.ICON;
-    refreshButton.title = c4g.maps.constant.i18n.REFRESH;
+    refreshButton.className = cssConstants.REFRESH + ' ' + cssConstants.ICON;
+    refreshButton.title = langConstants.REFRESH;
     $(refreshButton).click(function () {
       self.generateLinkFromCurrentState({target: self.textfield});
     });
@@ -108,18 +112,18 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         this.config.target.appendChild(this.popup);
         this.popupAttached = true;
       }
-      $(this.popup).removeClass(c4g.maps.constant.css.CLOSE).addClass(c4g.maps.constant.css.OPEN);
-      $(this.element).addClass(c4g.maps.constant.css.OPEN);
+      $(this.popup).removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN);
+      $(this.element).addClass(cssConstants.OPEN);
       this.generateLinkFromCurrentState({target: this.textfield});
     },
 
     close: function () {
-      $(this.popup).removeClass(c4g.maps.constant.css.OPEN).addClass(c4g.maps.constant.css.CLOSE);
-      $(this.element).removeClass(c4g.maps.constant.css.OPEN);
+      $(this.popup).removeClass(cssConstants.OPEN).addClass(cssConstants.CLOSE);
+      $(this.element).removeClass(cssConstants.OPEN);
     },
 
     toggle: function () {
-      if ($(this.popup).hasClass(c4g.maps.constant.css.CLOSE)) {
+      if ($(this.popup).hasClass(cssConstants.CLOSE)) {
         this.open();
       } else {
         this.close();
@@ -170,7 +174,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       }
       // delta-decode if there are more than one layer
       if (layers.length > 1) {
-        layers = c4g.maps.utils.deltaEncode(layers);
+        layers = utils.deltaEncode(layers);
         layers = layers.join(':');
       } else {
         layers = layers[0] || '0';
@@ -179,7 +183,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       parameters = parameters.join('/');
 
       // build link
-      link = c4g.maps.utils.setUrlParam(parameters, this.config.getParameter);
+      link = utils.setUrlParam(parameters, this.config.getParameter);
 
       if (options.target) {
         options.target.value = link;
@@ -194,9 +198,11 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       }
 
       // build and return link
-      return c4g.maps.utils.setUrlParam(parameters.join('/'), this.config.getParameter);
+      return utils.setUrlParam(parameters.join('/'), this.config.getParameter);
     } // end of generateLink
 
   }); // end of "add methods" ---
 
 }(jQuery, this.c4g));
+
+export var Permalink = this.c4g.maps.control.Permalink;

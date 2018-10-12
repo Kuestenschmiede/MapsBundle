@@ -170,3 +170,5 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
   }); // end of "css constants" ---
 
 }(jQuery, this.c4g));
+
+export var cssConstants = this.c4g.maps.constant.css;

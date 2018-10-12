@@ -2,6 +2,9 @@
 this.c4g = this.c4g || {};
 this.c4g.maps = this.c4g.maps || {};
 
+import {cssConstants} from "./c4g-maps-constant";
+import {Zoomlevel} from "./c4g-maps-control-zoomlevel";
+
 (function ($, c4g) {
   'use strict';
 
@@ -845,16 +848,16 @@ this.c4g.maps = this.c4g.maps || {};
     redrawMapView: function (mapController) {
       var mapData = mapController.data;
       var controlContainerTopLeft = document.createElement('div');
-      controlContainerTopLeft.className = c4g.maps.constant.css.CONTROL_CONTAINER_TL + ' ' + c4g.maps.constant.css.OL_UNSELECTABLE;
+      controlContainerTopLeft.className = cssConstants.CONTROL_CONTAINER_TL + ' ' + cssConstants.OL_UNSELECTABLE;
       mapController.$overlaycontainer_stopevent.prepend(controlContainerTopLeft);
 
       var controlContainerBottomLeft = document.createElement('div');
-      controlContainerBottomLeft.className = c4g.maps.constant.css.CONTROL_CONTAINER_BL + ' ' + c4g.maps.constant.css.OL_UNSELECTABLE;
+      controlContainerBottomLeft.className = cssConstants.CONTROL_CONTAINER_BL + ' ' + cssConstants.OL_UNSELECTABLE;
       $(controlContainerTopLeft).after(controlContainerBottomLeft);
       mapController.leftSlideElements.push(controlContainerBottomLeft);
 
       var controlContainerBottomLeftSub = document.createElement('div');
-      controlContainerBottomLeftSub.className = c4g.maps.constant.css.CONTROL_CONTAINER_BL_SUB + ' ' + c4g.maps.constant.css.OL_UNSELECTABLE;
+      controlContainerBottomLeftSub.className = cssConstants.CONTROL_CONTAINER_BL_SUB + ' ' + cssConstants.OL_UNSELECTABLE;
 
       if (mapData.scaleline) {
         mapController.map.removeControl(mapController.controls.scaleline);
@@ -870,7 +873,7 @@ this.c4g.maps = this.c4g.maps || {};
 
       if (mapData.zoomlevel) {
         mapController.map.removeControl(mapController.controls.zoomlevel);
-        mapController.controls.zoomlevel = new c4g.maps.control.Zoomlevel({
+        mapController.controls.zoomlevel = new Zoomlevel({
           mapView: mapController.map.getView(),
           target: controlContainerBottomLeftSub,
           undefinedHTML: 'N/A'
@@ -898,3 +901,5 @@ this.c4g.maps = this.c4g.maps || {};
   });
 
 }(jQuery, this.c4g));
+
+export var utils = this.c4g.maps.utils;

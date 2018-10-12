@@ -3,6 +3,10 @@ this.c4g = this.c4g || {};
 this.c4g.maps = this.c4g.maps || {};
 this.c4g.maps.control = this.c4g.maps.control || {};
 
+import {cssConstants} from "./c4g-maps-constant";
+import {langConstants} from "./c4g-maps-constant-i18n-de";
+
+
 (function ($, c4g) {
   'use strict';
 
@@ -33,9 +37,9 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
     // default options
     options = $.extend({
-      className: c4g.maps.constant.css.GRATICULE,
+      className: cssConstants.GRATICULE,
       switchable: true,
-      tipLabel: c4g.maps.constant.i18n.CTRL_GRID,
+      tipLabel: langConstants.CTRL_GRID,
       label: '#',
       disableLabel: '[]'
     }, options);
@@ -45,7 +49,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
     // function to enable the grid
     var enable = function () {
       objGrid.setMap(self.getMap());
-      $(element).addClass(c4g.maps.constant.css.ENABLED);
+      $(element).addClass(cssConstants.ENABLED);
       // if (options.caching) {
       //     c4g.maps.utils.storeValue('grid', '1');
       // }
@@ -54,7 +58,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
     // function to disable the grid
     var disable = function () {
       objGrid.setMap(null);
-      $(element).removeClass(c4g.maps.constant.css.ENABLED);
+      $(element).removeClass(cssConstants.ENABLED);
       // if (options.caching) {
       //     c4g.maps.utils.storeValue('grid', '0');
       // }
@@ -74,7 +78,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
     // wrapper div
     element = document.createElement('div');
-    element.className = options.className + ' ' + c4g.maps.constant.css.OL_UNSELECTABLE + ' ' + c4g.maps.constant.css.OL_CONTROL;
+    element.className = options.className + ' ' + cssConstants.OL_UNSELECTABLE + ' ' + cssConstants.OL_CONTROL;
 
     if (options.switchable) {
       // button
@@ -95,7 +99,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
     // if (options.caching && (c4g.maps.utils.getValue('grid') == '1')) {
     //     objGrid.setMap(self.getMap());
-    //     $(element).addClass(c4g.maps.constant.css.ENABLED);
+    //     $(element).addClass(cssConstants.ENABLED);
     // }
 
   };
@@ -112,3 +116,5 @@ this.c4g.maps.control = this.c4g.maps.control || {};
   }); // end of "add methods" ---
 
 }(jQuery, this.c4g));
+
+export var Grid = this.c4g.maps.control.Grid;

@@ -214,6 +214,6 @@ this.c4g.maps.config = this.c4g.maps.config || {};
 
     };
 
-
-
 }(jQuery, this.c4g));
+
+export var config = this.c4g.maps.config;

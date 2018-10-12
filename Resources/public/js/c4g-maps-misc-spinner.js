@@ -3,6 +3,8 @@ this.c4g = this.c4g || {};
 this.c4g.maps = this.c4g.maps || {};
 this.c4g.maps.misc = this.c4g.maps.misc || {};
 
+import {cssConstants} from "./c4g-maps-constant";
+
 (function ($, c4g) {
   'use strict';
 
@@ -25,7 +27,7 @@ this.c4g.maps.misc = this.c4g.maps.misc || {};
     // default options
     options = $.extend({
       className: '',
-      target: '.' + c4g.maps.constant.css.OL_VIEWPORT
+      target: '.' + cssConstants.OL_VIEWPORT
     }, options);
 
     if (options.className) {
@@ -33,11 +35,11 @@ this.c4g.maps.misc = this.c4g.maps.misc || {};
     }
 
     this.element = document.createElement('div');
-    this.element.className = c4g.maps.constant.css.SPINNER + options.className + ' ' + c4g.maps.constant.css.HIDE;
+    this.element.className = cssConstants.SPINNER + options.className + ' ' + cssConstants.HIDE;
     $(options.target).append(this.element);
 
     spinnerSpan = document.createElement('span');
-    spinnerSpan.className = c4g.maps.constant.css.ICON + ' ' + c4g.maps.constant.css.ANIMATION_SPIN;
+    spinnerSpan.className = cssConstants.ICON + ' ' + cssConstants.ANIMATION_SPIN;
     this.element.appendChild(spinnerSpan);
 
     this.additionalActivationCounter = 0;
@@ -54,8 +56,8 @@ this.c4g.maps.misc = this.c4g.maps.misc || {};
      * @return  {[type]}  [description]
      */
     show: function () {
-      if ($(this.element).hasClass(c4g.maps.constant.css.HIDE)) {
-        $(this.element).removeClass(c4g.maps.constant.css.HIDE);
+      if ($(this.element).hasClass(cssConstants.HIDE)) {
+        $(this.element).removeClass(cssConstants.HIDE);
       } else {
         this.additionalActivationCounter += 1;
       }
@@ -68,11 +70,11 @@ this.c4g.maps.misc = this.c4g.maps.misc || {};
      * @return  {[type]}  [description]
      */
     hide: function () {
-      if ($(this.element).hasClass(c4g.maps.constant.css.HIDE)) {
+      if ($(this.element).hasClass(cssConstants.HIDE)) {
         //console.warn('Spinner is already hidden.');
       } else {
         if (this.additionalActivationCounter === 0) {
-          $(this.element).addClass(c4g.maps.constant.css.HIDE);
+          $(this.element).addClass(cssConstants.HIDE);
         } else {
           this.additionalActivationCounter -= 1;
         }
@@ -83,3 +85,5 @@ this.c4g.maps.misc = this.c4g.maps.misc || {};
   }); // End of "add methods to spinner"
 
 }(jQuery, this.c4g));
+
+export var Spinner = this.c4g.maps.misc.Spinner;

@@ -4,6 +4,10 @@ this.c4g.maps = this.c4g.maps || {};
 this.c4g.maps.control = this.c4g.maps.control || {};
 this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin || {};
 
+import {cssConstants} from "./c4g-maps-constant";
+import {langConstants} from "./c4g-maps-constant-i18n-de";
+import {utils} from "./c4g-maps-utils";
+
 (function ($, c4g) {
   'use strict';
 
@@ -48,12 +52,12 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
       contentWrapper = document.createElement('div');
 
       contentHeadline = document.createElement('div');
-      contentHeadline.innerHTML = (this.starboard.options.baselayerSwitcherTitle || c4g.maps.constant.i18n.STARBOARD_VIEW_TRIGGER_BASELAYERSWITCHER);
+      contentHeadline.innerHTML = (this.starboard.options.baselayerSwitcherTitle || langConstants.STARBOARD_VIEW_TRIGGER_BASELAYERSWITCHER);
       contentHeadline.className = 'contentHeadline';
       contentWrapper.appendChild(contentHeadline);
 
       this.contentDiv = document.createElement('div');
-      this.contentDiv.className = c4g.maps.constant.css.STARBOARD_CONTENT_BASELAYERSWITCHER;
+      this.contentDiv.className = cssConstants.STARBOARD_CONTENT_BASELAYERSWITCHER;
       contentInfo = document.createElement('p');
       this.contentDiv.appendChild(contentInfo);
       contentWrapper.appendChild(this.contentDiv);
@@ -61,8 +65,8 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
       self.view = self.starboard.addView({
         name: 'layerswitcher',
         triggerConfig: {
-          tipLabel: (this.starboard.options.baselayerSwitcherTitle || c4g.maps.constant.i18n.STARBOARD_VIEW_TRIGGER_BASELAYERSWITCHER),
-          className: c4g.maps.constant.css.STARBOARD_VIEW_TRIGGER_BASELAYERSWITCHER,
+          tipLabel: (this.starboard.options.baselayerSwitcherTitle || langConstants.STARBOARD_VIEW_TRIGGER_BASELAYERSWITCHER),
+          className: cssConstants.STARBOARD_VIEW_TRIGGER_BASELAYERSWITCHER,
           withHeadline: false
         },
         sectionElements: [
@@ -116,7 +120,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
 
       fnDrawContent = function (baselayerIds) {
         self.baseLayerControl = document.createElement('div');
-        $(self.baseLayerControl).addClass(c4g.maps.constant.css.STARBOARD_BASELAYERTREE);
+        $(self.baseLayerControl).addClass(cssConstants.STARBOARD_BASELAYERTREE);
         self.setContent(self.baseLayerControl);
 
         self.addItems(baselayerIds, self.baseLayerControl);
@@ -183,26 +187,26 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
             baselayerItem;
           siblings = $(this).parent().siblings();
           for(var i = 0; i< siblings.length; i++){
-              if (siblings[i] && $(siblings[i]).hasClass(c4g.maps.constant.css.OPEN)) {
+              if (siblings[i] && $(siblings[i]).hasClass(cssConstants.OPEN)) {
                   if(self.proxy.baselayerController.arrBaselayers[self.proxy.activeBaselayerId] && self.proxy.baselayerController.arrBaselayers[self.proxy.activeBaselayerId].hasOverlays){
                     for(let j in self.proxy.baselayerController.arrBaselayers[self.proxy.activeBaselayerId].overlayController.arrOverlays){
                       if(self.proxy.baselayerController.arrBaselayers[self.proxy.activeBaselayerId].overlayController.arrOverlays.hasOwnProperty(j))
                       self.proxy.options.mapController.map.removeLayer(self.proxy.baselayerController.arrBaselayers[self.proxy.activeBaselayerId].overlayController.arrOverlays[j].layer);
                     }
                   }
-                  $(siblings[i]).removeClass(c4g.maps.constant.css.OPEN).addClass(c4g.maps.constant.css.CLOSE);
+                  $(siblings[i]).removeClass(cssConstants.OPEN).addClass(cssConstants.CLOSE);
               }
           }
           itemUid = $(this).data('uid');
 
           if (self.starboard.options.caching) {
-              c4g.maps.utils.storeValue('baselayer', itemUid);
+              utils.storeValue('baselayer', itemUid);
           }
 
-            if ($(this).parent().hasClass(c4g.maps.constant.css.CLOSE)) {
-                $(this).parent().removeClass(c4g.maps.constant.css.CLOSE).addClass(c4g.maps.constant.css.OPEN);
+            if ($(this).parent().hasClass(cssConstants.CLOSE)) {
+                $(this).parent().removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN);
             } else {
-                $(this).parent().removeClass(c4g.maps.constant.css.OPEN).addClass(c4g.maps.constant.css.CLOSE);
+                $(this).parent().removeClass(cssConstants.OPEN).addClass(cssConstants.CLOSE);
             }
 
             if (self.proxy.options.mapController.rightSlideElements) {
@@ -220,16 +224,16 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
                       self.proxy.options.mapController.map.addLayer(self.proxy.baselayerController.arrBaselayers[itemUid].overlayController.arrOverlays[j].layer);                  }
                 }
             }
-            $(this).addClass(c4g.maps.constant.css.ACTIVE).removeClass(c4g.maps.constant.css.INACTIVE);
+            $(this).addClass(cssConstants.ACTIVE).removeClass(cssConstants.INACTIVE);
 
             // if(this.nextSibling){
             //     var children = this.nextSibling.childNodes;
             //     for(i = 0; i < children.length; i++){
-            //         $(children[i].firstChild).addClass(c4g.maps.constant.css.ACTIVE).removeClass(c4g.maps.constant.css.INACTIVE);
+            //         $(children[i].firstChild).addClass(cssConstants.ACTIVE).removeClass(cssConstants.INACTIVE);
             //     }
             // }
             c4g.maps.hook.baselayer_changed = c4g.maps.hook.baselayer_changed || [];
-            c4g.maps.utils.callHookFunctions(c4g.maps.hook.baselayer_changed, itemUid);
+            utils.callHookFunctions(c4g.maps.hook.baselayer_changed, itemUid);
           }
       }; // end of "handleEntryClick()"
 
@@ -239,9 +243,9 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
         for (id in self.baselayers) {
           if (self.baselayers.hasOwnProperty(id)) {
             if (id === baselayerConfig.id) {
-              self.baselayers[id].$entry.addClass(c4g.maps.constant.css.ACTIVE).removeClass(c4g.maps.constant.css.INACTIVE);
+              self.baselayers[id].$entry.addClass(cssConstants.ACTIVE).removeClass(cssConstants.INACTIVE);
             } else {
-              self.baselayers[id].$entry.addClass(c4g.maps.constant.css.INACTIVE).removeClass(c4g.maps.constant.css.ACTIVE);
+              self.baselayers[id].$entry.addClass(cssConstants.INACTIVE).removeClass(cssConstants.ACTIVE);
             }
           }
         }
@@ -271,12 +275,12 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
               childItem = options.parseAsList ? document.createElement('li') : document.createElement('div');
               childEntry = document.createElement('a');
               if(self.proxy.activeBaselayerId == uid){
-                  $(childEntry).addClass(c4g.maps.constant.css.ACTIVE);
+                  $(childEntry).addClass(cssConstants.ACTIVE);
                   let overlayId = self.proxy.baselayerController.arrBaselayers[uid].overlays[j].id;
                   self.proxy.baselayerController.arrBaselayers[uid].overlayController.arrOverlays[overlayId].changeOpacity(self.proxy.baselayerController.arrBaselayers[uid].overlays[j].opacity);
               }
               else{
-                  $(childEntry).addClass(c4g.maps.constant.css.INACTIVE);
+                  $(childEntry).addClass(cssConstants.INACTIVE);
               }
 
               childEntry.appendChild(document.createTextNode(self.proxy.baselayerController.arrBaselayers[uid].overlays[j].name));
@@ -311,8 +315,8 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
           this.baselayers[uid].$entry = $entry;
 
           if (this.starboard.options.mapController.data.default_baselayer && parseInt(uid, 10) === parseInt(self.starboard.options.mapController.data.default_baselayer, 10)) {
-            $entry.addClass(c4g.maps.constant.css.ACTIVE);
-            $(listItem).addClass(c4g.maps.constant.css.OPEN);
+            $entry.addClass(cssConstants.ACTIVE);
+            $(listItem).addClass(cssConstants.OPEN);
               if(self.proxy.baselayerController.arrBaselayers[uid].hasOverlays){
                   for(let j in self.proxy.baselayerController.arrBaselayers[uid].overlayController.arrOverlays){
                         if(self.proxy.baselayerController.arrBaselayers[uid].overlayController.arrOverlays.hasOwnProperty(j)){
@@ -322,8 +326,8 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
                   }
               }
           } else {
-            $entry.addClass(c4g.maps.constant.css.INACTIVE);
-            $(listItem).addClass(c4g.maps.constant.css.CLOSE);
+            $entry.addClass(cssConstants.INACTIVE);
+            $(listItem).addClass(cssConstants.CLOSE);
           }
 
           $entry.data('uid', uid);
@@ -447,3 +451,5 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
   }); // end of "add methods"
 
 }(jQuery, this.c4g));
+
+export var Baselayerswitcher = this.c4g.maps.control.starboardplugin.Baselayerswitcher;

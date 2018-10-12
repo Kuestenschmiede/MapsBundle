@@ -3,6 +3,8 @@ this.c4g = this.c4g || {};
 this.c4g.maps = this.c4g.maps || {};
 this.c4g.maps.misc = this.c4g.maps.misc || {};
 
+import {TooltipPopUp} from "./c4g-maps-misc-tooltippopup";
+
 (function ($, c4g) {
   'use strict';
 
@@ -36,7 +38,7 @@ this.c4g.maps.misc = this.c4g.maps.misc || {};
     this.lastHoveredFeature = null;
 
     // create tooltip
-    this.hoverTooltip = new c4g.maps.misc.TooltipPopUp({
+    this.hoverTooltip = new TooltipPopUp({
       map: this.map,
       offset: [10, 10],
       horizontal: true,
@@ -413,3 +415,5 @@ this.c4g.maps.misc = this.c4g.maps.misc || {};
   }); // End of "add methods to TooltipPopUp"
 
 }(jQuery, this.c4g));
+
+export var MapHover = this.c4g.maps.misc.MapHover;

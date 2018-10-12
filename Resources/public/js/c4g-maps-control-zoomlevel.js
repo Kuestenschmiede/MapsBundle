@@ -3,6 +3,8 @@ this.c4g = this.c4g || {};
 this.c4g.maps = this.c4g.maps || {};
 this.c4g.maps.control = this.c4g.maps.control || {};
 
+import {cssConstants} from "./c4g-maps-constant";
+
 (function ($, c4g) {
   'use strict';
 
@@ -29,7 +31,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
     // default options
     options = $.extend({
-      className: c4g.maps.constant.css.ZOOM_LEVEL,
+      className: cssConstants.ZOOM_LEVEL,
       undefinedHTML: ''
     }, options);
 
@@ -60,3 +62,5 @@ this.c4g.maps.control = this.c4g.maps.control || {};
   }); // end of "add methods" ---
 
 }(jQuery, this.c4g));
+
+export var Zoomlevel = this.c4g.maps.control.Zoomlevel;
