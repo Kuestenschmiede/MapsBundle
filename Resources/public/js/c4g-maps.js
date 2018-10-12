@@ -26,6 +26,7 @@ import {Zoomlevel} from "./c4g-maps-control-zoomlevel";
 import {OverviewMap} from "./c4g-maps-control-overviewmap";
 import {Permalink} from "./c4g-maps-control-permalink";
 import {Starboard} from "./c4g-maps-control-starboard";
+import {Editor} from "./c4g-maps-control-portside-editor";
 
 (function ($, c4g) {
     'use strict';
@@ -628,8 +629,8 @@ import {Starboard} from "./c4g-maps-control-starboard";
             this.map.addControl(this.controls.router);
         }
         // editor
-        if (mapData.editor.enable && typeof c4g.maps.control.Editor === 'function') {
-            this.controls.editor = new c4g.maps.control.Editor({
+        if (mapData.editor.enable && typeof Editor === 'function') {
+            this.controls.editor = new Editor({
                 tipLabel: langConstants.CTRL_EDITOR,
                 type: mapData.editor.type || 'frontend',
                 target: mapData.editor.target || controlContainerTopLeft,
