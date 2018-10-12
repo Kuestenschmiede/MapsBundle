@@ -908,8 +908,8 @@ import {Starboard} from "./c4g-maps-control-starboard";
             }
         }
 
-      if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.mapController_addControls === 'object') {
-        utils.callHookFunctions(c4g.maps.hook.mapController_addControls, this);
+      if (window.c4gMapsHooks !== undefined && Array.isArray(window.c4gMapsHooks.mapController_addControls)) {
+        utils.callHookFunctions(window.c4gMapsHooks.mapController_addControls, this);
       }
     };
 

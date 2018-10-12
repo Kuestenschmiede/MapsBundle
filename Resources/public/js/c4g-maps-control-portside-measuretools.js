@@ -7,6 +7,7 @@ import {cssConstants} from "./c4g-maps-constant";
 import {langConstants} from "./c4g-maps-constant-i18n-de";
 import {utils} from "./c4g-maps-utils";
 import {Sideboard} from "./c4g-maps-control-sideboard";
+import {TooltipPopUp} from "./c4g-maps-misc-tooltippopup";
 
 (function ($, c4g) {
   'use strict';
@@ -453,7 +454,7 @@ import {Sideboard} from "./c4g-maps-control-sideboard";
               function (event) {
                 activeSketch = event.feature;
                 // create tooltip
-                activeTooltip = new c4g.maps.misc.TooltipPopUp({
+                activeTooltip = new TooltipPopUp({
                   map: self.options.mapController.map,
                   position: event.coordinate,
                   horizontal: true,

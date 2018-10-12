@@ -6,7 +6,6 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
 
 import {cssConstants} from "./c4g-maps-constant";
 import {langConstants} from "./c4g-maps-constant-i18n-de";
-import {utils} from "./c4g-maps-utils";
 
 (function ($, c4g) {
   'use strict';
