@@ -228,22 +228,22 @@ class ResourceLoader extends coreResourceLoader
             }
         }
 
+        $eventDispatcher = System::getContainer()->get('event_dispatcher');
+        $event = new LoadMapResourcesEvent();
+        $eventDispatcher->dispatch($event::NAME, $event);
+
         // core scripts (2|2)
         if ($resources['core']) {
             // load map-controller last, since it is the "main" script
             // and needs (nearly) all of the above scripts
-            parent::loadJavaScriptRessource('c4g-maps-test', self::BUNDLE_JS_PATH . 'c4g-maps-test.js' . $staticOption);
-            parent::loadJavaScriptRessource('c4g-maps', self::BUNDLE_JS_PATH . 'c4g-maps.js' . $staticOption);
+            parent::loadJavaScriptDeferred('c4g-maps-test', self::BUNDLE_JS_PATH . 'c4g-maps-test.js' . $staticOption);
+            parent::loadJavaScriptDeferred('c4g-maps', self::BUNDLE_JS_PATH . 'c4g-maps.js' . $staticOption);
         }
 
         //ToDo bundle path and tracking bundle
 //        if ( $GLOBALS['con4gis']['projects']['installed'] &&  $GLOBALS['con4gis']['tracking']['installed']) {
 //            parent::loadJavaScriptRessource('live-positions', 'bundles/con4gisprojects/js/C4GBrickLivePositions.js');
 //        }
-
-        $eventDispatcher = System::getContainer()->get('event_dispatcher');
-        $event = new LoadMapResourcesEvent();
-        $eventDispatcher->dispatch($event::NAME, $event);
 
         return true;
     }
