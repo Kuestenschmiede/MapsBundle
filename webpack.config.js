@@ -18,7 +18,6 @@ Encore
    * and one CSS file (e.g. app.css) if you JavaScript imports CSS.
    */
   .addEntry('c4g-maps', './Resources/public/js/c4g-maps.js')
-  .addEntry('c4g-maps-test', './Resources/public/js/c4g-maps-test.js')
 
   .cleanupOutputBeforeBuild()
   .enableSourceMaps(!Encore.isProduction())
