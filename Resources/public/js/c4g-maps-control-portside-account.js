@@ -3,6 +3,10 @@ this.c4g = this.c4g || {};
 this.c4g.maps = this.c4g.maps || {};
 this.c4g.maps.control = this.c4g.maps.control || {};
 
+import {Sideboard} from "./c4g-maps-control-sideboard";
+import {cssConstants} from "./c4g-maps-constant";
+import {langConstants} from "./c4g-maps-constant-i18n-de";
+
 (function ($, c4g) {
   'use strict';
 
@@ -18,9 +22,9 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
     // extend options
     this.options = $.extend({
-      className: c4g.maps.constant.css.ACCOUNT,
+      className: cssConstants.ACCOUNT,
       name: 'account',
-      headline: c4g.maps.constant.i18n.ACCOUNT,
+      headline: langConstants.ACCOUNT,
       create: true,
       mapController: undefined,
       direction: 'left'
@@ -33,9 +37,9 @@ this.c4g.maps.control = this.c4g.maps.control || {};
     this.mainSection = document.createElement('div');
 
     // call parent constructor
-    c4g.maps.control.Sideboard.call(this, this.options);
+    Sideboard.call(this, this.options);
   };
-  ol.inherits(c4g.maps.control.Account, c4g.maps.control.Sideboard);
+  ol.inherits(c4g.maps.control.Account, Sideboard);
 
   /**
    * Methods
@@ -75,8 +79,8 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         accountView = this.addView({
         name: 'account',
         triggerConfig: {
-          tipLabel: c4g.maps.constant.i18n.ACCOUNT_VIEW_TRIGGER,
-          className: c4g.maps.constant.css.ACCOUNT_VIEW_TRIGGER,
+          tipLabel: langConstants.ACCOUNT_VIEW_TRIGGER,
+          className: cssConstants.ACCOUNT_VIEW_TRIGGER,
           withHeadline: false
         },
         sectionElements: [
@@ -103,8 +107,8 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       viewAccount = self.addAccount({
         name: 'Account',
         triggerConfig: {
-          tipLabel: 'Account',//c4g.maps.constant.i18n[TRIGGER_DRAW],
-          className: 'c4g_account_trigger',//c4g.maps.constant.css[TRIGGER_DRAW]
+          tipLabel: 'Account',//langConstants[TRIGGER_DRAW],
+          className: 'c4g_account_trigger',//cssConstants[TRIGGER_DRAW]
           withHeadline: false
         },
         sectionElements: [
@@ -128,8 +132,8 @@ this.c4g.maps.control = this.c4g.maps.control || {};
           //
           //   // add apply button
           //   applyButton = document.createElement('button');
-          //   applyButton.className = c4g.maps.constant.css.ICON + ' ' + c4g.maps.constant.css.EDITOR_FEATURE_APPLY;
-          //   applyButton.title = c4g.maps.constant.i18n.EDITOR_FEATURE_APPLY;
+          //   applyButton.className = cssConstants.ICON + ' ' + cssConstants.EDITOR_FEATURE_APPLY;
+          //   applyButton.title = langConstants.EDITOR_FEATURE_APPLY;
           //   applyButton.setAttribute('feat_id', i);
           //
           // }; // end of "modifyFeatureFunction()"
@@ -151,3 +155,5 @@ this.c4g.maps.control = this.c4g.maps.control || {};
   });
 
 }(jQuery, this.c4g));
+
+export let Account = this.c4g.maps.control.Account;

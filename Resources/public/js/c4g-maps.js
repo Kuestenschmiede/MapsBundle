@@ -27,6 +27,7 @@ import {OverviewMap} from "./c4g-maps-control-overviewmap";
 import {Permalink} from "./c4g-maps-control-permalink";
 import {Starboard} from "./c4g-maps-control-starboard";
 import {Editor} from "./c4g-maps-control-portside-editor";
+import {Account} from "./c4g-maps-control-portside-account";
 
 (function ($, c4g) {
     'use strict';
@@ -505,8 +506,8 @@ import {Editor} from "./c4g-maps-control-portside-editor";
 
 
         // account
-        if (mapData.account && typeof c4g.maps.control.Account === 'function') {
-            this.controls.account = new c4g.maps.control.Account({
+        if (mapData.account && typeof Account === 'function') {
+            this.controls.account = new Account({
                 tipLabel: langConstants.CTRL_ACCOUNT,
                 target: controlContainerTopLeft,
                 caching: mapData.caching,

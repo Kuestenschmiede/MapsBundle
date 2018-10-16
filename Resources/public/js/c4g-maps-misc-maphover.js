@@ -4,6 +4,7 @@ this.c4g.maps = this.c4g.maps || {};
 this.c4g.maps.misc = this.c4g.maps.misc || {};
 
 import {TooltipPopUp} from "./c4g-maps-misc-tooltippopup";
+import {utils} from "./c4g-maps-utils";
 
 (function ($, c4g) {
   'use strict';
@@ -293,7 +294,7 @@ import {TooltipPopUp} from "./c4g-maps-misc-tooltippopup";
                 tooltipContent = '';
                 tooltipLength = parseInt(hovered.layer.tooltip_length);
                 for(i = 0; i<features.length; i++){
-                    var singleTooltip = c4g.maps.utils.replaceAllPlaceholders(tooltipHelper, features[i], hovered.layer);
+                    var singleTooltip = utils.replaceAllPlaceholders(tooltipHelper, features[i], hovered.layer);
                     if(singleTooltip != ''){
                         if(tooltipContent == '') tooltipContent = singleTooltip;
                         else tooltipContent = tooltipContent + ', ' + singleTooltip;
@@ -311,14 +312,14 @@ import {TooltipPopUp} from "./c4g-maps-misc-tooltippopup";
         }
 
         if (tooltipContent) {
-          tooltipContent = c4g.maps.utils.decodeGeoJsonProperty(tooltipContent);
+          tooltipContent = utils.decodeGeoJsonProperty(tooltipContent);
 
           // replace placeholders if possible
             if(hovered.feature.get('features')){
 
 
             }
-          tooltipContent = c4g.maps.utils.replaceAllPlaceholders(tooltipContent, hovered.feature, hovered.layer);
+          tooltipContent = utils.replaceAllPlaceholders(tooltipContent, hovered.feature, hovered.layer);
 
 
           if (tooltipContent.trim()) {
@@ -368,7 +369,7 @@ import {TooltipPopUp} from "./c4g-maps-misc-tooltippopup";
                     objPopup.layer = hovered.layer;
                     // Call the popup hook for plugin specific popup content
                     if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.proxy_fillPopup === 'object') {
-                        c4g.maps.utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
+                        utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
                     }
                     proxy.setPopup(objPopup, proxy);
                 } else {
@@ -390,7 +391,7 @@ import {TooltipPopUp} from "./c4g-maps-misc-tooltippopup";
 
                             // Call the popup hook for plugin specific popup content
                             if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.proxy_fillPopup === 'object') {
-                                c4g.maps.utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
+                                utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
                             }
 
                             proxy.setPopup(objPopup, proxy);
