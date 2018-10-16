@@ -243,3 +243,5 @@ this.c4g.maps.interaction = this.c4g.maps.interaction || {};
   }); // end of "add methods" ---
 
 }(jQuery, this.c4g));
+
+export let GeoPicker = this.c4g.maps.interaction.GeoPicker;

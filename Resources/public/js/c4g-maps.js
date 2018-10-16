@@ -28,6 +28,7 @@ import {Permalink} from "./c4g-maps-control-permalink";
 import {Starboard} from "./c4g-maps-control-starboard";
 import {Editor} from "./c4g-maps-control-portside-editor";
 import {Account} from "./c4g-maps-control-portside-account";
+import {GeoPicker} from "./c4g-maps-interaction-geopicker";
 
 (function ($, c4g) {
     'use strict';
@@ -821,11 +822,11 @@ import {Account} from "./c4g-maps-control-portside-account";
           });
           this.map.addControl(this.controls.starboard);
         }
-      c4g.maps.utils.callHookFunctions(c4g.maps.hook_controls);
+      //c4g.maps.utils.callHookFunctions(c4g.maps.hook_controls);
 
         // backend-geopicker
         if (mapData.geopicker && (mapData.geopicker.type === "backend" || mapData.geopicker.type === "frontend")) {
-          this.controls.geopicker = new c4g.maps.interaction.GeoPicker({
+          this.controls.geopicker = new GeoPicker({
               mapContainer: this
           });
           this.map.addInteraction(this.controls.geopicker);
