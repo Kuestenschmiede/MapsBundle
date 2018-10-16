@@ -3,6 +3,14 @@ this.c4g = this.c4g || {};
 this.c4g.maps = this.c4g.maps || {};
 this.c4g.maps.control = this.c4g.maps.control || {};
 
+var c4g = this.c4g;
+
+import {Sideboard} from "./c4g-maps-control-sideboard";
+import {utils} from "./c4g-maps-utils";
+import {Baselayerswitcher} from "./c4g-maps-control-starboardplugin-baselayerswitcher";
+import {Layerswitcher} from "./c4g-maps-control-starboardplugin-layerswitcher";
+import {Customtab} from "./c4g-maps-control-starboardplugin-customtab";
+
 (function ($, c4g) {
   'use strict';
 
@@ -34,9 +42,9 @@ this.c4g.maps.control = this.c4g.maps.control || {};
     this.hook_layerswitcher_loaded = this.hook_layerswitcher_loaded || [];
 
     //call Sideboard (parent) constructor
-    c4g.maps.control.Sideboard.call(this, this.options);
+    Sideboard.call(this, this.options);
   };
-  ol.inherits(c4g.maps.control.Starboard, c4g.maps.control.Sideboard);
+  ol.inherits(c4g.maps.control.Starboard, Sideboard);
 
   // Add methods
   c4g.maps.control.Starboard.prototype = $.extend(c4g.maps.control.Starboard.prototype, {
@@ -91,17 +99,17 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
         // - load "Layerswitcher"
         if (self.options.layerSwitcherCreate && renderLayertree && displayLayerswitcher) {
-          self.plugins.layerswitcher = new c4g.maps.control.starboardplugin.Layerswitcher(self);
+          self.plugins.layerswitcher = new Layerswitcher(self);
         }
 
         // call hook to load additional starboard tabs (layers)
-        c4g.maps.utils.callHookFunctions(self.hook_layerswitcher_loaded);
+        utils.callHookFunctions(self.hook_layerswitcher_loaded);
 
 
         // - check & load other Starboard-plugins (via hook)
         // called functions have to add themselves to this.plugins
         if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.starboard_loadPlugins === 'object') {
-          c4g.maps.utils.callHookFunctions(c4g.maps.hook.starboard_loadPlugins, self);
+          utils.callHookFunctions(c4g.maps.hook.starboard_loadPlugins, self);
           // - activate new plugins if they are not activated already
           for (plugin in self.plugins) {
             // Check if plugin is a real plugin and not a property of the object prototype
@@ -113,7 +121,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
         // - load "Baselayerswitcher"
         if (self.options.baselayerSwitcherCreate) {
-          self.plugins.baselayerswitcher = new c4g.maps.control.starboardplugin.Baselayerswitcher(self);
+          self.plugins.baselayerswitcher = new Baselayerswitcher(self);
           self.plugins.baselayerswitcher.activate();
         }
         if (self.plugins.layerswitcher) {
@@ -142,4 +150,6 @@ this.c4g.maps.control = this.c4g.maps.control || {};
     } // end of "init"
 
   }); // End of add methods
-}(jQuery, this.c4g));
+}(jQuery, c4g));
+
+export var Starboard = this.c4g.maps.control.Starboard;

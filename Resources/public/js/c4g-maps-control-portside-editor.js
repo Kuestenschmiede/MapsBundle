@@ -3,6 +3,12 @@ this.c4g = this.c4g || {};
 this.c4g.maps = this.c4g.maps || {};
 this.c4g.maps.control = this.c4g.maps.control || {};
 
+import {cssConstants} from "./c4g-maps-constant";
+import {langConstants} from "./c4g-maps-constant-i18n-de";
+import {utils} from "./c4g-maps-utils";
+import {Sideboard} from "./c4g-maps-control-sideboard";
+import {TooltipPopUp} from "./c4g-maps-misc-tooltippopup";
+
 (function ($, c4g) {
   'use strict';
 
@@ -31,7 +37,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         'Freehand'
       ],
       direction: 'left',
-      headline: c4g.maps.constant.i18n.EDITOR
+      headline: langConstants.EDITOR
       // initMode: 'select'
     }, options);
 
@@ -56,9 +62,9 @@ this.c4g.maps.control = this.c4g.maps.control || {};
     }
 
     // call parent constructor
-    c4g.maps.control.Sideboard.call(this, this.options);
+    Sideboard.call(this, this.options);
   };
-  ol.inherits(c4g.maps.control.Editor, c4g.maps.control.Sideboard);
+  ol.inherits(c4g.maps.control.Editor, Sideboard);
 
   /**
    * Methods
@@ -143,7 +149,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
             }
             // Call hook function for dynamically added tabs
             if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.editor_loadTabs === 'object') {
-              c4g.maps.utils.callHookFunctions(c4g.maps.hook.editor_loadTabs, self);
+              utils.callHookFunctions(c4g.maps.hook.editor_loadTabs, self);
             }
 
             return true;
@@ -226,23 +232,23 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       selectContentWrapper = document.createElement('div');
 
       selectContentHeadline = document.createElement('div');
-      selectContentHeadline.innerHTML = c4g.maps.constant.i18n.EDITOR_VIEW_TRIGGER_SELECT;
+      selectContentHeadline.innerHTML = langConstants.EDITOR_VIEW_TRIGGER_SELECT;
       selectContentHeadline.className = 'contentHeadline';
       selectContentWrapper.appendChild(selectContentHeadline);
 
       selectContent = document.createElement('div');
-      selectContent.className = c4g.maps.constant.css.EDITOR_CONTENT_SELECT;
+      selectContent.className = cssConstants.EDITOR_CONTENT_SELECT;
       selectContentInfo = document.createElement('p');
-      selectContentInfo.innerHTML = c4g.maps.constant.i18n.EDITOR_SELECT_INFO;
-      selectContentInfo.innerHTML += '<br><br><sub>' + c4g.maps.constant.i18n.EDITOR_SELECT_INFO_ADDITIONAL + '</sub>';
+      selectContentInfo.innerHTML = langConstants.EDITOR_SELECT_INFO;
+      selectContentInfo.innerHTML += '<br><br><sub>' + langConstants.EDITOR_SELECT_INFO_ADDITIONAL + '</sub>';
       selectContent.appendChild(selectContentInfo);
       selectContentWrapper.appendChild(selectContent);
 
       selectView = this.addView({
         name: 'select',
         triggerConfig: {
-          tipLabel: c4g.maps.constant.i18n.EDITOR_VIEW_TRIGGER_SELECT,
-          className: c4g.maps.constant.css.EDITOR_VIEW_TRIGGER_SELECT,
+          tipLabel: langConstants.EDITOR_VIEW_TRIGGER_SELECT,
+          className: cssConstants.EDITOR_VIEW_TRIGGER_SELECT,
           withHeadline: true
         },
         sectionElements: [
@@ -358,12 +364,12 @@ this.c4g.maps.control = this.c4g.maps.control || {};
               changedFeature = selectedFeatures.item(event.target.getAttribute('feat_id'));
               changedFeature.set(
                   'tooltip',
-                  c4g.maps.utils.encodeGeoJsonProperty(event.target.value || '')
+                  utils.encodeGeoJsonProperty(event.target.value || '')
               );
               self.save();
               // Call hook to notify the feature change
               if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.editor_featureChanged === 'object') {
-                c4g.maps.utils.callHookFunctions(c4g.maps.hook.editor_featureChanged, {
+                utils.callHookFunctions(c4g.maps.hook.editor_featureChanged, {
                   feature: changedFeature,
                   action: 'renamed'
                 });
@@ -375,14 +381,14 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                   changedFeature;
               changedFeature = selectedFeatures.item(event.target.getAttribute('feat_id'));
               currentVars = changedFeature.get('editorVars');
-              currentVars[event.target.getAttribute('var_id')].value = c4g.maps.utils.encodeGeoJsonProperty(
+              currentVars[event.target.getAttribute('var_id')].value = utils.encodeGeoJsonProperty(
                   event.target.value || ''
               );
               changedFeature.set('editorVars', currentVars);
               self.save();
               // Call hook to notify the feature change
               if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.editor_featureChanged === 'object') {
-                c4g.maps.utils.callHookFunctions(c4g.maps.hook.editor_featureChanged, {
+                utils.callHookFunctions(c4g.maps.hook.editor_featureChanged, {
                   feature: changedFeature,
                   action: 'changed_var'
                 });
@@ -430,8 +436,8 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
               // add apply button
               applyButton = document.createElement('button');
-              applyButton.className = c4g.maps.constant.css.ICON + ' ' + c4g.maps.constant.css.EDITOR_FEATURE_APPLY;
-              applyButton.title = c4g.maps.constant.i18n.EDITOR_FEATURE_APPLY;
+              applyButton.className = cssConstants.ICON + ' ' + cssConstants.EDITOR_FEATURE_APPLY;
+              applyButton.title = langConstants.EDITOR_FEATURE_APPLY;
               applyButton.setAttribute('feat_id', i);
 
               self.applyFeatureModification = function (event) {
@@ -452,7 +458,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                 self.applyFeatureModification = false;
                 // Call hook to notify the feature change
                 if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.editor_featureChanged === 'object') {
-                  c4g.maps.utils.callHookFunctions(c4g.maps.hook.editor_featureChanged, {
+                  utils.callHookFunctions(c4g.maps.hook.editor_featureChanged, {
                     feature: modifyFeature,
                     action: 'edited'
                   });
@@ -511,7 +517,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
               // Maybe pass the remaining features instead of the deletedFeature ?
               // Or maybe a second hook for deletion, where both is passed ?
               if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.editor_featureChanged === 'object') {
-                c4g.maps.utils.callHookFunctions(c4g.maps.hook.editor_featureChanged, {
+                utils.callHookFunctions(c4g.maps.hook.editor_featureChanged, {
                   feature: deleteFeature,
                   action: 'deleted'
                 });
@@ -531,7 +537,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                   inputNameElement.id = i;
                   inputNameElement.setAttribute(
                       'value',
-                      c4g.maps.utils.decodeGeoJsonProperty(selectedFeature.get('tooltip') || '')
+                      utils.decodeGeoJsonProperty(selectedFeature.get('tooltip') || '')
                   );
                   inputNameElement.setAttribute('feat_id', i);
                   $(inputNameElement).keydown(blurOnEnter);
@@ -539,15 +545,15 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                   headlineElement.appendChild(inputNameElement);
                   // add modify button
                   modifyButtonElement = document.createElement('button');
-                  modifyButtonElement.className = c4g.maps.constant.css.ICON + ' ' + c4g.maps.constant.css.EDITOR_FEATURE_MODIFY;
-                  modifyButtonElement.title = c4g.maps.constant.i18n.EDITOR_FEATURE_MODIFY;
+                  modifyButtonElement.className = cssConstants.ICON + ' ' + cssConstants.EDITOR_FEATURE_MODIFY;
+                  modifyButtonElement.title = langConstants.EDITOR_FEATURE_MODIFY;
                   modifyButtonElement.setAttribute('feat_id', i);
                   $(modifyButtonElement).click(modifyFeatureFunction);
                   headlineElement.appendChild(modifyButtonElement);
                   // add delete button
                   deleteButtonElement = document.createElement('button');
-                  deleteButtonElement.className = c4g.maps.constant.css.ICON + ' ' + c4g.maps.constant.css.EDITOR_FEATURE_DELETE;
-                  deleteButtonElement.title = c4g.maps.constant.i18n.EDITOR_FEATURE_DELETE;
+                  deleteButtonElement.className = cssConstants.ICON + ' ' + cssConstants.EDITOR_FEATURE_DELETE;
+                  deleteButtonElement.title = langConstants.EDITOR_FEATURE_DELETE;
                   deleteButtonElement.setAttribute('feat_id', i);
                   $(deleteButtonElement).click(deleteFeatureFunction);
                   headlineElement.appendChild(deleteButtonElement);
@@ -555,11 +561,11 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                   selectContent.appendChild(headlineElement);
                   if (selectedFeature.get('measuredLength')) {
                     if (selectedFeature.getGeometry() instanceof ol.geom.LineString) {
-                      label = c4g.maps.constant.i18n.LENGTH;
+                      label = langConstants.LENGTH;
                     } else if (selectedFeature.getGeometry() instanceof ol.geom.Polygon){
-                      label = c4g.maps.constant.i18n.PERIMETER;
+                      label = langConstants.PERIMETER;
                     } else {
-                        label = c4g.maps.constant.i18n.RADIUS;
+                        label = langConstants.RADIUS;
                     }
                     paragraphElement = document.createElement('p');
                     paragraphElement.innerHTML += '<strong>' + label + ':</strong> ' + selectedFeature.get('measuredLength').htmlValue;
@@ -567,12 +573,12 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                   }
                   if (selectedFeature.get('measuredArea')) {
                     paragraphElement = document.createElement('p');
-                    paragraphElement.innerHTML += '<strong>' + c4g.maps.constant.i18n.SURFACEAREA + ':</strong> ' + selectedFeature.get('measuredArea').htmlValue;
+                    paragraphElement.innerHTML += '<strong>' + langConstants.SURFACEAREA + ':</strong> ' + selectedFeature.get('measuredArea').htmlValue;
                     selectContent.appendChild(paragraphElement);
                   }
                   if (selectedFeature.get('measuredRadius')) {
                       paragraphElement = document.createElement('p');
-                      paragraphElement.innerHTML += '<strong>' + c4g.maps.constant.i18n.RADIUS + ':</strong> ' + selectedFeature.get('measuredRadius').htmlValue;
+                      paragraphElement.innerHTML += '<strong>' + langConstants.RADIUS + ':</strong> ' + selectedFeature.get('measuredRadius').htmlValue;
                       selectContent.appendChild(paragraphElement);
                   }
                   // check and append editor-vars
@@ -587,7 +593,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                     inputElement.id = i + '-' + j;
                     inputElement.setAttribute(
                         'value',
-                        c4g.maps.utils.decodeGeoJsonProperty(editorVars[j].value || '')
+                        utils.decodeGeoJsonProperty(editorVars[j].value || '')
                     );
                     inputElement.setAttribute('feat_id', i);
                     inputElement.setAttribute('var_id', j);
@@ -694,12 +700,12 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       TRIGGER_DRAW = 'EDITOR_VIEW_TRIGGER_DRAW_' + options.type.toUpperCase();
 
       drawContent = document.createElement('div');
-      drawContent.className = c4g.maps.constant.css['EDITOR_DRAW_CONTENT_' + options.type.toUpperCase()];
-      drawContent.innerHTML = '<h4>' + c4g.maps.constant.i18n[TRIGGER_DRAW] + '</h4>';
+      drawContent.className = cssConstants['EDITOR_DRAW_CONTENT_' + options.type.toUpperCase()];
+      drawContent.innerHTML = '<h4>' + langConstants[TRIGGER_DRAW] + '</h4>';
 
       if (options.type.toLowerCase() !== 'point') {
         optionsDiv = document.createElement('div');
-        optionsDiv.className = c4g.maps.constant.css.EDITOR_DRAW_OPTIONS;
+        optionsDiv.className = cssConstants.EDITOR_DRAW_OPTIONS;
         drawContent.appendChild(optionsDiv);
 
         enableInstantMeasureCheckbox = document.createElement('input');
@@ -709,7 +715,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
         enableInstantMeasureCheckboxLabel = document.createElement('label');
         enableInstantMeasureCheckboxLabel.setAttribute('for', 'enableInstantMeasureFor' + options.type);
-        enableInstantMeasureCheckboxLabel.innerHTML = c4g.maps.constant.i18n.EDITOR_ENABLE_INSTANT_MEASURE;
+        enableInstantMeasureCheckboxLabel.innerHTML = langConstants.EDITOR_ENABLE_INSTANT_MEASURE;
         optionsDiv.appendChild(enableInstantMeasureCheckboxLabel);
 
         optionsDiv.appendChild(document.createElement('br'));
@@ -722,7 +728,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         //
         // enableFreehandDrawCheckboxLabel = document.createElement('label');
         // enableFreehandDrawCheckboxLabel.setAttribute('for', 'enableFreehandDrawFor' + options.type);
-        // enableFreehandDrawCheckboxLabel.innerHTML = c4g.maps.constant.i18n.EDITOR_ENABLE_FREEHAND_DRAW;
+        // enableFreehandDrawCheckboxLabel.innerHTML = langConstants.EDITOR_ENABLE_FREEHAND_DRAW;
         // optionsDiv.appendChild(enableFreehandDrawCheckboxLabel);
       }
 
@@ -792,12 +798,12 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
 
                 if (styleData.fillcolor) {
-                    ctx.fillStyle = c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.fillcolor, styleData.fillopacity.value);
+                    ctx.fillStyle = utils.getRgbaFromHexAndOpacity(styleData.fillcolor, styleData.fillopacity.value);
                     ctx.fillRect(0, 0, canvas.width, canvas.height);
                 }
 
                 if (strokewidth && styleData.strokecolor) {
-                    ctx.strokeStyle = c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.strokecolor, styleData.strokeopacity.value);
+                    ctx.strokeStyle = utils.getRgbaFromHexAndOpacity(styleData.strokecolor, styleData.strokeopacity.value);
                     ctx.lineWidth = strokewidth;
                     ctx.strokeRect(0, 0, canvas.width, canvas.height);
                     ctx.translate(0.5, 0.5);
@@ -834,7 +840,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
           triggerConfig: {
             label: styleTriggerLabel,
             tipLabel: self.proxy.locationStyleController.arrLocStyles[styleId].tooltip || name,
-            className: c4g.maps.constant.css.EDITOR_DRAW_TRIGGER,
+            className: cssConstants.EDITOR_DRAW_TRIGGER,
             target: drawContent,
             withHeadline: true
           },
@@ -913,7 +919,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                   activeSketch.set('styleId', styleId);
 
                   if (enableInstantMeasureCheckbox && enableInstantMeasureCheckbox.checked) {
-                    activeTooltip = new c4g.maps.misc.TooltipPopUp({
+                    activeTooltip = new TooltipPopUp({
                       map: self.options.mapController.map,
                       position: event.coordinate,
                       horizontal: true
@@ -926,12 +932,12 @@ this.c4g.maps.control = this.c4g.maps.control || {};
             self.options.mapController.map.on('pointermove',
                 function (event) {
                   if (enableInstantMeasureCheckbox && enableInstantMeasureCheckbox.checked && activeSketch) {
-                      if(activeTooltip && c4g.maps.utils.measureGeometry(activeSketch.getGeometry(), true).rawValue && c4g.maps.utils.measureGeometry(activeSketch.getGeometry(), true).rawValue == "0.00"){
+                      if(activeTooltip && utils.measureGeometry(activeSketch.getGeometry(), true).rawValue && utils.measureGeometry(activeSketch.getGeometry(), true).rawValue == "0.00"){
                           activeTooltip.close();
                           activeTooltip = null;
                       }
-                      else if(!activeTooltip && c4g.maps.utils.measureGeometry(activeSketch.getGeometry(), true).rawValue && c4g.maps.utils.measureGeometry(activeSketch.getGeometry(), true).rawValue != "0.00"){
-                          activeTooltip = new c4g.maps.misc.TooltipPopUp({
+                      else if(!activeTooltip && utils.measureGeometry(activeSketch.getGeometry(), true).rawValue && utils.measureGeometry(activeSketch.getGeometry(), true).rawValue != "0.00"){
+                          activeTooltip = new TooltipPopUp({
                               map: self.options.mapController.map,
                               position: event.coordinate,
                               horizontal: true
@@ -939,7 +945,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                       }
                       if(activeTooltip){
                           activeTooltip.setPosition(event.coordinate);
-                          activeTooltip.setContent(c4g.maps.utils.measureGeometry(activeSketch.getGeometry(), true).htmlValue);
+                          activeTooltip.setContent(utils.measureGeometry(activeSketch.getGeometry(), true).htmlValue);
                       }
                   }
                 }, self);
@@ -960,12 +966,12 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                   // add styleId
                   activeSketch.set('styleId', styleId);
                   // add measurements to the feature
-                  activeSketch.set('measuredLength', c4g.maps.utils.measureGeometry(activeSketch.getGeometry(), true));
+                  activeSketch.set('measuredLength', utils.measureGeometry(activeSketch.getGeometry(), true));
                   if (options.type.toLowerCase() === 'polygon') {
-                    activeSketch.set('measuredArea', c4g.maps.utils.measureGeometry(activeSketch.getGeometry()));
+                    activeSketch.set('measuredArea', utils.measureGeometry(activeSketch.getGeometry()));
                   }
                   if (options.type.toLowerCase() === 'circle') {
-                      activeSketch.set('measuredRadius', c4g.maps.utils.measureGeometry(activeSketch.getGeometry()));
+                      activeSketch.set('measuredRadius', utils.measureGeometry(activeSketch.getGeometry()));
                   }
                   //activeSketch.setStyle(self.proxy.locationStyleController.arrLocStyles[styleId].style);
                   // add editor-vars
@@ -1032,8 +1038,8 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       drawView = self.addView({
         name: 'draw:' + options.type.toLowerCase(),
         triggerConfig: {
-          tipLabel: c4g.maps.constant.i18n[TRIGGER_DRAW],
-          className: c4g.maps.constant.css[TRIGGER_DRAW],
+          tipLabel: langConstants[TRIGGER_DRAW],
+          className: cssConstants[TRIGGER_DRAW],
           withHeadline: true
         },
         sectionElements: [
@@ -1195,7 +1201,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       }
       // Call hook functions before save
       if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.editor_onSave === 'object') {
-        c4g.maps.utils.callHookFunctions(c4g.maps.hook.editor_onSave, saveData);
+        utils.callHookFunctions(c4g.maps.hook.editor_onSave, saveData);
       }
       storage.setItem(slotName, JSON.stringify(saveData));
 
@@ -1273,7 +1279,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                 importFeatures();
                 // Call hook functions on load
                 if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.editor_onLoad === 'object') {
-                  c4g.maps.utils.callHookFunctions(c4g.maps.hook.editor_onLoad, loadData);
+                  utils.callHookFunctions(c4g.maps.hook.editor_onLoad, loadData);
                 }
               },
               always: function () {
@@ -1287,7 +1293,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         self.spinner.hide();
         // Call hook functions on load
         if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.editor_onLoad === 'object') {
-          c4g.maps.utils.callHookFunctions(c4g.maps.hook.editor_onLoad, loadData);
+          utils.callHookFunctions(c4g.maps.hook.editor_onLoad, loadData);
         }
       }
     }, // End of "load"
@@ -1406,8 +1412,8 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         self.editPolygonLayer.getSource().addFeatures(polygons);
         self.editCircleLayer.getSource().addFeatures(circles);
         self.editFreehandLayer.getSource().addFeatures(freehand);
-        c4g.maps.utils.fitToExtent(
-            c4g.maps.utils.getExtentForGeometries(points.concat(lines, polygons, circles, freehand)),
+        utils.fitToExtent(
+            utils.getExtentForGeometries(points.concat(lines, polygons, circles, freehand)),
             self.options.mapController.map,
             [25, 25, 25, self.container.offsetWidth + 25],
             1000
@@ -1442,3 +1448,5 @@ this.c4g.maps.control = this.c4g.maps.control || {};
   });
 
 }(jQuery, this.c4g));
+
+export var Editor = this.c4g.maps.control.Editor;

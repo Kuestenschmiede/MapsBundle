@@ -3,6 +3,8 @@ this.c4g = this.c4g || {};
 this.c4g.maps = this.c4g.maps || {};
 this.c4g.maps.control = this.c4g.maps.control || {};
 
+import {cssConstants} from "./c4g-maps-constant";
+
 (function ($, c4g) {
   'use strict';
 
@@ -24,7 +26,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
     // default options
     options = $.extend({
-      className: c4g.maps.constant.css.PRINT,
+      className: cssConstants.PRINT,
       switchable: true,
       enabled: true,
       mapController: undefined
@@ -55,13 +57,13 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
     // wrapper div
     element = document.createElement('div');
-    element.className = options.className + ' ' + c4g.maps.constant.css.OL_UNSELECTABLE + ' c4g-portside-control ol-control';
+    element.className = options.className + ' ' + cssConstants.OL_UNSELECTABLE + ' c4g-portside-control ol-control';
 
     if (options.switchable) {
       // button
       button = document.createElement('button');
       button.title = options.tipLabel;
-      button.className = c4g.maps.constant.css.PRINT
+      button.className = cssConstants.PRINT
       element.appendChild(button);
 
       // set onClick to the toggle-function
@@ -88,3 +90,5 @@ this.c4g.maps.control = this.c4g.maps.control || {};
   }); // end of "add methods" ---
 
 }(jQuery, this.c4g));
+
+export var Print = this.c4g.maps.control.Print;

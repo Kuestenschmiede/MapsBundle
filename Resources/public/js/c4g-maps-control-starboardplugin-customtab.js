@@ -4,6 +4,9 @@ this.c4g.maps = this.c4g.maps || {};
 this.c4g.maps.control = this.c4g.maps.control || {};
 this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin || {};
 
+import {cssConstants} from "./c4g-maps-constant";
+import {langConstants} from "./c4g-maps-constant-i18n-de";
+
 (function ($, c4g) {
   'use strict';
 
@@ -74,7 +77,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
       }
 
       if(!this.starboard.options.button) {
-        contentHeadline.innerHTML = (layerSwitcherTitle || c4g.maps.constant.i18n.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER);
+        contentHeadline.innerHTML = (layerSwitcherTitle || langConstants.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER);
       }
       else {
           $(contentHeadline).addClass("c4g-starboard-headline");
@@ -96,7 +99,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
               }
           };
           $(contentHeadlineLink).addClass("c4g-inactive c4g-starboard-headline-link");
-          contentHeadlineLink.innerHTML = (layerSwitcherTitle || c4g.maps.constant.i18n.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER);
+          contentHeadlineLink.innerHTML = (layerSwitcherTitle || langConstants.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER);
           contentHeadlineLink.innerHTML = contentHeadlineLink.innerHTML+' ';
           contentHeadline.appendChild(contentHeadlineLink);
       }
@@ -196,7 +199,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
 
       fnDrawContent = function (layerIds) {
         self.treeControl = document.createElement('div');
-        $(self.treeControl).addClass(c4g.maps.constant.css.STARBOARD_LAYERTREE);
+        $(self.treeControl).addClass(cssConstants.STARBOARD_LAYERTREE);
         self.setContent(self.treeControl);
         self.addItems(layerIds, self.treeControl, {parseAsList: true});
         self.initialized = true;
@@ -245,13 +248,13 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
         itemUid = $(this).data('uid');
         if (self.proxy.activeLayerIds[itemUid]) {
           // hide layer
-          $(this).removeClass(c4g.maps.constant.css.ACTIVE);
-          $(this).addClass(c4g.maps.constant.css.INACTIVE);
+          $(this).removeClass(cssConstants.ACTIVE);
+          $(this).addClass(cssConstants.INACTIVE);
           self.hideLayer(itemUid);
         } else {
           // show layer
-          $(this).removeClass(c4g.maps.constant.css.INACTIVE);
-          $(this).addClass(c4g.maps.constant.css.ACTIVE);
+          $(this).removeClass(cssConstants.INACTIVE);
+          $(this).addClass(cssConstants.ACTIVE);
           self.showLayer(itemUid);
         }
       };
@@ -265,9 +268,9 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
         if (changedLayer && changedLayer.$entries) {
           for (j = 0; j < changedLayer.$entries.length; j += 1) {
             if (self.proxy.activeLayerIds[layerId]) {
-              changedLayer.$entries[j].addClass(c4g.maps.constant.css.ACTIVE).removeClass(c4g.maps.constant.css.INACTIVE);
+              changedLayer.$entries[j].addClass(cssConstants.ACTIVE).removeClass(cssConstants.INACTIVE);
             } else {
-              changedLayer.$entries[j].addClass(c4g.maps.constant.css.INACTIVE).removeClass(c4g.maps.constant.css.ACTIVE);
+              changedLayer.$entries[j].addClass(cssConstants.INACTIVE).removeClass(cssConstants.ACTIVE);
             }
           }
         }
@@ -286,9 +289,9 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
             if (layer && layer.$entries) {
               for (j = 0; j < layer.$entries.length; j += 1) {
                 if (self.proxy.checkLayerIsActiveForZoom(id)) {
-                  layer.$entries[j].removeClass(c4g.maps.constant.css.DISABLED);
+                  layer.$entries[j].removeClass(cssConstants.DISABLED);
                 } else {
-                  layer.$entries[j].addClass(c4g.maps.constant.css.DISABLED);
+                  layer.$entries[j].addClass(cssConstants.DISABLED);
                 }
               }
             }
@@ -342,13 +345,13 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
           // prepare insertion of childs
           if (layer.visibleChilds) {
             toggle = document.createElement('span');
-            $(listItem).addClass(c4g.maps.constant.css.CLOSE);
-            $(toggle).addClass(c4g.maps.constant.css.ICON);
+            $(listItem).addClass(cssConstants.CLOSE);
+            $(toggle).addClass(cssConstants.ICON);
             $(toggle).click(function () {
-              if ($(this).parent().hasClass(c4g.maps.constant.css.CLOSE)) {
-                $(this).parent().removeClass(c4g.maps.constant.css.CLOSE).addClass(c4g.maps.constant.css.OPEN);
+              if ($(this).parent().hasClass(cssConstants.CLOSE)) {
+                $(this).parent().removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN);
               } else {
-                $(this).parent().removeClass(c4g.maps.constant.css.OPEN).addClass(c4g.maps.constant.css.CLOSE);
+                $(this).parent().removeClass(cssConstants.OPEN).addClass(cssConstants.CLOSE);
               }
               if (self.proxy.options.mapController.rightSlideElements) {
                 self.proxy.options.mapController.rightSlideElements.forEach(function (element) {
@@ -366,9 +369,9 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
           }
 
           if (this.proxy.activeLayerIds[uid]) {
-            $entry.addClass(c4g.maps.constant.css.ACTIVE);
+            $entry.addClass(cssConstants.ACTIVE);
           } else {
-            $entry.addClass(c4g.maps.constant.css.INACTIVE);
+            $entry.addClass(cssConstants.INACTIVE);
           }
           if (this.layers[layer.pid]) {
             // is child-element
@@ -507,3 +510,5 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
   }); // end of "add methods"
 
 }(jQuery, this.c4g));
+
+export var Customtab = this.c4g.maps.control.starboardplugin.Customtab;

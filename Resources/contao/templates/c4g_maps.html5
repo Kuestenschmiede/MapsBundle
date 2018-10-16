@@ -22,7 +22,9 @@ jQuery(document).ready(function()
 <?php else: ?>
 <?php
 
-    $GLOBALS['TL_BODY']['c4gMaps' . $this->id] = \Template::generateInlineScript('jQuery(document).ready(function(){c4g.maps.mapController_' . $this->mapData['mapId'] . '=new c4g.maps.MapController(' . json_encode($this->mapData) . ');});', false);
+    //$GLOBALS['TL_BODY']['c4gMaps' . $this->id] = \Template::generateInlineScript('jQuery(document).ready(function(){c4g.maps.mapController_' . $this->mapData['mapId'] . '=new c4g.maps.MapController(' . json_encode($this->mapData) . ');});', false);
+    $GLOBALS['TL_HEAD']['c4gMaps' . $this->id] = \Template::generateInlineScript('var mapId = '. $this->mapData['mapId'] . ';');
+    $GLOBALS['TL_HEAD']['c4gMaps' . $this->id] = \Template::generateInlineScript('var mapData = '. json_encode($this->mapData) . ';');
 
 ?>
 <?php endif; ?>

@@ -1,4 +1,6 @@
-class C4gLocationStyle{
+import {utils} from "./c4g-maps-utils";
+
+export class C4gLocationStyle{
     constructor(locStyleArr, controller){
         this.id        = locStyleArr['id'];
         this.style     = this.getStyleFunction(locStyleArr);
@@ -28,11 +30,11 @@ class C4gLocationStyle{
 
         // general
         strokeStyle = new ol.style.Stroke({
-            color: c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.strokecolor, styleData.strokeopacity),
+            color: utils.getRgbaFromHexAndOpacity(styleData.strokecolor, styleData.strokeopacity),
             width: parseInt(styleData.strokewidth.value, 10)
         });
         fillStyle = new ol.style.Fill({
-            color: c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.fillcolor, styleData.fillopacity)
+            color: utils.getRgbaFromHexAndOpacity(styleData.fillcolor, styleData.fillopacity)
         });
 
         // image
@@ -113,12 +115,12 @@ class C4gLocationStyle{
                         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
                         if (styleData.fillcolor) {
-                            ctx.fillStyle = c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.fillcolor, styleData.fillopacity.value);
+                            ctx.fillStyle = utils.getRgbaFromHexAndOpacity(styleData.fillcolor, styleData.fillopacity.value);
                             ctx.fillRect(0, 0, canvas.width, canvas.height);
                         }
 
                         if (strokewidth && styleData.strokecolor) {
-                            ctx.strokeStyle = c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.strokecolor, styleData.strokeopacity.value);
+                            ctx.strokeStyle = utils.getRgbaFromHexAndOpacity(styleData.strokecolor, styleData.strokeopacity.value);
                             ctx.lineWidth = styleData.strokewidth.value;
                             ctx.strokeRect(0, 0, canvas.width, canvas.height);
                             ctx.translate(0.5, 0.5);
@@ -205,7 +207,7 @@ class C4gLocationStyle{
             if (label) {
                 if (styleData.label_outl_color && styleData.label_outl_width.value) {
                     textStyleOutline = new ol.style.Stroke({
-                        color: c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.label_outl_color || defaultColor, {
+                        color: utils.getRgbaFromHexAndOpacity(styleData.label_outl_color || defaultColor, {
                             unit: '%',
                             value: 100
                         }),
@@ -213,7 +215,7 @@ class C4gLocationStyle{
                     });
                     if(styleData.label_outl_box === "1"){
                       backgroundFill = new ol.style.Fill({
-                        color: c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.label_outl_color || defaultColor, {
+                        color: utils.getRgbaFromHexAndOpacity(styleData.label_outl_color || defaultColor, {
                           unit: '%',
                           value: 100
                         })
@@ -233,7 +235,7 @@ class C4gLocationStyle{
                     textAlign: styleData.label_align_hor,
                     textBaseline: styleData.label_align_ver,
                     fill: new ol.style.Fill({
-                      color: c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.font_color || defaultColor, styleData.font_opacity)
+                      color: utils.getRgbaFromHexAndOpacity(styleData.font_color || defaultColor, styleData.font_opacity)
                     }),
                     backgroundFill: backgroundFill,
                     backgroundStroke: textStyleOutline
@@ -249,7 +251,7 @@ class C4gLocationStyle{
                     textAlign: styleData.label_align_hor,
                     textBaseline: styleData.label_align_ver,
                     fill: new ol.style.Fill({
-                      color: c4g.maps.utils.getRgbaFromHexAndOpacity(styleData.font_color || defaultColor, styleData.font_opacity)
+                      color: utils.getRgbaFromHexAndOpacity(styleData.font_color || defaultColor, styleData.font_opacity)
                     }),
                     stroke: textStyleOutline
                   });

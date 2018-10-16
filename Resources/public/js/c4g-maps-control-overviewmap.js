@@ -3,6 +3,9 @@ this.c4g = this.c4g || {};
 this.c4g.maps = this.c4g.maps || {};
 this.c4g.maps.control = this.c4g.maps.control || {};
 
+import {cssConstants} from "./c4g-maps-constant";
+import {langConstants} from "./c4g-maps-constant-i18n-de";
+
 (function ($, c4g) {
   'use strict';
 
@@ -28,16 +31,16 @@ this.c4g.maps.control = this.c4g.maps.control || {};
     // default options
     options = $.extend({
       collapsed: true,
-      tipLabel: c4g.maps.constant.i18n.CTRL_OVERVIEWMAP,
+      tipLabel: langConstants.CTRL_OVERVIEWMAP,
       layers: [new ol.layer.Tile({source: new ol.source.OSM()})]
     }, options);
 
     element = document.createElement('div');
-    element.className = c4g.maps.constant.css.OL_CONTROL + ' ' + c4g.maps.constant.css.OVERVIEWMAP + ' ' + c4g.maps.constant.css.OL_UNSELECTABLE;
+    element.className = cssConstants.OL_CONTROL + ' ' + cssConstants.OVERVIEWMAP + ' ' + cssConstants.OL_UNSELECTABLE;
     if (options.collapsed) {
-      element.className += ' ' + c4g.maps.constant.css.CLOSE;
+      element.className += ' ' + cssConstants.CLOSE;
     } else {
-      element.className += ' ' + c4g.maps.constant.css.OPEN;
+      element.className += ' ' + cssConstants.OPEN;
     }
     options.target.appendChild(element);
 
@@ -46,16 +49,16 @@ this.c4g.maps.control = this.c4g.maps.control || {};
     element.appendChild(trigger);
 
     triggerIcon = document.createElement('span');
-    triggerIcon.className = c4g.maps.constant.css.ICON;
+    triggerIcon.className = cssConstants.ICON;
     trigger.appendChild(triggerIcon);
 
     $(trigger).click(function () {
-      if ($(element).hasClass(c4g.maps.constant.css.CLOSE)) {
-        $(element).removeClass(c4g.maps.constant.css.CLOSE)
-            .addClass(c4g.maps.constant.css.OPEN);
+      if ($(element).hasClass(cssConstants.CLOSE)) {
+        $(element).removeClass(cssConstants.CLOSE)
+            .addClass(cssConstants.OPEN);
       } else {
-        $(element).addClass(c4g.maps.constant.css.CLOSE)
-            .removeClass(c4g.maps.constant.css.OPEN);
+        $(element).addClass(cssConstants.CLOSE)
+            .removeClass(cssConstants.OPEN);
       }
       try {
         this.blur();
@@ -84,3 +87,5 @@ this.c4g.maps.control = this.c4g.maps.control || {};
   }); // end of "add methods" ---
 
 }(jQuery, this.c4g));
+
+export var OverviewMap = this.c4g.maps.control.OverviewMap;

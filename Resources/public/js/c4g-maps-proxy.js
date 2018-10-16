@@ -5,7 +5,16 @@ this.c4g.maps.hook = this.c4g.maps.hook || {};
 
 'use strict';
 
-class MapProxy {
+import {C4gBaselayerController} from "./c4g-baselayer-controller";
+import {C4gLayerController} from "./c4g-layer-controller";
+import {C4gLocationStyleController} from "./c4g-locationstyle-controller";
+import {Spinner} from "./c4g-maps-misc-spinner";
+import {utils} from "./c4g-maps-utils";
+import {cssConstants} from "./c4g-maps-constant";
+import {langConstants} from "./c4g-maps-constant-i18n-de";
+
+var c4g = this.c4g;
+export class MapProxy {
   constructor(options){
     var mapData;
 
@@ -97,10 +106,10 @@ class MapProxy {
         }
 
         // hooks
-        c4g.maps.utils.callHookFunctions(self.hook_map_zoom);
+        utils.callHookFunctions(self.hook_map_zoom);
 
         if (self.options.mapController.data.caching && map.getView().getZoom()) {
-            c4g.maps.utils.storeValue('zoom', map.getView().getZoom());
+            utils.storeValue('zoom', map.getView().getZoom());
         }
 
 
@@ -130,10 +139,10 @@ class MapProxy {
       }
 
       // hooks
-      c4g.maps.utils.callHookFunctions(c4g.maps.hook.hook_map_zoom,self);
+      utils.callHookFunctions(c4g.maps.hook.hook_map_zoom,self);
 
       if (self.options.mapController.data.caching && map.getView().getZoom()) {
-          c4g.maps.utils.storeValue('zoom', map.getView().getZoom());
+          utils.storeValue('zoom', map.getView().getZoom());
       }
 
     }); // end of "zoom-observer"
@@ -142,12 +151,12 @@ class MapProxy {
         if (self.options.mapController.data.caching) {
             var coordinate = ol.proj.toLonLat(map.getView().getCenter());
             if (coordinate) {
-                c4g.maps.utils.storeValue('lon', coordinate[0]);
-                c4g.maps.utils.storeValue('lat', coordinate[1]);
+                utils.storeValue('lon', coordinate[0]);
+                utils.storeValue('lat', coordinate[1]);
             }
         }
         c4g.maps.hook.map_center_changed = c4g.maps.hook.map_center_changed || [];
-        c4g.maps.utils.callHookFunctions(c4g.maps.hook.map_center_changed, map.getView().getCenter());
+        utils.callHookFunctions(c4g.maps.hook.map_center_changed, map.getView().getCenter());
     }); // end of "center-observer"
 
     // click-observer
@@ -281,7 +290,7 @@ class MapProxy {
         // do not show popup when editor is open
         if (feature && feature.get('projectId')) {
             // but call click hooks
-            let result = c4g.maps.utils.callHookFunctions(self.hook_map_click, clickEvent);
+            let result = utils.callHookFunctions(self.hook_map_click, clickEvent);
             return false;
         }
       }
@@ -324,7 +333,7 @@ class MapProxy {
           c4g.maps.popup.popup.setPosition(coord);
           if (popupInfos.content) {
             c4g.maps.popup.$content.html('');
-            c4g.maps.popup.$popup.addClass(c4g.maps.constant.css.ACTIVE).addClass(c4g.maps.constant.css.LOADING);
+            c4g.maps.popup.$popup.addClass(cssConstants.ACTIVE).addClass(cssConstants.LOADING);
             c4g.maps.popup.spinner.show();
 
             if (popupInfos.async === false || popupInfos.async == '0') {
@@ -334,7 +343,7 @@ class MapProxy {
               objPopup.layer = layer;
               // Call the popup hook for plugin specific popup content
               if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.proxy_fillPopup === 'object') {
-                c4g.maps.utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
+                utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
               }
               self.setPopup(objPopup);
             } else {
@@ -356,22 +365,22 @@ class MapProxy {
 
                 // Call the popup hook for plugin specific popup content
                 if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.proxy_fillPopup === 'object') {
-                  c4g.maps.utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
+                  utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
                 }
 
                 self.setPopup(objPopup);
               });
             }
           } else {
-            c4g.maps.popup.$popup.removeClass(c4g.maps.constant.css.ACTIVE);
+            c4g.maps.popup.$popup.removeClass(cssConstants.ACTIVE);
           }
 
         } else {
-          c4g.maps.popup.$popup.removeClass(c4g.maps.constant.css.ACTIVE);
+          c4g.maps.popup.$popup.removeClass(cssConstants.ACTIVE);
         }
 
         // hooks
-        c4g.maps.utils.callHookFunctions(c4g.maps.hook.hook_map_click, clickEvent);
+        utils.callHookFunctions(c4g.maps.hook.hook_map_click, clickEvent);
       }
     }); // end of "click-observer"
 
@@ -406,7 +415,7 @@ class MapProxy {
     feature = popupConfig.feature;
     layer = popupConfig.layer;
 
-    popupContent = c4g.maps.utils.replaceAllPlaceholders(popupConfig.popup.content, feature, layer);
+    popupContent = utils.replaceAllPlaceholders(popupConfig.popup.content, feature, layer);
     // @TODO: check for route-option & display "route-to"
     // NOTE: does not work async this way
     if (this.options.mapController.controls.router && popupConfig.popup.routing_link) {
@@ -418,30 +427,30 @@ class MapProxy {
         }
 
         router.setInput(
-          $(event.currentTarget).hasClass(c4g.maps.constant.css.POPUP_ROUTE_FROM),
+          $(event.currentTarget).hasClass(cssConstants.POPUP_ROUTE_FROM),
           feature.getGeometry().getCoordinates()
         );
       }; // end of "routingHandler()"
 
       routeButtonWrapper = document.createElement('div');
-      routeButtonWrapper.className = c4g.maps.constant.css.POPUP_ROUTE_WRAPPER;
+      routeButtonWrapper.className = cssConstants.POPUP_ROUTE_WRAPPER;
 
       routeFromButton = document.createElement('button');
-      routeFromButton.className = c4g.maps.constant.css.ICON + ' ' + c4g.maps.constant.css.POPUP_ROUTE_FROM;
+      routeFromButton.className = cssConstants.ICON + ' ' + cssConstants.POPUP_ROUTE_FROM;
       jQuery(routeFromButton).click(routingHandler);
       routeButtonWrapper.appendChild(routeFromButton);
 
       routeFromButtonSpan = document.createElement('span');
-      routeFromButtonSpan.innerHTML = c4g.maps.constant.i18n.POPUP_ROUTE_FROM;
+      routeFromButtonSpan.innerHTML = langConstants.POPUP_ROUTE_FROM;
       routeFromButton.appendChild(routeFromButtonSpan);
 
       routeToButton = document.createElement('button');
-      routeToButton.className = c4g.maps.constant.css.ICON + ' ' + c4g.maps.constant.css.POPUP_ROUTE_TO;
+      routeToButton.className = cssConstants.ICON + ' ' + cssConstants.POPUP_ROUTE_TO;
       jQuery(routeToButton).click(routingHandler);
       routeButtonWrapper.appendChild(routeToButton);
 
       routeToButtonSpan = document.createElement('span');
-      routeToButtonSpan.innerHTML = c4g.maps.constant.i18n.POPUP_ROUTE_TO;
+      routeToButtonSpan.innerHTML = langConstants.POPUP_ROUTE_TO;
       routeToButton.appendChild(routeToButtonSpan);
     }
 
@@ -455,10 +464,10 @@ class MapProxy {
       }
     } else {
       // hide popup if there is no valid content left
-      c4g.maps.popup.$popup.removeClass(c4g.maps.constant.css.ACTIVE);
+      c4g.maps.popup.$popup.removeClass(cssConstants.ACTIVE);
     }
 
-    c4g.maps.popup.$popup.removeClass(c4g.maps.constant.css.LOADING);
+    c4g.maps.popup.$popup.removeClass(cssConstants.LOADING);
     c4g.maps.popup.spinner.hide();
   } // end of "setPopup()"
 
@@ -486,7 +495,7 @@ class MapProxy {
 
     jQuery(popUpCloseElement).click(function (event) {
       event.preventDefault();
-      c4g.maps.popup.$popup.removeClass(c4g.maps.constant.css.ACTIVE);
+      c4g.maps.popup.$popup.removeClass(cssConstants.ACTIVE);
     });
 
     popup = new ol.Overlay({
@@ -503,7 +512,7 @@ class MapProxy {
     c4g.maps.popup = {};
     c4g.maps.popup.popup = popup;
     // attach a spinner to the popup
-    c4g.maps.popup.spinner = new c4g.maps.misc.Spinner({target: popUpElement});
+    c4g.maps.popup.spinner = new Spinner({target: popUpElement});
 
     this.options.mapController.map.addOverlay(popup);
 
@@ -701,13 +710,13 @@ class MapProxy {
                 }
               }
 
-              var fillcolor = c4g.maps.utils.getRgbaFromHexAndOpacity('4975A8',{
+              var fillcolor = utils.getRgbaFromHexAndOpacity('4975A8',{
                 unit: '%',
                 value: 70
               });
 
               if (contentData.cluster_fillcolor) {
-                fillcolor = c4g.maps.utils.getRgbaFromHexAndOpacity(contentData.cluster_fillcolor,{
+                fillcolor = utils.getRgbaFromHexAndOpacity(contentData.cluster_fillcolor,{
                   unit: '%',
                   value: 70
                 });

@@ -1,4 +1,6 @@
-class C4gOverlayController{
+import {C4gOverlay} from "./c4g-overlay"
+
+export class C4gOverlayController{
     constructor(baselayer){
         this.baselayer = baselayer;
         this.arrOverlays = [];

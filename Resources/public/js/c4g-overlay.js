@@ -1,4 +1,4 @@
-class C4gOverlay{
+export class C4gOverlay {
 
     constructor(overlayArr, mapController){
         this.id            = overlayArr['id'];

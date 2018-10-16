@@ -1,4 +1,6 @@
-class C4gBaselayer{
+import {C4gOverlayController} from "./c4g-overlay-controller"
+
+export class C4gBaselayer{
     constructor(baselayerArr, controller) {
         this.id = baselayerArr['id'];
         this.pid = baselayerArr['pid'];

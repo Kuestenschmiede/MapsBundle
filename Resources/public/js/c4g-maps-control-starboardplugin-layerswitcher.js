@@ -3,6 +3,11 @@ this.c4g = this.c4g || {};
 this.c4g.maps = this.c4g.maps || {};
 this.c4g.maps.control = this.c4g.maps.control || {};
 this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin || {};
+
+import {cssConstants} from "./c4g-maps-constant";
+import {langConstants} from "./c4g-maps-constant-i18n-de";
+import {utils} from "./c4g-maps-utils";
+
 (function ($, c4g) {
   'use strict';
 
@@ -47,7 +52,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
       contentHeadline.className = 'contentHeadline';
 
       if(!this.starboard.options.button) {
-          contentHeadline.innerHTML = (layerSwitcherTitle || c4g.maps.constant.i18n.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER);
+          contentHeadline.innerHTML = (layerSwitcherTitle || langConstants.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER);
       }
       else {
           $(contentHeadline).addClass("c4g-starboard-headline");
@@ -69,7 +74,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
               }
           };
           $(contentHeadlineLink).addClass("c4g-inactive c4g-starboard-headline-link");
-          contentHeadlineLink.innerHTML = (layerSwitcherTitle || c4g.maps.constant.i18n.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER);
+          contentHeadlineLink.innerHTML = (layerSwitcherTitle || langConstants.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER);
           contentHeadlineLink.innerHTML = contentHeadlineLink.innerHTML+' ';
           contentHeadline.appendChild(contentHeadlineLink);
       }
@@ -77,7 +82,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
       contentWrapper.appendChild(contentHeadline);
 
       this.contentDiv = document.createElement('div');
-      this.contentDiv.className = c4g.maps.constant.css.STARBOARD_CONTENT_LAYERSWITCHER;
+      this.contentDiv.className = cssConstants.STARBOARD_CONTENT_LAYERSWITCHER;
       contentInfo = document.createElement('p');
       this.contentDiv.appendChild(contentInfo);
       contentWrapper.appendChild(this.contentDiv);
@@ -85,8 +90,8 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
       self.view = self.starboard.addView({
         name: 'layerswitcher',
         triggerConfig: {
-          tipLabel: (layerSwitcherTitle || c4g.maps.constant.i18n.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER),
-          className: c4g.maps.constant.css.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER,
+          tipLabel: (layerSwitcherTitle || langConstants.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER),
+          className: cssConstants.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER,
           withHeadline: false
         },
         sectionElements: [
@@ -145,7 +150,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
 
       fnDrawContent = function (layerIds) {
         self.treeControl = document.createElement('div');
-        $(self.treeControl).addClass(c4g.maps.constant.css.STARBOARD_LAYERTREE);
+        $(self.treeControl).addClass(cssConstants.STARBOARD_LAYERTREE);
         self.setContent(self.treeControl);
 
         self.addItems(layerIds, self.treeControl);
@@ -245,13 +250,13 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
             let parent = $(this).parent().parent().parent();
             let childs = $(parent).children();
             let parentUid = $(childs[1]).data('uid');
-            if($(this).hasClass(c4g.maps.constant.css.ACTIVE)){
+            if($(this).hasClass(cssConstants.ACTIVE)){
                 self.proxy.layerController.hideChildLayer(parentUid, itemUid);
-                $(this).removeClass(c4g.maps.constant.css.ACTIVE).addClass(c4g.maps.constant.css.INACTIVE);
+                $(this).removeClass(cssConstants.ACTIVE).addClass(cssConstants.INACTIVE);
             }
-            else if($(this).hasClass(c4g.maps.constant.css.INACTIVE)){
+            else if($(this).hasClass(cssConstants.INACTIVE)){
                 self.proxy.layerController.showChildLayer(parentUid, itemUid);
-                $(this).removeClass(c4g.maps.constant.css.INACTIVE).addClass(c4g.maps.constant.css.ACTIVE)
+                $(this).removeClass(cssConstants.INACTIVE).addClass(cssConstants.ACTIVE)
             }
         };
         fnChildEntryShow = function (event){
@@ -298,7 +303,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
                                 continue;
                             }
                             if (typeof vectorArray === "object") {
-                                vectorArray = c4g.maps.utils.objectToArray(vectorArray);
+                                vectorArray = utils.objectToArray(vectorArray);
                             }
                             layerGroup = layer.vectorLayer;
                             if (vectorArray && vectorArray.forEach && typeof vectorArray.forEach === 'function') {
@@ -347,7 +352,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
                     if (vectorArray !== undefined) {
                         // catch case of linked layers
                         if (typeof vectorArray === "object") {
-                            vectorArray = c4g.maps.utils.objectToArray(vectorArray);
+                            vectorArray = utils.objectToArray(vectorArray);
                         }
                         layerGroup = layer.vectorLayer;
                         if (vectorArray && vectorArray.forEach && typeof vectorArray.forEach === 'function') {
@@ -412,9 +417,9 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
         if (changedLayer && changedLayer.$entries) {
           for (j = 0; j < changedLayer.$entries.length; j += 1) {
             if (self.proxy.activeLayerIds[layerId]) {
-              changedLayer.$entries[j].addClass(c4g.maps.constant.css.ACTIVE).removeClass(c4g.maps.constant.css.INACTIVE);
+              changedLayer.$entries[j].addClass(cssConstants.ACTIVE).removeClass(cssConstants.INACTIVE);
             } else {
-              changedLayer.$entries[j].addClass(c4g.maps.constant.css.INACTIVE).removeClass(c4g.maps.constant.css.ACTIVE);
+              changedLayer.$entries[j].addClass(cssConstants.INACTIVE).removeClass(cssConstants.ACTIVE);
             }
             self.handleSelectedChilds( changedLayer.$entries[j]);
           }
@@ -434,9 +439,9 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
             if (layer && layer.$entries) {
               for (j = 0; j < layer.$entries.length; j += 1) {
                 if (self.proxy.checkLayerIsActiveForZoom(id)) {
-                  layer.$entries[j].removeClass(c4g.maps.constant.css.DISABLED);
+                  layer.$entries[j].removeClass(cssConstants.DISABLED);
                 } else {
-                  layer.$entries[j].addClass(c4g.maps.constant.css.DISABLED);
+                  layer.$entries[j].addClass(cssConstants.DISABLED);
                 }
               }
             }
@@ -472,7 +477,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
             item.$entries.push($entry);
 
             if (!this.proxy.checkLayerIsActiveForZoom(uid)) {
-              $entry.addClass(c4g.maps.constant.css.DISABLED);
+              $entry.addClass(cssConstants.DISABLED);
             }
 
             $entry.data('uid', uid);
@@ -482,14 +487,14 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
               toggle = document.createElement('span');
 
               if (layer.hide_child !== '1') {
-                  $(listItem).addClass(c4g.maps.constant.css.CLOSE);
-                  $(toggle).addClass(c4g.maps.constant.css.ICON);
+                  $(listItem).addClass(cssConstants.CLOSE);
+                  $(toggle).addClass(cssConstants.ICON);
               }
               $(toggle).click(function () {
-                if ($(this).parent().hasClass(c4g.maps.constant.css.CLOSE)) {
-                  $(this).parent().removeClass(c4g.maps.constant.css.CLOSE).addClass(c4g.maps.constant.css.OPEN);
+                if ($(this).parent().hasClass(cssConstants.CLOSE)) {
+                  $(this).parent().removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN);
                 } else {
-                  $(this).parent().removeClass(c4g.maps.constant.css.OPEN).addClass(c4g.maps.constant.css.CLOSE);
+                  $(this).parent().removeClass(cssConstants.OPEN).addClass(cssConstants.CLOSE);
                 }
                   if (self.proxy.options.mapController.rightSlideElements) {
                       self.proxy.options.mapController.rightSlideElements.forEach(function (element) {
@@ -531,19 +536,19 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
                             else{
                               $childEntry.click(fnChildEntryClick);
                               if (this.proxy.activeLayerIds[uid]) {
-                                $childEntry.addClass(c4g.maps.constant.css.ACTIVE);
+                                $childEntry.addClass(cssConstants.ACTIVE);
                               } else {
-                                $childEntry.addClass(c4g.maps.constant.css.INACTIVE);
+                                $childEntry.addClass(cssConstants.INACTIVE);
                               }
                             }
                             if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.addChilds === 'object') {
-                              c4g.maps.utils.callHookFunctions(c4g.maps.hook.addChilds);
+                              utils.callHookFunctions(c4g.maps.hook.addChilds);
                             }
 
 
                             if(c4g.maps.hook.starboard_layer_activate && c4g.maps.hook.starboard_layer_activate.length > 0){
                                 let paramObj = {'feature': feature, 'parentItem': childListItem, 'entry':$childEntry};
-                                c4g.maps.utils.callHookFunctions(c4g.maps.hook.starboard_layer_activate, paramObj);
+                                utils.callHookFunctions(c4g.maps.hook.starboard_layer_activate, paramObj);
                             }
                         }
                     }
@@ -551,9 +556,9 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
             }
 
             if (this.proxy.activeLayerIds[uid]) {
-              $entry.addClass(c4g.maps.constant.css.ACTIVE);
+              $entry.addClass(cssConstants.ACTIVE);
             } else {
-              $entry.addClass(c4g.maps.constant.css.INACTIVE);
+              $entry.addClass(cssConstants.INACTIVE);
             }
 
             // [info]:  In order for this to work,
@@ -568,14 +573,14 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
               // layer is map itself with a layer
               toggle = document.createElement('span');
               if(layer.hide_child !== '1') {
-                  $(listItem).addClass(c4g.maps.constant.css.CLOSE);
+                  $(listItem).addClass(cssConstants.CLOSE);
               }
-              $(toggle).addClass(c4g.maps.constant.css.ICON);
+              $(toggle).addClass(cssConstants.ICON);
               $(toggle).click(function () {
-                if ($(this).parent().hasClass(c4g.maps.constant.css.CLOSE)) {
-                  $(this).parent().removeClass(c4g.maps.constant.css.CLOSE).addClass(c4g.maps.constant.css.OPEN);
+                if ($(this).parent().hasClass(cssConstants.CLOSE)) {
+                  $(this).parent().removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN);
                 } else {
-                  $(this).parent().removeClass(c4g.maps.constant.css.OPEN).addClass(c4g.maps.constant.css.CLOSE);
+                  $(this).parent().removeClass(cssConstants.OPEN).addClass(cssConstants.CLOSE);
                 }
               });
               $(toggle).insertBefore($entry);
@@ -603,7 +608,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
 
             // call hook "layerswitcher_forEachItem"
             if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.layerswitcher_forEachItem === "object") {
-              c4g.maps.utils.callHookFunctions(
+              utils.callHookFunctions(
                   c4g.maps.hook.layerswitcher_forEachItem,
                   {that: this, item: item, entry: $entry}
               );
@@ -775,7 +780,7 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
                 $(parentEntry).css('font-weight', 'bold');
               } else {
                 $(parentEntry).css('font-weight', 'normal');
-                //$(parentEntry).addClass(c4g.maps.constant.css.INACTIVE);
+                //$(parentEntry).addClass(cssConstants.INACTIVE);
               }
             }
             this.updateParentLayers(parentEntry, parentLayer.id, parentLayer);
@@ -789,3 +794,5 @@ this.c4g.maps.control.starboardplugin = this.c4g.maps.control.starboardplugin ||
   }); // end of "add methods"
 
 }(jQuery, this.c4g));
+
+export var Layerswitcher = this.c4g.maps.control.starboardplugin.Layerswitcher;

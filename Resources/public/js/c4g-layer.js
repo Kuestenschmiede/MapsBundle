@@ -1,4 +1,4 @@
-class C4gLayer{
+export class C4gLayer{
   
   constructor(layerArr) {
     this.id = layerArr['id'];

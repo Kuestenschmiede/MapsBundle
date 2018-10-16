@@ -10,6 +10,24 @@ this.c4g.maps = this.c4g.maps || {};
 /*global Browser*/
 /*global Document:true */
 /*global jQuery*/
+var c4g = this.c4g;
+
+import {MapProxy} from "./c4g-maps-proxy";
+import {cssConstants} from "./c4g-maps-constant";
+import {langConstants} from "./c4g-maps-constant-i18n-de";
+import {Spinner} from "./c4g-maps-misc-spinner";
+import {MapHover} from "./c4g-maps-misc-maphover";
+import {utils} from "./c4g-maps-utils";
+import {Router} from "./c4g-maps-control-portside-router";
+import {Measuretools} from "./c4g-maps-control-portside-measuretools";
+import {Print} from "./c4g-maps-control-print";
+import {Grid} from "./c4g-maps-control-grid";
+import {Zoomlevel} from "./c4g-maps-control-zoomlevel";
+import {OverviewMap} from "./c4g-maps-control-overviewmap";
+import {Permalink} from "./c4g-maps-control-permalink";
+import {Starboard} from "./c4g-maps-control-starboard";
+import {Editor} from "./c4g-maps-control-portside-editor";
+import {Account} from "./c4g-maps-control-portside-account";
 
 (function ($, c4g) {
     'use strict';
@@ -111,7 +129,7 @@ this.c4g.maps = this.c4g.maps || {};
 
         // check permalink
         if (mapData.permalink.enable) {
-            permalink = c4g.maps.utils.getUrlParam(mapData.permalink.get_parameter);
+            permalink = utils.getUrlParam(mapData.permalink.get_parameter);
 
             if (permalink) {
                 permalink = permalink.split('/');
@@ -129,7 +147,7 @@ this.c4g.maps = this.c4g.maps || {};
                     mapData.baselayer = !isNaN(permalink[4]) ? permalink[4] : mapData.baselayer;
                     mapData.layers = permalink[5].split(':');
                     // decode deltaEncoding
-                    mapData.layers = c4g.maps.utils.deltaDecode(mapData.layers);
+                    mapData.layers = utils.deltaDecode(mapData.layers);
                     break;
                 case 2:
                     // baselayer and layers only
@@ -137,13 +155,13 @@ this.c4g.maps = this.c4g.maps || {};
                     mapData.baselayer = !isNaN(permalink[0]) ? permalink[0] : mapData.baselayer;
                     mapData.layers = permalink[1].split(':');
                     // decode deltaEncoding
-                    mapData.layers = c4g.maps.utils.deltaDecode(mapData.layers);
+                    mapData.layers = utils.deltaDecode(mapData.layers);
                     break;
                 case 1:
                     // layers only
                     mapData.layers = permalink[0].split(':');
                     // decode deltaEncoding
-                    mapData.layers = c4g.maps.utils.deltaDecode(mapData.layers);
+                    mapData.layers = utils.deltaDecode(mapData.layers);
                     break;
                 default:
                     // invalid count of permalink parameters
@@ -172,13 +190,13 @@ this.c4g.maps = this.c4g.maps || {};
         }
 
         if (mapData.caching) {
-            if ((c4g.maps.utils.getValue('lon')) && (c4g.maps.utils.getValue('lat'))) {
-                mapData.center.lon = c4g.maps.utils.getValue('lon');
-                mapData.center.lat = c4g.maps.utils.getValue('lat');
+            if ((utils.getValue('lon')) && (utils.getValue('lat'))) {
+                mapData.center.lon = utils.getValue('lon');
+                mapData.center.lat = utils.getValue('lat');
             }
 
-            if (c4g.maps.utils.getValue('zoom')) {
-                mapData.center.zoom = c4g.maps.utils.getValue('zoom');
+            if (utils.getValue('zoom')) {
+                mapData.center.zoom = utils.getValue('zoom');
             }
         }
 
@@ -211,7 +229,7 @@ this.c4g.maps = this.c4g.maps || {};
                 if (self.map) {
                   self.map.setView(view);
                   if (self.$overlaycontainer_stopevent) {
-                    c4g.maps.utils.redrawMapView(self);
+                    utils.redrawMapView(self);
                   }
                 }
               }
@@ -257,8 +275,8 @@ this.c4g.maps = this.c4g.maps || {};
                     }
 
                     if (mapData.caching) {
-                        if (c4g.maps.utils.getValue('baselayer')) {
-                            mapData.default_baselayer = c4g.maps.utils.getValue('baselayer');
+                        if (utils.getValue('baselayer')) {
+                            mapData.default_baselayer = utils.getValue('baselayer');
                         }
                     }
 
@@ -315,7 +333,7 @@ this.c4g.maps = this.c4g.maps || {};
                             continue;
                         }
                         if (typeof vectorArray === "object") {
-                            vectorArray = c4g.maps.utils.objectToArray(vectorArray);
+                            vectorArray = utils.objectToArray(vectorArray);
                         }
                         layerGroup = layer.vectorLayer;
                         if (vectorArray && vectorArray.forEach && typeof vectorArray.forEach === 'function') {
@@ -398,11 +416,11 @@ this.c4g.maps = this.c4g.maps || {};
         // ---
 
         // save overlaycontainer
-        this.$overlaycontainer_stopevent = $('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_OVERLAYCONTAINER_SE);
+        this.$overlaycontainer_stopevent = $('#' + mapData.mapDiv + ' .' + cssConstants.OL_OVERLAYCONTAINER_SE);
         // add Spinner
-        this.spinner = new c4g.maps.misc.Spinner({className: c4g.maps.constant.css.LARGE});
+        this.spinner = new Spinner({className: cssConstants.LARGE});
         // add mapHover
-        this.mapHover = new c4g.maps.misc.MapHover({mapController: this});
+        this.mapHover = new MapHover({mapController: this});
 
         // add interactions ===
         //
@@ -461,23 +479,23 @@ this.c4g.maps = this.c4g.maps || {};
         //
         // top-left
         controlContainerTopLeft = document.createElement('div');
-        controlContainerTopLeft.className = c4g.maps.constant.css.CONTROL_CONTAINER_TL + ' ' + c4g.maps.constant.css.OL_UNSELECTABLE;
+        controlContainerTopLeft.className = cssConstants.CONTROL_CONTAINER_TL + ' ' + cssConstants.OL_UNSELECTABLE;
         this.$overlaycontainer_stopevent.prepend(controlContainerTopLeft);
         // bottom-left
         controlContainerBottomLeft = document.createElement('div');
-        controlContainerBottomLeft.className = c4g.maps.constant.css.CONTROL_CONTAINER_BL + ' ' + c4g.maps.constant.css.OL_UNSELECTABLE;
+        controlContainerBottomLeft.className = cssConstants.CONTROL_CONTAINER_BL + ' ' + cssConstants.OL_UNSELECTABLE;
         $(controlContainerTopLeft).after(controlContainerBottomLeft);
         // element needs to be moved when Portside will be opened
         this.leftSlideElements.push(controlContainerBottomLeft);
         // top-right
         controlContainerTopRight = document.createElement('div');
-        controlContainerTopRight.className = c4g.maps.constant.css.CONTROL_CONTAINER_TR + ' ' + c4g.maps.constant.css.OL_UNSELECTABLE;
+        controlContainerTopRight.className = cssConstants.CONTROL_CONTAINER_TR + ' ' + cssConstants.OL_UNSELECTABLE;
         $(controlContainerBottomLeft).after(controlContainerTopRight);
         // element needs to be moved when Starboard will be opened
         this.rightSlideElements.push(controlContainerTopRight);
         // bottom-right
         controlContainerBottomRight = document.createElement('div');
-        controlContainerBottomRight.className = c4g.maps.constant.css.CONTROL_CONTAINER_BR + ' ' + c4g.maps.constant.css.OL_UNSELECTABLE;
+        controlContainerBottomRight.className = cssConstants.CONTROL_CONTAINER_BR + ' ' + cssConstants.OL_UNSELECTABLE;
         $(controlContainerTopRight).after(controlContainerBottomRight);
         // element needs to be moved when Starboard will be opened
         this.rightSlideElements.push(controlContainerBottomRight);
@@ -488,9 +506,9 @@ this.c4g.maps = this.c4g.maps || {};
 
 
         // account
-        if (mapData.account && typeof c4g.maps.control.Account === 'function') {
-            this.controls.account = new c4g.maps.control.Account({
-                tipLabel: c4g.maps.constant.i18n.CTRL_ACCOUNT,
+        if (mapData.account && typeof Account === 'function') {
+            this.controls.account = new Account({
+                tipLabel: langConstants.CTRL_ACCOUNT,
                 target: controlContainerTopLeft,
                 caching: mapData.caching,
                 mapController: this
@@ -503,8 +521,8 @@ this.c4g.maps = this.c4g.maps || {};
             this.controls.zoom = new ol.control.Zoom({
                 zoomInLabel: ' ',
                 zoomOutLabel: ' ',
-                zoomInTipLabel: c4g.maps.constant.i18n.CTRL_ZOOM_IN,
-                zoomOutTipLabel: c4g.maps.constant.i18n.CTRL_ZOOM_OUT,
+                zoomInTipLabel: langConstants.CTRL_ZOOM_IN,
+                zoomOutTipLabel: langConstants.CTRL_ZOOM_OUT,
                 target: controlContainerTopLeft
             });
             this.map.addControl(this.controls.zoom);
@@ -513,7 +531,7 @@ this.c4g.maps = this.c4g.maps || {};
                 this.controls.zoomslider = new ol.control.ZoomSlider(
                     {
                         label: ' ',
-                        tipLabel: c4g.maps.constant.i18n.CTRL_ZOOM_SLIDER,
+                        tipLabel: langConstants.CTRL_ZOOM_SLIDER,
                         target: controlContainerTopLeft
                     }
                 );
@@ -523,7 +541,7 @@ this.c4g.maps = this.c4g.maps || {};
         if (mapData.zoom_extent &! mapData.zoom_slider) {
             this.controls.zoom_extent = new ol.control.ZoomToExtent({
                 label: ' ',
-                tipLabel: c4g.maps.constant.i18n.CTRL_ZOOM_EXT,
+                tipLabel: langConstants.CTRL_ZOOM_EXT,
                 target: controlContainerTopLeft
             });
             this.map.addControl(this.controls.zoom_extent);
@@ -532,7 +550,7 @@ this.c4g.maps = this.c4g.maps || {};
             this.controls.zoom_home = new c4g.maps.control.Home({
                 label: ' ',
                 disableLabel: ' ',
-                tipLabel: c4g.maps.constant.i18n.CTRL_ZOOM_HOME,
+                tipLabel: langConstants.CTRL_ZOOM_HOME,
                 target: controlContainerTopLeft,
                 mapController: this
             });
@@ -543,7 +561,7 @@ this.c4g.maps = this.c4g.maps || {};
             this.controls.zoom_position = new c4g.maps.control.Position({
                 label: ' ',
                 disableLabel: ' ',
-                tipLabel: c4g.maps.constant.i18n.CTRL_ZOOM_POS,
+                tipLabel: langConstants.CTRL_ZOOM_POS,
                 target: controlContainerTopLeft,
                 mapController: this
             });
@@ -552,21 +570,21 @@ this.c4g.maps = this.c4g.maps || {};
 
         // combined zoom-controls
         if (mapData.zoom_slider) {
-            $('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM).addClass(c4g.maps.constant.css.OL_ZOOM_WITH_SLIDER).removeClass(c4g.maps.constant.css.OL_ZOOM);
-            $('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM_IN).after($('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM_SLIDER + ' button').addClass(c4g.maps.constant.css.OL_ZOOM_SLIDER));
-            $('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM_SLIDER + '.' + c4g.maps.constant.css.OL_CONTROL).remove();
+            $('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM).addClass(cssConstants.OL_ZOOM_WITH_SLIDER).removeClass(cssConstants.OL_ZOOM);
+            $('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_IN).after($('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_SLIDER + ' button').addClass(cssConstants.OL_ZOOM_SLIDER));
+            $('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_SLIDER + '.' + cssConstants.OL_CONTROL).remove();
         }
 
         if (mapData.zoom_panel && mapData.zoom_extent) {
-            $('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM).addClass(c4g.maps.constant.css.OL_ZOOM_WITH_EXT).removeClass(c4g.maps.constant.css.OL_ZOOM);
-            $('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM_IN).after($('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM_EXT + ' button').addClass(c4g.maps.constant.css.OL_ZOOM_EXT));
-            $('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM_EXT + '.' + c4g.maps.constant.css.OL_CONTROL).remove();
+            $('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM).addClass(cssConstants.OL_ZOOM_WITH_EXT).removeClass(cssConstants.OL_ZOOM);
+            $('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_IN).after($('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_EXT + ' button').addClass(cssConstants.OL_ZOOM_EXT));
+            $('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_EXT + '.' + cssConstants.OL_CONTROL).remove();
         }
 
         if (mapData.zoom_panel && mapData.zoom_home) {
-            $('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM).addClass(c4g.maps.constant.css.OL_ZOOM_WITH_HOME).removeClass(c4g.maps.constant.css.OL_ZOOM);
-            $('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM_IN).after($('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM_HOME + ' button').addClass(c4g.maps.constant.css.OL_ZOOM_HOME));
-            removeElement = controlContainerTopLeft.querySelector('.' + c4g.maps.constant.css.OL_ZOOM_HOME + '.' + c4g.maps.constant.css.OL_UNSELECTABLE + '.button');
+            $('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM).addClass(cssConstants.OL_ZOOM_WITH_HOME).removeClass(cssConstants.OL_ZOOM);
+            $('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_IN).after($('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_HOME + ' button').addClass(cssConstants.OL_ZOOM_HOME));
+            removeElement = controlContainerTopLeft.querySelector('.' + cssConstants.OL_ZOOM_HOME + '.' + cssConstants.OL_UNSELECTABLE + '.button');
             if (removeElement) {
                 try {
                     removeElement.remove();
@@ -577,10 +595,10 @@ this.c4g.maps = this.c4g.maps || {};
         }
 
         if (mapData.zoom_panel && mapData.zoom_position) {
-            $('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM).addClass(c4g.maps.constant.css.OL_ZOOM_WITH_POS).removeClass(c4g.maps.constant.css.OL_ZOOM);
-            $('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM_IN).after($('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM_POS + ' button').addClass(c4g.maps.constant.css.OL_ZOOM_POS));
-            $('#' + mapData.mapDiv + ' .' + c4g.maps.constant.css.OL_ZOOM_POS + '.' + c4g.maps.constant.css.OL_CONTROL).remove();
-            removeElement = controlContainerTopLeft.querySelector('.' + c4g.maps.constant.css.OL_ZOOM_POS + '.' + c4g.maps.constant.css.OL_UNSELECTABLE + '.button');
+            $('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM).addClass(cssConstants.OL_ZOOM_WITH_POS).removeClass(cssConstants.OL_ZOOM);
+            $('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_IN).after($('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_POS + ' button').addClass(cssConstants.OL_ZOOM_POS));
+            $('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_POS + '.' + cssConstants.OL_CONTROL).remove();
+            removeElement = controlContainerTopLeft.querySelector('.' + cssConstants.OL_ZOOM_POS + '.' + cssConstants.OL_UNSELECTABLE + '.button');
             if (removeElement) {
                 try {
                     removeElement.remove();
@@ -595,16 +613,16 @@ this.c4g.maps = this.c4g.maps || {};
             this.controls.fullscreen = new ol.control.FullScreen({
                 label: ' ',
                 labelActive: ' ',
-                tipLabel: c4g.maps.constant.i18n.CTRL_FULLSCREEN,
+                tipLabel: langConstants.CTRL_FULLSCREEN,
                 target: controlContainerTopLeft
             });
             this.map.addControl(this.controls.fullscreen);
         }
 
         // router
-        if (mapData.router_enable && typeof c4g.maps.control.Router === 'function') {
-            this.controls.router = new c4g.maps.control.Router({
-                tipLabel: c4g.maps.constant.i18n.CTRL_ROUTER,
+        if (mapData.router_enable && typeof Router === 'function') {
+            this.controls.router = new Router({
+                tipLabel: langConstants.CTRL_ROUTER,
                 target: controlContainerTopLeft,
                 caching: mapData.caching,
                 mapController: this
@@ -612,9 +630,9 @@ this.c4g.maps = this.c4g.maps || {};
             this.map.addControl(this.controls.router);
         }
         // editor
-        if (mapData.editor.enable && typeof c4g.maps.control.Editor === 'function') {
-            this.controls.editor = new c4g.maps.control.Editor({
-                tipLabel: c4g.maps.constant.i18n.CTRL_EDITOR,
+        if (mapData.editor.enable && typeof Editor === 'function') {
+            this.controls.editor = new Editor({
+                tipLabel: langConstants.CTRL_EDITOR,
                 type: mapData.editor.type || 'frontend',
                 target: mapData.editor.target || controlContainerTopLeft,
                 initOpen: mapData.editor.open || false,
@@ -625,9 +643,9 @@ this.c4g.maps = this.c4g.maps || {};
             this.map.addControl(this.controls.editor);
         }
         // measuretools
-        if (mapData.measuretools.enable && typeof c4g.maps.control.Measuretools === 'function') {
-            this.controls.measuretools = new c4g.maps.control.Measuretools({
-                tipLabel: c4g.maps.constant.i18n.CTRL_MEASURETOOLS,
+        if (mapData.measuretools.enable && typeof Measuretools === 'function') {
+            this.controls.measuretools = new Measuretools({
+                tipLabel: langConstants.CTRL_MEASURETOOLS,
                 target: controlContainerTopLeft,
                 caching: mapData.caching,
                 mapController: this
@@ -636,9 +654,9 @@ this.c4g.maps = this.c4g.maps || {};
         }
         //
         if (mapData.print){
-          this.controls.print = new c4g.maps.control.Print({
+          this.controls.print = new Print({
             label : "",
-            tipLabel : c4g.maps.constant.i18n.CTRL_PRINT,
+            tipLabel : langConstants.CTRL_PRINT,
             target: controlContainerTopLeft,
             mapController: this
           })
@@ -647,10 +665,10 @@ this.c4g.maps = this.c4g.maps || {};
 
         // show graticule (grid)
         if (mapData.graticule) {
-            this.controls.graticule = new c4g.maps.control.Grid({
+            this.controls.graticule = new Grid({
                 label: ' ',
                 disableLabel: ' ',
-                tipLabel: c4g.maps.constant.i18n.CTRL_GRID,
+                tipLabel: langConstants.CTRL_GRID,
                 caching: mapData.caching,
                 target: controlContainerTopLeft
             });
@@ -662,7 +680,7 @@ this.c4g.maps = this.c4g.maps || {};
         if (mapData.mouse_nav && (mapData.mouse_nav.drag_rotate || (mapData.mouse_nav.drag_rotate && mapData.mouse_nav.drag_rotate_zoom))) {
             this.controls.rotate = new ol.control.Rotate({
                 label: ' ',
-                tipLabel: c4g.maps.constant.i18n.CTRL_RESET_ROTATION,
+                tipLabel: langConstants.CTRL_RESET_ROTATION,
                 target: controlContainerTopLeft
             });
             this.map.addControl(this.controls.rotate);
@@ -670,7 +688,7 @@ this.c4g.maps = this.c4g.maps || {};
         // infopage
         if (mapData.infopage && typeof c4g.maps.control.Infopage === 'function') {
             this.controls.infopage = new c4g.maps.control.Infopage({
-                tipLabel: c4g.maps.constant.i18n.CTRL_INFOPAGE,
+                tipLabel: langConstants.CTRL_INFOPAGE,
                 target: controlContainerTopLeft,
                 caching: mapData.caching,
                 mapController: this
@@ -678,15 +696,15 @@ this.c4g.maps = this.c4g.maps || {};
             this.map.addControl(this.controls.infopage);
         }
         // additional panel
-        if (mapData.additionalPanel && typeof c4g.maps.control.additionalPanel === 'function') {
-          this.controls.additionalPanel = new c4g.maps.control.additionalPanel({
-            tipLabel: c4g.maps.constant.i18n.CTRL_ADDITIONALPANEL,
-            target: controlContainerTopLeft,
-            caching: mapData.caching,
-            mapController: this
-          });
-          this.map.addControl(this.controls.additionalPanel);
-        }
+        // if (mapData.additionalPanel && typeof c4g.maps.control.additionalPanel === 'function') {
+        //   this.controls.additionalPanel = new c4g.maps.control.additionalPanel({
+        //     tipLabel: langConstants.CTRL_ADDITIONALPANEL,
+        //     target: controlContainerTopLeft,
+        //     caching: mapData.caching,
+        //     mapController: this
+        //   });
+        //   this.map.addControl(this.controls.additionalPanel);
+        // }
 
 
       // scaleline
@@ -701,11 +719,11 @@ this.c4g.maps = this.c4g.maps || {};
         if (mapData.zoomlevel || mapData.mouseposition) {
           // wrapper for zoom-level and mouse-position
             controlContainerBottomLeftSub = document.createElement('div');
-            controlContainerBottomLeftSub.className = c4g.maps.constant.css.CONTROL_CONTAINER_BL_SUB + ' ' + c4g.maps.constant.css.OL_UNSELECTABLE;
+            controlContainerBottomLeftSub.className = cssConstants.CONTROL_CONTAINER_BL_SUB + ' ' + cssConstants.OL_UNSELECTABLE;
             $(controlContainerBottomLeft).append(controlContainerBottomLeftSub);
             // display zoom-level
             if (mapData.zoomlevel) {
-                this.controls.zoomlevel = new c4g.maps.control.Zoomlevel({
+                this.controls.zoomlevel = new Zoomlevel({
                     mapView: view,
                     target: controlContainerBottomLeftSub,
                     undefinedHTML: 'N/A'
@@ -753,10 +771,10 @@ this.c4g.maps = this.c4g.maps || {};
             this.controls.geobookmarks = new ol.control.GeoBookmark({
                 //target: controlContainerTopRight
                 label: ' ',
-                tipLabel: c4g.maps.constant.i18n.CTRL_GEOBOOKMARKS,
-                placeholder: c4g.maps.constant.i18n.GEOBOOKMARKS_PLACEHOLDER,
+                tipLabel: langConstants.CTRL_GEOBOOKMARKS,
+                placeholder: langConstants.GEOBOOKMARKS_PLACEHOLDER,
                 namespace: 'c4g_geobookmarks'/*,
-                className: c4g.maps.constant.css.GEOBOOKMARKS*/ //ToDo implement for own styling
+                className: cssConstants.GEOBOOKMARKS*/ //ToDo implement for own styling
             });
             this.map.addControl(this.controls.geobookmarks);
             this.rightSlideElements.push('.ol-bookmark');
@@ -765,27 +783,28 @@ this.c4g.maps = this.c4g.maps || {};
 
         // overview-map
         if (mapData.overviewmap) {
-            this.controls.overviewmap = new c4g.maps.control.OverviewMap({
+            this.controls.overviewmap = new OverviewMap({
                 target: controlContainerTopRight
             });
             this.map.addControl(this.controls.overviewmap);
         }
 
         if (mapData.starboard.label) {
-            starboard_label = c4g.maps.constant.i18n.CTRL_STARBOARD.replace('Starboard', mapData.starboard.label).replace('starboard', mapData.starboard.label);
+            starboard_label = langConstants.CTRL_STARBOARD.replace('Starboard', mapData.starboard.label).replace('starboard', mapData.starboard.label);
         }
 
         // starboard
       if (mapData.geopicker && mapData.geopicker.type === "backend") {
         enableStarboard = false;
       }
-      
+
       // popup margin
       //this.leftSlideElements.push('.ol-overlay-container');
       //this.rightSlideElements.push('.ol-overlay-container');
 
-      if (c4g.maps.control && c4g.maps.control.Starboard && typeof c4g.maps.control.Starboard === 'function' && enableStarboard) {
-          this.controls.starboard = new c4g.maps.control.Starboard({
+      console.log(c4g.maps.control);
+      if (typeof Starboard === 'function' && enableStarboard) {
+          this.controls.starboard = new Starboard({
             create: mapData.starboard.enable || false,
             headline: mapData.starboard.label,
             tipLabel: starboard_label || false,
@@ -837,7 +856,7 @@ this.c4g.maps = this.c4g.maps || {};
                 logoLink.href = 'https://con4gis.org';
                 logoLink.title = 'built with con4gis';
                 logoLink.target = '_blank';
-                logoLink.className = c4g.maps.constant.css.ATTRIBUTION_LOGO;
+                logoLink.className = cssConstants.ATTRIBUTION_LOGO;
                 logoGraphic = document.createElement('img');
                 logoGraphic.src = 'bundles/con4gismaps/images/logo_con4gis.svg';
                 logoLink.appendChild(logoGraphic);
@@ -845,7 +864,7 @@ this.c4g.maps = this.c4g.maps || {};
             }
             this.controls.attribution = new ol.control.Attribution({
                 label: ' ',
-                tipLabel: c4g.maps.constant.i18n.CTRL_ATTRIBUTION,
+                tipLabel: langConstants.CTRL_ATTRIBUTION,
                 collapseLabel: ' ',
                 target: controlContainerBottomRight
             });
@@ -855,9 +874,9 @@ this.c4g.maps = this.c4g.maps || {};
 
         // show permalink
         if (mapData.permalink.enable) {
-            this.controls.permalink = new c4g.maps.control.Permalink({
+            this.controls.permalink = new Permalink({
                 label: ' ',
-                tipLabel: c4g.maps.constant.i18n.CTRL_PERMALINK,
+                tipLabel: langConstants.CTRL_PERMALINK,
                 mapController: this,
                 getParameter: mapData.permalink.get_parameter,
                 target: controlContainerBottomRight
@@ -873,9 +892,9 @@ this.c4g.maps = this.c4g.maps || {};
             };
 
             if (mapData.themeData['maincolor']) {
-                var mainColor = c4g.maps.utils.getRgbaFromHexAndOpacity(mapData.themeData['maincolor'], mapData.themeData['mainopacity']);
-                var fontColor = c4g.maps.utils.getRgbaFromHexAndOpacity(mapData.themeData['fontcolor'], mapData.themeData['fontopacity']);
-                var shadowColor = c4g.maps.utils.getRgbaFromHexAndOpacity(mapData.themeData['shadowcolor'], mapData.themeData['shadowopacity']);
+                var mainColor = utils.getRgbaFromHexAndOpacity(mapData.themeData['maincolor'], mapData.themeData['mainopacity']);
+                var fontColor = utils.getRgbaFromHexAndOpacity(mapData.themeData['fontcolor'], mapData.themeData['fontopacity']);
+                var shadowColor = utils.getRgbaFromHexAndOpacity(mapData.themeData['shadowcolor'], mapData.themeData['shadowopacity']);
 
                 if (domMapDiv && domMapDiv.style) {
                     domMapDiv.style.setProperty('--main-color', mainColor);
@@ -889,9 +908,12 @@ this.c4g.maps = this.c4g.maps || {};
                 domMapDiv.style.setProperty('--button-radius-pixel', mapData.themeData['buttonradius']+'px');
             }
         }
-      if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.mapController_addControls === 'object') {
-          c4g.maps.utils.callHookFunctions(c4g.maps.hook.mapController_addControls, {mapController:this, Container: controlContainerTopLeft});
+      if (window.c4gMapsHooks !== undefined && Array.isArray(window.c4gMapsHooks.mapController_addControls)) {
+        utils.callHookFunctions(window.c4gMapsHooks.mapController_addControls, {mapController: this, Container: controlContainerTopLeft});
       }
     };
+
+
+    c4g.maps["mapController_" + mapData['id']] = new c4g.maps.MapController(mapData);
 
 }(jQuery, this.c4g)); // 'The End' :)    - ! Do not write stuff after this line ! -

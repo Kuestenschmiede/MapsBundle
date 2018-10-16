@@ -3,6 +3,12 @@ this.c4g = this.c4g || {};
 this.c4g.maps = this.c4g.maps || {};
 this.c4g.maps.control = this.c4g.maps.control || {};
 
+import {cssConstants} from "./c4g-maps-constant";
+import {langConstants} from "./c4g-maps-constant-i18n-de";
+import {utils} from "./c4g-maps-utils";
+import {Sideboard} from "./c4g-maps-control-sideboard";
+import {TooltipPopUp} from "./c4g-maps-misc-tooltippopup";
+
 (function ($, c4g) {
   'use strict';
 
@@ -19,7 +25,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
     // extend options
     this.options = $.extend({
       name: 'measure',
-      headline: c4g.maps.constant.i18n.MEASURETOOLS,
+      headline: langConstants.MEASURETOOLS,
       create: true,
       mapController: undefined,
       direction: 'left',
@@ -29,9 +35,9 @@ this.c4g.maps.control = this.c4g.maps.control || {};
     this.mainSection = document.createElement('div');
 
     // call parent constructor
-    c4g.maps.control.Sideboard.call(this, this.options);
+    Sideboard.call(this, this.options);
   };
-  ol.inherits(c4g.maps.control.Measuretools, c4g.maps.control.Sideboard);
+  ol.inherits(c4g.maps.control.Measuretools, Sideboard);
 
   /**
    * Methods
@@ -75,8 +81,8 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
       // set content-section
       this.mainSectionInfo = document.createElement('p');
-      this.mainSectionInfo.innerHTML = c4g.maps.constant.i18n.MEASURETOOLS_INFO;
-      this.mainSectionInfo.innerHTML += '<br><br><sub>' + c4g.maps.constant.i18n.MEASURETOOLS_INFO_ADDITIONAL + '<sub>';
+      this.mainSectionInfo.innerHTML = langConstants.MEASURETOOLS_INFO;
+      this.mainSectionInfo.innerHTML += '<br><br><sub>' + langConstants.MEASURETOOLS_INFO_ADDITIONAL + '<sub>';
       this.mainSection.appendChild(this.mainSectionInfo);
       this.contentContainer.appendChild(this.mainSection);
 
@@ -169,8 +175,8 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       selectView = this.addView({
         name: 'select',
         triggerConfig: {
-          tipLabel: c4g.maps.constant.i18n.MEASURETOOLS_VIEW_TRIGGER_SELECT,
-          className: c4g.maps.constant.css.MEASURETOOLS_VIEW_TRIGGER_SELECT,
+          tipLabel: langConstants.MEASURETOOLS_VIEW_TRIGGER_SELECT,
+          className: cssConstants.MEASURETOOLS_VIEW_TRIGGER_SELECT,
           withHeadline: true
         },
         sectionElements: [
@@ -207,8 +213,8 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       measureView = self.addView({
         name: 'draw:' + options.type.toLowerCase(),
         triggerConfig: {
-          tipLabel: c4g.maps.constant.i18n[TRIGGER_DRAW],
-          className: c4g.maps.constant.css[TRIGGER_DRAW],
+          tipLabel: langConstants[TRIGGER_DRAW],
+          className: cssConstants[TRIGGER_DRAW],
           withHeadline: true
         },
         sectionElements: [
@@ -278,24 +284,24 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
             // check feature-type
             if (feature.getGeometry() instanceof ol.geom.LineString) {
-              strLabel = c4g.maps.constant.i18n.LENGTH;
-              strType = c4g.maps.constant.i18n.LINE;
+              strLabel = langConstants.LENGTH;
+              strType = langConstants.LINE;
               measureArea = false;
               measureRadius = false;
             } else if (feature.getGeometry() instanceof ol.geom.Polygon) {
-              strLabel = c4g.maps.constant.i18n.PERIMETER;
-              strType = c4g.maps.constant.i18n.POLYGON;
+              strLabel = langConstants.PERIMETER;
+              strType = langConstants.POLYGON;
               measureArea = true;
               measureRadius = false;
             } else if (feature.getGeometry() instanceof ol.geom.Circle) {
-              strLabel = c4g.maps.constant.i18n.RADIUS;
-              strType = c4g.maps.constant.i18n.CIRCLE;
+              strLabel = langConstants.RADIUS;
+              strType = langConstants.CIRCLE;
               measureArea = true;
               measureRadius = true;
             } else {
               //freehand ist LineString too
-              strLabel = c4g.maps.constant.i18n.LENGTH;
-              strType = c4g.maps.constant.i18n.FREEHAND;
+              strLabel = langConstants.LENGTH;
+              strType = langConstants.FREEHAND;
               measureArea = false;
               measureRadius = false;
             }
@@ -315,7 +321,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
             // create and append label for name-inputfield
             labelElement = document.createElement('label');
             labelElement.setAttribute('for', 'measureElement_' + featureIdCount);
-            labelElement.innerHTML = c4g.maps.constant.i18n.NAME + ': ';
+            labelElement.innerHTML = langConstants.NAME + ': ';
             headlineElement.appendChild(labelElement);
 
             // create and append name-inputfield
@@ -346,7 +352,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
               paragraphElement = document.createElement('p');
               paragraphElement.className = 'c4g_maps_portside_measure_paragraph_surfacearea';
               strongElement = document.createElement('strong');
-              strongElement.innerHTML = c4g.maps.constant.i18n.SURFACEAREA + ': ';
+              strongElement.innerHTML = langConstants.SURFACEAREA + ': ';
               paragraphElement.appendChild(strongElement);
               spanElement = document.createElement('span');
               spanElement.innerHTML = '...';
@@ -359,7 +365,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                 // paragraphElement = document.createElement('p');
                 // paragraphElement.className = 'c4g_maps_portside_measure_paragraph_surfacearea';
                 // strongElement = document.createElement('strong');
-                // strongElement.innerHTML = c4g.maps.constant.i18n.SURFACEAREA + ': ';
+                // strongElement.innerHTML = langConstants.SURFACEAREA + ': ';
                 // paragraphElement.appendChild(strongElement);
                 // spanElement = document.createElement('span');
                 // spanElement.innerHTML = '...';
@@ -390,23 +396,23 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
             featureTooltip = feature.get('tooltip');
             name = feature.get('listElementValueName').value;
-            length = c4g.maps.utils.measureGeometry(feature.getGeometry(), true);
+            length = utils.measureGeometry(feature.getGeometry(), true);
             newContent = '<strong>' + name + '</strong><br>';
 
             feature.set('measuredLength', length);
             feature.get('listElementValueLine').innerHTML = length.htmlValue;
             if (feature.get('geometryType') === 'circle') {
-              radius = c4g.maps.utils.measureGeometry(feature.getGeometry());
+              radius = utils.measureGeometry(feature.getGeometry());
               feature.set('measuredRadius', radius);
               feature.get('listElementValueRadius').innerHTML = radius.htmlValue;
               newContent += radius.htmlValue;
 
-              area = c4g.maps.utils.measureGeometry(feature.getGeometry(), false, true);
+              area = utils.measureGeometry(feature.getGeometry(), false, true);
               feature.set('measuredArea', area);
               feature.get('listElementValueArea').innerHTML = area.htmlValue;
               // newContent += area.htmlValue;
             } else if (feature.get('geometryType') === 'polygon') {
-                area = c4g.maps.utils.measureGeometry(feature.getGeometry());
+                area = utils.measureGeometry(feature.getGeometry());
                 feature.set('measuredArea', area);
                 feature.get('listElementValueArea').innerHTML = area.htmlValue;
                 newContent += area.htmlValue;
@@ -428,7 +434,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
             //Start Workaround
             getValueOfGeometry = function (feature){
-                var leng = c4g.maps.utils.measureGeometry(feature.getGeometry(), true);
+                var leng = utils.measureGeometry(feature.getGeometry(), true);
                 // feature.set('measuredLength', length);
                 var val = leng.htmlValue;
                 var valuenumb = val.match(/\d/g);
@@ -448,7 +454,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
               function (event) {
                 activeSketch = event.feature;
                 // create tooltip
-                activeTooltip = new c4g.maps.misc.TooltipPopUp({
+                activeTooltip = new TooltipPopUp({
                   map: self.options.mapController.map,
                   position: event.coordinate,
                   horizontal: true,
@@ -526,3 +532,5 @@ this.c4g.maps.control = this.c4g.maps.control || {};
   });
 
 }(jQuery, this.c4g));
+
+export var Measuretools = this.c4g.maps.control.Measuretools;
