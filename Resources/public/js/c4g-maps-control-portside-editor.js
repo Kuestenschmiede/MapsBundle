@@ -7,6 +7,7 @@ import {cssConstants} from "./c4g-maps-constant";
 import {langConstants} from "./c4g-maps-constant-i18n-de";
 import {utils} from "./c4g-maps-utils";
 import {Sideboard} from "./c4g-maps-control-sideboard";
+import {TooltipPopUp} from "./c4g-maps-misc-tooltippopup";
 
 (function ($, c4g) {
   'use strict';
@@ -918,7 +919,7 @@ import {Sideboard} from "./c4g-maps-control-sideboard";
                   activeSketch.set('styleId', styleId);
 
                   if (enableInstantMeasureCheckbox && enableInstantMeasureCheckbox.checked) {
-                    activeTooltip = new c4g.maps.misc.TooltipPopUp({
+                    activeTooltip = new TooltipPopUp({
                       map: self.options.mapController.map,
                       position: event.coordinate,
                       horizontal: true
@@ -936,7 +937,7 @@ import {Sideboard} from "./c4g-maps-control-sideboard";
                           activeTooltip = null;
                       }
                       else if(!activeTooltip && utils.measureGeometry(activeSketch.getGeometry(), true).rawValue && utils.measureGeometry(activeSketch.getGeometry(), true).rawValue != "0.00"){
-                          activeTooltip = new c4g.maps.misc.TooltipPopUp({
+                          activeTooltip = new TooltipPopUp({
                               map: self.options.mapController.map,
                               position: event.coordinate,
                               horizontal: true
