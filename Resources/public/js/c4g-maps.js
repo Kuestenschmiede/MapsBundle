@@ -914,7 +914,6 @@ import {GeoPicker} from "./c4g-maps-interaction-geopicker";
       }
     };
 
-
-    c4g.maps["mapController_" + mapData['id']] = new c4g.maps.MapController(mapData);
-
 }(jQuery, this.c4g)); // 'The End' :)    - ! Do not write stuff after this line ! -
+
+export let MapController = this.c4g.maps.MapController;
