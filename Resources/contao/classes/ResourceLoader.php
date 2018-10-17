@@ -118,11 +118,6 @@ class ResourceLoader extends coreResourceLoader
                 parent::loadJavaScriptRessource('c4g-maps-constant-i18n', self::BUNDLE_JS_PATH . 'c4g-maps-constant-i18n-de.js' . $staticOption);
                 parent::loadJavaScriptRessource('c4g-maps-popup-info', self::BUNDLE_JS_PATH . 'c4g-maps-popup-info-de.js' . $staticOption);
             }
-            else if ($GLOBALS['TL_LANGUAGE'] == 'fi') {
-                parent::loadJavaScriptRessource('c4g-maps-constant-i18n', self::BUNDLE_JS_PATH . 'c4g-maps-constant-i18n-fi.js' . $staticOption);
-                //ToDo translate this
-                parent::loadJavaScriptRessource('c4g-maps-popup-info', self::BUNDLE_JS_PATH . 'c4g-maps-popup-info-en.js' . $staticOption);
-            }
             else {
                 // use english as fallback
                 parent::loadJavaScriptRessource('c4g-maps-constant-i18n', self::BUNDLE_JS_PATH . 'c4g-maps-constant-i18n-en.js' . $staticOption);
