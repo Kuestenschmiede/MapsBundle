@@ -222,11 +222,6 @@ import {cssConstants} from "./c4g-maps-constant";
 
       var self = this;
       this.options.mapController.map.un('click', self.fnMapRouterInteraction);
-
-      if (self.options.mapController.map.getInteractions() && self.options.mapController.map.getInteractions().getArray() &&
-          self.options.mapController.map.getInteractions().getArray()['9']) {
-        self.options.mapController.map.getInteractions().getArray()['9'].setActive(false);
-      }
     },
 
     addMapInputInteraction: function () {
@@ -261,12 +256,12 @@ import {cssConstants} from "./c4g-maps-constant";
       };
 
       this.options.mapController.map.on('click', self.fnMapRouterInteraction);
-      // if(self.options.mapController.map.getInteractions().getArray()['9']){
-      //     self.options.mapController.map.getInteractions().getArray()['9'].setActive(true);
-      // }
-      // else{
-      //     self.options.mapController.map.getInteractions().getArray()['8'].setActive(true)
-      // }
+      if(self.options.mapController.map.getInteractions().getArray()['9']){
+          self.options.mapController.map.getInteractions().getArray()['9'].setActive(true);
+      }
+      else{
+          self.options.mapController.map.getInteractions().getArray()['8'].setActive(true)
+      }
     },
 
 

@@ -518,9 +518,6 @@ export class C4gLayerController{
                             } else {
                               rFeatures[j].setStyle(c4g.maps.utils.reduceStyle(requestContentData.locationStyle));
                             }
-                            // } else {
-                            //   continue;
-                            // }
                           }
                         }
                       }
@@ -532,7 +529,7 @@ export class C4gLayerController{
                         let element = response.elements[elementId];
 
                         if(element.type == "node"){
-                          if(!element.tags){//not a feature, but part of a way
+                          if(!element.tags){//not a feature, but part of a way or relation
                             continue;
                           }
                           let point = new ol.geom.Point([element.lon,element.lat]).transform('EPSG:4326','EPSG:3857');
@@ -561,7 +558,6 @@ export class C4gLayerController{
                               feature.setGeometry(
                                 new ol.geom.Point(centerPoint)
                               );
-
                             }
                             feature = new ol.Feature({
                               geometry: polygon,
@@ -575,11 +571,13 @@ export class C4gLayerController{
                               geometry: lineString,
                               id: element.id
                             });
-                            let lineExtent = rFeatures[j].getGeometry().getExtent();
-                            centerPoint = ol.extent.getCenter(lineExtent);
-                            rFeatures[j].setGeometry(
-                              new ol.geom.Point(centerPoint)
-                            );
+                            if (requestContentData.settings.forceNodes) {
+                              let lineExtent = feature.getGeometry().getExtent();
+                              centerPoint = ol.extent.getCenter(lineExtent);
+                              feature.setGeometry(
+                                new ol.geom.Point(centerPoint)
+                              );
+                            }
 
                           }
                           feature.set('osm_type', 'way');
