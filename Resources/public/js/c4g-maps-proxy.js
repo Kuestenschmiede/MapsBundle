@@ -380,7 +380,7 @@ export class MapProxy {
         }
 
         // hooks
-        utils.callHookFunctions(c4g.maps.hook.hook_map_click, clickEvent);
+        utils.callHookFunctions(window.c4gMapsHooks.hook_map_click, clickEvent);
       }
     }); // end of "click-observer"
 
