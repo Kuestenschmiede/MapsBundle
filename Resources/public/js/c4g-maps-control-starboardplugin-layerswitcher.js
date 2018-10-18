@@ -544,12 +544,6 @@ import {utils} from "./c4g-maps-utils";
                             if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.addChilds === 'object') {
                               utils.callHookFunctions(c4g.maps.hook.addChilds);
                             }
-
-
-                            if(c4g.maps.hook.starboard_layer_activate && c4g.maps.hook.starboard_layer_activate.length > 0){
-                                let paramObj = {'feature': feature, 'parentItem': childListItem, 'entry':$childEntry};
-                                utils.callHookFunctions(c4g.maps.hook.starboard_layer_activate, paramObj);
-                            }
                         }
                     }
                 }
