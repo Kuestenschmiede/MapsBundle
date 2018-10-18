@@ -3,6 +3,10 @@ this.c4g = this.c4g || {};
 this.c4g.maps = this.c4g.maps || {};
 this.c4g.maps.control = this.c4g.maps.control || {};
 
+import {cssConstants} from "./c4g-maps-constant";
+import {langConstants} from "./c4g-maps-constant-i18n-de";
+import {utils} from "./c4g-maps-utils";
+
 (function ($, c4g) {
   'use strict';
 
@@ -24,7 +28,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
     // default options
     options = $.extend({
-      className: c4g.maps.constant.css.OL_ZOOM_HOME,
+      className: cssConstants.OL_ZOOM_HOME,
       switchable: true,
       enabled: true,
       mapController: undefined
@@ -64,12 +68,12 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       }
 
       options.mapController.map.setView(view);
-      c4g.maps.utils.redrawMapView(options.mapController);
+      utils.redrawMapView(options.mapController);
     };
 
     // wrapper div
     element = document.createElement('div');
-    element.className = options.className + ' ' + c4g.maps.constant.css.OL_UNSELECTABLE + ' button';
+    element.className = options.className + ' ' + cssConstants.OL_UNSELECTABLE + ' button';
 
     if (options.switchable) {
       // button
@@ -101,3 +105,5 @@ this.c4g.maps.control = this.c4g.maps.control || {};
   }); // end of "add methods" ---
 
 }(jQuery, this.c4g));
+
+export var Home = this.c4g.maps.control.Home;

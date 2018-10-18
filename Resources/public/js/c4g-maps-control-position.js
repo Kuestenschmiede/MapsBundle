@@ -3,6 +3,9 @@ this.c4g = this.c4g || {};
 this.c4g.maps = this.c4g.maps || {};
 this.c4g.maps.control = this.c4g.maps.control || {};
 
+import {cssConstants} from "./c4g-maps-constant";
+import {langConstants} from "./c4g-maps-constant-i18n-de";
+
 (function ($, c4g) {
   'use strict';
 
@@ -24,7 +27,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
     // default options
     options = $.extend({
-      className: c4g.maps.constant.css.OL_ZOOM_POS,
+      className: cssConstants.OL_ZOOM_POS,
       switchable: true,
       enabled: true,
       mapController: undefined
@@ -38,11 +41,11 @@ this.c4g.maps.control = this.c4g.maps.control || {};
     var mapData = options.mapController.data;
 
     var enable = function () {
-      $(element).addClass(c4g.maps.constant.css.ENABLED);
+      $(element).addClass(cssConstants.ENABLED);
     };
 
     var disable = function () {
-      $(element).removeClass(c4g.maps.constant.css.ENABLED);
+      $(element).removeClass(cssConstants.ENABLED);
     };
 
     var toggle = function (event) {
@@ -70,7 +73,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
     // wrapper div
     element = document.createElement('div');
-    element.className = options.className + ' ' + c4g.maps.constant.css.OL_UNSELECTABLE + ' button';
+    element.className = options.className + ' ' + cssConstants.OL_UNSELECTABLE + ' button';
 
     if (options.switchable) {
       // button
@@ -102,3 +105,5 @@ this.c4g.maps.control = this.c4g.maps.control || {};
   }); // end of "add methods" ---
 
 }(jQuery, this.c4g));
+
+export var Position = this.c4g.maps.control.Position;
