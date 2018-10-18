@@ -1,4 +1,5 @@
 import {C4gBaselayer} from "./c4g-baselayer";
+import {C4gOverlay} from "./c4g-overlay";
 import {config} from "./c4g-maps-config";
 import {utils} from "./c4g-maps-utils";
 import {langConstants} from "./c4g-maps-constant-i18n-de";
