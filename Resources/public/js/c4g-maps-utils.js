@@ -4,6 +4,7 @@ this.c4g.maps = this.c4g.maps || {};
 
 import {cssConstants} from "./c4g-maps-constant";
 import {Zoomlevel} from "./c4g-maps-control-zoomlevel";
+import * as popupFunctions from "./c4g-maps-popup-info-de";
 
 (function ($, c4g) {
   'use strict';
@@ -714,7 +715,7 @@ import {Zoomlevel} from "./c4g-maps-control-zoomlevel";
             var style;
 
             // check if function exists
-            if (typeof window[functionName] === 'function') {
+            if (typeof popupFunctions[functionName] === 'function') {
               // search style
               if (typeof feature.getStyle === 'function' && feature.getStyle() && typeof feature.getStyle() === 'function') {
                 style = feature.getStyle();
@@ -723,7 +724,7 @@ import {Zoomlevel} from "./c4g-maps-control-zoomlevel";
               } else {
                 return '';
               }
-              return window[functionName](feature, style);
+              return popupFunctions[functionName](feature, style);
             }
             return '';
           }
