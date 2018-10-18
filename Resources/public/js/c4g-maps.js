@@ -790,10 +790,6 @@ import {GeoPicker} from "./c4g-maps-interaction-geopicker";
             this.map.addControl(this.controls.overviewmap);
         }
 
-        if (mapData.starboard.label) {
-            starboard_label = langConstants.CTRL_STARBOARD.replace('Starboard', mapData.starboard.label).replace('starboard', mapData.starboard.label);
-        }
-
         // starboard
       if (mapData.geopicker && mapData.geopicker.type === "backend") {
         enableStarboard = false;
@@ -803,26 +799,9 @@ import {GeoPicker} from "./c4g-maps-interaction-geopicker";
       //this.leftSlideElements.push('.ol-overlay-container');
       //this.rightSlideElements.push('.ol-overlay-container');
 
-      console.log(c4g.maps.control);
       if (typeof Starboard === 'function' && enableStarboard) {
-          this.controls.starboard = new Starboard({
-            create: mapData.starboard.enable || false,
-            headline: mapData.starboard.label,
-            tipLabel: starboard_label || false,
-            caching: mapData.caching,
-            mapController: this,
-            extDiv: mapData.starboard.div,
-            defaultOpen: mapData.starboard.open,
-            filter: mapData.starboard.filter,
-            button: mapData.starboard.button,
-            baselayerSwitcherCreate: mapData.baselayerswitcher.enable,
-            baselayerSwitcherTitle: mapData.baselayerswitcher.label,
-            layerSwitcherCreate: mapData.layerswitcher.enable,
-            layerSwitcherTitle: mapData.layerswitcher.label
-          });
-          this.map.addControl(this.controls.starboard);
+          this.initializeStarboard();
         }
-      //c4g.maps.utils.callHookFunctions(c4g.maps.hook_controls);
 
         // backend-geopicker
         if (mapData.geopicker && (mapData.geopicker.type === "backend" || mapData.geopicker.type === "frontend")) {
@@ -913,6 +892,34 @@ import {GeoPicker} from "./c4g-maps-interaction-geopicker";
         utils.callHookFunctions(window.c4gMapsHooks.mapController_addControls, {mapController: this, Container: controlContainerTopLeft});
       }
     };
+    // Add methods
+  c4g.maps.MapController.prototype = $.extend(c4g.maps.MapController.prototype, {
+      initializeStarboard: function() {
+        const mapData = this.data;
+          let starboard_label;
+          if (mapData.starboard.label) {
+          starboard_label = langConstants.CTRL_STARBOARD.replace('Starboard', mapData.starboard.label).replace('starboard', mapData.starboard.label);
+        }
+
+
+        this.controls.starboard = new Starboard({
+          create: mapData.starboard.enable || false,
+          headline: mapData.starboard.label,
+          tipLabel: starboard_label || false,
+          caching: mapData.caching,
+          mapController: this,
+          extDiv: mapData.starboard.div,
+          defaultOpen: mapData.starboard.open,
+          filter: mapData.starboard.filter,
+          button: mapData.starboard.button,
+          baselayerSwitcherCreate: mapData.baselayerswitcher.enable,
+          baselayerSwitcherTitle: mapData.baselayerswitcher.label,
+          layerSwitcherCreate: mapData.layerswitcher.enable,
+          layerSwitcherTitle: mapData.layerswitcher.label
+        });
+        this.map.addControl(this.controls.starboard);
+      }
+  });
 
 }(jQuery, this.c4g)); // 'The End' :)    - ! Do not write stuff after this line ! -
 

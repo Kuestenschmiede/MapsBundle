@@ -3,6 +3,8 @@ import {utils} from "./c4g-maps-utils"
 
 var c4g = this.c4g;
 
+import {Customtab} from "./c4g-maps-control-starboardplugin-customtab";
+
 export class C4gLayerController{
   constructor(proxy){
     this.proxy = proxy;
@@ -86,10 +88,14 @@ export class C4gLayerController{
         layername = layer.name;
         layerid = layer.tabId;
         layericon = layer.awesomeicon;
-        c4g.maps.starboardTabs = c4g.maps.starboardTabs || {};
         starboard = self.proxy.options.mapController.controls.starboard;
+        if (!starboard) {
+          self.proxy.options.mapController.initializeStarboard();
+          starboard = self.proxy.options.mapController.controls.starboard;
+        }
         starboard.hook_layerswitcher_loaded.push(function(){
-          c4g.maps.starboardTabs[layerid] = new c4g.maps.control.starboardplugin.Customtab(starboard, {
+          starboard.starboardTabs = starboard.starboardTabs || {};
+          starboard.starboardTabs[layerid] = new Customtab(starboard, {
             name: layername,
             tabId: layerid,
             awesomeicon: layericon
