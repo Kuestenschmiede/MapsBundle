@@ -29,6 +29,9 @@ import {Starboard} from "./c4g-maps-control-starboard";
 import {Editor} from "./c4g-maps-control-portside-editor";
 import {Account} from "./c4g-maps-control-portside-account";
 import {GeoPicker} from "./c4g-maps-interaction-geopicker";
+import {Home} from "./c4g-maps-control-home";
+import {Position} from "./c4g-maps-control-position";
+import {Infopage} from "./c4g-maps-control-portside-infopage";
 
 (function ($, c4g) {
     'use strict';
@@ -548,7 +551,7 @@ import {GeoPicker} from "./c4g-maps-interaction-geopicker";
             this.map.addControl(this.controls.zoom_extent);
         }
         if (mapData.zoom_home &! mapData.zoom_slider) {
-            this.controls.zoom_home = new c4g.maps.control.Home({
+            this.controls.zoom_home = new Home({
                 label: ' ',
                 disableLabel: ' ',
                 tipLabel: langConstants.CTRL_ZOOM_HOME,
@@ -559,7 +562,7 @@ import {GeoPicker} from "./c4g-maps-interaction-geopicker";
         }
 
         if (mapData.zoom_position &! mapData.zoom_slider) {
-            this.controls.zoom_position = new c4g.maps.control.Position({
+            this.controls.zoom_position = new Position({
                 label: ' ',
                 disableLabel: ' ',
                 tipLabel: langConstants.CTRL_ZOOM_POS,
@@ -687,8 +690,8 @@ import {GeoPicker} from "./c4g-maps-interaction-geopicker";
             this.map.addControl(this.controls.rotate);
         }
         // infopage
-        if (mapData.infopage && typeof c4g.maps.control.Infopage === 'function') {
-            this.controls.infopage = new c4g.maps.control.Infopage({
+        if (mapData.infopage && typeof Infopage === 'function') {
+            this.controls.infopage = new Infopage({
                 tipLabel: langConstants.CTRL_INFOPAGE,
                 target: controlContainerTopLeft,
                 caching: mapData.caching,

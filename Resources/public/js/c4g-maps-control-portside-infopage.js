@@ -3,6 +3,10 @@ this.c4g = this.c4g || {};
 this.c4g.maps = this.c4g.maps || {};
 this.c4g.maps.control = this.c4g.maps.control || {};
 
+import {cssConstants} from "./c4g-maps-constant";
+import {langConstants} from "./c4g-maps-constant-i18n-de";
+import {Sideboard} from "./c4g-maps-control-sideboard";
+
 (function ($, c4g) {
   'use strict';
 
@@ -18,9 +22,9 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
     // extend options
     this.options = $.extend({
-      className: c4g.maps.constant.css.INFOPAGE,
+      className: cssConstants.INFOPAGE,
       name: 'infopage',
-      headline: c4g.maps.constant.i18n.INFOPAGE,
+      headline: langConstants.INFOPAGE,
       create: true,
       mapController: undefined,
       direction: 'left'
@@ -33,9 +37,9 @@ this.c4g.maps.control = this.c4g.maps.control || {};
     this.mainSection = document.createElement('div');
 
     // call parent constructor
-    c4g.maps.control.Sideboard.call(this, this.options);
+    Sideboard.call(this, this.options);
   };
-  ol.inherits(c4g.maps.control.Infopage, c4g.maps.control.Sideboard);
+  ol.inherits(c4g.maps.control.Infopage, Sideboard);
 
   /**
    * Methods
@@ -76,8 +80,8 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         infoView = this.addView({
         name: 'info',
         triggerConfig: {
-          tipLabel: c4g.maps.constant.i18n.INFOPAGE_VIEW_TRIGGER,
-          className: c4g.maps.constant.css.INFOPAGE_VIEW_TRIGGER,
+          tipLabel: langConstants.INFOPAGE_VIEW_TRIGGER,
+          className: cssConstants.INFOPAGE_VIEW_TRIGGER,
           withHeadline: false
         },
         sectionElements: [
@@ -104,8 +108,8 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       viewInfopage = self.addInfopage({
         name: 'Infopage',
         triggerConfig: {
-          tipLabel: 'Infopage',//c4g.maps.constant.i18n[TRIGGER_DRAW],
-          className: 'c4g_infopage_trigger',//c4g.maps.constant.css[TRIGGER_DRAW]
+          tipLabel: 'Infopage',//langConstants[TRIGGER_DRAW],
+          className: 'c4g_infopage_trigger',//cssConstants[TRIGGER_DRAW]
           withHeadline: false
         },
         sectionElements: [
@@ -129,8 +133,8 @@ this.c4g.maps.control = this.c4g.maps.control || {};
           //
           //   // add apply button
           //   applyButton = document.createElement('button');
-          //   applyButton.className = c4g.maps.constant.css.ICON + ' ' + c4g.maps.constant.css.EDITOR_FEATURE_APPLY;
-          //   applyButton.title = c4g.maps.constant.i18n.EDITOR_FEATURE_APPLY;
+          //   applyButton.className = cssConstants.ICON + ' ' + cssConstants.EDITOR_FEATURE_APPLY;
+          //   applyButton.title = langConstants.EDITOR_FEATURE_APPLY;
           //   applyButton.setAttribute('feat_id', i);
           //
           // }; // end of "modifyFeatureFunction()"
@@ -152,3 +156,5 @@ this.c4g.maps.control = this.c4g.maps.control || {};
   });
 
 }(jQuery, this.c4g));
+
+export var Infopage = this.c4g.maps.control.Infopage;
