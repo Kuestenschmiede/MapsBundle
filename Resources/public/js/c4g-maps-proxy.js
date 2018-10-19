@@ -498,6 +498,7 @@ export class MapProxy {
     });
 
     popup = new ol.Overlay({
+      autoPan: true,
       element: popUpElement,
       positioning: 'bottom-left',
       offset: [-50, 0]/*,
