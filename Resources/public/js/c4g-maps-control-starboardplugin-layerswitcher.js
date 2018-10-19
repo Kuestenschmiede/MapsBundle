@@ -541,14 +541,14 @@ import {utils} from "./c4g-maps-utils";
                                 $childEntry.addClass(cssConstants.INACTIVE);
                               }
                             }
-                            if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.addChilds === 'object') {
-                              utils.callHookFunctions(c4g.maps.hook.addChilds);
+
+                            if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.addChilds === 'object') {
+                              utils.callHookFunctions(window.c4gMapsHooks.addChilds);
                             }
 
-
-                            if(c4g.maps.hook.starboard_layer_activate && c4g.maps.hook.starboard_layer_activate.length > 0){
+                            if(window.c4gMapsHooks.starboard_layer_activate && window.c4gMapsHooks.starboard_layer_activate.length > 0){
                                 let paramObj = {'feature': feature, 'parentItem': childListItem, 'entry':$childEntry};
-                                utils.callHookFunctions(c4g.maps.hook.starboard_layer_activate, paramObj);
+                                utils.callHookFunctions(window.c4gMapsHooks.starboard_layer_activate, paramObj);
                             }
                         }
                     }
@@ -607,9 +607,9 @@ import {utils} from "./c4g-maps-utils";
             }
 
             // call hook "layerswitcher_forEachItem"
-            if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.layerswitcher_forEachItem === "object") {
+            if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.layerswitcher_forEachItem === "object") {
               utils.callHookFunctions(
-                  c4g.maps.hook.layerswitcher_forEachItem,
+                  window.c4gMapsHooks.layerswitcher_forEachItem,
                   {that: this, item: item, entry: $entry}
               );
             }

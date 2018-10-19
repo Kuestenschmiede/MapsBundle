@@ -32,7 +32,7 @@ import {Customtab} from "./c4g-maps-control-starboardplugin-customtab";
       filter: false
     }, opt_options);
 
-    //c4g.maps.hook.starboard_loadPlugins = [];
+    //window.c4gMapsHooks.starboard_loadPlugins = [];
 
     //set headline, since the definition above does not work for headline
     if (!this.options.headline || this.options.headline.length === 0) {
@@ -108,8 +108,8 @@ import {Customtab} from "./c4g-maps-control-starboardplugin-customtab";
 
         // - check & load other Starboard-plugins (via hook)
         // called functions have to add themselves to this.plugins
-        if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.starboard_loadPlugins === 'object') {
-          utils.callHookFunctions(c4g.maps.hook.starboard_loadPlugins, self);
+        if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.starboard_loadPlugins === 'object') {
+          utils.callHookFunctions(window.c4gMapsHooks.starboard_loadPlugins, self);
           // - activate new plugins if they are not activated already
           for (plugin in self.plugins) {
             // Check if plugin is a real plugin and not a property of the object prototype

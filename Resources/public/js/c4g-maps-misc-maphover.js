@@ -368,8 +368,8 @@ import {utils} from "./c4g-maps-utils";
                     objPopup.feature = hovered.feature;
                     objPopup.layer = hovered.layer;
                     // Call the popup hook for plugin specific popup content
-                    if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.proxy_fillPopup === 'object') {
-                        utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
+                    if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_fillPopup === 'object') {
+                        utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, objPopup);
                     }
                     proxy.setPopup(objPopup, proxy);
                 } else {
@@ -390,8 +390,8 @@ import {utils} from "./c4g-maps-utils";
                             objPopup.layer = hovered.layer;
 
                             // Call the popup hook for plugin specific popup content
-                            if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.proxy_fillPopup === 'object') {
-                                utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
+                            if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_fillPopup === 'object') {
+                                utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, objPopup);
                             }
 
                             proxy.setPopup(objPopup, proxy);

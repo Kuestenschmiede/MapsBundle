@@ -1,7 +1,6 @@
 // 'namespace'
 this.c4g = this.c4g || {};
 this.c4g.maps = this.c4g.maps || {};
-this.c4g.maps.hook = this.c4g.maps.hook || {};
 
 'use strict';
 
@@ -27,7 +26,7 @@ export class MapProxy {
 
     c4g.maps.editorStyles = c4g.maps.editorStyles || {};
 
-    //c4g.maps.hook.proxy_fillPopup = [];
+    //window.c4gMapsHooks.proxy_fillPopup = [];
 
     this.hook_baselayer_loaded = [];
     this.hook_baselayer_visibility = [];
@@ -37,7 +36,7 @@ export class MapProxy {
     this.hook_map_zoom = [];
 
     // add global hook for accessibility when there is no proxy reference
-    c4g.maps.hook.proxy_layer_loaded = c4g.maps.hook.proxy_layer_loaded || [];
+    window.c4gMapsHooks.proxy_layer_loaded = window.c4gMapsHooks.proxy_layer_loaded || [];
 
     this.baselayerIds = [];
     this.activeBaselayerId = undefined;
@@ -139,7 +138,7 @@ export class MapProxy {
       }
 
       // hooks
-      utils.callHookFunctions(c4g.maps.hook.hook_map_zoom,self);
+      utils.callHookFunctions(window.c4gMapsHooks.hook_map_zoom,self);
 
       if (self.options.mapController.data.caching && map.getView().getZoom()) {
           utils.storeValue('zoom', map.getView().getZoom());
@@ -155,8 +154,8 @@ export class MapProxy {
                 utils.storeValue('lat', coordinate[1]);
             }
         }
-        c4g.maps.hook.map_center_changed = c4g.maps.hook.map_center_changed || [];
-        utils.callHookFunctions(c4g.maps.hook.map_center_changed, map.getView().getCenter());
+        window.c4gMapsHooks.map_center_changed = window.c4gMapsHooks.map_center_changed || [];
+        utils.callHookFunctions(window.c4gMapsHooks.map_center_changed, map.getView().getCenter());
     }); // end of "center-observer"
 
     // click-observer
@@ -342,8 +341,8 @@ export class MapProxy {
               objPopup.feature = feature;
               objPopup.layer = layer;
               // Call the popup hook for plugin specific popup content
-              if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.proxy_fillPopup === 'object') {
-                utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
+              if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_fillPopup === 'object') {
+                utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, objPopup);
               }
               self.setPopup(objPopup);
             } else {
@@ -364,8 +363,8 @@ export class MapProxy {
                 objPopup.layer = layer;
 
                 // Call the popup hook for plugin specific popup content
-                if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.proxy_fillPopup === 'object') {
-                  utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
+                if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_fillPopup === 'object') {
+                  utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, objPopup);
                 }
 
                 self.setPopup(objPopup);
