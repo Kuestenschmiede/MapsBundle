@@ -13,7 +13,7 @@
 <?php if (\Environment::get('isAjaxRequest')): ?>
 <script>
   var mapData = <?php echo json_encode($this->mapData) ?>;
-    initMaps();
+    initMaps(mapData);
 </script>
 <?php else: ?>
 
