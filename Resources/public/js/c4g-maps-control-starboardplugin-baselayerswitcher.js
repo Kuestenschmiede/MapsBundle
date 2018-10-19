@@ -232,8 +232,8 @@ import {utils} from "./c4g-maps-utils";
             //         $(children[i].firstChild).addClass(cssConstants.ACTIVE).removeClass(cssConstants.INACTIVE);
             //     }
             // }
-            c4g.maps.hook.baselayer_changed = c4g.maps.hook.baselayer_changed || [];
-            utils.callHookFunctions(c4g.maps.hook.baselayer_changed, itemUid);
+            window.c4gMapsHooks.baselayer_changed = window.c4gMapsHooks.baselayer_changed || [];
+            utils.callHookFunctions(window.c4gMapsHooks.baselayer_changed, itemUid);
           }
       }; // end of "handleEntryClick()"
 

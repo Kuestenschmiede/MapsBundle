@@ -27,7 +27,7 @@ export class C4gLayerController{
       self.addLayers(data.layer, data.foreignLayers);
       self.proxy.layers_loaded = true;
       utils.callHookFunctions(self.proxy.hook_layer_loaded, self.proxy.layerIds);
-      // utils.callHookFunctions(c4g.maps.hook.proxy_layer_loaded, {layerIds: self.proxy.layerIds, proxy: self.proxy});
+      // utils.callHookFunctions(window.c4gMapsHooks.proxy_layer_loaded, {layerIds: self.proxy.layerIds, proxy: self.proxy});
       self.proxy.checkLocationStyles({
         done: function () {
           self.drawLayerInitial();
@@ -1346,8 +1346,8 @@ export class C4gLayerController{
                 objPopup.feature = features['0'];
                 objPopup.layer = layer.vectorLayer.getLayers().getArray()[0];
                 // Call the popup hook for plugin specific popup content
-                if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.proxy_fillPopup === 'object') {
-                  utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
+                if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_fillPopup === 'object') {
+                  utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, objPopup);
                 }
                 this.proxy.setPopup(objPopup);
               } else {
@@ -1369,8 +1369,8 @@ export class C4gLayerController{
                     objPopup.layer = layer;
 
                     // Call the popup hook for plugin specific popup content
-                    if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.proxy_fillPopup === 'object') {
-                      utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
+                    if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_fillPopup === 'object') {
+                      utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, objPopup);
                     }
 
                     self.proxy.setPopup(objPopup);
@@ -1664,8 +1664,8 @@ export class C4gLayerController{
         objPopup.feature = features['0'];
         objPopup.layer = layer;
         // Call the popup hook for plugin specific popup content
-        if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.proxy_fillPopup === 'object') {
-          utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
+        if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_fillPopup === 'object') {
+          utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, objPopup);
         }
         self.proxy.setPopup(objPopup);
       } else {
@@ -1686,8 +1686,8 @@ export class C4gLayerController{
             objPopup.layer = layer;
 
             // Call the popup hook for plugin specific popup content
-            if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.proxy_fillPopup === 'object') {
-              utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
+            if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_fillPopup === 'object') {
+              utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, objPopup);
             }
 
             self.proxy.setPopup(objPopup);

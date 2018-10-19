@@ -46,8 +46,8 @@ import {TooltipPopUp} from "./c4g-maps-misc-tooltippopup";
       return false;
     }
 
-    //c4g.maps.hook.editor_loadTabs = [];
-    //c4g.maps.hook.editor_featureChanged = [];
+    //window.c4gMapsHooks.editor_loadTabs = [];
+    //window.c4gMapsHooks.editor_featureChanged = [];
     this.tabs = [];
     // @TODO
     // this.typeLayer = undefined;
@@ -148,8 +148,8 @@ import {TooltipPopUp} from "./c4g-maps-misc-tooltippopup";
                 self.tabs.push(self.addDrawView({type: 'Freehand', styleIds: data.styles_freehand}));
             }
             // Call hook function for dynamically added tabs
-            if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.editor_loadTabs === 'object') {
-              utils.callHookFunctions(c4g.maps.hook.editor_loadTabs, self);
+            if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.editor_loadTabs === 'object') {
+              utils.callHookFunctions(window.c4gMapsHooks.editor_loadTabs, self);
             }
 
             return true;
@@ -368,8 +368,8 @@ import {TooltipPopUp} from "./c4g-maps-misc-tooltippopup";
               );
               self.save();
               // Call hook to notify the feature change
-              if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.editor_featureChanged === 'object') {
-                utils.callHookFunctions(c4g.maps.hook.editor_featureChanged, {
+              if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.editor_featureChanged === 'object') {
+                utils.callHookFunctions(window.c4gMapsHooks.editor_featureChanged, {
                   feature: changedFeature,
                   action: 'renamed'
                 });
@@ -387,8 +387,8 @@ import {TooltipPopUp} from "./c4g-maps-misc-tooltippopup";
               changedFeature.set('editorVars', currentVars);
               self.save();
               // Call hook to notify the feature change
-              if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.editor_featureChanged === 'object') {
-                utils.callHookFunctions(c4g.maps.hook.editor_featureChanged, {
+              if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.editor_featureChanged === 'object') {
+                utils.callHookFunctions(window.c4gMapsHooks.editor_featureChanged, {
                   feature: changedFeature,
                   action: 'changed_var'
                 });
@@ -457,8 +457,8 @@ import {TooltipPopUp} from "./c4g-maps-misc-tooltippopup";
                 self.save();
                 self.applyFeatureModification = false;
                 // Call hook to notify the feature change
-                if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.editor_featureChanged === 'object') {
-                  utils.callHookFunctions(c4g.maps.hook.editor_featureChanged, {
+                if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.editor_featureChanged === 'object') {
+                  utils.callHookFunctions(window.c4gMapsHooks.editor_featureChanged, {
                     feature: modifyFeature,
                     action: 'edited'
                   });
@@ -516,8 +516,8 @@ import {TooltipPopUp} from "./c4g-maps-misc-tooltippopup";
               // Call hook to notify the feature change
               // Maybe pass the remaining features instead of the deletedFeature ?
               // Or maybe a second hook for deletion, where both is passed ?
-              if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.editor_featureChanged === 'object') {
-                utils.callHookFunctions(c4g.maps.hook.editor_featureChanged, {
+              if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.editor_featureChanged === 'object') {
+                utils.callHookFunctions(window.c4gMapsHooks.editor_featureChanged, {
                   feature: deleteFeature,
                   action: 'deleted'
                 });
@@ -1200,8 +1200,8 @@ import {TooltipPopUp} from "./c4g-maps-misc-tooltippopup";
         storage = window.localStorage;
       }
       // Call hook functions before save
-      if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.editor_onSave === 'object') {
-        utils.callHookFunctions(c4g.maps.hook.editor_onSave, saveData);
+      if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.editor_onSave === 'object') {
+        utils.callHookFunctions(window.c4gMapsHooks.editor_onSave, saveData);
       }
       storage.setItem(slotName, JSON.stringify(saveData));
 
@@ -1278,8 +1278,8 @@ import {TooltipPopUp} from "./c4g-maps-misc-tooltippopup";
               done: function () {
                 importFeatures();
                 // Call hook functions on load
-                if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.editor_onLoad === 'object') {
-                  utils.callHookFunctions(c4g.maps.hook.editor_onLoad, loadData);
+                if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.editor_onLoad === 'object') {
+                  utils.callHookFunctions(window.c4gMapsHooks.editor_onLoad, loadData);
                 }
               },
               always: function () {
@@ -1292,8 +1292,8 @@ import {TooltipPopUp} from "./c4g-maps-misc-tooltippopup";
         importFeatures();
         self.spinner.hide();
         // Call hook functions on load
-        if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.editor_onLoad === 'object') {
-          utils.callHookFunctions(c4g.maps.hook.editor_onLoad, loadData);
+        if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.editor_onLoad === 'object') {
+          utils.callHookFunctions(window.c4gMapsHooks.editor_onLoad, loadData);
         }
       }
     }, // End of "load"

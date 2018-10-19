@@ -803,8 +803,8 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                                 objPopup.feature = feature;
                                 objPopup.layer = layer;
                                 // Call the popup hook for plugin specific popup content
-                                if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.proxy_fillPopup === 'object') {
-                                    c4g.maps.utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
+                                if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_fillPopup === 'object') {
+                                    c4g.maps.utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, objPopup);
                                 }
                                 self.config.mapController.proxy.setPopup(objPopup);
                             } else {
@@ -825,8 +825,8 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                                         objPopup.layer = layer;
 
                                         // Call the popup hook for plugin specific popup content
-                                        if (c4g.maps.hook !== undefined && typeof c4g.maps.hook.proxy_fillPopup === 'object') {
-                                            c4g.maps.utils.callHookFunctions(c4g.maps.hook.proxy_fillPopup, objPopup);
+                                        if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_fillPopup === 'object') {
+                                            c4g.maps.utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, objPopup);
                                         }
 
                                         self.setPopup(objPopup);
