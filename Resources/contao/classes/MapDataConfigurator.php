@@ -14,10 +14,12 @@
 namespace con4gis\MapsBundle\Resources\contao\classes;
 
 use con4gis\CoreBundle\Resources\contao\models\C4gSettingsModel;
+use con4gis\MapsBundle\Classes\Events\LoadMapdataEvent;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapBaselayersModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use Contao\Input;
+use Contao\System;
 
 /**
  * Class MapDataConfigurator
@@ -520,6 +522,11 @@ class MapDataConfigurator
         if (Input::get('mapsParams')) {
             $mapData['initialParams'] = Input::get('mapsParams');
         }
+        $eventDispatcher = System::getContainer()->get('event_dispatcher');
+        $event = new LoadMapdataEvent();
+        $event->setMapData($mapData);
+        $eventDispatcher->dispatch($event::NAME, $event);
+        $mapData = $event->getMapData();
 
         // load resources
         //
