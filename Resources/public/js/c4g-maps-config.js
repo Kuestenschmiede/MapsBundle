@@ -55,7 +55,6 @@ this.c4g.maps.config = this.c4g.maps.config || {};
       attributions: 'Style by <a target="_blank" href="http://www.opencyclemap.org/">OpenCycleMap</a>' + ' ' +ol.source.OSM.ATTRIBUTION,
       minZoom: 0,
       maxZoom: 19,
-      crossOrigin: 'anonymous',
       url: 'http://{a-c}.tile2.opencyclemap.org/transport/{z}/{x}/{y}.png'
     },
 
