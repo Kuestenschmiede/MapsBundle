@@ -34,7 +34,7 @@ this.c4g.maps.config = this.c4g.maps.config || {};
         ol.source.OSM.ATTRIBUTION,
       minZoom: 0,
       maxZoom: 19,
-      url: 'http://tile.memomaps.de/tilegen/{z}/{x}/{y}.png'
+      url: 'https://tile.memomaps.de/tilegen/{z}/{x}/{y}.png'
     },
 
     LandscapeMap: {
@@ -49,13 +49,6 @@ this.c4g.maps.config = this.c4g.maps.config || {};
     Mapnik: {
       attributions: ol.source.OSM.ATTRIBUTION,
       crossOrigin: 'anonymous',
-    },
-
-    TransportMap: {
-      attributions: 'Style by <a target="_blank" href="http://www.opencyclemap.org/">OpenCycleMap</a>' + ' ' +ol.source.OSM.ATTRIBUTION,
-      minZoom: 0,
-      maxZoom: 19,
-      url: 'http://{a-c}.tile2.opencyclemap.org/transport/{z}/{x}/{y}.png'
     },
 
     NONE: '' // last line
