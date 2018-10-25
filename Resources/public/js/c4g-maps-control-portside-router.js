@@ -186,6 +186,7 @@ import {cssConstants} from "./c4g-maps-constant";
       if (opt_options && opt_options.toLonLat) {
         this.performReverseSearch(this.$toInput, opt_options.toLonLat);
         this.toValue = new ol.geom.Point([opt_options.toLonLat[1], opt_options.toLonLat[0]]);
+        this.recalculateRoute();
       }
 
     },
@@ -237,12 +238,14 @@ import {cssConstants} from "./c4g-maps-constant";
           //self.$fromInput.val(ol.proj.toLonLat(evt.coordinate));
           self.performReverseSearch(self.$fromInput, coordinate);
           self.fromValue = new ol.geom.Point(coordinate);
+          self.recalculateRoute();
 
           //self.$fromInput.trigger('change');
         } else if (self.$toInput.val() === "") {
           //self.$toInput.val(ol.proj.toLonLat(evt.coordinate));
           self.performReverseSearch(self.$toInput, coordinate);
           self.toValue = new ol.geom.Point(coordinate);
+          self.recalculateRoute();
         } else if (self.$overInput) {
             if(self.$overInput.val() ==="") {
                 self.performReverseSearch(self.$overInput, coordinate);
@@ -250,6 +253,7 @@ import {cssConstants} from "./c4g-maps-constant";
                     self.overValue={};
                 }
                 self.overValue[self.index]=new ol.geom.Point(coordinate);
+                self.recalculateRoute();
                 self.$buttonOver.prop("disabled",false);
             }
         }
@@ -672,12 +676,14 @@ import {cssConstants} from "./c4g-maps-constant";
 
       if (from) {
         this.performReverseSearch(this.$fromInput, coordinate);
+        this.recalculateRoute();
         this.fromValue = new ol.geom.Point(coordinate);
 
         //this.$fromInput.trigger('change');
       }
       else {
         this.performReverseSearch(this.$toInput, coordinate);
+        this.recalculateRoute();
         this.toValue = new ol.geom.Point(coordinate);
       }
 
@@ -1618,8 +1624,6 @@ import {cssConstants} from "./c4g-maps-constant";
                   } else if ($input.attr('name') === "routingTo") {
                       self.$routerToClear.show();
                   }
-
-                  self.recalculateRoute();
               }
 
           })
