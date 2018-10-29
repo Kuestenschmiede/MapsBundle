@@ -557,6 +557,7 @@ import {cssConstants} from "./c4g-maps-constant";
           self.$overInput = $(self.overInput);
           self.$overInput.on('change', function () {
               self.performSearch(self.$overInput, "overValue");
+            self.recalculateRoute();
           });
       });
 
@@ -589,6 +590,7 @@ import {cssConstants} from "./c4g-maps-constant";
       this.$fromInput = $(this.fromInput);
       this.$fromInput.on('change', function () {
         self.performSearch(self.$fromInput, "fromValue");
+        self.recalculateRoute();
         if (self.$fromInput.val() !== "") {
           self.$routerFromClear.show();
         } else {
@@ -635,6 +637,7 @@ import {cssConstants} from "./c4g-maps-constant";
       this.$toInput = $(this.toInput);
       this.$toInput.on('change', function () {
         self.performSearch(self.$toInput, "toValue");
+        self.recalculateRoute();
         if (self.$toInput.val() !== "") {
           self.$routerToClear.show();
         } else {
@@ -1633,7 +1636,7 @@ import {cssConstants} from "./c4g-maps-constant";
 
     },
 
-    performSearch: function ($input, value) {
+    performSearch: function ($input, value, opt_callback) {
 
       var map,
           bounds,
@@ -1679,7 +1682,9 @@ import {cssConstants} from "./c4g-maps-constant";
               delete self[value];
           }
 
-          self.recalculateRoute();
+        if (opt_callback && typeof opt_callback === "function") {
+          opt_callback();
+        }
       })
       .error(function () {
           alert(langConstants.ROUTER_VIEW_ALERT_GEOCODING);
