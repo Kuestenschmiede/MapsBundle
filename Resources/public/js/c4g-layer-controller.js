@@ -540,9 +540,9 @@ export class C4gLayerController{
                           }
                           let point = new ol.geom.Point([element.lon,element.lat]).transform('EPSG:4326','EPSG:3857');
                           feature = new ol.Feature({
-                            geometry: point,
-                            id: element.id
+                            geometry: point
                           });
+                          feature.setId(element.id);
                           feature.set('osm_type', 'node');
                         }
                         else if(element.type == "way"){
