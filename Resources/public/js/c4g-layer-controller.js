@@ -27,7 +27,7 @@ export class C4gLayerController{
       self.addLayers(data.layer, data.foreignLayers);
       self.proxy.layers_loaded = true;
       utils.callHookFunctions(self.proxy.hook_layer_loaded, self.proxy.layerIds);
-      // utils.callHookFunctions(window.c4gMapsHooks.proxy_layer_loaded, {layerIds: self.proxy.layerIds, proxy: self.proxy});
+      utils.callHookFunctions(window.c4gMapsHooks.proxy_layer_loaded, {layerIds: self.proxy.layerIds, proxy: self.proxy});
       self.proxy.checkLocationStyles({
         done: function () {
           self.drawLayerInitial();
