@@ -1,4 +1,5 @@
 import {C4gOverlay} from "./c4g-overlay"
+import {config} from "./c4g-maps-config";
 
 export class C4gOverlayController{
     constructor(baselayer){
@@ -9,8 +10,8 @@ export class C4gOverlayController{
     showOverlayLayer(overlayId){
         var self = this,
             overlayLayerConfig,
-            osmSourceConfigs = c4g.maps.config.osm,
-            stamenSourceConfigs = c4g.maps.config.stamen,
+            osmSourceConfigs = config.osm,
+            stamenSourceConfigs = config.stamen,
             layerOptions,
             overlayLayer,
             noUrl;
