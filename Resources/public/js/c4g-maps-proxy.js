@@ -36,6 +36,7 @@ export class MapProxy {
     this.hook_map_zoom = [];
 
     // add global hook for accessibility when there is no proxy reference
+    window.c4gMapsHooks = window.c4gMapsHooks || {};
     window.c4gMapsHooks.proxy_layer_loaded = window.c4gMapsHooks.proxy_layer_loaded || [];
 
     this.baselayerIds = [];
