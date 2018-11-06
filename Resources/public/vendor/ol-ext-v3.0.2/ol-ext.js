@@ -1,7 +1,7 @@
 /**
  * ol-ext - A set of cool extensions for OpenLayers (ol) in node modules structure
  * @description ol3,openlayers,popup,menu,symbol,renderer,filter,canvas,interaction,split,statistic,charts,pie,LayerSwitcher,toolbar,animation
- * @version v3.0.0
+ * @version v3.0.1
  * @author Jean-Marc Viglino
  * @see https://github.com/Viglino/ol-ext#,
  * @license BSD-3-Clause
@@ -392,7 +392,7 @@ ol.control.SearchJSON.prototype.autocomplete = function (s, cback)
 	var parameters = '';
 	for (var index in data) {
 		parameters += (parameters) ? '&' : '?';
-		if (data.hasOwnProperty(index)) parameters += index + '=' + data[index];
+		if (data.hasOwnProperty(index)) parameters += index + '=' + encodeURIComponent(data[index]);
 	}
 	this.ajax(url + parameters, 
 		function (resp) {
@@ -589,7 +589,7 @@ ol.control.SearchGeoportail = function(options) {
   options = options || {};
   options.className = options.className || 'IGNF';
   options.typing = options.typing || 500;
-  options.url = "http://wxs.ign.fr/"+options.apiKey+"/ols/apis/completion";
+  options.url = "https://wxs.ign.fr/"+options.apiKey+"/ols/apis/completion";
   ol.control.SearchJSON.call(this, options);
 	this.set("copy","<a href='https://www.geoportail.gouv.fr/' target='new'>&copy; IGN-Géoportail</a>");
   this.set('type', options.type || 'StreetAddress,PositionOfInterest');
@@ -1364,21 +1364,21 @@ ol.control.LayerSwitcher.prototype.setprogress_ = function(layer)
  *	@param {bool} options.autoDeactivate used with subbar to deactivate all control when top level control deactivate, default false
  *	@param {Array<_ol_control_>} options.controls a list of control to add to the bar
  */
-ol.control.Bar = function(options)
-{	if (!options) options={};
+ol.control.Bar = function(options) {
+  if (!options) options={};
 	var element = $("<div>").addClass('ol-unselectable ol-control ol-bar');
 	if (options.className) element.addClass(options.className);
 	if (options.group) element.addClass('ol-group');
-	ol.control.Control.call(this,
-	{	element: element.get(0),
+	ol.control.Control.call(this, {
+    element: element.get(0),
 		target: options.target
 	});
 	this.set('toggleOne', options.toggleOne);
 	this.set('autoDeactivate', options.autoDeactivate);
 	this.controls_ = [];
-	if (options.controls instanceof Array)
-	{	for (var i=0; i<options.controls.length; i++)
-		{	this.addControl(options.controls[i]);
+	if (options.controls instanceof Array) {
+    for (var i=0; i<options.controls.length; i++) {
+      this.addControl(options.controls[i]);
 		}
 	}
 };
@@ -1393,18 +1393,18 @@ ol.control.Bar.prototype.setVisible = function (val) {
 /** Get the control visibility
 * @return {boolean} b
 */
-ol.control.Bar.prototype.getVisible = function ()
-{	return ($(this.element).css('display') != 'none');
+ol.control.Bar.prototype.getVisible = function () {
+  return ($(this.element).css('display') != 'none');
 }
 /**
  * Set the map instance the control is associated with
  * and add its controls associated to this map.
  * @param {_ol_Map_} map The map instance.
  */
-ol.control.Bar.prototype.setMap = function (map)
-{	ol.control.Control.prototype.setMap.call(this, map);
-	for (var i=0; i<this.controls_.length; i++)
-	{	var c = this.controls_[i];
+ol.control.Bar.prototype.setMap = function (map) {
+  ol.control.Control.prototype.setMap.call(this, map);
+	for (var i=0; i<this.controls_.length; i++) {
+    var c = this.controls_[i];
 		// map.addControl(c);
 		c.setMap(map);
 	}
@@ -1412,18 +1412,18 @@ ol.control.Bar.prototype.setMap = function (map)
 /** Get controls in the panel
 *	@param {Array<_ol_control_>}
 */
-ol.control.Bar.prototype.getControls = function ()
-{	return this.controls_;
+ol.control.Bar.prototype.getControls = function () {
+  return this.controls_;
 };
 /** Set tool bar position
 *	@param {top|left|bottom|right} pos
 */
-ol.control.Bar.prototype.setPosition = function (pos)
-{	$(this.element).removeClass('ol-left ol-top ol-bottom ol-right');
+ol.control.Bar.prototype.setPosition = function (pos) {
+  $(this.element).removeClass('ol-left ol-top ol-bottom ol-right');
 	pos=pos.split ('-');
-	for (var i=0; i<pos.length; i++)
-	{	switch (pos[i])
-		{	case 'top':
+	for (var i=0; i<pos.length; i++) {
+    switch (pos[i]) {
+      case 'top':
 			case 'left':
 			case 'bottom':
 			case 'right':
@@ -1436,46 +1436,46 @@ ol.control.Bar.prototype.setPosition = function (pos)
 /** Add a control to the bar
 *	@param {_ol_control_} c control to add
 */
-ol.control.Bar.prototype.addControl = function (c)
-{	this.controls_.push(c);
+ol.control.Bar.prototype.addControl = function (c) {
+  this.controls_.push(c);
 	c.setTarget(this.element);
-	if (this.getMap())
-	{	this.getMap().addControl(c);
+	if (this.getMap()) {
+    this.getMap().addControl(c);
 	}
 	// Activate and toogleOne
 	c.on ('change:active', this.onActivateControl_.bind(this));
-	if (c.getActive && c.getActive())
-	{	c.dispatchEvent({ type:'change:active', key:'active', oldValue:false, active:true });
+	if (c.getActive && c.getActive()) {
+    c.dispatchEvent({ type:'change:active', key:'active', oldValue:false, active:true });
 	}
 };
 /** Deativate all controls in a bar
 * @param {_ol_control_} except a control
 */
-ol.control.Bar.prototype.deactivateControls = function (except)
-{	for (var i=0; i<this.controls_.length; i++)
-	{	if (this.controls_[i] !== except && this.controls_[i].setActive)
-		{	this.controls_[i].setActive(false);
+ol.control.Bar.prototype.deactivateControls = function (except) {
+  for (var i=0; i<this.controls_.length; i++) {
+  if (this.controls_[i] !== except && this.controls_[i].setActive) {
+    this.controls_[i].setActive(false);
 		}
 	}
 };
-ol.control.Bar.prototype.getActiveControls = function ()
-{	var active = [];
-	for (var i=0, c; c=this.controls_[i]; i++)
-	{	if (c.getActive && c.getActive()) active.push(c);
+ol.control.Bar.prototype.getActiveControls = function () {
+  var active = [];
+	for (var i=0, c; c=this.controls_[i]; i++) {
+    if (c.getActive && c.getActive()) active.push(c);
 	}
 	return active;
 }
 /** Auto activate/deactivate controls in the bar
 * @param {boolean} b activate/deactivate
 */
-ol.control.Bar.prototype.setActive = function (b)
-{	if (!b && this.get("autoDeactivate"))
-	{	this.deactivateControls();
+ol.control.Bar.prototype.setActive = function (b) {
+  if (!b && this.get("autoDeactivate")) {
+    this.deactivateControls();
 	}
-	if (b)
-	{	var ctrls = this.getControls();
-		for (var i=0, sb; (sb = ctrls[i]); i++)
-		{	if (sb.get("autoActivate")) sb.setActive(true);
+	if (b) {
+    var ctrls = this.getControls();
+		for (var i=0, sb; (sb = ctrls[i]); i++) {
+      if (sb.get("autoActivate")) sb.setActive(true);
 		}
 	}
 }
@@ -1483,23 +1483,22 @@ ol.control.Bar.prototype.setActive = function (b)
 *	@param {ol.event} e :an object with a target {_ol_control_} and active flag {bool}
 */
 ol.control.Bar.prototype.onActivateControl_ = function (e) {
-	if (this.get('toggleOne'))
-	{	if (e.active)
-		{	var n;
+	if (this.get('toggleOne')) {
+    if (e.active) {
+      var n;
 			var ctrl = e.target;
-			for (n=0; n<this.controls_.length; n++)
-			{	if (this.controls_[n]===ctrl) break;
+			for (n=0; n<this.controls_.length; n++) {
+        if (this.controls_[n]===ctrl) break;
 			}
 			// Not here!
 			if (n==this.controls_.length) return;
 			this.deactivateControls (this.controls_[n]);
-		}
-		else
-		{	// No one active > test auto activate
-			if (!this.getActiveControls().length)
-			{	for (var i=0, c; c=this.controls_[i]; i++)
-				{	if (c.get("autoActivate"))
-					{	c.setActive();
+		} else {
+      // No one active > test auto activate
+			if (!this.getActiveControls().length) {
+        for (var i=0, c; c=this.controls_[i]; i++) {
+          if (c.get("autoActivate")) {
+            c.setActive(true);
 						break;
 					}
 				}
@@ -3510,7 +3509,7 @@ ol.control.Overview.prototype.setView = function(e)
 	this.calcExtent_();
 };
 
-/*	Copyright (c) 2015 Jean-Marc VIGLINO, 
+/*	Copyright (c) 2015-2018 Jean-Marc VIGLINO, 
 	released under the CeCILL-B license (French BSD license)
 	(http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt).
 */
@@ -3529,36 +3528,36 @@ ol.control.Overview.prototype.setView = function(e)
  *	@param {bool} options.anchor use "#" instead of "?" in href
  *	@param {function} options.onclick a function called when control is clicked
  */
-ol.control.Permalink = function(opt_options)
-{	var options = opt_options || {};
+ol.control.Permalink = function(opt_options) {
+  var options = opt_options || {};
 	var self = this;
 	var button = document.createElement('button');
 	this.replaceState_ = (options.urlReplace!==false);
 	this.fixed_ = options.fixed || 6;
 	this.hash_ = options.anchor ? "#" : "?";
-	function linkto()
-	{	if (typeof(options.onclick) == 'function') options.onclick(self.getLink());
+	function linkto() {
+    if (typeof(options.onclick) == 'function') options.onclick(self.getLink());
 		else self.setUrlReplace(!self.replaceState_);
 	}
-    button.addEventListener('click', linkto, false);
-    button.addEventListener('touchstart', linkto, false);
+  button.addEventListener('click', linkto, false);
+  button.addEventListener('touchstart', linkto, false);
 	var element = document.createElement('div');
-    element.className = (options.className || "ol-permalink") + " ol-unselectable ol-control";
-    element.appendChild(button);
-	ol.control.Control.call(this,
-	{	element: element,
+  element.className = (options.className || "ol-permalink") + " ol-unselectable ol-control";
+  element.appendChild(button);
+	ol.control.Control.call(this, {
+    element: element,
 		target: options.target
 	});
 	this.on ('change', this.viewChange_.bind(this));
 	// Save search params
 	this.search_ = {};
 	var hash = document.location.hash || document.location.search;
-	if (hash)
-	{	hash = hash.replace(/(^#|^\?)/,"").split("&");
-		for (var i=0; i<hash.length;  i++)
-		{	var t = hash[i].split("=");
-			switch(t[0])
-			{	case 'lon':
+	if (hash) {
+    hash = hash.replace(/(^#|^\?)/,"").split("&");
+		for (var i=0; i<hash.length;  i++) {
+      var t = hash[i].split("=");
+			switch(t[0]) {
+        case 'lon':
 				case 'lat':
 				case 'z':
 				case 'r':
@@ -3596,76 +3595,107 @@ ol.control.Permalink.prototype.setMap = function(map) {
 *	@param {Array<ol.layer>|undefined} an array of layer to search in
 *	@return {ol.layer|false}
 */
-ol.control.Permalink.prototype.getLayerByLink =  function (id, layers)
-{	if (!layers && this.getMap()) layers = this.getMap().getLayers().getArray();
-	for (var i=0; i<layers.length; i++)
-	{	if (layers[i].get('permalink') == id) return layers[i];
+ol.control.Permalink.prototype.getLayerByLink =  function (id, layers) {
+  if (!layers && this.getMap()) layers = this.getMap().getLayers().getArray();
+	for (var i=0; i<layers.length; i++) {
+    if (layers[i].get('permalink') == id) return layers[i];
 		// Layer Group
-		if (layers[i].getLayers)
-		{	var li = this.getLayerByLink ( id, layers[i].getLayers().getArray() );
+		if (layers[i].getLayers) {
+      var li = this.getLayerByLink ( id, layers[i].getLayers().getArray() );
 			if (li) return li;
 		}
 	}
 	return false;
-}
+};
 /** Set map position according to the current link 
 */
-ol.control.Permalink.prototype.setPosition = function()
-{	var map = this.getMap();
+ol.control.Permalink.prototype.setPosition = function() {
+  var map = this.getMap();
 	if (!map) return;
 	var hash = document.location.hash || document.location.search;
 	if (!hash) return;
 	var param = {};
 	hash = hash.replace(/(^#|^\?)/,"").split("&");
-	for (var i=0; i<hash.length;  i++)
-	{	var t = hash[i].split("=");
+	for (var i=0; i<hash.length;  i++) {
+    var t = hash[i].split("=");
 		param[t[0]] = t[1];
 	}
 	var c = ol.proj.transform([Number(param.lon),Number(param.lat)], 'EPSG:4326', map.getView().getProjection());
 	if (c[0] && c[1]) map.getView().setCenter(c);
 	if (param.z) map.getView().setZoom(Number(param.z));
 	if (param.r) map.getView().setRotation(Number(param.r));
-	if (param.l)
-	{	var l = param.l.split("|");
-		// Reset layers 
-		function resetLayers(layers)
-		{	if (!layers) layers = map.getLayers().getArray();
-			for (var i=0; i<layers.length; i++)
-			{	if (layers[i].get('permalink')) 
-				{	layers[i].setVisible(false);
-					// console.log("hide "+layers[i].get('permalink'));
-				}
-				if (layers[i].getLayers)
-				{	resetLayers (layers[i].getLayers().getArray());
-				}
+	// Reset layers visibility
+	function resetLayers(layers) {
+    if (!layers) layers = map.getLayers().getArray();
+		for (var i=0; i<layers.length; i++){
+      if (layers[i].get('permalink')) {
+        layers[i].setVisible(false);
+				// console.log("hide "+layers[i].get('permalink'));
+			}
+			if (layers[i].getLayers) {
+        resetLayers (layers[i].getLayers().getArray());
 			}
 		}
+	}
+	if (param.l) {
 		resetLayers();
-		for (var i=0; i<l.length; i++)
-		{	var t = l[i].split(":");
+		var l = param.l.split("|");
+    for (var i=0; i<l.length; i++) {
+      var t = l[i].split(":");
 			var li = this.getLayerByLink(t[0]);
 			var op = Number(t[1]);
-			if (li) 
-			{	li.setOpacity(op);
+			if (li) {
+        li.setOpacity(op);
 				li.setVisible(true);
 			}
 		}
 	}
-}
+};
 /**
  * Get the parameters added to the url. The object can be changed to add new values.
  * @return {Object} a key value object added to the url as &key=value
  * @api stable
  */
-ol.control.Permalink.prototype.getUrlParams = function()
-{	return this.search_;
-}
+ol.control.Permalink.prototype.getUrlParams = function() {
+  return this.search_;
+};
+/**
+ * Set a parameter to the url.
+ * @param {string} key the key parameter
+ * @param {string|undefined} value the parameter's value, if undefined or empty string remove the parameter
+ * @api stable
+ */
+ol.control.Permalink.prototype.setUrlParam = function(key, value) {
+  if (key) {
+    if (value===undefined || value==='') delete (this.search_[encodeURIComponent(key)])
+    else this.search_[encodeURIComponent(key)] = encodeURIComponent(value);
+  }
+  this.viewChange_();
+};
+/**
+ * Get a parameter url.
+ * @param {string} key the key parameter
+ * @return {string} the parameter's value or empty string if not set
+ * @api stable
+ */
+ol.control.Permalink.prototype.getUrlParam = function(key) {
+  return decodeURIComponent (this.search_[encodeURIComponent(key)] || '');
+};
+/**
+ * Has a parameter url.
+ * @param {string} key the key parameter
+ * @return {boolean} 
+ * @api stable
+ */
+ol.control.Permalink.prototype.hasUrlParam = function(key) {
+  return this.search_.hasOwnProperty(encodeURIComponent(key));
+};
 /**
  * Get the permalink
  * @return {permalink}
  */
-ol.control.Permalink.prototype.getLink = function()
-{	var map = this.getMap();
+ol.control.Permalink.prototype.getLink = function() {
+  var map = this.getMap();
 	var c = ol.proj.transform(map.getView().getCenter(), map.getView().getProjection(), 'EPSG:4326');
 	var z = map.getView().getZoom();
 	var r = map.getView().getRotation();
@@ -3675,13 +3705,13 @@ ol.control.Permalink.prototype.getLink = function()
 	for (var i in this.search_) anchor += "&"+i+"="+this.search_[i];
 	//return document.location.origin+document.location.pathname+this.hash_+anchor;
 	return document.location.protocol+"//"+document.location.host+document.location.pathname+this.hash_+anchor;
-}
+};
 /**
  * Enable / disable url replacement (replaceSate)
  *	@param {bool}
  */
-ol.control.Permalink.prototype.setUrlReplace = function(replace)
-{	try{
+ol.control.Permalink.prototype.setUrlReplace = function(replace) {
+  try {
 		this.replaceState_ = replace;
 		if (!replace) 
 		{	var s = "";
@@ -3691,30 +3721,30 @@ ol.control.Permalink.prototype.setUrlReplace = function(replace)
 			window.history.replaceState (null,null, document.location.origin+document.location.pathname+s);
 		}
 		else window.history.replaceState (null,null, this.getLink());
-	}catch(e){}
+	} catch(e) {}
 }
 /**
  * On view change refresh link
  * @param {ol.event} The map instance.
  * @private
  */
-ol.control.Permalink.prototype.viewChange_ = function()
-{	try{
+ol.control.Permalink.prototype.viewChange_ = function() {
+  try {
 		if (this.replaceState_) window.history.replaceState (null,null, this.getLink());
-	}catch(e){}
+	} catch(e) {}
 }
 /**
  * Layer change refresh link
  * @param {ol.event} The map instance.
  * @private
  */
-ol.control.Permalink.prototype.layerChange_ = function(e)
-{	// Get layers
+ol.control.Permalink.prototype.layerChange_ = function(e) {
+  // Get layers
 	var l = "";
-	function getLayers(layers)
-	{	for (var i=0; i<layers.length; i++)
-		{	if (layers[i].getVisible() && layers[i].get("permalink"))
-			{	if (l) l += "|";
+  function getLayers(layers) {
+  	for (var i=0; i<layers.length; i++) {
+      if (layers[i].getVisible() && layers[i].get("permalink")) {
+        if (l) l += "|";
 				l += layers[i].get("permalink")+":"+layers[i].get("opacity");
 			}
 			// Layer Group
@@ -3724,7 +3754,7 @@ ol.control.Permalink.prototype.layerChange_ = function(e)
 	getLayers(this.getMap().getLayers().getArray());
 	this.layerStr_ = l;
 	this.viewChange_();
-}
+};
 
 /*	Copyright (c) 2016 Jean-Marc VIGLINO, 
 	released under the CeCILL-B license (French BSD license)
@@ -4066,6 +4096,285 @@ ol.control.Profil.prototype.getImage = function(type, encoderOptions)
 {	if (type==="canvas") return this.canvas_;
 	return this.canvas_.toDataURL(type, encoderOptions);
 }
+
+/*	Copyright (c) 2017 Jean-Marc VIGLINO,
+	released under the CeCILL-B license (French BSD license)
+	(http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt).
+*/
+/**
+ * Search Control.
+ * This is the base class for search controls. You can use it for simple custom search or as base to new class.
+ * @see ol.control.SearchFeature
+ * @see ol.control.SearchPhoton
+ *
+ * @constructor
+ * @extends {ol.control.Control}
+ * @fires select
+ * @fires change:input
+ * @param {Object=} options
+ *	@param {string} options.className control class name
+ *	@param {Element | string | undefined} options.target Specify a target if you want the control to be rendered outside of the map's viewport.
+ *	@param {string | undefined} options.label Text label to use for the search button, default "search"
+ *	@param {string | undefined} options.placeholder placeholder, default "Search..."
+ *	@param {string | undefined} options.inputLabel label for the input, default none
+ *	@param {string | undefined} options.noCollapse prevent collapsing on input blur, default false
+ *	@param {number | undefined} options.typing a delay on each typing to start searching (ms) use -1 to prevent autocompletion, default 300.
+ *	@param {integer | undefined} options.minLength minimum length to start searching, default 1
+ *	@param {integer | undefined} options.maxItems maximum number of items to display in the autocomplete list, default 10
+ *	@param {integer | undefined} options.maxHistory maximum number of items to display in history. Set -1 if you don't want history, default maxItems
+ *	@param {function} options.getTitle a function that takes a feature and return the name to display in the index.
+ *	@param {function} options.autocomplete a function that take a search string and callback function to send an array
+ */
+ol.control.RoutingGeoportail = function(options) {
+  var self = this;
+	if (!options) options = {};
+	if (options.typing == undefined) options.typing = 300;
+  // Class name for history
+  this._classname = options.className || 'search';
+	var element = document.createElement("DIV");
+	var classNames = (options.className||"")+ " ol-routing";
+	if (!options.target) {
+    classNames += " ol-unselectable ol-control";
+	}
+	element.setAttribute('class', classNames);
+	ol.control.Control.call(this, {
+    element: element,
+    target: options.target
+	});
+	this.set('url', 'https://wxs.ign.fr/'+options.apiKey+'/itineraire/rest/route.json');
+	this._search = [];
+	var listElt = document.createElement("DIV");
+	this.addSearch(element, options);
+	this.addSearch(element, options);
+	element.appendChild(listElt);
+	this.addButton('ol-car', options.carlabel||"by car")
+		.addEventListener("click", function() {
+			self.setMode('car');
+		});
+	this.addButton('ol-pedestrian', options.pedlabel||"pedestrian")
+		.addEventListener("click", function() {
+			self.setMode('pedestrian');
+		});
+	this.addButton('ol-ok', options.runlabel||"search", 'OK')
+		.addEventListener("click", function() {
+			self.calculate();
+		});
+	this.resultElement = document.createElement("DIV");
+	this.resultElement.setAttribute('class', 'ol-result');
+	element.appendChild(this.resultElement);
+	this.setMode(options.mode || 'car');
+};
+ol.inherits(ol.control.RoutingGeoportail, ol.control.Control);
+ol.control.RoutingGeoportail.prototype.setMode = function (mode) {
+	this.set('mode', mode);
+	this.element.querySelector(".ol-car").classList.remove("selected");
+	this.element.querySelector(".ol-pedestrian").classList.remove("selected");
+	this.element.querySelector(".ol-"+mode).classList.add("selected");
+	this.calculate();
+};
+ol.control.RoutingGeoportail.prototype.addButton = function (className, title, info) {
+	var bt = document.createElement("I");
+	bt.setAttribute("class", className);
+	bt.setAttribute("type", "button");
+	bt.setAttribute("title", title);
+	bt.innerHTML = info||'';
+	this.element.appendChild(bt);
+	return bt;
+};
+/** Add a new search input
+ * @private
+ */
+ol.control.RoutingGeoportail.prototype.addSearch = function (element, options) {
+	var self = this;
+	var div = document.createElement("DIV");
+	element.appendChild(div);
+	var bt = document.createElement("BUTTON");
+	bt.setAttribute("type", "button");
+	bt.setAttribute("title", options.startlabel||"search");
+	div.appendChild(bt);
+	bt.addEventListener('click', function() {
+		self.resultElement.innerHTML = '';
+	});
+	var search = new ol.control.SearchGeoportail({
+		apiKey: options.apiKey,
+		target: div
+	});
+	this._search.push(search);
+	search.on('select', function(e){
+		search.setInput(e.search.fulltext);
+		search.set('selection', e.search);
+	});
+	var self = this;
+	search.element.querySelector('input').addEventListener('change', function(){
+		search.set('selection', null);
+		self.resultElement.innerHTML = '';
+	});
+};
+/**
+ * Set the map instance the control is associated with
+ * and add its controls associated to this map.
+ * @param {_ol_Map_} map The map instance.
+ */
+ol.control.RoutingGeoportail.prototype.setMap = function (map) {
+	ol.control.Control.prototype.setMap.call(this, map);
+	for (var i=0; i<this._search.length; i++) {
+		var c = this._search[i];
+		c.setMap(map);
+	}
+};
+ol.control.RoutingGeoportail.prototype.requestData = function (start, end) {
+	return {
+		'gp-access-lib': '1.1.0', 
+		origin: start.x+','+start.y,
+		destination: end.x+','+end.y,
+		method: 'time', // 'distance'
+		graphName: this.get('mode')==='pedestrian' ? 'Pieton' : 'Voiture',
+		waypoints:'', 
+		format: 'STANDARDEXT'
+	};
+};
+ol.control.RoutingGeoportail.prototype.listRouting = function (routing) {
+	var time = routing.duration/60;
+	$(this.resultElement).html('');
+	var t = '';
+	if (time<60) {
+		t += time.toFixed(0)+' min';
+	} else {
+		t+= (time/60).toFixed(0)+' h '+(time%60).toFixed(0)+' min';
+	}
+	var dist = routing.distance;
+	if (dist<1000) {
+		t += ' ('+dist.toFixed(0)+' m)';
+	} else {
+		t += ' ('+(dist/1000).toFixed(2)+' km)';
+	}
+	$('<i>').text(t).appendTo(this.resultElement);
+	var ul = $('<ul>').appendTo(this.resultElement);
+	var info = {
+		'none': 'Prendre sur ',
+		'R': 'Tourner à droite sur ',
+		'FR': 'Tourner légèrement à droite sur ',
+		'L': 'Tourner à gauche sur ',
+		'FL': 'Tourner légèrement à gauche sur ',
+		'F': 'Continuer tout droit sur ',
+	}
+	for (var i=0, f; f=routing.features[i]; i++) {
+		var d = f.get('distance');
+		d = (d<1000) ? d.toFixed(0)+' m' : (d/1000).toFixed(2)+' km';
+		var t = f.get('durationT')/60;
+		console.log(f.get('duration'),t)
+		t = (f.get('duration')<40) ? '' : (t<60) ? t.toFixed(0)+' min' : (t/60).toFixed(0)+' h '+(t%60).toFixed(0)+' min';
+		$('<li>').addClass(f.get('instruction'))
+		.html(
+			(info[f.get('instruction')||'none']||'#')
+			+ ' ' + f.get('name') 
+			+ '<i>' + d + (t ? ' - ' + t : '') +'</i>'
+		).appendTo(ul);
+	}
+};
+ol.control.RoutingGeoportail.prototype.handleResponse = function (data) {
+	var routing = { type:'routing' };
+/*
+	var format = new ol.format.WKT();
+	routing.features = [ format.readFeature(data.geometryWkt, {
+		dataProjection: 'EPSG:4326',
+		featureProjection: this.getMap().getView().getProjection()
+	}) ];
+*/
+	routing.features = [];
+	var distance = 0;
+	var duration = 0;
+	for (var i=0, l; l=data.legs[i]; i++) {
+		for (var j=0, s; s=l.steps[j]; j++) {
+			var geom = [];
+			for (var k=0, p; p=s.points[k]; k++){
+				p = p.split(',');
+				geom.push([parseFloat(p[0]),parseFloat(p[1])]);
+			}
+			geom = new ol.geom.LineString(geom);
+			options = {
+				geometry: geom.transform('EPSG:4326',this.getMap().getView().getProjection()),
+				name: s.name,
+				instruction: s.navInstruction,
+				distance: parseFloat(s.distanceMeters),
+				duration: parseFloat(s.durationSeconds)
+			}
+			console.log(duration, options.duration, s)
+			distance += options.distance;
+			duration += options.duration;
+			options.distanceT = distance;
+			options.durationT = duration;
+			var f = new ol.Feature(options);
+			routing.features.push(f);
+		}
+	}
+	routing.distance = parseFloat(data.distanceMeters);
+	routing.duration = parseFloat(data.durationSeconds);
+	console.log(data, routing);
+	this.dispatchEvent(routing);
+	this.path = routing;
+	return routing;
+};
+ol.control.RoutingGeoportail.prototype.calculate = function () {
+	$(this.resultElement).html('');
+	for (var i=0; i<this._search.length; i++) {
+		if (!this._search[i].get('selection')) return;
+	}
+	var start = this._search[0].get('selection');
+	var end = this._search[1].get('selection');
+	var data = this.requestData(start,end);
+	var url = encodeURI(this.get('url'));
+	var parameters = '';
+	for (var index in data) {
+		parameters += (parameters) ? '&' : '?';
+		if (data.hasOwnProperty(index)) parameters += index + '=' + data[index];
+	}
+	var self = this;
+	this.ajax(url + parameters, 
+		function (resp) {
+			console.log(resp)
+			if (resp.status >= 200 && resp.status < 400) {
+				self.listRouting(self.handleResponse (JSON.parse(resp.response)));
+			} else {
+				console.log(url + parameters, arguments);
+			}
+		}, function(){
+			console.log(url + parameters, arguments);
+		});
+};	
+/** Send an ajax request (GET)
+ * @param {string} url
+ * @param {function} onsuccess callback
+ * @param {function} onerror callback
+ */
+ol.control.RoutingGeoportail.prototype.ajax = function (url, onsuccess, onerror){
+	var self = this;
+	// Abort previous request
+	if (this._request) {
+		this._request.abort();
+	}
+	// New request
+	var ajax = this._request = new XMLHttpRequest();
+	ajax.open('GET', url, true);
+	if (this._auth) {
+		ajax.setRequestHeader("Authorization", "Basic " + this._auth);
+	}
+	this.element.classList.add('searching');
+	// Load complete
+	ajax.onload = function() {
+		self._request = null;
+		self.element.classList.remove('searching');
+		onsuccess.call(self, this);
+	};
+	// Oops, TODO do something ?
+	ajax.onerror = function() {
+		self._request = null;
+		self.element.classList.remove('searching');
+		if (onerror) onerror.call(self);
+	};
+	// GO!
+	ajax.send();
+};
 
 /*	Copyright (c) 2017 Jean-Marc VIGLINO,
 	released under the CeCILL-B license (French BSD license)
@@ -7049,7 +7358,7 @@ ol.interaction.DrawHole.prototype._finishDrawing = function(e)
 	if (c.length > 3) {
 		if (this._polygonIndex!==false) {
 			var geom = e.feature.getGeometry();
-			var newGeom = new ol.geom.MultiPolygon();
+			var newGeom = new ol.geom.MultiPolygon([]);
 			for (var i=0, pi; pi=geom.getPolygon(i); i++) {
 				if (i===this._polygonIndex) {
 					pi.appendLinearRing(new ol.geom.LinearRing(c));
@@ -9073,6 +9382,7 @@ ol.interaction.SelectCluster.prototype.animateCluster_ = function(center)
  * @extends {ol.interaction.Interaction}
  * @param {olx.interaction.SnapGuidesOptions} 
  *	- pixelTolerance {number | undefined} distance (in px) to snap to a guideline, default 10 px
+ *  - enableInitialGuides {bool | undefined} whether to draw initial guidelines based on the maps orientation, default false.
  *	- style {ol.style.Style | Array<ol.style.Style> | undefined} Style for the sektch features.
  */
 ol.interaction.SnapGuides = function(options) {
@@ -9097,6 +9407,7 @@ ol.interaction.SnapGuides = function(options) {
 	}
 	// Snap distance (in px)
 	this.snapDistance_ = options.pixelTolerance || 10;
+	this.enableInitialGuides_ = options.enableInitialGuides || false;
 	// Default style
  	var sketchStyle = 
 	[	new ol.style.Style({
@@ -9114,20 +9425,9 @@ ol.interaction.SnapGuides = function(options) {
 		{	features: new ol.Collection(),
 			useSpatialIndex: false
 		});
-/* Speed up with a ImageVector layer (deprecated)
-	this.overlayLayer_ = new ol.layer.Image(
-		{	source: new ol.source.ImageVector(
-			{	source: this.overlaySource_,
-				style: function(f)
-				{	return sketchStyle;
-				}
-			}),
-			name:'Snap overlay',
-			displayInLayerSwitcher: false
-		});
-*/
-console.log('CREATE OVERLAY')
 	this.overlayLayer_ = new ol.layer.Vector({
+		// render the snap guides as an image to improve performance on rerenders
+		renderMode: 'image',
 		source: this.overlaySource_,
 			style: function(f) {
 				return sketchStyle;
@@ -9212,33 +9512,32 @@ ol.interaction.SnapGuides.prototype.addGuide = function(v, ortho) {
 	{	var map = this.getMap();
 		// Limit extent
 		var extent = map.getView().calculateExtent(map.getSize());
-		extent = ol.extent.buffer(extent, Math.max (1e5+1, (extent[2]-extent[0])*100));
+		var guideLength = Math.max(
+			this.projExtent_[2] - this.projExtent_[0],
+			this.projExtent_[3] - this.projExtent_[1]
+		);
+		extent = ol.extent.buffer(extent, guideLength * 1.5);
 		//extent = ol.extent.boundingExtent(extent, this.projExtent_);
 		if (extent[0]<this.projExtent_[0]) extent[0]=this.projExtent_[0];
 		if (extent[1]<this.projExtent_[1]) extent[1]=this.projExtent_[1];
 		if (extent[2]>this.projExtent_[2]) extent[2]=this.projExtent_[2];
 		if (extent[3]>this.projExtent_[3]) extent[3]=this.projExtent_[3];
-		// 
 		var dx = v[0][0] - v[1][0];
 		var dy = v[0][1] - v[1][1];
 		var d = 1 / Math.sqrt(dx*dx+dy*dy);
-		var p, g = [];
-		var p0, p1;
-		for (var i= 0; i<1e8; i+=1e5)
-		{	if (ortho) p = [ v[0][0] + dy*d*i, v[0][1] - dx*d*i];
-			else p = [ v[0][0] + dx*d*i, v[0][1] + dy*d*i];
-			if (ol.extent.containsCoordinate(extent, p)) g.push(p);
-			else break;
+		function generateLine(loopDir) {
+			var p, g = [];
+			var loopCond = guideLength*loopDir*2;
+			for (var i=0; loopDir > 0 ? i < loopCond : i > loopCond; i+=(guideLength * loopDir) / 100) {
+				if (ortho) p = [ v[0][0] + dy*d*i, v[0][1] - dx*d*i];
+				else p = [ v[0][0] + dx*d*i, v[0][1] + dy*d*i];
+				if (ol.extent.containsCoordinate(extent, p)) g.push(p);
+				else break;
+			}
+			return new ol.Feature(new ol.geom.LineString([g[0], g[g.length-1]]));
 		}
-		var f0 = new ol.Feature(new ol.geom.LineString(g));
-		var g=[];
-		for (var i= 0; i>-1e8; i-=1e5)
-		{	if (ortho) p = [ v[0][0] + dy*d*i, v[0][1] - dx*d*i];
-			else p = [ v[0][0] + dx*d*i, v[0][1] + dy*d*i];
-			if (ol.extent.containsCoordinate(extent, p)) g.push(p);
-			else break;
-		}
-		var f1 = new ol.Feature(new ol.geom.LineString(g));
+		var f0 = generateLine(1);
+		var f1 = generateLine(-1);
 		this.overlaySource_.addFeature(f0);
 		this.overlaySource_.addFeature(f1);
 		return [f0, f1];
@@ -9262,28 +9561,29 @@ ol.interaction.SnapGuides.prototype.setDrawInteraction = function(drawi) {
 	// Current guidelines
 	var features = [];
 	function setGuides(e) {
-		var coord = [];
+		var coord = e.target.getCoordinates();
 		var s = 2;
 		switch (e.target.getType()) {
-			case 'LineString':
-				coord = e.target.getCoordinates();
-				s = 2;
-				break;
 			case 'Polygon':
-				coord = e.target.getCoordinates()[0];
-				s = 3;
+				coord = coord[0].slice(0, -1);
 				break;
 			default: break;
 		}
 		var l = coord.length;
-		if (l != nb && l > s) {
+		if (l === s && self.enableInitialGuides_) {
+			let [x, y] = coord[0];
+			coord = [[x, y], [x, y - 1]];
+		}
+		if (l != nb && (self.enableInitialGuides_ ? l >= s : l > s)) {
 			self.clearGuides(features);
-			features = self.addOrthoGuide([coord[l-s],coord[l-s-1]]);
-			features = features.concat(self.addGuide([coord[0],coord[1]]));
-			features = features.concat(self.addOrthoGuide([coord[0],coord[1]]));
+			if (l > s) {
+				features = self.addOrthoGuide([coord[l - s], coord[l - s - 1]]);
+			}
+			features = features.concat(self.addGuide([coord[0], coord[1]]));
+			features = features.concat(self.addOrthoGuide([coord[0], coord[1]]));
 			nb = l;
 		}
-	};
+	}
 	// New drawing
 	drawi.on ("drawstart", function(e) {
 		// When geom is changing add a new orthogonal direction 
@@ -9296,6 +9596,52 @@ ol.interaction.SnapGuides.prototype.setDrawInteraction = function(drawi) {
 		nb = 0;
 		features = [];
 	});
+};
+/** Listen to modify event to add orthogonal guidelines relative to the currently dragged point
+* @param {_ol_interaction_Modify_} modifyi a modify interaction to listen to
+* @api
+*/
+ol.interaction.SnapGuides.prototype.setModifyInteraction = function (modifyi) {
+	function mod(d, n) {
+		return ((d % n) + n) % n;
+	}
+	var self = this;
+	// Current guidelines
+	var features = [];
+	function computeGuides(e) {
+		const selectedVertex = e.target.vertexFeature_
+		if (!selectedVertex) return;
+		var f = e.features.getArray()[0];
+		var geom = f.getGeometry();
+		var coord = geom.getCoordinates();
+		switch (geom.getType()) {
+			case 'Polygon':
+				coord = coord[0].slice(0, -1);
+				break;
+			default: break;
+		}
+		var modifyVertex = selectedVertex.getGeometry().getCoordinates();
+		var idx = coord.findIndex((c) => c[0] === modifyVertex[0] && c[1] === modifyVertex[1]);
+		var l = coord.length;
+		self.clearGuides(features);
+		features = self.addOrthoGuide([coord[mod(idx - 1, l)], coord[mod(idx - 2, l)]]);
+		features = features.concat(self.addGuide([coord[mod(idx - 1, l)], coord[mod(idx - 2, l)]]));
+		features = features.concat(self.addGuide([coord[mod(idx + 1, l)], coord[mod(idx + 2, l)]]));
+		features = features.concat(self.addOrthoGuide([coord[mod(idx + 1, l)], coord[mod(idx + 2, l)]]));
+	}
+	function setGuides(e) {
+		// This callback is called before ol adds the vertex to the feature, so
+		// defer a moment for openlayers to add the new vertex
+		setTimeout(computeGuides, 0, e);
+	}
+	function drawEnd(e) {
+		self.clearGuides(features);
+		features = [];
+	}
+	// New drawing
+	modifyi.on("modifystart", setGuides);
+	// end drawing, clear directions
+	modifyi.on("modifyend", drawEnd);
 };
 
 /*	Copyright (c) 2016 Jean-Marc VIGLINO, 
@@ -10138,6 +10484,8 @@ ol.interaction.TouchCompass.prototype.drawCompass_ = function(e)
  *	@param {bool} options.stretch can stretch the feature
  *	@param {bool} options.scale can scale the feature
  *	@param {bool} options.rotate can rotate the feature
+ *	@param {bool} options.noFlip prevent the feature geometry to flip, default false
+ *	@param {bool} options.selection the intraction handle selection/deselection, if not use the select prototype to add features to transform, default true
  *	@param {ol.events.ConditionType | undefined} options.keepAspectRatio A function that takes an ol.MapBrowserEvent and returns a boolean to keep aspect ratio, default ol.events.condition.shiftKeyOnly.
  *	@param {ol.events.ConditionType | undefined} options.modifyCenter A function that takes an ol.MapBrowserEvent and returns a boolean to apply scale & strech from the center, default ol.events.condition.metaKey or ol.events.condition.ctrlKey.
  *	@param {} options.style list of ol.style for handles
@@ -10188,6 +10536,10 @@ ol.interaction.Transform = function(options) {
   this.set('keepAspectRatio', (options.keepAspectRatio || function(e){ return e.originalEvent.shiftKey }));
   /* Modify center */
   this.set('modifyCenter', (options.modifyCenter || function(e){ return e.originalEvent.metaKey || e.originalEvent.ctrlKey }));
+  /* Prevent flip */
+  this.set('noFlip', (options.noFlip || false));
+  /* Handle selection */
+  this.set('selection', (options.selection !== false));
   /*  */
   this.set('hitTolerance', (options.hitTolerance || 0));
   this.selection_ = [];
@@ -10329,6 +10681,8 @@ ol.interaction.Transform.prototype.getFeatureAtPixel_ = function(pixel) {
         self.handles_.forEach (function(f) { if (f===feature) found=true; });
         if (found) return { feature: feature, handle:feature.get('handle'), constraint:feature.get('constraint'), option:feature.get('option') };
       }
+      // No seletion
+      if (!self.get('selection')) return null;
       // filter condition
       if (self._filter) {
         if (self._filter(feature,layer)) return { feature: feature };
@@ -10419,6 +10773,7 @@ ol.interaction.Transform.prototype.drawSketch_ = function(center) {
 ol.interaction.Transform.prototype.select = function(feature, add) {
   if (!feature) {
     this.selection_ = [];
+    this.drawSketch_();
     return;
   }
   if (!feature.getGeometry || !feature.getGeometry()) return;
@@ -10475,7 +10830,7 @@ ol.interaction.Transform.prototype.handleDownEvent_ = function(evt) {
     });
     return true;
   }
-  else {
+  else if (this.get('selection')) {
     if (feature){
       if (!this.addFn_(evt)) this.selection_ = [];
       var index = this.selection_.indexOf(feature);
@@ -10567,6 +10922,10 @@ ol.interaction.Transform.prototype.handleDragEvent_ = function(evt) {
       }
       var scx = (evt.coordinate[0] - center[0]) / (this.coordinate_[0] - center[0]);
       var scy = (evt.coordinate[1] - center[1]) / (this.coordinate_[1] - center[1]);
+      if (this.get('noFlip')) {
+        if (scx<0) scx=-scx;
+        if (scy<0) scy=-scy;
+      }
       if (this.constraint_) {
         if (this.constraint_=="h") scx=1;
         else scy=1;
@@ -10832,6 +11191,407 @@ ol.style.dbPediaStyleFunction = function(options)
 	}
 };
 })();
+
+// doc: https://mapbox.github.io/delaunator/
+/** Delaunay source
+ * Calculate a delaunay triangulation from points in a source
+ * @param {*} options extend ol.source.Vector options
+ *  @param {ol.source.Vector} options.source the source that contains the points
+ */
+ol.source.Delaunay = function(options) {
+  options = options || {};
+  this._nodes = options.source;
+  delete options.source;
+  ol.source.Vector.call (this, options);
+  // Convex hull
+  this.hull = [];
+  // A new node is added to the source node: calculate the new triangulation
+  this._nodes.on('addfeature', this._onAddNode.bind(this));
+  // A new node is removed from the source node: calculate the new triangulation
+  this._nodes.on('removefeature', this._onRemoveNode.bind(this));
+  this.set ('epsilon', options.epsilon || .0001)
+};
+ol.inherits (ol.source.Delaunay, ol.source.Vector);
+/** Add a new triangle in the source
+ * @param {Array<ol.coordinates>} pts
+ */
+ol.source.Delaunay.prototype._addTriangle = function(pts) {
+  var triangle = new ol.Feature(new ol.geom.Polygon([pts]));
+  this.addFeature(triangle);
+  this.flip.push(triangle);
+  return triangle;
+};
+/** Get nodes 
+ */
+ol.source.Delaunay.prototype.getNodes = function () {
+  return this._nodes.getFeatures();
+};
+/** Get nodes source
+ */
+ol.source.Delaunay.prototype.getNodeSource = function () {
+  return this._nodes;
+};
+/**
+ * A point has been removed
+ * @param {ol.source.Vector.Event} e 
+ */
+ol.source.Delaunay.prototype._onRemoveNode = function(e) {
+  console.log(e)
+  var pt = e.feature.getGeometry().getCoordinates();
+  if (!pt) return;
+  // Get associated triangles
+  var triangles = this.getTrianglesAt(pt);
+  this.flip=[];
+  // Get hole
+  var edges = [];
+  while (triangles.length) {
+    var tr = triangles.pop()
+    this.removeFeature(tr);
+    tr = tr.getGeometry().getCoordinates()[0];
+    var pts = [];
+    for (var i=0, p; p = tr[i]; i++) {
+      if (!ol.coordinate.equal(p,pt)) {
+        pts.push(p);
+      }
+    }
+    edges.push(pts);
+  }
+  pts = edges.pop();
+var se = '';
+for (var i=0,e; e=edges[i]; i++) {
+  se += ' - '+this.listpt(e);
+}
+console.log('EDGES', se)
+  var i = 0;
+  function testEdge(p0, p1, index) {
+    if (ol.coordinate.equal(p0, pts[index])) {
+      if (index) pts.push(p1);
+      else pts.unshift(p1);
+      return true
+    }
+    return false;
+  }
+  while (true) {
+    var e = edges[i];
+    if ( testEdge(e[0], e[1], 0) 
+      || testEdge(e[1], e[0], 0)
+      || testEdge(e[0], e[1], pts.length-1)
+      || testEdge(e[1], e[0], pts.length-1)
+    ) {
+      edges.splice(i,1);
+      i = 0;
+    } else {
+      i++
+    }
+    if (!edges.length) break;
+    if (i>=edges.length) {
+      console.log(this.listpt(pts), this.listpt(edges));
+      throw '[DELAUNAY:removePoint] No edge found';
+    }
+  }
+  // Closed = interior
+console.log('PTS', this.listpt(pts))
+  var closed = ol.coordinate.equal(pts[0], pts[pts.length-1]);
+  if (closed) pts.pop();
+  // Update convex hull: remove pt + add new ones
+  for (var i, p; p=this.hull[i]; i++) {
+    if (ol.coordinate.equal(pt,p)) {
+      this.hull.splice(i,1);
+      break;
+    }
+  }
+  this.hull = ol.coordinate.convexHull(this.hull.concat(pts));
+select.getFeatures().clear();
+  // 
+  var clockwise = function (t) {
+    var i1, s = 0;
+    for (var i=0; i<t.length; i++) {
+      i1 = (i+1) % t.length;
+      s += (t[i1][0] - t[i][0]) * (t[i1][1] + t[i][1]);
+    }
+    console.log(s)
+    return (s>=0 ? 1:-1)
+  };
+  // Add ears
+  // a l'interieur : Si surface ear et surface de l'objet ont meme signe
+  // extrieur ? ajoute le point et idem ? + ferme la 
+  var clock;
+var enveloppe = pts.slice();
+  if (closed) {
+    clock = clockwise(pts);
+  } else {
+    console.log('ouvert', pts, pts.slice().push(pt))
+enveloppe.push(pt);
+    clock = clockwise(enveloppe);
+  }
+console.log('S=',clock,'CLOSED',closed)
+console.log('E=',this.listpt(enveloppe))
+  for (var i=0; i<=pts.length+1; i++) {
+    if (pts.length<3) break;
+    var t = [
+      pts[i % pts.length],
+      pts[(i+1) % pts.length],
+      pts[(i+2) % pts.length] 
+    ];
+    if (clockwise(t)===clock) {
+      var ok = true;
+      for (var k=i+3; k<i+pts.length; k++) {
+        console.log('test '+k, this.listpt([pts[k % pts.length]]))
+        if (this.inCircle(pts[k % pts.length], t)) {
+          ok = false;
+          break;
+        }
+      }
+      if (ok) {
+console.log(this.listpt(t),'ok');
+        this._addTriangle(t);
+        // remove
+        pts.splice((i+1) % pts.length, 1);
+        // and restart
+        i = -1;
+      }
+    }
+else console.log(this.listpt(t),'nok');
+  }
+if (pts.length>3) console.log('oops');
+console.log('LEAV',this.listpt(pts));
+var ul = $('ul.triangles').html('');
+$('<li>')
+.text('E:'+this.listpt(enveloppe)+' - '+clock+' - '+closed)
+.data('triangle', new ol.Feature(new ol.geom.Polygon([enveloppe])))
+.click(function(){
+  var t = $(this).data('triangle');
+  select.getFeatures().clear();
+  select.getFeatures().push(t);
+})
+.appendTo(ul);
+for (var i=0; i<this.flip.length; i++) {
+  $('<li>')
+    .text(this.listpt(this.flip[i].getGeometry().getCoordinates()[0])
+        +' - ' + clockwise(this.flip[i].getGeometry().getCoordinates()[0]))
+    .data('triangle', this.flip[i])
+    .click(function(){
+      var t = $(this).data('triangle');
+      select.getFeatures().clear();
+      select.getFeatures().push(t);
+    })
+    .appendTo(ul);
+}
+  // Flip?
+  this.flipTriangles();
+};
+/**
+ * A new point has been added
+ * @param {ol.source.Vector.Event} e 
+ */
+ol.source.Delaunay.prototype._onAddNode = function(e) {
+  var finserted = e.feature;
+  // Not a point!
+  if (finserted.getGeometry().getType() !== 'Point') {
+    this._nodes.removeFeature(finserted);
+    return;
+  }
+  // Reset flip table
+  this.flip = [];
+  var nodes = this.getNodes();
+  // The point
+  var pt = finserted.getGeometry().getCoordinates();
+  // Test existing point
+  var extent = ol.extent.buffer (ol.extent.boundingExtent([pt]), this.get('epsilon'));
+  if (this._nodes.getFeaturesInExtent(extent).length > 1) {
+    this._nodes.removeFeature(finserted);
+    return;
+  }
+  // Triangle needs at least 3 points
+  if (nodes.length <= 3) {
+    if (nodes.length===3) {
+      var pts = [];
+      for (var i=0; i<3; i++) pts.push(nodes[i].getGeometry().getCoordinates());
+      this._addTriangle(pts);
+      this.hull = ol.coordinate.convexHull(pts);
+    }
+    return;
+  }
+  // Get the triangle
+  var t = this.getFeaturesAtCoordinate(pt)[0];
+  if (t) {
+    this.removeFeature(t);
+    t.set('del', true);
+    var c = t.getGeometry().getCoordinates()[0];
+    for (var i=0; i<3; i++) {
+      this._addTriangle([ pt, c[i], c[(i+1)%3]]);
+    }
+  } else {
+    // Calculate new convex hull
+    var hull2 = this.hull.slice();
+    hull2.push(pt);
+    hull2 = ol.coordinate.convexHull(hull2);
+    // Search for points
+    for (var i=0,p; p=hull2[i]; i++) {
+      if (ol.coordinate.equal(p,pt)) break;
+    }
+    i = (i!==0 ? i-1 : hull2.length-1);
+    var p0 = hull2[i];
+    var stop = hull2[(i+2) % hull2.length];
+    for (var i=0,p; p=this.hull[i]; i++) {
+      if (ol.coordinate.equal(p,p0)) break;
+    }
+    // Connect to the hull
+    while (true) {
+      // DEBUG: prevent infinit loop
+      if (i>1000) {
+        console.error('[DELAUNAY:addPoint] Too many iterations')
+        break;
+      }
+      i++;
+      p = this.hull[i % this.hull.length];
+      this._addTriangle([pt, p, p0]);
+      p0 = p;
+      if (p[0] === stop[0] && p[1] === stop[1]) break;
+    }
+    this.hull = hull2;
+  }
+  this.flipTriangles();
+};
+/** Flipping algorithme: test new inserted triangle and flip
+ */
+ol.source.Delaunay.prototype.flipTriangles = function ()	{
+  var count = 1000; // Count to prevent too many iterations
+  while (this.flip.length) {
+    // DEBUG: prevent infinite loop
+    if (count--<0) {
+      console.error('[DELAUNAY:flipTriangles] Too many iterations')
+      break;
+    }
+    var tri = this.flip.pop();
+    if (tri.get('del')) continue;
+    var ti = tri.getGeometry().getCoordinates()[0];
+    for (var k=0; k<3; k++) {
+      // Get facing triangles
+      var mid = [(ti[(k+1)%3][0]+ti[k][0])/2, (ti[(k+1)%3][1]+ti[k][1])/2];
+      var triangles = this.getTrianglesAt(mid);
+      var pt1 = null;
+      // Get opposite point
+      if (triangles.length>1) {
+        var t0 = triangles[0].getGeometry().getCoordinates()[0];
+        var t1 = triangles[1].getGeometry().getCoordinates()[0];
+        for (var pi=0; pi<t1.length; pi++) {
+          if (!this._ptInTriangle(t1[pi], t0)) {
+            pt1 = t1[pi];
+            break;
+          }
+        }
+      }
+      if (pt1) {
+        // Is in circle ?
+        if (this.inCircle(pt1, t0)) {
+          var pt2;
+          // Get opposite point
+          for (var pi=0; pi<t0.length; pi++) {
+            if (!this._ptInTriangle(t0[pi], t1)) {
+              pt2 = t0.splice(pi,1)[0];
+              break;
+            }
+          }
+          // Flip triangles
+          if (this.intersectSegs([pt1, pt2], t0)) {
+            while (triangles.length) {
+              var tmp = triangles.pop();
+              tmp.set('del', true);
+              this.removeFeature(tmp);
+            }
+            this._addTriangle([pt1, pt2, t0[0]]);
+            this._addTriangle([pt1, pt2, t0[1]]);
+          }
+        }
+      }
+    }
+  }
+};
+/** Test intersection beetween 2 segs
+ * @param {Array<ol.coordinates>} d1
+ * @param {Array<ol.coordinates>} d2
+ * @return {bbolean}
+ */
+ol.source.Delaunay.prototype.intersectSegs = function (d1, d2)	{
+  var d1x = d1[1][0] - d1[0][0];
+  var d1y = d1[1][1] - d1[0][1];
+  var d2x = d2[1][0] - d2[0][0];
+  var d2y = d2[1][1] - d2[0][1];
+  var det = d1x * d2y - d1y * d2x;
+  if (det != 0) {
+    var k = (d1x * d1[0][1] - d1x * d2[0][1] - d1y * d1[0][0] + d1y * d2[0][0]) / det;
+    // Intersection: return [d2[0][0] + k*d2x, d2[0][1] + k*d2y];
+    return (0<k && k<1);
+  }
+  else return false;
+};
+/** Test pt is a triangle's node
+ * @param {ol.coordinate} pt
+ * @param {Array<ol.coordinate>} triangle
+ * @return {boolean}
+ */
+ol.source.Delaunay.prototype._ptInTriangle = function(pt, triangle) {
+  for (var i=0, p; p=triangle[i]; i++) {
+    if (ol.coordinate.equal(pt,p)) return true;
+  }
+  return false;
+};
+/** List points in a triangle (assume points get an id) for debug purposes
+ * @param {Array<ol.coordinate>} pts
+ * @return {String} ids list
+ */
+ol.source.Delaunay.prototype.listpt = function (pts) {
+  var s = '';
+  for (var i=0, p; p = pts[i]; i++) {
+    var c = this._nodes.getClosestFeatureToCoordinate(p);
+    if (!ol.coordinate.equal(c.getGeometry().getCoordinates(), p)) c=null;
+    s += (s?', ':'') + (c ? c.get('id') : '?');
+  }
+  return s;
+};
+/** Test if coord is within triangle's circumcircle 
+ * @param {ol.coordinate} coord
+ * @param {Array<ol.coordinate>} triangle
+ * @return {boolean}
+ */
+ol.source.Delaunay.prototype.inCircle = function (coord, triangle) {
+  var c = this.getCircumCircle(triangle);
+  return ol.coordinate.dist2d(coord, c.center) < c.radius;
+}
+/** Calculate the circumcircle of a triangle
+ * @param {Array<ol.coordinate>} triangle
+ * @return {*}
+ */
+ol.source.Delaunay.prototype.getCircumCircle = function (triangle) {
+  var x1 = triangle[0][0];
+  var y1 = triangle[0][1];
+  var x2 = triangle[1][0];
+  var y2 = triangle[1][1];
+  var x3 = triangle[2][0];
+  var y3 = triangle[2][1];
+  var m1 = (x1-x2)/(y2-y1);
+  var m2 = (x1-x3)/(y3-y1);
+  var b1 = ((y1+y2)/2) - m1*(x1+x2)/2;
+  var b2 = ((y1+y3)/2) - m2*(x1+x3)/2;
+  var cx = (b2-b1)/(m1-m2);
+  var cy = m1*cx + b1;
+  var center = [cx, cy];
+  return  { 
+    center: center, 
+    radius: ol.coordinate.dist2d(center,triangle[0])
+  };
+};
+/** Get triangles at a point
+ */
+ol.source.Delaunay.prototype.getTrianglesAt = function(coord) {
+  var extent = ol.extent.buffer (ol.extent.boundingExtent([coord]), this.get('epsilon'));
+  var result = [];
+  this.forEachFeatureIntersectingExtent(extent, function(f){
+    result.push(f);
+  });
+  return result;
+};
 
 /*	Copyright (c) 2015 Jean-Marc VIGLINO, 
 	released under the CeCILL-B license (French BSD license)
@@ -12010,121 +12770,6 @@ ol.render3D.prototype.drawFeature3D_ = function(ctx, build)
 */
 /**
  * @classdesc
- *	The Magnify overlay add a "magnifying glass" effect to an OL3 map that displays 
- *	a portion of the map in a different zoom (and actually display different content).
- *
- * @constructor
- * @extends {ol.Overlay}
- * @param {olx.OverlayOptions} options Overlay options 
- * @api stable
- */
-ol.Overlay.Magnify = function (options)
-{	var self = this;
-	var elt = $("<div>").addClass("ol-magnify");
-	this._elt = elt.get(0);
-	ol.Overlay.call(this,
-		{	positioning: options.positioning || "center-center",
-			element: this._elt,
-			stopEvent: false
-		});
-	// Create magnify map
-	this.mgmap_ = new ol.Map(
-	{	controls: new ol.Collection(),
-		interactions: new ol.Collection(),
-		target: options.target || this._elt,
-		view: new ol.View({ projection: options.projection }),
-		layers: options.layers
-	});
-	this.mgview_ = this.mgmap_.getView();
-	this.external_ = options.target?true:false;
-	this.set("zoomOffset", options.zoomOffset||1);
-	this.set("active", true);
-	this.on("propertychange", this.setView_.bind(this));
-};
-ol.inherits(ol.Overlay.Magnify, ol.Overlay);
-/**
- * Set the map instance the overlay is associated with.
- * @param {ol.Map} map The map instance.
- */
-ol.Overlay.Magnify.prototype.setMap = function(map) {
-	if (this.getMap()) {
-		$(this.getMap().getViewport()).off("mousemove", this.onMouseMove_);
-	}
-	if (this._listener) ol.Observable.unByKey(this._listener);
-	this._listener = null;
-	ol.Overlay.prototype.setMap.call(this, map);
-	$(map.getViewport()).on("mousemove", {self:this}, this.onMouseMove_);
-	this._listener = map.getView().on('propertychange', this.setView_.bind(this));
-	this.setView_();
-};
-/** Get the magnifier map
-*	@return {_ol_Map_}
-*/
-ol.Overlay.Magnify.prototype.getMagMap = function()
-{	return this.mgmap_;
-};
-/** Magnify is active
-*	@return {boolean}
-*/
-ol.Overlay.Magnify.prototype.getActive = function()
-{	return this.get("active");
-};
-/** Activate or deactivate 
-*	@param {boolean} active
-*/
-ol.Overlay.Magnify.prototype.setActive = function(active)
-{	return this.set("active", active);
-};
-/** Mouse move
- * @private
- */
-ol.Overlay.Magnify.prototype.onMouseMove_ = function(e)
-{	var self = e.data.self;
-	if (!self.get("active"))
-	{	self.setPosition();
-	}
-	else
-	{	var px = self.getMap().getEventCoordinate(e);
-		if (!self.external_) self.setPosition(px);
-		self.mgview_.setCenter(px);
-		if ($("canvas", self._elt).css("display")=="none") self.mgmap_.updateSize();
-	}
-};
-/** View has changed
- * @private
- */
-ol.Overlay.Magnify.prototype.setView_ = function(e)
-{	if (!this.get("active"))
-	{	this.setPosition();
-		return;
-	}
-	if (!e) 
-	{	// refresh all
-		this.setView_({key:'rotation'});
-		this.setView_({key:'resolution'});
-		return;
-	}
-	// Set the view params
-	switch (e.key)
-	{	case 'rotation':
-			this.mgview_.setRotation(this.getMap().getView().getRotation());
-			break;
-		case 'zoomOffset':
-		case 'resolution':
-		{	var z = Math.max(0,this.getMap().getView().getZoom()+Number(this.get("zoomOffset")));
-			this.mgview_.setZoom(z);
-			break;
-		}
-		default: break;
-	}
-};
-
-/*	Copyright (c) 2016 Jean-Marc VIGLINO, 
-	released under the CeCILL-B license (French BSD license)
-	(http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt).
-*/
-/**
- * @classdesc
  * A popup element to be displayed over the map and attached to a single map
  * location. The popup are customized using CSS.
  *
@@ -12334,19 +12979,223 @@ ol.Overlay.Popup.prototype.hide = function ()
 	this._elt.removeClass("visible");
 };
 
+/*	Copyright (c) 2016 Jean-Marc VIGLINO, 
+	released under the CeCILL-B license (French BSD license)
+	(http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt).
+*/
+/**
+ * @classdesc
+ *	The Magnify overlay add a "magnifying glass" effect to an OL3 map that displays 
+ *	a portion of the map in a different zoom (and actually display different content).
+ *
+ * @constructor
+ * @extends {ol.Overlay}
+ * @param {olx.OverlayOptions} options Overlay options 
+ * @api stable
+ */
+ol.Overlay.Magnify = function (options)
+{	var self = this;
+	var elt = $("<div>").addClass("ol-magnify");
+	this._elt = elt.get(0);
+	ol.Overlay.call(this,
+		{	positioning: options.positioning || "center-center",
+			element: this._elt,
+			stopEvent: false
+		});
+	// Create magnify map
+	this.mgmap_ = new ol.Map(
+	{	controls: new ol.Collection(),
+		interactions: new ol.Collection(),
+		target: options.target || this._elt,
+		view: new ol.View({ projection: options.projection }),
+		layers: options.layers
+	});
+	this.mgview_ = this.mgmap_.getView();
+	this.external_ = options.target?true:false;
+	this.set("zoomOffset", options.zoomOffset||1);
+	this.set("active", true);
+	this.on("propertychange", this.setView_.bind(this));
+};
+ol.inherits(ol.Overlay.Magnify, ol.Overlay);
+/**
+ * Set the map instance the overlay is associated with.
+ * @param {ol.Map} map The map instance.
+ */
+ol.Overlay.Magnify.prototype.setMap = function(map) {
+	if (this.getMap()) {
+		$(this.getMap().getViewport()).off("mousemove", this.onMouseMove_);
+	}
+	if (this._listener) ol.Observable.unByKey(this._listener);
+	this._listener = null;
+	ol.Overlay.prototype.setMap.call(this, map);
+	$(map.getViewport()).on("mousemove", {self:this}, this.onMouseMove_);
+	this._listener = map.getView().on('propertychange', this.setView_.bind(this));
+	this.setView_();
+};
+/** Get the magnifier map
+*	@return {_ol_Map_}
+*/
+ol.Overlay.Magnify.prototype.getMagMap = function()
+{	return this.mgmap_;
+};
+/** Magnify is active
+*	@return {boolean}
+*/
+ol.Overlay.Magnify.prototype.getActive = function()
+{	return this.get("active");
+};
+/** Activate or deactivate 
+*	@param {boolean} active
+*/
+ol.Overlay.Magnify.prototype.setActive = function(active)
+{	return this.set("active", active);
+};
+/** Mouse move
+ * @private
+ */
+ol.Overlay.Magnify.prototype.onMouseMove_ = function(e)
+{	var self = e.data.self;
+	if (!self.get("active"))
+	{	self.setPosition();
+	}
+	else
+	{	var px = self.getMap().getEventCoordinate(e);
+		if (!self.external_) self.setPosition(px);
+		self.mgview_.setCenter(px);
+		if ($("canvas", self._elt).css("display")=="none") self.mgmap_.updateSize();
+	}
+};
+/** View has changed
+ * @private
+ */
+ol.Overlay.Magnify.prototype.setView_ = function(e)
+{	if (!this.get("active"))
+	{	this.setPosition();
+		return;
+	}
+	if (!e) 
+	{	// refresh all
+		this.setView_({key:'rotation'});
+		this.setView_({key:'resolution'});
+		return;
+	}
+	// Set the view params
+	switch (e.key)
+	{	case 'rotation':
+			this.mgview_.setRotation(this.getMap().getView().getRotation());
+			break;
+		case 'zoomOffset':
+		case 'resolution':
+		{	var z = Math.max(0,this.getMap().getView().getZoom()+Number(this.get("zoomOffset")));
+			this.mgview_.setZoom(z);
+			break;
+		}
+		default: break;
+	}
+};
+
+/*	Copyright (c) 2016 Jean-Marc VIGLINO, 
+	released under the CeCILL-B license (French BSD license)
+	(http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt).
+*/
+/**
+ * @classdesc
+ * A placemark element to be displayed over the map and attached to a single map
+ * location. The placemarks are customized using CSS.
+ *
+ * @example
+var popup = new ol.Overlay.Placemark();
+map.addOverlay(popup);
+popup.show(coordinate);
+popup.hide();
+ *
+ * @constructor
+ * @extends {ol.Overlay}
+ * @param {} options Extend ol/Overlay/Popup options 
+ *	@param {String} options.color placemark color
+ *	@param {String} options.backgroundColor placemark color
+ *	@param {String} options.contentColor placemark color
+ *	@param {Number} options.radius placemark radius in pixel
+ *	@param {String} options.popupClass the a class of the overlay to style the popup.
+ *	@param {function|undefined} options.onclose: callback function when popup is closed
+ *	@param {function|undefined} options.onshow callback function when popup is shown
+ * @api stable
+ */
+ol.Overlay.Placemark = function (options) {
+	options = options || {};
+	options.popupClass = (options.popupClass || '') + ' placemark anim'
+	options.positioning = 'bottom-center',
+	ol.Overlay.Popup.call(this, options);
+	this.setPositioning = function(){};
+	if (options.color) this.element.style.color = options.color;
+	if (options.backgroundColor ) this.element.style.backgroundColor  = options.backgroundColor ;
+	if (options.contentColor ) this.setContentColor(options.contentColor);
+	if (options.size) this.setRadius(options.size);
+};
+ol.inherits(ol.Overlay.Placemark, ol.Overlay.Popup);
+/**
+ * Set the position and the content of the placemark (hide it before to enable animation).
+ * @param {ol.Coordinate|string} coordinate the coordinate of the popup or the HTML content.
+ * @param {string|undefined} html the HTML content (undefined = previous content).
+ */
+ol.Overlay.Placemark.prototype.show = function() {
+	this.hide();
+	ol.Overlay.Popup.prototype.show.apply(this, arguments);
+};
+/**
+ * Set the placemark color.
+ * @param {string} color
+ */
+ol.Overlay.Placemark.prototype.setColor = function(color) {
+	this.element.style.color = color;
+};
+/**
+ * Set the placemark background color.
+ * @param {string} color
+ */
+ol.Overlay.Placemark.prototype.setBackgroundColor = function(color) {
+	this.element.style.backgroundColor = color;
+};
+/**
+ * Set the placemark content color.
+ * @param {string} color
+ */
+ol.Overlay.Placemark.prototype.setContentColor = function(color) {
+	this.element.getElementsByClassName('content')[0].style.color = color;
+};
+/**
+ * Set the placemark class.
+ * @param {string} name
+ */
+ol.Overlay.Placemark.prototype.setClassName = function(name) {
+	var oldclass = this.element.className;
+	this.element.className = 'ol-popup placemark ol-popup-bottom ol-popup-center ' 
+		+ (/visible/.test(oldclass) ? 'visible ' : '')
+		+ (/anim/.test(oldclass) ? 'anim ' : '')
+		+ name;
+};
+/**
+ * Set the placemark radius.
+ * @param {number} size size in pixel
+ */
+ol.Overlay.Placemark.prototype.setRadius = function(size) {
+	this.element.style.fontSize = size + 'px';
+};
+
 /*
 	Copyright (c) 2017 Jean-Marc VIGLINO,
 	released under the CeCILL-B license (http://www.cecill.info/).
 	ol.coordinate.convexHull compute a convex hull using Andrew's Monotone Chain Algorithm.
 	@see https://en.wikipedia.org/wiki/Convex_hull_algorithms
 */
+(function(){
 /** Tests if a point is left or right of line (a,b).
 * @param {ol.coordinate} a point on the line
 * @param {ol.coordinate} b point on the line
-* @param {ol.coordinate} 0
+* @param {ol.coordinate} o
 * @return {bool} true if (a,b,o) turns clockwise
 */
-let clockwise = function (a, b, o) {
+var clockwise = function (a, b, o) {
   return ((a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]) <= 0);
 };
 /** Compute a convex hull using Andrew's Monotone Chain Algorithm
@@ -12412,6 +13261,7 @@ var getCoordinates = function (geom) {
 ol.geom.Geometry.prototype.convexHull = function() {
   return ol.coordinate.convexHull(getCoordinates(this));
 };
+})();
 
 /*	Copyright (c) 2016 Jean-Marc VIGLINO, 
 	released under the CeCILL-B license (French BSD license)
@@ -13436,7 +14286,7 @@ ol.Map.prototype.pulse = function(coords, options)
  * @api
  */
 ol.style.Chart = function(opt_options)
-{	options = opt_options || {};
+{	var options = opt_options || {};
 	var strokeWidth = 0;
 	if (opt_options.stroke) strokeWidth = opt_options.stroke.getWidth();
 	ol.style.RegularShape.call (this,
@@ -14235,6 +15085,7 @@ ol.style.FillPattern.prototype.getChecksum = function()
  *  @param {number} options.rotateWithView
  *  @param {number} options.opacity
  *  @param {number} options.fontSize, default 1
+ *  @param {string} options.fontStyle the font style (bold, italic, bold italic, etc), default none
  *  @param {boolean} options.gradient true to display a gradient on the symbol
  *  @param {_ol_style_Fill_} options.fill
  *  @param {_ol_style_Stroke_} options.stroke
@@ -14251,6 +15102,7 @@ ol.style.FontSymbol = function(options)
 	if (typeof(options.opacity)=="number") this.setOpacity(options.opacity);
 	this.color_ = options.color;
 	this.fontSize_ = options.fontSize || 1;
+	this.fontStyle_ = options.fontStyle || '';
 	this.stroke_ = options.stroke;
 	this.fill_ = options.fill;
 	this.radius_ = options.radius -strokeWidth;
@@ -14312,6 +15164,7 @@ ol.style.FontSymbol.prototype.clone = function()
 	{	glyph: "",
 		color: this.color_,
 		fontSize: this.fontSize_,
+		fontStyle: this.fontStyle_,
 		stroke: this.stroke_,
 		fill: this.fill_,
 		radius: this.radius_ + (this.stroke_ ? this.stroke_.getWidth():0),
@@ -14536,7 +15389,9 @@ ol.style.FontSymbol.prototype.drawMarker_ = function(renderOptions, context, x, 
 	}
 	// Draw the symbol
 	if (this.glyph_.char)
-	{	context.font = (2*tr.fac*(this.radius_)*this.fontSize_)+"px "+this.glyph_.font;
+	{	context.font = this.fontStyle_ +' '
+				+ (2*tr.fac*(this.radius_)*this.fontSize_)+"px "
+				+ this.glyph_.font;
 		context.strokeStyle = context.fillStyle;
 		context.lineWidth = renderOptions.strokeWidth * (this.form_ == "none" ? 2:1);
 		context.fillStyle = ol.color.asString(this.color_ || scolor);
