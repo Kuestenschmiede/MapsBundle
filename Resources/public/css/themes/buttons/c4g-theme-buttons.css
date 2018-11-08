@@ -696,6 +696,7 @@ button.ol-zoom-out {
 .c4g-router-input-wrapper > input {
   box-sizing: border-box;
   padding: 5px;
+  margin: 2px;
 }
 .c4g-router-input-wrapper > label {
   margin-right: 5px;
