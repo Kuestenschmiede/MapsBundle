@@ -321,10 +321,9 @@ class ResourceLoader extends coreResourceLoader
         );
 
         // load theme
-        $themeData = self::loadTheme($profile->theme);
         self::loadResources($resources);
         // check & load Theme
-        return $themeData;
+        return self::loadTheme($profile->theme);
     }
 
     /**
