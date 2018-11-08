@@ -106,7 +106,8 @@ import {Infopage} from "./c4g-maps-control-portside-infopage";
         // attribution
         mapData.attribution = $.extend({
             enable: true,
-            collapsed: false
+            collapsed: false,
+            collapsible: true
         }, mapData.attribution);
         // geosearch
         mapData.geosearch = $.extend({
@@ -849,7 +850,8 @@ import {Infopage} from "./c4g-maps-control-portside-infopage";
                 label: ' ',
                 tipLabel: langConstants.CTRL_ATTRIBUTION,
                 collapseLabel: ' ',
-                target: controlContainerBottomRight
+                target: controlContainerBottomRight,
+                collapsible: true
             });
             this.controls.attribution.setCollapsed(mapData.attribution.collapsed === '1');
             this.map.addControl(this.controls.attribution);
