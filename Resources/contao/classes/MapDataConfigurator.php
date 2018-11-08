@@ -536,8 +536,8 @@ class MapDataConfigurator
         if ($profileId) {
             $mapData['themeData'] = ResourceLoader::loadResourcesForProfile($profileId, $options['type'] == 'geopicker');
         } else {
-            ResourceLoader::loadResources();
             $mapData['themeData'] = ResourceLoader::loadTheme();
+            ResourceLoader::loadResources();
         }
 
         // @TODO: Check
