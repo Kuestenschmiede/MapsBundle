@@ -1,4 +1,6 @@
 // 'namespace'
+import {langConstantsEnglish} from "./c4g-maps-constant-i18n-en";
+
 this.c4g = this.c4g || {};
 this.c4g.maps = this.c4g.maps || {};
 
@@ -10,7 +12,20 @@ import {C4gLocationStyleController} from "./c4g-locationstyle-controller";
 import {Spinner} from "./c4g-maps-misc-spinner";
 import {utils} from "./c4g-maps-utils";
 import {cssConstants} from "./c4g-maps-constant";
-import {langConstants} from "./c4g-maps-constant-i18n-de";
+import {langConstantsGerman} from "./c4g-maps-constant-i18n-de";
+
+let langConstants = {};
+
+if (mapData) {
+  if (mapData.lang === "de") {
+    langConstants = langConstantsGerman;
+  } else if (mapData.lang === "en") {
+    langConstants = langConstantsEnglish;
+  } else {
+    // fallback
+    langConstants = langConstantsGerman;
+  }
+}
 
 var c4g = this.c4g;
 export class MapProxy {

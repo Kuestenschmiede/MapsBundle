@@ -235,7 +235,7 @@ import {utils} from "./c4g-maps-utils";
           //if this property is set, we have a feature that has none of our styles => no tooltip
           return false;
         }
-        // catch the case the layer is a baselayer (klokan vector tiles)
+        // catch the case the layer is a baselayer (vector tiles)
         if (hovered && hovered.layer && hovered.layer.type === "VECTOR_TILE") {
           return false;
         }

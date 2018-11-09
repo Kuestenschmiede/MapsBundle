@@ -18,6 +18,7 @@ use con4gis\MapsBundle\Classes\Events\LoadMapdataEvent;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapBaselayersModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
+use Contao\Controller;
 use Contao\Input;
 use Contao\System;
 
@@ -48,7 +49,6 @@ class MapDataConfigurator
             } else {
                 $objThis->import('FrontendUser', 'User');
             }
-
         }
 
         //TODO: currently when in backend mode, not the correct things are loaded
@@ -59,8 +59,9 @@ class MapDataConfigurator
             $map = new C4gMapsModel();
             $map->id = 0;
         }
-
+        $language = Controller::replaceInsertTags("{{page::language}}");
         $mapData['id'] = $map->id;
+        $mapData['lang'] = $language;
 
         // ------------------------------------------------------------------------
         // get profile for map
@@ -490,10 +491,6 @@ class MapDataConfigurator
             $mapData['hover_popups_stay'] = $profile->hover_popups_stay;
 
         }
-
-        // -----
-        // (...)
-        // -----
 
         // mapservice
         $baseLayer = C4gMapBaselayersModel::findById($objThis->c4g_map_default_mapservice);

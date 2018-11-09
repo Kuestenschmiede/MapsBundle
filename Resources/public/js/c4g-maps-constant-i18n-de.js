@@ -198,4 +198,4 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
 
 }(jQuery, this.c4g));
 
-export var langConstants = this.c4g.maps.constant.i18n;
+export var langConstantsGerman = this.c4g.maps.constant.i18n;

@@ -198,3 +198,5 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
   }); // end of "language constants" ---
 
 }(jQuery, this.c4g));
+
+export var langConstantsEnglish = this.c4g.maps.constant.i18n;
