@@ -236,7 +236,7 @@ import {utils} from "./c4g-maps-utils";
           return false;
         }
         // catch the case the layer is a baselayer (klokan vector tiles)
-        if (hovered.layer.type === "VECTOR_TILE") {
+        if (hovered && hovered.layer && hovered.layer.type === "VECTOR_TILE") {
           return false;
         }
 
