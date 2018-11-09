@@ -11,7 +11,7 @@ import {cssConstants} from "./c4g-maps-constant";
 
 let langConstants = {};
 
-if (mapData) {
+if (typeof mapData !== "undefined") {
   if (mapData.lang === "de") {
     langConstants = langConstantsGerman;
   } else if (mapData.lang === "en") {

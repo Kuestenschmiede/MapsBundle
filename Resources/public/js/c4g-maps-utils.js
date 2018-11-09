@@ -12,7 +12,7 @@ import {langConstantsEnglish} from "./c4g-maps-constant-i18n-en";
 
 let popupFunctions = {};
 
-if (mapData) {
+if (typeof mapData !== "undefined") {
   if (mapData.lang === "de") {
     popupFunctions = popupFunctionsDE;
   } else if (mapData.lang === "en") {

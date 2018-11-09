@@ -12,7 +12,7 @@ import {Spinner} from "./c4g-maps-misc-spinner";
 
 let langConstants = {};
 
-if (mapData) {
+if (typeof mapData !== "undefined") {
   if (mapData.lang === "de") {
     langConstants = langConstantsGerman;
   } else if (mapData.lang === "en") {

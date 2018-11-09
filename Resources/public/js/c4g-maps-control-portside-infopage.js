@@ -11,7 +11,7 @@ import {Sideboard} from "./c4g-maps-control-sideboard";
 
 let langConstants = {};
 
-if (mapData) {
+if (typeof mapData !== "undefined") {
   if (mapData.lang === "de") {
     langConstants = langConstantsGerman;
   } else if (mapData.lang === "en") {

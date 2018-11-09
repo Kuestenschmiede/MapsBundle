@@ -36,7 +36,7 @@ import {Infopage} from "./c4g-maps-control-portside-infopage";
 
 let langConstants = {};
 
-if (mapData) {
+if (typeof mapData !== "undefined") {
   if (mapData.lang === "de") {
     langConstants = langConstantsGerman;
   } else if (mapData.lang === "en") {
