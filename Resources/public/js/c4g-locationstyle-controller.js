@@ -5,7 +5,7 @@ export class C4gLocationStyleController{
     constructor(proxy){
         this.proxy = proxy;
         this.mapController = proxy.options.mapController;
-        this.arrLocStyles = [];
+        this.arrLocStyles = {};
     }
 
     loadLocationStyles(arrIds, opt_options) {

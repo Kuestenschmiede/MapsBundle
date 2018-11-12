@@ -1,11 +1,26 @@
 // "namespace"
+
 this.c4g = this.c4g || {};
 this.c4g.maps = this.c4g.maps || {};
 this.c4g.maps.control = this.c4g.maps.control || {};
 
 import {cssConstants} from "./c4g-maps-constant";
-import {langConstants} from "./c4g-maps-constant-i18n-de";
+import {langConstantsGerman} from "./c4g-maps-constant-i18n-de";
+import {langConstantsEnglish} from "./c4g-maps-constant-i18n-en";
 import {utils} from "./c4g-maps-utils";
+
+let langConstants = {};
+
+if (typeof mapData !== "undefined") {
+  if (mapData.lang === "de") {
+    langConstants = langConstantsGerman;
+  } else if (mapData.lang === "en") {
+    langConstants = langConstantsEnglish;
+  } else {
+    // fallback
+    langConstants = langConstantsGerman;
+  }
+}
 
 (function ($, c4g) {
   'use strict';
