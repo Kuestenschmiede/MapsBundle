@@ -92,6 +92,7 @@ export class C4gLocationStyle{
             case 'cust_icon':
                     if (styleData.icon_src) {
                         imageStyle = new ol.style.Icon({
+                            offset: [styleData.icon_offset[0],styleData.icon_offset[1]],
                             opacity: parseFloat(styleData.icon_opacity.value, 10) / 100,
                             src: styleData.icon_src,
                             size: [parseInt(styleData.icon_size[0], 10), parseInt(styleData.icon_size[1], 10)],

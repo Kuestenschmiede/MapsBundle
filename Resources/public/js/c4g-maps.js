@@ -701,7 +701,7 @@ import {Infopage} from "./c4g-maps-control-portside-infopage";
         }
         // @ToDo mapData.additionalPanel is always true, because it is set as an new object in the beginning. Therefore the second parameter of the boolean is requested, which throws an error
         // additionalPanel is furthermore not found anywhere in Maps and should be loaded over a hook
-      
+
         // if (mapData.additionalPanel && typeof c4g.maps.control.additionalPanel === 'function') {
         //   this.controls.additionalPanel = new c4g.maps.control.additionalPanel({
         //     tipLabel: langConstants.CTRL_ADDITIONALPANEL,

@@ -1,7 +1,8 @@
 import {C4gLayer} from "./c4g-layer"
 import {utils} from "./c4g-maps-utils"
+import {cssConstants} from "./c4g-maps-constant";
 
-var c4g = this.c4g;
+
 
 import {Customtab} from "./c4g-maps-control-starboardplugin-customtab";
 
@@ -1334,9 +1335,10 @@ export class C4gLayerController{
           });
           if (addLayer) {
             if(layer.vectorLayer.getLayers().getArray()[0] && layer.vectorLayer.getLayers().getArray()[0].popup && layer.vectorLayer.getLayers().getArray()[0].popup.showPopupOnActive){
-              c4g.maps.popup.$content.html('');
-              c4g.maps.popup.$popup.addClass(c4g.maps.constant.css.ACTIVE).addClass(c4g.maps.constant.css.LOADING);
-              c4g.maps.popup.spinner.show();
+
+              this.proxy.currentPopup.$content.html('');
+              this.proxy.currentPopup.$popup.addClass(cssConstants.ACTIVE).addClass(cssConstants.LOADING);
+              this.proxy.currentPopup.spinner.show();
               var popupInfos = layer.vectorLayer.getLayers().getArray()[0].popup;
               var features = layer.vectorLayer.getLayers().getArray()[0].getSource().getFeatures();
               var coord = features['0'].getGeometry().getCoordinates();
@@ -1652,9 +1654,9 @@ export class C4gLayerController{
     this.arrLayers[itemUid].vectorLayer = layerGroup;
     this.mapController.map.addLayer(layerGroup);
     if(layerGroup.getLayers().getArray()[0] && layerGroup.getLayers().getArray()[0].popup && layerGroup.getLayers().getArray()[0].popup.showPopupOnActive){
-      c4g.maps.popup.$content.html('');
-      c4g.maps.popup.$popup.addClass(c4g.maps.constant.css.ACTIVE).addClass(c4g.maps.constant.css.LOADING);
-      c4g.maps.popup.spinner.show();
+      this.proxy.currentPopup.$content.html('');
+      this.proxy.currentPopup.$popup.addClass(cssConstants.ACTIVE).addClass(cssConstants.LOADING);
+      this.proxy.currentPopup.spinner.show();
       var popupInfos = layerGroup.getLayers().getArray()[0].popup;
       var layer = layerGroup.getLayers().getArray()[0];
       var coord = features['0'].getGeometry().getCoordinates();

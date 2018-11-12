@@ -518,7 +518,7 @@ export class MapProxy {
 
     c4g.maps.popup.$popup = jQuery(c4g.maps.popup.popup.getElement());
     c4g.maps.popup.$content = jQuery('.c4g-popup-content', c4g.maps.popup.$popup);
-
+    this.currentPopup = c4g.maps.popup;
   } // end of "addPopUp()"
 
 
@@ -842,5 +842,4 @@ export class MapProxy {
 
     return true;
   } // end of "checkLayerIsActive()"
-
 }
