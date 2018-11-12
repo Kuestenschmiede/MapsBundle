@@ -29,6 +29,7 @@ export class C4gLayer{
     this.visibleChilds = false;
     this.vectorLayer = null;
     this.hideWhenInTab = layerArr['hide_when_in_tab'];
+    this.noFilter = layerArr['noFilter'];
 
     if (layerArr.projectId) {
       this.projectId = layerArr.projectId;

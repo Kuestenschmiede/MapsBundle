@@ -479,6 +479,7 @@ if (typeof mapData !== "undefined") {
 
           if (layer && layer.display) {
             listItem = options.parseAsList ? document.createElement('li') : document.createElement('div');
+            $(listItem).data('noFilter', layer['noFilter']);
             item.entryWrappers = item.entryWrappers || [];
             item.entryWrappers.push(listItem);
 
@@ -677,7 +678,7 @@ if (typeof mapData !== "undefined") {
                         var isMatch = false;
 
                         // search current LI for filter term
-                        if (element.children[i].getElementsByTagName('a')[0].innerHTML.toUpperCase().indexOf(filter.value.toUpperCase()) >= 0) {
+                        if (element.children[i].getElementsByTagName('a')[0].innerHTML.toUpperCase().indexOf(filter.value.toUpperCase()) >= 0 || $(element.children[i]).data('noFilter')) {
                             // it's a match
                             isMatch = true;
                         }
