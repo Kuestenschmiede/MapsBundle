@@ -431,35 +431,6 @@ class MapDataConfigurator
                 $mapData['geopicker']['disabled']  = $profile->geopicker_disabled;
             }
 
-
-            // router
-            //
-            if ($profile->router) {
-                $mapData['router_enable'] = $profile->geosearch && $profile->router;
-                $mapData['router_viaroute_precision'] = $profile->router_viaroute_url ? 1e5 : 1e6;
-                if ($profile->router_attribution)
-                {
-                    $mapData['router_attribution'] = \Contao\Controller::replaceInsertTags($profile->router_attribution);
-                    if ($profile->attribution) {
-                        $mapData['attribution']['router'] = \Contao\Controller::replaceInsertTags($profile->router_attribution);
-                    }
-                }
-                $mapData['router_from_locstyle'] = $profile->router_from_locstyle;
-                $mapData['router_to_locstyle'] = $profile->router_to_locstyle;
-                $mapData['router_point_locstyle'] = $profile->router_point_locstyle;
-                $mapData['router_interim_locstyle'] = $profile->router_interim_locstyle;
-                $mapData['router_api_selection'] = $profile->router_api_selection;
-                $mapData['router_alternative'] = $profile->router_alternative;
-                if($profile->router_profiles){
-                    $router_profiles = array_flip(unserialize($profile->router_profiles));
-                    foreach($router_profiles as $key => $router_profile){
-                        $router_profiles[$key] = $GLOBALS['TL_LANG']['c4g_maps']['router_profiles'][$key];
-                    }
-                    $mapData['router_profiles'] = $router_profiles;
-                }
-
-            }
-
             if ($profile->label_color) {
                 $mapData['default_label_color'] = $profile->label_color;
             }

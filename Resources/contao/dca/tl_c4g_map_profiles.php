@@ -92,14 +92,14 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
     // Palettes
     'palettes' => array
     (
-        '__selector__'                => array('mouse_nav','starboard','cluster_all','baselayerswitcher','layerswitcher','attribution','hover_popups','permalink','geosearch','geopicker','router', 'cesium'),
+        '__selector__'                => array('mouse_nav','starboard','cluster_all','baselayerswitcher','layerswitcher','attribution','hover_popups','permalink','geosearch','geopicker', 'cesium'),
         'default'                     => '{general_legend},name,theme;'.
                                          '{baselayer_legend:hide},baselayers, default_baselayer;'.
                                          '{locstyle_legend:hide},locstyles, label_color;'.
                                          '{navigation_legend},zoom_panel,zoom_panel_button,zoom_panel_slider,mouse_nav,touch_nav,keyboard_nav,fullscreen,print;'.
                                          '{starboard_legend:hide},starboard;'.
                                          '{information_legend},attribution,overviewmap,geobookmarks,measuretool,graticule,scaleline,mouseposition,permalink,zoomlevel;'.
-                                         '{geosearch_legend:hide},geosearch,router;'.
+                                         '{geosearch_legend:hide},geosearch;'.
                                          '{info_legend:hide},infopage;'.
                                          '{click_legend:hide},link_newwindow,link_open_on,hover_popups;'.
                                          '{geopicker_legend:hide},is_backend_geopicker_default,geopicker;'.
@@ -123,7 +123,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
         'permalink'                   => 'permalink_get_param',
         'geosearch'                   => 'geosearch_engine,geosearch_results,geosearch_show,geosearch_div,geosearch_zoomto,geosearch_zoombounds,geosearch_animate,geosearch_markresult,geosearch_popup,geosearch_attribution,geosearch_collapsed',
         'geopicker'                   => 'geopicker_fieldx,geopicker_fieldy,geopicker_searchdiv,geopicker_attribution,geopicker_disabled,geopicker_anonymous',
-        'router'                      => 'router_api_selection,router_viaroute_url,router_attribution,router_alternative,router_from_locstyle,router_to_locstyle,router_point_locstyle,router_interim_locstyle',
         'cesium'                      => 'cesium_always',
     ),
 
@@ -835,34 +834,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             'sql'                     => "char(1) NOT NULL default ''"
         ),
 
-        'router' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router'],
-            'exclude'                 => true,
-            'default'                 => '',
-            'inputType'               => 'checkbox',
-            'eval'                    => array('submitOnChange' => true, 'tl_class'=>'clr'),
-            'sql'                     => "char(1) NOT NULL default ''"
-        ),
-
-        'router_viaroute_url' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_viaroute_url'],
-            'exclude'                 => true,
-            'inputType'               => 'text',
-            'eval'                    => array('rgxp'=>'url', 'decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'long'),
-            'sql'                     => "varchar(255) NOT NULL default ''"
-        ),
-
-        'router_attribution' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_attribution'],
-            'filter'                  => false,
-            'inputType'               => 'text',
-            'eval'                    => array('maxlength'=>255, 'tl_class'=>'long', 'allowHtml' => true),
-            'sql'                     => "varchar(255) NOT NULL default ''"
-        ),
-
         'libsource' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['libsource'],
@@ -1028,98 +999,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             'eval'                    => array('rgxp'=>'digit', 'submitOnChange' => true),
             'sql'                     => "int(10) unsigned NOT NULL default '10'"
         ),
-        'router_api_selection' => array
-        (
-            'label'                   => $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_api_selection'],
-            'exclude'                 => true,
-            'inputType'               => 'select',
-            'default'                 => '1',
-            'options'                 => array('0','1','2'),
-            'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_api_selection'],
-            'eval'                    => array('tl_class'=>'clr long','submitOnChange' => true),
-            'sql'                     => "char(1) NOT NULL default '1'"
-
-        ),
-        'router_alternative'=> array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_alternative'],
-            'exclude'                 => true,
-            'default'                 => '',
-            'inputType'               => 'checkbox',
-            'eval'                    => array('submitOnChange' => true),
-            'sql'                     => "char(1) NOT NULL default ''"
-        ),
-        'router_api_key' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_api_key'],
-            'exclude'                 => true,
-            'inputType'               => 'text',
-            'eval'                    => array('rgxp'=>'url', 'decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'long'),
-            'sql'                     => "varchar(255) NOT NULL default ''"
-        ),
-        'router_from_locstyle' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_from_locstyle'],
-            'exclude'                 => true,
-            'inputType'               => 'select',
-            'options_callback'        => array('tl_c4g_map_profiles','getAllLocStyles'),
-            'eval'                    => array('tl_class'=>'clr w50'),
-            'wizard' => array
-            (
-                array('tl_c4g_map_profiles', 'editLocationStyle')
-            ),
-            'sql'                     => "int(10) unsigned NOT NULL default '0'"
-        ),
-        'router_to_locstyle' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_to_locstyle'],
-            'exclude'                 => true,
-            'inputType'               => 'select',
-            'options_callback'        => array('tl_c4g_map_profiles','getAllLocStyles'),
-            'eval'                    => array('tl_class'=>'w50'),
-            'wizard' => array
-            (
-                array('tl_c4g_map_profiles', 'editLocationStyle')
-            ),
-            'sql'                     => "int(10) unsigned NOT NULL default '0'"
-        ),
-        'router_point_locstyle' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_point_locstyle'],
-            'exclude'                 => true,
-            'inputType'               => 'select',
-            'options_callback'        => array('tl_c4g_map_profiles','getAllLocStyles'),
-            'eval'                    => array('tl_class'=>'w50'),
-            'wizard' => array
-            (
-                array('tl_c4g_map_profiles', 'editLocationStyle')
-            ),
-            'sql'                     => "int(10) unsigned NOT NULL default '0'"
-        ),
-        'router_interim_locstyle' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_interim_locstyle'],
-            'exclude'                 => true,
-            'inputType'               => 'select',
-            'options_callback'        => array('tl_c4g_map_profiles','getAllLocStyles'),
-            'eval'                    => array('tl_class'=>'w50'),
-            'wizard' => array
-            (
-                array('tl_c4g_map_profiles', 'editLocationStyle')
-            ),
-            'sql'                     => "int(10) unsigned NOT NULL default '0'"
-        ),
-        'router_profiles' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_profiles'],
-            'exclude'                 => true,
-            'default'                 => array('0','2','8'),
-            'inputType'               => 'select',
-            'options'                 => array('0','1','2','3','4','5','6','8','9','10'),
-            'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles'],
-            'eval'                    => array('mandatory'=>false, 'multiple'=>true,'chosen'=>true),
-            'sql'                     => "blob NULL"
-        ),
         'cesium' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium'],
@@ -1231,16 +1110,6 @@ class tl_c4g_map_profiles extends Backend
                 $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['geosearch'] =
                     str_replace(',geosearch_div,',',geosearch_key,geosearch_div,',
                         $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['geosearch']);
-            }
-
-
-            if($objProfile->router_api_selection == 2){
-                $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['router'] =
-                    str_replace('router_api_selection,','router_api_selection,router_api_key,',
-                        $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['router']);
-                $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['router'] =
-                    str_replace('router_interim_locstyle','router_interim_locstyle,router_profiles',
-                        $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['router']);
             }
 
 

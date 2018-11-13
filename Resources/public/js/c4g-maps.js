@@ -19,7 +19,6 @@ import {langConstantsEnglish} from "./c4g-maps-constant-i18n-en";
 import {Spinner} from "./c4g-maps-misc-spinner";
 import {MapHover} from "./c4g-maps-misc-maphover";
 import {utils} from "./c4g-maps-utils";
-import {Router} from "./c4g-maps-control-portside-router";
 import {Measuretools} from "./c4g-maps-control-portside-measuretools";
 import {Print} from "./c4g-maps-control-print";
 import {Grid} from "./c4g-maps-control-grid";

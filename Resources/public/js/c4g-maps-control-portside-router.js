@@ -1003,490 +1003,490 @@ if (typeof mapData !== "undefined") {
 
 
 
-      getInstructionIcon: function(strMod,strType) {
-          var image = "";
+    getInstructionIcon: function(strMod,strType) {
+        var image = "";
 
-          switch(strMod) {
-              case "right":
-                  image = "turn-right.png";
-                  break;
-              case "left":
-                  image = "turn-left.png";
-                  break;
-              case "sharp left":
-                  image = "sharp-left.png";
-                  break;
-              case "sharp right":
-                  image = "sharp-right.png";
-                  break;
-              case "slight left":
-                  image = "slight-left.png";
-                  break;
-              case "slight right":
-                  image = "slight-right.png";
-                  break;
-              case "uturn":
-                  image = "u-turn.png";
-                  break;
-              case "straight":
-                  image = "continue.png";
-                  break;
-              default:
-                  image ="default.png";
-                  break;
-          }
-          switch(strType){
-              case "depart":
-                  image ="head.png";
-                  break;
-              case "arrive":
-                  image ="target.png";
-                  break;
-              case "roundabout":
-                  image ="round-about.png";
-                  break;
-              default:
-                  break;
-          }
-
-          return "bundles/con4gismaps/vendor/osrm/images/" + image;
-      },
-      getInstructionIconORS: function(intType){
-        let image;
-        switch(intType){
-            case 0:
-                image = "turn-left.png";
-                break;
-            case 1:
+        switch(strMod) {
+            case "right":
                 image = "turn-right.png";
                 break;
-            case 2:
+            case "left":
+                image = "turn-left.png";
+                break;
+            case "sharp left":
                 image = "sharp-left.png";
                 break;
-            case 3:
+            case "sharp right":
                 image = "sharp-right.png";
                 break;
-            case 4:
+            case "slight left":
                 image = "slight-left.png";
                 break;
-            case 5:
+            case "slight right":
                 image = "slight-right.png";
                 break;
-            case 6:
-                image = "continue.png";
-                break;
-            case 7:
-                image = "round-about.png";
-                break;
-            case 8:
-                image = "round-about.png";
-                break;
-            case 9:
+            case "uturn":
                 image = "u-turn.png";
                 break;
-            case 10:
-                image = "target.png";
+            case "straight":
+                image = "continue.png";
                 break;
-            case 11:
-                image = "head.png";
+            default:
+                image ="default.png";
                 break;
-            case 12:
-                image = "slight-left.png";
-                break;
-            case 13:
-                image = "slight-right.png";
-                break;
-
         }
-          return document.getElementsByTagName('base')[0].href + "bundles/con4gismaps/vendor/osrm/images/" + image;
-      },
-
-      getTypeText: function(strType) {
-          var textID;
-
-          switch(strType) {
-              case "turn":
-                  textID = "ROUTER_5.X_TYPE_0";
-                  break;
-              case "new name":
-                  textID = "ROUTER_5.X_TYPE_1";
-                  break;
-              case "depart":
-                  textID = "ROUTER_5.X_TYPE_2";
-                  break;
-              case "arrive":
-                  textID = "ROUTER_5.X_TYPE_3";
-                  break;
-              case "merge":
-                  textID = "ROUTER_5.X_TYPE_4";
-                  break;
-              case "on ramp":
-                  textID = "ROUTER_5.X_TYPE_5";
-                  break;
-              case "off ramp":
-                  textID = "ROUTER_5.X_TYPE_6";
-                  break;
-              case "fork":
-                  textID = "ROUTER_5.X_TYPE_7";
-                  break;
-              case "end of road":
-                  textID = "ROUTER_5.X_TYPE_8";
-                  break;
-              case "use lane":
-                  textID = "ROUTER_5.X_TYPE_9";
-                  break;
-              case "continue":
-                  textID = "ROUTER_5.X_TYPE_10";
-                  break;
-              case "roundabout":
-              case "exit roundabout":
-                  textID = "ROUTER_5.X_TYPE_11";
-                  break;
-              case "rotary":
-              case "exit rotary":
-                  textID = "ROUTER_5.X_TYPE_12";
-                  break;
-              case "roundabout turn":
-                  textID = "ROUTER_5.X_TYPE_13";
-                  break;
-              case "notification":
-                  textID = "ROUTER_5.X_TYPE_14";
-                  break;
-              default:
-                  break;
-          }
-          return langConstants[textID];
-      },
-
-      getModifierText: function(strModifier) {
-          var textID;
-
-          switch(strModifier) {
-              case "uturn":
-                  textID = "ROUTER_5.X_MOD_0";
-                  break;
-              case "sharp right":
-                  textID = "ROUTER_5.X_MOD_1";
-                  break;
-              case "right":
-                  textID = "ROUTER_5.X_MOD_2";
-                  break;
-              case "slight right":
-                  textID = "ROUTER_5.X_MOD_3";
-                  break;
-              case "straight":
-                  textID = "ROUTER_5.X_MOD_4";
-                  break;
-              case "slight left":
-                  textID = "ROUTER_5.X_MOD_5";
-                  break;
-              case "left":
-                  textID = "ROUTER_5.X_MOD_6";
-                  break;
-              case "sharp left":
-                  textID = "ROUTER_5.X_MOD_7";
-                  break;
-              default:
-                  textID = "ROUTER_5.X_MOD_8";
-          }
-          return langConstants[textID];
-      },
-      getDrivingInstructionIcon: function (instructionId) {
-          var id,
-              image;
-
-          id = instructionId.replace(/^11-\d{1,}$/, "11");    // dumb check, if there is a roundabout (all have the same icon)
-
-          image = 'default.png';
-
-          switch (id) {
-              case '1':
-                  image = 'continue.png';
-                  break;
-              case '2':
-                  image = 'slight-right.png';
-                  break;
-              case '3':
-                  image = 'turn-right.png';
-                  break;
-              case '4':
-                  image = 'sharp-right.png';
-                  break;
-              case '5':
-                  image = 'u-turn.png';
-                  break;
-              case '6':
-                  image = 'sharp-left.png';
-                  break;
-              case '7':
-                  image = 'turn-left.png';
-                  break;
-              case '8':
-                  image = 'slight-left.png';
-                  break;
-              case '10':
-                  image = 'head.png';
-                  break;
-              case '11':
-                  image = 'round-about.png';
-                  break;
-              case '15':
-                  image = 'target.png';
-                  break;
-          }
-          return document.getElementsByTagName('base')[0].href + "bundles/con4gismaps/vendor/osrm/images/" + image;
-
-      },
-      getText: function (id) {
-
-          var text_id = "ROUTER_" + id;
-
-          if (langConstants[text_id] === undefined) {
-              console.warn(text_id + " can't find in language files.");
-          }
-          return langConstants[text_id];
-      },
-
-      getDrivingInstruction: function (instructionId) {
-
-          var id,
-              description;
-
-          id = "DIRECTION_" + instructionId.replace(/^11-\d{2,}$/, "11-x");   // dumb check, if there are 10+ exits on a roundabout (say the same for exit 10+)
-
-          description = this.getText(id);
-          if (!description) {
-              description = this.getText('DIRECTION_0');
-          }
-
-          return description;
-      },
-      showRouteInstructions: function (routeResponse,routeNumber) {
-
-          var self,
-              routerInstruction,
-              routerInstructionsHeader,
-              routerInstructionsHtml,
-              instr,
-              strType,
-              strMod,
-              rowstyle,
-              routeNumber = routeNumber || 0,
-              i,
-              j,
-              route_name_0 = "",
-              route_name_1 = "",
-              total_distance = "",
-              total_time = "";
-
-          self = this;
-
-
-          if (self.routerInstructionsWrapper === undefined) {
-              self.routerInstructionsWrapper = document.createElement('div');
-              self.routerInstructionsWrapper.className = cssConstants.ROUTER_INSTRUCTIONS_WRAPPER;
-              self.routerViewContentWrapper.appendChild(self.routerInstructionsWrapper);
-          } else {
-              $(self.routerInstructionsWrapper).empty();
-          }
-
-          routerInstructionsHeader = document.createElement('div');
-          routerInstructionsHeader.className = cssConstants.ROUTER_INSTRUCTIONS_HEADER;
-
-          if (routeResponse) {
-              if (this.options.mapController.data.router_api_selection == '1') {//OSRM-API:5.x
-                  if (routeResponse.routes[routeNumber].legs[0].summary) {
-                      route_name_0 = routeResponse.routes[routeNumber].legs[0].summary.split(",")[0];
-                      route_name_1 = routeResponse.routes[routeNumber].legs[0].summary.split(",")[1];
-                      if (routeResponse.routes[routeNumber].legs[1]) {
-                          route_name_1 = routeResponse.routes[routeNumber].legs[1].summary.split(",")[1];
-                      }
-
-                  }
-                  total_distance = this.toHumanDistance(routeResponse.routes[routeNumber].distance);
-                  total_time = this.toHumanTime(routeResponse.routes[routeNumber].duration);
-              }
-
-          else if(this.options.mapController.data.router_api_selection == '0') {//OSRM-API:<5
-              if (routeResponse.route_name) {
-                  route_name_0 = routeResponse.route_name[0];
-                  route_name_1 = routeResponse.route_name[1];
-              }
-
-              if (routeResponse.route_summary) {
-                  total_distance = this.toHumanDistance(routeResponse.route_summary.total_distance);
-                  total_time = this.toHumanTime(routeResponse.route_summary.total_time);
-              }
-
-
-          }
-          else if (this.options.mapController.data.router_api_selection == '2'){//OSR-API
-                  total_time = this.toHumanTime(routeResponse.routes[routeNumber].summary.duration);
-                  total_distance = this.toHumanDistance(routeResponse.routes[routeNumber].summary.distance);
-              }
-
-          if(route_name_0 && route_name_1){
-              routerInstructionsHeader.innerHTML = '<label>' + langConstants.ROUTER_VIEW_LABEL_ROUTE + '</label> <em>' + route_name_0 + ' &#8594; ' + route_name_1 + '</em><br>' + '<label>' + langConstants.ROUTER_VIEW_LABEL_DISTANCE + '</label> <em>' + total_distance + '</em><br>' + '<label>' + langConstants.ROUTER_VIEW_LABEL_TIME + '</label> <em>' + total_time + '</em><br>';
-          }
-          else if(this.routeProfile.active){
-              routerInstructionsHeader.innerHTML = '<label>' + langConstants.ROUTER_VIEW_LABEL_PROFILE + '</label> <em>'+this.options.mapController.data.router_profiles[this.routeProfile.active]  + '</em><br>' + '<label>' + langConstants.ROUTER_VIEW_LABEL_DISTANCE + '</label> <em>' + total_distance + '</em><br>' + '<label>' + langConstants.ROUTER_VIEW_LABEL_TIME + '</label> <em>' + total_time + '</em><br>';
-          }
-
-
-
-          self.routerInstructionsWrapper.appendChild(routerInstructionsHeader);
-
-          routerInstruction = document.createElement('div');
-
-          routerInstructionsHtml = '<table class="' + cssConstants.ROUTER_INSTRUCTIONS_TABLE + '" cellpadding="0" cellspacing="0">';
-          if (this.options.mapController.data.router_api_selection === '1') {//OSRM-API:5.x
-              for (j = 0; j < routeResponse.routes[routeNumber].legs.length; j += 1) {
-                  for (i = 0; i < routeResponse.routes[routeNumber].legs[j].steps.length; i += 1) {
-                      instr = routeResponse.routes[routeNumber].legs[j].steps[i];
-
-                      strType = instr.maneuver.type;
-                      if (instr.maneuver.modifier) {
-                          strMod = instr.maneuver.modifier;
-                      }
-                      rowstyle = cssConstants.ROUTER_INSTRUCTIONS_ITEM_ODD;
-
-                      if (i % 2 === 0) {
-                          rowstyle = cssConstants.ROUTER_INSTRUCTIONS_ITEM_EVEN;
-                      }
-
-                      rowstyle += " " + cssConstants.ROUTER_INSTRUCTIONS_ITEM;
-
-                      routerInstructionsHtml += '<tr class="' + rowstyle + '">';
-
-                      routerInstructionsHtml += '<td class="' + cssConstants.ROUTER_INSTRUCTIONS_ITEM_DIRECTION + '">';
-                      routerInstructionsHtml += '<img class="' + cssConstants.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_ICON + '" src="' + this.getInstructionIcon(strMod, strType) + '" alt=""/>';
-                      routerInstructionsHtml += '</td>';
-
-
-                      routerInstructionsHtml += '<td class="' + cssConstants.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_TEXT + '" data-pos="' + instr.maneuver.location + '">';
-
-
-                      // build route description
-                      var instructiontext = this.getTypeText(instr.maneuver.type).replace(/%s/, instr.name).replace(/%m/, this.getModifierText(instr.maneuver.modifier)).replace(/%z/, instr.maneuver.exit);
-                      if (instr.name.length < 1) {
-                          instructiontext = instructiontext.replace(/\[.*?\]/g, '');
-                      } else {
-                          instructiontext = instructiontext.replace(/\[(.*)\]/, "$1");
-                      }
-                      routerInstructionsHtml += instructiontext;
-
-
-                      routerInstructionsHtml += '</div>';
-                      routerInstructionsHtml += "</td>";
-
-                      routerInstructionsHtml += '<td class="' + cssConstants.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_DISTANCE + '">';
-                      if (i !== routeResponse.routes[routeNumber].legs[0].steps.length - 1) {
-                          routerInstructionsHtml += this.toHumanDistance(instr.distance);
-                      }
-                      routerInstructionsHtml += "</td>";
-
-                      routerInstructionsHtml += "</tr>";
-                  }
-              }
-
-          } else if(this.options.mapController.data.router_api_selection === '0'){//OSRM-API:<5
-              for (i = 0; i < routeResponse.route_instructions.length; i += 1) {
-                  instr = routeResponse.route_instructions[i];
-                  rowstyle = cssConstants.ROUTER_INSTRUCTIONS_ITEM_ODD;
-
-                  if (i % 2 === 0) {
-                      rowstyle = cssConstants.ROUTER_INSTRUCTIONS_ITEM_EVEN;
-                  }
-
-                  rowstyle += " " + cssConstants.ROUTER_INSTRUCTIONS_ITEM;
-
-                  routerInstructionsHtml += '<tr class="' + rowstyle + '">';
-
-                  routerInstructionsHtml += '<td class="' + cssConstants.ROUTER_INSTRUCTIONS_ITEM_DIRECTION + '">';
-                  routerInstructionsHtml += '<img class="' + cssConstants.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_ICON + '" src="' + this.getDrivingInstructionIcon(instr[0]) + '" alt=""/>';
-                  routerInstructionsHtml += '</td>';
-
-                  routerInstructionsHtml += '<td class="' + cssConstants.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_TEXT + '" data-pos="' + instr[3] + '">';
-
-                  // build route description
-                  if (instr[1] !== "") {
-                      routerInstructionsHtml += this.getDrivingInstruction(instr[0]).replace(/\[(.*)\]/, "$1").replace(/%s/, instr[1]).replace(/%d/, this.getText(instr[6]));
-                  } else {
-                      routerInstructionsHtml += this.getDrivingInstruction(instr[0]).replace(/\[(.*)\]/, "").replace(/%d/, this.getText(instr[6]));
-                  }
-
-
-                  routerInstructionsHtml += '</div>';
-                  routerInstructionsHtml += "</td>";
-
-                  routerInstructionsHtml += '<td class="' + cssConstants.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_DISTANCE + '">';
-                  if (i !== routeResponse.route_instructions.length - 1) {
-                      routerInstructionsHtml += this.toHumanDistance(instr[5]);
-                  }
-                  routerInstructionsHtml += "</td>";
-
-                  routerInstructionsHtml += "</tr>";
-              }
-          }
-          else if(this.options.mapController.data.router_api_selection === '2' ){//OpenRouteService
-              for (j = 0; j < routeResponse.routes[routeNumber].segments.length; j += 1) {
-                  for (i = 0; i < routeResponse.routes[routeNumber].segments[j].steps.length; i += 1) {
-                      instr = routeResponse.routes[routeNumber].segments[j].steps[i];
-
-                      strType = instr.type;
-
-                      rowstyle = cssConstants.ROUTER_INSTRUCTIONS_ITEM_ODD;
-
-                      if (i % 2 === 0) {
-                          rowstyle = cssConstants.ROUTER_INSTRUCTIONS_ITEM_EVEN;
-                      }
-
-                      rowstyle += " " + cssConstants.ROUTER_INSTRUCTIONS_ITEM;
-
-                      routerInstructionsHtml += '<tr class="' + rowstyle + '">';
-
-                      routerInstructionsHtml += '<td class="' + cssConstants.ROUTER_INSTRUCTIONS_ITEM_DIRECTION + '">';
-                      routerInstructionsHtml += '<img class="' + cssConstants.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_ICON + '" src="' + this.getInstructionIconORS(strType) + '" alt=""/>';
-                      routerInstructionsHtml += '</td>';
-
-                      if(instr.maneuver){
-                          routerInstructionsHtml += '<td class="' + cssConstants.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_TEXT + '" data-pos="' + instr.maneuver.location + '">';
-                      }
-                      else{
-                          routerInstructionsHtml += '<td class="' + cssConstants.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_TEXT + '" data-pos="' + 0 + '">';
-                      }
-
-
-                      // build route description
-
-                      routerInstructionsHtml += instr.instruction;
-
-
-                      routerInstructionsHtml += '</div>';
-                      routerInstructionsHtml += "</td>";
-
-                      routerInstructionsHtml += '<td class="' + cssConstants.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_DISTANCE + '">';
-                      if (i !== routeResponse.routes[routeNumber].segments[0].steps.length - 1) {
-                          routerInstructionsHtml += this.toHumanDistance(instr.distance);
-                      }
-                      routerInstructionsHtml += "</td>";
-
-                      routerInstructionsHtml += "</tr>";
-                  }
-              }
-          }
-
-
-          routerInstructionsHtml += '</table>';
-
-          routerInstruction.innerHTML = routerInstructionsHtml;
-
-          self.routerInstructionsWrapper.appendChild(routerInstruction);
-
-          this.adjustInstructionMapInteraction();
+        switch(strType){
+            case "depart":
+                image ="head.png";
+                break;
+            case "arrive":
+                image ="target.png";
+                break;
+            case "roundabout":
+                image ="round-about.png";
+                break;
+            default:
+                break;
+        }
+
+        return "bundles/con4gismaps/vendor/osrm/images/" + image;
+    },
+    getInstructionIconORS: function(intType){
+      let image;
+      switch(intType){
+          case 0:
+              image = "turn-left.png";
+              break;
+          case 1:
+              image = "turn-right.png";
+              break;
+          case 2:
+              image = "sharp-left.png";
+              break;
+          case 3:
+              image = "sharp-right.png";
+              break;
+          case 4:
+              image = "slight-left.png";
+              break;
+          case 5:
+              image = "slight-right.png";
+              break;
+          case 6:
+              image = "continue.png";
+              break;
+          case 7:
+              image = "round-about.png";
+              break;
+          case 8:
+              image = "round-about.png";
+              break;
+          case 9:
+              image = "u-turn.png";
+              break;
+          case 10:
+              image = "target.png";
+              break;
+          case 11:
+              image = "head.png";
+              break;
+          case 12:
+              image = "slight-left.png";
+              break;
+          case 13:
+              image = "slight-right.png";
+              break;
 
       }
+        return document.getElementsByTagName('base')[0].href + "bundles/con4gismaps/vendor/osrm/images/" + image;
     },
+
+    getTypeText: function(strType) {
+        var textID;
+
+        switch(strType) {
+            case "turn":
+                textID = "ROUTER_5.X_TYPE_0";
+                break;
+            case "new name":
+                textID = "ROUTER_5.X_TYPE_1";
+                break;
+            case "depart":
+                textID = "ROUTER_5.X_TYPE_2";
+                break;
+            case "arrive":
+                textID = "ROUTER_5.X_TYPE_3";
+                break;
+            case "merge":
+                textID = "ROUTER_5.X_TYPE_4";
+                break;
+            case "on ramp":
+                textID = "ROUTER_5.X_TYPE_5";
+                break;
+            case "off ramp":
+                textID = "ROUTER_5.X_TYPE_6";
+                break;
+            case "fork":
+                textID = "ROUTER_5.X_TYPE_7";
+                break;
+            case "end of road":
+                textID = "ROUTER_5.X_TYPE_8";
+                break;
+            case "use lane":
+                textID = "ROUTER_5.X_TYPE_9";
+                break;
+            case "continue":
+                textID = "ROUTER_5.X_TYPE_10";
+                break;
+            case "roundabout":
+            case "exit roundabout":
+                textID = "ROUTER_5.X_TYPE_11";
+                break;
+            case "rotary":
+            case "exit rotary":
+                textID = "ROUTER_5.X_TYPE_12";
+                break;
+            case "roundabout turn":
+                textID = "ROUTER_5.X_TYPE_13";
+                break;
+            case "notification":
+                textID = "ROUTER_5.X_TYPE_14";
+                break;
+            default:
+                break;
+        }
+        return langConstants[textID];
+    },
+
+    getModifierText: function(strModifier) {
+        var textID;
+
+        switch(strModifier) {
+            case "uturn":
+                textID = "ROUTER_5.X_MOD_0";
+                break;
+            case "sharp right":
+                textID = "ROUTER_5.X_MOD_1";
+                break;
+            case "right":
+                textID = "ROUTER_5.X_MOD_2";
+                break;
+            case "slight right":
+                textID = "ROUTER_5.X_MOD_3";
+                break;
+            case "straight":
+                textID = "ROUTER_5.X_MOD_4";
+                break;
+            case "slight left":
+                textID = "ROUTER_5.X_MOD_5";
+                break;
+            case "left":
+                textID = "ROUTER_5.X_MOD_6";
+                break;
+            case "sharp left":
+                textID = "ROUTER_5.X_MOD_7";
+                break;
+            default:
+                textID = "ROUTER_5.X_MOD_8";
+        }
+        return langConstants[textID];
+    },
+    getDrivingInstructionIcon: function (instructionId) {
+        var id,
+            image;
+
+        id = instructionId.replace(/^11-\d{1,}$/, "11");    // dumb check, if there is a roundabout (all have the same icon)
+
+        image = 'default.png';
+
+        switch (id) {
+            case '1':
+                image = 'continue.png';
+                break;
+            case '2':
+                image = 'slight-right.png';
+                break;
+            case '3':
+                image = 'turn-right.png';
+                break;
+            case '4':
+                image = 'sharp-right.png';
+                break;
+            case '5':
+                image = 'u-turn.png';
+                break;
+            case '6':
+                image = 'sharp-left.png';
+                break;
+            case '7':
+                image = 'turn-left.png';
+                break;
+            case '8':
+                image = 'slight-left.png';
+                break;
+            case '10':
+                image = 'head.png';
+                break;
+            case '11':
+                image = 'round-about.png';
+                break;
+            case '15':
+                image = 'target.png';
+                break;
+        }
+        return document.getElementsByTagName('base')[0].href + "bundles/con4gismaps/vendor/osrm/images/" + image;
+
+    },
+    getText: function (id) {
+
+        var text_id = "ROUTER_" + id;
+
+        if (langConstants[text_id] === undefined) {
+            console.warn(text_id + " can't find in language files.");
+        }
+        return langConstants[text_id];
+    },
+
+    getDrivingInstruction: function (instructionId) {
+
+        var id,
+            description;
+
+        id = "DIRECTION_" + instructionId.replace(/^11-\d{2,}$/, "11-x");   // dumb check, if there are 10+ exits on a roundabout (say the same for exit 10+)
+
+        description = this.getText(id);
+        if (!description) {
+            description = this.getText('DIRECTION_0');
+        }
+
+        return description;
+    },
+    showRouteInstructions: function (routeResponse,routeNumber) {
+
+        var self,
+            routerInstruction,
+            routerInstructionsHeader,
+            routerInstructionsHtml,
+            instr,
+            strType,
+            strMod,
+            rowstyle,
+            routeNumber = routeNumber || 0,
+            i,
+            j,
+            route_name_0 = "",
+            route_name_1 = "",
+            total_distance = "",
+            total_time = "";
+
+        self = this;
+
+
+        if (self.routerInstructionsWrapper === undefined) {
+            self.routerInstructionsWrapper = document.createElement('div');
+            self.routerInstructionsWrapper.className = cssConstants.ROUTER_INSTRUCTIONS_WRAPPER;
+            self.routerViewContentWrapper.appendChild(self.routerInstructionsWrapper);
+        } else {
+            $(self.routerInstructionsWrapper).empty();
+        }
+
+        routerInstructionsHeader = document.createElement('div');
+        routerInstructionsHeader.className = cssConstants.ROUTER_INSTRUCTIONS_HEADER;
+
+        if (routeResponse) {
+            if (this.options.mapController.data.router_api_selection == '1') {//OSRM-API:5.x
+                if (routeResponse.routes[routeNumber].legs[0].summary) {
+                    route_name_0 = routeResponse.routes[routeNumber].legs[0].summary.split(",")[0];
+                    route_name_1 = routeResponse.routes[routeNumber].legs[0].summary.split(",")[1];
+                    if (routeResponse.routes[routeNumber].legs[1]) {
+                        route_name_1 = routeResponse.routes[routeNumber].legs[1].summary.split(",")[1];
+                    }
+
+                }
+                total_distance = this.toHumanDistance(routeResponse.routes[routeNumber].distance);
+                total_time = this.toHumanTime(routeResponse.routes[routeNumber].duration);
+            }
+
+        else if(this.options.mapController.data.router_api_selection == '0') {//OSRM-API:<5
+            if (routeResponse.route_name) {
+                route_name_0 = routeResponse.route_name[0];
+                route_name_1 = routeResponse.route_name[1];
+            }
+
+            if (routeResponse.route_summary) {
+                total_distance = this.toHumanDistance(routeResponse.route_summary.total_distance);
+                total_time = this.toHumanTime(routeResponse.route_summary.total_time);
+            }
+
+
+        }
+        else if (this.options.mapController.data.router_api_selection == '2'){//OSR-API
+                total_time = this.toHumanTime(routeResponse.routes[routeNumber].summary.duration);
+                total_distance = this.toHumanDistance(routeResponse.routes[routeNumber].summary.distance);
+            }
+
+        if(route_name_0 && route_name_1){
+            routerInstructionsHeader.innerHTML = '<label>' + langConstants.ROUTER_VIEW_LABEL_ROUTE + '</label> <em>' + route_name_0 + ' &#8594; ' + route_name_1 + '</em><br>' + '<label>' + langConstants.ROUTER_VIEW_LABEL_DISTANCE + '</label> <em>' + total_distance + '</em><br>' + '<label>' + langConstants.ROUTER_VIEW_LABEL_TIME + '</label> <em>' + total_time + '</em><br>';
+        }
+        else if(this.routeProfile.active){
+            routerInstructionsHeader.innerHTML = '<label>' + langConstants.ROUTER_VIEW_LABEL_PROFILE + '</label> <em>'+this.options.mapController.data.router_profiles[this.routeProfile.active]  + '</em><br>' + '<label>' + langConstants.ROUTER_VIEW_LABEL_DISTANCE + '</label> <em>' + total_distance + '</em><br>' + '<label>' + langConstants.ROUTER_VIEW_LABEL_TIME + '</label> <em>' + total_time + '</em><br>';
+        }
+
+
+
+        self.routerInstructionsWrapper.appendChild(routerInstructionsHeader);
+
+        routerInstruction = document.createElement('div');
+
+        routerInstructionsHtml = '<table class="' + cssConstants.ROUTER_INSTRUCTIONS_TABLE + '" cellpadding="0" cellspacing="0">';
+        if (this.options.mapController.data.router_api_selection === '1') {//OSRM-API:5.x
+            for (j = 0; j < routeResponse.routes[routeNumber].legs.length; j += 1) {
+                for (i = 0; i < routeResponse.routes[routeNumber].legs[j].steps.length; i += 1) {
+                    instr = routeResponse.routes[routeNumber].legs[j].steps[i];
+
+                    strType = instr.maneuver.type;
+                    if (instr.maneuver.modifier) {
+                        strMod = instr.maneuver.modifier;
+                    }
+                    rowstyle = cssConstants.ROUTER_INSTRUCTIONS_ITEM_ODD;
+
+                    if (i % 2 === 0) {
+                        rowstyle = cssConstants.ROUTER_INSTRUCTIONS_ITEM_EVEN;
+                    }
+
+                    rowstyle += " " + cssConstants.ROUTER_INSTRUCTIONS_ITEM;
+
+                    routerInstructionsHtml += '<tr class="' + rowstyle + '">';
+
+                    routerInstructionsHtml += '<td class="' + cssConstants.ROUTER_INSTRUCTIONS_ITEM_DIRECTION + '">';
+                    routerInstructionsHtml += '<img class="' + cssConstants.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_ICON + '" src="' + this.getInstructionIcon(strMod, strType) + '" alt=""/>';
+                    routerInstructionsHtml += '</td>';
+
+
+                    routerInstructionsHtml += '<td class="' + cssConstants.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_TEXT + '" data-pos="' + instr.maneuver.location + '">';
+
+
+                    // build route description
+                    var instructiontext = this.getTypeText(instr.maneuver.type).replace(/%s/, instr.name).replace(/%m/, this.getModifierText(instr.maneuver.modifier)).replace(/%z/, instr.maneuver.exit);
+                    if (instr.name.length < 1) {
+                        instructiontext = instructiontext.replace(/\[.*?\]/g, '');
+                    } else {
+                        instructiontext = instructiontext.replace(/\[(.*)\]/, "$1");
+                    }
+                    routerInstructionsHtml += instructiontext;
+
+
+                    routerInstructionsHtml += '</div>';
+                    routerInstructionsHtml += "</td>";
+
+                    routerInstructionsHtml += '<td class="' + cssConstants.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_DISTANCE + '">';
+                    if (i !== routeResponse.routes[routeNumber].legs[0].steps.length - 1) {
+                        routerInstructionsHtml += this.toHumanDistance(instr.distance);
+                    }
+                    routerInstructionsHtml += "</td>";
+
+                    routerInstructionsHtml += "</tr>";
+                }
+            }
+
+        } else if(this.options.mapController.data.router_api_selection === '0'){//OSRM-API:<5
+            for (i = 0; i < routeResponse.route_instructions.length; i += 1) {
+                instr = routeResponse.route_instructions[i];
+                rowstyle = cssConstants.ROUTER_INSTRUCTIONS_ITEM_ODD;
+
+                if (i % 2 === 0) {
+                    rowstyle = cssConstants.ROUTER_INSTRUCTIONS_ITEM_EVEN;
+                }
+
+                rowstyle += " " + cssConstants.ROUTER_INSTRUCTIONS_ITEM;
+
+                routerInstructionsHtml += '<tr class="' + rowstyle + '">';
+
+                routerInstructionsHtml += '<td class="' + cssConstants.ROUTER_INSTRUCTIONS_ITEM_DIRECTION + '">';
+                routerInstructionsHtml += '<img class="' + cssConstants.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_ICON + '" src="' + this.getDrivingInstructionIcon(instr[0]) + '" alt=""/>';
+                routerInstructionsHtml += '</td>';
+
+                routerInstructionsHtml += '<td class="' + cssConstants.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_TEXT + '" data-pos="' + instr[3] + '">';
+
+                // build route description
+                if (instr[1] !== "") {
+                    routerInstructionsHtml += this.getDrivingInstruction(instr[0]).replace(/\[(.*)\]/, "$1").replace(/%s/, instr[1]).replace(/%d/, this.getText(instr[6]));
+                } else {
+                    routerInstructionsHtml += this.getDrivingInstruction(instr[0]).replace(/\[(.*)\]/, "").replace(/%d/, this.getText(instr[6]));
+                }
+
+
+                routerInstructionsHtml += '</div>';
+                routerInstructionsHtml += "</td>";
+
+                routerInstructionsHtml += '<td class="' + cssConstants.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_DISTANCE + '">';
+                if (i !== routeResponse.route_instructions.length - 1) {
+                    routerInstructionsHtml += this.toHumanDistance(instr[5]);
+                }
+                routerInstructionsHtml += "</td>";
+
+                routerInstructionsHtml += "</tr>";
+            }
+        }
+        else if(this.options.mapController.data.router_api_selection === '2' ){//OpenRouteService
+            for (j = 0; j < routeResponse.routes[routeNumber].segments.length; j += 1) {
+                for (i = 0; i < routeResponse.routes[routeNumber].segments[j].steps.length; i += 1) {
+                    instr = routeResponse.routes[routeNumber].segments[j].steps[i];
+
+                    strType = instr.type;
+
+                    rowstyle = cssConstants.ROUTER_INSTRUCTIONS_ITEM_ODD;
+
+                    if (i % 2 === 0) {
+                        rowstyle = cssConstants.ROUTER_INSTRUCTIONS_ITEM_EVEN;
+                    }
+
+                    rowstyle += " " + cssConstants.ROUTER_INSTRUCTIONS_ITEM;
+
+                    routerInstructionsHtml += '<tr class="' + rowstyle + '">';
+
+                    routerInstructionsHtml += '<td class="' + cssConstants.ROUTER_INSTRUCTIONS_ITEM_DIRECTION + '">';
+                    routerInstructionsHtml += '<img class="' + cssConstants.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_ICON + '" src="' + this.getInstructionIconORS(strType) + '" alt=""/>';
+                    routerInstructionsHtml += '</td>';
+
+                    if(instr.maneuver){
+                        routerInstructionsHtml += '<td class="' + cssConstants.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_TEXT + '" data-pos="' + instr.maneuver.location + '">';
+                    }
+                    else{
+                        routerInstructionsHtml += '<td class="' + cssConstants.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_TEXT + '" data-pos="' + 0 + '">';
+                    }
+
+
+                    // build route description
+
+                    routerInstructionsHtml += instr.instruction;
+
+
+                    routerInstructionsHtml += '</div>';
+                    routerInstructionsHtml += "</td>";
+
+                    routerInstructionsHtml += '<td class="' + cssConstants.ROUTER_INSTRUCTIONS_ITEM_DIRECTION_DISTANCE + '">';
+                    if (i !== routeResponse.routes[routeNumber].segments[0].steps.length - 1) {
+                        routerInstructionsHtml += this.toHumanDistance(instr.distance);
+                    }
+                    routerInstructionsHtml += "</td>";
+
+                    routerInstructionsHtml += "</tr>";
+                }
+            }
+        }
+
+
+        routerInstructionsHtml += '</table>';
+
+        routerInstruction.innerHTML = routerInstructionsHtml;
+
+        self.routerInstructionsWrapper.appendChild(routerInstruction);
+
+        this.adjustInstructionMapInteraction();
+
+    }
+  },
 
     adjustInstructionMapInteraction: function (routerInstruction) {
       var self = this,
