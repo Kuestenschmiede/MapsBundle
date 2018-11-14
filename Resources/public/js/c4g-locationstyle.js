@@ -268,7 +268,8 @@ export class C4gLocationStyle{
                         image: imageStyle,
                         text: textStyle,
                         stroke: strokeStyle,
-                        fill: fillStyle
+                        fill: fillStyle,
+                        zIndex: feature && feature.get('zIndex') ? feature.get('zIndex') : 0
                     })
                 );
             } else {
