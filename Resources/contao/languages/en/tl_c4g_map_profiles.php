@@ -118,6 +118,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['hover_popups']          = array('Pop
                                                                             'Show popup when mouse pointer rests on location.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['hover_popups_stay']     = array('Mouse hover popups stay open',
                                                                             'Popups that have been opened on mouse hover are not closed when the mouse pointer leaves the location.');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupAutoPan']          = array('Autopan to popup', '');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['attribution']           = array('Attribution',
                                                                             'Shows the attribution. Deactivate only when you are sure it is allowed.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['collapsed_attribution'] = array('Show initially collapsed',

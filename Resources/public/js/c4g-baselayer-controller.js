@@ -122,6 +122,9 @@ export class C4gBaselayerController {
               // custom
               let noUrl = true;
               if (baseLayerConfig.url) {
+                if(baseLayerConfig.url.indexOf('https') !== -1){
+                    layerOptions.crossOrigin = 'anonymous';
+                }
                 layerOptions.url = baseLayerConfig.url;
                 noUrl = false;
               } else if (baseLayerConfig.urls) {

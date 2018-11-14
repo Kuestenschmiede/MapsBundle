@@ -101,7 +101,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
                                          '{information_legend},attribution,overviewmap,geobookmarks,measuretool,graticule,scaleline,mouseposition,permalink,zoomlevel;'.
                                          '{geosearch_legend:hide},geosearch;'.
                                          '{info_legend:hide},infopage;'.
-                                         '{click_legend:hide},link_newwindow,link_open_on,hover_popups;'.
+                                         '{click_legend:hide},link_newwindow,link_open_on,hover_popups, popupAutoPan;'.
                                          '{geopicker_legend:hide},is_backend_geopicker_default,geopicker;'.
                                          '{editor_legend:hide},editor,editor_styles_point,editor_styles_line,editor_styles_polygon,editor_styles_circle,editor_styles_freehand,editor_vars,editor_show_items,editor_helpurl,is_backend_editor_default;'.
                                          '{cesium_legend:hide},cesium;'.
@@ -904,6 +904,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             'sql'                     => "char(1) NOT NULL default ''"
         ),
 
+
         'hover_popups_stay' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['hover_popups_stay'],
@@ -912,6 +913,13 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             'inputType'               => 'checkbox',
             'sql'                     => "char(1) NOT NULL default ''"
         ),
+        'popupAutoPan' => [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupAutoPan'],
+            'exclude'                 => true,
+            'default'                 => false,
+            'inputType'               => 'checkbox',
+            'sql'                     => "char(1) NOT NULL default ''"
+        ],
 
         'editor_styles_point' => array
         (

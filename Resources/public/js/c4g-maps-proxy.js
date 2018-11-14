@@ -344,8 +344,8 @@ export class MapProxy {
           } else {
             coord = clickEvent.coordinate;
           }
-
           c4g.maps.popup.popup.setPosition(coord);
+
           if (popupInfos.content) {
             c4g.maps.popup.$content.html('');
             c4g.maps.popup.$popup.addClass(cssConstants.ACTIVE).addClass(cssConstants.LOADING);
@@ -514,15 +514,14 @@ export class MapProxy {
     });
 
     popup = new ol.Overlay({
-      autoPan: true,
       element: popUpElement,
       positioning: 'bottom-left',
-      offset: [-50, 0]/*,
-        autoPan: true,
+      offset: [-50, 0],
+        autoPan: mapData.popupAutoPan ? true : false,
         autoPanAnimation: {
-             duration: 250
+             duration: 0
         },
-        autoPanMargin: 20*/
+        autoPanMargin: 100
     });
 
     c4g.maps.popup = {};

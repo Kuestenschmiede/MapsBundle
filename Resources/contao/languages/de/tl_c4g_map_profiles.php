@@ -127,6 +127,9 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['hover_popups']          = array('Pop
                                                                             'Popups anzeigen sobald der Mauszeiger über der Lokation verweilt, und nicht erst nach einem Mausklick.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['hover_popups_stay']     = array('Maus-Hover-Popups geöffnet lassen',
                                                                             'Popups nicht automatisch schließen, wenn der Mauszeiger die Lokation verlässt.');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupAutoPan']                  = array('Kartenausschnitt an Popup anpassen',
+                                                                            'Passt beim Öffnen eines Popups den Kartenausschnitt an ');
+
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['attribution']           = array('Copyright-Text (Attribution)',
                                                                             'Blendet einen Copyright-Text (eine sogenannte Attribution) ein. Deaktivierung nicht empfohlen!');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['collapsed_attribution'] = array('Initial geschlossen',

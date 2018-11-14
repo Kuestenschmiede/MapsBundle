@@ -57,6 +57,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['popup_info'] = array('Popup information', 'I
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popup_extend'] = array('Extend popup information with forumpost', 'Gives the ability to render additional popup information from a forumpost.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['routing_to'] = array('Add routing links to popup', 'Adds links for routing-options to the popup. Works only when routing is activated in the map profile.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popup_async'] = array('Load Popup Information later', 'Enables the loading of popup information during runtime.');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['popupAutoPan'] = array('Autopan to popup', '');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_linkurl'] = array('Direct link', 'Enter an URL (with http://) or click on the symbol to select a contao page. If you specify a link then the user jumps to the link via mouse click or mouse double click (depending on the map profile settings).');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_onclick_zoomto'] = array('On mouse click zoom to zoom level', 'Enter a zoom level, to which is zoomed when clicking onto a map structure item. Works only when there is no direct link.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_minzoom'] = array('Min. zoom level', 'Enter the minimum zoom level, on which the items are shown. 0 means no restriction.');
