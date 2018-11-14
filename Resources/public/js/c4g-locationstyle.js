@@ -263,13 +263,17 @@ export class C4gLocationStyle{
             // create style-object
             // we need this check because textStyle is a var accessible from closure and will be set even if no label is set
             if (label) {
+                let zIndex;
+                if(feature && feature.get && typeof feature.get === "function" && feature.get('zIndex')){
+                zIndex = feature.get('zIndex');
+              }
                 stylesArray.push(
                     new ol.style.Style({
                         image: imageStyle,
                         text: textStyle,
                         stroke: strokeStyle,
                         fill: fillStyle,
-                        zIndex: feature && feature.get('zIndex') ? feature.get('zIndex') : 0
+                        zIndex: zIndex
                     })
                 );
             } else {
