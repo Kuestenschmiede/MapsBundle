@@ -13,6 +13,7 @@
 
 namespace con4gis\MapsBundle\Resources\contao\classes;
 
+use BugBuster\MobileDetection\Mobile_Detection;
 use con4gis\CoreBundle\Resources\contao\models\C4gSettingsModel;
 use con4gis\MapsBundle\Classes\Events\LoadMapdataEvent;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapBaselayersModel;
@@ -69,7 +70,12 @@ class MapDataConfigurator
         $profileId = $map->profile;
         // check for mobile-profile
         $isMobile = false;
-        if (($map->profile_mobile > 0) && (\Input::cookie('TL_VIEW') == 'mobile' || (\Environment::get('agent')->mobile && \Input::cookie('TL_VIEW') != 'desktop'))) {
+//        if (($map->profile_mobile > 0) && (\Input::cookie('TL_VIEW') == 'mobile' || (\Environment::get('agent')->mobile && \Input::cookie('TL_VIEW') != 'desktop'))) {
+//            $isMobile = true;
+//            $profileId = $map->profile_mobile;
+//        }
+        $mobileDetection = new Mobile_Detection();
+        if ($mobileDetection->isMobile() && ($map->profile_mobile > 0)) {
             $isMobile = true;
             $profileId = $map->profile_mobile;
         }
