@@ -512,7 +512,7 @@ export class C4gLayerController{
                             } else if (rFeatures[j].getGeometry().getType() === "LineString") {
                               // @TODO: prüfen ob dies korrekter mittelpunkt ist
                               let lineExtent = rFeatures[j].getGeometry().getExtent();
-                              centerPoint = ol.extent.getCenter(lineExtent);
+                              let centerPoint = ol.extent.getCenter(lineExtent);
                               rFeatures[j].setGeometry(
                                 new ol.geom.Point(centerPoint)
                               );
@@ -552,28 +552,31 @@ export class C4gLayerController{
                             let node = response.elements.find(function(objNode){
                               return objNode.id === element.nodes[i];
                             });
-                            arrCoords.push([node.lon,node.lat]);
+                            arrCoords.push(ol.proj.transform([node.lon,node.lat],'EPSG:4326','EPSG:3857'));
                           }
                           if(arrCoords[0][0] == arrCoords[arrCoords.length-1][0] && arrCoords[0][1] == arrCoords[arrCoords.length-1][1]){ //polygon
                             delete arrCoords[arrCoords.length-1];
                             arrCoords.length = arrCoords.length-1;
                             let polygon = new ol.geom.Polygon([arrCoords]);
-                            polygon.transform('EPSG:4326','EPSG:3857');
+                            // polygon.transform('EPSG:4326','EPSG:3857');
                             if (requestContentData.settings.forceNodes) {
                               // convert tracks and areas to points
-                              let centerPoint = feature.getGeometry().getInteriorPoint().getCoordinates();
-                              feature.setGeometry(
-                                new ol.geom.Point(centerPoint)
-                              );
+                              let centerPoint = polygon.getInteriorPoint().getCoordinates();
+                              feature = new ol.Feature({
+                                geometry: new ol.geom.Point([centerPoint[0],centerPoint[1]]),
+                                id: element.id
+                              });
                             }
-                            feature = new ol.Feature({
-                              geometry: polygon,
-                              id: element.id
-                            });
+                            else{
+                              feature = new ol.Feature({
+                                geometry: polygon,
+                                id: element.id
+                              });
+                            }
                           }
                           else{ //linestring
                             let lineString = new ol.geom.LineString([arrCoords]);
-                            lineString.transform('EPSG:4326','EPSG:3857');
+                             // lineString.transform('EPSG:4326','EPSG:3857');
                             feature = new ol.Feature({
                               geometry: lineString,
                               id: element.id
@@ -601,7 +604,6 @@ export class C4gLayerController{
                           feature.set(tags, element.tags[tags]);
                         }
                         rFeatures.push(feature);
-
                       }
 
                     }
@@ -614,7 +616,8 @@ export class C4gLayerController{
                   }); // end of AJAX
 
                 },
-                strategy: ol.loadingstrategy.bbox
+                strategy: ol.loadingstrategy.bbox,
+                projection: 'EPSG:3857'
               });
 
               vectorSource = requestVectorSource;
@@ -772,7 +775,7 @@ export class C4gLayerController{
 
             if (contentData.settings.cluster) {
 
-              clusterSource = new ol.source.Cluster({
+              window.clusterSource = new ol.source.Cluster({
                 distance: 40,
                 //threshold: 2, //minimum element count
                 source: vectorSource,
@@ -785,7 +788,7 @@ export class C4gLayerController{
 
               vectorLayer = new ol.layer.AnimatedCluster(
                 {	name: 'Cluster',
-                  source: clusterSource,
+                  source: window.clusterSource,
                   // Use a style function for cluster symbolisation
                   style: styleForCluster
                 });
