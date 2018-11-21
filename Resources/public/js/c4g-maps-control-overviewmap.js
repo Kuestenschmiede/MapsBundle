@@ -1,12 +1,11 @@
 // "namespace"
-import {langConstantsEnglish} from "./c4g-maps-constant-i18n-en";
-
 this.c4g = this.c4g || {};
 this.c4g.maps = this.c4g.maps || {};
 this.c4g.maps.control = this.c4g.maps.control || {};
 
 import {cssConstants} from "./c4g-maps-constant";
 import {langConstantsGerman} from "./c4g-maps-constant-i18n-de";
+import {langConstantsEnglish} from "./c4g-maps-constant-i18n-en";
 
 let langConstants = {};
 

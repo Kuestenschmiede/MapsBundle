@@ -3,6 +3,23 @@ this.c4g = this.c4g || {};
 this.c4g.maps = this.c4g.maps || {};
 this.c4g.maps.control = this.c4g.maps.control || {};
 
+import {cssConstants} from "./c4g-maps-constant";
+import {langConstantsGerman} from "./c4g-maps-constant-i18n-de";
+import {langConstantsEnglish} from "./c4g-maps-constant-i18n-en";
+
+let langConstants = {};
+
+if (typeof mapData !== "undefined") {
+  if (mapData.lang === "de") {
+    langConstants = langConstantsGerman;
+  } else if (mapData.lang === "en") {
+    langConstants = langConstantsEnglish;
+  } else {
+    // fallback
+    langConstants = langConstantsGerman;
+  }
+}
+
 (function ($, c4g) {
   'use strict';
 
@@ -37,11 +54,11 @@ this.c4g.maps.control = this.c4g.maps.control || {};
     // default options
     options = $.extend({
       mapController: undefined,
-      className: c4g.maps.constant.css.GEOSEARCH,
+      className: cssConstants.GEOSEARCH,
       extDiv: false,
       collapsible: true,
       collapsed: true,
-      tipLabel: c4g.maps.constant.i18n.CTRL_GEOSEARCH,
+      tipLabel: langConstants.CTRL_GEOSEARCH,
       label: '>>',
       collapsedLabel: '(?)',
       attribution: true,
@@ -103,18 +120,18 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
     // controlwrapper div
     element = document.createElement('div');
-    element.className = options.className + ' ' + c4g.maps.constant.css.OL_UNSELECTABLE + ' ' + c4g.maps.constant.css.OL_CONTROL;
+    element.className = options.className + ' ' + cssConstants.OL_UNSELECTABLE + ' ' + cssConstants.OL_CONTROL;
 
     if ((options.collapsed && !options.extDiv) &! (this.config.caching && c4g.maps.utils.getValue('geosearch') == '1'))
     {
-      $(element).addClass(c4g.maps.constant.css.CLOSE);
+      $(element).addClass(cssConstants.CLOSE);
     } else {
-      $(element).addClass(c4g.maps.constant.css.OPEN);
+      $(element).addClass(cssConstants.OPEN);
     }
 
     // wrapper div
     this.searchWrapper = document.createElement('div');
-    this.searchWrapper.className = c4g.maps.constant.css.GEOSEARCH_WRAPPER;
+    this.searchWrapper.className = cssConstants.GEOSEARCH_WRAPPER;
     element.appendChild(this.searchWrapper);
 
     // search-field
@@ -137,15 +154,15 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
     // // result-wrapper
     // resultWrapper = document.createElement('div');
-    // resultWrapper.className = 'RESULTS ' + c4g.maps.constant.css.CLOSE;
+    // resultWrapper.className = 'RESULTS ' + cssConstants.CLOSE;
     // resultWrapper.innerHTML = 'no results';
     // searchWrapper.appendChild(resultWrapper);
     // this.resultWrapper = resultWrapper;
 
     // search-button
     searchButton = document.createElement('button');
-    searchButton.className = c4g.maps.constant.css.GEOSEARCH_START;
-    searchButton.title = c4g.maps.constant.i18n.CTRL_START_SEARCH;
+    searchButton.className = cssConstants.GEOSEARCH_START;
+    searchButton.title = langConstants.CTRL_START_SEARCH;
     this.searchWrapper.appendChild(searchButton);
 
       $(searchButton).click(function () {
@@ -189,7 +206,9 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                           searchResultContainer.appendChild(searchResult);
 
                       }
-                      searchWrapper.appendChild(searchResultContainer);
+                      if(searchWrapper){
+                        searchWrapper.appendChild(searchResultContainer);
+                      }
                   }
               }
           }
@@ -201,7 +220,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
     if (options.collapsible && !options.extDiv) {
       // button
       button = document.createElement('button');
-      button.className = c4g.maps.constant.css.GEOSEARCH_TRIGGER;
+      button.className = cssConstants.GEOSEARCH_TRIGGER;
       button.title = options.tipLabel;
       element.appendChild(button);
 
@@ -237,9 +256,9 @@ this.c4g.maps.control = this.c4g.maps.control || {};
      * @return  {[type]}  [description]
      */
     open: function () {
-      if ($(this.element).hasClass(c4g.maps.constant.css.CLOSE)) {
-        $(this.element).addClass(c4g.maps.constant.css.OPEN)
-            .removeClass(c4g.maps.constant.css.CLOSE)
+      if ($(this.element).hasClass(cssConstants.CLOSE)) {
+        $(this.element).addClass(cssConstants.OPEN)
+            .removeClass(cssConstants.CLOSE)
             .find('input')[0].focus();
           if (this.config.caching) {
               c4g.maps.utils.storeValue('geosearch', '1');
@@ -253,9 +272,9 @@ this.c4g.maps.control = this.c4g.maps.control || {};
      * @return  {[type]}  [description]
      */
     close: function () {
-      if ($(this.element).hasClass(c4g.maps.constant.css.OPEN)) {
-        $(this.element).addClass(c4g.maps.constant.css.CLOSE)
-            .removeClass(c4g.maps.constant.css.OPEN);
+      if ($(this.element).hasClass(cssConstants.OPEN)) {
+        $(this.element).addClass(cssConstants.CLOSE)
+            .removeClass(cssConstants.OPEN);
         // this.closeResults();
           if(document.getElementById("resultcontainer")){
               document.getElementById("resultcontainer").parentNode.removeChild(document.getElementById("resultcontainer"));
@@ -272,7 +291,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
      * @return  {[type]}  [description]
      */
     toggle: function () {
-      if ($(this.element).hasClass(c4g.maps.constant.css.CLOSE)) {
+      if ($(this.element).hasClass(cssConstants.CLOSE)) {
         this.open();
       } else {
         this.close();
@@ -285,9 +304,9 @@ this.c4g.maps.control = this.c4g.maps.control || {};
     //  * @return  {[type]}  [description]
     //  */
     // openResults: function () {
-    //   if ($(this.resultWrapper).hasClass(c4g.maps.constant.css.CLOSE)) {
-    //     $(this.resultWrapper).addClass(c4g.maps.constant.css.OPEN)
-    //       .removeClass(c4g.maps.constant.css.CLOSE);
+    //   if ($(this.resultWrapper).hasClass(cssConstants.CLOSE)) {
+    //     $(this.resultWrapper).addClass(cssConstants.OPEN)
+    //       .removeClass(cssConstants.CLOSE);
     //   }
     // },
 
@@ -297,9 +316,9 @@ this.c4g.maps.control = this.c4g.maps.control || {};
     //  * @return  {[type]}  [description]
     //  */
     // closeResults: function () {
-    //   if ($(this.resultWrapper).hasClass(c4g.maps.constant.css.OPEN)) {
-    //     $(this.resultWrapper).addClass(c4g.maps.constant.css.CLOSE)
-    //       .removeClass(c4g.maps.constant.css.OPEN);
+    //   if ($(this.resultWrapper).hasClass(cssConstants.OPEN)) {
+    //     $(this.resultWrapper).addClass(cssConstants.CLOSE)
+    //       .removeClass(cssConstants.OPEN);
     //   }
     // },
 
@@ -309,7 +328,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
     //  * @return  {[type]}  [description]
     //  */
     // toggleResults: function () {
-    //   if ($(this.resultWrapper).hasClass(c4g.maps.constant.css.CLOSE)) {
+    //   if ($(this.resultWrapper).hasClass(cssConstants.CLOSE)) {
     //     this.openResults();
     //   } else {
     //     this.closeResults();
@@ -794,7 +813,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                         c4g.maps.popup.popup.setPosition(coord);
                         if (popupInfos.content) {
                             c4g.maps.popup.$content.html('');
-                            c4g.maps.popup.$popup.addClass(c4g.maps.constant.css.ACTIVE).addClass(c4g.maps.constant.css.LOADING);
+                            c4g.maps.popup.popup.addClass(cssConstants.ACTIVE).addClass(cssConstants.LOADING);
                             c4g.maps.popup.spinner.show();
 
                             if (popupInfos.async === false || popupInfos.async == '0') {
@@ -834,11 +853,11 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                                 });
                             }
                         } else {
-                            c4g.maps.popup.$popup.removeClass(c4g.maps.constant.css.ACTIVE);
+                            c4g.maps.popup.popup.removeClass(cssConstants.ACTIVE);
                         }
 
-                    } else {
-                        c4g.maps.popup.$popup.removeClass(c4g.maps.constant.css.ACTIVE);
+                    } else if(c4g.maps && c4g.maps.popup && c4g.maps.popup.popup){
+                        c4g.maps.popup.popup.removeClass(cssConstants.ACTIVE);
                     }
                 }
 
@@ -848,7 +867,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
                 }
 
               } else {
-                alert(c4g.maps.constant.i18n.SEARCH_NOT_FOUND);
+                alert(langConstants.SEARCH_NOT_FOUND);
               }
               // self.resultWrapper.innerHTML = '@ console';
 
@@ -902,3 +921,5 @@ this.c4g.maps.control = this.c4g.maps.control || {};
   }); // end of "add methods" ---
 
 }(jQuery, this.c4g));
+
+export var GeoSearch = this.c4g.maps.control.GeoSearch ;

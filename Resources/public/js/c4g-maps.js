@@ -24,6 +24,7 @@ import {Print} from "./c4g-maps-control-print";
 import {Grid} from "./c4g-maps-control-grid";
 import {Zoomlevel} from "./c4g-maps-control-zoomlevel";
 import {OverviewMap} from "./c4g-maps-control-overviewmap";
+import {GeoSearch} from "./c4g-maps-control-geosearch";
 import {Permalink} from "./c4g-maps-control-permalink";
 import {Starboard} from "./c4g-maps-control-starboard";
 import {Editor} from "./c4g-maps-control-portside-editor";
@@ -762,8 +763,8 @@ if (typeof mapData !== "undefined") {
         }
 
         // geosearch
-        if (c4g.maps.control && c4g.maps.control.GeoSearch && typeof c4g.maps.control.GeoSearch === 'function' && (mapData.geosearch.enable)) {
-            this.controls.geosearch = new c4g.maps.control.GeoSearch({
+        if ((mapData.geosearch.enable)) {
+            this.controls.geosearch = new GeoSearch({
                 mapController: this,
                 target: controlContainerTopRight,
                 extDiv: mapData.geosearch.div || false,
