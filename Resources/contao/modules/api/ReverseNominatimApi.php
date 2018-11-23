@@ -68,7 +68,7 @@ class ReverseNominatimApi extends \Frontend
         switch ($intSearchEngine) {
             case '4':
                 if (!empty($objMapsProfile->geosearch_key)) {
-                    $strSearchUrl = 'http://'.$objMapsProfile->geosearch_key.'.search.mapservices.kartenkueste.de/reverse.php';
+                    $strSearchUrl = 'https://'.$objMapsProfile->geosearch_key.'.search.mapservices.kartenkueste.de/reverse.php';
                 } else {
                     //ToDo error handling
                 }

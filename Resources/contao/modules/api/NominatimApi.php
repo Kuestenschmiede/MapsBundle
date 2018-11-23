@@ -62,7 +62,7 @@ class NominatimApi extends \Frontend
         switch ($intSearchEngine) {
             case '4':
                 if (!empty($objMapsProfile->geosearch_key)) {
-                    $strSearchUrl = 'http://'.$objMapsProfile->geosearch_key.'.search.mapservices.kartenkueste.de/search.php';
+                    $strSearchUrl = 'https://'.$objMapsProfile->geosearch_key.'.search.mapservices.kartenkueste.de/search.php';
                 } else {
                     //ToDo error handling
                 }
