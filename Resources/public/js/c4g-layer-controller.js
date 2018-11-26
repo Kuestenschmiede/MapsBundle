@@ -575,14 +575,14 @@ export class C4gLayerController{
                             }
                           }
                           else{ //linestring
-                            let lineString = new ol.geom.LineString([arrCoords]);
+                            let lineString = new ol.geom.LineString(arrCoords);
                              // lineString.transform('EPSG:4326','EPSG:3857');
                             feature = new ol.Feature({
                               geometry: lineString,
                               id: element.id
                             });
                             if (requestContentData.settings.forceNodes) {
-                              let lineExtent = feature.getGeometry().getExtent();
+                              let lineExtent = ol.extent.boundingExtent(arrCoords);
                               centerPoint = ol.extent.getCenter(lineExtent);
                               feature.setGeometry(
                                 new ol.geom.Point(centerPoint)
