@@ -131,6 +131,9 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['add_attribution']       = array('Add
                                                                             'This text is added to the generated attribution. Deactivate only when you are sure it is allowed.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch']             = array('Activate search (search field / router)',
                                                                             'Activates searchengine for searching places and coordinates.');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearchParams']      = ['Parameters for the search',
+                                                                      'Enter keys and parameters in order to limit the search (<a href=https://wiki.openstreetmap.org/wiki/Nominatim>documentation</a>)'];
+
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_engine']      = array('Searchengine',
                                                                             'ATTENTION! Please take note to restrictions that may apply by the usage policy of the choosen provider. If you have choosen to use a custom URL, remember to add an attribution of that provider, if it\'s not your own server.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_show']        = array('Show search area',
@@ -244,6 +247,9 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine']['4'] =
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_api_selection']['0'] = 'OpenSourceRoutingMachine (API 4.x)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_api_selection']['1'] = 'OpenSourceRoutingMachine (API 5.x)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_api_selection']['2'] = 'OpenRouteService (API 5.x)';
+
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearchParams']['keys']       = ['Key','e.g.:countrycodes'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearchParams']['params']     = ['Parameter', 'e.g.: en'];
 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles']['0'] = 'Car';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles']['1'] = 'Heavy Vehicle';

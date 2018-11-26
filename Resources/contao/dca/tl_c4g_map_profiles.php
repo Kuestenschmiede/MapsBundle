@@ -121,7 +121,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
         'attribution'                 => 'collapsed_attribution,cfg_logo_attribution,div_attribution,add_attribution',
         'hover_popups'                => 'hover_popups_stay',
         'permalink'                   => 'permalink_get_param',
-        'geosearch'                   => 'geosearch_engine,geosearch_results,geosearch_show,geosearch_div,geosearch_zoomto,geosearch_zoombounds,geosearch_animate,geosearch_markresult,geosearch_popup,geosearch_attribution,geosearch_collapsed',
+        'geosearch'                   => 'geosearchParams,geosearch_engine,geosearch_results,geosearch_show,geosearch_div,geosearch_zoomto,geosearch_zoombounds,geosearch_animate,geosearch_markresult,geosearch_popup,geosearch_attribution,geosearch_collapsed',
         'geopicker'                   => 'geopicker_fieldx,geopicker_fieldy,geopicker_searchdiv,geopicker_attribution,geopicker_disabled,geopicker_anonymous',
         'cesium'                      => 'cesium_always',
     ),
@@ -658,6 +658,15 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             'inputType'               => 'checkbox',
             'sql'                     => "char(1) NOT NULL default '1'"
         ),
+        'geosearchParams' => [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearchParams'],
+            'exclude'                 => true,
+            'inputType'               => 'multiColumnWizard',
+            'eval'                    => [
+                'columnsCallback'        => ['tl_c4g_map_profiles','getSearchParams']
+            ],
+            'sql'                     => 'blob NULL'
+        ],
         'geosearch_results' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_results'],
@@ -666,8 +675,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             'inputType'               => 'checkbox',
             'sql'                     => "char(1) NOT NULL default '0'"
         ),
-
-
         'geosearch_customengine_url' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_customengine_url'],
@@ -1221,6 +1228,25 @@ class tl_c4g_map_profiles extends Backend
         }
 
         return $arrModules;
+    }
+    public function getSearchParams($multiColumnWizard)
+    {
+        $arrColumnKeys = [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearchParams']['keys'],
+            'inputType'               => 'text',
+            'eval'                    => ['tl_class'=>'w50']
+        ];
+        $arrColumnParams = [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearchParams']['params'],
+            'filter'                  => false,
+            'inputType'               => 'text',
+            'eval'                    => ['tl_class'=>'w50']
+        ];
+        $return = [
+            'keys'    => $arrColumnKeys,
+            'params'  => $arrColumnParams
+        ];
+        return $return;
     }
 
 }

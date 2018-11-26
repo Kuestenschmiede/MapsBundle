@@ -94,7 +94,11 @@ class NominatimApi extends \Frontend
                 $strSearchUrl = 'https://nominatim.openstreetmap.org/search';
                 break;
         }
-
+        if($objMapsProfile->geosearchParams){
+            foreach(unserialize($objMapsProfile->geosearchParams) as $geosearchParam){
+                $arrParams = array_merge($arrParams, [$geosearchParam['keys'] => $geosearchParam['params']]);
+            }
+        }
 
         if (sizeof($arrParams) > 0)
         {
