@@ -534,76 +534,13 @@ export class C4gLayerController{
                       rFeatures = [];
                       for(let elementId = 0; elementId < response.elements.length; elementId++){
                         let element = response.elements[elementId];
-
-                        if(element.type == "node"){
-                          if(!element.tags){//not a feature, but part of a way or relation
-                            continue;
-                          }
-                          let point = new ol.geom.Point([element.lon,element.lat]).transform('EPSG:4326','EPSG:3857');
-                          feature = new ol.Feature({
-                            geometry: point
-                          });
-                          feature.setId(element.id);
-                          feature.set('osm_type', 'node');
+                        if(element.type ==="node" && !element.tags){
+                          continue;
                         }
-                        else if(element.type == "way"){
-                          let arrCoords = [];
-                          for(let i = 0; i < element.nodes.length; i++){
-                            let node = response.elements.find(function(objNode){
-                              return objNode.id === element.nodes[i];
-                            });
-                            arrCoords.push(ol.proj.transform([node.lon,node.lat],'EPSG:4326','EPSG:3857'));
-                          }
-                          if(arrCoords[0][0] == arrCoords[arrCoords.length-1][0] && arrCoords[0][1] == arrCoords[arrCoords.length-1][1]){ //polygon
-                            delete arrCoords[arrCoords.length-1];
-                            arrCoords.length = arrCoords.length-1;
-                            let polygon = new ol.geom.Polygon([arrCoords]);
-                            // polygon.transform('EPSG:4326','EPSG:3857');
-                            if (requestContentData.settings.forceNodes) {
-                              // convert tracks and areas to points
-                              let centerPoint = polygon.getInteriorPoint().getCoordinates();
-                              feature = new ol.Feature({
-                                geometry: new ol.geom.Point([centerPoint[0],centerPoint[1]]),
-                                id: element.id
-                              });
-                            }
-                            else{
-                              feature = new ol.Feature({
-                                geometry: polygon,
-                                id: element.id
-                              });
-                            }
-                          }
-                          else{ //linestring
-                            let lineString = new ol.geom.LineString(arrCoords);
-                             // lineString.transform('EPSG:4326','EPSG:3857');
-                            feature = new ol.Feature({
-                              geometry: lineString,
-                              id: element.id
-                            });
-                            if (requestContentData.settings.forceNodes) {
-                              let lineExtent = ol.extent.boundingExtent(arrCoords);
-                              centerPoint = ol.extent.getCenter(lineExtent);
-                              feature.setGeometry(
-                                new ol.geom.Point(centerPoint)
-                              );
-                            }
-
-                          }
-                          feature.set('osm_type', 'way');
+                        let tempFeature = self.featureFromOverpass(element,response.elements, contentData, requestContentData.settings.forceNodes);
+                        if(tempFeature){
+                          rFeatures.push(tempFeature);
                         }
-                        feature.set('c4g_type', 'osm');
-                        feature.set('cluster_zoom', contentData.cluster_zoom);
-                        feature.set('cluster_popup', contentData.cluster_popup);
-                        feature.set('loc_linkurl', contentData.loc_linkurl);
-                        feature.set('hover_location', contentData.hover_location);
-                        feature.set('hover_style', contentData.hover_style);
-                        feature.set('zoom_onclick', contentData.data.zoom_onclick);
-                        feature.set('label', contentData.data.label);
-                        for(let tags in element.tags){
-                          feature.set(tags, element.tags[tags]);
-                        }
-                        rFeatures.push(feature);
                       }
 
                     }
@@ -962,10 +899,6 @@ export class C4gLayerController{
             }
           }
         }
-
-
-
-
       // add vector layer group
       layerGroup = new ol.layer.Group({
         layers: layers
@@ -1232,7 +1165,127 @@ export class C4gLayerController{
 
 
   } // end of "loadLayerContent()"
+  featureFromOverpass(element, elements, contentData, forceNodes){
+    let feature = null;
+    if(element.type == "node"){
+      if(element.tags){
+        let point = new ol.geom.Point([element.lon,element.lat]).transform('EPSG:4326','EPSG:3857');
+        feature = new ol.Feature({
+          geometry: point
+        });
+        feature.setId(element.id);
+        feature.set('osm_type', 'node');
+      }
 
+    }
+    else if(element.type == "way"){
+      if(element.tags){
+        feature = new ol.Feature(this.geomFromWay(element, elements, forceNodes));
+      }
+      else{
+        let geom = this.geomFromWay(element, elements, forceNodes);
+        feature = new ol.Feature(geom);
+      }
+
+    }
+    else if(element.type === "relation"){
+      let multiPolygon = null;
+      let multiLineString = null;
+      let arrCoords = null;
+      let point = null;
+        for(let i = 0; i< element.members.length; i++){
+          if(element.members[i].role === "outer"){ //@ToDo add handling for outer border
+            continue;
+          }
+          let way = elements.find(function(objWay){
+            return objWay.id === element.members[i].ref;
+          });
+          let geom = this.geomFromWay(way, elements, true)
+          if(geom instanceof ol.geom.Point){
+            if(!arrCoords){
+              arrCoords = [];
+
+            }
+            arrCoords.push(geom.getCoordinates());
+          }
+          else if(geom instanceof ol.geom.Polygon){
+            if(multiPolygon){
+              multiPolygon.appendPolygon(geom);
+            }
+            else{
+              multiPolygon = new ol.geom.MultiPolygon(geom.getCoordinates());
+            }
+          }
+          else if(geom instanceof  ol.geom.LineString){
+            if(multiLineString){
+              multiLineString.appendLineString(geom);
+            }
+            else{
+              multiLineString = new ol.geom.LineString(geom.getCoordinates());
+            }
+          }
+        }
+        if(arrCoords){
+          let extent = ol.extent.boundingExtent(arrCoords);
+          point = new ol.geom.Point(ol.extent.getCenter(extent));
+        }
+        if(point || multiPolygon || multiLineString){
+          feature = new ol.Feature(point ? point : (multiLineString ? multiLineString : multiPolygon));
+        }
+    }
+    if(feature){
+      feature.set('c4g_type', 'osm');
+      feature.set('cluster_zoom', contentData.cluster_zoom || '');
+      feature.set('cluster_popup', contentData.cluster_popup || '');
+      feature.set('loc_linkurl', contentData.loc_linkurl || '');
+      feature.set('hover_location', contentData.hover_location || '');
+      feature.set('hover_style', contentData.hover_style || '');
+      if(contentData.data){
+        feature.set('zoom_onclick', contentData.data.zoom_onclick || '');
+        feature.set('label', contentData.data.label || '');
+      }
+
+      for(let tags in element.tags){
+        feature.set(tags, element.tags[tags]);
+      }
+      return feature;
+    }
+
+  }
+  geomFromWay(element, elements, forceNodes){
+    let arrCoords = [];
+    for(let i = 0; i < element.nodes.length; i++){
+      let node = elements.find(function(objNode){
+        return objNode.id === element.nodes[i];
+      });
+      arrCoords.push(ol.proj.transform([node.lon,node.lat],'EPSG:4326','EPSG:3857'));
+    }
+    if(arrCoords[0][0] == arrCoords[arrCoords.length-1][0] && arrCoords[0][1] == arrCoords[arrCoords.length-1][1]){ //polygon
+      delete arrCoords[arrCoords.length-1];
+      arrCoords.length = arrCoords.length-1;
+      let polygon = new ol.geom.Polygon([arrCoords]);
+      // polygon.transform('EPSG:4326','EPSG:3857');
+      if (forceNodes) {
+        // convert tracks and areas to points
+        return new ol.geom.Point([polygon.getInteriorPoint().getCoordinates()[0],polygon.getInteriorPoint().getCoordinates()[1]]);
+      }
+      else{
+        return polygon;
+      }
+    }
+    else{ //linestring
+      let lineString = new ol.geom.LineString(arrCoords);
+      if (forceNodes) {
+        let lineExtent = ol.extent.boundingExtent(arrCoords);
+        let lineCenter = ol.extent.getCenter(lineExtent);
+        return new ol.geom.Point([lineCenter[0], lineCenter[1]]);
+      }
+      else{
+        return lineString;
+      }
+
+    }
+  }
   hideLayer(layerUid, keepLayer) {
 
     var layer,
