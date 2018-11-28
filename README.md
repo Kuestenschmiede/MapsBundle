@@ -18,6 +18,7 @@ For Contao 3 you can use [con4igs_maps3](https://github.com/Kuestenschmiede/con4
 - [ForumBundle](https://github.com/Kuestenschmiede/ForumBundle/releases) (*latest stable release*)
 - [ProjectsBundle](https://github.com/Kuestenschmiede/ProjectsBundle/releases) (*latest stable release*)
 - [TrackingBundle](https://github.com/Kuestenschmiede/TrackingBundle/releases) (*latest stable release*)
+- [RoutingBundle](https://github.com/Kuestenschmiede/RoutingBundle/releases) (*latest stable release*)
   
 **And with all other con4gis and Contao bundles**  
 con4gis is not a connectable application. It's a collection of content 
@@ -71,7 +72,7 @@ implemented features
         - switchable select all button
         - optional structure tabs
     - Portside
-        - Router (OSRM API 4+5, OpenRouteService)
+        - Router (OSRM API 4+5, OpenRouteService) [requires RoutingBundle]
         - Editor (waypoints, ways, areas, circles, freehand)
         - Measuretools (ways, areas, radius, freehand)
     - Attribution
@@ -81,6 +82,7 @@ implemented features
     - GeoSearch
         - jumps to automaticly first result
         - optional result selection
+        - limit search with specific search parameters
     - GeoPicker
     - Grid (Graticule)
     - MousePosition
@@ -101,7 +103,7 @@ implemented features
     - Single GEO coordinate (display as circle, star, square & more)
     - Other tables (pre-configured: events, members)
     - OSM files
-    - OSM requests (Overpass API)
+    - OSM requests (Overpass API (XML and QL))
     - build structure from directory
     - ... 
 - configurate ***Themes***:
