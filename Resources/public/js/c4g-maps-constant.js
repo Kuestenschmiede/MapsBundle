@@ -118,37 +118,6 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
     TOOLTIP_POPUP: 'c4g-tooltip-popup',
     ZOOM_LEVEL: 'c4g-zoom-level',
 
-    ROUTER_INPUT_WRAPPER: 'c4g-router-input-wrapper',
-    ROUTER_PROFILE_WRAPPER: 'c4g-router-profile-wrapper',
-    ROUTER_INPUT_FROM: 'c4g-router-input-from',
-    ROUTER_INPUT_TO: 'c4g-router-input-to',
-    ROUTER_INPUT_CLEAR: 'c4g-router-input-clear',
-    ROUTER_BUTTONBAR: 'c4g-router-buttonbar',
-    ROUTER_ATTRIBUTION_WRAPPER: 'c4g-router-attribution-wrapper',
-    ROUTER_INSTRUCTIONS_WRAPPER: 'c4g-router-instructions-wrapper',
-    ROUTER_INSTRUCTIONS_HEADER: 'c4g-router-instructions-header',
-
-    ROUTER_SWITCH: 'c4g-router-switch',
-    ROUTER_OVER: 'c4g-router-over',
-    ROUTER_PRINT: 'c4g-router-print',
-
-    ROUTER_PROFILE_CAR: 'c4g-router-profile-car',
-    ROUTER_PROFILE_HGV: 'c4g-router-profile-hgv',
-    ROUTER_PROFILE_BIKE: 'c4g-router-profile-bike',
-    ROUTER_PROFILE_FOOT: 'c4g-router-profile-foot',
-    ROUTER_PROFILE_WHEELCHAIR: 'c4g-router-profile-wheelchair',
-
-
-
-    ROUTER_INSTRUCTIONS_TABLE: 'c4g-router-instruction-table',
-    ROUTER_INSTRUCTIONS_ITEM: 'c4g-router-instruction-item',
-    ROUTER_INSTRUCTIONS_ITEM_ODD: 'c4g-router-instruction-item--odd',
-    ROUTER_INSTRUCTIONS_ITEM_EVEN: 'c4g-router-instruction-item--even',
-    ROUTER_INSTRUCTIONS_ITEM_DIRECTION: 'c4g-router-instruction-item_direction',
-    ROUTER_INSTRUCTIONS_ITEM_DIRECTION_ICON: 'c4g-router-instruction-item_direction-icon',
-    ROUTER_INSTRUCTIONS_ITEM_DIRECTION_TEXT: 'c4g-router-instruction-item_text',
-    ROUTER_INSTRUCTIONS_ITEM_DIRECTION_DISTANCE: 'c4g-router-instruction-item_distance',
-
     OL_CONTROL: 'ol-control',
     OL_UNSELECTABLE: 'ol-unselectable',
 

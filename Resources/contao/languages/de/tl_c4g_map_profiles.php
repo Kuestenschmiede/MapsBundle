@@ -219,12 +219,6 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_helpurl']        = ['Hilfe-Li
                                                                             'Wenn hier eine URL eingetragen wird, so erscheint ein "Hilfe" Link im Editor, der zu der angegebenen URL führt.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['be_optimize_checkboxes_limit']      = ['Grenzwert für Optimierung großer Checkbox-Listen',
                                                                             'Definiert wie viele Einträge enthalten sein müssen, bis die Checkbox-Listen in Chosenfields umgewandelt werden. (0 = niemals umwandeln)'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_api_selection'] = ['Auswahl der API-Version','Alte API funktioniert nur mit eingenem ORSM-Server'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_from_locstyle'] = ['Location-Stil für Start-Location', 'Location-Stil für Start-Location'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_to_locstyle'] = ['Location-Stil für Ziel-Location', 'Location-Stil für Ziel-Location'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_point_locstyle'] = ['Location-Stil für Unterwegs-Hinweise', 'Location-Stil für Unterwegs-Hinweise'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_interim_locstyle'] = ['Location-Stil für Zwischenziele', 'Location-Stil für Zwischenziele'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_alternative'] = ['Alternativroute','Sollen Alternativrouten dargestellt werden?'];
 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium'] = ['Cesium verwenden', 'Mit Cesium wird die 2D Karte in einen Globus umgewandelt.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium_always'] = ['Cesium immer verwenden', 'Soll Cesium für jede Basiskarte aktiviert sein? Falls nicht, kann Cesium auch für einzelne Karten in den Basiskarteneinstellungen aktiviert werden.'];
@@ -265,19 +259,6 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_api_selection']['2
 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearchParams']['keys']       = ['Schlüssel','Beispiel:countrycodes'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearchParams']['params']     = ['Parameter', 'Beispiel: de'];
-
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles']['0'] = 'Auto';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles']['1'] = 'Lastwagen';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles']['2'] = 'Fahrrad';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles']['3'] = 'Rennrad';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles']['4'] = 'Fahrrad (sicher)';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles']['5'] = 'Moutainbike';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles']['6'] = 'Trekkingrad';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles']['7'] = 'Elekrofahrrad';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles']['8'] = 'FußgängerIn';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles']['9'] = 'WandererIn';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_router_profiles']['10']= 'Rollstuhl';
-
 
 /**
  * Buttons
