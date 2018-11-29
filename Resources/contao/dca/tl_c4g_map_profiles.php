@@ -105,8 +105,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
                                          '{geopicker_legend:hide},is_backend_geopicker_default,geopicker;'.
                                          '{click_legend:hide},link_newwindow,link_open_on,hover_popups, popupAutoPan;'.
                                          '{cesium_legend:hide},cesium;'.
-                                         '{expert_legend:hide},script,overpass_url,custom_div,account,caching;'.
-                                         '{backend_legend:hide},be_optimize_checkboxes_limit;'
+                                         '{miscellaneous_legend:hide},script,overpass_url,custom_div,account,be_optimize_checkboxes_limit,caching;'
     ),
 
 

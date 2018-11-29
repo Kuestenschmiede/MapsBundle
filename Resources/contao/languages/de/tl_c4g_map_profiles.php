@@ -129,26 +129,12 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['hover_popups'] = ['Popups über Maus
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['hover_popups_stay'] = ['Maus-Hover-Popups geöffnet lassen', 'Popups nicht automatisch schließen, wenn der Mauszeiger die Lokation verlässt.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupAutoPan'] = ['Kartenausschnitt an Popup anpassen', 'Passt beim Öffnen eines Popups den Kartenausschnitt an '];
 
-/** Experten-Einstellungen */
+/** Sonstiges */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overpass_url'] = ['Alternative URL der Overpass-API (<a href="http://overpass-api.de/" target="_blank">Website des voreingestellten API-Server Anbieters</a>)', 'Geben Sie hier die URL des Overpass API Servers ein, wenn Sie z.B. einen eigenen Overpass API Server nutzen möchten. Standardmäßig wird http://overpass-api.de/api/interpreter verwendet'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['custom_div'] = ['DIV für den Kartenbereich', 'DIV zur Umpositionierung des Kartenbereichs. Mit Hilfe dieser Einstellung lässt sich die Karte z.B. mitten in ein Formular hinein verschieben. Das DIV muss manuell auf der Seite erzeugt werden, z.B. mit einem HTML Inhaltselement oder HTML Formularfeld.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['account'] = ['Accountbutton', 'Sobald Sie ein Frontendmodul auswählen, wird der Accountbutton dargestellt.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['caching'] = ['Kartensituation merken', 'Buttonstatus u.Ä. werden im Browser zwischengespeichert.'];
-
-
-
-
-
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['nav_history']           = ['Navigations-Historie',
-                                                                            'Erzeugt einen Vor- und einen Zurück-Schalter, vergleichbar mit denen eines Internet-Browsers.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['libsource']             = ['Zu verwendende OpenLayers Bibliothek',
-                                                                            'Wählen Sie die Herkunft der OpenLayers JavaScript Bibliothek aus.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['imagepath']             = ['Benutzerdefinierter Pfad für OpenLayers Icons (optional)',
-                                                                            'Nur beim Standard-Theme: Setzt den Pfad zu einem benutzerdefinierten OpenLayers /img/ Verzeichnis für den Fall, dass Sie OpenLayers Standardicons auswechseln möchten. ACHTUNG: Diese Einstellung betrifft NICHT Grafiken aus dem OpenLayers /themes/default/img/ Verzeichnis, die Sie über CSS austauschen können!'];
-
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['be_optimize_checkboxes_limit']      = ['Grenzwert für Optimierung großer Checkbox-Listen',
-                                                                            'Definiert wie viele Einträge enthalten sein müssen, bis die Checkbox-Listen in Chosenfields umgewandelt werden. (0 = niemals umwandeln)'];
-
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['caching'] = ['Kartensituation merken', 'Buttonstatus und Kartensituation werden im Browser zwischengespeichert.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['be_optimize_checkboxes_limit'] = ['Grenzwert für Optimierung großer Checkbox-Listen', 'Definiert wie viele Einträge enthalten sein müssen, bis die Checkbox-Listen in Chosenfields umgewandelt werden. (0 = niemals umwandeln)'];
 
 
 /**
@@ -157,18 +143,12 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['be_optimize_checkboxes_limit']      
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['CLICK'] = 'einfachem Mausklick';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['DBLCL'] = 'Maus-Doppelklick';
 
-//$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['dark']            = 'Dark Theme (angepasst)';
-//$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['modern']          = 'Modern Trans Theme';
-//$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['metro']           = 'Metro Theme';
-//$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['blue']            = 'Blue Theme (basierend auf dem angepassten Dark-Theme)';
-//$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['red']             = 'Red Theme (basierend auf dem angepassten Dark-Theme)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['default_theme']   = 'con4gis Standard-Theme';
 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_mouse_nav_dragmode']['0'] = 'Aus';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_mouse_nav_dragmode']['1'] = 'Karte drehen';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_mouse_nav_dragmode']['2'] = 'Karte drehen und zoomen';
 
-//$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_zoom_panel_button']['0'] = 'Aus';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_zoom_panel_button']['1'] = 'mit Welt-Icon (zoomt zurück in die kleinstmögliche Zoomstufe)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_zoom_panel_button']['2'] = 'mit Haus-Icon (zoomt zurück in die voreingestellte Position der Karte)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_zoom_panel_button']['3'] = 'mit Positions-Icon (zoomt auf sicheren Seiten zur aktuellen Geräteposition)';
@@ -210,9 +190,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_legend'] = 'Karteneditor';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_legend'] = 'Geopicker (Position bestimmen)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium_legend'] = 'Cesium (Globusdarstellung)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['click_legend'] = 'Einstellungen zum Klick-Verhalten';
-
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['expert_legend']         = 'Experten-Einstellungen';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['backend_legend']        = 'Backend-Einstellungen';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['miscellaneous_legend'] = 'Sonstiges';
 
 /**
  * Globals
