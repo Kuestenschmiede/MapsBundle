@@ -6,6 +6,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 import {cssConstants} from "./c4g-maps-constant";
 import {langConstantsGerman} from "./c4g-maps-constant-i18n-de";
 import {langConstantsEnglish} from "./c4g-maps-constant-i18n-en";
+import {utils} from "./c4g-maps-utils";
 
 let langConstants = {};
 
@@ -122,7 +123,7 @@ if (typeof mapData !== "undefined") {
     element = document.createElement('div');
     element.className = options.className + ' ' + cssConstants.OL_UNSELECTABLE + ' ' + cssConstants.OL_CONTROL;
 
-    if ((options.collapsed && !options.extDiv) &! (this.config.caching && c4g.maps.utils.getValue('geosearch') == '1'))
+    if ((options.collapsed && !options.extDiv) &! (this.config.caching && utils.getValue('geosearch') == '1'))
     {
       $(element).addClass(cssConstants.CLOSE);
     } else {
@@ -261,7 +262,7 @@ if (typeof mapData !== "undefined") {
             .removeClass(cssConstants.CLOSE)
             .find('input')[0].focus();
           if (this.config.caching) {
-              c4g.maps.utils.storeValue('geosearch', '1');
+              utils.storeValue('geosearch', '1');
           }
       }
     },
@@ -280,7 +281,7 @@ if (typeof mapData !== "undefined") {
               document.getElementById("resultcontainer").parentNode.removeChild(document.getElementById("resultcontainer"));
           }
           if (this.config.caching) {
-              c4g.maps.utils.storeValue('geosearch', '0');
+              utils.storeValue('geosearch', '0');
           }
       }
     },
@@ -823,7 +824,7 @@ if (typeof mapData !== "undefined") {
                                 objPopup.layer = layer;
                                 // Call the popup hook for plugin specific popup content
                                 if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_fillPopup === 'object') {
-                                    c4g.maps.utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, objPopup);
+                                    utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, objPopup);
                                 }
                                 self.config.mapController.proxy.setPopup(objPopup);
                             } else {
@@ -845,7 +846,7 @@ if (typeof mapData !== "undefined") {
 
                                         // Call the popup hook for plugin specific popup content
                                         if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_fillPopup === 'object') {
-                                            c4g.maps.utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, objPopup);
+                                            utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, objPopup);
                                         }
 
                                         self.setPopup(objPopup);
