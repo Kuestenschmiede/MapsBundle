@@ -463,10 +463,15 @@ if (typeof mapData !== "undefined") {
                 this.map.addInteraction(new ol.interaction.DragZoom({condition: ol.events.condition.shiftKeyOnly}));
             }
             // drag rotate (& zoom)
+            ol.events.condition.custom = function(mapBrowserEvent) {
+              var browserEvent = mapBrowserEvent.originalEvent;
+              return (browserEvent.ctrlKey && browserEvent.shiftKey);
+            };
+
             if (mapData.mouse_nav.drag_rotate_zoom) {
-                this.map.addInteraction(new ol.interaction.DragRotateAndZoom({condition: ol.events.condition.altKeyOnly}));
+                this.map.addInteraction(new ol.interaction.DragRotateAndZoom({condition: ol.events.condition.custom}));
             } else if (mapData.mouse_nav.drag_rotate) {
-                this.map.addInteraction(new ol.interaction.DragRotate({condition: ol.events.condition.altKeyOnly}));
+                this.map.addInteraction(new ol.interaction.DragRotate({condition: ol.events.condition.custom}));
             }
         }
         // touch navigation
