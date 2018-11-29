@@ -1010,7 +1010,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             'exclude'                 => true,
             'inputType'               => 'text',
             'default'                 => '10',
-            'eval'                    => array('rgxp'=>'digit', 'submitOnChange' => true),
+            'eval'                    => array('rgxp'=>'digit', 'submitOnChange' => true, "tl_class" => "clr m12"),
             'sql'                     => "int(10) unsigned NOT NULL default '10'"
         ),
         'cesium' => array
