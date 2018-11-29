@@ -98,12 +98,12 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
                                          '{locstyle_legend:hide},locstyles, label_color;'.
                                          '{navigation_legend},zoom_panel,zoom_panel_button,zoom_panel_slider,mouse_nav,touch_nav,keyboard_nav,fullscreen,print;'.
                                          '{starboard_legend:hide},starboard;'.
-                                         '{information_legend},attribution,overviewmap,geobookmarks,measuretool,graticule,scaleline,mouseposition,permalink,zoomlevel;'.
-                                         '{geosearch_legend:hide},geosearch;'.
-                                         '{info_legend:hide},infopage;'.
-                                         '{click_legend:hide},link_newwindow,link_open_on,hover_popups, popupAutoPan;'.
-                                         '{geopicker_legend:hide},is_backend_geopicker_default,geopicker;'.
+                                         '{information_legend},attribution,overviewmap,graticule,scaleline,mouseposition,permalink,zoomlevel,infopage;'.
+                                         '{tools_legend},measuretool,geobookmarks,geosearch;'.
+                                         '{geosearch_legend},geosearch;'.
                                          '{editor_legend:hide},editor,editor_styles_point,editor_styles_line,editor_styles_polygon,editor_styles_circle,editor_styles_freehand,editor_vars,editor_show_items,editor_helpurl,is_backend_editor_default;'.
+                                         '{geopicker_legend:hide},is_backend_geopicker_default,geopicker;'.
+                                         '{click_legend:hide},link_newwindow,link_open_on,hover_popups, popupAutoPan;'.
                                          '{cesium_legend:hide},cesium;'.
                                          '{expert_legend:hide},script,overpass_url,custom_div,account,caching;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;'
@@ -114,14 +114,14 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
     'subpalettes' => array
     (
         'mouse_nav'                   => 'mouse_nav_wheel,mouse_nav_doubleclick_zoom,mouse_nav_zoombox,mouse_nav_dragmode,mouse_nav_kinetic',
-        'starboard'                   => 'starboard_open,starboard_div,starboard_label,baselayerswitcher,layerswitcher,starboard_filter,starboard_button,cluster_all,async_content',
+        'starboard'                   => 'baselayerswitcher,layerswitcher,starboard_open,starboard_label,starboard_filter,starboard_button,starboard_div,cluster_all',
         'cluster_all'                 => 'cluster_distance,cluster_fillcolor,cluster_fontcolor,cluster_zoom',
         'baselayerswitcher'           => 'baselayerswitcher_label',
         'layerswitcher'               => 'layerswitcher_label',
-        'attribution'                 => 'collapsed_attribution,cfg_logo_attribution,div_attribution,add_attribution',
+        'attribution'                 => 'collapsed_attribution,add_attribution,cfg_logo_attribution,div_attribution',
         'hover_popups'                => 'hover_popups_stay',
         'permalink'                   => 'permalink_get_param',
-        'geosearch'                   => 'geosearchParams,geosearch_engine,geosearch_results,geosearch_show,geosearch_div,geosearch_zoomto,geosearch_zoombounds,geosearch_animate,geosearch_markresult,geosearch_popup,geosearch_attribution,geosearch_collapsed',
+        'geosearch'                   => 'geosearch_engine,geosearch_show,geosearchParams,geosearch_results,geosearch_zoomto,geosearch_zoombounds,geosearch_animate,geosearch_markresult,geosearch_popup,geosearch_attribution,geosearch_collapsed,geosearch_div',
         'geopicker'                   => 'geopicker_fieldx,geopicker_fieldy,geopicker_searchdiv,geopicker_attribution,geopicker_disabled,geopicker_anonymous',
         'cesium'                      => 'cesium_always',
     ),
@@ -642,12 +642,12 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_engine'],
             'exclude'                 => true,
-            'default'                 => '1',
+            'default'                 => '3',
             'inputType'               => 'radio',
-            'options'                 => array('4','1','2','3'),
+            'options'                 => array('3','1','2','4'),
             'eval'                    => array('submitOnChange' => true,'includeBlankOption' => false ),
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine'],
-            'sql'                     => "char(1) NOT NULL default '1'"
+            'sql'                     => "char(1) NOT NULL default '3'"
         ),
 
         'geosearch_show' => array
@@ -1106,24 +1106,20 @@ class tl_c4g_map_profiles extends Backend
         ->limit(1)
         ->execute($dc->id);
         if ($objProfile->numRows > 0) {
-            // if ($objProfile->zoom_panel == '1') {
-            //     $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['palettes']['default'] =
-            //         str_replace(',zoom_panel,',',zoom_panel,zoom_panel_world,',
-            //             $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['palettes']['default']);
-            // }
+
             if ($objProfile->geosearch_engine == '2') {
                 $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['geosearch'] =
-                    str_replace(',geosearch_div,',',geosearch_key,geosearch_div,',
+                    str_replace('geosearch_engine,','geosearch_engine,geosearch_key,',
                         $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['geosearch']);
                 // make key-field mandatory
                 $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['fields']['geosearch_key']['eval']['mandatory'] = true;
             } elseif ($objProfile->geosearch_engine == '3') {
                 $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['geosearch'] =
-                    str_replace(',geosearch_div,',',geosearch_customengine_url,geosearch_customengine_attribution,geosearch_key,geosearch_div,',
+                    str_replace('geosearch_engine,','geosearch_engine,geosearch_customengine_url,geosearch_customengine_attribution,geosearch_key,',
                         $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['geosearch']);
             } elseif ($objProfile->geosearch_engine == '4') {
                 $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['geosearch'] =
-                    str_replace(',geosearch_div,',',geosearch_key,geosearch_div,',
+                    str_replace('geosearch_engine,','geosearch_engine,geosearch_key,',
                         $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['geosearch']);
             }
 
