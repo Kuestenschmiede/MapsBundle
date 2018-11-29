@@ -96,16 +96,16 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
         'default'                     => '{general_legend},name,theme;'.
                                          '{baselayer_legend:hide},baselayers, default_baselayer;'.
                                          '{locstyle_legend:hide},locstyles, label_color;'.
-                                         '{navigation_legend},zoom_panel,zoom_panel_button,zoom_panel_slider,mouse_nav,touch_nav,keyboard_nav,fullscreen,print;'.
+                                         '{navigation_legend:hide},zoom_panel,zoom_panel_button,zoom_panel_slider,mouse_nav,touch_nav,keyboard_nav,fullscreen,print;'.
                                          '{starboard_legend:hide},starboard;'.
-                                         '{information_legend},attribution,overviewmap,graticule,scaleline,mouseposition,permalink,zoomlevel,infopage;'.
-                                         '{tools_legend},measuretool,geobookmarks,geosearch;'.
-                                         '{geosearch_legend},geosearch;'.
+                                         '{information_legend:hide},attribution,overviewmap,graticule,scaleline,mouseposition,permalink,zoomlevel,infopage;'.
+                                         '{geosearch_legend:hide},geosearch;'.
+                                         '{measure_legend:hide},measuretool;'.
                                          '{editor_legend:hide},editor,editor_styles_point,editor_styles_line,editor_styles_polygon,editor_styles_circle,editor_styles_freehand,editor_vars,editor_show_items,editor_helpurl,is_backend_editor_default;'.
                                          '{geopicker_legend:hide},is_backend_geopicker_default,geopicker;'.
                                          '{click_legend:hide},link_newwindow,link_open_on,hover_popups, popupAutoPan;'.
                                          '{cesium_legend:hide},cesium;'.
-                                         '{miscellaneous_legend:hide},script,overpass_url,custom_div,account,be_optimize_checkboxes_limit,caching;'
+                                         '{miscellaneous_legend:hide},script,overpass_url,custom_div,account,be_optimize_checkboxes_limit,caching,geobookmarks;'
     ),
 
 
