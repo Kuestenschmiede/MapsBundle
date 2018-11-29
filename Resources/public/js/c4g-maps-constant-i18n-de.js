@@ -82,7 +82,8 @@ this.c4g.maps.constant = this.c4g.maps.constant || {};
 
     SIDEBOARD: 'Sideboard',
 
-
+    POPUP_ROUTE_FROM: 'Route von hier',
+    POPUP_ROUTE_TO: 'Route hierhin',
 
     MEASURETOOLS: 'Messwerkzeuge',
     MEASURETOOLS_INFO: 'Wählen Sie weiter unten einen Messtyp aus und starten Sie die Messung durch das Klicken auf der Karte.',
