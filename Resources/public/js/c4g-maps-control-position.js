@@ -1,13 +1,8 @@
-// "namespace"
-this.c4g = this.c4g || {};
-this.c4g.maps = this.c4g.maps || {};
-this.c4g.maps.control = this.c4g.maps.control || {};
-
 import {cssConstants} from "./c4g-maps-constant";
 import {langConstants} from "./c4g-maps-constant-i18n-de";
+'use strict';
+export class Position {
 
-(function ($, c4g) {
-  'use strict';
 
   /**
    * Control to toggle the browser/desvice position on the map.
@@ -17,13 +12,13 @@ import {langConstants} from "./c4g-maps-constant-i18n-de";
    *
    * @param    {Object}              opt_options  *optional* control options.
    */
-  c4g.maps.control.Position = function (opt_options) {
+  constructor(opt_options) {
 
     var self = this;
     var options = opt_options || {};
 
     var element,
-        button;
+      button;
 
     // default options
     options = $.extend({
@@ -91,19 +86,6 @@ import {langConstants} from "./c4g-maps-constant-i18n-de";
       element: element,
       target: options.target
     });
-  };
-  ol.inherits(c4g.maps.control.Position, ol.control.Control);
-
-
-  /*
-   * Add methods
-   */
-  c4g.maps.control.Position.prototype = $.extend(c4g.maps.control.Position.prototype, {
-
-    // nothing to add here
-
-  }); // end of "add methods" ---
-
-}(jQuery, this.c4g));
-
-export var Position = this.c4g.maps.control.Position;
+    ol.inherits(Position, ol.control.Control);
+  }
+}

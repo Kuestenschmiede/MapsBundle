@@ -1,10 +1,4 @@
-// "namespace"
 import {langConstantsEnglish} from "./c4g-maps-constant-i18n-en";
-
-this.c4g = this.c4g || {};
-this.c4g.maps = this.c4g.maps || {};
-this.c4g.maps.control = this.c4g.maps.control || {};
-
 import {cssConstants} from "./c4g-maps-constant";
 import {langConstantsGerman} from "./c4g-maps-constant-i18n-de";
 import {utils} from "./c4g-maps-utils";
@@ -21,9 +15,9 @@ if (typeof mapData !== "undefined") {
     langConstants = langConstantsGerman;
   }
 }
+'use strict';
+export class Home {
 
-(function ($, c4g) {
-  'use strict';
 
   /**
    * Control to toggle the intial map position on the map.
@@ -33,13 +27,13 @@ if (typeof mapData !== "undefined") {
    *
    * @param    {Object}              opt_options  *optional* control options.
    */
-  c4g.maps.control.Home = function (opt_options) {
+  constructor(opt_options) {
 
     var self = this;
     var options = opt_options || {};
 
     var element,
-        button;
+      button;
 
     // default options
     options = $.extend({
@@ -106,19 +100,6 @@ if (typeof mapData !== "undefined") {
       element: element,
       target: options.target
     });
-  };
-  ol.inherits(c4g.maps.control.Home, ol.control.Control);
-
-
-  /*
-   * Add methods
-   */
-  c4g.maps.control.Home.prototype = $.extend(c4g.maps.control.Home.prototype, {
-
-    // nothing to add here
-
-  }); // end of "add methods" ---
-
-}(jQuery, this.c4g));
-
-export var Home = this.c4g.maps.control.Home;
+    ol.inherits(this, ol.control.Control);
+  }
+}

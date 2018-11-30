@@ -1,12 +1,7 @@
-// "namespace"
-this.c4g = this.c4g || {};
-this.c4g.maps = this.c4g.maps || {};
-this.c4g.maps.misc = this.c4g.maps.misc || {};
-
 import {cssConstants} from "./c4g-maps-constant";
+'use strict';
+export class TooltipPopUp {
 
-(function ($, c4g) {
-  'use strict';
 
   /**
    * @TODO
@@ -16,11 +11,11 @@ import {cssConstants} from "./c4g-maps-constant";
    *
    * @param {Object=} opt_options Control options.
    */
-  c4g.maps.misc.TooltipPopUp = function (opt_options) {
+  constructor (opt_options) {
 
     var self,
-        addClassName,
-        closeButton;
+      addClassName,
+      closeButton;
 
     self = this;
     this.options = opt_options || {};
@@ -78,85 +73,78 @@ import {cssConstants} from "./c4g-maps-constant";
     if (this.options.position) {
       this.overlay.setPosition(this.options.position);
     }
-  };
+  }
 
-  // Add methods to TooltipPopUp
-  c4g.maps.misc.TooltipPopUp.prototype = $.extend(c4g.maps.misc.TooltipPopUp.prototype, {
-
-    close: function () {
-      if (typeof this.options.closeFunction === 'function') {
-        this.options.closeFunction();
-      }
-
-      if (this.options.map) {
-        this.options.map.removeOverlay(this.overlay);
-      }
-    },
-
-    /**
-     * @TODO
-     * [show description]
-     *
-     * @return  {[type]}  [description]
-     */
-    show: function () {
-      if ($(this.element).hasClass(cssConstants.HIDE)) {
-        $(this.element).removeClass(cssConstants.HIDE);
-      }
-    },
-
-    /**
-     * @TODO
-     * [hide description]
-     *
-     * @return  {[type]}  [description]
-     */
-    hide: function () {
-      if (!$(this.element).hasClass(cssConstants.HIDE)) {
-        $(this.element).addClass(cssConstants.HIDE);
-      }
-    },
-
-    /**
-     * @TODO
-     * [getContent description]
-     *
-     */
-    getContent: function () {
-      return this.contentContainer.innerHTML;
-    },
-
-    /**
-     * @TODO
-     * [getPosition description]
-     *
-     */
-    getPosition: function () {
-      return this.overlay.getPosition();
-    },
-
-    /**
-     * @TODO
-     * [setContent description]
-     *
-     * @param  {[type]}  content  [description]
-     */
-    setContent: function (content) {
-      this.contentContainer.innerHTML = content;
-    },
-
-    /**
-     * @TODO
-     * [setPosition description]
-     *
-     * @param  {[type]}  coordinates  [description]
-     */
-    setPosition: function (coordinates) {
-      this.overlay.setPosition(coordinates);
+  close () {
+    if (typeof this.options.closeFunction === 'function') {
+      this.options.closeFunction();
     }
 
-  }); // End of "add methods to TooltipPopUp"
+    if (this.options.map) {
+      this.options.map.removeOverlay(this.overlay);
+    }
+  }
 
-}(jQuery, this.c4g));
+  /**
+   * @TODO
+   * [show description]
+   *
+   * @return  {[type]}  [description]
+   */
+  show () {
+    if ($(this.element).hasClass(cssConstants.HIDE)) {
+      $(this.element).removeClass(cssConstants.HIDE);
+    }
+  }
 
-export var TooltipPopUp = this.c4g.maps.misc.TooltipPopUp;
+  /**
+   * @TODO
+   * [hide description]
+   *
+   * @return  {[type]}  [description]
+   */
+  hide () {
+    if (!$(this.element).hasClass(cssConstants.HIDE)) {
+      $(this.element).addClass(cssConstants.HIDE);
+    }
+  }
+
+  /**
+   * @TODO
+   * [getContent description]
+   *
+   */
+  getContent () {
+    return this.contentContainer.innerHTML;
+  }
+
+  /**
+   * @TODO
+   * [getPosition description]
+   *
+   */
+  getPosition () {
+    return this.overlay.getPosition();
+  }
+
+  /**
+   * @TODO
+   * [setContent description]
+   *
+   * @param  {[type]}  content  [description]
+   */
+  setContent (content) {
+    this.contentContainer.innerHTML = content;
+  }
+
+  /**
+   * @TODO
+   * [setPosition description]
+   *
+   * @param  {[type]}  coordinates  [description]
+   */
+  setPosition (coordinates) {
+    this.overlay.setPosition(coordinates);
+  }
+
+} // End of "add methods to TooltipPopUp"

@@ -1,9 +1,3 @@
-// "namespace"
-
-this.c4g = this.c4g || {};
-this.c4g.maps = this.c4g.maps || {};
-this.c4g.maps.control = this.c4g.maps.control || {};
-
 import {cssConstants} from "./c4g-maps-constant";
 import {langConstantsEnglish} from "./c4g-maps-constant-i18n-en";
 import {langConstantsGerman} from "./c4g-maps-constant-i18n-de";
@@ -20,8 +14,8 @@ if (typeof mapData !== "undefined") {
     langConstants = langConstantsGerman;
   }
 }
-(function ($, c4g) {
-  'use strict';
+'use strict';
+export class Grid extends ol.control.Control {
 
   /**
    * Control to toggle a grid on the map.
@@ -31,8 +25,8 @@ if (typeof mapData !== "undefined") {
    *
    * @param    {Object}              opt_options  *optional* control options.
    */
-  c4g.maps.control.Grid = function (opt_options) {
-
+  constructor (opt_options) {
+    super(opt_options);
     var self = this;
     var options = opt_options || {};
 
@@ -109,25 +103,6 @@ if (typeof mapData !== "undefined") {
       element: element,
       target: options.target
     });
+  }
 
-    // if (options.caching && (c4g.maps.utils.getValue('grid') == '1')) {
-    //     objGrid.setMap(self.getMap());
-    //     $(element).addClass(cssConstants.ENABLED);
-    // }
-
-  };
-  ol.inherits(c4g.maps.control.Grid, ol.control.Control);
-
-
-  /*
-   * Add methods
-   */
-  c4g.maps.control.Grid.prototype = $.extend(c4g.maps.control.Grid.prototype, {
-
-    // nothing to add here
-
-  }); // end of "add methods" ---
-
-}(jQuery, this.c4g));
-
-export var Grid = this.c4g.maps.control.Grid;
+}

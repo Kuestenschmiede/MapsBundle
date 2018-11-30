@@ -1,15 +1,6 @@
-// "namespace"
-this.c4g = this.c4g || {};
-this.c4g.maps = this.c4g.maps || {};
-this.c4g.maps.config = this.c4g.maps.config || {};
-
-(function ($, c4g) {
-  'use strict';
-
-  /**
-   * osmSourceDefinitions
-   */
-  c4g.maps.config.osm = $.extend(c4g.maps.config.osm, {
+ 'use strict';
+export var config = {
+  osm: {
 
     CycleMap: {
       attributions: 'Style by <a target="_blank" href="http://www.opencyclemap.org/">OpenCycleMap</a>' + ' ' +
@@ -52,13 +43,9 @@ this.c4g.maps.config = this.c4g.maps.config || {};
     },
 
     NONE: '' // last line
-  }); // end of "osmSourceDefinitions" ---
+  },
 
-  /**
-   * stamenSourceDefinitions
-   */
-  c4g.maps.config.stamen = $.extend(c4g.maps.config.stamen, {
-
+  stamen: {
     Toner: {
       attributions: ol.source.OSM.ATTRIBUTION,
       layer: 'toner',
@@ -100,32 +87,26 @@ this.c4g.maps.config = this.c4g.maps.config || {};
     },
 
     NONE: ''
-  });
+  },
 
-  /**
-   * mapquestSourceDefinitions
-   */
-  c4g.maps.config.mapquest = $.extend(c4g.maps.config.mapquest, {
+  mapquest: {
 
-    MapQuestOpen: {
-      layer: 'osm'
-    },
+   MapQuestOpen: {
+     layer: 'osm'
+   },
 
-    MapQuestHyb: {
-      layer: 'hyb'
-    },
+   MapQuestHyb: {
+     layer: 'hyb'
+   },
 
-    MapQuestSat: {
-      layer: 'sat'
-    },
+   MapQuestSat: {
+     layer: 'sat'
+   },
 
-    NONE: ''
-  });
+   NONE: ''
+ },
 
-  /**
-   * mapboxSourceDefinitions
-   */
-  c4g.maps.config.mapbox = {
+  mapbox: {
 
     Mapbox: {
       tileSize: [512, 512],
@@ -143,69 +124,56 @@ this.c4g.maps.config = this.c4g.maps.config || {};
       maxZoom: 22,
       crossOrigin: 'anonymous',
     }
-  };
+  },
 
-    /**
-     * klokanSourceDefinitions
-     */
-    //ToDo not ready
-    c4g.maps.config.klokan = {
+  klokan: {
 
-        OpenMapTiles: {
-            format: new ol.format.MVT(),
-            tileGrid:  ol.tilegrid.createXYZ({tileSize: 512, maxZoom: 22}), //ToDo maxZoom from configuration
-            tilePixelRatio: 8,
-            attributions: '© <a target="_blank" href="https://openmaptiles.org/">OpenMapTiles</a>' + ' ' +
-            ol.source.OSM.ATTRIBUTION,
-            minZoom: 0,
-            maxZoom: 22,
-            crossOrigin: 'anonymous'
-        },
+    OpenMapTiles: {
+      format: new ol.format.MVT(),
+      tileGrid:  ol.tilegrid.createXYZ({tileSize: 512, maxZoom: 22}), //ToDo maxZoom from configuration
+      tilePixelRatio: 8,
+      attributions: '© <a target="_blank" href="https://openmaptiles.org/">OpenMapTiles</a>' + ' ' +
+        ol.source.OSM.ATTRIBUTION,
+      minZoom: 0,
+      maxZoom: 22,
+      crossOrigin: 'anonymous'
+    },
 
-        TileHosting: {
-            format: new ol.format.MVT(),
-            tileGrid:  ol.tilegrid.createXYZ({tileSize: 512, maxZoom: 22}), //ToDo maxZoom from configuration
-            tilePixelRatio: 8,
-            attributions: '© <a target="_blank" href="https://tilehosting.com/">TileHosting</a>' + ' ' +
-            ol.source.OSM.ATTRIBUTION,
-            minZoom: 0,
-            maxZoom: 22,
-            crossOrigin: 'anonymous',
-        }
-    };
+    TileHosting: {
+      format: new ol.format.MVT(),
+      tileGrid:  ol.tilegrid.createXYZ({tileSize: 512, maxZoom: 22}), //ToDo maxZoom from configuration
+      tilePixelRatio: 8,
+      attributions: '© <a target="_blank" href="https://tilehosting.com/">TileHosting</a>' + ' ' +
+        ol.source.OSM.ATTRIBUTION,
+      minZoom: 0,
+      maxZoom: 22,
+      crossOrigin: 'anonymous',
+    }
+  },
 
-    /**
-     * hereSourceDefinitions
-     */
-    c4g.maps.config.here = {
+  here: {
 
-        HERE: {
-            tileSize: [512, 512],
-            attributions: 'Map Tiles © <a target="_blank" href="https://developer.here.com">HERE</a>'+ ' ' +
-                ol.source.OSM.ATTRIBUTION,
-            minZoom: 0,
-            maxZoom: 22,
-            crossOrigin: 'anonymous',
-        }
+    HERE: {
+      tileSize: [512, 512],
+      attributions: 'Map Tiles © <a target="_blank" href="https://developer.here.com">HERE</a>'+ ' ' +
+        ol.source.OSM.ATTRIBUTION,
+      minZoom: 0,
+      maxZoom: 22,
+      crossOrigin: 'anonymous',
+    }
 
-    };
+  },
 
-    /**
-     * thunderforestSourceDefinitions
-     */
-    c4g.maps.config.thunderforest = {
+  thunderforest: {
 
-        Thunderforest: {
-            tileSize: [512, 512],
-            attributions: 'Map Tiles © <a target="_blank" href="https://www.thunderforest.com/">Thunderforest</a>' + ' ' +
-                ol.source.OSM.ATTRIBUTION,
-            minZoom: 0,
-            maxZoom: 19,
-            crossOrigin: 'anonymous',
-        }
+    Thunderforest: {
+      tileSize: [512, 512],
+      attributions: 'Map Tiles © <a target="_blank" href="https://www.thunderforest.com/">Thunderforest</a>' + ' ' +
+        ol.source.OSM.ATTRIBUTION,
+      minZoom: 0,
+      maxZoom: 19,
+      crossOrigin: 'anonymous',
+    }
 
-    };
-
-}(jQuery, this.c4g));
-
-export var config = this.c4g.maps.config;
+  }
+};

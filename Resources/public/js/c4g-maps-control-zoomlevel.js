@@ -1,26 +1,12 @@
-// "namespace"
-this.c4g = this.c4g || {};
-this.c4g.maps = this.c4g.maps || {};
-this.c4g.maps.control = this.c4g.maps.control || {};
-
 import {cssConstants} from "./c4g-maps-constant";
 
-(function ($, c4g) {
-  'use strict';
-
-  /**
-   * Displays the current zoomlevel on the map.
-   *
-   * @constructor
-   * @extends  {ol.control.Control}
-   *
-   * @param    {Object}              opt_options  *optional* control options.
-   */
-  c4g.maps.control.Zoomlevel = function (options) {
-
+'use strict';
+export class Zoomlevel extends ol.control.Control {
+  constructor(options) {
+    super(options);
     var self,
-        element,
-        updateZoomlevel;
+      element,
+      updateZoomlevel;
 
     self = this;
 
@@ -44,23 +30,12 @@ import {cssConstants} from "./c4g-maps-constant";
     };
 
     options.mapView.on('change:resolution', updateZoomlevel);
+
+    // inheritance-stuff
     ol.control.Control.call(this, {
       element: element,
       target: options.target
     });
-  };
-  ol.inherits(c4g.maps.control.Zoomlevel, ol.control.Control);
+  }
+}
 
-
-  /*
-   * Add methods
-   */
-  c4g.maps.control.Zoomlevel.prototype = $.extend(c4g.maps.control.Zoomlevel.prototype, {
-
-    // nothing to add here
-
-  }); // end of "add methods" ---
-
-}(jQuery, this.c4g));
-
-export var Zoomlevel = this.c4g.maps.control.Zoomlevel;

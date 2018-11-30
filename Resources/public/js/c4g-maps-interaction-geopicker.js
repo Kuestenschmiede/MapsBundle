@@ -1,10 +1,7 @@
-// "namespace"
-this.c4g = this.c4g || {};
-this.c4g.maps = this.c4g.maps || {};
-this.c4g.maps.interaction = this.c4g.maps.interaction || {};
+'use strict';
 
-(function ($, c4g) {
-  'use strict';
+export class GeoPicker {
+
 
   /**
    *
@@ -12,15 +9,15 @@ this.c4g.maps.interaction = this.c4g.maps.interaction || {};
    * @returns {boolean}
    * @constructor
    */
-  c4g.maps.interaction.GeoPicker = function (options) {
+  constructor(options) {
     var mapData,
-        mapContainer,
-        lat,
-        lon,
-        latIdx,
-        lonIdx,
-        latRnd,
-        lonRnd;
+      mapContainer,
+      lat,
+      lon,
+      latIdx,
+      lonIdx,
+      latRnd,
+      lonRnd;
 
     this.options = options || {};
 
@@ -47,29 +44,29 @@ this.c4g.maps.interaction = this.c4g.maps.interaction || {};
       lon = this.$fieldGeoX.val();
 
       if (mapData.geopicker.anonymous) {
-          this.$fieldGeoY.remove();
-          this.$fieldGeoX.remove();
+        this.$fieldGeoY.remove();
+        this.$fieldGeoX.remove();
 
-          latIdx = lat.indexOf('.');
-          lonIdx = lon.indexOf('.');
-          lat = lat.replace(/\D/g, "");
-          lon = lon.replace(/\D/g, "");
-          latRnd = Math.round((Math.random() * (99999999999 - 1)) + 1);
-          lonRnd = Math.round((Math.random() * (99999999999 - 1)) + 1);
-          if (latRnd > 49999999999) {
-              lat = parseInt(lat) - latRnd;
-          } else {
-              lat = parseInt(lat) + latRnd;
-          }
-          if (lonRnd < 50000000000) {
-              lon = parseInt(lon) - lonRnd;
-          } else {
-              lon = parseInt(lon) + lonRnd;
-          }
-          lat = lat + "";
-          lon = lon + "";
-          lat = lat.substr(0, latIdx) + '.' + lat.substr(latIdx, lat.length - latIdx);
-          lon = lon.substr(0, lonIdx) + '.' + lon.substr(lonIdx, lon.length - lonIdx);
+        latIdx = lat.indexOf('.');
+        lonIdx = lon.indexOf('.');
+        lat = lat.replace(/\D/g, "");
+        lon = lon.replace(/\D/g, "");
+        latRnd = Math.round((Math.random() * (99999999999 - 1)) + 1);
+        lonRnd = Math.round((Math.random() * (99999999999 - 1)) + 1);
+        if (latRnd > 49999999999) {
+          lat = parseInt(lat) - latRnd;
+        } else {
+          lat = parseInt(lat) + latRnd;
+        }
+        if (lonRnd < 50000000000) {
+          lon = parseInt(lon) - lonRnd;
+        } else {
+          lon = parseInt(lon) + lonRnd;
+        }
+        lat = lat + "";
+        lon = lon + "";
+        lat = lat.substr(0, latIdx) + '.' + lat.substr(latIdx, lat.length - latIdx);
+        lon = lon.substr(0, lonIdx) + '.' + lon.substr(lonIdx, lon.length - lonIdx);
       }
 
       this.opticLayerFeature = new ol.Feature({
@@ -95,97 +92,46 @@ this.c4g.maps.interaction = this.c4g.maps.interaction || {};
       handleEvent: this.options.handleEvent || this.handleEvent
       // handleEvent: this.options.handleEvent || c4g.maps.interaction.GeoPicker.handleEvent
     });
+    ol.inherits(this, ol.interaction.Interaction);
   };
-  ol.inherits(c4g.maps.interaction.GeoPicker, ol.interaction.Interaction);
 
 
-  /*
-   * Add methods
-   */
-  c4g.maps.interaction.GeoPicker.prototype = $.extend(c4g.maps.interaction.GeoPicker.prototype, {
+  geoPickerStyleFunction(feature, projection, getId) {
+    var color,
+      white,
+      result;
 
-    geoPickerStyleFunction: function (feature, projection, getId) {
-      var color,
-          white,
-          result;
+    if (getId) {
+      return -1;
+    }
 
-      if (getId) {
-        return -1;
-      }
+    white = [255, 255, 255, 1];
+    if (feature && typeof feature.get === 'function' && feature.get('pickerColor')) {
+      color = feature.get('pickerColor');
+    } else {
+      color = [200, 0, 0, 0.7];
+    }
 
-      white = [255, 255, 255, 1];
-      if (feature && typeof feature.get === 'function' && feature.get('pickerColor')) {
-        color = feature.get('pickerColor');
-      } else {
-        color = [200, 0, 0, 0.7];
-      }
-
-      result = [];
-      if (feature && typeof feature.get === 'function' && !feature.get('anonymous')) {
-          result.push(
-              new ol.style.Style({
-                  image: new ol.style.Circle({
-                      radius: 2,
-                      fill: new ol.style.Fill({
-                          color: color
-                      }),
-                      stroke: new ol.style.Stroke({
-                          color: white,
-                          width: 2
-                      })
-                  }),
-                  zIndex: Infinity
-              }));
-          result.push(
-              new ol.style.Style({
-                  image: new ol.style.Circle({
-                      radius: 20,
-                      stroke: new ol.style.Stroke({
-                          color: white,
-                          width: 4
-                      })
-                  }),
-                  zIndex: Infinity
-              }));
-          result.push(
-              new ol.style.Style({
-                  image: new ol.style.Circle({
-                      radius: 20,
-                      stroke: new ol.style.Stroke({
-                          color: color,
-                          width: 2
-                      })
-                  }),
-                  zIndex: Infinity
-              }));
-          result.push(
-              new ol.style.Style({
-                  image: new ol.style.Circle({
-                      radius: 40,
-                      stroke: new ol.style.Stroke({
-                          color: white,
-                          width: 4
-                      })
-                  }),
-                  zIndex: Infinity
-              }));
-          result.push(
-              new ol.style.Style({
-                  image: new ol.style.Circle({
-                      radius: 40,
-                      stroke: new ol.style.Stroke({
-                          color: color,
-                          width: 2
-                      })
-                  }),
-                  zIndex: Infinity
-              }));
-      }
-
+    result = [];
+    if (feature && typeof feature.get === 'function' && !feature.get('anonymous')) {
       result.push(
         new ol.style.Style({
           image: new ol.style.Circle({
-            radius: 60,
+            radius: 2,
+            fill: new ol.style.Fill({
+              color: color
+            }),
+            stroke: new ol.style.Stroke({
+              color: white,
+              width: 2
+            })
+          }),
+          zIndex: Infinity
+        }));
+      result.push(
+        new ol.style.Style({
+          image: new ol.style.Circle({
+            radius: 20,
             stroke: new ol.style.Stroke({
               color: white,
               width: 4
@@ -193,11 +139,10 @@ this.c4g.maps.interaction = this.c4g.maps.interaction || {};
           }),
           zIndex: Infinity
         }));
-
       result.push(
         new ol.style.Style({
           image: new ol.style.Circle({
-            radius: 60,
+            radius: 20,
             stroke: new ol.style.Stroke({
               color: color,
               width: 2
@@ -205,43 +150,85 @@ this.c4g.maps.interaction = this.c4g.maps.interaction || {};
           }),
           zIndex: Infinity
         }));
-
-      return result;
-    },
-
-    handleEvent: function (mapBrowserEvent) {
-      if (mapBrowserEvent.type === "singleclick") {
-        if (!this.options.disableClickEvent && !this.options.mapContainer.data.geopicker.disabled) {
-          return !this.pick(mapBrowserEvent.coordinate);
-        }
-      }
-
-      return true;
-    },
-
-    pick: function (coordinate) {
-      var arrLatLon;
-
-      arrLatLon = ol.proj.toLonLat(coordinate);
-
-      this.opticLayerFeature = new ol.Feature({
-        geometry: new ol.geom.Point(coordinate)
-      });
-
-      this.opticLayerSource.clear();
-      this.opticLayerSource.addFeature(this.opticLayerFeature);
-
-      this.$fieldGeoX.val(arrLatLon[0]);
-      this.$fieldGeoY.val(arrLatLon[1]);
-      this.$fieldGeoX.change();
-      this.$fieldGeoY.change();
-
-
-      return true;
+      result.push(
+        new ol.style.Style({
+          image: new ol.style.Circle({
+            radius: 40,
+            stroke: new ol.style.Stroke({
+              color: white,
+              width: 4
+            })
+          }),
+          zIndex: Infinity
+        }));
+      result.push(
+        new ol.style.Style({
+          image: new ol.style.Circle({
+            radius: 40,
+            stroke: new ol.style.Stroke({
+              color: color,
+              width: 2
+            })
+          }),
+          zIndex: Infinity
+        }));
     }
 
-  }); // end of "add methods" ---
+    result.push(
+      new ol.style.Style({
+        image: new ol.style.Circle({
+          radius: 60,
+          stroke: new ol.style.Stroke({
+            color: white,
+            width: 4
+          })
+        }),
+        zIndex: Infinity
+      }));
 
-}(jQuery, this.c4g));
+    result.push(
+      new ol.style.Style({
+        image: new ol.style.Circle({
+          radius: 60,
+          stroke: new ol.style.Stroke({
+            color: color,
+            width: 2
+          })
+        }),
+        zIndex: Infinity
+      }));
 
-export let GeoPicker = this.c4g.maps.interaction.GeoPicker;
+    return result;
+  }
+
+  handleEvent(mapBrowserEvent) {
+    if (mapBrowserEvent.type === "singleclick") {
+      if (!this.options.disableClickEvent && !this.options.mapContainer.data.geopicker.disabled) {
+        return !this.pick(mapBrowserEvent.coordinate);
+      }
+    }
+
+    return true;
+  }
+
+  pick(coordinate) {
+    var arrLatLon;
+
+    arrLatLon = ol.proj.toLonLat(coordinate);
+
+    this.opticLayerFeature = new ol.Feature({
+      geometry: new ol.geom.Point(coordinate)
+    });
+
+    this.opticLayerSource.clear();
+    this.opticLayerSource.addFeature(this.opticLayerFeature);
+
+    this.$fieldGeoX.val(arrLatLon[0]);
+    this.$fieldGeoY.val(arrLatLon[1]);
+    this.$fieldGeoX.change();
+    this.$fieldGeoY.change();
+
+
+    return true;
+  }
+}

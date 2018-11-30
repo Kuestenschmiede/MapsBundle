@@ -1,8 +1,3 @@
-// "namespace"
-this.c4g = this.c4g || {};
-this.c4g.maps = this.c4g.maps || {};
-this.c4g.maps.control = this.c4g.maps.control || {};
-
 import {cssConstants} from "./c4g-maps-constant";
 import {langConstantsGerman} from "./c4g-maps-constant-i18n-de";
 import {langConstantsEnglish} from "./c4g-maps-constant-i18n-en";
@@ -19,9 +14,8 @@ if (typeof mapData !== "undefined") {
     langConstants = langConstantsGerman;
   }
 }
-
-(function ($, c4g) {
-  'use strict';
+'use strict';
+export class OverviewMap {
 
   /**
    * Displays a overviewmap on the map.
@@ -33,7 +27,7 @@ if (typeof mapData !== "undefined") {
    *
    * @param    {Object}              opt_options  *optional* control options.
    */
-  c4g.maps.control.OverviewMap = function (options) {
+  constructor (options) {
 
     var element,
         trigger,
@@ -86,18 +80,6 @@ if (typeof mapData !== "undefined") {
     });
 
     return ovm;
-  };
+  }
 
-
-  /*
-   * Add methods
-   */
-  c4g.maps.control.OverviewMap.prototype = $.extend(c4g.maps.control.OverviewMap.prototype, {
-
-    // nothing to add here
-
-  }); // end of "add methods" ---
-
-}(jQuery, this.c4g));
-
-export var OverviewMap = this.c4g.maps.control.OverviewMap;
+}

@@ -1,8 +1,3 @@
-// "namespace"
-
-this.c4g = this.c4g || {};
-this.c4g.maps = this.c4g.maps || {};
-this.c4g.maps.control = this.c4g.maps.control || {};
 
 import {cssConstants} from "./c4g-maps-constant";
 import {langConstantsGerman} from "./c4g-maps-constant-i18n-de";
@@ -22,9 +17,9 @@ if (typeof mapData !== "undefined") {
     langConstants = langConstantsGerman;
   }
 }
+'use strict';
+export class Measuretools extends Sideboard {
 
-(function ($, c4g) {
-  'use strict';
 
   /**
    * Constructor
@@ -34,8 +29,8 @@ if (typeof mapData !== "undefined") {
    *
    * @param  {[type]}  mapController  [description]
    */
-  c4g.maps.control.Measuretools = function (opt_options) {
-
+  constructor(opt_options) {
+    super(opt_options);
     // extend options
     this.options = $.extend({
       name: 'measure',
@@ -47,504 +42,499 @@ if (typeof mapData !== "undefined") {
     }, opt_options);
 
     this.mainSection = document.createElement('div');
-
     // call parent constructor
     Sideboard.call(this, this.options);
-  };
-  ol.inherits(c4g.maps.control.Measuretools, Sideboard);
+  }
+
 
   /**
    * Methods
    */
-  c4g.maps.control.Measuretools.prototype = $.extend(c4g.maps.control.Measuretools.prototype, {
 
-    /**
-     * Executed when the panel will be opened for the first time.
-     * [init description]
-     *
-     * @return  {boolean}  Returns |true| on success
-     */
-    init: function () {
 
-      this.spinner.show();
+  /**
+   * Executed when the panel will be opened for the first time.
+   * [init description]
+   *
+   * @return  {boolean}  Returns |true| on success
+   */
+  init() {
 
-      // Add measure layers
-      this.measureLineLayer = new ol.layer.Vector({source: new ol.source.Vector()});
-      this.measurePolygonLayer = new ol.layer.Vector({source: new ol.source.Vector()});
-      this.measureCircleLayer = new ol.layer.Vector({source: new ol.source.Vector()});
-      this.measureFreehandLayer = new ol.layer.Vector({source: new ol.source.Vector()});
+    this.spinner.show();
 
-      this.measureLayerGroup = new ol.layer.Group({
-        layers: new ol.Collection([
-          this.measureFreehandLayer,
-          this.measureCircleLayer,
-          this.measurePolygonLayer,
-          this.measureLineLayer,
-        ]),
-        visible: true
-      });
-      this.options.mapController.map.addLayer(this.measureLayerGroup);
+    // Add measure layers
+    this.measureLineLayer = new ol.layer.Vector({source: new ol.source.Vector()});
+    this.measurePolygonLayer = new ol.layer.Vector({source: new ol.source.Vector()});
+    this.measureCircleLayer = new ol.layer.Vector({source: new ol.source.Vector()});
+    this.measureFreehandLayer = new ol.layer.Vector({source: new ol.source.Vector()});
 
-      // Add and activate measure-Views
-      this.viewMeasureSelect = this.addSelectView();
-      this.viewMeasureSelect.activate();
-      this.viewMeasureLine = this.addMeasureView({type: 'LineString'});
-      this.viewMeasureArea = this.addMeasureView({type: 'Polygon'});
-      this.viewMeasureRadius = this.addMeasureView({type: 'Circle'});
-      this.viewMeasureFreehand = this.addMeasureView({type: 'Freehand'});
+    this.measureLayerGroup = new ol.layer.Group({
+      layers: new ol.Collection([
+        this.measureFreehandLayer,
+        this.measureCircleLayer,
+        this.measurePolygonLayer,
+        this.measureLineLayer,
+      ]),
+      visible: true
+    });
+    this.options.mapController.map.addLayer(this.measureLayerGroup);
 
-      // set content-section
-      this.mainSectionInfo = document.createElement('p');
-      this.mainSectionInfo.innerHTML = langConstants.MEASURETOOLS_INFO;
-      this.mainSectionInfo.innerHTML += '<br><br><sub>' + langConstants.MEASURETOOLS_INFO_ADDITIONAL + '<sub>';
-      this.mainSection.appendChild(this.mainSectionInfo);
-      this.contentContainer.appendChild(this.mainSection);
+    // Add and activate measure-Views
+    this.viewMeasureSelect = this.addSelectView();
+    this.viewMeasureSelect.activate();
+    this.viewMeasureLine = this.addMeasureView({type: 'LineString'});
+    this.viewMeasureArea = this.addMeasureView({type: 'Polygon'});
+    this.viewMeasureRadius = this.addMeasureView({type: 'Circle'});
+    this.viewMeasureFreehand = this.addMeasureView({type: 'Freehand'});
 
-      this.spinner.hide();
-      return true;
-    }, // end of "init()"
+    // set content-section
+    this.mainSectionInfo = document.createElement('p');
+    this.mainSectionInfo.innerHTML = langConstants.MEASURETOOLS_INFO;
+    this.mainSectionInfo.innerHTML += '<br><br><sub>' + langConstants.MEASURETOOLS_INFO_ADDITIONAL + '<sub>';
+    this.mainSection.appendChild(this.mainSectionInfo);
+    this.contentContainer.appendChild(this.mainSection);
 
-    /**
-     * Executed before panel will be closed
-     *
-     * @return  {[type]}  [description]
-     */
-    preCloseFunction: function () {
-      var lineFeatures,
-          polygonFeatures,
-          circleFeatures,
-          freehandFeatures,
-          i;
+    this.spinner.hide();
+    return true;
+  } // end of "init()"
 
-      if (this.measureLayerGroup.getVisible()) {
-        this.measureLayerGroup.setVisible(false);
+  /**
+   * Executed before panel will be closed
+   *
+   * @return  {[type]}  [description]
+   */
+  preCloseFunction() {
+    var lineFeatures,
+      polygonFeatures,
+      circleFeatures,
+      freehandFeatures,
+      i;
 
-        // hide line-feature tooltips
-        lineFeatures = this.measureLineLayer.getSource().getFeatures();
-        for (i = 0; i < lineFeatures.length; i += 1) {
-          lineFeatures[i].get('tooltip').hide();
-        }
-        // hide polygon-feature tooltips
-        polygonFeatures = this.measurePolygonLayer.getSource().getFeatures();
-        for (i = 0; i < polygonFeatures.length; i += 1) {
-          polygonFeatures[i].get('tooltip').hide();
-        }
-        // hide circle-feature tooltips
-        circleFeatures = this.measureCircleLayer.getSource().getFeatures();
-        for (i = 0; i < circleFeatures.length; i += 1) {
-            circleFeatures[i].get('tooltip').hide();
-        }
-        // hide freehand-feature tooltips
-        freehandFeatures = this.measureFreehandLayer.getSource().getFeatures();
-        for (i = 0; i < freehandFeatures.length; i += 1) {
-            freehandFeatures[i].get('tooltip').hide();
-        }
+    if (this.measureLayerGroup.getVisible()) {
+      this.measureLayerGroup.setVisible(false);
+
+      // hide line-feature tooltips
+      lineFeatures = this.measureLineLayer.getSource().getFeatures();
+      for (i = 0; i < lineFeatures.length; i += 1) {
+        lineFeatures[i].get('tooltip').hide();
       }
-    }, // end of "preCloseFunction()"
-
-    /**
-     * Executed before panel will be opened
-     *
-     * @return  {[type]}  [description]
-     */
-    preOpenFunction: function () {
-      var lineFeatures,
-          polygonFeatures,
-          circleFeatures,
-          freehandFeatures,
-          i;
-
-      if (!this.measureLayerGroup.getVisible()) {
-        this.measureLayerGroup.setVisible(true);
-
-        // show line-feature tooltips
-        lineFeatures = this.measureLineLayer.getSource().getFeatures();
-        for (i = 0; i < lineFeatures.length; i += 1) {
-          lineFeatures[i].get('tooltip').show();
-        }
-        // show polygon-feature tooltips
-        polygonFeatures = this.measurePolygonLayer.getSource().getFeatures();
-        for (i = 0; i < polygonFeatures.length; i += 1) {
-          polygonFeatures[i].get('tooltip').show();
-        }
-        // show circle-feature tooltips
-        circleFeatures = this.measureCircleLayer.getSource().getFeatures();
-        for (i = 0; i < circleFeatures.length; i += 1) {
-            circleFeatures[i].get('tooltip').show();
-        }
-        // show freehand-feature tooltips
-        freehandFeatures = this.measureFreehandLayer.getSource().getFeatures();
-        for (i = 0; i < freehandFeatures.length; i += 1) {
-            freehandFeatures[i].get('tooltip').show();
-        }
+      // hide polygon-feature tooltips
+      polygonFeatures = this.measurePolygonLayer.getSource().getFeatures();
+      for (i = 0; i < polygonFeatures.length; i += 1) {
+        polygonFeatures[i].get('tooltip').hide();
       }
-    }, // end of "preOpenFunction()"
+      // hide circle-feature tooltips
+      circleFeatures = this.measureCircleLayer.getSource().getFeatures();
+      for (i = 0; i < circleFeatures.length; i += 1) {
+        circleFeatures[i].get('tooltip').hide();
+      }
+      // hide freehand-feature tooltips
+      freehandFeatures = this.measureFreehandLayer.getSource().getFeatures();
+      for (i = 0; i < freehandFeatures.length; i += 1) {
+        freehandFeatures[i].get('tooltip').hide();
+      }
+    }
+  } // end of "preCloseFunction()"
 
-    /**
-     * @TODO: [addSelectView description]
-     */
-    addSelectView: function () {
-      var selectView;
+  /**
+   * Executed before panel will be opened
+   *
+   * @return  {[type]}  [description]
+   */
+  preOpenFunction() {
+    var lineFeatures,
+      polygonFeatures,
+      circleFeatures,
+      freehandFeatures,
+      i;
 
-      selectView = this.addView({
-        name: 'select',
-        triggerConfig: {
-          tipLabel: langConstants.MEASURETOOLS_VIEW_TRIGGER_SELECT,
-          className: cssConstants.MEASURETOOLS_VIEW_TRIGGER_SELECT,
-          withHeadline: true
-        },
-        sectionElements: [
-          {section: this.contentContainer, element: this.mainSection},
-          {section: this.topToolbar, element: this.viewTriggerBar}
-        ]
-      });
+    if (!this.measureLayerGroup.getVisible()) {
+      this.measureLayerGroup.setVisible(true);
 
-      return selectView;
-    }, // end of "addSelectView()"
+      // show line-feature tooltips
+      lineFeatures = this.measureLineLayer.getSource().getFeatures();
+      for (i = 0; i < lineFeatures.length; i += 1) {
+        lineFeatures[i].get('tooltip').show();
+      }
+      // show polygon-feature tooltips
+      polygonFeatures = this.measurePolygonLayer.getSource().getFeatures();
+      for (i = 0; i < polygonFeatures.length; i += 1) {
+        polygonFeatures[i].get('tooltip').show();
+      }
+      // show circle-feature tooltips
+      circleFeatures = this.measureCircleLayer.getSource().getFeatures();
+      for (i = 0; i < circleFeatures.length; i += 1) {
+        circleFeatures[i].get('tooltip').show();
+      }
+      // show freehand-feature tooltips
+      freehandFeatures = this.measureFreehandLayer.getSource().getFeatures();
+      for (i = 0; i < freehandFeatures.length; i += 1) {
+        freehandFeatures[i].get('tooltip').show();
+      }
+    }
+  } // end of "preOpenFunction()"
 
-    /**
-     * @TODO: [addMeasureView description]
-     *
-     * @param  {[type]}  options  [description]
-     */
-    addMeasureView: function (options) {
-      var self,
-          TRIGGER_DRAW,
-          measureView,
-          source,
-          interaction,
-          features,
-          olType;
+  /**
+   * @TODO: [addSelectView description]
+   */
+  addSelectView() {
+    var selectView;
 
-      self = this;
+    selectView = this.addView({
+      name: 'select',
+      triggerConfig: {
+        tipLabel: langConstants.MEASURETOOLS_VIEW_TRIGGER_SELECT,
+        className: cssConstants.MEASURETOOLS_VIEW_TRIGGER_SELECT,
+        withHeadline: true
+      },
+      sectionElements: [
+        {section: this.contentContainer, element: this.mainSection},
+        {section: this.topToolbar, element: this.viewTriggerBar}
+      ]
+    });
 
-      options = $.extend({
-        type: 'LineString'
-      }, options);
+    return selectView;
+  } // end of "addSelectView()"
 
-      TRIGGER_DRAW = 'MEASURETOOLS_VIEW_TRIGGER_DRAW_' + options.type.toUpperCase();
+  /**
+   * @TODO: [addMeasureView description]
+   *
+   * @param  {[type]}  options  [description]
+   */
+  addMeasureView(options) {
+    var self,
+      TRIGGER_DRAW,
+      measureView,
+      source,
+      interaction,
+      features,
+      olType;
 
-      measureView = self.addView({
-        name: 'draw:' + options.type.toLowerCase(),
-        triggerConfig: {
-          tipLabel: langConstants[TRIGGER_DRAW],
-          className: cssConstants[TRIGGER_DRAW],
-          withHeadline: true
-        },
-        sectionElements: [
-          {section: self.topToolbar, element: self.viewTriggerBar}
-        ],
-        initFunction: function () {
-          var featureIdCount,
-              activeSketch,
-              activeTooltip,
-              addMeasureFeature,
-              updateMeasureFeature,
-              getValueOfGeometry,
-              getLengthOfMeasure,
-              removeMeasureFeature;
+    self = this;
 
-          // Show loading animation
-          self.spinner.show();
+    options = $.extend({
+      type: 'LineString'
+    }, options);
 
-          featureIdCount = 1;
+    TRIGGER_DRAW = 'MEASURETOOLS_VIEW_TRIGGER_DRAW_' + options.type.toUpperCase();
 
-          if (options.type.toLowerCase() === 'freehand') {
-              source = self.measureFreehandLayer.getSource();
-          } else if (options.type.toLowerCase() === 'circle') {
-              source = self.measureCircleLayer.getSource();
-          } else if (options.type.toLowerCase() === 'polygon') {
-              source = self.measurePolygonLayer.getSource();
+    measureView = self.addView({
+      name: 'draw:' + options.type.toLowerCase(),
+      triggerConfig: {
+        tipLabel: langConstants[TRIGGER_DRAW],
+        className: cssConstants[TRIGGER_DRAW],
+        withHeadline: true
+      },
+      sectionElements: [
+        {section: self.topToolbar, element: self.viewTriggerBar}
+      ],
+      initFunction: function () {
+        var featureIdCount,
+          activeSketch,
+          activeTooltip,
+          addMeasureFeature,
+          updateMeasureFeature,
+          getValueOfGeometry,
+          getLengthOfMeasure,
+          removeMeasureFeature;
+
+        // Show loading animation
+        self.spinner.show();
+
+        featureIdCount = 1;
+
+        if (options.type.toLowerCase() === 'freehand') {
+          source = self.measureFreehandLayer.getSource();
+        } else if (options.type.toLowerCase() === 'circle') {
+          source = self.measureCircleLayer.getSource();
+        } else if (options.type.toLowerCase() === 'polygon') {
+          source = self.measurePolygonLayer.getSource();
+        } else {
+          source = self.measureLineLayer.getSource();
+        }
+
+        features = new ol.Collection();
+
+        olType = options.type;
+        if (olType == 'Freehand') {
+          olType = 'LineString';
+        }
+        interaction = new ol.interaction.Draw({
+          features: features,
+          source: source,
+          type: olType,
+          freehand: options.type == 'Freehand',
+          // @TODO: use custom style? (BE-option)
+          // style: use default style
+        });
+
+        addMeasureFeature = function (feature) {
+          var listElement,
+            headlineElement,
+            labelElement,
+            inputElement,
+            paragraphElement,
+            strongElement,
+            spanElement,
+            strLabel,
+            strType,
+            measureArea,
+            measureRadius;
+
+          if (!feature instanceof ol.Feature) {
+            return false;
+          }
+
+          // check if the infomessage needs to be removed
+          if (self.mainSection.childElementCount === 1 && self.mainSection.children[0] === self.mainSectionInfo) {
+            self.mainSection.removeChild(self.mainSectionInfo);
+          }
+
+          // check feature-type
+          if (feature.getGeometry() instanceof ol.geom.LineString) {
+            strLabel = langConstants.LENGTH;
+            strType = langConstants.LINE;
+            measureArea = false;
+            measureRadius = false;
+          } else if (feature.getGeometry() instanceof ol.geom.Polygon) {
+            strLabel = langConstants.PERIMETER;
+            strType = langConstants.POLYGON;
+            measureArea = true;
+            measureRadius = false;
+          } else if (feature.getGeometry() instanceof ol.geom.Circle) {
+            strLabel = langConstants.RADIUS;
+            strType = langConstants.CIRCLE;
+            measureArea = true;
+            measureRadius = true;
           } else {
-              source = self.measureLineLayer.getSource();
+            //freehand ist LineString too
+            strLabel = langConstants.LENGTH;
+            strType = langConstants.FREEHAND;
+            measureArea = false;
+            measureRadius = false;
           }
 
-          features = new ol.Collection();
+          // create list element
+          listElement = document.createElement('div');
 
-          olType = options.type;
-          if (olType == 'Freehand') {
-              olType = 'LineString';
+          // create and append headline
+          headlineElement = document.createElement('div');
+          headlineElement.className = 'c4g_maps_portside_measure_element';
+          if (self.options.firstElement) {
+            headlineElement.className = 'c4g_maps_portside_measure_element c4g_maps_portside_measure_element_first';
+            self.options.firstElement = false;
           }
-          interaction = new ol.interaction.Draw({
-            features: features,
-            source: source,
-            type: olType,
-            freehand: options.type == 'Freehand',
-            // @TODO: use custom style? (BE-option)
-            // style: use default style
+          listElement.appendChild(headlineElement);
+
+          // create and append label for name-inputfield
+          labelElement = document.createElement('label');
+          labelElement.setAttribute('for', 'measureElement_' + featureIdCount);
+          labelElement.innerHTML = langConstants.NAME + ': ';
+          headlineElement.appendChild(labelElement);
+
+          // create and append name-inputfield
+          inputElement = document.createElement('input');
+          inputElement.type = 'text';
+          inputElement.name = 'measureElement_' + featureIdCount;
+          inputElement.value = strType + ' ' + featureIdCount;
+          // attach-change-handler
+          $(inputElement).change(function (event) {
+            updateMeasureFeature(feature);
           });
+          headlineElement.appendChild(inputElement);
+          feature.set('listElementValueName', inputElement);
 
-          addMeasureFeature = function (feature) {
-            var listElement,
-                headlineElement,
-                labelElement,
-                inputElement,
-                paragraphElement,
-                strongElement,
-                spanElement,
-                strLabel,
-                strType,
-                measureArea,
-                measureRadius;
+          // create and append paragraphs
+          paragraphElement = document.createElement('p');
+          paragraphElement.className = 'c4g_maps_portside_measure_paragraph';
+          strongElement = document.createElement('strong');
+          strongElement.innerHTML = strLabel + ': ';
+          paragraphElement.appendChild(strongElement);
+          spanElement = document.createElement('span');
+          spanElement.innerHTML = '...';
+          paragraphElement.appendChild(spanElement);
+          listElement.appendChild(paragraphElement);
+          feature.set('listElementValueLine', spanElement);
 
-            if (!feature instanceof ol.Feature) {
-              return false;
-            }
-
-            // check if the infomessage needs to be removed
-            if (self.mainSection.childElementCount === 1 && self.mainSection.children[0] === self.mainSectionInfo) {
-              self.mainSection.removeChild(self.mainSectionInfo);
-            }
-
-            // check feature-type
-            if (feature.getGeometry() instanceof ol.geom.LineString) {
-              strLabel = langConstants.LENGTH;
-              strType = langConstants.LINE;
-              measureArea = false;
-              measureRadius = false;
-            } else if (feature.getGeometry() instanceof ol.geom.Polygon) {
-              strLabel = langConstants.PERIMETER;
-              strType = langConstants.POLYGON;
-              measureArea = true;
-              measureRadius = false;
-            } else if (feature.getGeometry() instanceof ol.geom.Circle) {
-              strLabel = langConstants.RADIUS;
-              strType = langConstants.CIRCLE;
-              measureArea = true;
-              measureRadius = true;
-            } else {
-              //freehand ist LineString too
-              strLabel = langConstants.LENGTH;
-              strType = langConstants.FREEHAND;
-              measureArea = false;
-              measureRadius = false;
-            }
-
-            // create list element
-            listElement = document.createElement('div');
-
-            // create and append headline
-            headlineElement = document.createElement('div');
-            headlineElement.className = 'c4g_maps_portside_measure_element';
-            if (self.options.firstElement) {
-                headlineElement.className = 'c4g_maps_portside_measure_element c4g_maps_portside_measure_element_first';
-                self.options.firstElement = false;
-            }
-            listElement.appendChild(headlineElement);
-
-            // create and append label for name-inputfield
-            labelElement = document.createElement('label');
-            labelElement.setAttribute('for', 'measureElement_' + featureIdCount);
-            labelElement.innerHTML = langConstants.NAME + ': ';
-            headlineElement.appendChild(labelElement);
-
-            // create and append name-inputfield
-            inputElement = document.createElement('input');
-            inputElement.type = 'text';
-            inputElement.name = 'measureElement_' + featureIdCount;
-            inputElement.value = strType + ' ' + featureIdCount;
-            // attach-change-handler
-            $(inputElement).change(function (event) {
-              updateMeasureFeature(feature);
-            });
-            headlineElement.appendChild(inputElement);
-            feature.set('listElementValueName', inputElement);
-
-            // create and append paragraphs
+          if (measureArea) {
             paragraphElement = document.createElement('p');
-            paragraphElement.className = 'c4g_maps_portside_measure_paragraph';
+            paragraphElement.className = 'c4g_maps_portside_measure_paragraph_surfacearea';
             strongElement = document.createElement('strong');
-            strongElement.innerHTML = strLabel + ': ';
+            strongElement.innerHTML = langConstants.SURFACEAREA + ': ';
             paragraphElement.appendChild(strongElement);
             spanElement = document.createElement('span');
             spanElement.innerHTML = '...';
             paragraphElement.appendChild(spanElement);
             listElement.appendChild(paragraphElement);
-            feature.set('listElementValueLine', spanElement);
-
-            if (measureArea) {
-              paragraphElement = document.createElement('p');
-              paragraphElement.className = 'c4g_maps_portside_measure_paragraph_surfacearea';
-              strongElement = document.createElement('strong');
-              strongElement.innerHTML = langConstants.SURFACEAREA + ': ';
-              paragraphElement.appendChild(strongElement);
-              spanElement = document.createElement('span');
-              spanElement.innerHTML = '...';
-              paragraphElement.appendChild(spanElement);
-              listElement.appendChild(paragraphElement);
-              feature.set('listElementValueArea', spanElement);
-            }
-
-            if (measureRadius) {
-                // paragraphElement = document.createElement('p');
-                // paragraphElement.className = 'c4g_maps_portside_measure_paragraph_surfacearea';
-                // strongElement = document.createElement('strong');
-                // strongElement.innerHTML = langConstants.SURFACEAREA + ': ';
-                // paragraphElement.appendChild(strongElement);
-                // spanElement = document.createElement('span');
-                // spanElement.innerHTML = '...';
-                // paragraphElement.appendChild(spanElement);
-                // listElement.appendChild(paragraphElement);
-                feature.set('listElementValueRadius', spanElement);
-            }
-
-
-            // increase the id-counter
-            featureIdCount += 1;
-
-            // append element to the list
-            self.mainSection.appendChild(listElement);
-            // attach element to the feature
-            feature.set('listElement', listElement);
-
-            self.update();
-          }; // end of "addMeasureFeature()"
-
-          updateMeasureFeature = function (feature) {
-            var featureTooltip,
-                newContent,
-                name,
-                length,
-                area,
-                radius;
-
-            featureTooltip = feature.get('tooltip');
-            name = feature.get('listElementValueName').value;
-            length = utils.measureGeometry(feature.getGeometry(), true);
-            newContent = '<strong>' + name + '</strong><br>';
-
-            feature.set('measuredLength', length);
-            feature.get('listElementValueLine').innerHTML = length.htmlValue;
-            if (feature.get('geometryType') === 'circle') {
-              radius = utils.measureGeometry(feature.getGeometry());
-              feature.set('measuredRadius', radius);
-              feature.get('listElementValueRadius').innerHTML = radius.htmlValue;
-              newContent += radius.htmlValue;
-
-              area = utils.measureGeometry(feature.getGeometry(), false, true);
-              feature.set('measuredArea', area);
-              feature.get('listElementValueArea').innerHTML = area.htmlValue;
-              // newContent += area.htmlValue;
-            } else if (feature.get('geometryType') === 'polygon') {
-                area = utils.measureGeometry(feature.getGeometry());
-                feature.set('measuredArea', area);
-                feature.get('listElementValueArea').innerHTML = area.htmlValue;
-                newContent += area.htmlValue;
-            } else {
-              newContent += length.htmlValue;
-            }
-            featureTooltip.setContent(newContent);
-          }; // end of "updateMeasureFeature()"
-
-          removeMeasureFeature = function (feature) {
-            self.mainSection.removeChild(feature.get('listElement'));
-
-            // last element? -> add infomessage
-            if (self.mainSection.childElementCount < 1) {
-              self.mainSection.appendChild(self.mainSectionInfo);
-              self.update();
-            }
-          }; // end of "removeMeasureFeature()"
-
-            //Start Workaround
-            getValueOfGeometry = function (feature){
-                var leng = utils.measureGeometry(feature.getGeometry(), true);
-                // feature.set('measuredLength', length);
-                var val = leng.htmlValue;
-                var valuenumb = val.match(/\d/g);
-                valuenumb = valuenumb.join("");
-                return valuenumb;
-            }
-
-            getLengthOfMeasure = function (){
-                var length = '0.00 m';
-                var lengthnumb = length.match(/\d/g);
-                lengthnumb = lengthnumb.join("");
-                lengthnumb =+8;
-                return lengthnumb;
-            }// End Workaround
-
-          interaction.on('drawstart',
-              function (event) {
-                activeSketch = event.feature;
-                // create tooltip
-                activeTooltip = new TooltipPopUp({
-                  map: self.options.mapController.map,
-                  position: event.coordinate,
-                  horizontal: true,
-                  closeable: true,
-                  closeFunction: function () {
-                      //Workaround, for small or zero values of Freehand
-                      var val = getValueOfGeometry(event.feature);
-                      var leng = getLengthOfMeasure();
-                      if (val != leng && val > leng) {
-                          removeMeasureFeature(event.feature);
-                          source.removeFeature(event.feature);
-                      }
-                      else {
-                          removeMeasureFeature(event.feature);
-                      }
-                  }
-                });
-
-                activeSketch.set('tooltip', activeTooltip);
-                activeSketch.set('geometryType', options.type.toLowerCase());
-                addMeasureFeature(activeSketch);
-              }, self);
-
-          self.options.mapController.map.on('pointermove',
-              function (event) {
-                if (activeSketch && activeTooltip) {
-                  activeTooltip.setPosition(event.coordinate);
-                  updateMeasureFeature(activeSketch);
-                }
-              }, self);
-
-          interaction.on('drawend',
-              function (event) {
-                if (activeSketch && activeTooltip) {
-                  updateMeasureFeature(activeSketch);
-                  activeSketch = null;
-                  activeTooltip = null;
-                }
-              }, self);
-
-          self.spinner.hide();
-          return true;
-        },
-        activateFunction: function () {
-
-          // disable mapHover
-          self.options.mapController.mapHover.deactivate();
-
-          features.clear();
-
-          // Enable interaction
-          self.options.mapController.map.addInteraction(interaction);
-        },
-        deactivateFunction: function () {
-
-          // reactivate mapHover
-          self.options.mapController.mapHover.activate();
-
-          if (options.type.toLowerCase() !== 'point') {
-            try {
-              interaction.finishDrawing();
-            } catch (ignore) {
-              // 0_o
-            }
+            feature.set('listElementValueArea', spanElement);
           }
 
-          // Remove from map
-          self.options.mapController.map.removeInteraction(interaction);
+          if (measureRadius) {
+            // paragraphElement = document.createElement('p');
+            // paragraphElement.className = 'c4g_maps_portside_measure_paragraph_surfacearea';
+            // strongElement = document.createElement('strong');
+            // strongElement.innerHTML = langConstants.SURFACEAREA + ': ';
+            // paragraphElement.appendChild(strongElement);
+            // spanElement = document.createElement('span');
+            // spanElement.innerHTML = '...';
+            // paragraphElement.appendChild(spanElement);
+            // listElement.appendChild(paragraphElement);
+            feature.set('listElementValueRadius', spanElement);
+          }
+
+
+          // increase the id-counter
+          featureIdCount += 1;
+
+          // append element to the list
+          self.mainSection.appendChild(listElement);
+          // attach element to the feature
+          feature.set('listElement', listElement);
+
+          self.update();
+        }; // end of "addMeasureFeature()"
+
+        updateMeasureFeature = function (feature) {
+          var featureTooltip,
+            newContent,
+            name,
+            length,
+            area,
+            radius;
+
+          featureTooltip = feature.get('tooltip');
+          name = feature.get('listElementValueName').value;
+          length = utils.measureGeometry(feature.getGeometry(), true);
+          newContent = '<strong>' + name + '</strong><br>';
+
+          feature.set('measuredLength', length);
+          feature.get('listElementValueLine').innerHTML = length.htmlValue;
+          if (feature.get('geometryType') === 'circle') {
+            radius = utils.measureGeometry(feature.getGeometry());
+            feature.set('measuredRadius', radius);
+            feature.get('listElementValueRadius').innerHTML = radius.htmlValue;
+            newContent += radius.htmlValue;
+
+            area = utils.measureGeometry(feature.getGeometry(), false, true);
+            feature.set('measuredArea', area);
+            feature.get('listElementValueArea').innerHTML = area.htmlValue;
+            // newContent += area.htmlValue;
+          } else if (feature.get('geometryType') === 'polygon') {
+            area = utils.measureGeometry(feature.getGeometry());
+            feature.set('measuredArea', area);
+            feature.get('listElementValueArea').innerHTML = area.htmlValue;
+            newContent += area.htmlValue;
+          } else {
+            newContent += length.htmlValue;
+          }
+          featureTooltip.setContent(newContent);
+        }; // end of "updateMeasureFeature()"
+
+        removeMeasureFeature = function (feature) {
+          self.mainSection.removeChild(feature.get('listElement'));
+
+          // last element? -> add infomessage
+          if (self.mainSection.childElementCount < 1) {
+            self.mainSection.appendChild(self.mainSectionInfo);
+            self.update();
+          }
+        }; // end of "removeMeasureFeature()"
+
+        //Start Workaround
+        getValueOfGeometry = function (feature) {
+          var leng = utils.measureGeometry(feature.getGeometry(), true);
+          // feature.set('measuredLength', length);
+          var val = leng.htmlValue;
+          var valuenumb = val.match(/\d/g);
+          valuenumb = valuenumb.join("");
+          return valuenumb;
         }
-      });
 
-      return measureView;
-    } // end of "addMeasureView()"
+        getLengthOfMeasure = function () {
+          var length = '0.00 m';
+          var lengthnumb = length.match(/\d/g);
+          lengthnumb = lengthnumb.join("");
+          lengthnumb = +8;
+          return lengthnumb;
+        }// End Workaround
 
-  });
+        interaction.on('drawstart',
+          function (event) {
+            activeSketch = event.feature;
+            // create tooltip
+            activeTooltip = new TooltipPopUp({
+              map: self.options.mapController.map,
+              position: event.coordinate,
+              horizontal: true,
+              closeable: true,
+              closeFunction: function () {
+                //Workaround, for small or zero values of Freehand
+                var val = getValueOfGeometry(event.feature);
+                var leng = getLengthOfMeasure();
+                if (val != leng && val > leng) {
+                  removeMeasureFeature(event.feature);
+                  source.removeFeature(event.feature);
+                }
+                else {
+                  removeMeasureFeature(event.feature);
+                }
+              }
+            });
 
-}(jQuery, this.c4g));
+            activeSketch.set('tooltip', activeTooltip);
+            activeSketch.set('geometryType', options.type.toLowerCase());
+            addMeasureFeature(activeSketch);
+          }, self);
 
-export var Measuretools = this.c4g.maps.control.Measuretools;
+        self.options.mapController.map.on('pointermove',
+          function (event) {
+            if (activeSketch && activeTooltip) {
+              activeTooltip.setPosition(event.coordinate);
+              updateMeasureFeature(activeSketch);
+            }
+          }, self);
+
+        interaction.on('drawend',
+          function (event) {
+            if (activeSketch && activeTooltip) {
+              updateMeasureFeature(activeSketch);
+              activeSketch = null;
+              activeTooltip = null;
+            }
+          }, self);
+
+        self.spinner.hide();
+        return true;
+      },
+      activateFunction: function () {
+
+        // disable mapHover
+        self.options.mapController.mapHover.deactivate();
+
+        features.clear();
+
+        // Enable interaction
+        self.options.mapController.map.addInteraction(interaction);
+      },
+      deactivateFunction: function () {
+
+        // reactivate mapHover
+        self.options.mapController.mapHover.activate();
+
+        if (options.type.toLowerCase() !== 'point') {
+          try {
+            interaction.finishDrawing();
+          } catch (ignore) {
+            // 0_o
+          }
+        }
+
+        // Remove from map
+        self.options.mapController.map.removeInteraction(interaction);
+      }
+    });
+
+    return measureView;
+  } // end of "addMeasureView()"
+
+}

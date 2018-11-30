@@ -1,12 +1,8 @@
-// "namespace"
-this.c4g = this.c4g || {};
-this.c4g.maps = this.c4g.maps || {};
-this.c4g.maps.control = this.c4g.maps.control || {};
-
 import {cssConstants} from "./c4g-maps-constant";
 
-(function ($, c4g) {
-  'use strict';
+'use strict';
+
+export class Print extends ol.control.Control {
 
   /**
    * Control to toggle the browser/desvice position on the map.
@@ -16,8 +12,8 @@ import {cssConstants} from "./c4g-maps-constant";
    *
    * @param    {Object}              opt_options  *optional* control options.
    */
-  c4g.maps.control.Print = function (opt_options) {
-
+  constructor (opt_options) {
+    super(opt_options);
     var self = this;
     var options = opt_options || {};
 
@@ -76,19 +72,6 @@ import {cssConstants} from "./c4g-maps-constant";
       element: element,
       target: options.target
     });
-  };
-  ol.inherits(c4g.maps.control.Print, ol.control.Control);
+  }
 
-
-  /*
-   * Add methods
-   */
-  c4g.maps.control.Print.prototype = $.extend(c4g.maps.control.Print.prototype, {
-
-    // nothing to add here
-
-  }); // end of "add methods" ---
-
-}(jQuery, this.c4g));
-
-export var Print = this.c4g.maps.control.Print;
+}

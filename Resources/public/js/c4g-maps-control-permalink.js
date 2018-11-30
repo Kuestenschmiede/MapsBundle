@@ -1,9 +1,3 @@
-// "namespace"
-
-this.c4g = this.c4g || {};
-this.c4g.maps = this.c4g.maps || {};
-this.c4g.maps.control = this.c4g.maps.control || {};
-
 import {cssConstants} from "./c4g-maps-constant";
 import {langConstantsGerman} from "./c4g-maps-constant-i18n-de";
 import {langConstantsEnglish} from "./c4g-maps-constant-i18n-en";
@@ -21,9 +15,9 @@ if (typeof mapData !== "undefined") {
     langConstants = langConstantsGerman;
   }
 }
+'use strict';
 
-(function ($, c4g) {
-  'use strict';
+export class Permalink extends ol.control.Control {
 
   /**
    * Control to generate a permalink to the current Map state.
@@ -33,12 +27,12 @@ if (typeof mapData !== "undefined") {
    *
    * @param    {Object}              options  control options.
    */
-  c4g.maps.control.Permalink = function (options) {
-
+  constructor(options) {
+    super(options);
     var self,
-        button,
-        copyButton,
-        refreshButton;
+      button,
+      copyButton,
+      refreshButton;
 
     this.config = options || {};
     self = this;
@@ -112,112 +106,102 @@ if (typeof mapData !== "undefined") {
       element: this.element,
       target: this.config.target
     });
-  };
-  ol.inherits(c4g.maps.control.Permalink, ol.control.Control);
+  }
 
+  open() {
+    if (!this.popupAttached) {
+      $(this.popup).slideDown(1);
+      this.config.target.appendChild(this.popup);
+      this.popupAttached = true;
+    }
+    $(this.popup).removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN);
+    $(this.element).addClass(cssConstants.OPEN);
+    this.generateLinkFromCurrentState({target: this.textfield});
+  }
 
-  /*
-   * Add methods
-   */
-  c4g.maps.control.Permalink.prototype = $.extend(c4g.maps.control.Permalink.prototype, {
+  close() {
+    $(this.popup).removeClass(cssConstants.OPEN).addClass(cssConstants.CLOSE);
+    $(this.element).removeClass(cssConstants.OPEN);
+  }
 
-    open: function () {
-      if (!this.popupAttached) {
-        $(this.popup).slideDown(1);
-        this.config.target.appendChild(this.popup);
-        this.popupAttached = true;
+  toggle() {
+    if ($(this.popup).hasClass(cssConstants.CLOSE)) {
+      this.open();
+    } else {
+      this.close();
+    }
+  }
+
+  generateLinkFromCurrentState(opt_options) {
+    var options,
+      proxy,
+      mapView,
+      parameters,
+      link,
+      center,
+      baseLayerIdx,
+      layerIdx,
+      layers;
+
+    options = opt_options || {};
+    if (!options.paramCount || !(options.paramCount === 6 || options.paramCount === 2 || options.paramCount === 1)) {
+      options.paramCount = 6;
+    }
+
+    parameters = [];
+    mapView = this.config.mapController.map.getView();
+    proxy = this.config.mapController.proxy;
+
+    center = mapView.getCenter();
+    center = ol.proj.transform([center[0], center[1]], 'EPSG:3857', 'EPSG:4326');
+
+    parameters.push(+center[0].toFixed(5));
+    parameters.push(+center[1].toFixed(5));
+    parameters.push(mapView.getZoom());
+    parameters.push(+mapView.getRotation().toFixed(2));
+
+    // find active baselayer
+    if (proxy.activeBaselayerId) {
+      parameters.push(proxy.activeBaselayerId);
+    } else {
+      parameters.push(0);
+    }
+
+    // find active layers
+    layers = [];
+    for (layerIdx in proxy.activeLayerIds) {
+      if (proxy.activeLayerIds.hasOwnProperty(layerIdx)) {
+        layers.push(parseInt(layerIdx, 10));
       }
-      $(this.popup).removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN);
-      $(this.element).addClass(cssConstants.OPEN);
-      this.generateLinkFromCurrentState({target: this.textfield});
-    },
+    }
+    // delta-decode if there are more than one layer
+    if (layers.length > 1) {
+      layers = utils.deltaEncode(layers);
+      layers = layers.join(':');
+    } else {
+      layers = layers[0] || '0';
+    }
+    parameters.push(layers);
+    parameters = parameters.join('/');
 
-    close: function () {
-      $(this.popup).removeClass(cssConstants.OPEN).addClass(cssConstants.CLOSE);
-      $(this.element).removeClass(cssConstants.OPEN);
-    },
+    // build link
+    link = utils.setUrlParam(parameters, this.config.getParameter);
 
-    toggle: function () {
-      if ($(this.popup).hasClass(cssConstants.CLOSE)) {
-        this.open();
-      } else {
-        this.close();
-      }
-    },
+    if (options.target) {
+      options.target.value = link;
+    } else {
+      return link;
+    }
+  } // end of generateLinkFromCurrentState
 
-    generateLinkFromCurrentState: function (opt_options) {
-      var options,
-          proxy,
-          mapView,
-          parameters,
-          link,
-          center,
-          baseLayerIdx,
-          layerIdx,
-          layers;
+  generateLink(parameters) {
+    if (!parameters || !(parameters.length === 6 || parameters.length === 2 || parameters.length === 1)) {
+      return false;
+    }
 
-      options = opt_options || {};
-      if (!options.paramCount || !(options.paramCount === 6 || options.paramCount === 2 || options.paramCount === 1)) {
-        options.paramCount = 6;
-      }
+    // build and return link
+    return utils.setUrlParam(parameters.join('/'), this.config.getParameter);
+  } // end of generateLink
 
-      parameters = [];
-      mapView = this.config.mapController.map.getView();
-      proxy = this.config.mapController.proxy;
 
-      center = mapView.getCenter();
-      center = ol.proj.transform([center[0], center[1]], 'EPSG:3857', 'EPSG:4326');
-
-      parameters.push(+center[0].toFixed(5));
-      parameters.push(+center[1].toFixed(5));
-      parameters.push(mapView.getZoom());
-      parameters.push(+mapView.getRotation().toFixed(2));
-
-      // find active baselayer
-      if (proxy.activeBaselayerId) {
-        parameters.push(proxy.activeBaselayerId);
-      } else {
-        parameters.push(0);
-      }
-
-      // find active layers
-      layers = [];
-      for (layerIdx in proxy.activeLayerIds) {
-        if (proxy.activeLayerIds.hasOwnProperty(layerIdx)) {
-          layers.push(parseInt(layerIdx, 10));
-        }
-      }
-      // delta-decode if there are more than one layer
-      if (layers.length > 1) {
-        layers = utils.deltaEncode(layers);
-        layers = layers.join(':');
-      } else {
-        layers = layers[0] || '0';
-      }
-      parameters.push(layers);
-      parameters = parameters.join('/');
-
-      // build link
-      link = utils.setUrlParam(parameters, this.config.getParameter);
-
-      if (options.target) {
-        options.target.value = link;
-      } else {
-        return link;
-      }
-    }, // end of generateLinkFromCurrentState
-
-    generateLink: function (parameters) {
-      if (!parameters || !(parameters.length === 6 || parameters.length === 2 || parameters.length === 1)) {
-        return false;
-      }
-
-      // build and return link
-      return utils.setUrlParam(parameters.join('/'), this.config.getParameter);
-    } // end of generateLink
-
-  }); // end of "add methods" ---
-
-}(jQuery, this.c4g));
-
-export var Permalink = this.c4g.maps.control.Permalink;
+}

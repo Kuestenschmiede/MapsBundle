@@ -1,12 +1,7 @@
-// "namespace"
-this.c4g = this.c4g || {};
-this.c4g.maps = this.c4g.maps || {};
-this.c4g.maps.misc = this.c4g.maps.misc || {};
-
 import {cssConstants} from "./c4g-maps-constant";
 
-(function ($, c4g) {
-  'use strict';
+'use strict';
+export class Spinner {
 
   /**
    * @TODO
@@ -16,11 +11,11 @@ import {cssConstants} from "./c4g-maps-constant";
    *
    * @param {Object=} opt_options Control options.
    */
-  c4g.maps.misc.Spinner = function (opt_options) {
+  constructor(opt_options) {
 
     var options,
-        target,
-        spinnerSpan;
+      target,
+      spinnerSpan;
 
     options = opt_options || {};
 
@@ -44,46 +39,25 @@ import {cssConstants} from "./c4g-maps-constant";
 
     this.additionalActivationCounter = 0;
 
-  };
+  }
 
-  // Add methods to spinner
-  c4g.maps.misc.Spinner.prototype = $.extend(c4g.maps.misc.Spinner.prototype, {
+  show() {
+    if ($(this.element).hasClass(cssConstants.HIDE)) {
+      $(this.element).removeClass(cssConstants.HIDE);
+    } else {
+      this.additionalActivationCounter += 1;
+    }
+  }
 
-    /**
-     * @TODO
-     * [show description]
-     *
-     * @return  {[type]}  [description]
-     */
-    show: function () {
-      if ($(this.element).hasClass(cssConstants.HIDE)) {
-        $(this.element).removeClass(cssConstants.HIDE);
+  hide() {
+    if ($(this.element).hasClass(cssConstants.HIDE)) {
+      //console.warn('Spinner is already hidden.');
+    } else {
+      if (this.additionalActivationCounter === 0) {
+        $(this.element).addClass(cssConstants.HIDE);
       } else {
-        this.additionalActivationCounter += 1;
+        this.additionalActivationCounter -= 1;
       }
-    },
-
-    /**
-     * @TODO
-     * [hide description]
-     *
-     * @return  {[type]}  [description]
-     */
-    hide: function () {
-      if ($(this.element).hasClass(cssConstants.HIDE)) {
-        //console.warn('Spinner is already hidden.');
-      } else {
-        if (this.additionalActivationCounter === 0) {
-          $(this.element).addClass(cssConstants.HIDE);
-        } else {
-          this.additionalActivationCounter -= 1;
-        }
-      }
-
-    },
-
-  }); // End of "add methods to spinner"
-
-}(jQuery, this.c4g));
-
-export var Spinner = this.c4g.maps.misc.Spinner;
+    }
+  }
+}

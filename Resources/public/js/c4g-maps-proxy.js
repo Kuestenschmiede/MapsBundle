@@ -1,9 +1,6 @@
 // 'namespace'
 import {langConstantsEnglish} from "./c4g-maps-constant-i18n-en";
 
-this.c4g = this.c4g || {};
-this.c4g.maps = this.c4g.maps || {};
-
 'use strict';
 
 import {C4gBaselayerController} from "./c4g-baselayer-controller";
@@ -27,7 +24,6 @@ if (typeof mapData !== "undefined") {
   }
 }
 
-var c4g = this.c4g;
 export class MapProxy {
   constructor(options){
     var mapData;
@@ -39,7 +35,7 @@ export class MapProxy {
       return false;
     }
 
-    c4g.maps.editorStyles = c4g.maps.editorStyles || {};
+    // c4g.maps.editorStyles = c4g.maps.editorStyles || {};
 
     //window.c4gMapsHooks.proxy_fillPopup = [];
 
@@ -344,12 +340,12 @@ export class MapProxy {
           } else {
             coord = clickEvent.coordinate;
           }
-          c4g.maps.popup.popup.setPosition(coord);
+          window.c4gMapsPopup.popup.setPosition(coord);
 
           if (popupInfos.content) {
-            c4g.maps.popup.$content.html('');
-            c4g.maps.popup.$popup.addClass(cssConstants.ACTIVE).addClass(cssConstants.LOADING);
-            c4g.maps.popup.spinner.show();
+            window.c4gMapsPopup.$content.html('');
+            window.c4gMapsPopup.$popup.addClass(cssConstants.ACTIVE).addClass(cssConstants.LOADING);
+            window.c4gMapsPopup.spinner.show();
 
             if (popupInfos.async === false || popupInfos.async == '0') {
               objPopup = {};
@@ -387,11 +383,11 @@ export class MapProxy {
               });
             }
           } else {
-            c4g.maps.popup.$popup.removeClass(cssConstants.ACTIVE);
+            window.c4gMapsPopup.$popup.removeClass(cssConstants.ACTIVE);
           }
 
         } else {
-          c4g.maps.popup.$popup.removeClass(cssConstants.ACTIVE);
+          window.c4gMapsPopup.$popup.removeClass(cssConstants.ACTIVE);
         }
 
         // hooks
@@ -470,20 +466,20 @@ export class MapProxy {
     }
 
     if (popupContent.trim() || router) {
-      c4g.maps.popup.$content.html(popupContent);
+      window.c4gMapsPopup.$content.html(popupContent);
       if (router) {
-        c4g.maps.popup.$content.append(routeButtonWrapper);
+        window.c4gMapsPopup.$content.append(routeButtonWrapper);
       }
       if(feature.getGeometry() && feature.getGeometry() instanceof ol.geom.Point){
-        c4g.maps.popup.popup.setPosition(feature.getGeometry().getCoordinates());
+        window.c4gMapsPopup.popup.setPosition(feature.getGeometry().getCoordinates());
       }
     } else {
       // hide popup if there is no valid content left
-      c4g.maps.popup.$popup.removeClass(cssConstants.ACTIVE);
+      window.c4gMapsPopup.$popup.removeClass(cssConstants.ACTIVE);
     }
 
-    c4g.maps.popup.$popup.removeClass(cssConstants.LOADING);
-    c4g.maps.popup.spinner.hide();
+    window.c4gMapsPopup.$popup.removeClass(cssConstants.LOADING);
+    window.c4gMapsPopup.spinner.hide();
   } // end of "setPopup()"
 
 
@@ -510,7 +506,7 @@ export class MapProxy {
 
     jQuery(popUpCloseElement).click(function (event) {
       event.preventDefault();
-      c4g.maps.popup.$popup.removeClass(cssConstants.ACTIVE);
+      window.c4gMapsPopup.$popup.removeClass(cssConstants.ACTIVE);
     });
 
     popup = new ol.Overlay({
@@ -524,16 +520,16 @@ export class MapProxy {
         autoPanMargin: 100
     });
 
-    c4g.maps.popup = {};
-    c4g.maps.popup.popup = popup;
+    window.c4gMapsPopup = {};
+    window.c4gMapsPopup.popup = popup;
     // attach a spinner to the popup
-    c4g.maps.popup.spinner = new Spinner({target: popUpElement});
+    window.c4gMapsPopup.spinner = new Spinner({target: popUpElement});
 
     this.options.mapController.map.addOverlay(popup);
 
-    c4g.maps.popup.$popup = jQuery(c4g.maps.popup.popup.getElement());
-    c4g.maps.popup.$content = jQuery('.c4g-popup-content', c4g.maps.popup.$popup);
-    this.currentPopup = c4g.maps.popup;
+    window.c4gMapsPopup.$popup = jQuery(window.c4gMapsPopup.popup.getElement());
+    window.c4gMapsPopup.$content = jQuery('.c4g-popup-content', window.c4gMapsPopup.$popup);
+    this.currentPopup = window.c4gMapsPopup;
   } // end of "addPopUp()"
 
 
