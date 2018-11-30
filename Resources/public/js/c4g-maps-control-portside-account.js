@@ -45,7 +45,7 @@ export class Account extends Sideboard {
     this.mainSection = document.createElement('div');
 
     // call parent constructor
-    // Sideboard.call(this, this.options);
+    Sideboard.call(this, this.options);
   };
 
 
