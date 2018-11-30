@@ -384,8 +384,8 @@ export class C4gLayerController{
                     url;
 
                   boundingArray = ol.proj.transformExtent(extent, projection, 'EPSG:4326');
-                  //different cases for Overpass_QL and old Overpass
-                  if(requestData.params && requestData.params.substr(0, 1) == "<"){
+                  //different cases for Overpass_QL and XML query format
+                  if(requestData.params && requestData.params.substr(0, 1) === "<"){
                     strBoundingBox = '<bbox-query s="' + boundingArray[1] + '" n="' + boundingArray[3] + '" w="' + boundingArray[0] + '" e="' + boundingArray[2] + '"/>';
 
                   }
