@@ -180,16 +180,6 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['custom_div']            = array('DIV
                                                                             'Enter the ID of an existing DIV element if you want to put the map somewhere else on your page.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overpass_url']          = array('URL of Overpass-API (<a href="http://overpass-api.de/" target="_blank">Website of the default API-Server provider</a>)',
                                                                             'Default: http://overpass-api.de/api/interpreter');
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router']                = array('Activate routing (Please check the <a href="https://github.com/DennisOSRM/Project-OSRM/wiki/Api-usage-policy" target="_blank">terms of use</a> for default API!)',
-                                                                            'Adds an additional button to activate routing functionality.');
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_viaroute_url']   = array('Alternative URL of ORS- or OSRM-API',
-                                                                            'Default: http://router.project-osrm.org/viaroute or https://api.openrouteservice.org/directions?');
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_api_key']        = array('API-Key',
-                                                                            'Enter your API-key here. You can generate the key <a href="https://openrouteservice.org/sign-up/" target="_blank">here</a>.');
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_profiles']       = array('Router-profiles',
-                                                                            'Enter the profiles for OpenRouteService');
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['router_attribution']    = array('Override OSRM attribution',
-                                                                            'Only override the attribution if you use another API-server, or put the attribution somewhere prominent else on your page!');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_styles_point']   = array('Location styles for POIs',
                                                                             'Choose location styles that can be used in the editor.');
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_styles_line']    = array('Location styles for lines',
