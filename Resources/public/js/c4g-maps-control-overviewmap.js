@@ -73,10 +73,7 @@ export class OverviewMap {
     });
 
     ovm = new ol.control.OverviewMap({
-      collapsible: false,
-      collapsed: false,
-      target: element,
-      layers: options.layers
+      target: element
     });
 
     return ovm;

@@ -221,6 +221,8 @@ button.c4g-geosearch-start:before {
   opacity: 1;
   width: 150px;
   height: 100px;
+  right: 42px;
+  border-top: 2px solid;
 }
 .c4g-overviewmap.c4g-close .ol-overviewmap-map {
   opacity: 0;
