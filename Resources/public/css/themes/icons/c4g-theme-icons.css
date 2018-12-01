@@ -113,7 +113,7 @@ button.ol-full-screen-true:before {
   font-size: inherit;
 }
 .c4g-router.c4g-open > button:before {
-  content: "\f124";
+  content: "\f4d7";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;
@@ -185,7 +185,7 @@ button.c4g-router-input-clear:before {
   font-size: inherit;
 }
 .c4g-router.c4g-close > button:before {
-  content: "\f124";
+  content: "\f4d7";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;
