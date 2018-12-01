@@ -16,7 +16,7 @@ if (typeof mapData !== "undefined") {
   }
 }
 'use strict';
-export class Home {
+export class Home extends ol.control.Control {
 
 
   /**
@@ -28,6 +28,7 @@ export class Home {
    * @param    {Object}              opt_options  *optional* control options.
    */
   constructor(opt_options) {
+    super(opt_options);
 
     var self = this;
     var options = opt_options || {};
@@ -95,11 +96,10 @@ export class Home {
       button.addEventListener('touchstart', toggle, false);
     }
 
-    // inheritance-stuff
     ol.control.Control.call(this, {
       element: element,
       target: options.target
     });
-    ol.inherits(this, ol.control.Control);
+    ol.inherits(Home, ol.control.Control);
   }
 }

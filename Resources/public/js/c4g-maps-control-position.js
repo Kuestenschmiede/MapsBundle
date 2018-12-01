@@ -1,7 +1,7 @@
 import {cssConstants} from "./c4g-maps-constant";
 import {langConstants} from "./c4g-maps-constant-i18n-de";
 'use strict';
-export class Position {
+export class Position extends ol.control.Control {
 
 
   /**
@@ -13,6 +13,7 @@ export class Position {
    * @param    {Object}              opt_options  *optional* control options.
    */
   constructor(opt_options) {
+    super(opt_options);
 
     var self = this;
     var options = opt_options || {};
