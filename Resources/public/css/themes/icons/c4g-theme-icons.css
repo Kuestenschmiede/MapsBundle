@@ -277,7 +277,7 @@ button.ol-zoom-out:before {
 }
 .ol-zoom-extent button:before,
 button.ol-zoom-extent:before {
-  content: "\f0ac";
+  content: "\f57c";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;
