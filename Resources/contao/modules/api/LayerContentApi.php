@@ -136,7 +136,7 @@ class LayerContentApi extends \Controller
                     "hover_style" => $objLayer->hover_style,
                     "data" => array
                     (
-                        "url" => $objProfile->overpass_url ? $objProfile->overpass_url : "http://overpass-api.de/api/interpreter",
+                        "url" => $objProfile->overpass_url ? $objProfile->overpass_url : "https://overpass-api.de/api/interpreter",
                         "params" => rawurlencode($objLayer->ovp_request),
                         "popup" => $this->InfoWindowApi->getPopupConfiguration('tl_c4g_maps', $objLayer->id, $objLayer),/*array(
                             "content" => "tl_c4g_maps" . ":" . $objLayer->id
