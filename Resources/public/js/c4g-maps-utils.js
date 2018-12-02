@@ -381,49 +381,6 @@ export var utils = {
   },
 
   /**
-   * Reduce a defined style, to a simpler version.
-   *
-   * The reduced style is the first style of the defined styleset,
-   * with a 1px thick stroke and a circle with a 5px radius.
-   *
-   * This can be used to display additional geometries with a main-geometry,
-   * without having to define a whole new style.
-   *
-   * @param   {number|string}           styleId  [description]
-   *
-   * @return  {array<ol.style.Style>}            [description]
-   */
-  reduceStyle: function (styleId) {
-    var style,
-      reducedStyle,
-      fillStyle,
-      strokeStyle;
-
-    if (!c4g.maps.locationStyles[styleId] || !c4g.maps.locationStyles[styleId].style) {
-      return [];
-    }
-
-    style = c4g.maps.locationStyles[styleId].style()[0];
-
-    fillStyle = style.getFill();
-    strokeStyle = style.getStroke();
-    strokeStyle.setWidth(1);
-
-    reducedStyle = new ol.style.Style({
-      image: new ol.style.Circle({
-        fill: fillStyle,
-        stroke: strokeStyle,
-        radius: 5
-      }),
-      // text: style.getText(),
-      stroke: strokeStyle,
-      fill: fillStyle
-    });
-
-    return [reducedStyle];
-  }, // end of "reduceStyle"
-
-  /**
    * Measure the dimensions of the given geometry.
    *
    * If the geometry is a `LineString` the function will measure its length,
@@ -645,20 +602,7 @@ export var utils = {
         duration: opt_animationDuration,
         resolution: view.getResolution(),
         center: [0, 0]
-        //rotation: Math.PI
       });
-      // map.beforeRender(
-      //     ol.animation.pan({
-      //       start: +new Date(),
-      //       duration: opt_animationDuration,
-      //       source: view.getCenter()
-      //     }),
-      //     ol.animation.zoom({
-      //       start: +new Date(),
-      //       duration: opt_animationDuration,
-      //       resolution: view.getResolution()
-      //     })
-      // );
     }
 
     try {

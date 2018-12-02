@@ -382,15 +382,14 @@ export class C4gLayerController{
                   var boundingArray,
                     strBoundingBox,
                     url;
-
                   boundingArray = ol.proj.transformExtent(extent, projection, 'EPSG:4326');
                   //different cases for Overpass_QL and XML query format
-                  if(requestData.params && requestData.params.substr(0, 1) === "<"){
+                  if(requestData.params && requestData.params.substr(0, 1).trim() === "<"){
                     strBoundingBox = '<bbox-query s="' + boundingArray[1] + '" n="' + boundingArray[3] + '" w="' + boundingArray[0] + '" e="' + boundingArray[2] + '"/>';
 
                   }
                   else{
-                    strBoundingBox =boundingArray[1] + ',' + boundingArray[0] + ',' + boundingArray[3] + ',' + boundingArray[2];
+                    strBoundingBox = boundingArray[1] + ',' + boundingArray[0] + ',' + boundingArray[3] + ',' + boundingArray[2];
                   }
 
                   url = requestData.url;
@@ -505,24 +504,12 @@ export class C4gLayerController{
                             // convert tracks and areas to points
                             if (rFeatures[j].getGeometry().getType() === "Polygon") {
                               let centerPoint = rFeatures[j].getGeometry().getInteriorPoint().getCoordinates();
-                              rFeatures[j].setGeometry(
-                                new ol.geom.Point(centerPoint)
-                              );
+                              rFeatures[j].setGeometry(new ol.geom.Point(centerPoint));
                             } else if (rFeatures[j].getGeometry().getType() === "LineString") {
-                              // @TODO: prüfen ob dies korrekter mittelpunkt ist
+                              // @TODO: prüfen ob dies korrekter Mittelpunkt ist
                               let lineExtent = rFeatures[j].getGeometry().getExtent();
                               let centerPoint = ol.extent.getCenter(lineExtent);
-                              rFeatures[j].setGeometry(
-                                new ol.geom.Point(centerPoint)
-                              );
-                            }
-                          }
-                          if (rFeatures[j].get('c4g_osm_ref')) {
-                            // if (requestContentData.settings.showAdditionalGeometries) {
-                            if (requestContentData.settings.additionalStyle) {
-                              // @TODO: load and attach style
-                            } else {
-                              rFeatures[j].setStyle(c4g.maps.utils.reduceStyle(requestContentData.locationStyle));
+                              rFeatures[j].setGeometry(new ol.geom.Point(centerPoint));
                             }
                           }
                         }
