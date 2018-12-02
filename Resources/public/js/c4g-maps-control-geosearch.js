@@ -353,9 +353,10 @@ export class GeoSearch extends ol.control.Control {
 
     flyTo = function (map, location, zoomlevel, zoombounds, boundingbox, markResult, animate) {
       var duration = 2000;
-      var zoom = zoomlevel;//mapView.getZoom();
+      var zoom = zoomlevel;
       var parts = 2;
       var called = false;
+      var extent;
 
       function callback(complete) {
         --parts;
@@ -374,13 +375,14 @@ export class GeoSearch extends ol.control.Control {
             osmExtent.push(parseFloat(boundingbox[3]));
             osmExtent.push(parseFloat(boundingbox[1]));
 
+            extent = ol.proj.transformExtent(osmExtent, 'EPSG:4326', 'EPSG:3857')
             window.setTimeout(function () {
               mapView.fit(
-                ol.proj.transformExtent(osmExtent, 'EPSG:4326', 'EPSG:3857'),
+                extent,
                 map.getSize(),
                 {
-                  minZoom: mapView.get('minZoom') || 0,
-                  maxZoom: mapView.get('maxZoom') || 19,
+                  minZoom: mapView.get('minZoom') || 2,
+                  maxZoom: zoom || mapView.get('maxZoom') || 18,
                   duration: duration / 2,
                   easing: ol.easing.easeOut
                 }
@@ -604,9 +606,10 @@ export class GeoSearch extends ol.control.Control {
 
           flyTo = function (map, location, zoomlevel, zoombounds, boundingbox, markResult, animate) {
             var duration = 2000;
-            var zoom = zoomlevel;//mapView.getZoom();
+            var zoom = zoomlevel;
             var parts = 2;
             var called = false;
+            var extent;
 
             function callback(complete) {
               --parts;
@@ -625,13 +628,15 @@ export class GeoSearch extends ol.control.Control {
                   osmExtent.push(parseFloat(boundingbox[3]));
                   osmExtent.push(parseFloat(boundingbox[1]));
 
+                  extent = ol.proj.transformExtent(osmExtent, 'EPSG:4326', 'EPSG:3857');
+
                   window.setTimeout(function () {
-                    mapView.fit(
-                      ol.proj.transformExtent(osmExtent, 'EPSG:4326', 'EPSG:3857'),
+                    var viewFit = mapView.fit(
+                      extent,
                       map.getSize(),
                       {
-                        minZoom: mapView.get('minZoom') || 0,
-                        maxZoom: mapView.get('maxZoom') || 19,
+                        minZoom: mapView.get('minZoom') || 2,
+                        maxZoom: zoom || mapView.get('maxZoom') || 18,
                         duration: duration / 2,
                         easing: ol.easing.easeOut
                       }
@@ -647,6 +652,7 @@ export class GeoSearch extends ol.control.Control {
               center: location,
               duration: duration
             }, callback);
+
             map.getView().animate({
               zoom: zoom - 1,
               duration: duration / 2
