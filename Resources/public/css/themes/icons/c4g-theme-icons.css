@@ -95,9 +95,9 @@
   font-size: inherit;
 }
 span.ol-compass:before {
-  content: "\f062";
+  content: "\f35b";
   font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
+  font-weight: 100;
   font-size: inherit;
 }
 button.ol-full-screen-false:before {

@@ -564,7 +564,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
             'default'                 => array('0','0'),
             'inputType'               => 'imageSize',
             'options'                  => $imageSizes,
-            'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'long'),
+            'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'long', 'mandatory'=>false),
             'sql'                     => "varchar(100) NOT NULL default ''"
         ),
         'editor_sort' => array

@@ -26,7 +26,7 @@ export var langConstantsEnglish = {
   CTRL_ZOOM_HOME: 'jump to initial position',
   CTRL_ZOOM_POS: 'jump to browser/device position',
   CTRL_ZOOM_SLIDER: 'Zoom slider',
-  CTRL_RESET_ROTATION: 'Reset rotation (touch, alt+mouse)',
+  CTRL_RESET_ROTATION: 'Reset rotation (touch, ctrl+shift+mouse)',
   CTRL_PORTSIDE: 'Toggle portside',
   CTRL_ROUTER: 'Toggle router',
   CTRL_EDITOR: 'Toggle editor',
