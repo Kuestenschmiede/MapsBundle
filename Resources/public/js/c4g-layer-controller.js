@@ -504,7 +504,7 @@ export class C4gLayerController{
                             // convert tracks and areas to points
                             if (rFeatures[j].getGeometry().getType() === "Polygon") {
                               let centerPoint = rFeatures[j].getGeometry().getInteriorPoint().getCoordinates();
-                              rFeatures[j].setGeometry(new ol.geom.Point(centerPoint));
+                              rFeatures[j].setGeometry(new ol.geom.Point([centerPoint[0],centerPoint[1]]));
                             } else if (rFeatures[j].getGeometry().getType() === "LineString") {
                               // @TODO: prüfen ob dies korrekter Mittelpunkt ist
                               let lineExtent = rFeatures[j].getGeometry().getExtent();
