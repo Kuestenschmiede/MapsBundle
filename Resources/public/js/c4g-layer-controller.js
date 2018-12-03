@@ -1162,7 +1162,6 @@ export class C4gLayerController{
         feature.setId(element.id);
         feature.set('osm_type', 'node');
       }
-
     }
     else if(element.type == "way"){
       if(element.tags){
@@ -1244,16 +1243,20 @@ export class C4gLayerController{
       let node = elements.find(function(objNode){
         return objNode.id === element.nodes[i];
       });
-      arrCoords.push(ol.proj.transform([node.lon,node.lat],'EPSG:4326','EPSG:3857'));
+      if(node){
+        arrCoords.push(ol.proj.transform([node.lon,node.lat],'EPSG:4326','EPSG:3857'));
+      }
     }
-    if(arrCoords[0][0] == arrCoords[arrCoords.length-1][0] && arrCoords[0][1] == arrCoords[arrCoords.length-1][1]){ //polygon
+    if(arrCoords && arrCoords[0] && arrCoords[0][0] == arrCoords[arrCoords.length-1][0] && arrCoords[0][1] == arrCoords[arrCoords.length-1][1]){ //polygon
       delete arrCoords[arrCoords.length-1];
       arrCoords.length = arrCoords.length-1;
       let polygon = new ol.geom.Polygon([arrCoords]);
       // polygon.transform('EPSG:4326','EPSG:3857');
       if (forceNodes) {
         // convert tracks and areas to points
-        return new ol.geom.Point([polygon.getInteriorPoint().getCoordinates()[0],polygon.getInteriorPoint().getCoordinates()[1]]);
+        let tempPoint = polygon.getInteriorPoint();
+        let tempCoords = tempPoint.getCoordinates();
+        return new ol.geom.Point([tempCoords[0],tempCoords[1]]);
       }
       else{
         return polygon;
@@ -1262,9 +1265,12 @@ export class C4gLayerController{
     else{ //linestring
       let lineString = new ol.geom.LineString(arrCoords);
       if (forceNodes) {
-        let lineExtent = ol.extent.boundingExtent(arrCoords);
-        let lineCenter = ol.extent.getCenter(lineExtent);
-        return new ol.geom.Point([lineCenter[0], lineCenter[1]]);
+        if(arrCoords.length > 0){
+          let lineExtent = ol.extent.boundingExtent(arrCoords);
+          let lineCenter = ol.extent.getCenter(lineExtent);
+          return new ol.geom.Point([lineCenter[0], lineCenter[1]]);
+        }
+
       }
       else{
         return lineString;

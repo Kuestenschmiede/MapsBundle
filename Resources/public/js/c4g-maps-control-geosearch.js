@@ -849,8 +849,8 @@ export class GeoSearch extends ol.control.Control {
                   window.c4gMapsPopup.popup.removeClass(cssConstants.ACTIVE);
                 }
 
-              } else if (c4g.maps && window.c4gMapsPopup && window.c4gMapsPopup.popup) {
-                window.c4gMapsPopup.popup.removeClass(cssConstants.ACTIVE);
+              } else if (window && window.c4gMapsPopup && window.c4gMapsPopup.popup) {
+                $(window.c4gMapsPopup.popup).removeClass(cssConstants.ACTIVE);
               }
             }
 
