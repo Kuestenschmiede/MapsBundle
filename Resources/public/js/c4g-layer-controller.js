@@ -1225,6 +1225,7 @@ export class C4gLayerController{
       feature.set('loc_linkurl', contentData.loc_linkurl || '');
       feature.set('hover_location', contentData.hover_location || '');
       feature.set('hover_style', contentData.hover_style || '');
+      feature.set('tid', element.id);
       if(contentData.data){
         feature.set('zoom_onclick', contentData.data.zoom_onclick || '');
         feature.set('label', contentData.data.label || '');

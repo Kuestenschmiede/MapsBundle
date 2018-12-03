@@ -423,16 +423,6 @@ button.ol-zoom-position:before{
 }
 
 /*
- * Router
- */
-.c4g-router-instruction-table td {
-  min-width: 20px;
-}
-.c4g-router.c4g-portside-control button:before {
-  content: "R";
-}
-
-/*
  * Popups
  */
 .c4g-popup-wrapper {
@@ -455,10 +445,7 @@ button.ol-zoom-position:before{
 .c4g-popup-wrapper .c4g-popup-content {
   padding: 30px 10px 20px
 }
-.c4g-popup-route-wrapper {
-  white-space: nowrap;
-  margin-top: 8px;
-}
+
 .c4g-tooltip-popup {
   z-index: 80;
 }

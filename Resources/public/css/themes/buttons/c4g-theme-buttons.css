@@ -686,48 +686,7 @@ button.ol-zoom-out {
 }
 
 
-/*
- * Router
- */
-.c4g-router-input-wrapper {
-  display: flex;
-  justify-content: flex-start;
-}
-.c4g-router-input-wrapper > input {
-  box-sizing: border-box;
-  padding: 5px;
-  margin: 2px;
-}
-.c4g-router-input-wrapper > label {
-  margin-right: 5px;
-  vertical-align: middle;
-  margin-top: auto;
-  margin-bottom: auto;
-  min-width: 100px;
-}
-.c4g-router-buttonbar {
-  text-align: left;
-}
-.c4g-router-buttonbar button {
-  border-radius: 0%;
-  border-radius: var(--button-radius-percent);
-}
-.c4g-router-instructions-header {
-  margin-left: 5px;
-  margin-right: 5px;
-}
-.c4g-router-instructions-header > em {
-  float: right;
-  font-weight: normal;
-}
-.c4g-router-instruction-table td {
-  padding: 5px;
-}
-.c4g-router-attribution-wrapper {
-  font-size: 9px;
-  line-height: 18px;
-  text-align: center;
-}
+
 span.c4g-active ul,
 span ul{
   display: none;
@@ -912,22 +871,6 @@ button.c4g-popup-close {
   cursor: pointer;
   outline: none;
 }
-button.c4g-popup-route-from,
-button.c4g-popup-route-to,
-.c4g_brick_popup_button a {
-    border: 1px solid;
-    padding: 6px 10px;
-    cursor: pointer;
-    outline: none;
-}
-
-button.c4g-popup-route-from {
-    border-right: 0;
-    border-radius: 3px 0 0 3px;
-}
-button.c4g-popup-route-to {
-    border-radius: 0 3px 3px 0;
-}
 
 div.c4g-tooltip-popup {
   margin-bottom: 7px;
@@ -1045,10 +988,6 @@ div.c4g-tooltip-popup:before {
   border-radius: var(--button-radius-percent);
 }
 
-.c4g-router-profile-wrapper .c4g-active ul {
-  /*border-radius: var(--button-radius-pixel);*/
-  border: 2px solid;
-}
 
 /*
  *  Media-querys

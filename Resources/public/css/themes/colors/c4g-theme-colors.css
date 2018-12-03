@@ -207,22 +207,7 @@ button.c4g-draw-trigger.c4g-active {
   color: rgba(255,255,255,.9);
   color: var(--font-color);
 }
-.c4g-content-select input ,.c4g-portside-top-toolbar select, .c4g-portside-top-toolbar input, .c4g-portside-top-toolbar button, .c4g-router-input-wrapper button, .c4g-router-input-wrapper input {
-  color: rgba(24, 61, 93,.8);
-  color: var(--main-color);
-  border-color: rgba(0,155,222,.5);
-  border-color: var(--shadow-color);
-  background-color: rgba(255,255,255,.9);
-  background-color: var(--font-color);
-}
-.c4g-router-profile-wrapper button {
-  color: rgba(255,255,255,.9);
-  color: var(--font-color);
-  border-color: rgba(0,155,222,.5);
-  border-color: var(--shadow-color);
-  background-color: rgba(24, 61, 93,.8);
-  background-color: var(--main-color);
-}
+
 span.c4g-active ul {
   background-color: rgba(24, 61, 93,.8);
   background-color: var(--main-color);
@@ -236,43 +221,6 @@ span.c4g-active ul li{
 span.c4g-active ul li.c4g-active{
   background-color: rgba(0,155,222,.5);
   background-color: var(--shadow-color);
-}
-.c4g-router-profile-wrapper .c4g-active ul {
-  color: rgba(24, 61, 93,.8);
-  color: var(--main-color);
-}
-
-.c4g-router-profile-wrapper .c4g-active button,
-.c4g-router-profile-wrapper button.c4g-active {
-  color: rgba(0,155,222,.5);
-  color: var(--shadow-color);
-}
-
-.c4g-router-profile-wrapper span.c4g-active ul {
-  border-color: rgba(0,155,222,.5);
-  border-color: var(--shadow-color);
-  background-color: rgba(255,255,255,.9);
-  background-color: var(--font-color);
-  padding: 2px;
-}
-
-.c4g-router-profile-wrapper span.c4g-active ul li {
-  color: rgba(24, 61, 93,.8);
-  color: var(--main-color);
-  background-color: rgba(255,255,255,.9);
-  background-color: var(--font-color);
-  padding: 2px;
-}
-
-.c4g-router-profile-wrapper span.c4g-active ul li::before {
-  padding: 2px;
-}
-
-.c4g-router-profile-wrapper span.c4g-active ul li.c4g-active {
-  color: rgba(0,155,222,.5);
-  color: var(--shadow-color);
-  background-color: rgba(255,255,255,.9);
-  background-color: var(--font-color);
 }
 
 .c4g-content-select input:focus {
@@ -366,34 +314,6 @@ span.c4g-active ul li.c4g-active{
 .c4g-starboard-filter input[type=text]:focus + i{
   color: rgba(24, 61, 93,.8);
   color:var(--main-color);
-}
-
-/*
- * Router
- */
-.c4g-router-input-wrapper {
-  color: rgba(255,255,255,.9);
-  color: var(--font-color);
-}
-.c4g-router-instruction-table {
-  color: rgba(255,255,255,.9);
-  color: var(--font-color);
-}
-.c4g-router-instruction-table img {
-  background-color: rgba(255,255,255,.9);
-  background-color: var(--font-color);
-}
-.c4g-router-instruction-table td {
-  border-color: rgba(24, 61, 93,.8);
-  border-color: var(--main-color);
-}
-.c4g-router-attribution-wrapper {
-  color: rgba(255,255,255,.9);
-  color: var(--font-color);
-}
-.c4g-router-attribution-wrapper a {
-  color: rgba(255,255,255,.9);
-  color: var(--font-color);
 }
 
 /*
@@ -503,32 +423,6 @@ button.c4g-popup-close:hover {
   background-color: rgba(24, 61, 93,.8);
   background-color: var(--main-color);
 }
-button.c4g-popup-route-from,
-button.c4g-popup-route-to,
-.c4g_brick_popup_button a {
-    color: rgba(24, 61, 93,.8);
-    color: var(--main-color);
-    background-color: rgba(255,255,255,.9);
-    background-color: var(--font-color);
-    border-color: rgba(255,255,255,.9);
-    border-color: var(--font-color);
-}
-button.c4g-popup-route-from:hover,
-button.c4g-popup-route-to:hover,
-.c4g_brick_popup_button a:hover {
-    background-color: rgba(255,255,255,.9);
-    background-color: var(--font-color);
-}
-/*.c4g-popup-route-wrapper {*/
-  /*color: var(--main-color);*/
-  /*background-color: var(--font-color);*/
-  /*border-color: var(--shadow-color);*/
-/*}*/
-.c4g-popup-route-from,.c4g-popup-route-to, .c4g_brick_popup_button a {
-  color: rgba(24, 61, 93,.8);
-  color: var(--main-color);
-}
-
 /*
  * Panel
  */

@@ -637,16 +637,6 @@ export class MapController {
       this.map.addControl(this.controls.fullscreen);
     }
 
-    // // router
-    // if (mapData.router_enable && typeof Router === 'function') {
-    //   this.controls.router = new Router({
-    //     tipLabel: langConstants.CTRL_ROUTER,
-    //     target: controlContainerTopLeft,
-    //     caching: mapData.caching,
-    //     mapController: this
-    //   });
-    //   this.map.addControl(this.controls.router);
-    // }
     // editor
     if (mapData.editor.enable && typeof Editor === 'function') {
       this.controls.editor = new Editor({

@@ -197,9 +197,9 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         this.options.mapController.controls.editor.preOpenFunction = resizePortsideOpen;
       }
 
-      if (this.options.mapController.controls.router) {
-        this.options.mapController.controls.router.preOpenFunction = resizePortsideOpen;
-      }
+      // if (this.options.mapController.controls.router) {
+      //   this.options.mapController.controls.router.preOpenFunction = resizePortsideOpen;
+      // }
 
       if (this.options.mapController.controls.measuretools) {
         this.options.mapController.controls.measuretools.preOpenFunction = resizePortsideOpen;
@@ -258,10 +258,10 @@ this.c4g.maps.control = this.c4g.maps.control || {};
         this.options.mapController.controls.editor.preOpenFunction = null;
       }
 
-      if (this.options.mapController.controls.router) {
-        this.options.mapController.controls.router.preCloseFunction = resizePortsideClose;
-        this.options.mapController.controls.router.preOpenFunction = null;
-      }
+      // if (this.options.mapController.controls.router) {
+      //   this.options.mapController.controls.router.preCloseFunction = resizePortsideClose;
+      //   this.options.mapController.controls.router.preOpenFunction = null;
+      // }
 
       if (this.options.mapController.controls.measuretools) {
         this.options.mapController.controls.measuretools.preCloseFunction = resizePortsideClose;

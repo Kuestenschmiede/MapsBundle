@@ -1101,7 +1101,7 @@ class tl_c4g_map_profiles extends Backend
         if (!$dc->id) {
             return;
         }
-        $objProfile = $this->Database->prepare("SELECT zoom_panel, geosearch_engine, be_optimize_checkboxes_limit, router_api_selection FROM tl_c4g_map_profiles WHERE id=?")
+        $objProfile = $this->Database->prepare("SELECT zoom_panel, geosearch_engine, be_optimize_checkboxes_limit FROM tl_c4g_map_profiles WHERE id=?")
         ->limit(1)
         ->execute($dc->id);
         if ($objProfile->numRows > 0) {

@@ -112,48 +112,6 @@ button.ol-full-screen-true:before {
   font-weight: 900;
   font-size: inherit;
 }
-.c4g-router.c4g-open > button:before {
-  content: "\f4d7";
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
-  font-size: inherit;
-}
-button.c4g-router-print:before {
-  content: "\f02f";
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
-  font-size: inherit;
-}
-button.c4g-router-profile-car:before {
-  content: "\f1b9";
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
-  font-size: inherit;
-}
-button.c4g-router-profile-hgv:before {
-  content: "\f0d1";
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
-  font-size: inherit;
-}
-button.c4g-router-profile-bike:before {
-  content: "\f206";
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
-  font-size: inherit;
-}
-button.c4g-router-profile-foot:before {
-  content: "\f554";
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
-  font-size: inherit;
-}
-button.c4g-router-profile-wheelchair:before {
-  content: "\f193";
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
-  font-size: inherit;
-}
 span.c4g-active ul li:before{
   content:"\f111";
   font-family: 'Font Awesome 5 Free';
@@ -165,30 +123,6 @@ span.c4g-active ul li.c4g-active:before{
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: 14px;
-}
-button.c4g-router-switch:before {
-  content: "\f0dc";
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
-  font-size: inherit;
-}
-button.c4g-router-over:before {
-  content: "\f067";
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
-  font-size: inherit;
-}
-button.c4g-router-input-clear:before {
-  content: "\f1f8";
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
-  font-size: inherit;
-}
-.c4g-router.c4g-close > button:before {
-  content: "\f4d7";
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
-  font-size: inherit;
 }
 .c4g-editor.c4g-open > button:before {
   content: "\f044";
@@ -517,20 +451,6 @@ button.c4g-starboard-view-trigger-layerswitcher:before {
 /* PopUp */
 button.c4g-popup-close:before {
   content: "\f00d";
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
-  font-size: inherit;
-}
-button.c4g-popup-route-from:before {
-  content: "\f024";
-  margin: 0 5px 0 -3px;
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
-  font-size: inherit;
-}
-button.c4g-popup-route-to:before {
-  content: "\f11e";
-  margin: 0 5px 0 -3px;
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;

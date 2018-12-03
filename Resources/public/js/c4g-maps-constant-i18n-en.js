@@ -28,7 +28,6 @@ export var langConstantsEnglish = {
   CTRL_ZOOM_SLIDER: 'Zoom slider',
   CTRL_RESET_ROTATION: 'Reset rotation (touch, ctrl+shift+mouse)',
   CTRL_PORTSIDE: 'Toggle portside',
-  CTRL_ROUTER: 'Toggle router',
   CTRL_EDITOR: 'Toggle editor',
   CTRL_MEASURETOOLS: 'Toggle measuretools',
   CTRL_INFOPAGE: 'Toggle infopage',
