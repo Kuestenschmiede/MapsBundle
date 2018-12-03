@@ -36,7 +36,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouse_nav_wheel'] = ['Mousewheel Zoo
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouse_nav_doubleclick_zoom'] = ['Zoom with Double Click', 'If checked, the user can zoom in with a double click.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouse_nav_zoombox'] = ['Zoombox with [Shift + Click]', 'Activates the ability to zoom in by selecting a rectangle by clicking the map while holding the shift key.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouse_nav_dragmode'] = ['Rotate Map with [Ctrl + Shift + Click]', 'Activates the ability to rotate the map by clicking it while holding the shift and ctrl keys.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouse_nav_kinetic'] = ['Kinetic Mouse Scrolling','If checked, scrolling with the mouse will continue for a short period after the mouse button was let go (as opposed to stopping instantly.).'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouse_nav_kinetic'] = ['Kinetic Mouse Scrolling','If checked, scrolling with the mouse continues for a short period after the mouse button was let go (as opposed to stopping instantly.).'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['touch_nav'] = ['Touch Navigation', 'Enables touch screen navigation (requires touch screen device).'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['keyboard_nav'] = ['Keyboadr Navigation', 'Enables moving the map with the arrow keys and zooming in and out with the + and - keys, respectively.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['fullscreen'] = ['Full Screen Mode', 'Shows a button to switch to full screen mode.'];
@@ -61,7 +61,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_zoom'] = ['Maximal zoom', 'S
 
 /** Karteninformationen */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['attribution'] = ['Attribution', 'Shows the attribution. Deactivate only when you are sure it is allowed.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['collapsed_attribution'] = ['Show initially collapsed', 'Collapse the attribution by default. Otherwise the Attribution will be visible when entering the page, but is still collapsible.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['collapsed_attribution'] = ['Show initially collapsed', 'Collapse the attribution by default. Otherwise the Attribution is visible when entering the page, but is still collapsible.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cfg_logo_attribution']  = ['Show con4gis-logo', 'Shows the con4gis-logo on the map. You can turn it off, but we would appreciate it if you\'d mention "con4gis" at a different location on your page.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['div_attribution'] = ['DIV attribution', 'Enter the ID of an existing DIV element if you want to put the attributon outside the map.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overviewmap'] = ['Overview map', 'Adds a button in the lower right corner of the map, which when pressed shows an overwiew map.'];
@@ -96,50 +96,49 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_collapsed'] = ['Collapsed 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_div'] = ['DIV for search', 'Enter the ID of an existing DIV element if you want to put the search field somewhere else on your page.'];
 
 /** Editor */
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor'] = ['Show editor on the map', 'Shows a button, which activates an Editor for drawing locations, lines and areas on the map.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor'] = ['Show editor on the map', 'Shows a button which activates an Editor for drawing locations, lines and areas on the map.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_styles_point'] = ['Location styles for POIs', 'Choose location styles that can be used in the editor.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_styles_line'] = ['Location styles for lines', 'Choose location styles that can be used in the editor.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_styles_polygon'] = ['Location styles for polygons', 'Choose location styles that can be used in the editor.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_styles_circle'] = ['Location styles for circles', 'Choose location styles that can be used in the editor.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_styles_freehand'] = ['Location styles for freehand drawing', 'Choose location styles that can be used in the editor.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_vars'] = ['Additional fields', 'Fields available for POIs, lines and polygons can be addressed using ${key} in popup, label and tooltip.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_show_items'] = ['Show other map structure items while editing', 'Check this if you don\' want to hide other map structure items in the editor.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_helpurl'] = ['Help page URL', 'If you enter an URL here, a help link is displayed inside the editor, which opens the given URL.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['is_backend_editor_default'] = ['Is this the standard profile for backend editor?', 'If checked, it will used for the backend editor (structur element: geoJson)'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_show_items'] = ['Show other map structure items while editing', 'Check this if you do not want to hide other map structure items in the editor.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_helpurl'] = ['Help page URL', 'If you enter an URL here, a help link to the given URL is displayed inside the editor.'];
 
 /** Geopicker (Position bestimmen) */
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['is_backend_geopicker_default'] = ['Is this the standard profile for backend geopicker?', 'If checked, it will used for the backend geopicker (structur elements, events, ...).'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker'] = ['Show geopicker (frontend)', 'Adds a geopicker in the frontend, similar to the backend wizard to pick coordinates. Can be used together with INPUT fields in custom forms.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_fieldx'] = ['Form field for GEO latitude', 'The ID of an INPUT field, where the latitude of the chosen place is stored.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_fieldy'] = ['Form field for GEO longitude', 'The ID of an INPUT field, where the longitude of the chosen place is stored.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_searchdiv'] = ['DIV for geopicker', 'Enter the ID of an existing DIV element where you want to put the geopicking fields into. May be defined e.g. in an HTML form field.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_attribution'] = ['Show attribution of geocoding service', 'Adds an attribution of the search service (Nominatim).  Deactivate only when you are sure it is allowed.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_disabled'] = ['Disable geopicker', 'Just show position with disabled geopicker.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_anonymous'] = ['Make geopicker anonymous', 'With the geopicker anonymisation you can not identify the exact position.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['is_backend_geopicker_default'] = ['Standard Profile for Backend Geopicker', 'If checked, this profile is used as backedn geopicker (structure elements, events, ...).'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker'] = ['Show Geopicker (Frontend)', 'Adds a geopicker in the frontend, similar to the backend wizard to pick coordinates which can be used in forms.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_fieldx'] = ['Form field (Latitude)', 'The ID of an input field, where the latitude of the chosen location is stored.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_fieldy'] = ['Form field (Longitude)', 'The ID of an input field, where the longitude of the chosen location is stored.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_searchdiv'] = ['Div element for Geopicker', 'If given, the latitude and longitude fields are placed within a div element with the given id. This can be useful to place them within a form.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_attribution'] = ['Show Geocoding Service Attribution', 'Adds the search service attribution (Nominatim).  Deactivate only if you are allowed to do so.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_disabled'] = ['Disable Geopicker', 'If checked, the geopicker is disabled, but the location is still shown on the map.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_anonymous'] = ['Anonymous Geopicker', 'If checked, the exact position can no longer be identified, but is still within the given radius.'];
 
 /** Cesium */
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium'] = array('Use cesium', 'With cesium you can transform the 2D map in a globe.');
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium_always']  = array('Use cesium always', 'Do you want to use cesium for every basemap? If not you can activate single maps in the basemap settings.');
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium'] = ['Use Cesium', 'Transforms the 2D Map into a 3D globe.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium_always']  = ['Always use Cesium', 'Activates Cesium for all basemaps. (If you only want to do so for specific basemaps, you can do so in the basemap setting.)'];
 
 /** Einstellungen zum Klick-Verhalten */
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['link_newwindow'] = ['Open links in new window', 'Do not open links in the same window, but display linked pages in a new window.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['link_open_on'] = ['Open links on', 'Select on which mouse action a link should be opened, if a link is specified.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['hover_popups'] = ['Popups on mouse hover', 'Show popup when mouse pointer rests on location.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['hover_popups_stay'] = ['Mouse hover popups stay open', 'Popups that have been opened on mouse hover are not closed when the mouse pointer leaves the location.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupAutoPan'] = ['Autopan to popup', ''];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['link_newwindow'] = ['Open Links in new Window', 'If checked, links attempt to open in a new window.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['link_open_on'] = ['Open Links on', 'Select on which mouse action a link should be opened, if a link is specified.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['hover_popups'] = ['Popups on Mouse Hover', 'Shows a popup if the mouse pointer rests on a location.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['hover_popups_stay'] = ['Mouse Hover Popups stay open', 'Popups that have been opened on mouse hover are not closed when the mouse pointer leaves the location.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupAutoPan'] = ['Autopan to popup', 'Automatically pans to the popup\'s location'];
 
 /** Sonstiges */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overpass_url'] = ['URL of Overpass-API (<a href="http://overpass-api.de/" target="_blank">Website of the default API-Server provider</a>)', 'Default: http://overpass-api.de/api/interpreter'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['custom_div'] = ['DIV for map', 'Enter the ID of an existing DIV element if you want to put the map somewhere else on your page.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['account'] = ['Account button', 'If you select a frontend module you will see the account button on map.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['caching'] = ['Remember button states', 'With this switch you can cache button states.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['be_optimize_checkboxes_limit'] = ['Limit for optimization of large checkbox-lists', 'Defines how much entries must be there after the checkbox-lists will be converted to chosenfields. (0 = do not convert)'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['custom_div'] = ['Div element for Map', 'If given, the map is placed within a div element with the given id.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['account'] = ['Account Button', 'Select a frontend module to see the account button on map.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['caching'] = ['Remember Button States', 'If checked, button states are cached.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['be_optimize_checkboxes_limit'] = ['Convert large checkbox lists to Chosen Fields', 'If at least this many entries are in the list, it are converted to a chosen field. Select 0 to disable. this function.'];
 
 /**
  * Reference
  */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['CLICK']   = 'Single mouseclick';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['DBLCL']   = 'Mouse doubleclick';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['DBLCL']   = 'Double mouseclick';
 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['default_theme']   = 'con4gis Default-Theme';
 
@@ -179,7 +178,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['general_legend'] = 'General';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayer_legend'] = 'Base layers';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['locstyle_legend'] = 'Location styles';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['navigation_legend'] = 'Navigation';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_legend'] = 'map stracture';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_legend'] = 'map structure';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['information_legend'] = 'Map information';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['measure_legend'] = 'Measure tools';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_legend'] = 'Geosearch';
