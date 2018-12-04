@@ -123,35 +123,33 @@ export class GeoSearch extends ol.control.Control {
       $(element).addClass(cssConstants.OPEN);
     }
 
+    if (options.collapsible && !options.extDiv) {
+      // button
+      button = document.createElement('button');
+      button.className = cssConstants.GEOSEARCH_TRIGGER;
+      button.title = options.tipLabel;
+      element.appendChild(button);
+
+      // set onClick to the toggle-function
+      $(button).click(function () {
+        try {
+          this.blur();
+        } catch (ignore) {
+        }
+        self.toggle();
+      });
+    } else if (options.extDiv) {
+      options.target = options.extDiv;
+    }
+
     // wrapper div
     this.searchWrapper = document.createElement('div');
     this.searchWrapper.className = cssConstants.GEOSEARCH_WRAPPER;
-    element.appendChild(this.searchWrapper);
 
     // search-field
     searchInput = document.createElement('input');
     searchInput.type = 'text';
     this.searchWrapper.appendChild(searchInput);
-
-    // @TODO
-    // // result-trigger
-    // resultTrigger = document.createElement('button');
-    // resultTrigger.className = 'RT';
-    // searchWrapper.appendChild(resultTrigger);
-
-    // $(resultTrigger).click(function () {
-    //   try {
-    //     this.blur();
-    //   } catch (ignore) {}
-    //   self.toggleResults();
-    // });
-
-    // // result-wrapper
-    // resultWrapper = document.createElement('div');
-    // resultWrapper.className = 'RESULTS ' + cssConstants.CLOSE;
-    // resultWrapper.innerHTML = 'no results';
-    // searchWrapper.appendChild(resultWrapper);
-    // this.resultWrapper = resultWrapper;
 
     // search-button
     searchButton = document.createElement('button');
@@ -165,9 +163,7 @@ export class GeoSearch extends ol.control.Control {
       } catch (ignore) {
       }
       if (searchInput.value) {
-
         self.findLocation(searchInput.value);
-
       }
     });
 
@@ -210,31 +206,14 @@ export class GeoSearch extends ol.control.Control {
       }
     });
 
-
-    if (options.collapsible && !options.extDiv) {
-      // button
-      button = document.createElement('button');
-      button.className = cssConstants.GEOSEARCH_TRIGGER;
-      button.title = options.tipLabel;
-      element.appendChild(button);
-
-      // set onClick to the toggle-function
-      $(button).click(function () {
-        try {
-          this.blur();
-        } catch (ignore) {
-        }
-        self.toggle();
-      });
-    } else if (options.extDiv) {
-      options.target = options.extDiv;
-    }
+    element.appendChild(this.searchWrapper);
 
     // inheritance-stuff
     ol.control.Control.call(this, {
       element: element,
       target: options.target
     });
+
   }
 
   /**
