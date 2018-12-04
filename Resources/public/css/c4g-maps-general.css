@@ -78,9 +78,10 @@
 .c4g-control-container-top-left {
   position: absolute;
   top: .2em;
+  bottom: .2em;
   left: .2em;
   overflow-y: auto;
-  max-height: 82%;
+  max-height: 100%;
 }
 .c4g-control-container-top-left > div {
   margin-bottom: 3px;
@@ -259,7 +260,7 @@ button.c4g-geosearch-start:before {
 .c4g-portside-wrapper {
   position: relative;
   height: 100%;
-  margin: 0 0 0 48px;
+  margin: 0 0 0 57px;
   font-size: 16px;
 }
 .c4g-starboard-wrapper {
@@ -546,6 +547,10 @@ button.c4g-measuretools-view-trigger-draw-circle:before {
 
 .ol-scale-line {
   display: inline-block;
+  margin-left: 57px;
+}
+.c4g-control-container-bottom-left-sub {
+  margin-left: 57px;
 }
 .ol-scale-line-inner {
   font-size: 10px;
@@ -777,12 +782,12 @@ input.c4g-panel-button {
     bottom: 0;
     z-index: 115;
     min-height: 240px;
-    height: 50%;
+    /*height: 50%;*/
     top: auto;
   }
-  .c4g-portside-wrapper {
-    margin: 0;
-  }
+  /*.c4g-portside-wrapper {*/
+    /*margin: 0;*/
+  /*}*/
   .c4g-measure .c4g-portside-content-container {
     max-width: none;
   }
