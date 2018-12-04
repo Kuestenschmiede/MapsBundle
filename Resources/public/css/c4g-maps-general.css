@@ -631,12 +631,6 @@ button.c4g-measuretools-view-trigger-draw-circle:before {
   line-height: 1em;
   border-radius: 4px 0 0;
 }
-/*.ol-attribution.ol-logo-only {*/
-  /*bottom: .4em;*/
-  /*height: 1.1em;*/
-  /*line-height: 1em;*/
-  /*background: 0 0;*/
-/*}*/
 /*.ol-attribution.ol-logo-only button,*/
 .ol-attribution.ol-uncollapsible button {
   display: none;
@@ -798,12 +792,11 @@ input.c4g-panel-button {
     max-width: 360px;
   }
 }
-/*
 @media screen and (max-width: 480px) {
-  .c4g-popup-wrapper {
-    max-width: 240px;
+  .c4g-attribution-logo {
+    display:none;
   }
-}*/
+}
 
 .c4g-baselayertree .c4g-overlay-toggle {
   margin-top: 5px;

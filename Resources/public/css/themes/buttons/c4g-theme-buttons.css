@@ -220,6 +220,7 @@
   /* do not change "right"-value! */
   right: 0;
   margin-right: .2em;
+  white-space: nowrap;
 }
 .c4g-control-container-bottom-right > div {
   display: inline-block;
