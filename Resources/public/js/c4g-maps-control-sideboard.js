@@ -159,7 +159,7 @@ export class Sideboard extends ol.control.Control {
       //     this.options.mapController["active" + this.identifier] = this;
     } else {
       if (this.options.direction === 'left') {
-        $('#' + this.options.mapController.map.getTarget() + ' .' + cssConstants.OL_OVERLAYCONTAINER_SE).append(this.container);
+        $('#' + this.options.mapController.map.getTarget()/* + ' .' + cssConstants.OL_OVERLAYCONTAINER_SE*/).append(this.container);
       } else {
         this.options.mapController.$overlaycontainer_stopevent.append(this.container);
       }
