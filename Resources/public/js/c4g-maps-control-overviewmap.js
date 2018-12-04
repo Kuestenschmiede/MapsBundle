@@ -42,7 +42,7 @@ export class OverviewMap {
     }, options);
 
     element = document.createElement('div');
-    element.className = cssConstants.OL_CONTROL + ' ' + cssConstants.OVERVIEWMAP + ' ' + cssConstants.OL_UNSELECTABLE;
+    element.className = cssConstants.OVERVIEWMAP + ' ' + cssConstants.OL_UNSELECTABLE + ' ' + cssConstants.OL_CONTROL;
     if (options.collapsed) {
       element.className += ' ' + cssConstants.CLOSE;
     } else {

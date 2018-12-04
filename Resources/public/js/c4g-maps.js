@@ -667,7 +667,7 @@ export class MapController {
         tipLabel: langConstants.CTRL_PRINT,
         target: controlContainerTopLeft,
         mapController: this
-      })
+      });
       this.map.addControl(this.controls.print);
     }
 

@@ -34,7 +34,6 @@ export class Starboard extends Sideboard {
     }
 
     this.hook_layerswitcher_loaded = this.hook_layerswitcher_loaded || [];
-    // Sideboard.call(this, this.options);
   };
 
   /**
