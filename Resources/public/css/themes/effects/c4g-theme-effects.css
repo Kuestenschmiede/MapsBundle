@@ -60,6 +60,11 @@ input,
   transition: all .3s;
 }
 
+.c4g-layertree ul {
+  height: 100%;
+  display: grid;
+}
+
 .c4g-layertree .c4g-open > ul {
   -webkit-transition: all .5s;
   -o-transition: all .5s;
