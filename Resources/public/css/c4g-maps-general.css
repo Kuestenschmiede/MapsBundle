@@ -94,14 +94,17 @@
   left: 0px;
   margin-left: .4em;
 }
-
+.c4g-control-container-bottom-left-sub div {
+  display: block;
+  white-space: normal;
+}
 .c4g-control-container-top-right {
   position: absolute;
   top: .2em;
   /* do not change "right"-value! */
   right: 0;
   margin-right: .2em;
-  max-width: 480px;
+  max-width: 360px;
 }
 
 .c4g-control-container-bottom-right {
@@ -110,12 +113,12 @@
   text-align: right;
   /* do not change "right"-value! */
   right: 0;
-  margin-right: .2em;
-  margin-left: .2em;
+  margin-right: 0px;
+  margin-left: 57px;
 }
 
 .c4g-control-container-bottom-right li {
-  display: inline-block;
+  display: block;
 }
 
 .c4g-control-container-bottom-left-sub,
@@ -143,7 +146,7 @@ div.ol-zoom-position,
 }
 
 .c4g-control-container-bottom-right > div {
-  display: inline-block;
+  display: block;
   margin-left: 3px;
   vertical-align: bottom;
 }
@@ -546,7 +549,7 @@ button.c4g-measuretools-view-trigger-draw-circle:before {
 }
 
 .ol-scale-line {
-  display: inline-block;
+  display: block;
   margin-left: 57px;
 }
 .c4g-control-container-bottom-left-sub {
@@ -585,23 +588,26 @@ button.c4g-measuretools-view-trigger-draw-circle:before {
   display: inline-block;
 }
 .ol-attribution > ul {
-  float: left;
+  /*float: left;*/
   text-align: left;
 }
 .ol-attribution {
   text-align: right;
 }
 .ol-attribution ul {
-  margin: 0 26px -40px 0;
-  padding: 0 .5em;
-  line-height: 1.4em;
-  max-width: 480px;
+  /*margin: 0 26px -40px 0;*/
+  padding: 0 2px;
+  /*line-height: 1.4em;*/
+  /*max-width: 240px;*/
   height:auto;
+  font-size: 11px;
+  white-space: normal;
 }
 .ol-attribution li {
-  display: inline;
+  display: block;
   list-style: none;
   line-height: inherit;
+  max-width: 214px;
 }
 .ol-attribution li a {
   /*vertical-align: middle;*/
@@ -615,7 +621,7 @@ button.c4g-measuretools-view-trigger-draw-circle:before {
   max-height: 1.6em;
 }
 .ol-attribution:not(.ol-collapsed) {
-  max-width: 480px;
+  /*max-width: 220px;*/
 }
 .ol-attribution.ol-collapsed ul,
 .ol-attribution:not(.ol-collapsed) button:hover:after {
@@ -642,6 +648,9 @@ button.c4g-measuretools-view-trigger-draw-circle:before {
 /*
  * Permalink
  */
+.c4g-permalink {
+  float: right;
+}
 div.c4g-permalink-popup {
   display: block !important;
   min-width: 250px;
@@ -792,7 +801,7 @@ input.c4g-panel-button {
     max-width: 360px;
   }
 }
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 460px) {
   .c4g-attribution-logo {
     display:none;
   }

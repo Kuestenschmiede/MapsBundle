@@ -309,9 +309,6 @@ button.ol-zoom-out {
   font-size: 12px;
   border-radius: 4px;
 }
-.c4g-control-container-bottom-left-sub div {
-  display: inline-block;
-}
 .c4g-zoom-level {
   min-width: 5em;
 }
@@ -768,10 +765,9 @@ span.c4g-active:hover ul {
  *  Attributions
  */
 .ol-attribution {
-  border-radius: 4px;
+  border-radius: 2px;/*var(--button-radius-percent);*/
 }
 .ol-attribution.ol-collapsed {
-  border-radius: 0%;
   border-radius: var(--button-radius-percent);
 }
 .ol-attribution img {
