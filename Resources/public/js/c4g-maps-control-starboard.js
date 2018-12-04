@@ -34,7 +34,7 @@ export class Starboard extends Sideboard {
     }
 
     this.hook_layerswitcher_loaded = this.hook_layerswitcher_loaded || [];
-    Sideboard.call(this, this.options);
+    // Sideboard.call(this, this.options);
   };
 
   /**
@@ -120,7 +120,7 @@ export class Starboard extends Sideboard {
 
     if (!this.options.mapController.proxy.layers_loaded) {
       this.spinner.show();
-      this.options.mapController.proxy.hook_layer_loaded.push(function (layerIds) {
+      window.c4gMapsHooks.proxy_layer_loaded.push(function (layerIds) {
         self.spinner.hide();
         fnRender();
       });

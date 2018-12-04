@@ -369,7 +369,7 @@ export class GeoSearch extends ol.control.Control {
           if (zoombounds && boundingbox) {
             // translate osm-extent to ol3-extent
 
-            osmExtent = [];
+            let osmExtent = [];
             osmExtent.push(parseFloat(boundingbox[2]));
             osmExtent.push(parseFloat(boundingbox[0]));
             osmExtent.push(parseFloat(boundingbox[3]));
@@ -509,14 +509,14 @@ export class GeoSearch extends ol.control.Control {
     resultCoordinate = ol.proj.transform([parseFloat(result.lon), parseFloat(result.lat)], 'EPSG:4326', 'EPSG:3857')
 
     if (animate) {
-      resolution = mapView.getResolution();
-      viewExtent = mapView.calculateExtent(map.getSize());
+      var resolution = mapView.getResolution();
+      var viewExtent = mapView.calculateExtent(map.getSize());
       if (ol.extent.containsCoordinate(viewExtent, resultCoordinate)) {
         zoomType = 'zoom';
       } else {
         if (Math.abs(currentCoordinate[0] - resultCoordinate[0]) > Math.abs(currentCoordinate[1] - resultCoordinate[1])) {
-          coordDif = Math.abs(currentCoordinate[0] - resultCoordinate[0]);
-          difContext = ol.extent.getWidth(viewExtent);
+          var coordDif = Math.abs(currentCoordinate[0] - resultCoordinate[0]);
+          var difContext = ol.extent.getWidth(viewExtent);
         } else {
           coordDif = Math.abs(currentCoordinate[1] - resultCoordinate[1]);
           difContext = ol.extent.getHeight(viewExtent);

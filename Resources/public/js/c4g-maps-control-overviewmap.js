@@ -75,7 +75,6 @@ export class OverviewMap {
     ovm = new ol.control.OverviewMap({
       target: element
     });
-
     return ovm;
   }
 

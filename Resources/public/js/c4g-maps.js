@@ -808,7 +808,7 @@ export class MapController {
     //this.leftSlideElements.push('.ol-overlay-container');
     //this.rightSlideElements.push('.ol-overlay-container');
 
-    if (typeof Starboard === 'function' && enableStarboard) {
+    if (typeof Starboard === 'function' && enableStarboard && !this.controls.starboard) {
       this.initializeStarboard();
     }
 
@@ -913,7 +913,6 @@ export class MapController {
     if (mapData.starboard.label) {
       starboard_label = langConstants.CTRL_STARBOARD.replace('Starboard', mapData.starboard.label).replace('starboard', mapData.starboard.label);
     }
-
 
     this.controls.starboard = new Starboard({
       create: mapData.starboard.enable || false,
