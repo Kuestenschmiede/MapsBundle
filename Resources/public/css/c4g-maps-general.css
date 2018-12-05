@@ -455,7 +455,34 @@ button.ol-zoom-position:before{
 .c4g-popup-wrapper .c4g-popup-content {
   padding: 30px 10px 20px
 }
-
+@media screen and (min-height: 400px){
+  .c4g-popup-wrapper .c4g-popup-content {
+    padding: 30px 10px 20px;
+    overflow-y: auto;
+    max-height: 200px;
+  }
+}
+@media screen and (min-height: 600px){
+  .c4g-popup-wrapper .c4g-popup-content {
+    padding: 30px 10px 20px;
+    overflow-y: auto;
+    max-height: 300px;
+  }
+}
+@media screen and (min-height : 800px){
+  .c4g-popup-wrapper .c4g-popup-content {
+    padding: 30px 10px 20px;
+    overflow-y: auto;
+    max-height: 400px;
+  }
+}
+@media screen and (min-height : 1000px){
+  .c4g-popup-wrapper .c4g-popup-content {
+    padding: 30px 10px 20px;
+    overflow-y: auto;
+    max-height: 500px;
+  }
+}
 .c4g-tooltip-popup {
   z-index: 80;
 }
