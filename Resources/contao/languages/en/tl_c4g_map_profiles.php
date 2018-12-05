@@ -78,7 +78,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['permalink_get_param'] = ['Use GET-pa
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geobookmarks'] = ['Geo bookmarks (beta)', 'So you can store position/zoom bookmarks in your browser'];
 
 /** Suchwerkzeuge */
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch'] = ['Activate search (search field / router)', 'Activates searchengine for searching places and coordinates.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch'] = ['Activate search (search field)', 'Activates searchengine for searching places and coordinates.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_engine'] = ['Searchengine', 'ATTENTION! Please take note to restrictions that may apply by the usage policy of the choosen provider. If you have choosen to use a custom URL, remember to add an attribution of that provider, if it\'s not your own server.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_customengine_url'] = ['Custom searchengine-URL', 'The URL wich leads to the searchengine.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_customengine_attribution'] = ['Custom searchengine-attribution', 'IMPORTANT! The copyrighttext of the searchengines provider.'];

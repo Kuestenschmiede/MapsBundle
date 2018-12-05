@@ -91,11 +91,12 @@ export class C4gLocationStyle{
             case 'ol_icon': // fallthrough
             case 'cust_icon':
                     if (styleData.icon_src) {
+                        let anchorX = 1 / (parseInt(styleData.icon_size[0]) / (parseInt(styleData.icon_offset[0]) * -1));
+                        let anchorY = 1 / (parseInt(styleData.icon_size[1]) / (parseInt(styleData.icon_offset[1]) * -1));
                         imageStyle = new ol.style.Icon({
-                            offset: [styleData.icon_offset[0],styleData.icon_offset[1]],
+                            anchor: [anchorX, anchorY],
                             opacity: parseFloat(styleData.icon_opacity.value, 10) / 100,
                             src: styleData.icon_src,
-                            size: [parseInt(styleData.icon_size[0], 10), parseInt(styleData.icon_size[1], 10)],
                             scale: parseFloat(styleData.icon_scale, 10),
                         });
                     }
