@@ -184,3 +184,22 @@ $GLOBALS['TL_MODELS']['tl_c4g_map_baselayers'] = 'con4gis\MapsBundle\Resources\c
 $GLOBALS['TL_MODELS']['tl_c4g_map_themes'] = 'con4gis\MapsBundle\Resources\contao\models\C4gMapThemesModel';
 $GLOBALS['TL_MODELS']['tl_c4g_map_locstyles'] = 'con4gis\MapsBundle\Resources\contao\models\C4gMapLocstylesModel';
 $GLOBALS['TL_MODELS']['tl_c4g_map_overlays'] = 'con4gis\MapsBundle\Resources\contao\models\C4gMapOverlaysModel';
+
+/**
+ * Purge entries for cache clearing.
+ */
+$GLOBALS['TL_PURGE']['folders']['con4gis_layer'] = array
+(
+    'callback' => array('\con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator', 'purgeLayerApiCache'),
+    'affected' => array('var/cache/prod/con4gis_layerService')
+);
+$GLOBALS['TL_PURGE']['folders']['con4gis_baselayer'] = array
+(
+    'callback' => array('\con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator', 'purgeBaselayerApiCache'),
+    'affected' => array('var/cache/prod/con4gis_baselayerService')
+);
+$GLOBALS['TL_PURGE']['folders']['con4gis_locationstyle'] = array
+(
+    'callback' => array('\con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator', 'purgeLocationstyleApiCache'),
+    'affected' => array('var/cache/prod/con4gis_locationstyleService')
+);

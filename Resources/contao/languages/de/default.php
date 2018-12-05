@@ -122,3 +122,7 @@ $GLOBALS['TL_LANG']['c4g_maps']['router_labels']['c4gRtSEARCHING'] 		= "Suche Ad
 $GLOBALS['TL_LANG']['c4g_maps']['router_labels']['c4gRtERROR_SEARCHING'] 		= "Fehler beim Suchen der Adresse";
 $GLOBALS['TL_LANG']['c4g_maps']['router_labels']['c4gRtCALC_ROUTE'] 	= "Berechne Route...";
 $GLOBALS['TL_LANG']['c4g_maps']['router_labels']['c4gRtERROR_CALC_ROUTE'] 		= "Fehler beim Berechnen der Route";
+
+$GLOBALS['TL_LANG']['tl_maintenance_jobs']['con4gis_layer'] = array('con4gis Layer-Cache leeren', 'Löscht die temporären con4gis Layer-API-Dateien.');
+$GLOBALS['TL_LANG']['tl_maintenance_jobs']['con4gis_baselayer'] = array('con4gis Basiskarten-Cache leeren', 'Löscht die temporären con4gis Basiskarten-API-Dateien.');
+$GLOBALS['TL_LANG']['tl_maintenance_jobs']['con4gis_locationstyle'] = array('con4gis Lokationsstil-Cache leeren', 'Löscht die temporären con4gis Lokationsstil-API-Dateien.');
