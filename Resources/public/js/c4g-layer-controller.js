@@ -1182,33 +1182,42 @@ export class C4gLayerController{
           if(element.members[i].role === "outer"){ //@ToDo add handling for outer border
             continue;
           }
-          let way = elements.find(function(objWay){
-            return objWay.id === element.members[i].ref;
+          let member = elements.find(function(objMemb){
+            return objMemb.id === element.members[i].ref;
           });
-          let geom = this.geomFromWay(way, elements, true)
-          if(geom instanceof ol.geom.Point){
-            if(!arrCoords){
-              arrCoords = [];
+          if(member){
+            let geom;
+            if(member.type === 'node'){
+              geom = new ol.geom.Point([member.lon,member.lat]).transform('EPSG:4326','EPSG:3857');
+            }
+            else{
+              geom = this.geomFromWay(member, elements, true);
+            }
+            if(geom instanceof ol.geom.Point){
+              if(!arrCoords){
+                arrCoords = [];
 
+              }
+              arrCoords.push(geom.getCoordinates());
             }
-            arrCoords.push(geom.getCoordinates());
+            else if(geom instanceof ol.geom.Polygon){
+              if(multiPolygon){
+                multiPolygon.appendPolygon(geom);
+              }
+              else{
+                multiPolygon = new ol.geom.MultiPolygon(geom.getCoordinates());
+              }
+            }
+            else if(geom instanceof  ol.geom.LineString){
+              if(multiLineString){
+                multiLineString.appendLineString(geom);
+              }
+              else{
+                multiLineString = new ol.geom.LineString(geom.getCoordinates());
+              }
+            }
           }
-          else if(geom instanceof ol.geom.Polygon){
-            if(multiPolygon){
-              multiPolygon.appendPolygon(geom);
-            }
-            else{
-              multiPolygon = new ol.geom.MultiPolygon(geom.getCoordinates());
-            }
-          }
-          else if(geom instanceof  ol.geom.LineString){
-            if(multiLineString){
-              multiLineString.appendLineString(geom);
-            }
-            else{
-              multiLineString = new ol.geom.LineString(geom.getCoordinates());
-            }
-          }
+
         }
         if(arrCoords){
           let extent = ol.extent.boundingExtent(arrCoords);
