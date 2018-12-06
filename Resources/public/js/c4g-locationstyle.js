@@ -95,9 +95,10 @@ export class C4gLocationStyle{
                         let anchorY = 1 / (parseInt(styleData.icon_size[1]) / (parseInt(styleData.icon_offset[1]) * -1));
                         imageStyle = new ol.style.Icon({
                             anchor: [anchorX, anchorY],
-                            opacity: parseFloat(styleData.icon_opacity.value, 10) / 100,
+                            opacity: parseFloat(styleData.icon_opacity.value) / 100,
                             src: styleData.icon_src,
-                            scale: parseFloat(styleData.icon_scale, 10),
+                            scale: parseFloat(styleData.icon_scale),
+                            size: [parseInt(styleData.icon_size[0], 10), parseInt(styleData.icon_size[1], 10)]
                         });
                     }
                     break;
