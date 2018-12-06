@@ -1,6 +1,6 @@
 'use strict';
 
-export class GeoPicker {
+export class GeoPicker extends ol.interaction.Interaction {
 
 
   /**
@@ -19,6 +19,7 @@ export class GeoPicker {
       latRnd,
       lonRnd;
 
+    super({handleEvent: options.handleEvent});
     this.options = options || {};
 
     if (!this.options.mapContainer || !this.options.mapContainer.data) {
@@ -86,13 +87,6 @@ export class GeoPicker {
     mapContainer.map.addLayer(this.opticLayerVector);
 
     //TODO wenn geopicker.clickDisabled (oder so) gesetzt ist, this.options.handleEvent = function(){}
-
-    // inheritance-stuff
-    ol.interaction.Interaction.call(this, {
-      handleEvent: this.options.handleEvent || this.handleEvent
-      // handleEvent: this.options.handleEvent || c4g.maps.interaction.GeoPicker.handleEvent
-    });
-    ol.inherits(this, ol.interaction.Interaction);
   };
 
 
