@@ -928,18 +928,21 @@ div.c4g-tooltip-popup:before {
 
 .c4g-control-container-top-left::-webkit-scrollbar,
 .c4g-starboard-content-container::-webkit-scrollbar,
-.c4g-portside-content-container::-webkit-scrollbar {
+.c4g-portside-content-container::-webkit-scrollbar,
+.c4g-popup-wrapper .c4g-popup-content::-webkit-scrollbar{
   width: 12px/*calc(var(--button-size)/2.2)*/;
 }
 .c4g-control-container-top-left::-webkit-scrollbar-track,
 .c4g-starboard-content-container::-webkit-scrollbar-track,
-.c4g-portside-content-container::-webkit-scrollbar-track {
+.c4g-portside-content-container::-webkit-scrollbar-track,
+.c4g-popup-wrapper .c4g-popup-content::-webkit-scrollbar-track{
   border-radius: 0px;
   border-radius: var(--button-radius-pixel);
 }
 .c4g-control-container-top-left::-webkit-scrollbar-thumb,
 .c4g-starboard-content-container::-webkit-scrollbar-thumb,
-.c4g-portside-content-container::-webkit-scrollbar-thumb {
+.c4g-portside-content-container::-webkit-scrollbar-thumb,
+.c4g-popup-wrapper .c4g-popup-content::-webkit-scrollbar-thumb{
   border-radius: 0px;
   border-radius: var(--button-radius-pixel);
 }
