@@ -1038,7 +1038,6 @@ export class C4gLayerController{
                               if(contentData['tooltip']){
                                   contentFeature.set('tooltip',contentData['tooltip'])
                               }
-                              console.log(popup);
                               contentFeature.set('popup', popup);
                               contentFeature.set('zoom_onclick', layer.zoom_onclick);
                               contentFeature.set('tid', contentData['id']);
