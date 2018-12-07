@@ -1018,10 +1018,13 @@ export class C4gLayerController{
                               var point = new ol.geom.Point(resultCoordinate);
                               contentFeature = new ol.Feature(point);
                               contentFeature.setId(contentData.id);
-                              contentFeature.set('cluster_zoom', layer.cluster.zoom);
-                              contentFeature.set('cluster_popup', layer.cluster.popup);
-                              contentFeature.set('cluster_fillcolor', layer.cluster.fillcolor);
-                              contentFeature.set('cluster_fontcolor', layer.cluster.fontcolor);
+                              if (layer.cluster) {
+                                contentFeature.set('cluster_zoom', layer.cluster.zoom);
+                                contentFeature.set('cluster_popup', layer.cluster.popup);
+                                contentFeature.set('cluster_fillcolor', layer.cluster.fillcolor);
+                                contentFeature.set('cluster_fontcolor', layer.cluster.fontcolor);
+                              }
+
                               contentFeature.set('loc_linkurl', layer.loc_linkurl);
                               contentFeature.set('hover_location', layer.hover_location);
                               contentFeature.set('hover_style', layer.hover_style);
@@ -1045,8 +1048,12 @@ export class C4gLayerController{
                                   contentFeatures.push(contentFeature);
                               }
                               else{
-                                  if(!unstyledFeatures){unstyledFeatures =[];}
-                                  if(!missingStyles){missingStyles = [];}
+                                  if (!unstyledFeatures) {
+                                    unstyledFeatures = [];
+                                  }
+                                  if (!missingStyles) {
+                                    missingStyles = [];
+                                  }
                                   contentFeature.set('styleId',locstyle);
                                   unstyledFeatures.push(contentFeature);
                                   missingStyles[locstyle] = locstyle;

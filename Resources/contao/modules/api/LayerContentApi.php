@@ -677,7 +677,7 @@ class LayerContentApi extends \Controller
                                         "cluster" => $objLayer->cluster_locations ? ($objLayer->cluster_distance ? $objLayer->cluster_distance : 20) : false,
                                     )
                                 );
-                                if($objLayer->async_content){
+                                if ($objLayer->async_content) {
                                     if (!$arrReturnDataSet['data'] || !$arrReturnDataSet['data']['geometry'] || !$arrReturnDataSet['data']['geometry']['coordinates'] || count($arrReturnDataSet['data']['geometry']['coordinates']) != 2) continue;
                                     $set['pid'] = $objLayer->id;
                                     $set['type'] = $arrReturnDataSet['type'];
@@ -706,7 +706,7 @@ class LayerContentApi extends \Controller
 
                                     Database::getInstance()->prepare("INSERT INTO tl_c4g_map_layer_content %s")->set($set)->execute();
                                 }
-                                else{
+                                else {
                                     $arrReturnData[] = $arrReturnDataSet;
                                 }
                             }
