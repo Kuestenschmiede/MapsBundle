@@ -796,53 +796,6 @@ export var utils = {
     return window.location.href;
   },
 
-  redrawMapView: function (mapController) {
-    var mapData = mapController.data;
-    var controlContainerTopLeft = document.createElement('div');
-    controlContainerTopLeft.className = cssConstants.CONTROL_CONTAINER_TL + ' ' + cssConstants.OL_UNSELECTABLE;
-    mapController.$overlaycontainer_stopevent.prepend(controlContainerTopLeft);
-
-    var controlContainerBottomLeft = document.createElement('div');
-    controlContainerBottomLeft.className = cssConstants.CONTROL_CONTAINER_BL + ' ' + cssConstants.OL_UNSELECTABLE;
-    $(controlContainerTopLeft).after(controlContainerBottomLeft);
-    mapController.leftSlideElements.push(controlContainerBottomLeft);
-
-    var controlContainerBottomLeftSub = document.createElement('div');
-    controlContainerBottomLeftSub.className = cssConstants.CONTROL_CONTAINER_BL_SUB + ' ' + cssConstants.OL_UNSELECTABLE;
-
-    if (mapData.scaleline) {
-      mapController.map.removeControl(mapController.controls.scaleline);
-      mapController.controls.scaleline = new ol.control.ScaleLine({
-        mapView: mapController.map.getView(),
-        target: controlContainerBottomLeft,
-        undefinedHTML: 'N/A'
-      });
-      mapController.map.addControl(mapController.controls.scaleline);
-    }
-
-    $(controlContainerBottomLeft).append(controlContainerBottomLeftSub);
-
-    if (mapData.zoomlevel) {
-      mapController.map.removeControl(mapController.controls.zoomlevel);
-      mapController.controls.zoomlevel = new Zoomlevel({
-        mapView: mapController.map.getView(),
-        target: controlContainerBottomLeftSub,
-        undefinedHTML: 'N/A'
-      });
-      mapController.map.addControl(mapController.controls.zoomlevel);
-    }
-
-    if (mapData.mouseposition) {
-      mapController.map.removeControl(mapController.controls.mouseposition);
-      mapController.controls.mouseposition = new ol.control.MousePosition({
-        projection: 'EPSG:4326',
-        coordinateFormat: ol.coordinate.toStringHDMS,
-        target: controlContainerBottomLeftSub,
-        undefinedHTML: 'N/A'
-      });
-      mapController.map.addControl(mapController.controls.mouseposition);
-    }
-  },
   getValue: function (key) {
     return localStorage[key] || '';
   },
