@@ -575,12 +575,10 @@ button.c4g-measuretools-view-trigger-draw-circle:before {
 /*
  * Bottom left controls
  */
-
 .c4g-zoom-level {
   min-width: 5em;
   padding-right: 5px;
 }
-
 .ol-scale-line {
   display: block;
   margin-left: 57px;
@@ -621,19 +619,16 @@ button.c4g-measuretools-view-trigger-draw-circle:before {
   display: inline-block;
 }
 .ol-attribution > ul {
-  /*float: left;*/
   text-align: left;
 }
 .ol-attribution {
   text-align: right;
 }
 .ol-attribution ul {
-  /*margin: 0 26px -40px 0;*/
   padding: 0 2px;
-  /*line-height: 1.4em;*/
-  /*max-width: 240px;*/
   height:auto;
-  font-size: 11px;
+  font-size: 10px;
+  line-height: 14px;
   white-space: normal;
 }
 .ol-attribution li {
@@ -643,7 +638,6 @@ button.c4g-measuretools-view-trigger-draw-circle:before {
   max-width: 214px;
 }
 .ol-attribution li a {
-  /*vertical-align: middle;*/
 }
 .ol-attribution li:not(:last-child):after {
   content: " ";
@@ -653,16 +647,10 @@ button.c4g-measuretools-view-trigger-draw-circle:before {
   margin-bottom: -.2em;
   max-height: 1.6em;
 }
-.ol-attribution:not(.ol-collapsed) {
-  /*max-width: 220px;*/
-}
 .ol-attribution.ol-collapsed ul,
 .ol-attribution:not(.ol-collapsed) button:hover:after {
   display: none;
 }
-/*.ol-attribution.ol-logo-only ul {*/
-  /*display: block;*/
-/*}*/
 .ol-attribution.ol-uncollapsible {
   bottom: 0;
   right: 0;
@@ -670,7 +658,6 @@ button.c4g-measuretools-view-trigger-draw-circle:before {
   line-height: 1em;
   border-radius: 4px 0 0;
 }
-/*.ol-attribution.ol-logo-only button,*/
 .ol-attribution.ol-uncollapsible button {
   display: none;
 }
