@@ -574,19 +574,6 @@ export class C4gBaselayerController {
                     }
                 }
             }
-            // if (baseLayerConfig.hasOverlays) {
-            //
-            //     for (i = 0; i < baseLayerConfig.overlays.length; i += 1) {
-            //         if(!c4g.maps.overlays){
-            //             c4g.maps.overlays = [];
-            //         }
-            //         c4g.maps.overlays[baseLayerConfig.overlays[i].id] = baseLayerConfig.overlays[i];
-            //         if(this.mapController.data.baselayer && parseInt(baseLayerConfig.id, 10) === parseInt(this.proxy.activeBaselayerId, 10)) {
-            //             self.mapController.map.addLayer(self.showOverlayLayer(baseLayerConfig.overlays[i].id));
-            //         }
-            //     }
-            //
-            // }
 
             this.arrBaselayers[baseLayerUid].layer = newBaselayer;
         }
@@ -631,18 +618,6 @@ export class C4gBaselayerController {
 
                     var mapData = this.mapController.data;
                     if (mapData.zoomlevel || mapData.mouseposition) {
-                        var controlContainerTopLeft = document.createElement('div');
-                        controlContainerTopLeft.className = cssConstants.CONTROL_CONTAINER_TL + ' ' + cssConstants.OL_UNSELECTABLE;
-                        this.mapController.$overlaycontainer_stopevent.prepend(controlContainerTopLeft);
-
-                        var controlContainerBottomLeft = document.createElement('div');
-                        controlContainerBottomLeft.className = cssConstants.CONTROL_CONTAINER_BL + ' ' + cssConstants.OL_UNSELECTABLE;
-                        $(controlContainerTopLeft).after(controlContainerBottomLeft);
-                        this.mapController.leftSlideElements.push(controlContainerBottomLeft);
-
-                        var controlContainerBottomLeftSub = document.createElement('div');
-                        controlContainerBottomLeftSub.className = cssConstants.CONTROL_CONTAINER_BL_SUB + ' ' + cssConstants.OL_UNSELECTABLE;
-
                         var newView = new ol.View({
                             center: center,
                             projection: view.getProjection(),
@@ -654,40 +629,7 @@ export class C4gBaselayerController {
                         });
 
                         this.mapController.map.setView(newView);
-                        utils.redrawMapView(this.mapController);
-
-                        // if (mapData.scaleline) {
-                        //   this.mapController.map.removeControl(this.mapController.controls.scaleline);
-                        //   this.mapController.controls.scaleline = new ol.control.ScaleLine({
-                        //     mapView: this.mapController.map.getView(),
-                        //     target: controlContainerBottomLeft,
-                        //     undefinedHTML: 'N/A'
-                        //   });
-                        //   this.mapController.map.addControl(this.mapController.controls.scaleline);
-                        // }
-                        //
-                        // $(controlContainerBottomLeft).append(controlContainerBottomLeftSub);
-                        //
-                        // if (mapData.zoomlevel) {
-                        //   this.mapController.map.removeControl(this.mapController.controls.zoomlevel);
-                        //   this.mapController.controls.zoomlevel = new c4g.maps.control.Zoomlevel({
-                        //     mapView: this.mapController.map.getView(),
-                        //     target: controlContainerBottomLeftSub,
-                        //     undefinedHTML: 'N/A'
-                        //   });
-                        //   this.mapController.map.addControl(this.mapController.controls.zoomlevel);
-                        // }
-                        //
-                        // if (mapData.mouseposition) {
-                        //   this.mapController.map.removeControl(this.mapController.controls.mouseposition);
-                        //   this.mapController.controls.mouseposition = new ol.control.MousePosition({
-                        //     projection: 'EPSG:4326',
-                        //     coordinateFormat: ol.coordinate.toStringHDMS,
-                        //     target: controlContainerBottomLeftSub,
-                        //     undefinedHTML: 'N/A'
-                        //   });
-                        //   this.mapController.map.addControl(this.mapController.controls.mouseposition);
-                        // }
+                        // utils.redrawMapView(this.mapController);
                     }
 
                 }

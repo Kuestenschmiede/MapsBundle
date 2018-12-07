@@ -1,5 +1,6 @@
 import {cssConstants} from "./c4g-maps-constant";
 import {langConstants} from "./c4g-maps-constant-i18n-de";
+
 'use strict';
 export class Position extends ol.control.Control {
 
@@ -63,7 +64,6 @@ export class Position extends ol.control.Control {
         //}
         geoLocation.setTracking(false);
         options.mapController.map.setView(view);
-        c4g.maps.utils.redrawMapView(options.mapController);
       });
     };
 
