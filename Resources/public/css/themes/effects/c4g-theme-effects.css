@@ -62,7 +62,7 @@ input,
 
 .c4g-layertree ul {
   height: 100%;
-  display: grid;
+  /*display: grid;*/
 }
 
 .c4g-layertree .c4g-open > ul {
