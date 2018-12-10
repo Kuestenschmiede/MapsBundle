@@ -550,6 +550,16 @@ class LayerContentApi extends \Controller
 
                                                 $popupContent .= '<a class="' . $columnClass . '" href="' . $link . '" target="_blank">' . $additionalParam1 . '</a>';
                                                 break;
+                                            case 'pagelink3':
+                                                if (!$additionalParam1) {
+                                                    $additionalParam1 = 'details';
+                                                }
+                                                $linkPopup = $result->$column;
+                                                if(!(substr($link,0,4) === "http")){
+                                                    $linkPopup = 'https://' . $linkPopup;
+                                                }
+                                                $popupContent .= '<a class="' . $columnClass . '" href="' . $linkPopup . '" target="_blank">' . $additionalParam1 . '</a>';
+                                                break;
                                             case 'responsiveImage':
                                                 $responsiveImage = false;
                                                 if ($additionalParam1) {
@@ -565,6 +575,9 @@ class LayerContentApi extends \Controller
                                                     if ($image) {
                                                         $popupContent .= '<img src="' . $image . '">';
                                                     }
+                                                }
+                                                else{
+                                                    $popupContent .= '<img src="' . $result->$column . '">';
                                                 }
                                                 break;
                                             default:
