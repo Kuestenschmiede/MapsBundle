@@ -677,7 +677,6 @@ div.c4g-permalink-popup input[type='text'] {
   width: 100%;
   height: auto;
   z-index: 150;
-  /*background-color: #00b0e8;*/
   transition: 0.5s;
   max-height: 125px;
   margin-right: 1em;
@@ -770,30 +769,24 @@ input.c4g-panel-button {
   .c4g-popup-wrapper {
     max-width: 480px;
   }
+  .c4g-portside-container {
+    max-width: 100%;
+  }
 }
 @media screen and (max-width: 768px) {
   .c4g-portside-container {
     min-width: 0;
     visibility: visible;
-    width: 100%;
     left: 0;
     position: absolute;
-    max-width: none;
     bottom: 0;
     z-index: 115;
     min-height: 240px;
-    /*height: 50%;*/
     top: auto;
   }
-  /*.c4g-portside-wrapper {*/
-    /*margin: 0;*/
-  /*}*/
   .c4g-measure .c4g-portside-content-container {
     max-width: none;
   }
-  /*.searchResultButton{
-    font-size: smaller;
-  }*/
   .c4g-popup-wrapper {
     max-width: 360px;
   }
