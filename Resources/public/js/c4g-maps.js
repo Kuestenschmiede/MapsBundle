@@ -242,7 +242,7 @@ export class MapController {
           if (self.map) {
             self.map.setView(view);
             if (self.$overlaycontainer_stopevent) {
-              utils.redrawMapView(self);
+              // utils.redrawMapView(self);
             }
           }
         }
