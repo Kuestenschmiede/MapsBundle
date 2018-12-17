@@ -1,9 +1,6 @@
 import {C4gLayer} from "./c4g-layer"
 import {utils} from "./c4g-maps-utils"
 import {cssConstants} from "./c4g-maps-constant";
-
-
-
 import {Customtab} from "./c4g-maps-control-starboardplugin-customtab";
 
 export class C4gLayerController{
