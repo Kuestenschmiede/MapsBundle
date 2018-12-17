@@ -1,19 +1,5 @@
 import {cssConstants} from "./c4g-maps-constant";
-import {langConstantsEnglish} from "./c4g-maps-constant-i18n-en";
-import {langConstantsGerman} from "./c4g-maps-constant-i18n-de";
-
-let langConstants = {};
-
-if (typeof mapData !== "undefined") {
-  if (mapData.lang === "de") {
-    langConstants = langConstantsGerman;
-  } else if (mapData.lang === "en") {
-    langConstants = langConstantsEnglish;
-  } else {
-    // fallback
-    langConstants = langConstantsGerman;
-  }
-}
+import {langConstants} from "./c4g-maps-i18n";
 'use strict';
 export class Grid extends ol.control.Control {
 

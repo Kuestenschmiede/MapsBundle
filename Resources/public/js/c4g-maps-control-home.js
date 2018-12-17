@@ -1,20 +1,6 @@
-import {langConstantsEnglish} from "./c4g-maps-constant-i18n-en";
-import {cssConstants} from "./c4g-maps-constant";
-import {langConstantsGerman} from "./c4g-maps-constant-i18n-de";
 import {utils} from "./c4g-maps-utils";
-
-let langConstants = {};
-
-if (typeof mapData !== "undefined") {
-  if (mapData.lang === "de") {
-    langConstants = langConstantsGerman;
-  } else if (mapData.lang === "en") {
-    langConstants = langConstantsEnglish;
-  } else {
-    // fallback
-    langConstants = langConstantsGerman;
-  }
-}
+import {cssConstants} from "./c4g-maps-constant";
+import {langConstants} from "./c4g-maps-i18n";
 'use strict';
 export class Home extends ol.control.Control {
 

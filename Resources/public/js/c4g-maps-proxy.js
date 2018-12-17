@@ -1,6 +1,4 @@
 // 'namespace'
-import {langConstantsEnglish} from "./c4g-maps-constant-i18n-en";
-
 'use strict';
 
 import {C4gBaselayerController} from "./c4g-baselayer-controller";
@@ -9,20 +7,7 @@ import {C4gLocationStyleController} from "./c4g-locationstyle-controller";
 import {Spinner} from "./c4g-maps-misc-spinner";
 import {utils} from "./c4g-maps-utils";
 import {cssConstants} from "./c4g-maps-constant";
-import {langConstantsGerman} from "./c4g-maps-constant-i18n-de";
-
-let langConstants = {};
-
-if (typeof mapData !== "undefined") {
-  if (mapData.lang === "de") {
-    langConstants = langConstantsGerman;
-  } else if (mapData.lang === "en") {
-    langConstants = langConstantsEnglish;
-  } else {
-    // fallback
-    langConstants = langConstantsGerman;
-  }
-}
+import {langConstants} from "./c4g-maps-i18n";
 
 export class MapProxy {
   constructor(options){

@@ -1,5 +1,5 @@
 import {cssConstants} from "./c4g-maps-constant";
-import {langConstants} from "./c4g-maps-constant-i18n-de";
+import {langConstants} from "./c4g-maps-i18n";
 
 'use strict';
 export class Position extends ol.control.Control {

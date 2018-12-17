@@ -10,8 +10,6 @@
 
 import {MapProxy} from "./c4g-maps-proxy";
 import {cssConstants} from "./c4g-maps-constant";
-import {langConstantsGerman} from "./c4g-maps-constant-i18n-de";
-import {langConstantsEnglish} from "./c4g-maps-constant-i18n-en";
 import {Spinner} from "./c4g-maps-misc-spinner";
 import {MapHover} from "./c4g-maps-misc-maphover";
 import {utils} from "./c4g-maps-utils";
@@ -29,19 +27,8 @@ import {GeoPicker} from "./c4g-maps-interaction-geopicker";
 import {Home} from "./c4g-maps-control-home";
 import {Position} from "./c4g-maps-control-position";
 import {Infopage} from "./c4g-maps-control-portside-infopage";
+import {langConstants} from "./c4g-maps-i18n";
 
-let langConstants = {};
-
-if (typeof mapData !== "undefined") {
-  if (mapData.lang === "de") {
-    langConstants = langConstantsGerman;
-  } else if (mapData.lang === "en") {
-    langConstants = langConstantsEnglish;
-  } else {
-    // fallback
-    langConstants = langConstantsGerman;
-  }
-}
 'use strict';
 export class MapController {
 
