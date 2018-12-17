@@ -904,6 +904,16 @@ div.c4g-tooltip-popup:before {
   right: 5px;
 }
 
+.c4g_brick_popup_button {
+  margin-top: 8px;
+}
+
+.c4g_brick_popup_button a {
+  border: 1px solid;
+  padding: 6px 10px;
+  cursor: pointer;
+  outline: none;
+}
 
 /*
  *  General

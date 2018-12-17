@@ -406,6 +406,15 @@ div.c4g-popup-wrapper:before {
   color: var(--font-color);
 }
 
+.c4g_brick_popup_button a {
+  color: rgba(24, 61, 93, .8);
+  color: var(--main-color);
+  background-color: rgba(255, 255, 255, .9);
+  background-color: var(--font-color);
+  border-color: rgba(255, 255, 255, .9);
+  border-color: var(--font-color);
+}
+
 /*div.c4g-horizontal.c4g-tooltip-popup:before {*/
   /*border-top-color: transparent;*/
   /*border-right-color: var(--main-color);*/
