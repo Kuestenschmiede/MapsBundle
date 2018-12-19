@@ -2,7 +2,21 @@ import {cssConstants} from "./c4g-maps-constant";
 import {Zoomlevel} from "./c4g-maps-control-zoomlevel";
 import * as popupFunctionsDE from "./c4g-maps-popup-info-de";
 import * as popupFunctionsEN from "./c4g-maps-popup-info-en";
-import {langConstants} from "./c4g-maps-i18n";
+
+let popupFunctions = popupFunctionsDE;
+
+if (typeof mapData !== "undefined") {
+  if (mapData.lang === "de") {
+    popupFunctions = popupFunctionsDE;
+  } else if (mapData.lang === "en") {
+    popupFunctions = popupFunctionsEN;
+  } else {
+    // fallback
+    popupFunctions = popupFunctionsEN;
+  }
+} else {
+  popupFunctions = popupFunctionsEN;
+}
 
 export var utils = {
   /**
