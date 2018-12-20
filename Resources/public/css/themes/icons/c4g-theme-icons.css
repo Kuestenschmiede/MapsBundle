@@ -12,7 +12,7 @@
 .c4g-control button,
 .c4g-icon {
   display: inline-block;
-  /*font-family: 'Font Awesome 5 Free';*/
+  font-family: 'Font Awesome 5 Free';
   /*font-size: inherit;*/
   /*font-weight: 900;*/
   text-rendering: auto;
