@@ -10,7 +10,7 @@ export class Zoomlevel extends ol.control.Control {
 
     self = this;
 
-    if (!options || !options.mapView) {
+    if (!options || !options.mapController) {
       console.warn('Zoomlevel control needs to know the map.');
       return false;
     }
@@ -21,15 +21,21 @@ export class Zoomlevel extends ol.control.Control {
       undefinedHTML: ''
     }, options);
 
+    let mapView = options.mapController.map.getView();
+
     element = document.createElement('div');
     element.className = options.className;
-    element.innerHTML = options.mapView.getZoom();
+    element.innerHTML = mapView.getZoom();
 
     updateZoomlevel = function () {
-      element.innerHTML = parseInt(options.mapView.getZoom());
+      element.innerHTML = parseInt(mapView.getZoom());
     };
 
-    options.mapView.on('change:resolution', updateZoomlevel);
+    options.mapController.map.getView().on('change:resolution', function() {
+      updateZoomlevel();
+    });
+
+    this.view = mapView;
 
     // inheritance-stuff
     ol.control.Control.call(this, {

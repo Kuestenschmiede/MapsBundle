@@ -619,20 +619,10 @@ export class C4gBaselayerController {
 
           var mapData = this.mapController.data;
           if (mapData.zoomlevel || mapData.mouseposition) {
-            var newView = new ol.View({
-              center: center,
-              projection: view.getProjection(),
-              zoom: zoom,
-              minZoom: parseInt(baseLayerConfig.minZoom, 10) || 0,
-              maxZoom: parseInt(baseLayerConfig.maxZoom, 10) || 19,
-              rotation: view.getRotation(),
-              resolution: view.getResolution(),
-            });
-
-            this.mapController.map.setView(newView);
-            // utils.redrawMapView(this.mapController);
+            view.setMinZoom(parseInt(baseLayerConfig.minZoom, 10) || 0);
+            view.setMaxZoom(parseInt(baseLayerConfig.maxZoom, 10) || 19);
+            this.mapController.map.setView(view);
           }
-
         }
       }
     }

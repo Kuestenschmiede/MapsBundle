@@ -6,7 +6,7 @@ export class Position extends ol.control.Control {
 
 
   /**
-   * Control to toggle the browser/desvice position on the map.
+   * Control to toggle the browser/device position on the map.
    *
    * @constructor
    * @extends  {ol.control.Control}

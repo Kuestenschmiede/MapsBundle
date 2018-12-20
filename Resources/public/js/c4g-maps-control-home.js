@@ -64,7 +64,7 @@ export class Home extends ol.control.Control {
       }
 
       options.mapController.map.setView(view);
-      utils.redrawMapView(options.mapController);
+      // utils.redrawMapView(options.mapController);
     };
 
     // wrapper div

@@ -721,7 +721,7 @@ export class MapController {
       // display zoom-level
       if (mapData.zoomlevel) {
         this.controls.zoomlevel = new Zoomlevel({
-          mapView: view,
+          mapController: this,
           target: controlContainerBottomLeftSub,
           undefinedHTML: 'N/A'
         });

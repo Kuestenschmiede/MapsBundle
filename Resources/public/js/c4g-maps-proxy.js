@@ -119,7 +119,6 @@ export class MapProxy {
       var layerId,
         layer;
 
-
       // check layer zoom-bounds
       // @TODO: Use "self.activeLayerIds = false" ?
       for (layerId in self.activeLayerIds) {
