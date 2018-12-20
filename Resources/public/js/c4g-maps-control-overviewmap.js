@@ -21,11 +21,12 @@ export class OverviewMap {
         ovm;
 
     // default options
-    options = $.extend({
+    this.options = $.extend({
       collapsed: true,
       tipLabel: langConstants.CTRL_OVERVIEWMAP,
       layers: [new ol.layer.Tile({source: new ol.source.OSM()})]
     }, options);
+    this.mapController = options.mapController;
 
     element = document.createElement('div');
     element.className = cssConstants.OVERVIEWMAP + ' ' + cssConstants.OL_UNSELECTABLE + ' ' + cssConstants.OL_CONTROL;
@@ -58,10 +59,28 @@ export class OverviewMap {
       }
     });
 
-    ovm = new ol.control.OverviewMap({
-      target: element
+    this.ovm = new ol.control.OverviewMap({
+      target: element,
+      layers: options.layers,
+      collapsed: options.collapsed || true
     });
-    return ovm;
+    this.element = element;
+  }
+
+  removeFromMap() {
+    this.element.parentNode.removeChild(this.element);
+  }
+
+  getOverviewMap() {
+    return this.ovm;
+  }
+
+  isOpen() {
+    if ($(this.element).hasClass(cssConstants.OPEN)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
 }

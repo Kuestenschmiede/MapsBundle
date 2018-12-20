@@ -23,6 +23,7 @@ export class C4gBaselayerController {
       .done(function (data) {
         if (data.baselayer) {
           self.addBaseLayers(data.baselayer);
+          utils.callHookFunctions(window.c4gMapsHooks.proxy_baselayer_loaded);
         }
         return true;
       })

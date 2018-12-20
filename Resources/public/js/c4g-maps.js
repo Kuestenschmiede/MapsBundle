@@ -780,10 +780,32 @@ export class MapController {
 
     // overview-map
     if (mapData.overviewmap) {
-      this.controls.overviewmap = new OverviewMap({
-        target: controlContainerTopRight
+      let overviewMapOptions = {target: controlContainerTopRight, mapController: this, collapsed: true};
+      const scope = this;
+      const addOverviewMap = function() {
+        let activeBaselayer = scope.proxy.activeBaselayerId;
+        scope.proxy.baselayerController.showBaseLayer(activeBaselayer);
+        overviewMapOptions.layers = [scope.proxy.baselayerController.arrBaselayers[activeBaselayer].layer];
+        if (scope.overviewMap) {
+          // we are reloading the overview map, so keep the collapsed-property
+          overviewMapOptions.collapsed = !scope.overviewMap.isOpen();
+        }
+        scope.overviewMap = new OverviewMap(overviewMapOptions);
+        scope.controls.overviewmap = scope.overviewMap.getOverviewMap();
+        scope.map.addControl(scope.controls.overviewmap);
+      };
+      if (this.proxy.baselayers_loaded) {
+        addOverviewMap();
+      } else {
+        window.c4gMapsHooks.proxy_baselayer_loaded.push(addOverviewMap);
+      }
+      // add hook to synchronize overviewmap with baselayer
+      window.c4gMapsHooks.baselayer_changed = window.c4gMapsHooks.baselayer_changed || [];
+      window.c4gMapsHooks.baselayer_changed.push(function(baselayerId) {
+        scope.map.removeControl(scope.controls.overviewmap);
+        scope.overviewMap.removeFromMap();
+        addOverviewMap();
       });
-      this.map.addControl(this.controls.overviewmap);
     }
 
     // starboard
