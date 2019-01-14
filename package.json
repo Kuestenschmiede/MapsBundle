@@ -18,6 +18,6 @@
   },
   "homepage": "https://github.com/Kuestenschmiede/MapsBundle#readme",
   "devDependencies": {
-    "@symfony/webpack-encore": "^0.22.2"
+    "@symfony/webpack-encore": "^0.22.4"
   }
 }
