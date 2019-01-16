@@ -137,6 +137,11 @@ array_insert($GLOBALS['BE_MOD']['con4gis'], 2, array
             'icon' => 'bundles/con4gismaps/images/be-icons/mapstructure.png',
             'javascript'     => 'bundles/con4gismaps/js/c4g-maps-backend.js'
         ),
+        'c4g_map_table' =>
+        [
+            'tables' => array('tl_c4g_map_tables'),
+            'icon' => 'bundles/con4gismaps/images/be-icons/mapstructure.png',
+        ]
     ));
 
 /**
