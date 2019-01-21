@@ -11,7 +11,7 @@
  * @link      https://www.kuestenschmiede.de
  */
 
-$GLOBALS['TL_DCA']['tl_c4g_settings']['palettes']['default'] .= '{c4g_maps_legend},disabledC4gMapObjects,defaultprofile,caching;';
+$GLOBALS['TL_DCA']['tl_c4g_settings']['palettes']['default'] .= '{c4g_maps_legend},disabledC4gMapObjects,defaultprofile,caching,defaultData;';
 
 /**
  * Add fields
@@ -46,6 +46,14 @@ $GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['defaultprofile'] = array
     'sql'                     => "int(10) unsigned NOT NULL default '0'"
 
 );
+$GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['defaultData'] = [
+    'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayers'],
+    'exclude'                 => true,
+    'inputType'               => 'checkbox',
+    'options'                 => $GLOBALS['con4gis']['defaultData'],
+    'eval'                    => array('mandatory'=>false, 'multiple'=>true),
+    'sql'                     => "blob NULL"
+];
 
 /**
  * Class tl_settings_c4g_maps
