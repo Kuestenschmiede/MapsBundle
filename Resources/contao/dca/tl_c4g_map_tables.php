@@ -1,4 +1,4 @@
-<?php if (!defined('TL_ROOT')) die('You cannot access this file directly!');
+<?php
 
 /**
  * con4gis - the gis-kit
@@ -28,24 +28,23 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             [
                 'id' => 'primary'
             ]
-        ]
+        ],
+        'onload_callback' => [['con4gis\MapsBundle\Classes\Contao\Callbacks\TlC4gMapSettings','addDefaultTables']]
     ],
     'list' => array
     (
 
         'sorting' => array
         (
-            'mode'                    => 1,
-            'fields'                  => array('name'),
+            'mode'                    => 2,
             'panelLayout'             => 'filter;sort,search,limit',
-            'headerFields'            => array('name'),
-            'flag'                    => 1,
+            'headerFields'            => array('id','name'),
             'icon'                    => 'bundels/con4gisMapsBundle/images/core.png'
         ),
         'label' => array
         (
-            'fields'                  => array('name'),
-            'format'                  => '%s'
+            'fields'                  => array('id','name'),
+            'showColums'              => true
         ),
         'global_operations' => array
         (
@@ -61,35 +60,34 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
         (
             'edit' => array
             (
-                'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['edit'],
+                'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['edit'],
                 'href'                => 'act=edit',
                 'icon'                => 'edit.gif'
             ),
             'copy' => array
             (
-                'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['copy'],
+                'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['copy'],
                 'href'                => 'act=copy',
                 'icon'                => 'copy.gif'
             ),
             'delete' => array
             (
-                'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['delete'],
+                'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['delete'],
                 'href'                => 'act=delete',
                 'icon'                => 'delete.gif',
                 'attributes'          => 'onclick="if (!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\')) return false; Backend.getScrollOffset();"'
             ),
             'show' => array
             (
-                'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['show'],
+                'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['show'],
                 'href'                => 'act=show',
                 'icon'                => 'show.gif'
             )
         )
     ),
-    'palletes' =>
+    'palettes' =>
     [
-        '__selector__'                => array('styletype','line_arrows'),
-        'default' => 'name, tableSource, tabPid'
+        'default' => '{default_legend},name,tableSource,ptable,ptableOption,ptableField,ptableCompareField;{table_information},geox,geoy,geolocation,label,locstyle,tooltip;',
     ],
 
     // Fields
@@ -105,73 +103,103 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
         ],
         'name' =>
         [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['tableSource'],
+            'exclude'                 => true,
+            'inputType'               => 'text',
             'sql'                     => "text NULL"
-        ],
+            ],
         'tableSource' =>
         [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayers'],
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['tableSource'],
             'exclude'                 => true,
-            'inputType'               => 'checkbox',
-            'options_callback'        => array('tl_c4g_map_tables','getSourceTable'),
-            'eval'                    => array('mandatory'=>false, 'multiple'=>false),
+            'inputType'               => 'select',
+            'options_callback'        => array('tl_c4g_map_tables','getDatabaseTables'),
+            'eval'                    => array('mandatory'=>false, 'multiple'=>false, 'chosen' => true, 'submitOnChange' => true),
             'sql'                     => "text NULL"
         ],
-        'tabPid' =>
+        'ptable' =>
         [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayers'],
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['ptable'],
             'exclude'                 => true,
-            'inputType'               => 'checkbox',
-            'options_callback'        => array('tl_c4g_map_tables','getParentTables'),
-            'eval'                    => array('mandatory'=>false, 'multiple'=>true),
+            'inputType'               => 'select',
+            'options_callback'        => array('tl_c4g_map_tables','getDatabaseTables'),
+            'eval'                    => array('mandatory'=>false, 'multiple'=>true, 'size' => 2, 'chosen' => true, 'submitOnChange' => true),
             'sql'                     => "text NULL"
         ],
-        'tabPidOption' =>
+        'ptableOptions' =>
         [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayers'],
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['ptableOptions'],
             'exclude'                 => true,
-            'inputType'               => 'checkbox',
+            'inputType'               => 'select',
             'options_callback'        => array('tl_c4g_map_tables','getParentTablesFields'),
-            'eval'                    => array('mandatory'=>false, 'multiple'=>true),
+            'eval'                    => array('mandatory'=>false, 'multiple'=>true,'size' => 2, 'chosen' => true),
             'sql'                     => "text NULL"
         ],
-        'tabPidBlob' =>
+        'ptableBlob' =>
         [
             'sql'                     => "text NULL"
         ],
-        'tabPidField' =>
+        'ptableField' =>
         [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayers'],
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['ptableField'],
             'exclude'                 => true,
-            'inputType'               => 'checkbox',
+            'inputType'               => 'select',
             'options_callback'        => array('tl_c4g_map_tables','getSourceTableFields'),
-            'eval'                    => array('mandatory'=>false, 'multiple'=>false),
+            'eval'                    => array('mandatory'=>false, 'multiple'=>true, 'size' => 2, 'chosen' => true),
             'sql'                     => "text NULL"
         ],
-        'tabPidCompareField' =>
+        'ptableCompareField' =>
         [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayers'],
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['ptableCompareField'],
             'exclude'                 => true,
-            'inputType'               => 'checkbox',
-            'options_callback'        => array('tl_c4g_map_tables','getParentTablesFields'),
-            'eval'                    => array('mandatory'=>false, 'multiple'=>false),
+            'inputType'               => 'select',
+            'options_callback'        => array('tl_c4g_map_tables','getParentTablesFields', 'includeBlankOption' => true),
+            'eval'                    => array('mandatory'=>false, 'multiple'=>true, 'chosen' => true, 'size' => 2),
+            'sql'                     => "text NULL"
+        ],
+        'geox' =>
+        [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['geox'],
+            'exclude'                 => true,
+            'inputType'               => 'select',
+            'options_callback'        => array('tl_c4g_map_tables','getSourceTableFields'),
+            'eval'                    => array('mandatory'=>false, 'multiple'=>false, 'includeBlankOption' => true),
+            'sql'                     => "text NULL"
+        ],
+        'geoy' =>
+        [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['geoy'],
+            'exclude'                 => true,
+            'inputType'               => 'select',
+            'options_callback'        => array('tl_c4g_map_tables','getSourceTableFields'),
+            'eval'                    => array('mandatory'=>false, 'multiple'=>false, 'includeBlankOption' => true),
+            'sql'                     => "text NULL"
+        ],
+        'geolocation' =>
+        [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['geolocation'],
+            'exclude'                 => true,
+            'inputType'               => 'select',
+            'options_callback'        => array('tl_c4g_map_tables','getSourceTableFields'),
+            'eval'                    => array('mandatory'=>false, 'multiple'=>false, 'includeBlankOption' => true),
             'sql'                     => "text NULL"
         ],
         'label' =>
         [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayers'],
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['label'],
             'exclude'                 => true,
-            'inputType'               => 'checkbox',
+            'inputType'               => 'select',
             'options_callback'        => array('tl_c4g_map_tables','getSourceTableFields'),
-            'eval'                    => array('mandatory'=>false, 'multiple'=>false),
+            'eval'                    => array('mandatory'=>false, 'multiple'=>false, 'includeBlankOption' => true),
             'sql'                     => "text NULL"
         ],
         'locstyle' =>
         [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayers'],
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['locstyle'],
             'exclude'                 => true,
-            'inputType'               => 'checkbox',
+            'inputType'               => 'select',
             'options_callback'        => array('tl_c4g_map_tables','getSourceTableFields'),
-            'eval'                    => array('mandatory'=>false, 'multiple'=>false),
+            'eval'                    => array('mandatory'=>false, 'multiple'=>false, 'includeBlankOption' => true),
             'sql'                     => "text NULL"
         ],
         'popup' =>
@@ -180,22 +208,37 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
         ],
         'tooltip' =>
         [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayers'],
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['tooltip'],
             'exclude'                 => true,
-            'inputType'               => 'checkbox',
+            'inputType'               => 'select',
             'options_callback'        => array('tl_c4g_map_tables','getSourceTableFields'),
-            'eval'                    => array('mandatory'=>false, 'multiple'=>false),
+            'eval'                    => array('mandatory'=>false, 'multiple'=>false, 'chosen' => true, 'includeBlankOption' => true),
             'sql'                     => "text NULL"
         ]
-
-
     ]
 
 ];
 
 class tl_c4g_map_tables extends Backend
 {
-    public function getSourceTable(DataContainer $dc) {
-        $this->Database->prepare("SHOW TABLES")->execute();
+    public function getDatabaseTables(DataContainer $dc) {
+        $options = $this->Database->listTables();
+        return  $options;
+    }
+    public function getSourceTableFields(DataContainer $dc){
+        $tableName = $dc->activeRecord->tableSource;
+        $options = $this->Database->getFieldNames($tableName);
+        return $options;
+    }
+    public function getParentTablesFields(DataContainer $dc){
+        $tableNames = unserialize($dc->activeRecord->ptable);
+        $options = [];
+        foreach ($tableNames as $tableName){
+            $tableOptions = $this->Database->getFieldNames($tableName);
+            foreach ($tableOptions as $tableOption){
+                $options[$tableName.':'.$tableOption] = $tableName.':'.$tableOption;
+            }
+        }
+        return $options;
     }
 }
