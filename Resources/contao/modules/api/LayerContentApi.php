@@ -201,7 +201,7 @@ class LayerContentApi extends \Controller
                     $arrReturnData["0"]["data"]["popup"]['content'] = "tl_c4g_maps" . ":" . $objLayer->id;
                 } else {
                     $arrReturnData["0"]["data"]["popup"]['async'] = false;
-                    $arrReturnData["0"]["data"]["popup"]['content'] = $objLayer->popup_info;
+                    $arrReturnData["0"]["data"]["popup"]['content'] = $this->replaceInsertTags($objLayer->popup_info);
                     $arrReturnData["0"]["data"]["popup"]['routing_link'] = $objLayer->routing_to;
                     $arrReturnData["0"]["data"]["popup"]['showPopupOnActive'] = $objLayer->showPopupOnActive;
                 }
