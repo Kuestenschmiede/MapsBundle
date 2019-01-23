@@ -87,7 +87,9 @@ class LayerContentApi extends \Controller
 
         switch ($objLayer->location_type) {
             case "geojson":
-
+                $arrGeoJsonData = $this->createGeoJsonResult($objLayer,'tl_c4g_maps');
+                $strGeoJsonData = $this->replaceInsertTags(\GuzzleHttp\json_encode($arrGeoJsonData));
+                $arrGeoJsonData = \GuzzleHttp\json_decode($strGeoJsonData);
                 $arrReturnData[] = array
                 (
                     "id" => $intId,
@@ -95,11 +97,11 @@ class LayerContentApi extends \Controller
                     "format" => "GeoJSON",
                     "origType" => "geojson",
                     "locationStyle" => $objLayer->locstyle,
-                    "data" => $this->createGeoJsonResult($objLayer, 'tl_c4g_maps'),
+                    "data" => $arrGeoJsonData,
                     "loc_linkurl" => $this->replaceInsertTags($objLayer->loc_linkurl),
                     "hover_location" => $objLayer->hover_location,
                     "hover_style" => $objLayer->hover_style,
-
+                    "testitest" => "LOOOL"
                 );
 
                 break;
