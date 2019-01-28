@@ -4,29 +4,7 @@
   "description": "con4gis-Maps ============ The interactive maps brick of the Contao GIS-kit **con4gis**.",
   "main": "webpack.config.js",
   "scripts": {
-    "encore": "encore",
-    "test": "jest"
-  },
-  "jest": {
-    "modulePaths": [
-      "/Resources/public/js",
-      "/Resources/public/vendor"
-    ],
-    "moduleFileExtensions": [
-      "js",
-      "jsx"
-    ],
-    "moduleDirectories": [
-      "Resources",
-      "node_modules"
-    ],
-    "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/Resources/public/js/__mocks__/fileMock.js",
-      "\\.(css|less)$": "<rootDir>/Resources/public/js/__mocks__/styleMock.js"
-    },
-    "setupFiles": [
-      "<rootDir>/setup.js"
-    ]
+    "encore": "encore"
   },
   "repository": {
     "type": "git",
@@ -39,17 +17,6 @@
   },
   "homepage": "https://github.com/Kuestenschmiede/MapsBundle#readme",
   "devDependencies": {
-    "@symfony/webpack-encore": "0.20.1",
-    "babel-core": "~6.26.3",
-    "canvas": "^2.3.1",
-    "jasmine": "^3.3.1",
-    "jquery": "^3.3.1",
-    "jsdom": "^13.1.0",
-    "regenerator-runtime": "^0.13.1"
-  },
-  "dependencies": {
-    "babel-cli": "~6.26.0",
-    "babel-preset-env": "~1.6.0",
-    "source-map-support": "^0.5.10"
+    "@symfony/webpack-encore": "^0.22.4"
   }
 }
