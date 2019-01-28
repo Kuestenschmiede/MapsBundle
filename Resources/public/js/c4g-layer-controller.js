@@ -1352,16 +1352,18 @@ export class C4gLayerController{
     // hooks
     utils.callHookFunctions(this.proxy.hook_layer_visibility, layerUid);
   } // end of "hideLayer()"
-  hideChildLayer(layerUid, childUid){
-    let layer = this.arrLayers[layerUid]
+
+  hideChildLayer(layerUid, childUid) {
+    let layer = this.arrLayers[layerUid];
     childUid = childUid.replace(layerUid,'');
-    let childLayer = layer.vectorLayer.getLayers().getArray()[childUid]
+    let childLayer = layer.vectorLayer.getLayers().getArray()[childUid];
     childLayer.set('visible', false);
   }
-  showChildLayer(layerUid, childUid){
-      let layer = this.arrLayers[layerUid]
+
+  showChildLayer(layerUid, childUid) {
+      let layer = this.arrLayers[layerUid];
       childUid = childUid.replace(layerUid,'');
-      let childLayer = layer.vectorLayer.getLayers().getArray()[childUid]
+      let childLayer = layer.vectorLayer.getLayers().getArray()[childUid];
       childLayer.set('visible', true);
   }
 

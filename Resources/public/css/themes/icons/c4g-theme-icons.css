@@ -248,25 +248,6 @@ button.c4g-starboard-close:before{
   font-size: inherit;
 }
 
-button.c4g-editor-feature-modify:before {
-  content: "\f0a4";
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
-  font-size: inherit;
-}
-button.c4g-editor-feature-apply:before {
-  content: "\f00c";
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
-  font-size: inherit;
-}
-button.c4g-editor-feature-delete:before {
-  content: "\f1f8";
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
-  font-size: inherit;
-}
-
 button.c4g-measuretools-view-trigger-select:before,
 button.c4g-editor-view-trigger-select:before {
   content: "\f245";
