@@ -1,5 +1,6 @@
 <?php use con4gis\CoreBundle\Resources\contao\models\C4gSettingsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
+use con4gis\MapsBundle\Resources\contao\models\C4gMapTablesModel;
 
 if (!defined('TL_ROOT')) die('You cannot access this file directly!');
 
@@ -1226,20 +1227,27 @@ class tl_c4g_maps extends Backend
      */
     public function getTabSources(DataContainer $dc)
     {
-        $return = array();
-        foreach ($GLOBALS['con4gis']['maps']['sourcetable'] as $key=>$sourcetable) {
-            if (!isset($this->firstTabSource)) {
-                $this->firstTabSource = $key;
+        $return = [];
+        if ($this->Database->listTables()[0]) {
+            $objTables = C4gMapTablesModel::findAll();
+            while ($objTables->next()) {
+                $return[$objTables->id] = \Contao\Controller::replaceInsertTags($objTables->name);
             }
-            if (!$GLOBALS['TL_LANG']['c4g_maps']['sourcetable'][$key]['name'] && !$GLOBALS['con4gis']['maps']['sourcetable'][$key]['name']) {
-                $return[$key] = $key;
-            } else {
-                if ($GLOBALS['con4gis']['maps']['sourcetable'][$key]['name']) {
-                    $return[$key] = $GLOBALS['con4gis']['maps']['sourcetable'][$key]['name'];
-                } else {
-                    $return[$key] = $GLOBALS['TL_LANG']['c4g_maps']['sourcetable'][$key]['name'];
+        }
+        else {
+            foreach ($GLOBALS['con4gis']['maps']['sourcetable'] as $key=>$sourcetable) {
+                if (!isset($this->firstTabSource)) {
+                    $this->firstTabSource = $key;
                 }
-
+                if (!$GLOBALS['TL_LANG']['c4g_maps']['sourcetable'][$key]['name'] && !$GLOBALS['con4gis']['maps']['sourcetable'][$key]['name']) {
+                    $return[$key] = $key;
+                } else {
+                    if ($GLOBALS['con4gis']['maps']['sourcetable'][$key]['name']) {
+                        $return[$key] = $GLOBALS['con4gis']['maps']['sourcetable'][$key]['name'];
+                    } else {
+                        $return[$key] = $GLOBALS['TL_LANG']['c4g_maps']['sourcetable'][$key]['name'];
+                    }
+                }
             }
         }
         return $return;
@@ -1287,24 +1295,41 @@ class tl_c4g_maps extends Backend
      */
     public function getTabParentList(DataContainer $dc)
     {
+        $return = [];
+        if ($this->Database->listTables()[0]) {
+            if ($dc->activeRecord->tab_source<>'') {
+                $tabsource = C4gMapTablesModel::findByPk($dc->activeRecord->tab_source);
+            } else {
+                $objTables = C4gMapTablesModel::findAll();
+                $tabsource = $objTables[0];
+            }
+            $objTables = C4gMapTablesModel::findAll();
+            while ($objTables->next()) {
+                $return[$objTables->id] = \Contao\Controller::replaceInsertTags($objTables->name);
+            }
+        }
         if ($dc->activeRecord->tab_source<>'') {
             $tabsource = $dc->activeRecord->tab_source;
         } else {
             $tabsource = $this->firstTabSource;
         }
+        if ($this->Database->listTables()['tl_c4g_map_tables']) {
 
-        $source = $GLOBALS['con4gis']['maps']['sourcetable'][$tabsource];
-        $ptable = explode(',', $source['ptable']);
-        $ptable_option = explode(',', $source['ptable_option']);
-        if (is_array($source) && $ptable && $ptable_option) {
-            if (($ptable[0]) && ($ptable_option[0])) {
-                $obj = $this->Database->prepare(
-                    "SELECT id, ".$ptable_option[0]." FROM ".$ptable[0])->execute();
-                while ($obj->next()) {
-                    $name = $ptable_option[0];
-                    $return[$obj->id] = $obj->$name;
+        }
+        else{
+            $source = $GLOBALS['con4gis']['maps']['sourcetable'][$tabsource];
+            $ptable = explode(',', $source['ptable']);
+            $ptable_option = explode(',', $source['ptable_option']);
+            if (is_array($source) && $ptable && $ptable_option) {
+                if (($ptable[0]) && ($ptable_option[0])) {
+                    $obj = $this->Database->prepare(
+                        "SELECT id, ".$ptable_option[0]." FROM ".$ptable[0])->execute();
+                    while ($obj->next()) {
+                        $name = $ptable_option[0];
+                        $return[$obj->id] = $obj->$name;
+                    }
+                    return $return;
                 }
-                return $return;
             }
         }
     }

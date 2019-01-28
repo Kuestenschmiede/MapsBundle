@@ -190,6 +190,7 @@ $GLOBALS['TL_MODELS']['tl_c4g_map_baselayers'] = 'con4gis\MapsBundle\Resources\c
 $GLOBALS['TL_MODELS']['tl_c4g_map_themes'] = 'con4gis\MapsBundle\Resources\contao\models\C4gMapThemesModel';
 $GLOBALS['TL_MODELS']['tl_c4g_map_locstyles'] = 'con4gis\MapsBundle\Resources\contao\models\C4gMapLocstylesModel';
 $GLOBALS['TL_MODELS']['tl_c4g_map_overlays'] = 'con4gis\MapsBundle\Resources\contao\models\C4gMapOverlaysModel';
+$GLOBALS['TL_MODELS']['tl_c4g_map_tables'] = 'con4gis\MapsBundle\Resources\contao\models\C4gMapTablesModel';
 
 /**
  * Purge entries for cache clearing.
