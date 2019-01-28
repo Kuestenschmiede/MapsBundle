@@ -101,7 +101,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
                                          '{information_legend:hide},attribution,overviewmap,graticule,scaleline,mouseposition,permalink,zoomlevel,infopage;'.
                                          '{geosearch_legend:hide},geosearch;'.
                                          '{measure_legend:hide},measuretool;'.
-                                         '{editor_legend:hide},editor,editor_styles_point,editor_styles_line,editor_styles_polygon,editor_styles_circle,editor_styles_freehand,editor_vars,editor_show_items,editor_helpurl,is_backend_editor_default;'.
+                                         '{editor_legend:hide},editor;'.
                                          '{geopicker_legend:hide},is_backend_geopicker_default,geopicker;'.
                                          '{click_legend:hide},link_newwindow,link_open_on,hover_popups, popupAutoPan;'.
                                          '{cesium_legend:hide},cesium;'.
@@ -156,16 +156,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             'sql'                     => "char(10) NOT NULL default ''"
         ),
 
-        'is_backend_editor_default' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['is_backend_editor_default'],
-            'exclude'                 => true,
-            'default'                 => false,
-            'inputType'               => 'checkbox',
-            'eval'                    => array('tl_class'=>'long'),
-//            'save_callback'           => array(array('tl_c4g_map_profiles','set_backend_default')),
-            'sql'                     => "char(1) NULL"
-        ),
+
 
         'is_backend_geopicker_default' => array
         (
@@ -926,83 +917,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] = array
             'inputType'               => 'checkbox',
             'sql'                     => "char(1) NOT NULL default ''"
         ],
-
-        'editor_styles_point' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_styles_point'],
-            'exclude'                 => true,
-            'inputType'               => 'checkbox',
-            'options_callback'        => array('tl_c4g_map_profiles','getAllLocStyles'),
-            'eval'                    => array('mandatory'=>false, 'multiple'=>true),
-            'sql'                     => "blob NULL"
-        ),
-
-        'editor_styles_line' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_styles_line'],
-            'exclude'                 => true,
-            'inputType'               => 'checkbox',
-            'options_callback'        => array('tl_c4g_map_profiles','getAllLocStyles'),
-            'eval'                    => array('mandatory'=>false, 'multiple'=>true),
-            'sql'                     => "blob NULL"
-        ),
-
-        'editor_styles_polygon' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_styles_polygon'],
-            'exclude'                 => true,
-            'inputType'               => 'checkbox',
-            'options_callback'        => array('tl_c4g_map_profiles','getAllLocStyles'),
-            'eval'                    => array('mandatory'=>false, 'multiple'=>true),
-            'sql'                     => "blob NULL"
-        ),
-
-        'editor_styles_circle' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_styles_circle'],
-            'exclude'                 => true,
-            'inputType'               => 'checkbox',
-            'options_callback'        => array('tl_c4g_map_profiles','getAllLocStyles'),
-            'eval'                    => array('mandatory'=>false, 'multiple'=>true),
-            'sql'                     => "blob NULL"
-        ),
-
-        'editor_styles_freehand' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_styles_freehand'],
-            'exclude'                 => true,
-            'inputType'               => 'checkbox',
-            'options_callback'        => array('tl_c4g_map_profiles','getAllLocStyles'),
-            'eval'                    => array('mandatory'=>false, 'multiple'=>true),
-            'sql'                     => "blob NULL"
-        ),
-
-        'editor_vars' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_vars'],
-            'inputType'               => 'keyValueWizard',
-            'exclude'                 => true,
-            'sql'                     => "text NULL"
-        ),
-
-        'editor_show_items' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_show_items'],
-            'exclude'                 => true,
-            'default'                 => false,
-            'inputType'               => 'checkbox',
-            'sql'                     => "char(1) NOT NULL default ''"
-        ),
-
-        'editor_helpurl' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_helpurl'],
-            'exclude'                 => true,
-            'inputType'               => 'text',
-            'eval'                    => array('rgxp'=>'url', 'decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'wizard'),
-            'wizard'                  => array(array('tl_c4g_map_profiles', 'pickUrl')),
-            'sql'                     => "varchar(255) NOT NULL default ''"
-        ),
 
         'be_optimize_checkboxes_limit' => array
         (

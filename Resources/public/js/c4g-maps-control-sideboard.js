@@ -494,8 +494,6 @@ export class Sideboard extends ol.control.Control {
    * @return  {boolean}  Returns |true| on success.
    */
   toggle(opt_hide) {
-    var capitalizedName;
-    capitalizedName = utils.capitalizeFirstLetter(this.options.name);
     if (this.options.mapController["active" + this.identifier] === this) {
       return this.close(opt_hide);
     }
@@ -749,7 +747,6 @@ export class Sideboard extends ol.control.Control {
         additionalTriggerClass = '';
       }
       options.triggerConfig.className = cssConstants.ICON + additionalTriggerClass;
-      // @TODO check: trigger = this.makeButton(options.triggerConfig);
       trigger = this.makeButton(options.triggerConfig);
     }
 

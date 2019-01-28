@@ -20,4 +20,22 @@ use Symfony\Component\EventDispatcher\Event;
 class LoadMapResourcesEvent extends Event
 {
     const NAME = "maps.resources.load";
+
+    private $mapData = [];
+
+    /**
+     * @return array
+     */
+    public function getMapData(): array
+    {
+        return $this->mapData;
+    }
+
+    /**
+     * @param array $mapData
+     */
+    public function setMapData(array $mapData): void
+    {
+        $this->mapData = $mapData;
+    }
 }

@@ -83,9 +83,12 @@ class MapDataConfigurator
         //check if we are in backend mode
         if ($options['geoeditor']) {
             // select selected backend profile
-            $result = $database->prepare("SELECT id FROM `tl_c4g_map_profiles` WHERE `is_backend_editor_default` = '1'")->limit(1)->execute();
-            $profileId = $result->row();
-            $profileId = $profileId['id'];
+//            $result = $database->prepare("SELECT id FROM `tl_c4g_map_profiles` WHERE `is_backend_editor_default` = '1'")->limit(1)->execute();
+//            $profileId = $result->row();
+//            $profileId = $profileId['id'];
+            $mapData['editor'] = [];
+            $mapData['editor']['enable'] = true;
+            $mapData['editor']['type'] = 'backend';
         }
 
         //check if we are in backend mode
@@ -444,9 +447,13 @@ class MapDataConfigurator
             // editor
             //
             if ($profile->editor) {
-                $mapData['editor']['enable'] = $profile->editor;
-                $mapData['editor']['type'] = 'frontend';
-                $mapData['editor']['open'] = false;
+                if (isset($mapData['editor']['type']) && $mapData['editor']['type'] === 'backend') {
+                    // is already set, we are in backend mode
+                } else {
+                    $mapData['editor']['enable'] = $profile->editor;
+                    $mapData['editor']['type'] = 'frontend';
+                    $mapData['editor']['open'] = false;
+                }
             }
 
             // cesium
@@ -509,7 +516,7 @@ class MapDataConfigurator
         ResourceLoader::loadResourcesForModule('maps');
         // load internal scripts and themes
         if ($profileId) {
-            $mapData['themeData'] = ResourceLoader::loadResourcesForProfile($profileId, $options['type'] == 'geopicker');
+            $mapData['themeData'] = ResourceLoader::loadResourcesForProfile($profileId, $options['type'] == 'geopicker', null, $mapData);
         } else {
             ResourceLoader::loadResources();
             $mapData['themeData'] = ResourceLoader::loadTheme();

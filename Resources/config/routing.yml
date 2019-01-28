@@ -42,24 +42,6 @@ layer_content_data_service:
     requirements:
         layerId: \d+
 
-editor_service:
-    path: /con4gis/editorService/{profileId}
-    defaults:
-        _scope: frontend
-        _controller: "con4gisMapsBundle:Maps:editor"
-    methods: [GET]
-    requirements:
-        mapId: \d+
-
-beEditor_service:
-    path: /con4gis/beEditorService/
-    defaults:
-        _scope: frontend
-        _controller: "con4gisMapsBundle:Maps:beEditor"
-    methods: [GET]
-    requirements:
-        mapId: \d+
-
 infowindow_service:
     path: /con4gis/infoWindowService/{popupString}
     defaults:
