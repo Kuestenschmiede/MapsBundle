@@ -715,7 +715,15 @@ export class C4gLayerController{
 
 
             } else {
-              vectorLayer = utils.getVectorLayer(vectorSource, self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle] ? self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style : null);
+              if(self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle] && self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].fnStyleFunction) {
+
+                vectorStyle = Function("feature","data","map",self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].fnStyleFunction);
+                vectorLayer = utils.getVectorLayer(vectorSource, vectorStyle);
+
+              }
+              else{
+                vectorLayer = utils.getVectorLayer(vectorSource, self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle] ? self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style : null);
+              }
             }
 
             /* Fit to extend */
