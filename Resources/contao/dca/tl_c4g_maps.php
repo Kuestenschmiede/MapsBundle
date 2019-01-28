@@ -1296,27 +1296,29 @@ class tl_c4g_maps extends Backend
     public function getTabParentList(DataContainer $dc)
     {
         $return = [];
-        if ($this->Database->listTables()[0]) {
+        if ($this->Database->listTables()[0] || true) {
             if ($dc->activeRecord->tab_source<>'') {
                 $tabsource = C4gMapTablesModel::findByPk($dc->activeRecord->tab_source);
             } else {
                 $objTables = C4gMapTablesModel::findAll();
                 $tabsource = $objTables[0];
             }
-            $objTables = C4gMapTablesModel::findAll();
-            while ($objTables->next()) {
-                $return[$objTables->id] = \Contao\Controller::replaceInsertTags($objTables->name);
+            $ptable = unserialize($tabsource->ptable)[0];
+            $ptableBackendField = str_replace($ptable . '.','', unserialize($tabsource->ptableBackendField)[0]);
+            $ptableCompareField = str_replace($ptable . '.','', unserialize($tabsource->ptableCompareField)[0]);
+            $strSelect = "SELECT $ptableCompareField, $ptableBackendField FROM $ptable";
+            $objResult = $this->Database->prepare($strSelect)->execute();
+            while ($objResult->next()) {
+                $return[$objResult->$ptableCompareField] = $objResult->$ptableBackendField;
             }
-        }
-        if ($dc->activeRecord->tab_source<>'') {
-            $tabsource = $dc->activeRecord->tab_source;
-        } else {
-            $tabsource = $this->firstTabSource;
-        }
-        if ($this->Database->listTables()['tl_c4g_map_tables']) {
-
+            return $return;
         }
         else{
+            if ($dc->activeRecord->tab_source<>'') {
+                $tabsource = $dc->activeRecord->tab_source;
+            } else {
+                $tabsource = $this->firstTabSource;
+            }
             $source = $GLOBALS['con4gis']['maps']['sourcetable'][$tabsource];
             $ptable = explode(',', $source['ptable']);
             $ptable_option = explode(',', $source['ptable_option']);

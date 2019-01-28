@@ -87,7 +87,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
     ),
     'palettes' =>
     [
-        'default' => '{default_legend},name,tableSource,ptable,ptableOption,ptableField,ptableCompareField;{table_information},geox,geoy,geolocation,label,locstyle,tooltip;',
+        'default' => '{default_legend},name,tableSource,ptable,ptableOption,ptableBackendField,ptableField,ptableCompareField;{table_information},geox,geoy,geolocation,label,locstyle,tooltip;',
     ],
 
     // Fields
@@ -107,7 +107,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'exclude'                 => true,
             'inputType'               => 'text',
             'sql'                     => "text NULL"
-            ],
+        ],
         'tableSource' =>
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['tableSource'],
@@ -137,6 +137,14 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
         ],
         'ptableBlob' =>
         [
+            'sql'                     => "text NULL"
+        ],
+        'ptableBackendField' => [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['ptableCompareField'],
+            'exclude'                 => true,
+            'inputType'               => 'select',
+            'options_callback'        => array('tl_c4g_map_tables','getParentTablesFields', 'includeBlankOption' => true),
+            'eval'                    => array('mandatory'=>false, 'multiple'=>true, 'chosen' => true, 'size' => 2),
             'sql'                     => "text NULL"
         ],
         'ptableField' =>
@@ -236,7 +244,7 @@ class tl_c4g_map_tables extends Backend
         foreach ($tableNames as $tableName){
             $tableOptions = $this->Database->getFieldNames($tableName);
             foreach ($tableOptions as $tableOption){
-                $options[$tableName.':'.$tableOption] = $tableName.':'.$tableOption;
+                $options[$tableName.'.'.$tableOption] = $tableName.'.'.$tableOption;
             }
         }
         return $options;
