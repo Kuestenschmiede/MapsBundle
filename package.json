@@ -4,7 +4,9 @@
   "description": "con4gis-Maps ============ The interactive maps brick of the Contao GIS-kit **con4gis**.",
   "main": "webpack.config.js",
   "scripts": {
-    "encore": "encore"
+    "encore": "encore",
+    "build-dev": "webpack --watch --config webpack.development.config.js",
+    "build-prod": "webpack --watch --config webpack.production.config.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +19,14 @@
   },
   "homepage": "https://github.com/Kuestenschmiede/MapsBundle#readme",
   "devDependencies": {
-    "@symfony/webpack-encore": "^0.22.4"
+    "babel": "^6.23.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+    "echo-loader": "0.0.1",
+    "webpack": "^4.29.0",
+    "webpack-cli": "^3.2.1",
+    "babel-loader": "^7.1.5",
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0"
   }
 }
