@@ -885,7 +885,6 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
             'inputType'               => 'textarea',
             'eval'                    => array('tl_class'=>'wizard', 'preserve_tags'=>true),
             // 'save_callback'           => array(array('tl_c4g_maps','setLocData')),
-            'wizard'                  => array(array('con4gis\MapsBundle\Resources\contao\classes\GeoEditor', 'getEditorLink')),
             'sql'                     => "text NULL"
         ),
         'data_projection' => array

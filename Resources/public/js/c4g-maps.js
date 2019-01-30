@@ -21,7 +21,6 @@ import {OverviewMap} from "./c4g-maps-control-overviewmap";
 import {GeoSearch} from "./c4g-maps-control-geosearch";
 import {Permalink} from "./c4g-maps-control-permalink";
 import {Starboard} from "./c4g-maps-control-starboard";
-import {Editor} from "./c4g-maps-control-portside-editor";
 import {Account} from "./c4g-maps-control-portside-account";
 import {GeoPicker} from "./c4g-maps-interaction-geopicker";
 import {Home} from "./c4g-maps-control-home";
@@ -625,18 +624,18 @@ export class MapController {
     }
 
     // editor
-    if (mapData.editor.enable && typeof Editor === 'function') {
-      this.controls.editor = new Editor({
-        tipLabel: langConstants.CTRL_EDITOR,
-        type: mapData.editor.type || 'frontend',
-        target: mapData.editor.target || controlContainerTopLeft,
-        initOpen: mapData.editor.open || false,
-        dataField: mapData.editor.data_field || false,
-        caching: mapData.caching,
-        mapController: this
-      });
-      this.map.addControl(this.controls.editor);
-    }
+    // if (mapData.editor.enable && typeof Editor === 'function') {
+    //   this.controls.editor = new Editor({
+    //     tipLabel: langConstants.CTRL_EDITOR,
+    //     type: mapData.editor.type || 'frontend',
+    //     target: mapData.editor.target || controlContainerTopLeft,
+    //     initOpen: mapData.editor.open || false,
+    //     dataField: mapData.editor.data_field || false,
+    //     caching: mapData.caching,
+    //     mapController: this
+    //   });
+    //   this.map.addControl(this.controls.editor);
+    // }
     // measuretools
     if (mapData.measuretools.enable && typeof Measuretools === 'function') {
       this.controls.measuretools = new Measuretools({
@@ -903,7 +902,7 @@ export class MapController {
         }
       }
 
-      if (mapData.themeData['buttonradius']) {
+      if (domMapDiv && mapData.themeData['buttonradius']) {
         domMapDiv.style.setProperty('--button-radius-percent', mapData.themeData['buttonradius'] + '%');
         domMapDiv.style.setProperty('--button-radius-pixel', mapData.themeData['buttonradius'] + 'px');
       }

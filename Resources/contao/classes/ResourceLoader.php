@@ -34,7 +34,7 @@ class ResourceLoader extends coreResourceLoader
     /**
      * @TODO: doku
      */
-    public static function loadResources($resources=array())
+    public static function loadResources($resources=array(), $mapData = [])
     {
 
         global $objPage;
@@ -198,7 +198,7 @@ class ResourceLoader extends coreResourceLoader
 ////                parent::loadJavaScriptRessource('c4g-maps-control-portside-router', self::BUNDLE_JS_PATH . 'c4g-maps-control-portside-router.js' . $staticOption);
 ////            }
 ////            if ($resources['editor']) {
-////                parent::loadJavaScriptRessource('c4g-maps-control-portside-editor', self::BUNDLE_JS_PATH . 'c4g-maps-control-portside-editor.js' . $staticOption);
+////                parent::loadJavaScriptRessource('c4g-maps-control-portside-editor', self::BUNDLE_JS_PATH . 'c4g-backend-editor.js' . $staticOption);
 ////            }
 ////            if ($resources['measuretools']) {
 ////                parent::loadJavaScriptRessource('c4g-maps-control-portside-measuretools', self::BUNDLE_JS_PATH . 'c4g-maps-control-portside-measuretools.js' . $staticOption);
@@ -230,6 +230,7 @@ class ResourceLoader extends coreResourceLoader
 
         $eventDispatcher = System::getContainer()->get('event_dispatcher');
         $event = new LoadMapResourcesEvent();
+        $event->setMapData($mapData);
         $eventDispatcher->dispatch($event::NAME, $event);
 
         // core scripts (2|2)
@@ -250,7 +251,7 @@ class ResourceLoader extends coreResourceLoader
     /**
      * @TODO: doku
      */
-    public static function loadResourcesForProfile($profileId, $geopicker = false, $profile = null)
+    public static function loadResourcesForProfile($profileId, $geopicker = false, $profile = null, $mapData)
     {
         if (!$profile) {
             // get appropriate profile from database
@@ -321,7 +322,7 @@ class ResourceLoader extends coreResourceLoader
         );
 
         // load theme
-        self::loadResources($resources);
+        self::loadResources($resources, $mapData);
         // check & load Theme
         return self::loadTheme($profile->theme);
     }

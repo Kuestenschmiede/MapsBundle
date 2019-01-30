@@ -96,18 +96,6 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_attribution'] = ['Copyrigh
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_collapsed'] = ['Suchfeld initial einklappen', 'Das Eingabefeld für die Sucheingabe wird erst nach Klick auf die Lupe geöffnet.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_div'] = ['DIV für die Suche', 'DIV zur Positionierung der Suche. Nur nötig, falls die Suche nicht direkt vor der Karte angezeigt werden soll. Muss manuell auf der Seite erzeugt werden, z.B. mit einem HTML Inhaltselement.'];
 
-/** Editor */
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor'] = ['Editor aktivieren', 'Blendet einen Schalter ein, der den Editor auf der Karte anzeigt, mit dem Punkte, Strecken und Flächen auf die Karte gezeichnet werden können.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_styles_point'] = ['Lokationsstile für POIs', 'Ausgewählte Lokationsstile werden im Editor angeboten.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_styles_line'] = ['Lokationsstile für Strecken', 'Ausgewählte Lokationsstile werden im Editor angeboten.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_styles_polygon'] = ['Lokationsstile für Flächen', 'Ausgewählte Lokationsstile werden im Editor angeboten.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_styles_circle'] = ['Lokationsstile für Kreise', 'Ausgewählte Lokationsstile werden im Editor angeboten.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_styles_freehand'] = ['Lokationsstile fürs Freihandzeichnen', 'Ausgewählte Lokationsstile werden im Editor angeboten.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_vars'] = ['Zusatzfelder', 'Zusatzfelder stehen für POIs, Strecken und Flächen zur Verfügung und können über ${Schlüssel} im Popup, Label und Tooltip in die Karte eingefügt werden.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_show_items'] = ['Alle Karteneinträge im Editor anzeigen', 'Zeigt im Editor nicht nur den zu bearbeitenden Karteneintrag an, sondern auch alle Anderen.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_helpurl'] = ['Hilfe-Link', 'Wenn hier eine URL eingetragen wird, so erscheint ein "Hilfe" Link im Editor, der zu der angegebenen URL führt.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['is_backend_editor_default'] = ['Als Standardprofil für Backend-Geoeditor verwenden', 'Setzen Sie diese Checkbox, um das Kartenprofil als Standardwert im Backend-Geoeditor zu verwenden (Kartenstrukturelement GeoJson).'];
-
 /** Geopicker (Position bestimmen) */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['is_backend_geopicker_default'] = ['Als Standardprofil für Backend-Geopicker verwenden', 'Setzen Sie diese Checkbox, um das Kartenprofil standardmäßig für den Backend-Geopicker zu verwenden.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker'] = ['Geopicker anzeigen (Frontend)', 'Zeigt einen Geopicker, wie er im Backend zur Auswahl der Koordinaten verwendet wird im Frontend an. Nützlich z.B. in einem Formular.'];
