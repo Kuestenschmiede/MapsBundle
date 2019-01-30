@@ -1227,27 +1227,9 @@ class tl_c4g_maps extends Backend
     public function getTabSources(DataContainer $dc)
     {
         $return = [];
-        if ($this->Database->listTables()[0]) {
-            $objTables = C4gMapTablesModel::findAll();
-            while ($objTables->next()) {
-                $return[$objTables->id] = \Contao\Controller::replaceInsertTags($objTables->name);
-            }
-        }
-        else {
-            foreach ($GLOBALS['con4gis']['maps']['sourcetable'] as $key=>$sourcetable) {
-                if (!isset($this->firstTabSource)) {
-                    $this->firstTabSource = $key;
-                }
-                if (!$GLOBALS['TL_LANG']['c4g_maps']['sourcetable'][$key]['name'] && !$GLOBALS['con4gis']['maps']['sourcetable'][$key]['name']) {
-                    $return[$key] = $key;
-                } else {
-                    if ($GLOBALS['con4gis']['maps']['sourcetable'][$key]['name']) {
-                        $return[$key] = $GLOBALS['con4gis']['maps']['sourcetable'][$key]['name'];
-                    } else {
-                        $return[$key] = $GLOBALS['TL_LANG']['c4g_maps']['sourcetable'][$key]['name'];
-                    }
-                }
-            }
+        $objTables = C4gMapTablesModel::findAll();
+        while ($objTables->next()) {
+            $return[$objTables->id] = \Contao\Controller::replaceInsertTags($objTables->name);
         }
         return $return;
     }
@@ -1295,44 +1277,24 @@ class tl_c4g_maps extends Backend
     public function getTabParentList(DataContainer $dc)
     {
         $return = [];
-        if ($this->Database->listTables()[0] || true) {
-            if ($dc->activeRecord->tab_source<>'') {
-                $tabsource = C4gMapTablesModel::findByPk($dc->activeRecord->tab_source);
-            } else {
-                $objTables = C4gMapTablesModel::findAll();
-                $tabsource = $objTables[0];
-            }
-            $ptable = unserialize($tabsource->ptable)[0];
-            $ptableBackendField = str_replace($ptable . '.','', unserialize($tabsource->ptableBackendField)[0]);
-            $ptableCompareField = str_replace($ptable . '.','', unserialize($tabsource->ptableCompareField)[0]);
+        if ($dc->activeRecord->tab_source<>'') {
+            $tabsource = C4gMapTablesModel::findByPk($dc->activeRecord->tab_source);
+        } else {
+            $objTables = C4gMapTablesModel::findAll();
+            $tabsource = $objTables[0];
+        }
+        $ptable = unserialize($tabsource->ptable)[0];
+        $ptableBackendField = str_replace($ptable . '.','', unserialize($tabsource->ptableBackendField)[0]);
+        $ptableCompareField = str_replace($ptable . '.','', unserialize($tabsource->ptableCompareField)[0]);
+        if($ptable && $ptableBackendField && $ptableCompareField) {
             $strSelect = "SELECT $ptableCompareField, $ptableBackendField FROM $ptable";
             $objResult = $this->Database->prepare($strSelect)->execute();
             while ($objResult->next()) {
                 $return[$objResult->$ptableCompareField] = $objResult->$ptableBackendField;
             }
-            return $return;
         }
-        else{
-            if ($dc->activeRecord->tab_source<>'') {
-                $tabsource = $dc->activeRecord->tab_source;
-            } else {
-                $tabsource = $this->firstTabSource;
-            }
-            $source = $GLOBALS['con4gis']['maps']['sourcetable'][$tabsource];
-            $ptable = explode(',', $source['ptable']);
-            $ptable_option = explode(',', $source['ptable_option']);
-            if (is_array($source) && $ptable && $ptable_option) {
-                if (($ptable[0]) && ($ptable_option[0])) {
-                    $obj = $this->Database->prepare(
-                        "SELECT id, ".$ptable_option[0]." FROM ".$ptable[0])->execute();
-                    while ($obj->next()) {
-                        $name = $ptable_option[0];
-                        $return[$obj->id] = $obj->$name;
-                    }
-                    return $return;
-                }
-            }
-        }
+        return $return;
+
     }
 
     /**
@@ -1342,99 +1304,25 @@ class tl_c4g_maps extends Backend
      */
     public function getTabParentList1(DataContainer $dc)
     {
+        $return = [];
         if ($dc->activeRecord->tab_source<>'') {
-            $tabsource = $dc->activeRecord->tab_source;
+            $tabsource = C4gMapTablesModel::findByPk($dc->activeRecord->tab_source);
         } else {
-            $tabsource = $this->firstTabSource;
+            $objTables = C4gMapTablesModel::findAll();
+            $tabsource = $objTables[0];
         }
-
-        $source = $GLOBALS['con4gis']['maps']['sourcetable'][$tabsource];
-        if($GLOBALS['BE_FFL']['tag'])
-        {
-            $source = $GLOBALS['con4gis']['maps']['sourcetable'][$tabsource.'_with_tags'];
-        }
-        $ptable = explode(',', $source['ptable']);
-        $ctable = explode(',', $source['ctable']);
-        $ctable_option = explode(',', $source['ctable_option']);
-        $ptable_option = explode(',', $source['ptable_option']);
-        $ptype = $source['ptype'];
-        $sqlwhere = $source['ctable_where'];
-        if (is_array($source) && $ptable && $ptable_option) {
-            if (($ptable[1]) && ($ptable_option[1])) {
-                if($ptype == 'tag')
-                {
-                    $obj = $this->Database->prepare(
-                        "SELECT id, ".$ptable_option[1]." FROM ".$ptable[1]." WHERE ".$sqlwhere[1])->execute();
-                }
-                else
-                {
-                    $obj = $this->Database->prepare(
-                        "SELECT id, ".$ptable_option[1]." FROM ".$ptable[1])->execute();
-                }
-                while ($obj->next()) {
-                    $name = $ptable_option[1];
-                    $return[$obj->id] = $obj->$name;
-
-                }
-                $return = array_unique($return);
-                return $return;
-            }
-            else if (($ctable[0]) && ($ctable_option[0])) {
-                if($ptype == 'tag')
-                {
-                    $obj = $this->Database->prepare(
-                        "SELECT id, ".$ctable_option[0]." FROM ".$ctable[0]." WHERE ".$sqlwhere)->execute();
-                }
-                else
-                {
-                    $obj = $this->Database->prepare(
-                        "SELECT id, ".$ctable_option[0]." FROM ".$ctable[0])->execute();
-                }
-                while ($obj->next()) {
-                    $name = $ctable_option[0];
-                    $return[$obj->id] = $obj->$name;
-
-                }
-                $return = array_unique($return);
-                return $return;
+        $ptable = unserialize($tabsource->ptable)[1];
+        $ptableBackendField = str_replace($ptable . '.','', unserialize($tabsource->ptableBackendField)[1]);
+        $ptableCompareField = str_replace($ptable . '.','', unserialize($tabsource->ptableCompareField)[1]);
+        if($ptable && $ptableBackendField && $ptableCompareField){
+            $strSelect = "SELECT $ptableCompareField, $ptableBackendField FROM $ptable";
+            $objResult = $this->Database->prepare($strSelect)->execute();
+            while ($objResult->next()) {
+                $return[$objResult->$ptableCompareField] = $objResult->$ptableBackendField;
             }
         }
-
-
+        return $return;
     }
-
-//    public function getTabTag(DataContainer $dc)
-//    {
-//        if ($dc->activeRecord->tab_source<>'') {
-//            $tabsource = $dc->activeRecord->tab_source;
-//        } else {
-//            $tabsource = $this->firstTabSource;
-//        }
-//        $id = $dc->activeRecord->tab_pid;
-//        $objEvent = $this->Database->prepare("SELECT * FROM tl_calendar_events WHERE pid = ?")->execute($id);
-//        $stringSQL = "SELECT DISTINCT tag FROM tl_tag WHERE from_table = ?";
-//        while($objEvent->next())
-//        {
-//            if(substr($stringSQL,-1)=='?')
-//            {
-//                $stringSQL .= " AND tid = ".$objEvent->id;
-//            }
-//            else
-//            {
-//                $stringSQL .= " OR tid = ".$objEvent->id;
-//            }
-//
-//        }
-//
-//        $obj = $this->Database->prepare($stringSQL)->execute($tabsource,$dc->activeRecord->id);
-//        while ($obj->next()) {
-//
-//            $return[$obj->tag] = $obj->tag;
-//        }
-//        return $return;
-//
-//    }
-
 
     /**
      * Recursively step through map item tree
