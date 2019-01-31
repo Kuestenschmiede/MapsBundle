@@ -13272,6 +13272,21 @@ var utils = exports.utils = {
   },
 
 
+  /**
+   * Returns the current domain (without the subdomain)
+   */
+  getCurrentDomain: function getCurrentDomain() {
+    var domain = window.location.hostname;
+    var arrDomain = domain.split('.');
+    if (arrDomain.length > 2) {
+      // there is a subdomain
+      return arrDomain[arrDomain.length - 2];
+    } else {
+      return arrDomain[0];
+    }
+  },
+
+
   getValue: function getValue(key) {
     return localStorage[key] || '';
   },
