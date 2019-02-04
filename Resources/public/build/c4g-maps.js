@@ -11787,7 +11787,7 @@ var MapProxy = exports.MapProxy = function () {
     this.layers_loaded = false;
 
     mapData = this.options.mapController.data;
-
+    this.mapData = mapData;
     this.mapId = mapData.id;
 
     this.api_baselayer_url = this.options.mapController.data.api.baselayer + '/' + mapData.profile;
@@ -12205,7 +12205,7 @@ var MapProxy = exports.MapProxy = function () {
         element: popUpElement,
         positioning: 'bottom-left',
         offset: [-50, 0],
-        autoPan: mapData.popupAutoPan ? true : false,
+        autoPan: this.mapData.popupAutoPan ? true : false,
         autoPanAnimation: {
           duration: 0
         },
@@ -13269,6 +13269,21 @@ var utils = exports.utils = {
    */
   getCurrentSubdomain: function getCurrentSubdomain() {
     return window.location.href;
+  },
+
+
+  /**
+   * Returns the current domain (without the subdomain)
+   */
+  getCurrentDomain: function getCurrentDomain() {
+    var domain = window.location.hostname;
+    var arrDomain = domain.split('.');
+    if (arrDomain.length > 2) {
+      // there is a subdomain
+      return arrDomain[arrDomain.length - 2];
+    } else {
+      return arrDomain[0];
+    }
   },
 
 

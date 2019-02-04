@@ -48,7 +48,7 @@ export class MapProxy {
     this.layers_loaded = false;
 
     mapData = this.options.mapController.data;
-
+    this.mapData = mapData;
     this.mapId = mapData.id;
 
     this.api_baselayer_url = this.options.mapController.data.api.baselayer + '/' + mapData.profile;
@@ -498,7 +498,7 @@ export class MapProxy {
       element: popUpElement,
       positioning: 'bottom-left',
       offset: [-50, 0],
-        autoPan: mapData.popupAutoPan ? true : false,
+        autoPan: this.mapData.popupAutoPan ? true : false,
         autoPanAnimation: {
              duration: 0
         },

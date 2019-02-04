@@ -124,18 +124,7 @@ span.c4g-active ul li.c4g-active:before{
   font-weight: 900;
   font-size: 14px;
 }
-.c4g-editor.c4g-open > button:before {
-  content: "\f044";
-  font-weight: 100;
-  font-family: 'Font Awesome 5 Free';
-  font-size: inherit;
-}
-.c4g-editor.c4g-close > button:before {
-  content: "\f044";
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
-  font-size: inherit;
-}
+
 .c4g-measure.c4g-open > button:before {
   content: "\f545";
   font-family: 'Font Awesome 5 Free';
@@ -248,47 +237,33 @@ button.c4g-starboard-close:before{
   font-size: inherit;
 }
 
-button.c4g-measuretools-view-trigger-select:before,
-button.c4g-editor-view-trigger-select:before {
+button.c4g-measuretools-view-trigger-select:before {
   content: "\f245";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;
 }
-button.c4g-editor-view-trigger-draw-point:before {
-  content: "\f3c5";
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
-  font-size: inherit;
-}
-button.c4g-measuretools-view-trigger-draw-line:before,
-button.c4g-editor-view-trigger-draw-line:before {
+
+button.c4g-measuretools-view-trigger-draw-line:before {
   content: "\f1e0";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;
 }
-button.c4g-measuretools-view-trigger-draw-polygon:before,
-button.c4g-editor-view-trigger-draw-polygon:before {
-  content: "\f04d";
+button.c4g-measuretools-view-trigger-draw-polygon:before {
+  content: "\f5ee";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;
 }
-button.c4g-measuretools-view-trigger-draw-circle:before,
-button.c4g-editor-view-trigger-draw-circle:before {
+button.c4g-measuretools-view-trigger-draw-circle:before {
   content: "\f111";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;
 }
+
 button.c4g-measuretools-view-trigger-draw-freehand:before {
-  content: "\f303";
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
-  font-size: inherit;
-}
-button.c4g-editor-view-trigger-draw-freehand:before {
   content: "\f303";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;

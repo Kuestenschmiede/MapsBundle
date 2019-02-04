@@ -4,6 +4,7 @@ services:
         public: true
         arguments:
             - "@event_dispatcher"
+
     con4gis.profile_service:
         class: con4gis\MapsBundle\Classes\Services\ProfileService
         public: true
