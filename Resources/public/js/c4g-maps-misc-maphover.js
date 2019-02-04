@@ -108,7 +108,6 @@ export class MapHover {
         mapData = self.options.mapController.data,
         proxy = self.options.mapController.proxy;
 
-
       clustered = false;
       hovered = self.map.forEachFeatureAtPixel(event.pixel,
         function (feature, layer) {

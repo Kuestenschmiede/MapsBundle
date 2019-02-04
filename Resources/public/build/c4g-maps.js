@@ -11798,6 +11798,7 @@ var MapProxy = exports.MapProxy = function () {
     this.api_locstyle_url = this.options.mapController.data.api.locstyle;
     this.api_infowindow_url = this.options.mapController.data.api.infowindow;
     this.options = options;
+    this.clickObserverActive = true;
 
     // this.initialize();
   }
@@ -11893,6 +11894,10 @@ var MapProxy = exports.MapProxy = function () {
       map.on('click', function (clickEvent) {
 
         var feature, fFeatures, layer, popupInfos, currentZoom, minZoom, newCenter, geometry, coord, setPopup, styleFunc, styleCluster, objPopup;
+
+        if (!self.clickObserverActive) {
+          return false;
+        }
 
         //ToDo check new function call with ol 4.3
         feature = map.forEachFeatureAtPixel(clickEvent.pixel, function (feature, layer) {
@@ -12085,14 +12090,18 @@ var MapProxy = exports.MapProxy = function () {
           _c4gMapsUtils.utils.callHookFunctions(window.c4gMapsHooks.hook_map_click, clickEvent);
         }
       }); // end of "click-observer"
-
-
-      // this.options.mapController.map.getLayers().on('change:length', function(event) {
-      //     ;
-      // });
-
     } // end of "initial"*
 
+  }, {
+    key: "activateClickObserver",
+    value: function activateClickObserver() {
+      this.clickObserverActive = true;
+    }
+  }, {
+    key: "deactivateClickObserver",
+    value: function deactivateClickObserver() {
+      this.clickObserverActive = false;
+    }
   }, {
     key: "combine",
     value: function combine(proxy) {
