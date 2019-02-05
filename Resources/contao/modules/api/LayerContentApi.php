@@ -300,21 +300,20 @@ class LayerContentApi extends \Controller
                 return $this->createC4gForumResult($objLayer, $secondFetch);
                 break;
             case "table":
-                $sourceTable = $objLayer->tab_source;
                 $pidOption = '';
                 $whereClause = '';
                 $qWhere = '';
                 $addBeWhereClause = '';
                 $and = '';
-                $arrConfig = C4gMapTablesModel::findByPk($objLayer->tab_source);
-                $ptableArr = unserialize($arrConfig->ptable);
-                $ptableFieldArr = unserialize($arrConfig->ptableField);
-                $ptableCompareFieldArr = unserialize($arrConfig->ptableCompareField);
-                $ptableBlobArr = explode(',', $arrConfig['ptable_blob']);
+                $objConfig = C4gMapTablesModel::findByPk($objLayer->tab_source);
+                $sourceTable = $objConfig->tableSource;
+                $ptableArr = unserialize($objConfig->ptable);
+                $ptableFieldArr = unserialize($objConfig->ptableField);
+                $ptableCompareFieldArr = unserialize($objConfig->ptableCompareField);
+                $ptableBlobArr = unserialize($objConfig->ptableBlob);
 
                 //check parent values
-                if ($arrConfig['ptable']) {
-
+                if ($ptableArr) {
                     foreach ($ptableArr as $key => $ptable) {
                         $qWhere .= " WHERE ";
                         if ($key == 0) {
@@ -324,9 +323,8 @@ class LayerContentApi extends \Controller
                             $fieldName = "tab_pid" . intval($key);
                             $sourcePid = intval($objLayer->$fieldName);
                         }
-
                         $ptablefield = $ptableFieldArr[$key];
-                        $ptableCompareField = $ptableCompareFieldArr[$key];
+                        $ptableCompareField = str_replace($ptable . ".", "", $ptableCompareFieldArr[$key]);
 
                         //if there is a compare Field instead of the id field (parent table) we have change the parent id
                         if ($ptable && $sourcePid && $ptableCompareField && ($ptableCompareField != 'id')) {
@@ -335,8 +333,8 @@ class LayerContentApi extends \Controller
                             $sourcePid = intval($result->$ptableCompareField);
                         }
 
-                        if ($sourcePid) {
-                            if ($arrConfig['ptable_field']) {
+                        if ($sourcePid || $sourcePid == 0) {
+                            if ($objConfig->ptableField) {
                                 if ($ptableBlobArr[$key] == 1) {
                                     //ToDo filter after select
                                 } else {
@@ -349,31 +347,13 @@ class LayerContentApi extends \Controller
 
                     }
                 }
-
-                if ($arrConfig['sqlwhere']) {
-                    $qWhere = " WHERE ";
-                    if ($arrConfig['ptable'] && $pidOption) {
-                        $qAnd = " AND ";
-                    }
-                    $whereClause = $arrConfig['sqlwhere'];
-                }
-
                 if ($objLayer->tab_whereclause) {
-                    $an = " AND ";
-                    if (!$qWhere) {
-                        $qWhere = " WHERE ";
-                        $an = '';
-                    }
-                    $addBeWhereClause = $an . $objLayer->tab_whereclause;
-                }
-
-                if ($arrConfig['sourcetable']) {
-                    $sourceTable = $arrConfig['sourcetable'];
+                    $addBeWhereClause = " WHERE " . $objLayer->tab_whereclause;
                 }
                 $stmt = '';
 
                 if ($objLayer->tab_filter_alias) {
-                    //$alias = $this->getInput()->get($arrConfig['alias_getparam']);
+                    //$alias = $this->getInput()->get($objConfig['alias_getparam']);
                     $alias = $_SERVER['HTTP_REFERER'];
                     $strC = substr_count($alias, '/');
                     $arrUrl = explode('/', $alias);
@@ -398,23 +378,23 @@ class LayerContentApi extends \Controller
 
                 }
 
-                $geox = $arrConfig->geox;
-                $geoy = $arrConfig->geoy;
+                $geox = $objConfig->geox;
+                $geoy = $objConfig->geoy;
                 $geoxField = $geox;
                 $geoyField = $geoy;
                 $geolocation = '';
                 if (!$geox && !$geoy) {
-                    $geolocation = $arrConfig->geolocation;
+                    $geolocation = $objConfig->geolocation;
                 }
-                $tooltipField = $arrConfig->tooltip;
-                $labelField = $arrConfig->label;
+                $tooltipField = $objConfig->tooltip;
+                $labelField = $objConfig->label;
 
                 if (!$result) {
                     break;
                 }
-
+                $locstyleField = $objConfig->locstyle;
                 while ($result->next()) {
-                    $locstyle = $result->c4g_locstyle;
+                    $locstyle = $result->$locstyleField;
                     if (!$locstyle) {
                         $locstyle = $objLayer->locstyle;
                     }
@@ -422,9 +402,9 @@ class LayerContentApi extends \Controller
                     $blobCount = 0;
 
                     //check blob fields
-                    if ($arrConfig['ptable']) {
+                    if ($objConfig->ptable) {
                         foreach ($ptableArr as $key => $ptable) {
-                            $ptableBlobArr = explode(',', $arrConfig['ptable_blob']);
+                            $ptableBlobArr = explode(',', $objConfig->ptable_blob);
                             if ($ptableBlobArr[$key] == 1) {
                                 if ($key == 0) {
                                     $sourcePid = intval($objLayer->tab_pid);
@@ -461,8 +441,8 @@ class LayerContentApi extends \Controller
                     $popupContent = '';
                     if (($show == $blobCount) && (($result->$geoxField && $result->$geoyField) || ($geolocation && $result->$geolocation))) {
                         // replace popup stuff
-                        if ($arrConfig['popup']) {
-                            $popupElements = explode(',', $arrConfig['popup']);
+                        if ($objConfig->popup) {
+                            $popupElements = explode(',', $objConfig->popup);
                             foreach ($popupElements as $key => $value) {
                                 if (substr($value, 0, 1) == '{' && substr($value, -1, 1) == '}') {
                                     // we have an inserttag
@@ -572,8 +552,8 @@ class LayerContentApi extends \Controller
                                 floatval($result->$geoxField),
                                 floatval($result->$geoyField));
                         }
-                        if ($arrConfig['linkurl'] && !$arrConfig['popup']) {
-                            $link = $arrConfig['linkurl'];
+                        if ($objConfig->linkurl && !$objConfig->popup) {
+                            $link = $objConfig->linkurl;
                             $link = str_replace('[id]', $result->id, $link);
                             $matches = [];
                             if (preg_match('/\[[a-z]+\]/', $link, $matches)) {
