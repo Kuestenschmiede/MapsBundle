@@ -59,7 +59,7 @@ export class MapProxy {
     this.api_locstyle_url = this.options.mapController.data.api.locstyle;
     this.api_infowindow_url = this.options.mapController.data.api.infowindow;
     this.options = options;
-
+    this.clickObserverActive = true;
 
 
     // this.initialize();
@@ -173,16 +173,22 @@ export class MapProxy {
         styleCluster,
         objPopup;
 
+      if (!self.clickObserverActive) {
+        return false;
+      }
+
       //ToDo check new function call with ol 4.3
       feature = map.forEachFeatureAtPixel(clickEvent.pixel,
         function (feature, layer) {
           return feature;
-        });
+        }
+      );
 
       layer = map.forEachFeatureAtPixel(clickEvent.pixel,
         function (feature, layer) {
           return layer;
-        });
+        }
+      );
 
       if(layer && layer.getStyle()) {
         styleFunc = layer.getStyle();
@@ -300,20 +306,18 @@ export class MapProxy {
         feature = false;
       }
       if (feature && feature.get('loc_linkurl')) {
-        if(self.options.mapController.data.link_newwindow==='1') {
+        if (self.options.mapController.data.link_newwindow === '1') {
           window.open(feature.get('loc_linkurl'));
         }
         else{
           window.open(feature.get('loc_linkurl'),"_self");
         }
 
-      }
-      else {
-        if(feature && feature.get('zoom_onclick') && feature.get('zoom_onclick') != 0){
+      } else {
+        if (feature && feature.get('zoom_onclick') && feature.get('zoom_onclick') != 0) {
           map.getView().setZoom(feature.get('zoom_onclick'));
           map.getView().setCenter(feature.getGeometry().getCoordinates());
-        }
-        else if(layer && layer.zoom_onclick && layer.zoom_onclick != 0){
+        } else if (layer && layer.zoom_onclick && layer.zoom_onclick != 0) {
           map.getView().setZoom(layer.zoom_onclick);
           map.getView().setCenter(clickEvent.coordinate);
         }
@@ -380,17 +384,20 @@ export class MapProxy {
       }
     }); // end of "click-observer"
 
-
-    // this.options.mapController.map.getLayers().on('change:length', function(event) {
-    //     ;
-    // });
-
-
   } // end of "initial"*
-  combine(proxy){
+
+  activateClickObserver() {
+    this.clickObserverActive = true;
+  }
+
+  deactivateClickObserver() {
+    this.clickObserverActive = false;
+  }
+
+  combine(proxy) {
     var func = function(event) {
       proxy.combineLayers(proxy);
-      proxy.options.mapController.map.un('postrender',func);
+      proxy.options.mapController.map.un('postrender', func);
     };
     proxy.options.mapController.map.on('postrender', func)
   }

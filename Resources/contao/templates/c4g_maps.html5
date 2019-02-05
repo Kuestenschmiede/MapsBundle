@@ -12,14 +12,17 @@
 
 <?php if (\Environment::get('isAjaxRequest')): ?>
 <script>
-  var mapData = <?php echo json_encode($this->mapData) ?>;
-    initMaps(mapData);
+  window.mapData = window.mapData || {};
+  window.mapData<?php echo '['.$this->mapData['mapId'] . ']' ?> = <?php echo json_encode($this->mapData) ?>;
+    window.initMaps(window.mapData);
 </script>
 <?php else: ?>
 
 
-<script>
-  var mapData = <?php echo json_encode($this->mapData) ?>;
+<script defer>
+    window.mapData = window.mapData || {};
+    window.mapData<?php echo '['.$this->mapData['mapId'] . ']' ?> = <?php echo json_encode($this->mapData) ?>;
+
 </script>
 
 <?php endif; ?>
