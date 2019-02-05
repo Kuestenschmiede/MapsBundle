@@ -9323,13 +9323,17 @@ var GeoPicker = exports.GeoPicker = function (_ol$interaction$Inter) {
 var _c4gMaps = __webpack_require__(/*! ./c4g-maps */ "./Resources/public/js/c4g-maps.js");
 
 jQuery(document).ready(function () {
-  if (typeof mapData !== "undefined") {
-    window.initMaps(mapData);
+  if (typeof window.mapData !== "undefined") {
+    window.initMaps(window.mapData);
   }
 });
 
 window.initMaps = function (mapData) {
-  var mapController = new _c4gMaps.MapController(mapData);
+  for (var key in mapData) {
+    if (mapData.hasOwnProperty(key)) {
+      var mapController = new _c4gMaps.MapController(mapData[key]);
+    }
+  }
 };
 
 /***/ }),
