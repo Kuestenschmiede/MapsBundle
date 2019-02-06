@@ -62,9 +62,11 @@ class LayerContentDataApi extends \Frontend
         $sqlSelect = $objConfig->locstyle ? $sqlSelect . ", " .$objConfig->tableSource."." . $objConfig->locstyle . " AS locstyle" : $sqlSelect;
         $sqlSelect = $objConfig->label ? $sqlSelect . ", " . $objConfig->tableSource.".". $objConfig->label . " AS label" : $sqlSelect;
         $sqlSelect = $objConfig->tooltip ? $sqlSelect . ", ". $objConfig->tableSource."." . $objConfig->tooltip . " AS tooltip" : $sqlSelect;
-        $sqlWhere = $objConfig->sqlwhere ? $objConfig->sqlwhere : '';
-        $sqlAnd = $sqlWhere ? ' AND ' : '';
-        $strQuery = "SELECT ".$objConfig->tableSource.".id,". $sqlSelect ." FROM ".$objConfig->tableSource . $onClause . $sqlLoc . $sqlAnd . $sqlWhere . $andbewhereclause ;
+
+        if($objLayer->tab_pid && $objConfig->ptableField){
+            $whereParent = " AND " . $objConfig->ptableField . " = " . $objLayer->tab_pid;
+        }
+        $strQuery = "SELECT ".$objConfig->tableSource.".id,". $sqlSelect ." FROM ".$objConfig->tableSource . $onClause . $sqlLoc . $andbewhereclause . $whereParent;
         $result = \Database::getInstance()->prepare($strQuery)->execute()->fetchAllAssoc();
 
         return $result;

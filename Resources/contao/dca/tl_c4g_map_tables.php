@@ -145,7 +145,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'exclude'                 => true,
             'inputType'               => 'select',
             'options_callback'        => ['tl_c4g_map_tables','getSourceTableFields'],
-            'eval'                    => ['mandatory'=>false, 'multiple'=>true, 'size' => 2, 'chosen' => true],
             'sql'                     => "text NULL"
         ],
         'ptableCompareField' =>
