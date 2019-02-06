@@ -28,45 +28,45 @@ if (@class_exists("tl_member")) {
             ->addField(array('c4g_loc_geox', 'c4g_loc_geoy', 'c4g_loc_label', 'c4g_locstyle'), 'c4g_maps_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_APPEND)
             ->applyToPalette('default', 'tl_member');
 
-        $GLOBALS['TL_DCA']['tl_member']['fields']['c4g_loc_geox'] = array
-        (
+        $GLOBALS['TL_DCA']['tl_member']['fields']['c4g_loc_geox'] =
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_member']['c4g_loc_geox'],
             'exclude'                 => true,
             'inputType'               => 'c4g_text',
-            'eval'                    => array('mandatory'=>false, 'maxlength'=>20, 'tl_class'=>'w50 wizard' ),
-            'save_callback'           => array(array('tl_member_c4g_maps','setLocLon')),
-            'wizard'                  => array(array('\con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink')),
+            'eval'                    => ['mandatory'=>false, 'maxlength'=>20, 'tl_class'=>'w50 wizard'],
+            'save_callback'           => [['tl_member_c4g_maps','setLocLon']],
+            'wizard'                  => [['\con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink']],
             'sql'                     => "varchar(20) NOT NULL default ''"
-        );
+            ];
 
-        $GLOBALS['TL_DCA']['tl_member']['fields']['c4g_loc_geoy'] = array
-        (
+        $GLOBALS['TL_DCA']['tl_member']['fields']['c4g_loc_geoy'] =
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_member']['c4g_loc_geoy'],
             'exclude'                 => true,
             'inputType'               => 'c4g_text',
-            'eval'                    => array('mandatory'=>false, 'maxlength'=>20, 'tl_class'=>'w50 wizard' ),
-            'save_callback'           => array(array('tl_member_c4g_maps','setLocLat')),
-            'wizard'                  => array(array('\con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink')),
+            'eval'                    => ['mandatory'=>false, 'maxlength'=>20, 'tl_class'=>'w50 wizard'],
+            'save_callback'           => [['tl_member_c4g_maps','setLocLat']],
+            'wizard'                  => [['\con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink']],
             'sql'                     => "varchar(20) NOT NULL default ''"
-        );
+            ];
 
-        $GLOBALS['TL_DCA']['tl_member']['fields']['c4g_loc_label'] = array
-        (
+        $GLOBALS['TL_DCA']['tl_member']['fields']['c4g_loc_label'] =
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_member']['c4g_loc_label'],
             'exclude'                 => true,
             'inputType'               => 'text',
-            'eval'                    => array('tl_class'=>'clr' ),
+            'eval'                    => ['tl_class'=>'clr'],
             'sql'                     => "varchar(100) NOT NULL default ''"
-        );
+            ];
 
-        $GLOBALS['TL_DCA']['tl_member']['fields']['c4g_locstyle'] = array
-        (
+        $GLOBALS['TL_DCA']['tl_member']['fields']['c4g_locstyle'] =
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_member']['c4g_locstyle'],
             'exclude'                 => true,
             'inputType'               => 'select',
-            'options_callback'        => array('tl_member_c4g_maps','getLocStyles'),
+            'options_callback'        => ['tl_member_c4g_maps','getLocStyles'],
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
-        );
+            ];
     }
 }
 
