@@ -87,7 +87,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
         ],
     'palettes' =>
     [
-        'default' => '{default_legend},name,tableSource,ptable,ptableOption,ptableBackendField,ptableField,ptableCompareField;{table_information},geox,geoy,geolocation,label,locstyle,tooltip;',
+        'default' => '{defaultLegend},name,tableSource;{parentLegend},ptable,ptableOptions,ptableBackendField,ptableField,ptableCompareField;{geoLegend},geox,geoy,geolocation;{tableInformation},label,locstyle,tooltip;',
     ],
 
     // Fields
@@ -103,7 +103,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
         ],
         'name' =>
         [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['tableSource'],
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['name'],
             'exclude'                 => true,
             'inputType'               => 'text',
             'sql'                     => "text NULL"
@@ -132,19 +132,11 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'exclude'                 => true,
             'inputType'               => 'select',
             'options_callback'        => ['tl_c4g_map_tables','getParentTablesFields'],
-            'eval'                    => ['mandatory'=>false, 'multiple'=>true,'size' => 2, 'chosen' => true],
+            'eval'                    => ['mandatory'=>false, 'multiple'=>true,'size' => 2, 'chosen' => true, 'includeBlankOption' => true],
             'sql'                     => "text NULL"
         ],
         'ptableBlob' =>
         [
-            'sql'                     => "text NULL"
-        ],
-        'ptableBackendField' => [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['ptableCompareField'],
-            'exclude'                 => true,
-            'inputType'               => 'select',
-            'options_callback'        => ['tl_c4g_map_tables','getParentTablesFields', 'includeBlankOption' => true],
-            'eval'                    => ['mandatory'=>false, 'multiple'=>true, 'chosen' => true, 'size' => 2],
             'sql'                     => "text NULL"
         ],
         'ptableField' =>

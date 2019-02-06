@@ -21,57 +21,57 @@ $GLOBALS['con4gis']['maps']['ol-ext'] = 'v3.0.2';
 /**
  * Backend Modules
  */
-array_insert($GLOBALS['BE_MOD']['con4gis'], 2, array
-    (
-        'c4g_map_baselayers' => array
-        (
-            'tables' => array('tl_c4g_map_baselayers', 'tl_c4g_map_overlays'),
+array_insert($GLOBALS['BE_MOD']['con4gis'], 2,
+    [
+        'c4g_map_baselayers' =>
+            [
+            'tables' => ['tl_c4g_map_baselayers', 'tl_c4g_map_overlays'],
             'icon' => 'bundles/con4gismaps/images/be-icons/baselayers.png',
             'javascript'     => 'bundles/con4gismaps/js/c4g-maps-backend.js'
-        ),
-        'c4g_map_locstyles' => array
-        (
-            'tables' => array('tl_c4g_map_locstyles'),
+            ],
+        'c4g_map_locstyles' =>
+            [
+            'tables' => ['tl_c4g_map_locstyles'],
             'icon' => 'bundles/con4gismaps/images/be-icons/locstyles.png',
-        ),
-        'c4g_map_themes'    => array
-        (
-            'tables' => array('tl_c4g_map_themes'),
+            ],
+        'c4g_map_themes'    =>
+            [
+            'tables' => ['tl_c4g_map_themes'],
             'icon'  => 'bundles/con4gismaps/images/be-icons/themes.png',
-        ),
-        'c4g_map_profiles' => array
-        (
-            'tables' => array('tl_c4g_map_profiles'),
+            ],
+        'c4g_map_profiles' =>
+            [
+            'tables' => ['tl_c4g_map_profiles'],
             'icon' => 'bundles/con4gismaps/images/be-icons/profiles.png',
-        ),
-        'c4g_maps' => array
-        (
-            'tables' => array('tl_c4g_maps'),
+            ],
+        'c4g_maps' =>
+            [
+            'tables' => ['tl_c4g_maps'],
             'icon' => 'bundles/con4gismaps/images/be-icons/mapstructure.png',
             'javascript'     => 'bundles/con4gismaps/js/c4g-maps-backend.js'
-        ),
-        'c4g_map_table' =>
+            ],
+        'c4g_map_tables' =>
         [
-            'tables' => array('tl_c4g_map_tables'),
+            'tables' => ['tl_c4g_map_tables'],
             'icon' => 'bundles/con4gismaps/images/be-icons/mapstructure.png',
         ]
-    ));
+    ]);
 
 /**
  * Frontend modules
  */
-array_insert($GLOBALS['FE_MOD']['con4gis'], 1, array
-    (
+array_insert($GLOBALS['FE_MOD']['con4gis'], 1,
+    [
         'c4g_maps' => 'con4gis\MapsBundle\Resources\contao\modules\ModuleC4gMaps',
-    ));
+    ]);
 
 /**
  * Content elements
  */
-array_insert($GLOBALS['TL_CTE']['con4gis'], 1, array
-    (
+array_insert($GLOBALS['TL_CTE']['con4gis'], 1,
+    [
         'c4g_maps' => 'con4gis\MapsBundle\Resources\contao\modules\ContentC4gMaps',
-    ));
+    ]);
 
 
 $apiBaseUrl = 'con4gis';
@@ -108,18 +108,18 @@ $GLOBALS['TL_MODELS']['tl_c4g_map_tables'] = 'con4gis\MapsBundle\Resources\conta
 /**
  * Purge entries for cache clearing.
  */
-$GLOBALS['TL_PURGE']['folders']['con4gis_layer'] = array
-(
-    'callback' => array('\con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator', 'purgeLayerApiCache'),
-    'affected' => array('var/cache/prod/con4gis_layerService')
-);
-$GLOBALS['TL_PURGE']['folders']['con4gis_baselayer'] = array
-(
-    'callback' => array('\con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator', 'purgeBaselayerApiCache'),
-    'affected' => array('var/cache/prod/con4gis_baselayerService')
-);
-$GLOBALS['TL_PURGE']['folders']['con4gis_locationstyle'] = array
-(
-    'callback' => array('\con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator', 'purgeLocationstyleApiCache'),
-    'affected' => array('var/cache/prod/con4gis_locationstyleService')
-);
+$GLOBALS['TL_PURGE']['folders']['con4gis_layer'] =
+    [
+    'callback' => ['\con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator', 'purgeLayerApiCache'],
+    'affected' => ['var/cache/prod/con4gis_layerService']
+    ];
+$GLOBALS['TL_PURGE']['folders']['con4gis_baselayer'] =
+    [
+    'callback' => ['\con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator', 'purgeBaselayerApiCache'],
+    'affected' => ['var/cache/prod/con4gis_baselayerService']
+    ];
+$GLOBALS['TL_PURGE']['folders']['con4gis_locationstyle'] =
+    [
+    'callback' => ['\con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator', 'purgeLocationstyleApiCache'],
+    'affected' => ['var/cache/prod/con4gis_locationstyleService']
+    ];

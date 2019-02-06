@@ -404,7 +404,7 @@ class LayerContentApi extends \Controller
                     //check blob fields
                     if ($objConfig->ptable) {
                         foreach ($ptableArr as $key => $ptable) {
-                            $ptableBlobArr = explode(',', $objConfig->ptable_blob);
+                            $ptableBlobArr = unserialize($objConfig->ptable_blob);
                             if ($ptableBlobArr[$key] == 1) {
                                 if ($key == 0) {
                                     $sourcePid = intval($objLayer->tab_pid);

@@ -1284,13 +1284,13 @@ class tl_c4g_maps extends Backend
             $tabsource = $objTables[0];
         }
         $ptable = unserialize($tabsource->ptable)[0];
-        $ptableBackendField = str_replace($ptable . '.','', unserialize($tabsource->ptableBackendField)[0]);
+        $ptableOptions = str_replace($ptable . '.','', unserialize($tabsource->ptableOptions)[0]);
         $ptableCompareField = str_replace($ptable . '.','', unserialize($tabsource->ptableCompareField)[0]);
-        if($ptable && $ptableBackendField && $ptableCompareField) {
-            $strSelect = "SELECT $ptableCompareField, $ptableBackendField FROM $ptable";
+        if($ptable && $ptableOptions && $ptableCompareField) {
+            $strSelect = "SELECT $ptableCompareField, $ptableOptions FROM $ptable";
             $objResult = $this->Database->prepare($strSelect)->execute();
             while ($objResult->next()) {
-                $return[$objResult->$ptableCompareField] = $objResult->$ptableBackendField;
+                $return[$objResult->$ptableCompareField] = $objResult->$ptableOptions;
             }
         }
         return $return;
@@ -1312,13 +1312,13 @@ class tl_c4g_maps extends Backend
             $tabsource = $objTables[0];
         }
         $ptable = unserialize($tabsource->ptable)[1];
-        $ptableBackendField = str_replace($ptable . '.','', unserialize($tabsource->ptableBackendField)[1]);
+        $ptableOptions = str_replace($ptable . '.','', unserialize($tabsource->ptableOptions)[1]);
         $ptableCompareField = str_replace($ptable . '.','', unserialize($tabsource->ptableCompareField)[1]);
-        if($ptable && $ptableBackendField && $ptableCompareField){
-            $strSelect = "SELECT $ptableCompareField, $ptableBackendField FROM $ptable";
+        if($ptable && $ptableOptions && $ptableCompareField){
+            $strSelect = "SELECT $ptableCompareField, $ptableOptions FROM $ptable";
             $objResult = $this->Database->prepare($strSelect)->execute();
             while ($objResult->next()) {
-                $return[$objResult->$ptableCompareField] = $objResult->$ptableBackendField;
+                $return[$objResult->$ptableCompareField] = $objResult->$ptableOptions;
             }
         }
         return $return;
