@@ -29,7 +29,7 @@ $GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['caching'] =
     'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_settings']['caching'],
     'inputType'               => 'checkbox',
     'options'                 => $GLOBALS['con4gis']['api-caching'],
-    'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_settings']['references'],
+    'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_settings']['references']['caching'],
     'eval'                    => ['multiple'=>true],
     'sql'                     => "blob NULL"
     ];
@@ -50,7 +50,7 @@ $GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['defaultData'] = [
     'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayers'],
     'exclude'                 => true,
     'inputType'               => 'checkbox',
-    'options'                 => $GLOBALS['con4gis']['defaultData'],
+    'options'                 => &$GLOBALS['TL_LANG']['tl_c4g_settings']['references']['defaultData'],
     'eval'                    => array('mandatory'=>false, 'multiple'=>true),
     'sql'                     => "blob NULL"
 ];
