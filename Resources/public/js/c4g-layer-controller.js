@@ -111,7 +111,6 @@ export class C4gLayerController{
         }
 
         linkItems = false;
-        //console.log(layer);
         if (typeof layer.content === "object") {
           layer.content = utils.objectToArray(layer.content);
         }
@@ -365,7 +364,6 @@ export class C4gLayerController{
           }; // end of styleForCluster()
 
           if (contentData && (contentData.type === "urlData")) {
-
             requestData = {};
             requestData.url = contentData.data.url;
             if (contentData.data.params) {
@@ -762,7 +760,6 @@ export class C4gLayerController{
             }
 
             // force all nodes into one layer
-
 
             var contentFeature = new ol.format[layerContent[i].format]({}).readFeatures(layerContent[i].data, {
               featureProjection: featureProjection,
@@ -1547,6 +1544,7 @@ export class C4gLayerController{
                 parseFloat(elementContent.data.geometry.radius)
               ));
             feature.set('styleId', elementContent.locationStyle);
+            feature.set('label', elementContent.data.properties.label);
             features.push(feature);
           } else {
             // remaining geometries
