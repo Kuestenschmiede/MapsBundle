@@ -376,7 +376,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] = array
             'options'                 => array('left','center','right'),
             'default'                 => 'center',
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references'],
-            'eval'                    => array('tl_class'=>'w50'),
             'sql'                     => "varchar(10) NOT NULL default ''"
         ),
 
