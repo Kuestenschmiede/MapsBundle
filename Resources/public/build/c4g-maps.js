@@ -941,7 +941,6 @@ var C4gLayerController = exports.C4gLayerController = function () {
           }
 
           linkItems = false;
-          //console.log(layer);
           if (_typeof(layer.content) === "object") {
             layer.content = _c4gMapsUtils.utils.objectToArray(layer.content);
           }
@@ -1183,7 +1182,6 @@ var C4gLayerController = exports.C4gLayerController = function () {
           }; // end of styleForCluster()
 
           if (contentData && contentData.type === "urlData") {
-
             requestData = {};
             requestData.url = contentData.data.url;
             if (contentData.data.params) {
@@ -1552,7 +1550,6 @@ var C4gLayerController = exports.C4gLayerController = function () {
             }
 
             // force all nodes into one layer
-
 
             var contentFeature = new ol.format[layerContent[i].format]({}).readFeatures(layerContent[i].data, {
               featureProjection: featureProjection,
@@ -2286,6 +2283,7 @@ var C4gLayerController = exports.C4gLayerController = function () {
               features = [];
               var feature = new ol.Feature(new ol.geom.Circle(ol.proj.fromLonLat(elementContent.data.geometry.center), parseFloat(elementContent.data.geometry.radius)));
               feature.set('styleId', elementContent.locationStyle);
+              feature.set('label', elementContent.data.properties.label);
               features.push(feature);
             } else {
               // remaining geometries
