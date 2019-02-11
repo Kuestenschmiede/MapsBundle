@@ -140,6 +140,7 @@ export class C4gBaselayerController {
         } else {
           console.warn('custom url(s) missing -> switch to default');
         }
+        break;
       case 'osm':
         if (sourceConfigs.osm[baseLayerConfig.style]) {
           newBaselayer = new ol.layer.Tile({
