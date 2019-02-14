@@ -54,9 +54,16 @@ class GeoPicker extends \Backend
         if (substr($strField,-1,1)=='y') {
             $strFieldX = substr($strField,0,-1).'x';
             $strFieldY = $strField;
-        } else {
+        } elseif (substr($strField,-1,1)=='x') {
             $strFieldX = $strField;
             $strFieldY = substr($strField,0,-1).'y';
+        } elseif ($strField === "ctrl_longitude" || $strField === "ctrl_latitude") {
+            $strFieldX = 'ctrl_longitude';
+            $strFieldY = 'ctrl_latitude';
+        } else {
+            // default
+            $strFieldX = 'ctrl_longitude';
+            $strFieldY = 'ctrl_latitude';
         }
 
 
