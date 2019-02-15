@@ -13,7 +13,7 @@
 namespace con4gis\MapsBundle\Resources\contao\models;
 
 
-class C4GMapTablesModel extends \Model
+class C4gMapTablesModel extends \Model
 {
     // Table name
     protected static $strTable = 'tl_c4g_map_tables';
