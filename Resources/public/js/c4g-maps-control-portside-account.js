@@ -1,6 +1,6 @@
 import {Sideboard} from "./c4g-maps-control-sideboard";
 import {cssConstants} from "./c4g-maps-constant";
-import {langConstants} from "./c4g-maps-i18n";
+import {getLanguage} from "./c4g-maps-i18n";
 'use strict';
 export class Account extends Sideboard {
 
@@ -15,10 +15,11 @@ export class Account extends Sideboard {
   constructor(opt_options) {
     super(opt_options);
     // extend options
+    this.langConstants = getLanguage(opt_options.mapController.data);
     this.options = $.extend({
       className: cssConstants.ACCOUNT,
       name: 'account',
-      headline: langConstants.ACCOUNT,
+      headline: this.langConstants.ACCOUNT,
       create: true,
       mapController: undefined,
       direction: 'left'
@@ -68,7 +69,7 @@ export class Account extends Sideboard {
     accountView = this.addView({
       name: 'account',
       triggerConfig: {
-        tipLabel: langConstants.ACCOUNT_VIEW_TRIGGER,
+        tipLabel: this.langConstants.ACCOUNT_VIEW_TRIGGER,
         className: cssConstants.ACCOUNT_VIEW_TRIGGER,
         withHeadline: false
       },

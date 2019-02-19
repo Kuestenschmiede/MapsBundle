@@ -1,5 +1,5 @@
 import {cssConstants} from "./c4g-maps-constant";
-import {langConstants} from "./c4g-maps-i18n";
+import {getLanguage} from "./c4g-maps-i18n";
 'use strict';
 export class Grid extends ol.control.Control {
 
@@ -28,6 +28,7 @@ export class Grid extends ol.control.Control {
         showLabels: true
     });
 
+    let langConstants = getLanguage(options.mapController.data);
     // default options
     options = $.extend({
       className: cssConstants.GRATICULE,

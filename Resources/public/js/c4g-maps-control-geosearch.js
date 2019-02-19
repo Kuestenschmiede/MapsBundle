@@ -1,6 +1,6 @@
 import {cssConstants} from "./c4g-maps-constant";
 import {utils} from "./c4g-maps-utils";
-import {langConstants} from "./c4g-maps-i18n";
+import {getLanguage} from "./c4g-maps-i18n";
 'use strict';
 export class GeoSearch extends ol.control.Control {
 
@@ -30,7 +30,7 @@ export class GeoSearch extends ol.control.Control {
     // this.resultWrapper = resultWrapper;
 
     options = opt_options || {};
-
+    let langConstants = getLanguage(options.mapController.data);
 
     // default options
     options = $.extend({
@@ -825,6 +825,7 @@ export class GeoSearch extends ol.control.Control {
             }
 
           } else {
+            let langConstants = getLanguage(self.options.mapController.data);
             alert(langConstants.SEARCH_NOT_FOUND);
           }
           // self.resultWrapper.innerHTML = '@ console';

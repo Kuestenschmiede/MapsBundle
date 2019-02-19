@@ -1,5 +1,5 @@
 import {cssConstants} from "./c4g-maps-constant";
-import {langConstants} from "./c4g-maps-i18n";
+import {getLanguage} from "./c4g-maps-i18n";
 "use strict";
 
 export class Customtab {
@@ -58,6 +58,7 @@ export class Customtab {
       layerSwitcherTitle;
 
     self = this;
+    let langConstants = getLanguage(this.proxy.options.mapController.data);
     contentWrapper = document.createElement('div');
     contentHeadline = document.createElement('div');
     contentHeadline.className = 'contentHeadline';

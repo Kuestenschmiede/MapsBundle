@@ -1,6 +1,6 @@
 import {cssConstants} from "./c4g-maps-constant";
 import {utils} from "./c4g-maps-utils";
-import {langConstants} from "./c4g-maps-i18n";
+import {getLanguage} from "./c4g-maps-i18n";
 
 'use strict';
 export class Baselayerswitcher {
@@ -40,6 +40,7 @@ export class Baselayerswitcher {
       contentInfo;
 
     self = this;
+    let langConstants = getLanguage(this.starboard.options.mapController.data);
 
     contentWrapper = document.createElement('div');
 

@@ -1,5 +1,5 @@
 import {cssConstants} from "./c4g-maps-constant";
-import {langConstants} from "./c4g-maps-i18n";
+import {getLanguage} from "./c4g-maps-i18n";
 'use strict';
 export class OverviewMap {
 
@@ -20,6 +20,7 @@ export class OverviewMap {
         triggerIcon,
         ovm;
 
+    let langConstants = getLanguage(options.mapController.data);
     // default options
     this.options = $.extend({
       collapsed: true,
