@@ -418,7 +418,7 @@ export class MapProxy {
     feature = popupConfig.feature;
     layer = popupConfig.layer;
 
-    popupContent = utils.replaceAllPlaceholders(popupConfig.popup.content, feature, layer);
+    popupContent = utils.replaceAllPlaceholders(popupConfig.popup.content, feature, layer, this.options.mapController.data.lang);
     // @TODO: check for route-option & display "route-to"
     // NOTE: does not work async this way
     if (this.options.mapController.controls.router && popupConfig.popup.routing_link) {

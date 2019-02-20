@@ -621,10 +621,11 @@ export var utils = {
    * @param   {string}                      strInput   [description]
    * @param   {ol.Feature}                  feature    [description]
    * @param   {ol.layer.Layer | undefined}  opt_layer  [description]
+   * @param   {string}                      language   [description]
    *
    * @return  {string}                                 [description]
    */
-  replaceAllPlaceholders: function (strInput, feature, opt_layer) {
+  replaceAllPlaceholders: function (strInput, feature, opt_layer, language) {
     var strOutput;
 
     // only check the first two parameters as they will be used by all placeholder-functions
@@ -633,7 +634,7 @@ export var utils = {
       return strInput;
     }
 
-    strOutput = this.replaceFunctionPlaceholders(strInput, feature, opt_layer);
+    strOutput = this.replaceFunctionPlaceholders(strInput, feature, opt_layer, language);
     strOutput = this.replaceEditorVarsPlaceholders(strOutput, feature);
     strOutput = this.replaceAttributePlaceholders(strOutput, feature);
 
@@ -649,15 +650,17 @@ export var utils = {
    * @param   {string}          strInput  [description]
    * @param   {ol.Feature}      feature   [description]
    * @param   {ol.layer.Layer}  layer     [description]
+   * @param   {string}          language  [description]
    *
    * @return  {string}                    [description]
    */
-  replaceFunctionPlaceholders: function (strInput, feature, layer) {
+  replaceFunctionPlaceholders: function (strInput, feature, layer, language) {
     var strOutput;
 
     if (!strInput || !feature || !layer) {
       return strInput;
     }
+    popupFunctions = language === 'de' || language === 'de-DE' ? popupFunctionsDE : popupFunctionsEN;
 
     strOutput = strInput.replace(
       /\$\{FN([^\}]*)\}/g,

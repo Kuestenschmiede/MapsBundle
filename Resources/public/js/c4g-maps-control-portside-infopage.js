@@ -1,6 +1,6 @@
 import {Sideboard} from "./c4g-maps-control-sideboard";
 import {cssConstants} from "./c4g-maps-constant";
-import {langConstants} from "./c4g-maps-i18n";
+import {getLanguage} from "./c4g-maps-i18n";
 'use strict';
 export class Infopage extends Sideboard {
 
@@ -19,7 +19,7 @@ export class Infopage extends Sideboard {
     this.options = $.extend({
       className: cssConstants.INFOPAGE,
       name: 'infopage',
-      headline: langConstants.INFOPAGE,
+      headline: this.langConstants.INFOPAGE,
       create: true,
       mapController: undefined,
       direction: 'left'
@@ -49,6 +49,7 @@ export class Infopage extends Sideboard {
 
     this.viewInfopage = this.addInfoView();
     this.viewInfopage.activate();
+    this.langConstants = getLanguage(self.options.mapController.data);
 
     var proxy = self.options.mapController.proxy;
     var map = self.options.mapController.map;
@@ -69,7 +70,7 @@ export class Infopage extends Sideboard {
     infoView = this.addView({
       name: 'info',
       triggerConfig: {
-        tipLabel: langConstants.INFOPAGE_VIEW_TRIGGER,
+        tipLabel: this.langConstants.INFOPAGE_VIEW_TRIGGER,
         className: cssConstants.INFOPAGE_VIEW_TRIGGER,
         withHeadline: false
       },

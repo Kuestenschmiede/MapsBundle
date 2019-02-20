@@ -2,7 +2,7 @@ import {cssConstants} from "./c4g-maps-constant";
 import {utils} from "./c4g-maps-utils";
 import {Sideboard} from "./c4g-maps-control-sideboard";
 import {TooltipPopUp} from "./c4g-maps-misc-tooltippopup";
-import {langConstants} from "./c4g-maps-i18n";
+import {getLanguage} from "./c4g-maps-i18n";
 'use strict';
 export class Measuretools extends Sideboard {
 
@@ -18,9 +18,10 @@ export class Measuretools extends Sideboard {
   constructor(opt_options) {
     super(opt_options);
     // extend options
+    this.langConstants = getLanguage(opt_options.mapController.data);
     this.options = $.extend({
       name: 'measure',
-      headline: langConstants.MEASURETOOLS,
+      headline: this.langConstants.MEASURETOOLS,
       create: true,
       mapController: undefined,
       direction: 'left',
@@ -75,8 +76,8 @@ export class Measuretools extends Sideboard {
 
     // set content-section
     this.mainSectionInfo = document.createElement('p');
-    this.mainSectionInfo.innerHTML = langConstants.MEASURETOOLS_INFO;
-    this.mainSectionInfo.innerHTML += '<br><br><sub>' + langConstants.MEASURETOOLS_INFO_ADDITIONAL + '<sub>';
+    this.mainSectionInfo.innerHTML = this.langConstants.MEASURETOOLS_INFO;
+    this.mainSectionInfo.innerHTML += '<br><br><sub>' + this.langConstants.MEASURETOOLS_INFO_ADDITIONAL + '<sub>';
     this.mainSection.appendChild(this.mainSectionInfo);
     this.contentContainer.appendChild(this.mainSection);
 
@@ -169,7 +170,7 @@ export class Measuretools extends Sideboard {
     selectView = this.addView({
       name: 'select',
       triggerConfig: {
-        tipLabel: langConstants.MEASURETOOLS_VIEW_TRIGGER_SELECT,
+        tipLabel: this.langConstants.MEASURETOOLS_VIEW_TRIGGER_SELECT,
         className: cssConstants.MEASURETOOLS_VIEW_TRIGGER_SELECT,
         withHeadline: true
       },
@@ -207,7 +208,7 @@ export class Measuretools extends Sideboard {
     measureView = self.addView({
       name: 'draw:' + options.type.toLowerCase(),
       triggerConfig: {
-        tipLabel: langConstants[TRIGGER_DRAW],
+        tipLabel: this.langConstants[TRIGGER_DRAW],
         className: cssConstants[TRIGGER_DRAW],
         withHeadline: true
       },
@@ -278,24 +279,24 @@ export class Measuretools extends Sideboard {
 
           // check feature-type
           if (feature.getGeometry() instanceof ol.geom.LineString) {
-            strLabel = langConstants.LENGTH;
-            strType = langConstants.LINE;
+            strLabel = self.langConstants.LENGTH;
+            strType = self.langConstants.LINE;
             measureArea = false;
             measureRadius = false;
           } else if (feature.getGeometry() instanceof ol.geom.Polygon) {
-            strLabel = langConstants.PERIMETER;
-            strType = langConstants.POLYGON;
+            strLabel = self.langConstants.PERIMETER;
+            strType = self.langConstants.POLYGON;
             measureArea = true;
             measureRadius = false;
           } else if (feature.getGeometry() instanceof ol.geom.Circle) {
-            strLabel = langConstants.RADIUS;
-            strType = langConstants.CIRCLE;
+            strLabel = self.langConstants.RADIUS;
+            strType = self.langConstants.CIRCLE;
             measureArea = true;
             measureRadius = true;
           } else {
             //freehand ist LineString too
-            strLabel = langConstants.LENGTH;
-            strType = langConstants.FREEHAND;
+            strLabel = self.langConstants.LENGTH;
+            strType = self.langConstants.FREEHAND;
             measureArea = false;
             measureRadius = false;
           }
@@ -315,7 +316,7 @@ export class Measuretools extends Sideboard {
           // create and append label for name-inputfield
           labelElement = document.createElement('label');
           labelElement.setAttribute('for', 'measureElement_' + featureIdCount);
-          labelElement.innerHTML = langConstants.NAME + ': ';
+          labelElement.innerHTML = self.langConstants.NAME + ': ';
           headlineElement.appendChild(labelElement);
 
           // create and append name-inputfield
@@ -346,7 +347,7 @@ export class Measuretools extends Sideboard {
             paragraphElement = document.createElement('p');
             paragraphElement.className = 'c4g_maps_portside_measure_paragraph_surfacearea';
             strongElement = document.createElement('strong');
-            strongElement.innerHTML = langConstants.SURFACEAREA + ': ';
+            strongElement.innerHTML = self.langConstants.SURFACEAREA + ': ';
             paragraphElement.appendChild(strongElement);
             spanElement = document.createElement('span');
             spanElement.innerHTML = '...';

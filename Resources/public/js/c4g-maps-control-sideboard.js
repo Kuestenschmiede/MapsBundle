@@ -1,7 +1,7 @@
 import {utils} from "./c4g-maps-utils";
 import {cssConstants} from "./c4g-maps-constant";
 import {Spinner} from "./c4g-maps-misc-spinner";
-import {langConstants} from "./c4g-maps-i18n";
+import {getLanguage} from "./c4g-maps-i18n";
 "use strict";
 /**
  * Base class for sideboard structures. Provides standard configurations which are equal for each sideboard element.
@@ -25,6 +25,7 @@ export class Sideboard extends ol.control.Control {
       name: 'sideboard',
       direction: 'right',
     }, options);
+    this.langConstants = getLanguage(this.options.mapController.data);
 
     //active Identifier (which side is this element on?)
     //cssname needed to set the css class correctly
@@ -40,7 +41,7 @@ export class Sideboard extends ol.control.Control {
     }
     //this.cssname = this.identifier.charAt(0).toLowerCase() + this.identifier.slice(1);
     this.initialized = false;
-    this.options.tipLabel = this.options.tipLabel || this.options.headline || langConstants.CTRL_SIDEBOARD;
+    this.options.tipLabel = this.options.tipLabel || this.options.headline || this.langConstants.CTRL_SIDEBOARD;
     this.container = document.createElement('div');
     this.element = document.createElement('div');
     this.button = undefined;
@@ -217,7 +218,7 @@ export class Sideboard extends ol.control.Control {
       // Hidebutton
       hideButton = document.createElement('button');
       hideButton.className = cssConstants.PORTSIDE_HIDE;
-      hideButton.title = langConstants.HIDE;
+      hideButton.title = this.langConstants.HIDE;
       $(hideButton).click(function (event) {
         event.preventDefault();
         self.close(true);
@@ -229,7 +230,7 @@ export class Sideboard extends ol.control.Control {
     // Closebutton
     closeButton = document.createElement('button');
     closeButton.className = 'c4g-' + this.cssname + '-close';
-    closeButton.title = langConstants.CLOSE;
+    closeButton.title = this.langConstants.CLOSE;
     $(closeButton).click(function (event) {
       event.preventDefault();
       self.close();

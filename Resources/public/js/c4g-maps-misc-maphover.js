@@ -286,7 +286,7 @@ export class MapHover {
           tooltipContent = '';
           tooltipLength = parseInt(hovered.layer.tooltip_length);
           for (i = 0; i < features.length; i++) {
-            var singleTooltip = utils.replaceAllPlaceholders(tooltipHelper, features[i], hovered.layer);
+            var singleTooltip = utils.replaceAllPlaceholders(tooltipHelper, features[i], hovered.layer, mapData.lang);
             if (singleTooltip != '') {
               if (tooltipContent == '') tooltipContent = singleTooltip;
               else tooltipContent = tooltipContent + ', ' + singleTooltip;
@@ -310,7 +310,7 @@ export class MapHover {
 
 
         }
-        tooltipContent = utils.replaceAllPlaceholders(tooltipContent, hovered.feature, hovered.layer);
+        tooltipContent = utils.replaceAllPlaceholders(tooltipContent, hovered.feature, hovered.layer, mapData.lang);
 
 
         if (tooltipContent.trim()) {

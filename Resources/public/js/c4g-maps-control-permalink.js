@@ -1,6 +1,6 @@
 import {cssConstants} from "./c4g-maps-constant";
 import {utils} from "./c4g-maps-utils";
-import {langConstants} from "./c4g-maps-i18n";
+import {getLanguage} from "./c4g-maps-i18n";
 'use strict';
 
 export class Permalink extends ol.control.Control {
@@ -23,6 +23,7 @@ export class Permalink extends ol.control.Control {
     this.config = options || {};
     self = this;
 
+    let langConstants = getLanguage(options.mapController.data);
     // default options
     this.config = $.extend({
       className: cssConstants.PERMALINK,

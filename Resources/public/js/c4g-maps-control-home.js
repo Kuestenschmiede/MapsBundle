@@ -1,6 +1,6 @@
 import {utils} from "./c4g-maps-utils";
 import {cssConstants} from "./c4g-maps-constant";
-import {langConstants} from "./c4g-maps-i18n";
+
 'use strict';
 export class Home extends ol.control.Control {
 

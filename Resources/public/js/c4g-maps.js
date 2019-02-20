@@ -26,7 +26,7 @@ import {GeoPicker} from "./c4g-maps-interaction-geopicker";
 import {Home} from "./c4g-maps-control-home";
 import {Position} from "./c4g-maps-control-position";
 import {Infopage} from "./c4g-maps-control-portside-infopage";
-import {langConstants} from "./c4g-maps-i18n";
+import {getLanguage} from "./c4g-maps-i18n";
 
 'use strict';
 export class MapController {
@@ -44,6 +44,7 @@ export class MapController {
     // this.controls = null;
     this.leftSlideElements = [];
     this.rightSlideElements = [];
+    let langConstants = getLanguage(mapData);
 
     var self = this,
       permalink = false,
