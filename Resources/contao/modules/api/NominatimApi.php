@@ -67,7 +67,8 @@ class NominatimApi extends \Frontend
                     $strSearchUrl = 'https://'.$objMapsProfile->geosearch_key.'.search.mapservices.kartenkueste.de/search.php';
                 }
                 else if ($objSettings->con4gisIoUrl && $objSettings->con4gisIoKey) {
-                    $strSearchUrl = $objSettings->con4gisIoUrl . "search.php/?key=" . $objSettings->con4gisIoKey;
+                    $strSearchUrl = $objSettings->con4gisIoUrl . "search.php";
+                    $arrParams['key'] = $objSettings->con4gisIoKey;
                 }
                 else {
                     //TODO error handling
@@ -138,13 +139,8 @@ class NominatimApi extends \Frontend
         if ($_SERVER['HTTP_USER_AGENT']) {
             $REQUEST->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
         }
-        if ($objSettings->con4gisIoUrl && $objSettings->con4gisIoKey) {
-            $REQUEST->send($strSearchUrl . '&' . $strParams);
-        }
-        else {
-            $REQUEST->send($strSearchUrl . '?' . $strParams);
+        $REQUEST->send($strSearchUrl . '?' . $strParams);
 
-        }
         return $REQUEST->response;
     }
 
