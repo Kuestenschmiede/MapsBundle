@@ -20,14 +20,6 @@ export var config = {
       url: 'https://{a-c}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png'
     },
 
-    GermanTransport: {
-      attributions: 'Style by <a target="_blank" href="http://www.memomaps.de">Memomaps</a>' + ' ' +
-        ol.source.OSM.ATTRIBUTION,
-      minZoom: 0,
-      maxZoom: 19,
-      url: 'https://tile.memomaps.de/tilegen/{z}/{x}/{y}.png'
-    },
-
     LandscapeMap: {
       attributions: 'Style by <a target="_blank" href="http://www.opencyclemap.org/">OpenCycleMap</a>' + ' ' +
         ol.source.OSM.ATTRIBUTION,

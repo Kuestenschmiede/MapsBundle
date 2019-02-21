@@ -11,7 +11,7 @@
  * @link      https://www.kuestenschmiede.de
  */
 
-$GLOBALS['TL_DCA']['tl_c4g_settings']['palettes']['default'] .= '{c4g_maps_legend},disabledC4gMapObjects,defaultprofile,caching,defaultData;';
+$GLOBALS['TL_DCA']['tl_c4g_settings']['palettes']['default'] .= '{c4g_maps_legend},disabledC4gMapObjects,defaultprofile,caching,defaultData;{c4g_io_legend},con4gisIoUrl,con4gisIoKey;';
 
 /**
  * Add fields
@@ -47,12 +47,25 @@ $GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['defaultprofile'] =
 
     ];
 $GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['defaultData'] = [
-    'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayers'],
+    'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['defaultData'],
     'exclude'                 => true,
     'inputType'               => 'checkbox',
     'options'                 => &$GLOBALS['TL_LANG']['tl_c4g_settings']['references']['defaultData'],
     'eval'                    => array('mandatory'=>false, 'multiple'=>true),
     'sql'                     => "blob NULL"
+];
+$GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['con4gisIoUrl'] = [
+    'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['con4gisIoUrl'],
+    'exclude'                 => true,
+    'inputType'               => 'text',
+    'eval'                    => ['maxlength' => 100],
+    'sql'                     => "varchar(100) default ''"
+];$GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['con4gisIoKey'] = [
+    'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['con4gisIoKey'],
+    'exclude'                 => true,
+    'inputType'               => 'text',
+    'eval'                    => ['maxlength' => 32],
+    'sql'                     => "varchar(32) default ''"
 ];
 
 /**

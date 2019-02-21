@@ -257,16 +257,6 @@ var C4gBaselayerController = exports.C4gBaselayerController = function () {
             newBaselayer = new ol.layer.Tile({
               source: new ol.source.OSM($.extend(sourceConfigs.osm[baseLayerConfig.style], layerOptions))
             });
-          } else if (sourceConfigs.stamen[baseLayerConfig.style]) {
-            // Stamen
-            newBaselayer = new ol.layer.Tile({
-              source: new ol.source.Stamen($.extend(sourceConfigs.stamen[baseLayerConfig.style], layerOptions))
-            });
-            // } else if (mapQuestSourceConfigs[baseLayerConfig.style]) {
-            //   // mapQuest
-            //   newBaselayer = new ol.layer.Tile({
-            //     source: new ol.source.MapQuest(mapQuestSourceConfigs[baseLayerConfig.style])
-            //   });
           } else if (baseLayerConfig.style === 'osm_custom') {
             // custom
             var _noUrl = true;
@@ -284,6 +274,21 @@ var C4gBaselayerController = exports.C4gBaselayerController = function () {
             } else {
               console.warn('custom url(s) missing -> switch to default');
             }
+          } else {
+            console.warn('unsupported osm-style -> switch to default');
+          }
+          break;
+        case 'stamen':
+          if (sourceConfigs.stamen[baseLayerConfig.style]) {
+            // Stamen
+            newBaselayer = new ol.layer.Tile({
+              source: new ol.source.Stamen($.extend(sourceConfigs.stamen[baseLayerConfig.style], layerOptions))
+            });
+            // } else if (mapQuestSourceConfigs[baseLayerConfig.style]) {
+            //   // mapQuest
+            //   newBaselayer = new ol.layer.Tile({
+            //     source: new ol.source.MapQuest(mapQuestSourceConfigs[baseLayerConfig.style])
+            //   });
           } else {
             console.warn('unsupported osm-style -> switch to default');
           }
@@ -3129,13 +3134,6 @@ var config = exports.config = {
       url: 'https://{a-c}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png'
     },
 
-    GermanTransport: {
-      attributions: 'Style by <a target="_blank" href="http://www.memomaps.de">Memomaps</a>' + ' ' + ol.source.OSM.ATTRIBUTION,
-      minZoom: 0,
-      maxZoom: 19,
-      url: 'https://tile.memomaps.de/tilegen/{z}/{x}/{y}.png'
-    },
-
     LandscapeMap: {
       attributions: 'Style by <a target="_blank" href="http://www.opencyclemap.org/">OpenCycleMap</a>' + ' ' + ol.source.OSM.ATTRIBUTION,
       crossOrigin: 'anonymous',
@@ -3548,24 +3546,7 @@ var cssConstants = exports.cssConstants = {
   CONTROL_CONTAINER_BL: 'c4g-control-container-bottom-left',
   CONTROL_CONTAINER_BL_SUB: 'c4g-control-container-bottom-left-sub',
   CONTROL_CONTAINER_BR: 'c4g-control-container-bottom-right',
-  EDITOR_DRAW_CONTENT_POINT: 'c4g-draw-content-point',
-  EDITOR_DRAW_CONTENT_FREEHAND: 'c4g-draw-content-freehand',
-  EDITOR_DRAW_CONTENT_LINESTRING: 'c4g-draw-content-line',
-  EDITOR_DRAW_CONTENT_POLYGON: 'c4g-draw-content-polygon',
-  EDITOR_DRAW_CONTENT_CIRCLE: 'c4g-draw-content-circle',
-  EDITOR_DRAW_CONTENT_PROJECT: 'c4g-draw-content-project',
-  EDITOR_DRAW_TRIGGER: 'c4g-draw-trigger',
-  EDITOR_CONTENT_SELECT: 'c4g-content-select',
-  EDITOR_DRAW_OPTIONS: 'c4g-editor-draw-options',
-  EDITOR_FEATURE_APPLY: 'c4g-editor-feature-apply',
-  EDITOR_FEATURE_DELETE: 'c4g-editor-feature-delete',
-  EDITOR_FEATURE_MODIFY: 'c4g-editor-feature-modify',
-  EDITOR_VIEW_TRIGGER_SELECT: 'c4g-editor-view-trigger-select',
-  EDITOR_VIEW_TRIGGER_DRAW_POINT: 'c4g-editor-view-trigger-draw-point',
-  EDITOR_VIEW_TRIGGER_DRAW_FREEHAND: 'c4g-editor-view-trigger-draw-freehand',
-  EDITOR_VIEW_TRIGGER_DRAW_LINESTRING: 'c4g-editor-view-trigger-draw-line',
-  EDITOR_VIEW_TRIGGER_DRAW_POLYGON: 'c4g-editor-view-trigger-draw-polygon',
-  EDITOR_VIEW_TRIGGER_DRAW_CIRCLE: 'c4g-editor-view-trigger-draw-circle',
+
   GEOSEARCH: 'c4g-geosearch',
   GEOSEARCH_WRAPPER: 'c4g-geosearch-wrapper',
   GEOSEARCH_TRIGGER: 'c4g-geosearch-trigger',

@@ -151,22 +151,8 @@ export class C4gBaselayerController {
               )
             )
           });
-        } else if (sourceConfigs.stamen[baseLayerConfig.style]) {
-          // Stamen
-          newBaselayer = new ol.layer.Tile({
-            source: new ol.source.Stamen(
-              $.extend(
-                sourceConfigs.stamen[baseLayerConfig.style],
-                layerOptions
-              )
-            )
-          });
-          // } else if (mapQuestSourceConfigs[baseLayerConfig.style]) {
-          //   // mapQuest
-          //   newBaselayer = new ol.layer.Tile({
-          //     source: new ol.source.MapQuest(mapQuestSourceConfigs[baseLayerConfig.style])
-          //   });
-        } else if (baseLayerConfig.style === 'osm_custom') {
+        }
+        else if (baseLayerConfig.style === 'osm_custom') {
           // custom
           let noUrl = true;
           if (baseLayerConfig.url) {
@@ -184,6 +170,27 @@ export class C4gBaselayerController {
             console.warn('custom url(s) missing -> switch to default');
           }
         } else {
+          console.warn('unsupported osm-style -> switch to default');
+        }
+        break;
+      case 'stamen':
+        if (sourceConfigs.stamen[baseLayerConfig.style]) {
+          // Stamen
+          newBaselayer = new ol.layer.Tile({
+            source: new ol.source.Stamen(
+              $.extend(
+                sourceConfigs.stamen[baseLayerConfig.style],
+                layerOptions
+              )
+            )
+          });
+          // } else if (mapQuestSourceConfigs[baseLayerConfig.style]) {
+          //   // mapQuest
+          //   newBaselayer = new ol.layer.Tile({
+          //     source: new ol.source.MapQuest(mapQuestSourceConfigs[baseLayerConfig.style])
+          //   });
+        }
+        else {
           console.warn('unsupported osm-style -> switch to default');
         }
         break;
@@ -401,7 +408,7 @@ export class C4gBaselayerController {
         }
         newBaselayer = new ol.layer.Group({
           layers: baseLayerGroup
-        })
+        });
         break;
 
       default:

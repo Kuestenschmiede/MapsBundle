@@ -19,6 +19,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['display_name']   			= array('Name 
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['sort']   		   			= array('Sortierung', 'Geben Sie einen Wert für die aufsteigende Sortierung ein, falls Sie die definierten Basiskarten im Starboard in einer selbstdefinierten Reihenfolge anzeigen möchten.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider']       			= array('Anbieter', 'Bitte wählen Sie den Anbieter der Basiskarte aus.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['osm_style']      			= array('OSM Kartenstil', 'Bitte wählen Sie den Kartenstil von OpenStreetMap aus. Beachten Sie bitte die geltenden Nutzungsbedingungen, der Anbieter.');
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['stamen_style']      	    = array('Stamen Kartenstil', 'Bitte wählen Sie den Kartenstil von Stamen aus. Beachten Sie bitte die geltenden Nutzungsbedingungen von Stamen.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['osm_style_url1'] 			= array('URL 1', 'Bitte geben Sie die 1. URL des Kartenstils ein.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['osm_style_url2'] 			= array('URL 2', 'Bitte geben Sie die 2. URL des Kartenstils ein (optional).');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['osm_style_url3'] 			= array('URL 3', 'Bitte geben Sie die 3. URL des Kartenstils ein (optional).');
@@ -59,7 +60,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['baselayerGroup']['maxZoom']       
 /**
  * Reference
  */
-$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm']    = 'OpenStreetMap (verschiedene Anbieter)';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm']    = 'OpenStreetMap';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stamen'] = 'Stamen';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_here']   = 'HERE';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapbox'] = 'Mapbox';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_thunderforest'] = 'Thunderforest';
@@ -78,7 +80,6 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm_german'] 			= 'Deutsc
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm_german_transport']  	= 'ÖPNV Karte (memomaps.de)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm_transport']  		= 'ÖPNV Karte (opencyclemap.org)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm_landscape']  		= 'Geländekarte (opencyclemap.org)';
-//$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm_mapquestopen']  		= 'MapQuest Open (mapquest.com)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm_toner'] 				= 'Schwarz-Weiß (maps.stamen.com)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm_tonerlines'] 		= 'Schwarz-Weiß, nur Linien (maps.stamen.com)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm_tonerlabels'] 		= 'Schwarz-Weiß, nur Beschriftung (maps.stamen.com)';
