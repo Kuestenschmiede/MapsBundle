@@ -108,36 +108,36 @@ $GLOBALS['con4gis']['maps']['sourcetable']['tl_member'] = array
 /**
  * Backend Modules
  */
-array_insert($GLOBALS['BE_MOD']['con4gis'], 2, array
+$GLOBALS['BE_MOD']['con4gis'] = array_merge($GLOBALS['BE_MOD']['con4gis'], array
+(
+    'c4g_map_baselayers' => array
     (
-        'c4g_map_baselayers' => array
-        (
-            'tables' => array('tl_c4g_map_baselayers', 'tl_c4g_map_overlays'),
-            'icon' => 'bundles/con4gismaps/images/be-icons/baselayers.png',
-            'javascript'     => 'bundles/con4gismaps/js/c4g-maps-backend.js'
-        ),
-        'c4g_map_locstyles' => array
-        (
-            'tables' => array('tl_c4g_map_locstyles'),
-            'icon' => 'bundles/con4gismaps/images/be-icons/locstyles.png',
-        ),
-        'c4g_map_themes'    => array
-        (
-            'tables' => array('tl_c4g_map_themes'),
-            'icon'  => 'bundles/con4gismaps/images/be-icons/themes.png',
-        ),
-        'c4g_map_profiles' => array
-        (
-            'tables' => array('tl_c4g_map_profiles'),
-            'icon' => 'bundles/con4gismaps/images/be-icons/profiles.png',
-        ),
-        'c4g_maps' => array
-        (
-            'tables' => array('tl_c4g_maps'),
-            'icon' => 'bundles/con4gismaps/images/be-icons/mapstructure.png',
-            'javascript'     => 'bundles/con4gismaps/js/c4g-maps-backend.js'
-        ),
-    ));
+        'tables' => array('tl_c4g_map_baselayers', 'tl_c4g_map_overlays'),
+        'icon' => 'bundles/con4gismaps/images/be-icons/baselayers.png',
+        'javascript'     => 'bundles/con4gismaps/js/c4g-maps-backend.js'
+    ),
+    'c4g_map_locstyles' => array
+    (
+        'tables' => array('tl_c4g_map_locstyles'),
+        'icon' => 'bundles/con4gismaps/images/be-icons/locstyles.png',
+    ),
+    'c4g_map_themes'    => array
+    (
+        'tables' => array('tl_c4g_map_themes'),
+        'icon'  => 'bundles/con4gismaps/images/be-icons/themes.png',
+    ),
+    'c4g_map_profiles' => array
+    (
+        'tables' => array('tl_c4g_map_profiles'),
+        'icon' => 'bundles/con4gismaps/images/be-icons/profiles.png',
+    ),
+    'c4g_maps' => array
+    (
+        'tables' => array('tl_c4g_maps'),
+        'icon' => 'bundles/con4gismaps/images/be-icons/mapstructure.png',
+        'javascript'     => 'bundles/con4gismaps/js/c4g-maps-backend.js'
+    ),
+));
 
 /**
  * Frontend modules
