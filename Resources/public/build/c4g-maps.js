@@ -3350,21 +3350,6 @@ var langConstantsGerman = exports.langConstantsGerman = {
   CTRL_FULLSCREEN: 'Vollbildmodus ein-/ausschalten',
   CTRL_PRINT: 'Karte exportieren',
 
-  EDITOR: 'Editor',
-  EDITOR_ENABLE_INSTANT_MEASURE: 'Messen während des Zeichnens',
-  EDITOR_ENABLE_FREEHAND_DRAW: 'Freihand zeichnen',
-  EDITOR_FEATURE_APPLY: 'Editieren beenden',
-  EDITOR_FEATURE_DELETE: 'Element löschen',
-  EDITOR_FEATURE_MODIFY: 'Element editieren / verschieben',
-  EDITOR_SELECT_INFO: 'Zur Auswahl ein Element auf der Karte anklicken.',
-  EDITOR_SELECT_INFO_ADDITIONAL: '[Strg] + [Klick] für Mehrfachauswahl <br>[Shift] halten für Auswahlbox',
-  EDITOR_VIEW_TRIGGER_SELECT: 'Auswahl Modus',
-  EDITOR_VIEW_TRIGGER_DRAW_POINT: 'Kartenelemente',
-  EDITOR_VIEW_TRIGGER_DRAW_FREEHAND: 'Freihandwerkzeuge',
-  EDITOR_VIEW_TRIGGER_DRAW_LINESTRING: 'Streckenwerkzeuge',
-  EDITOR_VIEW_TRIGGER_DRAW_POLYGON: 'Flächenwerkzeuge',
-  EDITOR_VIEW_TRIGGER_DRAW_CIRCLE: 'Kreiswerkzeuge',
-
   POPUP_ROUTE_FROM: 'Route von hier',
   POPUP_ROUTE_TO: 'Route hierhin',
 

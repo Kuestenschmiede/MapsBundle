@@ -1,4 +1,5 @@
-<?php use con4gis\CoreBundle\Resources\contao\models\C4gSettingsModel;
+<?php
+use con4gis\CoreBundle\Resources\contao\models\C4gSettingsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapTablesModel;
 
@@ -87,7 +88,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             'copy' =>
                 [
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['copy'],
-                'href'                => 'act=copy',
+                'href'                => 'act=paste&amp;mode=copy',
                 'icon'                => 'copy.gif'
                 ],
             'copyChilds' =>
