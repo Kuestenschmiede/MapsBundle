@@ -27,6 +27,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
         'label'                       => $GLOBALS['TL_LANG']['MOD']['c4g_maps'][0],
         'dataContainer'               => 'Table',
         'enableVersioning'            => true,
+        'markAsCopy'                  => 'name',
         'onload_callback'             => array(
             array('tl_c4g_maps', 'updateDCA')),
         'onsubmit_callback'             => array(
