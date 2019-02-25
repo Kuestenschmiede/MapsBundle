@@ -194,6 +194,13 @@ export class C4gBaselayerController {
           console.warn('unsupported osm-style -> switch to default');
         }
         break;
+      case 'con4gisIo':
+        newBaselayer = new ol.layer.Tile({
+          source: new ol.source.XYZ({
+            url: baseLayerConfig.url
+          })
+        });
+        break;
       case 'mapbox':
         if (baseLayerConfig.api_key && baseLayerConfig.app_id && baseLayerConfig.mapbox_type) {
 

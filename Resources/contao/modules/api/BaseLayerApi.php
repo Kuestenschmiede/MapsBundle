@@ -17,6 +17,7 @@ use con4gis\CoreBundle\Resources\contao\classes\HttpResultHelper;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapBaselayersModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapOverlaysModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
+use con4gis\MapsBundle\Resources\contao\models\C4gMapSettingsModel;
 use Contao\StringUtil;
 
 /**
@@ -234,6 +235,30 @@ class BaseLayerApi extends \Frontend
                             $arrBaseLayer['urls'][] = str_replace("$", "", $objBaseLayer->osm_style_url4);
                         }
                     }
+                }
+                break;
+            case 'stamen':
+                $arrBaseLayer['style'] = $objBaseLayer->stamen_style;
+                if (!empty($objBaseLayer->osm_keyname)) {
+                    $arrBaseLayer['apiKey'] = $objBaseLayer->osm_keyname;
+                }
+                break;
+            case 'con4gisIo':
+                $objSettings = C4gMapSettingsModel::findOnly();
+                if ($objSettings->con4gisIoUrl && $objSettings->con4gisIoKey) {
+                    $keyUrl = $objSettings->con4gisIoUrl . "getKey.php";
+                    $keyUrl .= "?key=" . $objSettings->con4gisIoKey ."&service=4&id=" . $objBaseLayer->con4gisIo;
+                    $REQUEST = new \Request();
+                    if ($_SERVER['HTTP_REFERER']) {
+                        $REQUEST->setHeader('Referer', $_SERVER['HTTP_REFERER']);
+                    }
+                    if ($_SERVER['HTTP_USER_AGENT']) {
+                        $REQUEST->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
+                    }
+                    $REQUEST->send($keyUrl);
+                    $response = \GuzzleHttp\json_decode($REQUEST->response);
+                    $arrBaseLayer['url'] = $objSettings->con4gisIoUrl . "tiles.php?key=" . $response->key . "&z={z}&x={x}&y={y}";
+
                 }
                 break;
             case 'mapbox':

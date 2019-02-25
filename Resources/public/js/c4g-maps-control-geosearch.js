@@ -68,7 +68,13 @@ export class GeoSearch extends ol.control.Control {
     //   // if it is none of the above, then use the default URL
     //   this.config.url = 'https://nominatim.openstreetmap.org/search';
     // }
-    this.config.url = options.mapController.data.api.geosearch + "/" + options.mapController.data.profile;
+    if (options.mapController.data.geosearch.comKey && options.mapController.data.geosearch.url) {
+      this.config.url = options.mapController.data.geosearch.url + "search.php";
+      this.config.key = options.mapController.data.geosearch.comKey;
+    }
+    else {
+      this.config.url = options.mapController.data.api.geosearch + "/" + options.mapController.data.profile;
+    }
     // zoomlevel when centering the found location
     this.config.zoomlevel = options.searchZoom;
     // zoom to bounds instead of zoomlevel when centering the found location
@@ -541,16 +547,18 @@ export class GeoSearch extends ol.control.Control {
 
 
     if (this.config.quicksearch) {
-
+      let data = {
+        format: "json",
+        q: location
+      };
+      if (this.config.key) {
+        data.key = this.config.key;
+      }
       // AJAX -> @nominatim
       $.ajax({
-        crossDomain: true,
         dataType: "json",
         url: this.config.url,
-        data: {
-          format: "json",
-          q: location
-        }
+        data: data
       })
         .done(function (results) {
 

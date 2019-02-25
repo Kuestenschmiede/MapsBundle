@@ -293,6 +293,13 @@ var C4gBaselayerController = exports.C4gBaselayerController = function () {
             console.warn('unsupported osm-style -> switch to default');
           }
           break;
+        case 'con4gisIo':
+          newBaselayer = new ol.layer.Tile({
+            source: new ol.source.XYZ({
+              url: baseLayerConfig.url
+            })
+          });
+          break;
         case 'mapbox':
           if (baseLayerConfig.api_key && baseLayerConfig.app_id && baseLayerConfig.mapbox_type) {
 
@@ -3728,7 +3735,12 @@ var GeoSearch = exports.GeoSearch = function (_ol$control$Control) {
     //   // if it is none of the above, then use the default URL
     //   this.config.url = 'https://nominatim.openstreetmap.org/search';
     // }
-    _this.config.url = options.mapController.data.api.geosearch + "/" + options.mapController.data.profile;
+    if (options.mapController.data.geosearch.comKey && options.mapController.data.geosearch.url) {
+      _this.config.url = options.mapController.data.geosearch.url + "search.php";
+      _this.config.key = options.mapController.data.geosearch.comKey;
+    } else {
+      _this.config.url = options.mapController.data.api.geosearch + "/" + options.mapController.data.profile;
+    }
     // zoomlevel when centering the found location
     _this.config.zoomlevel = options.searchZoom;
     // zoom to bounds instead of zoomlevel when centering the found location
@@ -4172,16 +4184,18 @@ var GeoSearch = exports.GeoSearch = function (_ol$control$Control) {
 
 
       if (this.config.quicksearch) {
-
+        var data = {
+          format: "json",
+          q: location
+        };
+        if (this.config.key) {
+          data.key = this.config.key;
+        }
         // AJAX -> @nominatim
         $.ajax({
-          crossDomain: true,
           dataType: "json",
           url: this.config.url,
-          data: {
-            format: "json",
-            q: location
-          }
+          data: data
         }).done(function (results) {
 
           var mapView, currentCoordinate, resultCoordinate, coordDif, difContext, viewExtent, result, osmExtent, resolution, zoomType, flyTo, completeSearch;

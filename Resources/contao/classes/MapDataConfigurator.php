@@ -18,6 +18,7 @@ use con4gis\CoreBundle\Resources\contao\models\C4gSettingsModel;
 use con4gis\MapsBundle\Classes\Events\LoadMapdataEvent;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapBaselayersModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
+use con4gis\MapsBundle\Resources\contao\models\C4gMapSettingsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use Contao\Controller;
 use Contao\Input;
@@ -405,7 +406,7 @@ class MapDataConfigurator
             if ($profile->caching) {
                 $mapData['caching'] = 1;
             }
-
+            $objSettings = C4gMapSettingsModel::findOnly();
             // geosearch
             //
             if ($profile->geosearch) {
@@ -423,6 +424,21 @@ class MapDataConfigurator
                 $mapData['geosearch']['popup'] = $profile->geosearch_popup;
                 $mapData['geosearch']['attribution'] = \Contao\Controller::replaceInsertTags($profile->geosearch_attribution);
                 $mapData['geosearch']['collapsed'] = $profile->geosearch_collapsed;
+                if ($objSettings->con4gisIoUrl && $objSettings->con4gisIoKey) {
+                    $keyUrl = $objSettings->con4gisIoUrl . "getKey.php";
+                    $keyUrl .= "?key=" . $objSettings->con4gisIoKey ."&service=2";
+                    $REQUEST = new \Request();
+                    if ($_SERVER['HTTP_REFERER']) {
+                        $REQUEST->setHeader('Referer', $_SERVER['HTTP_REFERER']);
+                    }
+                    if ($_SERVER['HTTP_USER_AGENT']) {
+                        $REQUEST->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
+                    }
+                    $REQUEST->send($keyUrl);
+                    $response = \GuzzleHttp\json_decode($REQUEST->response);
+                    $mapData['geosearch']['comKey'] = $response->key;
+                    $mapData['geosearch']['url'] = $objSettings->con4gisIoUrl;
+                }
 
                 if ($profile->attribution && $profile->geosearch_attribution) {
                     $mapData['attribution']['geosearch'] = \Contao\Controller::replaceInsertTags($profile->geosearch_attribution);

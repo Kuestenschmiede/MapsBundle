@@ -127,6 +127,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                                          '{protection_legend:hide},protect_baselayer;',
         'stamen'                      => '{general_legend},name,display_name,provider,stamen_style,attribution,minzoomlevel,maxzoomlevel;{cesium_legend:hide},cesium;'.
                                          '{protection_legend:hide},protect_baselayer;',
+        'con4gisIo'                   => '{general_legend},name,display_name,provider,con4gisIo,attribution,minzoomlevel,maxzoomlevel;{cesium_legend:hide},cesium;'.
+                                         '{protection_legend:hide},protect_baselayer;',
         'mapbox'                      => '{general_legend},name,display_name,provider,mapbox_type,app_id,api_key,attribution,minzoomlevel,maxzoomlevel;{cesium_legend:hide},cesium;'.
                                          '{protection_legend:hide},hide_in_be,protect_baselayer;',
         'here'                        => '{general_legend},name,display_name,provider,here_type,app_id,api_key,attribution,minzoomlevel,maxzoomlevel;{cesium_legend:hide},cesium;'.
@@ -227,6 +229,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                 'klokan' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_klokan'],
                 'wms' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_wms'],
                 'group' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_group'],
+                'con4gisIo' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['con4gisIo'],
                 'custom' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_custom']
             ],
             'eval'                    => ['submitOnChange'=>true, 'tl_class'=>'clr'],
@@ -301,6 +304,14 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             'inputType'               => 'text',
             'eval'                    => ['decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'long'],
             'sql'                     => "varchar(255) NOT NULL default ''"
+            ],
+        'con4gisIo' =>
+            [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['con4gisIo'],
+            'filter'                  => false,
+            'inputType'               => 'select',
+            'options_callback'        => ['tl_c4g_map_baselayers', 'getCon4gisIoBaselayers'],
+            'sql'                     => "int NOT NULL default 0"
             ],
         'extend' =>
             [
@@ -679,6 +690,27 @@ class tl_c4g_map_baselayers extends Backend
             'maxZoom'       => $arrColumMaxZoom,
         );
         return $return;
+    }
+    public function getCon4gisIoBaselayers(){
+        $objSettings = \con4gis\MapsBundle\Resources\contao\models\C4gMapSettingsModel::findOnly();
+        if ($objSettings->con4gisIoUrl && $objSettings->con4gisIoKey) {
+            $baselayerUrl = $objSettings->con4gisIoUrl . "getBaselayers.php";
+            $baselayerUrl .= "?key=" . $objSettings->con4gisIoKey;
+            $REQUEST = new \Request();
+            if ($_SERVER['HTTP_REFERER']) {
+                $REQUEST->setHeader('Referer', $_SERVER['HTTP_REFERER']);
+            }
+            if ($_SERVER['HTTP_USER_AGENT']) {
+                $REQUEST->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
+            }
+            $REQUEST->send($baselayerUrl);
+            $responses = \GuzzleHttp\json_decode($REQUEST->response);
+            $arrReturn= [];
+            foreach ($responses as $response){
+                $arrReturn[$response->id] =$response->name;
+            }
+            return $arrReturn;
+        }
     }
 }
 
