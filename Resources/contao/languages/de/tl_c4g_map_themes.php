@@ -11,16 +11,16 @@
  * @link      https://www.kuestenschmiede.de
  */
 
-$GLOBALS['TL_LANG']['tl_c4g_map_themes']['new']     = array('Neues Kartenthema', 'Ein neues Kartenthema erstellen');
-$GLOBALS['TL_LANG']['tl_c4g_map_themes']['edit']    = array('Kartenthema bearbeiten', 'Kartenthema ID %s bearbeiten');
-$GLOBALS['TL_LANG']['tl_c4g_map_themes']['copy']    = array('Kartenthema duplizieren', 'Kartenthema ID %s duplizieren');
-$GLOBALS['TL_LANG']['tl_c4g_map_themes']['delete']  = array('Kartenthema löschen', 'Kartenthema ID %s löschen');
-$GLOBALS['TL_LANG']['tl_c4g_map_themes']['show']    = array('Kartenthema anzeigen', 'Kartenthema ID %s anzeigen');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['new']     = array('Neues Kartenlayout', 'Ein neues Kartenlayout erstellen');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['edit']    = array('Kartenlayout bearbeiten', 'Kartenlayout ID %s bearbeiten');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['copy']    = array('Kartenlayout duplizieren', 'Kartenlayout ID %s duplizieren');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['delete']  = array('Kartenlayout löschen', 'Kartenlayout ID %s löschen');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['show']    = array('Kartenlayout anzeigen', 'Kartenlayout ID %s anzeigen');
 
 /**
  * Fields
  */
-$GLOBALS['TL_LANG']['tl_c4g_map_themes']['name']        = array('Name', 'Bitte geben Sie den Namen des Kartenthemas an.');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['name']        = array('Name', 'Bitte geben Sie den Namen des Kartenlayouts an.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['useglobal']   = array('Einstellungen global setzen', 'Einige Einstellungen, wie Farben und Formen, werden im CSS als Variable gesetzt und können auch global, also außerhalb der Karte, zur Verfügung gestellt werden.');
 
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['buttons'] = array('Buttons-CSS', 'Wählen Sie einen Stil für die Buttons aus.');
@@ -47,15 +47,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_themes']['custom_icons'] = array('Eigene Icon-CS
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['external_icons']  = array('Eigene Icons', 'Laden Sie Ihre eigene CSS-Datei hoch (Beispiele unter files/con4gis).');
 
 // Palettes
-$GLOBALS['TL_LANG']['tl_c4g_map_themes']['theme_legend']   = 'Kartenthema-Einstellungen';
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['theme_legend']   = 'Layouteinstellungen';
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['buttons_legend'] = 'Bedienelemente';
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['colors_legend']  = 'Farben';
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['effects_legend'] = 'Effekte';
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['icons_legend']   = 'Icons';
-
-//$GLOBALS['TL_LANG']['tl_c4g_map_themes']['example_info']   =
-//    'Beispieldateien wurden Ihnen unter /files/con4gis/examples/themes zur Verfügung gestellt.<br>'.
-//    'Sollten Sie Dateien im Files Verzeichnis nutzen wollen, dann denken Sie daran diese zu veröffentlichen.<br>'.
-//    'Achtung! Der Beispielorder wird immer wieder mit aktuellen Daten überschrieben. Kopieren Sie sich die Dateien für Ihr eigenes Theme.<br>'.
-//    'Sollte mangels Dateirechten die Zurverfügungstellung nicht möglich sein, dann können Sie die Dateien auch unter /vendor/con4gis/MapsBundle/Resources/public/css/themes finden.<br>'.
-//    'Selbstverständlich können Sie auch eigenes CSS nutzen und die Karte auf Ihre Art anpassen.';
