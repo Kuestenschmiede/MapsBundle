@@ -187,15 +187,6 @@ var C4gBaselayerController = exports.C4gBaselayerController = function () {
           if (this.mapController.data.baselayer && parseInt(uid, 10) === parseInt(this.mapController.data.baselayer, 10)) {
             this.showBaseLayer(uid);
           }
-
-          if (this.arrBaselayers[uid].hasOverlays) {
-            for (j = 0; j < this.arrBaselayers[uid].overlays.length; j++) {
-              if (!this.arrBaselayers[uid].overlayController.arrOverlays[this.arrBaselayers[uid].overlays[j].id]) {
-                this.arrBaselayers[uid].overlayController.arrOverlays[this.arrBaselayers[uid].overlays[j].id] = new _c4gOverlay.C4gOverlay(this.arrBaselayers[uid].overlays[j], this.mapController);
-                this.arrBaselayers[uid].overlayController.arrOverlays[this.arrBaselayers[uid].overlays[j].id].layer = this.arrBaselayers[uid].overlayController.showOverlayLayer(this.arrBaselayers[uid].overlays[j].id);
-              }
-            }
-          }
         }
       }
 

@@ -78,14 +78,6 @@ export class C4gBaselayerController {
           this.showBaseLayer(uid);
         }
 
-        if(this.arrBaselayers[uid].hasOverlays){
-          for (j = 0; j< this.arrBaselayers[uid].overlays.length; j++){
-            if(!this.arrBaselayers[uid].overlayController.arrOverlays[this.arrBaselayers[uid].overlays[j].id]){
-              this.arrBaselayers[uid].overlayController.arrOverlays[this.arrBaselayers[uid].overlays[j].id] = new C4gOverlay(this.arrBaselayers[uid].overlays[j], this.mapController);
-              this.arrBaselayers[uid].overlayController.arrOverlays[this.arrBaselayers[uid].overlays[j].id].layer = this.arrBaselayers[uid].overlayController.showOverlayLayer(this.arrBaselayers[uid].overlays[j].id);
-            }
-          }
-        }
       }
     }
 
