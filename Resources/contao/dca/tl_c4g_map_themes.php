@@ -90,11 +90,11 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
         ],
 
     //Palettes
-    'palettes' => array
-    (
-        '__selector__' => array('custom_colors', 'custom_buttons', 'custom_effects', 'custom_icons'),
+    'palettes' =>
+        [
+        '__selector__' => ['custom_colors', 'custom_buttons', 'custom_effects', 'custom_icons'],
         'default' => '{theme_legend}, name, useglobal; {colors_legend}, maincolor, mainopacity, fontcolor, fontopacity, shadowcolor, shadowopacity, colors, custom_colors; {buttons_legend}, buttonradius, buttons, custom_buttons; {effects_legend}, effects, custom_effects; {icons_legend}, icons, custom_icons',
-    ),
+        ],
 
     //Subpalettes
     'subpalettes' =>
