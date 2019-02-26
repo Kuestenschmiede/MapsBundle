@@ -139,7 +139,7 @@ export class C4gLocationStyle{
 
                         img.onload = function() {
                             ctx.drawImage(img, strokewidth, strokewidth, width, height);
-                        }
+                        };
 
                         imageStyle = new ol.style.Icon({
                             img: canvas,

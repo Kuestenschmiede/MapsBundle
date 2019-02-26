@@ -8375,7 +8375,10 @@ var Layerswitcher = exports.Layerswitcher = function () {
           // show layer
           self.proxy.layerController.showLayer(itemUid);
           //zooom to extent
-          zoomToExtent(itemUid);
+          setTimeout(function () {
+            zoomToExtent(itemUid);
+          }, 200);
+          // zoomToExtent(itemUid);
         }
         if (self.handleSelectedChilds(this)) {
           self.updateParentLayers(this, itemUid, layerItem);
@@ -8432,9 +8435,6 @@ var Layerswitcher = exports.Layerswitcher = function () {
             for (key in layerItem.childs) {
               if (layerItem.childs.hasOwnProperty(key)) {
                 layer = layerItem.childs[key];
-                if (layer.type == "overpass") {
-                  continue;
-                }
                 vectorArray = layer.content;
                 if (vectorArray === undefined) {
                   // catch case of linked layers
@@ -8443,7 +8443,7 @@ var Layerswitcher = exports.Layerswitcher = function () {
                 if ((typeof vectorArray === "undefined" ? "undefined" : _typeof(vectorArray)) === "object") {
                   vectorArray = _c4gMapsUtils.utils.objectToArray(vectorArray);
                 }
-                layerGroup = layer.vectorLayer;
+                layerGroup = layerItem.vectorLayer;
                 if (vectorArray && vectorArray.forEach && typeof vectorArray.forEach === 'function') {
                   vectorArray.forEach(function (vectorLayer) {
                     if (vectorLayer && vectorLayer.data && vectorLayer.data.geometry && vectorLayer.data.geometry.coordinates) {
@@ -8481,46 +8481,40 @@ var Layerswitcher = exports.Layerswitcher = function () {
             }
           }
 
-          if (layerItem.type !== "overpass" && layerItem.vectorLayer) {
-            vectorArray = layer.content;
-            if (vectorArray !== undefined) {
-              // catch case of linked layers
-              if ((typeof vectorArray === "undefined" ? "undefined" : _typeof(vectorArray)) === "object") {
-                vectorArray = _c4gMapsUtils.utils.objectToArray(vectorArray);
-              }
-              layerGroup = layer.vectorLayer;
-              if (vectorArray && vectorArray.forEach && typeof vectorArray.forEach === 'function') {
-                vectorArray.forEach(function (vectorLayer) {
-                  if (vectorLayer && vectorLayer.data && vectorLayer.data.geometry && vectorLayer.data.geometry.coordinates) {
-                    if (vectorLayer.data.geometry.type === "Point") {
-                      coords = ol.proj.transform([parseFloat(vectorLayer.data.geometry.coordinates[0]), parseFloat(vectorLayer.data.geometry.coordinates[1])], 'EPSG:4326', 'EPSG:3857');
-                      geometry = new ol.geom.Point(coords);
-                      coordinates.push(geometry.getCoordinates());
-                    }
+          if (layerItem.vectorLayer) {
+
+            layerGroup = layerItem.vectorLayer;
+            vectorArray = layerGroup.getLayers().getArray();
+            if (vectorArray && vectorArray.forEach && typeof vectorArray.forEach === 'function') {
+              vectorArray.forEach(function (vectorLayer) {
+                if (vectorLayer && vectorLayer.getSource() && vectorLayer.getSource().getFeatures()) {
+                  var features = vectorLayer.getSource().getFeatures();
+                  for (var id in features) {
+                    coordinates.push(features[id].getGeometry().getCoordinates());
                   }
-                });
-              }
-              if (layerGroup) {
-                // handle more complex geometries
-                featureList = layerGroup.getLayers();
-                featureArray = featureList.getArray();
-                featureArray.forEach(function (feature) {
-                  if (layer.type !== "overpass") {
-                    if (layer.type === "kml") {
-                      var source = feature.getSource();
-                      //var sourceFeatures = source.getFeatures();
-                      source.getExtent().forEach(function (coordinate) {
-                        coordinates.push(coordinate);
-                      });
-                    } else {
-                      coordinates.push(ol.extent.getTopRight(feature.getSource().getExtent()));
-                      coordinates.push(ol.extent.getTopLeft(feature.getSource().getExtent()));
-                      coordinates.push(ol.extent.getBottomRight(feature.getSource().getExtent()));
-                      coordinates.push(ol.extent.getBottomLeft(feature.getSource().getExtent()));
-                    }
+                }
+              });
+            }
+            if (layerGroup) {
+              // handle more complex geometries
+              featureList = layerGroup.getLayers();
+              featureArray = featureList.getArray();
+              featureArray.forEach(function (feature) {
+                if (layer.type !== "overpass") {
+                  if (layer.type === "kml") {
+                    var source = feature.getSource();
+                    //var sourceFeatures = source.getFeatures();
+                    source.getExtent().forEach(function (coordinate) {
+                      coordinates.push(coordinate);
+                    });
+                  } else {
+                    coordinates.push(ol.extent.getTopRight(feature.getSource().getExtent()));
+                    coordinates.push(ol.extent.getTopLeft(feature.getSource().getExtent()));
+                    coordinates.push(ol.extent.getBottomRight(feature.getSource().getExtent()));
+                    coordinates.push(ol.extent.getBottomLeft(feature.getSource().getExtent()));
                   }
-                });
-              }
+                }
+              });
             }
           }
 
