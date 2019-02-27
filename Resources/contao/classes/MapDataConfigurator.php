@@ -426,8 +426,8 @@ class MapDataConfigurator
                 $mapData['geosearch']['attribution'] = \Contao\Controller::replaceInsertTags($profile->geosearch_attribution);
                 $mapData['geosearch']['collapsed'] = $profile->geosearch_collapsed;
                 if ($objSettings->con4gisIoUrl && $objSettings->con4gisIoKey) {
-                    $keyUrl = $objSettings->con4gisIoUrl . "getKey.php";
-                    $keyUrl .= "?key=" . $objSettings->con4gisIoKey ."&service=2";
+                    $keySearchUrl = $objSettings->con4gisIoUrl . "getKey.php";
+                    $keySearchUrl .= "?key=" . $objSettings->con4gisIoKey ."&service=2";
                     $REQUEST = new \Request();
                     if ($_SERVER['HTTP_REFERER']) {
                         $REQUEST->setHeader('Referer', $_SERVER['HTTP_REFERER']);
@@ -435,9 +435,22 @@ class MapDataConfigurator
                     if ($_SERVER['HTTP_USER_AGENT']) {
                         $REQUEST->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
                     }
-                    $REQUEST->send($keyUrl);
+                    $REQUEST->send($keySearchUrl);
                     $response = \GuzzleHttp\json_decode($REQUEST->response);
-                    $mapData['geosearch']['comKey'] = $response->key;
+                    $mapData['geosearch']['searchKey'] = $response->key;
+
+                    $keyReverseUrl = $objSettings->con4gisIoUrl . "getKey.php";
+                    $keyReverseUrl .= "?key=" . $objSettings->con4gisIoKey ."&service=3";
+                    $REQUEST = new \Request();
+                    if ($_SERVER['HTTP_REFERER']) {
+                        $REQUEST->setHeader('Referer', $_SERVER['HTTP_REFERER']);
+                    }
+                    if ($_SERVER['HTTP_USER_AGENT']) {
+                        $REQUEST->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
+                    }
+                    $REQUEST->send($keyReverseUrl);
+                    $response = \GuzzleHttp\json_decode($REQUEST->response);
+                    $mapData['geosearch']['reverseKey'] = $response->key;
                     $mapData['geosearch']['url'] = $objSettings->con4gisIoUrl;
                 }
 
