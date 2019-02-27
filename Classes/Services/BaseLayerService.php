@@ -1,18 +1,13 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: fsc
+ * Date: 26.02.19
+ * Time: 17:38
+ */
 
-/*
-  * This file is part of con4gis,
-  * the gis-kit for Contao CMS.
-  *
-  * @package   	con4gis
-  * @version    6
-  * @author  	con4gis contributors (see "authors.txt")
-  * @license 	LGPL-3.0-or-later
-  * @copyright 	Küstenschmiede GmbH Software & Design
-  * @link       https://www.con4gis.org
-  */
+namespace con4gis\MapsBundle\Classes\Services;
 
-namespace con4gis\MapsBundle\Resources\contao\modules\api;
 
 use con4gis\CoreBundle\Resources\contao\classes\HttpResultHelper;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapBaselayersModel;
@@ -20,28 +15,37 @@ use con4gis\MapsBundle\Resources\contao\models\C4gMapOverlaysModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapSettingsModel;
 use Contao\StringUtil;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-/**
- * Class BaseLayerApi
- * @package con4gis\MapsBundle\Resources\contao\modules\api
- */
-class BaseLayerApi extends \Frontend
+class BaseLayerService
 {
+
+    /**
+     * @var EventDispatcherInterface
+     */
+    private $eventDispatcher = null;
+
+    /**
+     * LayerService constructor.
+     * @param EventDispatcherInterface $eventDispatcher
+     */
+    public function __construct(EventDispatcherInterface $eventDispatcher)
+    {
+        $this->eventDispatcher = $eventDispatcher;
+    }
     /**
      * Determines the request method and selects the appropriate data result.
      *
      * @param  array $arrInput Fragments from request uri
      * @return mixed           JSON data
      */
-    protected $arrLayers = array();
-    protected $arrConfig = array();
-    private $mapsProfileModel;
+    protected $arrLayers = [];
+    protected $arrConfig = [];
 
     public function generate($intProfileId)
     {
         $blnProfileBaselayerFilter = false;
         $mapsProfileModel = C4gMapProfilesModel::findById($intProfileId);
-        $this->import('FrontendUser', 'User');
 
         if ($mapsProfileModel !== null)
         {
@@ -56,7 +60,7 @@ class BaseLayerApi extends \Frontend
 
         $this->arrConfig['countAll'] = sizeof($arrLayers);
 
-		return array('config' => $this->arrConfig, 'baselayer' => $arrLayers);
+        return array('config' => $this->arrConfig, 'baselayer' => $arrLayers);
 
     }
 
@@ -367,5 +371,4 @@ class BaseLayerApi extends \Frontend
         $arrBaseLayer['cesium']= $objBaseLayer->cesium;
         return $arrBaseLayer;
     }
-
 }
