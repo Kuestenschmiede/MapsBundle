@@ -230,7 +230,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                 'klokan' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_klokan'],
                 'wms' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_wms'],
                 'group' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_group'],
-                'con4gisIo' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['con4gisIo'],
+                'con4gisIo' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_con4gisIo'],
                 'custom' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_custom']
             ],
             'eval'                    => ['submitOnChange'=>true, 'tl_class'=>'clr'],
