@@ -11,16 +11,16 @@
  * @link      https://www.kuestenschmiede.de
  */
 
-$GLOBALS['TL_LANG']['tl_c4g_map_themes']['new']     = array('New theme', 'Create a new theme');
-$GLOBALS['TL_LANG']['tl_c4g_map_themes']['edit']    = array('Edit theme', 'Edit theme ID %s');
-$GLOBALS['TL_LANG']['tl_c4g_map_themes']['copy']    = array('Copy theme', 'Copy theme ID %s');
-$GLOBALS['TL_LANG']['tl_c4g_map_themes']['delete']  = array('Delete theme', 'Delete theme ID %s');
-$GLOBALS['TL_LANG']['tl_c4g_map_themes']['show']    = array('Show theme', 'Show theme ID %s');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['new']     = array('New layout', 'Create a new layout');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['edit']    = array('Edit layout', 'Edit layout ID %s');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['copy']    = array('Copy layout', 'Copy layout ID %s');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['delete']  = array('Delete layout', 'Delete layout ID %s');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['show']    = array('Show layout', 'Show layout ID %s');
 
 /**
  * Fields
  */
-$GLOBALS['TL_LANG']['tl_c4g_map_themes']['name']        = array('Name', 'Please choose a name for the theme.');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['name']        = array('Name', 'Please choose a name for the layout.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['useglobal']   = array('Set global', 'Some css vars, like colors, will provided outside the map.');
 
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['buttons'] = array('Buttons', 'Choose a style for the buttons.');
@@ -38,10 +38,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_themes']['custom_icons'] = array('Custom icons',
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['external_icons']  = array('Custom icons', 'Upload your own CSS-File.');
 
 // Palettes
-$GLOBALS['TL_LANG']['tl_c4g_map_themes']['theme_legend']   = 'Theme settings';
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['theme_legend']   = 'Layout settings';
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['buttons_legend'] = 'Buttons';
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['colors_legend']  = 'Colors';
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['effects_legend'] = 'Effects';
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['icons_legend']   = 'Icons';
-
-//$GLOBALS['TL_LANG']['tl_c4g_map_themes']['example_info']   = 'Examples: /files/con4gis/examples/themes';
