@@ -39,8 +39,6 @@ $GLOBALS['TL_LANG']['tl_c4g_map_tables']['tooltip']                 = ['Tooltip'
  */
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['new']        = ['Neue Datenanbindung', 'Eine neue Datenanbindung erstellen'];
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['edit']       = ['Datenanbindung bearbeiten', 'Datenanbindung ID %s bearbeiten'];
-$GLOBALS['TL_LANG']['tl_c4g_map_tables']['copy']       = ['Datenanbindung duplizieren', 'Datenanbindung ID %s duplizieren'];
-$GLOBALS['TL_LANG']['tl_c4g_map_tables']['cut']        = ['Datenanbindung verschieben', 'Datenanbindung ID %s verschieben'];
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['delete']     = ['Datenanbindung löschen', 'Datenanbindung ID %s löschen'];
 
 /**
