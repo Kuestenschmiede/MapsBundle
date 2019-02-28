@@ -3711,9 +3711,9 @@ var GeoSearch = exports.GeoSearch = function (_ol$control$Control) {
     //   // if it is none of the above, then use the default URL
     //   this.config.url = 'https://nominatim.openstreetmap.org/search';
     // }
-    if (options.mapController.data.geosearch.comKey && options.mapController.data.geosearch.url) {
+    if (options.mapController.data.geosearch.searchKey && options.mapController.data.geosearch.url) {
       _this.config.url = options.mapController.data.geosearch.url + "search.php";
-      _this.config.key = options.mapController.data.geosearch.comKey;
+      _this.config.key = options.mapController.data.geosearch.searchKey;
     } else {
       _this.config.url = options.mapController.data.api.geosearch + "/" + options.mapController.data.profile;
     }

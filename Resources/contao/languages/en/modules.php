@@ -20,7 +20,7 @@ $GLOBALS['TL_LANG']['MOD']['c4g_map_baselayers'] 	= [ 'Maps: Base layers', 'Main
 $GLOBALS['TL_LANG']['MOD']['c4g_map_locstyles'] 	= [ 'Maps: Location styles', 'Maintain con4gis-Maps location styles.' ];
 $GLOBALS['TL_LANG']['MOD']['c4g_map_profiles'] 		= [ 'Maps: Profiles', 'Maintain con4gis-Maps map profiles.' ];
 $GLOBALS['TL_LANG']['MOD']['c4g_map_themes'] 		= [ 'Maps: Layouts', 'Maintain con4gis-Maps map layouts.' ];
-$GLOBALS['TL_LANG']['MOD']['c4g_map_tables']        = ['Maps: Datenanbindung', 'Das Thema (Layout]; der Karte anpassen.'];
+$GLOBALS['TL_LANG']['MOD']['c4g_map_tables']        = ['Maps: Data connection', 'Enable custom data connections'];
 
 /**
  * Frontend modules

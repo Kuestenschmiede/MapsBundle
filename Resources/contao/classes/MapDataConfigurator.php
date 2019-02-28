@@ -425,7 +425,7 @@ class MapDataConfigurator
                 $mapData['geosearch']['popup'] = $profile->geosearch_popup;
                 $mapData['geosearch']['attribution'] = \Contao\Controller::replaceInsertTags($profile->geosearch_attribution);
                 $mapData['geosearch']['collapsed'] = $profile->geosearch_collapsed;
-                if ($objSettings->con4gisIoUrl && $objSettings->con4gisIoKey) {
+                if ($profile->geosearch_engine == "4" && $objSettings->con4gisIoUrl && $objSettings->con4gisIoKey) {
                     $keySearchUrl = $objSettings->con4gisIoUrl . "getKey.php";
                     $keySearchUrl .= "?key=" . $objSettings->con4gisIoKey ."&service=2";
                     $REQUEST = new \Request();
