@@ -519,6 +519,10 @@ export class MapController {
         mapController: this
       });
       this.map.addControl(this.controls.account);
+      // open if opened before
+      if ((mapData.caching && (utils.getValue(this.controls.account.options.name) === '1'))) {
+        this.controls.account.open();
+      }
     }
 
     // zoom-controls
@@ -624,19 +628,6 @@ export class MapController {
       this.map.addControl(this.controls.fullscreen);
     }
 
-    // editor
-    // if (mapData.editor.enable && typeof Editor === 'function') {
-    //   this.controls.editor = new Editor({
-    //     tipLabel: langConstants.CTRL_EDITOR,
-    //     type: mapData.editor.type || 'frontend',
-    //     target: mapData.editor.target || controlContainerTopLeft,
-    //     initOpen: mapData.editor.open || false,
-    //     dataField: mapData.editor.data_field || false,
-    //     caching: mapData.caching,
-    //     mapController: this
-    //   });
-    //   this.map.addControl(this.controls.editor);
-    // }
     // measuretools
     if (mapData.measuretools.enable && typeof Measuretools === 'function') {
       this.controls.measuretools = new Measuretools({
@@ -646,6 +637,10 @@ export class MapController {
         mapController: this
       });
       this.map.addControl(this.controls.measuretools);
+      // open if opened before
+      if ((mapData.caching && (utils.getValue(this.controls.measuretools.options.name) === '1'))) {
+        this.controls.measuretools.open();
+      }
     }
     //
     if (mapData.print) {
@@ -689,6 +684,10 @@ export class MapController {
         mapController: this
       });
       this.map.addControl(this.controls.infopage);
+      // open if opened before
+      if ((mapData.caching && (utils.getValue(this.controls.infopage.options.name) === '1'))) {
+        this.controls.infopage.open();
+      }
     }
     // @ToDo mapData.additionalPanel is always true, because it is set as an new object in the beginning. Therefore the second parameter of the boolean is requested, which throws an error
     // additionalPanel is furthermore not found anywhere in Maps and should be loaded over a hook
@@ -761,6 +760,10 @@ export class MapController {
         results: mapData.geosearch.results
       });
       this.map.addControl(this.controls.geosearch);
+      // open if opened before
+      // if ((mapData.caching && (utils.getValue(this.controls.geosearch.options.name) === '1'))) {
+      //   this.controls.geosearch.open();
+      // }
     }
 
     // geobookmarks - not ready
@@ -930,7 +933,7 @@ export class MapController {
       caching: mapData.caching,
       mapController: this,
       extDiv: mapData.starboard.div,
-      defaultOpen: mapData.starboard.open,
+      // defaultOpen: mapData.starboard.open,
       filter: mapData.starboard.filter,
       button: mapData.starboard.button,
       baselayerSwitcherCreate: mapData.baselayerswitcher.enable,
@@ -939,5 +942,10 @@ export class MapController {
       layerSwitcherTitle: mapData.layerswitcher.label
     });
     this.map.addControl(this.controls.starboard);
+
+    // open if opened before
+    if (mapData.starboard.open || (mapData.caching && (utils.getValue(this.controls.starboard.options.name) === '1'))) {
+      this.controls.starboard.open();
+    }
   }
 }

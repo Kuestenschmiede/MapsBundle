@@ -3345,21 +3345,6 @@ var langConstantsGerman = exports.langConstantsGerman = {
   CTRL_FULLSCREEN: 'Vollbildmodus ein-/ausschalten',
   CTRL_PRINT: 'Karte exportieren',
 
-  EDITOR: 'Editor',
-  EDITOR_ENABLE_INSTANT_MEASURE: 'Messen während des Zeichnens',
-  EDITOR_ENABLE_FREEHAND_DRAW: 'Freihand zeichnen',
-  EDITOR_FEATURE_APPLY: 'Editieren beenden',
-  EDITOR_FEATURE_DELETE: 'Element löschen',
-  EDITOR_FEATURE_MODIFY: 'Element editieren / verschieben',
-  EDITOR_SELECT_INFO: 'Zur Auswahl ein Element auf der Karte anklicken.',
-  EDITOR_SELECT_INFO_ADDITIONAL: '[Strg] + [Klick] für Mehrfachauswahl <br>[Shift] halten für Auswahlbox',
-  EDITOR_VIEW_TRIGGER_SELECT: 'Auswahl Modus',
-  EDITOR_VIEW_TRIGGER_DRAW_POINT: 'Kartenelemente',
-  EDITOR_VIEW_TRIGGER_DRAW_FREEHAND: 'Freihandwerkzeuge',
-  EDITOR_VIEW_TRIGGER_DRAW_LINESTRING: 'Streckenwerkzeuge',
-  EDITOR_VIEW_TRIGGER_DRAW_POLYGON: 'Flächenwerkzeuge',
-  EDITOR_VIEW_TRIGGER_DRAW_CIRCLE: 'Kreiswerkzeuge',
-
   POPUP_ROUTE_FROM: 'Route von hier',
   POPUP_ROUTE_TO: 'Route hierhin',
 
@@ -3548,24 +3533,7 @@ var cssConstants = exports.cssConstants = {
   CONTROL_CONTAINER_BL: 'c4g-control-container-bottom-left',
   CONTROL_CONTAINER_BL_SUB: 'c4g-control-container-bottom-left-sub',
   CONTROL_CONTAINER_BR: 'c4g-control-container-bottom-right',
-  EDITOR_DRAW_CONTENT_POINT: 'c4g-draw-content-point',
-  EDITOR_DRAW_CONTENT_FREEHAND: 'c4g-draw-content-freehand',
-  EDITOR_DRAW_CONTENT_LINESTRING: 'c4g-draw-content-line',
-  EDITOR_DRAW_CONTENT_POLYGON: 'c4g-draw-content-polygon',
-  EDITOR_DRAW_CONTENT_CIRCLE: 'c4g-draw-content-circle',
-  EDITOR_DRAW_CONTENT_PROJECT: 'c4g-draw-content-project',
-  EDITOR_DRAW_TRIGGER: 'c4g-draw-trigger',
-  EDITOR_CONTENT_SELECT: 'c4g-content-select',
-  EDITOR_DRAW_OPTIONS: 'c4g-editor-draw-options',
-  EDITOR_FEATURE_APPLY: 'c4g-editor-feature-apply',
-  EDITOR_FEATURE_DELETE: 'c4g-editor-feature-delete',
-  EDITOR_FEATURE_MODIFY: 'c4g-editor-feature-modify',
-  EDITOR_VIEW_TRIGGER_SELECT: 'c4g-editor-view-trigger-select',
-  EDITOR_VIEW_TRIGGER_DRAW_POINT: 'c4g-editor-view-trigger-draw-point',
-  EDITOR_VIEW_TRIGGER_DRAW_FREEHAND: 'c4g-editor-view-trigger-draw-freehand',
-  EDITOR_VIEW_TRIGGER_DRAW_LINESTRING: 'c4g-editor-view-trigger-draw-line',
-  EDITOR_VIEW_TRIGGER_DRAW_POLYGON: 'c4g-editor-view-trigger-draw-polygon',
-  EDITOR_VIEW_TRIGGER_DRAW_CIRCLE: 'c4g-editor-view-trigger-draw-circle',
+
   GEOSEARCH: 'c4g-geosearch',
   GEOSEARCH_WRAPPER: 'c4g-geosearch-wrapper',
   GEOSEARCH_TRIGGER: 'c4g-geosearch-trigger',
@@ -6487,9 +6455,9 @@ var Sideboard = exports.Sideboard = function (_ol$control$Control) {
       this.options.mapController.map.on('change:size', this.update, this);
 
       // Show open if desired
-      if (this.options.defaultOpen || this.options.caching && _c4gMapsUtils.utils.getValue(this.options.name) == '1') {
-        this.open();
-      }
+      // if ((this.options.defaultOpen) || (this.options.caching && (utils.getValue(this.options.name) == '1'))) {
+      //   this.open();
+      // }
 
       return true;
     } // end of "create"
@@ -13865,6 +13833,10 @@ var MapController = exports.MapController = function () {
         mapController: this
       });
       this.map.addControl(this.controls.account);
+      // open if opened before
+      if (mapData.caching && _c4gMapsUtils.utils.getValue(this.controls.account.options.name) === '1') {
+        this.controls.account.open();
+      }
     }
 
     // zoom-controls
@@ -13968,19 +13940,6 @@ var MapController = exports.MapController = function () {
       this.map.addControl(this.controls.fullscreen);
     }
 
-    // editor
-    // if (mapData.editor.enable && typeof Editor === 'function') {
-    //   this.controls.editor = new Editor({
-    //     tipLabel: langConstants.CTRL_EDITOR,
-    //     type: mapData.editor.type || 'frontend',
-    //     target: mapData.editor.target || controlContainerTopLeft,
-    //     initOpen: mapData.editor.open || false,
-    //     dataField: mapData.editor.data_field || false,
-    //     caching: mapData.caching,
-    //     mapController: this
-    //   });
-    //   this.map.addControl(this.controls.editor);
-    // }
     // measuretools
     if (mapData.measuretools.enable && typeof _c4gMapsControlPortsideMeasuretools.Measuretools === 'function') {
       this.controls.measuretools = new _c4gMapsControlPortsideMeasuretools.Measuretools({
@@ -13990,6 +13949,10 @@ var MapController = exports.MapController = function () {
         mapController: this
       });
       this.map.addControl(this.controls.measuretools);
+      // open if opened before
+      if (mapData.caching && _c4gMapsUtils.utils.getValue(this.controls.measuretools.options.name) === '1') {
+        this.controls.measuretools.open();
+      }
     }
     //
     if (mapData.print) {
@@ -14033,6 +13996,10 @@ var MapController = exports.MapController = function () {
         mapController: this
       });
       this.map.addControl(this.controls.infopage);
+      // open if opened before
+      if (mapData.caching && _c4gMapsUtils.utils.getValue(this.controls.infopage.options.name) === '1') {
+        this.controls.infopage.open();
+      }
     }
     // @ToDo mapData.additionalPanel is always true, because it is set as an new object in the beginning. Therefore the second parameter of the boolean is requested, which throws an error
     // additionalPanel is furthermore not found anywhere in Maps and should be loaded over a hook
@@ -14105,6 +14072,10 @@ var MapController = exports.MapController = function () {
         results: mapData.geosearch.results
       });
       this.map.addControl(this.controls.geosearch);
+      // open if opened before
+      // if ((mapData.caching && (utils.getValue(this.controls.geosearch.options.name) === '1'))) {
+      //   this.controls.geosearch.open();
+      // }
     }
 
     // geobookmarks - not ready
@@ -14275,7 +14246,7 @@ var MapController = exports.MapController = function () {
         caching: mapData.caching,
         mapController: this,
         extDiv: mapData.starboard.div,
-        defaultOpen: mapData.starboard.open,
+        // defaultOpen: mapData.starboard.open,
         filter: mapData.starboard.filter,
         button: mapData.starboard.button,
         baselayerSwitcherCreate: mapData.baselayerswitcher.enable,
@@ -14284,6 +14255,11 @@ var MapController = exports.MapController = function () {
         layerSwitcherTitle: mapData.layerswitcher.label
       });
       this.map.addControl(this.controls.starboard);
+
+      // open if opened before
+      if (mapData.starboard.open || mapData.caching && _c4gMapsUtils.utils.getValue(this.controls.starboard.options.name) === '1') {
+        this.controls.starboard.open();
+      }
     }
   }]);
 
