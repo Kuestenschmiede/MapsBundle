@@ -1,15 +1,16 @@
 <?php
 
-/**
- * con4gis - the gis-kit
- *
- * @version   php 7
- * @package   con4gis
- * @author    con4gis contributors (see "authors.txt")
- * @license   GNU/LGPL http://opensource.org/licenses/lgpl-3.0.html
- * @copyright Küstenschmiede GmbH Software & Design 2011 - 2018
- * @link      https://www.kuestenschmiede.de
- */
+/*
+  * This file is part of con4gis,
+  * the gis-kit for Contao CMS.
+  *
+  * @package   	con4gis
+  * @version    6
+  * @author  	con4gis contributors (see "authors.txt")
+  * @license 	LGPL-3.0-or-later
+  * @copyright 	Küstenschmiede GmbH Software & Design
+  * @link       https://www.con4gis.org
+  */
 
 
 
@@ -55,7 +56,6 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['tooltip_length'] = array('Length of the tool
 $GLOBALS['TL_LANG']['tl_c4g_maps']['enablePopup'] = array('Activate popup', 'With the checkbox you can enable the popup for this structure element.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popup_info'] = array('Popup information', 'Information to be displayed in a popup after clicking with the mouse on a location or via mouse hover (depending on the map profile settings).');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popup_extend'] = array('Extend popup information with forumpost', 'Gives the ability to render additional popup information from a forumpost.');
-$GLOBALS['TL_LANG']['tl_c4g_maps']['routing_to'] = array('Add routing links to popup', 'Adds links for routing-options to the popup. Works only when routing is activated in the map profile.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popup_async'] = array('Load Popup Information later', 'Enables the loading of popup information during runtime.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popupAutoPan'] = array('Autopan to popup', '');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_linkurl'] = array('Direct link', 'Enter an URL (with http://) or click on the symbol to select a contao page. If you specify a link then the user jumps to the link via mouse click or mouse double click (depending on the map profile settings).');
@@ -105,7 +105,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['specialprofile_groups'] = array('Groups', 'T
 $GLOBALS['TL_LANG']['tl_c4g_maps']['be_optimize_checkboxes_limit']    = array('Limit for optimization of large checkbox-lists',
                                       'Defines how much entries must be there after the checkbox-lists will be converted to chosenfields. (0 = do not convert)');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_locations'] = array('Cluster locations','BCluster locations');
-$GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_distance'] = array('Cluster distance','Cluster distance (default 20px)');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_distance'] = array('Cluster distance','Cluster distance');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_fillcolor'] = array('Fill color', 'Select the fill color of the cluster bubble.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_fontcolor'] = array('Font color', 'Select the font color of the cluster bubble.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_zoom'] = array('Maximal zoom', 'Select the maximal zoomlevel. The cluster is splitted on click afterwards ');

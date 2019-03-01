@@ -1,67 +1,68 @@
 <?php
 use con4gis\CoreBundle\Resources\contao\models\C4gSettingsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
+use con4gis\MapsBundle\Resources\contao\models\C4gMapTablesModel;
 
 if (!defined('TL_ROOT')) die('You cannot access this file directly!');
 
-/**
- * con4gis - the gis-kit
- *
- * @version   php 7
- * @package   con4gis
- * @author    con4gis contributors (see "authors.txt")
- * @license   GNU/LGPL http://opensource.org/licenses/lgpl-3.0.html
- * @copyright Küstenschmiede GmbH Software & Design 2011 - 2018
- * @link      https://www.kuestenschmiede.de
- */
+/*
+  * This file is part of con4gis,
+  * the gis-kit for Contao CMS.
+  *
+  * @package   	con4gis
+  * @version    6
+  * @author  	con4gis contributors (see "authors.txt")
+  * @license 	LGPL-3.0-or-later
+  * @copyright 	Küstenschmiede GmbH Software & Design
+  * @link       https://www.con4gis.org
+  */
 
 /**
  * Table tl_c4g_maps
  */
-$GLOBALS['TL_DCA']['tl_c4g_maps'] = array
-(
+$GLOBALS['TL_DCA']['tl_c4g_maps'] =
+    [
 
     // Config
-    'config' => array
-    (
+    'config' =>
+        [
         'label'                       => $GLOBALS['TL_LANG']['MOD']['c4g_maps'][0],
         'dataContainer'               => 'Table',
         'enableVersioning'            => true,
-        'markAsCopy'                  => 'name',
-        'onload_callback'             => array(
-            array('tl_c4g_maps', 'updateDCA')),
-        'onsubmit_callback'             => array(
-            array(\con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator::class, 'purgeLayerApiCache')
-        ),
-        'sql'                         => array
-        (
-            'keys' => array
-            (
+        'onload_callback'             => [
+            ['tl_c4g_maps', 'updateDCA']],
+        'onsubmit_callback'             => [
+            [\con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator::class, 'purgeLayerApiCache']
+        ],
+        'sql'                         =>
+            [
+            'keys' =>
+                [
                 'id' => 'primary',
                 'pid' => 'index'
-            )
-        )
-    ),
+                ]
+            ]
+        ],
 
     // List
-    'list' => array
-    (
-        'sorting' => array
-        (
+    'list' =>
+        [
+        'sorting' =>
+            [
             'mode'                    => 5,
             'icon'                    => 'bundels/con4gisMapsBundle/images/core.png',
-            'fields'                  => array('name'),
+            'fields'                  => ['name'],
             'panelLayout'             => 'filter;sort,search,limit',
             'flag'                    => 1
-        ),
-        'label' => array
-        (
-            'fields'                  => array('name'),
+            ],
+        'label' =>
+            [
+            'fields'                  => ['name'],
             'format'                  => '%s',
-            'label_callback'          => array('tl_c4g_maps','generateLabel')
-        ),
-        'global_operations' => array
-        (
+            'label_callback'          => ['tl_c4g_maps','generateLabel']
+            ],
+        'global_operations' =>
+            [
 //            'update_db' => array
 //            (
 //                'label'               => &$GLOBALS['TL_LANG']['c4g_maps']['update_db'],
@@ -69,70 +70,70 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
 //                'class'               => 'navigation',
 //                'attributes'          => 'onclick="Backend.getScrollOffset();" accesskey="i"'
 //            ),
-            'all' => array
-            (
+            'all' =>
+                [
                 'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
                 'href'                => 'act=select',
                 'class'               => 'header_edit_all',
                 'attributes'          => 'onclick="Backend.getScrollOffset();" accesskey="e"'
-            )
-        ),
-        'operations' => array
-        (
-            'edit' => array
-            (
+                ]
+            ],
+        'operations' =>
+            [
+            'edit' =>
+                [
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['edit'],
                 'href'                => 'act=edit',
                 'icon'                => 'edit.gif'
-            ),
-            'copy' => array
-            (
+                ],
+            'copy' =>
+                [
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['copy'],
                 'href'                => 'act=paste&amp;mode=copy',
                 'icon'                => 'copy.gif'
-            ),
-            'copyChilds' => array
-            (
+                ],
+            'copyChilds' =>
+                [
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['copyChilds'],
                 'href'                => 'act=paste&amp;mode=copy&amp;childs=1',
                 'icon'                => 'copychilds.gif',
                 'attributes'          => 'onclick="Backend.getScrollOffset();"',
-                'button_callback'     => array('tl_c4g_maps', 'copyPageWithSubpages')
-            ),
-            'cut' => array
-            (
+                'button_callback'     => ['tl_c4g_maps', 'copyPageWithSubpages']
+                ],
+            'cut' =>
+                [
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['cut'],
                 'href'                => 'act=paste&amp;mode=cut',
                 'icon'                => 'cut.gif',
                 'attributes'          => 'onclick="Backend.getScrollOffset();"'
-            ),
-            'delete' => array
-            (
+                ],
+            'delete' =>
+                [
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['delete'],
                 'href'                => 'act=delete',
                 'icon'                => 'delete.gif',
                 'attributes'          => 'onclick="if (!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\')) return false; Backend.getScrollOffset();"'
-            ),
-            'toggle' => array
-            (
+                ],
+            'toggle' =>
+                [
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['toggle'],
                 'icon'                => 'visible.gif',
                 'attributes'          => 'onclick="Backend.getScrollOffset(); return AjaxRequest.toggleVisibility(this, %s);"',
-                'button_callback'     => array('tl_c4g_maps', 'toggleIcon')
-            ),
-            'show' => array
-            (
+                'button_callback'     => ['tl_c4g_maps', 'toggleIcon']
+                ],
+            'show' =>
+                [
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['show'],
                 'href'                => 'act=show',
                 'icon'                => 'show.gif'
-            )
-        )
-    ),
+                ]
+            ]
+        ],
 
     // Palettes
-    'palettes' => array
-    (
-        '__selector__'                => array( 'is_map', 'profile','location_type', 'tab_source', 'show_locations', 'popup_extend', 'protect_element', 'use_specialprofile', 'cluster_locations', 'split_geojson'),
+    'palettes' =>
+        [
+        '__selector__'                => ['is_map', 'profile','location_type', 'tab_source', 'show_locations', 'popup_extend', 'protect_element', 'use_specialprofile', 'cluster_locations', 'split_geojson'],
         'default'                     => '{general_legend},name,profile,profile_mobile,published;'.
                                          '{map_legend},is_map;'.
                                          '{location_legend},location_type,data_layername,hide_child,exemptFromFilter,data_hidelayer,cssClass,zoom_locations, hover_location,loc_minzoom,loc_maxzoom;'.
@@ -141,37 +142,37 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
         'single'                      => '{general_legend},name,profile,profile_mobile,published;'.
                                          '{map_legend},is_map;'.
-                                         '{location_legend},location_type,data_layername,exemptFromFilter,hide_child,data_hidelayer,loc_geox,loc_geoy,locstyle,loc_only_in_parent,loc_label,tooltip, tooltip_length,enablePopup,showPopupOnActive,popup_info,routing_to,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
+                                         '{location_legend},location_type,data_layername,exemptFromFilter,hide_child,data_hidelayer,loc_geox,loc_geoy,locstyle,loc_only_in_parent,loc_label,tooltip, tooltip_length,enablePopup,showPopupOnActive,popup_info,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
                                          '{protection_legend:hide},protect_element;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
         'table'                      =>  '{general_legend},name,profile,profile_mobile,published;'.
                                          '{map_legend},is_map;'.
-                                         '{location_legend},location_type,data_layername,hide_child,exemptFromFilter,data_hidelayer,tab_source,tab_pid,tab_pid1,tab_labeldisplay,tab_tooltipdisplay,tab_directlink,tab_force_target_blank,tab_whereclause,tabJoinclause,tab_orderby,tab_filter_alias,locstyle,routing_to,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,cluster_locations,async_content,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
+                                         '{location_legend},location_type,data_layername,hide_child,exemptFromFilter,data_hidelayer,tab_source,tab_pid,tab_pid1,tab_labeldisplay,tab_tooltipdisplay,tab_directlink,tab_force_target_blank,tab_whereclause,tabJoinclause,tab_orderby,tab_filter_alias,locstyle,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,cluster_locations,async_content,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
                                          '{protection_legend:hide},protect_element;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
         'gpx'                        =>  '{general_legend},name,profile,profile_mobile,published;'.
                                          '{map_legend},is_map;'.
-                                         '{location_legend},location_type,data_layername,hide_child,exemptFromFilter,data_hidelayer,data_file,data_url,locstyle,loc_label,tooltip, tooltip_length,enablePopup,popup_info,popup_async,routing_to,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
+                                         '{location_legend},location_type,data_layername,hide_child,exemptFromFilter,data_hidelayer,data_file,data_url,locstyle,loc_label,tooltip, tooltip_length,enablePopup,popup_info,popup_async,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
                                          '{protection_legend:hide},protect_element;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
         'kml'                        =>  '{general_legend},name,profile,profile_mobile,published;'.
                                          '{map_legend},is_map;'.
-                                         '{location_legend},location_type,data_layername,hide_child,exemptFromFilter,data_hidelayer,data_file,data_url,loc_label,tooltip, tooltip_length,enablePopup,popup_info,popup_async,routing_to,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
+                                         '{location_legend},location_type,data_layername,hide_child,exemptFromFilter,data_hidelayer,data_file,data_url,loc_label,tooltip, tooltip_length,enablePopup,popup_info,popup_async,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
                                          '{protection_legend:hide},protect_element;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
         'geojson'                    =>  '{general_legend},name,profile,profile_mobile,published;'.
                                          '{map_legend},is_map;'.
-                                         '{location_legend},location_type,data_layername,hide_child,exemptFromFilter,data_hidelayer,data_file,split_geojson,data_content,data_projection,locstyle,loc_label,tooltip, tooltip_length,enablePopup,popup_info,routing_to,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
+                                         '{location_legend},location_type,data_layername,hide_child,exemptFromFilter,data_hidelayer,data_file,split_geojson,data_content,data_projection,locstyle,loc_label,tooltip, tooltip_length,enablePopup,popup_info,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
                                          '{protection_legend:hide},protect_element;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
         'osm'                        =>  '{general_legend},name,profile,profile_mobile,published;'.
                                          '{map_legend},is_map;'.
-                                         '{location_legend},location_type,data_layername,hide_child,exemptFromFilter,data_hidelayer,data_file,data_url,data_forcenodes,locstyle,loc_label,tooltip, tooltip_length,enablePopup,popupType,popup_info,routing_to,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,cluster_locations,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
+                                         '{location_legend},location_type,data_layername,hide_child,exemptFromFilter,data_hidelayer,data_file,data_url,data_forcenodes,locstyle,loc_label,tooltip, tooltip_length,enablePopup,popupType,popup_info,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,cluster_locations,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
                                          '{protection_legend:hide},protect_element;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
         'overpass'                   =>  '{general_legend},name,profile,profile_mobile,published;'.
                                          '{map_legend},is_map;'.
-                                         '{location_legend},location_type,data_layername,hide_child,exemptFromFilter,data_hidelayer,ovp_request,ovp_bbox_limited,data_forcenodes,data_additionalgeometries,locstyle,loc_label,tooltip, tooltip_length,enablePopup,popupType,popup_info,routing_to,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,cluster_locations,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
+                                         '{location_legend},location_type,data_layername,hide_child,exemptFromFilter,data_hidelayer,ovp_request,ovp_bbox_limited,data_forcenodes,data_additionalgeometries,locstyle,loc_label,tooltip, tooltip_length,enablePopup,popupType,popup_info,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,cluster_locations,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
                                          '{protection_legend:hide},protect_element;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
         'link'                       =>  '{general_legend},name,profile,profile_mobile,published;'.
@@ -181,7 +182,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
         'c4gForum'                   =>  '{general_legend},name,profile,profile_mobile,published;'.
                                          '{map_legend},is_map;'.
-                                         '{location_legend},location_type,data_layername,hide_child,exemptFromFilter,data_hidelayer,forums,forum_jumpto,forum_reassign_layer,loc_label,tooltip, tooltip_length,enablePopup,popup_info,routing_to,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,hide_when_in_tab,cssClass;'.
+                                         '{location_legend},location_type,data_layername,hide_child,exemptFromFilter,data_hidelayer,forums,forum_jumpto,forum_reassign_layer,loc_label,tooltip, tooltip_length,enablePopup,popup_info,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,hide_when_in_tab,cssClass;'.
                                          '{protection_legend:hide},protect_element;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
         'startab'                    =>  '{general_legend},name,profile,profile_mobile,published;' .
@@ -190,135 +191,135 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
         'folder'                     =>  '{general_legend},name,profile,profile_mobile,published;'.
                                          '{map_legend},is_map;'.
-                                         '{location_legend},location_type,data_layername,hide_child,data_hidelayer,data_folder,locstyle,loc_label,tooltip, tooltip_length,enablePopup,popup_info,routing_to,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,hide_when_in_tab,cssClass;'.
+                                         '{location_legend},location_type,data_layername,hide_child,data_hidelayer,data_folder,locstyle,loc_label,tooltip, tooltip_length,enablePopup,popup_info,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,hide_when_in_tab,cssClass;'.
                                          '{protection_legend:hide},protect_element;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
-    ),
+        ],
 
     // Subpalettes
-    'subpalettes' => array
-    (
+    'subpalettes' =>
+        [
         'use_specialprofile'          => 'specialprofile, specialprofile_mobile, specialprofile_groups',
-        //'enablePopup'                 => 'popup_info,routing_to',
+        //'enablePopup'                 => 'popup_info',
         'protect_element'             => 'permitted_groups',
         'popup_extend'                => 'forums',
         'is_map'                      => '',  // is set in updateDCA
         'cluster_locations'           => 'cluster_distance, cluster_fillcolor, cluster_fontcolor, cluster_zoom,cluster_popup',
         'split_geojson'               => 'geojson_attributes, geojson_zoom'
-    ),
+        ],
 
     // Fields
-    'fields' => array
-    (
-        'id' => array
-        (
+    'fields' =>
+        [
+        'id' =>
+            [
             'sql'                     => "int(10) unsigned NOT NULL auto_increment",
             'search'                  => true
-        ),
-        'pid' => array
-        (
+            ],
+        'pid' =>
+            [
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
-        ),
-        'sorting' => array
-        (
+            ],
+        'sorting' =>
+            [
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
-        ),
-        'tstamp' => array
-        (
+            ],
+        'tstamp' =>
+            [
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
-        ),
-        'name' => array
-        (
+            ],
+        'name' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['name'],
             'exclude'                 => true,
             'inputType'               => 'c4g_text',
-            'eval'                    => array('mandatory'=>true, 'maxlength'=>255 ),
+            'eval'                    => ['mandatory'=>true, 'maxlength'=>255],
             'sql'                     => "varchar(100) NOT NULL default ''",
             'search'                  => true
-        ),
-        'profile' => array
-        (
+            ],
+        'profile' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['profile'],
             'exclude'                 => true,
             'inputType'               => 'select',
             'foreignKey'              => 'tl_c4g_map_profiles.name',
-            'eval'                    => array('tl_class'=>'w50',
+            'eval'                    => ['tl_class'=>'w50',
                                                'includeBlankOption'=>true, 'blankOptionLabel'=>&$GLOBALS['TL_LANG']['tl_c4g_maps']['default_profile'],
-                                               'submitOnChange' => true, 'chosen' => true, 'alwaysSave' => true ),
-            'load_callback'           => array(array('tl_c4g_maps','getDefaultProfile')),
-            'relation'                => array('type'=>'belongsTo', 'load'=>'eager'),
+                                               'submitOnChange' => true, 'chosen' => true, 'alwaysSave' => true],
+            'load_callback'           => [['tl_c4g_maps','getDefaultProfile']],
+            'relation'                => ['type'=>'belongsTo', 'load'=>'eager'],
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
 
-        ),
-        'profile_mobile' => array
-        (
+            ],
+        'profile_mobile' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['profile_mobile'],
             'exclude'                 => true,
             'inputType'               => 'select',
             'foreignKey'              => 'tl_c4g_map_profiles.name',
-            'eval'                    => array(
+            'eval'                    => [
                                             'tl_class'=>'w50',
                                             'chosen' => true,
                                             'includeBlankOption'=>true
-                                              ),
+            ],
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
-        ),
-        'published' => array
-        (
+            ],
+        'published' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['published'],
             'exclude'                 => true,
             'default'                 => true,
             'inputType'               => 'checkbox',
-            'eval'                    => array('tl_class'=>'clr'),
+            'eval'                    => ['tl_class'=>'clr'],
             'sql'                     => "char(1) NOT NULL default '1'"
-        ),
-        'is_map' => array
-        (
+            ],
+        'is_map' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['is_map'],
             'exclude'                 => true,
             'default'                 => '',
             'inputType'               => 'checkbox',
-            'eval'                    => array('submitOnChange' => true),
+            'eval'                    => ['submitOnChange' => true],
             'sql'                     => "char(1) NOT NULL default ''"
-        ),
-        'width' => array
-        (
+            ],
+        'width' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['width'],
             'exclude'                 => true,
             'inputType'               => 'inputUnit',
-            'options'                 => array('px', '%', 'em', 'vh', 'vw', 'vmin', 'vmax', 'pt', 'pc', 'in', 'cm', 'mm'),
-            'eval'                    => array(
+            'options'                 => ['px', '%', 'em', 'vh', 'vw', 'vmin', 'vmax', 'pt', 'pc', 'in', 'cm', 'mm'],
+            'eval'                    => [
                                             'rgxp'=>'digit_auto_inherit',
                                             'tl_class'=>'long',
                                             'includeBlankOption'=>true
-                                        ),
+            ],
             'sql'                     => "varchar(64) NOT NULL default ''"
-        ),
-        'height' => array
-        (
+            ],
+        'height' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['height'],
             'exclude'                 => true,
             'inputType'               => 'inputUnit',
-            'options'                 => array('px', '%', 'em', 'vh', 'vw', 'vmin', 'vmax', 'pt', 'pc', 'in', 'cm', 'mm'),
-            'eval'                    => array(
+            'options'                 => ['px', '%', 'em', 'vh', 'vw', 'vmin', 'vmax', 'pt', 'pc', 'in', 'cm', 'mm'],
+            'eval'                    => [
                                             'rgxp'=>'digit_auto_inherit',
                                             'tl_class'=>'long',
                                             'includeBlankOption'=>true
-                                        ),
+            ],
             'sql'                     => "varchar(64) NOT NULL default ''"
-        ),
-        'margin' => array
-        (
+            ],
+        'margin' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['margin'],
             'exclude'                 => true,
             'inputType'               => 'trbl',
-            'options'                 => array('px', '%', 'em', 'vh', 'vw', 'vmin', 'vmax', 'pt', 'pc', 'in', 'cm', 'mm'),
-            'eval'                    => array(
+            'options'                 => ['px', '%', 'em', 'vh', 'vw', 'vmin', 'vmax', 'pt', 'pc', 'in', 'cm', 'mm'],
+            'eval'                    => [
                                             'rgxp'=>'digit_auto_inherit',
                                             'includeBlankOption'=>true
-                                        ),
+            ],
             'sql'                     => "varchar(128) NOT NULL default ''"
-        ),
+            ],
         // 'auto_width' => array
         // (
         //  'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['auto_width'],
@@ -383,211 +384,211 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
         //     'default'                 => '0',
         //  'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'w50')
         // ),
-        'calc_extent' => array
-        (
+        'calc_extent' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['calc_extent'],
             'exclude'                 => true,
             'inputType'               => 'select',
-            'options'                 => array('LOCATIONS','CENTERZOOM'),
+            'options'                 => ['LOCATIONS','CENTERZOOM'],
             #'default'                 => 'LOCATIONS',
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['references'],
             #'eval'                    => array('submitOnChange'=>true,'tl_class'=>'clr'),
-            'load_callback'           => array(array('tl_c4g_maps','setOldValue')),
+            'load_callback'           => [['tl_c4g_maps','setOldValue']],
             'sql'                     => "varchar(10) NOT NULL default ''"
-        ),
-        'show_locations' => array
-        (
+            ],
+        'show_locations' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['show_locations'],
             'exclude'                 => true,
             'inputType'               => 'checkbox',
             'default'                 => '0',
-            'eval'                    => array('submitOnChange'=>true,'tl_class'=>'clr'),
-            'load_callback'           => array(array('tl_c4g_maps','getOldValue')),
+            'eval'                    => ['submitOnChange'=>true,'tl_class'=>'clr'],
+            'load_callback'           => [['tl_c4g_maps','getOldValue']],
 
             'sql'                     => "char(1) NOT NULL default '2'"
-        ),
-        'min_gap' => array
-        (
+            ],
+        'min_gap' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['min_gap'],
             'exclude'                 => true,
             'inputType'               => 'c4g_text',
             'default'                 => '0',
-            'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'clr'),
+            'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
-        ),
-        'awesomeicon' => array
-        (
+            ],
+        'awesomeicon' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['awesomeicon'],
             'exclude'                 => true,
             'inputType'               => 'c4g_text',
-            'eval'                    => array('maxlength'=>20, 'tl_class'=>'clr'),
+            'eval'                    => ['maxlength'=>20, 'tl_class'=>'clr'],
             'sql'                     => "varchar(20) NOT NULL default ''"
-        ),
-        'center_geox' => array
-        (
+            ],
+        'center_geox' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['center_geox'],
             'exclude'                 => true,
             'inputType'               => 'c4g_text',
-            'eval'                    => array('maxlength'=>20, 'tl_class'=>'w50 wizard', 'require_input'=>true ),
-            'save_callback'           => array(array('tl_c4g_maps','setCenterLon')),
-            'wizard'                  => array(array('con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink')),
+            'eval'                    => ['maxlength'=>20, 'tl_class'=>'w50 wizard', 'require_input'=>true],
+            'save_callback'           => [['tl_c4g_maps','setCenterLon']],
+            'wizard'                  => [['con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink']],
             'sql'                     => "varchar(20) NOT NULL default ''"
-        ),
-        'center_geoy' => array
-        (
+            ],
+        'center_geoy' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['center_geoy'],
             'exclude'                 => true,
             'inputType'               => 'c4g_text',
-            'eval'                    => array('maxlength'=>20, 'tl_class'=>'w50 wizard', 'require_input'=>true),
-            'save_callback'           => array(array('tl_c4g_maps','setCenterLat')),
-            'wizard'                  => array(array('con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink')),
+            'eval'                    => ['maxlength'=>20, 'tl_class'=>'w50 wizard', 'require_input'=>true],
+            'save_callback'           => [['tl_c4g_maps','setCenterLat']],
+            'wizard'                  => [['con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink']],
             'sql'                     => "varchar(20) NOT NULL default ''"
-        ),
-        'zoom' => array
-        (
+            ],
+        'zoom' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['zoom'],
             'exclude'                 => true,
             'inputType'               => 'c4g_text',
             'default'                 => '10',
-            'eval'                    => array('tl_class'=>'clr'),
+            'eval'                    => ['tl_class'=>'clr'],
             'sql'                     => "varchar(20) NOT NULL default '10'"
-        ),
-        'geolocation' => array
-        (
+            ],
+        'geolocation' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['geolocation'],
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',
-            'eval'                    => array('submitOnChange' => true),
+            'eval'                    => ['submitOnChange' => true],
             'sql'                     => "char(1) NOT NULL default ''"
-        ),
-        'geolocation_zoom' => array
-        (
+            ],
+        'geolocation_zoom' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['geolocation_zoom'],
             'exclude'                 => true,
             'inputType'               => 'c4g_text',
             'default'                 => '16',
-            'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'clr'),
+            'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
             'sql'                     => "int(10) unsigned NOT NULL default '16'"
-        ),
-        'hide_when_in_tab' => array
-        (
+            ],
+        'hide_when_in_tab' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['hide_when_in_tab'],
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',
             'sql'                     => "char(1) NOT NULL default ''"
-        ),
-        'restrict_area' => array
-        (
+            ],
+        'restrict_area' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['restrict_area'],
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',
-            'eval'                    => array('submitOnChange' => true),
+            'eval'                    => ['submitOnChange' => true],
             'sql'                     => "char(1) NOT NULL default ''"
-        ),
-        'restr_bottomleft_geox' => array
-        (
+            ],
+        'restr_bottomleft_geox' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['restr_bottomleft_geox'],
             'exclude'                 => true,
             'inputType'               => 'c4g_text',
-            'eval'                    => array('maxlength'=>20, 'tl_class'=>'w50 wizard', 'require_input'=>true ),
-            'save_callback'           => array(array('tl_c4g_maps','setRestrLon')),
-            'wizard'                  => array(array('con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink')),
+            'eval'                    => ['maxlength'=>20, 'tl_class'=>'w50 wizard', 'require_input'=>true],
+            'save_callback'           => [['tl_c4g_maps','setRestrLon']],
+            'wizard'                  => [['con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink']],
             'sql'                     => "varchar(20) NOT NULL default ''"
-        ),
-        'restr_bottomleft_geoy' => array
-        (
+            ],
+        'restr_bottomleft_geoy' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['restr_bottomleft_geoy'],
             'exclude'                 => true,
             'inputType'               => 'c4g_text',
-            'eval'                    => array('maxlength'=>20, 'tl_class'=>'w50 wizard', 'require_input'=>true ),
-            'save_callback'           => array(array('tl_c4g_maps','setRestrLat')),
-            'wizard'                  => array(array('con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink')),
+            'eval'                    => ['maxlength'=>20, 'tl_class'=>'w50 wizard', 'require_input'=>true],
+            'save_callback'           => [['tl_c4g_maps','setRestrLat']],
+            'wizard'                  => [['con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink']],
             'sql'                     => "varchar(20) NOT NULL default ''"
-        ),
-        'restr_topright_geox' => array
-        (
+            ],
+        'restr_topright_geox' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['restr_topright_geox'],
             'exclude'                 => true,
             'inputType'               => 'c4g_text',
-            'eval'                    => array('maxlength'=>20, 'tl_class'=>'w50 wizard', 'require_input'=>true ),
-            'save_callback'           => array(array('tl_c4g_maps','setRestrLon')),
-            'wizard'                  => array(array('con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink')),
+            'eval'                    => ['maxlength'=>20, 'tl_class'=>'w50 wizard', 'require_input'=>true],
+            'save_callback'           => [['tl_c4g_maps','setRestrLon']],
+            'wizard'                  => [['con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink']],
             'sql'                     => "varchar(20) NOT NULL default ''"
-        ),
-        'restr_topright_geoy' => array
-        (
+            ],
+        'restr_topright_geoy' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['restr_topright_geoy'],
             'exclude'                 => true,
             'inputType'               => 'c4g_text',
-            'eval'                    => array('maxlength'=>20, 'tl_class'=>'w50 wizard', 'require_input'=>true ),
-            'save_callback'           => array(array('tl_c4g_maps','setRestrLat')),
-            'wizard'                  => array(array('con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink')),
+            'eval'                    => ['maxlength'=>20, 'tl_class'=>'w50 wizard', 'require_input'=>true],
+            'save_callback'           => [['tl_c4g_maps','setRestrLat']],
+            'wizard'                  => [['con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink']],
             'sql'                     => "varchar(20) NOT NULL default ''"
-        ),
-        'include_sublocations' => array
-        (
+            ],
+        'include_sublocations' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['include_sublocations'],
             'exclude'                 => true,
             'default'                 => true,
             'inputType'               => 'checkbox',
             'sql'                     => "char(1) NOT NULL default '1'"
-        ),
-        'location_type' => array
-        (
+            ],
+        'location_type' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['location_type'],
             'exclude'                 => true,
             'default'                 => 'none',
             'inputType'               => 'radio',
-            'options_callback'        => array('tl_c4g_maps','getLocationTypes'),
-            'eval'                    => array('submitOnChange' => true),
+            'options_callback'        => ['tl_c4g_maps','getLocationTypes'],
+            'eval'                    => ['submitOnChange' => true],
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['references'],
             'sql'                     => "char(10) NOT NULL default ''"
-        ),
-        'loc_geox' => array
-        (
+            ],
+        'loc_geox' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['loc_geox'],
             'exclude'                 => true,
             'inputType'               => 'c4g_text',
-            'eval'                    => array('mandatory'=>true, 'maxlength'=>20, 'tl_class'=>'w50 wizard' ),
-            'save_callback'           => array(array('tl_c4g_maps','setLocLon')),
-            'wizard'                  => array(array('con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink')),
+            'eval'                    => ['mandatory'=>true, 'maxlength'=>20, 'tl_class'=>'w50 wizard'],
+            'save_callback'           => [['tl_c4g_maps','setLocLon']],
+            'wizard'                  => [['con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink']],
             'sql'                     => "varchar(20) NOT NULL default ''"
-        ),
+            ],
 
-        'loc_geoy' => array
-        (
+        'loc_geoy' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['loc_geoy'],
             'exclude'                 => true,
             'inputType'               => 'c4g_text',
-            'eval'                    => array('mandatory'=>true, 'maxlength'=>20, 'tl_class'=>'w50 wizard'),
-            'save_callback'           => array(array('tl_c4g_maps','setLocLat')),
-            'wizard'                  => array(array('con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink')),
+            'eval'                    => ['mandatory'=>true, 'maxlength'=>20, 'tl_class'=>'w50 wizard'],
+            'save_callback'           => [['tl_c4g_maps','setLocLat']],
+            'wizard'                  => [['con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink']],
             'sql'                     => "varchar(20) NOT NULL default ''"
-        ),
-        'locstyle' => array
-        (
+            ],
+        'locstyle' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['locstyle'],
             'exclude'                 => true,
             'inputType'               => 'select',
-            'options_callback'        => array('tl_c4g_maps','getLocStyles'),
-            'eval'                    => array('tl_class'=>'clr', 'chosen' => true),
-            'wizard' => array
-            (
-                array('tl_c4g_maps', 'editLocationStyle')
-            ),
+            'options_callback'        => ['tl_c4g_maps','getLocStyles'],
+            'eval'                    => ['tl_class'=>'clr', 'chosen' => true],
+            'wizard' =>
+                [
+                ['tl_c4g_maps', 'editLocationStyle']
+                ],
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
-        ),
-        'loc_only_in_parent' => array
-        (
+            ],
+        'loc_only_in_parent' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['loc_only_in_parent'],
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',
             'sql'                     => "char(1) NOT NULL default ''"
-        ),
+            ],
         'exemptFromFilter' => [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['exemptFromFilter'],
             'exclude'                 => true,
@@ -595,164 +596,156 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
             'inputType'               => 'checkbox',
             'sql'                     => "char(1) NOT NULL default ''"
         ],
-        'loc_label' => array
-        (
+        'loc_label' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['loc_label'],
             'exclude'                 => true,
             'inputType'               => 'c4g_text',
             'sql'                     => "varchar(100) NOT NULL default ''"
-        ),
-        'tooltip' => array
-        (
+            ],
+        'tooltip' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['tooltip'],
             'exclude'                 => true,
             'inputType'               => 'c4g_text',
-            'eval'                    => array('tl_class'=>'long'),
+            'eval'                    => ['tl_class'=>'long'],
             'sql'                     => "varchar(100) NOT NULL default ''"
-        ),
-        'tooltip_length' => array
-        (
+            ],
+        'tooltip_length' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['tooltip_length'],
             'inputType'               => 'c4g_text',
             'default'                 => '30',
-            'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'clr'),
+            'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
             'sql'                     => "int(100) NOT NULL default '30'"
-        ),
-        'enablePopup' => array
-        (
+            ],
+        'enablePopup' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['enablePopup'],
             'exclude'                 => true,
             'default'                 => true,
             'inputType'               => 'checkbox',
-            'eval'                    => array('submitOnChange' => true),
+            'eval'                    => ['submitOnChange' => true],
             'sql'                     => "char(1) NOT NULL default '1'"
-        ),
-        'popupType' => array
-        (
+            ],
+        'popupType' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['popupType'],
             'exclude'                 => true,
             'default'                 => 'text',
             'inputType'               => 'radio',
-            'options'                 => array('text','template','popup_info'),
-            'eval'                    => array('mandatory'=>true, 'submitOnChange' => true),
+            'options'                 => ['text','template','popup_info'],
+            'eval'                    => ['mandatory'=>true, 'submitOnChange' => true],
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['popupType'],
             'sql'                     => "char(10) NOT NULL default 'text'"
-        ),
-        'popupTemplate' => array
-        (
+            ],
+        'popupTemplate' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['popupTemplate'],
             'exclude'                 => true,
             'default'                 => 'popup_default',
             'inputType'               => 'select',
-            'options_callback'        => array('tl_c4g_maps', 'getPopupTemplates'),
-            'eval'                    => array('mandatore'=>true, 'chosen'=>true),
+            'options_callback'        => ['tl_c4g_maps', 'getPopupTemplates'],
+            'eval'                    => ['mandatore'=>true, 'chosen'=>true],
             'sql'                     => "varchar(64) NOT NULL default ''"
-        ),
-        'popup_info' => array
-        (
+            ],
+        'popup_info' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['popup_info'],
             'exclude'                 => true,
             'inputType'               => 'textarea',
-            'eval'                    => array('rte'=>'tinyMCE'),
+            'eval'                    => ['rte'=>'tinyMCE'],
             'sql'                     => "text NULL"
-        ),
-        'popup_async' => array
-        (
+            ],
+        'popup_async' =>
+            [
             //@Todo Asynchrone Abfrage (GPX,KML) reparieren und einblenden
             #'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['popup_async'],
             #'exclude'                 => true,
             'default'                 => false,
             #'inputType'               => 'checkbox',
             'sql'                     => "char(1) NOT NULL default ''"
-        ),
-        'popup_extend' => array
-        (
+            ],
+        'popup_extend' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['popup_extend'],
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',
-            'eval'                    => array('submitOnChange' => true),
+            'eval'                    => ['submitOnChange' => true],
             'sql'                     => "char(1) NOT NULL default '0'"
-        ),
-        'routing_to' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['routing_to'],
-            'exclude'                 => true,
-            'default'                 => '',
-            'inputType'               => 'checkbox',
-            'sql'                     => "char(1) NOT NULL default ''"
-        ),
-        'loc_linkurl' => array
-        (
+            ],
+        'loc_linkurl' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['loc_linkurl'],
             'exclude'                 => true,
             'inputType'               => 'text',
-            'eval'                    => array('rgxp'=>'url', 'decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'wizard'),
-            'wizard'                  => array(array('tl_c4g_maps', 'pickUrl')),
+            'eval'                    => ['rgxp'=>'url', 'decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'wizard'],
+            'wizard'                  => [['tl_c4g_maps', 'pickUrl']],
             'sql'                     => "varchar(255) NOT NULL default ''"
-        ),
-        'loc_onclick_zoomto' => array
-        (
+            ],
+        'loc_onclick_zoomto' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['loc_onclick_zoomto'],
             'exclude'                 => true,
             'inputType'               => 'c4g_text',
             'default'                 => '0',
-            'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'clr'),
+            'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
-        ),
-        'loc_minzoom' => array
-        (
+            ],
+        'loc_minzoom' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['loc_minzoom'],
             'exclude'                 => true,
             'inputType'               => 'c4g_text',
             'default'                 => '0',
-            'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'clr'),
+            'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
-        ),
-        'loc_maxzoom' => array
-        (
+            ],
+        'loc_maxzoom' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['loc_maxzoom'],
             'exclude'                 => true,
             'inputType'               => 'c4g_text',
             'default'                 => '0',
-            'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'clr'),
+            'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
-        ),
-        'tab_source' => array
-        (
+            ],
+        'tab_source' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['tab_source'],
             'exclude'                 => true,
             'inputType'               => 'select',
-            'options_callback'        => array('tl_c4g_maps','getTabSources'),
-            'eval'                    => array('submitOnChange' => true,  'chosen' => true),
+            'options_callback'        => ['tl_c4g_maps','getTabSources'],
+            'eval'                    => ['submitOnChange' => true,  'chosen' => true],
             'sql'                     => "varchar(100) NOT NULL default ''"
-        ),
-        'async_content' => array
-        (
+            ],
+        'async_content' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['async_content'],
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',
             'sql'                     => "char(1) NOT NULL default ''"
-        ),
-        'tab_pid' => array
-        (
+            ],
+        'tab_pid' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['tab_pid'],
             'exclude'                 => true,
             'inputType'               => 'select',
-            'options_callback'        => array('tl_c4g_maps','getTabParentList'),
+            'options_callback'        => ['tl_c4g_maps','getTabParentList'],
             'sql'                     => "int(10) unsigned NOT NULL default '0'",
-            'eval'                    =>  array('tl_class'=>'clr', 'chosen'=>true, 'includeBlankOption' => true)
-        ),
-        'tab_pid1' => array
-        (
+            'eval'                    =>  ['tl_class'=>'clr', 'chosen'=>true, 'includeBlankOption' => true]
+            ],
+        'tab_pid1' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['tab_pid1'],
             'exclude'                 => true,
             'inputType'               => 'select',
-            'options_callback'        => array('tl_c4g_maps','getTabParentList1'),
+            'options_callback'        => ['tl_c4g_maps','getTabParentList1'],
             'sql'                     => "int(10) unsigned NOT NULL default '0'",
-            'eval'                    => array('tl_class'=>'clr', 'chosen'=>true, 'includeBlankOption' => true)
-        ),
+            'eval'                    => ['tl_class'=>'clr', 'chosen'=>true, 'includeBlankOption' => true]
+            ],
 //        'tab_tag' => array
 //        (
 //            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['tab_tag'],
@@ -762,397 +755,397 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] = array
 //            'sql'                     => "char(10) unsigned NOT NULL default ''",
 //            'eval'                    => array('tl_class'=>'clr', 'chosen'=>true, 'includeBlankOption' => true)
 //        ),
-        'tab_labeldisplay' => array
-        (
+        'tab_labeldisplay' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['tab_labeldisplay'],
             'exclude'                 => true,
             'inputType'               => 'select',
-            'options'                 => array('OFF','1ST','1ST_MORE','1ST_COUNT','ALL'),
+            'options'                 => ['OFF','1ST','1ST_MORE','1ST_COUNT','ALL'],
             'default'                 => '1ST_MORE',
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['references'],
             'sql'                     => "char(10) NOT NULL default '1ST_MORE'"
-        ),
-        'tab_tooltipdisplay' => array
-        (
+            ],
+        'tab_tooltipdisplay' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['tab_tooltipdisplay'],
             'exclude'                 => true,
             'inputType'               => 'select',
-            'options'                 => array('OFF','1ST','1ST_MORE','1ST_COUNT','ALL'),
+            'options'                 => ['OFF','1ST','1ST_MORE','1ST_COUNT','ALL'],
             'default'                 => '1ST_MORE',
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['references'],
             'sql'                     => "char(10) NOT NULL default '1ST_MORE'"
-        ),
-        'tab_directlink' => array
-        (
+            ],
+        'tab_directlink' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['tab_directlink'],
             'exclude'                 => true,
             'default'                 => '',
             'inputType'               => 'checkbox',
             'sql'                     => "char(1) NOT NULL default ''"
-        ),
-        'tab_force_target_blank' => array
-        (
+            ],
+        'tab_force_target_blank' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['tab_force_target_blank'],
             'exclude'                 => true,
             'default'                 => '',
             'inputType'               => 'checkbox',
             'sql'                     => "char(1) NOT NULL default ''"
-        ),
-        'tab_whereclause' => array
-        (
+            ],
+        'tab_whereclause' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['tab_whereclause'],
             'exclude'                 => true,
             'inputType'               => 'textarea',
-            'eval'                    => array('decodeEntities'=>true), // -> hier werden die HTML Entities deaktiviert
+            'eval'                    => ['decodeEntities'=>true], // -> hier werden die HTML Entities deaktiviert
             'sql'                     => "text NULL"
-        ),
-        'tabJoinclause' => array
-        (
+            ],
+        'tabJoinclause' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['tabJoinclause'],
             'exclude'                 => true,
             'inputType'               => 'textarea',
-            'eval'                    => array('decodeEntities'=>true), // -> hier werden die HTML Entities deaktiviert
+            'eval'                    => ['decodeEntities'=>true], // -> hier werden die HTML Entities deaktiviert
             'sql'                     => "text NULL"
-        ),
-        'tab_orderby' => array
-        (
+            ],
+        'tab_orderby' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['tab_orderby'],
             'exclude'                 => true,
             'inputType'               => 'text',
-            'eval'                    => array('maxlength'=>128),
+            'eval'                    => ['maxlength'=>128],
             'sql'                     => "varchar(128) NOT NULL default ''"
-        ),
-        'tab_filter_alias' => array
-        (
+            ],
+        'tab_filter_alias' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['tab_filter_alias'],
             'exclude'                 => true,
             'default'                 => '',
             'inputType'               => 'checkbox',
             'sql'                     => "char(1) NOT NULL default ''"
-        ),
-        'data_file' => array
-        (
+            ],
+        'data_file' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['data_file'],
             'exclude'                 => true,
             'inputType'               => 'fileTree',
-            'eval'                    => array( 'trailingSlash' => false, 'files' => true, 'fieldType' => 'radio' ),
+            'eval'                    => ['trailingSlash' => false, 'files' => true, 'fieldType' => 'radio'],
             'sql'                     => "binary(16) NULL"
-        ),
-        'data_folder' => array
-        (
+            ],
+        'data_folder' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['data_folder'],
             'exclude'                 => true,
             'inputType'               => 'fileTree',
-            'eval'                    => array( 'trailingSlash' => false, 'files' => false, 'fieldType' => 'radio' ),
+            'eval'                    => ['trailingSlash' => false, 'files' => false, 'fieldType' => 'radio'],
             'sql'                     => "binary(16) NULL"
-        ),
-        'split_geojson' => array
-        (
+            ],
+        'split_geojson' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['split_geojson'],
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',
-            'eval'                    => array('submitOnChange' => true),
+            'eval'                    => ['submitOnChange' => true],
             'sql'                     => "char(1) NOT NULL default ''"
-        ),
-        'geojson_attributes' => array
-        (
+            ],
+        'geojson_attributes' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['geojson_attributes'],
             'exclude'                 => true,
             'inputType'               => 'textarea',
             'sql'                     => "text NULL"
-        ),
-        'geojson_zoom' => array
-        (
+            ],
+        'geojson_zoom' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['geojson_zoom'],
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',
             'sql'                     => "char(1) NOT NULL default ''"
-        ),
-        'data_url' => array
-        (
+            ],
+        'data_url' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['data_url'],
             'exclude'                 => true,
             'inputType'               => 'text',
-            'eval'                    => array('rgxp'=>'url', 'decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'wizard'),
-            'wizard'                  => array(array('tl_c4g_maps', 'pickUrl')),
+            'eval'                    => ['rgxp'=>'url', 'decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'wizard'],
+            'wizard'                  => [['tl_c4g_maps', 'pickUrl']],
             'sql'                     => "varchar(255) NOT NULL default ''"
-        ),
-        'data_content' => array
-        (
+            ],
+        'data_content' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['data_content'],
             'exclude'                 => true,
             'inputType'               => 'textarea',
-            'eval'                    => array('tl_class'=>'wizard', 'preserve_tags'=>true),
+            'eval'                    => ['tl_class'=>'wizard', 'preserve_tags'=>true],
             // 'save_callback'           => array(array('tl_c4g_maps','setLocData')),
             'sql'                     => "text NULL"
-        ),
-        'data_projection' => array
-        (
+            ],
+        'data_projection' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['data_projection'],
             'exclude'                 => true,
             'inputType'               => 'select',
-            'options'                 => array('MERC','WGS84'),
+            'options'                 => ['MERC','WGS84'],
             'default'                 => 'MERC',
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['references'],
             'sql'                     => "char(5) NOT NULL default ''"
-        ),
-        'data_forcenodes' => array
-        (
+            ],
+        'data_forcenodes' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['data_forcenodes'],
             'exclude'                 => true,
             'default'                 => true,
             'inputType'               => 'checkbox',
             'sql'                     => "char(1) NOT NULL default '1'"
-        ),
-        'data_additionalgeometries' => array
-        (
+            ],
+        'data_additionalgeometries' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['data_additionalgeometries'],
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',
             'sql'                     => "char(1) NOT NULL default ''"
-        ),
-        'data_layername' => array
-        (
+            ],
+        'data_layername' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['data_layername'],
             'exclude'                 => true,
             'inputType'               => 'text',
-            'eval'                    => array('maxlength'=>254),
+            'eval'                    => ['maxlength'=>254],
             'sql'                     => "varchar(254) NOT NULL default ''",
             'search'                  => true
-        ),
-        'data_hidelayer' => array
-        (
+            ],
+        'data_hidelayer' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['data_hidelayer'],
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',
             'sql'                     => "char(1) NOT NULL default ''"
-        ),
-        'hide_child' => array
-        (
+            ],
+        'hide_child' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['hide_child'],
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',
             'sql'                     => "char(1) NOT NULL default ''"
-        ),
-        'showPopupOnActive' => array
-        (
+            ],
+        'showPopupOnActive' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['showPopupOnActive'],
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',
             'sql'                     => "char(1) NOT NULL default ''"
-        ),
-        'forums' => array
-        (
+            ],
+        'forums' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['forums'],
             'exclude'                 => true,
             'inputType'               => 'checkbox',
-            'options_callback'        => array('tl_c4g_maps','getMapForums'),
-            'eval'                    => array('mandatory'=>false, 'multiple'=>true),
+            'options_callback'        => ['tl_c4g_maps','getMapForums'],
+            'eval'                    => ['mandatory'=>false, 'multiple'=>true],
             'sql'                     => "blob NULL"
-        ),
-        'forum_jumpto' => array
-        (
+            ],
+        'forum_jumpto' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['forum_jumpto'],
             'exclude'                 => true,
             'inputType'               => 'pageTree',
-            'eval'                    => array('fieldType'=>'radio'),
+            'eval'                    => ['fieldType'=>'radio'],
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
-        ),
-        'forum_reassign_layer' => array
-        (
+            ],
+        'forum_reassign_layer' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['forum_reassign_layer'],
             'exclude'                 => true,
             'inputType'               => 'select',
-            'options'                 => array('NO','THREAD'),
+            'options'                 => ['NO','THREAD'],
             'default'                 => 'NO',
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['references'],
             'sql'                     => "char(10) NOT NULL default 'NO'"
-        ),
-        'ovp_request' => array
-        (
+            ],
+        'ovp_request' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['ovp_request'],
             'exclude'                 => true,
             'inputType'               => 'textarea',
-            'eval'                    => array('allowHtml'=>true, 'preserveTags'=>true),
+            'eval'                    => ['allowHtml'=>true, 'preserveTags'=>true],
             'sql'                     => "text NULL"
-        ),
-        'ovp_bbox_limited' => array
-        (
+            ],
+        'ovp_bbox_limited' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['ovp_bbox_limited'],
             'exclude'                 => true,
             'default'                 => true,
             'inputType'               => 'checkbox',
             'sql'                     => "char(1) NOT NULL default '1'"
-        ),
-        'link_id' => array
-        (
+            ],
+        'link_id' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['link_id'],
             'exclude'                 => true,
             'inputType'               => 'select',
-            'options_callback'        => array('tl_c4g_maps', 'get_link_items'),
-            'eval'                    => array( 'chosen' => true ),
+            'options_callback'        => ['tl_c4g_maps', 'get_link_items'],
+            'eval'                    => ['chosen' => true],
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
-        ),
-        'protect_element' => array
-        (
+            ],
+        'protect_element' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['protect_element'],
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',
-            'eval'                    => array('submitOnChange' => true),
+            'eval'                    => ['submitOnChange' => true],
             'sql'                     => "char(1) NOT NULL default ''"
-        ),
-        'permitted_groups' => array
-        (
+            ],
+        'permitted_groups' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['permitted_groups'],
             'exclude'                 => true,
             'inputType'               => 'checkbox',
             'foreignKey'              => 'tl_member_group.name',
-            'eval'                    => array('mandatory'=>false, 'multiple'=>true),
+            'eval'                    => ['mandatory'=>false, 'multiple'=>true],
             'sql'                     => "blob NULL"
-        ),
-        'use_specialprofile' => array
-        (
+            ],
+        'use_specialprofile' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['use_specialprofile'],
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',
-            'eval'                    => array('submitOnChange' => true),
+            'eval'                    => ['submitOnChange' => true],
             'sql'                     => "char(1) NOT NULL default ''"
-        ),
-        'specialprofile' => array
-        (
+            ],
+        'specialprofile' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['specialprofile'],
             'exclude'                 => true,
             'inputType'               => 'select',
             'foreignKey'              => 'tl_c4g_map_profiles.name',
-            'eval'                    => array('tl_class'=>'w50', 'submitOnChange' => true, 'alwaysSave' => true,  'chosen' => true ),
-            'load_callback'           => array(array('tl_c4g_maps','getDefaultProfile')),
+            'eval'                    => ['tl_class'=>'w50', 'submitOnChange' => true, 'alwaysSave' => true,  'chosen' => true],
+            'load_callback'           => [['tl_c4g_maps','getDefaultProfile']],
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
-        ),
-        'specialprofile_mobile' => array
-        (
+            ],
+        'specialprofile_mobile' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['specialprofile_mobile'],
             'exclude'                 => true,
             'inputType'               => 'select',
             'foreignKey'              => 'tl_c4g_map_profiles.name',
-            'eval'                    => array('tl_class'=>'w50',
-                                               'includeBlankOption'=>true,  'chosen' => true),
+            'eval'                    => ['tl_class'=>'w50',
+                                               'includeBlankOption'=>true,  'chosen' => true],
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
-        ),
-        'specialprofile_groups' => array
-        (
+            ],
+        'specialprofile_groups' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['specialprofile_groups'],
             'exclude'                 => true,
             'inputType'               => 'checkbox',
             'foreignKey'              => 'tl_member_group.name',
-            'eval'                    => array('tl_class'=>'clr', 'mandatory'=>false, 'multiple'=>true),
+            'eval'                    => ['tl_class'=>'clr', 'mandatory'=>false, 'multiple'=>true],
             'sql'                     => "blob NULL"
-        ),
-        'cluster_locations' => array
-        (
+            ],
+        'cluster_locations' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_locations'],
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',
-            'eval'                    => array('submitOnChange' => true),
+            'eval'                    => ['submitOnChange' => true],
             'sql'                     => "char(1) NOT NULL default ''"
-        ),
-        'cluster_distance' => array
-        (
+            ],
+        'cluster_distance' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_distance'],
             'exclude'                 => true,
             'inputType'               => 'text',
-            'eval'                    => array('maxlength'=>100),
+            'eval'                    => ['maxlength'=>100],
             'sql'                     => "varchar(100) NOT NULL default ''"
-        ),
-        'cluster_fillcolor' => array
-        (
+            ],
+        'cluster_fillcolor' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_fillcolor'],
             'inputType'               => 'text',
             'default'                 => '4975A8',
-            'eval'                    => array('maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard', 'mandatory'=>true),
+            'eval'                    => ['maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard', 'mandatory'=>true],
             'sql'                     => "varchar(6) NOT NULL default '4975A8'"
-        ),
-        'cluster_fontcolor' => array
-        (
+            ],
+        'cluster_fontcolor' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_fontcolor'],
             'default'                 => 'ffffff',
             'inputType'               => 'text',
-            'eval'                    => array('maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'),
+            'eval'                    => ['maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'],
             'sql'                     => "varchar(6) NOT NULL default 'ffffff'"
-        ),'cluster_zoom' => array
-        (
+            ],'cluster_zoom' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_zoom'],
             'default'                 => '17',
             'exclude'                 => true,
             'inputType'               => 'c4g_text',
-            'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'clr'),
+            'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
             'sql'                     => "int(10) unsigned NOT NULL default '17'"
-        ),'cluster_popup' => array
-        (
+            ],'cluster_popup' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_popup'],
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',
             'sql'                     => "char(1) NOT NULL default ''"
-        ),
+            ],
 
-        'zoom_locations' => array
-        (
+        'zoom_locations' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['zoom_locations'],
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',
             'sql'                     => "char(1) NOT NULL default ''"
-        ),
-        'hover_location' => array
-        (
+            ],
+        'hover_location' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['hover_location'],
             'exclude'                 => true,
             'default'                 => false,
-            'eval'                    => array('submitOnChange' => true),
+            'eval'                    => ['submitOnChange' => true],
             'inputType'               => 'checkbox',
             'sql'                     => "char(1) NOT NULL default ''"
-        ),
-        'hover_style' => array
-        (
+            ],
+        'hover_style' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['hover_style'],
             'exclude'                 => true,
             'inputType'               => 'select',
-            'options_callback'        => array('tl_c4g_maps','getLocStyles'),
-            'eval'                    => array('tl_class'=>'clr',  'chosen' => true),
-            'wizard' => array
-            (
-                array('tl_c4g_maps', 'editLocationStyle')
-            ),
+            'options_callback'        => ['tl_c4g_maps','getLocStyles'],
+            'eval'                    => ['tl_class'=>'clr',  'chosen' => true],
+            'wizard' =>
+                [
+                ['tl_c4g_maps', 'editLocationStyle']
+                ],
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
-        ),
-        'be_optimize_checkboxes_limit' => array
-        (
+            ],
+        'be_optimize_checkboxes_limit' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['be_optimize_checkboxes_limit'],
             'exclude'                 => true,
             'inputType'               => 'text',
             'default'                 => '10',
-            'eval'                    => array('rgxp'=>'digit', 'submitOnChange' => true),
+            'eval'                    => ['rgxp'=>'digit', 'submitOnChange' => true],
             'sql'                     => "int(10) unsigned NOT NULL default '10'"
-        ),
-        'cssClass' => array
-        (
+            ],
+        'cssClass' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['cssClass'],
             'exclude'                 => true,
             'inputType'               => 'text',
-            'eval'                    => array('tl_class'=>'w50 clr'),
+            'eval'                    => ['tl_class'=>'w50 clr'],
             'sql'                     => "varchar(255) NOT NULL default ''"
-        ),
-    )
-);
+            ],
+        ]
+    ];
 
 /**
  * Class tl_c4g_maps
@@ -1227,21 +1220,10 @@ class tl_c4g_maps extends Backend
      */
     public function getTabSources(DataContainer $dc)
     {
-        $return = array();
-        foreach ($GLOBALS['con4gis']['maps']['sourcetable'] as $key=>$sourcetable) {
-            if (!isset($this->firstTabSource)) {
-                $this->firstTabSource = $key;
-            }
-            if (!$GLOBALS['TL_LANG']['c4g_maps']['sourcetable'][$key]['name'] && !$GLOBALS['con4gis']['maps']['sourcetable'][$key]['name']) {
-                $return[$key] = $key;
-            } else {
-                if ($GLOBALS['con4gis']['maps']['sourcetable'][$key]['name']) {
-                    $return[$key] = $GLOBALS['con4gis']['maps']['sourcetable'][$key]['name'];
-                } else {
-                    $return[$key] = $GLOBALS['TL_LANG']['c4g_maps']['sourcetable'][$key]['name'];
-                }
-
-            }
+        $return = [];
+        $objTables = C4gMapTablesModel::findAll();
+        while ($objTables->next()) {
+            $return[$objTables->id] = \Contao\Controller::replaceInsertTags($objTables->name);
         }
         return $return;
     }
@@ -1288,26 +1270,25 @@ class tl_c4g_maps extends Backend
      */
     public function getTabParentList(DataContainer $dc)
     {
+        $return = [];
         if ($dc->activeRecord->tab_source<>'') {
-            $tabsource = $dc->activeRecord->tab_source;
+            $tabsource = C4gMapTablesModel::findByPk($dc->activeRecord->tab_source);
         } else {
-            $tabsource = $this->firstTabSource;
+            $objTables = C4gMapTablesModel::findAll();
+            $tabsource = $objTables[0];
         }
-
-        $source = $GLOBALS['con4gis']['maps']['sourcetable'][$tabsource];
-        $ptable = explode(',', $source['ptable']);
-        $ptable_option = explode(',', $source['ptable_option']);
-        if (is_array($source) && $ptable && $ptable_option) {
-            if (($ptable[0]) && ($ptable_option[0])) {
-                $obj = $this->Database->prepare(
-                    "SELECT id, ".$ptable_option[0]." FROM ".$ptable[0])->execute();
-                while ($obj->next()) {
-                    $name = $ptable_option[0];
-                    $return[$obj->id] = $obj->$name;
-                }
-                return $return;
+        $ptable = unserialize($tabsource->ptable)[0];
+        $ptableOptions = str_replace($ptable . '.','', unserialize($tabsource->ptableOptions)[0]);
+        $ptableCompareField = str_replace($ptable . '.','', unserialize($tabsource->ptableCompareField)[0]);
+        if($ptable && $ptableOptions && $ptableCompareField) {
+            $strSelect = "SELECT $ptableCompareField, $ptableOptions FROM $ptable";
+            $objResult = $this->Database->prepare($strSelect)->execute();
+            while ($objResult->next()) {
+                $return[$objResult->$ptableCompareField] = $objResult->$ptableOptions;
             }
         }
+        return $return;
+
     }
 
     /**
@@ -1317,99 +1298,25 @@ class tl_c4g_maps extends Backend
      */
     public function getTabParentList1(DataContainer $dc)
     {
+        $return = [];
         if ($dc->activeRecord->tab_source<>'') {
-            $tabsource = $dc->activeRecord->tab_source;
+            $tabsource = C4gMapTablesModel::findByPk($dc->activeRecord->tab_source);
         } else {
-            $tabsource = $this->firstTabSource;
+            $objTables = C4gMapTablesModel::findAll();
+            $tabsource = $objTables[0];
         }
-
-        $source = $GLOBALS['con4gis']['maps']['sourcetable'][$tabsource];
-        if($GLOBALS['BE_FFL']['tag'])
-        {
-            $source = $GLOBALS['con4gis']['maps']['sourcetable'][$tabsource.'_with_tags'];
-        }
-        $ptable = explode(',', $source['ptable']);
-        $ctable = explode(',', $source['ctable']);
-        $ctable_option = explode(',', $source['ctable_option']);
-        $ptable_option = explode(',', $source['ptable_option']);
-        $ptype = $source['ptype'];
-        $sqlwhere = $source['ctable_where'];
-        if (is_array($source) && $ptable && $ptable_option) {
-            if (($ptable[1]) && ($ptable_option[1])) {
-                if($ptype == 'tag')
-                {
-                    $obj = $this->Database->prepare(
-                        "SELECT id, ".$ptable_option[1]." FROM ".$ptable[1]." WHERE ".$sqlwhere[1])->execute();
-                }
-                else
-                {
-                    $obj = $this->Database->prepare(
-                        "SELECT id, ".$ptable_option[1]." FROM ".$ptable[1])->execute();
-                }
-                while ($obj->next()) {
-                    $name = $ptable_option[1];
-                    $return[$obj->id] = $obj->$name;
-
-                }
-                $return = array_unique($return);
-                return $return;
-            }
-            else if (($ctable[0]) && ($ctable_option[0])) {
-                if($ptype == 'tag')
-                {
-                    $obj = $this->Database->prepare(
-                        "SELECT id, ".$ctable_option[0]." FROM ".$ctable[0]." WHERE ".$sqlwhere)->execute();
-                }
-                else
-                {
-                    $obj = $this->Database->prepare(
-                        "SELECT id, ".$ctable_option[0]." FROM ".$ctable[0])->execute();
-                }
-                while ($obj->next()) {
-                    $name = $ctable_option[0];
-                    $return[$obj->id] = $obj->$name;
-
-                }
-                $return = array_unique($return);
-                return $return;
+        $ptable = unserialize($tabsource->ptable)[1];
+        $ptableOptions = str_replace($ptable . '.','', unserialize($tabsource->ptableOptions)[1]);
+        $ptableCompareField = str_replace($ptable . '.','', unserialize($tabsource->ptableCompareField)[1]);
+        if($ptable && $ptableOptions && $ptableCompareField){
+            $strSelect = "SELECT $ptableCompareField, $ptableOptions FROM $ptable";
+            $objResult = $this->Database->prepare($strSelect)->execute();
+            while ($objResult->next()) {
+                $return[$objResult->$ptableCompareField] = $objResult->$ptableOptions;
             }
         }
-
-
+        return $return;
     }
-
-//    public function getTabTag(DataContainer $dc)
-//    {
-//        if ($dc->activeRecord->tab_source<>'') {
-//            $tabsource = $dc->activeRecord->tab_source;
-//        } else {
-//            $tabsource = $this->firstTabSource;
-//        }
-//        $id = $dc->activeRecord->tab_pid;
-//        $objEvent = $this->Database->prepare("SELECT * FROM tl_calendar_events WHERE pid = ?")->execute($id);
-//        $stringSQL = "SELECT DISTINCT tag FROM tl_tag WHERE from_table = ?";
-//        while($objEvent->next())
-//        {
-//            if(substr($stringSQL,-1)=='?')
-//            {
-//                $stringSQL .= " AND tid = ".$objEvent->id;
-//            }
-//            else
-//            {
-//                $stringSQL .= " OR tid = ".$objEvent->id;
-//            }
-//
-//        }
-//
-//        $obj = $this->Database->prepare($stringSQL)->execute($tabsource,$dc->activeRecord->id);
-//        while ($obj->next()) {
-//
-//            $return[$obj->tag] = $obj->tag;
-//        }
-//        return $return;
-//
-//    }
-
 
     /**
      * Recursively step through map item tree
@@ -1534,8 +1441,8 @@ class tl_c4g_maps extends Backend
                 'width,height,margin,show_locations,'.$calcExtentFields.'center_geox,center_geoy,zoom,geolocation,'.$geolocationFields.'restrict_area,'.$restrictAreaFields.',include_sublocations';
 
             if ($GLOBALS['con4gis']['forum']['installed']) {
-                $GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['overpass'] = str_replace('popup_info,routing_to', 'popup_info,popup_extend,routing_to', $GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['overpass']);
-                $GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['osm'] = str_replace('popup_info,routing_to', 'popup_info,popup_extend,routing_to', $GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['osm']);
+                $GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['overpass'] = str_replace('popup_info', 'popup_info,popup_extend', $GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['overpass']);
+                $GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['osm'] = str_replace('popup_info', 'popup_info,popup_extend', $GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['osm']);
             }
 
             // convert checkboxes to chosenfields, if there are to many locationstyles

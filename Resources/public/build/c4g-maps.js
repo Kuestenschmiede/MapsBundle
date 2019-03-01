@@ -187,15 +187,6 @@ var C4gBaselayerController = exports.C4gBaselayerController = function () {
           if (this.mapController.data.baselayer && parseInt(uid, 10) === parseInt(this.mapController.data.baselayer, 10)) {
             this.showBaseLayer(uid);
           }
-
-          if (this.arrBaselayers[uid].hasOverlays) {
-            for (j = 0; j < this.arrBaselayers[uid].overlays.length; j++) {
-              if (!this.arrBaselayers[uid].overlayController.arrOverlays[this.arrBaselayers[uid].overlays[j].id]) {
-                this.arrBaselayers[uid].overlayController.arrOverlays[this.arrBaselayers[uid].overlays[j].id] = new _c4gOverlay.C4gOverlay(this.arrBaselayers[uid].overlays[j], this.mapController);
-                this.arrBaselayers[uid].overlayController.arrOverlays[this.arrBaselayers[uid].overlays[j].id].layer = this.arrBaselayers[uid].overlayController.showOverlayLayer(this.arrBaselayers[uid].overlays[j].id);
-              }
-            }
-          }
         }
       }
 
@@ -257,16 +248,6 @@ var C4gBaselayerController = exports.C4gBaselayerController = function () {
             newBaselayer = new ol.layer.Tile({
               source: new ol.source.OSM($.extend(sourceConfigs.osm[baseLayerConfig.style], layerOptions))
             });
-          } else if (sourceConfigs.stamen[baseLayerConfig.style]) {
-            // Stamen
-            newBaselayer = new ol.layer.Tile({
-              source: new ol.source.Stamen($.extend(sourceConfigs.stamen[baseLayerConfig.style], layerOptions))
-            });
-            // } else if (mapQuestSourceConfigs[baseLayerConfig.style]) {
-            //   // mapQuest
-            //   newBaselayer = new ol.layer.Tile({
-            //     source: new ol.source.MapQuest(mapQuestSourceConfigs[baseLayerConfig.style])
-            //   });
           } else if (baseLayerConfig.style === 'osm_custom') {
             // custom
             var _noUrl = true;
@@ -287,6 +268,28 @@ var C4gBaselayerController = exports.C4gBaselayerController = function () {
           } else {
             console.warn('unsupported osm-style -> switch to default');
           }
+          break;
+        case 'stamen':
+          if (sourceConfigs.stamen[baseLayerConfig.style]) {
+            // Stamen
+            newBaselayer = new ol.layer.Tile({
+              source: new ol.source.Stamen($.extend(sourceConfigs.stamen[baseLayerConfig.style], layerOptions))
+            });
+            // } else if (mapQuestSourceConfigs[baseLayerConfig.style]) {
+            //   // mapQuest
+            //   newBaselayer = new ol.layer.Tile({
+            //     source: new ol.source.MapQuest(mapQuestSourceConfigs[baseLayerConfig.style])
+            //   });
+          } else {
+            console.warn('unsupported osm-style -> switch to default');
+          }
+          break;
+        case 'con4gisIo':
+          newBaselayer = new ol.layer.Tile({
+            source: new ol.source.XYZ({
+              url: baseLayerConfig.url
+            })
+          });
           break;
         case 'mapbox':
           if (baseLayerConfig.api_key && baseLayerConfig.app_id && baseLayerConfig.mapbox_type) {
@@ -3129,13 +3132,6 @@ var config = exports.config = {
       url: 'https://{a-c}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png'
     },
 
-    GermanTransport: {
-      attributions: 'Style by <a target="_blank" href="http://www.memomaps.de">Memomaps</a>' + ' ' + ol.source.OSM.ATTRIBUTION,
-      minZoom: 0,
-      maxZoom: 19,
-      url: 'https://tile.memomaps.de/tilegen/{z}/{x}/{y}.png'
-    },
-
     LandscapeMap: {
       attributions: 'Style by <a target="_blank" href="http://www.opencyclemap.org/">OpenCycleMap</a>' + ' ' + ol.source.OSM.ATTRIBUTION,
       crossOrigin: 'anonymous',
@@ -3345,21 +3341,6 @@ var langConstantsGerman = exports.langConstantsGerman = {
   CTRL_FULLSCREEN: 'Vollbildmodus ein-/ausschalten',
   CTRL_PRINT: 'Karte exportieren',
 
-  EDITOR: 'Editor',
-  EDITOR_ENABLE_INSTANT_MEASURE: 'Messen während des Zeichnens',
-  EDITOR_ENABLE_FREEHAND_DRAW: 'Freihand zeichnen',
-  EDITOR_FEATURE_APPLY: 'Editieren beenden',
-  EDITOR_FEATURE_DELETE: 'Element löschen',
-  EDITOR_FEATURE_MODIFY: 'Element editieren / verschieben',
-  EDITOR_SELECT_INFO: 'Zur Auswahl ein Element auf der Karte anklicken.',
-  EDITOR_SELECT_INFO_ADDITIONAL: '[Strg] + [Klick] für Mehrfachauswahl <br>[Shift] halten für Auswahlbox',
-  EDITOR_VIEW_TRIGGER_SELECT: 'Auswahl Modus',
-  EDITOR_VIEW_TRIGGER_DRAW_POINT: 'Kartenelemente',
-  EDITOR_VIEW_TRIGGER_DRAW_FREEHAND: 'Freihandwerkzeuge',
-  EDITOR_VIEW_TRIGGER_DRAW_LINESTRING: 'Streckenwerkzeuge',
-  EDITOR_VIEW_TRIGGER_DRAW_POLYGON: 'Flächenwerkzeuge',
-  EDITOR_VIEW_TRIGGER_DRAW_CIRCLE: 'Kreiswerkzeuge',
-
   POPUP_ROUTE_FROM: 'Route von hier',
   POPUP_ROUTE_TO: 'Route hierhin',
 
@@ -3548,24 +3529,7 @@ var cssConstants = exports.cssConstants = {
   CONTROL_CONTAINER_BL: 'c4g-control-container-bottom-left',
   CONTROL_CONTAINER_BL_SUB: 'c4g-control-container-bottom-left-sub',
   CONTROL_CONTAINER_BR: 'c4g-control-container-bottom-right',
-  EDITOR_DRAW_CONTENT_POINT: 'c4g-draw-content-point',
-  EDITOR_DRAW_CONTENT_FREEHAND: 'c4g-draw-content-freehand',
-  EDITOR_DRAW_CONTENT_LINESTRING: 'c4g-draw-content-line',
-  EDITOR_DRAW_CONTENT_POLYGON: 'c4g-draw-content-polygon',
-  EDITOR_DRAW_CONTENT_CIRCLE: 'c4g-draw-content-circle',
-  EDITOR_DRAW_CONTENT_PROJECT: 'c4g-draw-content-project',
-  EDITOR_DRAW_TRIGGER: 'c4g-draw-trigger',
-  EDITOR_CONTENT_SELECT: 'c4g-content-select',
-  EDITOR_DRAW_OPTIONS: 'c4g-editor-draw-options',
-  EDITOR_FEATURE_APPLY: 'c4g-editor-feature-apply',
-  EDITOR_FEATURE_DELETE: 'c4g-editor-feature-delete',
-  EDITOR_FEATURE_MODIFY: 'c4g-editor-feature-modify',
-  EDITOR_VIEW_TRIGGER_SELECT: 'c4g-editor-view-trigger-select',
-  EDITOR_VIEW_TRIGGER_DRAW_POINT: 'c4g-editor-view-trigger-draw-point',
-  EDITOR_VIEW_TRIGGER_DRAW_FREEHAND: 'c4g-editor-view-trigger-draw-freehand',
-  EDITOR_VIEW_TRIGGER_DRAW_LINESTRING: 'c4g-editor-view-trigger-draw-line',
-  EDITOR_VIEW_TRIGGER_DRAW_POLYGON: 'c4g-editor-view-trigger-draw-polygon',
-  EDITOR_VIEW_TRIGGER_DRAW_CIRCLE: 'c4g-editor-view-trigger-draw-circle',
+
   GEOSEARCH: 'c4g-geosearch',
   GEOSEARCH_WRAPPER: 'c4g-geosearch-wrapper',
   GEOSEARCH_TRIGGER: 'c4g-geosearch-trigger',
@@ -3747,7 +3711,12 @@ var GeoSearch = exports.GeoSearch = function (_ol$control$Control) {
     //   // if it is none of the above, then use the default URL
     //   this.config.url = 'https://nominatim.openstreetmap.org/search';
     // }
-    _this.config.url = options.mapController.data.api.geosearch + "/" + options.mapController.data.profile;
+    if (options.mapController.data.geosearch.searchKey && options.mapController.data.geosearch.url) {
+      _this.config.url = options.mapController.data.geosearch.url + "search.php";
+      _this.config.key = options.mapController.data.geosearch.searchKey;
+    } else {
+      _this.config.url = options.mapController.data.api.geosearch + "/" + options.mapController.data.profile;
+    }
     // zoomlevel when centering the found location
     _this.config.zoomlevel = options.searchZoom;
     // zoom to bounds instead of zoomlevel when centering the found location
@@ -4191,16 +4160,18 @@ var GeoSearch = exports.GeoSearch = function (_ol$control$Control) {
 
 
       if (this.config.quicksearch) {
-
+        var data = {
+          format: "json",
+          q: location
+        };
+        if (this.config.key) {
+          data.key = this.config.key;
+        }
         // AJAX -> @nominatim
         $.ajax({
-          crossDomain: true,
           dataType: "json",
           url: this.config.url,
-          data: {
-            format: "json",
-            q: location
-          }
+          data: data
         }).done(function (results) {
 
           var mapView, currentCoordinate, resultCoordinate, coordDif, difContext, viewExtent, result, osmExtent, resolution, zoomType, flyTo, completeSearch;
@@ -8404,7 +8375,10 @@ var Layerswitcher = exports.Layerswitcher = function () {
           // show layer
           self.proxy.layerController.showLayer(itemUid);
           //zooom to extent
-          zoomToExtent(itemUid);
+          setTimeout(function () {
+            zoomToExtent(itemUid);
+          }, 200);
+          // zoomToExtent(itemUid);
         }
         if (self.handleSelectedChilds(this)) {
           self.updateParentLayers(this, itemUid, layerItem);
@@ -8461,9 +8435,6 @@ var Layerswitcher = exports.Layerswitcher = function () {
             for (key in layerItem.childs) {
               if (layerItem.childs.hasOwnProperty(key)) {
                 layer = layerItem.childs[key];
-                if (layer.type == "overpass") {
-                  continue;
-                }
                 vectorArray = layer.content;
                 if (vectorArray === undefined) {
                   // catch case of linked layers
@@ -8472,7 +8443,7 @@ var Layerswitcher = exports.Layerswitcher = function () {
                 if ((typeof vectorArray === "undefined" ? "undefined" : _typeof(vectorArray)) === "object") {
                   vectorArray = _c4gMapsUtils.utils.objectToArray(vectorArray);
                 }
-                layerGroup = layer.vectorLayer;
+                layerGroup = layerItem.vectorLayer;
                 if (vectorArray && vectorArray.forEach && typeof vectorArray.forEach === 'function') {
                   vectorArray.forEach(function (vectorLayer) {
                     if (vectorLayer && vectorLayer.data && vectorLayer.data.geometry && vectorLayer.data.geometry.coordinates) {
@@ -8510,46 +8481,40 @@ var Layerswitcher = exports.Layerswitcher = function () {
             }
           }
 
-          if (layerItem.type !== "overpass" && layerItem.vectorLayer) {
-            vectorArray = layer.content;
-            if (vectorArray !== undefined) {
-              // catch case of linked layers
-              if ((typeof vectorArray === "undefined" ? "undefined" : _typeof(vectorArray)) === "object") {
-                vectorArray = _c4gMapsUtils.utils.objectToArray(vectorArray);
-              }
-              layerGroup = layer.vectorLayer;
-              if (vectorArray && vectorArray.forEach && typeof vectorArray.forEach === 'function') {
-                vectorArray.forEach(function (vectorLayer) {
-                  if (vectorLayer && vectorLayer.data && vectorLayer.data.geometry && vectorLayer.data.geometry.coordinates) {
-                    if (vectorLayer.data.geometry.type === "Point") {
-                      coords = ol.proj.transform([parseFloat(vectorLayer.data.geometry.coordinates[0]), parseFloat(vectorLayer.data.geometry.coordinates[1])], 'EPSG:4326', 'EPSG:3857');
-                      geometry = new ol.geom.Point(coords);
-                      coordinates.push(geometry.getCoordinates());
-                    }
+          if (layerItem.vectorLayer) {
+
+            layerGroup = layerItem.vectorLayer;
+            vectorArray = layerGroup.getLayers().getArray();
+            if (vectorArray && vectorArray.forEach && typeof vectorArray.forEach === 'function') {
+              vectorArray.forEach(function (vectorLayer) {
+                if (vectorLayer && vectorLayer.getSource() && vectorLayer.getSource().getFeatures()) {
+                  var features = vectorLayer.getSource().getFeatures();
+                  for (var id in features) {
+                    coordinates.push(features[id].getGeometry().getCoordinates());
                   }
-                });
-              }
-              if (layerGroup) {
-                // handle more complex geometries
-                featureList = layerGroup.getLayers();
-                featureArray = featureList.getArray();
-                featureArray.forEach(function (feature) {
-                  if (layer.type !== "overpass") {
-                    if (layer.type === "kml") {
-                      var source = feature.getSource();
-                      //var sourceFeatures = source.getFeatures();
-                      source.getExtent().forEach(function (coordinate) {
-                        coordinates.push(coordinate);
-                      });
-                    } else {
-                      coordinates.push(ol.extent.getTopRight(feature.getSource().getExtent()));
-                      coordinates.push(ol.extent.getTopLeft(feature.getSource().getExtent()));
-                      coordinates.push(ol.extent.getBottomRight(feature.getSource().getExtent()));
-                      coordinates.push(ol.extent.getBottomLeft(feature.getSource().getExtent()));
-                    }
+                }
+              });
+            }
+            if (layerGroup) {
+              // handle more complex geometries
+              featureList = layerGroup.getLayers();
+              featureArray = featureList.getArray();
+              featureArray.forEach(function (feature) {
+                if (layer.type !== "overpass") {
+                  if (layer.type === "kml") {
+                    var source = feature.getSource();
+                    //var sourceFeatures = source.getFeatures();
+                    source.getExtent().forEach(function (coordinate) {
+                      coordinates.push(coordinate);
+                    });
+                  } else {
+                    coordinates.push(ol.extent.getTopRight(feature.getSource().getExtent()));
+                    coordinates.push(ol.extent.getTopLeft(feature.getSource().getExtent()));
+                    coordinates.push(ol.extent.getBottomRight(feature.getSource().getExtent()));
+                    coordinates.push(ol.extent.getBottomLeft(feature.getSource().getExtent()));
                   }
-                });
-              }
+                }
+              });
             }
           }
 

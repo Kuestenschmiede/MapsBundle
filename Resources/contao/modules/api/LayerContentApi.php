@@ -1,15 +1,16 @@
 <?php
 
-/**
- * con4gis - the gis-kit
- *
- * @version   php 7
- * @package   con4gis
- * @author    con4gis contributors (see "authors.txt")
- * @license   GNU/LGPL http://opensource.org/licenses/lgpl-3.0.html
- * @copyright Küstenschmiede GmbH Software & Design 2011 - 2018
- * @link      https://www.kuestenschmiede.de
- */
+/*
+  * This file is part of con4gis,
+  * the gis-kit for Contao CMS.
+  *
+  * @package   	con4gis
+  * @version    6
+  * @author  	con4gis contributors (see "authors.txt")
+  * @license 	LGPL-3.0-or-later
+  * @copyright 	Küstenschmiede GmbH Software & Design
+  * @link       https://www.con4gis.org
+  */
 
 namespace con4gis\MapsBundle\Resources\contao\modules\api;
 
@@ -18,6 +19,7 @@ use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
 use con4gis\CoreBundle\Resources\contao\classes\HttpResultHelper;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapLocstylesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
+use con4gis\MapsBundle\Resources\contao\models\C4gMapTablesModel;
 use con4gis\MapsProjectBundle\Classes\ReplaceInsertTags;
 use Contao\ContentModel;
 use Contao\Controller;
@@ -299,50 +301,20 @@ class LayerContentApi extends \Controller
                 return $this->createC4gForumResult($objLayer, $secondFetch);
                 break;
             case "table":
-                $sourceTable = $objLayer->tab_source;
                 $pidOption = '';
                 $whereClause = '';
                 $qWhere = '';
-                $qAnd = '';
                 $addBeWhereClause = '';
                 $and = '';
-                $qIn = '';
+                $objConfig = C4gMapTablesModel::findByPk($objLayer->tab_source);
+                $sourceTable = $objConfig->tableSource;
+                $ptableArr = unserialize($objConfig->ptable);
+                $ptableFieldArr = unserialize($objConfig->ptableField);
+                $ptableCompareFieldArr = unserialize($objConfig->ptableCompareField);
+                $ptableBlobArr = unserialize($objConfig->ptableBlob);
 
-                $arrConfig = $GLOBALS['con4gis']['maps']['sourcetable'][$sourceTable];
-                if ($GLOBALS['BE_FFL']['tag'] && $GLOBALS['con4gis']['maps']['sourcetable'][$sourceTable . '_with_tags']) {
-                    $arrConfig = $GLOBALS['con4gis']['maps']['sourcetable'][$sourceTable . '_with_tags'];
-                }
-                $ptableArr = explode(',', $arrConfig['ptable']);
-                $ctableArr = explode(',', $arrConfig['ctable']);
-                $ptableFieldArr = explode(',', $arrConfig['ptable_field']);
-                $ptableCompareFieldArr = explode(',', $arrConfig['ptable_compare_field']);
-                $ptableBlobArr = explode(',', $arrConfig['ptable_blob']);
-
-                //check child values
-                if ($objLayer->tab_pid1 && $arrConfig['ctable'] && $arrConfig['ctable_option']) {
-                    foreach ($ctableArr as $key => $ctable) {
-                        $queryChild = "SELECT " . $arrConfig['ctable_option'] . " FROM " . $arrConfig['ctable'] . " WHERE id=" . $objLayer->tab_pid1;
-                        $child = \Database::getInstance()->prepare($queryChild)->execute()->fetchAssoc();
-                        $sqlquery = "SELECT tid FROM " . $arrConfig['ctable'] . " WHERE " . $arrConfig['ctable_option'] . "=?";
-                        $idsfromChild = \Database::getInstance()->prepare($sqlquery)->execute($child[$arrConfig['ctable_option']])->fetchAllAssoc();
-
-                        if ($idsfromChild && count($idsfromChild) > 0) {
-                            $qIn .= ' id IN(';
-                            foreach ($idsfromChild as $value) {
-                                $qIn .= $value['tid'] . ',';
-                            }
-                            $qIn = rtrim($qIn, ',') . ')';
-                            if (!$qWhere) {
-                                $qWhere = " WHERE ";
-                            } else {
-                                $qAndIn = " AND ";
-                            }
-                        }
-                    }
-                }
                 //check parent values
-                if ($arrConfig['ptable']) {
-
+                if ($ptableArr) {
                     foreach ($ptableArr as $key => $ptable) {
                         $qWhere .= " WHERE ";
                         if ($key == 0) {
@@ -352,9 +324,8 @@ class LayerContentApi extends \Controller
                             $fieldName = "tab_pid" . intval($key);
                             $sourcePid = intval($objLayer->$fieldName);
                         }
-
                         $ptablefield = $ptableFieldArr[$key];
-                        $ptableCompareField = $ptableCompareFieldArr[$key];
+                        $ptableCompareField = str_replace($ptable . ".", "", $ptableCompareFieldArr[$key]);
 
                         //if there is a compare Field instead of the id field (parent table) we have change the parent id
                         if ($ptable && $sourcePid && $ptableCompareField && ($ptableCompareField != 'id')) {
@@ -363,8 +334,8 @@ class LayerContentApi extends \Controller
                             $sourcePid = intval($result->$ptableCompareField);
                         }
 
-                        if ($sourcePid) {
-                            if ($arrConfig['ptable_field']) {
+                        if ($sourcePid || $sourcePid == 0) {
+                            if ($objConfig->ptableField) {
                                 if ($ptableBlobArr[$key] == 1) {
                                     //ToDo filter after select
                                 } else {
@@ -377,31 +348,13 @@ class LayerContentApi extends \Controller
 
                     }
                 }
-
-                if ($arrConfig['sqlwhere']) {
-                    $qWhere = " WHERE ";
-                    if ($arrConfig['ptable'] && $pidOption) {
-                        $qAnd = " AND ";
-                    }
-                    $whereClause = $arrConfig['sqlwhere'];
-                }
-
                 if ($objLayer->tab_whereclause) {
-                    $an = " AND ";
-                    if (!$qWhere) {
-                        $qWhere = " WHERE ";
-                        $an = '';
-                    }
-                    $addBeWhereClause = $an . $objLayer->tab_whereclause;
-                }
-
-                if ($arrConfig['sourcetable']) {
-                    $sourceTable = $arrConfig['sourcetable'];
+                    $addBeWhereClause = " WHERE " . $objLayer->tab_whereclause;
                 }
                 $stmt = '';
 
                 if ($objLayer->tab_filter_alias) {
-                    //$alias = $this->getInput()->get($arrConfig['alias_getparam']);
+                    //$alias = $this->getInput()->get($objConfig['alias_getparam']);
                     $alias = $_SERVER['HTTP_REFERER'];
                     $strC = substr_count($alias, '/');
                     $arrUrl = explode('/', $alias);
@@ -416,318 +369,318 @@ class LayerContentApi extends \Controller
                 }
 
                 if ($sourceTable) {
-                    $queryCount = "SELECT COUNT(*) AS count FROM `$sourceTable`" . $qWhere . $pidOption . $qAnd . $whereClause . $addBeWhereClause . $qAndIn . $qIn . $stmt;
+                    $queryCount = "SELECT COUNT(*) AS count FROM `$sourceTable`" . $qWhere . $pidOption . $qAnd . $whereClause . $addBeWhereClause . $stmt;
                     $resultCount = \Database::getInstance()->prepare($queryCount)->execute()->fetchAssoc()['count'];
 
                     if ($resultCount < 45000) {
-                        $query = "SELECT * FROM `$sourceTable`" . $qWhere . $pidOption . $qAnd . $whereClause . $addBeWhereClause . $qAndIn . $qIn . $stmt;
+                        $query = "SELECT * FROM `$sourceTable`" . $qWhere . $pidOption . $qAnd . $whereClause . $addBeWhereClause . $stmt;
                         $result = \Database::getInstance()->prepare($query)->execute();
                     }
 
                 }
 
-                $geox = $arrConfig['geox'];
-                $geoy = $arrConfig['geoy'];
+                $geox = $objConfig->geox;
+                $geoy = $objConfig->geoy;
                 $geoxField = $geox;
                 $geoyField = $geoy;
                 $geolocation = '';
                 if (!$geox && !$geoy) {
-                    $geolocation = $arrConfig['geolocation'];
+                    $geolocation = $objConfig->geolocation;
                 }
-                $tooltipField = $arrConfig['tooltip'];
-                $labelField = $arrConfig['label'];
+                $tooltipField = $objConfig->tooltip;
+                $labelField = $objConfig->label;
 
                 if (!$result) {
                     break;
                 }
+                $locstyleField = $objConfig->locstyle;
+                while ($result->next()) {
+                    $locstyle = $result->$locstyleField;
+                    if (!$locstyle) {
+                        $locstyle = $objLayer->locstyle;
+                    }
+                    $show = 0;
+                    $blobCount = 0;
 
-                    while ($result->next()) {
-                        $locstyle = $result->c4g_locstyle;
-                        if (!$locstyle) {
-                            $locstyle = $objLayer->locstyle;
-                        }
-                        $show = 0;
-                        $blobCount = 0;
+                    //check blob fields
+                    if ($objConfig->ptable) {
+                        foreach ($ptableArr as $key => $ptable) {
+                            $ptableBlobArr = unserialize($objConfig->ptable_blob);
+                            if ($ptableBlobArr[$key] == 1) {
+                                if ($key == 0) {
+                                    $sourcePid = intval($objLayer->tab_pid);
+                                } else {
+                                    $fieldName = "tab_pid" . intval($key);
+                                    $sourcePid = intval($objLayer->$fieldName);
+                                }
 
-                        //check blob fields
-                        if ($arrConfig['ptable']) {
-                            foreach ($ptableArr as $key => $ptable) {
-                                $ptableBlobArr = explode(',', $arrConfig['ptable_blob']);
-                                if ($ptableBlobArr[$key] == 1) {
-                                    if ($key == 0) {
-                                        $sourcePid = intval($objLayer->tab_pid);
-                                    } else {
-                                        $fieldName = "tab_pid" . intval($key);
-                                        $sourcePid = intval($objLayer->$fieldName);
+                                if ($sourcePid) {
+                                    $blobCount++;
+                                }
+
+                                $ptablefield = $ptableFieldArr[$key];
+                                $ptableCompareField = $ptableCompareFieldArr[$key];
+                                $blobfield = $result->$ptablefield;
+
+                                if ($blobfield && $sourcePid && $ptableCompareField && ($ptableCompareField != 'id')) {
+                                    $query2 = "SELECT * FROM `$ptable` WHERE id = $sourcePid";
+                                    $result2 = \Database::getInstance()->prepare($query2)->limit(1)->execute();
+                                    $sourcePid = intval($result2->$ptableCompareField);
+                                }
+
+                                if ($sourcePid && $blobfield) {
+                                    $blobArr = unserialize($blobfield);
+                                    if (in_array($sourcePid, $blobArr)) {
+                                        $show++;
                                     }
 
-                                    if ($sourcePid) {
-                                        $blobCount++;
-                                    }
-
-                                    $ptablefield = $ptableFieldArr[$key];
-                                    $ptableCompareField = $ptableCompareFieldArr[$key];
-                                    $blobfield = $result->$ptablefield;
-
-                                    if ($blobfield && $sourcePid && $ptableCompareField && ($ptableCompareField != 'id')) {
-                                        $query2 = "SELECT * FROM `$ptable` WHERE id = $sourcePid";
-                                        $result2 = \Database::getInstance()->prepare($query2)->limit(1)->execute();
-                                        $sourcePid = intval($result2->$ptableCompareField);
-                                    }
-
-                                    if ($sourcePid && $blobfield) {
-                                        $blobArr = unserialize($blobfield);
-                                        if (in_array($sourcePid, $blobArr)) {
-                                            $show++;
-                                        }
-
-                                    }
                                 }
                             }
-                        }
-
-                        $popupContent = '';
-                        if (($show == $blobCount) && (($result->$geoxField && $result->$geoyField) || ($geolocation && $result->$geolocation))) {
-                            // replace popup stuff
-                            if ($arrConfig['popup']) {
-                                $popupElements = explode(',', $arrConfig['popup']);
-                                foreach ($popupElements as $key => $value) {
-                                    if (substr($value, 0, 1) == '{' && substr($value, -1, 1) == '}') {
-                                        // we have an inserttag
-                                        $replacedValue = str_replace('[id]', $result->id, $value);
-                                        $popupContent .= $this->replaceInsertTags($replacedValue) . ' ';
-                                    } else if (substr($value, 0, 1) == '[' && substr($value, -1, 1) == ']') {
-                                        // no insert tag
-                                        $replacedValue = str_replace('[', '', $value);
-                                        $replacedValue = str_replace(']', '', $replacedValue);
-                                        $elements = explode(':', $replacedValue);
-                                        $column = $elements[0];
-                                        $columnClass = 'c4g_maps_table_column_' . $column;
-                                        $dataType = $elements[1];
-                                        $additionalParam1 = $elements[2];
-                                        $additionalParam2 = $elements[3];
-                                        switch ($dataType) {
-                                            case 'date':
-                                                $popupContent .= '<div class="' . $columnClass . '">' . date('d.m.y', $result->$column) . '</div>';
-                                                break;
-                                            case 'string':
-                                                $columnText = $result->$column;
-                                                $columnText = str_replace('[nbsp]', ' ', $columnText);
-                                                $columnText = html_entity_decode(C4GUtils::secure_ugc($columnText));
-                                                $popupContent .= '<div class="' . $columnClass . '">' . $columnText . '</div>';
-                                                break;
-                                            case 'pagelink':
-                                                if (!$additionalParam1) {
-                                                    $additionalParam1 = 'details';
-                                                }
-                                                $aliasOrId = $result->$column;
-                                                if (!$additionalParam2) {
-                                                    $link = $this->replaceInsertTags('{{link_url::' . $aliasOrId . '}}');
-                                                } else {
-                                                    if ($column == 'subdomain') {
-                                                        $link = 'https://' . $aliasOrId . '.' . $additionalParam2;
-                                                    } else {
-                                                        $link = 'https://' . $additionalParam2;
-                                                        $link = $link . '/' . $aliasOrId . '.html';
-                                                    }
-                                                }
-
-                                                $popupContent .= '<a class="' . $columnClass . '" href="' . $link . '">' . $additionalParam1 . '</a>';
-                                                break;
-                                            case 'pagelink2':
-                                                if (!$additionalParam1) {
-                                                    $additionalParam1 = 'details';
-                                                }
-                                                $aliasOrId = $result->$column;
-                                                if (!$additionalParam2) {
-                                                    $link = $this->replaceInsertTags('{{link_url::' . $aliasOrId . '}}');
-                                                } else {
-                                                    if ($column == 'subdomain') {
-                                                        $link = 'https://' . $aliasOrId . '.' . $additionalParam2;
-                                                    } else {
-                                                        $link = 'https://' . $additionalParam2;
-                                                        $link = $link . '/' . $aliasOrId . '.html';
-                                                    }
-                                                }
-
-                                                $popupContent .= '<a class="' . $columnClass . '" href="' . $link . '" target="_blank">' . $additionalParam1 . '</a>';
-                                                break;
-                                            case 'pagelink3':
-                                                if (!$additionalParam1) {
-                                                    $additionalParam1 = 'details';
-                                                }
-                                                $linkPopup = $result->$column;
-                                                if(!(substr($link,0,4) === "http")){
-                                                    $linkPopup = 'https://' . $linkPopup;
-                                                }
-                                                $popupContent .= '<a class="' . $columnClass . '" href="' . $linkPopup . '" target="_blank">' . $additionalParam1 . '</a>';
-                                                break;
-                                            case 'responsiveImage':
-                                                $responsiveImage = false;
-                                                if ($additionalParam1) {
-                                                    $responsiveImage = $additionalParam1;
-                                                }
-                                                $file = \FilesModel::findByUuid($result->$column);
-                                                if ($file) {
-                                                    if (!$responsiveImage) {
-                                                        $image = \Image::get($file->path, 360, 240);
-                                                    } else {
-                                                        $image = \Image::get($file->path, '', '', $responsiveImage);
-                                                    }
-                                                    if ($image) {
-                                                        $popupContent .= '<img src="' . $image . '">';
-                                                    }
-                                                }
-                                                else{
-                                                    $popupContent .= '<img src="' . $result->$column . '">';
-                                                }
-                                                break;
-                                            default:
-                                                break;
-                                        }
-                                    } else {
-                                        // other stuff put in as text
-                                        $popupContent .= $value . ' ';
-                                    }
-                                }
-                            }
-                            if ($result->$geolocation) {
-                                $geox = substr($result->$geolocation, strpos($result->$geolocation, ',') + 1);
-                                $geoy = substr($result->$geolocation, 0, strpos($result->$geolocation, ','));
-                                $coordinates = array(floatval($geox), floatval($geoy));
-                            } else {
-                                $coordinates = array(
-                                    floatval($result->$geoxField),
-                                    floatval($result->$geoyField));
-                            }
-                            if ($arrConfig['linkurl'] && !$arrConfig['popup']) {
-                                $link = $arrConfig['linkurl'];
-                                $link = str_replace('[id]', $result->id, $link);
-                                $matches = [];
-                                if (preg_match('/\[[a-z]+\]/', $link, $matches)) {
-                                    foreach ($matches as $key => $value) {
-                                        $replacedValue = str_replace('[', '', $value);
-                                        $replacedValue = str_replace(']', '', $replacedValue);
-                                        if ($result->$replacedValue) {
-                                            $replacedValue = $result->$replacedValue;
-                                        }
-                                        $matches[$key] = $replacedValue;
-                                    }
-                                    $link = preg_replace(['/\[[a-z]+\]/'], $matches, $link);
-                                }
-                                $link = $this->replaceInsertTags($link);
-                                if (substr($link, 0, 1) == '(' && substr($link, -1, 1) == ')') {
-                                    $link = substr($link, 1);
-                                    $link = substr($link, 0, -1);
-                                }
-                            } else {
-                                $link = $this->replaceInsertTags($objLayer->loc_linkurl);
-                            }
-                            $event = false;
-                            if ($objLayer->cluster_popup != 1) {
-                                for ($i = 0; $i < count($arrReturnData); $i++) {
-                                    set_time_limit(60);
-                                    if ($arrReturnData[$i]['data']['geometry']['coordinates'] == $coordinates) {
-                                        if (substr($arrReturnData[$i]['data']['properties']['popup']['content'], 0, 3) != '<ul') {
-                                            $arrReturnData[$i]['data']['properties']['popup']['content'] = '<ul><li>' . $arrReturnData[$i]['data']['properties']['popup']['content'] . '</li>';
-                                        }
-                                        if (substr($arrReturnData[$i]['data']['properties']['popup']['content'], -4) == 'ul>') {
-                                            $arrReturnData[$i]['data']['properties']['popup']['content'] = str_replace('</ul>', '', $arrReturnData[$i]['data']['properties']['popup']['content']);
-                                        }
-                                        $arrReturnData[$i]['data']['properties']['popup']['content'] .= $popupContent . '</li></ul>';
-                                        $arrReturnData[$i]['data']['properties']['tooltip'] .= ', ' . \Contao\Controller::replaceInsertTags($result->$tooltipField);
-                                        $event = true;
-                                    }
-                                }
-                            }
-
-
-                            if (!$event) {
-                                if ($sourceTable == 'tl_content') {
-                                    $popupContent = Controller::getContentElement($result->id) ? Controller::replaceInsertTags(Controller::getContentElement($result->id)) : $popupContent;
-                                    $popupContent = str_replace('TL_FILES_URL', '', $popupContent);
-                                }
-
-                                $arrReturnDataSet = array
-                                (
-                                    "id" => $result->id,
-                                    "type" => 'GeoJSON',
-                                    "format" => "GeoJSON",
-                                    "origType" => "table",
-                                    "locationStyle" => $locstyle,
-                                    "cluster_fillcolor" => $objLayer->cluster_fillcolor,
-                                    "cluster_fontcolor" => $objLayer->cluster_fontcolor,
-                                    "cluster_zoom" => $objLayer->cluster_zoom,
-                                    "cluster_popup" => $objLayer->cluster_popup,
-                                    "loc_linkurl" => $link,
-                                    "hover_location" => $objLayer->hover_location,
-                                    "hover_style" => $objLayer->hover_style,
-                                    "data" => $arrGeoJson = array
-                                    (
-                                        'type' => 'Feature',
-                                        'geometry' => array(
-                                            'type' => 'Point',
-                                            'coordinates' => $coordinates,
-                                        ),
-                                        'properties' => array
-                                        (
-                                            'projection' => 'EPSG:4326',
-                                            'popup' => array(
-                                                'async' => false,
-                                                'content' => $popupContent,
-                                                'routing_link' => $objLayer->routing_to
-                                            ),
-                                            'tooltip' => unserialize($result->$tooltipField)['value'] ? unserialize($result->$tooltipField)['value'] : \Contao\Controller::replaceInsertTags($result->$tooltipField),
-                                            "tooltip_length" => $objLayer->tooltip_length,
-                                            'label' => Controller::replaceInsertTags($result->$labelField),
-                                            'zoom_onclick' => $objLayer->loc_onclick_zoomto
-                                        ),
-                                    ),
-                                    "settings" => array
-                                    (
-                                        "loadAsync" => false,
-                                        "refresh" => false,
-                                        "crossOrigine" => false,
-                                        "boundingBox" => false,
-                                        "cluster" => $objLayer->cluster_locations ? ($objLayer->cluster_distance ? $objLayer->cluster_distance : 20) : false,
-                                    )
-                                );
-                                if ($objLayer->async_content) {
-                                    if (!$arrReturnDataSet['data'] || !$arrReturnDataSet['data']['geometry'] || !$arrReturnDataSet['data']['geometry']['coordinates'] || count($arrReturnDataSet['data']['geometry']['coordinates']) != 2) continue;
-                                    $set['pid'] = $objLayer->id;
-                                    $set['type'] = $arrReturnDataSet['type'];
-                                    $set['format'] = $arrReturnDataSet['format'];
-                                    $set['origType'] = $arrReturnDataSet['origType'];
-                                    $set['locStyle'] = $arrReturnDataSet['locationStyle'];
-                                    $set['datatype'] = $arrReturnDataSet['data']['type'];
-                                    $set['geotype'] = $arrReturnDataSet['data']['geometry']['type'];
-                                    $set['geox'] = $arrReturnDataSet['data']['geometry']['coordinates'][0];
-                                    $set['geoy'] = $arrReturnDataSet['data']['geometry']['coordinates'][1];
-                                    $set['projection'] = $arrReturnDataSet['data']['properties']['projection'];
-                                    $set['popup_content'] = $arrReturnDataSet['data']['properties']['popup']['content'];
-                                    $set['popup_routing_link'] = $arrReturnDataSet['data']['properties']['popup']['routing_link'];
-                                    $set['popup_async'] = $arrReturnDataSet['data']['properties']['popup']['async'];
-                                    $set['tooltip'] = $arrReturnDataSet['data']['properties']['tooltip'];
-                                    $set['tooltip_length'] = $arrReturnDataSet['data']['properties']['tooltip_length'];
-                                    $set['label'] = $arrReturnDataSet['data']['properties']['label'];
-                                    $set['loc_linkurl'] = $arrReturnDataSet['data']['properties']['loc_linkurl'];
-                                    $set['hover_location'] = $arrReturnDataSet['data']['properties']['hover_location'];
-                                    $set['hover_style'] = $arrReturnDataSet['data']['properties']['hover_style'];
-                                    $set['cluster_fillcolor'] = $arrReturnDataSet['cluster_fillcolor'];
-                                    $set['cluster_distance'] = $arrReturnDataSet['cluster_distance'];
-                                    $set['cluster_fontcolor'] = $arrReturnDataSet['cluster_fontcolor'];
-                                    $set['cluster_zoom'] = $arrReturnDataSet['cluster_zoom'];
-                                    $set['cluster_popup'] = $arrReturnDataSet['cluster_popup'];
-
-                                    Database::getInstance()->prepare("INSERT INTO tl_c4g_map_layer_content %s")->set($set)->execute();
-                                }
-                                else {
-                                    $arrReturnData[] = $arrReturnDataSet;
-                                }
-                            }
-
                         }
                     }
+
+                    $popupContent = '';
+                    if (($show == $blobCount) && (($result->$geoxField && $result->$geoyField) || ($geolocation && $result->$geolocation))) {
+                        // replace popup stuff
+                        if ($objConfig->popup) {
+                            $popupElements = explode(',', $objConfig->popup);
+                            foreach ($popupElements as $key => $value) {
+                                if (substr($value, 0, 1) == '{' && substr($value, -1, 1) == '}') {
+                                    // we have an inserttag
+                                    $replacedValue = str_replace('[id]', $result->id, $value);
+                                    $popupContent .= $this->replaceInsertTags($replacedValue) . ' ';
+                                } else if (substr($value, 0, 1) == '[' && substr($value, -1, 1) == ']') {
+                                    // no insert tag
+                                    $replacedValue = str_replace('[', '', $value);
+                                    $replacedValue = str_replace(']', '', $replacedValue);
+                                    $elements = explode(':', $replacedValue);
+                                    $column = $elements[0];
+                                    $columnClass = 'c4g_maps_table_column_' . $column;
+                                    $dataType = $elements[1];
+                                    $additionalParam1 = $elements[2];
+                                    $additionalParam2 = $elements[3];
+                                    switch ($dataType) {
+                                        case 'date':
+                                            $popupContent .= '<div class="' . $columnClass . '">' . date('d.m.y', $result->$column) . '</div>';
+                                            break;
+                                        case 'string':
+                                            $columnText = $result->$column;
+                                            $columnText = str_replace('[nbsp]', ' ', $columnText);
+                                            $columnText = html_entity_decode(C4GUtils::secure_ugc($columnText));
+                                            $popupContent .= '<div class="' . $columnClass . '">' . $columnText . '</div>';
+                                            break;
+                                        case 'pagelink':
+                                            if (!$additionalParam1) {
+                                                $additionalParam1 = 'details';
+                                            }
+                                            $aliasOrId = $result->$column;
+                                            if (!$additionalParam2) {
+                                                $link = $this->replaceInsertTags('{{link_url::' . $aliasOrId . '}}');
+                                            } else {
+                                                if ($column == 'subdomain') {
+                                                    $link = 'https://' . $aliasOrId . '.' . $additionalParam2;
+                                                } else {
+                                                    $link = 'https://' . $additionalParam2;
+                                                    $link = $link . '/' . $aliasOrId . '.html';
+                                                }
+                                            }
+
+                                            $popupContent .= '<a class="' . $columnClass . '" href="' . $link . '">' . $additionalParam1 . '</a>';
+                                            break;
+                                        case 'pagelink2':
+                                            if (!$additionalParam1) {
+                                                $additionalParam1 = 'details';
+                                            }
+                                            $aliasOrId = $result->$column;
+                                            if (!$additionalParam2) {
+                                                $link = $this->replaceInsertTags('{{link_url::' . $aliasOrId . '}}');
+                                            } else {
+                                                if ($column == 'subdomain') {
+                                                    $link = 'https://' . $aliasOrId . '.' . $additionalParam2;
+                                                } else {
+                                                    $link = 'https://' . $additionalParam2;
+                                                    $link = $link . '/' . $aliasOrId . '.html';
+                                                }
+                                            }
+
+                                            $popupContent .= '<a class="' . $columnClass . '" href="' . $link . '" target="_blank">' . $additionalParam1 . '</a>';
+                                            break;
+                                        case 'pagelink3':
+                                            if (!$additionalParam1) {
+                                                $additionalParam1 = 'details';
+                                            }
+                                            $linkPopup = $result->$column;
+                                            if(!(substr($link,0,4) === "http")){
+                                                $linkPopup = 'https://' . $linkPopup;
+                                            }
+                                            $popupContent .= '<a class="' . $columnClass . '" href="' . $linkPopup . '" target="_blank">' . $additionalParam1 . '</a>';
+                                            break;
+                                        case 'responsiveImage':
+                                            $responsiveImage = false;
+                                            if ($additionalParam1) {
+                                                $responsiveImage = $additionalParam1;
+                                            }
+                                            $file = \FilesModel::findByUuid($result->$column);
+                                            if ($file) {
+                                                if (!$responsiveImage) {
+                                                    $image = \Image::get($file->path, 360, 240);
+                                                } else {
+                                                    $image = \Image::get($file->path, '', '', $responsiveImage);
+                                                }
+                                                if ($image) {
+                                                    $popupContent .= '<img src="' . $image . '">';
+                                                }
+                                            }
+                                            else{
+                                                $popupContent .= '<img src="' . $result->$column . '">';
+                                            }
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else {
+                                    // other stuff put in as text
+                                    $popupContent .= $value . ' ';
+                                }
+                            }
+                        }
+                        if ($result->$geolocation) {
+                            $geox = substr($result->$geolocation, strpos($result->$geolocation, ',') + 1);
+                            $geoy = substr($result->$geolocation, 0, strpos($result->$geolocation, ','));
+                            $coordinates = array(floatval($geox), floatval($geoy));
+                        } else {
+                            $coordinates = array(
+                                floatval($result->$geoxField),
+                                floatval($result->$geoyField));
+                        }
+                        if ($objConfig->linkurl && !$objConfig->popup) {
+                            $link = $objConfig->linkurl;
+                            $link = str_replace('[id]', $result->id, $link);
+                            $matches = [];
+                            if (preg_match('/\[[a-z]+\]/', $link, $matches)) {
+                                foreach ($matches as $key => $value) {
+                                    $replacedValue = str_replace('[', '', $value);
+                                    $replacedValue = str_replace(']', '', $replacedValue);
+                                    if ($result->$replacedValue) {
+                                        $replacedValue = $result->$replacedValue;
+                                    }
+                                    $matches[$key] = $replacedValue;
+                                }
+                                $link = preg_replace(['/\[[a-z]+\]/'], $matches, $link);
+                            }
+                            $link = $this->replaceInsertTags($link);
+                            if (substr($link, 0, 1) == '(' && substr($link, -1, 1) == ')') {
+                                $link = substr($link, 1);
+                                $link = substr($link, 0, -1);
+                            }
+                        } else {
+                            $link = $this->replaceInsertTags($objLayer->loc_linkurl);
+                        }
+                        $event = false;
+                        if ($objLayer->cluster_popup != 1) {
+                            for ($i = 0; $i < count($arrReturnData); $i++) {
+                                set_time_limit(60);
+                                if ($arrReturnData[$i]['data']['geometry']['coordinates'] == $coordinates) {
+                                    if (substr($arrReturnData[$i]['data']['properties']['popup']['content'], 0, 3) != '<ul') {
+                                        $arrReturnData[$i]['data']['properties']['popup']['content'] = '<ul><li>' . $arrReturnData[$i]['data']['properties']['popup']['content'] . '</li>';
+                                    }
+                                    if (substr($arrReturnData[$i]['data']['properties']['popup']['content'], -4) == 'ul>') {
+                                        $arrReturnData[$i]['data']['properties']['popup']['content'] = str_replace('</ul>', '', $arrReturnData[$i]['data']['properties']['popup']['content']);
+                                    }
+                                    $arrReturnData[$i]['data']['properties']['popup']['content'] .= $popupContent . '</li></ul>';
+                                    $arrReturnData[$i]['data']['properties']['tooltip'] .= ', ' . \Contao\Controller::replaceInsertTags($result->$tooltipField);
+                                    $event = true;
+                                }
+                            }
+                        }
+
+
+                        if (!$event) {
+                            if ($sourceTable == 'tl_content') {
+                                $popupContent = Controller::getContentElement($result->id) ? Controller::replaceInsertTags(Controller::getContentElement($result->id)) : $popupContent;
+                                $popupContent = str_replace('TL_FILES_URL', '', $popupContent);
+                            }
+
+                            $arrReturnDataSet = array
+                            (
+                                "id" => $result->id,
+                                "type" => 'GeoJSON',
+                                "format" => "GeoJSON",
+                                "origType" => "table",
+                                "locationStyle" => $locstyle,
+                                "cluster_fillcolor" => $objLayer->cluster_fillcolor,
+                                "cluster_fontcolor" => $objLayer->cluster_fontcolor,
+                                "cluster_zoom" => $objLayer->cluster_zoom,
+                                "cluster_popup" => $objLayer->cluster_popup,
+                                "loc_linkurl" => $link,
+                                "hover_location" => $objLayer->hover_location,
+                                "hover_style" => $objLayer->hover_style,
+                                "data" => $arrGeoJson = array
+                                (
+                                    'type' => 'Feature',
+                                    'geometry' => array(
+                                        'type' => 'Point',
+                                        'coordinates' => $coordinates,
+                                    ),
+                                    'properties' => array
+                                    (
+                                        'projection' => 'EPSG:4326',
+                                        'popup' => array(
+                                            'async' => false,
+                                            'content' => $popupContent,
+                                            'routing_link' => $objLayer->routing_to
+                                        ),
+                                        'tooltip' => unserialize($result->$tooltipField)['value'] ? unserialize($result->$tooltipField)['value'] : \Contao\Controller::replaceInsertTags($result->$tooltipField),
+                                        "tooltip_length" => $objLayer->tooltip_length,
+                                        'label' => Controller::replaceInsertTags($result->$labelField),
+                                        'zoom_onclick' => $objLayer->loc_onclick_zoomto
+                                    ),
+                                ),
+                                "settings" => array
+                                (
+                                    "loadAsync" => false,
+                                    "refresh" => false,
+                                    "crossOrigine" => false,
+                                    "boundingBox" => false,
+                                    "cluster" => $objLayer->cluster_locations ? ($objLayer->cluster_distance ? $objLayer->cluster_distance : 20) : false,
+                                )
+                            );
+                            if ($objLayer->async_content) {
+                                if (!$arrReturnDataSet['data'] || !$arrReturnDataSet['data']['geometry'] || !$arrReturnDataSet['data']['geometry']['coordinates'] || count($arrReturnDataSet['data']['geometry']['coordinates']) != 2) continue;
+                                $set['pid'] = $objLayer->id;
+                                $set['type'] = $arrReturnDataSet['type'];
+                                $set['format'] = $arrReturnDataSet['format'];
+                                $set['origType'] = $arrReturnDataSet['origType'];
+                                $set['locStyle'] = $arrReturnDataSet['locationStyle'];
+                                $set['datatype'] = $arrReturnDataSet['data']['type'];
+                                $set['geotype'] = $arrReturnDataSet['data']['geometry']['type'];
+                                $set['geox'] = $arrReturnDataSet['data']['geometry']['coordinates'][0];
+                                $set['geoy'] = $arrReturnDataSet['data']['geometry']['coordinates'][1];
+                                $set['projection'] = $arrReturnDataSet['data']['properties']['projection'];
+                                $set['popup_content'] = $arrReturnDataSet['data']['properties']['popup']['content'];
+                                $set['popup_routing_link'] = $arrReturnDataSet['data']['properties']['popup']['routing_link'];
+                                $set['popup_async'] = $arrReturnDataSet['data']['properties']['popup']['async'];
+                                $set['tooltip'] = $arrReturnDataSet['data']['properties']['tooltip'];
+                                $set['tooltip_length'] = $arrReturnDataSet['data']['properties']['tooltip_length'];
+                                $set['label'] = $arrReturnDataSet['data']['properties']['label'];
+                                $set['loc_linkurl'] = $arrReturnDataSet['data']['properties']['loc_linkurl'];
+                                $set['hover_location'] = $arrReturnDataSet['data']['properties']['hover_location'];
+                                $set['hover_style'] = $arrReturnDataSet['data']['properties']['hover_style'];
+                                $set['cluster_fillcolor'] = $arrReturnDataSet['cluster_fillcolor'];
+                                $set['cluster_distance'] = $arrReturnDataSet['cluster_distance'];
+                                $set['cluster_fontcolor'] = $arrReturnDataSet['cluster_fontcolor'];
+                                $set['cluster_zoom'] = $arrReturnDataSet['cluster_zoom'];
+                                $set['cluster_popup'] = $arrReturnDataSet['cluster_popup'];
+
+                                Database::getInstance()->prepare("INSERT INTO tl_c4g_map_layer_content %s")->set($set)->execute();
+                            }
+                            else {
+                                $arrReturnData[] = $arrReturnDataSet;
+                            }
+                        }
+
+                    }
+                }
 
                 break;
             case 'link':

@@ -1,45 +1,51 @@
 <?php
-
 /**
- * con4gis - the gis-kit
- *
- * @version   php 7
- * @package   con4gis
- * @author    con4gis contributors (see "authors.txt")
- * @license   GNU/LGPL http://opensource.org/licenses/lgpl-3.0.html
- * @copyright Küstenschmiede GmbH Software & Design 2011 - 2018
- * @link      https://www.kuestenschmiede.de
+ * Created by PhpStorm.
+ * User: fsc
+ * Date: 26.02.19
+ * Time: 17:38
  */
 
-namespace con4gis\MapsBundle\Resources\contao\modules\api;
+namespace con4gis\MapsBundle\Classes\Services;
+
 
 use con4gis\CoreBundle\Resources\contao\classes\HttpResultHelper;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapBaselayersModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapOverlaysModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
+use con4gis\MapsBundle\Resources\contao\models\C4gMapSettingsModel;
 use Contao\StringUtil;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-/**
- * Class BaseLayerApi
- * @package con4gis\MapsBundle\Resources\contao\modules\api
- */
-class BaseLayerApi extends \Frontend
+class BaseLayerService
 {
+
+    /**
+     * @var EventDispatcherInterface
+     */
+    private $eventDispatcher = null;
+
+    /**
+     * LayerService constructor.
+     * @param EventDispatcherInterface $eventDispatcher
+     */
+    public function __construct(EventDispatcherInterface $eventDispatcher)
+    {
+        $this->eventDispatcher = $eventDispatcher;
+    }
     /**
      * Determines the request method and selects the appropriate data result.
      *
      * @param  array $arrInput Fragments from request uri
      * @return mixed           JSON data
      */
-    protected $arrLayers = array();
-    protected $arrConfig = array();
-    private $mapsProfileModel;
+    protected $arrLayers = [];
+    protected $arrConfig = [];
 
     public function generate($intProfileId)
     {
         $blnProfileBaselayerFilter = false;
         $mapsProfileModel = C4gMapProfilesModel::findById($intProfileId);
-        $this->import('FrontendUser', 'User');
 
         if ($mapsProfileModel !== null)
         {
@@ -54,7 +60,7 @@ class BaseLayerApi extends \Frontend
 
         $this->arrConfig['countAll'] = sizeof($arrLayers);
 
-		return array('config' => $this->arrConfig, 'baselayer' => $arrLayers);
+        return array('config' => $this->arrConfig, 'baselayer' => $arrLayers);
 
     }
 
@@ -236,6 +242,30 @@ class BaseLayerApi extends \Frontend
                     }
                 }
                 break;
+            case 'stamen':
+                $arrBaseLayer['style'] = $objBaseLayer->stamen_style;
+                if (!empty($objBaseLayer->osm_keyname)) {
+                    $arrBaseLayer['apiKey'] = $objBaseLayer->osm_keyname;
+                }
+                break;
+            case 'con4gisIo':
+                $objSettings = C4gMapSettingsModel::findOnly();
+                if ($objSettings->con4gisIoUrl && $objSettings->con4gisIoKey) {
+                    $keyUrl = $objSettings->con4gisIoUrl . "getKey.php";
+                    $keyUrl .= "?key=" . $objSettings->con4gisIoKey ."&service=4&id=" . $objBaseLayer->con4gisIo;
+                    $REQUEST = new \Request();
+                    if ($_SERVER['HTTP_REFERER']) {
+                        $REQUEST->setHeader('Referer', $_SERVER['HTTP_REFERER']);
+                    }
+                    if ($_SERVER['HTTP_USER_AGENT']) {
+                        $REQUEST->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
+                    }
+                    $REQUEST->send($keyUrl);
+                    $response = \GuzzleHttp\json_decode($REQUEST->response);
+                    $arrBaseLayer['url'] = $objSettings->con4gisIoUrl . "tiles.php?key=" . $response->key . "&z={z}&x={x}&y={y}";
+
+                }
+                break;
             case 'mapbox':
                 $arrBaseLayer['url'] = 'https://api.mapbox.com/styles/v1/';
                 $arrBaseLayer['url_classic'] = 'https://api.tiles.mapbox.com/v4/';
@@ -341,5 +371,4 @@ class BaseLayerApi extends \Frontend
         $arrBaseLayer['cesium']= $objBaseLayer->cesium;
         return $arrBaseLayer;
     }
-
 }

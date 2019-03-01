@@ -1,19 +1,21 @@
 <?php
 
-/**
- * con4gis - the gis-kit
- *
- * @version   php 7
- * @package   con4gis
- * @author    con4gis contributors (see "authors.txt")
- * @license   GNU/LGPL http://opensource.org/licenses/lgpl-3.0.html
- * @copyright Küstenschmiede GmbH Software & Design 2011 - 2018
- * @link      https://www.kuestenschmiede.de
- */
+/*
+  * This file is part of con4gis,
+  * the gis-kit for Contao CMS.
+  *
+  * @package   	con4gis
+  * @version    6
+  * @author  	con4gis contributors (see "authors.txt")
+  * @license 	LGPL-3.0-or-later
+  * @copyright 	Küstenschmiede GmbH Software & Design
+  * @link       https://www.con4gis.org
+  */
 
 namespace con4gis\MapsBundle\Resources\contao\modules\api;
 use con4gis\CoreBundle\Resources\contao\classes\HttpResultHelper;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
+use con4gis\MapsBundle\Resources\contao\models\C4gMapSettingsModel;
 
 /**
  * Class NominatimApi
@@ -56,15 +58,21 @@ class NominatimApi extends \Frontend
             }
 
         }
+        $objSettings = C4gMapSettingsModel::findOnly();
 
         $strParams = "";
 
         switch ($intSearchEngine) {
             case '4':
-                if (!empty($objMapsProfile->geosearch_key)) {
+                if (!empty($objMapsProfile->geosearch_key)) { //Deprecated
                     $strSearchUrl = 'https://'.$objMapsProfile->geosearch_key.'.search.mapservices.kartenkueste.de/search.php';
-                } else {
-                    //ToDo error handling
+                }
+                else if ($objSettings->con4gisIoUrl && $objSettings->con4gisIoKey) {
+                    $strSearchUrl = $objSettings->con4gisIoUrl . "search.php";
+                    $arrParams['key'] = $objSettings->con4gisIoKey;
+                }
+                else {
+                    //TODO error handling
                 }
 
                 break;
@@ -104,22 +112,24 @@ class NominatimApi extends \Frontend
         {
             foreach ($arrParams as $strKey=>$strValue)
             {
-                if ((strpos($strSearchUrl,'api.opencagedata.com') !== false) && ($strKey=='format')){
-                    if ( (strpos($strSearchUrl, 'json') !== true) &&
-                        (strpos($strSearchUrl, 'geojson') !== true) &&
-                        (strpos($strSearchUrl, 'xml') !== true) &&
-                        (strpos($strSearchUrl, 'map') !== true) &&
-                        (strpos($strSearchUrl, 'google-v3-json') !== true)) {
-                        $strSearchUrl = addslashes($strSearchUrl).'json';
-                        continue;
+                if ($strKey && $strValue) {
+                    if ((strpos($strSearchUrl,'api.opencagedata.com') !== false) && ($strKey=='format') && $strKey && $strValue){
+                        if ( (strpos($strSearchUrl, 'json') !== true) &&
+                            (strpos($strSearchUrl, 'geojson') !== true) &&
+                            (strpos($strSearchUrl, 'xml') !== true) &&
+                            (strpos($strSearchUrl, 'map') !== true) &&
+                            (strpos($strSearchUrl, 'google-v3-json') !== true)) {
+                            $strSearchUrl = addslashes($strSearchUrl).'json';
+                            continue;
+                        }
                     }
-                }
 
-                if (strlen($strParams) > 0)
-                {
-                    $strParams .= "&";
+                    if (strlen($strParams) > 0)
+                    {
+                        $strParams .= "&";
+                    }
+                    $strParams .= $strKey . "=" . urlencode($strValue);
                 }
-                $strParams .= $strKey . "=" . urlencode($strValue);
             }
         }
 

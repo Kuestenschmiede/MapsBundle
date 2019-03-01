@@ -78,14 +78,6 @@ export class C4gBaselayerController {
           this.showBaseLayer(uid);
         }
 
-        if(this.arrBaselayers[uid].hasOverlays){
-          for (j = 0; j< this.arrBaselayers[uid].overlays.length; j++){
-            if(!this.arrBaselayers[uid].overlayController.arrOverlays[this.arrBaselayers[uid].overlays[j].id]){
-              this.arrBaselayers[uid].overlayController.arrOverlays[this.arrBaselayers[uid].overlays[j].id] = new C4gOverlay(this.arrBaselayers[uid].overlays[j], this.mapController);
-              this.arrBaselayers[uid].overlayController.arrOverlays[this.arrBaselayers[uid].overlays[j].id].layer = this.arrBaselayers[uid].overlayController.showOverlayLayer(this.arrBaselayers[uid].overlays[j].id);
-            }
-          }
-        }
       }
     }
 
@@ -151,22 +143,8 @@ export class C4gBaselayerController {
               )
             )
           });
-        } else if (sourceConfigs.stamen[baseLayerConfig.style]) {
-          // Stamen
-          newBaselayer = new ol.layer.Tile({
-            source: new ol.source.Stamen(
-              $.extend(
-                sourceConfigs.stamen[baseLayerConfig.style],
-                layerOptions
-              )
-            )
-          });
-          // } else if (mapQuestSourceConfigs[baseLayerConfig.style]) {
-          //   // mapQuest
-          //   newBaselayer = new ol.layer.Tile({
-          //     source: new ol.source.MapQuest(mapQuestSourceConfigs[baseLayerConfig.style])
-          //   });
-        } else if (baseLayerConfig.style === 'osm_custom') {
+        }
+        else if (baseLayerConfig.style === 'osm_custom') {
           // custom
           let noUrl = true;
           if (baseLayerConfig.url) {
@@ -186,6 +164,34 @@ export class C4gBaselayerController {
         } else {
           console.warn('unsupported osm-style -> switch to default');
         }
+        break;
+      case 'stamen':
+        if (sourceConfigs.stamen[baseLayerConfig.style]) {
+          // Stamen
+          newBaselayer = new ol.layer.Tile({
+            source: new ol.source.Stamen(
+              $.extend(
+                sourceConfigs.stamen[baseLayerConfig.style],
+                layerOptions
+              )
+            )
+          });
+          // } else if (mapQuestSourceConfigs[baseLayerConfig.style]) {
+          //   // mapQuest
+          //   newBaselayer = new ol.layer.Tile({
+          //     source: new ol.source.MapQuest(mapQuestSourceConfigs[baseLayerConfig.style])
+          //   });
+        }
+        else {
+          console.warn('unsupported osm-style -> switch to default');
+        }
+        break;
+      case 'con4gisIo':
+        newBaselayer = new ol.layer.Tile({
+          source: new ol.source.XYZ({
+            url: baseLayerConfig.url
+          })
+        });
         break;
       case 'mapbox':
         if (baseLayerConfig.api_key && baseLayerConfig.app_id && baseLayerConfig.mapbox_type) {
@@ -401,7 +407,7 @@ export class C4gBaselayerController {
         }
         newBaselayer = new ol.layer.Group({
           layers: baseLayerGroup
-        })
+        });
         break;
 
       default:
