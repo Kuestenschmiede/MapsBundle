@@ -684,19 +684,6 @@ button.ol-zoom-out {
   margin-right: 5px;
 }
 
-
-
-span.c4g-active ul,
-span ul{
-  display: none;
-  position: absolute;
-  z-index: 1;
-}
-span.c4g-active:hover ul {
-  display: inline;
-}
-
-
 /*
  *  Geosearch
  */

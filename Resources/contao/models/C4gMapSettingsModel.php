@@ -11,16 +11,21 @@
   * @copyright 	Küstenschmiede GmbH Software & Design
   * @link       https://www.con4gis.org
   */
-
 namespace con4gis\MapsBundle\Resources\contao\models;
 
 /**
- * Class C4gMapBaselayersModel
+ * Class C4gMapSettingsModel
  * @package con4gis\MapsBundle\Resources\contao\models
  */
-class C4gMapBaselayersModel extends \Model
+class C4gMapSettingsModel extends \Contao\Model
 {
     // Table name
-    protected static $strTable = 'tl_c4g_map_baselayers';
-
+    protected static $strTable = 'tl_c4g_settings';
+    public static function findOnly() {
+        $collSettings = static::findAll();
+        foreach ($collSettings as $objSettings) {
+            return $objSettings;
+        }
+    }
 }
+

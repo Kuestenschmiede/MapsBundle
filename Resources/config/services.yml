@@ -10,3 +10,8 @@ services:
         public: true
         arguments:
             - "@event_dispatcher"
+    con4gis.baselayer_service:
+        class: con4gis\MapsBundle\Classes\Services\BaseLayerService
+        public: true
+        arguments:
+            - "@event_dispatcher"

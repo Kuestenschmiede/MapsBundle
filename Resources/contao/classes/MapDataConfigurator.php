@@ -1,15 +1,16 @@
 <?php
 
-/**
- * con4gis - the gis-kit
- *
- * @version   php 7
- * @package   con4gis
- * @author    con4gis contributors (see "authors.txt")
- * @license   GNU/LGPL http://opensource.org/licenses/lgpl-3.0.html
- * @copyright Küstenschmiede GmbH Software & Design 2011 - 2018
- * @link      https://www.kuestenschmiede.de
- */
+/*
+  * This file is part of con4gis,
+  * the gis-kit for Contao CMS.
+  *
+  * @package   	con4gis
+  * @version    6
+  * @author  	con4gis contributors (see "authors.txt")
+  * @license 	LGPL-3.0-or-later
+  * @copyright 	Küstenschmiede GmbH Software & Design
+  * @link       https://www.con4gis.org
+  */
 
 namespace con4gis\MapsBundle\Resources\contao\classes;
 
@@ -18,6 +19,7 @@ use con4gis\CoreBundle\Resources\contao\models\C4gSettingsModel;
 use con4gis\MapsBundle\Classes\Events\LoadMapdataEvent;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapBaselayersModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
+use con4gis\MapsBundle\Resources\contao\models\C4gMapSettingsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use Contao\Controller;
 use Contao\Input;
@@ -405,7 +407,7 @@ class MapDataConfigurator
             if ($profile->caching) {
                 $mapData['caching'] = 1;
             }
-
+            $objSettings = C4gMapSettingsModel::findOnly();
             // geosearch
             //
             if ($profile->geosearch) {
@@ -423,6 +425,34 @@ class MapDataConfigurator
                 $mapData['geosearch']['popup'] = $profile->geosearch_popup;
                 $mapData['geosearch']['attribution'] = \Contao\Controller::replaceInsertTags($profile->geosearch_attribution);
                 $mapData['geosearch']['collapsed'] = $profile->geosearch_collapsed;
+                if ($profile->geosearch_engine == "4" && $objSettings->con4gisIoUrl && $objSettings->con4gisIoKey) {
+                    $keySearchUrl = $objSettings->con4gisIoUrl . "getKey.php";
+                    $keySearchUrl .= "?key=" . $objSettings->con4gisIoKey ."&service=2";
+                    $REQUEST = new \Request();
+                    if ($_SERVER['HTTP_REFERER']) {
+                        $REQUEST->setHeader('Referer', $_SERVER['HTTP_REFERER']);
+                    }
+                    if ($_SERVER['HTTP_USER_AGENT']) {
+                        $REQUEST->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
+                    }
+                    $REQUEST->send($keySearchUrl);
+                    $response = \GuzzleHttp\json_decode($REQUEST->response);
+                    $mapData['geosearch']['searchKey'] = $response->key;
+
+                    $keyReverseUrl = $objSettings->con4gisIoUrl . "getKey.php";
+                    $keyReverseUrl .= "?key=" . $objSettings->con4gisIoKey ."&service=3";
+                    $REQUEST = new \Request();
+                    if ($_SERVER['HTTP_REFERER']) {
+                        $REQUEST->setHeader('Referer', $_SERVER['HTTP_REFERER']);
+                    }
+                    if ($_SERVER['HTTP_USER_AGENT']) {
+                        $REQUEST->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
+                    }
+                    $REQUEST->send($keyReverseUrl);
+                    $response = \GuzzleHttp\json_decode($REQUEST->response);
+                    $mapData['geosearch']['reverseKey'] = $response->key;
+                    $mapData['geosearch']['url'] = $objSettings->con4gisIoUrl;
+                }
 
                 if ($profile->attribution && $profile->geosearch_attribution) {
                     $mapData['attribution']['geosearch'] = \Contao\Controller::replaceInsertTags($profile->geosearch_attribution);

@@ -18,28 +18,28 @@ namespace con4gis\MapsBundle\Classes\Events;
 
 use Symfony\Component\EventDispatcher\Event;
 
-class LoadLayersEvent extends Event
+class LoadBaseLayersEvent extends Event
 {
-    const NAME = "maps.layers.load";
+    const NAME = "maps.baseLayers.load";
 
-    private $layerData = [];
+    private $baseLayerData = [];
 
     private $additionalData = [];
 
     /**
      * @return array
      */
-    public function getLayerData(): array
+    public function getBaseLayerData(): array
     {
-        return $this->layerData;
+        return $this->baseLayerData;
     }
 
     /**
-     * @param array $layerData
+     * @param array $baseLayerData
      */
-    public function setLayerData(array $layerData)
+    public function setBaseLayerData(array $baseLayerData)
     {
-        $this->layerData = $layerData;
+        $this->baseLayerData = $baseLayerData;
     }
 
     /**

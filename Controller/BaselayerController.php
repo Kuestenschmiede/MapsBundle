@@ -11,6 +11,7 @@ namespace con4gis\MapsBundle\Controller;
 
 use con4gis\CoreBundle\Controller\BaseController;
 use con4gis\MapsBundle\Classes\Caches\C4GBaselayerApiCache;
+use con4gis\MapsBundle\Classes\Services\BaseLayerService;
 use con4gis\MapsBundle\Resources\contao\modules\api\BaseLayerApi;
 use con4gis\MapsBundle\Resources\contao\modules\api\BaseLayerTileApi;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -30,7 +31,6 @@ class BaselayerController extends BaseController
     public function baseLayerAction(Request $request, $profileId)
     {
         $response = new JsonResponse();
-        $baseLayerApi = new BaseLayerApi();
 
         $this->checkForCacheSettings('baseLayerService');
 
@@ -39,7 +39,8 @@ class BaselayerController extends BaseController
         }
 
         if (!self::$outputFromCache) {
-            $this->responseData = $baseLayerApi->generate($profileId);
+            $baseLayerService = $this->get('con4gis.baselayer_service');
+            $this->responseData = $baseLayerService->generate($profileId);
             if (self::$useCache) {
                 $this->storeDataInCache($request);
             }

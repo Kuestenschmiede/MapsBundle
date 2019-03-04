@@ -1,122 +1,123 @@
 <?php if (!defined('TL_ROOT')) die('You cannot access this file directly!');
 
-/**
- * con4gis - the gis-kit
- *
- * @version   php 7
- * @package   con4gis
- * @author    con4gis contributors (see "authors.txt")
- * @license   GNU/LGPL http://opensource.org/licenses/lgpl-3.0.html
- * @copyright Küstenschmiede GmbH Software & Design 2011 - 2018
- * @link      https://www.kuestenschmiede.de
- */
+/*
+  * This file is part of con4gis,
+  * the gis-kit for Contao CMS.
+  *
+  * @package   	con4gis
+  * @version    6
+  * @author  	con4gis contributors (see "authors.txt")
+  * @license 	LGPL-3.0-or-later
+  * @copyright 	Küstenschmiede GmbH Software & Design
+  * @link       https://www.con4gis.org
+  */
 
 /**
  * Table tl_c4g_map_themes
  */
-$GLOBALS['TL_DCA']['tl_c4g_map_themes'] = array
-(
+$GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
+    [
 
     // Config
-    'config' => array
-    (
+    'config' =>
+        [
         'dataContainer'               => 'Table',
         'enableVersioning'            => true,
-        'sql'                         => array
-        (
-            'keys' => array
-            (
+        'sql'                         =>
+            [
+            'keys' =>
+                [
                 'id' => 'primary'
-            )
-        )
-    ),
+                ]
+            ]
+        ],
 
     // List
-    'list' => array
-    (
+    'list' =>
+        [
 
-        'sorting' => array
-        (
+        'sorting' =>
+            [
             'mode'                    => 1,
-            'fields'                  => array('name'),
+            'fields'                  => ['name'],
             'panelLayout'             => 'filter;sort,search,limit',
-            'headerFields'            => array('name'),
+            'headerFields'            => ['name'],
             'flag'                    => 1,
-        ),
-        'label' => array
-        (
-            'fields'                  => array('name'),
+            ],
+        'label' =>
+            [
+            'fields'                  => ['name'],
             'format'                  => '%s'
-        ),
-        'global_operations' => array
-        (
-            'all' => array
-            (
+            ],
+        'global_operations' =>
+            [
+            'all' =>
+                [
                 'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
                 'href'                => 'act=select',
                 'class'               => 'header_edit_all',
                 'attributes'          => 'onclick="Backend.getScrollOffset();" accesskey="e"'
-            )
-        ),
-        'operations' => array
-        (
-            'edit' => array
-            (
+                ]
+            ],
+        'operations' =>
+            [
+            'edit' =>
+                [
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['edit'],
                 'href'                => 'act=edit',
                 'icon'                => 'edit.gif'
-            ),
-            'copy' => array
-            (
+                ],
+            'copy' =>
+                [
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['copy'],
                 'href'                => 'act=copy',
                 'icon'                => 'copy.gif'
-            ),
-            'delete' => array
-            (
+                ],
+            'delete' =>
+                [
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['delete'],
                 'href'                => 'act=delete',
                 'icon'                => 'delete.gif',
                 'attributes'          => 'onclick="if (!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\')) return false; Backend.getScrollOffset();"'
-            ),
-            'show' => array
-            (
+                ],
+            'show' =>
+                [
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['show'],
                 'href'                => 'act=show',
                 'icon'                => 'show.gif'
-            )
-        )
-    ),
+                ]
+            ]
+        ],
 
     //Palettes
-    'palettes' => array
-    (
-        '__selector__' => array('custom_colors', 'custom_buttons', 'custom_effects', 'custom_icons'),
+    'palettes' =>
+        [
+        '__selector__' => ['custom_colors', 'custom_buttons', 'custom_effects', 'custom_icons'],
         'default' => '{theme_legend}, name, useglobal; {colors_legend}, maincolor, mainopacity, fontcolor, fontopacity, shadowcolor, shadowopacity, colors, custom_colors; {buttons_legend}, buttonradius, buttons, custom_buttons; {effects_legend}, effects, custom_effects; {icons_legend}, icons, custom_icons',
-    ),
+        ],
 
     //Subpalettes
-    'subpalettes' => array
-    (
+    'subpalettes' =>
+        [
         'custom_buttons' => 'external_buttons',
         'custom_colors'  => 'external_colors',
         'custom_effects' => 'external_effects',
         'custom_icons'   => 'external_icons'
-    ),
+        ],
 
     //Fields
-    'fields' => array
-    (
-        'id' => array
-        (
+    'fields' =>
+        [
+        'id' =>
+            [
             'sql'                     => "int(10) unsigned NOT NULL auto_increment"
-        ),
-        'tstamp' => array
-        (
+            ],
+        'tstamp' =>
+            [
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
-        ),
-        'name' => array
-        (
+            ],
+        'name' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['name'],
             'exclude'                 => true,
             'search'                  => true,
@@ -124,171 +125,171 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] = array
             'filter'                  => true,
             'flag'                    => 1,
             'inputType'               => 'text',
-            'eval'                    => array('mandatory'=>true, 'maxlength'=>75),
+            'eval'                    => ['mandatory'=>true, 'maxlength'=>75],
             'sql'                     => "varchar(100) NOT NULL default ''"
-        ),
-        'useglobal' => array
-        (
+            ],
+        'useglobal' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['useglobal'],
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',
             'sql'                     => "char(1) NOT NULL default ''"
-        ),
-        'buttons' => array
-        (
+            ],
+        'buttons' =>
+            [
             'label'                     => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['buttons'],
             'inputType'                 => 'select',
-            'options_callback'          => array('tl_c4g_map_themes', 'getButtonOptions'),
-            'eval'                      => array('mandatory' => false, 'includeBlankOption' => false),
+            'options_callback'          => ['tl_c4g_map_themes', 'getButtonOptions'],
+            'eval'                      => ['mandatory' => false, 'includeBlankOption' => false],
             'sql'                       => "blob NULL"
-        ),
-        'custom_buttons' => array
-        (
+            ],
+        'custom_buttons' =>
+            [
             'label'                     => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['custom_buttons'],
             'inputType'                 => 'checkbox',
             'default'                   => '',
-            'eval'                      => array('mandatory' => false, 'tl_class' => 'm12', 'submitOnChange' => true),
+            'eval'                      => ['mandatory' => false, 'tl_class' => 'm12', 'submitOnChange' => true],
             'sql'                       => "varchar(1) NOT NULL"
-        ),
-        'external_buttons' => array
-        (
+            ],
+        'external_buttons' =>
+            [
             'label'                     => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['external_buttons'],
             'inputType'                 => 'fileTree',
-            'eval'                      => array('mandatory' => false, 'filesOnly' => true, 'extensions' => 'css', 'fieldType' => 'radio'),
+            'eval'                      => ['mandatory' => false, 'filesOnly' => true, 'extensions' => 'css', 'fieldType' => 'radio'],
             'sql'                       => "blob NULL"
-        ),
-        'buttonradius' => array
-        (
+            ],
+        'buttonradius' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['buttonradius'],
             'inputType'               => 'inputUnit',
             'default'                 => '0',
-            'options'                 => array('%'),
-            'eval'                    => array('rgxp'=>'prcnt', 'tl_class'=>'long', 'mandatory'=>true),
+            'options'                 => ['%'],
+            'eval'                    => ['rgxp'=>'prcnt', 'tl_class'=>'long', 'mandatory'=>true],
             'sql'                     => "varchar(100) NOT NULL default ''"
-        ),
-        'colors' => array
-        (
+            ],
+        'colors' =>
+            [
             'label'                     => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['colors'],
             'inputType'                 => 'select',
-            'options_callback'          => array('tl_c4g_map_themes', 'getColorOptions'),
-            'eval'                      => array('mandatory' => false, 'multiple' => false, 'includeBlankOption' => false),
+            'options_callback'          => ['tl_c4g_map_themes', 'getColorOptions'],
+            'eval'                      => ['mandatory' => false, 'multiple' => false, 'includeBlankOption' => false],
             'sql'                       => "blob NULL"
-        ),
-        'custom_colors' => array
-        (
+            ],
+        'custom_colors' =>
+            [
             'label'                     => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['custom_colors'],
             'inputType'                 => 'checkbox',
             'default'                   => '',
-            'eval'                      => array('mandatory' => false, 'tl_class' => 'm12', 'submitOnChange' => true),
+            'eval'                      => ['mandatory' => false, 'tl_class' => 'm12', 'submitOnChange' => true],
             'sql'                       => "varchar(1) NOT NULL"
-        ),
-        'external_colors' => array
-        (
+            ],
+        'external_colors' =>
+            [
             'label'                     => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['external_colors'],
             'inputType'                 => 'fileTree',
-            'eval'                      => array('mandatory' => false, 'filesOnly' => true, 'extensions' => 'css', 'fieldType' => 'radio'),
+            'eval'                      => ['mandatory' => false, 'filesOnly' => true, 'extensions' => 'css', 'fieldType' => 'radio'],
             'sql'                       => "blob NULL"
-        ),
-        'maincolor' => array
-        (
+            ],
+        'maincolor' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['maincolor'],
             'default'                 => '103a5d',
             'inputType'               => 'text',
-            'eval'                    => array('maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'long wizard', 'mandatory'=>true ),
+            'eval'                    => ['maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'long wizard', 'mandatory'=>true],
             'sql'                     => "varchar(6) NOT NULL default ''"
-        ),
-        'mainopacity' => array
-        (
+            ],
+        'mainopacity' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['mainopacity'],
             'inputType'               => 'inputUnit',
             'default'                 => '100',
-            'options'                 => array('%'),
-            'eval'                    => array('rgxp'=>'prcnt', 'tl_class'=>'long', 'mandatory'=>true),
+            'options'                 => ['%'],
+            'eval'                    => ['rgxp'=>'prcnt', 'tl_class'=>'long', 'mandatory'=>true],
             'sql'                     => "varchar(100) NOT NULL default ''"
-        ),
-        'fontcolor' => array
-        (
+            ],
+        'fontcolor' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['fontcolor'],
             'default'                 => 'ffffff',
             'inputType'               => 'text',
-            'eval'                    => array('maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'long wizard', 'mandatory'=>true ),
+            'eval'                    => ['maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'long wizard', 'mandatory'=>true],
             'sql'                     => "varchar(6) NOT NULL default ''"
-        ),
-        'fontopacity' => array
-        (
+            ],
+        'fontopacity' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['fontopacity'],
             'inputType'               => 'inputUnit',
             'default'                 => '100',
-            'options'                 => array('%'),
-            'eval'                    => array('rgxp'=>'prcnt', 'tl_class'=>'long', 'mandatory'=>true),
+            'options'                 => ['%'],
+            'eval'                    => ['rgxp'=>'prcnt', 'tl_class'=>'long', 'mandatory'=>true],
             'sql'                     => "varchar(100) NOT NULL default ''"
-        ),
-        'shadowcolor' => array
-        (
+            ],
+        'shadowcolor' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['shadowcolor'],
             'default'                 => '009bde',
             'inputType'               => 'text',
-            'eval'                    => array('maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'long wizard', 'mandatory'=>true ),
+            'eval'                    => ['maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'long wizard', 'mandatory'=>true],
             'sql'                     => "varchar(6) NOT NULL default ''"
-        ),
-        'shadowopacity' => array
-        (
+            ],
+        'shadowopacity' =>
+            [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['shadowopacity'],
             'inputType'               => 'inputUnit',
             'default'                 => '50',
-            'options'                 => array('%'),
-            'eval'                    => array('rgxp'=>'prcnt', 'tl_class'=>'long', 'mandatory'=>true),
+            'options'                 => ['%'],
+            'eval'                    => ['rgxp'=>'prcnt', 'tl_class'=>'long', 'mandatory'=>true],
             'sql'                     => "varchar(100) NOT NULL default ''"
-        ),
-        'effects' => array
-        (
+            ],
+        'effects' =>
+            [
             'label'                     => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['effects'],
             'inputType'                 => 'select',
-            'options_callback'          => array('tl_c4g_map_themes', 'getEffectOptions'),
-            'eval'                      => array('mandatory' => false, 'multiple' => false, 'includeBlankOption' => false),
+            'options_callback'          => ['tl_c4g_map_themes', 'getEffectOptions'],
+            'eval'                      => ['mandatory' => false, 'multiple' => false, 'includeBlankOption' => false],
             'sql'                       => "blob NULL"
-        ),
-        'custom_effects' => array
-        (
+            ],
+        'custom_effects' =>
+            [
             'label'                     => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['custom_effects'],
             'inputType'                 => 'checkbox',
             'default'                   => '',
-            'eval'                      => array('mandatory' => false, 'tl_class' => 'm12', 'submitOnChange' => true),
+            'eval'                      => ['mandatory' => false, 'tl_class' => 'm12', 'submitOnChange' => true],
             'sql'                       => "varchar(1) NOT NULL"
-        ),
-        'external_effects' => array
-        (
+            ],
+        'external_effects' =>
+            [
             'label'                     => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['external_effects'],
             'inputType'                 => 'fileTree',
-            'eval'                      => array('mandatory' => false, 'filesOnly' => true, 'extensions' => 'css', 'fieldType' => 'radio'),
+            'eval'                      => ['mandatory' => false, 'filesOnly' => true, 'extensions' => 'css', 'fieldType' => 'radio'],
             'sql'                       => "blob NULL"
-        ),
-        'icons' => array
-        (
+            ],
+        'icons' =>
+            [
             'label'                     => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['icons'],
             'inputType'                 => 'select',
-            'options_callback'          => array('tl_c4g_map_themes', 'getIconOptions'),
-            'eval'                      => array('mandatory' => false, 'multiple' => false, 'includeBlankOption' => false),
+            'options_callback'          => ['tl_c4g_map_themes', 'getIconOptions'],
+            'eval'                      => ['mandatory' => false, 'multiple' => false, 'includeBlankOption' => false],
             'sql'                       => "blob NULL"
-        ),
-        'custom_icons' => array
-        (
+            ],
+        'custom_icons' =>
+            [
             'label'                     => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['custom_icons'],
             'inputType'                 => 'checkbox',
             'default'                   => '',
-            'eval'                      => array('mandatory' => false, 'tl_class' => 'm12', 'submitOnChange' => true),
+            'eval'                      => ['mandatory' => false, 'tl_class' => 'm12', 'submitOnChange' => true],
             'sql'                       => "varchar(1) NOT NULL"
-        ),
-        'external_icons' => array
-        (
+            ],
+        'external_icons' =>
+            [
             'label'                     => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['external_icons'],
             'inputType'                 => 'fileTree',
-            'eval'                      => array('mandatory' => false, 'filesOnly' => true, 'extensions' => 'css', 'fieldType' => 'radio'),
+            'eval'                      => ['mandatory' => false, 'filesOnly' => true, 'extensions' => 'css', 'fieldType' => 'radio'],
             'sql'                       => "blob NULL"
-        ),
-    )
-);
+            ],
+        ]
+    ];
 
 /**
  * Class tl_c4g_map_themes

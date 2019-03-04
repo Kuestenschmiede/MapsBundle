@@ -1,15 +1,16 @@
 <?php
 
-/**
- * con4gis - the gis-kit
- *
- * @version   php 7
- * @package   con4gis
- * @author    con4gis contributors (see "authors.txt")
- * @license   GNU/LGPL http://opensource.org/licenses/lgpl-3.0.html
- * @copyright Küstenschmiede GmbH Software & Design 2011 - 2018
- * @link      https://www.kuestenschmiede.de
- */
+/*
+  * This file is part of con4gis,
+  * the gis-kit for Contao CMS.
+  *
+  * @package   	con4gis
+  * @version    6
+  * @author  	con4gis contributors (see "authors.txt")
+  * @license 	LGPL-3.0-or-later
+  * @copyright 	Küstenschmiede GmbH Software & Design
+  * @link       https://www.con4gis.org
+  */
 
 /**
  * Fields
@@ -54,7 +55,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_filter'] = ['Starboardfilt
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_button'] = ['Auswahl-Button aktivieren','Erstellt einen Button, mit dem alle Elemente des Starboards zeitgleich ein- und ausgeblendet werden. Achtung! Abhängig von der Struktur kann das zu langen Ladezeiten führen.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_div'] = ['DIV für das Starboard', 'DIV zur Positionierung des Starboards außerhalb der Karte. Muss manuell auf der Seite erzeugt werden, z.B. mit einem HTML Inhaltselement.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_all'] = ['Cluster über alle Layer', 'Erstellt ein Cluster über alle Layer. Überschreibt die Einstellungen im Strukturelement. Achtung! Diese Funktion ist nicht für alle Strukturelemente geeignet.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_distance'] = ['Cluster-Distanz', 'Ab welcher Entfernung in Pixeln soll geclustert werden? (Standard beträgt 20px)'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_distance'] = ['Cluster-Distanz', 'Ab welcher Entfernung in Pixeln soll geclustert werden?'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_fillcolor'] = ['Füllfarbe', 'Wählen Sie die Füllfarbe der Clusterblasen aus.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_fontcolor'] = ['Schriftfarbe', 'Wählen Sie die Schriftfarbe der Clusterblasen aus.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_zoom'] = ['Minimale Zoomstufe (Spinne)','Wählen Sie die Zoomstufe, bis zu der hereingezoomt wird. Ab dieser Stufe werden die Cluster per Klick aufgelöst und verteilt dargestellt.'];

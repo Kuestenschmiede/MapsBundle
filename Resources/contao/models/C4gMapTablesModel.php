@@ -1,5 +1,4 @@
 <?php
-
 /*
   * This file is part of con4gis,
   * the gis-kit for Contao CMS.
@@ -14,13 +13,9 @@
 
 namespace con4gis\MapsBundle\Resources\contao\models;
 
-/**
- * Class C4gMapBaselayersModel
- * @package con4gis\MapsBundle\Resources\contao\models
- */
-class C4gMapBaselayersModel extends \Model
+
+class C4gMapTablesModel extends \Model
 {
     // Table name
-    protected static $strTable = 'tl_c4g_map_baselayers';
-
+    protected static $strTable = 'tl_c4g_map_tables';
 }
