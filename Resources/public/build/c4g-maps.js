@@ -185,12 +185,16 @@ var C4gBaselayerController = exports.C4gBaselayerController = function () {
 
           // @TODO: check initial baselayer-handling
           if (this.mapController.data.baselayer && parseInt(uid, 10) === parseInt(this.mapController.data.baselayer, 10)) {
+            // check default from content/module (overrides profile settings)
+            this.showBaseLayer(uid);
+          } else if (this.mapController.data.default_baselayer && parseInt(uid, 10) === parseInt(this.mapController.data.default_baselayer, 10)) {
+            // check default from profile
             this.showBaseLayer(uid);
           }
         }
       }
 
-      if (!this.activeBaselayerId) {
+      if (!this.proxy.activeBaselayerId) {
         // no baselayer was activated
         if (baselayers.length > 0 && baselayers[0].id) {
           // take first baselayer if possible
@@ -6458,9 +6462,9 @@ var Sideboard = exports.Sideboard = function (_ol$control$Control) {
       this.options.mapController.map.on('change:size', this.update, this);
 
       // Show open if desired
-      if (this.options.defaultOpen || this.options.caching && _c4gMapsUtils.utils.getValue(this.options.name) == '1') {
-        this.open();
-      }
+      // if ((this.options.defaultOpen) || (this.options.caching && (utils.getValue(this.options.name) == '1'))) {
+      //   this.open();
+      // }
 
       return true;
     } // end of "create"
@@ -7387,18 +7391,17 @@ var Baselayerswitcher = exports.Baselayerswitcher = function () {
           if (self.proxy.baselayerController.arrBaselayers[itemUid].hasOverlays) {
             for (var _j2 in self.proxy.baselayerController.arrBaselayers[itemUid].overlayController.arrOverlays) {
               if (self.proxy.baselayerController.arrBaselayers[itemUid].overlayController.arrOverlays.hasOwnProperty(_j2)) {
-                self.proxy.options.mapController.map.addLayer(self.proxy.baselayerController.arrBaselayers[itemUid].overlayController.arrOverlays[_j2].layer);
+                var overlay = self.proxy.baselayerController.arrBaselayers[itemUid].overlayController.arrOverlays[_j2];
+                try {
+                  self.proxy.options.mapController.map.addLayer(overlay.layer);
+                } catch (error) {
+                  // layer is already on map
+                  overlay.layer.setOpacity(overlay.opacity);
+                }
               }
             }
           }
           $(this).addClass(_c4gMapsConstant.cssConstants.ACTIVE).removeClass(_c4gMapsConstant.cssConstants.INACTIVE);
-
-          // if(this.nextSibling){
-          //     var children = this.nextSibling.childNodes;
-          //     for(i = 0; i < children.length; i++){
-          //         $(children[i].firstChild).addClass(cssConstants.ACTIVE).removeClass(cssConstants.INACTIVE);
-          //     }
-          // }
           window.c4gMapsHooks.baselayer_changed = window.c4gMapsHooks.baselayer_changed || [];
           _c4gMapsUtils.utils.callHookFunctions(window.c4gMapsHooks.baselayer_changed, itemUid);
         }
@@ -7440,7 +7443,7 @@ var Baselayerswitcher = exports.Baselayerswitcher = function () {
             for (j = 0; j < self.proxy.baselayerController.arrBaselayers[uid].overlays.length; j++) {
               childItem = options.parseAsList ? document.createElement('li') : document.createElement('div');
               childEntry = document.createElement('a');
-              if (self.proxy.activeBaselayerId == uid) {
+              if (self.proxy.activeBaselayerId === uid) {
                 $(childEntry).addClass(_c4gMapsConstant.cssConstants.ACTIVE);
                 var overlayId = self.proxy.baselayerController.arrBaselayers[uid].overlays[j].id;
                 self.proxy.baselayerController.arrBaselayers[uid].overlayController.arrOverlays[overlayId].changeOpacity(self.proxy.baselayerController.arrBaselayers[uid].overlays[j].opacity);
@@ -13830,6 +13833,10 @@ var MapController = exports.MapController = function () {
         mapController: this
       });
       this.map.addControl(this.controls.account);
+      // open if opened before
+      if (mapData.caching && _c4gMapsUtils.utils.getValue(this.controls.account.options.name) === '1') {
+        this.controls.account.open();
+      }
     }
 
     // zoom-controls
@@ -13933,19 +13940,6 @@ var MapController = exports.MapController = function () {
       this.map.addControl(this.controls.fullscreen);
     }
 
-    // editor
-    // if (mapData.editor.enable && typeof Editor === 'function') {
-    //   this.controls.editor = new Editor({
-    //     tipLabel: langConstants.CTRL_EDITOR,
-    //     type: mapData.editor.type || 'frontend',
-    //     target: mapData.editor.target || controlContainerTopLeft,
-    //     initOpen: mapData.editor.open || false,
-    //     dataField: mapData.editor.data_field || false,
-    //     caching: mapData.caching,
-    //     mapController: this
-    //   });
-    //   this.map.addControl(this.controls.editor);
-    // }
     // measuretools
     if (mapData.measuretools.enable && typeof _c4gMapsControlPortsideMeasuretools.Measuretools === 'function') {
       this.controls.measuretools = new _c4gMapsControlPortsideMeasuretools.Measuretools({
@@ -13955,6 +13949,10 @@ var MapController = exports.MapController = function () {
         mapController: this
       });
       this.map.addControl(this.controls.measuretools);
+      // open if opened before
+      if (mapData.caching && _c4gMapsUtils.utils.getValue(this.controls.measuretools.options.name) === '1') {
+        this.controls.measuretools.open();
+      }
     }
     //
     if (mapData.print) {
@@ -13998,6 +13996,10 @@ var MapController = exports.MapController = function () {
         mapController: this
       });
       this.map.addControl(this.controls.infopage);
+      // open if opened before
+      if (mapData.caching && _c4gMapsUtils.utils.getValue(this.controls.infopage.options.name) === '1') {
+        this.controls.infopage.open();
+      }
     }
     // @ToDo mapData.additionalPanel is always true, because it is set as an new object in the beginning. Therefore the second parameter of the boolean is requested, which throws an error
     // additionalPanel is furthermore not found anywhere in Maps and should be loaded over a hook
@@ -14070,6 +14072,10 @@ var MapController = exports.MapController = function () {
         results: mapData.geosearch.results
       });
       this.map.addControl(this.controls.geosearch);
+      // open if opened before
+      // if ((mapData.caching && (utils.getValue(this.controls.geosearch.options.name) === '1'))) {
+      //   this.controls.geosearch.open();
+      // }
     }
 
     // geobookmarks - not ready
@@ -14240,7 +14246,7 @@ var MapController = exports.MapController = function () {
         caching: mapData.caching,
         mapController: this,
         extDiv: mapData.starboard.div,
-        defaultOpen: mapData.starboard.open,
+        // defaultOpen: mapData.starboard.open,
         filter: mapData.starboard.filter,
         button: mapData.starboard.button,
         baselayerSwitcherCreate: mapData.baselayerswitcher.enable,
@@ -14249,6 +14255,11 @@ var MapController = exports.MapController = function () {
         layerSwitcherTitle: mapData.layerswitcher.label
       });
       this.map.addControl(this.controls.starboard);
+
+      // open if opened before
+      if (mapData.starboard.open || mapData.caching && _c4gMapsUtils.utils.getValue(this.controls.starboard.options.name) === '1') {
+        this.controls.starboard.open();
+      }
     }
   }]);
 
@@ -14393,9 +14404,8 @@ var C4gOverlayController = exports.C4gOverlayController = function () {
           console.warn('unsupported provider');
           break;
       }
-      overlayLayer.setOpacity(parseInt(overlayLayerConfig.opacity) / 100);
       this.arrOverlays[overlayId].layer = overlayLayer;
-      this.arrOverlays[overlayId].changeOpacity(this.arrOverlays[overlayId].opacity);
+      this.arrOverlays[overlayId].changeOpacity(parseInt(overlayLayerConfig.opacity) / 100);
       return this.arrOverlays[overlayId].layer;
     }
   }]);

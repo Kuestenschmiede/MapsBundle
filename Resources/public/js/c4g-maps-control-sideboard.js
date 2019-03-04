@@ -255,9 +255,9 @@ export class Sideboard extends ol.control.Control {
     this.options.mapController.map.on('change:size', this.update, this);
 
     // Show open if desired
-    if ((this.options.defaultOpen) || (this.options.caching && (utils.getValue(this.options.name) == '1'))) {
-      this.open();
-    }
+    // if ((this.options.defaultOpen) || (this.options.caching && (utils.getValue(this.options.name) == '1'))) {
+    //   this.open();
+    // }
 
     return true;
   } // end of "create"

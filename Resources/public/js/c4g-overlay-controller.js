@@ -120,9 +120,8 @@ export class C4gOverlayController{
         console.warn('unsupported provider');
         break;
     }
-    overlayLayer.setOpacity(parseInt(overlayLayerConfig.opacity)/100);
     this.arrOverlays[overlayId].layer = overlayLayer;
-    this.arrOverlays[overlayId].changeOpacity(this.arrOverlays[overlayId].opacity);
+    this.arrOverlays[overlayId].changeOpacity(parseInt(overlayLayerConfig.opacity)/100);
     return this.arrOverlays[overlayId].layer
   }
 }

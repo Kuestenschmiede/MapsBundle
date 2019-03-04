@@ -18,6 +18,7 @@ namespace con4gis\MapsBundle\Resources\contao\modules\api;
 use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
 use con4gis\CoreBundle\Resources\contao\classes\HttpResultHelper;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapLocstylesModel;
+use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapTablesModel;
 use con4gis\MapsProjectBundle\Classes\ReplaceInsertTags;
@@ -25,6 +26,7 @@ use Contao\ContentModel;
 use Contao\Controller;
 use Contao\Database;
 use Contao\StringUtil;
+use Contao\System;
 
 if (!defined('TL_ROOT')) die('You cannot access this file directly!');
 
@@ -82,9 +84,11 @@ class LayerContentApi extends \Controller
             // \HttpResultHelper::NotFound();
             return array();
         }
-
+        
         $objProfile = $objLayer->getRelated('profile');
-
+        $profileService = System::getContainer()->get('con4gis.profile_service');
+        $profileId = $profileService->getProfileId($objProfile->id);
+        $objProfile = C4gMapProfilesModel::findByPk($profileId);
         $arrReturnData = array();
 
         switch ($objLayer->location_type) {
