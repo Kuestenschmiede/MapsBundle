@@ -91,128 +91,22 @@ class ResourceLoader extends coreResourceLoader
 
         // third-party scripts
         if ($resources['openlayers']) {
-            parent::loadJavaScriptRessource('openlayers', self::VENDOR_PATH . 'ol-' . $GLOBALS['con4gis']['maps']['ol-version'] . '/ol' . $suffixOl . '.js');
+            parent::loadJavaScriptResource(self::VENDOR_PATH . 'ol-' . $GLOBALS['con4gis']['maps']['ol-version'] . '/ol' . $suffixOl . '.js', self::HEAD, 'openlayers');
         }
 
         if ($resources['cesium']) {
-            parent::loadJavaScriptRessource('cesium', self::VENDOR_PATH . 'ol-cesium-'.$GLOBALS['con4gis']['maps']['ol-cesium-version'].'/Cesium/Cesium.js');
-            parent::loadJavaScriptRessource('olcesium', self::VENDOR_PATH . 'ol-cesium-'.$GLOBALS['con4gis']['maps']['ol-cesium-version'].'/olcesium' . $suffixCesium . '.js');
-            parent::loadCssRessource('olcesium', self::VENDOR_PATH . 'ol-cesium-'.$GLOBALS['con4gis']['maps']['ol-cesium-version'].'/olcs.css');
+            parent::loadJavaScriptResource(self::VENDOR_PATH . 'ol-cesium-'.$GLOBALS['con4gis']['maps']['ol-cesium-version'].'/Cesium/Cesium.js', self::JAVASCRIPT, 'cesium');
+            parent::loadJavaScriptResource(self::VENDOR_PATH . 'ol-cesium-'.$GLOBALS['con4gis']['maps']['ol-cesium-version'].'/olcesium' . $suffixCesium . '.js',self::JAVASCRIPT,  'olcesium');
+            parent::loadCssResourceDeferred(self::VENDOR_PATH . 'ol-cesium-'.$GLOBALS['con4gis']['maps']['ol-cesium-version'].'/olcs.css');
         }
 
         if ($resources['olms']) {
-            parent::loadJavaScriptRessource('olms', "https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL");
-            parent::loadJavaScriptRessource('olms', self::VENDOR_PATH . 'ol-mapbox-style-'.$GLOBALS['con4gis']['maps']['olms-version'].'/olms.js');
+            parent::loadJavaScriptResource("https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL", 'olms');
+            parent::loadJavaScriptResource(self::VENDOR_PATH . 'ol-mapbox-style-'.$GLOBALS['con4gis']['maps']['olms-version'].'/olms.js',self::HEAD,  'olms');
         }
-        parent::loadCssRessource('c4g-maps-general', self::BUNDLE_CSS_PATH . 'c4g-maps-general.css');
-        // core scripts (1|2)
-//        if ($resources['core']) {
-//            // minimum CSS rules in order for maps to work properly
-
-//
-//            // need to be loaded first!
-//            parent::loadJavaScriptRessource('c4g-maps-constant', self::BUNDLE_JS_PATH . 'c4g-maps-constant.js' . $staticOption);
-//
-//            // load language script
-//            if ($GLOBALS['TL_LANGUAGE'] == 'de') {
-//                parent::loadJavaScriptRessource('c4g-maps-constant-i18n', self::BUNDLE_JS_PATH . 'c4g-maps-constant-i18n-de.js' . $staticOption);
-//                parent::loadJavaScriptRessource('c4g-maps-popup-info', self::BUNDLE_JS_PATH . 'c4g-maps-popup-info-de.js' . $staticOption);
-//            }
-//            else if ($GLOBALS['TL_LANGUAGE'] == 'fi') {
-//                parent::loadJavaScriptRessource('c4g-maps-constant-i18n', self::BUNDLE_JS_PATH . 'c4g-maps-constant-i18n-fi.js' . $staticOption);
-//                //ToDo translate this
-//                parent::loadJavaScriptRessource('c4g-maps-popup-info', self::BUNDLE_JS_PATH . 'c4g-maps-popup-info-en.js' . $staticOption);
-//            }
-//            else {
-//                // use english as fallback
-//                parent::loadJavaScriptRessource('c4g-maps-constant-i18n', self::BUNDLE_JS_PATH . 'c4g-maps-constant-i18n-en.js' . $staticOption);
-//                parent::loadJavaScriptRessource('c4g-maps-popup-info', self::BUNDLE_JS_PATH . 'c4g-maps-popup-info-en.js' . $staticOption);
-//            }
-//
-//            // configuration-, utility-, core- and miscellaneous-scripts
-//            parent::loadJavaScriptRessource('c4g-maps-config', self::BUNDLE_JS_PATH . 'c4g-maps-config.js' . $staticOption);
-//            parent::loadJavaScriptRessource('c4g-maps-proxy', self::BUNDLE_JS_PATH . 'c4g-maps-proxy.js' . $staticOption);
-//            parent::loadJavaScriptRessource('c4g-maps-utils', self::BUNDLE_JS_PATH . 'c4g-maps-utils.js' . $staticOption);
-//            parent::loadJavaScriptRessource('c4g-maps-misc-maphover', self::BUNDLE_JS_PATH . 'c4g-maps-misc-maphover.js' . $staticOption);
-//            parent::loadJavaScriptRessource('c4g-maps-misc-spinner', self::BUNDLE_JS_PATH . 'c4g-maps-misc-spinner.js' . $staticOption);
-//            parent::loadJavaScriptRessource('c4g-maps-misc-tooltippopup', self::BUNDLE_JS_PATH . 'c4g-maps-misc-tooltippopup.js' . $staticOption);
-//            parent::loadJavaScriptRessource('c4g-layer', self::BUNDLE_JS_PATH . 'c4g-layer.js' . $staticOption);
-//            parent::loadJavaScriptRessource('c4g-layer-controller', self::BUNDLE_JS_PATH . 'c4g-layer-controller.js' . $staticOption);
-//            parent::loadJavaScriptRessource('c4g-baselayer', self::BUNDLE_JS_PATH . 'c4g-baselayer.js' . $staticOption);
-//            parent::loadJavaScriptRessource('c4g-baselayer-controller', self::BUNDLE_JS_PATH . 'c4g-baselayer-controller.js' . $staticOption);
-//            parent::loadJavaScriptRessource('c4g-overlay', self::BUNDLE_JS_PATH . 'c4g-overlay.js' . $staticOption);
-//            parent::loadJavaScriptRessource('c4g-overlay-controller', self::BUNDLE_JS_PATH . 'c4g-overlay-controller.js' . $staticOption);
-//            parent::loadJavaScriptRessource('c4g-locationstyle', self::BUNDLE_JS_PATH . 'c4g-locationstyle.js' . $staticOption);
-//            parent::loadJavaScriptRessource('c4g-locationstyle-controller', self::BUNDLE_JS_PATH . 'c4g-locationstyle-controller.js' . $staticOption);
-//        }
-        // experimental panel loading
-
-//        $GLOBALS['TL_JAVASCRIPT']['c4g-maps-misc-panelbutton'] = 'bundles/con4gismaps/js/c4g-maps-misc-panelbutton.js';
-//        $GLOBALS['TL_JAVASCRIPT']['c4g-maps-control-panel'] = 'bundles/con4gismaps/js/c4g-maps-control-panel.js';
-        // end experimental panel loading
-
-
-        // optional scripts
-//        if ($resources['geopicker']) {
-//            parent::loadJavaScriptRessource('c4g-maps-interaction-geopicker', self::BUNDLE_JS_PATH . 'c4g-maps-interaction-geopicker.js' . $staticOption);
-//        }
-//        if ($resources['grid']) {
-//            parent::loadJavaScriptRessource('c4g-maps-control-grid', self::BUNDLE_JS_PATH . 'c4g-maps-control-grid.js' . $staticOption);
-//        }
-//        if ($resources['home']) {
-//            parent::loadJavaScriptRessource('c4g-maps-control-home', self::BUNDLE_JS_PATH . 'c4g-maps-control-home.js' . $staticOption);
-//        }
-//        if ($resources['position']) {
-//            parent::loadJavaScriptRessource('c4g-maps-control-position', self::BUNDLE_JS_PATH . 'c4g-maps-control-position.js' . $staticOption);
-//        }
-//        if ($resources['permalink']) {
-//            parent::loadJavaScriptRessource('c4g-maps-control-permalink', self::BUNDLE_JS_PATH . 'c4g-maps-control-permalink.js' . $staticOption);
-//        }
-//        if ($resources['zoomlevel']) {
-//            parent::loadJavaScriptRessource('c4g-maps-control-zoomlevel', self::BUNDLE_JS_PATH . 'c4g-maps-control-zoomlevel.js' . $staticOption);
-//        }
-//        if ($resources['geosearch']) {
-//            parent::loadJavaScriptRessource('c4g-maps-control-geosearch', self::BUNDLE_JS_PATH . 'c4g-maps-control-geosearch.js' . $staticOption);
-//        }
-//        if ($resources['overviewmap']) {
-//            parent::loadJavaScriptRessource('c4g-maps-control-overviewmap', self::BUNDLE_JS_PATH . 'c4g-maps-control-overviewmap.js' . $staticOption);
-//        }
-//        parent::loadJavaScriptRessource('c4g-maps-control-print', self::BUNDLE_JS_PATH . 'c4g-maps-control-print.js' . $staticOption);
-//
-//        if ($resources['baselayerswitcher']) {
-//            parent::loadJavaScriptRessource('c4g-maps-control-starboardplugin-baselayerswitcher', self::BUNDLE_JS_PATH . 'c4g-maps-control-starboardplugin-baselayerswitcher.js' . $staticOption);
-//        }
-//        if ($resources['layerswitcher']) {
-//            parent::loadJavaScriptRessource('c4g-maps-control-starboardplugin-layerswitcher', self::BUNDLE_JS_PATH . 'c4g-maps-control-starboardplugin-layerswitcher.js' . $staticOption);
-//        }
-//        if ($resources['starboard'] || $resources['router'] || $resources['editor'] || $resources['measuretools']) {
-//            parent::loadJavaScriptRessource('c4g-maps-control-sideboard', self::BUNDLE_JS_PATH . 'c4g-maps-control-sideboard.js' . $staticOption);
-//
-//            if ($resources['starboard']) {
-//                parent::loadJavaScriptRessource('c4g-maps-control-starboard', self::BUNDLE_JS_PATH . 'c4g-maps-control-starboard.js' . $staticOption);
-//                if ($resources['customtab']) {
-//                    parent::loadJavaScriptRessource('c4g-maps-control-starboardplugin-customtab', self::BUNDLE_JS_PATH . 'c4g-maps-control-starboardplugin-customtab.js' . $staticOption);
-//                }
-//            }
-////            if ($resources['router']) {
-////                parent::loadJavaScriptRessource('c4g-maps-control-portside-router', self::BUNDLE_JS_PATH . 'c4g-maps-control-portside-router.js' . $staticOption);
-////            }
-////            if ($resources['editor']) {
-////                parent::loadJavaScriptRessource('c4g-maps-control-portside-editor', self::BUNDLE_JS_PATH . 'c4g-backend-editor.js' . $staticOption);
-////            }
-////            if ($resources['measuretools']) {
-////                parent::loadJavaScriptRessource('c4g-maps-control-portside-measuretools', self::BUNDLE_JS_PATH . 'c4g-maps-control-portside-measuretools.js' . $staticOption);
-////            }
-////            if ($resources['infopage']) {
-////                parent::loadJavaScriptRessource('c4g-maps-control-portside-infopage', self::BUNDLE_JS_PATH . 'c4g-maps-control-portside-infopage.js' . $staticOption);
-////            }
-////            if ($resources['account'] > 0) {
-////                parent::loadJavaScriptRessource('c4g-maps-control-portside-account', self::BUNDLE_JS_PATH . 'c4g-maps-control-portside-account.js' . $staticOption);
-////            }
-//        }
-
-        parent::loadJavaScriptRessource('ol-ext', self::VENDOR_PATH .'ol-ext-'.$GLOBALS['con4gis']['maps']['ol-ext'] .'/ol-ext.min.js' . $staticOption);
-        parent::loadCssRessource('ol-ext', self::VENDOR_PATH .'ol-ext-'.$GLOBALS['con4gis']['maps']['ol-ext'] .'/ol-ext.min.css' . $staticOption);
+        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'c4g-maps-general.css');
+        parent::loadJavaScriptResource(self::VENDOR_PATH .'ol-ext-'.$GLOBALS['con4gis']['maps']['ol-ext'] .'/ol-ext.min.js' . $staticOption,self::HEAD,'ol-ext');
+        parent::loadCssResourceDeferred(self::VENDOR_PATH .'ol-ext-'.$GLOBALS['con4gis']['maps']['ol-ext'] .'/ol-ext.min.css' . $staticOption);
 
         // load plugins
         if ($resources['plugins']) {
@@ -239,11 +133,6 @@ class ResourceLoader extends coreResourceLoader
             // and needs (nearly) all of the above scripts
             parent::loadJavaScriptDeferred('c4g-maps', self::BUNDLE_JS_PATH . 'c4g-maps.js' . $staticOption);
         }
-
-        //ToDo bundle path and tracking bundle
-//        if ( $GLOBALS['con4gis']['projects']['installed'] &&  $GLOBALS['con4gis']['tracking']['installed']) {
-//            parent::loadJavaScriptRessource('live-positions', 'bundles/con4gisprojects/js/C4GBrickLivePositions.js');
-//        }
 
         return true;
     }
@@ -332,16 +221,17 @@ class ResourceLoader extends coreResourceLoader
      */
     public static function loadTheme($themeId = -1)
     {
+        // TODO defer CSS scripts?
         if ($themeId != -1) {
           $theme = C4gMapThemesModel::findByPk($themeId);
         }
 
         if (!$theme) {
             // load default theme
-            parent::loadCssRessource('c4g-maps-icons', self::BUNDLE_CSS_PATH . 'themes/icons/c4g-theme-icons.css');
-            parent::loadCssRessource('c4g-maps-buttons', self::BUNDLE_CSS_PATH . 'themes/buttons/c4g-theme-buttons.css');
-            parent::loadCssRessource('c4g-maps-colors', self::BUNDLE_CSS_PATH . 'themes/colors/c4g-theme-colors.css');
-            parent::loadCssRessource('c4g-maps-effects', self::BUNDLE_CSS_PATH . 'themes/effects/c4g-theme-effects.css');
+            parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/icons/c4g-theme-icons.css');
+            parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/buttons/c4g-theme-buttons.css');
+            parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/colors/c4g-theme-colors.css');
+            parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/effects/c4g-theme-effects.css');
             return true;
         }
 
@@ -352,16 +242,16 @@ class ResourceLoader extends coreResourceLoader
          */
         if ($theme->custom_icons) {
             $objFile = \FilesModel::findByUuid($theme->external_icons);
-            parent::loadCssRessource('c4g-maps-icons', $objFile->path);
+            parent::loadCssResource($objFile->path);
         } else if ($theme->icons) {
-            parent::loadCssRessource('c4g-maps-icons', self::BUNDLE_CSS_PATH . 'themes/icons/' . $theme->icons);
+            parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/icons/' . $theme->icons);
         }
 
         if ($theme->custom_buttons) {
             $objFile = \FilesModel::findByUuid($theme->external_buttons);
-            parent::loadCssRessource('c4g-maps-buttons', $objFile->path);
+            parent::loadCssResource($objFile->path);
         } else if ($theme->buttons) {
-            parent::loadCssRessource('c4g-maps-buttons', self::BUNDLE_CSS_PATH . 'themes/buttons/' . $theme->buttons);
+            parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/buttons/' . $theme->buttons);
 
             if ($theme->buttonradius) {
                 $themeData['buttonradius'] = deserialize($theme->buttonradius)['value'];
@@ -370,9 +260,9 @@ class ResourceLoader extends coreResourceLoader
 
         if ($theme->custom_colors) {
             $objFile = \FilesModel::findByUuid($theme->external_colors);
-            parent::loadCssRessource('c4g-maps-colors', $objFile->path);
+            parent::loadCssResource($objFile->path);
         } else if ($theme->colors) {
-            parent::loadCssRessource('c4g-maps-colors', self::BUNDLE_CSS_PATH . 'themes/colors/' . $theme->colors);
+            parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/colors/' . $theme->colors);
 
             if ($theme->maincolor) {
                 $themeData['maincolor'] = $theme->maincolor;
@@ -398,9 +288,9 @@ class ResourceLoader extends coreResourceLoader
 
         if ($theme->custom_effects) {
             $objFile = \FilesModel::findByUuid($theme->external_effects);
-            parent::loadCssRessource('c4g-maps-effects', $objFile->path);
+            parent::loadCssResource($objFile->path);
         } else if ($theme->effects) {
-            parent::loadCssRessource('c4g-maps-effects', self::BUNDLE_CSS_PATH . 'themes/effects/' . $theme->effects);
+            parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/effects/' . $theme->effects);
         }
 
         return $themeData;
