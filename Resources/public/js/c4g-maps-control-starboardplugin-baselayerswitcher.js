@@ -121,7 +121,7 @@ export class Baselayerswitcher {
       self.initialized = true;
       self.starboard.spinner.hide();
       self.starboard.update();
-    } // end of "fnDrawContent()"
+    }; // end of "fnDrawContent()"
 
     if (this.proxy.baselayers_loaded) {
       fnDrawContent(this.proxy.baselayerController.baselayerIds);
@@ -214,18 +214,18 @@ export class Baselayerswitcher {
         if (self.proxy.baselayerController.arrBaselayers[itemUid].hasOverlays) {
           for (let j in self.proxy.baselayerController.arrBaselayers[itemUid].overlayController.arrOverlays) {
             if (self.proxy.baselayerController.arrBaselayers[itemUid].overlayController.arrOverlays.hasOwnProperty(j)) {
-              self.proxy.options.mapController.map.addLayer(self.proxy.baselayerController.arrBaselayers[itemUid].overlayController.arrOverlays[j].layer);
+              let overlay = self.proxy.baselayerController.arrBaselayers[itemUid].overlayController.arrOverlays[j];
+              try {
+                self.proxy.options.mapController.map.addLayer(overlay.layer);
+              } catch(error) {
+                // layer is already on map
+                overlay.layer.setOpacity(overlay.opacity);
+              }
+
             }
           }
         }
         $(this).addClass(cssConstants.ACTIVE).removeClass(cssConstants.INACTIVE);
-
-        // if(this.nextSibling){
-        //     var children = this.nextSibling.childNodes;
-        //     for(i = 0; i < children.length; i++){
-        //         $(children[i].firstChild).addClass(cssConstants.ACTIVE).removeClass(cssConstants.INACTIVE);
-        //     }
-        // }
         window.c4gMapsHooks.baselayer_changed = window.c4gMapsHooks.baselayer_changed || [];
         utils.callHookFunctions(window.c4gMapsHooks.baselayer_changed, itemUid);
       }
@@ -269,7 +269,7 @@ export class Baselayerswitcher {
           for (j = 0; j < self.proxy.baselayerController.arrBaselayers[uid].overlays.length; j++) {
             childItem = options.parseAsList ? document.createElement('li') : document.createElement('div');
             childEntry = document.createElement('a');
-            if (self.proxy.activeBaselayerId == uid) {
+            if (self.proxy.activeBaselayerId === uid) {
               $(childEntry).addClass(cssConstants.ACTIVE);
               let overlayId = self.proxy.baselayerController.arrBaselayers[uid].overlays[j].id;
               self.proxy.baselayerController.arrBaselayers[uid].overlayController.arrOverlays[overlayId].changeOpacity(self.proxy.baselayerController.arrBaselayers[uid].overlays[j].opacity);
@@ -289,7 +289,7 @@ export class Baselayerswitcher {
             toggle.setAttribute('value', self.proxy.baselayerController.arrBaselayers[uid].overlays[j].opacity);
             toggle.setAttribute('steps', 10);
             $(toggle).on('input', function (event) {
-              self.proxy.baselayerController.arrBaselayers[$(this).parent().data('pid')].overlayController.arrOverlays[$(this).parent().data('id')].changeOpacity(this.value)
+              self.proxy.baselayerController.arrBaselayers[$(this).parent().data('pid')].overlayController.arrOverlays[$(this).parent().data('id')].changeOpacity(this.value);
             });
 
 

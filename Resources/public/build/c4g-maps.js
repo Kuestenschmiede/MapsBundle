@@ -185,12 +185,16 @@ var C4gBaselayerController = exports.C4gBaselayerController = function () {
 
           // @TODO: check initial baselayer-handling
           if (this.mapController.data.baselayer && parseInt(uid, 10) === parseInt(this.mapController.data.baselayer, 10)) {
+            // check default from content/module (overrides profile settings)
+            this.showBaseLayer(uid);
+          } else if (this.mapController.data.default_baselayer && parseInt(uid, 10) === parseInt(this.mapController.data.default_baselayer, 10)) {
+            // check default from profile
             this.showBaseLayer(uid);
           }
         }
       }
 
-      if (!this.activeBaselayerId) {
+      if (!this.proxy.activeBaselayerId) {
         // no baselayer was activated
         if (baselayers.length > 0 && baselayers[0].id) {
           // take first baselayer if possible
@@ -7387,18 +7391,17 @@ var Baselayerswitcher = exports.Baselayerswitcher = function () {
           if (self.proxy.baselayerController.arrBaselayers[itemUid].hasOverlays) {
             for (var _j2 in self.proxy.baselayerController.arrBaselayers[itemUid].overlayController.arrOverlays) {
               if (self.proxy.baselayerController.arrBaselayers[itemUid].overlayController.arrOverlays.hasOwnProperty(_j2)) {
-                self.proxy.options.mapController.map.addLayer(self.proxy.baselayerController.arrBaselayers[itemUid].overlayController.arrOverlays[_j2].layer);
+                var overlay = self.proxy.baselayerController.arrBaselayers[itemUid].overlayController.arrOverlays[_j2];
+                try {
+                  self.proxy.options.mapController.map.addLayer(overlay.layer);
+                } catch (error) {
+                  // layer is already on map
+                  overlay.layer.setOpacity(overlay.opacity);
+                }
               }
             }
           }
           $(this).addClass(_c4gMapsConstant.cssConstants.ACTIVE).removeClass(_c4gMapsConstant.cssConstants.INACTIVE);
-
-          // if(this.nextSibling){
-          //     var children = this.nextSibling.childNodes;
-          //     for(i = 0; i < children.length; i++){
-          //         $(children[i].firstChild).addClass(cssConstants.ACTIVE).removeClass(cssConstants.INACTIVE);
-          //     }
-          // }
           window.c4gMapsHooks.baselayer_changed = window.c4gMapsHooks.baselayer_changed || [];
           _c4gMapsUtils.utils.callHookFunctions(window.c4gMapsHooks.baselayer_changed, itemUid);
         }
@@ -7440,7 +7443,7 @@ var Baselayerswitcher = exports.Baselayerswitcher = function () {
             for (j = 0; j < self.proxy.baselayerController.arrBaselayers[uid].overlays.length; j++) {
               childItem = options.parseAsList ? document.createElement('li') : document.createElement('div');
               childEntry = document.createElement('a');
-              if (self.proxy.activeBaselayerId == uid) {
+              if (self.proxy.activeBaselayerId === uid) {
                 $(childEntry).addClass(_c4gMapsConstant.cssConstants.ACTIVE);
                 var overlayId = self.proxy.baselayerController.arrBaselayers[uid].overlays[j].id;
                 self.proxy.baselayerController.arrBaselayers[uid].overlayController.arrOverlays[overlayId].changeOpacity(self.proxy.baselayerController.arrBaselayers[uid].overlays[j].opacity);
@@ -14401,9 +14404,8 @@ var C4gOverlayController = exports.C4gOverlayController = function () {
           console.warn('unsupported provider');
           break;
       }
-      overlayLayer.setOpacity(parseInt(overlayLayerConfig.opacity) / 100);
       this.arrOverlays[overlayId].layer = overlayLayer;
-      this.arrOverlays[overlayId].changeOpacity(this.arrOverlays[overlayId].opacity);
+      this.arrOverlays[overlayId].changeOpacity(parseInt(overlayLayerConfig.opacity) / 100);
       return this.arrOverlays[overlayId].layer;
     }
   }]);

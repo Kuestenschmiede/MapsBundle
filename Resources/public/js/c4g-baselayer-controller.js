@@ -75,13 +75,17 @@ export class C4gBaselayerController {
 
         // @TODO: check initial baselayer-handling
         if (this.mapController.data.baselayer && parseInt(uid, 10) === parseInt(this.mapController.data.baselayer, 10)) {
+          // check default from content/module (overrides profile settings)
+          this.showBaseLayer(uid);
+        } else if (this.mapController.data.default_baselayer && parseInt(uid, 10) === parseInt(this.mapController.data.default_baselayer, 10)) {
+          // check default from profile
           this.showBaseLayer(uid);
         }
 
       }
     }
 
-    if (!this.activeBaselayerId) {
+    if (!this.proxy.activeBaselayerId) {
       // no baselayer was activated
       if (baselayers.length > 0 && baselayers[0].id) {
         // take first baselayer if possible
