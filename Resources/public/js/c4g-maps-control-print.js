@@ -59,7 +59,7 @@ export class Print extends ol.control.Control {
       // button
       button = document.createElement('button');
       button.title = options.tipLabel;
-      button.className = cssConstants.PRINT
+      button.className = cssConstants.PRINT;
       element.appendChild(button);
 
       // set onClick to the toggle-function
