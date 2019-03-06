@@ -106,8 +106,7 @@ class LayerContentApi extends \Controller
                     "data" => $arrGeoJsonData,
                     "loc_linkurl" => $this->replaceInsertTags($objLayer->loc_linkurl),
                     "hover_location" => $objLayer->hover_location,
-                    "hover_style" => $objLayer->hover_style,
-                    "testitest" => "LOOOL"
+                    "hover_style" => $objLayer->hover_style
                 );
 
                 break;
