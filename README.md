@@ -1,47 +1,27 @@
-con4gis-Maps
-============
+#con4gis-MapsBundle
+
+## Overview
 The interactive maps brick of the Contao GIS-kit **con4gis**.
 
-**Git Repository:** MapsBundle  
-**Composer Vendor/Package:** [con4gis/maps](https://packagist.org/packages/con4gis/maps)  
-**Website:** [maps.con4gis.org](https://maps.con4gis.org)
+The con4gis MapsBundle allows you to integrate maps into your application. There 
+are many options for the look & feel of the map, as well as additional controls such as 
+zoom controls, scalelines and many more. You can also integrate geospatial data from many different sources.
 
-**Contains:**
-- [OpenLayers 5.x] (https://github.com/openlayers/openlayers)
-
-**Requires:**
-- [Contao](https://github.com/contao/core) (***4.4.x***)   
-For Contao 3 you can use [con4igs_maps3](https://github.com/Kuestenschmiede/con4gis_maps3/releases) Extension.
-- [CoreBundle](https://github.com/Kuestenschmiede/CoreBundle/releases) (*latest stable release*)
-
-**Extendable:**
-- [ForumBundle](https://github.com/Kuestenschmiede/ForumBundle/releases) (*latest stable release*)
-- [ProjectsBundle](https://github.com/Kuestenschmiede/ProjectsBundle/releases) (*latest stable release*)
-- [TrackingBundle](https://github.com/Kuestenschmiede/TrackingBundle/releases) (*latest stable release*)
-- [RoutingBundle](https://github.com/Kuestenschmiede/RoutingBundle/releases) (*latest stable release*)
-  
-**And with all other con4gis and Contao bundles**  
-con4gis is not a connectable application. It's a collection of content 
-elements for your website. So you can build your own individual and limitless web applications.
-
-implemented features
-----------------
-- place map on a Page via *CE* or *MOD*
-- define map-size and -margin
-- configurate ***Basemaps***:
-    - OSM
-        - Mapnik (*default*)
-        - CycleMap
-        - German
-        - GermanTransport
-        - LandscapeMap
-        - TransportMap
-        - Stamen (Toner, Terrain & Watercolor)
-        - MapBox (Studio & Classic Styles)
-        - HERE (6 Styles)
-        - Thunderforest (9 Styles)
-        - Klokan Technologies (OpenMapTiles & 8 MapTiler Styles)
-        - Custom
+__Main features include:__
+* Add a map as content element or frontend module
+* Configure baselayer 
+    - Mapnik (*default*)
+    - CycleMap
+    - German
+    - GermanTransport
+    - LandscapeMap
+    - TransportMap
+    - Stamen (Toner, Terrain & Watercolor)
+    - MapBox (Studio & Classic Styles)
+    - HERE (6 Styles)
+    - Thunderforest (9 Styles)
+    - Klokan Technologies (OpenMapTiles & 8 MapTiler Styles)
+    - Custom
     - Bing (3 Styles)
     - other
         - WMS
@@ -65,22 +45,19 @@ implemented features
     - cesium view
 - configurate ***Controls***:
     - Starboard
-        - BaselayerSwitcher
-        - LayerSwitcher
+        - baselayer switcher
+        - layer switcher
         - define your own tabs to structure your content even better
         - switchable filter field
         - switchable select all button
         - optional structure tabs
-    - Portside
-        - Router (OSRM API 4+5, OpenRouteService) [requires RoutingBundle]
-        - Editor (waypoints, ways, areas, circles, freehand)
-        - Measuretools (ways, areas, radius, freehand)
+    - Portside measuretools (ways, areas, radius, freehand)
     - Attribution
     - Export map
     - Simple favorites (localstorage)
     - Fullscreen
     - GeoSearch
-        - jumps to automaticly first result
+        - jumps automatically to first result 
         - optional result selection
         - limit search with specific search parameters
     - GeoPicker
@@ -105,7 +82,35 @@ implemented features
     - OSM files
     - OSM requests (Overpass API (XML and QL))
     - build structure from directory
-    - ... 
-- configurate ***Themes***:
-    - default theme (sample)
-    - BE themes manager (own CSS styling)
+    
+- configurate ***Layouts***:
+    - default layout (sample)
+    - BE layout manager (custom CSS styling) 
+
+**Extendable:**
+- [RoutingBundle](https://github.com/Kuestenschmiede/RoutingBundle/releases) (*latest stable release*)
+- [EditorBundle](https://github.com/Kuestenschmiede/EditorBundle/releases) (*latest stable release*)
+  
+**And with all other con4gis and Contao bundles**  
+con4gis is not a connectable application. It's a collection of content 
+elements for your website. So you can build your own individual and limitless web applications.
+
+
+**Contains:**
+- [OpenLayers 5.x] (https://github.com/openlayers/openlayers)
+
+## Installation
+Via composer:
+```
+composer require con4gis/maps
+```
+Alternatively, you can use the Contao Manager to install the con4gis-MapsBundle.
+
+##Requirements:
+- [Contao](https://github.com/contao/core-bundle) (***4.4.x***)
+For Contao 3 you can use [con4gis_maps3](https://github.com/Kuestenschmiede/con4gis_maps3/releases) Extension.
+- [CoreBundle](https://github.com/Kuestenschmiede/CoreBundle/releases) (*latest stable release*)
+
+## Documentation
+Visit [docs.con4gis.org](https://docs.con4gis.org) for a user documentation. You can also contact us via the support forum there.
+
