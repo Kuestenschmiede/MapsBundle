@@ -1,26 +1,16 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: cro
- * Date: 15.09.17
- * Time: 11:38
- */
-
-namespace con4gis\MapsBundle\Controller;
-
-
 /*
-  * This file is part of con4gis,
-  * the gis-kit for Contao CMS.
-  *
-  * @package   	con4gis
-  * @version    6
-  * @author  	con4gis contributors (see "authors.txt")
-  * @license 	LGPL-3.0-or-later
-  * @copyright 	Küstenschmiede GmbH Software & Design
-  * @link       https://www.con4gis.org
-  */
-
+ * This file is part of con4gis,
+ * the gis-kit for Contao CMS.
+ *
+ * @package    con4gis
+ * @version    6
+ * @author     con4gis contributors (see "authors.txt")
+ * @license    LGPL-3.0-or-later
+ * @copyright  Küstenschmiede GmbH Software & Design
+ * @link       https://www.con4gis.org
+ */
+namespace con4gis\MapsBundle\Controller;
 
 use con4gis\CoreBundle\Controller\BaseController;
 use con4gis\MapsBundle\Classes\Caches\C4GLayerApiCache;

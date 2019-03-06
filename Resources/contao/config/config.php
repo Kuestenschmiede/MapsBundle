@@ -1,23 +1,21 @@
 <?php
-
 /*
-  * This file is part of con4gis,
-  * the gis-kit for Contao CMS.
-  *
-  * @package   	con4gis
-  * @version    6
-  * @author  	con4gis contributors (see "authors.txt")
-  * @license 	LGPL-3.0-or-later
-  * @copyright 	Küstenschmiede GmbH Software & Design
-  * @link       https://www.con4gis.org
-  */
-
+ * This file is part of con4gis,
+ * the gis-kit for Contao CMS.
+ *
+ * @package    con4gis
+ * @version    6
+ * @author     con4gis contributors (see "authors.txt")
+ * @license    LGPL-3.0-or-later
+ * @copyright  Küstenschmiede GmbH Software & Design
+ * @link       https://www.con4gis.org
+ */
 
 $GLOBALS['con4gis']['maps']['installed'] = true;
 $GLOBALS['con4gis']['maps']['ol-version'] = 'v5.3.0';
 $GLOBALS['con4gis']['maps']['ol-cesium-version'] = 'v2.5.0';
 $GLOBALS['con4gis']['maps']['olms-version'] = 'v4.0.0';
-$GLOBALS['con4gis']['maps']['ol-ext'] = 'v3.1.1';
+$GLOBALS['con4gis']['maps']['ol-ext'] = 'v3.1.2';
 
 /**
  * Backend Modules

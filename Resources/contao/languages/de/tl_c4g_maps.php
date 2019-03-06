@@ -1,16 +1,15 @@
 <?php
-
 /*
-  * This file is part of con4gis,
-  * the gis-kit for Contao CMS.
-  *
-  * @package   	con4gis
-  * @version    6
-  * @author  	con4gis contributors (see "authors.txt")
-  * @license 	LGPL-3.0-or-later
-  * @copyright 	Küstenschmiede GmbH Software & Design
-  * @link       https://www.con4gis.org
-  */
+ * This file is part of con4gis,
+ * the gis-kit for Contao CMS.
+ *
+ * @package    con4gis
+ * @version    6
+ * @author     con4gis contributors (see "authors.txt")
+ * @license    LGPL-3.0-or-later
+ * @copyright  Küstenschmiede GmbH Software & Design
+ * @link       https://www.con4gis.org
+ */
 
 /**
  * Fields
@@ -60,7 +59,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_onclick_zoomto'] = array('Zoomen bei Mau
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_minzoom'] = array('Mindest-Zoomstufe', 'Geben Sie die Zoomstufe ein, ab der die Elemente des Karteneintrags angezeigt werden. 0=keine Einschränkung.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_maxzoom'] = array('Maximale Zoomstufe', 'Geben Sie die Zoomstufe ein, bis zu der die Elemente des Karteneintrags angezeigt werden. 0=keine Einschränkung.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['async_content'] = array('Lokationen asynchron nachladen', 'Einfache Lokationen werden asynchron nachgeladen, um die initiale Performance zu verbessern.');
-$GLOBALS['TL_LANG']['tl_c4g_maps']['tab_source'] = array('Quelltabelle', 'Wählen Sie die Quelltabelle aus, aus der die anzuzeigenden Lokationen geladen werden. Sie können eigene Tabellen hinzuprogrammieren, siehe CONFIG.PHP.');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['tab_source'] = array('Quelltabelle', 'Wählen Sie die Quelltabelle aus, aus der die anzuzeigenden Lokationen geladen werden. Sie können eigene Tabellen über das Modul Datenanbindung hinzubringen.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['tab_pid']  = array('Eintrag aus Elterntabelle (optional)', 'Falls eine Elterntabelle vorhanden ist, wählen Sie hier den Eintrag der Elterntabelle aus, auf den die Auswahl eingeschränkt werden soll.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['tab_pid1'] = array('Zweiter Eintrag aus Elterntabelle (optional)', 'Falls eine Elterntabelle vorhanden ist, wählen Sie hier den Eintrag der Elterntabelle aus, auf den die Auswahl eingeschränkt werden soll.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['tab_labeldisplay'] = array('Anzeige von Labels', 'Geben Sie hier an, ob das Label angezeigt werden soll, und wie das Label zusammengesetzt sein soll, wenn in der Tabelle mehrere Datensätze für die gleichen Koordinaten gefunden werden.');
