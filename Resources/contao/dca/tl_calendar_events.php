@@ -1,20 +1,18 @@
 <?php if (!defined('TL_ROOT')) die('You can not access this file directly!');
-
+/*
+ * This file is part of con4gis,
+ * the gis-kit for Contao CMS.
+ *
+ * @package    con4gis
+ * @version    6
+ * @author     con4gis contributors (see "authors.txt")
+ * @license    LGPL-3.0-or-later
+ * @copyright  Küstenschmiede GmbH Software & Design
+ * @link       https://www.con4gis.org
+ */
 use \con4gis\MapsBundle\Resources\contao\classes\GeoPicker;
 use con4gis\MapsBundle\Resources\contao\classes\Utils;
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
-
-/*
-  * This file is part of con4gis,
-  * the gis-kit for Contao CMS.
-  *
-  * @package   	con4gis
-  * @version    6
-  * @author  	con4gis contributors (see "authors.txt")
-  * @license 	LGPL-3.0-or-later
-  * @copyright 	Küstenschmiede GmbH Software & Design
-  * @link       https://www.con4gis.org
-  */
 
 if (@class_exists("tl_calendar_events")) {
 
