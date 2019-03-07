@@ -40,6 +40,7 @@ export class C4gLayerController{
       self.proxy.checkLocationStyles({
         done: function () {
           self.drawLayerInitial();
+          utils.callHookFunctions(window.c4gMapsHooks.proxy_layer_drawn, {layerIds: self.proxy.layerIds, proxy: self.proxy});
         }
       });
       return true;

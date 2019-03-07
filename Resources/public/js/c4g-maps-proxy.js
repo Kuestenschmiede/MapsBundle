@@ -45,6 +45,7 @@ export class MapProxy {
     // add global hook for accessibility when there is no proxy reference
     window.c4gMapsHooks = window.c4gMapsHooks || {};
     window.c4gMapsHooks.proxy_layer_loaded = window.c4gMapsHooks.proxy_layer_loaded || [];
+    window.c4gMapsHooks.proxy_layer_drawn = window.c4gMapsHooks.proxy_layer_drawn || [];
     window.c4gMapsHooks.proxy_baselayer_loaded = window.c4gMapsHooks.proxy_baselayer_loaded || [];
 
     this.baselayerIds = [];
