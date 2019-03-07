@@ -14,12 +14,13 @@
 /**
  * Back end modules
  */
-$GLOBALS['TL_LANG']['MOD']['c4g_maps'] 					= ['Kartenstrukturen', 'Karten von con4gis-Maps in Kartenstrukturen verwalten.'];
+$GLOBALS['TL_LANG']['MOD']['c4g_maps'] 					= ['Kartenstruktur', 'Karten von con4gis-Maps in Kartenstrukturen verwalten.'];
 $GLOBALS['TL_LANG']['MOD']['c4g_map_baselayers'] 		= ['Basiskarten', 'Basiskarten von con4gis-Maps verwalten.'];
 $GLOBALS['TL_LANG']['MOD']['c4g_map_locstyles'] 		= ['Lokationsstile', 'Lokationsstile von con4gis-Maps verwalten.'];
 $GLOBALS['TL_LANG']['MOD']['c4g_map_profiles'] 			= ['Kartenprofile', 'Kartenprofile von con4gis-Maps verwalten.'];
 $GLOBALS['TL_LANG']['MOD']['c4g_map_themes']            = ['Kartenlayout', 'Das Layout der Karte anpassen.'];
-$GLOBALS['TL_LANG']['MOD']['c4g_map_tables']            = ['Datenanbindung', 'Eigene Datenanbindungen anpassen.'];
+$GLOBALS['TL_LANG']['MOD']['c4g_map_tables']            = ['Kartenstruktur: Datenanbindung', 'Eigene Datenanbindungen anpassen.'];
+$GLOBALS['TL_LANG']['MOD']['con4gis_maps']              = ['con4gis '.$GLOBALS['con4gis']['version'] . ' - Kartentechnik', 'con4gis Kartentechnik-Module.'];
 
 /**
  * Frontend modules

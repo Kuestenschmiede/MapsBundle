@@ -20,6 +20,7 @@ $GLOBALS['TL_LANG']['MOD']['c4g_map_locstyles'] 	= ['Location styles', 'Maintain
 $GLOBALS['TL_LANG']['MOD']['c4g_map_profiles'] 		= ['Profiles', 'Maintain con4gis-Maps map profiles.'];
 $GLOBALS['TL_LANG']['MOD']['c4g_map_themes'] 		= ['Layouts', 'Maintain con4gis-Maps map layouts.'];
 $GLOBALS['TL_LANG']['MOD']['c4g_map_tables']        = ['Data connection', 'Enable custom data connections'];
+$GLOBALS['TL_LANG']['MOD']['con4gis_maps']              = ['con4gis '.$GLOBALS['con4gis']['version'] . ' - Mapping tools', 'con4gis Map modules.'];
 
 /**
  * Frontend modules
