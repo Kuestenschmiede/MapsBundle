@@ -90,7 +90,7 @@ class ResourceLoader extends coreResourceLoader
 
         // third-party scripts
         if ($resources['openlayers']) {
-            parent::loadJavaScriptResource(self::VENDOR_PATH . 'ol-' . $GLOBALS['con4gis']['maps']['ol-version'] . '/ol' . $suffixOl . '.js', self::HEAD, 'openlayers');
+            parent::loadJavaScriptResource(self::VENDOR_PATH . 'ol-' . $GLOBALS['con4gis']['maps']['ol-version'] . '/ol' . $suffixOl . '.js', self::JAVASCRIPT, 'openlayers');
         }
 
         if ($resources['cesium']) {
