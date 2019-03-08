@@ -19,7 +19,7 @@ $GLOBALS['TL_LANG']['MOD']['c4g_map_baselayers'] 		= ['Basiskarten', 'Basiskarte
 $GLOBALS['TL_LANG']['MOD']['c4g_map_locstyles'] 		= ['Lokationsstile', 'Lokationsstile von con4gis-Maps verwalten.'];
 $GLOBALS['TL_LANG']['MOD']['c4g_map_profiles'] 			= ['Kartenprofile', 'Kartenprofile von con4gis-Maps verwalten.'];
 $GLOBALS['TL_LANG']['MOD']['c4g_map_themes']            = ['Kartenlayout', 'Das Layout der Karte anpassen.'];
-$GLOBALS['TL_LANG']['MOD']['c4g_map_tables']            = ['Kartenstruktur: Datenanbindung', 'Eigene Datenanbindungen anpassen.'];
+$GLOBALS['TL_LANG']['MOD']['c4g_map_tables']            = ['Kartenstruktur: Quelltabellen', 'Eigene Datenanbindungen anpassen.'];
 $GLOBALS['TL_LANG']['MOD']['con4gis_maps']              = ['con4gis '.$GLOBALS['con4gis']['version'] . ' - Kartentechnik', 'con4gis Kartentechnik-Module.'];
 
 /**
