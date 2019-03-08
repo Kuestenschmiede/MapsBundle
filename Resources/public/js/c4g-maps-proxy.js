@@ -18,7 +18,9 @@ import {C4gLocationStyleController} from "./c4g-locationstyle-controller";
 import {Spinner} from "./c4g-maps-misc-spinner";
 import {utils} from "./c4g-maps-utils";
 import {cssConstants} from "./c4g-maps-constant";
-import {langConstants} from "./c4g-maps-i18n";
+import {getLanguage} from "./c4g-maps-i18n";
+
+let langConstants = {};
 
 export class MapProxy {
   constructor(options){
@@ -60,6 +62,7 @@ export class MapProxy {
     this.layers_loaded = false;
 
     mapData = this.options.mapController.data;
+    langConstants = getLanguage(mapData);
     this.mapData = mapData;
     this.mapId = mapData.id;
 
