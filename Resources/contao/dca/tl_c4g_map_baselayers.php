@@ -656,6 +656,7 @@ class tl_c4g_map_baselayers extends Backend
         $this->Database->prepare("UPDATE tl_c4g_map_baselayers SET tstamp=". time() .", published='" . ($blnPublished ? '' : '1') . "' WHERE id=?")
             ->execute($intId);
         $this->createNewVersion('tl_c4g_map_baselayers', $intId);
+        con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator::purgeBaselayerApiCache();
     }
     public function groupColumns( $multiColumnWizard){
         $arrColumnBaselayers = array(

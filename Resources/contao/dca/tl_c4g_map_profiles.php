@@ -634,7 +634,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'exclude'                 => true,
             'default'                 => '3',
             'inputType'               => 'radio',
-            'options'                 => ['3','1','2','4'],
+            'options'                 => ['3','4','2','1'],
             'eval'                    => ['submitOnChange' => true,'includeBlankOption' => false],
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine'],
             'sql'                     => "char(1) NOT NULL default '3'"
