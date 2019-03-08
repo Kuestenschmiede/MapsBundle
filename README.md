@@ -1,4 +1,4 @@
-#con4gis-MapsBundle
+# con4gis-MapsBundle
 
 ## Overview
 The interactive maps brick of the Contao GIS-kit **con4gis**.
