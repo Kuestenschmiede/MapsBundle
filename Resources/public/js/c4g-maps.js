@@ -39,6 +39,8 @@ import {Position} from "./c4g-maps-control-position";
 import {Infopage} from "./c4g-maps-control-portside-infopage";
 import {getLanguage} from "./c4g-maps-i18n";
 
+let langConstants = {};
+
 'use strict';
 export class MapController {
 
@@ -55,7 +57,7 @@ export class MapController {
     // this.controls = null;
     this.leftSlideElements = [];
     this.rightSlideElements = [];
-    let langConstants = getLanguage(mapData);
+    langConstants = getLanguage(mapData);
 
     var self = this,
       permalink = false,
