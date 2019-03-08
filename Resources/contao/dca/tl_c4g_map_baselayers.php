@@ -216,20 +216,20 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider'],
             'filter'                  => true,
-            'inputType'               => 'select',
+            'inputType'               => 'radio',
             'default'                 => 'osm',
             'options'                 => [
+                'custom' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_custom'],
+                'bing' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_bing'],
+                'con4gisIo' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_con4gisIo'],
+                'here' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_here'],
+                'klokan' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_klokan'],
+                'mapbox' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapbox'],
                 'osm' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm'],
                 'stamen' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stamen'],
-                'mapbox' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapbox'],
-                'here' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_here'],
                 'thunder' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_thunderforest'],
-                'bing' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_bing'],
-                'klokan' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_klokan'],
-                'con4gisIo' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_con4gisIo'],
                 'wms' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_wms'],
-                'group' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_group'],
-                'custom' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_custom']
+                'group' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_group']
             ],
             'eval'                    => ['submitOnChange'=>true, 'tl_class'=>'clr'],
             'sql'                     => "varchar(10) NOT NULL default ''"
@@ -335,7 +335,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             'inputType'               => 'select',
             'default'                 => 'Mapbox',
             'options'                 => [
-                'Mapbox'              => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapbox'],
+                'Mapbox'              => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapbox_studio'],
                 'MapboxClassic'       => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapbox_classic'],
             ],
             'eval'                    => ['submitOnChange' => true],
