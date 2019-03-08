@@ -671,7 +671,8 @@ export class MapController {
         disableLabel: ' ',
         tipLabel: langConstants.CTRL_GRID,
         caching: mapData.caching,
-        target: controlContainerTopLeft
+        target: controlContainerTopLeft,
+        mapController: this
       });
       this.map.addControl(this.controls.graticule);
     }
