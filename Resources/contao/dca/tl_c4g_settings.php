@@ -48,14 +48,12 @@ $GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['defaultprofile'] =
     ];
 $GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['defaultData'] = [
     'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_settings']['defaultData'],
-    'exclude'                 => true,
     'inputType'               => 'checkbox',
     'options'                 => &$GLOBALS['TL_LANG']['tl_c4g_settings']['references']['defaultData'],
-    'eval'                    => array('mandatory'=>false, 'multiple'=>true),
+    'eval'                    => array('mandatory'=>false, 'multiple'=>true, 'includeBlankOption'=>true),
     'sql'                     => [
-        'type' => 'string',
-        'notnull' => true,
-        'default' => 'a:1:{i:0;s:6:"tables";}'
+        'type'      => 'string',
+        'default'   => 'a:1:{i:0;s:6:"tables";}'
     ]
 ];
 
