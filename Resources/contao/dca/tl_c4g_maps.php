@@ -1222,7 +1222,7 @@ class tl_c4g_maps extends Backend
     {
         $return = [];
         $objTables = C4gMapTablesModel::findAll();
-        while ($objTables->next()) {
+        while ($objTables && $objTables->next()) {
             $return[$objTables->id] = \Contao\Controller::replaceInsertTags($objTables->name);
         }
         return $return;
