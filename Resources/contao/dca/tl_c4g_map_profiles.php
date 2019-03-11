@@ -16,7 +16,6 @@
  */
 $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
     [
-
     // Config
     'config' =>
         [
@@ -92,7 +91,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
     // Palettes
     'palettes' =>
         [
-        '__selector__'                => ['mouse_nav','starboard','cluster_all','baselayerswitcher','layerswitcher','attribution','hover_popups','permalink','geosearch','geopicker', 'cesium'],
+        '__selector__'                => ['mouse_nav','starboard','cluster_all','baselayerswitcher','layerswitcher','attribution','hover_popups','permalink','geosearch','geopicker','overpassEngine', 'cesium'],
         'default'                     => '{general_legend},name,theme;'.
                                          '{baselayer_legend:hide},baselayers, default_baselayer;'.
                                          '{locstyle_legend:hide},locstyles, label_color;'.
@@ -105,7 +104,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                                          '{geopicker_legend:hide},is_backend_geopicker_default,geopicker;'.
                                          '{click_legend:hide},link_newwindow,link_open_on,hover_popups, popupAutoPan;'.
                                          '{cesium_legend:hide},cesium;'.
-                                         '{miscellaneous_legend:hide},script,overpass_url,custom_div,account,be_optimize_checkboxes_limit,caching,geobookmarks;'
+                                         '{overpassLegend:hide},overpassEngine;'.
+                                         '{miscellaneous_legend:hide},script,custom_div,account,be_optimize_checkboxes_limit,caching,geobookmarks;'
         ],
 
 
@@ -123,6 +123,10 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         'geosearch'                   => 'geosearch_engine,geosearch_show,geosearchParams,geosearch_results,geosearch_zoomto,geosearch_zoombounds,geosearch_animate,geosearch_markresult,geosearch_popup,geosearch_attribution,geosearch_collapsed,geosearch_div',
         'geopicker'                   => 'geopicker_fieldx,geopicker_fieldy,geopicker_searchdiv,geopicker_attribution,geopicker_disabled,geopicker_anonymous',
         'cesium'                      => 'cesium_always',
+        'overpassEngine_1'            => 'overpass_url',
+        'overpassEngine_2'            => '',
+        'overpassEngine_3'            => ''
+
         ],
 
     // Fields
@@ -841,7 +845,16 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'eval'                    => ['submitOnChange' => true, 'tl_class' => 'long'],
             'sql'                     => "varchar(10) NOT NULL default 'DEFAULT'"
             ],
-
+        'overpassEngine' =>
+            [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overpassEngine'],
+            'inputType'               => 'radio',
+            'default'                 => '0',
+            'options'                 => ['1','2','3'],
+            'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['referencesOverpassEngine'],
+            'eval'                    => ['tl_class'=>'clr long','submitOnChange' => true],
+            'sql'                     => "varchar(255) NOT NULL default '0'"
+            ],
         'overpass_url' =>
             [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overpass_url'],

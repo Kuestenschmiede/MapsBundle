@@ -11,7 +11,7 @@
  * @link       https://www.con4gis.org
  */
 
-$GLOBALS['TL_DCA']['tl_c4g_settings']['palettes']['default'] .= '{c4g_maps_legend},disabledC4gMapObjects,defaultprofile,caching,defaultData;';
+$GLOBALS['TL_DCA']['tl_c4g_settings']['palettes']['default'] .= '{c4g_maps_legend},disabledC4gMapObjects,defaultprofile,caching;';
 
 /**
  * Add fields
@@ -46,16 +46,16 @@ $GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['defaultprofile'] =
     'sql'                     => "int(10) unsigned NOT NULL default '0'"
 
     ];
-$GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['defaultData'] = [
-    'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_settings']['defaultData'],
-    'inputType'               => 'checkbox',
-    'options'                 => &$GLOBALS['TL_LANG']['tl_c4g_settings']['references']['defaultData'],
-    'eval'                    => array('mandatory'=>false, 'multiple'=>true, 'includeBlankOption'=>true),
-    'sql'                     => [
-        'type'      => 'string',
-        'default'   => 'a:1:{i:0;s:6:"tables";}'
-    ]
-];
+//$GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['defaultData'] = [
+//    'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_settings']['defaultData'],
+//    'inputType'               => 'checkbox',
+//    'options'                 => &$GLOBALS['TL_LANG']['tl_c4g_settings']['references']['defaultData'],
+//    'eval'                    => array('mandatory'=>false, 'multiple'=>true, 'includeBlankOption'=>true),
+//    'sql'                     => [
+//        'type'      => 'string',
+//        'default'   => 'a:1:{i:0;s:6:"tables";}'
+//    ]
+//];
 
 /**
  * Class tl_settings_c4g_maps

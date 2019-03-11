@@ -17,6 +17,7 @@ use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
 use con4gis\CoreBundle\Resources\contao\classes\HttpResultHelper;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapLocstylesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
+use con4gis\MapsBundle\Resources\contao\models\C4gMapSettingsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapTablesModel;
 use con4gis\MapsProjectBundle\Classes\ReplaceInsertTags;
@@ -126,6 +127,31 @@ class LayerContentApi extends \Controller
                 break;
             case "overpass":
                 $this->InfoWindowApi = new InfoWindowApi();
+                $objSettings = C4gMapSettingsModel::findOnly();
+                if ($objProfile->overpassEngine == "2" && $objSettings->con4gisIoUrl && $objSettings->con4gisIoKey) {
+                    $keySearchUrl = $objSettings->con4gisIoUrl . "getKey.php";
+                    $keySearchUrl .= "?key=" . $objSettings->con4gisIoKey ."&service=5";
+                    $REQUEST = new \Request();
+                    if ($_SERVER['HTTP_REFERER']) {
+                        $REQUEST->setHeader('Referer', $_SERVER['HTTP_REFERER']);
+                    }
+                    if ($_SERVER['HTTP_USER_AGENT']) {
+                        $REQUEST->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
+                    }
+                    $REQUEST->send($keySearchUrl);
+                    $response = \GuzzleHttp\json_decode($REQUEST->response);
+                    $url = $objSettings->con4gisIoUrl . "osm.php?key=" . $response->key; 
+                    $mapData['geosearch']['url'] = $objSettings->con4gisIoUrl;
+                }
+                else if ($objProfile->overpassEngine == "1") {
+                    $url = $objProfile->overpass_url;
+                }
+                else if ( $objProfile->overpassEngine == "3") {
+                    "https://overpass-api.de/api/interpreter";
+                }
+                else { // @Todo
+                    $url = "";
+                }
                 $arrReturnData[] = array
                 (
                     "id" => $intId,
@@ -141,7 +167,7 @@ class LayerContentApi extends \Controller
                     "hover_style" => $objLayer->hover_style,
                     "data" => array
                     (
-                        "url" => $objProfile->overpass_url ? $objProfile->overpass_url : "https://overpass-api.de/api/interpreter",
+                        "url" => $url,
                         "params" => rawurlencode($objLayer->ovp_request),
                         "popup" => $this->InfoWindowApi->getPopupConfiguration('tl_c4g_maps', $objLayer->id, $objLayer),/*array(
                             "content" => "tl_c4g_maps" . ":" . $objLayer->id

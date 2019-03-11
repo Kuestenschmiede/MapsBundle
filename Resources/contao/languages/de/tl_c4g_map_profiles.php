@@ -118,7 +118,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['hover_popups_stay'] = ['Maus-Hover-P
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupAutoPan'] = ['Kartenausschnitt an Popup anpassen', 'Passt beim Öffnen eines Popups den Kartenausschnitt an '];
 
 /** Sonstiges */
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overpass_url'] = ['Alternative URL der Overpass-API (<a href="http://overpass-api.de/" target="_blank">Website des voreingestellten API-Server Anbieters</a>)', 'Geben Sie hier die URL des Overpass API Servers ein, wenn Sie z.B. einen eigenen Overpass API Server nutzen möchten. Standardmäßig wird http://overpass-api.de/api/interpreter verwendet'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overpassEngine'] = ['Overpass-Servertechnik', 'Auswahl der Overpass-Servertechnik'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overpass_url'] = ['Alternative URL der Overpass-API ', 'Geben Sie hier die URL des Overpass API Servers ein, wenn Sie z.B. einen eigenen Overpass API Server nutzen möchten.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['custom_div'] = ['DIV für den Kartenbereich', 'DIV zur Umpositionierung des Kartenbereichs. Mit Hilfe dieser Einstellung lässt sich die Karte z.B. mitten in ein Formular hinein verschieben. Das DIV muss manuell auf der Seite erzeugt werden, z.B. mit einem HTML Inhaltselement oder HTML Formularfeld.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['account'] = ['Accountbutton', 'Sobald Sie ein Frontendmodul auswählen, wird der Accountbutton dargestellt.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['caching'] = ['Kartensituation merken', 'Buttonstatus und Kartensituation werden im Browser zwischengespeichert.'];
@@ -147,6 +148,10 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine']['2'] =
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine']['3'] = 'Benutzerdefiniert';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine']['4'] = 'con4gis.io Kartendienste (<a href="https://con4gis.io" target="_blank">Nutzungsbestimmungen</a>)';
 
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['referencesOverpassEngine']['1'] = 'Benutzerdefinierter Overpass-Server';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['referencesOverpassEngine']['2'] = 'con4gis.io Kartendienste (<a href="https://con4gis.io" target="_blank">Nutzungsbestimmungen</a>);';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['referencesOverpassEngine']['3'] = 'Öffentlicher Overpass-Server (<a href="http://overpass-api.de/" target="_blank">Website des API-Server Anbieters</a>)';
+
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearchParams']['keys']       = ['Schlüssel','Beispiel:countrycodes'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearchParams']['params']     = ['Parameter', 'Beispiel: de'];
 
@@ -172,6 +177,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['measure_legend'] = 'Messwerkzeuge';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_legend'] = 'Kartensuche';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_legend'] = 'Karteneditor';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_legend'] = 'Geopicker (Position bestimmen)';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overpassLegend'] = 'Overpass';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium_legend'] = 'Cesium (Globusdarstellung)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['click_legend'] = 'Einstellungen zum Klick-Verhalten';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['miscellaneous_legend'] = 'Sonstiges';

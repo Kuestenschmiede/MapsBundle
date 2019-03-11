@@ -128,7 +128,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['hover_popups_stay'] = ['Mouse Hover 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupAutoPan'] = ['Autopan to popup', 'Automatically pans to the popup\'s location'];
 
 /** Sonstiges */
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overpass_url'] = ['URL of Overpass-API (<a href="http://overpass-api.de/" target="_blank">Website of the default API-Server provider</a>)', 'Default: http://overpass-api.de/api/interpreter'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overpassEngine'] = ['Overpass Server Technology', 'Choose your preferred Overpass Server Technology'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overpass_url'] = ['URL of Overpass-API'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['custom_div'] = ['Div element for Map', 'If given, the map is placed within a div element with the given id.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['account'] = ['Account Button', 'Select a frontend module to see the account button on map.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['caching'] = ['Remember Button States', 'If checked, button states are cached.'];
@@ -155,6 +156,9 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine']['2'] =
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine']['3'] = 'Custom';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine']['4'] = 'con4gis.io mapservices (<a href="https://con4gis.io" target="_blank">usage policy</a>)';
 
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['referencesOverpassEngine']['1'] = 'Custom overpass server';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['referencesOverpassEngine']['2'] = 'con4gis.io mapservices (<a href="https://con4gis.io" target="_blank">usage policy</a>);';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['referencesOverpassEngine']['3'] = 'Public overpass server (<a href="http://overpass-api.de/" target="_blank">usage policy</a>)';
 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearchParams']['keys']       = ['Key','e.g.:countrycodes'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearchParams']['params']     = ['Parameter', 'e.g.: en'];
@@ -180,6 +184,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['information_legend'] = 'Map informat
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['measure_legend'] = 'Measure tools';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_legend'] = 'Geosearch';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_legend'] = 'Map editor';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overpassLegend'] = 'Overpass';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_legend'] = 'Geopicker';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium_legend'] = 'Cesium (globe view)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['click_legend'] = 'Click settings';
