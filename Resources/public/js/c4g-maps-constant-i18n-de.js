@@ -62,9 +62,6 @@ export var langConstantsGerman = {
   CTRL_FULLSCREEN: 'Vollbildmodus ein-/ausschalten',
   CTRL_PRINT: 'Karte exportieren',
 
-  POPUP_ROUTE_FROM: 'Route von hier',
-  POPUP_ROUTE_TO: 'Route hierhin',
-
   STARBOARD: 'Starboard',
   STARBOARD_BASELAYER: 'Basiskarten',
   STARBOARD_LAYER: 'Ebenen',

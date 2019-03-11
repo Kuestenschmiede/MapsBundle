@@ -358,7 +358,7 @@ export class MapProxy {
               objPopup.layer = layer;
               // Call the popup hook for plugin specific popup content
               if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_fillPopup === 'object') {
-                utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, objPopup);
+                utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, {popup: objPopup, mapController: self.options.mapController});
               }
               self.setPopup(objPopup);
             } else {
@@ -380,9 +380,8 @@ export class MapProxy {
 
                 // Call the popup hook for plugin specific popup content
                 if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_fillPopup === 'object') {
-                  utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, objPopup);
+                  utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, {popup: objPopup, mapController: self.options.mapController});
                 }
-
                 self.setPopup(objPopup);
               });
             }
@@ -434,50 +433,12 @@ export class MapProxy {
     layer = popupConfig.layer;
 
     popupContent = utils.replaceAllPlaceholders(popupConfig.popup.content, feature, layer, this.options.mapController.data.lang);
-    // @TODO: check for route-option & display "route-to"
-    // NOTE: does not work async this way
-    if (this.options.mapController.controls.router && popupConfig.popup.routing_link) {
-      router = this.options.mapController.controls.router;
-
-      routingHandler = function (event) {
-        if (self.options.mapController.activePortside !== router) {
-          router.open();
-        }
-
-        router.setInput(
-          $(event.currentTarget).hasClass(cssConstants.POPUP_ROUTE_FROM),
-          feature.getGeometry().getCoordinates()
-        );
-      }; // end of "routingHandler()"
-
-      routeButtonWrapper = document.createElement('div');
-      routeButtonWrapper.className = cssConstants.POPUP_ROUTE_WRAPPER;
-
-      routeFromButton = document.createElement('button');
-      routeFromButton.className = cssConstants.ICON + ' ' + cssConstants.POPUP_ROUTE_FROM;
-      jQuery(routeFromButton).click(routingHandler);
-      routeButtonWrapper.appendChild(routeFromButton);
-
-      routeFromButtonSpan = document.createElement('span');
-      routeFromButtonSpan.innerHTML = langConstants.POPUP_ROUTE_FROM;
-      routeFromButton.appendChild(routeFromButtonSpan);
-
-      routeToButton = document.createElement('button');
-      routeToButton.className = cssConstants.ICON + ' ' + cssConstants.POPUP_ROUTE_TO;
-      jQuery(routeToButton).click(routingHandler);
-      routeButtonWrapper.appendChild(routeToButton);
-
-      routeToButtonSpan = document.createElement('span');
-      routeToButtonSpan.innerHTML = langConstants.POPUP_ROUTE_TO;
-      routeToButton.appendChild(routeToButtonSpan);
-    }
-
-    if (popupContent.trim() || router) {
+    if (popupContent.trim()) {
       window.c4gMapsPopup.$content.html(popupContent);
-      if (router) {
-        window.c4gMapsPopup.$content.append(routeButtonWrapper);
+      if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_appendPopup === 'object') {
+        utils.callHookFunctions(window.c4gMapsHooks.proxy_appendPopup, {popup: popupConfig, mapController: this.options.mapController});
       }
-      if(feature.getGeometry() && feature.getGeometry() instanceof ol.geom.Point){
+      if (feature.getGeometry() && feature.getGeometry() instanceof ol.geom.Point) {
         window.c4gMapsPopup.popup.setPosition(feature.getGeometry().getCoordinates());
       }
     } else {
