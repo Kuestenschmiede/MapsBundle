@@ -206,6 +206,7 @@ button.c4g-geosearch-start:before {
   width: calc(100% - 50px);
   margin-left: auto;
   margin-right: auto;
+  max-width: 640px;
 }
 
 /*
