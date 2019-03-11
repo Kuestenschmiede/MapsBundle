@@ -54,6 +54,10 @@ array_insert($GLOBALS['BE_MOD'], array_search('con4gis_core', array_keys($GLOBAL
     ]]
 );
 
+if(TL_MODE == "BE") {
+    $GLOBALS['TL_CSS'][] = '/bundles/con4gismaps/css/backend.css';
+}
+
 //$GLOBALS['BE_MOD']['con4gis'] =
 //    \con4gis\CoreBundle\Resources\contao\classes\C4GUtils::sortBackendModules($GLOBALS['BE_MOD']['con4gis']);
 /**

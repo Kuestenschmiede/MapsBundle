@@ -80,9 +80,6 @@ export var langConstantsEnglish = {
   STARBOARD_VIEW_TRIGGER_BASELAYERSWITCHER: 'Baselayerswitcher',
   STARBOARD_VIEW_TRIGGER_LAYERSWITCHER: 'Layerswitcher',
 
-  POPUP_ROUTE_FROM: 'Route from here',
-  POPUP_ROUTE_TO: 'Route to here',
-
   MEASURETOOLS: 'Measuretools',
   MEASURETOOLS_INFO: 'Select a measuretype below and start measuring by clicking on the map.',
   MEASURETOOLS_INFO_ADDITIONAL: '(To stop a measurement, double-click on the map.)',
