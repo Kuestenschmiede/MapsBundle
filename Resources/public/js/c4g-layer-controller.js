@@ -403,7 +403,8 @@ export class C4gLayerController{
 
                   if (requestData.params) {
                     const bboxTag = requestData.params.indexOf('(bbox)') >= 0 ? /\(bbox\)/g : /\{{bbox\}}/g
-                    url += '?data=' + encodeURIComponent(requestData.params.replace(bboxTag, strBoundingBox));
+                    url += url.includes("?") ? "&" : "?";
+                    url += 'data=' + encodeURIComponent(requestData.params.replace(bboxTag, strBoundingBox));
                   }
 
                   if (self.layerRequests === undefined) {
