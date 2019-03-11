@@ -849,11 +849,11 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overpassEngine'],
             'inputType'               => 'radio',
-            'default'                 => '0',
+            'default'                 => '1',
             'options'                 => ['1','2','3'],
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['referencesOverpassEngine'],
             'eval'                    => ['tl_class'=>'clr long','submitOnChange' => true],
-            'sql'                     => "varchar(255) NOT NULL default '0'"
+            'sql'                     => "varchar(255) NOT NULL default '1'"
             ],
         'overpass_url' =>
             [
