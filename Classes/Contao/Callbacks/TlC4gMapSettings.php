@@ -14,13 +14,13 @@ namespace con4gis\MapsBundle\Classes\Contao\Callbacks;
 
 class TlC4gMapSettings extends \Backend
 {
-    public function addDefaultTables($dc){
+    public function addDefaultTables($dc) {
 
         // check wether default-data should be set
         $strSelectSettings = "SELECT * FROM tl_c4g_settings";
         $strSettings = $this->Database->prepare($strSelectSettings)->execute()->fetchAssoc();
         $arrSettings = unserialize($strSettings['defaultData']);
-        if($arrSettings[0]){
+        if ($arrSettings[0]) {
 
             // set settings so this function is not triggered each time
             $arrSettings[0] = 0;
