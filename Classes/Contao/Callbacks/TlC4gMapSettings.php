@@ -89,13 +89,17 @@ class TlC4gMapSettings extends \Backend
             $ptableField = serialize([$ptableField]);
         }
         $ptableCompareField = $arrConfig['ptable_compare_field'] ? $arrConfig['ptable_compare_field'] : "";
-        if(strrpos($ptableCompareField, ',')) {
-            $arrCompareField = explode($ptableCompareField, ',');
-            $ptableCompareField = serialize([explode(',',$ptable)[0] . '.' . $arrCompareField[0], explode(',',$ptable)[1] . '.' . $arrCompareField[1]]);
+        if ($ptableCompareField) {
+            // only set when the compare field is not empty
+            if(strrpos($ptableCompareField, ',')) {
+                $arrCompareField = explode($ptableCompareField, ',');
+                $ptableCompareField = serialize([explode(',',$ptable)[0] . '.' . $arrCompareField[0], explode(',',$ptable)[1] . '.' . $arrCompareField[1]]);
+            }
+            else{
+                $ptableCompareField = serialize([$arrConfig['ptable'] . '.' . $ptableCompareField]);
+            }
         }
-        else{
-            $ptableCompareField = serialize([$arrConfig['ptable'] . '.' . $ptableCompareField]);
-        }
+        
         $ptableBlob = $arrConfig['ptable_blob'] ? $arrConfig['ptable_blob'] : "";
         $label = $arrConfig['label'] ? $arrConfig['label'] : "";
         $locstyle = $arrConfig['locstyle'] ? $arrConfig['locstyle'] : "";
