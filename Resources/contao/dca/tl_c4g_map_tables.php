@@ -123,6 +123,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'exclude'                 => true,
             'inputType'               => 'select',
             'options_callback'        => ['tl_c4g_map_tables','getDatabaseTables'],
+            'save_callback'           => ['tl_c4g_map_tables', 'serializeResult'],
             'eval'                    => ['mandatory'=>false, 'multiple'=>true, 'size' => 2, 'chosen' => true, 'submitOnChange' => true],
             'sql'                     => "text NULL"
         ],
@@ -132,6 +133,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'exclude'                 => true,
             'inputType'               => 'select',
             'options_callback'        => ['tl_c4g_map_tables','getParentTablesFields'],
+            'save_callback'           => ['tl_c4g_map_tables', 'serializeResult'],
             'eval'                    => ['mandatory'=>false, 'multiple'=>true,'size' => 2, 'chosen' => true, 'includeBlankOption' => true],
             'sql'                     => "text NULL"
         ],
@@ -145,6 +147,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'exclude'                 => true,
             'inputType'               => 'select',
             'options_callback'        => ['tl_c4g_map_tables','getSourceTableFields', 'includeBlankOption' => true],
+            'save_callback'           => ['tl_c4g_map_tables', 'serializeResult'],
             'sql'                     => "text NULL"
         ],
         'ptableCompareField' =>
@@ -153,6 +156,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'exclude'                 => true,
             'inputType'               => 'select',
             'options_callback'        => ['tl_c4g_map_tables','getParentTablesFields', 'includeBlankOption' => true],
+            'save_callback'           => ['tl_c4g_map_tables', 'serializeResult'],
             'eval'                    => ['mandatory'=>false, 'multiple'=>true, 'chosen' => true, 'size' => 2],
             'sql'                     => "text NULL"
         ],
@@ -224,12 +228,14 @@ class tl_c4g_map_tables extends Backend
         $options = $this->Database->listTables();
         return  $options;
     }
-    public function getSourceTableFields(DataContainer $dc){
+    
+    public function getSourceTableFields(DataContainer $dc) {
         $tableName = $dc->activeRecord->tableSource;
         $options = $this->Database->getFieldNames($tableName);
         return $options;
     }
-    public function getParentTablesFields(DataContainer $dc){
+    
+    public function getParentTablesFields(DataContainer $dc) {
         $tableNames = unserialize($dc->activeRecord->ptable);
         $options = [];
         foreach ($tableNames as $tableName){
@@ -239,5 +245,10 @@ class tl_c4g_map_tables extends Backend
             }
         }
         return $options;
+    }
+    
+    public function serializeResult($varValue, \Contao\DataContainer $dc)
+    {
+        return serialize($varValue);
     }
 }

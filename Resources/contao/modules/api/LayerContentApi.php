@@ -341,40 +341,40 @@ class LayerContentApi extends \Controller
                 $ptableBlobArr = unserialize($objConfig->ptableBlob);
 
                 //check parent values
-                if ($ptableArr) {
-                    foreach ($ptableArr as $key => $ptable) {
-                        $qWhere .= " WHERE ";
-                        if ($key == 0) {
-                            $sourcePid = intval($objLayer->tab_pid);
-                        } else {
-                            $and = " AND ";
-                            $fieldName = "tab_pid" . intval($key);
-                            $sourcePid = intval($objLayer->$fieldName);
-                        }
-                        $ptablefield = $ptableFieldArr[$key];
-                        $ptableCompareField = str_replace($ptable . ".", "", $ptableCompareFieldArr[$key]);
-
-                        //if there is a compare Field instead of the id field (parent table) we have change the parent id
-                        if ($ptable && $sourcePid && $ptableCompareField && ($ptableCompareField != 'id')) {
-                            $query = "SELECT * FROM `$ptable` WHERE id = $sourcePid";
-                            $result = \Database::getInstance()->prepare($query)->limit(1)->execute();
-                            $sourcePid = intval($result->$ptableCompareField);
-                        }
-
-                        if ($sourcePid || $sourcePid == 0) {
-                            if ($objConfig->ptableField) {
-                                if ($ptableBlobArr[$key] == 1) {
-                                    //ToDo filter after select
-                                } else {
-                                    $pidOption .= $and . "$ptablefield = $sourcePid ";
-                                }
-                            } else {
-                                $pidOption .= "`pid` = '$sourcePid'  ";
-                            }
-                        }
-
-                    }
-                }
+//                if ($ptableArr) {
+//                    foreach ($ptableArr as $key => $ptable) {
+//                        $qWhere .= " WHERE ";
+//                        if ($key == 0) {
+//                            $sourcePid = intval($objLayer->tab_pid);
+//                        } else {
+//                            $and = " AND ";
+//                            $fieldName = "tab_pid" . intval($key);
+//                            $sourcePid = intval($objLayer->$fieldName);
+//                        }
+//                        $ptablefield = $ptableFieldArr[$key];
+//                        $ptableCompareField = str_replace($ptable . ".", "", $ptableCompareFieldArr[$key]);
+//
+//                        //if there is a compare Field instead of the id field (parent table) we have change the parent id
+//                        if ($ptable && $sourcePid && $ptableCompareField && ($ptableCompareField != 'id')) {
+//                            $query = "SELECT * FROM `$ptable` WHERE id = $sourcePid";
+//                            $result = \Database::getInstance()->prepare($query)->limit(1)->execute();
+//                            $sourcePid = intval($result->$ptableCompareField);
+//                        }
+//
+//                        if ($sourcePid || $sourcePid == 0) {
+//                            if ($objConfig->ptableField) {
+//                                if ($ptableBlobArr[$key] == 1) {
+//                                    //ToDo filter after select
+//                                } else {
+//                                    $pidOption .= $and . "$ptablefield = $sourcePid ";
+//                                }
+//                            } else {
+//                                $pidOption .= "`pid` = '$sourcePid'  ";
+//                            }
+//                        }
+//
+//                    }
+//                }
                 if ($objLayer->tab_whereclause) {
                     $addBeWhereClause = " WHERE " . $objLayer->tab_whereclause;
                 }
@@ -470,106 +470,8 @@ class LayerContentApi extends \Controller
                     if (($show == $blobCount) && (($result->$geoxField && $result->$geoyField) || ($geolocation && $result->$geolocation))) {
                         // replace popup stuff
                         if ($objConfig->popup) {
-                            $popupElements = explode(',', $objConfig->popup);
-                            foreach ($popupElements as $key => $value) {
-                                if (substr($value, 0, 1) == '{' && substr($value, -1, 1) == '}') {
-                                    // we have an inserttag
-                                    $replacedValue = str_replace('[id]', $result->id, $value);
-                                    $popupContent .= $this->replaceInsertTags($replacedValue) . ' ';
-                                } else if (substr($value, 0, 1) == '[' && substr($value, -1, 1) == ']') {
-                                    // no insert tag
-                                    $replacedValue = str_replace('[', '', $value);
-                                    $replacedValue = str_replace(']', '', $replacedValue);
-                                    $elements = explode(':', $replacedValue);
-                                    $column = $elements[0];
-                                    $columnClass = 'c4g_maps_table_column_' . $column;
-                                    $dataType = $elements[1];
-                                    $additionalParam1 = $elements[2];
-                                    $additionalParam2 = $elements[3];
-                                    switch ($dataType) {
-                                        case 'date':
-                                            $popupContent .= '<div class="' . $columnClass . '">' . date('d.m.y', $result->$column) . '</div>';
-                                            break;
-                                        case 'string':
-                                            $columnText = $result->$column;
-                                            $columnText = str_replace('[nbsp]', ' ', $columnText);
-                                            $columnText = html_entity_decode(C4GUtils::secure_ugc($columnText));
-                                            $popupContent .= '<div class="' . $columnClass . '">' . $columnText . '</div>';
-                                            break;
-                                        case 'pagelink':
-                                            if (!$additionalParam1) {
-                                                $additionalParam1 = 'details';
-                                            }
-                                            $aliasOrId = $result->$column;
-                                            if (!$additionalParam2) {
-                                                $link = $this->replaceInsertTags('{{link_url::' . $aliasOrId . '}}');
-                                            } else {
-                                                if ($column == 'subdomain') {
-                                                    $link = 'https://' . $aliasOrId . '.' . $additionalParam2;
-                                                } else {
-                                                    $link = 'https://' . $additionalParam2;
-                                                    $link = $link . '/' . $aliasOrId . '.html';
-                                                }
-                                            }
-
-                                            $popupContent .= '<a class="' . $columnClass . '" href="' . $link . '">' . $additionalParam1 . '</a>';
-                                            break;
-                                        case 'pagelink2':
-                                            if (!$additionalParam1) {
-                                                $additionalParam1 = 'details';
-                                            }
-                                            $aliasOrId = $result->$column;
-                                            if (!$additionalParam2) {
-                                                $link = $this->replaceInsertTags('{{link_url::' . $aliasOrId . '}}');
-                                            } else {
-                                                if ($column == 'subdomain') {
-                                                    $link = 'https://' . $aliasOrId . '.' . $additionalParam2;
-                                                } else {
-                                                    $link = 'https://' . $additionalParam2;
-                                                    $link = $link . '/' . $aliasOrId . '.html';
-                                                }
-                                            }
-
-                                            $popupContent .= '<a class="' . $columnClass . '" href="' . $link . '" target="_blank">' . $additionalParam1 . '</a>';
-                                            break;
-                                        case 'pagelink3':
-                                            if (!$additionalParam1) {
-                                                $additionalParam1 = 'details';
-                                            }
-                                            $linkPopup = $result->$column;
-                                            if(!(substr($link,0,4) === "http")){
-                                                $linkPopup = 'https://' . $linkPopup;
-                                            }
-                                            $popupContent .= '<a class="' . $columnClass . '" href="' . $linkPopup . '" target="_blank">' . $additionalParam1 . '</a>';
-                                            break;
-                                        case 'responsiveImage':
-                                            $responsiveImage = false;
-                                            if ($additionalParam1) {
-                                                $responsiveImage = $additionalParam1;
-                                            }
-                                            $file = \FilesModel::findByUuid($result->$column);
-                                            if ($file) {
-                                                if (!$responsiveImage) {
-                                                    $image = \Image::get($file->path, 360, 240);
-                                                } else {
-                                                    $image = \Image::get($file->path, '', '', $responsiveImage);
-                                                }
-                                                if ($image) {
-                                                    $popupContent .= '<img src="' . $image . '">';
-                                                }
-                                            }
-                                            else{
-                                                $popupContent .= '<img src="' . $result->$column . '">';
-                                            }
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                } else {
-                                    // other stuff put in as text
-                                    $popupContent .= $value . ' ';
-                                }
-                            }
+                            $api = new LayerContentDataApi();
+                            $popupContent = $api->getPopup($objConfig->popup, $result->fetchAssoc())['content'];
                         }
                         if ($result->$geolocation) {
                             $geox = substr($result->$geolocation, strpos($result->$geolocation, ',') + 1);
