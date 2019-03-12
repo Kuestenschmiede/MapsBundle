@@ -22,7 +22,7 @@ class TlC4gMapSettings extends \Backend
         if (!$strTables) {
             // set default-data for tl_calendar_events
             $this->translateArrToDB('tl_calendar_events', [
-                'name'          => 'Events',
+                'name'          => '{{ifnlng::de}}Events{{ifnlng}}{{iflng::de}}Events{{iflng}}',
                 'ptable'        => 'tl_calendar',
                 'ptable_option' => 'title',
                 'geox'          => 'c4g_loc_geox',
@@ -39,7 +39,7 @@ class TlC4gMapSettings extends \Backend
 
             // set default data for tl_content
             $this->translateArrToDB('tl_content', [
-                'name'          => 'Content',
+                'name'          => '{{ifnlng::de}}Inhaltselemente{{ifnlng}}{{iflng::de}}Content elements{{iflng}}',
                 'geox'          => 'c4g_loc_geox',
                 'geoy'          => 'c4g_loc_geoy',
                 'label'         => 'c4g_loc_label',
@@ -50,7 +50,7 @@ class TlC4gMapSettings extends \Backend
 
             // set default data for tl_member
             $this->translateArrToDB('tl_member', [
-                'name'          => 'Member',
+                'name'          => '{{ifnlng::de}}Mitgliederdaten{{ifnlng}}{{iflng::de}}Members{{iflng}}',
                 'geox'          => 'c4g_loc_geox',
                 'geoy'          => 'c4g_loc_geoy',
                 'label'         => 'c4g_loc_label',
@@ -108,8 +108,9 @@ class TlC4gMapSettings extends \Backend
         $geox = $arrConfig['geox'] ? $arrConfig['geox'] : "";
         $geoy = $arrConfig['geoy'] ? $arrConfig['geoy'] : "";
         $geolocation = $arrConfig['geolocation'] ? $arrConfig['geolocation'] : "";
+        $dbName = $arrConfig['name'];
         $time = time();
-        $strInsert = "INSERT INTO tl_c4g_map_tables (name, tableSource, label, locstyle, popup, tooltip, tstamp, ptableCompareField, ptableField, ptableBlob, ptableOptions, ptable, geoy, geox, geolocation) VALUES ('$sourceTable', '$tableSource', '$label', '$locstyle', '$popup', '$tooltip', $time , '$ptableCompareField', '$ptableField', '$ptableBlob', '$ptableOptions', '$ptable', '$geoy', '$geox','$geolocation');";
+        $strInsert = "INSERT INTO tl_c4g_map_tables (name, tableSource, label, locstyle, popup, tooltip, tstamp, ptableCompareField, ptableField, ptableBlob, ptableOptions, ptable, geoy, geox, geolocation) VALUES ('$dbName', '$tableSource', '$label', '$locstyle', '$popup', '$tooltip', $time , '$ptableCompareField', '$ptableField', '$ptableBlob', '$ptableOptions', '$ptable', '$geoy', '$geox','$geolocation');";
         $result = $this->Database->prepare($strInsert)->execute();
         if($result && $result->insertId) {
             $insertId = $result->insertId;

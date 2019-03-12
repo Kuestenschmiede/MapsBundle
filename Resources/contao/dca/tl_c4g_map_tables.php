@@ -45,6 +45,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             [
             'fields'                  => ['name','tableSource'],
             'format'                  => '<span style="color:#303E4D"><b>%s</b></span> -> %s',
+            'label_callback'          =>['tl_c4g_map_tables', 'getLabel'],
+                'showColumns'         => true
             ],
         'global_operations' =>
             [
@@ -250,5 +252,11 @@ class tl_c4g_map_tables extends Backend
     public function serializeResult($varValue, \Contao\DataContainer $dc)
     {
         return serialize($varValue);
+    }
+    
+    public function getLabel($row, $label)
+    {
+        $label = [\Contao\Controller::replaceInsertTags($row['name']), $row['tableSource']];
+        return $label;
     }
 }
