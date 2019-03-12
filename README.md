@@ -106,7 +106,7 @@ composer require con4gis/maps
 ```
 Alternatively, you can use the Contao Manager to install the con4gis-MapsBundle.
 
-##Requirements:
+## Requirements:
 - [Contao](https://github.com/contao/core-bundle) (***4.4.x***)
 For Contao 3 you can use [con4gis_maps3](https://github.com/Kuestenschmiede/con4gis_maps3/releases) Extension.
 - [CoreBundle](https://github.com/Kuestenschmiede/CoreBundle/releases) (*latest stable release*)
