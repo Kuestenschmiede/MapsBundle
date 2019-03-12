@@ -341,40 +341,40 @@ class LayerContentApi extends \Controller
                 $ptableBlobArr = unserialize($objConfig->ptableBlob);
 
                 //check parent values
-//                if ($ptableArr) {
-//                    foreach ($ptableArr as $key => $ptable) {
-//                        $qWhere .= " WHERE ";
-//                        if ($key == 0) {
-//                            $sourcePid = intval($objLayer->tab_pid);
-//                        } else {
-//                            $and = " AND ";
-//                            $fieldName = "tab_pid" . intval($key);
-//                            $sourcePid = intval($objLayer->$fieldName);
-//                        }
-//                        $ptablefield = $ptableFieldArr[$key];
-//                        $ptableCompareField = str_replace($ptable . ".", "", $ptableCompareFieldArr[$key]);
-//
-//                        //if there is a compare Field instead of the id field (parent table) we have change the parent id
-//                        if ($ptable && $sourcePid && $ptableCompareField && ($ptableCompareField != 'id')) {
-//                            $query = "SELECT * FROM `$ptable` WHERE id = $sourcePid";
-//                            $result = \Database::getInstance()->prepare($query)->limit(1)->execute();
-//                            $sourcePid = intval($result->$ptableCompareField);
-//                        }
-//
-//                        if ($sourcePid || $sourcePid == 0) {
-//                            if ($objConfig->ptableField) {
-//                                if ($ptableBlobArr[$key] == 1) {
-//                                    //ToDo filter after select
-//                                } else {
-//                                    $pidOption .= $and . "$ptablefield = $sourcePid ";
-//                                }
-//                            } else {
-//                                $pidOption .= "`pid` = '$sourcePid'  ";
-//                            }
-//                        }
-//
-//                    }
-//                }
+                if ($ptableArr && $ptableFieldArr && $ptableCompareFieldArr && $ptableBlobArr) {
+                    foreach ($ptableArr as $key => $ptable) {
+                        $qWhere .= " WHERE ";
+                        if ($key == 0) {
+                            $sourcePid = intval($objLayer->tab_pid);
+                        } else {
+                            $and = " AND ";
+                            $fieldName = "tab_pid" . intval($key);
+                            $sourcePid = intval($objLayer->$fieldName);
+                        }
+                        $ptablefield = $ptableFieldArr[$key];
+                        $ptableCompareField = str_replace($ptable . ".", "", $ptableCompareFieldArr[$key]);
+
+                        //if there is a compare Field instead of the id field (parent table) we have change the parent id
+                        if ($ptable && $sourcePid && $ptableCompareField && ($ptableCompareField != 'id')) {
+                            $query = "SELECT * FROM `$ptable` WHERE id = $sourcePid";
+                            $result = \Database::getInstance()->prepare($query)->limit(1)->execute();
+                            $sourcePid = intval($result->$ptableCompareField);
+                        }
+
+                        if ($sourcePid || $sourcePid == 0) {
+                            if ($objConfig->ptableField) {
+                                if ($ptableBlobArr[$key] == 1) {
+                                    //ToDo filter after select
+                                } else {
+                                    $pidOption .= $and . "$ptablefield = $sourcePid ";
+                                }
+                            } else {
+                                $pidOption .= "`pid` = '$sourcePid'  ";
+                            }
+                        }
+
+                    }
+                }
                 if ($objLayer->tab_whereclause) {
                     $addBeWhereClause = " WHERE " . $objLayer->tab_whereclause;
                 }
@@ -421,8 +421,8 @@ class LayerContentApi extends \Controller
                     break;
                 }
                 $locstyleField = $objConfig->locstyle;
-                while ($result->next()) {
-                    $locstyle = $result->$locstyleField;
+                while ($arrResult = $result->fetchAssoc()) {
+                    $locstyle = $arrResult[$locstyleField];
                     if (!$locstyle) {
                         $locstyle = $objLayer->locstyle;
                     }
@@ -447,7 +447,7 @@ class LayerContentApi extends \Controller
 
                                 $ptablefield = $ptableFieldArr[$key];
                                 $ptableCompareField = $ptableCompareFieldArr[$key];
-                                $blobfield = $result->$ptablefield;
+                                $blobfield = $arrResult[$ptablefield];
 
                                 if ($blobfield && $sourcePid && $ptableCompareField && ($ptableCompareField != 'id')) {
                                     $query2 = "SELECT * FROM `$ptable` WHERE id = $sourcePid";
@@ -467,20 +467,22 @@ class LayerContentApi extends \Controller
                     }
 
                     $popupContent = '';
-                    if (($show == $blobCount) && (($result->$geoxField && $result->$geoyField) || ($geolocation && $result->$geolocation))) {
+                    if (($show == $blobCount) && (($arrResult[$geoxField] && $arrResult[$geoyField]) || ($geolocation && $arrResult[$geolocation]))) {
                         // replace popup stuff
                         if ($objConfig->popup) {
                             $api = new LayerContentDataApi();
-                            $popupContent = $api->getPopup($objConfig->popup, $result->fetchAssoc())['content'];
+                            $popupContent = $api->getPopup($objConfig, $arrResult)['content'];
                         }
-                        if ($result->$geolocation) {
-                            $geox = substr($result->$geolocation, strpos($result->$geolocation, ',') + 1);
-                            $geoy = substr($result->$geolocation, 0, strpos($result->$geolocation, ','));
+                        if ($arrResult[$geolocation]) {
+                            $geox = substr($arrResult[$geolocation], strpos($arrResult[$geolocation], ',') + 1);
+                            $geoy = substr($arrResult[$geolocation], 0, strpos($arrResult[$geolocation], ','));
                             $coordinates = array(floatval($geox), floatval($geoy));
                         } else {
+                            $geox = $arrResult[$geoxField];
+                            $geoy = $arrResult[$geoyField];
                             $coordinates = array(
-                                floatval($result->$geoxField),
-                                floatval($result->$geoyField));
+                                floatval($geox),
+                                floatval($geoy));
                         }
                         if ($objConfig->linkurl && !$objConfig->popup) {
                             $link = $objConfig->linkurl;
@@ -490,8 +492,8 @@ class LayerContentApi extends \Controller
                                 foreach ($matches as $key => $value) {
                                     $replacedValue = str_replace('[', '', $value);
                                     $replacedValue = str_replace(']', '', $replacedValue);
-                                    if ($result->$replacedValue) {
-                                        $replacedValue = $result->$replacedValue;
+                                    if ($arrResult[$replacedValue]) {
+                                        $replacedValue = $arrResult[$replacedValue];
                                     }
                                     $matches[$key] = $replacedValue;
                                 }
@@ -517,7 +519,7 @@ class LayerContentApi extends \Controller
                                         $arrReturnData[$i]['data']['properties']['popup']['content'] = str_replace('</ul>', '', $arrReturnData[$i]['data']['properties']['popup']['content']);
                                     }
                                     $arrReturnData[$i]['data']['properties']['popup']['content'] .= $popupContent . '</li></ul>';
-                                    $arrReturnData[$i]['data']['properties']['tooltip'] .= ', ' . \Contao\Controller::replaceInsertTags($result->$tooltipField);
+                                    $arrReturnData[$i]['data']['properties']['tooltip'] .= ', ' . \Contao\Controller::replaceInsertTags($arrResult[$tooltipField]);
                                     $event = true;
                                 }
                             }
@@ -526,13 +528,13 @@ class LayerContentApi extends \Controller
 
                         if (!$event) {
                             if ($sourceTable == 'tl_content') {
-                                $popupContent = Controller::getContentElement($result->id) ? Controller::replaceInsertTags(Controller::getContentElement($result->id)) : $popupContent;
+                                $popupContent = Controller::getContentElement($arrResult['id']) ? Controller::replaceInsertTags(Controller::getContentElement($arrResult['id'])) : $popupContent;
                                 $popupContent = str_replace('TL_FILES_URL', '', $popupContent);
                             }
 
                             $arrReturnDataSet = array
                             (
-                                "id" => $result->id,
+                                "id" => $arrResult['id'],
                                 "type" => 'GeoJSON',
                                 "format" => "GeoJSON",
                                 "origType" => "table",
@@ -559,9 +561,9 @@ class LayerContentApi extends \Controller
                                             'content' => $popupContent,
                                             'routing_link' => $objLayer->routing_to
                                         ),
-                                        'tooltip' => unserialize($result->$tooltipField)['value'] ? unserialize($result->$tooltipField)['value'] : \Contao\Controller::replaceInsertTags($result->$tooltipField),
+                                        'tooltip' => unserialize($arrResult[$tooltipField])['value'] ? unserialize($arrResult[$tooltipField])['value'] : \Contao\Controller::replaceInsertTags($arrResult[$tooltipField]),
                                         "tooltip_length" => $objLayer->tooltip_length,
-                                        'label' => Controller::replaceInsertTags($result->$labelField),
+                                        'label' => Controller::replaceInsertTags($arrResult[$labelField]),
                                         'zoom_onclick' => $objLayer->loc_onclick_zoomto
                                     ),
                                 ),
