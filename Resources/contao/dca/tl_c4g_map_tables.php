@@ -148,8 +148,9 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['ptableField'],
             'exclude'                 => true,
             'inputType'               => 'select',
-            'options_callback'        => ['tl_c4g_map_tables','getSourceTableFields', 'includeBlankOption' => true],
+            'options_callback'        => ['tl_c4g_map_tables','getSourceTableFields'],
             'save_callback'           => ['tl_c4g_map_tables', 'serializeResult'],
+            'eval'                    => ['mandatory'=>false, 'includeBlankOption' => true],
             'sql'                     => "text NULL"
         ],
         'ptableCompareField' =>
@@ -157,7 +158,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['ptableCompareField'],
             'exclude'                 => true,
             'inputType'               => 'select',
-            'options_callback'        => ['tl_c4g_map_tables','getParentTablesFields', 'includeBlankOption' => true],
+            'options_callback'        => ['tl_c4g_map_tables','getParentTablesFields'],
             'save_callback'           => ['tl_c4g_map_tables', 'serializeResult'],
             'eval'                    => ['mandatory'=>false, 'multiple'=>true, 'chosen' => true, 'size' => 2],
             'sql'                     => "text NULL"
