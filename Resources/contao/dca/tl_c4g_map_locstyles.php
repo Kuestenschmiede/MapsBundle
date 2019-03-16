@@ -183,18 +183,18 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
             [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['strokewidth'],
             'inputType'               => 'inputUnit',
-            'default'                 => '',
+            'default'                 => '2',
             'options'                 => ['px'],
             'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'long', 'mandatory'=>false],
-            'sql'                     => "varchar(100) NOT NULL default ''"
+            'sql'                     => "varchar(100) NOT NULL default '2'"
             ],
         'strokecolor' =>
             [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['strokecolor'],
-            'default'                 => '',
+            'default'                 => 'ee0016',
             'inputType'               => 'text',
             'eval'                    => ['maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'long wizard', 'mandatory'=>false],
-            'sql'                     => "varchar(6) NOT NULL default ''"
+            'sql'                     => "varchar(6) NOT NULL default 'ee0016'"
             ],
         'strokeopacity' =>
             [
@@ -203,15 +203,15 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
             'default'                 => '100',
             'options'                 => ['%'],
             'eval'                    => ['rgxp'=>'prcnt', 'tl_class'=>'long', 'mandatory'=>false],
-            'sql'                     => "varchar(100) NOT NULL default ''"
+            'sql'                     => "varchar(100) NOT NULL default '100'"
             ],
         'fillcolor' =>
             [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['fillcolor'],
             'inputType'               => 'text',
-            'default'                 => '',
+            'default'                 => 'ee0011',
             'eval'                    => ['maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'long wizard'],
-            'sql'                     => "varchar(6) NOT NULL default ''"
+            'sql'                     => "varchar(6) NOT NULL default 'ee0011'"
             ],
         'fillopacity' =>
             [
@@ -220,7 +220,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
             'default'                 => '50',
             'options'                 => ['%'],
             'eval'                    => ['rgxp'=>'prcnt', 'tl_class'=>'long', 'mandatory'=>false],
-            'sql'                     => "varchar(100) NOT NULL default ''"
+            'sql'                     => "varchar(100) NOT NULL default '50'"
             ],
         'radius' =>
             [
@@ -424,10 +424,10 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
         'label_outl_color' =>
             [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_outl_color'],
-            'default'                 => '',
+            'default'                 => 'ee0016',
             'inputType'               => 'text',
             'eval'                    => ['maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'],
-            'sql'                     => "varchar(6) NOT NULL default ''"
+            'sql'                     => "varchar(6) NOT NULL default 'ee0016'"
             ],
         'label_outl_box' =>
             [
