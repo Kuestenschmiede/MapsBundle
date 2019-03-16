@@ -1043,7 +1043,7 @@ export class C4gLayerController{
                               contentFeature.set('loc_linkurl', layer.loc_linkurl);
                               contentFeature.set('hover_location', layer.hover_location);
                               contentFeature.set('hover_style', layer.hover_style);
-                              let popup = contentData['popup'] ? contentData['popup'] : $.extend({},layer.popup);
+                              let popup = contentData['popup'] ? contentData['popup'] : jQuery.extend({},layer.popup);
                               if(popup && popup.content && popup.content.search && popup.content.search('itemId')){
                                 popup.content = popup.content.replace('itemId',contentData['id']);
                               }

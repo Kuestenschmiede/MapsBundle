@@ -10,15 +10,6 @@
  * @link       https://www.con4gis.org
  */
 
-//for jslint
-/*jslint browser:true*/
-/*jslint todo:true */
-/*global window*/
-/*global ol*/
-/*global Browser*/
-/*global Document:true */
-/*global jQuery*/
-
 import {MapProxy} from "./c4g-maps-proxy";
 import {cssConstants} from "./c4g-maps-constant";
 import {Spinner} from "./c4g-maps-misc-spinner";
@@ -82,7 +73,7 @@ export class MapController {
       enableStarboard = true;
 
     //--
-    mapData = $.extend({
+    mapData = jQuery.extend({
       api: {},
       addIdToDiv: false,
       mapId: 1,
@@ -100,31 +91,31 @@ export class MapController {
       geosearch: {}
     }, mapData);
     if (mapData.calc_extent === 'LOCATIONS') {
-      mapData = $.extend({
+      mapData = jQuery.extend({
         min_gap: 25
       }, mapData);
     }
 
     // center
-    mapData.center = $.extend({
+    mapData.center = jQuery.extend({
       lat: 52.22,
       lon: 9.43,
       rotation: 0,
       zoom: 6
     }, mapData.center);
     // attribution
-    mapData.attribution = $.extend({
+    mapData.attribution = jQuery.extend({
       enable: true,
       collapsed: false,
       collapsible: true
     }, mapData.attribution);
     // geosearch
-    mapData.geosearch = $.extend({
+    mapData.geosearch = jQuery.extend({
       enable: false,
       div: false
     }, mapData.geosearch);
     // permalink
-    mapData.permalink = $.extend({
+    mapData.permalink = jQuery.extend({
       enable: false,
       get_parameter: false
     }, mapData.permalink);
@@ -429,7 +420,7 @@ export class MapController {
     // ---
 
     // save overlaycontainer
-    this.$overlaycontainer_stopevent = $('#' + mapData.mapDiv + ' .' + cssConstants.OL_OVERLAYCONTAINER_SE);
+    this.$overlaycontainer_stopevent = jQuery('#' + mapData.mapDiv + ' .' + cssConstants.OL_OVERLAYCONTAINER_SE);
     // add Spinner
     this.spinner = new Spinner({className: cssConstants.LARGE});
     // add mapHover
@@ -502,19 +493,19 @@ export class MapController {
     // bottom-left
     controlContainerBottomLeft = document.createElement('div');
     controlContainerBottomLeft.className = cssConstants.CONTROL_CONTAINER_BL + ' ' + cssConstants.OL_UNSELECTABLE;
-    $(controlContainerTopLeft).after(controlContainerBottomLeft);
+    jQuery(controlContainerTopLeft).after(controlContainerBottomLeft);
     // element needs to be moved when Portside will be opened
     this.leftSlideElements.push(controlContainerBottomLeft);
     // top-right
     controlContainerTopRight = document.createElement('div');
     controlContainerTopRight.className = cssConstants.CONTROL_CONTAINER_TR + ' ' + cssConstants.OL_UNSELECTABLE;
-    $(controlContainerBottomLeft).after(controlContainerTopRight);
+    jQuery(controlContainerBottomLeft).after(controlContainerTopRight);
     // element needs to be moved when Starboard will be opened
     this.rightSlideElements.push(controlContainerTopRight);
     // bottom-right
     controlContainerBottomRight = document.createElement('div');
     controlContainerBottomRight.className = cssConstants.CONTROL_CONTAINER_BR + ' ' + cssConstants.OL_UNSELECTABLE;
-    $(controlContainerTopRight).after(controlContainerBottomRight);
+    jQuery(controlContainerTopRight).after(controlContainerBottomRight);
     // element needs to be moved when Starboard will be opened
     this.rightSlideElements.push(controlContainerBottomRight);
     // ===
@@ -592,20 +583,20 @@ export class MapController {
 
     // combined zoom-controls
     if (mapData.zoom_slider) {
-      $('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM).addClass(cssConstants.OL_ZOOM_WITH_SLIDER).removeClass(cssConstants.OL_ZOOM);
-      $('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_IN).after($('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_SLIDER + ' button').addClass(cssConstants.OL_ZOOM_SLIDER));
-      $('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_SLIDER + '.' + cssConstants.OL_CONTROL).remove();
+      jQuery('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM).addClass(cssConstants.OL_ZOOM_WITH_SLIDER).removeClass(cssConstants.OL_ZOOM);
+      jQuery('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_IN).after(jQuery('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_SLIDER + ' button').addClass(cssConstants.OL_ZOOM_SLIDER));
+      jQuery('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_SLIDER + '.' + cssConstants.OL_CONTROL).remove();
     }
 
     if (mapData.zoom_panel && mapData.zoom_extent) {
-      $('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM).addClass(cssConstants.OL_ZOOM_WITH_EXT).removeClass(cssConstants.OL_ZOOM);
-      $('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_IN).after($('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_EXT + ' button').addClass(cssConstants.OL_ZOOM_EXT));
-      $('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_EXT + '.' + cssConstants.OL_CONTROL).remove();
+      jQuery('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM).addClass(cssConstants.OL_ZOOM_WITH_EXT).removeClass(cssConstants.OL_ZOOM);
+      jQuery('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_IN).after(jQuery('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_EXT + ' button').addClass(cssConstants.OL_ZOOM_EXT));
+      jQuery('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_EXT + '.' + cssConstants.OL_CONTROL).remove();
     }
 
     if (mapData.zoom_panel && mapData.zoom_home) {
-      $('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM).addClass(cssConstants.OL_ZOOM_WITH_HOME).removeClass(cssConstants.OL_ZOOM);
-      $('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_IN).after($('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_HOME + ' button').addClass(cssConstants.OL_ZOOM_HOME));
+      jQuery('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM).addClass(cssConstants.OL_ZOOM_WITH_HOME).removeClass(cssConstants.OL_ZOOM);
+      jQuery('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_IN).after(jQuery('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_HOME + ' button').addClass(cssConstants.OL_ZOOM_HOME));
       removeElement = controlContainerTopLeft.querySelector('.' + cssConstants.OL_ZOOM_HOME + '.' + cssConstants.OL_UNSELECTABLE + '.button');
       if (removeElement) {
         try {
@@ -617,9 +608,9 @@ export class MapController {
     }
 
     if (mapData.zoom_panel && mapData.zoom_position) {
-      $('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM).addClass(cssConstants.OL_ZOOM_WITH_POS).removeClass(cssConstants.OL_ZOOM);
-      $('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_IN).after($('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_POS + ' button').addClass(cssConstants.OL_ZOOM_POS));
-      $('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_POS + '.' + cssConstants.OL_CONTROL).remove();
+      jQuery('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM).addClass(cssConstants.OL_ZOOM_WITH_POS).removeClass(cssConstants.OL_ZOOM);
+      jQuery('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_IN).after(jQuery('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_POS + ' button').addClass(cssConstants.OL_ZOOM_POS));
+      jQuery('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_POS + '.' + cssConstants.OL_CONTROL).remove();
       removeElement = controlContainerTopLeft.querySelector('.' + cssConstants.OL_ZOOM_POS + '.' + cssConstants.OL_UNSELECTABLE + '.button');
       if (removeElement) {
         try {
@@ -730,7 +721,7 @@ export class MapController {
       // wrapper for zoom-level and mouse-position
       controlContainerBottomLeftSub = document.createElement('div');
       controlContainerBottomLeftSub.className = cssConstants.CONTROL_CONTAINER_BL_SUB + ' ' + cssConstants.OL_UNSELECTABLE;
-      $(controlContainerBottomLeft).append(controlContainerBottomLeftSub);
+      jQuery(controlContainerBottomLeft).append(controlContainerBottomLeftSub);
       // display zoom-level
       if (mapData.zoomlevel) {
         this.controls.zoomlevel = new Zoomlevel({

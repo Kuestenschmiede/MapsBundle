@@ -32,7 +32,7 @@ export class Spinner {
     options = opt_options || {};
 
     // default options
-    options = $.extend({
+    options = jQuery.extend({
       className: '',
       target: '.' + cssConstants.OL_VIEWPORT
     }, options);
@@ -43,7 +43,7 @@ export class Spinner {
 
     this.element = document.createElement('div');
     this.element.className = cssConstants.SPINNER + options.className + ' ' + cssConstants.HIDE;
-    $(options.target).append(this.element);
+    jQuery(options.target).append(this.element);
 
     spinnerSpan = document.createElement('span');
     spinnerSpan.className = cssConstants.ICON + ' ' + cssConstants.ANIMATION_SPIN;
@@ -54,19 +54,19 @@ export class Spinner {
   }
 
   show() {
-    if ($(this.element).hasClass(cssConstants.HIDE)) {
-      $(this.element).removeClass(cssConstants.HIDE);
+    if (jQuery(this.element).hasClass(cssConstants.HIDE)) {
+      jQuery(this.element).removeClass(cssConstants.HIDE);
     } else {
       this.additionalActivationCounter += 1;
     }
   }
 
   hide() {
-    if ($(this.element).hasClass(cssConstants.HIDE)) {
+    if (jQuery(this.element).hasClass(cssConstants.HIDE)) {
       //console.warn('Spinner is already hidden.');
     } else {
       if (this.additionalActivationCounter === 0) {
-        $(this.element).addClass(cssConstants.HIDE);
+        jQuery(this.element).addClass(cssConstants.HIDE);
       } else {
         this.additionalActivationCounter -= 1;
       }

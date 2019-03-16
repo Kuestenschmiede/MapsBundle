@@ -59,25 +59,25 @@ export class Layerswitcher {
       contentHeadline.innerHTML = (layerSwitcherTitle || langConstants.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER);
     }
     else {
-      $(contentHeadline).addClass("c4g-starboard-headline");
+      jQuery(contentHeadline).addClass("c4g-starboard-headline");
       contentHeadlineLink = document.createElement('a');
       contentHeadlineLink.onclick = function () {
-        if ($(this).hasClass("c4g-active") !== false) {
+        if (jQuery(this).hasClass("c4g-active") !== false) {
           for (var i = 0; i < self.proxy.layerIds.length; i++) {
             self.proxy.layerController.hideLayer(self.proxy.layerIds[i]);
           }
-          $(this).removeClass("c4g-active");
-          $(this).addClass("c4g-inactive");
+          jQuery(this).removeClass("c4g-active");
+          jQuery(this).addClass("c4g-inactive");
         }
         else {
           for (var i = 0; i < self.proxy.layerIds.length; i++) {
             self.proxy.layerController.showLayer(self.proxy.layerIds[i]);
           }
-          $(this).removeClass("c4g-inactive");
-          $(this).addClass("c4g-active");
+          jQuery(this).removeClass("c4g-inactive");
+          jQuery(this).addClass("c4g-active");
         }
       };
-      $(contentHeadlineLink).addClass("c4g-inactive c4g-starboard-headline-link");
+      jQuery(contentHeadlineLink).addClass("c4g-inactive c4g-starboard-headline-link");
       contentHeadlineLink.innerHTML = (layerSwitcherTitle || langConstants.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER);
       contentHeadlineLink.innerHTML = contentHeadlineLink.innerHTML + ' ';
       contentHeadline.appendChild(contentHeadlineLink);
@@ -154,7 +154,7 @@ export class Layerswitcher {
 
     fnDrawContent = function (layerIds) {
       self.treeControl = document.createElement('div');
-      $(self.treeControl).addClass(cssConstants.STARBOARD_LAYERTREE);
+      jQuery(self.treeControl).addClass(cssConstants.STARBOARD_LAYERTREE);
       self.setContent(self.treeControl);
 
       self.addItems(layerIds, self.treeControl);
@@ -208,7 +208,7 @@ export class Layerswitcher {
     self = this;
 
     options = options || {};
-    options = $.extend({
+    options = jQuery.extend({
       parseAsList: true
     }, options);
 
@@ -221,7 +221,7 @@ export class Layerswitcher {
 
       event.preventDefault();
 
-      itemUid = $(this).data('uid');
+      itemUid = jQuery(this).data('uid');
       layerItem = self.proxy.layerController.arrLayers[itemUid];
 
       if (self.proxy.activeLayerIds[itemUid]) {
@@ -251,26 +251,26 @@ export class Layerswitcher {
     }; // end of "fnHandleEntryClick()"
     fnChildEntryClick = function (event) {
       event.preventDefault();
-      let itemUid = $(this).data('uid');
-      let parent = $(this).parent().parent().parent();
-      let childs = $(parent).children();
-      let parentUid = $(childs[1]).data('uid');
-      if ($(this).hasClass(cssConstants.ACTIVE)) {
+      let itemUid = jQuery(this).data('uid');
+      let parent = jQuery(this).parent().parent().parent();
+      let childs = jQuery(parent).children();
+      let parentUid = jQuery(childs[1]).data('uid');
+      if (jQuery(this).hasClass(cssConstants.ACTIVE)) {
         self.proxy.layerController.hideChildLayer(parentUid, itemUid);
-        $(this).removeClass(cssConstants.ACTIVE).addClass(cssConstants.INACTIVE);
+        jQuery(this).removeClass(cssConstants.ACTIVE).addClass(cssConstants.INACTIVE);
       }
-      else if ($(this).hasClass(cssConstants.INACTIVE)) {
+      else if (jQuery(this).hasClass(cssConstants.INACTIVE)) {
         self.proxy.layerController.showChildLayer(parentUid, itemUid);
-        $(this).removeClass(cssConstants.INACTIVE).addClass(cssConstants.ACTIVE)
+        jQuery(this).removeClass(cssConstants.INACTIVE).addClass(cssConstants.ACTIVE)
       }
     };
     fnChildEntryShow = function (event) {
       event.preventDefault();
       let parent = this.parentElement;
-      let uid = $(parent.firstChild).data('uid');
-      parent = $(this).parent().parent().parent();
-      let childs = $(parent).children();
-      let parentUid = $(childs[1]).data('uid');
+      let uid = jQuery(parent.firstChild).data('uid');
+      parent = jQuery(this).parent().parent().parent();
+      let childs = jQuery(parent).children();
+      let parentUid = jQuery(childs[1]).data('uid');
       uid = uid.replace(parentUid, '')
       let layer = self.proxy.layerController.arrLayers[parentUid].vectorLayer;
       if (layer) {
@@ -458,7 +458,7 @@ export class Layerswitcher {
 
         if (layer && layer.display) {
           listItem = options.parseAsList ? document.createElement('li') : document.createElement('div');
-          $(listItem).data('noFilter', layer['noFilter']);
+          jQuery(listItem).data('noFilter', layer['noFilter']);
           item.entryWrappers = item.entryWrappers || [];
           item.entryWrappers.push(listItem);
 
@@ -467,7 +467,7 @@ export class Layerswitcher {
           entry.appendChild(document.createTextNode(layer.name));
           listItem.appendChild(entry);
 
-          $entry = $(entry);
+          $entry = jQuery(entry);
           item.$entries = item.$entries || [];
           item.$entries.push($entry);
 
@@ -482,23 +482,23 @@ export class Layerswitcher {
             toggle = document.createElement('span');
 
             if (layer.hide_child !== '1') {
-              $(listItem).addClass(cssConstants.CLOSE);
-              $(toggle).addClass(cssConstants.ICON);
+              jQuery(listItem).addClass(cssConstants.CLOSE);
+              jQuery(toggle).addClass(cssConstants.ICON);
             }
-            $(toggle).click(function () {
-              if ($(this).parent().hasClass(cssConstants.CLOSE)) {
-                $(this).parent().removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN);
+            jQuery(toggle).click(function () {
+              if (jQuery(this).parent().hasClass(cssConstants.CLOSE)) {
+                jQuery(this).parent().removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN);
               } else {
-                $(this).parent().removeClass(cssConstants.OPEN).addClass(cssConstants.CLOSE);
+                jQuery(this).parent().removeClass(cssConstants.OPEN).addClass(cssConstants.CLOSE);
               }
               if (self.proxy.options.mapController.rightSlideElements) {
                 self.proxy.options.mapController.rightSlideElements.forEach(function (element) {
-                  $(element).css('right', self.starboard.container.offsetWidth);
+                  jQuery(element).css('right', self.starboard.container.offsetWidth);
                 });
               }
-              $(self.starboard.element).css('right', self.starboard.container.offsetWidth);
+              jQuery(self.starboard.element).css('right', self.starboard.container.offsetWidth);
             });
-            $(toggle).insertBefore($entry);
+            jQuery(toggle).insertBefore($entry);
             childWrapper = options.parseAsList ? document.createElement('ul') : document.createElement('div');
             item.childWrappers = item.childWrappers || [];
             item.childWrappers.push(childWrapper);
@@ -519,7 +519,7 @@ export class Layerswitcher {
                   childEntry.appendChild(document.createTextNode(feature.properties[layer.geojson_attributes.split(',')[0]]));
                   childListItem.appendChild(childEntry);
                   let childUid = uid + "" + i;
-                  let $childEntry = $(childEntry);
+                  let $childEntry = jQuery(childEntry);
                   childItem.$entries = item.$entries || [];
                   childItem.$entries.push($entry);
                   childWrapper.appendChild(childListItem);
@@ -568,17 +568,17 @@ export class Layerswitcher {
             // layer is map itself with a layer
             toggle = document.createElement('span');
             if (layer.hide_child !== '1') {
-              $(listItem).addClass(cssConstants.CLOSE);
+              jQuery(listItem).addClass(cssConstants.CLOSE);
             }
-            $(toggle).addClass(cssConstants.ICON);
-            $(toggle).click(function () {
-              if ($(this).parent().hasClass(cssConstants.CLOSE)) {
-                $(this).parent().removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN);
+            jQuery(toggle).addClass(cssConstants.ICON);
+            jQuery(toggle).click(function () {
+              if (jQuery(this).parent().hasClass(cssConstants.CLOSE)) {
+                jQuery(this).parent().removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN);
               } else {
-                $(this).parent().removeClass(cssConstants.OPEN).addClass(cssConstants.CLOSE);
+                jQuery(this).parent().removeClass(cssConstants.OPEN).addClass(cssConstants.CLOSE);
               }
             });
-            $(toggle).insertBefore($entry);
+            jQuery(toggle).insertBefore($entry);
             childWrapper = options.parseAsList ? document.createElement('ul') : document.createElement('div');
             item.childWrappers = item.childWrappers || [];
             item.childWrappers.push(childWrapper);
@@ -594,11 +594,11 @@ export class Layerswitcher {
             layerClass = encodeURIComponent(
               idstr.toLowerCase()
             ).replace(/%[0-9A-F]{2}/gi, '');
-            $(listItem).addClass('c4g_starboard_item_' + layerClass);
+            jQuery(listItem).addClass('c4g_starboard_item_' + layerClass);
           }
 
           if (layer.cssClass) {
-            $(listItem).addClass(layer.cssClass);
+            jQuery(listItem).addClass(layer.cssClass);
           }
 
           // call hook "layerswitcher_forEachItem"
@@ -657,7 +657,7 @@ export class Layerswitcher {
               var isMatch = false;
 
               // search current LI for filter term
-              if (element.children[i].getElementsByTagName('a')[0].innerHTML.toUpperCase().indexOf(filter.value.toUpperCase()) >= 0 || $(element.children[i]).data('noFilter')) {
+              if (element.children[i].getElementsByTagName('a')[0].innerHTML.toUpperCase().indexOf(filter.value.toUpperCase()) >= 0 || jQuery(element.children[i]).data('noFilter')) {
                 // it's a match
                 isMatch = true;
               }
@@ -752,10 +752,10 @@ export class Layerswitcher {
    * @param entry
    */
   handleSelectedChilds(entry) {
-    if (this.checkChildSelections($(entry).data('uid')) >= 1) {
-      $(entry).css('font-weight', 'bold');
+    if (this.checkChildSelections(jQuery(entry).data('uid')) >= 1) {
+      jQuery(entry).css('font-weight', 'bold');
     } else {
-      $(entry).css('font-weight', 'normal');
+      jQuery(entry).css('font-weight', 'normal');
     }
     this.starboard.update();
     return true;
@@ -775,13 +775,13 @@ export class Layerswitcher {
         parentEntry = entry.parentNode.parentNode.parentNode.getElementsByTagName('a')[0];
         if (parentEntry) {
           if (this.proxy.activeLayerIds[clickedLayer.id]) {
-            $(parentEntry).css('font-weight', 'bold');
+            jQuery(parentEntry).css('font-weight', 'bold');
           } else {
-            if (this.checkChildSelections($(parentEntry).data('uid')) >= 1) {
-              $(parentEntry).css('font-weight', 'bold');
+            if (this.checkChildSelections(jQuery(parentEntry).data('uid')) >= 1) {
+              jQuery(parentEntry).css('font-weight', 'bold');
             } else {
-              $(parentEntry).css('font-weight', 'normal');
-              //$(parentEntry).addClass(cssConstants.INACTIVE);
+              jQuery(parentEntry).css('font-weight', 'normal');
+              //jQuery(parentEntry).addClass(cssConstants.INACTIVE);
             }
           }
           this.updateParentLayers(parentEntry, parentLayer.id, parentLayer);

@@ -42,7 +42,7 @@ export class Grid extends ol.control.Control {
 
     let langConstants = getLanguage(options.mapController.data);
     // default options
-    options = $.extend({
+    options = jQuery.extend({
       className: cssConstants.GRATICULE,
       switchable: true,
       tipLabel: langConstants.CTRL_GRID,
@@ -55,7 +55,7 @@ export class Grid extends ol.control.Control {
     // function to enable the grid
     var enable = function () {
       objGrid.setMap(self.getMap());
-      $(element).addClass(cssConstants.ENABLED);
+      jQuery(element).addClass(cssConstants.ENABLED);
       // if (options.caching) {
       //     c4g.maps.utils.storeValue('grid', '1');
       // }
@@ -64,7 +64,7 @@ export class Grid extends ol.control.Control {
     // function to disable the grid
     var disable = function () {
       objGrid.setMap(null);
-      $(element).removeClass(cssConstants.ENABLED);
+      jQuery(element).removeClass(cssConstants.ENABLED);
       // if (options.caching) {
       //     c4g.maps.utils.storeValue('grid', '0');
       // }

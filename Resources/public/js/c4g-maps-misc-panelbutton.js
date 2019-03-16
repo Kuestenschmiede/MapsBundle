@@ -14,11 +14,11 @@ this.c4g = this.c4g || {};
 this.c4g.maps = this.c4g.maps || {};
 this.c4g.maps.misc = this.c4g.maps.misc || {};
 
-(function($, c4g){
+(function(jQuery, c4g){
 
   c4g.maps.misc.Panelbutton = function(options) {
 
-    this.options = $.extend({
+    this.options = jQuery.extend({
       location: 'left',
       label: '',
       type: 'button',
@@ -30,7 +30,7 @@ this.c4g.maps.misc = this.c4g.maps.misc || {};
     this.create();
   };
 
-  c4g.maps.misc.Panelbutton.prototype = $.extend(c4g.maps.misc.Panelbutton.prototype, {
+  c4g.maps.misc.Panelbutton.prototype = jQuery.extend(c4g.maps.misc.Panelbutton.prototype, {
 
     create: function() {
 
@@ -42,14 +42,14 @@ this.c4g.maps.misc = this.c4g.maps.misc || {};
           this.element.innerHTML = this.options.label;
           if (this.options.eventlistener && this.options.eventlistener.eventtype && this.options.eventlistener.listener
             && typeof this.options.eventlistener.listener === 'function') {
-            $(this.element).on(this.options.eventlistener.eventtype, scope.options.eventlistener.listener);
+            jQuery(this.element).on(this.options.eventlistener.eventtype, scope.options.eventlistener.listener);
           }
           break;
         case 'input':
           this.element = document.createElement('input');
           this.element.placeholder = this.options.label;
           if (this.options.eventlistener && this.options.eventlistener.eventtype && this.options.eventlistener.listener) {
-            $(this.element).on(this.options.eventlistener.eventtype, this.options.eventlistener.listener);
+            jQuery(this.element).on(this.options.eventlistener.eventtype, this.options.eventlistener.listener);
           }
           break;
         case 'slider':
@@ -99,10 +99,10 @@ this.c4g.maps.misc = this.c4g.maps.misc || {};
       stateLength = 100 / (states.length);
       // the bar where sliding over is possible
       slidebar = document.createElement('div');
-      $(slidebar).addClass('c4g-panel-slidebar');
+      jQuery(slidebar).addClass('c4g-panel-slidebar');
       // the clickable element to move the slider
       slidebutton = document.createElement('button');
-      $(slidebutton).addClass('c4g-panel-slidebutton');
+      jQuery(slidebutton).addClass('c4g-panel-slidebutton');
       slidebar.appendChild(slidebutton);
       // start state
       defaultState = states[this.options.defaultState];
@@ -132,7 +132,7 @@ this.c4g.maps.misc = this.c4g.maps.misc || {};
       };
 
       // build up click handler
-      $slidebutton = $(slidebutton);
+      $slidebutton = jQuery(slidebutton);
       currentCursorX = 0;
 
       $slidebutton.on('mousedown', function(event) {
@@ -153,7 +153,7 @@ this.c4g.maps.misc = this.c4g.maps.misc || {};
           }
         });
         // unset move listener
-        $(docBody).on('mouseup', function(event) {
+        jQuery(docBody).on('mouseup', function(event) {
           $slidebutton.off('mousemove');
         });
       }); // end clickhandler
@@ -171,7 +171,7 @@ this.c4g.maps.misc = this.c4g.maps.misc || {};
         console.warn('cannot attach event listener without enough parameters...');
       }
 
-      $(this.element).on(type, listener);
+      jQuery(this.element).on(type, listener);
     }
   });
 

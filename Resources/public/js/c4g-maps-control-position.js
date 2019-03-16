@@ -34,7 +34,7 @@ export class Position extends ol.control.Control {
       button;
 
     // default options
-    options = $.extend({
+    options = jQuery.extend({
       className: cssConstants.OL_ZOOM_POS,
       switchable: true,
       enabled: true,
@@ -49,11 +49,11 @@ export class Position extends ol.control.Control {
     var mapData = options.mapController.data;
 
     var enable = function () {
-      $(element).addClass(cssConstants.ENABLED);
+      jQuery(element).addClass(cssConstants.ENABLED);
     };
 
     var disable = function () {
-      $(element).removeClass(cssConstants.ENABLED);
+      jQuery(element).removeClass(cssConstants.ENABLED);
     };
 
     var toggle = function (event) {

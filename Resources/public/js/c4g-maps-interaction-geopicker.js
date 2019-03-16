@@ -42,8 +42,8 @@ export class GeoPicker extends ol.interaction.Interaction {
     mapData = this.options.mapContainer.data;
     mapContainer = this.options.mapContainer;
     // configurate geopicker
-    this.$fieldGeoX = $(mapData.geopicker.input_geo_x);
-    this.$fieldGeoY = $(mapData.geopicker.input_geo_y);
+    this.$fieldGeoX = jQuery(mapData.geopicker.input_geo_x);
+    this.$fieldGeoY = jQuery(mapData.geopicker.input_geo_y);
 
     this.opticLayerSource = new ol.source.Vector({});
     this.opticLayerVector = new ol.layer.Vector({

@@ -89,7 +89,7 @@ export class C4gLocationStyleController{
                 if (options.always && typeof options.always === "function" && (index ? completed : true)) {
                     options.always();
                 }
-                if (!$(self.proxy.options.mapController.spinner.element).hasClass(cssConstants.HIDE)) {
+                if (!jQuery(self.proxy.options.mapController.spinner.element).hasClass(cssConstants.HIDE)) {
                     self.proxy.options.mapController.spinner.hide();
                 }
             }).fail(function (jqXHR, textStatus, errorThrown ) {

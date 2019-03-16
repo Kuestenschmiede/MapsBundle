@@ -29,7 +29,7 @@ export class Customtab {
       console.warn('Cannot initialize Project-tab without a starboard.');
       return false;
     }
-    projectConf = $.extend({
+    projectConf = jQuery.extend({
       tabId: null,
       name: "Customtab",
       awesomeicon: ''
@@ -85,25 +85,25 @@ export class Customtab {
       contentHeadline.innerHTML = (layerSwitcherTitle || langConstants.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER);
     }
     else {
-      $(contentHeadline).addClass("c4g-starboard-headline");
+      jQuery(contentHeadline).addClass("c4g-starboard-headline");
       contentHeadlineLink = document.createElement('a');
       contentHeadlineLink.onclick = function () {
-        if ($(this).hasClass("c4g-active") !== false) {
+        if (jQuery(this).hasClass("c4g-active") !== false) {
           for (var i = 0; i < self.proxy.layerIds.length; i++) {
             self.proxy.layerController.hideLayer(self.proxy.layerIds[i]);
           }
-          $(this).removeClass("c4g-active");
-          $(this).addClass("c4g-inactive");
+          jQuery(this).removeClass("c4g-active");
+          jQuery(this).addClass("c4g-inactive");
         }
         else {
           for (var i = 0; i < self.proxy.layerIds.length; i++) {
             self.proxy.layerController.showLayer(self.proxy.layerIds[i]);
           }
-          $(this).removeClass("c4g-inactive");
-          $(this).addClass("c4g-active");
+          jQuery(this).removeClass("c4g-inactive");
+          jQuery(this).addClass("c4g-active");
         }
       };
-      $(contentHeadlineLink).addClass("c4g-inactive c4g-starboard-headline-link");
+      jQuery(contentHeadlineLink).addClass("c4g-inactive c4g-starboard-headline-link");
       contentHeadlineLink.innerHTML = (layerSwitcherTitle || langConstants.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER);
       contentHeadlineLink.innerHTML = contentHeadlineLink.innerHTML + ' ';
       contentHeadline.appendChild(contentHeadlineLink);
@@ -204,7 +204,7 @@ export class Customtab {
 
     fnDrawContent = function (layerIds) {
       self.treeControl = document.createElement('div');
-      $(self.treeControl).addClass(cssConstants.STARBOARD_LAYERTREE);
+      jQuery(self.treeControl).addClass(cssConstants.STARBOARD_LAYERTREE);
       self.setContent(self.treeControl);
       self.addItems(layerIds, self.treeControl, {parseAsList: true});
       self.initialized = true;
@@ -239,7 +239,7 @@ export class Customtab {
       childWrapper;
 
     options = options || {};
-    options = $.extend({
+    options = jQuery.extend({
       parseAsList: true
     }, options);
 
@@ -250,16 +250,16 @@ export class Customtab {
 
       event.preventDefault();
       // "this" is the event sending entry
-      itemUid = $(this).data('uid');
+      itemUid = jQuery(this).data('uid');
       if (self.proxy.activeLayerIds[itemUid]) {
         // hide layer
-        $(this).removeClass(cssConstants.ACTIVE);
-        $(this).addClass(cssConstants.INACTIVE);
+        jQuery(this).removeClass(cssConstants.ACTIVE);
+        jQuery(this).addClass(cssConstants.INACTIVE);
         self.hideLayer(itemUid);
       } else {
         // show layer
-        $(this).removeClass(cssConstants.INACTIVE);
-        $(this).addClass(cssConstants.ACTIVE);
+        jQuery(this).removeClass(cssConstants.INACTIVE);
+        jQuery(this).addClass(cssConstants.ACTIVE);
         self.showLayer(itemUid);
       }
     };
@@ -341,7 +341,7 @@ export class Customtab {
         entry.setAttribute('href', '#');
         entry.appendChild(document.createTextNode(layer.layername || layer.name));
         listItem.appendChild(entry);
-        $entry = $(entry);
+        $entry = jQuery(entry);
         item.$entries = item.$entries || [];
         item.$entries.push($entry);
         $entry.data('uid', uid);
@@ -350,23 +350,23 @@ export class Customtab {
         // prepare insertion of childs
         if (layer.visibleChilds) {
           toggle = document.createElement('span');
-          $(listItem).addClass(cssConstants.CLOSE);
-          $(toggle).addClass(cssConstants.ICON);
-          $(toggle).click(function () {
-            if ($(this).parent().hasClass(cssConstants.CLOSE)) {
-              $(this).parent().removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN);
+          jQuery(listItem).addClass(cssConstants.CLOSE);
+          jQuery(toggle).addClass(cssConstants.ICON);
+          jQuery(toggle).click(function () {
+            if (jQuery(this).parent().hasClass(cssConstants.CLOSE)) {
+              jQuery(this).parent().removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN);
             } else {
-              $(this).parent().removeClass(cssConstants.OPEN).addClass(cssConstants.CLOSE);
+              jQuery(this).parent().removeClass(cssConstants.OPEN).addClass(cssConstants.CLOSE);
             }
             if (self.proxy.options.mapController.rightSlideElements) {
               self.proxy.options.mapController.rightSlideElements.forEach(function (element) {
-                $(element).css('right', self.starboard.container.offsetWidth);
+                jQuery(element).css('right', self.starboard.container.offsetWidth);
               });
             }
-            $(self.starboard.element).css('right', self.starboard.container.offsetWidth);
+            jQuery(self.starboard.element).css('right', self.starboard.container.offsetWidth);
 
           });
-          $(toggle).insertBefore($entry);
+          jQuery(toggle).insertBefore($entry);
           childWrapper = options.parseAsList ? document.createElement('ul') : document.createElement('div');
           item.childWrappers = item.childWrappers || [];
           item.childWrappers.push(childWrapper);

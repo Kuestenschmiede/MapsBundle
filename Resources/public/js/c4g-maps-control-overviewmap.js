@@ -33,7 +33,7 @@ export class OverviewMap {
 
     let langConstants = getLanguage(options.mapController.data);
     // default options
-    this.options = $.extend({
+    this.options = jQuery.extend({
       collapsed: true,
       tipLabel: langConstants.CTRL_OVERVIEWMAP,
       layers: [new ol.layer.Tile({source: new ol.source.OSM()})]
@@ -57,12 +57,12 @@ export class OverviewMap {
     triggerIcon.className = cssConstants.ICON;
     trigger.appendChild(triggerIcon);
 
-    $(trigger).click(function () {
-      if ($(element).hasClass(cssConstants.CLOSE)) {
-        $(element).removeClass(cssConstants.CLOSE)
+    jQuery(trigger).click(function () {
+      if (jQuery(element).hasClass(cssConstants.CLOSE)) {
+        jQuery(element).removeClass(cssConstants.CLOSE)
             .addClass(cssConstants.OPEN);
       } else {
-        $(element).addClass(cssConstants.CLOSE)
+        jQuery(element).addClass(cssConstants.CLOSE)
             .removeClass(cssConstants.OPEN);
       }
       try {
@@ -88,7 +88,7 @@ export class OverviewMap {
   }
 
   isOpen() {
-    if ($(this.element).hasClass(cssConstants.OPEN)) {
+    if (jQuery(this.element).hasClass(cssConstants.OPEN)) {
       return true;
     } else {
       return false;

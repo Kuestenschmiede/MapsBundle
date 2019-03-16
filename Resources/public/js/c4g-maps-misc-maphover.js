@@ -28,7 +28,7 @@ export class MapHover {
     this.options = options || {};
 
     // default options
-    this.options = $.extend({
+    this.options = jQuery.extend({
       // mapController: undefined,
       activate: true
     }, this.options);
@@ -133,7 +133,7 @@ export class MapHover {
       if (!hovered) {
         self.hoverTooltip.hide();
         canvas = document.querySelector("canvas");
-        $(canvas).css('cursor', 'default');
+        jQuery(canvas).css('cursor', 'default');
         if (mapData.hover_popups === '1' && mapData.hover_popups_stay != '1') {
           window.c4gMapsPopup.$popup.removeClass(c4g.maps.constant.css.ACTIVE);
         }
@@ -147,7 +147,7 @@ export class MapHover {
 
 
       canvas = document.querySelector("canvas");
-      $(canvas).css('cursor', 'pointer');
+      jQuery(canvas).css('cursor', 'pointer');
 
       if (hovered.feature && typeof hovered.feature.get === 'function' && hovered.feature.get('features')) {
         if (hovered.feature.get('features')[1]) {
@@ -376,7 +376,7 @@ export class MapHover {
             }
             proxy.setPopup(objPopup, proxy);
           } else {
-            $.ajax({
+            jQuery.ajax({
               dataType: "json",
               url: proxy.api_infowindow_url + '/' + popupInfos.content,
               done: function (data) {

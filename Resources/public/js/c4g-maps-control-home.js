@@ -35,7 +35,7 @@ export class Home extends ol.control.Control {
       button;
 
     // default options
-    options = $.extend({
+    options = jQuery.extend({
       className: cssConstants.OL_ZOOM_HOME,
       switchable: true,
       enabled: true,

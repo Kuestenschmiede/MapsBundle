@@ -28,7 +28,7 @@ export class Account extends Sideboard {
     super(opt_options);
     // extend options
     this.langConstants = getLanguage(opt_options.mapController.data);
-    this.options = $.extend({
+    this.options = jQuery.extend({
       className: cssConstants.ACCOUNT,
       name: 'account',
       headline: this.langConstants.ACCOUNT,

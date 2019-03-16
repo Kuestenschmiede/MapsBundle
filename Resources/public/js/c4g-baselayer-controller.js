@@ -152,7 +152,7 @@ export class C4gBaselayerController {
         if (sourceConfigs.osm[baseLayerConfig.style]) {
           newBaselayer = new ol.layer.Tile({
             source: new ol.source.OSM(
-              $.extend(
+              jQuery.extend(
                 sourceConfigs.osm[baseLayerConfig.style],
                 layerOptions
               )
@@ -185,7 +185,7 @@ export class C4gBaselayerController {
           // Stamen
           newBaselayer = new ol.layer.Tile({
             source: new ol.source.Stamen(
-              $.extend(
+              jQuery.extend(
                 sourceConfigs.stamen[baseLayerConfig.style],
                 layerOptions
               )
@@ -231,7 +231,7 @@ export class C4gBaselayerController {
         }else if(baseLayerConfig.hide_in_be){
           layerOptions.url = "con4gis/baseLayerTileService/" + baseLayerConfig.id + "/{z}/{x}/{y}";
           newBaselayer = new ol.layer.Tile({
-            source: new ol.source.XYZ($.extend(
+            source: new ol.source.XYZ(jQuery.extend(
               sourceConfigs.mapbox[baseLayerConfig.mapbox_type],
               layerOptions))
           });
@@ -304,7 +304,7 @@ export class C4gBaselayerController {
           }
 
           newBaselayer = new ol.layer.Tile({
-            source: new ol.source.XYZ($.extend(
+            source: new ol.source.XYZ(jQuery.extend(
               sourceConfigs.here[baseLayerConfig.here_type],
               layerOptions))
           });
@@ -312,7 +312,7 @@ export class C4gBaselayerController {
         else if(baseLayerConfig.hide_in_be){
           layerOptions.url = layerOptions.url = "con4gis/baseLayerTileService/" + baseLayerConfig.id + "/{z}/{x}/{y}";
           newBaselayer = new ol.layer.Tile({
-            source: new ol.source.XYZ($.extend(
+            source: new ol.source.XYZ(jQuery.extend(
               sourceConfigs.mapbox[baseLayerConfig.here_type],
               layerOptions))
           });

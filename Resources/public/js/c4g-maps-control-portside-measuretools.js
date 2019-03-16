@@ -31,7 +31,7 @@ export class Measuretools extends Sideboard {
     super(opt_options);
     // extend options
     this.langConstants = getLanguage(opt_options.mapController.data);
-    this.options = $.extend({
+    this.options = jQuery.extend({
       name: 'measure',
       headline: this.langConstants.MEASURETOOLS,
       create: true,
@@ -211,7 +211,7 @@ export class Measuretools extends Sideboard {
 
     self = this;
 
-    options = $.extend({
+    options = jQuery.extend({
       type: 'LineString'
     }, options);
 
@@ -337,7 +337,7 @@ export class Measuretools extends Sideboard {
           inputElement.name = 'measureElement_' + featureIdCount;
           inputElement.value = strType + ' ' + featureIdCount;
           // attach-change-handler
-          $(inputElement).change(function (event) {
+          jQuery(inputElement).change(function (event) {
             updateMeasureFeature(feature);
           });
           headlineElement.appendChild(inputElement);

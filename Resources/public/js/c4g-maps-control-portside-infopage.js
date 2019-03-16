@@ -28,7 +28,7 @@ export class Infopage extends Sideboard {
   constructor(opt_options) {
     super(opt_options);
     // extend options
-    this.options = $.extend({
+    this.options = jQuery.extend({
       className: cssConstants.INFOPAGE,
       name: 'infopage',
       headline: this.langConstants.INFOPAGE,

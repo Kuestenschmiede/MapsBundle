@@ -37,7 +37,7 @@ export class Permalink extends ol.control.Control {
 
     let langConstants = getLanguage(options.mapController.data);
     // default options
-    this.config = $.extend({
+    this.config = jQuery.extend({
       className: cssConstants.PERMALINK,
       // mapController: undefined,
       tipLabel: langConstants.CTRL_PERMALINK,
@@ -62,7 +62,7 @@ export class Permalink extends ol.control.Control {
     // set onClick to the toggle-function
     // button.addEventListener('click', this.toggle, false);
     // button.addEventListener('touchstart', this.toggle, false);
-    $(button).click(function () {
+    jQuery(button).click(function () {
       try {
         this.blur();
       } catch (ignore) {
@@ -95,7 +95,7 @@ export class Permalink extends ol.control.Control {
     refreshButton = document.createElement('button');
     refreshButton.className = cssConstants.REFRESH + ' ' + cssConstants.ICON;
     refreshButton.title = langConstants.REFRESH;
-    $(refreshButton).click(function () {
+    jQuery(refreshButton).click(function () {
       self.generateLinkFromCurrentState({target: self.textfield});
     });
     this.popup.appendChild(refreshButton);
@@ -109,22 +109,22 @@ export class Permalink extends ol.control.Control {
 
   open() {
     if (!this.popupAttached) {
-      $(this.popup).slideDown(1);
+      jQuery(this.popup).slideDown(1);
       this.config.target.appendChild(this.popup);
       this.popupAttached = true;
     }
-    $(this.popup).removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN);
-    $(this.element).addClass(cssConstants.OPEN);
+    jQuery(this.popup).removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN);
+    jQuery(this.element).addClass(cssConstants.OPEN);
     this.generateLinkFromCurrentState({target: this.textfield});
   }
 
   close() {
-    $(this.popup).removeClass(cssConstants.OPEN).addClass(cssConstants.CLOSE);
-    $(this.element).removeClass(cssConstants.OPEN);
+    jQuery(this.popup).removeClass(cssConstants.OPEN).addClass(cssConstants.CLOSE);
+    jQuery(this.element).removeClass(cssConstants.OPEN);
   }
 
   toggle() {
-    if ($(this.popup).hasClass(cssConstants.CLOSE)) {
+    if (jQuery(this.popup).hasClass(cssConstants.CLOSE)) {
       this.open();
     } else {
       this.close();

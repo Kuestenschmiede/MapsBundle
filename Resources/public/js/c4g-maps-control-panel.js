@@ -15,7 +15,7 @@ this.c4g = this.c4g || {};
 this.c4g.maps = this.c4g.maps || {};
 this.c4g.maps.control = this.c4g.maps.control || {};
 
-(function($, c4g) {
+(function(jQuery, c4g) {
 
   'use strict';
   /**
@@ -25,7 +25,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
    * @constructor
    */
   c4g.maps.control.Panel = function(options, opt_buttons) {
-    this.options = $.extend({
+    this.options = jQuery.extend({
       mapController: undefined,
       name: 'panel',
       direction: 'top',
@@ -36,7 +36,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
     }, options);
     this.listenerKeys = [];
     this.element = document.createElement('div');
-    $(this.element).addClass('ol-control');
+    jQuery(this.element).addClass('ol-control');
 
     if (opt_buttons) {
       this.buttons = opt_buttons;
@@ -74,7 +74,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
   ol.inherits(c4g.maps.control.Panel, ol.control.Control);
 
   // add methods
-  c4g.maps.control.Panel.prototype = $.extend(c4g.maps.control.Panel.prototype, {
+  c4g.maps.control.Panel.prototype = jQuery.extend(c4g.maps.control.Panel.prototype, {
 
     /**
      * Builds up the html elements and structures.
@@ -109,24 +109,24 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       // set container attributes
       this.container.style.minHeight = '100px';
       this.container.style[this.options.direction] = '-1920px';
-      $(this.container).addClass(this.cssName + ' ' + this.cssName + '-container ' + c4g.maps.constant.css.CLOSE);
+      jQuery(this.container).addClass(this.cssName + ' ' + this.cssName + '-container ' + c4g.maps.constant.css.CLOSE);
 
       if (formNeeded) {
         //set main form attributes
-        $(this.mainForm).addClass(this.cssName + ' c4g-panel-main-form');
+        jQuery(this.mainForm).addClass(this.cssName + ' c4g-panel-main-form');
       }
       //set left wrapper attributes
-      $(this.leftButtonWrapper).addClass(this.cssName + ' c4g-panel-left-wrapper c4g-panel-button-wrapper');
+      jQuery(this.leftButtonWrapper).addClass(this.cssName + ' c4g-panel-left-wrapper c4g-panel-button-wrapper');
       //set mid wrapper attributes
-      $(this.midButtonWrapper).addClass(this.cssName + ' c4g-panel-mid-wrapper c4g-panel-button-wrapper');
+      jQuery(this.midButtonWrapper).addClass(this.cssName + ' c4g-panel-mid-wrapper c4g-panel-button-wrapper');
       //set right wrapper attributes
-      $(this.rightButtonWrapper).addClass(this.cssName + ' c4g-panel-right-wrapper c4g-panel-button-wrapper');
-      $(this.contentWrapper).addClass(this.cssName + ' c4g-panel-content-wrapper');
+      jQuery(this.rightButtonWrapper).addClass(this.cssName + ' c4g-panel-right-wrapper c4g-panel-button-wrapper');
+      jQuery(this.contentWrapper).addClass(this.cssName + ' c4g-panel-content-wrapper');
 
 
       // set button to toggle the panel
       this.button = document.createElement('button');
-      $(this.button).on('click', function (event) {
+      jQuery(this.button).on('click', function (event) {
         event.stopPropagation();
         // loose focus, otherwise it looks messy
         try {
@@ -139,7 +139,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       }); // end of clickhandler
 
       this.button.title = this.options.tipLabel;
-      //$(this.button).addClass('ol-control');
+      //jQuery(this.button).addClass('ol-control');
       this.element.appendChild(this.button);
 
       /**
@@ -151,7 +151,7 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       for (key in this.buttons) {
         if (this.buttons.hasOwnProperty(key)) {
           button = this.buttons[key];
-          $(button.getElement()).addClass(this.cssName + ' c4g-panel-button');
+          jQuery(button.getElement()).addClass(this.cssName + ' c4g-panel-button');
           this[button.getSection() + "ButtonWrapper"].appendChild(button.getElement());
         }
       }
@@ -183,17 +183,17 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       portside = this.options.mapController.activePortside;
 
       containerOffsetHeight = this.container.offsetHeight;
-      $(this.container).removeClass(c4g.maps.constant.css.CLOSE).addClass(c4g.maps.constant.css.OPEN).css(this.options.direction, 0);
+      jQuery(this.container).removeClass(c4g.maps.constant.css.CLOSE).addClass(c4g.maps.constant.css.OPEN).css(this.options.direction, 0);
       this.slideElements.forEach(function (element) {
-        $(element).css(scope.options.direction, containerOffsetHeight);
+        jQuery(element).css(scope.options.direction, containerOffsetHeight);
       });
 
       // resize starboard, if open
       if (starboard) {
         curStarboardHeight = starboard.container.offsetHeight;
         newStarboardHeight = curStarboardHeight - containerOffsetHeight;
-        $(starboard.container).css('top', containerOffsetHeight);
-        $(starboard.container).css('height', newStarboardHeight);
+        jQuery(starboard.container).css('top', containerOffsetHeight);
+        jQuery(starboard.container).css('height', newStarboardHeight);
       }
 
       var resizePortsideOpen = function() {
@@ -201,8 +201,8 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
         currentHeight = this.container.offsetHeight;
         newHeight = currentHeight - containerOffsetHeight;
-        $(this.container).css('height', newHeight);
-        $(this.container).css('top', containerOffsetHeight);
+        jQuery(this.container).css('height', newHeight);
+        jQuery(this.container).css('top', containerOffsetHeight);
       };
 
       if (this.options.mapController.controls.editor) {
@@ -221,8 +221,8 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       if (portside) {
         curPortsideHeight = portside.container.offsetHeight;
         newPortsideHeight = curPortsideHeight - containerOffsetHeight;
-        $(portside.container).css('height', newPortsideHeight);
-        $(portside.container).css('top', containerOffsetHeight);
+        jQuery(portside.container).css('height', newPortsideHeight);
+        jQuery(portside.container).css('top', containerOffsetHeight);
         portside.update();
       }
     },// end of open()
@@ -242,18 +242,18 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       portside = this.options.mapController.activePortside;
 
       containerOffsetHeight = this.container.offsetHeight;
-      $(this.container).removeClass(c4g.maps.constant.css.OPEN).addClass(c4g.maps.constant.css.CLOSE).css(this.options.direction, -containerOffsetHeight);
-      $(this.element).removeClass(c4g.maps.constant.css.OPEN).addClass(c4g.maps.constant.css.CLOSE).css(this.options.direction, 0);
+      jQuery(this.container).removeClass(c4g.maps.constant.css.OPEN).addClass(c4g.maps.constant.css.CLOSE).css(this.options.direction, -containerOffsetHeight);
+      jQuery(this.element).removeClass(c4g.maps.constant.css.OPEN).addClass(c4g.maps.constant.css.CLOSE).css(this.options.direction, 0);
 
       this.slideElements.forEach(function (element) {
-        $(element).css(scope.options.direction, 0);
+        jQuery(element).css(scope.options.direction, 0);
       });
 
       // resize starboard, if open
       if (starboard) {
         newStarboardHeight = starboard.container.offsetHeight + containerOffsetHeight;
-        $(starboard.container).css('height', newStarboardHeight);
-        $(starboard.container).css('top', 0);
+        jQuery(starboard.container).css('height', newStarboardHeight);
+        jQuery(starboard.container).css('top', 0);
       }
 
       var resizePortsideClose = function() {
@@ -261,8 +261,8 @@ this.c4g.maps.control = this.c4g.maps.control || {};
 
         currentHeight = this.container.offsetHeight;
         newHeight = currentHeight + containerOffsetHeight;
-        $(this.container).css('height', newHeight);
-        $(this.container).css('top', 0);
+        jQuery(this.container).css('height', newHeight);
+        jQuery(this.container).css('top', 0);
       };
 
       if (this.options.mapController.controls.editor) {
@@ -284,13 +284,13 @@ this.c4g.maps.control = this.c4g.maps.control || {};
       if (portside) {
         curPortsideHeight = portside.container.offsetHeight;
         newPortsideHeight = curPortsideHeight + containerOffsetHeight;
-        $(portside.container).css('height', newPortsideHeight);
-        $(portside.container).css('top', 0);
+        jQuery(portside.container).css('height', newPortsideHeight);
+        jQuery(portside.container).css('top', 0);
       }
     }, // end of close()
 
     toggle: function() {
-      if ($(this.container).hasClass(c4g.maps.constant.css.CLOSE)) {
+      if (jQuery(this.container).hasClass(c4g.maps.constant.css.CLOSE)) {
         this.open();
       } else {
         this.close();

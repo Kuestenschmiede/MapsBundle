@@ -28,7 +28,7 @@ export class Zoomlevel extends ol.control.Control {
     }
 
     // default options
-    options = $.extend({
+    options = jQuery.extend({
       className: cssConstants.ZOOM_LEVEL,
       undefinedHTML: ''
     }, options);

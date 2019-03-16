@@ -33,7 +33,7 @@ export class TooltipPopUp {
     this.options = opt_options || {};
 
     // default options
-    this.options = $.extend({
+    this.options = jQuery.extend({
       // className: ''
       // closeFunction: null
       // map: null
@@ -63,7 +63,7 @@ export class TooltipPopUp {
       closeButton.className = cssConstants.ICON + ' ' + cssConstants.POPUP_CLOSE;
       this.element.appendChild(closeButton);
 
-      $(closeButton).click(function () {
+      jQuery(closeButton).click(function () {
         self.close();
       });
     }
@@ -104,8 +104,8 @@ export class TooltipPopUp {
    * @return  {[type]}  [description]
    */
   show () {
-    if ($(this.element).hasClass(cssConstants.HIDE)) {
-      $(this.element).removeClass(cssConstants.HIDE);
+    if (jQuery(this.element).hasClass(cssConstants.HIDE)) {
+      jQuery(this.element).removeClass(cssConstants.HIDE);
     }
   }
 
@@ -116,8 +116,8 @@ export class TooltipPopUp {
    * @return  {[type]}  [description]
    */
   hide () {
-    if (!$(this.element).hasClass(cssConstants.HIDE)) {
-      $(this.element).addClass(cssConstants.HIDE);
+    if (!jQuery(this.element).hasClass(cssConstants.HIDE)) {
+      jQuery(this.element).addClass(cssConstants.HIDE);
     }
   }
 

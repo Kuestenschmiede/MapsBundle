@@ -28,7 +28,7 @@ export class Starboard extends Sideboard {
   constructor(opt_options) {
     //call Sideboard (parent) constructor
     super(opt_options);
-    this.options = $.extend({
+    this.options = jQuery.extend({
       create: true,
       extDiv: false,
       defaultOpen: false,

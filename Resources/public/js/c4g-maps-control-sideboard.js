@@ -29,7 +29,7 @@ export class Sideboard extends ol.control.Control {
    */
   constructor(options) {
     super(options);
-    this.options = $.extend({
+    this.options = jQuery.extend({
       create: true,
       extDiv: false,
       defaultOpen: false,
@@ -117,7 +117,7 @@ export class Sideboard extends ol.control.Control {
       this.options.mapController["active" + this.identifier] = this.options.mapController["active" + this.identifier] || false;
 
       this.button = document.createElement('button');
-      $(this.button).on('click', function (event) {
+      jQuery(this.button).on('click', function (event) {
         event.stopPropagation();
         // loose focus, otherwise it looks messy
         try {
@@ -138,8 +138,8 @@ export class Sideboard extends ol.control.Control {
     }
 
     // Set attributes
-    $(this.container).addClass('c4g-' + this.options.name + ' ' + 'c4g-' + this.cssname + '-container' + ' ' + cssConstants.OL_UNSELECTABLE + initClass);
-    $(this.element).addClass('c4g-' + this.options.name + ' ' + 'c4g-' + this.cssname + '-control' + ' ' + cssConstants.OL_UNSELECTABLE + ' ' + cssConstants.OL_CONTROL + initClass);
+    jQuery(this.container).addClass('c4g-' + this.options.name + ' ' + 'c4g-' + this.cssname + '-container' + ' ' + cssConstants.OL_UNSELECTABLE + initClass);
+    jQuery(this.element).addClass('c4g-' + this.options.name + ' ' + 'c4g-' + this.cssname + '-control' + ' ' + cssConstants.OL_UNSELECTABLE + ' ' + cssConstants.OL_CONTROL + initClass);
 
     // Set initial dimensions
     if (this.options.direction === 'right') {
@@ -158,7 +158,7 @@ export class Sideboard extends ol.control.Control {
       //     this.options.mapController["active" + this.identifier] = this;
     } else {
       if (this.options.direction === 'left') {
-        $('#' + this.options.mapController.map.getTarget() + ' > div > div.' + cssConstants.OL_OVERLAYCONTAINER_SE).append(this.container);
+        jQuery('#' + this.options.mapController.map.getTarget() + ' > div > div.' + cssConstants.OL_OVERLAYCONTAINER_SE).append(this.container);
       } else {
         this.options.mapController.$overlaycontainer_stopevent.append(this.container);
       }
@@ -231,7 +231,7 @@ export class Sideboard extends ol.control.Control {
       hideButton = document.createElement('button');
       hideButton.className = cssConstants.PORTSIDE_HIDE;
       hideButton.title = this.langConstants.HIDE;
-      $(hideButton).click(function (event) {
+      jQuery(hideButton).click(function (event) {
         event.preventDefault();
         self.close(true);
         return false;
@@ -243,7 +243,7 @@ export class Sideboard extends ol.control.Control {
     closeButton = document.createElement('button');
     closeButton.className = 'c4g-' + this.cssname + '-close';
     closeButton.title = this.langConstants.CLOSE;
-    $(closeButton).click(function (event) {
+    jQuery(closeButton).click(function (event) {
       event.preventDefault();
       self.close();
       return false;
@@ -259,7 +259,7 @@ export class Sideboard extends ol.control.Control {
     // Handle external DIV and default state
     // catch touch events and stop their propagation
     // otherwise touch-scrolling will be stopped by ol3
-    $(this.container).on('touchstart touchmove touchend', function (event) {
+    jQuery(this.container).on('touchstart touchmove touchend', function (event) {
       event.stopPropagation();
     });
 
@@ -295,7 +295,7 @@ export class Sideboard extends ol.control.Control {
         capitalizedName = utils.capitalizeFirstLetter(this.options.name);
     }*/
 
-    contentContainerOuterHeight = $(this.wrapper).height() - ($(this.titleBar).outerHeight(true) + $(this.statusBar).outerHeight(true));
+    contentContainerOuterHeight = jQuery(this.wrapper).height() - (jQuery(this.titleBar).outerHeight(true) + jQuery(this.statusBar).outerHeight(true));
     if (this.options && this.options.direction && this.options.direction != "undefined" && this.options.direction === 'left') {
       if (this !== this.options.mapController["active" + this.identifier]) {
         containerOffsetWidth = 0;
@@ -307,7 +307,7 @@ export class Sideboard extends ol.control.Control {
       if (this.topToolbar.innerHTML) {
         // this.topToolbar.style.display = 'block';
         this.topToolbar.style.display = '';
-        contentContainerOuterHeight -= $(this.topToolbar).outerHeight(true);
+        contentContainerOuterHeight -= jQuery(this.topToolbar).outerHeight(true);
       } else {
         this.topToolbar.style.display = 'none';
       }
@@ -318,14 +318,14 @@ export class Sideboard extends ol.control.Control {
       if (this.bottomToolbar.innerHTML) {
         // this.bottomToolbar.style.display = 'block';
         this.bottomToolbar.style.display = '';
-        contentContainerOuterHeight -= $(this.bottomToolbar).outerHeight(true);
+        contentContainerOuterHeight -= jQuery(this.bottomToolbar).outerHeight(true);
       } else {
         this.bottomToolbar.style.display = 'none';
       }
     }
 
     // Content-container
-    $(this.contentContainer).outerHeight(contentContainerOuterHeight);
+    jQuery(this.contentContainer).outerHeight(contentContainerOuterHeight);
 
     // Correct width
     if (this.options) {
@@ -333,12 +333,12 @@ export class Sideboard extends ol.control.Control {
         //this.container.style.width = 'auto';
         containerOffsetWidth = this.container.offsetWidth;
         this.options.mapController[this.options.direction + "SlideElements"].forEach(function (element) {
-          $(element).css(self.options.direction, containerOffsetWidth);
+          jQuery(element).css(self.options.direction, containerOffsetWidth);
         });
 
         //only move the toggle button on starboard elements
         if (this.options.direction === 'right') {
-          $(this.element).css(this.options.direction, containerOffsetWidth);
+          jQuery(this.element).css(this.options.direction, containerOffsetWidth);
         }
 
       }
@@ -387,15 +387,15 @@ export class Sideboard extends ol.control.Control {
       } else {
         // slide other elements when no other sideboard was active on this side
         this.options.mapController[this.options.direction + "SlideElements"].forEach(function (element) {
-          $(element).css(self.options.direction, containerOffsetWidth);
+          jQuery(element).css(self.options.direction, containerOffsetWidth);
         });
       }
 
-      $(this.container).removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN).css(this.options.direction, 0);
+      jQuery(this.container).removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN).css(this.options.direction, 0);
       if (this.options.direction === 'left') {
-        $(this.element).removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN);
+        jQuery(this.element).removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN);
       } else {
-        $(this.element).removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN).css(this.options.direction, containerOffsetWidth);
+        jQuery(this.element).removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN).css(this.options.direction, containerOffsetWidth);
       }
 
       // set this as active Sideboard
@@ -406,16 +406,16 @@ export class Sideboard extends ol.control.Control {
         this.activeView.activate();
       }
 
-      if ($(this.statusBar).hasClass(cssConstants.CLOSE)) {
-        $(this.statusBar).removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN);
+      if (jQuery(this.statusBar).hasClass(cssConstants.CLOSE)) {
+        jQuery(this.statusBar).removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN);
       }
 
-      if ($(this.bottomToolbar).hasClass(cssConstants.CLOSE)) {
-        $(this.bottomToolbar).removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN);
+      if (jQuery(this.bottomToolbar).hasClass(cssConstants.CLOSE)) {
+        jQuery(this.bottomToolbar).removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN);
       }
 
       // show container to fix resizing issue
-      $(this.container).css('visibility', 'visible');
+      jQuery(this.container).css('visibility', 'visible');
 
       this.update();
       if (this.options.caching) {
@@ -472,18 +472,18 @@ export class Sideboard extends ol.control.Control {
         console.warn('This ' + this.options.name + '-element (' + this.options.name + ') is already closed.');
         return false;
       }
-      $(this.container).removeClass(cssConstants.OPEN).addClass(cssConstants.CLOSE).css(direction, -containerOffsetWidth);
-      $(this.element).removeClass(cssConstants.OPEN).addClass(cssConstants.CLOSE).css(direction, 0);
+      jQuery(this.container).removeClass(cssConstants.OPEN).addClass(cssConstants.CLOSE).css(direction, -containerOffsetWidth);
+      jQuery(this.element).removeClass(cssConstants.OPEN).addClass(cssConstants.CLOSE).css(direction, 0);
 
       if (!opt_openOtherSideboard) {
         // slide other elements
         this.options.mapController[direction + "SlideElements"].forEach(function (element) {
-          $(element).css(direction, 0);
+          jQuery(element).css(direction, 0);
         });
       }
 
       // hide container to fix resizing issue
-      $(this.container).css('visibility', 'hidden');
+      jQuery(this.container).css('visibility', 'hidden');
 
       // check if a view needs to be deactivated
       if (this.activeView) {
@@ -526,7 +526,7 @@ export class Sideboard extends ol.control.Control {
     var options,
       button;
 
-    options = $.extend({
+    options = jQuery.extend({
       label: undefined,
       tipLabel: undefined,
       className: '',
@@ -555,7 +555,7 @@ export class Sideboard extends ol.control.Control {
     }
 
     if (typeof options.clickAction === 'function') {
-      $(button).click(function () {
+      jQuery(button).click(function () {
         try {
           this.blur();
         } catch (e) {
@@ -566,7 +566,7 @@ export class Sideboard extends ol.control.Control {
     }
 
     if (options.target) {
-      $(options.target).append(button);
+      jQuery(options.target).append(button);
     }
 
     return button;
@@ -584,7 +584,7 @@ export class Sideboard extends ol.control.Control {
       section,
       element;
 
-    options = $.extend({
+    options = jQuery.extend({
       type: 'div',
       className: '',
       target: undefined
@@ -648,7 +648,7 @@ export class Sideboard extends ol.control.Control {
     self = this;
     viewScope = opt_viewScope || this;
 
-    options = $.extend({
+    options = jQuery.extend({
       // name: undefined,
       triggerConfig: undefined, // @TODO doku format: {opt_target: [string|htmlObject], opt_className: [string], opt_tipLabel: [string]}
       sectionElements: [], // @TODO doku format: [{section: [sectionObject], element: [elementObject]}]
@@ -708,7 +708,7 @@ export class Sideboard extends ol.control.Control {
 
       // Change trigger-state, if existent
       if (trigger) {
-        $(trigger).addClass('c4g-active');
+        jQuery(trigger).addClass('c4g-active');
       }
 
       // Call activate function, if existent
@@ -729,7 +729,7 @@ export class Sideboard extends ol.control.Control {
 
       if (typeof viewScope.activeView === 'object' && viewScope.activeView === view) {
         if (trigger && !view.paused) {
-          $(trigger).removeClass('c4g-active');
+          jQuery(trigger).removeClass('c4g-active');
         }
 
         // Handle sub-views
@@ -748,7 +748,7 @@ export class Sideboard extends ol.control.Control {
 
 
     if (typeof options.triggerConfig === 'object') {
-      options.triggerConfig = $.extend({
+      options.triggerConfig = jQuery.extend({
         target: this.viewTriggerBar,
         tipLabel: options.name,
       }, options.triggerConfig);

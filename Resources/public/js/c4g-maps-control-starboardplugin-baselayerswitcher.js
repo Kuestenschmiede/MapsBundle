@@ -125,7 +125,7 @@ export class Baselayerswitcher {
 
     fnDrawContent = function (baselayerIds) {
       self.baseLayerControl = document.createElement('div');
-      $(self.baseLayerControl).addClass(cssConstants.STARBOARD_BASELAYERTREE);
+      jQuery(self.baseLayerControl).addClass(cssConstants.STARBOARD_BASELAYERTREE);
       self.setContent(self.baseLayerControl);
 
       self.addItems(baselayerIds, self.baseLayerControl);
@@ -190,36 +190,36 @@ export class Baselayerswitcher {
       var itemUid,
         siblings,
         baselayerItem;
-      siblings = $(this).parent().siblings();
+      siblings = jQuery(this).parent().siblings();
       for (var i = 0; i < siblings.length; i++) {
-        if (siblings[i] && $(siblings[i]).hasClass(cssConstants.OPEN)) {
+        if (siblings[i] && jQuery(siblings[i]).hasClass(cssConstants.OPEN)) {
           if (self.proxy.baselayerController.arrBaselayers[self.proxy.activeBaselayerId] && self.proxy.baselayerController.arrBaselayers[self.proxy.activeBaselayerId].hasOverlays) {
             for (let j in self.proxy.baselayerController.arrBaselayers[self.proxy.activeBaselayerId].overlayController.arrOverlays) {
               if (self.proxy.baselayerController.arrBaselayers[self.proxy.activeBaselayerId].overlayController.arrOverlays.hasOwnProperty(j))
                 self.proxy.options.mapController.map.removeLayer(self.proxy.baselayerController.arrBaselayers[self.proxy.activeBaselayerId].overlayController.arrOverlays[j].layer);
             }
           }
-          $(siblings[i]).removeClass(cssConstants.OPEN).addClass(cssConstants.CLOSE);
+          jQuery(siblings[i]).removeClass(cssConstants.OPEN).addClass(cssConstants.CLOSE);
         }
       }
-      itemUid = $(this).data('uid');
+      itemUid = jQuery(this).data('uid');
 
       if (self.starboard.options.caching) {
         utils.storeValue('baselayer', itemUid);
       }
 
-      if ($(this).parent().hasClass(cssConstants.CLOSE)) {
-        $(this).parent().removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN);
+      if (jQuery(this).parent().hasClass(cssConstants.CLOSE)) {
+        jQuery(this).parent().removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN);
       } else {
-        $(this).parent().removeClass(cssConstants.OPEN).addClass(cssConstants.CLOSE);
+        jQuery(this).parent().removeClass(cssConstants.OPEN).addClass(cssConstants.CLOSE);
       }
 
       if (self.proxy.options.mapController.rightSlideElements) {
         self.proxy.options.mapController.rightSlideElements.forEach(function (element) {
-          $(element).css('right', self.starboard.container.offsetWidth);
+          jQuery(element).css('right', self.starboard.container.offsetWidth);
         });
       }
-      $(self.starboard.element).css('right', self.starboard.container.offsetWidth);
+      jQuery(self.starboard.element).css('right', self.starboard.container.offsetWidth);
 
       if (self.proxy.activeBaselayerId !== itemUid) {
         self.proxy.baselayerController.showBaseLayer(itemUid);
@@ -237,7 +237,7 @@ export class Baselayerswitcher {
             }
           }
         }
-        $(this).addClass(cssConstants.ACTIVE).removeClass(cssConstants.INACTIVE);
+        jQuery(this).addClass(cssConstants.ACTIVE).removeClass(cssConstants.INACTIVE);
         window.c4gMapsHooks.baselayer_changed = window.c4gMapsHooks.baselayer_changed || [];
         utils.callHookFunctions(window.c4gMapsHooks.baselayer_changed, itemUid);
       }
@@ -272,7 +272,7 @@ export class Baselayerswitcher {
         entry = document.createElement('a');
         entry.setAttribute('href', '#');
         entry.appendChild(document.createTextNode(self.proxy.baselayerController.arrBaselayers[uid].name));
-        $(entry).data('id', uid);
+        jQuery(entry).data('id', uid);
         if (self.proxy.baselayerController.arrBaselayers[uid].hasOverlays) {
 
 
@@ -282,17 +282,17 @@ export class Baselayerswitcher {
             childItem = options.parseAsList ? document.createElement('li') : document.createElement('div');
             childEntry = document.createElement('a');
             if (self.proxy.activeBaselayerId === uid) {
-              $(childEntry).addClass(cssConstants.ACTIVE);
+              jQuery(childEntry).addClass(cssConstants.ACTIVE);
               let overlayId = self.proxy.baselayerController.arrBaselayers[uid].overlays[j].id;
               self.proxy.baselayerController.arrBaselayers[uid].overlayController.arrOverlays[overlayId].changeOpacity(self.proxy.baselayerController.arrBaselayers[uid].overlays[j].opacity);
             }
             else {
-              $(childEntry).addClass(cssConstants.INACTIVE);
+              jQuery(childEntry).addClass(cssConstants.INACTIVE);
             }
 
             childEntry.appendChild(document.createTextNode(self.proxy.baselayerController.arrBaselayers[uid].overlays[j].name));
-            $(childEntry).data('id', self.proxy.baselayerController.arrBaselayers[uid].overlays[j].id);
-            $(childEntry).data('pid', uid);
+            jQuery(childEntry).data('id', self.proxy.baselayerController.arrBaselayers[uid].overlays[j].id);
+            jQuery(childEntry).data('pid', uid);
             toggle = document.createElement('input');
             toggle.className = 'c4g-overlay-toggle';
             toggle.setAttribute('type', 'range');
@@ -300,8 +300,8 @@ export class Baselayerswitcher {
             toggle.setAttribute('max', 100);
             toggle.setAttribute('value', self.proxy.baselayerController.arrBaselayers[uid].overlays[j].opacity);
             toggle.setAttribute('steps', 10);
-            $(toggle).on('input', function (event) {
-              self.proxy.baselayerController.arrBaselayers[$(this).parent().data('pid')].overlayController.arrOverlays[$(this).parent().data('id')].changeOpacity(this.value);
+            jQuery(toggle).on('input', function (event) {
+              self.proxy.baselayerController.arrBaselayers[jQuery(this).parent().data('pid')].overlayController.arrOverlays[jQuery(this).parent().data('id')].changeOpacity(this.value);
             });
 
 
@@ -317,12 +317,12 @@ export class Baselayerswitcher {
           childList = undefined;
         }
 
-        $entry = $(entry);
+        $entry = jQuery(entry);
         this.baselayers[uid].$entry = $entry;
 
         if (this.starboard.options.mapController.data.default_baselayer && parseInt(uid, 10) === parseInt(self.starboard.options.mapController.data.default_baselayer, 10)) {
           $entry.addClass(cssConstants.ACTIVE);
-          $(listItem).addClass(cssConstants.OPEN);
+          jQuery(listItem).addClass(cssConstants.OPEN);
           if (self.proxy.baselayerController.arrBaselayers[uid].hasOverlays) {
             for (let j in self.proxy.baselayerController.arrBaselayers[uid].overlayController.arrOverlays) {
               if (self.proxy.baselayerController.arrBaselayers[uid].overlayController.arrOverlays.hasOwnProperty(j)) {
@@ -333,7 +333,7 @@ export class Baselayerswitcher {
           }
         } else {
           $entry.addClass(cssConstants.INACTIVE);
-          $(listItem).addClass(cssConstants.CLOSE);
+          jQuery(listItem).addClass(cssConstants.CLOSE);
         }
 
         $entry.data('uid', uid);

@@ -45,7 +45,7 @@ export class GeoSearch extends ol.control.Control {
     let langConstants = getLanguage(options.mapController.data);
 
     // default options
-    options = $.extend({
+    options = jQuery.extend({
       mapController: undefined,
       className: cssConstants.GEOSEARCH,
       extDiv: false,
@@ -122,9 +122,9 @@ export class GeoSearch extends ol.control.Control {
     element.className = options.className + ' ' + cssConstants.OL_UNSELECTABLE + ' ' + cssConstants.OL_CONTROL;
 
     if ((options.collapsed && !options.extDiv) & !(this.config.caching && utils.getValue('geosearch') == '1')) {
-      $(element).addClass(cssConstants.CLOSE);
+      jQuery(element).addClass(cssConstants.CLOSE);
     } else {
-      $(element).addClass(cssConstants.OPEN);
+      jQuery(element).addClass(cssConstants.OPEN);
     }
 
     if (options.collapsible && !options.extDiv) {
@@ -135,7 +135,7 @@ export class GeoSearch extends ol.control.Control {
       element.appendChild(button);
 
       // set onClick to the toggle-function
-      $(button).click(function () {
+      jQuery(button).click(function () {
         try {
           this.blur();
         } catch (ignore) {
@@ -161,7 +161,7 @@ export class GeoSearch extends ol.control.Control {
     searchButton.title = langConstants.CTRL_START_SEARCH;
     this.searchWrapper.appendChild(searchButton);
 
-    $(searchButton).click(function () {
+    jQuery(searchButton).click(function () {
       try {
         this.blur();
       } catch (ignore) {
@@ -171,7 +171,7 @@ export class GeoSearch extends ol.control.Control {
       }
     });
 
-    $(searchInput).keypress(function (e) {
+    jQuery(searchInput).keypress(function (e) {
       if (e.which === 13) {
         if (searchInput.value) {
 
@@ -226,8 +226,8 @@ export class GeoSearch extends ol.control.Control {
    * @return  {[type]}  [description]
    */
   open() {
-    if ($(this.element).hasClass(cssConstants.CLOSE)) {
-      $(this.element).addClass(cssConstants.OPEN)
+    if (jQuery(this.element).hasClass(cssConstants.CLOSE)) {
+      jQuery(this.element).addClass(cssConstants.OPEN)
         .removeClass(cssConstants.CLOSE)
         .find('input')[0].focus();
       if (this.config.caching) {
@@ -242,8 +242,8 @@ export class GeoSearch extends ol.control.Control {
    * @return  {[type]}  [description]
    */
   close() {
-    if ($(this.element).hasClass(cssConstants.OPEN)) {
-      $(this.element).addClass(cssConstants.CLOSE)
+    if (jQuery(this.element).hasClass(cssConstants.OPEN)) {
+      jQuery(this.element).addClass(cssConstants.CLOSE)
         .removeClass(cssConstants.OPEN);
       // this.closeResults();
       if (document.getElementById("resultcontainer")) {
@@ -261,7 +261,7 @@ export class GeoSearch extends ol.control.Control {
    * @return  {[type]}  [description]
    */
   toggle() {
-    if ($(this.element).hasClass(cssConstants.CLOSE)) {
+    if (jQuery(this.element).hasClass(cssConstants.CLOSE)) {
       this.open();
     } else {
       this.close();
@@ -274,8 +274,8 @@ export class GeoSearch extends ol.control.Control {
   //  * @return  {[type]}  [description]
   //  */
   // openResults: function () {
-  //   if ($(this.resultWrapper).hasClass(cssConstants.CLOSE)) {
-  //     $(this.resultWrapper).addClass(cssConstants.OPEN)
+  //   if (jQuery(this.resultWrapper).hasClass(cssConstants.CLOSE)) {
+  //     jQuery(this.resultWrapper).addClass(cssConstants.OPEN)
   //       .removeClass(cssConstants.CLOSE);
   //   }
   // },
@@ -286,8 +286,8 @@ export class GeoSearch extends ol.control.Control {
   //  * @return  {[type]}  [description]
   //  */
   // closeResults: function () {
-  //   if ($(this.resultWrapper).hasClass(cssConstants.OPEN)) {
-  //     $(this.resultWrapper).addClass(cssConstants.CLOSE)
+  //   if (jQuery(this.resultWrapper).hasClass(cssConstants.OPEN)) {
+  //     jQuery(this.resultWrapper).addClass(cssConstants.CLOSE)
   //       .removeClass(cssConstants.OPEN);
   //   }
   // },
@@ -298,7 +298,7 @@ export class GeoSearch extends ol.control.Control {
   //  * @return  {[type]}  [description]
   //  */
   // toggleResults: function () {
-  //   if ($(this.resultWrapper).hasClass(cssConstants.CLOSE)) {
+  //   if (jQuery(this.resultWrapper).hasClass(cssConstants.CLOSE)) {
   //     this.openResults();
   //   } else {
   //     this.closeResults();
@@ -567,7 +567,7 @@ export class GeoSearch extends ol.control.Control {
         data.key = this.config.key;
       }
       // AJAX -> @nominatim
-      $.ajax({
+      jQuery.ajax({
         dataType: "json",
         url: this.config.url,
         data: data
@@ -805,7 +805,7 @@ export class GeoSearch extends ol.control.Control {
                     }
                     self.config.mapController.proxy.setPopup(objPopup);
                   } else {
-                    $.ajax({
+                    jQuery.ajax({
                       dataType: "json",
                       url: self.api_infowindow_url + '/' + popupInfos.content,
                       done: function (data) {
@@ -835,7 +835,7 @@ export class GeoSearch extends ol.control.Control {
                 }
 
               } else if (window && window.c4gMapsPopup && window.c4gMapsPopup.popup) {
-                $(window.c4gMapsPopup.popup).removeClass(cssConstants.ACTIVE);
+                jQuery(window.c4gMapsPopup.popup).removeClass(cssConstants.ACTIVE);
               }
             }
 

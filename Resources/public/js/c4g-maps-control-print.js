@@ -33,7 +33,7 @@ export class Print extends ol.control.Control {
       button;
 
     // default options
-    options = $.extend({
+    options = jQuery.extend({
       className: cssConstants.PRINT,
       switchable: true,
       enabled: true,
