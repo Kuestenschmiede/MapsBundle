@@ -17,7 +17,6 @@ use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
 use con4gis\CoreBundle\Resources\contao\classes\HttpResultHelper;
 use con4gis\MapsBundle\Classes\Events\LoadLayersEvent;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
-use con4gis\MapsBundle\Resources\contao\modules\api\LayerContentApi;
 use Contao\Database;
 use Contao\FrontendUser;
 use Contao\System;
@@ -29,14 +28,20 @@ class LayerService
      * @var EventDispatcherInterface
      */
     private $eventDispatcher = null;
+    
+    /**
+     * @var LayerContentService
+     */
+    private $layerContentService = null;
 
     /**
      * LayerService constructor.
      * @param EventDispatcherInterface $eventDispatcher
      */
-    public function __construct(EventDispatcherInterface $eventDispatcher)
+    public function __construct(EventDispatcherInterface $eventDispatcher, LayerContentService $layerContentService)
     {
         $this->eventDispatcher = $eventDispatcher;
+        $this->layerContentService = $layerContentService;
     }
 
     protected $arrLayers = array();
@@ -281,20 +286,16 @@ class LayerService
                         $noneFolder = false;
                         if ($folder != '') {
                             if ($noneFolder) {
-                                $objLayerContentApi = new LayerContentApi();
-                                $dict = $objLayerContentApi->getFolderDataPublic($objLayers, 1);
+                                $dict = $this->layerContentService->getFolderDataPublic($objLayers, 1);
                                 foreach ($dict as $child) {
                                     $arrLayer[] = $child;
                                 }
                                 continue;
                             } else {
-                                $objLayerContentApi = new LayerContentApi();
-                                $dict = $objLayerContentApi->getFolderDataPublic($objLayers);
-
+                                $dict = $this->layerContentService->getFolderDataPublic($objLayers);
                                 $arrLayerData['hasChilds'] = true;
                                 $arrLayerData['childsCount'] = count($dict);
                                 $arrLayerData['childs'] = $dict;
-
                                 unset($arrLayerData['raw']);
                                 $arrLayer[] = $arrLayerData;
                                 continue;
@@ -498,13 +499,12 @@ class LayerService
      */
     protected function getContentForType($objLayer)
     {
-        $objLayerContentApi = new LayerContentApi();
         switch ($objLayer->location_type)
         {
             // TODO: make Hook instead and let con4gis-Forum handle this?
             case "c4gForum":
                 if ($objLayer->forum_reassign_layer && $objLayer->forum_reassign_layer=="THREAD") {
-                    $arrReassignedRawLayer = $objLayerContentApi->getLayerDataPublic($objLayer->id);
+                    $arrReassignedRawLayer = $this->layerContentService->getLayerDataPublic($objLayer->id);
 
                     //loop over all forum layers
                     foreach ($arrReassignedRawLayer as $index=>$reassignedLayer)
@@ -538,7 +538,7 @@ class LayerService
 
                     return false;
                 } else {
-                    return $objLayerContentApi->getLayerDataPublic($objLayer->id);
+                    return $this->layerContentService->getLayerDataPublic($objLayer->id);
                 }
             // same function call, so fallthrough
 
@@ -547,7 +547,7 @@ class LayerService
                     return false;
                 }
                 else{
-                    return $objLayerContentApi->getLayerDataPublic($objLayer->id);
+                    return $this->layerContentService->getLayerDataPublic($objLayer->id);
                 }
             case "link":
             case "overpass":
@@ -555,12 +555,10 @@ class LayerService
             case "kml":
             case "osm":
             case "single":
-                return $objLayerContentApi->getLayerDataPublic($objLayer->id);
-//            case "folder":
-//                return $objLayerContentApi->getFolderDataPublic($objLayer);
+                return $this->layerContentService->getLayerDataPublic($objLayer->id);
             default:
                 if (!$objLayer->data_hidelayer) {
-                    return $objLayerContentApi->getLayerDataPublic($objLayer->id);
+                    return $this->layerContentService->getLayerDataPublic($objLayer->id);
                 }
                 return false;
         }
