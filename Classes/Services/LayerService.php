@@ -96,7 +96,7 @@ class LayerService
         $return = array(
             'config' => $this->arrConfig,
             'layer' => $arrLayers,
-            'foreignLayers' => $this->checkAndFetchMissingLinkedLayers($arrLayers)
+//            'foreignLayers' => $this->checkAndFetchMissingLinkedLayers($arrLayers)
         );
         foreach($return['layer'] as $key => $layer)
         {
@@ -464,36 +464,8 @@ class LayerService
 
         $arrLayerData['type'] = $objLayer->location_type;
         if ($objLayer->location_type === 'link') {
-            $arrLayerData['link_id'] = $objLayer->link_id;
-            $linkedLayer = C4gMapsModel::findByPk($objLayer->link_id);
-            // check if linked element is overpass request and assign correct content values
-            if ($linkedLayer->location_type == "overpass") {
-                $arrLayerData['content'] = $this->getContentForType($linkedLayer);
-            } else {
-                // check childs
-                $childLayers = C4gMapsModel::findPublishedByPid($linkedLayer->id);
-                $arrLayerData['childs'] = [];
-                foreach ($childLayers as $childLayer) {
-                    if ($childLayer->location_type === "overpass") {
-                        $childData = $this->parseLayer($childLayer);
-                        $childData['pid'] = $objLayer->id;
-                        $arrLayerData['childs'][] = $childData;
-                    }
-                }
-                $arrLayerData['hide'] = $objLayer->data_hidelayer;
-                $arrLayerData['content'] = [];
-                $arrLayerData['hasChilds'] = count($arrLayerData['childs']) > 0;
-                $arrLayerData['childsCount'] = count($arrLayerData['childs']);
-            }
-            // set zooms of links
-            if ($linkedLayer->loc_minzoom>0 || $linkedLayer->loc_maxzoom>0)
-            {
-                $arrLayerData['zoom'] = array(
-                    'min' => $linkedLayer->loc_minzoom,
-                    'max' => $linkedLayer->loc_maxzoom,
-                    'onclick_to' => $linkedLayer->loc_onclick_zoomto
-                );
-            }
+            $arrLayerData = $this->handleLayerLink($objLayer, $arrLayerData);
+            
         } else {
             $arrLayerData['content'] = $this->getContentForType($objLayer);
         }
@@ -502,6 +474,41 @@ class LayerService
         }
         $arrLayerData['raw'] = $objLayer;
 
+        return $arrLayerData;
+    }
+    
+    private function handleLayerLink($objLayer, $arrLayerData)
+    {
+        $arrLayerData['link_id'] = $objLayer->link_id;
+        $linkedLayer = C4gMapsModel::findByPk($objLayer->link_id);
+        // check if linked element is overpass request and assign correct content values
+        if ($linkedLayer->location_type == "overpass") {
+            $arrLayerData['content'] = $this->getContentForType($linkedLayer);
+        } else {
+            // check childs
+            $childLayers = C4gMapsModel::findPublishedByPid($linkedLayer->id);
+            $arrLayerData['childs'] = [];
+            foreach ($childLayers as $childLayer) {
+                if ($childLayer->location_type === "overpass") {
+                    $childData = $this->parseLayer($childLayer);
+                    $childData['pid'] = $objLayer->id;
+                    $arrLayerData['childs'][] = $childData;
+                }
+            }
+            $arrLayerData['hide'] = $objLayer->data_hidelayer;
+            $arrLayerData['content'] = [];
+            $arrLayerData['hasChilds'] = count($arrLayerData['childs']) > 0;
+            $arrLayerData['childsCount'] = count($arrLayerData['childs']);
+        }
+        // set zooms of links
+        if ($linkedLayer->loc_minzoom>0 || $linkedLayer->loc_maxzoom>0)
+        {
+            $arrLayerData['zoom'] = array(
+                'min' => $linkedLayer->loc_minzoom,
+                'max' => $linkedLayer->loc_maxzoom,
+                'onclick_to' => $linkedLayer->loc_onclick_zoomto
+            );
+        }
         return $arrLayerData;
     }
 
