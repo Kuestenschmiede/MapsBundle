@@ -257,29 +257,29 @@ class LayerService
                         $arrLayerData['childs'] = $childLayerList;
                     } else if ($objLayers->location_type == 'link') {
                         // link handling
-                        if ($childLayerList = $this->getLayerList($arrLayerData['link_id'], true)) {
-                            // duplicate children for the link
-                            foreach($childLayerList as $key=>$child)
-                            {
-                                // generate new unique ids
-                                $childId = $childLayerList[$key]['id'];
-                                $childLayerList[$key]['link_id'] = $childId;
-                                $childLayerList[$key]['id'] = uniqid();
-                                $childLayerList[$key]['pid'] = $arrLayerData['id'];
-                                $childLayerList[$key]['childs'] = $this->getLinkedChilds($childLayerList[$key]);
-                                if ($childLayerList[$key]['childs'] && sizeof($childLayerList[$key]['childs']) > 0) {
-                                    $childLayerList[$key]['hasChilds'] = true;
-                                    $childLayerList[$key]['childCount'] = sizeof($childLayerList[$key]['childs']);
-                                    foreach($childLayerList[$key]['childs'] as $index=>$item)
-                                    {
-                                        $childLayerList[$key]['childs'][$index]['hide'] = $objLayers->data_hidelayer;
-                                    }
-                                }
-                            }
-                            $arrLayerData['hasChilds'] = true;
-                            $arrLayerData['childsCount'] = sizeof($childLayerList);
-                            $arrLayerData['childs'] = $childLayerList;
-                        }
+//                        if ($childLayerList = $this->getLayerList($arrLayerData['link_id'], true)) {
+//                            // duplicate children for the link
+//                            foreach($childLayerList as $key=>$child)
+//                            {
+//                                // generate new unique ids
+//                                $childId = $childLayerList[$key]['id'];
+//                                $childLayerList[$key]['link_id'] = $childId;
+//                                $childLayerList[$key]['id'] = uniqid();
+//                                $childLayerList[$key]['pid'] = $arrLayerData['id'];
+//                                $childLayerList[$key]['childs'] = $this->getLinkedChilds($childLayerList[$key]);
+//                                if ($childLayerList[$key]['childs'] && sizeof($childLayerList[$key]['childs']) > 0) {
+//                                    $childLayerList[$key]['hasChilds'] = true;
+//                                    $childLayerList[$key]['childCount'] = sizeof($childLayerList[$key]['childs']);
+//                                    foreach($childLayerList[$key]['childs'] as $index=>$item)
+//                                    {
+//                                        $childLayerList[$key]['childs'][$index]['hide'] = $objLayers->data_hidelayer;
+//                                    }
+//                                }
+//                            }
+//                            $arrLayerData['hasChilds'] = true;
+//                            $arrLayerData['childsCount'] = sizeof($childLayerList);
+//                            $arrLayerData['childs'] = $childLayerList;
+//                        }
                     } else if ($objLayers->location_type == 'folder') {
                         $folder = $this->getFolder($objLayers);
                         // TODO was soll diese Variable und der entsprechende IF-Fall?
@@ -470,8 +470,20 @@ class LayerService
             if ($linkedLayer->location_type == "overpass") {
                 $arrLayerData['content'] = $this->getContentForType($linkedLayer);
             } else {
-                $arrLayerData['content'] = $this->getContentForType($objLayer);
+                // check childs
+                $childLayers = C4gMapsModel::findPublishedByPid($linkedLayer->id);
+                $arrLayerData['childs'] = [];
+                foreach ($childLayers as $childLayer) {
+                    if ($childLayer->location_type === "overpass") {
+                        $childData = $this->parseLayer($childLayer);
+                        $childData['pid'] = $objLayer->id;
+                        $arrLayerData['childs'][] = $childData;
+                    }
+                }
                 $arrLayerData['hide'] = $objLayer->data_hidelayer;
+                $arrLayerData['content'] = [];
+                $arrLayerData['hasChilds'] = count($arrLayerData['childs']) > 0;
+                $arrLayerData['childsCount'] = count($arrLayerData['childs']);
             }
             // set zooms of links
             if ($linkedLayer->loc_minzoom>0 || $linkedLayer->loc_maxzoom>0)
@@ -504,7 +516,7 @@ class LayerService
             // TODO: make Hook instead and let con4gis-Forum handle this?
             case "c4gForum":
                 if ($objLayer->forum_reassign_layer && $objLayer->forum_reassign_layer=="THREAD") {
-                    $arrReassignedRawLayer = $this->layerContentService->getLayerDataPublic($objLayer->id);
+                    $arrReassignedRawLayer = $this->layerContentService->getLayerData($objLayer->id);
 
                     //loop over all forum layers
                     foreach ($arrReassignedRawLayer as $index=>$reassignedLayer)
@@ -538,7 +550,7 @@ class LayerService
 
                     return false;
                 } else {
-                    return $this->layerContentService->getLayerDataPublic($objLayer->id);
+                    return $this->layerContentService->getLayerData($objLayer->id);
                 }
             // same function call, so fallthrough
 
@@ -547,7 +559,7 @@ class LayerService
                     return false;
                 }
                 else{
-                    return $this->layerContentService->getLayerDataPublic($objLayer->id);
+                    return $this->layerContentService->getLayerData($objLayer->id);
                 }
             case "link":
             case "overpass":
@@ -555,10 +567,10 @@ class LayerService
             case "kml":
             case "osm":
             case "single":
-                return $this->layerContentService->getLayerDataPublic($objLayer->id);
+                return $this->layerContentService->getLayerData($objLayer->id);
             default:
                 if (!$objLayer->data_hidelayer) {
-                    return $this->layerContentService->getLayerDataPublic($objLayer->id);
+                    return $this->layerContentService->getLayerData($objLayer->id);
                 }
                 return false;
         }
