@@ -486,28 +486,42 @@ class LayerService
             $arrLayerData['content'] = $this->getContentForType($linkedLayer);
         } else {
             // check childs
-            $childLayers = C4gMapsModel::findPublishedByPid($linkedLayer->id);
-            $arrLayerData['childs'] = [];
-            foreach ($childLayers as $childLayer) {
-                if ($childLayer->location_type === "overpass") {
-                    $childData = $this->parseLayer($childLayer);
-                    $childData['pid'] = $objLayer->id;
-                    $arrLayerData['childs'][] = $childData;
-                }
-            }
-            $arrLayerData['hide'] = $objLayer->data_hidelayer;
-            $arrLayerData['content'] = [];
-            $arrLayerData['hasChilds'] = count($arrLayerData['childs']) > 0;
-            $arrLayerData['childsCount'] = count($arrLayerData['childs']);
+            $arrLayerData = array_merge($arrLayerData, $this->getChildsForLinkedLayer($linkedLayer->id, $objLayer));
         }
         // set zooms of links
-        if ($linkedLayer->loc_minzoom>0 || $linkedLayer->loc_maxzoom>0)
+        if ($linkedLayer->loc_minzoom > 0 || $linkedLayer->loc_maxzoom > 0)
         {
             $arrLayerData['zoom'] = array(
                 'min' => $linkedLayer->loc_minzoom,
                 'max' => $linkedLayer->loc_maxzoom,
                 'onclick_to' => $linkedLayer->loc_onclick_zoomto
             );
+        }
+        return $arrLayerData;
+    }
+    
+    /**
+     * Returns the linked structure.
+     * @param $layer
+     */
+    private function getChildsForLinkedLayer($layerId, $parentLayer)
+    {
+        $childLayers = C4gMapsModel::findPublishedByPid($layerId);
+        $arrLayerData['childs'] = [];
+        foreach ($childLayers as $childLayer) {
+            if ($childLayer->location_type !== "none") {
+                // we reached the "bottom" of the tree leaf
+                $childData = $this->parseLayer($childLayer);
+                $childData['pid'] = $parentLayer->id;
+                $arrLayerData['childs'][] = $childData;
+                $arrLayerData['hide'] = $parentLayer->data_hidelayer;
+                $arrLayerData['content'] = [];
+                $arrLayerData['hasChilds'] = count($arrLayerData['childs']) > 0;
+                $arrLayerData['childsCount'] = count($arrLayerData['childs']);
+            } else {
+                // $childLayer is the acutal existing layer.
+                $arrLayerData = $this->getChildsForLinkedLayer($childLayer->id, $parentLayer);
+            }
         }
         return $arrLayerData;
     }
@@ -580,33 +594,6 @@ class LayerService
                     return $this->layerContentService->getLayerData($objLayer->id);
                 }
                 return false;
-        }
-    }
-
-    private function getLinkedChilds($layer)
-    {
-        $childs = array();
-        $dbValues = C4gMapsModel::findPublishedByPid($layer['link_id']);
-        if ($dbValues) {
-            while($dbValues->next()) {
-                $child = array();
-                $child['link_id'] = $dbValues->id;
-                $child['name'] = \Contao\Controller::replaceInsertTags($dbValues->data_layername);
-                $child['id'] = uniqid();
-                $child['pid'] = $layer['id'];
-                $child['display'] = $layer['display'];
-                $child['content'] = $this->getContentForType($dbValues);
-                $child['type'] = "link";
-                $child['childs'] = $this->getLinkedChilds($child);
-                if ($child['childs'] && sizeof($child['childs']) > 0) {
-                    $child['hasChilds'] = true;
-                    $child['childCount'] = sizeof($child['childs']);
-                }
-                $childs[] = $child;
-            }
-            return $childs;
-        } else {
-            return array();
         }
     }
 
