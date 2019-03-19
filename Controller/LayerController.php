@@ -17,6 +17,7 @@ use con4gis\MapsBundle\Classes\Caches\C4GLayerApiCache;
 use con4gis\MapsBundle\Classes\Events\LoadLayersEvent;
 use con4gis\MapsBundle\Classes\Services\LayerContentService;
 use con4gis\MapsBundle\Classes\Services\LayerService;
+use con4gis\MapsBundle\Resources\contao\classes\Utils;
 use con4gis\MapsBundle\Resources\contao\modules\api\LayerContentDataApi;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -68,10 +69,13 @@ class LayerController extends BaseController
                 $arrLayerData['childs'][$childIdx] = $this->addCustomLogic($child);
             }
         } else {
-            $event = new LoadLayersEvent();
-            $event->setLayerData($arrLayerData);
-            $this->eventDispatcher->dispatch($event::NAME, $event);
-            $arrLayerData = $event->getLayerData();
+            if (!in_array($arrLayerData['type'], Utils::getLocationTypes())) {
+                // custom location type
+                $event = new LoadLayersEvent();
+                $event->setLayerData($arrLayerData);
+                $this->eventDispatcher->dispatch($event::NAME, $event);
+                $arrLayerData = $event->getLayerData();
+            }
         }
         return $arrLayerData;
     }
