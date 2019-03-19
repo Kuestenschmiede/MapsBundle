@@ -486,6 +486,7 @@ class LayerService
             $arrLayerData['content'] = $this->getContentForType($linkedLayer);
         } else {
             // check childs
+            // TODO cache resolved link
             $arrLayerData = array_merge($arrLayerData, $this->getChildsForLinkedLayer($linkedLayer->id, $objLayer));
         }
         // set zooms of links
@@ -502,7 +503,9 @@ class LayerService
     
     /**
      * Returns the linked structure.
-     * @param $layer
+     * @param $layerId
+     * @param $parentLayer
+     * @return array
      */
     private function getChildsForLinkedLayer($layerId, $parentLayer)
     {
@@ -515,13 +518,19 @@ class LayerService
                 $childData['pid'] = $parentLayer->id;
                 $arrLayerData['childs'][] = $childData;
                 $arrLayerData['hide'] = $parentLayer->data_hidelayer;
-                $arrLayerData['content'] = [];
-                $arrLayerData['hasChilds'] = count($arrLayerData['childs']) > 0;
-                $arrLayerData['childsCount'] = count($arrLayerData['childs']);
+                
             } else {
                 // $childLayer is the acutal existing layer.
-                $arrLayerData = $this->getChildsForLinkedLayer($childLayer->id, $parentLayer);
+                $arrChildData = $this->getChildsForLinkedLayer($childLayer->id, $parentLayer);
+                // merge the added childs into the current childs array
+                $arrLayerData['childs'] = array_merge($arrLayerData['childs'], $arrChildData['childs']);
+//                $arrLayerData['childsCount'] = count($arrLayerData['childs']);
+//                $arrLayerData['hasChilds'] = count($arrLayerData['childs']) > 0;
+//                $arrLayerData['content'] = [];
             }
+            $arrLayerData['content'] = [];
+            $arrLayerData['hasChilds'] = count($arrLayerData['childs']) > 0;
+            $arrLayerData['childsCount'] = count($arrLayerData['childs']);
         }
         return $arrLayerData;
     }
