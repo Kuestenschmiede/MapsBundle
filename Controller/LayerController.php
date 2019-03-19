@@ -12,10 +12,11 @@
  */
 namespace con4gis\MapsBundle\Controller;
 
-
 use con4gis\CoreBundle\Controller\BaseController;
 use con4gis\MapsBundle\Classes\Caches\C4GLayerApiCache;
-use con4gis\MapsBundle\Resources\contao\modules\api\LayerContentApi;
+use con4gis\MapsBundle\Classes\Events\LoadLayersEvent;
+use con4gis\MapsBundle\Classes\Services\LayerContentService;
+use con4gis\MapsBundle\Classes\Services\LayerService;
 use con4gis\MapsBundle\Resources\contao\modules\api\LayerContentDataApi;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,32 +35,55 @@ class LayerController extends BaseController
     {
         $response = new JsonResponse();
         $this->initialize(false);
-
         $this->checkForCacheSettings('layerService');
-
+        
         if (self::$useCache) {
             $this->checkAndStoreCachedData($request);
         }
-
+        
         if (!self::$outputFromCache) {
-            // TODO use Dependency Injection
+            /* @var LayerService $layerService */
             $layerService = $this->get('con4gis.layer_service');
             $this->responseData = $layerService->generate($mapId);
             if (self::$useCache) {
                 $this->storeDataInCache($request);
             }
         }
-
-        $response->setData($this->responseData);
+        
+        // dispatch event for custom layer content
+        $modifiedData = $this->responseData;
+        foreach ($modifiedData['layer'] as $key => $layer) {
+            $modifiedData['layer'][$key] = $this->addCustomLogic($layer);
+        }
+        
+        $response->setData($modifiedData);
+        
         return $response;
+    }
+    
+    private function addCustomLogic($arrLayerData)
+    {
+        if ($arrLayerData['hasChilds']) {
+            foreach ($arrLayerData['childs'] as $childIdx => $child) {
+                $arrLayerData['childs'][$childIdx] = $this->addCustomLogic($child);
+            }
+        } else {
+            $event = new LoadLayersEvent();
+            $event->setLayerData($arrLayerData);
+            $this->eventDispatcher->dispatch($event::NAME, $event);
+            $arrLayerData = $event->getLayerData();
+        }
+        return $arrLayerData;
     }
 
     public function layerContentAction(Request $request, $layerId)
     {
         $response = new JsonResponse();
+        /* @var LayerContentService $layerContentService */
         $layerContentService = $this->get('con4gis.layer_content_service');
-        $this->responseData = $layerContentService->generate($layerId);
+        $this->responseData = $layerContentService->getLayerData($layerId);
         $response->setData($this->responseData);
+        
         return $response;
     }
     public function layerContentDataAction(Request $request, $layerId, $extent)
@@ -68,6 +92,7 @@ class LayerController extends BaseController
         $layerDataApi = new LayerContentDataApi();
         $this->responseData = $layerDataApi->generate($layerId,$extent);
         $response->setData($this->responseData);
+        
         return $response;
     }
 }

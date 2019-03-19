@@ -1235,7 +1235,7 @@ class tl_c4g_maps extends Backend
      */
     public function getLocationTypes(DataContainer $dc)
     {
-        $return = array('none','single','table','gpx','kml','geojson','osm','folder','overpass','link', 'startab');
+        $return = \con4gis\MapsBundle\Resources\contao\classes\Utils::getLocationTypes();
         if ($GLOBALS['con4gis']['forum']['installed']) {
             $return[] = 'c4gForum';
         }
