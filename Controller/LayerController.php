@@ -57,8 +57,8 @@ class LayerController extends BaseController
     public function layerContentAction(Request $request, $layerId)
     {
         $response = new JsonResponse();
-        $layerApi = new LayerContentApi();
-        $this->responseData = $layerApi->generate($layerId);
+        $layerContentService = $this->get('con4gis.layer_content_service');
+        $this->responseData = $layerContentService->generate($layerId);
         $response->setData($this->responseData);
         return $response;
     }
