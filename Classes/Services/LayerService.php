@@ -16,8 +16,8 @@ namespace con4gis\MapsBundle\Classes\Services;
 use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
 use con4gis\CoreBundle\Resources\contao\classes\HttpResultHelper;
 use con4gis\MapsBundle\Classes\Events\LoadLayersEvent;
+use con4gis\MapsBundle\Resources\contao\classes\Utils;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
-use con4gis\MapsBundle\Resources\contao\modules\api\LayerContentApi;
 use Contao\Database;
 use Contao\FrontendUser;
 use Contao\System;
@@ -29,25 +29,36 @@ class LayerService
      * @var EventDispatcherInterface
      */
     private $eventDispatcher = null;
-
+    
+    /**
+     * @var LayerContentService
+     */
+    private $layerContentService = null;
+    
+    protected $arrLayers = [];
+    
+    protected $arrConfig = [];
+    
+    protected $arrReassignedLayer = [];
+    
     /**
      * LayerService constructor.
      * @param EventDispatcherInterface $eventDispatcher
+     * @param LayerContentService $layerContentService
      */
-    public function __construct(EventDispatcherInterface $eventDispatcher)
+    public function __construct(EventDispatcherInterface $eventDispatcher, LayerContentService $layerContentService)
     {
         $this->eventDispatcher = $eventDispatcher;
+        $this->layerContentService = $layerContentService;
     }
-
-    protected $arrLayers = array();
-    protected $arrConfig = array();
-    protected $arrReassignedLayer = array();
 
     public function generate($intParentId)
     {
         Database::getInstance()->prepare("DELETE FROM tl_c4g_map_layer_content")->execute();
         $arrLayers = $this->getLayerList($intParentId);
 
+        // reassign layers from forum or other sources
+        // this realizes the assignment of forum posts into a layer with the same name, if any exists
         if(sizeof($this->arrReassignedLayer) > 0)
         {
             foreach ($arrLayers as $index=>$layer)
@@ -60,7 +71,7 @@ class LayerService
                         if (is_array($arrLayers[$index]['content'])) {
                             $arrLayers[$index]['content'][] = $reassignedLayer;
                         } else {
-                            $arrLayers[$index]['content'] = array($reassignedLayer);
+                            $arrLayers[$index]['content'] = [$reassignedLayer];
 
                         }
                     }
@@ -78,7 +89,7 @@ class LayerService
                                 if (is_array($arrLayers[$index]['childs'][$childIndex]['content'])) {
                                     $arrLayers[$index]['childs'][$childIndex]['content'][] = $reassignedLayer;
                                 } else {
-                                    $arrLayers[$index]['childs'][$childIndex]['content'] = array($reassignedLayer);
+                                    $arrLayers[$index]['childs'][$childIndex]['content'] = [$reassignedLayer];
                                 }
                             }
                         }
@@ -88,11 +99,10 @@ class LayerService
         }
 
         $this->arrConfig['countAll'] = sizeof($arrLayers);
-        $return = array(
+        $return = [
             'config' => $this->arrConfig,
-            'layer' => $arrLayers,
-            'foreignLayers' => $this->checkAndFetchMissingLinkedLayers($arrLayers)
-        );
+            'layer' => $arrLayers
+        ];
         foreach($return['layer'] as $key => $layer)
         {
             $objLayer = C4gMapsModel::findByPk($layer['id']);
@@ -129,74 +139,16 @@ class LayerService
         $layer['childs'] = $arrChilds;
         return $layer;
     }
-
-    protected function checkAndFetchMissingLinkedLayers($layers)
-    {
-        $missingLayers = array();
-
-        $layerIdList = array();
-        $this->setLayerIdList($layers, $layerIdList);
-
-        foreach ($layerIdList as $id => $exists) {
-            if (!$exists) {
-                $fetchedLayer = C4gMapsModel::findById($id);
-
-                if (!$fetchedLayer) {
-                    continue;
-                }
-                // do not return protected layers, to users without permission
-                if ($fetchedLayer->protect_element) {
-                    if (FE_USER_LOGGED_IN && !empty($fetchedLayer->permitted_groups)) {
-                        $groups = \FrontendUser::getInstance()->groups;
-                        if (sizeof(array_intersect($groups, deserialize($fetchedLayer->permitted_groups))) <= 0) {
-                            continue;
-                        }
-                    } else {
-                        continue;
-                    }
-                }
-                if ($layerData = $this->parseLayer($fetchedLayer)) {
-
-                    if ($childLayerList = $this->getLayerList($layerData['id'], true)) {
-                        $layerData['hasChilds'] = true;
-                        $layerData['childsCount'] = sizeof($childLayerList);
-                        $layerData['childs'] = $childLayerList;
-                    }
-                    // HOOK: add custom logic
-                    $layerData = $this->addCustomLogic($layerData);
-                    if (is_array($layerData) && count($layerData) > 0) {
-                        unset($layerData['raw']);
-                        $missingLayers[$layerData['id']] = $layerData;
-                    }
-                }
-            }
-        }
-
-        return $missingLayers;
-    }
-
-    protected function setLayerIdList($layers, &$idList)
-    {
-        foreach ($layers as $layer) {
-            $idList[$layer['id']] = true;
-            if ($layer['link_id'] && !array_key_exists($layer['link_id'], $idList)) {
-                $idList[$layer['link_id']] = false;
-            }
-            if ($layer['hasChilds']) {
-                $this->setLayerIdList($layer['childs'], $idList);
-            }
-        }
-    }
-
+    
     /**
      * Returns the layer structure for the map.
-     *
-     * @param int $id
+     * @param $intId
+     * @param bool $blnIsSubLayer
+     * @return array
      */
     protected function getLayerList($intId, $blnIsSubLayer = false)
     {
         $arrLayer = array();
-        $arrLinkData = array();
 
         if (!$blnIsSubLayer) {
             // Find the requested map
@@ -239,9 +191,6 @@ class LayerService
                         continue;
                     }
                 }
-
-                //if ($objLayers->forum_reassign_layer)
-
                 if ($arrGetLayerData = $this->parseLayer($objLayers)) {
                     $arrLayerData = $arrGetLayerData;//$this->parseLayer($objLayers);
                     $arrLayerData['cssClass'] = $objLayers->cssClass;
@@ -250,61 +199,22 @@ class LayerService
                         $arrLayerData['hasChilds'] = true;
                         $arrLayerData['childsCount'] = sizeof($childLayerList);
                         $arrLayerData['childs'] = $childLayerList;
-                    } else if ($objLayers->location_type == 'link') {
-                        // link handling
-                        if ($childLayerList = $this->getLayerList($arrLayerData['link_id'], true)) {
-                            // duplicate children for the link
-                            foreach($childLayerList as $key=>$child)
-                            {
-                                // generate new unique ids
-                                $childId = $childLayerList[$key]['id'];
-                                $childLayerList[$key]['link_id'] = $childId;
-                                $childLayerList[$key]['id'] = uniqid();
-                                $childLayerList[$key]['pid'] = $arrLayerData['id'];
-                                $childLayerList[$key]['childs'] = $this->getLinkedChilds($childLayerList[$key]);
-                                if ($childLayerList[$key]['childs'] && sizeof($childLayerList[$key]['childs']) > 0) {
-                                    $childLayerList[$key]['hasChilds'] = true;
-                                    $childLayerList[$key]['childCount'] = sizeof($childLayerList[$key]['childs']);
-                                    foreach($childLayerList[$key]['childs'] as $index=>$item)
-                                    {
-                                        $childLayerList[$key]['childs'][$index]['hide'] = $objLayers->data_hidelayer;
-                                    }
-                                }
-                            }
-                            $arrLayerData['hasChilds'] = true;
-                            $arrLayerData['childsCount'] = sizeof($childLayerList);
-                            $arrLayerData['childs'] = $childLayerList;
-                        }
                     } else if ($objLayers->location_type == 'folder') {
                         $folder = $this->getFolder($objLayers);
-                        // TODO was soll diese Variable und der entsprechende IF-Fall?
-                        $noneFolder = false;
                         if ($folder != '') {
-                            if ($noneFolder) {
-                                $objLayerContentApi = new LayerContentApi();
-                                $dict = $objLayerContentApi->getFolderDataPublic($objLayers, 1);
-                                foreach ($dict as $child) {
-                                    $arrLayer[] = $child;
-                                }
-                                continue;
-                            } else {
-                                $objLayerContentApi = new LayerContentApi();
-                                $dict = $objLayerContentApi->getFolderDataPublic($objLayers);
-
-                                $arrLayerData['hasChilds'] = true;
-                                $arrLayerData['childsCount'] = count($dict);
-                                $arrLayerData['childs'] = $dict;
-
-                                unset($arrLayerData['raw']);
-                                $arrLayer[] = $arrLayerData;
-                                continue;
-                            }
+                            $dict = $this->layerContentService->getFolderDataPublic($objLayers);
+                            $arrLayerData['hasChilds'] = true;
+                            $arrLayerData['childsCount'] = count($dict);
+                            $arrLayerData['childs'] = $dict;
+                            unset($arrLayerData['raw']);
+                            $arrLayer[] = $arrLayerData;
+                            continue;
                         }
                     }
                     $arrLayerData['childs'] = $this->setChildHide($arrLayerData['childs'], $objLayers);
 
                     // HOOK: add custom logic
-                    $arrLayerData = $this->addCustomLogic($arrLayerData);
+//                    $arrLayerData = $this->addCustomLogic($arrLayerData);
                     // only add if there is a result
                     if (is_array($arrLayerData) && count($arrLayerData) > 0) {
                         unset($arrLayerData['raw']);
@@ -312,20 +222,12 @@ class LayerService
                     }
                 }
             }
-//            $arrLayer = $this->checkAndReassignFrontendLayers($arrLayer);
         }
         return $arrLayer;
     }
 
-    private function addCustomLogic($arrLayerData)
+    private function checkAndReassignFrontendLayers(&$arrLayers)
     {
-        $event = new LoadLayersEvent();
-        $event->setLayerData($arrLayerData);
-        $this->eventDispatcher->dispatch($event::NAME, $event);
-        return $event->getLayerData();
-    }
-
-    private function checkAndReassignFrontendLayers(&$arrLayers) {
         foreach($arrLayers as $index => $layer) {
             if ($layer['type'] == "poim") {
                 $objLayer = C4gMapsModel::findByPk($layer['id']);
@@ -334,7 +236,7 @@ class LayerService
                         $overpassLayers = &$this->searchOverpassLayerByName($poiGroup['name'], $arrLayers);
                         if (count($overpassLayers) > 0) {
                             foreach($overpassLayers as &$overpassLayer) {
-                                $overpassLayer['childs'] = array();
+                                $overpassLayer['childs'] = [];
                                 $overpassLayer['childsCount'] = 0;
                                 $poiGroup['pid'] = $overpassLayer['id'];
                                 $overpassLayer['childs'][] = $poiGroup;
@@ -342,7 +244,6 @@ class LayerService
                             }
                             unset ($layer['childs'][$grpKey]);
                             $layer['childsCount']--;
-//                            return $overpassLayers;
                         }
                     }
                     $arrLayers[$index]['display'] = false;
@@ -353,7 +254,7 @@ class LayerService
     }
 
     private function &searchOverpassLayerByName($name, &$layers) {
-        $return = array();
+        $return = [];
         foreach($layers as $key => &$layer) {
             if ($layer['name'] == $name && $layer['type'] == 'overpass') {
                 $return[] = &$layer;
@@ -378,7 +279,7 @@ class LayerService
      */
     private function setChildHide($childList, $parentLayer)
     {
-        $newChildList = array();
+        $newChildList = [];
         if ($childList && $parentLayer) {
             foreach($childList as $index=>$child)
             {
@@ -404,7 +305,7 @@ class LayerService
     protected function parseLayer($objLayer)
     {
         $stringClass = $GLOBALS['con4gis']['stringClass'];
-        $arrLayerData = array();
+        $arrLayerData = [];
         $arrLayerData['id'] = $objLayer->id;
         $arrLayerData['pid'] = $objLayer->pid;
         $arrLayerData['name'] =  \Contao\Controller::replaceInsertTags($stringClass::decodeEntities($objLayer->name));
@@ -412,48 +313,46 @@ class LayerService
         $arrLayerData['async_content'] = $objLayer->async_content;
         $arrLayerData['noFilter'] = $objLayer->exemptFromFilter;
         $arrLayerData['locstyle'] = $objLayer->locstyle;
-        if($objLayer->cluster_locations){
-            $arrLayerData['cluster'] = array(
+        
+        if ($objLayer->cluster_locations) {
+            $arrLayerData['cluster'] = [
                 'distance' => $objLayer->cluster_distance,
                 'fillcolor' => $objLayer->cluster_fillcolor,
                 'fontcolor' => $objLayer->cluster_fontcolor,
                 'zoom' => $objLayer->cluster_zoom,
                 'popup' => $objLayer->cluster_popup
-            );
+            ];
         }
 
         // check parent hide status
         $parentLayer = C4gMapsModel::findById($objLayer->pid);
+        
         if (!$parentLayer->is_map && $parentLayer->data_hidelayer) {
             $arrLayerData['hide'] = $parentLayer->data_hidelayer;
         } else {
             $arrLayerData['hide'] = $objLayer->data_hidelayer;
         }
 
-        if ($objLayer->loc_minzoom>0 || $objLayer->loc_maxzoom>0)
-        {
-            $arrLayerData['zoom'] = array(
+        if ($objLayer->loc_minzoom>0 || $objLayer->loc_maxzoom>0) {
+            $arrLayerData['zoom'] = [
                 'min' => $objLayer->loc_minzoom,
                 'max' => $objLayer->loc_maxzoom,
                 'onclick_to' => $objLayer->loc_onclick_zoomto
-            );
+            ];
         }
 
-        if ($objLayer->data_layername)
-        {
+        if ($objLayer->data_layername) {
             $arrLayerData['name'] = \Contao\Controller::replaceInsertTags($stringClass::decodeEntities($objLayer->data_layername));
             $arrLayerData['display'] = true;
             $arrLayerData['hide_child'] = $objLayer->hide_child;
-        }
-        else
-        {
+        } else {
             $arrLayerData['display'] = false;
         }
-        if($objLayer->split_geojson){
+        
+        if ($objLayer->split_geojson) {
             $arrLayerData['split_geojson'] = $objLayer->split_geojson;
             $arrLayerData['geojson_attributes'] = $objLayer->geojson_attributes;
             $arrLayerData['geojson_zoom'] = $objLayer->geojson_zoom;
-
         }
 
         // hide when element is rendered in starboard tab
@@ -463,32 +362,84 @@ class LayerService
 
         $arrLayerData['type'] = $objLayer->location_type;
         if ($objLayer->location_type === 'link') {
-            $arrLayerData['link_id'] = $objLayer->link_id;
-            $linkedLayer = C4gMapsModel::findByPk($objLayer->link_id);
-            // check if linked element is overpass request and assign correct content values
-            if ($linkedLayer->location_type == "overpass") {
-                $arrLayerData['content'] = $this->getContentForType($linkedLayer);
-            } else {
-                $arrLayerData['content'] = $this->getContentForType($objLayer);
-                $arrLayerData['hide'] = $objLayer->data_hidelayer;
-            }
-            // set zooms of links
-            if ($linkedLayer->loc_minzoom>0 || $linkedLayer->loc_maxzoom>0)
-            {
-                $arrLayerData['zoom'] = array(
-                    'min' => $linkedLayer->loc_minzoom,
-                    'max' => $linkedLayer->loc_maxzoom,
-                    'onclick_to' => $linkedLayer->loc_onclick_zoomto
-                );
-            }
+            $arrLayerData = $this->handleLayerLink($objLayer, $arrLayerData);
         } else {
             $arrLayerData['content'] = $this->getContentForType($objLayer);
         }
+        
         if ($objLayer->location_type === 'startab') {
             $arrLayerData['awesomeicon'] = $objLayer->awesomeicon;
         }
+        
         $arrLayerData['raw'] = $objLayer;
 
+        return $arrLayerData;
+    }
+    
+    private function handleLayerLink($objLayer, $arrLayerData)
+    {
+        $arrLayerData['link_id'] = $objLayer->link_id;
+        $linkedLayer = C4gMapsModel::findByPk($objLayer->link_id);
+        
+        // check if linked element is overpass request and assign correct content values
+        if ($linkedLayer->location_type !== "none") {
+            // TODO check with nested link structures
+            $arrLayerData['content'] = $this->getContentForType($linkedLayer);
+        } else {
+            // check childs
+            // TODO cache resolved link
+            $arrLayerData = array_merge($arrLayerData, $this->getChildsForLinkedLayer($linkedLayer->id, $objLayer));
+        }
+        
+        // set zooms of links
+        if ($linkedLayer->loc_minzoom > 0 || $linkedLayer->loc_maxzoom > 0)
+        {
+            $arrLayerData['zoom'] = [
+                'min' => $linkedLayer->loc_minzoom,
+                'max' => $linkedLayer->loc_maxzoom,
+                'onclick_to' => $linkedLayer->loc_onclick_zoomto
+            ];
+        }
+        
+        return $arrLayerData;
+    }
+    
+    /**
+     * Returns the linked structure.
+     * @param $layerId
+     * @param $parentLayer
+     * @return array
+     */
+    private function getChildsForLinkedLayer($layerId, $parentLayer)
+    {
+        $childLayers = C4gMapsModel::findPublishedByPid($layerId);
+        $arrLayerData['childs'] = [];
+        
+        foreach ($childLayers as $childLayer) {
+            if ($childLayer->location_type !== "none") {
+                // we reached the "bottom" of the tree leaf
+                $childData = $this->parseLayer($childLayer);
+                $childData['pid'] = $parentLayer->id;
+                $arrLayerData['childs'][] = $childData;
+                $arrLayerData['hide'] = $parentLayer->data_hidelayer;
+            } else {
+                $currentChildLayer = $this->parseLayer($childLayer);
+                // set correct pid for the contentless element
+                $currentChildLayer['pid'] = $parentLayer->id;
+                // $childLayer is the acutal existing layer.
+                $arrChildData = $this->getChildsForLinkedLayer($childLayer->id, (object) $currentChildLayer);
+                $currentChildLayer['childs'] = $arrChildData['childs'];
+                $currentChildLayer['content'] = [];
+                $currentChildLayer['hasChilds'] = count($currentChildLayer['childs']) > 0;
+                $currentChildLayer['childsCount'] = count($currentChildLayer['childs']);
+                $arrLayerData['childs'][] = $currentChildLayer;
+            }
+            
+            $arrLayerData['content'] = [];
+            $arrLayerData['hasChilds'] = count($arrLayerData['childs']) > 0;
+            $arrLayerData['childsCount'] = count($arrLayerData['childs']);
+        }
+        
         return $arrLayerData;
     }
 
@@ -498,116 +449,90 @@ class LayerService
      */
     protected function getContentForType($objLayer)
     {
-        $objLayerContentApi = new LayerContentApi();
         switch ($objLayer->location_type)
         {
-            // TODO: make Hook instead and let con4gis-Forum handle this?
             case "c4gForum":
-                if ($objLayer->forum_reassign_layer && $objLayer->forum_reassign_layer=="THREAD") {
-                    $arrReassignedRawLayer = $objLayerContentApi->getLayerDataPublic($objLayer->id);
-
-                    //loop over all forum layers
-                    foreach ($arrReassignedRawLayer as $index=>$reassignedLayer)
-                    {
-                        $found = false;
-                        $strReassignName = $reassignedLayer['threadName'];
-                        $layer = $this->arrReassignedLayer[$strReassignName];
-                        if ($layer && is_array($layer)) {
-                            $this->arrReassignedLayer[$strReassignName][] = $reassignedLayer;
-                            $found = true;
-                        } else if (!$layer) {
-                            // lookup in child elements if the layer is there
-                            foreach ($this->arrReassignedLayer as $index_child=>$reassignedLayer_child)
-                            {
-                                $layer_child = $reassignedLayer_child[$strReassignName];
-                                if ($layer_child && is_array($layer_child)) {
-                                    // found layer
-                                    $reassignedLayer_child[$strReassignName][] = $reassignedLayer;
-                                    $found = true;
-                                    break;
-                                }
-                            }
-                        }
-
-                        if (!$found) {
-                            //since the layer was not found, insert it at first level
-                            $this->arrReassignedLayer[$strReassignName] = array();
-                            $this->arrReassignedLayer[$strReassignName][] = $reassignedLayer;
-                        }
-                    }
-
-                    return false;
-                } else {
-                    return $objLayerContentApi->getLayerDataPublic($objLayer->id);
-                }
-            // same function call, so fallthrough
-
+                return $this->getC4gForumData($objLayer);
+                break;
             case "table":
                 if($objLayer->async_content){
                     return false;
                 }
                 else{
-                    return $objLayerContentApi->getLayerDataPublic($objLayer->id);
+                    return $this->layerContentService->getLayerData($objLayer->id);
                 }
+                break;
+            // same function call, so fallthrough
             case "link":
             case "overpass":
             case "gpx":
             case "kml":
             case "osm":
             case "single":
-                return $objLayerContentApi->getLayerDataPublic($objLayer->id);
-//            case "folder":
-//                return $objLayerContentApi->getFolderDataPublic($objLayer);
+                return $this->layerContentService->getLayerData($objLayer->id);
+                break;
             default:
                 if (!$objLayer->data_hidelayer) {
-                    return $objLayerContentApi->getLayerDataPublic($objLayer->id);
+                    return $this->layerContentService->getLayerData($objLayer->id);
                 }
                 return false;
+                break;
         }
     }
-
-    private function getLinkedChilds($layer)
+    
+    private function getC4gForumData($objLayer)
     {
-        $childs = array();
-        $dbValues = C4gMapsModel::findPublishedByPid($layer['link_id']);
-        if ($dbValues) {
-            while($dbValues->next()) {
-                $child = array();
-                $child['link_id'] = $dbValues->id;
-                $child['name'] = \Contao\Controller::replaceInsertTags($dbValues->data_layername);
-                $child['id'] = uniqid();
-                $child['pid'] = $layer['id'];
-                $child['display'] = $layer['display'];
-                $child['content'] = $this->getContentForType($dbValues);
-                $child['type'] = "link";
-                $child['childs'] = $this->getLinkedChilds($child);
-                if ($child['childs'] && sizeof($child['childs']) > 0) {
-                    $child['hasChilds'] = true;
-                    $child['childCount'] = sizeof($child['childs']);
+        if ($objLayer->forum_reassign_layer && $objLayer->forum_reassign_layer=="THREAD") {
+            $arrReassignedRawLayer = $this->layerContentService->getLayerData($objLayer->id);
+        
+            //loop over all forum layers
+            foreach ($arrReassignedRawLayer as $index=>$reassignedLayer)
+            {
+                $found = false;
+                $strReassignName = $reassignedLayer['threadName'];
+                $layer = $this->arrReassignedLayer[$strReassignName];
+                if ($layer && is_array($layer)) {
+                    $this->arrReassignedLayer[$strReassignName][] = $reassignedLayer;
+                    $found = true;
+                } else if (!$layer) {
+                    // lookup in child elements if the layer is there
+                    foreach ($this->arrReassignedLayer as $index_child=>$reassignedLayer_child)
+                    {
+                        $layer_child = $reassignedLayer_child[$strReassignName];
+                        if ($layer_child && is_array($layer_child)) {
+                            // found layer
+                            $reassignedLayer_child[$strReassignName][] = $reassignedLayer;
+                            $found = true;
+                            break;
+                        }
+                    }
                 }
-                $childs[] = $child;
+                if (!$found) {
+                    //since the layer was not found, insert it at first level
+                    $this->arrReassignedLayer[$strReassignName] = array();
+                    $this->arrReassignedLayer[$strReassignName][] = $reassignedLayer;
+                }
             }
-            return $childs;
+            return false;
         } else {
-            return array();
+            return $this->layerContentService->getLayerData($objLayer->id);
         }
     }
 
     private function getFolder($objLayer)
     {
         $strUrl = "";
-        if ($objLayer->data_folder)
-        {
-            if (\Validator::isUuid($objLayer->data_folder))
-            {
+        
+        if ($objLayer->data_folder) {
+            if (\Validator::isUuid($objLayer->data_folder)) {
                 // add ressource folder
                 $objFolder = \FilesModel::findByUuid($objLayer->data_folder);
-                if ($objFolder !== null)
-                {
+                if ($objFolder !== null) {
                     $strUrl = $objFolder->path;
                 }
             }
         }
+        
         return $strUrl;
     }
 }

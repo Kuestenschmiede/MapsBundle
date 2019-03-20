@@ -68,5 +68,14 @@ class Utils
         }
         return true;
     }
+    
+    /**
+     * Returns an array of location types that are supported by maps per default.
+     * @return array
+     */
+    public static function getLocationTypes()
+    {
+        return ['none','single','table','gpx','kml','geojson','osm','folder','overpass','link', 'startab'];
+    }
 
 }
