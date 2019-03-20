@@ -126,7 +126,7 @@ export class Sideboard extends ol.control.Control {
           // [note] "this.blur()" does not work in IE-fullscreen-mode
           console.warn(e.name + ': ' + e.message);
         }
-        if(capitalizedName == "Router" || capitalizedName == "Measure" || capitalizedName == "Editor"){
+        if(capitalizedName === "Router" || capitalizedName === "Measure" || capitalizedName === "Editor"){
           self.toggle(true);
         }
         else{
@@ -296,7 +296,7 @@ export class Sideboard extends ol.control.Control {
     }*/
 
     contentContainerOuterHeight = jQuery(this.wrapper).height() - (jQuery(this.titleBar).outerHeight(true) + jQuery(this.statusBar).outerHeight(true));
-    if (this.options && this.options.direction && this.options.direction != "undefined" && this.options.direction === 'left') {
+    if (this.options && this.options.direction && this.options.direction !== "undefined" && this.options.direction === 'left') {
       if (this !== this.options.mapController["active" + this.identifier]) {
         containerOffsetWidth = 0;
       }
