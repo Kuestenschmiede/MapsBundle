@@ -704,7 +704,11 @@ class tl_c4g_map_baselayers extends Backend
                 $REQUEST->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
             }
             $REQUEST->send($baselayerUrl);
-            $responses = \GuzzleHttp\json_decode($REQUEST->response);
+            if ($REQUEST->response) {
+                $responses = \GuzzleHttp\json_decode($REQUEST->response);
+            } else {
+                $responses = [];
+            }
             $arrReturn= [];
             foreach ($responses as $response){
                 $arrReturn[$response->id] =$response->name;
