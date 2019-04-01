@@ -131,8 +131,13 @@ class LayerContentService
     private function getGeoJSONLayerContent($objLayer)
     {
         $arrGeoJsonData = $this->createGeoJsonResult($objLayer,'tl_c4g_maps');
-        $strGeoJsonData = Controller::replaceInsertTags(\GuzzleHttp\json_encode($arrGeoJsonData));
-        $arrGeoJsonData = \GuzzleHttp\json_decode($strGeoJsonData);
+        if ($arrGeoJsonData) {
+            $strGeoJsonData = Controller::replaceInsertTags(\GuzzleHttp\json_encode($arrGeoJsonData));
+        }
+        if ($strGeoJsonData) {
+          $arrGeoJsonData = \GuzzleHttp\json_decode($strGeoJsonData);
+        }
+
         return [
             "id" => $objLayer->id,
             "type" => "GeoJSON",
@@ -167,6 +172,7 @@ class LayerContentService
         if ($objProfile->overpassEngine == "2" && $objSettings->con4gisIoUrl && $objSettings->con4gisIoKey) {
             $keySearchUrl = $objSettings->con4gisIoUrl . "getKey.php";
             $keySearchUrl .= "?key=" . $objSettings->con4gisIoKey ."&service=5";
+
             $REQUEST = new \Request();
             if ($_SERVER['HTTP_REFERER']) {
                 $REQUEST->setHeader('Referer', $_SERVER['HTTP_REFERER']);
@@ -175,8 +181,13 @@ class LayerContentService
                 $REQUEST->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
             }
             $REQUEST->send($keySearchUrl);
-            $response = \GuzzleHttp\json_decode($REQUEST->response);
-            $url = $objSettings->con4gisIoUrl . "osm.php?key=" . $response->key;
+            
+            //ToDo do we need guzzle implementation
+            if ($REQUEST->response) {
+                $response = \GuzzleHttp\json_decode($REQUEST->response);
+                $url = $objSettings->con4gisIoUrl . "osm.php?key=" . $response->key;
+            }
+
             $mapData['geosearch']['url'] = $objSettings->con4gisIoUrl;
         }
         else if ($objProfile->overpassEngine == "1") {
@@ -824,7 +835,8 @@ class LayerContentService
                         break;
                 }
                 
-                if(strpos($data, "Feature") !== false) {
+                $arrGeoJson = [];
+                if ($data && (strpos($data, "Feature") !== false)) {
                     $arrGeoJson = json_decode($data, true);
                     $arrGeoJson['properties'] = array(
                         'popup' => array(
@@ -838,7 +850,7 @@ class LayerContentService
                         "tooltip_length" => $objLayer->tooltip_length,
                         'label' =>  Controller::replaceInsertTags($objLayer->loc_label)
                     );
-                } else {
+                } else if ($data) {
                     // OL3 needs a feature or feature-collection
                     $arrGeoJson = array
                     (

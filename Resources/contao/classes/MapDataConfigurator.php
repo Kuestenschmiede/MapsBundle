@@ -434,8 +434,10 @@ class MapDataConfigurator
                         $REQUEST->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
                     }
                     $REQUEST->send($keySearchUrl);
-                    $response = \GuzzleHttp\json_decode($REQUEST->response);
-                    $mapData['geosearch']['searchKey'] = $response->key;
+                    if ($REQUEST->response) {
+                        $response = \GuzzleHttp\json_decode($REQUEST->response);
+                        $mapData['geosearch']['searchKey'] = $response->key;
+                    }
 
                     $keyReverseUrl = $objSettings->con4gisIoUrl . "getKey.php";
                     $keyReverseUrl .= "?key=" . $objSettings->con4gisIoKey ."&service=3";
@@ -447,8 +449,10 @@ class MapDataConfigurator
                         $REQUEST->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
                     }
                     $REQUEST->send($keyReverseUrl);
-                    $response = \GuzzleHttp\json_decode($REQUEST->response);
-                    $mapData['geosearch']['reverseKey'] = $response->key;
+                    if ($REQUEST->response) {
+                        $response = \GuzzleHttp\json_decode($REQUEST->response);
+                        $mapData['geosearch']['reverseKey'] = $response->key;
+                    }
                     $mapData['geosearch']['url'] = $objSettings->con4gisIoUrl;
                 }
 

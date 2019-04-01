@@ -265,9 +265,10 @@ class BaseLayerService
                         $REQUEST->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
                     }
                     $REQUEST->send($keyUrl);
-                    $response = \GuzzleHttp\json_decode($REQUEST->response);
-                    $arrBaseLayer['url'] = $objSettings->con4gisIoUrl . "tiles.php?key=" . $response->key . "&z={z}&x={x}&y={y}";
-
+                    if ($REQUEST->response) {
+                        $response = \GuzzleHttp\json_decode($REQUEST->response);
+                        $arrBaseLayer['url'] = $objSettings->con4gisIoUrl . "tiles.php?key=" . $response->key . "&z={z}&x={x}&y={y}";
+                    }
                 }
                 break;
             case 'mapbox':
