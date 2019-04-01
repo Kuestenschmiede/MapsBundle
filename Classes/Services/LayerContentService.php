@@ -409,20 +409,26 @@ class LayerContentService
             $arrUrl = explode('/', $alias);
             $alias = explode('.', $arrUrl[$strC])[0];
             if ($alias) {
+                if ($qWhere) {
+                    $stmt = ' AND';
+                }
+                else {
+                    $stmt = ' WHERE';
+                }
                 if (is_numeric($alias)) {
-                    $stmt .= ' AND (( alias = "' . $alias . '" ) OR ( id = ' . $alias . ' ))';
+                    $stmt .= ' (( alias = "' . $alias . '" ) OR ( id = ' . $alias . ' ))';
                 } else {
-                    $stmt .= ' AND (alias = "' . $alias . '")';
+                    $stmt .= ' (alias = "' . $alias . '")';
                 }
             }
         }
     
         if ($sourceTable) {
-            $queryCount = "SELECT COUNT(*) AS count FROM `$sourceTable`" . $qWhere . $pidOption . $qAnd . $whereClause . $addBeWhereClause . $stmt;
+            $queryCount = "SELECT COUNT(*) AS count FROM `$sourceTable`" . $qWhere . $pidOption . $and . $whereClause . $addBeWhereClause . $stmt;
             $resultCount = \Database::getInstance()->prepare($queryCount)->execute()->fetchAssoc()['count'];
         
             if ($resultCount < 45000) {
-                $query = "SELECT * FROM `$sourceTable`" . $qWhere . $pidOption . $qAnd . $whereClause . $addBeWhereClause . $stmt;
+                $query = "SELECT * FROM `$sourceTable`" . $qWhere . $pidOption . $and . $whereClause . $addBeWhereClause . $stmt;
                 $result = \Database::getInstance()->prepare($query)->execute();
             }
         
