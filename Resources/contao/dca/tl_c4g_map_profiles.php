@@ -161,18 +161,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             ],
 
 
-
-        'is_backend_geopicker_default' =>
-            [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['is_backend_geopicker_default'],
-            'exclude'                 => true,
-            'default'                 => false,
-            'inputType'               => 'checkbox',
-            'eval'                    => ['tl_class'=>'long'],
-//            'save_callback'           => array(array('tl_c4g_map_profiles','set_backend_default')),
-            'sql'                     => "char(1) NULL"
-            ],
-
         'baselayers' =>
             [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayers'],
@@ -764,6 +752,17 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'default'                 => true,
             'inputType'               => 'checkbox',
             'sql'                     => "char(1) NOT NULL default '1'"
+            ],
+
+        'is_backend_geopicker_default' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['is_backend_geopicker_default'],
+                'exclude'                 => true,
+                'default'                 => false,
+                'inputType'               => 'checkbox',
+                'eval'                    => ['tl_class'=>'long'],
+//            'save_callback'           => array(array('tl_c4g_map_profiles','set_backend_default')),
+                'sql'                     => "char(1) NULL"
             ],
 
         'geopicker' =>
