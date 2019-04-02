@@ -17,7 +17,7 @@
 
 /** Allgemeine Daten */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['name'] = ['Name', 'Enter a name for the map profile.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['theme'] = ['Theme', 'Select your own theme.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['theme'] = ['Layout', 'Select your own theme.'];
 
 /** Basiskarten */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayers'] = ['Base layers', 'Check the baselayers you wish to see in the Starboard. Default: all'];
