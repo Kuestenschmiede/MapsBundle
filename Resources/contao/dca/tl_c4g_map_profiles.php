@@ -100,7 +100,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                                          '{information_legend:hide},attribution,overviewmap,graticule,scaleline,mouseposition,permalink,zoomlevel,infopage;'.
                                          '{geosearch_legend:hide},geosearch;'.
                                          '{measure_legend:hide},measuretool;'.
-                                         '{editor_legend:hide},editor;'.
                                          '{geopicker_legend:hide},is_backend_geopicker_default,geopicker;'.
                                          '{click_legend:hide},link_newwindow,link_open_on,hover_popups, popupAutoPan;'.
                                          '{cesium_legend:hide},cesium;'.
@@ -126,7 +125,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         'overpassEngine_1'            => 'overpass_url',
         'overpassEngine_2'            => '',
         'overpassEngine_3'            => ''
-
         ],
 
     // Fields
@@ -476,16 +474,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'inputType'               => 'checkbox',
             'sql'                     => "char(1) NOT NULL default ''"
             ],
-
-        'editor' =>
-            [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor'],
-            'exclude'                 => true,
-            'inputType'               => 'checkbox',
-            'eval'                    => ['mandatory'=>false],
-            'sql'                     => "char(1) NOT NULL default ''"
-            ],
-
         'attribution' =>
             [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['attribution'],
@@ -1065,21 +1053,6 @@ class tl_c4g_map_profiles extends Backend
                     if (intval($objLocCount->entry_count) >= intval($objProfile->be_optimize_checkboxes_limit)) {
                         $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['fields']['locstyles']['inputType'] = 'select';
                         $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['fields']['locstyles']['eval']['chosen'] = true;
-
-                        $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['fields']['editor_styles_point']['inputType'] = 'select';
-                        $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['fields']['editor_styles_point']['eval']['chosen'] = true;
-
-                        $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['fields']['editor_styles_line']['inputType'] = 'select';
-                        $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['fields']['editor_styles_line']['eval']['chosen'] = true;
-
-                        $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['fields']['editor_styles_polygon']['inputType'] = 'select';
-                        $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['fields']['editor_styles_polygon']['eval']['chosen'] = true;
-
-                        $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['fields']['editor_styles_circle']['inputType'] = 'select';
-                        $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['fields']['editor_styles_circle']['eval']['chosen'] = true;
-
-                        $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['fields']['editor_styles_freehand']['inputType'] = 'select';
-                        $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['fields']['editor_styles_freehand']['eval']['chosen'] = true;
                     }
                 }
             }
