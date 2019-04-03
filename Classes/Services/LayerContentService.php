@@ -14,7 +14,7 @@
 
 namespace con4gis\MapsBundle\Classes\Services;
 
-use con4gis\MapsBundle\Resources\contao\classes\Utils;
+use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapLocstylesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapSettingsModel;
@@ -171,9 +171,9 @@ class LayerContentService
     {
         $objSettings = C4gMapSettingsModel::findOnly();
         if ($objProfile->overpassEngine == "2") {
-            $key = Utils::getKey($objSettings, '5');
+            $key = C4GUtils::getKey($objSettings, '5');
             if ($key) {
-                $url = $objSettings->con4gisIoUrl . "osm.php?key=" . $key;
+                $url = rtrim($objSettings->con4gisIoUrl, "/") . "/" . "osm.php?key=" . $key;
                 $mapData['geosearch']['url'] = rtrim($objSettings->con4gisIoUrl, "/") . "/";
             }
         }

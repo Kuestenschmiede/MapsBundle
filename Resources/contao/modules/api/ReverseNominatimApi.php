@@ -73,7 +73,7 @@ class ReverseNominatimApi extends \Frontend
                     $strSearchUrl = 'https://'.$objMapsProfile->geosearch_key.'.search.mapservices.kartenkueste.de/reverse.php';
                 }
                 else if ($objSettings->con4gisIoUrl && $objSettings->con4gisIoKey) {
-                    $strSearchUrl = $objSettings->con4gisIoUrl . "reverse.php";
+                    $strSearchUrl = rtrim($objSettings->con4gisIoUrl, "/") . "/" . "reverse.php";
                     $arrParams['key'] = $objSettings->con4gisIoKey;
                 }
                 else {

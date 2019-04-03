@@ -14,7 +14,7 @@ namespace con4gis\MapsBundle\Classes\Services;
 
 
 use con4gis\CoreBundle\Resources\contao\classes\HttpResultHelper;
-use con4gis\MapsBundle\Resources\contao\classes\Utils;
+use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapBaselayersModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapOverlaysModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
@@ -255,7 +255,7 @@ class BaseLayerService
                 break;
             case 'con4gisIo':
                 $objSettings = C4gMapSettingsModel::findOnly();
-                $key = Utils::getKey($objSettings, '4', 'id='.$objBaseLayer->con4gisIo);
+                $key = C4GUtils::getKey($objSettings, '4', 'id='.$objBaseLayer->con4gisIo);
                 if ($key) {
                     $arrBaseLayer['url'] = rtrim($objSettings->con4gisIoUrl, "/") . "/" . "tiles.php?key=" . $key . "&z={z}&x={x}&y={y}";
                 }
