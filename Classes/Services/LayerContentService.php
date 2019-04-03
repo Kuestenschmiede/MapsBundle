@@ -173,7 +173,7 @@ class LayerContentService
         if ($objProfile->overpassEngine == "2") {
             $key = Utils::getKey($objSettings, '5');
             if ($key) {
-                $url = $objSettings->con4gisIoUrl . "osm.php?key=" . $key;
+                $url = rtrim($objSettings->con4gisIoUrl, "/") . "/" . "osm.php?key=" . $key;
                 $mapData['geosearch']['url'] = rtrim($objSettings->con4gisIoUrl, "/") . "/";
             }
         }
