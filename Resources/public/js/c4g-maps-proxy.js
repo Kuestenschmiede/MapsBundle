@@ -489,7 +489,6 @@ export class MapProxy {
       window.c4gMapsPopup.$popup.removeClass(cssConstants.ACTIVE);
     });
     if (this.mapData.popupHandling < 2) {
-      // $(popUpElement).addClass('nose');
       let autoPan = this.mapData.popupHandling == 1 ? true : false;
       popup = new ol.Overlay({
         element: popUpElement,
@@ -503,7 +502,7 @@ export class MapProxy {
       });
     }
     else {
-      // $(popUpElement).addClass('nonose');
+      $(popUpElement).addClass('c4g-popup-wrapper-nonose');
       popup = new ol.Overlay({
         element: popUpElement,
         positioning: 'center-center',

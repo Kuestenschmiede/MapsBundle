@@ -849,6 +849,9 @@ div.c4g-popup-wrapper:before {
   margin-bottom: 10px;
   border: 10px solid transparent;
 }
+div.c4g-popup-wrapper-nonose:before {
+  display:none;
+}
 button.c4g-popup-close {
   position: absolute;
   top: 6px;
