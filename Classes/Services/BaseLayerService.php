@@ -14,6 +14,7 @@ namespace con4gis\MapsBundle\Classes\Services;
 
 
 use con4gis\CoreBundle\Resources\contao\classes\HttpResultHelper;
+use con4gis\MapsBundle\Resources\contao\classes\Utils;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapBaselayersModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapOverlaysModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
@@ -254,21 +255,9 @@ class BaseLayerService
                 break;
             case 'con4gisIo':
                 $objSettings = C4gMapSettingsModel::findOnly();
-                if ($objSettings->con4gisIoUrl && $objSettings->con4gisIoKey) {
-                    $keyUrl = $objSettings->con4gisIoUrl . "getKey.php";
-                    $keyUrl .= "?key=" . $objSettings->con4gisIoKey ."&service=4&id=" . $objBaseLayer->con4gisIo;
-                    $REQUEST = new \Request();
-                    if ($_SERVER['HTTP_REFERER']) {
-                        $REQUEST->setHeader('Referer', $_SERVER['HTTP_REFERER']);
-                    }
-                    if ($_SERVER['HTTP_USER_AGENT']) {
-                        $REQUEST->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
-                    }
-                    $REQUEST->send($keyUrl);
-                    if ($REQUEST->response) {
-                        $response = \GuzzleHttp\json_decode($REQUEST->response);
-                        $arrBaseLayer['url'] = $objSettings->con4gisIoUrl . "tiles.php?key=" . $response->key . "&z={z}&x={x}&y={y}";
-                    }
+                $key = Utils::getKey($objSettings, '4', 'id='.$objBaseLayer->con4gisIo);
+                if ($key) {
+                    $arrBaseLayer['url'] = rtrim($objSettings->con4gisIoUrl, "/") . "/" . "tiles.php?key=" . $key . "&z={z}&x={x}&y={y}";
                 }
                 break;
             case 'mapbox':

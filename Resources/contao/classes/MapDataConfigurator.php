@@ -423,37 +423,11 @@ class MapDataConfigurator
                 $mapData['geosearch']['popup'] = $profile->geosearch_popup;
                 $mapData['geosearch']['attribution'] = \Contao\Controller::replaceInsertTags($profile->geosearch_attribution);
                 $mapData['geosearch']['collapsed'] = $profile->geosearch_collapsed;
-                if ($profile->geosearch_engine == "4" && $objSettings->con4gisIoUrl && $objSettings->con4gisIoKey) {
-                    $keySearchUrl = $objSettings->con4gisIoUrl . "getKey.php";
-                    $keySearchUrl .= "?key=" . $objSettings->con4gisIoKey ."&service=2";
-                    $REQUEST = new \Request();
-                    if ($_SERVER['HTTP_REFERER']) {
-                        $REQUEST->setHeader('Referer', $_SERVER['HTTP_REFERER']);
-                    }
-                    if ($_SERVER['HTTP_USER_AGENT']) {
-                        $REQUEST->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
-                    }
-                    $REQUEST->send($keySearchUrl);
-                    if ($REQUEST->response) {
-                        $response = \GuzzleHttp\json_decode($REQUEST->response);
-                        $mapData['geosearch']['searchKey'] = $response->key;
-                    }
 
-                    $keyReverseUrl = $objSettings->con4gisIoUrl . "getKey.php";
-                    $keyReverseUrl .= "?key=" . $objSettings->con4gisIoKey ."&service=3";
-                    $REQUEST = new \Request();
-                    if ($_SERVER['HTTP_REFERER']) {
-                        $REQUEST->setHeader('Referer', $_SERVER['HTTP_REFERER']);
-                    }
-                    if ($_SERVER['HTTP_USER_AGENT']) {
-                        $REQUEST->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
-                    }
-                    $REQUEST->send($keyReverseUrl);
-                    if ($REQUEST->response) {
-                        $response = \GuzzleHttp\json_decode($REQUEST->response);
-                        $mapData['geosearch']['reverseKey'] = $response->key;
-                    }
-                    $mapData['geosearch']['url'] = $objSettings->con4gisIoUrl;
+                if ($profile->geosearch_engine == "4") {
+                    $mapData['geosearch']['searchKey'] = Utils::getKey($objSettings, '2');
+                    $mapData['geosearch']['reverseKey'] = Utils::getKey($objSettings, '3');
+                    $mapData['geosearch']['url'] = rtrim($objSettings->con4gisIoUrl, "/") . "/";
                 }
 
                 if ($profile->attribution && $profile->geosearch_attribution) {
