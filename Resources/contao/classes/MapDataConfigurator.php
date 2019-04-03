@@ -479,7 +479,7 @@ class MapDataConfigurator
             $mapData['link_newwindow'] = $profile->link_newwindow;
             $mapData['hover_popups'] = $profile->hover_popups;
             $mapData['hover_popups_stay'] = $profile->hover_popups_stay;
-            $mapData['popupAutoPan'] = $profile->popupAutoPan;
+            $mapData['popupHandling'] = $profile->popupHandling;
 
         }
 

@@ -125,7 +125,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['link_newwindow'] = ['Open Links in n
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['link_open_on'] = ['Open Links on', 'Select on which mouse action a link should be opened, if a link is specified.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['hover_popups'] = ['Popups on Mouse Hover', 'Shows a popup if the mouse pointer rests on a location.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['hover_popups_stay'] = ['Mouse Hover Popups stay open', 'Popups that have been opened on mouse hover are not closed when the mouse pointer leaves the location.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupAutoPan'] = ['Autopan to popup', 'Automatically pans to the popup\'s location'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandling'] = ['Autopan to popup', 'Automatically pans to the popup\'s location'];
 
 /** Sonstiges */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overpassEngine'] = ['Overpass Server Technology', 'Choose your preferred Overpass Server Technology'];

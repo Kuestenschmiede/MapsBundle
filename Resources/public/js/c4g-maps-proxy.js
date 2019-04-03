@@ -344,7 +344,13 @@ export class MapProxy {
           } else {
             coord = clickEvent.coordinate;
           }
-          window.c4gMapsPopup.popup.setPosition(coord);
+          if (self.mapData.popupHandling < 2) {
+            window.c4gMapsPopup.popup.setPosition(coord);
+          }
+          else {
+            window.c4gMapsPopup.popup.setPosition(self.options.mapController.map.getView().getCenter());
+
+          }
 
           if (popupInfos.content) {
             window.c4gMapsPopup.$content.html('');
@@ -439,7 +445,13 @@ export class MapProxy {
         utils.callHookFunctions(window.c4gMapsHooks.proxy_appendPopup, {popup: popupConfig, mapController: this.options.mapController});
       }
       if (feature.getGeometry() && feature.getGeometry() instanceof ol.geom.Point) {
-        window.c4gMapsPopup.popup.setPosition(feature.getGeometry().getCoordinates());
+        if (self.mapData.popupHandling < 2) {
+          window.c4gMapsPopup.popup.setPosition(feature.getGeometry().getCoordinates());
+        }
+        else {
+
+          window.c4gMapsPopup.popup.setPosition(self.options.mapController.map.getView().getCenter());
+        }
       }
     } else {
       // hide popup if there is no valid content left
@@ -476,17 +488,30 @@ export class MapProxy {
       event.preventDefault();
       window.c4gMapsPopup.$popup.removeClass(cssConstants.ACTIVE);
     });
-
-    popup = new ol.Overlay({
-      element: popUpElement,
-      positioning: 'bottom-left',
-      offset: [-50, 0],
-        autoPan: this.mapData.popupAutoPan ? true : false,
+    if (this.mapData.popupHandling < 2) {
+      // $(popUpElement).addClass('nose');
+      let autoPan = this.mapData.popupHandling == 1 ? true : false;
+      popup = new ol.Overlay({
+        element: popUpElement,
+        positioning: 'bottom-left',
+        offset: [-50, 0],
+        autoPan: autoPan,
         autoPanAnimation: {
-             duration: 0
+          duration: 0
         },
         autoPanMargin: 100
-    });
+      });
+    }
+    else {
+      // $(popUpElement).addClass('nonose');
+      popup = new ol.Overlay({
+        element: popUpElement,
+        positioning: 'center-center',
+        offset: [-50, 0],
+        autoPan: false,
+      });
+
+    }
 
     window.c4gMapsPopup = {};
     window.c4gMapsPopup.popup = popup;

@@ -101,7 +101,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                                          '{geosearch_legend:hide},geosearch;'.
                                          '{measure_legend:hide},measuretool;'.
                                          '{geopicker_legend:hide},is_backend_geopicker_default,geopicker;'.
-                                         '{click_legend:hide},link_newwindow,link_open_on,hover_popups, popupAutoPan;'.
+                                         '{click_legend:hide},link_newwindow,link_open_on,hover_popups, popupHandling;'.
                                          '{cesium_legend:hide},cesium;'.
                                          '{overpassLegend:hide},overpassEngine;'.
                                          '{miscellaneous_legend:hide},script,custom_div,account,be_optimize_checkboxes_limit,caching,geobookmarks;'
@@ -910,14 +910,16 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'inputType'               => 'checkbox',
             'sql'                     => "char(1) NOT NULL default ''"
             ],
-        'popupAutoPan' => [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupAutoPan'],
+        'popupHandling' => [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandling'],
             'exclude'                 => true,
-            'default'                 => false,
-            'inputType'               => 'checkbox',
+            'default'                 => '0',
+            'inputType'               => 'radio',
+            'options'                 => ['0','1','2'],
+            'eval'                    => ['submitOnChange' => true,'includeBlankOption' => false],
+            'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandlingReferences'],
             'sql'                     => "char(1) NOT NULL default ''"
         ],
-
         'be_optimize_checkboxes_limit' =>
             [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['be_optimize_checkboxes_limit'],
