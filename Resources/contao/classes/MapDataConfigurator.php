@@ -13,6 +13,7 @@
 namespace con4gis\MapsBundle\Resources\contao\classes;
 
 use BugBuster\MobileDetection\Mobile_Detection;
+use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
 use con4gis\CoreBundle\Resources\contao\models\C4gSettingsModel;
 use con4gis\MapsBundle\Classes\Events\LoadMapdataEvent;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapBaselayersModel;
@@ -425,8 +426,8 @@ class MapDataConfigurator
                 $mapData['geosearch']['collapsed'] = $profile->geosearch_collapsed;
 
                 if ($profile->geosearch_engine == "4") {
-                    $mapData['geosearch']['searchKey'] = Utils::getKey($objSettings, '2');
-                    $mapData['geosearch']['reverseKey'] = Utils::getKey($objSettings, '3');
+                    $mapData['geosearch']['searchKey'] = C4GUtils::getKey($objSettings, '2');
+                    $mapData['geosearch']['reverseKey'] = C4GUtils::getKey($objSettings, '3');
                     $mapData['geosearch']['url'] = rtrim($objSettings->con4gisIoUrl, "/") . "/";
                 }
 
