@@ -694,7 +694,7 @@ class tl_c4g_map_baselayers extends Backend
     public function getCon4gisIoBaselayers(){
         $objSettings = \con4gis\MapsBundle\Resources\contao\models\C4gMapSettingsModel::findOnly();
         if ($objSettings->con4gisIoUrl && $objSettings->con4gisIoKey) {
-            $baselayerUrl = $objSettings->con4gisIoUrl . "getBaselayers.php";
+            $baselayerUrl = rtrim($objSettings->con4gisIoUrl, "/") . "/" . "getBaselayers.php";
             $baselayerUrl .= "?key=" . $objSettings->con4gisIoKey;
             $REQUEST = new \Request();
             if ($_SERVER['HTTP_REFERER']) {
