@@ -452,7 +452,7 @@ export class Sideboard extends ol.control.Control {
 
     direction = this.options.direction;
 
-    if (opt_hide) {
+    if (opt_hide && !opt_openOtherSideboard) {
       if (typeof this.preHideFunction === 'function') {
         this.preHideFunction();
       }
@@ -487,7 +487,7 @@ export class Sideboard extends ol.control.Control {
 
       // check if a view needs to be deactivated
       if (this.activeView) {
-        this.activeView.deactivate(opt_hide);
+        this.activeView.deactivate(opt_hide && !opt_openOtherSideboard);
       }
 
       // Remove active Sideboardentry
