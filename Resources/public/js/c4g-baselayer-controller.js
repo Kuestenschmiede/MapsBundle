@@ -202,10 +202,9 @@ export class C4gBaselayerController {
         }
         break;
       case 'con4gisIo':
+        layerOptions.url = baseLayerConfig.url;
         newBaselayer = new ol.layer.Tile({
-          source: new ol.source.XYZ({
-            url: baseLayerConfig.url
-          })
+          source: new ol.source.XYZ(layerOptions)
         });
         break;
       case 'mapbox':
