@@ -14,6 +14,15 @@ import {C4gOverlay} from "./c4g-overlay";
 import {config} from "./c4g-maps-config";
 import {utils} from "./c4g-maps-utils";
 import {cssConstants} from "./c4g-maps-constant";
+import {TileLayer} from "ol/layer/Tile";
+import {XYZ} from "ol/source";
+import {OSM} from "ol/source";
+import {Stamen} from "ol/source";
+import {VectorTile} from "ol/VectorTile";
+import {VectorTileSource} from "ol/source/VectorTile";
+import {BingMaps} from "ol/source";
+import {TileWMS} from "ol/source";
+import {LayerGroup} from "ol/layer";
 
 export class C4gBaselayerController {
   constructor(proxy) {
@@ -140,8 +149,8 @@ export class C4gBaselayerController {
           noUrl = false;
         }
         if (!noUrl) {
-          newBaselayer = new ol.layer.Tile({
-            source: new ol.source.XYZ(layerOptions),
+          newBaselayer = new TileLayer({
+            source: new XYZ(layerOptions),
             extent: baseLayerConfig.extend
           });
         } else {
@@ -150,8 +159,8 @@ export class C4gBaselayerController {
         break;
       case 'osm':
         if (sourceConfigs.osm[baseLayerConfig.style]) {
-          newBaselayer = new ol.layer.Tile({
-            source: new ol.source.OSM(
+          newBaselayer = new TileLayer({
+            source: new OSM(
               jQuery.extend(
                 sourceConfigs.osm[baseLayerConfig.style],
                 layerOptions
@@ -170,8 +179,8 @@ export class C4gBaselayerController {
             noUrl = false;
           }
           if (!noUrl) {
-            newBaselayer = new ol.layer.Tile({
-              source: new ol.source.XYZ(layerOptions)
+            newBaselayer = new TileLayer({
+              source: new XYZ(layerOptions)
             });
           } else {
             console.warn('custom url(s) missing -> switch to default');
@@ -183,8 +192,8 @@ export class C4gBaselayerController {
       case 'stamen':
         if (sourceConfigs.stamen[baseLayerConfig.style]) {
           // Stamen
-          newBaselayer = new ol.layer.Tile({
-            source: new ol.source.Stamen(
+          newBaselayer = new TileLayer({
+            source: new Stamen(
               jQuery.extend(
                 sourceConfigs.stamen[baseLayerConfig.style],
                 layerOptions
@@ -193,7 +202,7 @@ export class C4gBaselayerController {
           });
           // } else if (mapQuestSourceConfigs[baseLayerConfig.style]) {
           //   // mapQuest
-          //   newBaselayer = new ol.layer.Tile({
+          //   newBaselayer = new TileLayer({
           //     source: new ol.source.MapQuest(mapQuestSourceConfigs[baseLayerConfig.style])
           //   });
         }
@@ -203,8 +212,8 @@ export class C4gBaselayerController {
         break;
       case 'con4gisIo':
         layerOptions.url = baseLayerConfig.url;
-        newBaselayer = new ol.layer.Tile({
-          source: new ol.source.XYZ(layerOptions)
+        newBaselayer = new TileLayer({
+          source: new XYZ(layerOptions)
         });
         break;
       case 'mapbox':
@@ -212,16 +221,16 @@ export class C4gBaselayerController {
 
           if (baseLayerConfig.mapbox_type === 'Mapbox') {
             layerOptions.url = baseLayerConfig.url + baseLayerConfig.app_id + '/tiles/{z}/{x}/{y}?access_token=' + baseLayerConfig.api_key;
-            newBaselayer = new ol.layer.Tile({
-              source: new ol.source.XYZ(
+            newBaselayer = new TileLayer({
+              source: new XYZ(
                 jQuery.extend(sourceConfigs.mapbox[baseLayerConfig.mapbox_type], layerOptions)
               )
             });
           } else {
             layerOptions.url = baseLayerConfig.url_classic + baseLayerConfig.app_id + '/{z}/{x}/{y}.png?access_token=' + baseLayerConfig.api_key;
 
-            newBaselayer = new ol.layer.Tile({
-              source: new ol.source.XYZ(jQuery.extend(
+            newBaselayer = new TileLayer({
+              source: new XYZ(jQuery.extend(
                 sourceConfigs.mapbox[baseLayerConfig.mapbox_type],
                 layerOptions
               ))
@@ -229,8 +238,8 @@ export class C4gBaselayerController {
           }
         }else if(baseLayerConfig.hide_in_be){
           layerOptions.url = "con4gis/baseLayerTileService/" + baseLayerConfig.id + "/{z}/{x}/{y}";
-          newBaselayer = new ol.layer.Tile({
-            source: new ol.source.XYZ(jQuery.extend(
+          newBaselayer = new TileLayer({
+            source: new XYZ(jQuery.extend(
               sourceConfigs.mapbox[baseLayerConfig.mapbox_type],
               layerOptions))
           });
@@ -244,8 +253,8 @@ export class C4gBaselayerController {
 
           if (baseLayerConfig.klokan_type === 'OpenMapTiles') {
             layerOptions.url = baseLayerConfig.url + '{z}/{x}/{y}.pbf';
-            newBaselayer = new ol.layer.VectorTile({
-              source: new ol.source.VectorTile(jQuery.extend(
+            newBaselayer = new VectorTile({
+              source: new VectorTileSource(jQuery.extend(
                 sourceConfigs.klokan[baseLayerConfig.klokan_type],
                 layerOptions))
             });
@@ -258,8 +267,8 @@ export class C4gBaselayerController {
             });
           } else {
             layerOptions.url = baseLayerConfig.url + '/data/v3/{z}/{x}/{y}.pbf?key='+baseLayerConfig.api_key;
-            newBaselayer = new ol.layer.VectorTile({
-              source: new ol.source.VectorTile(jQuery.extend(
+            newBaselayer = new VectorTile({
+              source: new VectorTileSource(jQuery.extend(
                 sourceConfigs.klokan[baseLayerConfig.klokan_type],
                 layerOptions))
             });
@@ -302,16 +311,16 @@ export class C4gBaselayerController {
               '?app_id='+baseLayerConfig.app_id+'&app_code='+baseLayerConfig.api_key;
           }
 
-          newBaselayer = new ol.layer.Tile({
-            source: new ol.source.XYZ(jQuery.extend(
+          newBaselayer = new TileLayer({
+            source: new XYZ(jQuery.extend(
               sourceConfigs.here[baseLayerConfig.here_type],
               layerOptions))
           });
         }
         else if(baseLayerConfig.hide_in_be){
           layerOptions.url = layerOptions.url = "con4gis/baseLayerTileService/" + baseLayerConfig.id + "/{z}/{x}/{y}";
-          newBaselayer = new ol.layer.Tile({
-            source: new ol.source.XYZ(jQuery.extend(
+          newBaselayer = new TileLayer({
+            source: new XYZ(jQuery.extend(
               sourceConfigs.mapbox[baseLayerConfig.here_type],
               layerOptions))
           });
@@ -327,15 +336,15 @@ export class C4gBaselayerController {
             layerOptions.url = "https://tile.thunderforest.com/"+baseLayerConfig.style+"/{z}/{x}/{y}.png?apikey="+baseLayerConfig.api_key;
           }
 
-          newBaselayer = new ol.layer.Tile({
-            source: new ol.source.XYZ(jQuery.extend(
+          newBaselayer = new TileLayer({
+            source: new XYZ(jQuery.extend(
               sourceConfigs.thunderforest[baseLayerConfig.thunderforest_type],
               layerOptions))
           });
         }else if(baseLayerConfig.hide_in_be){
           layerOptions.url = "con4gis/baseLayerTileService/" + baseLayerConfig.id + "/{z}/{x}/{y}";
-          newBaselayer = new ol.layer.Tile({
-            source: new ol.source.XYZ(jQuery.extend(
+          newBaselayer = new TileLayer({
+            source: new XYZ(jQuery.extend(
               sourceConfigs.mapbox[baseLayerConfig.thunderforest_type],
               layerOptions))
           });
@@ -350,8 +359,8 @@ export class C4gBaselayerController {
         break;
       case 'bing':
         if (baseLayerConfig.api_key && baseLayerConfig.style) {
-          newBaselayer = new ol.layer.Tile({
-            source: new ol.source.BingMaps({
+          newBaselayer = new TileLayer({
+            source: new BingMaps({
               culture: navigator.languages ? navigator.languages[0] : (navigator.language || navigator.userLanguage),
               key: baseLayerConfig.api_key,
               imagerySet: baseLayerConfig.style
@@ -363,8 +372,8 @@ export class C4gBaselayerController {
         break;
       case 'wms':
         if(baseLayerConfig.url.indexOf('https') !== -1){
-          newBaselayer = new ol.layer.Tile({
-            source: new ol.source.TileWMS({
+          newBaselayer = new TileLayer({
+            source: new TileWMS({
               url: baseLayerConfig.url,
               params: {
                 LAYERS: baseLayerConfig.params.layers,
@@ -373,15 +382,15 @@ export class C4gBaselayerController {
                 TRANSPARENT: baseLayerConfig.params.transparent
               },
               gutter: baseLayerConfig.gutter,
-              attributions: baseLayerConfig.attribution + ' ' + ol.source.OSM.ATTRIBUTION,
+              attributions: baseLayerConfig.attribution + ' ' + OSM.ATTRIBUTION,
               crossOrigin: 'anonymous'
             }),
             //extent: ol.proj.transformExtent([5.59334, 50.0578, 9.74158, 52.7998], 'EPSG:4326', 'EPSG:3857')
           });
         }
         else{
-          newBaselayer = new ol.layer.Tile({
-            source: new ol.source.TileWMS({
+          newBaselayer = new TileLayer({
+            source: new TileWMS({
               url: baseLayerConfig.url,
               params: {
                 LAYERS: baseLayerConfig.params.layers,
@@ -390,7 +399,7 @@ export class C4gBaselayerController {
                 TRANSPARENT: baseLayerConfig.params.transparent
               },
               gutter: baseLayerConfig.gutter,
-              attributions: baseLayerConfig.attribution + ' ' + ol.source.OSM.ATTRIBUTION,
+              attributions: baseLayerConfig.attribution + ' ' + OSM.ATTRIBUTION,
             }),
             //extent: ol.proj.transformExtent([5.59334, 50.0578, 9.74158, 52.7998], 'EPSG:4326', 'EPSG:3857')
           });
@@ -398,10 +407,10 @@ export class C4gBaselayerController {
 
         break;
       case 'owm':
-        newBaselayer = new ol.layer.Tile({
-          source: new ol.source.XYZ({
+        newBaselayer = new TileLayer({
+          source: new XYZ({
             url: baseLayerConfig.url + baseLayerConfig.app_id + '/{z}/{x}/{y}?hash=' + baseLayerConfig.api_key,
-            attributions: baseLayerConfig.attribution + ' ' + ol.source.OSM.ATTRIBUTION
+            attributions: baseLayerConfig.attribution + ' ' + OSM.ATTRIBUTION
           }),
           //extent: ol.proj.transformExtent([5.59334, 50.0578, 9.74158, 52.7998], 'EPSG:4326', 'EPSG:3857')
         });
@@ -419,7 +428,7 @@ export class C4gBaselayerController {
             baseLayerGroup.push(element);
           }
         }
-        newBaselayer = new ol.layer.Group({
+        newBaselayer = new LayerGroup({
           layers: baseLayerGroup
         });
         break;
@@ -457,8 +466,8 @@ export class C4gBaselayerController {
       sourceConfigs.here = config.here;
       sourceConfigs.thunderforest = config.thunderforest;
 
-      //newBaselayer = new ol.layer.Tile({
-      //  source: new ol.source.OSM()
+      //newBaselayer = new TileLayer({
+      //  source: new OSM()
       //});
 
       layerOptions = {};
@@ -467,7 +476,7 @@ export class C4gBaselayerController {
         if (layerOptions.attributions) {
           layerOptions.attributions = layerOptions.attributions + ' ' + baseLayerConfig.attribution;
         } else {
-          layerOptions.attributions = ol.source.OSM.ATTRIBUTION + ' ' + baseLayerConfig.attribution;
+          layerOptions.attributions = OSM.ATTRIBUTION + ' ' + baseLayerConfig.attribution;
         }
       } else if (!layerOptions.attributions) {
         switch (baseLayerConfig.provider) {
@@ -481,7 +490,7 @@ export class C4gBaselayerController {
             } else if (sourceConfigs.osm[baseLayerConfig.style]) {
               layerOptions.attributions = sourceConfigs.osm[baseLayerConfig.style].attributions;
             } else {
-              layerOptions.attributions = ol.source.OSM.ATTRIBUTION;
+              layerOptions.attributions = OSM.ATTRIBUTION;
             }
             break;
           case 'mapbox':
@@ -497,7 +506,7 @@ export class C4gBaselayerController {
             layerOptions.attributions = sourceConfigs.thunderforest[baseLayerConfig.thunderforest_type].attributions;
             break;
           default:
-            layerOptions.attributions = ol.source.OSM.ATTRIBUTION;
+            layerOptions.attributions = OSM.ATTRIBUTION;
             break;
         }
       }
