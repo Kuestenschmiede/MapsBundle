@@ -11,10 +11,11 @@
  */
 
 import {cssConstants} from "./c4g-maps-constant";
+import {Control} from "ol/control";
 
 'use strict';
 
-export class Print extends ol.control.Control {
+export class Print extends Control {
 
   /**
    * Control to toggle the browser/desvice position on the map.
@@ -80,7 +81,7 @@ export class Print extends ol.control.Control {
     }
 
     // inheritance-stuff
-    ol.control.Control.call(this, {
+    Control.call(this, {
       element: element,
       target: options.target
     });

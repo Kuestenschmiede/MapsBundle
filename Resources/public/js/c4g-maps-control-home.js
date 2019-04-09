@@ -12,9 +12,10 @@
 
 import {utils} from "./c4g-maps-utils";
 import {cssConstants} from "./c4g-maps-constant";
+import {Control} from "ol/control";
 
 'use strict';
-export class Home extends ol.control.Control {
+export class Home extends Control {
 
 
   /**
@@ -94,10 +95,10 @@ export class Home extends ol.control.Control {
       button.addEventListener('touchstart', toggle, false);
     }
 
-    ol.control.Control.call(this, {
+    Control.call(this, {
       element: element,
       target: options.target
     });
-    ol.inherits(Home, ol.control.Control);
+    // ol.inherits(Home, Control);
   }
 }

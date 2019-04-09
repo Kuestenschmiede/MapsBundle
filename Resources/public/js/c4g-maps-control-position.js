@@ -11,9 +11,10 @@
  */
 
 import {cssConstants} from "./c4g-maps-constant";
+import {Control} from "ol/control";
 
 'use strict';
-export class Position extends ol.control.Control {
+export class Position extends Control {
 
 
   /**
@@ -94,10 +95,10 @@ export class Position extends ol.control.Control {
     }
 
     // inheritance-stuff
-    ol.control.Control.call(this, {
+    Control.call(this, {
       element: element,
       target: options.target
     });
-    ol.inherits(Position, ol.control.Control);
+    // ol.inherits(Position, ol.control.Control);
   }
 }

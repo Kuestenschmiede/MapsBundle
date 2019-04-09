@@ -11,9 +11,10 @@
  */
 
 import {cssConstants} from "./c4g-maps-constant";
+import {Control} from "ol/control";
 
 'use strict';
-export class Zoomlevel extends ol.control.Control {
+export class Zoomlevel extends Control {
   constructor(options) {
     super(options);
     var self,
@@ -50,7 +51,7 @@ export class Zoomlevel extends ol.control.Control {
     this.view = mapView;
 
     // inheritance-stuff
-    ol.control.Control.call(this, {
+    Control.call(this, {
       element: element,
       target: options.target
     });

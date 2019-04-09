@@ -19,6 +19,17 @@ import {Spinner} from "./c4g-maps-misc-spinner";
 import {utils} from "./c4g-maps-utils";
 import {cssConstants} from "./c4g-maps-constant";
 import {getLanguage} from "./c4g-maps-i18n";
+import {Vector} from "ol/layer";
+import {Point} from "ol/geom";
+import {toLonLat} from "ol/proj";
+import {Style} from "ol/style";
+import {Circle} from "ol/style";
+import {Fill} from "ol/style";
+import {Text} from "ol/style";
+import {Feature} from "ol";
+import {Overlay} from "ol";
+import {Vector as VectorSource} from "ol/source";
+import {Cluster} from "ol/source";
 
 let langConstants = {};
 
@@ -160,7 +171,7 @@ export class MapProxy {
 
     map.getView().on('change:center', function(evt){
         if (self.options.mapController.data.caching) {
-            var coordinate = ol.proj.toLonLat(map.getView().getCenter());
+            var coordinate = toLonLat(map.getView().getCenter());
             if (coordinate) {
                 utils.storeValue('lon', coordinate[0]);
                 utils.storeValue('lat', coordinate[1]);
@@ -244,9 +255,9 @@ export class MapProxy {
           else {
 
 
-            feature.setStyle(new ol.style.Style({
-              image: new ol.style.Circle({
-                fill: new ol.style.Fill({
+            feature.setStyle(new Style({
+              image: new Circle({
+                fill: new Fill({
                   opacity: 0
                 }),
                 radius: 0
@@ -279,11 +290,11 @@ export class MapProxy {
                 var a = 2 * Math.PI * i / max;
                 if (max == 2 || max == 4) a += Math.PI / 4;
                 var p = [newCenter[0] + r * Math.sin(a), newCenter[1] + r * Math.cos(a)];
-                var coordinate = ol.proj.toLonLat(p);
+                var coordinate = toLonLat(p);
                 var f = [];
                 f.push(fFeatures[i]);
-                var cf = new ol.Feature({
-                  geometry: new ol.geom.Point(p),
+                var cf = new Feature({
+                  geometry: new Point(p),
                   features: f,
                   style: fFeatures[i].get('style')
                 });
@@ -339,7 +350,7 @@ export class MapProxy {
 
         if (feature) {
           geometry = feature.getGeometry();
-          if (geometry instanceof ol.geom.Point) {
+          if (geometry instanceof Point) {
             coord = geometry.getCoordinates();
           } else {
             coord = clickEvent.coordinate;
@@ -444,7 +455,7 @@ export class MapProxy {
       if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_appendPopup === 'object') {
         utils.callHookFunctions(window.c4gMapsHooks.proxy_appendPopup, {popup: popupConfig, mapController: this.options.mapController});
       }
-      if (feature.getGeometry() && feature.getGeometry() instanceof ol.geom.Point) {
+      if (feature.getGeometry() && feature.getGeometry() instanceof Point) {
         if (self.mapData.popupHandling < 2) {
           window.c4gMapsPopup.popup.setPosition(feature.getGeometry().getCoordinates());
         }
@@ -490,7 +501,7 @@ export class MapProxy {
     });
     if (this.mapData.popupHandling < 2) {
       let autoPan = this.mapData.popupHandling == 1 ? true : false;
-      popup = new ol.Overlay({
+      popup = new Overlay({
         element: popUpElement,
         positioning: 'bottom-left',
         offset: [-50, 0],
@@ -503,7 +514,7 @@ export class MapProxy {
     }
     else {
       $(popUpElement).addClass('c4g-popup-wrapper-nonose');
-      popup = new ol.Overlay({
+      popup = new Overlay({
         element: popUpElement,
         positioning: 'center-center',
         offset: [-50, 0],
@@ -675,7 +686,7 @@ export class MapProxy {
         }
       }
 
-      vectorSource = new ol.source.Vector({
+      vectorSource = new VectorSource({
         projection: 'EPSG:3857'
 
       });
@@ -684,7 +695,7 @@ export class MapProxy {
         vectorSource.addFeatures(features[i]);
       }
 
-      clusterSource = new ol.source.Cluster({
+      clusterSource = new Cluster({
         distance: 40,
         //threshold: 2, //minimum element count
         source: vectorSource
@@ -727,25 +738,25 @@ export class MapProxy {
               var fontcolor = contentData.cluster_fontcolor ? '#' + contentData.cluster_fontcolor : '#FFFFFF';
 
               style.push(
-                new ol.style.Style({
-                  text: new ol.style.Text({
+                new Style({
+                  text: new Text({
                     text: "●",
                     font: "60px sans-serif",
                     offsetX: -1 * iconOffset[0],
                     offsetY: -1 * iconOffset[1],
-                    fill: new ol.style.Fill({
+                    fill: new Fill({
                       color: fillcolor
                     })
                   })
                 })
               );
               style.push(
-                new ol.style.Style({
-                  text: new ol.style.Text({
+                new Style({
+                  text: new Text({
                     text: size.toString(),
                     offsetX: -1 * iconOffset[0],
                     offsetY: -1 * iconOffset[1] + 3,
-                    fill: new ol.style.Fill({
+                    fill: new Fill({
                       color: fontcolor
                     })
                   })
@@ -769,7 +780,7 @@ export class MapProxy {
 
       //vectorLayer = self.getVectorLayer(clusterSource, styleForCluster);
 
-      vectorLayer = new ol.layer.Vector({
+      vectorLayer = new Vector({
         name: 'Cluster',
         source: clusterSource,
         style: styleForCluster

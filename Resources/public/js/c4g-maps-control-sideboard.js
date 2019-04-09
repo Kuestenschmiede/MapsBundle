@@ -14,11 +14,13 @@ import {utils} from "./c4g-maps-utils";
 import {cssConstants} from "./c4g-maps-constant";
 import {Spinner} from "./c4g-maps-misc-spinner";
 import {getLanguage} from "./c4g-maps-i18n";
+import {Control} from "ol/control";
+
 "use strict";
 /**
  * Base class for sideboard structures. Provides standard configurations which are equal for each sideboard element.
  */
-export class Sideboard extends ol.control.Control {
+export class Sideboard extends Control {
 
   /**
    * Constructor
@@ -77,11 +79,6 @@ export class Sideboard extends ol.control.Control {
       this.create();
     }
 
-    // inheritance-stuff
-    // ol.control.Control.call(this, {
-    //   element: element,
-    //   target: options.target
-    // });
   };
 
   /**
