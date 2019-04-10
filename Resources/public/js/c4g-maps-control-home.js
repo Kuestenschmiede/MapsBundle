@@ -13,6 +13,8 @@
 import {utils} from "./c4g-maps-utils";
 import {cssConstants} from "./c4g-maps-constant";
 import {Control} from "ol/control";
+import {Geolocation} from "ol";
+import {transform} from "ol/proj";
 
 'use strict';
 export class Home extends Control {
@@ -55,14 +57,14 @@ export class Home extends Control {
       // loose focus, otherwise it looks messy
       this.blur();
 
-      view.setCenter(ol.proj.transform([parseFloat(mapData.center.lon), parseFloat(mapData.center.lat)], 'EPSG:4326', 'EPSG:3857'));
+      view.setCenter(transform([parseFloat(mapData.center.lon), parseFloat(mapData.center.lat)], 'EPSG:4326', 'EPSG:3857'));
       view.setZoom(parseInt(mapData.center.zoom, 10));
       view.setRotation(parseFloat(mapData.center.rotation));
 
       // check userposition
       var geoLocation;
       if (mapData.geolocation) {
-        geoLocation = new ol.Geolocation({
+        geoLocation = new Geolocation({
           tracking: true,
           projection: view.getProjection()
         });
@@ -77,7 +79,6 @@ export class Home extends Control {
       }
 
       options.mapController.map.setView(view);
-      // utils.redrawMapView(options.mapController);
     };
 
     // wrapper div
@@ -99,6 +100,5 @@ export class Home extends Control {
       element: element,
       target: options.target
     });
-    // ol.inherits(Home, Control);
   }
 }

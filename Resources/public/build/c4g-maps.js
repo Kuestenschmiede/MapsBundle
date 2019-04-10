@@ -898,6 +898,38 @@ var _c4gMapsConstant = __webpack_require__(/*! ./c4g-maps-constant */ "./Resourc
 
 var _c4gMapsControlStarboardpluginCustomtab = __webpack_require__(/*! ./c4g-maps-control-starboardplugin-customtab */ "./Resources/public/js/c4g-maps-control-starboardplugin-customtab.js");
 
+var _style = __webpack_require__(/*! ol/style */ "./node_modules/ol/style.js");
+
+var _source = __webpack_require__(/*! ol/source */ "./node_modules/ol/source.js");
+
+var _proj = __webpack_require__(/*! ol/proj */ "./node_modules/ol/proj.js");
+
+var _geom2 = __webpack_require__(/*! ol/geom */ "./node_modules/ol/geom.js");
+
+var _ol = __webpack_require__(/*! ol */ "./node_modules/ol/index.js");
+
+var _OSMXML = __webpack_require__(/*! ol/format/OSMXML */ "./node_modules/ol/format/OSMXML.js");
+
+var _OSMXML2 = _interopRequireDefault(_OSMXML);
+
+var _loadingstrategy = __webpack_require__(/*! ol/loadingstrategy */ "./node_modules/ol/loadingstrategy.js");
+
+var _layer = __webpack_require__(/*! ol/layer */ "./node_modules/ol/layer.js");
+
+var _Circle = __webpack_require__(/*! ol/geom/Circle */ "./node_modules/ol/geom/Circle.js");
+
+var _Circle2 = _interopRequireDefault(_Circle);
+
+var _format = __webpack_require__(/*! ol/format */ "./node_modules/ol/format.js");
+
+var olFormat = _interopRequireWildcard(_format);
+
+var _extent = __webpack_require__(/*! ol/extent */ "./node_modules/ol/extent.js");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var C4gLayerController = exports.C4gLayerController = function () {
@@ -918,7 +950,6 @@ var C4gLayerController = exports.C4gLayerController = function () {
         return false;
       }
 
-      //jQuery.ajax("maps/layerService",{//this.proxy.api_layer_url,{
       jQuery.ajax(this.proxy.api_layer_url, {
         dataType: this.mapController.data.jsonp ? "jsonp" : "json"
 
@@ -1207,23 +1238,23 @@ var C4gLayerController = exports.C4gLayerController = function () {
                     });
                   }
 
-                  style.push(new ol.style.Style({
-                    text: new ol.style.Text({
+                  style.push(new _style.Style({
+                    text: new _style.Text({
                       text: "●",
                       font: "60px sans-serif",
                       offsetX: -1 * iconOffset[0],
                       offsetY: -1 * iconOffset[1],
-                      fill: new ol.style.Fill({
+                      fill: new _style.Fill({
                         color: fillcolor
                       })
                     })
                   }));
-                  style.push(new ol.style.Style({
-                    text: new ol.style.Text({
+                  style.push(new _style.Style({
+                    text: new _style.Text({
                       text: size.toString(),
                       offsetX: -1 * iconOffset[0],
                       offsetY: -1 * iconOffset[1] + 3,
-                      fill: new ol.style.Fill({
+                      fill: new _style.Fill({
                         color: fontcolor
                       })
                     })
@@ -1245,10 +1276,10 @@ var C4gLayerController = exports.C4gLayerController = function () {
 
             if (contentData.settings.boundingBox) {
               requestContentData = contentData;
-              requestVectorSource = new ol.source.Vector({
+              requestVectorSource = new _source.Vector({
                 loader: function loader(extent, resolution, projection) {
                   var boundingArray, strBoundingBox, url;
-                  boundingArray = ol.proj.transformExtent(extent, projection, 'EPSG:4326');
+                  boundingArray = (0, _proj.transformExtent)(extent, projection, 'EPSG:4326');
                   //different cases for Overpass_QL and XML query format
                   if (requestData.params && requestData.params.substr(0, 1).trim() === "<") {
                     strBoundingBox = '<bbox-query s="' + boundingArray[1] + '" n="' + boundingArray[3] + '" w="' + boundingArray[0] + '" e="' + boundingArray[2] + '"/>';
@@ -1327,7 +1358,7 @@ var C4gLayerController = exports.C4gLayerController = function () {
                         }
                       }
                       // import osm_xml
-                      format = new ol.format.OSMXML();
+                      format = new _OSMXML2.default();
                       if (format && response) {
                         try {
                           rFeatures = format.readFeatures(response, { featureProjection: projection });
@@ -1359,12 +1390,12 @@ var C4gLayerController = exports.C4gLayerController = function () {
                             // convert tracks and areas to points
                             if (rFeatures[j].getGeometry().getType() === "Polygon") {
                               var centerPoint = rFeatures[j].getGeometry().getInteriorPoint().getCoordinates();
-                              rFeatures[j].setGeometry(new ol.geom.Point([centerPoint[0], centerPoint[1]]));
+                              rFeatures[j].setGeometry(new _geom2.Point([centerPoint[0], centerPoint[1]]));
                             } else if (rFeatures[j].getGeometry().getType() === "LineString") {
                               // @TODO: prüfen ob dies korrekter Mittelpunkt ist
                               var lineExtent = rFeatures[j].getGeometry().getExtent();
-                              var _centerPoint = ol.extent.getCenter(lineExtent);
-                              rFeatures[j].setGeometry(new ol.geom.Point(_centerPoint));
+                              var _centerPoint = (0, _extent.getCenter)(lineExtent);
+                              rFeatures[j].setGeometry(new _geom2.Point(_centerPoint));
                             }
                           }
                         }
@@ -1390,21 +1421,21 @@ var C4gLayerController = exports.C4gLayerController = function () {
                     //self.combineLayers(self);
                   }); // end of AJAX
                 },
-                strategy: ol.loadingstrategy.bbox,
+                strategy: _loadingstrategy.bbox,
                 projection: 'EPSG:3857'
               });
 
               vectorSource = requestVectorSource;
             } else {
 
-              if (typeof ol.format[contentData.format] === "function") {
+              if (typeof olFormat[contentData.format] === "function") {
 
                 //StaticVector
-                vectorSource = new ol.source.Vector({
-                  format: new ol.format[contentData.format](),
+                vectorSource = new _source.Vector({
+                  format: new olFormat[contentData.format](),
                   url: requestData.url,
                   projection: 'EPSG:3857',
-                  strategy: ol.loadingstrategy.all
+                  strategy: _loadingstrategy.all
                 });
 
                 if (contentData.settings && contentData.settings.refresh === true) {
@@ -1449,7 +1480,7 @@ var C4gLayerController = exports.C4gLayerController = function () {
                           // update of stations
                           jQuery.each(data.features, function (index, featureData) {
                             if (featureData.type && featureData.type === "Feature") {
-                              var feature = new ol.format[contentData.format]().readFeature(featureData, {
+                              var feature = new olFormat[contentData.format]().readFeature(featureData, {
                                 dataProjection: 'EPSG:4326',
                                 featureProjection: 'EPSG:3857'
                               });
@@ -1493,7 +1524,7 @@ var C4gLayerController = exports.C4gLayerController = function () {
 
                           jQuery.each(data.features, function (index, featureData) {
                             if (featureData.type && featureData.type == "Feature") {
-                              refreshAjaxVars.feature = new ol.format[contentData.format]().readFeature(featureData, {
+                              refreshAjaxVars.feature = new olFormat[contentData.format]().readFeature(featureData, {
                                 dataProjection: 'EPSG:4326',
                                 featureProjection: 'EPSG:3857'
                               });
@@ -1545,7 +1576,7 @@ var C4gLayerController = exports.C4gLayerController = function () {
 
             if (contentData.settings.cluster) {
 
-              window.clusterSource = new ol.source.Cluster({
+              window.clusterSource = new _source.Cluster({
                 distance: 40,
                 //threshold: 2, //minimum element count
                 source: vectorSource,
@@ -1607,7 +1638,7 @@ var C4gLayerController = exports.C4gLayerController = function () {
 
             // force all nodes into one layer
 
-            var contentFeature = new ol.format[layerContent[i].format]({}).readFeatures(layerContent[i].data, {
+            var contentFeature = new olFormat[layerContent[i].format]({}).readFeatures(layerContent[i].data, {
               featureProjection: featureProjection,
               dataProjection: dataProjection
             })[0];
@@ -1621,14 +1652,14 @@ var C4gLayerController = exports.C4gLayerController = function () {
             contentFeatures.push(contentFeature);
 
             if (i + 1 === this.arrLayers[itemUid].content.length) {
-              vectorSource = new ol.source.Vector({
+              vectorSource = new _source.Vector({
                 features: contentFeatures,
                 projection: 'EPSG:3857',
-                format: new ol.format.GeoJSON()
+                format: new _format.GeoJSON()
 
               });
               if (contentData && contentData.settings && contentData.settings.cluster) {
-                clusterSource = new ol.source.Cluster({
+                clusterSource = new _source.Cluster({
                   distance: 40,
                   zoom: contentData.cluster_zoom,
 
@@ -1653,7 +1684,7 @@ var C4gLayerController = exports.C4gLayerController = function () {
               //TODO: refactoren und kürzen!
               // we have overpass request with reassigned forum layers
               // forum layers can not be drawn via the normal drawLayer, because they do not have a Uid
-              if (contentData && typeof ol.format[contentData.format] === "function") {
+              if (contentData && typeof olFormat[contentData.format] === "function") {
                 if (contentData.data.properties && contentData.data.properties.projection) {
                   dataProjection = contentData.data.properties.projection;
                   featureProjection = this.mapController.map.getView().getProjection();
@@ -1661,7 +1692,7 @@ var C4gLayerController = exports.C4gLayerController = function () {
                   dataProjection = undefined;
                 }
 
-                features = new ol.format[contentData.format]({}).readFeatures(contentData.data, {
+                features = new olFormat[contentData.format]({}).readFeatures(contentData.data, {
                   featureProjection: featureProjection,
                   dataProjection: dataProjection
                 });
@@ -1684,12 +1715,12 @@ var C4gLayerController = exports.C4gLayerController = function () {
                 if (missingStyles.length > 0) {
                   //TODO there are unstyled features because some styles were not loaded
                 } else {
-                  vectorSource = new ol.source.Vector({
+                  vectorSource = new _source.Vector({
                     features: features,
                     projection: 'EPSG:3857',
-                    format: new ol.format.GeoJSON()
+                    format: new _format.GeoJSON()
                   });
-                  clusterSource = new ol.source.Cluster({
+                  clusterSource = new _source.Cluster({
                     distance: 40,
                     zoom: contentData.cluster_zoom,
 
@@ -1729,7 +1760,7 @@ var C4gLayerController = exports.C4gLayerController = function () {
           }
         }
         // add vector layer group
-        layerGroup = new ol.layer.Group({
+        layerGroup = new _layer.Group({
           layers: layers
         });
         this.arrLayers[itemUid].vectorLayer = layerGroup;
@@ -1786,23 +1817,23 @@ var C4gLayerController = exports.C4gLayerController = function () {
                 });
               }
 
-              style.push(new ol.style.Style({
-                text: new ol.style.Text({
+              style.push(new _style.Style({
+                text: new _style.Text({
                   text: "●",
                   font: "60px sans-serif",
                   offsetX: -1 * iconOffset[0],
                   offsetY: -1 * iconOffset[1],
-                  fill: new ol.style.Fill({
+                  fill: new _style.Fill({
                     color: fillcolor
                   })
                 })
               }));
-              style.push(new ol.style.Style({
-                text: new ol.style.Text({
+              style.push(new _style.Style({
+                text: new _style.Text({
                   text: feature.get('features').length.toString(),
                   offsetX: -1 * iconOffset[0],
                   offsetY: -1 * iconOffset[1] + 3,
-                  fill: new ol.style.Fill({
+                  fill: new _style.Fill({
                     color: fontcolor
                   })
                 })
@@ -1814,11 +1845,11 @@ var C4gLayerController = exports.C4gLayerController = function () {
             return style;
           }
         };
-        requestVectorSource = new ol.source.Vector({
+        requestVectorSource = new _source.Vector({
           loader: function loader(extent, resolution, projection) {
             var boundingArray, strBoundingBox, url;
             self.mapController.spinner.show();
-            boundingArray = ol.proj.transformExtent(extent, projection, 'EPSG:4326');
+            boundingArray = (0, _proj.transformExtent)(extent, projection, 'EPSG:4326');
             strBoundingBox = boundingArray[0] + ',' + boundingArray[1] + ';' + boundingArray[2] + ',' + boundingArray[3];
             if (self.layerRequests === undefined) {
               self.layerRequests = {};
@@ -1842,9 +1873,9 @@ var C4gLayerController = exports.C4gLayerController = function () {
                 for (var _j = 0; _j < contentFeatures.length; _j++) {
                   if (contentData.id === contentFeatures[_j].id) continue loopData;
                 }
-                var resultCoordinate = ol.proj.transform([parseFloat(contentData['geox']), parseFloat(contentData['geoy'])], 'EPSG:4326', 'EPSG:3857');
-                var point = new ol.geom.Point(resultCoordinate);
-                contentFeature = new ol.Feature(point);
+                var resultCoordinate = (0, _proj.transform)([parseFloat(contentData['geox']), parseFloat(contentData['geoy'])], 'EPSG:4326', 'EPSG:3857');
+                var point = new _geom2.Point(resultCoordinate);
+                contentFeature = new _ol.Feature(point);
                 contentFeature.setId(contentData.id);
                 if (layer.cluster) {
                   contentFeature.set('cluster_zoom', layer.cluster.zoom);
@@ -1904,7 +1935,7 @@ var C4gLayerController = exports.C4gLayerController = function () {
               self.mapController.spinner.hide();
             });
           },
-          strategy: ol.loadingstrategy.bbox
+          strategy: _loadingstrategy.bbox
         });
 
         if (this.arrLayers[itemUid].cluster) {
@@ -1916,7 +1947,7 @@ var C4gLayerController = exports.C4gLayerController = function () {
             clusterDistance = 0;
           }
 
-          clusterSource = new ol.source.Cluster({
+          clusterSource = new _source.Cluster({
             distance: clusterDistance,
             //threshold: 2, //minimum element count
             source: requestVectorSource
@@ -1927,14 +1958,14 @@ var C4gLayerController = exports.C4gLayerController = function () {
             style: styleForCluster
           });
         } else {
-          vectorLayer = new ol.layer.Vector({
+          vectorLayer = new _layer.Vector({
             name: 'Layer',
             source: requestVectorSource
           });
         }
         layers = layers || [];
         layers.push(vectorLayer);
-        layerGroup = new ol.layer.Group({
+        layerGroup = new _layer.Group({
           layers: layers
         });
         this.arrLayers[itemUid].vectorLayer = layerGroup;
@@ -1980,8 +2011,8 @@ var C4gLayerController = exports.C4gLayerController = function () {
       var feature = null;
       if (element.type == "node") {
         if (element.tags) {
-          var point = new ol.geom.Point([element.lon, element.lat]).transform('EPSG:4326', 'EPSG:3857');
-          feature = new ol.Feature({
+          var point = new _geom2.Point([element.lon, element.lat]).transform('EPSG:4326', 'EPSG:3857');
+          feature = new _ol.Feature({
             geometry: point
           });
           feature.setId(element.id);
@@ -1989,10 +2020,10 @@ var C4gLayerController = exports.C4gLayerController = function () {
         }
       } else if (element.type == "way") {
         if (element.tags) {
-          feature = new ol.Feature(this.geomFromWay(element, elements, forceNodes));
+          feature = new _ol.Feature(this.geomFromWay(element, elements, forceNodes));
         } else {
           var geom = this.geomFromWay(element, elements, forceNodes);
-          feature = new ol.Feature(geom);
+          feature = new _ol.Feature(geom);
         }
       } else if (element.type === "relation") {
         var multiPolygon = null;
@@ -2011,26 +2042,26 @@ var C4gLayerController = exports.C4gLayerController = function () {
           if (member) {
             var _geom = void 0;
             if (member.type === 'node') {
-              _geom = new ol.geom.Point([member.lon, member.lat]).transform('EPSG:4326', 'EPSG:3857');
+              _geom = new _geom2.Point([member.lon, member.lat]).transform('EPSG:4326', 'EPSG:3857');
             } else {
               _geom = _this.geomFromWay(member, elements, true);
             }
-            if (_geom instanceof ol.geom.Point) {
+            if (_geom instanceof _geom2.Point) {
               if (!arrCoords) {
                 arrCoords = [];
               }
               arrCoords.push(_geom.getCoordinates());
-            } else if (_geom instanceof ol.geom.Polygon) {
+            } else if (_geom instanceof _geom2.Polygon) {
               if (multiPolygon) {
                 multiPolygon.appendPolygon(_geom);
               } else {
-                multiPolygon = new ol.geom.MultiPolygon(_geom.getCoordinates());
+                multiPolygon = new _geom2.MultiPolygon(_geom.getCoordinates());
               }
-            } else if (_geom instanceof ol.geom.LineString) {
+            } else if (_geom instanceof _geom2.LineString) {
               if (multiLineString) {
                 multiLineString.appendLineString(_geom);
               } else {
-                multiLineString = new ol.geom.LineString(_geom.getCoordinates());
+                multiLineString = new _geom2.LineString(_geom.getCoordinates());
               }
             }
           }
@@ -2042,11 +2073,11 @@ var C4gLayerController = exports.C4gLayerController = function () {
           if (_ret === "continue") continue;
         }
         if (arrCoords) {
-          var extent = ol.extent.boundingExtent(arrCoords);
-          _point = new ol.geom.Point(ol.extent.getCenter(extent));
+          var extent = (0, _extent.boundingExtent)(arrCoords);
+          _point = new _geom2.Point((0, _extent.getCenter)(extent));
         }
         if (_point || multiPolygon || multiLineString) {
-          feature = new ol.Feature(_point ? _point : multiLineString ? multiLineString : multiPolygon);
+          feature = new _ol.Feature(_point ? _point : multiLineString ? multiLineString : multiPolygon);
         }
       }
       if (feature) {
@@ -2078,7 +2109,7 @@ var C4gLayerController = exports.C4gLayerController = function () {
           return objNode.id === element.nodes[i];
         });
         if (node) {
-          arrCoords.push(ol.proj.transform([node.lon, node.lat], 'EPSG:4326', 'EPSG:3857'));
+          arrCoords.push((0, _proj.transform)([node.lon, node.lat], 'EPSG:4326', 'EPSG:3857'));
         }
       };
 
@@ -2089,24 +2120,24 @@ var C4gLayerController = exports.C4gLayerController = function () {
         //polygon
         delete arrCoords[arrCoords.length - 1];
         arrCoords.length = arrCoords.length - 1;
-        var polygon = new ol.geom.Polygon([arrCoords]);
+        var polygon = new _geom2.Polygon([arrCoords]);
         // polygon.transform('EPSG:4326','EPSG:3857');
         if (forceNodes) {
           // convert tracks and areas to points
           var tempPoint = polygon.getInteriorPoint();
           var tempCoords = tempPoint.getCoordinates();
-          return new ol.geom.Point([tempCoords[0], tempCoords[1]]);
+          return new _geom2.Point([tempCoords[0], tempCoords[1]]);
         } else {
           return polygon;
         }
       } else {
         //linestring
-        var lineString = new ol.geom.LineString(arrCoords);
+        var lineString = new _geom2.LineString(arrCoords);
         if (forceNodes) {
           if (arrCoords.length > 0) {
-            var lineExtent = ol.extent.boundingExtent(arrCoords);
-            var lineCenter = ol.extent.getCenter(lineExtent);
-            return new ol.geom.Point([lineCenter[0], lineCenter[1]]);
+            var lineExtent = (0, _extent.boundingExtent)(arrCoords);
+            var lineCenter = (0, _extent.getCenter)(lineExtent);
+            return new _geom2.Point([lineCenter[0], lineCenter[1]]);
           }
         } else {
           return lineString;
@@ -2317,7 +2348,7 @@ var C4gLayerController = exports.C4gLayerController = function () {
           if (!elementContent) {
             continue;
           }
-          if (typeof ol.format[elementContent.format] === "function") {
+          if (typeof olFormat[elementContent.format] === "function") {
 
             // if (element.content[i].origType === 'single') {
             //   featureProjection = this.mapController.map.getView().getProjection();
@@ -2337,13 +2368,13 @@ var C4gLayerController = exports.C4gLayerController = function () {
             if (elementContent.data.geometry && elementContent.data.geometry.type === "Circle") {
               // draw circle geometries
               features = [];
-              var feature = new ol.Feature(new ol.geom.Circle(ol.proj.fromLonLat(elementContent.data.geometry.center), parseFloat(elementContent.data.geometry.radius)));
+              var feature = new _ol.Feature(new _Circle2.default((0, _proj.fromLonLat)(elementContent.data.geometry.center), parseFloat(elementContent.data.geometry.radius)));
               feature.set('styleId', elementContent.locationStyle);
               feature.set('label', elementContent.data.properties.label);
               features.push(feature);
             } else {
               // remaining geometries
-              features = new ol.format[elementContent.format]({}).readFeatures(elementContent.data, {
+              features = new olFormat[elementContent.format]({}).readFeatures(elementContent.data, {
                 featureProjection: featureProjection,
                 dataProjection: dataProjection
               });
@@ -2391,10 +2422,10 @@ var C4gLayerController = exports.C4gLayerController = function () {
                     }
                   }
 
-                  fVectorSource = new ol.source.Vector({
+                  fVectorSource = new _source.Vector({
                     features: features,
                     projection: 'EPSG:3857',
-                    format: new ol.format.GeoJSON()
+                    format: new _format.GeoJSON()
                   });
 
                   fVectorLayer = _c4gMapsUtils.utils.getVectorLayer(fVectorSource, vectorStyle);
@@ -2436,7 +2467,7 @@ var C4gLayerController = exports.C4gLayerController = function () {
                         fVectorLayer.zoom_onclick = elementContent.data.properties.zoom_onclick;
                       }
                     }
-                    fLayerGroup = new ol.layer.Group({
+                    fLayerGroup = new _layer.Group({
                       layers: [fVectorLayer]
                     });
                     self.arrLayers[itemUid].vectorLayer = fLayerGroup;
@@ -2447,9 +2478,9 @@ var C4gLayerController = exports.C4gLayerController = function () {
             } else {
               if (element.split_geojson) {
                 for (var _i2 = 0; _i2 < features.length; _i2++) {
-                  vectorSource = new ol.source.Vector({
+                  vectorSource = new _source.Vector({
                     projection: 'EPSG:3857',
-                    format: new ol.format.GeoJSON()
+                    format: new _format.GeoJSON()
                   });
                   vectorSource.addFeature(features[_i2]);
                   vectorLayer = _c4gMapsUtils.utils.getVectorLayer(vectorSource, vectorStyle);
@@ -2471,10 +2502,10 @@ var C4gLayerController = exports.C4gLayerController = function () {
                   }
                 }
               } else {
-                vectorSource = new ol.source.Vector({
+                vectorSource = new _source.Vector({
                   features: features,
                   projection: 'EPSG:3857',
-                  format: new ol.format.GeoJSON()
+                  format: new _format.GeoJSON()
                 });
                 vectorLayer = _c4gMapsUtils.utils.getVectorLayer(vectorSource, vectorStyle);
 
@@ -2502,7 +2533,7 @@ var C4gLayerController = exports.C4gLayerController = function () {
         }
       }
 
-      layerGroup = new ol.layer.Group({
+      layerGroup = new _layer.Group({
         layers: layers
       });
 
@@ -3800,6 +3831,10 @@ var _layer = __webpack_require__(/*! ol/layer */ "./node_modules/ol/layer.js");
 
 var _source = __webpack_require__(/*! ol/source */ "./node_modules/ol/source.js");
 
+var _ol2 = __webpack_require__(/*! ol/ */ "./node_modules/ol/index.js");
+
+var _Observable = __webpack_require__(/*! ol/Observable */ "./node_modules/ol/Observable.js");
+
 var _extent = __webpack_require__(/*! ol/extent */ "./node_modules/ol/extent.js");
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -4160,7 +4195,7 @@ var GeoSearch = exports.GeoSearch = function (_Control) {
               osmExtent.push(parseFloat(boundingbox[3]));
               osmExtent.push(parseFloat(boundingbox[1]));
 
-              extent = transformExtent(osmExtent, 'EPSG:4326', 'EPSG:3857');
+              extent = (0, _proj.transformExtent)(osmExtent, 'EPSG:4326', 'EPSG:3857');
               window.setTimeout(function () {
                 mapView.fit(extent, map.getSize(), {
                   minZoom: mapView.get('minZoom') || 2,
@@ -4191,7 +4226,7 @@ var GeoSearch = exports.GeoSearch = function (_Control) {
       completeSearch = function completeSearch(markResult, animate) {
         var addMarker, markerSource, animateMarker;
 
-        markerSource = new _source.VectorSource();
+        markerSource = new _source.Vector();
         map.addLayer(new _layer.Vector({
           style: new _style.Style(),
           source: markerSource
@@ -4238,7 +4273,7 @@ var GeoSearch = exports.GeoSearch = function (_Control) {
 
             if (elapsed > duration) {
               markerSource.clear();
-              _ol.Observable.unByKey(listenerKey);
+              (0, _Observable.unByKey)(listenerKey);
               return;
             }
             // continue postcompose animation
@@ -4373,7 +4408,7 @@ var GeoSearch = exports.GeoSearch = function (_Control) {
                   osmExtent.push(parseFloat(boundingbox[3]));
                   osmExtent.push(parseFloat(boundingbox[1]));
 
-                  extent = transformExtent(osmExtent, 'EPSG:4326', 'EPSG:3857');
+                  extent = (0, _proj.transformExtent)(osmExtent, 'EPSG:4326', 'EPSG:3857');
 
                   window.setTimeout(function () {
                     var viewFit = mapView.fit(extent, map.getSize(), {
@@ -4408,7 +4443,7 @@ var GeoSearch = exports.GeoSearch = function (_Control) {
             if (markResult) {
               var addMarker, markerSource, animateMarker;
 
-              markerSource = new _source.VectorSource();
+              markerSource = new _source.Vector();
               map.addLayer(new _layer.Vector({
                 style: new _style.Style(),
                 source: markerSource
@@ -4455,7 +4490,7 @@ var GeoSearch = exports.GeoSearch = function (_Control) {
 
                   if (elapsed > duration) {
                     markerSource.clear();
-                    _ol.Observable.unByKey(listenerKey);
+                    (0, _Observable.unByKey)(listenerKey);
                     return;
                   }
                   // continue postcompose animation
@@ -4652,6 +4687,8 @@ var _c4gMapsI18n = __webpack_require__(/*! ./c4g-maps-i18n */ "./Resources/publi
 
 var _control = __webpack_require__(/*! ol/control */ "./node_modules/ol/control.js");
 
+var _ol = __webpack_require__(/*! ol */ "./node_modules/ol/index.js");
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -4691,7 +4728,7 @@ var Grid = exports.Grid = function (_Control) {
 
     var element, button;
 
-    var objGrid = new ol.Graticule({
+    var objGrid = new _ol.Graticule({
       /*
       strokeStyle: new ol.style.Stroke({
           width: 2,
@@ -4791,6 +4828,10 @@ var _c4gMapsConstant = __webpack_require__(/*! ./c4g-maps-constant */ "./Resourc
 
 var _control = __webpack_require__(/*! ol/control */ "./node_modules/ol/control.js");
 
+var _ol = __webpack_require__(/*! ol */ "./node_modules/ol/index.js");
+
+var _proj = __webpack_require__(/*! ol/proj */ "./node_modules/ol/proj.js");
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -4852,14 +4893,14 @@ var Home = exports.Home = function (_Control) {
       // loose focus, otherwise it looks messy
       this.blur();
 
-      view.setCenter(ol.proj.transform([parseFloat(mapData.center.lon), parseFloat(mapData.center.lat)], 'EPSG:4326', 'EPSG:3857'));
+      view.setCenter((0, _proj.transform)([parseFloat(mapData.center.lon), parseFloat(mapData.center.lat)], 'EPSG:4326', 'EPSG:3857'));
       view.setZoom(parseInt(mapData.center.zoom, 10));
       view.setRotation(parseFloat(mapData.center.rotation));
 
       // check userposition
       var geoLocation;
       if (mapData.geolocation) {
-        geoLocation = new ol.Geolocation({
+        geoLocation = new _ol.Geolocation({
           tracking: true,
           projection: view.getProjection()
         });
@@ -4874,7 +4915,6 @@ var Home = exports.Home = function (_Control) {
       }
 
       options.mapController.map.setView(view);
-      // utils.redrawMapView(options.mapController);
     };
 
     // wrapper div
@@ -4896,7 +4936,6 @@ var Home = exports.Home = function (_Control) {
       element: element,
       target: options.target
     });
-    // ol.inherits(Home, Control);
     return _this;
   }
 
@@ -4937,6 +4976,12 @@ var _c4gMapsConstant = __webpack_require__(/*! ./c4g-maps-constant */ "./Resourc
 
 var _c4gMapsI18n = __webpack_require__(/*! ./c4g-maps-i18n */ "./Resources/public/js/c4g-maps-i18n.js");
 
+var _source = __webpack_require__(/*! ol/source */ "./node_modules/ol/source.js");
+
+var _layer = __webpack_require__(/*! ol/layer */ "./node_modules/ol/layer.js");
+
+var _control = __webpack_require__(/*! ol/control */ "./node_modules/ol/control.js");
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 'use strict';
@@ -4963,7 +5008,7 @@ var OverviewMap = exports.OverviewMap = function () {
     this.options = jQuery.extend({
       collapsed: true,
       tipLabel: langConstants.CTRL_OVERVIEWMAP,
-      layers: [new ol.layer.Tile({ source: new ol.source.OSM() })]
+      layers: [new _layer.Tile({ source: new _source.OSM() })]
     }, options);
     this.mapController = options.mapController;
 
@@ -4995,7 +5040,7 @@ var OverviewMap = exports.OverviewMap = function () {
       } catch (ignore) {}
     });
 
-    this.ovm = new ol.control.OverviewMap({
+    this.ovm = new _control.OverviewMap({
       target: element,
       layers: options.layers,
       collapsed: options.collapsed || true
@@ -5678,6 +5723,16 @@ var _c4gMapsMiscTooltippopup = __webpack_require__(/*! ./c4g-maps-misc-tooltippo
 
 var _c4gMapsI18n = __webpack_require__(/*! ./c4g-maps-i18n */ "./Resources/public/js/c4g-maps-i18n.js");
 
+var _layer = __webpack_require__(/*! ol/layer */ "./node_modules/ol/layer.js");
+
+var _source = __webpack_require__(/*! ol/source */ "./node_modules/ol/source.js");
+
+var _ol = __webpack_require__(/*! ol */ "./node_modules/ol/index.js");
+
+var _interaction = __webpack_require__(/*! ol/interaction */ "./node_modules/ol/interaction.js");
+
+var _geom = __webpack_require__(/*! ol/geom */ "./node_modules/ol/geom.js");
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -5748,13 +5803,13 @@ var Measuretools = exports.Measuretools = function (_Sideboard) {
       this.spinner.show();
 
       // Add measure layers
-      this.measureLineLayer = new ol.layer.Vector({ source: new ol.source.Vector() });
-      this.measurePolygonLayer = new ol.layer.Vector({ source: new ol.source.Vector() });
-      this.measureCircleLayer = new ol.layer.Vector({ source: new ol.source.Vector() });
-      this.measureFreehandLayer = new ol.layer.Vector({ source: new ol.source.Vector() });
+      this.measureLineLayer = new _layer.Vector({ source: new _source.Vector() });
+      this.measurePolygonLayer = new _layer.Vector({ source: new _source.Vector() });
+      this.measureCircleLayer = new _layer.Vector({ source: new _source.Vector() });
+      this.measureFreehandLayer = new _layer.Vector({ source: new _source.Vector() });
 
-      this.measureLayerGroup = new ol.layer.Group({
-        layers: new ol.Collection([this.measureFreehandLayer, this.measureCircleLayer, this.measurePolygonLayer, this.measureLineLayer]),
+      this.measureLayerGroup = new _layer.Group({
+        layers: new _ol.Collection([this.measureFreehandLayer, this.measureCircleLayer, this.measurePolygonLayer, this.measureLineLayer]),
         visible: true
       });
       this.options.mapController.map.addLayer(this.measureLayerGroup);
@@ -5919,13 +5974,13 @@ var Measuretools = exports.Measuretools = function (_Sideboard) {
             source = self.measureLineLayer.getSource();
           }
 
-          features = new ol.Collection();
+          features = new _ol.Collection();
 
           olType = options.type;
           if (olType == 'Freehand') {
             olType = 'LineString';
           }
-          interaction = new ol.interaction.Draw({
+          interaction = new _interaction.Draw({
             features: features,
             source: source,
             type: olType,
@@ -5937,7 +5992,7 @@ var Measuretools = exports.Measuretools = function (_Sideboard) {
           addMeasureFeature = function addMeasureFeature(feature) {
             var listElement, headlineElement, labelElement, inputElement, paragraphElement, strongElement, spanElement, strLabel, strType, measureArea, measureRadius;
 
-            if (!feature instanceof ol.Feature) {
+            if (!feature instanceof _ol.Feature) {
               return false;
             }
 
@@ -5947,17 +6002,17 @@ var Measuretools = exports.Measuretools = function (_Sideboard) {
             }
 
             // check feature-type
-            if (feature.getGeometry() instanceof ol.geom.LineString) {
+            if (feature.getGeometry() instanceof _geom.LineString) {
               strLabel = self.langConstants.LENGTH;
               strType = self.langConstants.LINE;
               measureArea = false;
               measureRadius = false;
-            } else if (feature.getGeometry() instanceof ol.geom.Polygon) {
+            } else if (feature.getGeometry() instanceof _geom.Polygon) {
               strLabel = self.langConstants.PERIMETER;
               strType = self.langConstants.POLYGON;
               measureArea = true;
               measureRadius = false;
-            } else if (feature.getGeometry() instanceof ol.geom.Circle) {
+            } else if (feature.getGeometry() instanceof _geom.Circle) {
               strLabel = self.langConstants.RADIUS;
               strType = self.langConstants.CIRCLE;
               measureArea = true;
@@ -6209,6 +6264,8 @@ var _c4gMapsConstant = __webpack_require__(/*! ./c4g-maps-constant */ "./Resourc
 
 var _control = __webpack_require__(/*! ol/control */ "./node_modules/ol/control.js");
 
+var _ol = __webpack_require__(/*! ol */ "./node_modules/ol/index.js");
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -6278,7 +6335,7 @@ var Position = exports.Position = function (_Control) {
       // loose focus, otherwise it looks messy
       this.blur();
 
-      var geoLocation = new ol.Geolocation({
+      var geoLocation = new _ol.Geolocation({
         tracking: true,
         projection: view.getProjection()
       });
@@ -9718,6 +9775,12 @@ var _c4gMapsMiscTooltippopup = __webpack_require__(/*! ./c4g-maps-misc-tooltippo
 
 var _c4gMapsUtils = __webpack_require__(/*! ./c4g-maps-utils */ "./Resources/public/js/c4g-maps-utils.js");
 
+var _geom = __webpack_require__(/*! ol/geom */ "./node_modules/ol/geom.js");
+
+var _ol = __webpack_require__(/*! ol */ "./node_modules/ol/index.js");
+
+var _Observable = __webpack_require__(/*! ol/Observable */ "./node_modules/ol/Observable.js");
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 'use strict';
@@ -9795,7 +9858,7 @@ var MapHover = exports.MapHover = function () {
     key: "deactivate",
     value: function deactivate() {
       if (this.listenerKey) {
-        ol.Observable.unByKey(this.listenerKey);
+        (0, _Observable.unByKey)(this.listenerKey);
         this.listenerKey = false;
       }
     } // end of "deactivate()"
@@ -9876,7 +9939,7 @@ var MapHover = exports.MapHover = function () {
             hovered.feature = hovered.feature.get('features')[0];
           }
         }
-        if (hovered.feature.getGeometry() && hovered.feature.getGeometry() instanceof ol.geom.LineString) {
+        if (hovered.feature.getGeometry() && hovered.feature.getGeometry() instanceof _geom.LineString) {
           return false;
         }
         if (hovered.feature.get("hover_location") || self.lastHoveredFeature && self.lastHoveredFeature.get("hover_location")) {
@@ -10230,6 +10293,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _c4gMapsConstant = __webpack_require__(/*! ./c4g-maps-constant */ "./Resources/public/js/c4g-maps-constant.js");
 
+var _ol = __webpack_require__(/*! ol */ "./node_modules/ol/index.js");
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 'use strict';
@@ -10291,7 +10356,7 @@ var TooltipPopUp = exports.TooltipPopUp = function () {
     this.contentContainer = document.createElement('div');
     this.element.appendChild(this.contentContainer);
 
-    this.overlay = new ol.Overlay({
+    this.overlay = new _ol.Overlay({
       element: this.element,
       insertFirst: false,
       offset: this.options.offset,
@@ -10308,7 +10373,7 @@ var TooltipPopUp = exports.TooltipPopUp = function () {
   }
 
   _createClass(TooltipPopUp, [{
-    key: 'close',
+    key: "close",
     value: function close() {
       if (typeof this.options.closeFunction === 'function') {
         this.options.closeFunction();
@@ -10327,7 +10392,7 @@ var TooltipPopUp = exports.TooltipPopUp = function () {
      */
 
   }, {
-    key: 'show',
+    key: "show",
     value: function show() {
       if (jQuery(this.element).hasClass(_c4gMapsConstant.cssConstants.HIDE)) {
         jQuery(this.element).removeClass(_c4gMapsConstant.cssConstants.HIDE);
@@ -10342,7 +10407,7 @@ var TooltipPopUp = exports.TooltipPopUp = function () {
      */
 
   }, {
-    key: 'hide',
+    key: "hide",
     value: function hide() {
       if (!jQuery(this.element).hasClass(_c4gMapsConstant.cssConstants.HIDE)) {
         jQuery(this.element).addClass(_c4gMapsConstant.cssConstants.HIDE);
@@ -10356,7 +10421,7 @@ var TooltipPopUp = exports.TooltipPopUp = function () {
      */
 
   }, {
-    key: 'getContent',
+    key: "getContent",
     value: function getContent() {
       return this.contentContainer.innerHTML;
     }
@@ -10368,7 +10433,7 @@ var TooltipPopUp = exports.TooltipPopUp = function () {
      */
 
   }, {
-    key: 'getPosition',
+    key: "getPosition",
     value: function getPosition() {
       return this.overlay.getPosition();
     }
@@ -10381,7 +10446,7 @@ var TooltipPopUp = exports.TooltipPopUp = function () {
      */
 
   }, {
-    key: 'setContent',
+    key: "setContent",
     value: function setContent(content) {
       this.contentContainer.innerHTML = content;
     }
@@ -10394,7 +10459,7 @@ var TooltipPopUp = exports.TooltipPopUp = function () {
      */
 
   }, {
-    key: 'setPosition',
+    key: "setPosition",
     value: function setPosition(coordinates) {
       this.overlay.setPosition(coordinates);
     }
@@ -12985,6 +13050,26 @@ var _c4gMapsPopupInfoEn = __webpack_require__(/*! ./c4g-maps-popup-info-en */ ".
 
 var popupFunctionsEN = _interopRequireWildcard(_c4gMapsPopupInfoEn);
 
+var _layer = __webpack_require__(/*! ol/layer */ "./node_modules/ol/layer.js");
+
+var _geom = __webpack_require__(/*! ol/geom */ "./node_modules/ol/geom.js");
+
+var _Circle = __webpack_require__(/*! ol/geom/Circle */ "./node_modules/ol/geom/Circle.js");
+
+var _Circle2 = _interopRequireDefault(_Circle);
+
+var _proj = __webpack_require__(/*! ol/proj */ "./node_modules/ol/proj.js");
+
+var _sphere = __webpack_require__(/*! ol/sphere */ "./node_modules/ol/sphere.js");
+
+var _interaction = __webpack_require__(/*! ol/interaction */ "./node_modules/ol/interaction.js");
+
+var _source = __webpack_require__(/*! ol/source */ "./node_modules/ol/source.js");
+
+var _extent = __webpack_require__(/*! ol/extent */ "./node_modules/ol/extent.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 var popupFunctions = popupFunctionsDE;
@@ -13346,17 +13431,17 @@ var utils = exports.utils = {
     //sphere = new ol.Sphere(6378137);
     result = {};
 
-    if (geometry instanceof ol.geom.LineString || geometry instanceof ol.geom.Polygon && opt_forceLineMeasure) {
+    if (geometry instanceof _geom.LineString || geometry instanceof _geom.Polygon && opt_forceLineMeasure) {
 
       coordinates = geometry.getCoordinates();
-      if (geometry instanceof ol.geom.Polygon) {
+      if (geometry instanceof _geom.Polygon) {
         coordinates = coordinates[0];
       }
       value = 0;
       for (i = 0; i < coordinates.length - 1; i += 1) {
-        coord1 = ol.proj.transform(coordinates[i], 'EPSG:3857', 'EPSG:4326');
-        coord2 = ol.proj.transform(coordinates[i + 1], 'EPSG:3857', 'EPSG:4326');
-        value += ol.sphere.getDistance(coord1, coord2, 6378137);
+        coord1 = (0, _proj.transform)(coordinates[i], 'EPSG:3857', 'EPSG:4326');
+        coord2 = (0, _proj.transform)(coordinates[i + 1], 'EPSG:3857', 'EPSG:4326');
+        value += (0, _sphere.getDistance)(coord1, coord2, 6378137);
       }
       result.rawValue = (Math.round(value * 100) / 100).toFixed(2);
       if (value > 1000) {
@@ -13364,22 +13449,22 @@ var utils = exports.utils = {
       } else {
         result.htmlValue = result.rawValue + ' ' + 'm';
       }
-    } else if (geometry instanceof ol.geom.Polygon) {
-      //geometry = /** @type {ol.geom.Polygon} */(geometry.clone().transform('EPSG:3857', 'EPSG:4326'));
+    } else if (geometry instanceof _geom.Polygon) {
+      //geometry = /** @type {Polygon} */(geometry.clone().transform('EPSG:3857', 'EPSG:4326'));
       //coordinates = geometry.getLinearRing(0).getCoordinates();
-      value = Math.abs(ol.sphere.getArea(geometry));
+      value = Math.abs((0, _sphere.getArea)(geometry));
       result.rawValue = (Math.round(value * 100) / 100).toFixed(2);
       if (value > 10000) {
         result.htmlValue = (Math.round(value / 1000000 * 100) / 100).toFixed(2) + ' ' + 'km<sup>2</sup>';
       } else {
         result.htmlValue = result.rawValue + ' ' + 'm<sup>2</sup>';
       }
-    } else if (geometry instanceof ol.geom.Circle && opt_forceSurfaceMeasure) {
+    } else if (geometry instanceof _Circle2.default && opt_forceSurfaceMeasure) {
       var center = geometry.getCenter();
       var radius = geometry.getRadius();
       var edgeCoordinate = [center[0] + radius, center[1]];
       //var wgs84Sphere = new ol.Sphere(6378137);
-      var value = ol.sphere.getDistance(ol.proj.transform(center, 'EPSG:3857', 'EPSG:4326'), ol.proj.transform(edgeCoordinate, 'EPSG:3857', 'EPSG:4326'), 6378137);
+      var value = (0, _sphere.getDistance)((0, _proj.transform)(center, 'EPSG:3857', 'EPSG:4326'), (0, _proj.transform)(edgeCoordinate, 'EPSG:3857', 'EPSG:4326'), 6378137);
 
       value = Math.PI * Math.sqrt(value);
 
@@ -13389,12 +13474,12 @@ var utils = exports.utils = {
       } else {
         result.htmlValue = result.rawValue + ' ' + 'm<sup>2</sup>';
       }
-    } else if (geometry instanceof ol.geom.Circle) {
+    } else if (geometry instanceof _Circle2.default) {
       var center = geometry.getCenter();
       var radius = geometry.getRadius();
       var edgeCoordinate = [center[0] + radius, center[1]];
       //var wgs84Sphere = new ol.Sphere(6378137);
-      var value = ol.sphere.getDistance(ol.proj.transform(center, 'EPSG:3857', 'EPSG:4326'), ol.proj.transform(edgeCoordinate, 'EPSG:3857', 'EPSG:4326'), 6378137);
+      var value = (0, _sphere.getDistance)((0, _proj.transform)(center, 'EPSG:3857', 'EPSG:4326'), (0, _proj.transform)(edgeCoordinate, 'EPSG:3857', 'EPSG:4326'), 6378137);
 
       result.rawValue = (Math.round(value * 100) / 100).toFixed(2);
       if (result.rawValue > 10000) {
@@ -13424,10 +13509,10 @@ var utils = exports.utils = {
       return false;
     }
 
-    extentSource = new ol.source.Vector();
+    extentSource = new _layer.Vector();
     extentSource.addFeatures(arrGeometries);
 
-    return extentSource.getExtent() || ol.Extent([0, 0, 0, 0]);
+    return extentSource.getExtent() || (0, _interaction.Extent)([0, 0, 0, 0]);
   }, // end of getExtentForGeometries()
 
   /**
@@ -13454,7 +13539,7 @@ var utils = exports.utils = {
         if (typeof extent === "undefined") {
           extent = extents[key];
         } else {
-          ol.extent.extend(extent, extents[key]);
+          (0, _extent.extend)(extent, extents[key]);
         }
       }
     }
@@ -13682,7 +13767,7 @@ var utils = exports.utils = {
       };
     }
 
-    return new ol.layer.Vector({
+    return new _layer.Vector({
       source: source,
       style: fnStyle
     });
@@ -14764,6 +14849,10 @@ var _c4gOverlay = __webpack_require__(/*! ./c4g-overlay */ "./Resources/public/j
 
 var _c4gMapsConfig = __webpack_require__(/*! ./c4g-maps-config */ "./Resources/public/js/c4g-maps-config.js");
 
+var _source = __webpack_require__(/*! ol/source */ "./node_modules/ol/source.js");
+
+var _layer = __webpack_require__(/*! ol/layer */ "./node_modules/ol/layer.js");
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var C4gOverlayController = exports.C4gOverlayController = function () {
@@ -14786,8 +14875,8 @@ var C4gOverlayController = exports.C4gOverlayController = function () {
           noUrl;
 
       layerOptions = {};
-      overlayLayer = new ol.layer.Tile({
-        source: new ol.source.OSM()
+      overlayLayer = new _layer.Tile({
+        source: new _source.OSM()
       });
 
       overlayLayerConfig = this.arrOverlays[overlayId];
@@ -14795,24 +14884,24 @@ var C4gOverlayController = exports.C4gOverlayController = function () {
       switch (overlayLayerConfig.provider) {
         case 'osm':
           if (osmSourceConfigs[overlayLayerConfig.style]) {
-            overlayLayer = new ol.layer.Tile({
-              source: new ol.source.OSM(jQuery.extend(osmSourceConfigs[overlayLayerConfig.style], layerOptions))
+            overlayLayer = new _layer.Tile({
+              source: new _source.OSM(jQuery.extend(osmSourceConfigs[overlayLayerConfig.style], layerOptions))
             });
           } else if (stamenSourceConfigs[overlayLayerConfig.style]) {
             // Stamen
-            overlayLayer = new ol.layer.Tile({
-              source: new ol.source.Stamen(jQuery.extend(stamenSourceConfigs[overlayLayerConfig.style], layerOptions))
+            overlayLayer = new _layer.Tile({
+              source: new _source.Stamen(jQuery.extend(stamenSourceConfigs[overlayLayerConfig.style], layerOptions))
             });
             // } else if (mapQuestSourceConfigs[overlayLayerConfig.style]) {
             //   // mapQuest
-            //   overlayLayer = new ol.layer.Tile({
+            //   overlayLayer = new Tile({
             //     source: new ol.source.MapQuest(mapQuestSourceConfigs[overlayLayerConfig.style])
             //   });
           } else if (overlayLayerConfig.style === 'osm_custom') {
             // custom
             noUrl = true;
             if (overlayLayerConfig.attribution) {
-              layerOptions.attributions = overlayLayerConfig.attribution + ' ' + ol.source.OSM.ATTRIBUTION;
+              layerOptions.attributions = overlayLayerConfig.attribution + ' ' + _source.OSM.ATTRIBUTION;
             }
 
             if (overlayLayerConfig.url) {
@@ -14823,8 +14912,8 @@ var C4gOverlayController = exports.C4gOverlayController = function () {
               noUrl = false;
             }
             if (!noUrl) {
-              overlayLayer = new ol.layer.Tile({
-                source: new ol.source.XYZ(layerOptions)
+              overlayLayer = new _layer.Tile({
+                source: new _source.XYZ(layerOptions)
               });
             } else {
               console.warn('custom url(s) missing -> switch to default');
@@ -14839,8 +14928,8 @@ var C4gOverlayController = exports.C4gOverlayController = function () {
           break;
         case 'bing':
           if (baseLayerConfig.apiKey && overlayLayerConfig.style) {
-            overlayLayer = new ol.layer.Tile({
-              source: new ol.source.BingMaps({
+            overlayLayer = new _layer.Tile({
+              source: new _source.BingMaps({
                 culture: navigator.languages ? navigator.languages[0] : navigator.language || navigator.userLanguage,
                 key: overlayLayerConfig.apiKey,
                 imagerySet: overlayLayerConfig.style
@@ -14851,8 +14940,8 @@ var C4gOverlayController = exports.C4gOverlayController = function () {
           }
           break;
         case 'wms':
-          overlayLayer = new ol.layer.Tile({
-            source: new ol.source.TileWMS({
+          overlayLayer = new _layer.Tile({
+            source: new _source.TileWMS({
               url: overlayLayerConfig.url,
               params: {
                 LAYERS: overlayLayerConfig.params.layers,
@@ -14861,16 +14950,16 @@ var C4gOverlayController = exports.C4gOverlayController = function () {
                 TRANSPARENT: overlayLayerConfig.params.transparent
               },
               gutter: overlayLayerConfig.gutter,
-              attributions: overlayLayerConfig.attribution + ' ' + ol.source.OSM.ATTRIBUTION
+              attributions: overlayLayerConfig.attribution + ' ' + _source.OSM.ATTRIBUTION
             })
             //extent: ol.proj.transformExtent([5.59334, 50.0578, 9.74158, 52.7998], 'EPSG:4326', 'EPSG:3857')
           });
           break;
         case 'owm':
-          overlayLayer = new ol.layer.Tile({
-            source: new ol.source.XYZ({
+          overlayLayer = new _layer.Tile({
+            source: new _source.XYZ({
               url: overlayLayerConfig.url + overlayLayerConfig.app_id + '/{z}/{x}/{y}?hash=' + overlayLayerConfig.api_key,
-              attributions: overlayLayerConfig.attribution + ' ' + ol.source.OSM.ATTRIBUTION
+              attributions: overlayLayerConfig.attribution + ' ' + _source.OSM.ATTRIBUTION
             })
             //extent: ol.proj.transformExtent([5.59334, 50.0578, 9.74158, 52.7998], 'EPSG:4326', 'EPSG:3857')
           });
@@ -39011,6 +39100,220 @@ function getGeometryType(type, numEnds) {
 exports.default = MVT;
 
 //# sourceMappingURL=MVT.js.map
+
+/***/ }),
+
+/***/ "./node_modules/ol/format/OSMXML.js":
+/*!******************************************!*\
+  !*** ./node_modules/ol/format/OSMXML.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _array = __webpack_require__(/*! ../array.js */ "./node_modules/ol/array.js");
+
+var _Feature = __webpack_require__(/*! ../Feature.js */ "./node_modules/ol/Feature.js");
+
+var _Feature2 = _interopRequireDefault(_Feature);
+
+var _Feature3 = __webpack_require__(/*! ./Feature.js */ "./node_modules/ol/format/Feature.js");
+
+var _XMLFeature = __webpack_require__(/*! ./XMLFeature.js */ "./node_modules/ol/format/XMLFeature.js");
+
+var _XMLFeature2 = _interopRequireDefault(_XMLFeature);
+
+var _GeometryLayout = __webpack_require__(/*! ../geom/GeometryLayout.js */ "./node_modules/ol/geom/GeometryLayout.js");
+
+var _GeometryLayout2 = _interopRequireDefault(_GeometryLayout);
+
+var _LineString = __webpack_require__(/*! ../geom/LineString.js */ "./node_modules/ol/geom/LineString.js");
+
+var _LineString2 = _interopRequireDefault(_LineString);
+
+var _Point = __webpack_require__(/*! ../geom/Point.js */ "./node_modules/ol/geom/Point.js");
+
+var _Point2 = _interopRequireDefault(_Point);
+
+var _Polygon = __webpack_require__(/*! ../geom/Polygon.js */ "./node_modules/ol/geom/Polygon.js");
+
+var _Polygon2 = _interopRequireDefault(_Polygon);
+
+var _obj = __webpack_require__(/*! ../obj.js */ "./node_modules/ol/obj.js");
+
+var _proj = __webpack_require__(/*! ../proj.js */ "./node_modules/ol/proj.js");
+
+var _xml = __webpack_require__(/*! ../xml.js */ "./node_modules/ol/xml.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * @const
+ * @type {Array<null>}
+ */
+var NAMESPACE_URIS = [null];
+
+/**
+ * @const
+ * @type {Object<string, Object<string, import("../xml.js").Parser>>}
+ */
+/**
+ * @module ol/format/OSMXML
+ */
+// FIXME add typedef for stack state objects
+var WAY_PARSERS = (0, _xml.makeStructureNS)(NAMESPACE_URIS, {
+  'nd': readNd,
+  'tag': readTag
+});
+
+/**
+ * @const
+ * @type {Object<string, Object<string, import("../xml.js").Parser>>}
+ */
+var PARSERS = (0, _xml.makeStructureNS)(NAMESPACE_URIS, {
+  'node': readNode,
+  'way': readWay
+});
+
+/**
+ * @classdesc
+ * Feature format for reading data in the
+ * [OSMXML format](http://wiki.openstreetmap.org/wiki/OSM_XML).
+ *
+ * @api
+ */
+var OSMXML = /*@__PURE__*/function (XMLFeature) {
+  function OSMXML() {
+    XMLFeature.call(this);
+
+    /**
+     * @inheritDoc
+     */
+    this.dataProjection = (0, _proj.get)('EPSG:4326');
+  }
+
+  if (XMLFeature) OSMXML.__proto__ = XMLFeature;
+  OSMXML.prototype = Object.create(XMLFeature && XMLFeature.prototype);
+  OSMXML.prototype.constructor = OSMXML;
+
+  /**
+   * @inheritDoc
+   */
+  OSMXML.prototype.readFeaturesFromNode = function readFeaturesFromNode(node, opt_options) {
+    var options = this.getReadOptions(node, opt_options);
+    if (node.localName == 'osm') {
+      var state = (0, _xml.pushParseAndPop)({
+        nodes: {},
+        ways: [],
+        features: []
+      }, PARSERS, node, [options]);
+      // parse nodes in ways
+      for (var j = 0; j < state.ways.length; j++) {
+        var values = /** @type {Object} */state.ways[j];
+        /** @type {Array<number>} */
+        var flatCoordinates = [];
+        for (var i = 0, ii = values.ndrefs.length; i < ii; i++) {
+          var point = state.nodes[values.ndrefs[i]];
+          (0, _array.extend)(flatCoordinates, point);
+        }
+        var geometry = void 0;
+        if (values.ndrefs[0] == values.ndrefs[values.ndrefs.length - 1]) {
+          // closed way
+          geometry = new _Polygon2.default(flatCoordinates, _GeometryLayout2.default.XY, [flatCoordinates.length]);
+        } else {
+          geometry = new _LineString2.default(flatCoordinates, _GeometryLayout2.default.XY);
+        }
+        (0, _Feature3.transformWithOptions)(geometry, false, options);
+        var feature = new _Feature2.default(geometry);
+        feature.setId(values.id);
+        feature.setProperties(values.tags);
+        state.features.push(feature);
+      }
+      if (state.features) {
+        return state.features;
+      }
+    }
+    return [];
+  };
+
+  return OSMXML;
+}(_XMLFeature2.default);
+
+/**
+ * @const
+ * @type {Object<string, Object<string, import("../xml.js").Parser>>}
+ */
+var NODE_PARSERS = (0, _xml.makeStructureNS)(NAMESPACE_URIS, {
+  'tag': readTag
+});
+
+/**
+ * @param {Element} node Node.
+ * @param {Array<*>} objectStack Object stack.
+ */
+function readNode(node, objectStack) {
+  var options = /** @type {import("./Feature.js").ReadOptions} */objectStack[0];
+  var state = /** @type {Object} */objectStack[objectStack.length - 1];
+  var id = node.getAttribute('id');
+  /** @type {import("../coordinate.js").Coordinate} */
+  var coordinates = [parseFloat(node.getAttribute('lon')), parseFloat(node.getAttribute('lat'))];
+  state.nodes[id] = coordinates;
+
+  var values = (0, _xml.pushParseAndPop)({
+    tags: {}
+  }, NODE_PARSERS, node, objectStack);
+  if (!(0, _obj.isEmpty)(values.tags)) {
+    var geometry = new _Point2.default(coordinates);
+    (0, _Feature3.transformWithOptions)(geometry, false, options);
+    var feature = new _Feature2.default(geometry);
+    feature.setId(id);
+    feature.setProperties(values.tags);
+    state.features.push(feature);
+  }
+}
+
+/**
+ * @param {Element} node Node.
+ * @param {Array<*>} objectStack Object stack.
+ */
+function readWay(node, objectStack) {
+  var id = node.getAttribute('id');
+  var values = (0, _xml.pushParseAndPop)({
+    id: id,
+    ndrefs: [],
+    tags: {}
+  }, WAY_PARSERS, node, objectStack);
+  var state = /** @type {Object} */objectStack[objectStack.length - 1];
+  state.ways.push(values);
+}
+
+/**
+ * @param {Element} node Node.
+ * @param {Array<*>} objectStack Object stack.
+ */
+function readNd(node, objectStack) {
+  var values = /** @type {Object} */objectStack[objectStack.length - 1];
+  values.ndrefs.push(node.getAttribute('ref'));
+}
+
+/**
+ * @param {Element} node Node.
+ * @param {Array<*>} objectStack Object stack.
+ */
+function readTag(node, objectStack) {
+  var values = /** @type {Object} */objectStack[objectStack.length - 1];
+  values.tags[node.getAttribute('k')] = node.getAttribute('v');
+}
+
+exports.default = OSMXML;
+
+//# sourceMappingURL=OSMXML.js.map
 
 /***/ }),
 

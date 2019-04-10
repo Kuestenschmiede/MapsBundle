@@ -13,6 +13,7 @@
 import {cssConstants} from "./c4g-maps-constant";
 import {getLanguage} from "./c4g-maps-i18n";
 import {Control} from "ol/control";
+import {Graticule} from "ol";
 
 'use strict';
 export class Grid extends Control {
@@ -33,7 +34,7 @@ export class Grid extends Control {
     var element,
         button;
 
-    var objGrid = new ol.Graticule({
+    var objGrid = new Graticule({
         /*
         strokeStyle: new ol.style.Stroke({
             width: 2,

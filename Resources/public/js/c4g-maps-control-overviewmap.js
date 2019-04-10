@@ -11,6 +11,10 @@
  */
 import {cssConstants} from "./c4g-maps-constant";
 import {getLanguage} from "./c4g-maps-i18n";
+import {OSM} from "ol/source";
+import {Tile} from "ol/layer";
+import {OverviewMap as OvMap} from "ol/control";
+
 'use strict';
 export class OverviewMap {
 
@@ -36,7 +40,7 @@ export class OverviewMap {
     this.options = jQuery.extend({
       collapsed: true,
       tipLabel: langConstants.CTRL_OVERVIEWMAP,
-      layers: [new ol.layer.Tile({source: new ol.source.OSM()})]
+      layers: [new Tile({source: new OSM()})]
     }, options);
     this.mapController = options.mapController;
 
@@ -71,7 +75,7 @@ export class OverviewMap {
       }
     });
 
-    this.ovm = new ol.control.OverviewMap({
+    this.ovm = new OvMap({
       target: element,
       layers: options.layers,
       collapsed: options.collapsed || true

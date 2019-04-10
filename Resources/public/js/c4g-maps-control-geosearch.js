@@ -19,12 +19,13 @@ import {easeOut} from "ol/easing";
 import {Style} from "ol/style";
 import {Circle} from "ol/style";
 import {Stroke} from "ol/style";
-import {transform} from "ol/proj";
+import {transform, transformExtent} from "ol/proj";
 import {Point} from "ol/geom";
 import {Feature} from "ol";
 import {Vector} from "ol/layer";
-import {VectorSource} from "ol/source";
-import {Observable} from "ol";
+import {Vector as VectorSource} from "ol/source";
+import {Observable} from "ol/";
+import {unByKey} from "ol/Observable";
 import {containsCoordinate} from "ol/extent";
 import {getWidth} from "ol/extent";
 import {getHeight} from "ol/extent";
@@ -473,7 +474,7 @@ export class GeoSearch extends Control {
 
           if (elapsed > duration) {
             markerSource.clear();
-            Observable.unByKey(listenerKey);
+            unByKey(listenerKey);
             return;
           }
           // continue postcompose animation
@@ -732,7 +733,7 @@ export class GeoSearch extends Control {
 
                   if (elapsed > duration) {
                     markerSource.clear();
-                    Observable.unByKey(listenerKey);
+                    unByKey(listenerKey);
                     return;
                   }
                   // continue postcompose animation

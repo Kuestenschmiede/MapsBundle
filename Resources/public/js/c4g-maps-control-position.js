@@ -12,6 +12,7 @@
 
 import {cssConstants} from "./c4g-maps-constant";
 import {Control} from "ol/control";
+import {Geolocation} from "ol";
 
 'use strict';
 export class Position extends Control {
@@ -62,7 +63,7 @@ export class Position extends Control {
       // loose focus, otherwise it looks messy
       this.blur();
 
-      var geoLocation = new ol.Geolocation({
+      var geoLocation = new Geolocation({
         tracking: true,
         projection: view.getProjection()
       });

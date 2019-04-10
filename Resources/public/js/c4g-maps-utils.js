@@ -13,6 +13,14 @@ import {cssConstants} from "./c4g-maps-constant";
 import {Zoomlevel} from "./c4g-maps-control-zoomlevel";
 import * as popupFunctionsDE from "./c4g-maps-popup-info-de";
 import * as popupFunctionsEN from "./c4g-maps-popup-info-en";
+import {Vector} from "ol/layer";
+import {Polygon, LineString} from "ol/geom";
+import Circle from "ol/geom/Circle";
+import {transform} from "ol/proj";
+import {getDistance, getArea} from "ol/sphere";
+import {Extent} from "ol/interaction";
+import {Vector as VectorSource} from "ol/source";
+import {extend} from "ol/extent";
 
 let popupFunctions = popupFunctionsDE;
 
@@ -423,17 +431,17 @@ export var utils = {
     //sphere = new ol.Sphere(6378137);
     result = {};
 
-    if (geometry instanceof ol.geom.LineString || (geometry instanceof ol.geom.Polygon && opt_forceLineMeasure)) {
+    if (geometry instanceof LineString || (geometry instanceof Polygon && opt_forceLineMeasure)) {
 
       coordinates = geometry.getCoordinates();
-      if (geometry instanceof ol.geom.Polygon) {
+      if (geometry instanceof Polygon) {
         coordinates = coordinates[0];
       }
       value = 0;
       for (i = 0; i < coordinates.length - 1; i += 1) {
-        coord1 = ol.proj.transform(coordinates[i], 'EPSG:3857', 'EPSG:4326');
-        coord2 = ol.proj.transform(coordinates[i + 1], 'EPSG:3857', 'EPSG:4326');
-        value += ol.sphere.getDistance(coord1, coord2, 6378137);
+        coord1 = transform(coordinates[i], 'EPSG:3857', 'EPSG:4326');
+        coord2 = transform(coordinates[i + 1], 'EPSG:3857', 'EPSG:4326');
+        value += getDistance(coord1, coord2, 6378137);
       }
       result.rawValue = (Math.round(value * 100) / 100).toFixed(2);
       if (value > 1000) {
@@ -444,10 +452,10 @@ export var utils = {
           ' ' + 'm';
       }
 
-    } else if (geometry instanceof ol.geom.Polygon) {
-      //geometry = /** @type {ol.geom.Polygon} */(geometry.clone().transform('EPSG:3857', 'EPSG:4326'));
+    } else if (geometry instanceof Polygon) {
+      //geometry = /** @type {Polygon} */(geometry.clone().transform('EPSG:3857', 'EPSG:4326'));
       //coordinates = geometry.getLinearRing(0).getCoordinates();
-      value = Math.abs(ol.sphere.getArea(geometry));
+      value = Math.abs(getArea(geometry));
       result.rawValue = (Math.round(value * 100) / 100).toFixed(2);
       if (value > 10000) {
         result.htmlValue = (Math.round(value / 1000000 * 100) / 100).toFixed(2) +
@@ -457,14 +465,14 @@ export var utils = {
           ' ' + 'm<sup>2</sup>';
       }
 
-    } else if (geometry instanceof ol.geom.Circle && opt_forceSurfaceMeasure) {
+    } else if (geometry instanceof Circle && opt_forceSurfaceMeasure) {
       var center = geometry.getCenter();
       var radius = geometry.getRadius();
       var edgeCoordinate = [center[0] + radius, center[1]];
       //var wgs84Sphere = new ol.Sphere(6378137);
-      var value = ol.sphere.getDistance(
-        ol.proj.transform(center, 'EPSG:3857', 'EPSG:4326'),
-        ol.proj.transform(edgeCoordinate, 'EPSG:3857', 'EPSG:4326'),
+      var value = getDistance(
+        transform(center, 'EPSG:3857', 'EPSG:4326'),
+        transform(edgeCoordinate, 'EPSG:3857', 'EPSG:4326'),
         6378137
       );
 
@@ -480,14 +488,14 @@ export var utils = {
       }
 
 
-    } else if (geometry instanceof ol.geom.Circle) {
+    } else if (geometry instanceof Circle) {
       var center = geometry.getCenter();
       var radius = geometry.getRadius();
       var edgeCoordinate = [center[0] + radius, center[1]];
       //var wgs84Sphere = new ol.Sphere(6378137);
-      var value = ol.sphere.getDistance(
-        ol.proj.transform(center, 'EPSG:3857', 'EPSG:4326'),
-        ol.proj.transform(edgeCoordinate, 'EPSG:3857', 'EPSG:4326'),
+      var value = getDistance(
+        transform(center, 'EPSG:3857', 'EPSG:4326'),
+        transform(edgeCoordinate, 'EPSG:3857', 'EPSG:4326'),
         6378137
       );
 
@@ -521,10 +529,10 @@ export var utils = {
       return false;
     }
 
-    extentSource = new ol.source.Vector();
+    extentSource = new Vector();
     extentSource.addFeatures(arrGeometries);
 
-    return extentSource.getExtent() || ol.Extent([0, 0, 0, 0]);
+    return extentSource.getExtent() || Extent([0, 0, 0, 0]);
   }, // end of getExtentForGeometries()
 
   /**
@@ -554,7 +562,7 @@ export var utils = {
         if (typeof extent === "undefined") {
           extent = extents[key];
         } else {
-          ol.extent.extend(extent, extents[key])
+          extend(extent, extents[key])
         }
       }
     }
@@ -796,7 +804,7 @@ export var utils = {
       };
     }
 
-    return new ol.layer.Vector({
+    return new Vector({
       source: source,
       style: fnStyle
     });

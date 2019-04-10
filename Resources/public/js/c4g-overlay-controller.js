@@ -12,6 +12,10 @@
 
 import {C4gOverlay} from "./c4g-overlay"
 import {config} from "./c4g-maps-config";
+import {OSM} from "ol/source";
+import {Tile} from "ol/layer";
+import {Stamen} from "ol/source";
+import {XYZ, BingMaps, TileWMS} from "ol/source";
 
 export class C4gOverlayController{
   constructor(baselayer) {
@@ -29,8 +33,8 @@ export class C4gOverlayController{
       noUrl;
 
     layerOptions = {};
-    overlayLayer = new ol.layer.Tile({
-      source: new ol.source.OSM()
+    overlayLayer = new Tile({
+      source: new OSM()
     });
 
     overlayLayerConfig = this.arrOverlays[overlayId];
@@ -38,8 +42,8 @@ export class C4gOverlayController{
     switch (overlayLayerConfig.provider) {
       case 'osm':
         if (osmSourceConfigs[overlayLayerConfig.style]) {
-          overlayLayer = new ol.layer.Tile({
-            source: new ol.source.OSM(
+          overlayLayer = new Tile({
+            source: new OSM(
               jQuery.extend(
                 osmSourceConfigs[overlayLayerConfig.style],
                 layerOptions
@@ -48,8 +52,8 @@ export class C4gOverlayController{
           });
         } else if (stamenSourceConfigs[overlayLayerConfig.style]) {
           // Stamen
-          overlayLayer = new ol.layer.Tile({
-            source: new ol.source.Stamen(
+          overlayLayer = new Tile({
+            source: new Stamen(
               jQuery.extend(
                 stamenSourceConfigs[overlayLayerConfig.style],
                 layerOptions
@@ -58,14 +62,14 @@ export class C4gOverlayController{
           });
           // } else if (mapQuestSourceConfigs[overlayLayerConfig.style]) {
           //   // mapQuest
-          //   overlayLayer = new ol.layer.Tile({
+          //   overlayLayer = new Tile({
           //     source: new ol.source.MapQuest(mapQuestSourceConfigs[overlayLayerConfig.style])
           //   });
         } else if (overlayLayerConfig.style === 'osm_custom') {
           // custom
           noUrl = true;
           if (overlayLayerConfig.attribution) {
-            layerOptions.attributions = overlayLayerConfig.attribution + ' ' + ol.source.OSM.ATTRIBUTION;
+            layerOptions.attributions = overlayLayerConfig.attribution + ' ' + OSM.ATTRIBUTION;
           }
 
           if (overlayLayerConfig.url) {
@@ -76,8 +80,8 @@ export class C4gOverlayController{
             noUrl = false;
           }
           if (!noUrl) {
-            overlayLayer = new ol.layer.Tile({
-              source: new ol.source.XYZ(layerOptions)
+            overlayLayer = new Tile({
+              source: new XYZ(layerOptions)
             });
           } else {
             console.warn('custom url(s) missing -> switch to default');
@@ -92,8 +96,8 @@ export class C4gOverlayController{
         break;
       case 'bing':
         if (baseLayerConfig.apiKey && overlayLayerConfig.style) {
-          overlayLayer = new ol.layer.Tile({
-            source: new ol.source.BingMaps({
+          overlayLayer = new Tile({
+            source: new BingMaps({
               culture: navigator.languages ? navigator.languages[0] : (navigator.language || navigator.userLanguage),
               key: overlayLayerConfig.apiKey,
               imagerySet: overlayLayerConfig.style
@@ -104,8 +108,8 @@ export class C4gOverlayController{
         }
         break;
       case 'wms':
-        overlayLayer = new ol.layer.Tile({
-          source: new ol.source.TileWMS({
+        overlayLayer = new Tile({
+          source: new TileWMS({
             url: overlayLayerConfig.url,
             params: {
               LAYERS: overlayLayerConfig.params.layers,
@@ -114,16 +118,16 @@ export class C4gOverlayController{
               TRANSPARENT: overlayLayerConfig.params.transparent
             },
             gutter: overlayLayerConfig.gutter,
-            attributions: overlayLayerConfig.attribution + ' ' + ol.source.OSM.ATTRIBUTION
+            attributions: overlayLayerConfig.attribution + ' ' + OSM.ATTRIBUTION
           }),
           //extent: ol.proj.transformExtent([5.59334, 50.0578, 9.74158, 52.7998], 'EPSG:4326', 'EPSG:3857')
         });
         break;
       case 'owm':
-        overlayLayer = new ol.layer.Tile({
-          source: new ol.source.XYZ({
+        overlayLayer = new Tile({
+          source: new XYZ({
             url: overlayLayerConfig.url + overlayLayerConfig.app_id + '/{z}/{x}/{y}?hash=' + overlayLayerConfig.api_key,
-            attributions: overlayLayerConfig.attribution + ' ' + ol.source.OSM.ATTRIBUTION
+            attributions: overlayLayerConfig.attribution + ' ' + OSM.ATTRIBUTION
           }),
           //extent: ol.proj.transformExtent([5.59334, 50.0578, 9.74158, 52.7998], 'EPSG:4326', 'EPSG:3857')
         });
