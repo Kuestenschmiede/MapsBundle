@@ -529,7 +529,7 @@ export var utils = {
       return false;
     }
 
-    extentSource = new Vector();
+    extentSource = new VectorSource();
     extentSource.addFeatures(arrGeometries);
 
     return extentSource.getExtent() || Extent([0, 0, 0, 0]);

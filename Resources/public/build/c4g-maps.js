@@ -3089,7 +3089,7 @@ var C4gLocationStyle = exports.C4gLocationStyle = function () {
                         styleData.label_offset = [0, 0, "px"];
                     }
                     if (styleData.label_outl_box === "1") {
-                        textStyle = new Text({
+                        textStyle = new _style.Text({
                             text: label,
                             font: (styleData.font_weight || 'normal') + ' ' + (styleData.font_style || 'normal') + ' ' + (styleData.font_size || '13') + 'px ' + (styleData.font_family || 'sans-serif'),
                             // scale: parseInt(styleData.font_size || 0, 10) || undefined,
@@ -3104,7 +3104,7 @@ var C4gLocationStyle = exports.C4gLocationStyle = function () {
                             backgroundStroke: textStyleOutline
                         });
                     } else {
-                        textStyle = new Text({
+                        textStyle = new _style.Text({
                             text: label,
                             font: (styleData.font_weight || 'normal') + ' ' + (styleData.font_style || 'normal') + ' ' + (styleData.font_size || '13') + 'px ' + (styleData.font_family || 'sans-serif'),
                             // scale: parseInt(styleData.font_size || 0, 10) || undefined,
@@ -3158,7 +3158,7 @@ var C4gLocationStyle = exports.C4gLocationStyle = function () {
                             // forward arrows
                             stylesArray.push(new _style.Style({
                                 geometry: new _geom.Point(end),
-                                text: new Text({
+                                text: new _style.Text({
                                     text: "ᐳ",
                                     font: arrowSizeUnit + " sans-serif",
                                     offsetX: 0,
@@ -3174,7 +3174,7 @@ var C4gLocationStyle = exports.C4gLocationStyle = function () {
                             if (styleData.line_arrows_back) {
                                 stylesArray.push(new _style.Style({
                                     geometry: new _geom.Point(start),
-                                    text: new Text({
+                                    text: new _style.Text({
                                         text: "ᐳ",
                                         font: arrowSizeUnit + " sans-serif",
                                         offsetX: 0,
@@ -13509,7 +13509,7 @@ var utils = exports.utils = {
       return false;
     }
 
-    extentSource = new _layer.Vector();
+    extentSource = new _source.Vector();
     extentSource.addFeatures(arrGeometries);
 
     return extentSource.getExtent() || (0, _interaction.Extent)([0, 0, 0, 0]);

@@ -19,6 +19,7 @@ import {Circle} from "ol/style";
 import {Icon} from "ol/style";
 import {Feature} from "ol";
 import {Point} from "ol/geom";
+import {Text} from "ol/style";
 
 export class C4gLocationStyle{
     constructor(locStyleArr, controller){
