@@ -431,10 +431,10 @@ export var utils = {
     //sphere = new ol.Sphere(6378137);
     result = {};
 
-    if (geometry instanceof LineString || (geometry instanceof Polygon && opt_forceLineMeasure)) {
+    if (geometry.constructor.name === LineString.name || (geometry.constructor.name === Polygon.name && opt_forceLineMeasure)) {
 
       coordinates = geometry.getCoordinates();
-      if (geometry instanceof Polygon) {
+      if (geometry.constructor.name === Polygon.name) {
         coordinates = coordinates[0];
       }
       value = 0;
@@ -452,7 +452,7 @@ export var utils = {
           ' ' + 'm';
       }
 
-    } else if (geometry instanceof Polygon) {
+    } else if (geometry.constructor.name === Polygon.name) {
       //geometry = /** @type {Polygon} */(geometry.clone().transform('EPSG:3857', 'EPSG:4326'));
       //coordinates = geometry.getLinearRing(0).getCoordinates();
       value = Math.abs(getArea(geometry));
@@ -465,7 +465,7 @@ export var utils = {
           ' ' + 'm<sup>2</sup>';
       }
 
-    } else if (geometry instanceof Circle && opt_forceSurfaceMeasure) {
+    } else if (geometry.constructor.name === Circle.name && opt_forceSurfaceMeasure) {
       var center = geometry.getCenter();
       var radius = geometry.getRadius();
       var edgeCoordinate = [center[0] + radius, center[1]];
@@ -488,7 +488,7 @@ export var utils = {
       }
 
 
-    } else if (geometry instanceof Circle) {
+    } else if (geometry.constructor.name === Circle.name) {
       var center = geometry.getCenter();
       var radius = geometry.getRadius();
       var edgeCoordinate = [center[0] + radius, center[1]];

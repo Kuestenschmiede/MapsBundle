@@ -13431,10 +13431,10 @@ var utils = exports.utils = {
     //sphere = new ol.Sphere(6378137);
     result = {};
 
-    if (geometry instanceof _geom.LineString || geometry instanceof _geom.Polygon && opt_forceLineMeasure) {
+    if (geometry.constructor.name === _geom.LineString.name || geometry.constructor.name === _geom.Polygon.name && opt_forceLineMeasure) {
 
       coordinates = geometry.getCoordinates();
-      if (geometry instanceof _geom.Polygon) {
+      if (geometry.constructor.name === _geom.Polygon.name) {
         coordinates = coordinates[0];
       }
       value = 0;
@@ -13449,7 +13449,7 @@ var utils = exports.utils = {
       } else {
         result.htmlValue = result.rawValue + ' ' + 'm';
       }
-    } else if (geometry instanceof _geom.Polygon) {
+    } else if (geometry.constructor.name === _geom.Polygon.name) {
       //geometry = /** @type {Polygon} */(geometry.clone().transform('EPSG:3857', 'EPSG:4326'));
       //coordinates = geometry.getLinearRing(0).getCoordinates();
       value = Math.abs((0, _sphere.getArea)(geometry));
@@ -13459,7 +13459,7 @@ var utils = exports.utils = {
       } else {
         result.htmlValue = result.rawValue + ' ' + 'm<sup>2</sup>';
       }
-    } else if (geometry instanceof _Circle2.default && opt_forceSurfaceMeasure) {
+    } else if (geometry.constructor.name === _Circle2.default.name && opt_forceSurfaceMeasure) {
       var center = geometry.getCenter();
       var radius = geometry.getRadius();
       var edgeCoordinate = [center[0] + radius, center[1]];
@@ -13474,7 +13474,7 @@ var utils = exports.utils = {
       } else {
         result.htmlValue = result.rawValue + ' ' + 'm<sup>2</sup>';
       }
-    } else if (geometry instanceof _Circle2.default) {
+    } else if (geometry.constructor.name === _Circle2.default.name) {
       var center = geometry.getCenter();
       var radius = geometry.getRadius();
       var edgeCoordinate = [center[0] + radius, center[1]];
