@@ -50,10 +50,10 @@ class GeoPicker extends \Backend
     {
 
         $strField = 'ctrl_' . $dc->field . (($this->Input->get('act') == 'editAll') ? '_' . $dc->id : '');
-        if (substr($strField,-1,1)=='y') {
-            $strFieldX = substr($strField,0,-1).'x';
+        if (strtoupper(substr($strField,-1,1)=='Y')) {
+            $strFieldX = substr($strField,0,-1).'X';
             $strFieldY = $strField;
-        } elseif (substr($strField,-1,1)=='x') {
+        } elseif (strtoupper(substr($strField,-1,1)=='x')) {
             $strFieldX = $strField;
             $strFieldY = substr($strField,0,-1).'y';
         } elseif ($strField === "ctrl_longitude" || $strField === "ctrl_latitude") {
