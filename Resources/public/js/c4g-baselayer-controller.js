@@ -23,6 +23,7 @@ import {VectorTile as VectorTileSource} from "ol/source/VectorTile";
 import {BingMaps} from "ol/source";
 import {TileWMS} from "ol/source";
 import {LayerGroup} from "ol/layer";
+import OLCesium from "olcs/OLCesium";
 
 export class C4gBaselayerController {
   constructor(proxy) {
@@ -669,7 +670,7 @@ export class C4gBaselayerController {
         var mapData = this.mapController.data;
         if (mapData.cesium && mapData.cesium.enable && (mapData.cesium.always || baseLayerConfig.cesium)) {
           if (!this.ol3d) {
-            this.ol3d = new olcs.OLCesium({
+            this.ol3d = new OLCesium({
               map: this.mapController.map,
               createSynchronizers: false/*,
                             time() {

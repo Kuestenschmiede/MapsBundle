@@ -262,14 +262,14 @@ export class Measuretools extends Sideboard {
         features = new Collection();
 
         olType = options.type;
-        if (olType == 'Freehand') {
+        if (olType === 'Freehand') {
           olType = 'LineString';
         }
         interaction = new Draw({
           features: features,
           source: source,
           type: olType,
-          freehand: options.type == 'Freehand',
+          freehand: options.type === 'Freehand',
           // @TODO: use custom style? (BE-option)
           // style: use default style
         });

@@ -32,6 +32,7 @@ import {GeoJSON} from "ol/format";
 import {getCenter, boundingExtent} from "ol/extent";
 import {Group} from "ol/layer";
 import * as olFormat from "ol/format";
+import ol_layer_AnimatedCluster from "ol-ext/layer/AnimatedCluster";
 
 
 export class C4gLayerController{
@@ -736,7 +737,7 @@ export class C4gLayerController{
 
               //vectorLayer = utils.getVectorLayer(clusterSource, styleForCluster);
 
-              vectorLayer = new ol.layer.AnimatedCluster(
+              vectorLayer = new ol_layer_AnimatedCluster(
                 {	name: 'Cluster',
                   source: window.clusterSource,
                   // Use a style function for cluster symbolisation
@@ -824,7 +825,7 @@ export class C4gLayerController{
                 });
                 //vectorLayer = utils.getVectorLayer(clusterSource, styleForCluster);
 
-                vectorLayer = new ol.layer.AnimatedCluster(
+                vectorLayer = new ol_layer_AnimatedCluster(
                   {	name: 'Cluster',
                     source: clusterSource,
                     // Use a style function for cluster symbolisation
@@ -1131,7 +1132,7 @@ export class C4gLayerController{
               //threshold: 2, //minimum element count
               source: requestVectorSource
             });
-              vectorLayer = new ol.layer.AnimatedCluster(
+              vectorLayer = new ol_layer_AnimatedCluster(
                   {	name: 'Cluster',
                       source: clusterSource,
                       // Use a style function for cluster symbolisation
@@ -1234,14 +1235,14 @@ export class C4gLayerController{
             else{
               geom = this.geomFromWay(member, elements, true);
             }
-            if(geom instanceof Point){
+            if(geom.constructor.name === Point.name){
               if(!arrCoords){
                 arrCoords = [];
 
               }
               arrCoords.push(geom.getCoordinates());
             }
-            else if(geom instanceof Polygon){
+            else if(geom.constructor.name === Polygon.name){
               if(multiPolygon){
                 multiPolygon.appendPolygon(geom);
               }
@@ -1249,7 +1250,7 @@ export class C4gLayerController{
                 multiPolygon = new MultiPolygon(geom.getCoordinates());
               }
             }
-            else if(geom instanceof  LineString){
+            else if(geom.constructor.name === LineString.name){
               if(multiLineString){
                 multiLineString.appendLineString(geom);
               }

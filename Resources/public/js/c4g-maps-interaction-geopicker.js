@@ -17,7 +17,7 @@ import {Stroke} from "ol/style";
 import {Fill} from "ol/style";
 import {Circle} from "ol/style";
 import {Vector} from "ol/layer";
-import {VectorSource} from "ol/source";
+import {Vector as VectorSource} from "ol/source";
 import {fromLonLat} from "ol/proj";
 import {toLonLat} from "ol/proj";
 

@@ -89,23 +89,10 @@ class ResourceLoader extends coreResourceLoader
         }
 
         // third-party scripts
-//        if ($resources['openlayers']) {
-//            parent::loadJavaScriptResource(self::VENDOR_PATH . 'ol-' . $GLOBALS['con4gis']['maps']['ol-version'] . '/ol' . $suffixOl . '.js', self::JAVASCRIPT, 'openlayers');
-//        }
-
-//        if ($resources['cesium']) {
-//            parent::loadJavaScriptResource(self::VENDOR_PATH . 'ol-cesium-'.$GLOBALS['con4gis']['maps']['ol-cesium-version'].'/Cesium/Cesium.js', self::JAVASCRIPT, 'cesium');
-//            parent::loadJavaScriptResource(self::VENDOR_PATH . 'ol-cesium-'.$GLOBALS['con4gis']['maps']['ol-cesium-version'].'/olcesium' . $suffixCesium . '.js',self::JAVASCRIPT,  'olcesium');
-//            parent::loadCssResourceDeferred(self::VENDOR_PATH . 'ol-cesium-'.$GLOBALS['con4gis']['maps']['ol-cesium-version'].'/olcs.css');
-//        }
-
-//        if ($resources['olms']) {
-//            parent::loadJavaScriptResource("https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL", 'olms');
-//            parent::loadJavaScriptResource(self::VENDOR_PATH . 'ol-mapbox-style-'.$GLOBALS['con4gis']['maps']['olms-version'].'/olms.js',self::HEAD,  'olms');
-//        }
+        if ($resources['cesium']) {
+            parent::loadJavaScriptResource(self::VENDOR_PATH . 'ol-cesium-' . $GLOBALS['con4gis']['maps']['ol-cesium-version'] . '/Cesium/Cesium.js', self::JAVASCRIPT, 'cesium');
+        }
         parent::loadCssResource(self::BUNDLE_CSS_PATH . 'c4g-maps-general.css');
-//        parent::loadJavaScriptResource(self::VENDOR_PATH .'ol-ext-'.$GLOBALS['con4gis']['maps']['ol-ext'] .'/ol-ext.min.js' . $staticOption,self::HEAD,'ol-ext');
-//        parent::loadCssResourceDeferred(self::VENDOR_PATH .'ol-ext-'.$GLOBALS['con4gis']['maps']['ol-ext'] .'/ol-ext.min.css' . $staticOption);
 
         // load plugins
         if ($resources['plugins']) {

@@ -6,7 +6,7 @@ var config = {
     filename: 'c4g-maps.js',
     path: path.resolve('./Resources/public/build/')
   },
-  devtool: "source-map",
+  devtool: "inline-source-map",
   module: {
     rules: [
       {

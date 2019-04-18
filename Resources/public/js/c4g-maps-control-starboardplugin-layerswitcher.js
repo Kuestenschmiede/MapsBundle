@@ -249,6 +249,7 @@ export class Layerswitcher {
 
       // c4g.maps.layers[itemUid] = layerItem;
     }; // end of "fnHandleEntryClick()"
+
     fnChildEntryClick = function (event) {
       event.preventDefault();
       let itemUid = jQuery(this).data('uid');
@@ -264,6 +265,7 @@ export class Layerswitcher {
         jQuery(this).removeClass(cssConstants.INACTIVE).addClass(cssConstants.ACTIVE)
       }
     };
+
     fnChildEntryShow = function (event) {
       event.preventDefault();
       let parent = this.parentElement;
@@ -271,15 +273,14 @@ export class Layerswitcher {
       parent = jQuery(this).parent().parent().parent();
       let childs = jQuery(parent).children();
       let parentUid = jQuery(childs[1]).data('uid');
-      uid = uid.replace(parentUid, '')
+      uid = uid.replace(parentUid, '');
       let layer = self.proxy.layerController.arrLayers[parentUid].vectorLayer;
       if (layer) {
         let singleLayer = layer.getLayers().getArray()[uid];
         let feature = singleLayer.getSource().getFeatures()[0];
         self.proxy.options.mapController.map.getView().fit(feature.getGeometry());
       }
-
-    }
+    };
 
     zoomToExtent = function (itemUid) { //function to zoom to the extent of a map structure and its children
       var layerItem,
