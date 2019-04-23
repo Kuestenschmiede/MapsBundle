@@ -212,7 +212,7 @@ export class C4gLocationStyle{
             }
 
             // check if this is a feature.styleFunction
-            if (!(feature instanceof Feature)) {
+            if (!(feature && feature.constructor.name === Feature.name)) {
                 projection = feature;
                 feature = this;
             }
@@ -315,7 +315,7 @@ export class C4gLocationStyle{
                 styleData.line_arrows
                 && feature
                 && (typeof feature.getGeometry === 'function')
-                && !(feature.getGeometry() instanceof Point)
+                && !(feature.getGeometry().constructor.name === Point.name)
                 && typeof feature.getGeometry().forEachSegment === 'function'
             ) {
                 arrowSize = (styleData.line_arrows_radius) ? (parseInt(styleData.line_arrows_radius.value, 10) * 2) : 0;

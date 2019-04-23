@@ -799,7 +799,7 @@ export class GeoSearch extends Control {
               }
               if (feature) {
                 var geometry = feature.getGeometry();
-                if (geometry instanceof Point) {
+                if (geometry.constructor.name === Point.name) {
                   var coord = geometry.getCoordinates();
                 } else {
                   var coord = resultCoordinate;

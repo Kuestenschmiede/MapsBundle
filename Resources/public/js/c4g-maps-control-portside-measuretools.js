@@ -287,7 +287,7 @@ export class Measuretools extends Sideboard {
             measureArea,
             measureRadius;
 
-          if (!feature instanceof Feature) {
+          if (!(feature.constructor.name === Feature.name)) {
             return false;
           }
 
@@ -297,17 +297,17 @@ export class Measuretools extends Sideboard {
           }
 
           // check feature-type
-          if (feature.getGeometry() instanceof LineString) {
+          if (feature.getGeometry().constructor.name === LineString.name) {
             strLabel = self.langConstants.LENGTH;
             strType = self.langConstants.LINE;
             measureArea = false;
             measureRadius = false;
-          } else if (feature.getGeometry() instanceof Polygon) {
+          } else if (feature.getGeometry().constructor.name === Polygon.name) {
             strLabel = self.langConstants.PERIMETER;
             strType = self.langConstants.POLYGON;
             measureArea = true;
             measureRadius = false;
-          } else if (feature.getGeometry() instanceof Circle) {
+          } else if (feature.getGeometry().constructor.name === Circle.name) {
             strLabel = self.langConstants.RADIUS;
             strType = self.langConstants.CIRCLE;
             measureArea = true;

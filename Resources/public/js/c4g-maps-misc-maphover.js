@@ -161,7 +161,7 @@ export class MapHover {
           hovered.feature = hovered.feature.get('features')[0];
         }
       }
-      if (hovered.feature.getGeometry() && hovered.feature.getGeometry() instanceof LineString) {
+      if (hovered.feature.getGeometry() && hovered.feature.getGeometry().constructor.name === LineString.name) {
         return false;
       }
       if (hovered.feature.get("hover_location") || (self.lastHoveredFeature && self.lastHoveredFeature.get("hover_location"))) {

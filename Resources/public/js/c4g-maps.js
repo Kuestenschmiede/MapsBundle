@@ -60,6 +60,7 @@ import {MousePosition} from "ol/control";
 import {Attribution} from "ol/control";
 import {toStringHDMS} from "ol/coordinate";
 import {get} from "ol/proj";
+import ol_control_GeoBookmark from "ol-ext/control/GeoBookmark"
 
 let langConstants = {};
 
@@ -804,7 +805,7 @@ export class MapController {
 
     // geobookmarks - not ready
     if (mapData.geobookmarks) {
-      this.controls.geobookmarks = new ol.control.GeoBookmark({
+      this.controls.geobookmarks = new ol_control_GeoBookmark({
         //target: controlContainerTopRight
         label: ' ',
         tipLabel: langConstants.CTRL_GEOBOOKMARKS,

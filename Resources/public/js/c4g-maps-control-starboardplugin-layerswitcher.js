@@ -13,6 +13,9 @@
 import {cssConstants} from "./c4g-maps-constant";
 import {utils} from "./c4g-maps-utils";
 import {getLanguage} from "./c4g-maps-i18n";
+import {transform} from "ol/proj";
+import {getTopLeft, getTopRight, getBottomRight, getBottomLeft, boundingExtent} from "ol/extent";
+import {Point} from "ol/geom";
 
 'use strict';
 export class Layerswitcher {
@@ -316,9 +319,9 @@ export class Layerswitcher {
                     vectorLayer.data.geometry &&
                     vectorLayer.data.geometry.coordinates) {
                     if (vectorLayer.data.geometry.type === "Point") {
-                      coords = ol.proj.transform([parseFloat(vectorLayer.data.geometry.coordinates[0]),
+                      coords = transform([parseFloat(vectorLayer.data.geometry.coordinates[0]),
                         parseFloat(vectorLayer.data.geometry.coordinates[1])], 'EPSG:4326', 'EPSG:3857');
-                      geometry = new ol.geom.Point(coords);
+                      geometry = new Point(coords);
                       coordinates.push(geometry.getCoordinates());
                     }
                   }
@@ -336,12 +339,12 @@ export class Layerswitcher {
                       coordinates.push(coordinate);
                     });
                   } else {
-                    if (ol.extent.getTopRight(feature.getSource().getExtent())['0'] != "Infinity" && ol.extent.getTopRight(feature.getSource().getExtent())['0'] != "-Infinity") {
+                    if (getTopRight(feature.getSource().getExtent())['0'] != "Infinity" && getTopRight(feature.getSource().getExtent())['0'] != "-Infinity") {
 
-                      coordinates.push(ol.extent.getTopRight(feature.getSource().getExtent()));
-                      coordinates.push(ol.extent.getTopLeft(feature.getSource().getExtent()));
-                      coordinates.push(ol.extent.getBottomRight(feature.getSource().getExtent()));
-                      coordinates.push(ol.extent.getBottomLeft(feature.getSource().getExtent()));
+                      coordinates.push(getTopRight(feature.getSource().getExtent()));
+                      coordinates.push(getTopLeft(feature.getSource().getExtent()));
+                      coordinates.push(getBottomRight(feature.getSource().getExtent()));
+                      coordinates.push(getBottomLeft(feature.getSource().getExtent()));
                     }
                   }
                 });
@@ -379,10 +382,10 @@ export class Layerswitcher {
                     coordinates.push(coordinate);
                   });
                 } else {
-                  coordinates.push(ol.extent.getTopRight(feature.getSource().getExtent()));
-                  coordinates.push(ol.extent.getTopLeft(feature.getSource().getExtent()));
-                  coordinates.push(ol.extent.getBottomRight(feature.getSource().getExtent()));
-                  coordinates.push(ol.extent.getBottomLeft(feature.getSource().getExtent()));
+                  coordinates.push(getTopRight(feature.getSource().getExtent()));
+                  coordinates.push(getTopLeft(feature.getSource().getExtent()));
+                  coordinates.push(getBottomRight(feature.getSource().getExtent()));
+                  coordinates.push(getBottomLeft(feature.getSource().getExtent()));
                 }
               }
             });
@@ -390,7 +393,7 @@ export class Layerswitcher {
         }
 
 
-        extent = ol.extent.boundingExtent(coordinates);
+        extent = boundingExtent(coordinates);
         if (extent[0] === Infinity || extent[0] === -Infinity) {
           return
         }
