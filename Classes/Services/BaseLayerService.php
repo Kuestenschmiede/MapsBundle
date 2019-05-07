@@ -338,8 +338,11 @@ class BaseLayerService
                 $arrBaseLayer['api_key'] = $objBaseLayer->api_key;
                 break;
             case 'group':
-                $layerGroup = unserialize($objBaseLayer->layerGroup);
-                foreach($layerGroup as $key => $layer){
+                $layerGroup = array();
+                foreach(unserialize($objBaseLayer->layerGroup) as $key => $layer){
+                    if (!$layer['baselayers'] || $layer['baselayers'] >= 0) {
+                        continue;
+                    }
                     $objChildLayer = $this->Database->prepare("SELECT * FROM tl_c4g_map_baselayers WHERE id=?")->execute($layer['baselayers']);
                     $layer['entry'] = $this->parseBaseLayer($objChildLayer);
                     $layerGroup[$key] = $layer;
