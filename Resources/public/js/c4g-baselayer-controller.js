@@ -18,12 +18,14 @@ import TileLayer from "ol/layer/Tile";
 import {XYZ} from "ol/source";
 import {OSM} from "ol/source";
 import {Stamen} from "ol/source";
-import {VectorTile} from "ol/VectorTile";
-import {VectorTile as VectorTileSource} from "ol/source/VectorTile";
+import VectorTile from "ol/VectorTile";
+import {default as VectorTileSource} from "ol/source/VectorTile";
 import {BingMaps} from "ol/source";
 import {TileWMS} from "ol/source";
-import {LayerGroup} from "ol/layer";
+import {Group as LayerGroup} from "ol/layer";
 import OLCesium from "olcs/OLCesium";
+import {applyStyle} from 'ol-mapbox-style';
+import VectorTileLayer from 'ol/layer/VectorTile';
 
 export class C4gBaselayerController {
   constructor(proxy) {
@@ -254,7 +256,7 @@ export class C4gBaselayerController {
 
           if (baseLayerConfig.klokan_type === 'OpenMapTiles') {
             layerOptions.url = baseLayerConfig.url + '{z}/{x}/{y}.pbf';
-            newBaselayer = new VectorTile({
+            newBaselayer = new VectorTileLayer({
               source: new VectorTileSource(jQuery.extend(
                 sourceConfigs.klokan[baseLayerConfig.klokan_type],
                 layerOptions))
@@ -263,12 +265,12 @@ export class C4gBaselayerController {
             //ToDo style url
             fetch(baseLayerConfig.url + '/styles/'+baseLayerConfig.style+'/style.json').then(function(response) {
               response.json().then(function(glStyle) {
-                olms.applyStyle(newBaselayer, glStyle, 'openmaptiles');
+                applyStyle(newBaselayer, glStyle, 'openmaptiles');
               });
             });
           } else {
             layerOptions.url = baseLayerConfig.url + '/data/v3/{z}/{x}/{y}.pbf?key='+baseLayerConfig.api_key;
-            newBaselayer = new VectorTile({
+            newBaselayer = new VectorTileLayer({
               source: new VectorTileSource(jQuery.extend(
                 sourceConfigs.klokan[baseLayerConfig.klokan_type],
                 layerOptions))
@@ -276,7 +278,7 @@ export class C4gBaselayerController {
 
             fetch(baseLayerConfig.url + '/styles/'+baseLayerConfig.style+'/style.json?key='+baseLayerConfig.api_key).then(function(response) {
               response.json().then(function(glStyle) {
-                olms.applyStyle(newBaselayer, glStyle, 'openmaptiles');
+                applyStyle(newBaselayer, glStyle, 'openmaptiles');
               });
             });
           }
