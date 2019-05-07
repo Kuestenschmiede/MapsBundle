@@ -289,27 +289,27 @@ export class C4gBaselayerController {
       case 'here':
         if (baseLayerConfig.api_key && baseLayerConfig.app_id && baseLayerConfig.here_type) {
 
-          if (baseLayerConfig.style == 'normal') {
+          if (baseLayerConfig.style === 'normal') {
             layerOptions.url = 'https://{1-4}.base.maps.cit.api.here.com/maptile/2.1/maptile/newest/normal.day/{z}/{x}/{y}/256/png' +
               '?app_id='+baseLayerConfig.app_id+'&app_code='+baseLayerConfig.api_key;
           } else
-          if (baseLayerConfig.style == 'transit') {
+          if (baseLayerConfig.style === 'transit') {
             layerOptions.url = 'https://{1-4}.base.maps.cit.api.here.com/maptile/2.1/maptile/newest/normal.day.transit/{z}/{x}/{y}/256/png' +
               '?app_id='+baseLayerConfig.app_id+'&app_code='+baseLayerConfig.api_key;
           } else
-          if (baseLayerConfig.style == 'pedestrian') {
+          if (baseLayerConfig.style === 'pedestrian') {
             layerOptions.url = 'https://{1-4}.base.maps.cit.api.here.com/maptile/2.1/maptile/newest/pedestrian.day/{z}/{x}/{y}/256/png' +
               '?app_id='+baseLayerConfig.app_id+'&app_code='+baseLayerConfig.api_key;
           } else
-          if (baseLayerConfig.style == 'terrain') {
+          if (baseLayerConfig.style === 'terrain') {
             layerOptions.url = 'https://{1-4}.aerial.maps.cit.api.here.com/maptile/2.1/maptile/newest/terrain.day/{z}/{x}/{y}/256/png' +
               '?app_id='+baseLayerConfig.app_id+'&app_code='+baseLayerConfig.api_key;
           } else
-          if (baseLayerConfig.style == 'satellite') {
+          if (baseLayerConfig.style === 'satellite') {
             layerOptions.url = 'https://{1-4}.aerial.maps.cit.api.here.com/maptile/2.1/maptile/newest/satellite.day/{z}/{x}/{y}/256/png' +
               '?app_id='+baseLayerConfig.app_id+'&app_code='+baseLayerConfig.api_key;
           } else
-          if (baseLayerConfig.style == 'hybrid') {
+          if (baseLayerConfig.style === 'hybrid') {
             layerOptions.url = 'https://{1-4}.aerial.maps.cit.api.here.com/maptile/2.1/maptile/newest/hybrid.day/{z}/{x}/{y}/256/png' +
               '?app_id='+baseLayerConfig.app_id+'&app_code='+baseLayerConfig.api_key;
           }
