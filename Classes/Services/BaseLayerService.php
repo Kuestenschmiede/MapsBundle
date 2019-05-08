@@ -19,6 +19,7 @@ use con4gis\MapsBundle\Resources\contao\models\C4gMapBaselayersModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapOverlaysModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapSettingsModel;
+use Contao\Database;
 use Contao\StringUtil;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -340,10 +341,7 @@ class BaseLayerService
             case 'group':
                 $layerGroup = array();
                 foreach(unserialize($objBaseLayer->layerGroup) as $key => $layer){
-                    if (!$layer['baselayers'] || $layer['baselayers'] >= 0) {
-                        continue;
-                    }
-                    $objChildLayer = $this->Database->prepare("SELECT * FROM tl_c4g_map_baselayers WHERE id=?")->execute($layer['baselayers']);
+                    $objChildLayer = Database::getInstance()->prepare("SELECT * FROM tl_c4g_map_baselayers WHERE id=?")->execute($layer['baselayers']);
                     $layer['entry'] = $this->parseBaseLayer($objChildLayer);
                     $layerGroup[$key] = $layer;
                 }
