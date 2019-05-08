@@ -87,11 +87,7 @@ class LayerContentDataApi extends \Frontend
             $popupContent = Controller::getContentElement($arrElement['id']) ? Controller::replaceInsertTags(Controller::getContentElement($arrElement['id'])) : $popupContent;
         } else {
             if (!$config->popup) {
-                $popup = [];
-                $popup['content'] = $popupContent;
-                $popup['async'] = false;
-                $popup['routing_link'] = "";
-                return $popup;
+                return false;
             }
             foreach ($popupElements as $key => $value) {
                 if (substr($value, 0, 1) == '{' && substr($value, -1, 1) == '}') {
