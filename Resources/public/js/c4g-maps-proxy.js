@@ -242,8 +242,6 @@ export class MapProxy {
 
           }
           else {
-
-
             feature.setStyle(new ol.style.Style({
               image: new ol.style.Circle({
                 fill: new ol.style.Fill({
@@ -274,22 +272,42 @@ export class MapProxy {
               //open the cluster after zooming
               var pix = map.getView().getResolution();
               var max = fFeatures.length;
-              var r = pix * 12 * (0.5 + max / 4);
+              let clustDistance = self.options.mapController.data.cluster_dist_spider ? self.options.mapController.data.cluster_dist_spider : 20;
+              let arrLinestring = [];
+              var r = pix * clustDistance * (0.5 + max / 4);
               for (var i = 0; i < max; i++) {
                 var a = 2 * Math.PI * i / max;
                 if (max == 2 || max == 4) a += Math.PI / 4;
                 var p = [newCenter[0] + r * Math.sin(a), newCenter[1] + r * Math.cos(a)];
                 var coordinate = ol.proj.toLonLat(p);
                 var f = [];
+                let featureLinestring = new ol.Feature(new ol.geom.LineString([newCenter, p]));
+                arrLinestring.push(featureLinestring);
                 f.push(fFeatures[i]);
                 var cf = new ol.Feature({
                   geometry: new ol.geom.Point(p),
                   features: f,
                   style: fFeatures[i].get('style')
-                });
-                layer.getSource().addFeature(cf);
-                map.getView().setCenter(newCenter);
+                  });
+                  layer.getSource().addFeature(cf);
+                  layer.getSource().addFeature(featureLinestring);
+                  map.getView().setCenter(newCenter);
               }
+              let stringSource = new ol.source.Vector({features: arrLinestring});
+              let stringStyle = new ol.style.Style({
+                stroke: new ol.style.Stroke({
+                  width: 0.1,
+                  color: "#000070"
+                })
+              });
+              let stringLayer = new ol.layer.Vector({
+                source: stringSource,
+                style: stringStyle
+              });
+              map.getView().on('change:resolution', function(evt) {
+                map.removeLayer(stringLayer);
+              });
+              map.addLayer(stringLayer);
             } else {
               currentZoom += 1;
             }

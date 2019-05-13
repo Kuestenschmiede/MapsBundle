@@ -58,6 +58,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_distance'] = ['Cluster-Dista
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_fillcolor'] = ['Füllfarbe', 'Wählen Sie die Füllfarbe der Clusterblasen aus.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_fontcolor'] = ['Schriftfarbe', 'Wählen Sie die Schriftfarbe der Clusterblasen aus.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_zoom'] = ['Minimale Zoomstufe (Spinne)','Wählen Sie die Zoomstufe, bis zu der hereingezoomt wird. Ab dieser Stufe werden die Cluster per Klick aufgelöst und verteilt dargestellt.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_dist_spider'] = ['Cluster-Distanz (aufgelöst)','Wählen Sie die Distanz, die zwischen den aufgelösten Punkten eines Clusters dargestellt werden soll.'];
 
 /** Karteninformationen */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['attribution'] = ['Copyright-Text (Attribution)', 'Blendet einen Copyright-Text (eine sogenannte Attribution) ein. Deaktivierung nicht empfohlen!'];
