@@ -395,7 +395,37 @@ export class C4gBaselayerController {
             //extent: ol.proj.transformExtent([5.59334, 50.0578, 9.74158, 52.7998], 'EPSG:4326', 'EPSG:3857')
           });
         }
+        break;
+      case 'image':
+        var projection = new ol.proj.Projection({
+          code: 'image',
+          units: 'pixels',
+          extent: baseLayerConfig.extent ? baseLayerConfig.extent : [0, 0, 1920, 1080]
+        });
+        newBaselayer = new ol.layer.Image({
+          source: new ol.source.ImageStatic({
+            url: baseLayerConfig.imageSrc,
+            imageExtent: baseLayerConfig.extent ? baseLayerConfig.extent : [0, 0, 1920, 1080],
+            projection: projection
+          })
+        });
+        // const self = this;
+        // setTimeout(function(){
+        //   self.mapController.map.getView().setCenter(ol.extent.getCenter(baseLayerConfig.extent ? baseLayerConfig.extent : [0, 0, 886, 435]));
+        //   self.mapController.map.getView().setZoom(18);
+        //   }, 3000);
 
+
+        break;
+      case 'geoimage':
+        let  arrSource = JSON.parse(baseLayerConfig.geoImageJson);
+        arrSource.url = baseLayerConfig.imageSrc ? baseLayerConfig.imageSrc : arrSource.url;
+        newBaselayer = new ol.layer.Image({
+
+          source: new ol.source.GeoImage(
+              arrSource
+          )
+        });
         break;
       case 'owm':
         newBaselayer = new ol.layer.Tile({
@@ -445,7 +475,33 @@ export class C4gBaselayerController {
       view;
 
     let baseLayerConfig = this.arrBaselayers[baseLayerUid];
-
+    let arrLayers = self.proxy.layerController.arrLayers;
+    for (let id in arrLayers) {
+      if (arrLayers.hasOwnProperty(id)) {
+        let layer = arrLayers[id];
+        if (layer) {
+          let showLayer = false;
+          if (layer.activeForBaselayers == "all") {
+            showLayer = true;
+          }
+          else {
+            for (let activeBaselayerId in layer.activeForBaselayers) {
+              if (layer.activeForBaselayers.hasOwnProperty(activeBaselayerId)) {
+                if (baseLayerUid == layer.activeForBaselayers[activeBaselayerId]) {
+                  showLayer = true;
+                }
+              }
+            }
+          }
+          if (showLayer) {
+            self.proxy.layerController.showLayer(id);
+          }
+          else {
+            self.proxy.layerController.hideLayer(id);
+          }
+        }
+      }
+    }
 
     if ((typeof baseLayerConfig !== "undefined") && !baseLayerConfig.layer) {
       // create layer

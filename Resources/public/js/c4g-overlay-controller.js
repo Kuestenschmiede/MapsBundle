@@ -128,6 +128,15 @@ export class C4gOverlayController{
           //extent: ol.proj.transformExtent([5.59334, 50.0578, 9.74158, 52.7998], 'EPSG:4326', 'EPSG:3857')
         });
         break;
+      case 'geoimage':
+        let objSource = JSON.parse(overlayLayerConfig.geoImageJson);
+        objSource.url = overlayLayerConfig.imageSrc ? overlayLayerConfig.imageSrc : objSource.url;
+        overlayLayer = new ol.layer.Image({
+          source: new ol.source.GeoImage(
+            objSource
+          )
+        });
+        break;
       default:
         console.warn('unsupported provider');
         break;

@@ -458,7 +458,35 @@ var C4gBaselayerController = exports.C4gBaselayerController = function () {
               //extent: ol.proj.transformExtent([5.59334, 50.0578, 9.74158, 52.7998], 'EPSG:4326', 'EPSG:3857')
             });
           }
+          break;
+        case 'image':
+          var projection = new ol.proj.Projection({
+            code: 'image',
+            units: 'pixels',
+            extent: baseLayerConfig.extent ? baseLayerConfig.extent : [0, 0, 1920, 1080]
+          });
+          newBaselayer = new ol.layer.Image({
+            source: new ol.source.ImageStatic({
+              url: baseLayerConfig.imageSrc,
+              imageExtent: baseLayerConfig.extent ? baseLayerConfig.extent : [0, 0, 1920, 1080],
+              projection: projection
+            })
+          });
+          // const self = this;
+          // setTimeout(function(){
+          //   self.mapController.map.getView().setCenter(ol.extent.getCenter(baseLayerConfig.extent ? baseLayerConfig.extent : [0, 0, 886, 435]));
+          //   self.mapController.map.getView().setZoom(18);
+          //   }, 3000);
 
+
+          break;
+        case 'geoimage':
+          var arrSource = JSON.parse(baseLayerConfig.geoImageJson);
+          arrSource.url = baseLayerConfig.imageSrc ? baseLayerConfig.imageSrc : arrSource.url;
+          newBaselayer = new ol.layer.Image({
+
+            source: new ol.source.GeoImage(arrSource)
+          });
           break;
         case 'owm':
           newBaselayer = new ol.layer.Tile({
@@ -509,6 +537,31 @@ var C4gBaselayerController = exports.C4gBaselayerController = function () {
           view = void 0;
 
       var baseLayerConfig = this.arrBaselayers[baseLayerUid];
+      var arrLayers = self.proxy.layerController.arrLayers;
+      for (var id in arrLayers) {
+        if (arrLayers.hasOwnProperty(id)) {
+          var layer = arrLayers[id];
+          if (layer) {
+            var showLayer = false;
+            if (layer.activeForBaselayers == "all") {
+              showLayer = true;
+            } else {
+              for (var activeBaselayerId in layer.activeForBaselayers) {
+                if (layer.activeForBaselayers.hasOwnProperty(activeBaselayerId)) {
+                  if (baseLayerUid == layer.activeForBaselayers[activeBaselayerId]) {
+                    showLayer = true;
+                  }
+                }
+              }
+            }
+            if (showLayer) {
+              self.proxy.layerController.showLayer(id);
+            } else {
+              self.proxy.layerController.hideLayer(id);
+            }
+          }
+        }
+      }
 
       if (typeof baseLayerConfig !== "undefined" && !baseLayerConfig.layer) {
         // create layer
@@ -828,6 +881,8 @@ var C4gBaselayer = exports.C4gBaselayer = function C4gBaselayer(baselayerArr, co
     this.style_url = baselayerArr['style_url'];
     this.hasOverlays = baselayerArr['hasOverlays'];
     this.overlays = baselayerArr['overlays'];
+    this.imageSrc = baselayerArr['image_src'];
+    this.geoImageJson = baselayerArr['geoimage_json'];
     if (baselayerArr['layerGroup']) {
         var layerGroup = [];
         for (var index in baselayerArr['layerGroup']) {
@@ -1581,6 +1636,24 @@ var C4gLayerController = exports.C4gLayerController = function () {
 
             fnAttachDataToLayer(vectorLayer, contentData.data);
             layers.push(vectorLayer);
+          } else if (this.arrLayers[itemUid].type === "image") {
+            var extent = [0, 0, 430, 474];
+            var projection = new ol.proj.Projection({
+              code: 'xkcd-image',
+              units: 'pixels',
+              extent: extent
+            });
+            vectorSource = new ol.source.ImageStatic({
+              url: this.arrLayers[itemUid].iconSrc,
+              projection: projection,
+              imageExtent: extent
+            });
+
+            vectorLayer = new ol.layer.Image({
+              source: vectorSource
+            });
+            self.mapController.map.addLayer(vectorLayer);
+            self.mapController.map.getView().setCenter(ol.extent.getCenter(extent));
           } else if (this.arrLayers[itemUid].type === "table" || this.arrLayers[itemUid].type === "link") {
             var layerContent = this.arrLayers[itemUid].content;
             contentData = layerContent[0];
@@ -2629,7 +2702,8 @@ var C4gLayer = exports.C4gLayer = function C4gLayer(layerArr) {
   this.vectorLayer = null;
   this.hideWhenInTab = layerArr['hide_when_in_tab'];
   this.noFilter = layerArr['noFilter'];
-
+  this.iconSrc = layerArr['icon_src'];
+  this.activeForBaselayers = layerArr['activeForBaselayers'];
   if (layerArr.projectId) {
     this.projectId = layerArr.projectId;
   }
@@ -4299,263 +4373,265 @@ var GeoSearch = exports.GeoSearch = function (_ol$control$Control) {
 
           var mapView, currentCoordinate, resultCoordinate, coordDif, difContext, viewExtent, result, osmExtent, resolution, zoomType, flyTo, completeSearch;
 
-          mapView = map.getView();
+          if (results && results.length && results.length > 0) {
+            mapView = map.getView();
 
-          flyTo = function flyTo(map, location, zoomlevel, zoombounds, boundingbox, markResult, animate) {
-            var duration = 2000;
-            var zoom = zoomlevel;
-            var parts = 2;
-            var called = false;
-            var extent;
+            flyTo = function flyTo(map, location, zoomlevel, zoombounds, boundingbox, markResult, animate) {
+              var duration = 2000;
+              var zoom = zoomlevel;
+              var parts = 2;
+              var called = false;
+              var extent;
 
-            function callback(complete) {
-              --parts;
-              if (called) {
-                return;
-              }
-              if (parts === 0 || !complete) {
-                called = true;
-
-                if (zoombounds && boundingbox) {
-                  // translate osm-extent to ol3-extent
-
-                  osmExtent = [];
-                  osmExtent.push(parseFloat(boundingbox[2]));
-                  osmExtent.push(parseFloat(boundingbox[0]));
-                  osmExtent.push(parseFloat(boundingbox[3]));
-                  osmExtent.push(parseFloat(boundingbox[1]));
-
-                  extent = ol.proj.transformExtent(osmExtent, 'EPSG:4326', 'EPSG:3857');
-
-                  window.setTimeout(function () {
-                    var viewFit = mapView.fit(extent, map.getSize(), {
-                      minZoom: mapView.get('minZoom') || 2,
-                      maxZoom: zoom || mapView.get('maxZoom') || 18,
-                      duration: duration / 2,
-                      easing: ol.easing.easeOut
-                    });
-                  }, duration);
+              function callback(complete) {
+                --parts;
+                if (called) {
+                  return;
                 }
+                if (parts === 0 || !complete) {
+                  called = true;
 
-                completeSearch(markResult, animate);
-              }
-            }
+                  if (zoombounds && boundingbox) {
+                    // translate osm-extent to ol3-extent
 
-            map.getView().animate({
-              center: location,
-              duration: duration
-            }, callback);
+                    osmExtent = [];
+                    osmExtent.push(parseFloat(boundingbox[2]));
+                    osmExtent.push(parseFloat(boundingbox[0]));
+                    osmExtent.push(parseFloat(boundingbox[3]));
+                    osmExtent.push(parseFloat(boundingbox[1]));
 
-            map.getView().animate({
-              zoom: zoom - 1,
-              duration: duration / 2
-            }, {
-              zoom: zoom,
-              duration: duration / 2
-            }, callback);
-          };
+                    extent = ol.proj.transformExtent(osmExtent, 'EPSG:4326', 'EPSG:3857');
 
-          completeSearch = function completeSearch(markResult, animate) {
-            // result marker & animation
-            if (markResult) {
-              var addMarker, markerSource, animateMarker;
-
-              markerSource = new ol.source.Vector();
-              map.addLayer(new ol.layer.Vector({
-                style: new ol.style.Style(),
-                source: markerSource
-              }));
-
-              addMarker = function addMarker() {
-                markerSource.addFeature(new ol.Feature(new ol.geom.Point(resultCoordinate)));
-              };
-
-              animateMarker = function animateMarker(feature) {
-                var animationStep, start, duration, listenerKey;
-
-                start = new Date().getTime();
-                duration = 3000;
-
-                animationStep = function animationStep(event) {
-                  var vectorContext, frameState, elapsed, elapsedRatio, radius, opacity, marker, flashGeom;
-
-                  vectorContext = event.vectorContext;
-                  frameState = event.frameState;
-                  flashGeom = feature.getGeometry().clone();
-                  elapsed = frameState.time - start;
-                  elapsedRatio = elapsed / duration;
-                  radius = ol.easing.linear(1 - elapsedRatio) * 100;
-                  if (radius < 0) {
-                    radius = 0;
+                    window.setTimeout(function () {
+                      var viewFit = mapView.fit(extent, map.getSize(), {
+                        minZoom: mapView.get('minZoom') || 2,
+                        maxZoom: zoom || mapView.get('maxZoom') || 18,
+                        duration: duration / 2,
+                        easing: ol.easing.easeOut
+                      });
+                    }, duration);
                   }
-                  opacity = ol.easing.linear(elapsedRatio);
 
-                  var marker = new ol.style.Style({
-                    image: new ol.style.Circle({
-                      radius: radius,
-                      snapToPixel: false,
-                      stroke: new ol.style.Stroke({
-                        color: 'rgba(200, 0, 0, ' + opacity + ')',
-                        width: 3,
-                        opacity: opacity
-                      })
-                    })
-                  });
-
-                  vectorContext.setStyle(marker);
-                  vectorContext.drawGeometry(flashGeom, null);
-
-                  if (elapsed > duration) {
-                    markerSource.clear();
-                    ol.Observable.unByKey(listenerKey);
-                    return;
-                  }
-                  // continue postcompose animation
-                  frameState.animate = true;
-                }; // end of "animationStep"
-
-                listenerKey = map.on('postcompose', animationStep);
-              }; // end of "animateMarker"
-
-              markerSource.on('addfeature', function (event) {
-                animateMarker(event.feature);
-              });
-
-              if (animate) {
-                if (zoomType === 'zoom') {
-                  window.setTimeout(addMarker, animationDuration / 2);
-                } else {
-                  window.setTimeout(addMarker, animationDuration);
+                  completeSearch(markResult, animate);
                 }
-              } else {
-                addMarker();
               }
-            } // end of result marker & animation handling
-          };
 
-          if (results[0]) {
-            result = results[0];
-            self.results = results;
-            currentCoordinate = mapView.getCenter();
-            resultCoordinate = ol.proj.transform([parseFloat(result.lon), parseFloat(result.lat)], 'EPSG:4326', 'EPSG:3857');
+              map.getView().animate({
+                center: location,
+                duration: duration
+              }, callback);
 
-            if (animate) {
-              flyTo(map, resultCoordinate, self.config.zoomlevel, self.config.zoombounds, result.boundingbox, markResult, animate);
-            } else {
-              completeSearch(self.config.markResult, self.config.animate);
-              mapView.setCenter(resultCoordinate);
-              if (self.config.zoomlevel >= 0) {
-                map.getView().setZoom(self.config.zoomlevel);
-              }
-            }
+              map.getView().animate({
+                zoom: zoom - 1,
+                duration: duration / 2
+              }, {
+                zoom: zoom,
+                duration: duration / 2
+              }, callback);
+            };
 
-            var pixel = map.getPixelFromCoordinate(resultCoordinate);
-            var feature = map.forEachFeatureAtPixel(pixel, function (feature, layer) {
-              return feature;
-            });
-            var layer = map.forEachFeatureAtPixel(pixel, function (feature, layer) {
-              return layer;
-            });
-            if (self.config.popup) {
-              var popupInfos = {};
-              if (feature && feature.get('popup')) {
-                // single POI
-                popupInfos = feature.get('popup');
-              } else if (layer && layer.popup) {
-                popupInfos = layer.popup;
-              } else {
-                feature = false;
-              }
-              if (feature) {
-                var geometry = feature.getGeometry();
-                if (geometry instanceof ol.geom.Point) {
-                  var coord = geometry.getCoordinates();
-                } else {
-                  var coord = resultCoordinate;
-                }
+            completeSearch = function completeSearch(markResult, animate) {
+              // result marker & animation
+              if (markResult) {
+                var addMarker, markerSource, animateMarker;
 
-                window.c4gMapsPopup.popup.setPosition(coord);
-                if (popupInfos.content) {
-                  window.c4gMapsPopup.$content.html('');
-                  window.c4gMapsPopup.popup.addClass(_c4gMapsConstant.cssConstants.ACTIVE).addClass(_c4gMapsConstant.cssConstants.LOADING);
-                  window.c4gMapsPopup.spinner.show();
+                markerSource = new ol.source.Vector();
+                map.addLayer(new ol.layer.Vector({
+                  style: new ol.style.Style(),
+                  source: markerSource
+                }));
 
-                  if (popupInfos.async === false || popupInfos.async == '0') {
-                    var objPopup = {};
-                    objPopup.popup = popupInfos;
-                    objPopup.feature = feature;
-                    objPopup.layer = layer;
-                    // Call the popup hook for plugin specific popup content
-                    if (window.c4gMapsHooks !== undefined && _typeof(window.c4gMapsHooks.proxy_fillPopup) === 'object') {
-                      _c4gMapsUtils.utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, objPopup);
+                addMarker = function addMarker() {
+                  markerSource.addFeature(new ol.Feature(new ol.geom.Point(resultCoordinate)));
+                };
+
+                animateMarker = function animateMarker(feature) {
+                  var animationStep, start, duration, listenerKey;
+
+                  start = new Date().getTime();
+                  duration = 3000;
+
+                  animationStep = function animationStep(event) {
+                    var vectorContext, frameState, elapsed, elapsedRatio, radius, opacity, marker, flashGeom;
+
+                    vectorContext = event.vectorContext;
+                    frameState = event.frameState;
+                    flashGeom = feature.getGeometry().clone();
+                    elapsed = frameState.time - start;
+                    elapsedRatio = elapsed / duration;
+                    radius = ol.easing.linear(1 - elapsedRatio) * 100;
+                    if (radius < 0) {
+                      radius = 0;
                     }
-                    self.config.mapController.proxy.setPopup(objPopup);
-                  } else {
-                    jQuery.ajax({
-                      dataType: "json",
-                      url: self.api_infowindow_url + '/' + popupInfos.content,
-                      done: function done(data) {
-                        var popupInfo = {
-                          async: popupInfos.async,
-                          content: data.content,
-                          popup: popupInfos.popup,
-                          routing_link: popupInfos.routing_link
-                        };
+                    opacity = ol.easing.linear(elapsedRatio);
 
-                        objPopup = {};
-                        objPopup.popup = popupInfo;
-                        objPopup.feature = feature;
-                        objPopup.layer = layer;
-
-                        // Call the popup hook for plugin specific popup content
-                        if (window.c4gMapsHooks !== undefined && _typeof(window.c4gMapsHooks.proxy_fillPopup) === 'object') {
-                          _c4gMapsUtils.utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, objPopup);
-                        }
-
-                        self.setPopup(objPopup);
-                      }
+                    var marker = new ol.style.Style({
+                      image: new ol.style.Circle({
+                        radius: radius,
+                        snapToPixel: false,
+                        stroke: new ol.style.Stroke({
+                          color: 'rgba(200, 0, 0, ' + opacity + ')',
+                          width: 3,
+                          opacity: opacity
+                        })
+                      })
                     });
-                  }
-                } else {
-                  window.c4gMapsPopup.popup.removeClass(_c4gMapsConstant.cssConstants.ACTIVE);
-                }
-              } else if (window && window.c4gMapsPopup && window.c4gMapsPopup.popup) {
-                jQuery(window.c4gMapsPopup.popup).removeClass(_c4gMapsConstant.cssConstants.ACTIVE);
-              }
-            }
 
-            if (self.config.autopick && self.config.mapController.geopicker && typeof self.config.mapController.geopicker.pick === 'function') {
-              self.config.mapController.geopicker.pick(resultCoordinate);
-            }
-          } else {
-            var langConstants = (0, _c4gMapsI18n.getLanguage)(self.options.mapController.data);
-            alert(langConstants.SEARCH_NOT_FOUND);
-          }
-          // self.resultWrapper.innerHTML = '@ console';
+                    vectorContext.setStyle(marker);
+                    vectorContext.drawGeometry(flashGeom, null);
 
-          if (document.getElementById("resultcontainer")) {
-            document.getElementById("resultcontainer").parentNode.removeChild(document.getElementById("resultcontainer"));
-          }
-          if (self.config.results) {
+                    if (elapsed > duration) {
+                      markerSource.clear();
+                      ol.Observable.unByKey(listenerKey);
+                      return;
+                    }
+                    // continue postcompose animation
+                    frameState.animate = true;
+                  }; // end of "animationStep"
 
-            var searchResultContainer = document.createElement('ul');
-            searchResultContainer.setAttribute("id", "resultcontainer");
-            if (self.results) {
-              for (var i = 0; i < self.results.length; i++) {
-                var searchResult = document.createElement('li');
-                var searchResultButton = document.createElement('button');
-                searchResultButton.setAttribute("id", i);
-                searchResultButton.setAttribute('class', 'searchResultButton');
-                searchResultButton.addEventListener('click', function () {
-                  self.zoomTo(this.getAttribute("id"));
+                  listenerKey = map.on('postcompose', animationStep);
+                }; // end of "animateMarker"
+
+                markerSource.on('addfeature', function (event) {
+                  animateMarker(event.feature);
                 });
 
-                searchResultButton.setAttribute("name", self.results[i].display_name);
-                searchResultButton.innerHTML = self.results[i].display_name;
-                searchResult.appendChild(searchResultButton);
-                searchResultContainer.appendChild(searchResult);
+                if (animate) {
+                  if (zoomType === 'zoom') {
+                    window.setTimeout(addMarker, animationDuration / 2);
+                  } else {
+                    window.setTimeout(addMarker, animationDuration);
+                  }
+                } else {
+                  addMarker();
+                }
+              } // end of result marker & animation handling
+            };
+
+            if (results[0]) {
+              result = results[0];
+              self.results = results;
+              currentCoordinate = mapView.getCenter();
+              resultCoordinate = ol.proj.transform([parseFloat(result.lon), parseFloat(result.lat)], 'EPSG:4326', 'EPSG:3857');
+
+              if (animate) {
+                flyTo(map, resultCoordinate, self.config.zoomlevel, self.config.zoombounds, result.boundingbox, markResult, animate);
+              } else {
+                completeSearch(self.config.markResult, self.config.animate);
+                mapView.setCenter(resultCoordinate);
+                if (self.config.zoomlevel >= 0) {
+                  map.getView().setZoom(self.config.zoomlevel);
+                }
               }
-              self.searchWrapper.appendChild(searchResultContainer);
+
+              var pixel = map.getPixelFromCoordinate(resultCoordinate);
+              var feature = map.forEachFeatureAtPixel(pixel, function (feature, layer) {
+                return feature;
+              });
+              var layer = map.forEachFeatureAtPixel(pixel, function (feature, layer) {
+                return layer;
+              });
+              if (self.config.popup) {
+                var popupInfos = {};
+                if (feature && feature.get('popup')) {
+                  // single POI
+                  popupInfos = feature.get('popup');
+                } else if (layer && layer.popup) {
+                  popupInfos = layer.popup;
+                } else {
+                  feature = false;
+                }
+                if (feature) {
+                  var geometry = feature.getGeometry();
+                  if (geometry instanceof ol.geom.Point) {
+                    var coord = geometry.getCoordinates();
+                  } else {
+                    var coord = resultCoordinate;
+                  }
+
+                  window.c4gMapsPopup.popup.setPosition(coord);
+                  if (popupInfos.content) {
+                    window.c4gMapsPopup.$content.html('');
+                    window.c4gMapsPopup.popup.addClass(_c4gMapsConstant.cssConstants.ACTIVE).addClass(_c4gMapsConstant.cssConstants.LOADING);
+                    window.c4gMapsPopup.spinner.show();
+
+                    if (popupInfos.async === false || popupInfos.async == '0') {
+                      var objPopup = {};
+                      objPopup.popup = popupInfos;
+                      objPopup.feature = feature;
+                      objPopup.layer = layer;
+                      // Call the popup hook for plugin specific popup content
+                      if (window.c4gMapsHooks !== undefined && _typeof(window.c4gMapsHooks.proxy_fillPopup) === 'object') {
+                        _c4gMapsUtils.utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, objPopup);
+                      }
+                      self.config.mapController.proxy.setPopup(objPopup);
+                    } else {
+                      jQuery.ajax({
+                        dataType: "json",
+                        url: self.api_infowindow_url + '/' + popupInfos.content,
+                        done: function done(data) {
+                          var popupInfo = {
+                            async: popupInfos.async,
+                            content: data.content,
+                            popup: popupInfos.popup,
+                            routing_link: popupInfos.routing_link
+                          };
+
+                          objPopup = {};
+                          objPopup.popup = popupInfo;
+                          objPopup.feature = feature;
+                          objPopup.layer = layer;
+
+                          // Call the popup hook for plugin specific popup content
+                          if (window.c4gMapsHooks !== undefined && _typeof(window.c4gMapsHooks.proxy_fillPopup) === 'object') {
+                            _c4gMapsUtils.utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, objPopup);
+                          }
+
+                          self.setPopup(objPopup);
+                        }
+                      });
+                    }
+                  } else {
+                    window.c4gMapsPopup.popup.removeClass(_c4gMapsConstant.cssConstants.ACTIVE);
+                  }
+                } else if (window && window.c4gMapsPopup && window.c4gMapsPopup.popup) {
+                  jQuery(window.c4gMapsPopup.popup).removeClass(_c4gMapsConstant.cssConstants.ACTIVE);
+                }
+              }
+
+              if (self.config.autopick && self.config.mapController.geopicker && typeof self.config.mapController.geopicker.pick === 'function') {
+                self.config.mapController.geopicker.pick(resultCoordinate);
+              }
+            } else {
+              var langConstants = (0, _c4gMapsI18n.getLanguage)(self.options.mapController.data);
+              alert(langConstants.SEARCH_NOT_FOUND);
+            }
+            // self.resultWrapper.innerHTML = '@ console';
+
+            if (document.getElementById("resultcontainer")) {
+              document.getElementById("resultcontainer").parentNode.removeChild(document.getElementById("resultcontainer"));
+            }
+            if (self.config.results) {
+
+              var searchResultContainer = document.createElement('ul');
+              searchResultContainer.setAttribute("id", "resultcontainer");
+              if (self.results) {
+                for (var i = 0; i < self.results.length; i++) {
+                  var searchResult = document.createElement('li');
+                  var searchResultButton = document.createElement('button');
+                  searchResultButton.setAttribute("id", i);
+                  searchResultButton.setAttribute('class', 'searchResultButton');
+                  searchResultButton.addEventListener('click', function () {
+                    self.zoomTo(this.getAttribute("id"));
+                  });
+
+                  searchResultButton.setAttribute("name", self.results[i].display_name);
+                  searchResultButton.innerHTML = self.results[i].display_name;
+                  searchResult.appendChild(searchResultButton);
+                  searchResultContainer.appendChild(searchResult);
+                }
+                self.searchWrapper.appendChild(searchResultContainer);
+              }
             }
           }
         })
@@ -14789,6 +14865,13 @@ var C4gOverlayController = exports.C4gOverlayController = function () {
             //extent: ol.proj.transformExtent([5.59334, 50.0578, 9.74158, 52.7998], 'EPSG:4326', 'EPSG:3857')
           });
           break;
+        case 'geoimage':
+          var objSource = JSON.parse(overlayLayerConfig.geoImageJson);
+          objSource.url = overlayLayerConfig.imageSrc ? overlayLayerConfig.imageSrc : objSource.url;
+          overlayLayer = new ol.layer.Image({
+            source: new ol.source.GeoImage(objSource)
+          });
+          break;
         default:
           console.warn('unsupported provider');
           break;
@@ -14848,6 +14931,8 @@ var C4gOverlay = exports.C4gOverlay = function () {
     this.attribution = overlayArr['attribution'];
     this.gutter = overlayArr['gutter'];
     this.params = overlayArr['params'];
+    this.imageSrc = overlayArr['image_src'];
+    this.geoImageJson = overlayArr['geoimage_json'];
     this.layer = false;
     this.overlayArr = overlayArr;
     this.mapController = mapController;

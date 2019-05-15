@@ -54,7 +54,6 @@ class LayerService
 
     public function generate($intParentId)
     {
-        Database::getInstance()->prepare("DELETE FROM tl_c4g_map_layer_content")->execute();
         $arrLayers = $this->getLayerList($intParentId);
 
         // reassign layers from forum or other sources
@@ -323,7 +322,12 @@ class LayerService
                 'popup' => $objLayer->cluster_popup
             ];
         }
-
+        if ($objLayer->filterByBaseLayer && unserialize($objLayer->filterByBaseLayer)) {
+            $arrLayerData['activeForBaselayers'] = unserialize($objLayer->filterByBaseLayer);
+        }
+        else {
+            $arrLayerData['activeForBaselayers'] = "all";
+        }
         // check parent hide status
         $parentLayer = C4gMapsModel::findById($objLayer->pid);
         
@@ -366,7 +370,15 @@ class LayerService
         } else {
             $arrLayerData['content'] = $this->getContentForType($objLayer);
         }
-        
+        if ($objLayer->icon_src) {
+            $objFile = \FilesModel::findByUuid($objLayer->icon_src);
+            if ($objFile && $objFile->path) {
+                $arrLayerData['icon_src'] = $objFile->path;
+                $arrLayerData['content'] = [0 => true,
+                    1 => true];
+
+            }
+        }
         if ($objLayer->location_type === 'startab') {
             $arrLayerData['awesomeicon'] = $objLayer->awesomeicon;
         }
