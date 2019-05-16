@@ -29,6 +29,11 @@ $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['api_port']      = array('Port', 'Bit
 $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider_custom'] = 'Benutzerdefiniert';
 $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider_wms']    = 'WMS';
 $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider_owm']    = 'OpenWeatherMap';
+$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider_geoimage']    = 'Georeferenziertes Bild';
+
+$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['image_src']   			= ['Bild auswählen', 'Bitte wählen Sie das Bild aus, was Sie als Basiskarte anzeigen wollen.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['geoimage_json']         = ['JSON zur Georeferenzierung', 'Bitte geben Sie hier ein <a href="https://www.json.org/">JSON</a> zur Georeferenzierung ein. Sie können dieses durch <a href="http://viglino.github.io/Map-georeferencer/">dieses Tool</a> generieren lassen oder manuell die Paramater "imageCenter", "imageRotate" und "imageScale" eintragen.'];
+
 
 /**
  * Reference

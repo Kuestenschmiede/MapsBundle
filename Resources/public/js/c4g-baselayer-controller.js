@@ -494,7 +494,7 @@ export class C4gBaselayerController {
         if (layer) {
           let showLayer = false;
           if (layer.activeForBaselayers == "all") {
-            showLayer = true;
+            continue
           }
           else {
             for (let activeBaselayerId in layer.activeForBaselayers) {

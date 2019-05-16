@@ -189,7 +189,10 @@ class BaseLayerService
                 $objFile = \FilesModel::findByUuid($objOverlay->image_src);
                 if ($objFile && $objFile->path) {
                     $arrOverlayData['image_src'] = $objFile->path;
-                    $arrOverlayData['geoimage_json'] = $objOverlay->geoimage_json;
+                    $jsonGeoRef = $objOverlay->geoimage_json;
+                    $jsonGeoRef = $jsonGeoRef[0] == "{" ? $jsonGeoRef : "{" . $jsonGeoRef;
+                    $jsonGeoRef = $jsonGeoRef[strlen($jsonGeoRef) - 1] == "}" ? $jsonGeoRef : $jsonGeoRef . "}";
+                    $arrOverlayData['geoimage_json'] = $jsonGeoRef;
                 }
         }
         $arrOverlayData['opacity']     = $objOverlay->opacity;
@@ -365,7 +368,10 @@ class BaseLayerService
                 $objFile = \FilesModel::findByUuid($objBaseLayer->image_src);
                 if ($objFile && $objFile->path) {
                     $arrBaseLayer['image_src'] = $objFile->path;
-                    $arrBaseLayer['geoimage_json'] = $objBaseLayer->geoimage_json;
+                    $jsonGeoRef = $objBaseLayer->geoimage_json;
+                    $jsonGeoRef = $jsonGeoRef[0] == "{" ? $jsonGeoRef : "{" . $jsonGeoRef;
+                    $jsonGeoRef = $jsonGeoRef[strlen($jsonGeoRef) -1] == "}" ? $jsonGeoRef : $jsonGeoRef . "}";
+                    $arrBaseLayer['geoimage_json'] = $jsonGeoRef;
                 }
                 break;
             default:
