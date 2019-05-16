@@ -19,6 +19,7 @@ use con4gis\MapsBundle\Resources\contao\models\C4gMapBaselayersModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapOverlaysModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapSettingsModel;
+use Contao\Database;
 use Contao\StringUtil;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -37,6 +38,7 @@ class BaseLayerService
     public function __construct(EventDispatcherInterface $eventDispatcher)
     {
         $this->eventDispatcher = $eventDispatcher;
+        $this->Database = Database::getInstance();
     }
     /**
      * Determines the request method and selects the appropriate data result.
@@ -183,6 +185,12 @@ class BaseLayerService
                 $arrOverlayData['app_id'] = $objOverlay->app_id;
                 $arrOverlayData['api_key'] = $objOverlay->api_key;
                 break;
+            case 'geoimage':
+                $objFile = \FilesModel::findByUuid($objOverlay->image_src);
+                if ($objFile && $objFile->path) {
+                    $arrOverlayData['image_src'] = $objFile->path;
+                    $arrOverlayData['geoimage_json'] = $objOverlay->geoimage_json;
+                }
         }
         $arrOverlayData['opacity']     = $objOverlay->opacity;
         $arrOverlayData['attribution'] = $objOverlay->attribution;
@@ -195,7 +203,7 @@ class BaseLayerService
     protected function parseBaseLayer($objBaseLayer)
     {
         $stringClass = $GLOBALS['con4gis']['stringClass'];
-        $arrBaseLayer = array();
+        $arrBaseLayer = [];
 
         $arrBaseLayer['id'] = $objBaseLayer->id;
         $arrBaseLayer['name'] =  \Contao\Controller::replaceInsertTags($stringClass::decodeEntities($objBaseLayer->display_name ?: $objBaseLayer->name));
@@ -346,6 +354,19 @@ class BaseLayerService
                 }
                 $arrBaseLayer['layerGroup'] = array_reverse($layerGroup);
 
+                break;
+            case 'image':
+                $objFile = \FilesModel::findByUuid($objBaseLayer->image_src);
+                if ($objFile && $objFile->path) {
+                    $arrBaseLayer['image_src'] = $objFile->path;
+                }
+                break;
+                case 'geoimage':
+                $objFile = \FilesModel::findByUuid($objBaseLayer->image_src);
+                if ($objFile && $objFile->path) {
+                    $arrBaseLayer['image_src'] = $objFile->path;
+                    $arrBaseLayer['geoimage_json'] = $objBaseLayer->geoimage_json;
+                }
                 break;
             default:
                 die('This should not have happened!');

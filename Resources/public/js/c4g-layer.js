@@ -41,7 +41,8 @@ export class C4gLayer{
     this.vectorLayer = null;
     this.hideWhenInTab = layerArr['hide_when_in_tab'];
     this.noFilter = layerArr['noFilter'];
-
+    this.iconSrc = layerArr['icon_src'];
+    this.activeForBaselayers = layerArr['activeForBaselayers'];
     if (layerArr.projectId) {
       this.projectId = layerArr.projectId;
     }

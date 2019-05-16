@@ -115,6 +115,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
         'provider_custom' => 'url1,url2,url3,url4',
         'provider_wms' => 'wms_url,wms_params_layers,wms_params_version,wms_params_format,wms_params_transparent,wms_params_srs,wms_gutter',
         'provider_owm' => 'api_key,app_id,api_port',
+        'provider_geoimage' => 'image_src,geoimage_json'
     ],
     
     // Fields
@@ -151,9 +152,12 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
             'filter'                  => true,
             'inputType'               => 'select',
             'default'                 => 'custom',
-            'options'                 => ['custom' => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider_custom'],
-                'wms' => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider_wms'],
-                'owm' => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider_owm'],
+            'options'                 =>
+            [
+                'custom'    => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider_custom'],
+                'wms'       => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider_wms'],
+                'owm'       => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider_owm'],
+                'geoimage'  => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider_geoimage']
             ],
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['references'],
             'eval'                    => ['submitOnChange' => true],
@@ -299,6 +303,22 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
             'eval'                    => ['decodeEntities'=>true, 'maxlength'=>4, 'tl_class'=>'long', 'mandatory'=>'true'],
             'sql'                     => "varchar(4) NOT NULL default '8099'"
         ],
+        'image_src' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['image_src'],
+                'exclude'                 => true,
+                'inputType'               => 'fileTree',
+                'eval'                    => ['fieldType'=>'radio', 'files'=>true, 'extensions'=>'gif,jpg,jpeg,png', 'tl_class'=>'clr', 'mandatory'=>true,'submitOnChange' => true],
+                'sql'                     => "binary(16) NULL"
+            ],
+        'geoimage_json' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['geoimage_json'],
+                'exclude'                 => true,
+                'inputType'               => 'textarea',
+                'eval'                    => ['style'=>'height:120px;', 'preserveTags'=>true],
+                'sql'                     => "text NULL"
+            ],
     ]
 ];
 

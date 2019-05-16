@@ -113,7 +113,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         [
         'mouse_nav'                   => 'mouse_nav_wheel,mouse_nav_doubleclick_zoom,mouse_nav_zoombox,mouse_nav_dragmode,mouse_nav_kinetic',
         'starboard'                   => 'baselayerswitcher,layerswitcher,starboard_open,starboard_label,starboard_filter,starboard_button,starboard_div,cluster_all',
-        'cluster_all'                 => 'cluster_distance,cluster_fillcolor,cluster_fontcolor,cluster_zoom',
+        'cluster_all'                 => 'cluster_distance,cluster_fillcolor,cluster_fontcolor,cluster_zoom, cluster_dist_spider',
         'baselayerswitcher'           => 'baselayerswitcher_label',
         'layerswitcher'               => 'layerswitcher_label',
         'attribution'                 => 'collapsed_attribution,add_attribution,cfg_logo_attribution,div_attribution',
@@ -421,6 +421,15 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'inputType'               => 'c4g_text',
             'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
             'sql'                     => "int(10) unsigned NOT NULL default '17'"
+            ],
+            'cluster_dist_spider' =>
+            [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_dist_spider'],
+            'default'                 => '20',
+            'exclude'                 => true,
+            'inputType'               => 'c4g_text',
+            'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
+            'sql'                     => "int(10) unsigned NOT NULL default '20'"
             ],
         'baselayerswitcher' =>
             [

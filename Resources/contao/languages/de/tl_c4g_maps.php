@@ -15,7 +15,7 @@
  * Fields
  */
 $GLOBALS['TL_LANG']['tl_c4g_maps']['name'] = array('Name', 'Name der Karte bzw. der Lokation');
-$GLOBALS['TL_LANG']['tl_c4g_maps']['profile'] = array('Kartenprofil', 'Wählen Sie hier bitte ein Kartenprofil, das die Darstellung bestimmt. Kartenprofile werden über den Menüpunkt "Kartenprofile" unter "Layout" gepfegt. Falls Sie kein eigenes Kartenprofil wählen, dann wird standardmäßig mit OpenStreetMaps Mapnik Karten gearbeitet.');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['profile'] = array('Kartenprofil', 'Wählen Sie hier bitte ein Kartenprofil, das die Darstellung bestimmt. Kartenprofile werden über den Menüpunkt "Kartenprofile" unter "Layout" gepflegt. Falls Sie kein eigenes Kartenprofil wählen, dann wird standardmäßig mit OpenStreetMaps Mapnik Karten gearbeitet.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['profile_mobile'] = array('Kartenprofil mobil', 'Optional: Kartenprofil, das für mobile Endgeräte verwendet wird.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['published'] = array('Veröffentlicht', 'Legt fest, ob die Karte bzw. die Lokation veröffentlicht wird.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['is_map'] = array('Als Karte verwenden', 'Soll dieses Element eine im Frontend darstellbare Karte repräsentieren?');
@@ -44,7 +44,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['restr_topright_geoy'] = array('Geo Y-Koordin
 $GLOBALS['TL_LANG']['tl_c4g_maps']['location_type'] = array('Typ des Kartenelements (Lokationstyp)', 'Legen Sie fest, welche Art von Lokation bzw. Lokationen dieses Element repräsentieren soll. Es ist möglich, im Baum beliebig viele Lokationselemente pro Karte als Kindelement zu definieren.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_geox'] = array('Geo X-Koordinate', 'Geben Sie hier die X-Koordinate (Breitengrad, WGS-84) der Lokation ein.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_geoy'] = array('Geo Y-Koordinate', 'Geben Sie hier die Y-Koordinate (Längengrad, WGS-84) der Lokation ein.');
-$GLOBALS['TL_LANG']['tl_c4g_maps']['locstyle'] = array('Lokationsstil', 'Über den Lokationsstil, der beim Kartenprofil definiert wird, legen Sie das Aussehen der Lokation fest. Ist keine Lokationsstil definiert, dann wird standardmäßig ein roter Punkt gezeichnet. ');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['locstyle'] = array('Lokationsstil', 'Über den Lokationsstil, der beim Kartenprofil definiert wird, legen Sie das Aussehen der Lokation fest. Ist kein Lokationsstil definiert, dann wird standardmäßig ein roter Punkt gezeichnet. ');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_only_in_parent'] = array('Lokation nur in übergeordneten Karten anzeigen', 'Wenn Sie diese Checkbox NICHT setzen, dann wird diese Lokation auch angezeigt, sobald Sie dieses Element als Karte darstellen lassen.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['exemptFromFilter'] = ['Lokation von Starboard-Filter ausnehmen','Bei gesetzter Checkbox, wird diese Lokation vom Starboard-Filter ignoriert.'];
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_label'] = array('Label', 'Geben Sie hier ein Label ein, das auf der Karte bei der Lokation mit angezeigt wird.');
@@ -53,7 +53,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['tooltip_length'] = array('Länge des Tooltip
 $GLOBALS['TL_LANG']['tl_c4g_maps']['enablePopup'] = array('Popup aktivieren', 'Setzen Sie diese Checkbox um das Popup für dieses Element zu aktivieren.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popup_info'] = array('Popup Information', 'Wird eine Popup-Information gesetzt, so wird sie durch einen Mausklick oder via Hover (abhängig von der Einstellung im Kartenprofil) auf der Lokation angezeigt.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popup_extend'] = array('Popup Information durch Forenbeitrag erweitern', 'Ermöglicht es zusätzliche Popup-Information aus einem Forenbeitrag zu generieren.');
-$GLOBALS['TL_LANG']['tl_c4g_maps']['popup_async'] = array('Inhalt des Popup nachladen', 'Ermöglicht das Nachladen des Inhalts des Popups zur Laufzeit (Empfehlenswert bei großen Datenmengen).');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['popup_async'] = array('Inhalt des Popups nachladen', 'Ermöglicht das Nachladen des Inhalts des Popups zur Laufzeit (Empfehlenswert bei großen Datenmengen).');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_linkurl'] = array('Direktverlinkung', 'Geben Sie eine URL ein (mit http://) oder wählen Sie über das Symbol eine Contao-Seite aus. Wird eine Direktverlinkung angegeben, so wird sie über Mausklick oder Maus-Doppelklick (abhängig von der Einstellung im Kartenprofil) angesprungen.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_onclick_zoomto'] = array('Zoomen bei Mausklick auf Zoomstufe', 'Geben Sie die Zoomstufe ein, auf die bei Mausklick gezoomt werden soll. Funktioniert nur, wenn keine Direktverlinkung angegeben ist.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_minzoom'] = array('Mindest-Zoomstufe', 'Geben Sie die Zoomstufe ein, ab der die Elemente des Karteneintrags angezeigt werden. 0=keine Einschränkung.');
@@ -100,14 +100,14 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['specialprofile'] = array('Spezialprofil', 'D
 $GLOBALS['TL_LANG']['tl_c4g_maps']['specialprofile_mobile'] = array('Spezialprofil mobil', 'Optional: Spezialprofil, das für mobile Endgeräte verwendet wird.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['specialprofile_groups'] = array('Betroffene Gruppen', 'Die Gruppen, für die das Spezialprofil aktiviert wird.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['be_optimize_checkboxes_limit']    = array('Grenzwert für Optimierung großer Checkbox-Listen',
-                                      'Definiert wie viele Einträge enthalten sein müssen, bis die Checkbox-Listen in Chosenfields umgewandelt werden. (0 = niemals umwandeln)');
+                                      'Definiert, wie viele Einträge enthalten sein müssen, bis die Checkbox-Listen in Chosenfields umgewandelt werden. (0 = niemals umwandeln)');
 
 $GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_locations'] = array('Lokationen clustern','Beim Clustern werden Strecken und Flächen in Punkte umgerechnet');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_distance'] = array('Cluster-Distanz','Ab welcher Entfernung in Pixeln soll geclustert werden? (Standard beträgt 20px)');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_fillcolor'] = array('Füllfarbe', 'Wählen Sie die Füllfarbe der Clusterblasen aus.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_fontcolor'] = array('Schriftfarbe', 'Wählen Sie die Schriftfarbe der Clusterblasen aus.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_zoom'] = array('Minimale Zoomstufe (Spinne)', 'Wählen Sie die Zoomstufe, bis zu der hereingezoomt wird. Ab dieser Stufe werden die Cluster per Klick aufgelöst und verteilt dargestellt oder das Popup geöffnet.');
-$GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_popup'] = array('Popup beim Clustern', 'Statt das Cluster aufzulösen wird ein gemeinsames Popup erstellt und geöffnet.');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_popup'] = array('Popup beim Clustern', 'Statt das Cluster aufzulösen, wird ein gemeinsames Popup erstellt und geöffnet.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['zoom_locations'] = array('Zoom auf Lokationen','Beim Aktivieren der Lokationen im Starboard wird auf sie und eventuelle Kindelemente gezoomt. Dies funktioniert nicht mit Lokationen aus asynchronen Abfragen (z.B. Overpass).');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['hover_location'] = array('Hover-Effekt bei Lokationen','Ändern des Lokationsstils beim Hovern über einer Lokation');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['hover_style'] = array('Lokationsstil bei Hover-Effekt','Lokationsstil, der beim Hovern über die Lokation angezeigt werden soll.');

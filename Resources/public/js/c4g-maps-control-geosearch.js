@@ -604,31 +604,32 @@ export class GeoSearch extends Control {
             flyTo,
             completeSearch;
 
-          mapView = map.getView();
+          if (results && results.length && results.length > 0){
+            mapView = map.getView();
 
-          flyTo = function (map, location, zoomlevel, zoombounds, boundingbox, markResult, animate) {
-            var duration = 2000;
-            var zoom = zoomlevel;
-            var parts = 2;
-            var called = false;
-            var extent;
+            flyTo = function (map, location, zoomlevel, zoombounds, boundingbox, markResult, animate) {
+              var duration = 2000;
+              var zoom = zoomlevel;
+              var parts = 2;
+              var called = false;
+              var extent;
 
-            function callback(complete) {
-              --parts;
-              if (called) {
-                return;
-              }
-              if (parts === 0 || !complete) {
-                called = true;
+              function callback(complete) {
+                --parts;
+                if (called) {
+                  return;
+                }
+                if (parts === 0 || !complete) {
+                  called = true;
 
-                if (zoombounds && boundingbox) {
-                  // translate osm-extent to ol3-extent
+                  if (zoombounds && boundingbox) {
+                    // translate osm-extent to ol3-extent
 
-                  osmExtent = [];
-                  osmExtent.push(parseFloat(boundingbox[2]));
-                  osmExtent.push(parseFloat(boundingbox[0]));
-                  osmExtent.push(parseFloat(boundingbox[3]));
-                  osmExtent.push(parseFloat(boundingbox[1]));
+                    osmExtent = [];
+                    osmExtent.push(parseFloat(boundingbox[2]));
+                    osmExtent.push(parseFloat(boundingbox[0]));
+                    osmExtent.push(parseFloat(boundingbox[3]));
+                    osmExtent.push(parseFloat(boundingbox[1]));
 
                   extent = transformExtent(osmExtent, 'EPSG:4326', 'EPSG:3857');
 
@@ -645,32 +646,29 @@ export class GeoSearch extends Control {
                     );
                   }, duration)
                 }
-
-                completeSearch(markResult, animate);
               }
-            }
 
-            map.getView().animate({
-              center: location,
-              duration: duration
-            }, callback);
+              map.getView().animate({
+                center: location,
+                duration: duration
+              }, callback);
 
-            map.getView().animate({
-              zoom: zoom - 1,
-              duration: duration / 2
-            }, {
-              zoom: zoom,
-              duration: duration / 2
-            }, callback);
+              map.getView().animate({
+                zoom: zoom - 1,
+                duration: duration / 2
+              }, {
+                zoom: zoom,
+                duration: duration / 2
+              }, callback);
 
-          };
+            };
 
-          completeSearch = function (markResult, animate) {
-            // result marker & animation
-            if (markResult) {
-              var addMarker,
-                markerSource,
-                animateMarker;
+            completeSearch = function (markResult, animate) {
+              // result marker & animation
+              if (markResult) {
+                var addMarker,
+                    markerSource,
+                    animateMarker;
 
               markerSource = new VectorSource();
               map.addLayer(new Vector({
@@ -686,24 +684,24 @@ export class GeoSearch extends Control {
                 );
               };
 
-              animateMarker = function (feature) {
-                var animationStep,
-                  start,
-                  duration,
-                  listenerKey;
+                animateMarker = function (feature) {
+                  var animationStep,
+                      start,
+                      duration,
+                      listenerKey;
 
-                start = new Date().getTime();
-                duration = 3000;
+                  start = new Date().getTime();
+                  duration = 3000;
 
-                animationStep = function (event) {
-                  var vectorContext,
-                    frameState,
-                    elapsed,
-                    elapsedRatio,
-                    radius,
-                    opacity,
-                    marker,
-                    flashGeom;
+                  animationStep = function (event) {
+                    var vectorContext,
+                        frameState,
+                        elapsed,
+                        elapsedRatio,
+                        radius,
+                        opacity,
+                        marker,
+                        flashGeom;
 
                   vectorContext = event.vectorContext;
                   frameState = event.frameState;
@@ -725,11 +723,10 @@ export class GeoSearch extends Control {
                         width: 3,
                         opacity: opacity
                       })
-                    })
-                  });
+                    });
 
-                  vectorContext.setStyle(marker);
-                  vectorContext.drawGeometry(flashGeom, null);
+                    vectorContext.setStyle(marker);
+                    vectorContext.drawGeometry(flashGeom, null);
 
                   if (elapsed > duration) {
                     markerSource.clear();
@@ -740,27 +737,27 @@ export class GeoSearch extends Control {
                   frameState.animate = true;
                 }; // end of "animationStep"
 
-                listenerKey = map.on('postcompose', animationStep);
+                  listenerKey = map.on('postcompose', animationStep);
 
-              }; // end of "animateMarker"
+                }; // end of "animateMarker"
 
-              markerSource.on('addfeature', function (event) {
-                animateMarker(event.feature);
-              });
+                markerSource.on('addfeature', function (event) {
+                  animateMarker(event.feature);
+                });
 
-              if (animate) {
-                if (zoomType === 'zoom') {
-                  window.setTimeout(addMarker, animationDuration / 2);
+                if (animate) {
+                  if (zoomType === 'zoom') {
+                    window.setTimeout(addMarker, animationDuration / 2);
+                  } else {
+                    window.setTimeout(addMarker, animationDuration);
+                  }
                 } else {
-                  window.setTimeout(addMarker, animationDuration);
+                  addMarker();
                 }
-              } else {
-                addMarker();
-              }
 
-            }// end of result marker & animation handling
+              }// end of result marker & animation handling
 
-          };
+            };
 
           if (results[0]) {
             result = results[0];
@@ -768,15 +765,15 @@ export class GeoSearch extends Control {
             currentCoordinate = mapView.getCenter();
             resultCoordinate = transform([parseFloat(result.lon), parseFloat(result.lat)], 'EPSG:4326', 'EPSG:3857');
 
-            if (animate) {
-              flyTo(map, resultCoordinate, self.config.zoomlevel, self.config.zoombounds, result.boundingbox, markResult, animate);
-            } else {
-              completeSearch(self.config.markResult, self.config.animate);
-              mapView.setCenter(resultCoordinate);
-              if (self.config.zoomlevel >= 0) {
-                map.getView().setZoom(self.config.zoomlevel);
+              if (animate) {
+                flyTo(map, resultCoordinate, self.config.zoomlevel, self.config.zoombounds, result.boundingbox, markResult, animate);
+              } else {
+                completeSearch(self.config.markResult, self.config.animate);
+                mapView.setCenter(resultCoordinate);
+                if (self.config.zoomlevel >= 0) {
+                  map.getView().setZoom(self.config.zoomlevel);
+                }
               }
-            }
 
             var pixel = map.getPixelFromCoordinate(resultCoordinate);
             var feature = map.forEachFeatureAtPixel(pixel,
@@ -802,97 +799,106 @@ export class GeoSearch extends Control {
                 if (geometry.constructor.name === Point.name) {
                   var coord = geometry.getCoordinates();
                 } else {
-                  var coord = resultCoordinate;
+                  feature = false;
                 }
-
-                window.c4gMapsPopup.popup.setPosition(coord);
-                if (popupInfos.content) {
-                  window.c4gMapsPopup.$content.html('');
-                  window.c4gMapsPopup.popup.addClass(cssConstants.ACTIVE).addClass(cssConstants.LOADING);
-                  window.c4gMapsPopup.spinner.show();
-
-                  if (popupInfos.async === false || popupInfos.async == '0') {
-                    var objPopup = {};
-                    objPopup.popup = popupInfos;
-                    objPopup.feature = feature;
-                    objPopup.layer = layer;
-                    // Call the popup hook for plugin specific popup content
-                    if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_fillPopup === 'object') {
-                      utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, objPopup);
-                    }
-                    self.config.mapController.proxy.setPopup(objPopup);
+                if (feature) {
+                  var geometry = feature.getGeometry();
+                  if (geometry instanceof ol.geom.Point) {
+                    var coord = geometry.getCoordinates();
                   } else {
-                    jQuery.ajax({
-                      dataType: "json",
-                      url: self.api_infowindow_url + '/' + popupInfos.content,
-                      done: function (data) {
-                        var popupInfo = {
-                          async: popupInfos.async,
-                          content: data.content,
-                          popup: popupInfos.popup,
-                          routing_link: popupInfos.routing_link
-                        };
-
-                        objPopup = {};
-                        objPopup.popup = popupInfo;
-                        objPopup.feature = feature;
-                        objPopup.layer = layer;
-
-                        // Call the popup hook for plugin specific popup content
-                        if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_fillPopup === 'object') {
-                          utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, objPopup);
-                        }
-
-                        self.setPopup(objPopup);
-                      }
-                    });
+                    var coord = resultCoordinate;
                   }
-                } else {
-                  window.c4gMapsPopup.popup.removeClass(cssConstants.ACTIVE);
+
+                  window.c4gMapsPopup.popup.setPosition(coord);
+                  if (popupInfos.content) {
+                    window.c4gMapsPopup.$content.html('');
+                    window.c4gMapsPopup.popup.addClass(cssConstants.ACTIVE).addClass(cssConstants.LOADING);
+                    window.c4gMapsPopup.spinner.show();
+
+                    if (popupInfos.async === false || popupInfos.async == '0') {
+                      var objPopup = {};
+                      objPopup.popup = popupInfos;
+                      objPopup.feature = feature;
+                      objPopup.layer = layer;
+                      // Call the popup hook for plugin specific popup content
+                      if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_fillPopup === 'object') {
+                        utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, objPopup);
+                      }
+                      self.config.mapController.proxy.setPopup(objPopup);
+                    } else {
+                      jQuery.ajax({
+                        dataType: "json",
+                        url: self.api_infowindow_url + '/' + popupInfos.content,
+                        done: function (data) {
+                          var popupInfo = {
+                            async: popupInfos.async,
+                            content: data.content,
+                            popup: popupInfos.popup,
+                            routing_link: popupInfos.routing_link
+                          };
+
+                          objPopup = {};
+                          objPopup.popup = popupInfo;
+                          objPopup.feature = feature;
+                          objPopup.layer = layer;
+
+                          // Call the popup hook for plugin specific popup content
+                          if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_fillPopup === 'object') {
+                            utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, objPopup);
+                          }
+
+                          self.setPopup(objPopup);
+                        }
+                      });
+                    }
+                  } else {
+                    window.c4gMapsPopup.popup.removeClass(cssConstants.ACTIVE);
+                  }
+
+                } else if (window && window.c4gMapsPopup && window.c4gMapsPopup.popup) {
+                  jQuery(window.c4gMapsPopup.popup).removeClass(cssConstants.ACTIVE);
                 }
+              }
 
-              } else if (window && window.c4gMapsPopup && window.c4gMapsPopup.popup) {
-                jQuery(window.c4gMapsPopup.popup).removeClass(cssConstants.ACTIVE);
+
+              if (self.config.autopick && self.config.mapController.geopicker && typeof self.config.mapController.geopicker.pick === 'function') {
+                self.config.mapController.geopicker.pick(resultCoordinate);
+              }
+
+            } else {
+              let langConstants = getLanguage(self.options.mapController.data);
+              alert(langConstants.SEARCH_NOT_FOUND);
+            }
+            // self.resultWrapper.innerHTML = '@ console';
+
+            if (document.getElementById("resultcontainer")) {
+              document.getElementById("resultcontainer").parentNode.removeChild(document.getElementById("resultcontainer"));
+            }
+            if (self.config.results) {
+
+              var searchResultContainer = document.createElement('ul');
+              searchResultContainer.setAttribute("id", "resultcontainer");
+              if (self.results) {
+                for (var i = 0; i < self.results.length; i++) {
+                  var searchResult = document.createElement('li');
+                  var searchResultButton = document.createElement('button');
+                  searchResultButton.setAttribute("id", i);
+                  searchResultButton.setAttribute('class', 'searchResultButton');
+                  searchResultButton.addEventListener('click', function () {
+                    self.zoomTo(this.getAttribute("id"))
+                  });
+
+                  searchResultButton.setAttribute("name", self.results[i].display_name);
+                  searchResultButton.innerHTML = self.results[i].display_name;
+                  searchResult.appendChild(searchResultButton);
+                  searchResultContainer.appendChild(searchResult);
+
+                }
+                self.searchWrapper.appendChild(searchResultContainer);
               }
             }
-
-
-            if (self.config.autopick && self.config.mapController.geopicker && typeof self.config.mapController.geopicker.pick === 'function') {
-              self.config.mapController.geopicker.pick(resultCoordinate);
-            }
-
-          } else {
-            let langConstants = getLanguage(self.options.mapController.data);
-            alert(langConstants.SEARCH_NOT_FOUND);
           }
-          // self.resultWrapper.innerHTML = '@ console';
 
-          if (document.getElementById("resultcontainer")) {
-            document.getElementById("resultcontainer").parentNode.removeChild(document.getElementById("resultcontainer"));
-          }
-          if (self.config.results) {
-
-            var searchResultContainer = document.createElement('ul');
-            searchResultContainer.setAttribute("id", "resultcontainer");
-            if (self.results) {
-              for (var i = 0; i < self.results.length; i++) {
-                var searchResult = document.createElement('li');
-                var searchResultButton = document.createElement('button');
-                searchResultButton.setAttribute("id", i);
-                searchResultButton.setAttribute('class', 'searchResultButton');
-                searchResultButton.addEventListener('click', function () {
-                  self.zoomTo(this.getAttribute("id"))
-                });
-
-                searchResultButton.setAttribute("name", self.results[i].display_name);
-                searchResultButton.innerHTML = self.results[i].display_name;
-                searchResult.appendChild(searchResultButton);
-                searchResultContainer.appendChild(searchResult);
-
-              }
-              self.searchWrapper.appendChild(searchResultContainer);
-            }
-          }
         })
 
         // AJAX-failure

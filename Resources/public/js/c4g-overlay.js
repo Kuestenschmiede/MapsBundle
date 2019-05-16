@@ -23,6 +23,8 @@ export class C4gOverlay {
     this.attribution   = overlayArr['attribution'];
     this.gutter        = overlayArr['gutter'];
     this.params        = overlayArr['params'];
+    this.imageSrc      = overlayArr['image_src'];
+    this.geoImageJson  = overlayArr['geoimage_json'];
     this.layer         = false;
     this.overlayArr    = overlayArr;
     this.mapController    = mapController
