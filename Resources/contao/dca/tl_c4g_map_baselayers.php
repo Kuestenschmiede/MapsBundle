@@ -140,9 +140,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                                          '{protection_legend:hide},protect_baselayer;',
         'wms'                         => '{general_legend},name,display_name,provider,wms_url,wms_params_layers,wms_params_version,wms_params_format,wms_params_transparent,wms_gutter,attribution,minzoomlevel,maxzoomlevel;{cesium_legend:hide},cesium;'.
                                          '{protection_legend:hide},protect_baselayer;',
-        'image'                       => '{general_legend},name,display_name,provider,image_src,attribution,minzoomlevel,maxzoomlevel;{cesium_legend:hide},cesium;'.
-                                         '{protection_legend:hide},protect_baselayer;',
-        'geoimage'                       => '{general_legend},name,display_name,provider,image_src,geoimage_json,attribution,minzoomlevel,maxzoomlevel;{cesium_legend:hide},cesium;'.
+        'geoimage'                    => '{general_legend},name,display_name,provider,image_src,geoimage_json,attribution,minzoomlevel,maxzoomlevel;{cesium_legend:hide},cesium;'.
                                          '{protection_legend:hide},protect_baselayer;',
         'owm'                         => '{general_legend},name,display_name,provider,app_id,api_key,attribution,minzoomlevel,maxzoomlevel;{cesium_legend:hide},cesium;'.
                                          '{protection_legend:hide},protect_baselayer;',
@@ -233,7 +231,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                 'stamen' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stamen'],
                 'thunder' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_thunderforest'],
                 'wms' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_wms'],
-                'image' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_image'],
                 'geoimage' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_geoimage'],
                 'group' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_group']
             ],

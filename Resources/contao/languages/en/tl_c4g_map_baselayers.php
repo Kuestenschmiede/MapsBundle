@@ -34,6 +34,9 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['here_type']   			= array('HERE', '
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['thunderforest_type']      = array('Thunderforest', 'Bitte wählen Sie den Kartenstil aus.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['bing_style']     		= array('Bing Maps style', 'Please select from the given Bing Maps styles.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['bing_key']       		= array('Bing Application Key', 'Enter your Bing Application Key here. You get it from http://bingmapsportal.com/.');
+
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['image_src']   			= ['Choose picture', 'Please choose the picture to be displayed as a baselayer.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['geoimage_json']           = ['JSON to georeference. Please enter a <a href="https://www.json.org/">JSON</a> to locate the picture. You may use <a href="http://viglino.github.io/Map-georeferencer/">this tool</a> or you set the parameters "imageCenter", "imageRotate" und "imageScale" on your own.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['google_style']   		= array('Google Maps style', 'Please select from the given Google Maps styles.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['attribution']    		= array('Custom attribution', 'Enter a custom attribution here if needed (optional).');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['minzoomlevel']   		= array('Custom minimum zoomlevel', 'Enter a custom minimum zoomlevel here if needed (0 means minimum zoomlevel of the map as default)');

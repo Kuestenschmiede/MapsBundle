@@ -544,7 +544,7 @@ var C4gBaselayerController = exports.C4gBaselayerController = function () {
           if (layer) {
             var showLayer = false;
             if (layer.activeForBaselayers == "all") {
-              showLayer = true;
+              continue;
             } else {
               for (var activeBaselayerId in layer.activeForBaselayers) {
                 if (layer.activeForBaselayers.hasOwnProperty(activeBaselayerId)) {
@@ -1636,24 +1636,6 @@ var C4gLayerController = exports.C4gLayerController = function () {
 
             fnAttachDataToLayer(vectorLayer, contentData.data);
             layers.push(vectorLayer);
-          } else if (this.arrLayers[itemUid].type === "image") {
-            var extent = [0, 0, 430, 474];
-            var projection = new ol.proj.Projection({
-              code: 'xkcd-image',
-              units: 'pixels',
-              extent: extent
-            });
-            vectorSource = new ol.source.ImageStatic({
-              url: this.arrLayers[itemUid].iconSrc,
-              projection: projection,
-              imageExtent: extent
-            });
-
-            vectorLayer = new ol.layer.Image({
-              source: vectorSource
-            });
-            self.mapController.map.addLayer(vectorLayer);
-            self.mapController.map.getView().setCenter(ol.extent.getCenter(extent));
           } else if (this.arrLayers[itemUid].type === "table" || this.arrLayers[itemUid].type === "link") {
             var layerContent = this.arrLayers[itemUid].content;
             contentData = layerContent[0];
