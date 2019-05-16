@@ -54,6 +54,7 @@ export class MapProxy {
     this.hook_layer_visibility = [];
     this.hook_map_click = [];
     this.hook_map_zoom = [];
+    this.hook_locstyles_loaded = [];
 
     // add global hook for accessibility when there is no proxy reference
     window.c4gMapsHooks = window.c4gMapsHooks || {};
