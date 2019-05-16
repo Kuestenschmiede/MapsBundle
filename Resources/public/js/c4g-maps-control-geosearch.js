@@ -506,7 +506,7 @@ export class GeoSearch extends Control {
     map = this.getMap();
 
     result = self.results[index];
-    resultCoordinate = transform([parseFloat(result.lon), parseFloat(result.lat)], 'EPSG:4326', 'EPSG:3857')
+    resultCoordinate = transform([parseFloat(result.lon), parseFloat(result.lat)], 'EPSG:4326', 'EPSG:3857');
 
     if (animate) {
       var resolution = mapView.getResolution();
@@ -631,20 +631,23 @@ export class GeoSearch extends Control {
                     osmExtent.push(parseFloat(boundingbox[3]));
                     osmExtent.push(parseFloat(boundingbox[1]));
 
-                  extent = transformExtent(osmExtent, 'EPSG:4326', 'EPSG:3857');
+                    extent = transformExtent(osmExtent, 'EPSG:4326', 'EPSG:3857');
 
-                  window.setTimeout(function () {
-                    var viewFit = mapView.fit(
-                      extent,
-                      map.getSize(),
-                      {
-                        minZoom: mapView.get('minZoom') || 2,
-                        maxZoom: zoom || mapView.get('maxZoom') || 18,
-                        duration: duration / 2,
-                        easing: easeOut
-                      }
-                    );
-                  }, duration)
+                    window.setTimeout(function () {
+                      var viewFit = mapView.fit(
+                        extent,
+                        map.getSize(),
+                        {
+                          minZoom: mapView.get('minZoom') || 2,
+                          maxZoom: zoom || mapView.get('maxZoom') || 18,
+                          duration: duration / 2,
+                          easing: easeOut
+                        }
+                      );
+                    }, duration)
+                  }
+
+                  completeSearch(markResult, animate);
                 }
               }
 
@@ -667,75 +670,76 @@ export class GeoSearch extends Control {
               // result marker & animation
               if (markResult) {
                 var addMarker,
-                    markerSource,
-                    animateMarker;
+                  markerSource,
+                  animateMarker;
 
-              markerSource = new VectorSource();
-              map.addLayer(new Vector({
-                style: new Style(),
-                source: markerSource
-              }));
+                markerSource = new VectorSource();
+                map.addLayer(new Vector({
+                  style: new Style(),
+                  source: markerSource
+                }));
 
-              addMarker = function () {
-                markerSource.addFeature(
-                  new Feature(
-                    new Point(resultCoordinate)
-                  )
-                );
-              };
+                addMarker = function () {
+                  markerSource.addFeature(
+                    new Feature(
+                      new Point(resultCoordinate)
+                    )
+                  );
+                };
 
                 animateMarker = function (feature) {
                   var animationStep,
-                      start,
-                      duration,
-                      listenerKey;
+                    start,
+                    duration,
+                    listenerKey;
 
                   start = new Date().getTime();
                   duration = 3000;
 
                   animationStep = function (event) {
                     var vectorContext,
-                        frameState,
-                        elapsed,
-                        elapsedRatio,
-                        radius,
-                        opacity,
-                        marker,
-                        flashGeom;
+                      frameState,
+                      elapsed,
+                      elapsedRatio,
+                      radius,
+                      opacity,
+                      marker,
+                      flashGeom;
 
-                  vectorContext = event.vectorContext;
-                  frameState = event.frameState;
-                  flashGeom = feature.getGeometry().clone();
-                  elapsed = frameState.time - start;
-                  elapsedRatio = elapsed / duration;
-                  radius = linear(1 - elapsedRatio) * 100;
-                  if (radius < 0) {
-                    radius = 0;
-                  }
-                  opacity = linear(elapsedRatio);
+                    vectorContext = event.vectorContext;
+                    frameState = event.frameState;
+                    flashGeom = feature.getGeometry().clone();
+                    elapsed = frameState.time - start;
+                    elapsedRatio = elapsed / duration;
+                    radius = linear(1 - elapsedRatio) * 100;
+                    if (radius < 0) {
+                      radius = 0;
+                    }
+                    opacity = linear(elapsedRatio);
 
-                  var marker = new Style({
-                    image: new Circle({
-                      radius: radius,
-                      snapToPixel: false,
-                      stroke: new Stroke({
-                        color: 'rgba(200, 0, 0, ' + opacity + ')',
-                        width: 3,
-                        opacity: opacity
+                    var marker = new Style({
+                      image: new Circle({
+                        radius: radius,
+                        snapToPixel: false,
+                        stroke: new Stroke({
+                          color: 'rgba(200, 0, 0, ' + opacity + ')',
+                          width: 3,
+                          opacity: opacity
+                        })
                       })
                     });
 
                     vectorContext.setStyle(marker);
                     vectorContext.drawGeometry(flashGeom, null);
 
-                  if (elapsed > duration) {
-                    markerSource.clear();
-                    unByKey(listenerKey);
-                    return;
-                  }
-                  // continue postcompose animation
-                  frameState.animate = true;
-                }; // end of "animationStep"
+                    if (elapsed > duration) {
+                      markerSource.clear();
+                      unByKey(listenerKey);
+                      return;
+                    }
+                    // continue postcompose animation
+                    frameState.animate = true;
+                  }; // end of "animationStep"
 
                   listenerKey = map.on('postcompose', animationStep);
 
@@ -759,11 +763,11 @@ export class GeoSearch extends Control {
 
             };
 
-          if (results[0]) {
-            result = results[0];
-            self.results = results;
-            currentCoordinate = mapView.getCenter();
-            resultCoordinate = transform([parseFloat(result.lon), parseFloat(result.lat)], 'EPSG:4326', 'EPSG:3857');
+            if (results[0]) {
+              result = results[0];
+              self.results = results;
+              currentCoordinate = mapView.getCenter();
+              resultCoordinate = transform([parseFloat(result.lon), parseFloat(result.lat)], 'EPSG:4326', 'EPSG:3857');
 
               if (animate) {
                 flyTo(map, resultCoordinate, self.config.zoomlevel, self.config.zoombounds, result.boundingbox, markResult, animate);
@@ -775,35 +779,28 @@ export class GeoSearch extends Control {
                 }
               }
 
-            var pixel = map.getPixelFromCoordinate(resultCoordinate);
-            var feature = map.forEachFeatureAtPixel(pixel,
-              function (feature, layer) {
-                return feature;
-              });
-            var layer = map.forEachFeatureAtPixel(pixel,
-              function (feature, layer) {
-                return layer;
-              });
-            if (self.config.popup) {
-              var popupInfos = {};
-              if (feature && feature.get('popup')) {
-                // single POI
-                popupInfos = feature.get('popup');
-              } else if (layer && layer.popup) {
-                popupInfos = layer.popup;
-              } else {
-                feature = false;
-              }
-              if (feature) {
-                var geometry = feature.getGeometry();
-                if (geometry.constructor.name === Point.name) {
-                  var coord = geometry.getCoordinates();
+              var pixel = map.getPixelFromCoordinate(resultCoordinate);
+              var feature = map.forEachFeatureAtPixel(pixel,
+                function (feature, layer) {
+                  return feature;
+                });
+              var layer = map.forEachFeatureAtPixel(pixel,
+                function (feature, layer) {
+                  return layer;
+                });
+              if (self.config.popup) {
+                var popupInfos = {};
+                if (feature && feature.get('popup')) {
+                  // single POI
+                  popupInfos = feature.get('popup');
+                } else if (layer && layer.popup) {
+                  popupInfos = layer.popup;
                 } else {
                   feature = false;
                 }
                 if (feature) {
                   var geometry = feature.getGeometry();
-                  if (geometry instanceof ol.geom.Point) {
+                  if (geometry instanceof Point) {
                     var coord = geometry.getCoordinates();
                   } else {
                     var coord = resultCoordinate;
