@@ -13,6 +13,7 @@
 import {Sideboard} from "./c4g-maps-control-sideboard";
 import {cssConstants} from "./c4g-maps-constant";
 import {getLanguage} from "./c4g-maps-i18n";
+
 'use strict';
 export class Infopage extends Sideboard {
 
@@ -118,32 +119,6 @@ export class Infopage extends Sideboard {
         {section: self.topToolbar, element: self.viewTriggerBar}
       ],
       initFunction: function () {
-
-        // Show loading animation
-        self.spinner.show();
-
-        // printFunction = function (event) {
-        //   var infoButton,
-        //       featureGeometry,
-        //       translateInteraction,
-        //       modifyInteraction,
-        //       modifyButton,
-        //       applyButton;
-        //
-        //
-        //     infoButton = event.target;
-        //
-        //   // add apply button
-        //   applyButton = document.createElement('button');
-        //   applyButton.className = cssConstants.ICON + ' ' + cssConstants.EDITOR_FEATURE_APPLY;
-        //   applyButton.title = langConstants.EDITOR_FEATURE_APPLY;
-        //   applyButton.setAttribute('feat_id', i);
-        //
-        // }; // end of "modifyFeatureFunction()"
-
-        features = new ol.Collection();
-
-        self.spinner.hide();
         return true;
       },
       activateFunction: function () {

@@ -13,15 +13,18 @@
 import {cssConstants} from "./c4g-maps-constant";
 import {utils} from "./c4g-maps-utils";
 import {getLanguage} from "./c4g-maps-i18n";
+import {Control} from "ol/control";
+import {transform} from "ol/proj";
+
 'use strict';
 
-export class Permalink extends ol.control.Control {
+export class Permalink extends Control {
 
   /**
    * Control to generate a permalink to the current Map state.
    *
    * @constructor
-   * @extends  {ol.control.Control}
+   * @extends  {Control}
    *
    * @param    {Object}              options  control options.
    */
@@ -101,7 +104,7 @@ export class Permalink extends ol.control.Control {
     this.popup.appendChild(refreshButton);
 
     // inheritance-stuff
-    ol.control.Control.call(this, {
+    Control.call(this, {
       element: this.element,
       target: this.config.target
     });
@@ -152,7 +155,7 @@ export class Permalink extends ol.control.Control {
     proxy = this.config.mapController.proxy;
 
     center = mapView.getCenter();
-    center = ol.proj.transform([center[0], center[1]], 'EPSG:3857', 'EPSG:4326');
+    center = transform([center[0], center[1]], 'EPSG:3857', 'EPSG:4326');
 
     parameters.push(+center[0].toFixed(5));
     parameters.push(+center[1].toFixed(5));

@@ -15,6 +15,13 @@ import {utils} from "./c4g-maps-utils";
 import {Sideboard} from "./c4g-maps-control-sideboard";
 import {TooltipPopUp} from "./c4g-maps-misc-tooltippopup";
 import {getLanguage} from "./c4g-maps-i18n";
+import {Vector, Group} from "ol/layer";
+import {Vector as VectorSource} from "ol/source";
+import {Collection} from "ol";
+import {Draw} from "ol/interaction";
+import {Feature} from "ol";
+import {Circle, Polygon, LineString} from "ol/geom";
+
 'use strict';
 export class Measuretools extends Sideboard {
 
@@ -62,13 +69,13 @@ export class Measuretools extends Sideboard {
     this.spinner.show();
 
     // Add measure layers
-    this.measureLineLayer = new ol.layer.Vector({source: new ol.source.Vector()});
-    this.measurePolygonLayer = new ol.layer.Vector({source: new ol.source.Vector()});
-    this.measureCircleLayer = new ol.layer.Vector({source: new ol.source.Vector()});
-    this.measureFreehandLayer = new ol.layer.Vector({source: new ol.source.Vector()});
+    this.measureLineLayer = new Vector({source: new VectorSource()});
+    this.measurePolygonLayer = new Vector({source: new VectorSource()});
+    this.measureCircleLayer = new Vector({source: new VectorSource()});
+    this.measureFreehandLayer = new Vector({source: new VectorSource()});
 
-    this.measureLayerGroup = new ol.layer.Group({
-      layers: new ol.Collection([
+    this.measureLayerGroup = new Group({
+      layers: new Collection([
         this.measureFreehandLayer,
         this.measureCircleLayer,
         this.measurePolygonLayer,
@@ -252,17 +259,17 @@ export class Measuretools extends Sideboard {
           source = self.measureLineLayer.getSource();
         }
 
-        features = new ol.Collection();
+        features = new Collection();
 
         olType = options.type;
-        if (olType == 'Freehand') {
+        if (olType === 'Freehand') {
           olType = 'LineString';
         }
-        interaction = new ol.interaction.Draw({
+        interaction = new Draw({
           features: features,
           source: source,
           type: olType,
-          freehand: options.type == 'Freehand',
+          freehand: options.type === 'Freehand',
           // @TODO: use custom style? (BE-option)
           // style: use default style
         });
@@ -280,7 +287,7 @@ export class Measuretools extends Sideboard {
             measureArea,
             measureRadius;
 
-          if (!feature instanceof ol.Feature) {
+          if (!(feature.constructor.name === Feature.name)) {
             return false;
           }
 
@@ -290,17 +297,17 @@ export class Measuretools extends Sideboard {
           }
 
           // check feature-type
-          if (feature.getGeometry() instanceof ol.geom.LineString) {
+          if (feature.getGeometry().constructor.name === LineString.name) {
             strLabel = self.langConstants.LENGTH;
             strType = self.langConstants.LINE;
             measureArea = false;
             measureRadius = false;
-          } else if (feature.getGeometry() instanceof ol.geom.Polygon) {
+          } else if (feature.getGeometry().constructor.name === Polygon.name) {
             strLabel = self.langConstants.PERIMETER;
             strType = self.langConstants.POLYGON;
             measureArea = true;
             measureRadius = false;
-          } else if (feature.getGeometry() instanceof ol.geom.Circle) {
+          } else if (feature.getGeometry().constructor.name === Circle.name) {
             strLabel = self.langConstants.RADIUS;
             strType = self.langConstants.CIRCLE;
             measureArea = true;
@@ -447,7 +454,7 @@ export class Measuretools extends Sideboard {
           var valuenumb = val.match(/\d/g);
           valuenumb = valuenumb.join("");
           return valuenumb;
-        }
+        };
 
         getLengthOfMeasure = function () {
           var length = '0.00 m';
@@ -455,7 +462,7 @@ export class Measuretools extends Sideboard {
           lengthnumb = lengthnumb.join("");
           lengthnumb = +8;
           return lengthnumb;
-        }// End Workaround
+        };// End Workaround
 
         interaction.on('drawstart',
           function (event) {

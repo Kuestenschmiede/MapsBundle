@@ -13,8 +13,25 @@
 import {cssConstants} from "./c4g-maps-constant";
 import {utils} from "./c4g-maps-utils";
 import {getLanguage} from "./c4g-maps-i18n";
+import {Control} from "ol/control";
+import {linear} from "ol/easing";
+import {easeOut} from "ol/easing";
+import {Style} from "ol/style";
+import {Circle} from "ol/style";
+import {Stroke} from "ol/style";
+import {transform, transformExtent} from "ol/proj";
+import {Point} from "ol/geom";
+import {Feature} from "ol";
+import {Vector} from "ol/layer";
+import {Vector as VectorSource} from "ol/source";
+import {Observable} from "ol/";
+import {unByKey} from "ol/Observable";
+import {containsCoordinate} from "ol/extent";
+import {getWidth} from "ol/extent";
+import {getHeight} from "ol/extent";
+
 'use strict';
-export class GeoSearch extends ol.control.Control {
+export class GeoSearch extends Control {
 
   /**
    * @TODO description
@@ -213,7 +230,7 @@ export class GeoSearch extends ol.control.Control {
     element.appendChild(this.searchWrapper);
 
     // inheritance-stuff
-    ol.control.Control.call(this, {
+    Control.call(this, {
       element: element,
       target: options.target
     });
@@ -358,7 +375,7 @@ export class GeoSearch extends ol.control.Control {
             osmExtent.push(parseFloat(boundingbox[3]));
             osmExtent.push(parseFloat(boundingbox[1]));
 
-            extent = ol.proj.transformExtent(osmExtent, 'EPSG:4326', 'EPSG:3857')
+            extent = transformExtent(osmExtent, 'EPSG:4326', 'EPSG:3857')
             window.setTimeout(function () {
               mapView.fit(
                 extent,
@@ -367,7 +384,7 @@ export class GeoSearch extends ol.control.Control {
                   minZoom: mapView.get('minZoom') || 2,
                   maxZoom: zoom || mapView.get('maxZoom') || 18,
                   duration: duration / 2,
-                  easing: ol.easing.easeOut
+                  easing: easeOut
                 }
               );
             }, duration)
@@ -396,16 +413,16 @@ export class GeoSearch extends ol.control.Control {
         markerSource,
         animateMarker;
 
-      markerSource = new ol.source.Vector();
-      map.addLayer(new ol.layer.Vector({
-        style: new ol.style.Style(),
+      markerSource = new VectorSource();
+      map.addLayer(new Vector({
+        style: new Style(),
         source: markerSource
       }));
 
       addMarker = function () {
         markerSource.addFeature(
-          new ol.Feature(
-            new ol.geom.Point(resultCoordinate)
+          new Feature(
+            new Point(resultCoordinate)
           )
         );
       };
@@ -434,17 +451,17 @@ export class GeoSearch extends ol.control.Control {
           flashGeom = feature.getGeometry().clone();
           elapsed = frameState.time - start;
           elapsedRatio = elapsed / duration;
-          radius = ol.easing.linear(1 - elapsedRatio) * 100;
+          radius = linear(1 - elapsedRatio) * 100;
           if (radius < 0) {
             radius = 0;
           }
-          opacity = ol.easing.linear(elapsedRatio);
+          opacity = linear(elapsedRatio);
 
-          marker = new ol.style.Style({
-            image: new ol.style.Circle({
+          marker = new Style({
+            image: new Circle({
               radius: radius,
               snapToPixel: false,
-              stroke: new ol.style.Stroke({
+              stroke: new Stroke({
                 color: 'rgba(200, 0, 0, ' + opacity + ')',
                 width: 3,
                 opacity: opacity
@@ -457,7 +474,7 @@ export class GeoSearch extends ol.control.Control {
 
           if (elapsed > duration) {
             markerSource.clear();
-            ol.Observable.unByKey(listenerKey);
+            unByKey(listenerKey);
             return;
           }
           // continue postcompose animation
@@ -489,20 +506,20 @@ export class GeoSearch extends ol.control.Control {
     map = this.getMap();
 
     result = self.results[index];
-    resultCoordinate = ol.proj.transform([parseFloat(result.lon), parseFloat(result.lat)], 'EPSG:4326', 'EPSG:3857')
+    resultCoordinate = transform([parseFloat(result.lon), parseFloat(result.lat)], 'EPSG:4326', 'EPSG:3857');
 
     if (animate) {
       var resolution = mapView.getResolution();
       var viewExtent = mapView.calculateExtent(map.getSize());
-      if (ol.extent.containsCoordinate(viewExtent, resultCoordinate)) {
+      if (containsCoordinate(viewExtent, resultCoordinate)) {
         zoomType = 'zoom';
       } else {
         if (Math.abs(currentCoordinate[0] - resultCoordinate[0]) > Math.abs(currentCoordinate[1] - resultCoordinate[1])) {
           var coordDif = Math.abs(currentCoordinate[0] - resultCoordinate[0]);
-          var difContext = ol.extent.getWidth(viewExtent);
+          var difContext = getWidth(viewExtent);
         } else {
           coordDif = Math.abs(currentCoordinate[1] - resultCoordinate[1]);
-          difContext = ol.extent.getHeight(viewExtent);
+          difContext = getHeight(viewExtent);
         }
         if (coordDif > 0) {
           resolution *= coordDif / difContext;
@@ -614,18 +631,18 @@ export class GeoSearch extends ol.control.Control {
                     osmExtent.push(parseFloat(boundingbox[3]));
                     osmExtent.push(parseFloat(boundingbox[1]));
 
-                    extent = ol.proj.transformExtent(osmExtent, 'EPSG:4326', 'EPSG:3857');
+                    extent = transformExtent(osmExtent, 'EPSG:4326', 'EPSG:3857');
 
                     window.setTimeout(function () {
                       var viewFit = mapView.fit(
-                          extent,
-                          map.getSize(),
-                          {
-                            minZoom: mapView.get('minZoom') || 2,
-                            maxZoom: zoom || mapView.get('maxZoom') || 18,
-                            duration: duration / 2,
-                            easing: ol.easing.easeOut
-                          }
+                        extent,
+                        map.getSize(),
+                        {
+                          minZoom: mapView.get('minZoom') || 2,
+                          maxZoom: zoom || mapView.get('maxZoom') || 18,
+                          duration: duration / 2,
+                          easing: easeOut
+                        }
                       );
                     }, duration)
                   }
@@ -653,58 +670,58 @@ export class GeoSearch extends ol.control.Control {
               // result marker & animation
               if (markResult) {
                 var addMarker,
-                    markerSource,
-                    animateMarker;
+                  markerSource,
+                  animateMarker;
 
-                markerSource = new ol.source.Vector();
-                map.addLayer(new ol.layer.Vector({
-                  style: new ol.style.Style(),
+                markerSource = new VectorSource();
+                map.addLayer(new Vector({
+                  style: new Style(),
                   source: markerSource
                 }));
 
                 addMarker = function () {
                   markerSource.addFeature(
-                      new ol.Feature(
-                          new ol.geom.Point(resultCoordinate)
-                      )
+                    new Feature(
+                      new Point(resultCoordinate)
+                    )
                   );
                 };
 
                 animateMarker = function (feature) {
                   var animationStep,
-                      start,
-                      duration,
-                      listenerKey;
+                    start,
+                    duration,
+                    listenerKey;
 
                   start = new Date().getTime();
                   duration = 3000;
 
                   animationStep = function (event) {
                     var vectorContext,
-                        frameState,
-                        elapsed,
-                        elapsedRatio,
-                        radius,
-                        opacity,
-                        marker,
-                        flashGeom;
+                      frameState,
+                      elapsed,
+                      elapsedRatio,
+                      radius,
+                      opacity,
+                      marker,
+                      flashGeom;
 
                     vectorContext = event.vectorContext;
                     frameState = event.frameState;
                     flashGeom = feature.getGeometry().clone();
                     elapsed = frameState.time - start;
                     elapsedRatio = elapsed / duration;
-                    radius = ol.easing.linear(1 - elapsedRatio) * 100;
+                    radius = linear(1 - elapsedRatio) * 100;
                     if (radius < 0) {
                       radius = 0;
                     }
-                    opacity = ol.easing.linear(elapsedRatio);
+                    opacity = linear(elapsedRatio);
 
-                    var marker = new ol.style.Style({
-                      image: new ol.style.Circle({
+                    var marker = new Style({
+                      image: new Circle({
                         radius: radius,
                         snapToPixel: false,
-                        stroke: new ol.style.Stroke({
+                        stroke: new Stroke({
                           color: 'rgba(200, 0, 0, ' + opacity + ')',
                           width: 3,
                           opacity: opacity
@@ -717,7 +734,7 @@ export class GeoSearch extends ol.control.Control {
 
                     if (elapsed > duration) {
                       markerSource.clear();
-                      ol.Observable.unByKey(listenerKey);
+                      unByKey(listenerKey);
                       return;
                     }
                     // continue postcompose animation
@@ -750,7 +767,7 @@ export class GeoSearch extends ol.control.Control {
               result = results[0];
               self.results = results;
               currentCoordinate = mapView.getCenter();
-              resultCoordinate = ol.proj.transform([parseFloat(result.lon), parseFloat(result.lat)], 'EPSG:4326', 'EPSG:3857');
+              resultCoordinate = transform([parseFloat(result.lon), parseFloat(result.lat)], 'EPSG:4326', 'EPSG:3857');
 
               if (animate) {
                 flyTo(map, resultCoordinate, self.config.zoomlevel, self.config.zoombounds, result.boundingbox, markResult, animate);
@@ -764,13 +781,13 @@ export class GeoSearch extends ol.control.Control {
 
               var pixel = map.getPixelFromCoordinate(resultCoordinate);
               var feature = map.forEachFeatureAtPixel(pixel,
-                  function (feature, layer) {
-                    return feature;
-                  });
+                function (feature, layer) {
+                  return feature;
+                });
               var layer = map.forEachFeatureAtPixel(pixel,
-                  function (feature, layer) {
-                    return layer;
-                  });
+                function (feature, layer) {
+                  return layer;
+                });
               if (self.config.popup) {
                 var popupInfos = {};
                 if (feature && feature.get('popup')) {
@@ -783,7 +800,7 @@ export class GeoSearch extends ol.control.Control {
                 }
                 if (feature) {
                   var geometry = feature.getGeometry();
-                  if (geometry instanceof ol.geom.Point) {
+                  if (geometry instanceof Point) {
                     var coord = geometry.getCoordinates();
                   } else {
                     var coord = resultCoordinate;

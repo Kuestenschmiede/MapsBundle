@@ -10,6 +10,16 @@
  * @link       https://www.con4gis.org
  */
 import {utils} from "./c4g-maps-utils";
+import {Stroke} from "ol/style";
+import {Fill} from "ol/style";
+import {Style} from "ol/style";
+import {RegularShape} from "ol/style";
+import {Circle} from "ol/style";
+// import {Photo} from "ol/style";
+import {Icon} from "ol/style";
+import {Feature} from "ol";
+import {Point} from "ol/geom";
+import {Text} from "ol/style";
 
 export class C4gLocationStyle{
     constructor(locStyleArr, controller){
@@ -40,18 +50,18 @@ export class C4gLocationStyle{
         self = this;
 
         // general
-        strokeStyle = new ol.style.Stroke({
+        strokeStyle = new Stroke({
             color: utils.getRgbaFromHexAndOpacity(styleData.strokecolor, styleData.strokeopacity),
             width: parseInt(styleData.strokewidth.value, 10)
         });
-        fillStyle = new ol.style.Fill({
+        fillStyle = new Fill({
             color: utils.getRgbaFromHexAndOpacity(styleData.fillcolor, styleData.fillopacity)
         });
 
         // image
         switch (styleData.styletype) {
             case 'square':
-                imageStyle = new ol.style.RegularShape({
+                imageStyle = new RegularShape({
                     fill: fillStyle,
                     stroke: strokeStyle,
                     points: 4,
@@ -60,7 +70,7 @@ export class C4gLocationStyle{
                 });
                 break;
             case 'star':
-                imageStyle = new ol.style.RegularShape({
+                imageStyle = new RegularShape({
                     fill: fillStyle,
                     stroke: strokeStyle,
                     radius1: styleData.radius.value || 10,
@@ -70,7 +80,7 @@ export class C4gLocationStyle{
                 });
                 break;
             case 'x':
-                imageStyle = new ol.style.RegularShape({
+                imageStyle = new RegularShape({
                     fill: fillStyle,
                     stroke: strokeStyle,
                     points: 4,
@@ -80,7 +90,7 @@ export class C4gLocationStyle{
                 });
                 break;
             case 'cross':
-                imageStyle = new ol.style.RegularShape({
+                imageStyle = new RegularShape({
                     fill: fillStyle,
                     stroke: strokeStyle,
                     points: 4,
@@ -90,7 +100,7 @@ export class C4gLocationStyle{
                 });
                 break;
             case 'triangle':
-                imageStyle = new ol.style.RegularShape({
+                imageStyle = new RegularShape({
                     fill: fillStyle,
                     stroke: strokeStyle,
                     points: 3,
@@ -104,7 +114,7 @@ export class C4gLocationStyle{
                     if (styleData.icon_src) {
                         let anchorX = 1 / (parseInt(styleData.icon_size[0]) / (parseInt(styleData.icon_offset[0]) * -1));
                         let anchorY = 1 / (parseInt(styleData.icon_size[1]) / (parseInt(styleData.icon_offset[1]) * -1));
-                        imageStyle = new ol.style.Icon({
+                        imageStyle = new Icon({
                             anchor: [anchorX, anchorY],
                             opacity: parseFloat(styleData.icon_opacity.value) / 100,
                             src: styleData.icon_src,
@@ -152,7 +162,7 @@ export class C4gLocationStyle{
                             ctx.drawImage(img, strokewidth, strokewidth, width, height);
                         };
 
-                        imageStyle = new ol.style.Icon({
+                        imageStyle = new Icon({
                             img: canvas,
                             imgSize: [canvas.width, canvas.height]/*,
                             opacity: (styleData.icon_opacity.value / 100)*/
@@ -161,7 +171,7 @@ export class C4gLocationStyle{
 
                 break;
             case 'photo' :
-                imageStyle = new ol.style.Photo({
+                imageStyle = new Photo({
                     kind: styleData.photoKind,
                     crop: true,
                     opacity: parseFloat(styleData.icon_opacity.value, 10) / 100,
@@ -172,14 +182,14 @@ export class C4gLocationStyle{
                 });
                 break;
             case 'point':
-                imageStyle = new ol.style.Circle({
+                imageStyle = new Circle({
                     fill: fillStyle,
                     stroke: strokeStyle,
                     radius: styleData.radius.value || 7
                 });
                 break;
             default:
-                imageStyle = new ol.style.Circle({
+                imageStyle = new Circle({
                     fill: fillStyle,
                     stroke: strokeStyle,
                     radius: styleData.radius.value || 7
@@ -202,7 +212,7 @@ export class C4gLocationStyle{
             }
 
             // check if this is a feature.styleFunction
-            if (!(feature instanceof ol.Feature)) {
+            if (!(feature && feature.constructor.name === Feature.name)) {
                 projection = feature;
                 feature = this;
             }
@@ -220,7 +230,7 @@ export class C4gLocationStyle{
             // label
             if (label) {
                 if (styleData.label_outl_color && styleData.label_outl_width.value) {
-                    textStyleOutline = new ol.style.Stroke({
+                    textStyleOutline = new Stroke({
                         color: utils.getRgbaFromHexAndOpacity(styleData.label_outl_color || defaultColor, {
                             unit: '%',
                             value: 100
@@ -228,7 +238,7 @@ export class C4gLocationStyle{
                         width: parseInt(styleData.label_outl_width.value, 10)
                     });
                     if(styleData.label_outl_box === "1"){
-                      backgroundFill = new ol.style.Fill({
+                      backgroundFill = new Fill({
                         color: utils.getRgbaFromHexAndOpacity(styleData.label_outl_color || defaultColor, {
                           unit: '%',
                           value: 100
@@ -240,7 +250,7 @@ export class C4gLocationStyle{
                     styleData.label_offset = [0, 0, "px"];
                 }
                 if(styleData.label_outl_box === "1"){
-                  textStyle = new ol.style.Text({
+                  textStyle = new Text({
                     text: label,
                     font: (styleData.font_weight || 'normal') + ' ' + (styleData.font_style || 'normal') + ' ' + (styleData.font_size || '13') + 'px ' + (styleData.font_family || 'sans-serif'),
                     // scale: parseInt(styleData.font_size || 0, 10) || undefined,
@@ -248,7 +258,7 @@ export class C4gLocationStyle{
                     offsetY: parseInt(styleData.label_offset[1] || 0, 10),
                     textAlign: styleData.label_align_hor,
                     textBaseline: styleData.label_align_ver,
-                    fill: new ol.style.Fill({
+                    fill: new Fill({
                       color: utils.getRgbaFromHexAndOpacity(styleData.font_color || defaultColor, styleData.font_opacity)
                     }),
                     backgroundFill: backgroundFill,
@@ -256,7 +266,7 @@ export class C4gLocationStyle{
                   });
                 }
                 else{
-                  textStyle = new ol.style.Text({
+                  textStyle = new Text({
                     text: label,
                     font: (styleData.font_weight || 'normal') + ' ' + (styleData.font_style || 'normal') + ' ' + (styleData.font_size || '13') + 'px ' + (styleData.font_family || 'sans-serif'),
                     // scale: parseInt(styleData.font_size || 0, 10) || undefined,
@@ -264,7 +274,7 @@ export class C4gLocationStyle{
                     offsetY: parseInt(styleData.label_offset[1] || 0, 10),
                     textAlign: styleData.label_align_hor,
                     textBaseline: styleData.label_align_ver,
-                    fill: new ol.style.Fill({
+                    fill: new Fill({
                       color: utils.getRgbaFromHexAndOpacity(styleData.font_color || defaultColor, styleData.font_opacity)
                     }),
                     stroke: textStyleOutline
@@ -281,7 +291,7 @@ export class C4gLocationStyle{
                 zIndex = feature.get('zIndex');
               }
                 stylesArray.push(
-                    new ol.style.Style({
+                    new Style({
                         image: imageStyle,
                         text: textStyle,
                         stroke: strokeStyle,
@@ -291,7 +301,7 @@ export class C4gLocationStyle{
                 );
             } else {
                 stylesArray.push(
-                    new ol.style.Style({
+                    new Style({
                         image: imageStyle,
                         stroke: strokeStyle,
                         fill: fillStyle
@@ -305,7 +315,7 @@ export class C4gLocationStyle{
                 styleData.line_arrows
                 && feature
                 && (typeof feature.getGeometry === 'function')
-                && !(feature.getGeometry() instanceof ol.geom.Point)
+                && !(feature.getGeometry().constructor.name === Point.name)
                 && typeof feature.getGeometry().forEachSegment === 'function'
             ) {
                 arrowSize = (styleData.line_arrows_radius) ? (parseInt(styleData.line_arrows_radius.value, 10) * 2) : 0;
@@ -324,9 +334,9 @@ export class C4gLocationStyle{
                     ) {
                         // forward arrows
                         stylesArray.push(
-                            new ol.style.Style({
-                                geometry: new ol.geom.Point(end),
-                                text: new ol.style.Text({
+                            new Style({
+                                geometry: new Point(end),
+                                text: new Text({
                                     text: "ᐳ",
                                     font: arrowSizeUnit + " sans-serif",
                                     offsetX: 0,
@@ -342,9 +352,9 @@ export class C4gLocationStyle{
                         // backward arrows (if wanted)
                         if (styleData.line_arrows_back) {
                             stylesArray.push(
-                                new ol.style.Style({
-                                    geometry: new ol.geom.Point(start),
-                                    text: new ol.style.Text({
+                                new Style({
+                                    geometry: new Point(start),
+                                    text: new Text({
                                         text: "ᐳ",
                                         font: arrowSizeUnit + " sans-serif",
                                         offsetX: 0,

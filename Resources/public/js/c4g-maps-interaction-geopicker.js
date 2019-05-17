@@ -9,10 +9,21 @@
  * @copyright  Küstenschmiede GmbH Software & Design
  * @link       https://www.con4gis.org
  */
+import {Interaction} from "ol/interaction";
+import {Feature} from "ol";
+import {Point} from "ol/geom";
+import {Style} from "ol/style";
+import {Stroke} from "ol/style";
+import {Fill} from "ol/style";
+import {Circle} from "ol/style";
+import {Vector} from "ol/layer";
+import {Vector as VectorSource} from "ol/source";
+import {fromLonLat} from "ol/proj";
+import {toLonLat} from "ol/proj";
 
 'use strict';
 
-export class GeoPicker extends ol.interaction.Interaction {
+export class GeoPicker extends Interaction {
 
 
   /**
@@ -45,8 +56,8 @@ export class GeoPicker extends ol.interaction.Interaction {
     this.$fieldGeoX = jQuery(mapData.geopicker.input_geo_x);
     this.$fieldGeoY = jQuery(mapData.geopicker.input_geo_y);
 
-    this.opticLayerSource = new ol.source.Vector({});
-    this.opticLayerVector = new ol.layer.Vector({
+    this.opticLayerSource = new VectorSource({});
+    this.opticLayerVector = new Vector({
       source: this.opticLayerSource,
       style: this.geoPickerStyleFunction
     });
@@ -82,8 +93,8 @@ export class GeoPicker extends ol.interaction.Interaction {
         lon = lon.substr(0, lonIdx) + '.' + lon.substr(lonIdx, lon.length - lonIdx);
       }
 
-      this.opticLayerFeature = new ol.Feature({
-        geometry: new ol.geom.Point(ol.proj.fromLonLat([parseFloat(lon), parseFloat(lat)])),
+      this.opticLayerFeature = new Feature({
+        geometry: new Point(fromLonLat([parseFloat(lon), parseFloat(lat)])),
         pickerColor: [0, 180, 100, 1],
         anonymous: mapData.geopicker.anonymous
       });
@@ -121,13 +132,13 @@ export class GeoPicker extends ol.interaction.Interaction {
     result = [];
     if (feature && typeof feature.get === 'function' && !feature.get('anonymous')) {
       result.push(
-        new ol.style.Style({
-          image: new ol.style.Circle({
+        new Style({
+          image: new Circle({
             radius: 2,
-            fill: new ol.style.Fill({
+            fill: new Fill({
               color: color
             }),
-            stroke: new ol.style.Stroke({
+            stroke: new Stroke({
               color: white,
               width: 2
             })
@@ -135,10 +146,10 @@ export class GeoPicker extends ol.interaction.Interaction {
           zIndex: Infinity
         }));
       result.push(
-        new ol.style.Style({
-          image: new ol.style.Circle({
+        new Style({
+          image: new Circle({
             radius: 20,
-            stroke: new ol.style.Stroke({
+            stroke: new Stroke({
               color: white,
               width: 4
             })
@@ -146,10 +157,10 @@ export class GeoPicker extends ol.interaction.Interaction {
           zIndex: Infinity
         }));
       result.push(
-        new ol.style.Style({
-          image: new ol.style.Circle({
+        new Style({
+          image: new Circle({
             radius: 20,
-            stroke: new ol.style.Stroke({
+            stroke: new Stroke({
               color: color,
               width: 2
             })
@@ -157,10 +168,10 @@ export class GeoPicker extends ol.interaction.Interaction {
           zIndex: Infinity
         }));
       result.push(
-        new ol.style.Style({
-          image: new ol.style.Circle({
+        new Style({
+          image: new Circle({
             radius: 40,
-            stroke: new ol.style.Stroke({
+            stroke: new Stroke({
               color: white,
               width: 4
             })
@@ -168,10 +179,10 @@ export class GeoPicker extends ol.interaction.Interaction {
           zIndex: Infinity
         }));
       result.push(
-        new ol.style.Style({
-          image: new ol.style.Circle({
+        new Style({
+          image: new Circle({
             radius: 40,
-            stroke: new ol.style.Stroke({
+            stroke: new Stroke({
               color: color,
               width: 2
             })
@@ -181,10 +192,10 @@ export class GeoPicker extends ol.interaction.Interaction {
     }
 
     result.push(
-      new ol.style.Style({
-        image: new ol.style.Circle({
+      new Style({
+        image: new Circle({
           radius: 60,
-          stroke: new ol.style.Stroke({
+          stroke: new Stroke({
             color: white,
             width: 4
           })
@@ -193,10 +204,10 @@ export class GeoPicker extends ol.interaction.Interaction {
       }));
 
     result.push(
-      new ol.style.Style({
-        image: new ol.style.Circle({
+      new Style({
+        image: new Circle({
           radius: 60,
-          stroke: new ol.style.Stroke({
+          stroke: new Stroke({
             color: color,
             width: 2
           })
@@ -220,10 +231,10 @@ export class GeoPicker extends ol.interaction.Interaction {
   pick(coordinate) {
     var arrLatLon;
 
-    arrLatLon = ol.proj.toLonLat(coordinate);
+    arrLatLon = toLonLat(coordinate);
 
-    this.opticLayerFeature = new ol.Feature({
-      geometry: new ol.geom.Point(coordinate)
+    this.opticLayerFeature = new Feature({
+      geometry: new Point(coordinate)
     });
 
     this.opticLayerSource.clear();

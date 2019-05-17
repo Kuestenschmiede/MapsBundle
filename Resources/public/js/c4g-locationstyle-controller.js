@@ -11,6 +11,7 @@
  */
 import {C4gLocationStyle} from "./c4g-locationstyle";
 import {cssConstants} from "./c4g-maps-constant";
+import {utils} from "./c4g-maps-utils";
 
 export class C4gLocationStyleController{
     constructor(proxy){
@@ -71,6 +72,8 @@ export class C4gLocationStyleController{
                 }
                 if (options.done && typeof options.done === "function" && (index ? successful : true)) {
                     options.done();
+                    // call hooks
+                    utils.callHookFunctions(self.proxy.hook_locstyles_loaded, {locstyleController: self})
                 }
             }).always(function (jXhr, strStatus) {
                 var completed = true;

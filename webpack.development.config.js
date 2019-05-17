@@ -6,12 +6,12 @@ var config = {
     filename: 'c4g-maps.js',
     path: path.resolve('./Resources/public/build/')
   },
-  devtool: "source-map",
+  devtool: "inline-source-map",
   module: {
     rules: [
       {
         test: /\.js$/,
-        exclude: /node_modules/,
+        exclude: /node_modules(?!\/ol)/,
         use: [{
           loader: "echo-loader",
         }, {

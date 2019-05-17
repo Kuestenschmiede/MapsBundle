@@ -12,8 +12,11 @@
 
 import {cssConstants} from "./c4g-maps-constant";
 import {getLanguage} from "./c4g-maps-i18n";
+import {Control} from "ol/control";
+import {Graticule} from "ol";
+
 'use strict';
-export class Grid extends ol.control.Control {
+export class Grid extends Control {
 
   /**
    * Control to toggle a grid on the map.
@@ -31,7 +34,7 @@ export class Grid extends ol.control.Control {
     var element,
         button;
 
-    var objGrid = new ol.Graticule({
+    var objGrid = new Graticule({
         /*
         strokeStyle: new ol.style.Stroke({
             width: 2,
@@ -98,7 +101,7 @@ export class Grid extends ol.control.Control {
     }
 
     // inheritance-stuff
-    ol.control.Control.call(this, {
+    Control.call(this, {
       element: element,
       target: options.target
     });

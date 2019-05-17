@@ -12,6 +12,10 @@
 
 import {TooltipPopUp} from "./c4g-maps-misc-tooltippopup";
 import {utils} from "./c4g-maps-utils";
+import {LineString} from "ol/geom";
+import {Observable} from "ol";
+import {unByKey} from "ol/Observable";
+
 'use strict';
 export class MapHover {
 
@@ -79,7 +83,7 @@ export class MapHover {
    */
   deactivate() {
     if (this.listenerKey) {
-      ol.Observable.unByKey(this.listenerKey);
+      unByKey(this.listenerKey);
       this.listenerKey = false;
     }
   } // end of "deactivate()"
@@ -157,7 +161,7 @@ export class MapHover {
           hovered.feature = hovered.feature.get('features')[0];
         }
       }
-      if (hovered.feature.getGeometry() && hovered.feature.getGeometry() instanceof ol.geom.LineString) {
+      if (hovered.feature.getGeometry() && hovered.feature.getGeometry().constructor.name === LineString.name) {
         return false;
       }
       if (hovered.feature.get("hover_location") || (self.lastHoveredFeature && self.lastHoveredFeature.get("hover_location"))) {

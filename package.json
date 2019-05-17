@@ -19,13 +19,19 @@
   "homepage": "https://github.com/Kuestenschmiede/MapsBundle#readme",
   "devDependencies": {
     "babel": "^6.23.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+    "babel-preset-env": "^1.7.0",
     "echo-loader": "0.0.1",
-    "webpack": "^4.29.0",
-    "webpack-cli": "^3.2.1",
-    "babel-loader": "^7.1.5",
-    "babel-core": "^6.26.3",
-    "babel-preset-env": "^1.7.0"
+    "webpack": "^4.30.0",
+    "webpack-cli": "^3.3.2"
+  },
+  "dependencies": {
+    "ol": "^5.3.2",
+    "ol-ext": "^3.1.2",
+    "ol-mapbox-style": "^4.3.1",
+    "olcs": "^2.9.0"
   }
 }

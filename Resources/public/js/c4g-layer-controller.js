@@ -13,6 +13,27 @@ import {C4gLayer} from "./c4g-layer"
 import {utils} from "./c4g-maps-utils"
 import {cssConstants} from "./c4g-maps-constant";
 import {Customtab} from "./c4g-maps-control-starboardplugin-customtab";
+import {Style} from "ol/style";
+import {Text} from "ol/style";
+import {Fill} from "ol/style";
+import {Vector as VectorSource} from "ol/source";
+import {transformExtent} from "ol/proj";
+import {transform} from "ol/proj";
+import {Point, LineString, Polygon, MultiPolygon} from "ol/geom";
+import {Feature} from "ol";
+import OSMXML from "ol/format/OSMXML";
+import {all} from "ol/loadingstrategy";
+import {bbox} from "ol/loadingstrategy";
+import {Vector} from "ol/layer";
+import {Cluster} from "ol/source";
+import Circle from "ol/geom/Circle";
+import {fromLonLat} from "ol/proj";
+import {GeoJSON} from "ol/format";
+import {getCenter, boundingExtent} from "ol/extent";
+import {Group} from "ol/layer";
+import * as olFormat from "ol/format";
+import ol_layer_AnimatedCluster from "ol-ext/layer/AnimatedCluster";
+
 
 export class C4gLayerController{
   constructor(proxy){
@@ -27,8 +48,7 @@ export class C4gLayerController{
     if (this.mapId === 0) {
       return false;
     }
-
-    //jQuery.ajax("maps/layerService",{//this.proxy.api_layer_url,{
+    
     jQuery.ajax(this.proxy.api_layer_url,{
       dataType: this.mapController.data.jsonp ? "jsonp" : "json"
 
@@ -342,25 +362,25 @@ export class C4gLayerController{
                   }
 
                   style.push(
-                    new ol.style.Style({
-                      text: new ol.style.Text({
+                    new Style({
+                      text: new Text({
                         text: "●",
                         font: "60px sans-serif",
                         offsetX: -1 * iconOffset[0],
                         offsetY: -1 * iconOffset[1],
-                        fill: new ol.style.Fill({
+                        fill: new Fill({
                           color: fillcolor
                         })
                       })
                     })
                   );
                   style.push(
-                    new ol.style.Style({
-                      text: new ol.style.Text({
+                    new Style({
+                      text: new Text({
                         text: size.toString(),
                         offsetX: -1 * iconOffset[0],
                         offsetY: -1 * iconOffset[1] + 3,
-                        fill: new ol.style.Fill({
+                        fill: new Fill({
                           color: fontcolor
                         })
                       })
@@ -384,12 +404,12 @@ export class C4gLayerController{
 
             if (contentData.settings.boundingBox) {
               requestContentData = contentData;
-              requestVectorSource = new ol.source.Vector({
+              requestVectorSource = new VectorSource({
                 loader: function (extent, resolution, projection) {
                   var boundingArray,
                     strBoundingBox,
                     url;
-                  boundingArray = ol.proj.transformExtent(extent, projection, 'EPSG:4326');
+                  boundingArray = transformExtent(extent, projection, 'EPSG:4326');
                   //different cases for Overpass_QL and XML query format
                   if(requestData.params && requestData.params.substr(0, 1).trim() === "<"){
                     strBoundingBox = '<bbox-query s="' + boundingArray[1] + '" n="' + boundingArray[3] + '" w="' + boundingArray[0] + '" e="' + boundingArray[2] + '"/>';
@@ -480,7 +500,7 @@ export class C4gLayerController{
                         }
                       }
                       // import osm_xml
-                      format = new ol.format.OSMXML();
+                      format = new OSMXML();
                       if (format && response) {
                         try {
                           rFeatures = format.readFeatures(response, {featureProjection: projection});
@@ -512,12 +532,12 @@ export class C4gLayerController{
                             // convert tracks and areas to points
                             if (rFeatures[j].getGeometry().getType() === "Polygon") {
                               let centerPoint = rFeatures[j].getGeometry().getInteriorPoint().getCoordinates();
-                              rFeatures[j].setGeometry(new ol.geom.Point([centerPoint[0],centerPoint[1]]));
+                              rFeatures[j].setGeometry(new Point([centerPoint[0],centerPoint[1]]));
                             } else if (rFeatures[j].getGeometry().getType() === "LineString") {
                               // @TODO: prüfen ob dies korrekter Mittelpunkt ist
                               let lineExtent = rFeatures[j].getGeometry().getExtent();
-                              let centerPoint = ol.extent.getCenter(lineExtent);
-                              rFeatures[j].setGeometry(new ol.geom.Point(centerPoint));
+                              let centerPoint = getCenter(lineExtent);
+                              rFeatures[j].setGeometry(new Point(centerPoint));
                             }
                           }
                         }
@@ -547,21 +567,21 @@ export class C4gLayerController{
                   }); // end of AJAX
 
                 },
-                strategy: ol.loadingstrategy.bbox,
+                strategy: bbox,
                 projection: 'EPSG:3857'
               });
 
               vectorSource = requestVectorSource;
             } else {
 
-              if (typeof ol.format[contentData.format] === "function") {
+              if (typeof olFormat[contentData.format] === "function") {
 
                 //StaticVector
-                vectorSource = new ol.source.Vector({
-                  format: new ol.format[contentData.format](),
+                vectorSource = new VectorSource({
+                  format: new olFormat[contentData.format](),
                   url: requestData.url,
                   projection: 'EPSG:3857',
-                  strategy: ol.loadingstrategy.all
+                  strategy: all
                 });
 
                 if (contentData.settings && contentData.settings.refresh === true) {
@@ -606,7 +626,7 @@ export class C4gLayerController{
                           // update of stations
                           jQuery.each(data.features, function (index, featureData) {
                             if (featureData.type && featureData.type === "Feature") {
-                              var feature = (new ol.format[contentData.format]()).readFeature(featureData, {
+                              var feature = (new olFormat[contentData.format]()).readFeature(featureData, {
                                 dataProjection: 'EPSG:4326',
                                 featureProjection: 'EPSG:3857'
                               });
@@ -650,7 +670,7 @@ export class C4gLayerController{
 
                           jQuery.each(data.features, function (index, featureData) {
                             if (featureData.type && featureData.type == "Feature") {
-                              refreshAjaxVars.feature = (new ol.format[contentData.format]()).readFeature(featureData, {
+                              refreshAjaxVars.feature = (new olFormat[contentData.format]()).readFeature(featureData, {
                                 dataProjection: 'EPSG:4326',
                                 featureProjection: 'EPSG:3857'
                               });
@@ -706,7 +726,7 @@ export class C4gLayerController{
 
             if (contentData.settings.cluster) {
 
-              window.clusterSource = new ol.source.Cluster({
+              window.clusterSource = new Cluster({
                 distance: 40,
                 //threshold: 2, //minimum element count
                 source: vectorSource,
@@ -717,7 +737,7 @@ export class C4gLayerController{
 
               //vectorLayer = utils.getVectorLayer(clusterSource, styleForCluster);
 
-              vectorLayer = new ol.layer.AnimatedCluster(
+              vectorLayer = new ol_layer_AnimatedCluster(
                 {	name: 'Cluster',
                   source: window.clusterSource,
                   // Use a style function for cluster symbolisation
@@ -774,7 +794,7 @@ export class C4gLayerController{
 
             // force all nodes into one layer
 
-            var contentFeature = new ol.format[layerContent[i].format]({}).readFeatures(layerContent[i].data, {
+            var contentFeature = new olFormat[layerContent[i].format]({}).readFeatures(layerContent[i].data, {
               featureProjection: featureProjection,
               dataProjection: dataProjection
             })[0];
@@ -789,14 +809,14 @@ export class C4gLayerController{
 
 
             if(i+1 === this.arrLayers[itemUid].content.length){
-              vectorSource = new ol.source.Vector({
+              vectorSource = new VectorSource({
                 features: contentFeatures,
                 projection: 'EPSG:3857',
-                format: new ol.format.GeoJSON(),
+                format: new GeoJSON(),
 
               });
               if (contentData && contentData.settings && contentData.settings.cluster) {
-                clusterSource = new ol.source.Cluster({
+                clusterSource = new Cluster({
                   distance: 40,
                   zoom: contentData.cluster_zoom,
 
@@ -805,7 +825,7 @@ export class C4gLayerController{
                 });
                 //vectorLayer = utils.getVectorLayer(clusterSource, styleForCluster);
 
-                vectorLayer = new ol.layer.AnimatedCluster(
+                vectorLayer = new ol_layer_AnimatedCluster(
                   {	name: 'Cluster',
                     source: clusterSource,
                     // Use a style function for cluster symbolisation
@@ -823,7 +843,7 @@ export class C4gLayerController{
               //TODO: refactoren und kürzen!
               // we have overpass request with reassigned forum layers
               // forum layers can not be drawn via the normal drawLayer, because they do not have a Uid
-              if (contentData && (typeof ol.format[contentData.format] === "function")) {
+              if (contentData && (typeof olFormat[contentData.format] === "function")) {
                 if (contentData.data.properties && contentData.data.properties.projection) {
                   dataProjection = contentData.data.properties.projection;
                   featureProjection = this.mapController.map.getView().getProjection();
@@ -831,7 +851,7 @@ export class C4gLayerController{
                   dataProjection = undefined;
                 }
 
-                features = (new ol.format[contentData.format]({})).readFeatures(contentData.data, {
+                features = (new olFormat[contentData.format]({})).readFeatures(contentData.data, {
                   featureProjection: featureProjection,
                   dataProjection: dataProjection
                 });
@@ -854,12 +874,12 @@ export class C4gLayerController{
                 if (missingStyles.length > 0) {
                   //TODO there are unstyled features because some styles were not loaded
                 } else {
-                  vectorSource = new ol.source.Vector({
+                  vectorSource = new VectorSource({
                     features: features,
                     projection: 'EPSG:3857',
-                    format: new ol.format.GeoJSON()
+                    format: new GeoJSON()
                   });
-                  clusterSource = new ol.source.Cluster({
+                  clusterSource = new Cluster({
                     distance: 40,
                     zoom: contentData.cluster_zoom,
 
@@ -901,7 +921,7 @@ export class C4gLayerController{
           }
         }
       // add vector layer group
-      layerGroup = new ol.layer.Group({
+      layerGroup = new Group({
         layers: layers
       });
       this.arrLayers[itemUid].vectorLayer = layerGroup;
@@ -966,25 +986,25 @@ export class C4gLayerController{
                       }
 
                       style.push(
-                          new ol.style.Style({
-                              text: new ol.style.Text({
+                          new Style({
+                              text: new Text({
                                   text: "●",
                                   font: "60px sans-serif",
                                   offsetX: -1 * iconOffset[0],
                                   offsetY: -1 * iconOffset[1],
-                                  fill: new ol.style.Fill({
+                                  fill: new Fill({
                                       color: fillcolor
                                   })
                               })
                           })
                       );
                       style.push(
-                          new ol.style.Style({
-                              text: new ol.style.Text({
+                          new Style({
+                              text: new Text({
                                   text: feature.get('features').length.toString(),
                                   offsetX: -1 * iconOffset[0],
                                   offsetY: -1 * iconOffset[1] + 3,
-                                  fill: new ol.style.Fill({
+                                  fill: new Fill({
                                       color: fontcolor
                                   })
                               })
@@ -998,13 +1018,13 @@ export class C4gLayerController{
                   return style;
               }
           };
-          requestVectorSource = new ol.source.Vector({
+          requestVectorSource = new VectorSource({
               loader: function (extent, resolution, projection) {
                   var boundingArray,
                       strBoundingBox,
                       url;
                   self.mapController.spinner.show();
-                  boundingArray = ol.proj.transformExtent(extent, projection, 'EPSG:4326');
+                  boundingArray = transformExtent(extent, projection, 'EPSG:4326');
                   strBoundingBox = boundingArray[0]+','+boundingArray[1]+';'+boundingArray[2]+','+boundingArray[3];
                   if (self.layerRequests === undefined) {
                       self.layerRequests = {};
@@ -1029,9 +1049,9 @@ export class C4gLayerController{
                               for(let j = 0; j < contentFeatures.length; j++){
                                   if(contentData.id === contentFeatures[j].id) continue loopData;
                               }
-                              var resultCoordinate = ol.proj.transform([parseFloat(contentData['geox']), parseFloat(contentData['geoy'])], 'EPSG:4326', 'EPSG:3857')
-                              var point = new ol.geom.Point(resultCoordinate);
-                              contentFeature = new ol.Feature(point);
+                              var resultCoordinate = transform([parseFloat(contentData['geox']), parseFloat(contentData['geoy'])], 'EPSG:4326', 'EPSG:3857')
+                              var point = new Point(resultCoordinate);
+                              contentFeature = new Feature(point);
                               contentFeature.setId(contentData.id);
                               if (layer.cluster) {
                                 contentFeature.set('cluster_zoom', layer.cluster.zoom);
@@ -1095,7 +1115,7 @@ export class C4gLayerController{
                       })
 
               },
-              strategy: ol.loadingstrategy.bbox
+              strategy: bbox
           });
 
           if(this.arrLayers[itemUid].cluster){
@@ -1107,12 +1127,12 @@ export class C4gLayerController{
               clusterDistance = 0;
             }
 
-            clusterSource = new ol.source.Cluster({
+            clusterSource = new Cluster({
               distance: clusterDistance,
               //threshold: 2, //minimum element count
               source: requestVectorSource
             });
-              vectorLayer = new ol.layer.AnimatedCluster(
+              vectorLayer = new ol_layer_AnimatedCluster(
                   {	name: 'Cluster',
                       source: clusterSource,
                       // Use a style function for cluster symbolisation
@@ -1120,7 +1140,7 @@ export class C4gLayerController{
                   });
           }
           else{
-              vectorLayer = new ol.layer.Vector(
+              vectorLayer = new Vector(
                   {
                       name: 'Layer',
                       source: requestVectorSource
@@ -1129,7 +1149,7 @@ export class C4gLayerController{
           }
           layers = layers || [];
           layers.push(vectorLayer);
-        layerGroup = new ol.layer.Group({
+        layerGroup = new Group({
             layers: layers
         });
         this.arrLayers[itemUid].vectorLayer = layerGroup;
@@ -1177,8 +1197,8 @@ export class C4gLayerController{
     let feature = null;
     if(element.type == "node"){
       if(element.tags){
-        let point = new ol.geom.Point([element.lon,element.lat]).transform('EPSG:4326','EPSG:3857');
-        feature = new ol.Feature({
+        let point = new Point([element.lon,element.lat]).transform('EPSG:4326','EPSG:3857');
+        feature = new Feature({
           geometry: point
         });
         feature.setId(element.id);
@@ -1187,11 +1207,11 @@ export class C4gLayerController{
     }
     else if(element.type == "way"){
       if(element.tags){
-        feature = new ol.Feature(this.geomFromWay(element, elements, forceNodes));
+        feature = new Feature(this.geomFromWay(element, elements, forceNodes));
       }
       else{
         let geom = this.geomFromWay(element, elements, forceNodes);
-        feature = new ol.Feature(geom);
+        feature = new Feature(geom);
       }
 
     }
@@ -1210,43 +1230,43 @@ export class C4gLayerController{
           if(member){
             let geom;
             if(member.type === 'node'){
-              geom = new ol.geom.Point([member.lon,member.lat]).transform('EPSG:4326','EPSG:3857');
+              geom = new Point([member.lon,member.lat]).transform('EPSG:4326','EPSG:3857');
             }
             else{
               geom = this.geomFromWay(member, elements, true);
             }
-            if(geom instanceof ol.geom.Point){
+            if(geom.constructor.name === Point.name){
               if(!arrCoords){
                 arrCoords = [];
 
               }
               arrCoords.push(geom.getCoordinates());
             }
-            else if(geom instanceof ol.geom.Polygon){
+            else if(geom.constructor.name === Polygon.name){
               if(multiPolygon){
                 multiPolygon.appendPolygon(geom);
               }
               else{
-                multiPolygon = new ol.geom.MultiPolygon(geom.getCoordinates());
+                multiPolygon = new MultiPolygon(geom.getCoordinates());
               }
             }
-            else if(geom instanceof  ol.geom.LineString){
+            else if(geom.constructor.name === LineString.name){
               if(multiLineString){
                 multiLineString.appendLineString(geom);
               }
               else{
-                multiLineString = new ol.geom.LineString(geom.getCoordinates());
+                multiLineString = new LineString(geom.getCoordinates());
               }
             }
           }
 
         }
         if(arrCoords){
-          let extent = ol.extent.boundingExtent(arrCoords);
-          point = new ol.geom.Point(ol.extent.getCenter(extent));
+          let extent = boundingExtent(arrCoords);
+          point = new Point(getCenter(extent));
         }
         if(point || multiPolygon || multiLineString){
-          feature = new ol.Feature(point ? point : (multiLineString ? multiLineString : multiPolygon));
+          feature = new Feature(point ? point : (multiLineString ? multiLineString : multiPolygon));
         }
     }
     if(feature){
@@ -1276,31 +1296,31 @@ export class C4gLayerController{
         return objNode.id === element.nodes[i];
       });
       if(node){
-        arrCoords.push(ol.proj.transform([node.lon,node.lat],'EPSG:4326','EPSG:3857'));
+        arrCoords.push(transform([node.lon,node.lat],'EPSG:4326','EPSG:3857'));
       }
     }
     if(arrCoords && arrCoords[0] && arrCoords[0][0] == arrCoords[arrCoords.length-1][0] && arrCoords[0][1] == arrCoords[arrCoords.length-1][1]){ //polygon
       delete arrCoords[arrCoords.length-1];
       arrCoords.length = arrCoords.length-1;
-      let polygon = new ol.geom.Polygon([arrCoords]);
+      let polygon = new Polygon([arrCoords]);
       // polygon.transform('EPSG:4326','EPSG:3857');
       if (forceNodes) {
         // convert tracks and areas to points
         let tempPoint = polygon.getInteriorPoint();
         let tempCoords = tempPoint.getCoordinates();
-        return new ol.geom.Point([tempCoords[0],tempCoords[1]]);
+        return new Point([tempCoords[0],tempCoords[1]]);
       }
       else{
         return polygon;
       }
     }
     else{ //linestring
-      let lineString = new ol.geom.LineString(arrCoords);
+      let lineString = new LineString(arrCoords);
       if (forceNodes) {
         if(arrCoords.length > 0){
-          let lineExtent = ol.extent.boundingExtent(arrCoords);
-          let lineCenter = ol.extent.getCenter(lineExtent);
-          return new ol.geom.Point([lineCenter[0], lineCenter[1]]);
+          let lineExtent = boundingExtent(arrCoords);
+          let lineCenter = getCenter(lineExtent);
+          return new Point([lineCenter[0], lineCenter[1]]);
         }
 
       }
@@ -1531,7 +1551,7 @@ export class C4gLayerController{
         if (!elementContent) {
           continue;
         }
-        if (typeof ol.format[elementContent.format] === "function") {
+        if (typeof olFormat[elementContent.format] === "function") {
 
           // if (element.content[i].origType === 'single') {
           //   featureProjection = this.mapController.map.getView().getProjection();
@@ -1551,9 +1571,9 @@ export class C4gLayerController{
           if (elementContent.data.geometry && elementContent.data.geometry.type === "Circle") {
             // draw circle geometries
             features = [];
-            let feature = new ol.Feature(
-              new ol.geom.Circle(
-                ol.proj.fromLonLat(elementContent.data.geometry.center),
+            let feature = new Feature(
+              new Circle(
+                fromLonLat(elementContent.data.geometry.center),
                 parseFloat(elementContent.data.geometry.radius)
               ));
             feature.set('styleId', elementContent.locationStyle);
@@ -1561,7 +1581,7 @@ export class C4gLayerController{
             features.push(feature);
           } else {
             // remaining geometries
-            features = (new ol.format[elementContent.format]({})).readFeatures(elementContent.data, {
+            features = (new olFormat[elementContent.format]({})).readFeatures(elementContent.data, {
               featureProjection: featureProjection,
               dataProjection: dataProjection
             });
@@ -1613,10 +1633,10 @@ export class C4gLayerController{
                   }
                 }
 
-                  fVectorSource = new ol.source.Vector({
+                  fVectorSource = new VectorSource({
                       features: features,
                       projection: 'EPSG:3857',
-                      format: new ol.format.GeoJSON()
+                      format: new GeoJSON()
                   });
 
                   fVectorLayer = utils.getVectorLayer(fVectorSource, vectorStyle);
@@ -1658,7 +1678,7 @@ export class C4gLayerController{
                               fVectorLayer.zoom_onclick = elementContent.data.properties.zoom_onclick;
                           }
                       }
-                      fLayerGroup = new ol.layer.Group({
+                      fLayerGroup = new Group({
                           layers: [fVectorLayer]
                       });
                       self.arrLayers[itemUid].vectorLayer = fLayerGroup;
@@ -1670,9 +1690,9 @@ export class C4gLayerController{
           } else {
             if(element.split_geojson) {
                 for (let i = 0; i < features.length; i++) {
-                    vectorSource = new ol.source.Vector({
+                    vectorSource = new VectorSource({
                         projection: 'EPSG:3857',
-                        format: new ol.format.GeoJSON()
+                        format: new GeoJSON()
                     });
                     vectorSource.addFeature(features[i]);
                     vectorLayer = utils.getVectorLayer(vectorSource, vectorStyle);
@@ -1695,10 +1715,10 @@ export class C4gLayerController{
                 }
             }
             else{
-                vectorSource = new ol.source.Vector({
+                vectorSource = new VectorSource({
                     features: features,
                     projection: 'EPSG:3857',
-                    format: new ol.format.GeoJSON()
+                    format: new GeoJSON()
                 });
                 vectorLayer = utils.getVectorLayer(vectorSource, vectorStyle);
 
@@ -1730,7 +1750,7 @@ export class C4gLayerController{
       }
     }
 
-    layerGroup = new ol.layer.Group({
+    layerGroup = new Group({
       layers: layers
     });
 

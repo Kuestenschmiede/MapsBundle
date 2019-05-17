@@ -11,6 +11,8 @@
  */
 
 import {cssConstants} from "./c4g-maps-constant";
+import {Overlay} from "ol";
+
 'use strict';
 export class TooltipPopUp {
 
@@ -71,7 +73,7 @@ export class TooltipPopUp {
     this.contentContainer = document.createElement('div');
     this.element.appendChild(this.contentContainer);
 
-    this.overlay = new ol.Overlay({
+    this.overlay = new Overlay({
       element: this.element,
       insertFirst: false,
       offset: this.options.offset,

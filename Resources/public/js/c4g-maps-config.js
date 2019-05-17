@@ -10,13 +10,17 @@
  * @link       https://www.con4gis.org
  */
 
- 'use strict';
+import {ATTRIBUTION} from "ol/source/OSM";
+import {MVT} from "ol/format";
+import {createXYZ} from "ol/tilegrid";
+
+'use strict';
 export var config = {
   osm: {
 
     CycleMap: {
       attributions: 'Style by <a target="_blank" href="http://www.opencyclemap.org/">OpenCycleMap</a>' + ' ' +
-        ol.source.OSM.ATTRIBUTION,
+        ATTRIBUTION,
       crossOrigin: 'anonymous',
       minZoom: 0,
       maxZoom: 19,
@@ -25,7 +29,7 @@ export var config = {
 
     German: {
       attributions: 'Style by <a target="_blank" href="http://www.openstreetmap.de/germanstyle.html">openstreetmap.de</a>' + ' ' +
-        ol.source.OSM.ATTRIBUTION,
+        ATTRIBUTION,
       crossOrigin: 'anonymous',
       minZoom: 0,
       maxZoom: 19,
@@ -34,7 +38,7 @@ export var config = {
 
     LandscapeMap: {
       attributions: 'Style by <a target="_blank" href="http://www.opencyclemap.org/">OpenCycleMap</a>' + ' ' +
-        ol.source.OSM.ATTRIBUTION,
+        ATTRIBUTION,
       crossOrigin: 'anonymous',
       minZoom: 0,
       maxZoom: 19,
@@ -42,7 +46,7 @@ export var config = {
     },
 
     Mapnik: {
-      attributions: ol.source.OSM.ATTRIBUTION,
+      attributions: ATTRIBUTION,
       crossOrigin: 'anonymous',
     },
 
@@ -51,7 +55,7 @@ export var config = {
 
   stamen: {
     Toner: {
-      attributions: ol.source.OSM.ATTRIBUTION,
+      attributions: ATTRIBUTION,
       layer: 'toner',
       minZoom: 0,
       maxZoom: 18,
@@ -59,7 +63,7 @@ export var config = {
     },
 
     TonerLabels: {
-      attributions: ol.source.OSM.ATTRIBUTION,
+      attributions: ATTRIBUTION,
       layer: 'toner-labels',
       minZoom: 0,
       maxZoom: 18,
@@ -67,7 +71,7 @@ export var config = {
     },
 
     TonerLines: {
-      attributions: ol.source.OSM.ATTRIBUTION,
+      attributions: ATTRIBUTION,
       layer: 'toner-lines',
       minZoom: 0,
       maxZoom: 18,
@@ -75,7 +79,7 @@ export var config = {
     },
 
     Terrain: {
-      attributions: ol.source.OSM.ATTRIBUTION,
+      attributions: ATTRIBUTION,
       layer: 'terrain',
       minZoom: 0,
       maxZoom: 18,
@@ -83,7 +87,7 @@ export var config = {
     },
 
     Watercolor: {
-      attributions: ol.source.OSM.ATTRIBUTION,
+      attributions: ATTRIBUTION,
       layer: 'watercolor',
       minZoom: 0,
       maxZoom: 18,
@@ -115,7 +119,7 @@ export var config = {
     Mapbox: {
       tileSize: [512, 512],
       attributions: '© <a target="_blank" href="https://www.mapbox.com/about/maps/">Mapbox</a>' + ' ' +
-        ol.source.OSM.ATTRIBUTION,
+        ATTRIBUTION,
       minZoom: 0,
       maxZoom: 22,
       crossOrigin: 'anonymous',
@@ -123,7 +127,7 @@ export var config = {
 
     MapboxClassic: {
       attributions: '© <a target="_blank" href="https://www.mapbox.com/about/maps/">Mapbox</a>' + ' ' +
-        ol.source.OSM.ATTRIBUTION,
+        ATTRIBUTION,
       minZoom: 0,
       maxZoom: 22,
       crossOrigin: 'anonymous',
@@ -133,22 +137,22 @@ export var config = {
   klokan: {
 
     OpenMapTiles: {
-      format: new ol.format.MVT(),
-      tileGrid:  ol.tilegrid.createXYZ({tileSize: 512, maxZoom: 22}), //ToDo maxZoom from configuration
+      format: new MVT(),
+      tileGrid:  createXYZ({tileSize: 512, maxZoom: 22}), //ToDo maxZoom from configuration
       tilePixelRatio: 8,
       attributions: '© <a target="_blank" href="https://openmaptiles.org/">OpenMapTiles</a>' + ' ' +
-        ol.source.OSM.ATTRIBUTION,
+        ATTRIBUTION,
       minZoom: 0,
       maxZoom: 22,
       crossOrigin: 'anonymous'
     },
 
     TileHosting: {
-      format: new ol.format.MVT(),
-      tileGrid:  ol.tilegrid.createXYZ({tileSize: 512, maxZoom: 22}), //ToDo maxZoom from configuration
+      format: new MVT(),
+      tileGrid:  createXYZ({tileSize: 512, maxZoom: 22}), //ToDo maxZoom from configuration
       tilePixelRatio: 8,
       attributions: '© <a target="_blank" href="https://tilehosting.com/">TileHosting</a>' + ' ' +
-        ol.source.OSM.ATTRIBUTION,
+        ATTRIBUTION,
       minZoom: 0,
       maxZoom: 22,
       crossOrigin: 'anonymous',
@@ -160,7 +164,7 @@ export var config = {
     HERE: {
       tileSize: [512, 512],
       attributions: 'Map Tiles © <a target="_blank" href="https://developer.here.com">HERE</a>'+ ' ' +
-        ol.source.OSM.ATTRIBUTION,
+        ATTRIBUTION,
       minZoom: 0,
       maxZoom: 22,
       crossOrigin: 'anonymous',
@@ -173,7 +177,7 @@ export var config = {
     Thunderforest: {
       tileSize: [512, 512],
       attributions: 'Map Tiles © <a target="_blank" href="https://www.thunderforest.com/">Thunderforest</a>' + ' ' +
-        ol.source.OSM.ATTRIBUTION,
+        ATTRIBUTION,
       minZoom: 0,
       maxZoom: 19,
       crossOrigin: 'anonymous',
