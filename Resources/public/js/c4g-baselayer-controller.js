@@ -30,6 +30,8 @@ import VectorTileLayer from 'ol/layer/VectorTile';
 import ol_source_GeoImage from "ol-ext/source/GeoImage";
 import Projection from "ol/proj/Projection";
 import {ImageStatic} from "ol/source";
+import {Layerswitcher} from "./c4g-maps-control-starboardplugin-layerswitcher";
+import {Baselayerswitcher} from "./c4g-maps-control-starboardplugin-baselayerswitcher";
 
 export class C4gBaselayerController {
   constructor(proxy) {
@@ -492,18 +494,22 @@ export class C4gBaselayerController {
             showLayer = !!layer.activeForBaselayers.includes(baselayerId);
           }
           if (showLayer) {
-            layer.display = true;
+            arrLayers[id].display = true;
             this.proxy.layerController.showLayer(id);
           } else {
-            layer.display = false;
+            arrLayers[id].display = false;
             this.proxy.layerController.hideLayer(id);
           }
         }
       }
     }
-    if (this.proxy.options.mapController.controls.starboard &&
-      this.proxy.options.mapController.controls.starboard.initialized) {
-      this.proxy.options.mapController.controls.starboard.plugins.layerswitcher.loadContent();
+    let starboard = this.proxy.options.mapController.controls.starboard;
+    if (starboard && starboard.initialized) {
+      if (!starboard.plugins.layerswitcher) {
+        starboard.plugins.layerswitcher = new Layerswitcher(starboard);
+      }
+      starboard.plugins.layerswitcher.loadContent();
+      // starboard.plugins.layerswitcher.activate();
     }
   }
 
@@ -521,7 +527,14 @@ export class C4gBaselayerController {
       view;
 
     let baseLayerConfig = this.arrBaselayers[baseLayerUid];
-    this.filterLayersForBaselayer(baseLayerUid);
+    if (this.proxy.layers_loaded) {
+      this.filterLayersForBaselayer(baseLayerUid);
+    } else {
+      this.proxy.hook_layer_loaded.push(function() {
+        self.filterLayersForBaselayer(baseLayerUid);
+      });
+    }
+
 
     if ((typeof baseLayerConfig !== "undefined") && !baseLayerConfig.layer) {
       // create layer

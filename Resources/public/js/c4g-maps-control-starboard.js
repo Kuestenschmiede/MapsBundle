@@ -87,15 +87,17 @@ export class Starboard extends Sideboard {
 
       if (renderLayertree) {
         // do not display layerswitcher if there is nothing to switch
-        if (self.options.mapController.proxy.layerController.arrLayers) {
-          for (let id in self.options.mapController.proxy.layerController.arrLayers) {
-            if (self.options.mapController.proxy.layerController.arrLayers[id].display) {
-              displayLayerswitcher = true;
+        let objLayers = self.options.mapController.proxy.layerController.arrLayers;
+        if (objLayers) {
+          for (let id in objLayers) {
+            if (objLayers.hasOwnProperty(id)) {
+              if (objLayers[id].display) {
+                displayLayerswitcher = true;
+              }
             }
           }
         }
       }
-
       // - load "Layerswitcher"
       if (self.options.layerSwitcherCreate && renderLayertree && displayLayerswitcher) {
         self.plugins.layerswitcher = new Layerswitcher(self);
