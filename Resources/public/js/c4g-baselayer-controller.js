@@ -477,6 +477,36 @@ export class C4gBaselayerController {
     return newBaselayer;
 
   }
+
+  filterLayersForBaselayer(baselayerId) {
+    let arrLayers = this.proxy.layerController.arrLayers;
+    for (let id in arrLayers) {
+      if (arrLayers.hasOwnProperty(id)) {
+        let layer = arrLayers[id];
+        if (layer) {
+          let showLayer = false;
+          if (layer.activeForBaselayers === "all") {
+            continue;
+          }
+          else {
+            showLayer = !!layer.activeForBaselayers.includes(baselayerId);
+          }
+          if (showLayer) {
+            layer.display = true;
+            this.proxy.layerController.showLayer(id);
+          } else {
+            layer.display = false;
+            this.proxy.layerController.hideLayer(id);
+          }
+        }
+      }
+    }
+    if (this.proxy.options.mapController.controls.starboard &&
+      this.proxy.options.mapController.controls.starboard.initialized) {
+      this.proxy.options.mapController.controls.starboard.plugins.layerswitcher.loadContent();
+    }
+  }
+
   showBaseLayer(baseLayerUid) {
 
     let self = this,
@@ -491,33 +521,7 @@ export class C4gBaselayerController {
       view;
 
     let baseLayerConfig = this.arrBaselayers[baseLayerUid];
-    let arrLayers = self.proxy.layerController.arrLayers;
-    for (let id in arrLayers) {
-      if (arrLayers.hasOwnProperty(id)) {
-        let layer = arrLayers[id];
-        if (layer) {
-          let showLayer = false;
-          if (layer.activeForBaselayers == "all") {
-            continue;
-          }
-          else {
-            for (let activeBaselayerId in layer.activeForBaselayers) {
-              if (layer.activeForBaselayers.hasOwnProperty(activeBaselayerId)) {
-                if (baseLayerUid == layer.activeForBaselayers[activeBaselayerId]) {
-                  showLayer = true;
-                }
-              }
-            }
-          }
-          if (showLayer) {
-            self.proxy.layerController.showLayer(id);
-          }
-          else {
-            self.proxy.layerController.hideLayer(id);
-          }
-        }
-      }
-    }
+    this.filterLayersForBaselayer(baseLayerUid);
 
     if ((typeof baseLayerConfig !== "undefined") && !baseLayerConfig.layer) {
       // create layer
