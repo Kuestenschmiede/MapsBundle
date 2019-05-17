@@ -9,6 +9,7 @@
  * @copyright  Küstenschmiede GmbH Software & Design
  * @link       https://www.con4gis.org
  */
+
 import {C4gBaselayer} from "./c4g-baselayer";
 import {C4gOverlay} from "./c4g-overlay";
 import {config} from "./c4g-maps-config";
@@ -22,10 +23,13 @@ import VectorTile from "ol/VectorTile";
 import {default as VectorTileSource} from "ol/source/VectorTile";
 import {BingMaps} from "ol/source";
 import {TileWMS} from "ol/source";
-import {Group as LayerGroup} from "ol/layer";
+import {Group as LayerGroup, Image} from "ol/layer";
 import OLCesium from "olcs/OLCesium";
 import {applyStyle} from 'ol-mapbox-style';
 import VectorTileLayer from 'ol/layer/VectorTile';
+import ol_source_GeoImage from "ol-ext/source/GeoImage";
+import Projection from "ol/proj/Projection";
+import {ImageStatic} from "ol/source";
 
 export class C4gBaselayerController {
   constructor(proxy) {
@@ -409,13 +413,13 @@ export class C4gBaselayerController {
         }
         break;
       case 'image':
-        var projection = new ol.proj.Projection({
+        var projection = new Projection({
           code: 'image',
           units: 'pixels',
           extent: baseLayerConfig.extent ? baseLayerConfig.extent : [0, 0, 1920, 1080]
         });
-        newBaselayer = new ol.layer.Image({
-          source: new ol.source.ImageStatic({
+        newBaselayer = new Image({
+          source: new ImageStatic({
             url: baseLayerConfig.imageSrc,
             imageExtent: baseLayerConfig.extent ? baseLayerConfig.extent : [0, 0, 1920, 1080],
             projection: projection
@@ -432,9 +436,9 @@ export class C4gBaselayerController {
       case 'geoimage':
         let  arrSource = JSON.parse(baseLayerConfig.geoImageJson);
         arrSource.url = baseLayerConfig.imageSrc ? baseLayerConfig.imageSrc : arrSource.url;
-        newBaselayer = new ol.layer.Image({
+        newBaselayer = new Image({
 
-          source: new ol.source.GeoImage(
+          source: new ol_source_GeoImage(
               arrSource
           )
         });

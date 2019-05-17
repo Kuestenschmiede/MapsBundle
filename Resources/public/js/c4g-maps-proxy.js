@@ -20,12 +20,9 @@ import {utils} from "./c4g-maps-utils";
 import {cssConstants} from "./c4g-maps-constant";
 import {getLanguage} from "./c4g-maps-i18n";
 import {Vector} from "ol/layer";
-import {Point} from "ol/geom";
+import {Point, LineString} from "ol/geom";
 import {toLonLat} from "ol/proj";
-import {Style} from "ol/style";
-import {Circle} from "ol/style";
-import {Fill} from "ol/style";
-import {Text} from "ol/style";
+import {Style, Circle, Fill, Text, Stroke} from "ol/style";
 import {Feature} from "ol";
 import {Overlay} from "ol";
 import {Vector as VectorSource} from "ol/source";
@@ -295,7 +292,7 @@ export class MapProxy {
                 var p = [newCenter[0] + r * Math.sin(a), newCenter[1] + r * Math.cos(a)];
                 var coordinate = toLonLat(p);
                 var f = [];
-                let featureLinestring = new ol.Feature(new ol.geom.LineString([newCenter, p]));
+                let featureLinestring = new Feature(new LineString([newCenter, p]));
                 arrLinestring.push(featureLinestring);
                 f.push(fFeatures[i]);
                 var cf = new Feature({
@@ -307,14 +304,14 @@ export class MapProxy {
                   layer.getSource().addFeature(featureLinestring);
                   map.getView().setCenter(newCenter);
               }
-              let stringSource = new ol.source.Vector({features: arrLinestring});
-              let stringStyle = new ol.style.Style({
-                stroke: new ol.style.Stroke({
+              let stringSource = new VectorSource({features: arrLinestring});
+              let stringStyle = new Style({
+                stroke: new Stroke({
                   width: 0.1,
                   color: "#000070"
                 })
               });
-              let stringLayer = new ol.layer.Vector({
+              let stringLayer = new Vector({
                 source: stringSource,
                 style: stringStyle
               });
