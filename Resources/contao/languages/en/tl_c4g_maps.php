@@ -35,6 +35,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['show_locations'] = array('Show all Locations
 $GLOBALS['TL_LANG']['tl_c4g_maps']['min_gap'] = array('Minimum gap in pixel from locations to map border', 'Use this setting when your icons reach beyond the map border after determining the extent.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['center_geox'] = array('GEO latitude', 'Enter the GEO X-coordinate (latitude, WGS-84) of the map center.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['center_geoy'] = array('GEO longitude', 'Enter the GEO Y-coordinate (longitude, WGS-84) of the map center.');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['center_rotation'] = array('Initial rotation', 'Enter the initial rotation of the map in degrees. 180° equal a map facing south.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['zoom'] = array('Zoomlevel', 'Enter the zoomlevel of the initially shown map.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['restrict_area'] = array('Restrict navigation area', 'Selecting this option enables you to define an area where the user cannot pan away from. Also clicking on the world symbol of the zoom panel zooms to the defined area.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['restr_bottomleft_geox'] = array('GEO latitude left', 'GEO X-coordinate (latitude, WGS-84) of the lower left corner of the restricted navigation area.');

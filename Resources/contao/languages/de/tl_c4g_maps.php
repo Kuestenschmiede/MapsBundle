@@ -35,6 +35,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['show_locations'] = array('Alle Lokationen an
 $GLOBALS['TL_LANG']['tl_c4g_maps']['min_gap'] = array('Mindestabstand der Lokationen zum Kartenrand in Pixeln', 'Diese Einstellung ist sinnvoll, wenn nach der automatischen Ermittlung des anzuzeigenden Kartenausschnitts Ihre Icons aufgrund ihrer Größe über den Kartenrand hinausgehen.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['center_geox'] = array('Geo X-Koordinate', 'Geben Sie hier die X-Koordinate (Breitengrad, WGS-84) der Kartenmitte ein.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['center_geoy'] = array('Geo Y-Koordinate', 'Geben Sie hier die Y-Koordinate (Längengrad, WGS-84) der Kartenmitte ein.');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['center_rotation'] = array('Initiale Drehung', 'Geben Sie hier die intitiale Drehung in Grad an. 180° ergeben eine gesüdete Karte.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['zoom'] = array('Zoom-Level', 'Geben Sie hier den Zoom-Level der Karte ein.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['restrict_area'] = array('Kartenausschnitt einschränken', 'Mit dieser Option können Sie setzen, aus welchem "Rechteck" der Nutzer nicht herausnavigieren können soll. Außerdem wird bei einem Klick auf das Weltkugel-Symbol des Zoom-Steuerelements auf die hier angegebenen Koordinaten gezoomt.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['restr_bottomleft_geox'] = array('Geo X-Koordinate links', 'Geo X-Koordinate (Breitengrad, WGS-84) der linken, unteren Ecke für den eingeschränkten Navigationsbereich.');
