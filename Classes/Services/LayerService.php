@@ -10,6 +10,7 @@
  * @copyright  Küstenschmiede GmbH Software & Design
  * @link       https://www.con4gis.org
  */
+
 namespace con4gis\MapsBundle\Classes\Services;
 
 
@@ -330,7 +331,6 @@ class LayerService
         }
         // check parent hide status
         $parentLayer = C4gMapsModel::findById($objLayer->pid);
-        
         if (!$parentLayer->is_map && $parentLayer->data_hidelayer) {
             $arrLayerData['hide'] = $parentLayer->data_hidelayer;
         } else {
@@ -370,6 +370,24 @@ class LayerService
         } else {
             $arrLayerData['content'] = $this->getContentForType($objLayer);
         }
+        
+        if ($arrLayerData['activeForBaselayers'] === "all" && $parentLayer) {
+            if ($parentLayer->filterByBaseLayer) {
+                $arrLayerData['activeForBaselayers'] = unserialize($parentLayer->filterByBaseLayer);
+            } else {
+                // check parents if they have a baselayer filter
+                $layer = C4gMapsModel::findByPk($parentLayer->id);
+                while ($layer->pid != 0) {
+                    if ($layer->filterByBaseLayer) {
+                        $arrLayerData['activeForBaselayers'] = unserialize($layer->filterByBaseLayer);
+                        break;
+                    } else {
+                        $layer = C4gMapsModel::findByPk($layer->pid);
+                    }
+                }
+            }
+        }
+        
         if ($objLayer->icon_src) {
             $objFile = \FilesModel::findByUuid($objLayer->icon_src);
             if ($objFile && $objFile->path) {
@@ -401,6 +419,11 @@ class LayerService
             // check childs
             // TODO cache resolved link
             $arrLayerData = array_merge($arrLayerData, $this->getChildsForLinkedLayer($linkedLayer->id, $objLayer));
+        }
+        
+        // set baselayer filter
+        if ($linkedLayer->filterByBaseLayer) {
+            $arrLayerData['activeForBaselayers'] = unserialize($linkedLayer->filterByBaseLayer);
         }
         
         // set zooms of links
