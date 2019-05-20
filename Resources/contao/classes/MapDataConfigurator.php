@@ -195,7 +195,9 @@ class MapDataConfigurator
             if (!empty($map->center_geoy)) {
                 $mapData['center']['lat'] = \Contao\Controller::replaceInsertTags($map->center_geoy);
             }
-
+            if (!empty($map->center_rotation)) {
+                $mapData['center']['rotation'] = $map->center_rotation / 180 * pi();
+            }
             // map-zoom
             if (!empty($map->zoom)) {
                 $mapData['center']['zoom'] = \Contao\Controller::replaceInsertTags($map->zoom);
