@@ -488,7 +488,7 @@ export class C4gBaselayerController {
         let layer = arrLayers[id];
         if (layer) {
           let showLayer = false;
-          if (layer.activeForBaselayers === "all") {
+          if (layer.activeForBaselayers === "all" || layer.renderSpecial) {
             continue;
           }
           else {
