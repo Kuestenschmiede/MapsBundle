@@ -481,6 +481,12 @@ class MapDataConfigurator
                 $mapData['ovp_key'] = $key;
             }
             
+            // check baselayers if a key is needed
+            $blKeys = static::checkBaselayers($profile, $objSettings);
+            if (count($blKeys) > 0) {
+                $mapData['base_keys'] = $blKeys;
+            }
+            
             // miscellaneous
             //
             $mapData['infopage'] =  \Contao\Controller::replaceInsertTags($profile->infopage);
@@ -541,5 +547,26 @@ class MapDataConfigurator
 
 
         return $mapData;
+    }
+    
+    private static function checkBaselayers($profile, $objSettings)
+    {
+        $arrKeys = [];
+        if ($profile->baselayers !== null) {
+            $baselayerIds = unserialize($profile->baselayers);
+            $blResult = C4gMapBaselayersModel::findBy('id', $baselayerIds);
+        } else {
+            $blResult = C4gMapBaselayersModel::findAll();
+        }
+        $baseLayers = $blResult->fetchAll();
+        
+        foreach ($baseLayers as $baseLayer) {
+            if ($baseLayer['provider'] == "con4gisIo") {
+                $key = C4GUtils::getKey($objSettings, '4', 'id='.$baseLayer['con4gisIo']);
+                $arrKeys[$baseLayer['id']] = $key;
+            }
+        }
+        
+        return $arrKeys;
     }
 }

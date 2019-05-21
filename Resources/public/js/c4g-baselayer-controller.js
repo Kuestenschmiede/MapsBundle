@@ -39,6 +39,7 @@ export class C4gBaselayerController {
     this.mapController = proxy.options.mapController;
     this.arrBaselayers = {};
     this.baselayerIds = [];
+    this.baseKeys = this.mapController.data.base_keys;
   }
 
   loadBaseLayers() {
@@ -220,7 +221,7 @@ export class C4gBaselayerController {
         }
         break;
       case 'con4gisIo':
-        layerOptions.url = baseLayerConfig.url;
+        layerOptions.url = baseLayerConfig.url.replace('{key}', this.baseKeys[baseLayerConfig.id]);
         newBaselayer = new TileLayer({
           source: new XYZ(layerOptions)
         });

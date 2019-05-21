@@ -266,10 +266,10 @@ class BaseLayerService
                 break;
             case 'con4gisIo':
                 $objSettings = C4gMapSettingsModel::findOnly();
-                $key = C4GUtils::getKey($objSettings, '4', 'id='.$objBaseLayer->con4gisIo);
-                if ($key) {
-                    $arrBaseLayer['url'] = rtrim($objSettings->con4gisIoUrl, "/") . "/" . "tiles.php?key=" . $key . "&z={z}&x={x}&y={y}";
-                }
+//                $key = C4GUtils::getKey($objSettings, '4', 'id='.$objBaseLayer->con4gisIo);
+//                if ($key) {
+                    $arrBaseLayer['url'] = rtrim($objSettings->con4gisIoUrl, "/") . "/" . "tiles.php?key={key}&z={z}&x={x}&y={y}";
+//                }
                 break;
             case 'mapbox':
                 $arrBaseLayer['url'] = 'https://api.mapbox.com/styles/v1/';
