@@ -171,11 +171,7 @@ class LayerContentService
     {
         $objSettings = C4gMapSettingsModel::findOnly();
         if ($objProfile->overpassEngine == "2") {
-            $key = C4GUtils::getKey($objSettings, '5');
-            if ($key) {
-                $url = rtrim($objSettings->con4gisIoUrl, "/") . "/" . "osm.php?key=" . $key;
-                $mapData['geosearch']['url'] = rtrim($objSettings->con4gisIoUrl, "/") . "/";
-            }
+            $url = rtrim($objSettings->con4gisIoUrl, "/") . "/" . "osm.php?key={key}";
         }
         else if ($objProfile->overpassEngine == "1") {
             $url = $objProfile->overpass_url;

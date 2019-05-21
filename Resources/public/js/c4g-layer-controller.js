@@ -34,13 +34,14 @@ import {Group} from "ol/layer";
 import * as olFormat from "ol/format";
 import ol_layer_AnimatedCluster from "ol-ext/layer/AnimatedCluster";
 
+export class C4gLayerController {
 
-export class C4gLayerController{
-  constructor(proxy){
+  constructor(proxy) {
     this.proxy = proxy;
     this.mapController = proxy.options.mapController;
     this.arrLayers = {};
     this.layerRequests = {};
+    this.ovpKey = this.mapController.data.ovp_key;
   }
   
   loadLayers () {
@@ -420,6 +421,9 @@ export class C4gLayerController{
                   }
 
                   url = requestData.url;
+                  if (url.indexOf('{key}') > -1) {
+                    url = url.replace('{key}', self.ovpKey);
+                  }
 
                   if (requestData.params) {
                     const bboxTag = requestData.params.indexOf('(bbox)') >= 0 ? /\(bbox\)/g : /\{{bbox\}}/g

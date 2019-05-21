@@ -129,7 +129,6 @@ class MapDataConfigurator
         if ($profileService) {
             $profileId = $profileService->getProfileId($profileId);
         }
-
         // get appropriate profile from database
         $profile = C4gMapProfilesModel::findByPk($profileId);
         // use default if the profile was not found
@@ -174,6 +173,7 @@ class MapDataConfigurator
                 $mapData['caching'] = 0;
             }
         }
+        
         $mapData['profile'] = $profileId;
 
         // ------------------------------------------------------------------------
@@ -474,9 +474,13 @@ class MapDataConfigurator
                 $mapData['cesium']['always'] = $profile->cesium_always;
             }
 
-            // expert-configs
+            // overpass handling
             //
-
+            if ($profile->overpassEngine === "2") {
+                $key = C4GUtils::getKey($objSettings, '5');
+                $mapData['ovp_key'] = $key;
+            }
+            
             // miscellaneous
             //
             $mapData['infopage'] =  \Contao\Controller::replaceInsertTags($profile->infopage);
