@@ -22,6 +22,7 @@ use con4gis\MapsBundle\Resources\contao\models\C4gMapSettingsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use Contao\Controller;
 use Contao\Input;
+use Contao\Model\Collection;
 use Contao\System;
 
 /**
@@ -557,6 +558,9 @@ class MapDataConfigurator
             $blResult = C4gMapBaselayersModel::findBy('id', $baselayerIds);
         } else {
             $blResult = C4gMapBaselayersModel::findAll();
+        }
+        if (!$blResult instanceof Collection) {
+            return [];
         }
         $baseLayers = $blResult->fetchAll();
         
