@@ -32,6 +32,9 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_src']         = array('Icon Qu
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_size']        = array('Größe des Icons','Bei manchen Bildformaten ist es notwendig die Originalmaße der Bilddatei anzugeben. Wenn Sie das Icon in einer anderen Größe als das Original anzeigen wollen, nutzen Sie dann bitte die "Icon skalieren"-Option.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['svgSize']          = array('Größe des SVG','Geben Sie hier die Größe an, in der Sie das SVG auf der Karte darstellen wollen.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_scale']       = array('Icon skalieren','Sie können die Größe skalieren: 1.0 = 100%');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_resize_zoom']       = array('Icon bei Zoom neu skalieren', 'Setzen Sie diese Checkbox, wenn das Icon beim Zoomen auch neu mitskaliert werden soll.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_resize_src_zoom']       = array('Initiale Zoomstufe','Geben Sie die Zoomstufe an, für die das Icon die angegebenen Maße und Skalierung haben soll.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_resize_scale_factor']       = array('Skalierungsfaktor','Geben Sie einen Prozentwert (1-100) an, um den das Icon pro Zoomstufe skaliert werden soll.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_offset']      = array('Positionsversatz des Icons (X/Y) in Pixel','Bei einem Versatz von "0" befindet sich die obere linke Ecke des Icons an der angegebenen Geo-Lokation. X=Positiv => nach rechts. X=negativ => nach links. Y=positiv => nach unten. Y=negativ => nach oben.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_opacity']     = array('Deckkraft des Icons','Bitte wählen Sie die Deckkraft des Icons in % aus.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['iconcolor']        = array('Farbe des Icons','Hiermit können Sie die Icon-Farbe verändern.');

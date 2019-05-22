@@ -282,6 +282,37 @@ export class C4gLocationStyle{
                 }
 
             }
+            // check if image has to be resized
+            if (styleData.icon_resize_zoom) {
+                let currentZoom = self.controller.mapController.map.getView().getZoom();
+                let initialZoom = parseInt(styleData.icon_resize_src_zoom, 10);
+                let scaleFactor = parseFloat(styleData.icon_resize_scale_factor);
+                let initialScale = parseFloat(styleData.icon_scale);
+                let factor = 0;
+                let newScale = 0.0;
+                if (currentZoom > initialZoom) {
+                    // resize image bigger
+                    factor = currentZoom - initialZoom;
+                    let scaleSummand = scaleFactor * factor;
+                    newScale = initialScale + scaleSummand;
+                    if (newScale > 1.0) {
+                        newScale = 1.0;
+                    }
+                } else if (currentZoom < initialZoom) {
+                    // resize image smaller
+                    factor = initialZoom - currentZoom;
+                    let scaleSummand = scaleFactor * factor;
+                    newScale = initialScale - scaleSummand;
+                    if (newScale <= 0.0) {
+                        // fixed small scale
+                        newScale = 0.01;
+                    }
+                } else {
+                    // resize to initial size
+                    newScale = initialScale;
+                }
+                imageStyle.setScale(newScale);
+            }
 
             // create style-object
             // we need this check because textStyle is a var accessible from closure and will be set even if no label is set
