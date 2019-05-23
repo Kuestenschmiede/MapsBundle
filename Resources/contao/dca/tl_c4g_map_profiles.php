@@ -91,10 +91,10 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
     // Palettes
     'palettes' =>
         [
-        '__selector__'                => ['mouse_nav','starboard','cluster_all','baselayerswitcher','layerswitcher','attribution','hover_popups','permalink','geosearch','geopicker','overpassEngine', 'cesium'],
+        '__selector__'                => ['resize_locstyles_zoom', 'mouse_nav','starboard','cluster_all','baselayerswitcher','layerswitcher','attribution','hover_popups','permalink','geosearch','geopicker','overpassEngine', 'cesium'],
         'default'                     => '{general_legend},name,theme;'.
                                          '{baselayer_legend:hide},baselayers, default_baselayer;'.
-                                         '{locstyle_legend:hide},locstyles, label_color;'.
+                                         '{locstyle_legend:hide},locstyles, label_color,resize_locstyles_zoom;'.
                                          '{navigation_legend:hide},zoom_panel,zoom_panel_button,zoom_panel_slider,mouse_nav,touch_nav,keyboard_nav,fullscreen,print;'.
                                          '{starboard_legend:hide},starboard;'.
                                          '{information_legend:hide},attribution,overviewmap,graticule,scaleline,mouseposition,permalink,zoomlevel,infopage;'.
@@ -124,7 +124,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         'cesium'                      => 'cesium_always',
         'overpassEngine_1'            => 'overpass_url',
         'overpassEngine_2'            => '',
-        'overpassEngine_3'            => ''
+        'overpassEngine_3'            => '',
+        'resize_locstyles_zoom'       => 'resize_src_zoom,resize_scale_factor,resize_min_scale,resize_max_scale'
         ],
 
     // Fields
@@ -197,7 +198,57 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'eval'                    => ['maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'long wizard'],
             'sql'                     => "varchar(6) NOT NULL default ''"
             ],
+    
+        'resize_locstyles_zoom' =>
+        [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['resize_locstyles_zoom'],
+            'exclude'                 => true,
+            'default'                 => '',
+            'inputType'               => 'checkbox',
+            'eval'                    => ['submitOnChange' => true],
+            'sql'                     => "char(1) NOT NULL default ''"
+        ],
+    
+        'resize_src_zoom' =>
+        [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['resize_src_zoom'],
+            'exclude'                 => true,
+            'inputType'               => 'text',
+            'default'                 => '',
+            'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
+            'sql'                     => "int(10) NOT NULL default '0'"
+        ],
 
+        'resize_scale_factor' =>
+        [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['resize_scale_factor'],
+            'exclude'                 => true,
+            'inputType'               => 'text',
+            'default'                 => '0.1',
+            'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
+            'sql'                     => "double(3,3) NOT NULL default '0.100'"
+        ],
+    
+        'resize_min_scale' =>
+        [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['resize_min_scale'],
+            'exclude'                 => true,
+            'inputType'               => 'text',
+            'default'                 => '0.1',
+            'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
+            'sql'                     => "double(3,3) NOT NULL default '0.100'"
+        ],
+    
+        'resize_max_scale' =>
+        [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['resize_max_scale'],
+            'exclude'                 => true,
+            'inputType'               => 'text',
+            'default'                 => '1.0',
+            'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
+            'sql'                     => "double(3,3) NOT NULL default '1.000'"
+        ],
+        
         'zoom_panel' =>
             [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['zoom_panel'],
@@ -211,7 +262,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['zoom_panel_button'],
             'exclude'                 => true,
-            'default'                 => true,
             'default'                 => '',
             'inputType'               => 'checkbox',
             'options'                 => ['1','2','3'],

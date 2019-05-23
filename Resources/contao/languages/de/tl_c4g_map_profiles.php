@@ -26,6 +26,11 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['default_baselayer'] = ['Standard-Bas
 /** Lokationsstile */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['locstyles'] = ['Lokationsstile', 'Wählen Sie die Lokationsstile, die in den Kartenstrukturelementen dieses Profils geladen werden sollen. Standard: alle'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['label_color'] = ['Label-Farbe', 'Wählen Sie die Standardfarbe für Labels aus. Dies kann durch die Einstellung am Lokationsstil überschrieben werden.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['resize_locstyles_zoom'] = ['Lokationen beim Zoom skalieren', 'Setzen Sie diese Checkbox, wenn die Lokationen (mit Icons) beim Zoomen der Zoomstufe entsprechend skaliert werden sollen.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['resize_src_zoom'] = ['Initialer Zoom', 'Geben Sie den Zoomlevel an, bei dem die Lokationen ihre normale Größe haben sollen.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['resize_scale_factor'] = ['Skalierungsfaktor', 'Geben Sie einen Skalierungsfaktor (zwischen 0 und 1) an, um den die Lokationen beim Zoomen hoch- oder herunterskaliert werden sollen.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['resize_min_scale'] = ['Minimale Skalierung', 'Geben Sie eine Skalierung an, die nicht unterschritten werden soll (Lokationen werden nicht kleiner skaliert als dieser Wert).'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['resize_max_scale'] = ['Maximale Skalierung', 'Geben Sie eine Skalierung an, die nicht überschritten werden soll (Lokationen werden nicht größer skaliert als dieser Wert).'];
 
 /** Navigation */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['zoom_panel'] = ['Steuerelement zum Zoomen', 'Erzeugen von Buttons zum Hinein- und Herauszoomen.'];

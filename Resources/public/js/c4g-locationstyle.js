@@ -15,14 +15,15 @@ import {Fill} from "ol/style";
 import {Style} from "ol/style";
 import {RegularShape} from "ol/style";
 import {Circle} from "ol/style";
-// import {Photo} from "ol/style";
+// import {Photo} from "ol/style"; // TODO, kommt aus ol-ext
 import {Icon} from "ol/style";
 import {Feature} from "ol";
 import {Point} from "ol/geom";
 import {Text} from "ol/style";
 
-export class C4gLocationStyle{
-  constructor(locStyleArr, controller){
+export class C4gLocationStyle {
+
+  constructor(locStyleArr, controller) {
     this.id        = locStyleArr['id'];
     this.style     = this.getStyleFunction(locStyleArr);
     this.editor    = this.getStyleEditorConfig(locStyleArr);
@@ -58,6 +59,192 @@ export class C4gLocationStyle{
       color: utils.getRgbaFromHexAndOpacity(styleData.fillcolor, styleData.fillopacity)
     });
 
+    imageStyle = this.createImageStyle(styleData, strokeStyle, fillStyle);
+
+    // build function
+    styleFunction = function (feature, projection, getId) {
+      var stylesArray,
+        label,
+        arrowSize,
+        arrowSizeUnit,
+        segmentLength,
+        arrows_minzoom,
+        start_pixel,
+        end_pixel;
+
+      if (getId) {
+        return styleData.id;
+      }
+
+      // check if this is a feature.styleFunction
+      if (!(feature && feature.constructor.name === Feature.name)) {
+        projection = feature;
+        feature = this;
+      }
+
+      stylesArray = [];
+
+      if (feature && typeof feature.get === 'function' && feature.get('label')) {
+        label = feature.get('label');
+      } else if (styleData.label) {
+        label = styleData.label;
+      } else {
+        label = false;
+      }
+      let defaultColor = self.controller.mapController.data.default_label_color;
+      // label
+      if (label) {
+        if (styleData.label_outl_color && styleData.label_outl_width.value) {
+          textStyleOutline = new Stroke({
+            color: utils.getRgbaFromHexAndOpacity(styleData.label_outl_color || defaultColor, {
+              unit: '%',
+              value: 100
+            }),
+            width: parseInt(styleData.label_outl_width.value, 10)
+          });
+          if(styleData.label_outl_box === "1"){
+            backgroundFill = new Fill({
+              color: utils.getRgbaFromHexAndOpacity(styleData.label_outl_color || defaultColor, {
+                unit: '%',
+                value: 100
+              })
+            });
+          }
+        }
+        if (!styleData.label_offset) {
+          styleData.label_offset = [0, 0, "px"];
+        }
+        let textOptions = {
+          text: label,
+          font: (styleData.font_weight || 'normal') + ' ' + (styleData.font_style || 'normal') + ' ' + (styleData.font_size || '13') + 'px ' + (styleData.font_family || 'sans-serif'),
+          // scale: parseInt(styleData.font_size || 0, 10) || undefined,
+          offsetX: parseInt(styleData.label_offset[0] || 0, 10),
+          offsetY: parseInt(styleData.label_offset[1] || 0, 10),
+          textAlign: styleData.label_align_hor,
+          textBaseline: styleData.label_align_ver,
+          fill: new Fill({
+            color: utils.getRgbaFromHexAndOpacity(styleData.font_color || defaultColor, styleData.font_opacity)
+          }),
+          stroke: textStyleOutline
+        };
+        if (styleData.label_outl_box === "1") {
+          textOptions.backgroundFill = backgroundFill;
+          textOptions.backgroundStroke = textStyleOutline;
+        }
+        textStyle = new Text(textOptions);
+      }
+
+      let newScale = self.getScaleFactor(styleData);
+
+      // check if image has to be resized
+      if (imageStyle && newScale !== 0.0) {
+        if (styleData.styletype === 'cust_icon' || styleData.styletype === 'point') {
+          let newScale = self.getScaleFactor(styleData);
+          imageStyle.setScale(newScale);
+        } else if (styleData.styletype === 'cust_icon_svg') {
+          let newScale = self.getScaleFactor(styleData);
+          let canvas = imageStyle.getImage();
+          canvas.width = styleData.icon_size[0] * newScale;
+          canvas.height = styleData.icon_size[1] * newScale;
+          imageStyle = new Icon({
+            img: canvas,
+            imgSize: [canvas.width, canvas.height]
+          });
+
+        }
+      }
+
+      // create style-object
+      if (label) {
+        let zIndex;
+        if(feature && feature.get && typeof feature.get === "function" && feature.get('zIndex')){
+          zIndex = feature.get('zIndex');
+        }
+        stylesArray.push(
+          new Style({
+            image: imageStyle,
+            text: textStyle,
+            stroke: strokeStyle,
+            fill: fillStyle,
+            zIndex: zIndex
+          })
+        );
+      } else {
+        stylesArray.push(
+          new Style({
+            image: imageStyle,
+            stroke: strokeStyle,
+            fill: fillStyle
+          })
+        );
+      }
+
+
+      // add line-arrows
+      if (
+        styleData.line_arrows
+        && feature
+        && (typeof feature.getGeometry === 'function')
+        && !(feature.getGeometry().constructor.name === Point.name)
+        && typeof feature.getGeometry().forEachSegment === 'function'
+      ) {
+        let arrowStyles = self.createLineArrowStyles(styleData, feature);
+        stylesArray = stylesArray.concat(arrowStyles);
+      }
+
+      return stylesArray;
+    };
+
+    return styleFunction;
+  } // end of "getStyleFunction()"
+
+  /**
+   * Determines the current scaling factor according to the current zoomlevel and the profile/locstyle settings.
+   * @param styleData
+   */
+  getScaleFactor(styleData) {
+    let newScale = 0.0;
+    let initialZoom, scaleFactor, factor, minScale, maxScale;
+    let currentZoom = this.controller.mapController.map.getView().getZoom();
+    let initialScale = parseFloat(styleData.icon_scale);
+    // locstyle setting overwrites profile setting
+    if (styleData.icon_resize_zoom) {
+      initialZoom = parseInt(styleData.icon_resize_src_zoom, 10);
+      scaleFactor = parseFloat(styleData.icon_resize_scale_factor);
+      minScale = parseFloat(styleData.icon_resize_min_scale);
+      maxScale = parseFloat(styleData.icon_resize_max_scale);
+    } else if (this.controller.resizeOnZoom) {
+      initialZoom = parseInt(this.controller.resizeOnZoom.srcZoom, 10);
+      scaleFactor = parseFloat(this.controller.resizeOnZoom.scaleFactor);
+      minScale = parseFloat(this.controller.resizeOnZoom.minScale);
+      maxScale = parseFloat(this.controller.resizeOnZoom.maxScale);
+    }
+    if (currentZoom > initialZoom) {
+      // resize image bigger
+      factor = currentZoom - initialZoom;
+      let scaleSummand = scaleFactor * factor;
+      newScale = initialScale + scaleSummand;
+      if (newScale > maxScale) {
+        newScale = maxScale;
+      }
+    } else if (currentZoom < initialZoom) {
+      // resize image smaller
+      factor = initialZoom - currentZoom;
+      let scaleSummand = scaleFactor * factor;
+      newScale = initialScale - scaleSummand;
+      if (newScale <= minScale) {
+        newScale = minScale;
+      }
+    } else {
+      // resize to initial size
+      newScale = initialScale;
+    }
+
+    return newScale;
+  }
+
+  createImageStyle(styleData, strokeStyle, fillStyle) {
+    let imageStyle;
     // image
     switch (styleData.styletype) {
       case 'square':
@@ -129,39 +316,6 @@ export class C4gLocationStyle{
           let ctx = canvas.getContext("2d");
           let width = (styleData.icon_size[0]*styleData.icon_scale);
           let height = (styleData.icon_size[1]*styleData.icon_scale);
-
-          if (styleData.icon_resize_zoom) {
-            let currentZoom = self.controller.mapController.map.getView().getZoom();
-            let initialZoom = parseInt(styleData.icon_resize_src_zoom, 10);
-            let scaleFactor = parseFloat(styleData.icon_resize_scale_factor);
-            let initialScale = parseFloat(styleData.icon_scale);
-            let factor = 0;
-            let newScale = 0.0;
-            if (currentZoom > initialZoom) {
-              // resize image bigger
-              factor = currentZoom - initialZoom;
-              let scaleSummand = scaleFactor * factor;
-              newScale = initialScale + scaleSummand;
-              if (newScale > 1.0) {
-                newScale = 1.0;
-              }
-            } else if (currentZoom < initialZoom) {
-              // resize image smaller
-              factor = initialZoom - currentZoom;
-              let scaleSummand = scaleFactor * factor;
-              newScale = initialScale - scaleSummand;
-              if (newScale <= 0.0) {
-                // fixed small scale
-                newScale = 0.01;
-              }
-            } else {
-              // resize to initial size
-              newScale = initialScale;
-            }
-            width = styleData.icon_size[0] * newScale;
-            height = styleData.icon_size[1] * newScale;
-          }
-
           let strokewidth = 0;
           if (styleData.strokewidth && styleData.strokewidth.value) {
             strokewidth = styleData.strokewidth.value;
@@ -182,10 +336,6 @@ export class C4gLocationStyle{
             ctx.translate(0.5, 0.5);
           }
 
-          // if (styleData.icon_opacity.value && (styleData.icon_opacity.value > 0)) {
-          //     ctx.globalAlpha = (styleData.icon_opacity.value / 100);
-          // }
-
           let img = new Image();
           img.src = styleData.svgSrc;
           img.zIndex = 100; //Test
@@ -196,8 +346,7 @@ export class C4gLocationStyle{
 
           imageStyle = new Icon({
             img: canvas,
-            imgSize: [canvas.width, canvas.height]/*,
-                            opacity: (styleData.icon_opacity.value / 100)*/
+            imgSize: [canvas.width, canvas.height]
           });
         }
 
@@ -227,220 +376,67 @@ export class C4gLocationStyle{
           radius: styleData.radius.value || 7
         });
     }
+    return imageStyle;
+  }
 
-    // build function
-    styleFunction = function (feature, projection, getId) {
-      var stylesArray,
-        label,
-        arrowSize,
-        arrowSizeUnit,
-        segmentLength,
-        arrows_minzoom,
-        start_pixel,
-        end_pixel;
+  createLineArrowStyles(styleData, feature) {
+    const scope = this;
+    let stylesArray = [];
+    let arrowSize = (styleData.line_arrows_radius) ? (parseInt(styleData.line_arrows_radius.value, 10) * 2) : 0;
+    let arrowSizeUnit = arrowSize + styleData.line_arrows_radius.unit;
+    feature.getGeometry().forEachSegment(function (start, end) {
+      //if minzoom is 0 (unlimited), hide arrows if they are bigger than the segment
+      let arrows_minzoom = parseInt(styleData.line_arrows_minzoom, 10);
+      let start_pixel = scope.controller.mapController.map.getPixelFromCoordinate(start);
+      let end_pixel = scope.controller.mapController.map.getPixelFromCoordinate(end);
+      // euclid-distance between start and end
+      let segmentLength = Math.sqrt(Math.pow(end_pixel[1] - start_pixel[1], 2) + Math.pow(end_pixel[0] - start_pixel[0], 2));
 
-      if (getId) {
-        return styleData.id;
-      }
-
-      // check if this is a feature.styleFunction
-      if (!(feature && feature.constructor.name === Feature.name)) {
-        projection = feature;
-        feature = this;
-      }
-
-      stylesArray = [];
-
-      if (feature && typeof feature.get === 'function' && feature.get('label')) {
-        label = feature.get('label');
-      } else if (styleData.label) {
-        label = styleData.label;
-      } else {
-        label = false;
-      }
-      let defaultColor = self.controller.mapController.data.default_label_color;
-      // label
-      if (label) {
-        if (styleData.label_outl_color && styleData.label_outl_width.value) {
-          textStyleOutline = new Stroke({
-            color: utils.getRgbaFromHexAndOpacity(styleData.label_outl_color || defaultColor, {
-              unit: '%',
-              value: 100
-            }),
-            width: parseInt(styleData.label_outl_width.value, 10)
-          });
-          if(styleData.label_outl_box === "1"){
-            backgroundFill = new Fill({
-              color: utils.getRgbaFromHexAndOpacity(styleData.label_outl_color || defaultColor, {
-                unit: '%',
-                value: 100
-              })
-            });
-          }
-        }
-        if (!styleData.label_offset) {
-          styleData.label_offset = [0, 0, "px"];
-        }
-        if(styleData.label_outl_box === "1"){
-          textStyle = new Text({
-            text: label,
-            font: (styleData.font_weight || 'normal') + ' ' + (styleData.font_style || 'normal') + ' ' + (styleData.font_size || '13') + 'px ' + (styleData.font_family || 'sans-serif'),
-            // scale: parseInt(styleData.font_size || 0, 10) || undefined,
-            offsetX: parseInt(styleData.label_offset[0] || 0, 10),
-            offsetY: parseInt(styleData.label_offset[1] || 0, 10),
-            textAlign: styleData.label_align_hor,
-            textBaseline: styleData.label_align_ver,
-            fill: new Fill({
-              color: utils.getRgbaFromHexAndOpacity(styleData.font_color || defaultColor, styleData.font_opacity)
-            }),
-            backgroundFill: backgroundFill,
-            backgroundStroke: textStyleOutline
-          });
-        }
-        else{
-          textStyle = new Text({
-            text: label,
-            font: (styleData.font_weight || 'normal') + ' ' + (styleData.font_style || 'normal') + ' ' + (styleData.font_size || '13') + 'px ' + (styleData.font_family || 'sans-serif'),
-            // scale: parseInt(styleData.font_size || 0, 10) || undefined,
-            offsetX: parseInt(styleData.label_offset[0] || 0, 10),
-            offsetY: parseInt(styleData.label_offset[1] || 0, 10),
-            textAlign: styleData.label_align_hor,
-            textBaseline: styleData.label_align_ver,
-            fill: new Fill({
-              color: utils.getRgbaFromHexAndOpacity(styleData.font_color || defaultColor, styleData.font_opacity)
-            }),
-            stroke: textStyleOutline
-          });
-        }
-
-      }
-      // check if image has to be resized
-      if (styleData.icon_resize_zoom) {
-        let currentZoom = self.controller.mapController.map.getView().getZoom();
-        let initialZoom = parseInt(styleData.icon_resize_src_zoom, 10);
-        let scaleFactor = parseFloat(styleData.icon_resize_scale_factor);
-        let initialScale = parseFloat(styleData.icon_scale);
-        let factor = 0;
-        let newScale = 0.0;
-        if (currentZoom > initialZoom) {
-          // resize image bigger
-          factor = currentZoom - initialZoom;
-          let scaleSummand = scaleFactor * factor;
-          newScale = initialScale + scaleSummand;
-          if (newScale > 1.0) {
-            newScale = 1.0;
-          }
-        } else if (currentZoom < initialZoom) {
-          // resize image smaller
-          factor = initialZoom - currentZoom;
-          let scaleSummand = scaleFactor * factor;
-          newScale = initialScale - scaleSummand;
-          if (newScale <= 0.0) {
-            // fixed small scale
-            newScale = 0.01;
-          }
-        } else {
-          // resize to initial size
-          newScale = initialScale;
-        }
-        imageStyle.setScale(newScale);
-      }
-
-      // create style-object
-      // we need this check because textStyle is a var accessible from closure and will be set even if no label is set
-      if (label) {
-        let zIndex;
-        if(feature && feature.get && typeof feature.get === "function" && feature.get('zIndex')){
-          zIndex = feature.get('zIndex');
-        }
-        stylesArray.push(
-          new Style({
-            image: imageStyle,
-            text: textStyle,
-            stroke: strokeStyle,
-            fill: fillStyle,
-            zIndex: zIndex
-          })
-        );
-      } else {
-        stylesArray.push(
-          new Style({
-            image: imageStyle,
-            stroke: strokeStyle,
-            fill: fillStyle
-          })
-        );
-      }
-
-
-      // add line-arrows
       if (
-        styleData.line_arrows
-        && feature
-        && (typeof feature.getGeometry === 'function')
-        && !(feature.getGeometry().constructor.name === Point.name)
-        && typeof feature.getGeometry().forEachSegment === 'function'
+        (arrows_minzoom < 0 && arrowSize + parseInt(styleData.strokewidth.value, 10) < segmentLength)
+        || (arrows_minzoom >= 0 && self.controller.mapController.map.getView().getZoom() >= arrows_minzoom)
       ) {
-        arrowSize = (styleData.line_arrows_radius) ? (parseInt(styleData.line_arrows_radius.value, 10) * 2) : 0;
-        arrowSizeUnit = arrowSize + styleData.line_arrows_radius.unit;
-        feature.getGeometry().forEachSegment(function (start, end) {
-          //if minzoom is 0 (unlimited), hide arrows if they are bigger than the segment
-          arrows_minzoom = parseInt(styleData.line_arrows_minzoom, 10);
-          start_pixel = self.controller.mapController.map.getPixelFromCoordinate(start);
-          end_pixel = self.controller.mapController.map.getPixelFromCoordinate(end);
-          // euclid-distance between start and end
-          segmentLength = Math.sqrt(Math.pow(end_pixel[1] - start_pixel[1], 2) + Math.pow(end_pixel[0] - start_pixel[0], 2));
-
-          if (
-            (arrows_minzoom < 0 && arrowSize + parseInt(styleData.strokewidth.value, 10) < segmentLength)
-            || (arrows_minzoom >= 0 && self.controller.mapController.map.getView().getZoom() >= arrows_minzoom)
-          ) {
-            // forward arrows
-            stylesArray.push(
-              new Style({
-                geometry: new Point(end),
-                text: new Text({
-                  text: "ᐳ",
-                  font: arrowSizeUnit + " sans-serif",
-                  offsetX: 0,
-                  offsetY: 1,
-                  fill: fillStyle,
-                  stroke: strokeStyle,
-                  textAlign: 'right',
-                  rotateWithView: true,
-                  rotation: -Math.atan2((end[1] - start[1]), (end[0] - start[0]))
-                })
+        // forward arrows
+        stylesArray.push(
+          new Style({
+            geometry: new Point(end),
+            text: new Text({
+              text: "ᐳ",
+              font: arrowSizeUnit + " sans-serif",
+              offsetX: 0,
+              offsetY: 1,
+              fill: fillStyle,
+              stroke: strokeStyle,
+              textAlign: 'right',
+              rotateWithView: true,
+              rotation: -Math.atan2((end[1] - start[1]), (end[0] - start[0]))
+            })
+          })
+        );
+        // backward arrows (if wanted)
+        if (styleData.line_arrows_back) {
+          stylesArray.push(
+            new Style({
+              geometry: new Point(start),
+              text: new Text({
+                text: "ᐳ",
+                font: arrowSizeUnit + " sans-serif",
+                offsetX: 0,
+                offsetY: -1,
+                fill: fillStyle,
+                stroke: strokeStyle,
+                textAlign: 'right',
+                rotateWithView: true,
+                rotation: -Math.atan2((start[1] - end[1]), (start[0] - end[0]))
               })
-            );
-            // backward arrows (if wanted)
-            if (styleData.line_arrows_back) {
-              stylesArray.push(
-                new Style({
-                  geometry: new Point(start),
-                  text: new Text({
-                    text: "ᐳ",
-                    font: arrowSizeUnit + " sans-serif",
-                    offsetX: 0,
-                    offsetY: -1,
-                    fill: fillStyle,
-                    stroke: strokeStyle,
-                    textAlign: 'right',
-                    rotateWithView: true,
-                    rotation: -Math.atan2((start[1] - end[1]), (start[0] - end[0]))
-                  })
-                })
-              );
-            }
+            })
+          );
+        }
 
-          }
-        });
       }
-
-      return stylesArray;
-    };
-
-    return styleFunction;
-  } // end of "getStyleFunction()"
+    });
+    return stylesArray;
+  }
 
 
   getStyleEditorConfig(styleData) {

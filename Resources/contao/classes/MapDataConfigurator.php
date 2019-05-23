@@ -292,8 +292,17 @@ class MapDataConfigurator
             $mapData['default_baselayer'] = $profile->default_baselayer;
 
 
-            // location-styles
+            // location-style resizing
             //
+//            $mapData['resize_locstyles_zoom'] = $profile->resize_locstyles_zoom;
+            if ($profile->resize_locstyles_zoom) {
+                $mapData['resizeLocstyles'] = [
+                    'srcZoom' => $profile->resize_src_zoom,
+                    'scaleFactor' => $profile->resize_scale_factor,
+                    'minScale' => $profile->resize_min_scale,
+                    'maxScale' => $profile->resize_max_scale
+                ];
+            }
 
             // map-navigation
             //
