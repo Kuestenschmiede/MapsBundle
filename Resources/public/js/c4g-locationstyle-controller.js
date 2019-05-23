@@ -58,7 +58,9 @@ export class C4gLocationStyleController {
         if (data.length > 0) {
           for (i = 0; i < data.length; i += 1) {
             styleData = data[i];
-            self.arrLocStyles[styleData.id] = new C4gLocationStyle(styleData, self);
+            let style = new C4gLocationStyle(styleData, self);
+            style.style = style.getStyleFunction(styleData);
+            self.arrLocStyles[styleData.id] = style;
           }
         }
         if (index) {

@@ -25,7 +25,7 @@ export class C4gLocationStyle {
 
   constructor(locStyleArr, controller) {
     this.id        = locStyleArr['id'];
-    this.style     = this.getStyleFunction(locStyleArr);
+    // this.style     = this.getStyleFunction(locStyleArr);
     this.editor    = this.getStyleEditorConfig(locStyleArr);
     this.name      = locStyleArr['name'];
     this.tooltip   = locStyleArr['tooltip'];
@@ -64,13 +64,7 @@ export class C4gLocationStyle {
     // build function
     styleFunction = function (feature, projection, getId) {
       var stylesArray,
-        label,
-        arrowSize,
-        arrowSizeUnit,
-        segmentLength,
-        arrows_minzoom,
-        start_pixel,
-        end_pixel;
+        label;
 
       if (getId) {
         return styleData.id;
@@ -165,7 +159,7 @@ export class C4gLocationStyle {
           })
         );
       }
-      
+
       // add line-arrows
       if (
         styleData.line_arrows
@@ -174,7 +168,7 @@ export class C4gLocationStyle {
         && !(feature.getGeometry().constructor.name === Point.name)
         && typeof feature.getGeometry().forEachSegment === 'function'
       ) {
-        let arrowStyles = self.createLineArrowStyles(styleData, feature);
+        let arrowStyles = self.createLineArrowStyles(styleData, feature, strokeStyle, fillStyle);
         stylesArray = stylesArray.concat(arrowStyles);
       }
 
@@ -367,7 +361,7 @@ export class C4gLocationStyle {
     return imageStyle;
   }
 
-  createLineArrowStyles(styleData, feature) {
+  createLineArrowStyles(styleData, feature, strokeStyle, fillStyle) {
     const scope = this;
     let stylesArray = [];
     let arrowSize = (styleData.line_arrows_radius) ? (parseInt(styleData.line_arrows_radius.value, 10) * 2) : 0;
@@ -382,7 +376,7 @@ export class C4gLocationStyle {
 
       if (
         (arrows_minzoom < 0 && arrowSize + parseInt(styleData.strokewidth.value, 10) < segmentLength)
-        || (arrows_minzoom >= 0 && self.controller.mapController.map.getView().getZoom() >= arrows_minzoom)
+        || (arrows_minzoom >= 0 && scope.controller.mapController.map.getView().getZoom() >= arrows_minzoom)
       ) {
         // forward arrows
         stylesArray.push(
