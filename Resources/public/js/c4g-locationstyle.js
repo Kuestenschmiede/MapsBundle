@@ -138,20 +138,7 @@ export class C4gLocationStyle {
 
       // check if image has to be resized
       if (imageStyle && newScale !== 0.0) {
-        if (styleData.styletype === 'cust_icon' || styleData.styletype === 'point') {
-          let newScale = self.getScaleFactor(styleData);
-          imageStyle.setScale(newScale);
-        } else if (styleData.styletype === 'cust_icon_svg') {
-          let newScale = self.getScaleFactor(styleData);
-          let canvas = imageStyle.getImage();
-          canvas.width = styleData.icon_size[0] * newScale;
-          canvas.height = styleData.icon_size[1] * newScale;
-          imageStyle = new Icon({
-            img: canvas,
-            imgSize: [canvas.width, canvas.height]
-          });
-
-        }
+        imageStyle.setScale(newScale);
       }
 
       // create style-object
@@ -178,8 +165,7 @@ export class C4gLocationStyle {
           })
         );
       }
-
-
+      
       // add line-arrows
       if (
         styleData.line_arrows
@@ -314,8 +300,10 @@ export class C4gLocationStyle {
         if(styleData.svgSrc && styleData.icon_scale && styleData.icon_size) {
           let canvas = document.createElement('canvas');
           let ctx = canvas.getContext("2d");
-          let width = (styleData.icon_size[0]*styleData.icon_scale);
-          let height = (styleData.icon_size[1]*styleData.icon_scale);
+          let width, height;
+          width = (styleData.icon_size[0]*styleData.icon_scale);
+          height = (styleData.icon_size[1]*styleData.icon_scale);
+
           let strokewidth = 0;
           if (styleData.strokewidth && styleData.strokewidth.value) {
             strokewidth = styleData.strokewidth.value;
