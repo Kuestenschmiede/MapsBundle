@@ -38,7 +38,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
         'dataContainer'               => 'Table',
         'enableVersioning'            => true,
         'onsubmit_callback'             => [
-            ['\con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator', 'purgeLocationstyleApiCache']
+            ['\con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator', 'purgeLocationstyleApiCache'],
+            ['\con4gis\MapsBundle\Classes\Contao\Callbacks\TlC4gMapLocstyles', 'editSvgIcon']
         ],
         'sql'                         =>
             [
@@ -123,7 +124,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
                                          '{popup_legend},tooltip,popup_info;'.
                                          '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;'.
                                          '{editor_legend:hide},editor_icon,editor_icon_size,editor_sort,editor_vars,editor_collect;',
-        'cust_icon_svg'                   => 'name, styletype, svgSrc, icon_scale, icon_size,icon_resize_zoom, strokewidth, strokecolor, strokeopacity, fillcolor, fillopacity;'.
+        'cust_icon_svg'                   => 'name, styletype, svgSrc,svg_add_attributes, icon_scale, icon_size,icon_resize_zoom, strokewidth, strokecolor, strokeopacity, fillcolor, fillopacity;'.
                                          '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,label_outl_box,font_opacity,font_style,font_weight;'.
                                          '{popup_legend},tooltip,popup_info;'.
                                          '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;'.
@@ -259,6 +260,14 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
             //'save_callback'           => array(array('tl_c4g_map_locstyles','setSizes')),
             'sql'                     => "binary(16) NULL"
             ],
+        'svg_add_attributes' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['svg_add_attributes'],
+                'exclude'                 => true,
+                'default'                 => '',
+                'inputType'               => 'checkbox',
+                'sql'                     => "char(1) NOT NULL default ''"
+            ],
         'icon_scale' =>
             [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_scale'],
@@ -362,7 +371,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['onhover_locstyle'],
             'exclude'                 => true,
             'inputType'               => 'select',
-            'options_callback'        => ['tl_c4g_map_locstyles','getLocStyles', 'includeBlankOption' => true],
+            'options_callback'        => ['\con4gis\MapsBundle\Classes\Contao\Callbacks\TlC4gMapLocstyles','getLocStyles', 'includeBlankOption' => true],
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
         ],
         'style_function_js' =>
@@ -707,20 +716,5 @@ class tl_c4g_map_locstyles extends Backend
         return $varValue;
     }
 
-    /**
-     * Return all Location Styles as array
-     * @param object
-     * @return array
-     */
-    public function getLocStyles(DataContainer $dc)
-    {
-        $locStyles = $this->Database->prepare("SELECT id,name FROM tl_c4g_map_locstyles ORDER BY name")
-            ->execute();
-        $return[''] = '-';
-        while ($locStyles->next())
-        {
-            $return[$locStyles->id] = $locStyles->name;
-        }
-        return $return;
-    }
+    
 }

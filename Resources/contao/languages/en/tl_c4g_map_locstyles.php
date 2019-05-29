@@ -25,7 +25,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['radius']           = array('Radius'
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['ol_icon']          = array('OpenLayers Icon','Select from the internal OpenLayers icons.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['ol_icon_size']     = array('Icon size','Size of the icon. Is scaled when needed.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['ol_icon_offset']   = array('Offset for icon in pixel (X/Y)','An offset of "0" means, the upper left corner is printed on the location. X>0 => shifts icon to the right. X<0 => to the left. Y>0 => to the bottom. Y<0 => to the top.');
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['svgSrc']           = array('SVG source','Select the svg to be displayed for the location from the list.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['svgSrc']           = array('SVG source','Select the svg to be displayed for the location from the list. Please note that for Firefox the height and width of the icon must be set within the SVG file ("height" and "width" attributes).');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['svg_add_attributes']           = array('Add SVG attributes','When set, the SVG image will be edited on submit so that it\'s compatible with Firefox.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['givenSvgWidth']    = array('Known svg size','Choose, if the size of the svg is specified with "width" and "height" or not.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_src']         = array('Icon source','Select the icon to be displayed for the location from the list.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['svgSize']          = array('SVG size','Choose the size of the SVG in pixels.');
