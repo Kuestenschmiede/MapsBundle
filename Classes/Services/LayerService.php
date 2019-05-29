@@ -313,6 +313,7 @@ class LayerService
         $arrLayerData['async_content'] = $objLayer->async_content;
         $arrLayerData['noFilter'] = $objLayer->exemptFromFilter;
         $arrLayerData['locstyle'] = $objLayer->locstyle;
+        $arrLayerData['initial_opened'] = $objLayer->initial_opened;
         
         if ($objLayer->cluster_locations) {
             $arrLayerData['cluster'] = [

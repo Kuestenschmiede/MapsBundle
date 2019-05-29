@@ -489,6 +489,9 @@ export class Layerswitcher {
               jQuery(listItem).addClass(cssConstants.CLOSE);
               jQuery(toggle).addClass(cssConstants.ICON);
             }
+            if (layer.initial_opened === '1') {
+              jQuery(listItem).removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN);
+            }
             jQuery(toggle).click(function () {
               if (jQuery(this).parent().hasClass(cssConstants.CLOSE)) {
                 jQuery(this).parent().removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN);

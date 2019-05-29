@@ -43,6 +43,7 @@ export class C4gLayer{
     this.noFilter = layerArr['noFilter'];
     this.iconSrc = layerArr['icon_src'];
     this.activeForBaselayers = layerArr['activeForBaselayers'];
+    this.initial_opened = layerArr['initial_opened'];
     if (layerArr.projectId) {
       this.projectId = layerArr.projectId;
     }
