@@ -201,7 +201,6 @@ export class MapProxy {
         return false;
       }
 
-      //ToDo check new function call with ol 4.3
       feature = map.forEachFeatureAtPixel(clickEvent.pixel,
         function (feature, layer) {
           return feature;
@@ -380,7 +379,7 @@ export class MapProxy {
             window.c4gMapsPopup.popup.setPosition(self.options.mapController.map.getView().getCenter());
 
           }
-
+          self.addPopUp(popupInfos.content);
           if (popupInfos.content) {
             window.c4gMapsPopup.$content.html('');
             window.c4gMapsPopup.$popup.addClass(cssConstants.ACTIVE).addClass(cssConstants.LOADING);
@@ -492,13 +491,17 @@ export class MapProxy {
   } // end of "setPopup()"
 
 
-  addPopUp() {
+  addPopUp(popupContent) {
 
     let popUpElement,
       popUpCloseElement,
       popUpContent,
       popup;
 
+
+    if (window.c4gMapsPopup && window.c4gMapsPopup.popup) {
+      this.options.mapController.map.removeOverlay(window.c4gMapsPopup.popup);
+    }
 
     popUpElement = document.createElement('div');
     popUpElement.setAttribute('id', 'c4g_popup_' + this.options.mapController.data.mapId);
@@ -512,13 +515,13 @@ export class MapProxy {
 
     popUpElement.appendChild(popUpCloseElement);
     popUpElement.appendChild(popUpContent);
-
     jQuery(popUpCloseElement).click(function (event) {
       event.preventDefault();
       window.c4gMapsPopup.$popup.removeClass(cssConstants.ACTIVE);
     });
-    if (this.mapData.popupHandling < 2) {
-      let autoPan = this.mapData.popupHandling == 1 ? true : false;
+
+    if (parseInt(this.mapData.popupHandling, 10) < 2 && !!popupContent) {
+      let autoPan = parseInt(this.mapData.popupHandling, 10) === 1;
       popup = new Overlay({
         element: popUpElement,
         positioning: 'bottom-left',
