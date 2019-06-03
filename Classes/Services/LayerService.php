@@ -314,6 +314,7 @@ class LayerService
         $arrLayerData['noFilter'] = $objLayer->exemptFromFilter;
         $arrLayerData['locstyle'] = $objLayer->locstyle;
         $arrLayerData['initial_opened'] = $objLayer->initial_opened;
+        $arrLayerData['zIndex'] = $objLayer->zIndex;
         
         if ($objLayer->cluster_locations) {
             $arrLayerData['cluster'] = [

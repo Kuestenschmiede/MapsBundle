@@ -792,7 +792,7 @@ export var utils = {
     return object;
   }, // end of objectToArray()
 
-  getVectorLayer(source, style) {
+  getVectorLayer(source, style, zIndex) {
     var fnStyle;
 
     // make sure that the style is a function
@@ -806,7 +806,8 @@ export var utils = {
 
     return new Vector({
       source: source,
-      style: fnStyle
+      style: fnStyle,
+      zIndex: zIndex
     });
   },// end of "getVectorLayer()"
 

@@ -75,6 +75,7 @@ export class C4gLayerController {
       // this.proxy.starboard.spinner.hide();
     });
   } // end of "loadLayer()"
+
   addLayers(layers, foreignLayers) {
     var i,
       j,
@@ -246,6 +247,7 @@ export class C4gLayerController {
 
     return isVisible;
   } // end of "addLayers()"
+
   loadLayerContent(itemUid) {
 
     var self = this,
@@ -753,11 +755,11 @@ export class C4gLayerController {
               if(self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle] && self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].fnStyleFunction) {
 
                 vectorStyle = Function("feature","data","map",self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].fnStyleFunction);
-                vectorLayer = utils.getVectorLayer(vectorSource, vectorStyle);
+                vectorLayer = utils.getVectorLayer(vectorSource, vectorStyle, self.arrLayers[itemUid]);
 
               }
               else{
-                vectorLayer = utils.getVectorLayer(vectorSource, self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle] ? self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style : null);
+                vectorLayer = utils.getVectorLayer(vectorSource, self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle] ? self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style : null, self.arrLayers[itemUid]);
               }
             }
 
@@ -812,7 +814,7 @@ export class C4gLayerController {
             contentFeatures.push(contentFeature);
 
 
-            if(i+1 === this.arrLayers[itemUid].content.length){
+            if (i+1 === this.arrLayers[itemUid].content.length) {
               vectorSource = new VectorSource({
                 features: contentFeatures,
                 projection: 'EPSG:3857',
@@ -837,7 +839,7 @@ export class C4gLayerController {
                   });
 
               } else {
-                vectorLayer = utils.getVectorLayer(vectorSource, contentData && self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle] ? self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style : null);
+                vectorLayer = utils.getVectorLayer(vectorSource, contentData && self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle] ? self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style : null, self.arrLayers[itemUid]);
               }
               layers.push(vectorLayer);
             }
@@ -891,7 +893,7 @@ export class C4gLayerController {
                     source: vectorSource
                   });
 
-                  vectorLayer = utils.getVectorLayer(clusterSource, vectorStyle);
+                  vectorLayer = utils.getVectorLayer(clusterSource, vectorStyle, self.arrLayers[itemUid]);
                   if (contentData.data && contentData.data.properties) {
                       if (contentData.data.properties.popup) {
                           vectorLayer.popup = contentData.data.properties.popup;
@@ -1643,7 +1645,7 @@ export class C4gLayerController {
                       format: new GeoJSON()
                   });
 
-                  fVectorLayer = utils.getVectorLayer(fVectorSource, vectorStyle);
+                  fVectorLayer = utils.getVectorLayer(fVectorSource, vectorStyle, element.zIndex);
 
                   // layers.push(vectorLayer);
                   if (self.arrLayers[itemUid].fVectorLayer) {
@@ -1699,7 +1701,7 @@ export class C4gLayerController {
                         format: new GeoJSON()
                     });
                     vectorSource.addFeature(features[i]);
-                    vectorLayer = utils.getVectorLayer(vectorSource, vectorStyle);
+                    vectorLayer = utils.getVectorLayer(vectorSource, vectorStyle, element.zIndex);
                     for(let j = 0; j< element.geojson_attributes.split(',').length; j++){
                       vectorLayer.set(element.geojson_attributes.split(',')[j],features[i].get(element.geojson_attributes.split(',')[j]))
                     }
@@ -1724,7 +1726,7 @@ export class C4gLayerController {
                     projection: 'EPSG:3857',
                     format: new GeoJSON()
                 });
-                vectorLayer = utils.getVectorLayer(vectorSource, vectorStyle);
+                vectorLayer = utils.getVectorLayer(vectorSource, vectorStyle, element.zIndex);
 
                 if (elementContent.data && elementContent.data.properties) {
                     if (elementContent.data.properties.popup) {
@@ -1760,7 +1762,7 @@ export class C4gLayerController {
 
     this.arrLayers[itemUid].vectorLayer = layerGroup;
     this.mapController.map.addLayer(layerGroup);
-    if(layerGroup.getLayers().getArray()[0] && layerGroup.getLayers().getArray()[0].popup && layerGroup.getLayers().getArray()[0].popup.showPopupOnActive){
+    if (layerGroup.getLayers().getArray()[0] && layerGroup.getLayers().getArray()[0].popup && layerGroup.getLayers().getArray()[0].popup.showPopupOnActive) {
       this.proxy.currentPopup.$content.html('');
       this.proxy.currentPopup.$popup.addClass(cssConstants.ACTIVE).addClass(cssConstants.LOADING);
       this.proxy.currentPopup.spinner.show();
