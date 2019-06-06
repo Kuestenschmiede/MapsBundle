@@ -92,8 +92,11 @@ export class Permalink extends Control {
     copyButton.title = langConstants.COPY_TO_CLIPBOARD;
     copyButton.setAttribute('data-clipboard-target', '.' + cssConstants.PERMALINK_POPUP + ' > input[type="text"]');
     this.popup.appendChild(copyButton);
-    // new Clipboard(copyButton);
-    // new Clipboard();
+    try {
+      new Clipboard(copyButton);
+    } catch(error) {
+      console.warn('Permalink is currently not supported in backend mode..');
+    }
 
     // refresh button
     refreshButton = document.createElement('button');
