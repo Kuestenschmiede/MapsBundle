@@ -92,7 +92,8 @@ export class Permalink extends Control {
     copyButton.title = langConstants.COPY_TO_CLIPBOARD;
     copyButton.setAttribute('data-clipboard-target', '.' + cssConstants.PERMALINK_POPUP + ' > input[type="text"]');
     this.popup.appendChild(copyButton);
-    new Clipboard(copyButton);
+    // new Clipboard(copyButton);
+    // new Clipboard();
 
     // refresh button
     refreshButton = document.createElement('button');

@@ -136,7 +136,7 @@ class LayerContentService
             $strGeoJsonData = Controller::replaceInsertTags(\GuzzleHttp\json_encode($arrGeoJsonData));
         }
         if ($strGeoJsonData) {
-          $arrGeoJsonData = \GuzzleHttp\json_decode($strGeoJsonData);
+          $arrGeoJsonData = \GuzzleHttp\json_decode($strGeoJsonData, true);
         }
 
         return [

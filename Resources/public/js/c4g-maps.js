@@ -837,7 +837,7 @@ export class MapController {
       if (this.proxy.baselayers_loaded) {
         addOverviewMap();
       } else {
-        window.c4gMapsHooks.proxy_baselayer_loaded.push(addOverviewMap);
+        this.proxy.hook_baselayer_loaded.push(addOverviewMap);
       }
       // add hook to synchronize overviewmap with baselayer
       window.c4gMapsHooks.baselayer_changed = window.c4gMapsHooks.baselayer_changed || [];
