@@ -13,6 +13,7 @@
 import {C4gOverlay} from "./c4g-overlay"
 import {config} from "./c4g-maps-config";
 import {OSM} from "ol/source";
+import {ATTRIBUTION as OSM_ATTRIBUTION} from "ol/source/OSM";
 import {Tile} from "ol/layer";
 import {Stamen} from "ol/source";
 import {XYZ, BingMaps, TileWMS} from "ol/source";
@@ -71,7 +72,7 @@ export class C4gOverlayController{
           // custom
           noUrl = true;
           if (overlayLayerConfig.attribution) {
-            layerOptions.attributions = overlayLayerConfig.attribution + ' ' + OSM.ATTRIBUTION;
+            layerOptions.attributions = overlayLayerConfig.attribution + ' ' + OSM_ATTRIBUTION;
           }
 
           if (overlayLayerConfig.url) {
@@ -120,7 +121,7 @@ export class C4gOverlayController{
               TRANSPARENT: overlayLayerConfig.params.transparent
             },
             gutter: overlayLayerConfig.gutter,
-            attributions: overlayLayerConfig.attribution + ' ' + OSM.ATTRIBUTION
+            attributions: overlayLayerConfig.attribution + ' ' + OSM_ATTRIBUTION
           }),
           //extent: ol.proj.transformExtent([5.59334, 50.0578, 9.74158, 52.7998], 'EPSG:4326', 'EPSG:3857')
         });
@@ -129,7 +130,7 @@ export class C4gOverlayController{
         overlayLayer = new Tile({
           source: new XYZ({
             url: overlayLayerConfig.url + overlayLayerConfig.app_id + '/{z}/{x}/{y}?hash=' + overlayLayerConfig.api_key,
-            attributions: overlayLayerConfig.attribution + ' ' + OSM.ATTRIBUTION
+            attributions: overlayLayerConfig.attribution + ' ' + OSM_ATTRIBUTION
           }),
           //extent: ol.proj.transformExtent([5.59334, 50.0578, 9.74158, 52.7998], 'EPSG:4326', 'EPSG:3857')
         });

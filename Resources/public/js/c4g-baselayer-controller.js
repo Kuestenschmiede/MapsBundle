@@ -18,6 +18,7 @@ import {cssConstants} from "./c4g-maps-constant";
 import TileLayer from "ol/layer/Tile";
 import {XYZ} from "ol/source";
 import {OSM} from "ol/source";
+import {ATTRIBUTION as OSM_ATTRIBUTION} from "ol/source/OSM";
 import {Stamen} from "ol/source";
 import VectorTile from "ol/VectorTile";
 import {default as VectorTileSource} from "ol/source/VectorTile";
@@ -392,7 +393,7 @@ export class C4gBaselayerController {
                 TRANSPARENT: baseLayerConfig.params.transparent
               },
               gutter: baseLayerConfig.gutter,
-              attributions: baseLayerConfig.attribution + ' ' + OSM.ATTRIBUTION,
+              attributions: baseLayerConfig.attribution + ' ' + OSM_ATTRIBUTION,
               crossOrigin: 'anonymous'
             }),
             //extent: ol.proj.transformExtent([5.59334, 50.0578, 9.74158, 52.7998], 'EPSG:4326', 'EPSG:3857')
@@ -409,7 +410,7 @@ export class C4gBaselayerController {
                 TRANSPARENT: baseLayerConfig.params.transparent
               },
               gutter: baseLayerConfig.gutter,
-              attributions: baseLayerConfig.attribution + ' ' + OSM.ATTRIBUTION,
+              attributions: baseLayerConfig.attribution + ' ' + OSM_ATTRIBUTION,
             }),
             //extent: ol.proj.transformExtent([5.59334, 50.0578, 9.74158, 52.7998], 'EPSG:4326', 'EPSG:3857')
           });
@@ -450,7 +451,7 @@ export class C4gBaselayerController {
         newBaselayer = new TileLayer({
           source: new XYZ({
             url: baseLayerConfig.url + baseLayerConfig.app_id + '/{z}/{x}/{y}?hash=' + baseLayerConfig.api_key,
-            attributions: baseLayerConfig.attribution + ' ' + OSM.ATTRIBUTION
+            attributions: baseLayerConfig.attribution + ' ' + OSM_ATTRIBUTION
           }),
           //extent: ol.proj.transformExtent([5.59334, 50.0578, 9.74158, 52.7998], 'EPSG:4326', 'EPSG:3857')
         });
@@ -560,7 +561,7 @@ export class C4gBaselayerController {
         if (layerOptions.attributions) {
           layerOptions.attributions = layerOptions.attributions + ' ' + baseLayerConfig.attribution;
         } else {
-          layerOptions.attributions = OSM.ATTRIBUTION + ' ' + baseLayerConfig.attribution;
+          layerOptions.attributions = OSM_ATTRIBUTION + ' ' + baseLayerConfig.attribution;
         }
       } else if (!layerOptions.attributions) {
         switch (baseLayerConfig.provider) {
@@ -574,7 +575,7 @@ export class C4gBaselayerController {
             } else if (sourceConfigs.osm[baseLayerConfig.style]) {
               layerOptions.attributions = sourceConfigs.osm[baseLayerConfig.style].attributions;
             } else {
-              layerOptions.attributions = OSM.ATTRIBUTION;
+              layerOptions.attributions = OSM_ATTRIBUTION;
             }
             break;
           case 'mapbox':
@@ -590,7 +591,7 @@ export class C4gBaselayerController {
             layerOptions.attributions = sourceConfigs.thunderforest[baseLayerConfig.thunderforest_type].attributions;
             break;
           default:
-            layerOptions.attributions = OSM.ATTRIBUTION;
+            layerOptions.attributions = OSM_ATTRIBUTION;
             break;
         }
       }
@@ -604,7 +605,7 @@ export class C4gBaselayerController {
 
           exists = false;
           for (i = 0; i < layerOptions.attributions.length; i += 1) {
-            if (layerOptions.attributions[i] == additionalAttribution) {
+            if (layerOptions.attributions[i] === additionalAttribution) {
               exists = true;
               break;
             }
@@ -655,7 +656,7 @@ export class C4gBaselayerController {
             layerOptions.attributions = [];
           }
           for (i = 0; i < layerOptions.attributions.length; i += 1) {
-            if (layerOptions.attributions[i] == geosearchAttribution) {
+            if (layerOptions.attributions[i] === geosearchAttribution) {
               exists = true;
               break;
             }
