@@ -192,6 +192,7 @@ class LayerContentService
             "cluster_fillcolor" => $objLayer->cluster_fillcolor,
             "cluster_fontcolor" => $objLayer->cluster_fontcolor,
             "cluster_zoom" => $objLayer->cluster_zoom,
+            "cluster_popup" => $objLayer->cluster_popup,
             "loc_linkurl" => Controller::replaceInsertTags($objLayer->loc_linkurl),
             "hover_location" => $objLayer->hover_location,
             "hover_style" => $objLayer->hover_style,

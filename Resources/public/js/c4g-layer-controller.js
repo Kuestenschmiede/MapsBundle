@@ -540,7 +540,6 @@ export class C4gLayerController {
                               let centerPoint = rFeatures[j].getGeometry().getInteriorPoint().getCoordinates();
                               rFeatures[j].setGeometry(new Point([centerPoint[0],centerPoint[1]]));
                             } else if (rFeatures[j].getGeometry().getType() === "LineString") {
-                              // @TODO: prüfen ob dies korrekter Mittelpunkt ist
                               let lineExtent = rFeatures[j].getGeometry().getExtent();
                               let centerPoint = getCenter(lineExtent);
                               rFeatures[j].setGeometry(new Point(centerPoint));

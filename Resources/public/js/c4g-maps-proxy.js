@@ -227,13 +227,11 @@ export class MapProxy {
       if (!(fFeatures && fFeatures.length === 1)) {
         // cluster multiple POI
         if (fFeatures) {
-          if(fFeatures[0].get('cluster_popup') == 1)
-          {
+          if(fFeatures[0].get('cluster_popup') == 1) {
             map.getView().setCenter(clickEvent.coordinate);
             currentZoom = map.getView().getZoom();
             minZoom = self.options.mapController.data.cluster_all ? self.options.mapController.data.cluster_zoom : fFeatures['0'].get('cluster_zoom');
-            if(currentZoom >= minZoom)
-            {
+            if (currentZoom >= minZoom) {
               setPopup =[];
               setPopup.content = '';
               setPopup.async = false;
@@ -243,15 +241,10 @@ export class MapProxy {
               feature = fFeatures[0].clone();
               feature.set('popup',setPopup);
             }
-            else
-            {
+            else {
               map.getView().setZoom(currentZoom+1);
             }
-
-          }
-          else {
-
-
+          } else {
             feature.setStyle(new Style({
               image: new Circle({
                 fill: new Fill({
@@ -275,10 +268,7 @@ export class MapProxy {
             newCenter = map.getCoordinateFromPixel(clickEvent.pixel);
             minZoom = self.options.mapController.data.cluster_all ? self.options.mapController.data.cluster_zoom : fFeatures['0'].get('cluster_zoom');
 
-            //ToDo remove with structure element param
             if (currentZoom >= minZoom) {
-
-              //if (currentZoom >= map.getView().getMaxZoom()) {
               //open the cluster after zooming
               var pix = map.getView().getResolution();
               var max = fFeatures.length;
