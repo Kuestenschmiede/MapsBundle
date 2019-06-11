@@ -243,16 +243,21 @@ export class Sideboard extends Control {
       titleButtonBar.appendChild(hideButton);
     }
 
-    // Closebutton
-    closeButton = document.createElement('button');
-    closeButton.className = 'c4g-' + this.cssname + '-close';
-    closeButton.title = this.langConstants.CLOSE;
-    jQuery(closeButton).click(function (event) {
-      event.preventDefault();
-      self.close();
-      return false;
-    });
-    titleButtonBar.appendChild(closeButton);
+    if (!this.options.extDiv) {
+      // Closebutton
+      closeButton = document.createElement('button');
+      closeButton.className = 'c4g-' + this.cssname + '-close';
+      closeButton.title = this.langConstants.CLOSE;
+      jQuery(closeButton).click(function (event) {
+        event.preventDefault();
+        self.close();
+        return false;
+      });
+      titleButtonBar.appendChild(closeButton);
+    } else {
+      // ext div workaround
+      titleButtonBar.style.minHeight = '50px';
+    }
 
     //Add spinner for left sided sideboard elements
     this.spinner = new Spinner({
