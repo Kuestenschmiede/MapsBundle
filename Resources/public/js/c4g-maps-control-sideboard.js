@@ -349,7 +349,7 @@ export class Sideboard extends Control {
         });
 
         //only move the toggle button on starboard elements
-        if (this.options.direction === 'right') {
+        if (this.options.direction === 'right' && !this.options.extDiv) {
           jQuery(this.element).css(this.options.direction, containerOffsetWidth);
         }
 
