@@ -135,7 +135,12 @@ export class Sideboard extends Control {
     }
 
     // Set attributes
-    jQuery(this.container).addClass('c4g-' + this.options.name + ' ' + 'c4g-' + this.cssname + '-container' + ' ' + cssConstants.OL_UNSELECTABLE + initClass);
+    if (this.options.extDiv) {
+      jQuery(this.container).addClass('c4g-' + this.options.name + ' ' + 'c4g-' + this.cssname + '-container-ext-div' + ' ' + cssConstants.OL_UNSELECTABLE + initClass);
+    } else {
+      jQuery(this.container).addClass('c4g-' + this.options.name + ' ' + 'c4g-' + this.cssname + '-container' + ' ' + cssConstants.OL_UNSELECTABLE + initClass);
+    }
+
     jQuery(this.element).addClass('c4g-' + this.options.name + ' ' + 'c4g-' + this.cssname + '-control' + ' ' + cssConstants.OL_UNSELECTABLE + ' ' + cssConstants.OL_CONTROL + initClass);
 
     // Set initial dimensions
@@ -167,6 +172,7 @@ export class Sideboard extends Control {
     this.wrapper = document.createElement('div');
     this.wrapper.className = 'c4g-' + this.cssname + '-wrapper';
     this.container.appendChild(this.wrapper);
+
     // Titlebar
     this.titleBar = document.createElement('div');
     this.titleBar.className = 'c4g-' + this.cssname + '-titlebar';
@@ -218,6 +224,7 @@ export class Sideboard extends Control {
     this.headline.className = 'c4g-' + this.cssname + '-headline';
     this.headline.innerHTML = this.options.headline;
     this.titleBar.appendChild(this.headline);
+
     // Buttonbar
     titleButtonBar = document.createElement('div');
     titleButtonBar.className = cssConstants.CONTROL + ' ' + 'c4g-' + this.cssname + '-buttonbar';
@@ -268,6 +275,9 @@ export class Sideboard extends Control {
     //   this.open();
     // }
 
+    if (this.options.extDiv) {
+      this.init();
+    }
     return true;
   } // end of "create"
 

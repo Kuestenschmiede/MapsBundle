@@ -596,6 +596,14 @@ button.c4g-measuretools-view-trigger-draw-circle:before {
   width: 67px;
   display: inline-block;
 }
+div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
+  bottom: inherit;
+  right: inherit;
+  height: auto;
+  line-height: inherit;
+  border-radius: 4px 0 0;
+}
+
 .ol-attribution > ul {
   text-align: left;
 }
@@ -860,3 +868,4 @@ input[type=range]:focus::-ms-fill-lower {
 input[type=range]:focus::-ms-fill-upper {
   background: rgba(0,60,136,.7);
 }
+
