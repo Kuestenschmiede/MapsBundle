@@ -493,7 +493,9 @@ export class C4gBaselayerController {
             continue;
           }
           else {
-            showLayer = !!layer.activeForBaselayers.includes(baselayerId);
+            if (layer.activeForBaselayers) {
+              showLayer = !!layer.activeForBaselayers.includes(baselayerId);
+            }
           }
           if (showLayer) {
             arrLayers[id].display = true;
