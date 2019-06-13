@@ -223,6 +223,7 @@ export class C4gBaselayerController {
         break;
       case 'con4gisIo':
         layerOptions.url = baseLayerConfig.url.replace('{key}', this.baseKeys[baseLayerConfig.id]);
+        layerOptions.crossOrigin = 'anonymous';
         newBaselayer = new TileLayer({
           source: new XYZ(layerOptions)
         });
