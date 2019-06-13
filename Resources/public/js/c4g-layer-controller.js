@@ -1240,14 +1240,14 @@ export class C4gLayerController {
             else{
               geom = this.geomFromWay(member, elements, true);
             }
-            if(geom.constructor.name === Point.name){
+            if(geom.getType() === 'Point'){
               if(!arrCoords){
                 arrCoords = [];
 
               }
               arrCoords.push(geom.getCoordinates());
             }
-            else if(geom.constructor.name === Polygon.name){
+            else if(geom.getType() === 'Polygon') {
               if(multiPolygon){
                 multiPolygon.appendPolygon(geom);
               }
@@ -1255,7 +1255,7 @@ export class C4gLayerController {
                 multiPolygon = new MultiPolygon(geom.getCoordinates());
               }
             }
-            else if(geom.constructor.name === LineString.name){
+            else if(geom.getType() === 'LineString') {
               if(multiLineString){
                 multiLineString.appendLineString(geom);
               }

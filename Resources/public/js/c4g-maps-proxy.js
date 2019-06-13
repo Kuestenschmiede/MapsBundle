@@ -357,7 +357,7 @@ export class MapProxy {
 
         if (feature) {
           geometry = feature.getGeometry();
-          if (geometry.constructor.name === Point.name) {
+          if (geometry.getType() === 'Point') {
             coord = geometry.getCoordinates();
           } else {
             coord = clickEvent.coordinate;
@@ -462,7 +462,7 @@ export class MapProxy {
       if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_appendPopup === 'object') {
         utils.callHookFunctions(window.c4gMapsHooks.proxy_appendPopup, {popup: popupConfig, mapController: this.options.mapController});
       }
-      if (feature.getGeometry() && feature.getGeometry().constructor.name === Point.name) {
+      if (feature.getGeometry() && feature.getGeometry().getType() === 'Point') {
         if (self.mapData.popupHandling < 2) {
           window.c4gMapsPopup.popup.setPosition(feature.getGeometry().getCoordinates());
         }

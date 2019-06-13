@@ -71,6 +71,7 @@ export class C4gLocationStyle {
       }
 
       // check if this is a feature.styleFunction
+      // TODO breaks in prod build
       if (!(feature && feature.constructor.name === Feature.name)) {
         projection = feature;
         feature = this;
@@ -165,7 +166,7 @@ export class C4gLocationStyle {
         styleData.line_arrows
         && feature
         && (typeof feature.getGeometry === 'function')
-        && !(feature.getGeometry().constructor.name === Point.name)
+        && !(feature.getGeometry().getType() === 'Point')
         && typeof feature.getGeometry().forEachSegment === 'function'
       ) {
         let arrowStyles = self.createLineArrowStyles(styleData, feature, strokeStyle, fillStyle);
