@@ -71,8 +71,7 @@ export class C4gLocationStyle {
       }
 
       // check if this is a feature.styleFunction
-      // TODO breaks in prod build
-      if (!(feature && feature.constructor.name === Feature.name)) {
+      if (!(feature)) {
         projection = feature;
         feature = this;
       }

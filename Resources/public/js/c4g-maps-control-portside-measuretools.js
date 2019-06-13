@@ -287,10 +287,9 @@ export class Measuretools extends Sideboard {
             measureArea,
             measureRadius;
 
-          // TODO ersatz für die abfrage finden und wieder einbauen
-          // if (!(feature.constructor.name === Feature.name)) {
-          //   return false;
-          // }
+          if (!feature) {
+            return false;
+          }
 
           // check if the infomessage needs to be removed
           if (self.mainSection.childElementCount === 1 && self.mainSection.children[0] === self.mainSectionInfo) {
