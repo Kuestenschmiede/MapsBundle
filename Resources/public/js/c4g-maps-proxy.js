@@ -362,7 +362,7 @@ export class MapProxy {
           } else {
             coord = clickEvent.coordinate;
           }
-          if (self.mapData.popupHandling < 2) {
+          if (self.mapData.popupHandling !== '2') {
             window.c4gMapsPopup.popup.setPosition(coord);
           }
           else {
@@ -463,7 +463,7 @@ export class MapProxy {
         utils.callHookFunctions(window.c4gMapsHooks.proxy_appendPopup, {popup: popupConfig, mapController: this.options.mapController});
       }
       if (feature.getGeometry() && feature.getGeometry().getType() === 'Point') {
-        if (self.mapData.popupHandling < 2) {
+        if (self.mapData.popupHandling && self.mapData.popupHandling !== '2') {
           window.c4gMapsPopup.popup.setPosition(feature.getGeometry().getCoordinates());
         }
         else {
@@ -510,7 +510,7 @@ export class MapProxy {
       window.c4gMapsPopup.$popup.removeClass(cssConstants.ACTIVE);
     });
 
-    if (parseInt(this.mapData.popupHandling, 10) < 2 && !!popupContent) {
+    if (parseInt(this.mapData.popupHandling, 10) !== 2) {
       let autoPan = parseInt(this.mapData.popupHandling, 10) === 1;
       popup = new Overlay({
         element: popUpElement,
@@ -531,9 +531,7 @@ export class MapProxy {
         offset: [-50, 0],
         autoPan: false,
       });
-
     }
-
     window.c4gMapsPopup = {};
     window.c4gMapsPopup.popup = popup;
     // attach a spinner to the popup
@@ -544,6 +542,7 @@ export class MapProxy {
     window.c4gMapsPopup.$popup = jQuery(window.c4gMapsPopup.popup.getElement());
     window.c4gMapsPopup.$content = jQuery('.c4g-popup-content', window.c4gMapsPopup.$popup);
     this.currentPopup = window.c4gMapsPopup;
+
   } // end of "addPopUp()"
 
 
