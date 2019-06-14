@@ -214,9 +214,9 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['resize_src_zoom'],
             'exclude'                 => true,
             'inputType'               => 'text',
-            'default'                 => '',
+            'default'                 => 18,
             'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
-            'sql'                     => "int(10) NOT NULL default '0'"
+            'sql'                     => "int(10) NOT NULL default '18'"
         ],
 
         'resize_scale_factor' =>
@@ -977,7 +977,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'options'                 => ['0','1','2'],
             'eval'                    => ['submitOnChange' => true,'includeBlankOption' => false],
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandlingReferences'],
-            'sql'                     => "char(1) NOT NULL default ''"
+            'sql'                     => "char(1) NOT NULL default '0'"
         ],
         'be_optimize_checkboxes_limit' =>
             [
