@@ -30,7 +30,7 @@ export var config = {
     German: {
       attributions: 'Style by <a target="_blank" href="http://www.openstreetmap.de/germanstyle.html">openstreetmap.de</a>' + ' ' +
         ATTRIBUTION,
-      crossOrigin: 'anonymous',
+      crossOrigin: null,
       minZoom: 0,
       maxZoom: 19,
       url: 'https://{a-c}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png'
