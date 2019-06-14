@@ -730,7 +730,7 @@ class tl_c4g_map_baselayers extends Backend
             }
             $arrReturn= [];
             foreach ($responses as $response){
-                $arrReturn[$response->id] =$response->name;
+                $arrReturn[$response->id] = \InsertTags::replaceInsertTags($response->name);
             }
             return $arrReturn;
         }
