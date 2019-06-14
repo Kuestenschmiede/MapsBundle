@@ -564,7 +564,7 @@ class MapDataConfigurator
         $arrKeys = [];
         if ($profile->baselayers !== null) {
             $baselayerIds = unserialize($profile->baselayers);
-            $blResult = C4gMapBaselayersModel::findBy('id', $baselayerIds);
+            $blResult = C4gMapBaselayersModel::findMultipleByIds($baselayerIds);
         } else {
             $blResult = C4gMapBaselayersModel::findAll();
         }
