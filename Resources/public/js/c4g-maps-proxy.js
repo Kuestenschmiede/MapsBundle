@@ -236,7 +236,9 @@ export class MapProxy {
               setPopup.content = '';
               setPopup.async = false;
               for(var i = 0; i < fFeatures.length; i++){
-                setPopup.content = setPopup.content.concat(fFeatures[i].get('popup').content);
+                if (fFeatures[i].get && fFeatures[i].get('popup') && fFeatures[i].get('popup').content) {
+                  setPopup.content = setPopup.content.concat(fFeatures[i].get('popup').content);
+                }
               }
               feature = fFeatures[0].clone();
               feature.set('popup',setPopup);
@@ -455,8 +457,15 @@ export class MapProxy {
 
     feature = popupConfig.feature;
     layer = popupConfig.layer;
-
-    popupContent = utils.replaceAllPlaceholders(popupConfig.popup.content, feature, layer, this.options.mapController.data.lang);
+    if (feature.get('features')) {
+      let features = feature.get('features');
+      for (let i = 0; i < features.length; i++) {
+        popupContent += utils.replaceAllPlaceholders(popupConfig.popup.content, features[i], layer, this.options.mapController.data.lang);
+      }
+    }
+    else {
+      popupContent = utils.replaceAllPlaceholders(popupConfig.popup.content, feature, layer, this.options.mapController.data.lang);
+    }
     if (popupContent.trim()) {
       window.c4gMapsPopup.$content.html(popupContent);
       if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_appendPopup === 'object') {
@@ -685,9 +694,9 @@ export class MapProxy {
             }
 
           }
-          if(oneFeature){//single not clustered feature
-            if(feature.length >= 1){
-              if(!feature['0'].get('popup')){
+          if (oneFeature) {//single not clustered feature
+            if (feature.length >= 1) {
+              if (!feature['0'].get('popup')) {
                 feature['0'].set('popup',layer.popup)
               }
               features.push(feature);
@@ -701,7 +710,7 @@ export class MapProxy {
 
       });
 
-      for(i = 0; i < features.length; i ++){
+      for (i = 0; i < features.length; i ++) {
         vectorSource.addFeatures(features[i]);
       }
 

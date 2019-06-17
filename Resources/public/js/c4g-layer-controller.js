@@ -549,23 +549,19 @@ export class C4gLayerController {
                       }
 
                     }
-                    else if(response && response.elements){
+                    else if (response && response.elements) {
                       rFeatures = [];
-                      for(let elementId = 0; elementId < response.elements.length; elementId++){
+                      for (let elementId = 0; elementId < response.elements.length; elementId++) {
                         let element = response.elements[elementId];
-                        if(element.type ==="node" && !element.tags){
+                        if (element.type ==="node" && !element.tags) {
                           continue;
                         }
                         let tempFeature = self.featureFromOverpass(element,response.elements, contentData, requestContentData.settings.forceNodes);
                         let addFeature = requestVectorSource.getFeatureById(element.id);
-                        if (addFeature) {
-                          console.log(addFeature);
-                        }
                         if(tempFeature && !addFeature){
                           rFeatures.push(tempFeature);
                         }
                       }
-
                     }
                     try {
                       requestVectorSource.addFeatures(rFeatures);
