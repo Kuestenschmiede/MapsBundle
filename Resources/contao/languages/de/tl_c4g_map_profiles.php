@@ -26,6 +26,11 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['default_baselayer'] = ['Standard-Bas
 /** Lokationsstile */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['locstyles'] = ['Lokationsstile', 'Wählen Sie die Lokationsstile, die in den Kartenstrukturelementen dieses Profils geladen werden sollen. Standard: alle'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['label_color'] = ['Label-Farbe', 'Wählen Sie die Standardfarbe für Labels aus. Dies kann durch die Einstellung am Lokationsstil überschrieben werden.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['resize_locstyles_zoom'] = ['Lokationen beim Zoom skalieren', 'Setzen Sie diese Checkbox, wenn die Lokationen (mit Icons) beim Zoomen der Zoomstufe entsprechend skaliert werden sollen.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['resize_src_zoom'] = ['Initialer Zoom', 'Geben Sie den Zoomlevel an, bei dem die Lokationen ihre normale Größe haben sollen.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['resize_scale_factor'] = ['Skalierungsfaktor', 'Geben Sie einen Skalierungsfaktor (zwischen 0 und 1) an, um den die Lokationen beim Zoomen hoch- oder herunterskaliert werden sollen.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['resize_min_scale'] = ['Minimale Skalierung', 'Geben Sie eine Skalierung an, die nicht unterschritten werden soll (Lokationen werden nicht kleiner skaliert als dieser Wert).'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['resize_max_scale'] = ['Maximale Skalierung', 'Geben Sie eine Skalierung an, die nicht überschritten werden soll (Lokationen werden nicht größer skaliert als dieser Wert).'];
 
 /** Navigation */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['zoom_panel'] = ['Steuerelement zum Zoomen', 'Erzeugen von Buttons zum Hinein- und Herauszoomen.'];
@@ -64,7 +69,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_dist_spider'] = ['Cluster-Di
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['attribution'] = ['Copyright-Text (Attribution)', 'Blendet einen Copyright-Text (eine sogenannte Attribution) ein. Deaktivierung nicht empfohlen!'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['collapsed_attribution'] = ['Initial geschlossen', 'Zeigt den Copyright-Text initial geschlossen an. Auch wenn diese Option nicht gewählt ist kann die Attribution vom Benutzer geschlossen werden.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['add_attribution'] = ['Zusätzlicher Copyright-Text', 'wird an den Copyright-Text des verwendeten Kartendienstes angefügt.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cfg_logo_attribution']  = ['con4gis-Logo einblenden', 'Blendet das con4gis-Logo auf der Karte ein. Sie können diese Option deaktivieren. Wir würden uns in diesem Fall über eine Erwähung von "con4gis" an anderer Stelle freuen.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cfg_logo_attribution']  = ['con4gis-Logo einblenden', 'Blendet das con4gis-Logo auf der Karte ein. Sie können diese Option deaktivieren. Wir würden uns in diesem Fall über eine Erwähnung von "con4gis" an anderer Stelle freuen.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['div_attribution'] = ['DIV für Copyright-Text (Attribution)', 'DIV zur Positionierung des Copyrights. Nur nötig, falls das Copyright außerhalb der Karte angezeigt werden soll. Muss manuell auf der Seite erzeugt werden, z.B. mit einem HTML Inhaltselement.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overviewmap'] = ['Übersichtskarte', 'Schafft die Möglichkeit, über einen Schalter, rechts auf der Karte, eine kleine Umgebungskarte darzustellen.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['graticule'] = ['Geografisches Netz', 'Blendet einen Schalter ein, welcher ein Geografisches Netz anzeigt, das mit Hilfe von horizontalen und vertikalen Linien die Längen- und Breitengrade visualisiert.'];

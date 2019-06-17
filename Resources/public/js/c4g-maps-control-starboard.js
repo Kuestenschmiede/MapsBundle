@@ -133,17 +133,16 @@ export class Starboard extends Sideboard {
 
     if (!this.options.mapController.proxy.layers_loaded) {
       this.spinner.show();
-      window.c4gMapsHooks.proxy_layer_loaded.push(function (layerIds) {
+      this.options.mapController.proxy.hook_layer_loaded.push(function (layerIds) {
         self.spinner.hide();
         fnRender();
+        this.initialized = true;
       });
     } else {
       // layers are already loaded
       fnRender();
+      this.initialized = true;
     }
-
-    this.initialized = true;
-
 
     return true;
   } // end of "init"

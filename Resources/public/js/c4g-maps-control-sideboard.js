@@ -135,7 +135,12 @@ export class Sideboard extends Control {
     }
 
     // Set attributes
-    jQuery(this.container).addClass('c4g-' + this.options.name + ' ' + 'c4g-' + this.cssname + '-container' + ' ' + cssConstants.OL_UNSELECTABLE + initClass);
+    if (this.options.extDiv) {
+      jQuery(this.container).addClass('c4g-' + this.options.name + ' ' + 'c4g-' + this.cssname + '-container-ext-div' + ' ' + cssConstants.OL_UNSELECTABLE + initClass);
+    } else {
+      jQuery(this.container).addClass('c4g-' + this.options.name + ' ' + 'c4g-' + this.cssname + '-container' + ' ' + cssConstants.OL_UNSELECTABLE + initClass);
+    }
+
     jQuery(this.element).addClass('c4g-' + this.options.name + ' ' + 'c4g-' + this.cssname + '-control' + ' ' + cssConstants.OL_UNSELECTABLE + ' ' + cssConstants.OL_CONTROL + initClass);
 
     // Set initial dimensions
@@ -167,6 +172,7 @@ export class Sideboard extends Control {
     this.wrapper = document.createElement('div');
     this.wrapper.className = 'c4g-' + this.cssname + '-wrapper';
     this.container.appendChild(this.wrapper);
+
     // Titlebar
     this.titleBar = document.createElement('div');
     this.titleBar.className = 'c4g-' + this.cssname + '-titlebar';
@@ -218,6 +224,7 @@ export class Sideboard extends Control {
     this.headline.className = 'c4g-' + this.cssname + '-headline';
     this.headline.innerHTML = this.options.headline;
     this.titleBar.appendChild(this.headline);
+
     // Buttonbar
     titleButtonBar = document.createElement('div');
     titleButtonBar.className = cssConstants.CONTROL + ' ' + 'c4g-' + this.cssname + '-buttonbar';
@@ -236,16 +243,21 @@ export class Sideboard extends Control {
       titleButtonBar.appendChild(hideButton);
     }
 
-    // Closebutton
-    closeButton = document.createElement('button');
-    closeButton.className = 'c4g-' + this.cssname + '-close';
-    closeButton.title = this.langConstants.CLOSE;
-    jQuery(closeButton).click(function (event) {
-      event.preventDefault();
-      self.close();
-      return false;
-    });
-    titleButtonBar.appendChild(closeButton);
+    if (!this.options.extDiv) {
+      // Closebutton
+      closeButton = document.createElement('button');
+      closeButton.className = 'c4g-' + this.cssname + '-close';
+      closeButton.title = this.langConstants.CLOSE;
+      jQuery(closeButton).click(function (event) {
+        event.preventDefault();
+        self.close();
+        return false;
+      });
+      titleButtonBar.appendChild(closeButton);
+    } else {
+      // ext div workaround
+      titleButtonBar.style.minHeight = '50px';
+    }
 
     //Add spinner for left sided sideboard elements
     this.spinner = new Spinner({
@@ -268,6 +280,9 @@ export class Sideboard extends Control {
     //   this.open();
     // }
 
+    if (this.options.extDiv) {
+      this.init();
+    }
     return true;
   } // end of "create"
 
@@ -334,7 +349,7 @@ export class Sideboard extends Control {
         });
 
         //only move the toggle button on starboard elements
-        if (this.options.direction === 'right') {
+        if (this.options.direction === 'right' && !this.options.extDiv) {
           jQuery(this.element).css(this.options.direction, containerOffsetWidth);
         }
 

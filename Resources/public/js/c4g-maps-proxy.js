@@ -201,7 +201,6 @@ export class MapProxy {
         return false;
       }
 
-      //ToDo check new function call with ol 4.3
       feature = map.forEachFeatureAtPixel(clickEvent.pixel,
         function (feature, layer) {
           return feature;
@@ -228,13 +227,11 @@ export class MapProxy {
       if (!(fFeatures && fFeatures.length === 1)) {
         // cluster multiple POI
         if (fFeatures) {
-          if(fFeatures[0].get('cluster_popup') == 1)
-          {
+          if(fFeatures[0].get('cluster_popup') == 1) {
             map.getView().setCenter(clickEvent.coordinate);
             currentZoom = map.getView().getZoom();
             minZoom = self.options.mapController.data.cluster_all ? self.options.mapController.data.cluster_zoom : fFeatures['0'].get('cluster_zoom');
-            if(currentZoom >= minZoom)
-            {
+            if (currentZoom >= minZoom) {
               setPopup =[];
               setPopup.content = '';
               setPopup.async = false;
@@ -244,15 +241,10 @@ export class MapProxy {
               feature = fFeatures[0].clone();
               feature.set('popup',setPopup);
             }
-            else
-            {
+            else {
               map.getView().setZoom(currentZoom+1);
             }
-
-          }
-          else {
-
-
+          } else {
             feature.setStyle(new Style({
               image: new Circle({
                 fill: new Fill({
@@ -276,10 +268,7 @@ export class MapProxy {
             newCenter = map.getCoordinateFromPixel(clickEvent.pixel);
             minZoom = self.options.mapController.data.cluster_all ? self.options.mapController.data.cluster_zoom : fFeatures['0'].get('cluster_zoom');
 
-            //ToDo remove with structure element param
             if (currentZoom >= minZoom) {
-
-              //if (currentZoom >= map.getView().getMaxZoom()) {
               //open the cluster after zooming
               var pix = map.getView().getResolution();
               var max = fFeatures.length;
@@ -368,19 +357,19 @@ export class MapProxy {
 
         if (feature) {
           geometry = feature.getGeometry();
-          if (geometry.constructor.name === Point.name) {
+          if (geometry.getType() === 'Point') {
             coord = geometry.getCoordinates();
           } else {
             coord = clickEvent.coordinate;
           }
-          if (self.mapData.popupHandling < 2) {
+          if (self.mapData.popupHandling !== '2') {
             window.c4gMapsPopup.popup.setPosition(coord);
           }
           else {
             window.c4gMapsPopup.popup.setPosition(self.options.mapController.map.getView().getCenter());
 
           }
-
+          self.addPopUp(popupInfos.content);
           if (popupInfos.content) {
             window.c4gMapsPopup.$content.html('');
             window.c4gMapsPopup.$popup.addClass(cssConstants.ACTIVE).addClass(cssConstants.LOADING);
@@ -473,8 +462,8 @@ export class MapProxy {
       if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_appendPopup === 'object') {
         utils.callHookFunctions(window.c4gMapsHooks.proxy_appendPopup, {popup: popupConfig, mapController: this.options.mapController});
       }
-      if (feature.getGeometry() && feature.getGeometry().constructor.name === Point.name) {
-        if (self.mapData.popupHandling < 2) {
+      if (feature.getGeometry() && feature.getGeometry().getType() === 'Point') {
+        if (self.mapData.popupHandling && self.mapData.popupHandling !== '2') {
           window.c4gMapsPopup.popup.setPosition(feature.getGeometry().getCoordinates());
         }
         else {
@@ -492,13 +481,17 @@ export class MapProxy {
   } // end of "setPopup()"
 
 
-  addPopUp() {
+  addPopUp(popupContent) {
 
     let popUpElement,
       popUpCloseElement,
       popUpContent,
       popup;
 
+
+    if (window.c4gMapsPopup && window.c4gMapsPopup.popup) {
+      this.options.mapController.map.removeOverlay(window.c4gMapsPopup.popup);
+    }
 
     popUpElement = document.createElement('div');
     popUpElement.setAttribute('id', 'c4g_popup_' + this.options.mapController.data.mapId);
@@ -512,13 +505,13 @@ export class MapProxy {
 
     popUpElement.appendChild(popUpCloseElement);
     popUpElement.appendChild(popUpContent);
-
     jQuery(popUpCloseElement).click(function (event) {
       event.preventDefault();
       window.c4gMapsPopup.$popup.removeClass(cssConstants.ACTIVE);
     });
-    if (this.mapData.popupHandling < 2) {
-      let autoPan = this.mapData.popupHandling == 1 ? true : false;
+
+    if (parseInt(this.mapData.popupHandling, 10) !== 2) {
+      let autoPan = parseInt(this.mapData.popupHandling, 10) === 1;
       popup = new Overlay({
         element: popUpElement,
         positioning: 'bottom-left',
@@ -538,9 +531,7 @@ export class MapProxy {
         offset: [-50, 0],
         autoPan: false,
       });
-
     }
-
     window.c4gMapsPopup = {};
     window.c4gMapsPopup.popup = popup;
     // attach a spinner to the popup
@@ -551,6 +542,7 @@ export class MapProxy {
     window.c4gMapsPopup.$popup = jQuery(window.c4gMapsPopup.popup.getElement());
     window.c4gMapsPopup.$content = jQuery('.c4g-popup-content', window.c4gMapsPopup.$popup);
     this.currentPopup = window.c4gMapsPopup;
+
   } // end of "addPopUp()"
 
 

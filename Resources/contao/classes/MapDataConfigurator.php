@@ -22,6 +22,7 @@ use con4gis\MapsBundle\Resources\contao\models\C4gMapSettingsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use Contao\Controller;
 use Contao\Input;
+use Contao\Model\Collection;
 use Contao\System;
 
 /**
@@ -129,7 +130,6 @@ class MapDataConfigurator
         if ($profileService) {
             $profileId = $profileService->getProfileId($profileId);
         }
-
         // get appropriate profile from database
         $profile = C4gMapProfilesModel::findByPk($profileId);
         // use default if the profile was not found
@@ -174,6 +174,7 @@ class MapDataConfigurator
                 $mapData['caching'] = 0;
             }
         }
+        
         $mapData['profile'] = $profileId;
 
         // ------------------------------------------------------------------------
@@ -291,8 +292,17 @@ class MapDataConfigurator
             $mapData['default_baselayer'] = $profile->default_baselayer;
 
 
-            // location-styles
+            // location-style resizing
             //
+//            $mapData['resize_locstyles_zoom'] = $profile->resize_locstyles_zoom;
+            if ($profile->resize_locstyles_zoom) {
+                $mapData['resizeLocstyles'] = [
+                    'srcZoom' => $profile->resize_src_zoom,
+                    'scaleFactor' => $profile->resize_scale_factor,
+                    'minScale' => $profile->resize_min_scale,
+                    'maxScale' => $profile->resize_max_scale
+                ];
+            }
 
             // map-navigation
             //
@@ -474,9 +484,19 @@ class MapDataConfigurator
                 $mapData['cesium']['always'] = $profile->cesium_always;
             }
 
-            // expert-configs
+            // overpass handling
             //
-
+            if ($profile->overpassEngine === "2") {
+                $key = C4GUtils::getKey($objSettings, '5');
+                $mapData['ovp_key'] = $key;
+            }
+            
+            // check baselayers if a key is needed
+            $blKeys = static::checkBaselayers($profile, $objSettings);
+            if (count($blKeys) > 0) {
+                $mapData['base_keys'] = $blKeys;
+            }
+            
             // miscellaneous
             //
             $mapData['infopage'] =  \Contao\Controller::replaceInsertTags($profile->infopage);
@@ -537,5 +557,29 @@ class MapDataConfigurator
 
 
         return $mapData;
+    }
+    
+    private static function checkBaselayers($profile, $objSettings)
+    {
+        $arrKeys = [];
+        if ($profile->baselayers !== null) {
+            $baselayerIds = unserialize($profile->baselayers);
+            $blResult = C4gMapBaselayersModel::findMultipleByIds($baselayerIds);
+        } else {
+            $blResult = C4gMapBaselayersModel::findAll();
+        }
+        if (!$blResult instanceof Collection) {
+            return [];
+        }
+        $baseLayers = $blResult->fetchAll();
+        
+        foreach ($baseLayers as $baseLayer) {
+            if ($baseLayer['provider'] == "con4gisIo") {
+                $key = C4GUtils::getKey($objSettings, '4', 'id='.$baseLayer['con4gisIo']);
+                $arrKeys[$baseLayer['id']] = $key;
+            }
+        }
+        
+        return $arrKeys;
     }
 }

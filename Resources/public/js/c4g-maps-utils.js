@@ -430,11 +430,10 @@ export var utils = {
 
     //sphere = new ol.Sphere(6378137);
     result = {};
-
-    if (geometry.constructor.name === LineString.name || (geometry.constructor.name === Polygon.name && opt_forceLineMeasure)) {
+    if (geometry.getType() === 'LineString' || (geometry.getType() === 'Polygon' && opt_forceLineMeasure)) {
 
       coordinates = geometry.getCoordinates();
-      if (geometry.constructor.name === Polygon.name) {
+      if (geometry.getType() === 'Polygon') {
         coordinates = coordinates[0];
       }
       value = 0;
@@ -452,7 +451,7 @@ export var utils = {
           ' ' + 'm';
       }
 
-    } else if (geometry.constructor.name === Polygon.name) {
+    } else if (geometry.getType() === 'Polygon') {
       //geometry = /** @type {Polygon} */(geometry.clone().transform('EPSG:3857', 'EPSG:4326'));
       //coordinates = geometry.getLinearRing(0).getCoordinates();
       value = Math.abs(getArea(geometry));
@@ -465,7 +464,7 @@ export var utils = {
           ' ' + 'm<sup>2</sup>';
       }
 
-    } else if (geometry.constructor.name === Circle.name && opt_forceSurfaceMeasure) {
+    } else if (geometry.getType() === 'Circle' && opt_forceSurfaceMeasure) {
       var center = geometry.getCenter();
       var radius = geometry.getRadius();
       var edgeCoordinate = [center[0] + radius, center[1]];
@@ -488,7 +487,7 @@ export var utils = {
       }
 
 
-    } else if (geometry.constructor.name === Circle.name) {
+    } else if (geometry.getType() === 'Circle') {
       var center = geometry.getCenter();
       var radius = geometry.getRadius();
       var edgeCoordinate = [center[0] + radius, center[1]];
@@ -792,7 +791,7 @@ export var utils = {
     return object;
   }, // end of objectToArray()
 
-  getVectorLayer(source, style) {
+  getVectorLayer(source, style, zIndex) {
     var fnStyle;
 
     // make sure that the style is a function
@@ -806,7 +805,8 @@ export var utils = {
 
     return new Vector({
       source: source,
-      style: fnStyle
+      style: fnStyle,
+      zIndex: zIndex
     });
   },// end of "getVectorLayer()"
 

@@ -136,7 +136,7 @@ class LayerContentService
             $strGeoJsonData = Controller::replaceInsertTags(\GuzzleHttp\json_encode($arrGeoJsonData));
         }
         if ($strGeoJsonData) {
-          $arrGeoJsonData = \GuzzleHttp\json_decode($strGeoJsonData);
+          $arrGeoJsonData = \GuzzleHttp\json_decode($strGeoJsonData, true);
         }
 
         return [
@@ -171,11 +171,7 @@ class LayerContentService
     {
         $objSettings = C4gMapSettingsModel::findOnly();
         if ($objProfile->overpassEngine == "2") {
-            $key = C4GUtils::getKey($objSettings, '5');
-            if ($key) {
-                $url = rtrim($objSettings->con4gisIoUrl, "/") . "/" . "osm.php?key=" . $key;
-                $mapData['geosearch']['url'] = rtrim($objSettings->con4gisIoUrl, "/") . "/";
-            }
+            $url = rtrim($objSettings->con4gisIoUrl, "/") . "/" . "osm.php?key={key}";
         }
         else if ($objProfile->overpassEngine == "1") {
             $url = $objProfile->overpass_url;
@@ -196,6 +192,7 @@ class LayerContentService
             "cluster_fillcolor" => $objLayer->cluster_fillcolor,
             "cluster_fontcolor" => $objLayer->cluster_fontcolor,
             "cluster_zoom" => $objLayer->cluster_zoom,
+            "cluster_popup" => $objLayer->cluster_popup,
             "loc_linkurl" => Controller::replaceInsertTags($objLayer->loc_linkurl),
             "hover_location" => $objLayer->hover_location,
             "hover_style" => $objLayer->hover_style,

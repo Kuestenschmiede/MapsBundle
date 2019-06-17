@@ -837,7 +837,7 @@ export class MapController {
       if (this.proxy.baselayers_loaded) {
         addOverviewMap();
       } else {
-        window.c4gMapsHooks.proxy_baselayer_loaded.push(addOverviewMap);
+        this.proxy.hook_baselayer_loaded.push(addOverviewMap);
       }
       // add hook to synchronize overviewmap with baselayer
       window.c4gMapsHooks.baselayer_changed = window.c4gMapsHooks.baselayer_changed || [];
@@ -900,14 +900,18 @@ export class MapController {
         logoLink.appendChild(logoGraphic);
         controlContainerBottomRight.appendChild(logoLink);
       }
-      this.controls.attribution = new Attribution({
+      const attrOptions = {
         label: ' ',
         tipLabel: langConstants.CTRL_ATTRIBUTION,
         collapseLabel: ' ',
-        target: controlContainerBottomRight,
-        collapsible: true
-      });
-      this.controls.attribution.setCollapsed(mapData.attribution.collapsed === '1');
+        target: mapData.attribution.div ? mapData.attribution.div : controlContainerBottomRight,
+        collapsible: mapData.attribution.div ? false : true
+      };
+      if (mapData.attribution.div) {
+        attrOptions["className"] = "ol-attribution ol-attribution-ext-div";
+      }
+      this.controls.attribution = new Attribution(attrOptions);
+      this.controls.attribution.setCollapsed(mapData.attribution.div ? false : mapData.attribution.collapsed === '1');
       this.map.addControl(this.controls.attribution);
     }
 
