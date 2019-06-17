@@ -552,7 +552,11 @@ export class C4gLayerController{
                           continue;
                         }
                         let tempFeature = self.featureFromOverpass(element,response.elements, contentData, requestContentData.settings.forceNodes);
-                        if(tempFeature){
+                        let addFeature = requestVectorSource.getFeatureById(element.id);
+                        if (addFeature) {
+                          console.log(addFeature);
+                        }
+                        if(tempFeature && !addFeature){
                           rFeatures.push(tempFeature);
                         }
                       }
@@ -1201,7 +1205,6 @@ export class C4gLayerController{
         feature = new Feature({
           geometry: point
         });
-        feature.setId(element.id);
         feature.set('osm_type', 'node');
       }
     }
@@ -1270,6 +1273,7 @@ export class C4gLayerController{
         }
     }
     if(feature){
+      feature.setId(element.id);
       feature.set('c4g_type', 'osm');
       feature.set('cluster_zoom', contentData.cluster_zoom || '');
       feature.set('cluster_popup', contentData.cluster_popup || '');
@@ -1291,15 +1295,15 @@ export class C4gLayerController{
   }
   geomFromWay(element, elements, forceNodes){
     let arrCoords = [];
-    for(let i = 0; i < element.nodes.length; i++){
-      let node = elements.find(function(objNode){
+    for (let i = 0; i < element.nodes.length; i++) {
+      let node = elements.find(function(objNode) {
         return objNode.id === element.nodes[i];
       });
-      if(node){
+      if (node) {
         arrCoords.push(transform([node.lon,node.lat],'EPSG:4326','EPSG:3857'));
       }
     }
-    if(arrCoords && arrCoords[0] && arrCoords[0][0] == arrCoords[arrCoords.length-1][0] && arrCoords[0][1] == arrCoords[arrCoords.length-1][1]){ //polygon
+    if (arrCoords && arrCoords[0] && arrCoords[0][0] == arrCoords[arrCoords.length-1][0] && arrCoords[0][1] == arrCoords[arrCoords.length-1][1]) { //polygon
       delete arrCoords[arrCoords.length-1];
       arrCoords.length = arrCoords.length-1;
       let polygon = new Polygon([arrCoords]);
@@ -1310,14 +1314,14 @@ export class C4gLayerController{
         let tempCoords = tempPoint.getCoordinates();
         return new Point([tempCoords[0],tempCoords[1]]);
       }
-      else{
+      else {
         return polygon;
       }
     }
-    else{ //linestring
+    else { //linestring
       let lineString = new LineString(arrCoords);
       if (forceNodes) {
-        if(arrCoords.length > 0){
+        if(arrCoords.length > 0) {
           let lineExtent = boundingExtent(arrCoords);
           let lineCenter = getCenter(lineExtent);
           return new Point([lineCenter[0], lineCenter[1]]);
