@@ -15,6 +15,7 @@ import {utils} from "./c4g-maps-utils";
 import {LineString} from "ol/geom";
 import {Observable} from "ol";
 import {unByKey} from "ol/Observable";
+import {cssConstants} from "./c4g-maps-constant";
 
 'use strict';
 export class MapHover {
@@ -139,7 +140,7 @@ export class MapHover {
         canvas = document.querySelector("canvas");
         jQuery(canvas).css('cursor', 'default');
         if (mapData.hover_popups === '1' && mapData.hover_popups_stay != '1') {
-          window.c4gMapsPopup.$popup.removeClass(c4g.maps.constant.css.ACTIVE);
+          window.c4gMapsPopup.$popup.removeClass(cssConstants.ACTIVE);
         }
 
         if (self.lastHoveredFeature && self.lastFeatureStyle) {
@@ -366,7 +367,7 @@ export class MapHover {
 
         if (popupInfos.content) {
           window.c4gMapsPopup.$content.html('');
-          window.c4gMapsPopup.$popup.addClass(c4g.maps.constant.css.ACTIVE).addClass(c4g.maps.constant.css.LOADING);
+          window.c4gMapsPopup.$popup.addClass(cssConstants.ACTIVE).addClass(cssConstants.LOADING);
           window.c4gMapsPopup.spinner.show();
 
           if (popupInfos.async === false) {
@@ -406,7 +407,7 @@ export class MapHover {
             });
           }
         } else {
-          window.c4gMapsPopup.$popup.removeClass(c4g.maps.constant.css.ACTIVE);
+          window.c4gMapsPopup.$popup.removeClass(cssConstants.ACTIVE);
         }
       }
 
