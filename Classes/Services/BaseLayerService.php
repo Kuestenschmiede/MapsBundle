@@ -15,6 +15,7 @@ namespace con4gis\MapsBundle\Classes\Services;
 
 use con4gis\CoreBundle\Resources\contao\classes\HttpResultHelper;
 use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
+use con4gis\MapsBundle\Resources\contao\classes\Utils;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapBaselayersModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapOverlaysModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
@@ -210,7 +211,7 @@ class BaseLayerService
 
         $arrBaseLayer['id'] = $objBaseLayer->id;
         $decodedName = $stringClass::decodeEntities($objBaseLayer->display_name ?: $objBaseLayer->name);
-        $arrBaseLayer['name'] =  $this->replaceInsertTags($decodedName);
+        $arrBaseLayer['name'] =  Utils::replaceInsertTags($decodedName);
 
         $arrBaseLayer['provider'] = $objBaseLayer->provider;
         switch ($objBaseLayer->provider) {
@@ -389,42 +390,5 @@ class BaseLayerService
         }
         $arrBaseLayer['cesium']= $objBaseLayer->cesium;
         return $arrBaseLayer;
-    }
-    
-    /**
-     * Custom implementation of the replaceInsertTags function for the iflng and ifnlng tags to workaround
-     * the issue that the global page object is null in the baselayer request.
-     */
-    private function replaceInsertTags(string $toReplace)
-    {
-        $language = $GLOBALS['TL_LANGUAGE'];
-        // convert string into a more parsable form
-        $toReplace = str_replace("{{", "/", $toReplace);
-        $toReplace = str_replace("}}", "/", $toReplace);
-        $toReplace = str_replace("//", "/", $toReplace);
-        $arrReplace = explode("/", $toReplace);
-        $result = "";
-        foreach ($arrReplace as $key => $value) {
-            if (strlen($value) > 6) {
-                // check if the value contains a language tag
-                if (substr($value, 0, 6) === "ifnlng") {
-                    $arrLang = explode("::", $value);
-                    if ($arrLang[1] !== $language) {
-                        // language does not match, so get the value
-                        $result = $arrReplace[$key + 1];
-                    }
-                } else if (substr($value, 0, 6) === "iflng:") {
-                    $arrLang = explode("::", $value);
-                    if ($arrLang[1] === $language) {
-                        // language does match, so get the value
-                        $result = $arrReplace[$key + 1];
-                    }
-                }
-            }
-        }
-        if ($result === "") {
-            $result = $toReplace;
-        }
-        return $result;
     }
 }

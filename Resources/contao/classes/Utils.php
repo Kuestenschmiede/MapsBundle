@@ -70,6 +70,45 @@ class Utils
     }
     
     /**
+     * Custom implementation of the replaceInsertTags function for the iflng and ifnlng tags to workaround
+     * the issue that the global page object is null in the baselayer request.
+     * @param $toReplace
+     * @return string
+     */
+    public static function replaceInsertTags(string $toReplace)
+    {
+        $language = $GLOBALS['TL_LANGUAGE'];
+        // convert string into a more parsable form
+        $toReplace = str_replace("{{", "/", $toReplace);
+        $toReplace = str_replace("}}", "/", $toReplace);
+        $toReplace = str_replace("//", "/", $toReplace);
+        $arrReplace = explode("/", $toReplace);
+        $result = "";
+        foreach ($arrReplace as $key => $value) {
+            if (strlen($value) > 6) {
+                // check if the value contains a language tag
+                if (substr($value, 0, 6) === "ifnlng") {
+                    $arrLang = explode("::", $value);
+                    if ($arrLang[1] !== $language) {
+                        // language does not match, so get the value
+                        $result = $arrReplace[$key + 1];
+                    }
+                } else if (substr($value, 0, 6) === "iflng:") {
+                    $arrLang = explode("::", $value);
+                    if ($arrLang[1] === $language) {
+                        // language does match, so get the value
+                        $result = $arrReplace[$key + 1];
+                    }
+                }
+            }
+        }
+        if ($result === "") {
+            $result = $toReplace;
+        }
+        return $result;
+    }
+    
+    /**
      * Returns an array of location types that are supported by maps per default.
      * @return array
      */
