@@ -348,7 +348,7 @@ class LayerService
         }
 
         if ($objLayer->data_layername) {
-            $arrLayerData['name'] = \Contao\Controller::replaceInsertTags($stringClass::decodeEntities($objLayer->data_layername));
+            $arrLayerData['name'] = Utils::replaceInsertTags($stringClass::decodeEntities($objLayer->data_layername));
             $arrLayerData['display'] = true;
             $arrLayerData['hide_child'] = $objLayer->hide_child;
         } else {
