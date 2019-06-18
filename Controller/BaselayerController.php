@@ -34,6 +34,7 @@ class BaselayerController extends BaseController
 
     public function baseLayerAction(Request $request, $profileId)
     {
+        $this->initializeContao();
         $response = new JsonResponse();
 
         $this->checkForCacheSettings('baseLayerService');

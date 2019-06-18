@@ -209,7 +209,8 @@ class BaseLayerService
         $arrBaseLayer = [];
 
         $arrBaseLayer['id'] = $objBaseLayer->id;
-        $arrBaseLayer['name'] =  \Contao\Controller::replaceInsertTags($stringClass::decodeEntities($objBaseLayer->display_name ?: $objBaseLayer->name));
+        $decodedName = $stringClass::decodeEntities($objBaseLayer->display_name ?: $objBaseLayer->name);
+        $arrBaseLayer['name'] =  $this->replaceInsertTags($decodedName);
 
         $arrBaseLayer['provider'] = $objBaseLayer->provider;
         switch ($objBaseLayer->provider) {
@@ -266,10 +267,7 @@ class BaseLayerService
                 break;
             case 'con4gisIo':
                 $objSettings = C4gMapSettingsModel::findOnly();
-//                $key = C4GUtils::getKey($objSettings, '4', 'id='.$objBaseLayer->con4gisIo);
-//                if ($key) {
-                    $arrBaseLayer['url'] = rtrim($objSettings->con4gisIoUrl, "/") . "/" . "tiles.php?key={key}&z={z}&x={x}&y={y}";
-//                }
+                $arrBaseLayer['url'] = rtrim($objSettings->con4gisIoUrl, "/") . "/" . "tiles.php?key={key}&z={z}&x={x}&y={y}";
                 break;
             case 'mapbox':
                 $arrBaseLayer['url'] = 'https://api.mapbox.com/styles/v1/';
@@ -391,5 +389,42 @@ class BaseLayerService
         }
         $arrBaseLayer['cesium']= $objBaseLayer->cesium;
         return $arrBaseLayer;
+    }
+    
+    /**
+     * Custom implementation of the replaceInsertTags function for the iflng and ifnlng tags to workaround
+     * the issue that the global page object is null in the baselayer request.
+     */
+    private function replaceInsertTags(string $toReplace)
+    {
+        $language = $GLOBALS['TL_LANGUAGE'];
+        // convert string into a more parsable form
+        $toReplace = str_replace("{{", "/", $toReplace);
+        $toReplace = str_replace("}}", "/", $toReplace);
+        $toReplace = str_replace("//", "/", $toReplace);
+        $arrReplace = explode("/", $toReplace);
+        $result = "";
+        foreach ($arrReplace as $key => $value) {
+            if (strlen($value) > 6) {
+                // check if the value contains a language tag
+                if (substr($value, 0, 6) === "ifnlng") {
+                    $arrLang = explode("::", $value);
+                    if ($arrLang[1] !== $language) {
+                        // language does not match, so get the value
+                        $result = $arrReplace[$key + 1];
+                    }
+                } else if (substr($value, 0, 6) === "iflng:") {
+                    $arrLang = explode("::", $value);
+                    if ($arrLang[1] === $language) {
+                        // language does match, so get the value
+                        $result = $arrReplace[$key + 1];
+                    }
+                }
+            }
+        }
+        if ($result === "") {
+            $result = $toReplace;
+        }
+        return $result;
     }
 }
