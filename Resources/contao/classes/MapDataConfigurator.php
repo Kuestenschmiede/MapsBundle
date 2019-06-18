@@ -72,10 +72,6 @@ class MapDataConfigurator
         $profileId = $map->profile;
         // check for mobile-profile
         $isMobile = false;
-//        if (($map->profile_mobile > 0) && (\Input::cookie('TL_VIEW') == 'mobile' || (\Environment::get('agent')->mobile && \Input::cookie('TL_VIEW') != 'desktop'))) {
-//            $isMobile = true;
-//            $profileId = $map->profile_mobile;
-//        }
         $mobileDetection = new Mobile_Detection();
         if ($mobileDetection->isMobile() && ($map->profile_mobile > 0)) {
             $isMobile = true;

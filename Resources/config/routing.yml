@@ -1,11 +1,12 @@
 baselayer_service:
-    path: /con4gis/baseLayerService/{profileId}
+    path: /con4gis/baseLayerService/{profileId}/{lang}
     defaults:
         _scope: frontend
         _controller: "con4gisMapsBundle:Baselayer:baseLayer"
     methods: [GET]
     requirements:
         profileId: \d+
+        lang: .*
 
 baselayer_tile_service:
     path: /con4gis/baseLayerTileService/{baseLayerId}/{z}/{x}/{y}
@@ -17,13 +18,14 @@ baselayer_tile_service:
         baseLayerId: \d+
 
 layer_service:
-    path: /con4gis/layerService/{mapId}
+    path: /con4gis/layerService/{mapId}/{lang}
     defaults:
         _scope: frontend
         _controller: "con4gisMapsBundle:Layer:layer"
     methods: [GET]
     requirements:
         mapId: \d+
+        lang: .*
 
 layer_content_service:
     path: /con4gis/layerContentService/{layerId}

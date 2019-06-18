@@ -53,9 +53,9 @@ class LayerService
         $this->layerContentService = $layerContentService;
     }
 
-    public function generate($intParentId)
+    public function generate($intParentId, $lang)
     {
-        $arrLayers = $this->getLayerList($intParentId);
+        $arrLayers = $this->getLayerList($intParentId, $lang);
 
         // reassign layers from forum or other sources
         // this realizes the assignment of forum posts into a layer with the same name, if any exists
@@ -146,7 +146,7 @@ class LayerService
      * @param bool $blnIsSubLayer
      * @return array
      */
-    protected function getLayerList($intId, $blnIsSubLayer = false)
+    protected function getLayerList($intId, $lang, $blnIsSubLayer = false)
     {
         $arrLayer = array();
 
@@ -166,7 +166,7 @@ class LayerService
         if ($objMap) {
             // append map itself as structure element
             if ($objMap->location_type != "none") {
-                $mapLayer = $this->parseLayer($objMap);
+                $mapLayer = $this->parseLayer($objMap, $lang);
                 unset($mapLayer['raw']);
                 $arrLayer[] = $mapLayer;
             }
@@ -191,11 +191,11 @@ class LayerService
                         continue;
                     }
                 }
-                if ($arrGetLayerData = $this->parseLayer($objLayers)) {
+                if ($arrGetLayerData = $this->parseLayer($objLayers, $lang)) {
                     $arrLayerData = $arrGetLayerData;//$this->parseLayer($objLayers);
                     $arrLayerData['cssClass'] = $objLayers->cssClass;
 
-                    if ($childLayerList = $this->getLayerList($arrLayerData['id'], true)) {
+                    if ($childLayerList = $this->getLayerList($arrLayerData['id'], $lang, true)) {
                         $arrLayerData['hasChilds'] = true;
                         $arrLayerData['childsCount'] = sizeof($childLayerList);
                         $arrLayerData['childs'] = $childLayerList;
@@ -302,13 +302,13 @@ class LayerService
      * @param mixed $objLayer
      * @return array
      */
-    protected function parseLayer($objLayer)
+    protected function parseLayer($objLayer, $lang)
     {
         $stringClass = $GLOBALS['con4gis']['stringClass'];
         $arrLayerData = [];
         $arrLayerData['id'] = $objLayer->id;
         $arrLayerData['pid'] = $objLayer->pid;
-        $arrLayerData['name'] =  \Contao\Controller::replaceInsertTags($stringClass::decodeEntities($objLayer->name));
+        $arrLayerData['name'] =  Utils::replaceInsertTags($stringClass::decodeEntities($objLayer->name), $lang);
         $arrLayerData['zoom_locations'] = $objLayer->zoom_locations;
         $arrLayerData['async_content'] = $objLayer->async_content;
         $arrLayerData['noFilter'] = $objLayer->exemptFromFilter;
@@ -348,7 +348,7 @@ class LayerService
         }
 
         if ($objLayer->data_layername) {
-            $arrLayerData['name'] = Utils::replaceInsertTags($stringClass::decodeEntities($objLayer->data_layername));
+            $arrLayerData['name'] = Utils::replaceInsertTags($stringClass::decodeEntities($objLayer->data_layername), $lang);
             $arrLayerData['display'] = true;
             $arrLayerData['hide_child'] = $objLayer->hide_child;
         } else {
@@ -368,7 +368,7 @@ class LayerService
 
         $arrLayerData['type'] = $objLayer->location_type;
         if ($objLayer->location_type === 'link') {
-            $arrLayerData = $this->handleLayerLink($objLayer, $arrLayerData);
+            $arrLayerData = $this->handleLayerLink($objLayer, $arrLayerData, $lang);
         } else {
             $arrLayerData['content'] = $this->getContentForType($objLayer);
         }
@@ -408,7 +408,7 @@ class LayerService
         return $arrLayerData;
     }
     
-    private function handleLayerLink($objLayer, $arrLayerData)
+    private function handleLayerLink($objLayer, $arrLayerData, $lang)
     {
         $arrLayerData['link_id'] = $objLayer->link_id;
         $linkedLayer = C4gMapsModel::findByPk($objLayer->link_id);
@@ -420,7 +420,7 @@ class LayerService
         } else {
             // check childs
             // TODO cache resolved link
-            $arrLayerData = array_merge($arrLayerData, $this->getChildsForLinkedLayer($linkedLayer->id, $objLayer));
+            $arrLayerData = array_merge($arrLayerData, $this->getChildsForLinkedLayer($linkedLayer->id, $objLayer, $lang));
         }
         
         // set baselayer filter
@@ -447,7 +447,7 @@ class LayerService
      * @param $parentLayer
      * @return array
      */
-    private function getChildsForLinkedLayer($layerId, $parentLayer)
+    private function getChildsForLinkedLayer($layerId, $parentLayer, $lang)
     {
         $childLayers = C4gMapsModel::findPublishedByPid($layerId);
         $arrLayerData['childs'] = [];
@@ -455,16 +455,16 @@ class LayerService
         foreach ($childLayers as $childLayer) {
             if ($childLayer->location_type !== "none") {
                 // we reached the "bottom" of the tree leaf
-                $childData = $this->parseLayer($childLayer);
+                $childData = $this->parseLayer($childLayer, $lang);
                 $childData['pid'] = $parentLayer->id;
                 $arrLayerData['childs'][] = $childData;
                 $arrLayerData['hide'] = $parentLayer->data_hidelayer;
             } else {
-                $currentChildLayer = $this->parseLayer($childLayer);
+                $currentChildLayer = $this->parseLayer($childLayer, $lang);
                 // set correct pid for the contentless element
                 $currentChildLayer['pid'] = $parentLayer->id;
                 // $childLayer is the acutal existing layer.
-                $arrChildData = $this->getChildsForLinkedLayer($childLayer->id, (object) $currentChildLayer);
+                $arrChildData = $this->getChildsForLinkedLayer($childLayer->id, (object) $currentChildLayer, $lang);
                 $currentChildLayer['childs'] = $arrChildData['childs'];
                 $currentChildLayer['content'] = [];
                 $currentChildLayer['hasChilds'] = count($currentChildLayer['childs']) > 0;

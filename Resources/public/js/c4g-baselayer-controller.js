@@ -211,11 +211,6 @@ export class C4gBaselayerController {
               )
             )
           });
-          // } else if (mapQuestSourceConfigs[baseLayerConfig.style]) {
-          //   // mapQuest
-          //   newBaselayer = new TileLayer({
-          //     source: new ol.source.MapQuest(mapQuestSourceConfigs[baseLayerConfig.style])
-          //   });
         }
         else {
           console.warn('unsupported osm-style -> switch to default');

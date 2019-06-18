@@ -73,11 +73,12 @@ class Utils
      * Custom implementation of the replaceInsertTags function for the iflng and ifnlng tags to workaround
      * the issue that the global page object is null in the baselayer request.
      * @param $toReplace
+     * @param $lang
      * @return string
      */
-    public static function replaceInsertTags(string $toReplace)
+    public static function replaceInsertTags(string $toReplace, string $lang)
     {
-        $language = $GLOBALS['TL_LANGUAGE'];
+        $language = $lang;
         // convert string into a more parsable form
         $toReplace = str_replace("{{", "/", $toReplace);
         $toReplace = str_replace("}}", "/", $toReplace);

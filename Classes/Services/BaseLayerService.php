@@ -50,7 +50,7 @@ class BaseLayerService
     protected $arrLayers = [];
     protected $arrConfig = [];
 
-    public function generate($intProfileId)
+    public function generate($intProfileId, $lang)
     {
         $blnProfileBaselayerFilter = false;
         $mapsProfileModel = C4gMapProfilesModel::findById($intProfileId);
@@ -64,7 +64,7 @@ class BaseLayerService
             }
         }
 
-        $arrLayers = $this->getBaseLayerList($blnProfileBaselayerFilter ? $arrProfileBaselayerFilter : false);
+        $arrLayers = $this->getBaseLayerList($blnProfileBaselayerFilter ? $arrProfileBaselayerFilter : false, $lang);
 
         $this->arrConfig['countAll'] = sizeof($arrLayers);
 
@@ -77,7 +77,7 @@ class BaseLayerService
      *
      * @param int $id
      */
-    protected function getBaseLayerList($arrFilter)
+    protected function getBaseLayerList($arrFilter, $lang)
     {
 
         $arrBaseLayer = array();
@@ -112,7 +112,7 @@ class BaseLayerService
                     }
                 }
 
-                $arrLayerData = $this->parseBaseLayer($objBaseLayers);
+                $arrLayerData = $this->parseBaseLayer($objBaseLayers, $lang);
 
                 $objOverlays = C4gMapOverlaysModel::findBy('pid', $objBaseLayers->id);
                 if ($objOverlays !== null)
@@ -204,14 +204,14 @@ class BaseLayerService
 
     }
 
-    protected function parseBaseLayer($objBaseLayer)
+    protected function parseBaseLayer($objBaseLayer, $lang)
     {
         $stringClass = $GLOBALS['con4gis']['stringClass'];
         $arrBaseLayer = [];
 
         $arrBaseLayer['id'] = $objBaseLayer->id;
         $decodedName = $stringClass::decodeEntities($objBaseLayer->display_name ?: $objBaseLayer->name);
-        $arrBaseLayer['name'] =  Utils::replaceInsertTags($decodedName);
+        $arrBaseLayer['name'] =  Utils::replaceInsertTags($decodedName, $lang);
 
         $arrBaseLayer['provider'] = $objBaseLayer->provider;
         switch ($objBaseLayer->provider) {
