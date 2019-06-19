@@ -61,6 +61,11 @@ class NominatimApi extends \Frontend
         $strParams = "";
 
         switch ($intSearchEngine) {
+            case '5':
+                if (!empty($objMapsProfile->geosearch_key)) {
+                    $strSearchUrl = 'https://api.openrouteservice.org/geocode/search?api_key=' . $objMapsProfile->geosearch_key;
+                }
+                break;
             case '4':
                 if (!empty($objMapsProfile->geosearch_key)) { //Deprecated
                     $strSearchUrl = 'https://'.$objMapsProfile->geosearch_key.'.search.mapservices.kartenkueste.de/search.php';
@@ -108,25 +113,36 @@ class NominatimApi extends \Frontend
 
         if (sizeof($arrParams) > 0)
         {
-            foreach ($arrParams as $strKey=>$strValue)
-            {
-                if ($strKey && $strValue) {
-                    if ((strpos($strSearchUrl,'api.opencagedata.com') !== false) && ($strKey=='format') && $strKey && $strValue){
-                        if ( (strpos($strSearchUrl, 'json') !== true) &&
-                            (strpos($strSearchUrl, 'geojson') !== true) &&
-                            (strpos($strSearchUrl, 'xml') !== true) &&
-                            (strpos($strSearchUrl, 'map') !== true) &&
-                            (strpos($strSearchUrl, 'google-v3-json') !== true)) {
-                            $strSearchUrl = addslashes($strSearchUrl).'json';
-                            continue;
+            if ($intSearchEngine < 5) {
+                foreach ($arrParams as $strKey=>$strValue)
+                {
+                    if ($strKey && $strValue) {
+                        if ((strpos($strSearchUrl,'api.opencagedata.com') !== false) && ($strKey=='format') && $strKey && $strValue){
+                            if ( (strpos($strSearchUrl, 'json') !== true) &&
+                                (strpos($strSearchUrl, 'geojson') !== true) &&
+                                (strpos($strSearchUrl, 'xml') !== true) &&
+                                (strpos($strSearchUrl, 'map') !== true) &&
+                                (strpos($strSearchUrl, 'google-v3-json') !== true)) {
+                                $strSearchUrl = addslashes($strSearchUrl).'json';
+                                continue;
+                            }
                         }
-                    }
 
-                    if (strlen($strParams) > 0)
-                    {
-                        $strParams .= "&";
+                        if (strlen($strParams) > 0)
+                        {
+                            $strParams .= "&";
+                        }
+                        $strParams .= $strKey . "=" . urlencode($strValue);
                     }
-                    $strParams .= $strKey . "=" . urlencode($strValue);
+                }
+            }
+            if ($intSearchEngine == '5') {
+                $strSearchUrl .= '&';
+                if ($arrParams['q']) {
+                    $strSearchUrl .= "text=" . $arrParams['q'];
+                }
+                if ($arrParams['limit']) {
+                    $strSearchUrl .= "&size=" . $arrParams['limit'];
                 }
             }
         }
@@ -138,7 +154,12 @@ class NominatimApi extends \Frontend
         if ($_SERVER['HTTP_USER_AGENT']) {
             $REQUEST->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
         }
-        $REQUEST->send($strSearchUrl . '?' . $strParams);
+        if ($intSearchEngine < 5) {
+            $REQUEST->send($strSearchUrl . '?' . $strParams);
+        }
+        else if ($intSearchEngine == 5) {
+            $REQUEST->send($strSearchUrl);
+        }
 
         return $REQUEST->response;
     }
