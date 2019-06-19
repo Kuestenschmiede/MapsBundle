@@ -15,6 +15,7 @@ namespace con4gis\MapsBundle\Classes\Services;
 
 use con4gis\CoreBundle\Resources\contao\classes\HttpResultHelper;
 use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
+use con4gis\MapsBundle\Resources\contao\classes\Utils;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapBaselayersModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapOverlaysModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
@@ -49,7 +50,7 @@ class BaseLayerService
     protected $arrLayers = [];
     protected $arrConfig = [];
 
-    public function generate($intProfileId)
+    public function generate($intProfileId, $lang)
     {
         $blnProfileBaselayerFilter = false;
         $mapsProfileModel = C4gMapProfilesModel::findById($intProfileId);
@@ -63,7 +64,7 @@ class BaseLayerService
             }
         }
 
-        $arrLayers = $this->getBaseLayerList($blnProfileBaselayerFilter ? $arrProfileBaselayerFilter : false);
+        $arrLayers = $this->getBaseLayerList($blnProfileBaselayerFilter ? $arrProfileBaselayerFilter : false, $lang);
 
         $this->arrConfig['countAll'] = sizeof($arrLayers);
 
@@ -76,7 +77,7 @@ class BaseLayerService
      *
      * @param int $id
      */
-    protected function getBaseLayerList($arrFilter)
+    protected function getBaseLayerList($arrFilter, $lang)
     {
 
         $arrBaseLayer = array();
@@ -111,7 +112,7 @@ class BaseLayerService
                     }
                 }
 
-                $arrLayerData = $this->parseBaseLayer($objBaseLayers);
+                $arrLayerData = $this->parseBaseLayer($objBaseLayers, $lang);
 
                 $objOverlays = C4gMapOverlaysModel::findBy('pid', $objBaseLayers->id);
                 if ($objOverlays !== null)
@@ -203,13 +204,14 @@ class BaseLayerService
 
     }
 
-    protected function parseBaseLayer($objBaseLayer)
+    protected function parseBaseLayer($objBaseLayer, $lang)
     {
         $stringClass = $GLOBALS['con4gis']['stringClass'];
         $arrBaseLayer = [];
 
         $arrBaseLayer['id'] = $objBaseLayer->id;
-        $arrBaseLayer['name'] =  \Contao\Controller::replaceInsertTags($stringClass::decodeEntities($objBaseLayer->display_name ?: $objBaseLayer->name));
+        $decodedName = $stringClass::decodeEntities($objBaseLayer->display_name ?: $objBaseLayer->name);
+        $arrBaseLayer['name'] =  Utils::replaceInsertTags($decodedName, $lang);
 
         $arrBaseLayer['provider'] = $objBaseLayer->provider;
         switch ($objBaseLayer->provider) {
@@ -266,10 +268,7 @@ class BaseLayerService
                 break;
             case 'con4gisIo':
                 $objSettings = C4gMapSettingsModel::findOnly();
-//                $key = C4GUtils::getKey($objSettings, '4', 'id='.$objBaseLayer->con4gisIo);
-//                if ($key) {
-                    $arrBaseLayer['url'] = rtrim($objSettings->con4gisIoUrl, "/") . "/" . "tiles.php?key={key}&z={z}&x={x}&y={y}";
-//                }
+                $arrBaseLayer['url'] = rtrim($objSettings->con4gisIoUrl, "/") . "/" . "tiles.php?key={key}&z={z}&x={x}&y={y}";
                 break;
             case 'mapbox':
                 $arrBaseLayer['url'] = 'https://api.mapbox.com/styles/v1/';

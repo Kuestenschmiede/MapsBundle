@@ -32,7 +32,7 @@ class LayerController extends BaseController
         $this->cacheInstance = C4GLayerApiCache::getInstance();
     }
 
-    public function layerAction(Request $request, $mapId)
+    public function layerAction(Request $request, $mapId, $lang)
     {
         $response = new JsonResponse();
         $this->initialize(false);
@@ -45,7 +45,7 @@ class LayerController extends BaseController
         if (!self::$outputFromCache) {
             /* @var LayerService $layerService */
             $layerService = $this->get('con4gis.layer_service');
-            $this->responseData = $layerService->generate($mapId);
+            $this->responseData = $layerService->generate($mapId, $lang);
             if (self::$useCache) {
                 $this->storeDataInCache($request);
             }

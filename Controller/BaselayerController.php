@@ -32,10 +32,10 @@ class BaselayerController extends BaseController
         $this->cacheInstance = C4GBaselayerApiCache::getInstance();
     }
 
-    public function baseLayerAction(Request $request, $profileId)
+    public function baseLayerAction(Request $request, $profileId, $lang)
     {
+        $this->initializeContao();
         $response = new JsonResponse();
-
         $this->checkForCacheSettings('baseLayerService');
 
         if (self::$useCache) {
@@ -44,26 +44,24 @@ class BaselayerController extends BaseController
 
         if (!self::$outputFromCache) {
             $baseLayerService = $this->get('con4gis.baselayer_service');
-            $this->responseData = $baseLayerService->generate($profileId);
+            $this->responseData = $baseLayerService->generate($profileId, $lang);
             if (self::$useCache) {
                 $this->storeDataInCache($request);
             }
         }
 
         $response->setData($this->responseData);
+        
         return $response;
     }
+    
     public function baseLayerTileAction(Request $request, $baseLayerId, $z, $x, $y)
     {
         $baseLayerTileApi = new BaseLayerTileApi();
-
-//        if (!self::$outputFromCache) {
         $this->responseData = $baseLayerTileApi->generate($baseLayerId, $z, $x, $y);
-        //$this->storeDataInCache($request);
-//        }
-
         $response = new Response($this->responseData);
         $response->headers->set('Content-Type', 'application/png');
+        
         return $response;
     }
 }
