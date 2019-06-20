@@ -293,7 +293,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_resize_src_zoom'],
             'exclude'                 => true,
             'inputType'               => 'text',
-            'default'                 => '',
+            'default'                 => 0,
             'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
             'sql'                     => "int(10) NOT NULL default '0'"
         ],
@@ -303,7 +303,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_resize_scale_factor'],
             'exclude'                 => true,
             'inputType'               => 'text',
-            'default'                 => '',
+            'default'                 => 0,
             'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
             'sql'                     => "double(3,3) NOT NULL default '1.000'"
         ],
