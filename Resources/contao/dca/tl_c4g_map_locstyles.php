@@ -619,7 +619,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['editor_icon_size'],
             'exclude'                 => true,
-            'default'                 => ['0','0'],
+            'default'                 => ['16','16'],
             'inputType'               => 'imageSize',
             'options'                  => $imageSizes,
             'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'long', 'mandatory'=>false],
