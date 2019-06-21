@@ -69,11 +69,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['popup_offset']     = array('Positio
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['onclick_zoomto'] 	 = array('Zoomen bei Mausklick auf Zoomstufe', 'Geben Sie die Zoomstufe ein, auf die bei Mausklick gezoomt werden soll. Funktioniert nur, wenn keine Direktverlinkung angegeben ist. Überschreibt Einstellung am Kartenstrukturelement!');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['minzoom'] 		 = array('Mindest-Zoomstufe', 'Geben Sie die Zoomstufe ein, ab der die Elemente des Karteneintrags angezeigt werden. 0=keine Einschränkung.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['maxzoom'] 		 = array('Maximale Zoomstufe', 'Geben Sie die Zoomstufe ein, bis zu der die Elemente des Karteneintrags angezeigt werden. 0=keine Einschränkung.');
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['editor_icon'] 	 = array('Icon im Editor','Das Icon wird im Editor an Stelle des Standardicons verwendet.');
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['editor_icon_size'] = array('Größe des Editoricons','Geben Sie die gewünschte Icongröße an.');
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['editor_sort']      = array('Sortierung','Reihenfolge im Editor für diesen Lokationsstil.');
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['editor_vars'] 	 = array('Zusatzfelder','Zusatzfelder stehen im Editor zur Verfügung und können über ${Schlüssel} im Popup, Label und Tooltip in die Karte eingefügt werden.');
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['editor_collect'] 	 = array('Geometrien zusammenfassen','Fasst alle Geometrien dieses Lokationsstils, die miteinander im Editor bearbeitet werden, zusammen.');
+
 
 /**
  * Reference
@@ -133,7 +129,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['arrow_legend'] 	= 'Richtungspfeile'
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_legend'] 	= 'Einstellungen für Label';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['popup_legend'] 	= 'Einstellungen für Popups';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['zoom_legend']  	= 'Zoomstufen';
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['editor_legend']	= 'Einstellungen für Editor (GeoJSON und con4gis-Forum)';
+
 
 /**
  * Globals

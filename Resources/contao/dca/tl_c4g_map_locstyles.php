@@ -117,8 +117,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
                                          '{arrow_legend},line_arrows;'.
                                          '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,label_outl_box,font_opacity,font_style,font_weight;'.
                                          '{popup_legend},tooltip,popup_info;'.
-                                         '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;'.
-                                         '{editor_legend:hide},editor_icon,editor_icon_size,editor_sort,editor_vars,editor_collect;',
+                                         '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;',
         'cust_icon'                   => 'name,styletype,icon_src, icon_scale, icon_size,icon_resize_zoom,icon_opacity,icon_offset;'.
                                          '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,label_outl_box,font_opacity,font_style,font_weight;'.
                                          '{popup_legend},tooltip,popup_info;'.
@@ -607,48 +606,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
             'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
         ],
-        'editor_icon' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['editor_icon'],
-            'exclude'                 => true,
-            'inputType'               => 'fileTree',
-            'eval'                    => ['fieldType'=>'radio', 'files'=>true, 'extensions'=>'gif,jpg,jpeg,png,svg', 'tl_class'=>'clr'],
-            'sql'                     => "binary(16) NULL"
-        ],
-        'editor_icon_size' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['editor_icon_size'],
-            'exclude'                 => true,
-            'default'                 => ['16','16'],
-            'inputType'               => 'imageSize',
-            'options'                  => $imageSizes,
-            'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'long', 'mandatory'=>false],
-            'sql'                     => "varchar(100) NOT NULL default ''"
-        ],
-        'editor_sort' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['editor_sort'],
-            'exclude'                 => true,
-            'inputType'               => 'text',
-            'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
-            'sql'                     => "int(10) unsigned NOT NULL default '0'"
-        ],
-        'editor_vars' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['editor_vars'],
-            'inputType'               => 'keyValueWizard',
-            'exclude'                 => true,
-            'sql'                     => "text NULL"
-        ],
-
-        'editor_collect' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['editor_collect'],
-            'exclude'                 => true,
-            'default'                 => '',
-            'inputType'               => 'checkbox',
-            'sql'                     => "char(1) NOT NULL default ''"
-        ],
+        
 
 
     ]
