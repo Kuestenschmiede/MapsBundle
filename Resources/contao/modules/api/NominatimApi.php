@@ -62,8 +62,11 @@ class NominatimApi extends \Frontend
 
         switch ($intSearchEngine) {
             case '5':
-                if (!empty($objMapsProfile->geosearch_key)) {
+                if (!empty($objMapsProfile->geosearch_key) && !$objMapsProfile->geosearch_customengine_url) {
                     $strSearchUrl = 'https://api.openrouteservice.org/geocode/search?api_key=' . $objMapsProfile->geosearch_key;
+                }
+                else if ($objMapsProfile->geosearch_customengine_url) {
+                    $strSearchUrl = $objMapsProfile->geosearch_customengine_url . "v1/search?";
                 }
                 break;
             case '4':
@@ -137,9 +140,11 @@ class NominatimApi extends \Frontend
                 }
             }
             if ($intSearchEngine == '5') {
-                $strSearchUrl .= '&';
+                if (substr($strSearchUrl, -1) != "?") {
+                    $strSearchUrl .= '&';
+                }
                 if ($arrParams['q']) {
-                    $strSearchUrl .= "text=" . $arrParams['q'];
+                    $strSearchUrl .= "text=" . urlencode($arrParams['q']);
                 }
                 if ($arrParams['limit']) {
                     $strSearchUrl .= "&size=" . $arrParams['limit'];
@@ -160,8 +165,28 @@ class NominatimApi extends \Frontend
         else if ($intSearchEngine == 5) {
             $REQUEST->send($strSearchUrl);
         }
+        $response = $REQUEST->response;
+        if ($response && json_decode($response) && json_decode($response)->features) {
+            $arrResponse = json_decode($response)->features;
+            $arrNominatim = [];
+            foreach ($arrResponse as $elementResponse) {
+                $elementNominatim = [
+                    "lon"           => $elementResponse->geometry->coordinates[0],
+                    "lat"           => $elementResponse->geometry->coordinates[1],
+                    "display_name"  => $elementResponse->properties->label ? $elementResponse->properties->label : $elementResponse->properties->name,
+                    "bounding_box"  => [
+                        $elementResponse->bbox[1],
+                        $elementResponse->bbox[3],
+                        $elementResponse->bbox[0],
+                        $elementResponse->bbox[2],
+                    ]
+                ];
+                $arrNominatim[] = $elementNominatim;
+            }
+            $response = \GuzzleHttp\json_encode($arrNominatim);
+        }
 
-        return $REQUEST->response;
+        return $response;
     }
 
 }
