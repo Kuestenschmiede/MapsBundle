@@ -63,11 +63,6 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['popup_offset']     = array('Offset 
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['onclick_zoomto'] 	 = array('On mouse click zoom to zoom level', 'Enter a zoom level, to which is zoomed when an item has been clicked. Works only when there is no direct link. Overrides setting defined at map structure items.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['minzoom'] 		 = array('Min. zoom level', 'Enter the minimum zoom level, on which the items are shown. 0 means no restriction.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['maxzoom'] 		 = array('Max. zoom level', 'Enter the maximum zoom level, on which the items are shown. 0 means no restriction.');
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['editor_icon'] 	 = array('Editor icon','Icon used for add functionality in the editor (replaces default icon).');
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['editor_icon_size'] = array('Editor icon size','Size of the icon. Is scaled when needed.');
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['editor_sort']      = array('Sortorder','Sortorder in editor for this locationstyle.');
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['editor_vars']      = array('Additional fields','Fields available for geometries of this location style. Can be addressed using ${key} in popup, label and tooltip.');
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['editor_collect'] 	 = array('Create geometry collection','Puts all geometries of this location type that are edited together into a single geometry collection.');
 
 /**
  * Reference
@@ -127,7 +122,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['arrow_legend'] 	= 'Line direction a
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_legend'] 	= 'Label settings';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['popup_legend'] 	= 'Popup settings';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['zoom_legend']  	= 'Zoom settings';
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['editor_legend']	= 'Editor settings (GeoJSON and con4gis-Forum)';
+
 
 /**
  * Globals
