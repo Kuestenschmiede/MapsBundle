@@ -54,7 +54,7 @@ export class OverviewMap {
     options.target.appendChild(element);
 
     trigger = document.createElement('button');
-    trigger.title = options.tipLabel;
+    trigger.title = this.options.tipLabel;
     element.appendChild(trigger);
 
     triggerIcon = document.createElement('span');
