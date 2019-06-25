@@ -89,7 +89,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
         ],
     'palettes' =>
     [
-        'default' => '{defaultLegend},name,tableSource;{parentLegend},ptable,ptableOptions,ptableBackendField,ptableField,ptableCompareField;{geoLegend},geox,geoy,geolocation;{tableInformation},label,locstyle,tooltip;',
+        'default' => '{defaultLegend},name,tableSource;{parentLegend},ptable,ptableOptions,ptableBackendField,ptableField,ptableCompareField;{geoLegend},geox,geoy,geolocation;{tableInformation},label,locstyle,tooltip,popup;',
     ],
 
     // Fields
@@ -210,6 +210,13 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
         ],
         'popup' =>
         [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['popup'],
+            'exclude'                 => true,
+            'inputType'               => 'select',
+            'options_callback'        => ['tl_c4g_map_tables','getSourceTableFields'],
+            'save_callback'           => [['tl_c4g_map_tables', 'concatResult']],
+            'load_callback'           => [['tl_c4g_map_tables', 'separateResult']],
+            'eval'                    => ['mandatory'=>false, 'multiple'=>true, 'chosen' => true, 'includeBlankOption' => true],
             'sql'                     => "text NULL"
         ],
         'tooltip' =>
@@ -259,5 +266,16 @@ class tl_c4g_map_tables extends Backend
     {
         $label = [\Contao\Controller::replaceInsertTags($row['name']), $row['tableSource']];
         return $label;
+    }
+    
+    public function concatResult($varValue)
+    {
+        $varValue = implode(",", unserialize($varValue));
+        return $varValue;
+    }
+    
+    public function separateResult($varValue)
+    {
+        return explode(",", $varValue);
     }
 }

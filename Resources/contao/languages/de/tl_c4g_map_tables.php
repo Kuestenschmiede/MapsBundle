@@ -28,7 +28,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_tables']['geoy']                    = ['Geo Y-Ko
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['geolocation']             = ['Geolokation', 'Geben Sie hier das Feld ein, das das Koordinatenpaar enthält'];
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['label']                   = ['Label', 'Geben Sie hier das Feld ein, das das Label enthält'];
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['locstyle']                = ['Lokationsstil', 'Geben Sie hier das Feld ein, das die ID des Lokationstils enthält'];
-$GLOBALS['TL_LANG']['tl_c4g_map_tables']['popup']                   = ['Popup', ''];
+$GLOBALS['TL_LANG']['tl_c4g_map_tables']['popup']                   = ['Popup', 'Wählen Sie Felder aus, aus denen das Popup zusammengesetzt werden soll (die einzelnen Feldinhalte werden mit einem Zeilenumbruch voneinander getrennt).'];
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['tooltip']                 = ['Tooltip', 'Geben Sie hier das Feld ein, das den Tooltip enthält'];
 
 
