@@ -96,8 +96,8 @@ export class Grid extends Control {
       element.appendChild(button);
 
       // set onClick to the toggle-function
-      button.addEventListener('click', toggle, false);
-      button.addEventListener('touchstart', toggle, false);
+      button.addEventListener('click', toggle, {useCapture: false, passive: true});
+      button.addEventListener('touchstart', toggle, {useCapture: false, passive: true});
     }
 
     // inheritance-stuff
