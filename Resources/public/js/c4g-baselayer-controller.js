@@ -619,36 +619,12 @@ export class C4gBaselayerController {
 
       //ToDo type class for geosearch_engine
       //geosearch attribution
-      var geosearch_attribution = '';
       if (this.mapController.data.geosearch) {
-        var geosearch_engine = this.mapController.data.geosearch.geosearch_engine;
 
         if (this.mapController.data &&
           this.mapController.data.attribution) {
 
-          switch (geosearch_engine) {
-            case '4':
-              geosearch_attribution = ''; //con4gis mapservices
-              break;
-            case '3':
-              if (this.mapController.data.geosearch.custom_attribution) {
-                geosearch_attribution = this.mapController.data.geosearch.custom_attribution;
-              }
-              break;
-            case '2':
-              geosearch_attribution =
-                'Nominatim Search Courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png" alt="" />';
-              break;
-            case '1':
-            default:
-              geosearch_attribution =
-                'Nominatim Search Courtesy of <a href="http://wiki.openstreetmap.org/wiki/Nominatim_usage_policy" target="_blank">OpenStreetMap</a>';
-              break;
-          }
-
-
-          var geosearchAttribution = geosearch_attribution;
-
+         let geosearchAttribution = this.mapController.data.attribution.geosearch;
           var exists = false;
           if (!layerOptions.attributions) {
             layerOptions.attributions = [];
@@ -665,6 +641,25 @@ export class C4gBaselayerController {
           }
           else {
             layerOptions.attributions = geosearchAttribution;
+          }
+
+          let routerAttribution = " - " + this.mapController.data.attribution.router;
+          var exists = false;
+          if (!layerOptions.attributions) {
+            layerOptions.attributions = [];
+          }
+          for (i = 0; i < layerOptions.attributions.length; i += 1) {
+            if (layerOptions.attributions[i] === routerAttribution) {
+              exists = true;
+              break;
+            }
+          }
+
+          if (!exists) {
+            layerOptions.attributions = layerOptions.attributions + ' ' + routerAttribution;
+          }
+          else {
+            layerOptions.attributions = routerAttribution;
           }
         }
       }
