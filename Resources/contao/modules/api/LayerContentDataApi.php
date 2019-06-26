@@ -184,8 +184,14 @@ class LayerContentDataApi extends \Frontend
                             break;
                     }
                 } else {
-                    // other stuff put in as text
-                    $popupContent .= $value . ' ';
+                    // try to load other strings as columns
+                    try {
+                        $popupContent .= $arrElement[$value] . "<br>";
+                    } catch(\Throwable $exception) {
+                        // other stuff put in as text
+                        $popupContent .= $value . ' ';
+                    }
+                    
                 }
             }
         }
