@@ -19,7 +19,7 @@ use con4gis\MapsBundle\Resources\contao\models\C4gMapSettingsModel;
  * Class NominatimApi
  * @package con4gis\MapsBundle\Resources\contao\modules\api
  */
-class NominatimApi extends \Frontend
+class SearchApi extends \Frontend
 {
     /**
      * Determines the request method and selects the appropriate data result.
@@ -30,7 +30,7 @@ class NominatimApi extends \Frontend
      */
     public function generate($intProfileId, $arrParams)
     {
-        return $this->getNominatimResponse($intProfileId, $arrParams);
+        return $this->getSearchResponse($intProfileId, $arrParams);
     }
 
     /**
@@ -38,7 +38,7 @@ class NominatimApi extends \Frontend
      *
      * @param int $id
      */
-    protected function getNominatimResponse($intProfileId=0, $arrParams)
+    protected function getSearchResponse($intProfileId=0, $arrParams)
     {
 
         $intSearchEngine = 0;
@@ -170,10 +170,20 @@ class NominatimApi extends \Frontend
             $arrResponse = json_decode($response)->features;
             $arrNominatim = [];
             foreach ($arrResponse as $elementResponse) {
+                $name = $elementResponse->properties->name;
+                if ($elementResponse->properties->county && $elementResponse->properties->county != $name) {
+                    $name .= ', ' . $elementResponse->properties->county;
+                }
+                if ($elementResponse->properties->region && $elementResponse->properties->county != $elementResponse->properties->region) {
+                    $name .= ', ' . $elementResponse->properties->region;
+                }
+                if ($elementResponse->properties->country) {
+                    $name .= ', ' . $elementResponse->properties->country;
+                }
                 $elementNominatim = [
                     "lon"           => $elementResponse->geometry->coordinates[0],
                     "lat"           => $elementResponse->geometry->coordinates[1],
-                    "display_name"  => $elementResponse->properties->label ? $elementResponse->properties->label : $elementResponse->properties->name,
+                    "display_name"  => $name,
                     "bounding_box"  => [
                         $elementResponse->bbox[1],
                         $elementResponse->bbox[3],

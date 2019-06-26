@@ -15,8 +15,8 @@ namespace con4gis\MapsBundle\Controller;
 use con4gis\CoreBundle\Controller\BaseController;
 use con4gis\MapsBundle\Resources\contao\classes\GeoPicker;
 use con4gis\MapsBundle\Resources\contao\modules\api\InfoWindowApi;
-use con4gis\MapsBundle\Resources\contao\modules\api\NominatimApi;
-use con4gis\MapsBundle\Resources\contao\modules\api\ReverseNominatimApi;
+use con4gis\MapsBundle\Resources\contao\modules\api\SearchApi;
+use con4gis\MapsBundle\Resources\contao\modules\api\ReverseSearchApi;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -44,23 +44,23 @@ class MapsController extends BaseController
         }
     }
 
-    public function nominatimAction(Request $request, $profileId)
+    public function searchAction(Request $request, $profileId)
     {
         $response = new Response();
         $getParams = $request->query->all();
-        $nominatimApi = new NominatimApi();
-        $returnData = $nominatimApi->generate($profileId, $getParams);
+        $searchApi = new SearchApi();
+        $returnData = $searchApi->generate($profileId, $getParams);
         $response->setContent($returnData);
         $response->headers->set('Content-Type', 'application/json');
         return $response;
     }
 
-    public function reverseNominatimAction(Request $request, $profileId)
+    public function reverseSearchAction(Request $request, $profileId)
     {
         $response = new Response();
         $getParams = $request->query->all();
-        $reverseNominatimApi = new ReverseNominatimApi();
-        $returnData = $reverseNominatimApi->generate($profileId, $getParams);
+        $reverseSearchApi = new ReverseSearchApi();
+        $returnData = $reverseSearchApi->generate($profileId, $getParams);
         $response->setContent($returnData);
         $response->headers->set('Content-Type', 'application/json');
         return $response;

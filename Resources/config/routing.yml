@@ -60,20 +60,20 @@ locationstyle_service:
         _controller: "con4gisMapsBundle:Locationstyle:locationStyle"
     methods: [GET]
 
-nominatim_service:
-    path: /con4gis/nominatimService/{profileId}
+search_service:
+    path: /con4gis/searchService/{profileId}
     defaults:
         _scope: frontend
-        _controller: "con4gisMapsBundle:Maps:nominatim"
+        _controller: "con4gisMapsBundle:Maps:search"
     methods: [GET]
     requirements:
         profileId: \d+
 
-reverse_nominatim_service:
-    path: /con4gis/reverseNominatimService/{profileId}
+reverse_search_service:
+    path: /con4gis/reverseSearchService/{profileId}
     defaults:
         _scope: frontend
-        _controller: "con4gisMapsBundle:Maps:reverseNominatim"
+        _controller: "con4gisMapsBundle:Maps:reverseSearch"
     methods: [GET]
     requirements:
         profileId: \d+

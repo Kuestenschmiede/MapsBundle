@@ -22,7 +22,7 @@ use con4gis\MapsBundle\Resources\contao\models\C4gMapSettingsModel;
  * Class ReverseNominatimApi
  * @package con4gis\MapsBundle\Resources\contao\modules\api
  */
-class ReverseNominatimApi extends \Frontend
+class ReverseSearchApi extends \Frontend
 {
     /**
      * Determines the request method and selects the appropriate data result.
@@ -68,6 +68,14 @@ class ReverseNominatimApi extends \Frontend
         $strParams = "";
 
         switch ($intSearchEngine) {
+            case '5':
+                if (!empty($objMapsProfile->geosearch_key) && !$objMapsProfile->geosearch_customengine_url) {
+                    $strSearchUrl = 'https://api.openrouteservice.org/geocode/reverse?api_key=' . $objMapsProfile->geosearch_key;
+                }
+                else if ($objMapsProfile->geosearch_customengine_url) {
+                    $strSearchUrl = $objMapsProfile->geosearch_customengine_url . "v1/reverse?";
+                }
+                break;
             case '4':
                 if (!empty($objMapsProfile->geosearch_key)) { //Deprecated
                     $strSearchUrl = 'https://'.$objMapsProfile->geosearch_key.'.search.mapservices.kartenkueste.de/reverse.php';
@@ -125,7 +133,7 @@ class ReverseNominatimApi extends \Frontend
                 break;
         }
 
-        if (sizeof($arrParams) > 0)
+        if (sizeof($arrParams) > 0 && $intSearchEngine < 5)
         {
             foreach ($arrParams as $strKey => $strValue)
             {
@@ -136,6 +144,21 @@ class ReverseNominatimApi extends \Frontend
                 $strParams .= $strKey . "=" . urlencode($strValue);
             }
         }
+        else if ($intSearchEngine === "5") {
+            foreach ($arrParams as $strKey => $strValue) {
+
+                if (substr($strSearchUrl, -1) != "?") {
+                    $strSearchUrl .= '&';
+                }
+                if ($strKey === "lat") {
+                    $strSearchUrl .= "point.lat=" . urlencode($strValue);
+                }
+                if ($strKey ==='lon') {
+                    $strSearchUrl .= "point.lon=" . urlencode($strValue);
+                }
+            }
+            $strSearchUrl .= "&size=1";
+        }
 
         $REQUEST = new \Request();
         if ($_SERVER['HTTP_REFERER']) {
@@ -144,9 +167,41 @@ class ReverseNominatimApi extends \Frontend
         if ($_SERVER['HTTP_USER_AGENT']) {
             $REQUEST->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
         }
-        $REQUEST->send($strSearchUrl . '?' . $strParams);
+        if ($intSearchEngine < 5) {
+            $REQUEST->send($strSearchUrl . '?' . $strParams);
+        }
+        else if ($intSearchEngine == 5) {
+            $REQUEST->send($strSearchUrl);
+        }
+        $response = $REQUEST->response;
+        if ($response && json_decode($response) && json_decode($response)->features) {
+            $arrResponse = json_decode($response)->features;
+            $elementResponse = $arrResponse[0];
+            $name = $elementResponse->properties->name;
+            if ($elementResponse->properties->county && $elementResponse->properties->county != $name) {
+                $name .= ', ' . $elementResponse->properties->county;
+            }
+            if ($elementResponse->properties->region && $elementResponse->properties->county != $elementResponse->properties->region) {
+                $name .= ', ' . $elementResponse->properties->region;
+            }
+            if ($elementResponse->properties->country) {
+                $name .= ', ' . $elementResponse->properties->country;
+            }
+            $elementNominatim = [
+                "lon"           => $elementResponse->geometry->coordinates[0],
+                "lat"           => $elementResponse->geometry->coordinates[1],
+                "display_name"  => $name,
+                "bounding_box"  => [
+                    $elementResponse->bbox[1],
+                    $elementResponse->bbox[3],
+                    $elementResponse->bbox[0],
+                    $elementResponse->bbox[2],
+                ]
+            ];
 
-        return $REQUEST->response;
+            $response = \GuzzleHttp\json_encode($elementNominatim);
+        }
+        return $response;
     }
 
 }
