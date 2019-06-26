@@ -79,6 +79,7 @@ class LayerContentService
         $objProfile = $objLayer->getRelated('profile');
         $profileId = $this->profileService->getProfileId($objProfile->id);
         $objProfile = C4gMapProfilesModel::findByPk($profileId);
+
         $arrReturnData = array();
         switch ($objLayer->location_type) {
             case "geojson":
@@ -181,6 +182,16 @@ class LayerContentService
         }
         else { // @Todo
             $url = "";
+        }
+
+        //simple option to active clustering on every element
+        if (!$objLayer->cluster_locations && $objProfile->cluster_all) {
+            $objLayer->cluster_locations = true;
+            $objLayer->cluster_fillcolor = $objProfile->cluster_fillcolor;
+            $objLayer->cluster_fontcolor = $objProfile->cluster_fontcolor;
+            $objLayer->cluster_zoom      = $objProfile->cluster_zoom;
+            $objLayer->cluster_popup     = $objProfile->cluster_popup;
+            $objLayer->cluster_distance  = $objProfile->cluster_distance;
         }
     
         return [
