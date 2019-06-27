@@ -435,33 +435,30 @@ class MapDataConfigurator
                 $mapData['geosearch']['collapsed'] = $profile->geosearch_collapsed;
                 $keyForward = null;
                 if ($profile->geosearch_engine == "4") {
-                    $keyForward = C4GUtils::getKey($objSettings, '2');
+                    $keyForward = (array) C4GUtils::getKey($objSettings, '2', "", false);
                     $mapData['geosearch']['searchKey'] = $keyForward['key'];
-                    $mapData['geosearch']['reverseKey'] = C4GUtils::getKey($objSettings, '3')['key'];
+                    $mapData['geosearch']['reverseKey'] = ((array) C4GUtils::getKey($objSettings, '3', "", false))['key'];
                     $mapData['geosearch']['url'] = rtrim($objSettings->con4gisIoUrl, "/") . "/";
                 }
 
-
-                else {
-                    switch ($profile->geosearch_engine) {
-                        case '1':
-                            $mapData['attribution']['geosearch'] = 'Nominatim Search Courtesy of <a href="http://wiki.openstreetmap.org/wiki/Nominatim_usage_policy" target="_blank">OpenStreetMap</a>';
+                switch ($profile->geosearch_engine) {
+                    case '1':
+                        $mapData['attribution']['geosearch'] = 'Nominatim Search Courtesy of <a href="http://wiki.openstreetmap.org/wiki/Nominatim_usage_policy" target="_blank">OpenStreetMap</a>';
                         break;
-                        case '2':
-                            $mapData['attribution']['geosearch'] = 'Nominatim Search Courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png" alt="" />';
-                            break;
-                        case '3':
-                            if ($profile->attribution && $profile->geosearch_attribution) {
-                                $mapData['attribution']['geosearch'] = \Contao\Controller::replaceInsertTags($profile->geosearch_attribution);
-                            }
-                            break;
-                        case '4':
-                            $mapData['attribution']['geosearch'] = $keyForward['attribution'];
+                    case '2':
+                        $mapData['attribution']['geosearch'] = 'Nominatim Search Courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png" alt="" />';
                         break;
-                        default:
-                            $mapData['attribution']['geosearch'] = 'Nominatim Search Courtesy of <a href="http://wiki.openstreetmap.org/wiki/Nominatim_usage_policy" target="_blank">OpenStreetMap</a>';
+                    case '3':
+                        if ($profile->attribution && $profile->geosearch_attribution) {
+                            $mapData['attribution']['geosearch'] = \Contao\Controller::replaceInsertTags($profile->geosearch_attribution);
+                        }
                         break;
-                    }
+                    case '4':
+                        $mapData['attribution']['geosearch'] = $keyForward['attribution'];
+                        break;
+                    default:
+                        $mapData['attribution']['geosearch'] = 'Nominatim Search Courtesy of <a href="http://wiki.openstreetmap.org/wiki/Nominatim_usage_policy" target="_blank">OpenStreetMap</a>';
+                        break;
                 }
             }
 
