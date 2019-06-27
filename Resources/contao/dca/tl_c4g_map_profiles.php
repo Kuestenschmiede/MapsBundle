@@ -673,7 +673,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'exclude'                 => true,
             'default'                 => '3',
             'inputType'               => 'radio',
-            'options'                 => ['3','4','2','1'],
+            'options'                 => ['3','4','2','1','5'],
             'eval'                    => ['submitOnChange' => true,'includeBlankOption' => false],
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine'],
             'sql'                     => "char(1) NOT NULL default '3'"
@@ -1094,6 +1094,10 @@ class tl_c4g_map_profiles extends Backend
             } elseif ($objProfile->geosearch_engine == '4') {
                 $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['geosearch'] =
                     str_replace('geosearch_engine,','geosearch_engine,geosearch_key,',
+                        $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['geosearch']);
+            } elseif ($objProfile->geosearch_engine == '5') {
+                $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['geosearch'] =
+                    str_replace('geosearch_engine,','geosearch_engine,geosearch_customengine_url,',
                         $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['geosearch']);
             }
 

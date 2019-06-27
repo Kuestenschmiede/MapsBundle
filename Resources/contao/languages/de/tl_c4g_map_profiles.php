@@ -153,6 +153,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine']['1'] =
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine']['2'] = 'Nominatim bei MapQuest (<a href="http://developer.mapquest.com/web/products/open/nominatim" target="_blank">Nutzungsbestimmungen</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine']['3'] = 'Benutzerdefiniert';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine']['4'] = 'con4gis.io Kartendienste (<a href="https://con4gis.io" target="_blank">Nutzungsbestimmungen</a>)';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine']['5'] = 'Pelias (<a href="https://pelias.io/" target="_blank">Nutzungsbestimmungen</a>)';
 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['referencesOverpassEngine']['1'] = 'Benutzerdefinierter Overpass-Server';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['referencesOverpassEngine']['2'] = 'con4gis.io Kartendienste (<a href="https://con4gis.io" target="_blank">Nutzungsbestimmungen</a>)';

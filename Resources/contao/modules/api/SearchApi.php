@@ -62,10 +62,7 @@ class SearchApi extends \Frontend
 
         switch ($intSearchEngine) {
             case '5':
-                if (!empty($objMapsProfile->geosearch_key) && !$objMapsProfile->geosearch_customengine_url) {
-                    $strSearchUrl = 'https://api.openrouteservice.org/geocode/search?api_key=' . $objMapsProfile->geosearch_key;
-                }
-                else if ($objMapsProfile->geosearch_customengine_url) {
+                if ($objMapsProfile->geosearch_customengine_url) {
                     $strSearchUrl = $objMapsProfile->geosearch_customengine_url . "v1/search?";
                 }
                 break;
