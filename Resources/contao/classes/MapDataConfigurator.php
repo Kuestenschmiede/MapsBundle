@@ -181,7 +181,7 @@ class MapDataConfigurator
             $mapData['mapId'] = 0;
             $mapData['id'] = 0;
         }
-        $mapData['width'] = '100%';
+
         $mapData['height'] = '100vh';
 
         if ($map->id != 0) {
