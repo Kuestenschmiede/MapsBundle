@@ -624,7 +624,7 @@ export class C4gBaselayerController {
         if (this.mapController.data &&
           this.mapController.data.attribution) {
 
-         let geosearchAttribution = this.mapController.data.attribution.geosearch;
+         let geosearchAttribution = this.mapController.data.attribution.geosearch ? this.mapController.data.attribution.geosearch : "";
           var exists = false;
           if (!layerOptions.attributions) {
             layerOptions.attributions = [];
@@ -643,7 +643,7 @@ export class C4gBaselayerController {
             layerOptions.attributions = geosearchAttribution;
           }
 
-          let routerAttribution = " - " + this.mapController.data.attribution.router;
+          let routerAttribution = this.mapController.data.attribution.router ? " - " + this.mapController.data.attribution.router : "";
           var exists = false;
           if (!layerOptions.attributions) {
             layerOptions.attributions = [];
