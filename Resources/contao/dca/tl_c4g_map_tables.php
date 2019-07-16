@@ -89,7 +89,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
         ],
     'palettes' =>
     [
-        'default' => '{defaultLegend},name,tableSource;{parentLegend},ptable,ptableOptions,ptableBackendField,ptableField,ptableCompareField;{geoLegend},geox,geoy,geolocation;{tableInformation},label,locstyle,tooltip,popup, popupSelection;',
+        'default' => '{defaultLegend},name,tableSource;{parentLegend},ptable,ptableOptions,ptableBackendField,ptableField,ptableCompareField;{geoLegend},geox,geoy,geolocation;{tableInformation},label,locstyle,tooltip,popup, popupSelection,cutTextAtLength;',
     ],
 
     // Fields
@@ -235,6 +235,13 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'options_callback'        => ['tl_c4g_map_tables','getSourceTableFields'],
             'eval'                    => ['mandatory'=>false, 'multiple'=>false, 'chosen' => true, 'includeBlankOption' => true],
             'sql'                     => "text NULL"
+        ],
+        'cutTextAtLength' => [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['cutTextAtLength'],
+            'exclude'                 => true,
+            'inputType'               => 'text',
+            'eval'                    => ['mandatory'=>false],
+            'sql'                     => "varchar(10) NULL"
         ]
     ]
 

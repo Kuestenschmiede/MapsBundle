@@ -83,6 +83,7 @@ class LayerContentDataApi extends \Frontend
         $popupString = $config->popup ?: $config->popupSelection;
         $popupContent = '';
         $popupElements = explode(',', $popupString);
+        $maxLength = intval($config->cutTextAtLength);
         if ($config->tableSource === 'tl_content') {
             $popupContent = Controller::getContentElement($arrElement['id']) ? Controller::replaceInsertTags(Controller::getContentElement($arrElement['id'])) : $popupContent;
         } else {
@@ -112,6 +113,10 @@ class LayerContentDataApi extends \Frontend
                             $columnText = $arrElement[$column];
                             $columnText = str_replace('[nbsp]', ' ', $columnText);
                             $columnText = html_entity_decode(C4GUtils::secure_ugc($columnText));
+                            if ($maxLength > 0 && strlen($columnText) > $maxLength) {
+                                $columnText = substr($columnText, 0, $maxLength);
+                                $columnText .= '...';
+                            }
                             $popupContent .= '<div class="' . $columnClass . '">' . $columnText . '</div>';
                             $popupContent = mb_convert_encoding($popupContent, 'UTF-8', mb_detect_encoding($popupContent));
                             break;

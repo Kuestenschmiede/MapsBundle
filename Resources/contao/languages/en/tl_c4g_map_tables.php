@@ -30,7 +30,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_tables']['label']                   = ['Label', 
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['locstyle']                = ['Lokationsstil', 'Please choose the field, which represents the Y-coordinate'];
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['popup']                   = ['Popup', ''];
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['tooltip']                 = ['Tooltip', 'Please choose the field, which contains the tooltip'];
-
+$GLOBALS['TL_LANG']['tl_c4g_map_tables']['cutTextAtLength']                 = ['Cut text at certain length', 'Specify a number of characters for which the rest of the text is to be replaced by "...". 0 means no replacement.'];
 
 
 /**
