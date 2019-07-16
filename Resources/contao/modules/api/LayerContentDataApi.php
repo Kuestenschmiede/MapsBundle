@@ -80,13 +80,13 @@ class LayerContentDataApi extends \Frontend
     
     public function getPopup($config, $arrElement)
     {
-        $popupString = $config->popup;
+        $popupString = $config->popup ?: $config->popupSelection;
         $popupContent = '';
         $popupElements = explode(',', $popupString);
         if ($config->tableSource === 'tl_content') {
             $popupContent = Controller::getContentElement($arrElement['id']) ? Controller::replaceInsertTags(Controller::getContentElement($arrElement['id'])) : $popupContent;
         } else {
-            if (!$config->popup) {
+            if (!$popupString) {
                 return false;
             }
             foreach ($popupElements as $key => $value) {
@@ -113,6 +113,7 @@ class LayerContentDataApi extends \Frontend
                             $columnText = str_replace('[nbsp]', ' ', $columnText);
                             $columnText = html_entity_decode(C4GUtils::secure_ugc($columnText));
                             $popupContent .= '<div class="' . $columnClass . '">' . $columnText . '</div>';
+                            $popupContent = mb_convert_encoding($popupContent, 'UTF-8', mb_detect_encoding($popupContent));
                             break;
                         case 'pagelink':
                             if (!$additionalParam1) {
@@ -191,7 +192,7 @@ class LayerContentDataApi extends \Frontend
                         // other stuff put in as text
                         $popupContent .= $value . ' ';
                     }
-                    
+                    $popupContent = mb_convert_encoding($popupContent, 'UTF-8', mb_detect_encoding($popupContent));
                 }
             }
         }
