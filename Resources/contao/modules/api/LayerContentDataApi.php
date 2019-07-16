@@ -114,7 +114,8 @@ class LayerContentDataApi extends \Frontend
                             $columnText = str_replace('[nbsp]', ' ', $columnText);
                             $columnText = html_entity_decode(C4GUtils::secure_ugc($columnText));
                             if ($maxLength > 0 && strlen($columnText) > $maxLength) {
-                                $columnText = substr($columnText, 0, $maxLength);
+                                $idxWhitespace = strpos($columnText, ' ', $maxLength);
+                                $columnText = substr($columnText, 0, $idxWhitespace);
                                 $columnText .= '...';
                             }
                             $popupContent .= '<div class="' . $columnClass . '">' . $columnText . '</div>';
