@@ -80,117 +80,142 @@ class LayerContentDataApi extends \Frontend
     
     public function getPopup($config, $arrElement)
     {
-        $popupString = $config->popup ?: $config->popupSelection;
+        // check which field has to be used
+        $popupString = $config->popupSwitch === 'expert' ? $config->popup : $config->popupSelection;
+        if (!$popupString) {
+            return false;
+        }
         $popupContent = '';
         $popupElements = explode(',', $popupString);
         $maxLength = intval($config->cutTextAtLength);
         if ($config->tableSource === 'tl_content') {
             $popupContent = Controller::getContentElement($arrElement['id']) ? Controller::replaceInsertTags(Controller::getContentElement($arrElement['id'])) : $popupContent;
         } else {
-            if (!$popupString) {
-                return false;
-            }
-            foreach ($popupElements as $key => $value) {
-                if (substr($value, 0, 1) == '{' && substr($value, -1, 1) == '}') {
-                    // we have an inserttag
-                    $replacedValue = str_replace('[id]', $arrElement['id'], $value);
-                    $popupContent .= $this->replaceInsertTags($replacedValue) . ' ';
-                } else if (substr($value, 0, 1) == '[' && substr($value, -1, 1) == ']') {
-                    // no insert tag
-                    $replacedValue = str_replace('[', '', $value);
-                    $replacedValue = str_replace(']', '', $replacedValue);
-                    $elements = explode(':', $replacedValue);
-                    $column = $elements[0];
-                    $columnClass = 'c4g_maps_table_column_' . $column;
-                    $dataType = $elements[1];
-                    $additionalParam1 = $elements[2];
-                    $additionalParam2 = $elements[3];
-                    switch ($dataType) {
-                        case 'date':
-                            $popupContent .= '<div class="' . $columnClass . '">' . date('d.m.Y', $arrElement[$column]) . '</div>';
-                            break;
-                        case 'string':
-                            $columnText = $arrElement[$column];
-                            $columnText = str_replace('[nbsp]', ' ', $columnText);
-                            $columnText = html_entity_decode(C4GUtils::secure_ugc($columnText));
-                            if ($maxLength > 0 && strlen($columnText) > $maxLength) {
-                                $idxWhitespace = strpos($columnText, ' ', $maxLength);
-                                $columnText = substr($columnText, 0, $idxWhitespace);
-                                $columnText .= '...';
-                            }
-                            $popupContent .= '<div class="' . $columnClass . '">' . $columnText . '</div>';
-                            $popupContent = mb_convert_encoding($popupContent, 'UTF-8', mb_detect_encoding($popupContent));
-                            break;
-                        case 'pagelink':
-                            if (!$additionalParam1) {
-                                $additionalParam1 = 'details';
-                            }
-                            $aliasOrId = $arrElement[$column];
-                            if (!$additionalParam2) {
-                                $link = $this->replaceInsertTags('{{link_url::' . $aliasOrId . '}}');
-                            } else {
-                                if ($column == 'subdomain') {
-                                    $link = 'https://' . $aliasOrId . '.' . $additionalParam2;
-                                } else {
-                                    $link = 'https://' . $additionalParam2;
-                                    $link = $link . '/' . $aliasOrId . '.html';
+            if ($config->popupSwitch === 'expert') {
+                foreach ($popupElements as $key => $value) {
+                    if (substr($value, 0, 1) == '{' && substr($value, -1, 1) == '}') {
+                        // we have an inserttag
+                        $replacedValue = str_replace('[id]', $arrElement['id'], $value);
+                        $popupContent .= $this->replaceInsertTags($replacedValue) . ' ';
+                    } else if (substr($value, 0, 1) == '[' && substr($value, -1, 1) == ']') {
+                        // no insert tag
+                        $replacedValue = str_replace('[', '', $value);
+                        $replacedValue = str_replace(']', '', $replacedValue);
+                        $elements = explode(':', $replacedValue);
+                        $column = $elements[0];
+                        $columnClass = 'c4g_maps_table_column_' . $column;
+                        $dataType = $elements[1];
+                        $additionalParam1 = $elements[2];
+                        $additionalParam2 = $elements[3];
+                        switch ($dataType) {
+                            case 'date':
+                                $popupContent .= '<div class="' . $columnClass . '">' . date('d.m.Y', $arrElement[$column]) . '</div>';
+                                break;
+                            case 'string':
+                                $columnText = $arrElement[$column];
+                                $columnText = str_replace('[nbsp]', ' ', $columnText);
+                                $columnText = html_entity_decode(C4GUtils::secure_ugc($columnText));
+                                if ($maxLength > 0 && strlen($columnText) > $maxLength) {
+                                    $idxWhitespace = strpos($columnText, ' ', $maxLength);
+                                    $columnText = substr($columnText, 0, $idxWhitespace);
+                                    $columnText .= '...';
                                 }
-                            }
+                                $popupContent .= '<div class="' . $columnClass . '">' . $columnText . '</div>';
+                                $popupContent = mb_convert_encoding($popupContent, 'UTF-8', mb_detect_encoding($popupContent));
+                                break;
+                            case 'pagelink':
+                                if (!$additionalParam1) {
+                                    $additionalParam1 = 'details';
+                                }
+                                $aliasOrId = $arrElement[$column];
+                                if (!$additionalParam2) {
+                                    $link = $this->replaceInsertTags('{{link_url::' . $aliasOrId . '}}');
+                                } else {
+                                    if ($column == 'subdomain') {
+                                        $link = 'https://' . $aliasOrId . '.' . $additionalParam2;
+                                    } else {
+                                        // check if its a relative link (starts with /)
+                                        if (strpos($additionalParam2, '/') === 0) {
+                                            $link = $additionalParam2;
+                                        } else {
+                                            $link = 'https://' . $additionalParam2;
+                                        }
+                                        // check for ? or # and do not append slash if it exists
+                                        $appendWithoutSlash = strpos($additionalParam2, '?') || strpos($additionalParam2, '#');
+                                        if (!$appendWithoutSlash) {
+                                            $link = $link . '/';
+                                        }
+                            
+                                        $link .= $aliasOrId;
+                                        // append html when it's not there
+                                        if (!strpos($link, '.html')) {
+                                            $link .= ".html";
+                                        }
+                                    }
+                                }
+                                if ($config->openLinksInTab) {
+                                    $strTarget = ' target="_blank"';
+                                } else {
+                                    $strTarget = '';
+                                }
+                                
+                                $popupContent .= '<a class="' . $columnClass .'"' . $strTarget . 'href="' . $link . '">' . $additionalParam1 . '</a>';
+                                break;
+                            case 'pagelink2':
+                                if (!$additionalParam1) {
+                                    $additionalParam1 = 'details';
+                                }
+                                $aliasOrId = $arrElement[$column];
+                                if (!$additionalParam2) {
+                                    $link = $this->replaceInsertTags('{{link_url::' . $aliasOrId . '}}');
+                                } else {
+                                    if ($column == 'subdomain') {
+                                        $link = 'https://' . $aliasOrId . '.' . $additionalParam2;
+                                    } else {
+                                        $link = 'https://' . $additionalParam2;
+                                        $link = $link . '/' . $aliasOrId . '.html';
+                                    }
+                                }
                     
-                            $popupContent .= '<a class="' . $columnClass . '" href="' . $link . '">' . $additionalParam1 . '</a>';
-                            break;
-                        case 'pagelink2':
-                            if (!$additionalParam1) {
-                                $additionalParam1 = 'details';
-                            }
-                            $aliasOrId = $arrElement[$column];
-                            if (!$additionalParam2) {
-                                $link = $this->replaceInsertTags('{{link_url::' . $aliasOrId . '}}');
-                            } else {
-                                if ($column == 'subdomain') {
-                                    $link = 'https://' . $aliasOrId . '.' . $additionalParam2;
-                                } else {
-                                    $link = 'https://' . $additionalParam2;
-                                    $link = $link . '/' . $aliasOrId . '.html';
+                                $popupContent .= '<a class="' . $columnClass . '" href="' . $link . '" target="_blank">' . $additionalParam1 . '</a>';
+                                break;
+                            case 'pagelink3':
+                                if (!$additionalParam1) {
+                                    $additionalParam1 = 'details';
                                 }
-                            }
-                    
-                            $popupContent .= '<a class="' . $columnClass . '" href="' . $link . '" target="_blank">' . $additionalParam1 . '</a>';
-                            break;
-                        case 'pagelink3':
-                            if (!$additionalParam1) {
-                                $additionalParam1 = 'details';
-                            }
-                            $linkPopup = $arrElement[$column];
-                            if(!(substr($link,0,4) === "http")){
-                                $linkPopup = 'https://' . $linkPopup;
-                            }
-                            $popupContent .= '<a class="' . $columnClass . '" href="' . $linkPopup . '" target="_blank">' . $additionalParam1 . '</a>';
-                            break;
-                        case 'responsiveImage':
-                            $responsiveImage = false;
-                            if ($additionalParam1) {
-                                $responsiveImage = $additionalParam1;
-                            }
-                            $file = \FilesModel::findByUuid($arrElement[$column]);
-                            if ($file) {
-                                if (!$responsiveImage) {
-                                    $image = \Image::get($file->path, 360, 240);
-                                } else {
-                                    $image = \Image::get($file->path, '', '', $responsiveImage);
+                                $linkPopup = $arrElement[$column];
+                                if(!(substr($link,0,4) === "http")){
+                                    $linkPopup = 'https://' . $linkPopup;
                                 }
-                                if ($image) {
-                                    $popupContent .= '<img src="' . $image . '">';
+                                $popupContent .= '<a class="' . $columnClass . '" href="' . $linkPopup . '" target="_blank">' . $additionalParam1 . '</a>';
+                                break;
+                            case 'responsiveImage':
+                                $responsiveImage = false;
+                                if ($additionalParam1) {
+                                    $responsiveImage = $additionalParam1;
                                 }
-                            }
-                            else{
-                                $popupContent .= '<img src="' . $arrElement[$column] . '">';
-                            }
-                            break;
-                        default:
-                            break;
+                                $file = \FilesModel::findByUuid($arrElement[$column]);
+                                if ($file) {
+                                    if (!$responsiveImage) {
+                                        $image = \Image::get($file->path, 360, 240);
+                                    } else {
+                                        $image = \Image::get($file->path, '', '', $responsiveImage);
+                                    }
+                                    if ($image) {
+                                        $popupContent .= '<img src="' . $image . '">';
+                                    }
+                                }
+                                else{
+                                    $popupContent .= '<img src="' . $arrElement[$column] . '">';
+                                }
+                                break;
+                            default:
+                                break;
+                        }
                     }
-                } else {
+                }
+            } else {
+                foreach ($popupElements as $key => $value) {
                     // try to load other strings as columns
                     try {
                         $popupContent .= $arrElement[$value] . "<br>";
