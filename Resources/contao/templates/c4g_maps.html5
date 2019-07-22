@@ -14,7 +14,7 @@
 <script>
   window.mapData = window.mapData || {};
   window.mapData<?php echo '['.$this->mapData['mapId'] . ']' ?> = <?php echo json_encode($this->mapData) ?>;
-    window.initMaps(window.mapData);
+    window.initMap(window.mapData<?php echo '['.$this->mapData['mapId'] . ']' ?>);
 </script>
 <?php else: ?>
 
