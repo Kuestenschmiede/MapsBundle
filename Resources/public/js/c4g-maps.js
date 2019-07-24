@@ -583,7 +583,7 @@ export class MapController {
         this.map.addControl(this.controls.zoomslider);
       }
     }
-    if (mapData.zoom_extent & !mapData.zoom_slider) {
+    if (mapData.zoom_extent && !mapData.zoom_slider) {
       this.controls.zoom_extent = new ZoomToExtent({
         label: ' ',
         tipLabel: langConstants.CTRL_ZOOM_EXT,
@@ -591,7 +591,7 @@ export class MapController {
       });
       this.map.addControl(this.controls.zoom_extent);
     }
-    if (mapData.zoom_home & !mapData.zoom_slider) {
+    if (mapData.zoom_home && !mapData.zoom_slider) {
       this.controls.zoom_home = new Home({
         label: ' ',
         disableLabel: ' ',
@@ -602,7 +602,7 @@ export class MapController {
       this.map.addControl(this.controls.zoom_home);
     }
 
-    if (mapData.zoom_position & !mapData.zoom_slider) {
+    if (mapData.zoom_position && !mapData.zoom_slider) {
       this.controls.zoom_position = new Position({
         label: ' ',
         disableLabel: ' ',

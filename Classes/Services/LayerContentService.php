@@ -504,7 +504,7 @@ class LayerContentService
             $popupContent = '';
             if (($show == $blobCount) && (($arrResult[$geoxField] && $arrResult[$geoyField]) || ($geolocation && $arrResult[$geolocation]))) {
                 // replace popup stuff
-                if ($objConfig->popup) {
+                if ($objConfig->popupSelection || $objConfig->popup) {
                     $api = new LayerContentDataApi();
                     $popupContent = $api->getPopup($objConfig, $arrResult)['content'];
                 }

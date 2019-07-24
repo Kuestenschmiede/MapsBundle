@@ -12,6 +12,10 @@
 
 import {MapController} from "./c4g-maps"
 
+window.initMap = function(mapData) {
+  let mapController = new MapController(mapData);
+};
+
 window.initMaps = function(mapData) {
   for (let key in mapData) {
     if (mapData.hasOwnProperty(key)) {
