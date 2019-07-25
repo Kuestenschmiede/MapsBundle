@@ -417,7 +417,7 @@ export class MapController {
         }
         //TODO: catch case min_gap is already an array
         padding = [mapData.min_gap, mapData.min_gap, mapData.min_gap, mapData.min_gap];
-        self.map.getView().fit(extent, self.map.getSize(), {padding: padding});
+        self.map.getView().fit(extent, {padding: padding});
         center = self.map.getView().getCenter();
         if (isNaN(center[0])) {
           self.map.getView().setCenter([50, 10]);
