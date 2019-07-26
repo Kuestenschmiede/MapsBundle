@@ -75,14 +75,14 @@ export class GeoPicker extends Interaction {
         lonIdx = lon.indexOf('.');
         lat = lat.replace(/\D/g, "");
         lon = lon.replace(/\D/g, "");
-        latRnd = Math.round((Math.random() * (99999999999 - 1)) + 1);
-        lonRnd = Math.round((Math.random() * (99999999999 - 1)) + 1);
-        if (latRnd > 49999999999) {
+        latRnd = Math.round((Math.random() * (9999999999 - 1)) + 1);
+        lonRnd = Math.round((Math.random() * (9999999999 - 1)) + 1);
+        if (latRnd > 4999999999) {
           lat = parseInt(lat) - latRnd;
         } else {
           lat = parseInt(lat) + latRnd;
         }
-        if (lonRnd < 50000000000) {
+        if (lonRnd < 5000000000) {
           lon = parseInt(lon) - lonRnd;
         } else {
           lon = parseInt(lon) + lonRnd;
