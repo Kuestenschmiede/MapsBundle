@@ -13,6 +13,11 @@
 namespace con4gis\MapsBundle\Resources\contao\classes;
 
 
+use con4gis\CoreBundle\Resources\contao\models\C4gSettingsModel;
+use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
+use Contao\BackendUser;
+use Contao\ContentModel;
+
 /**
  * Class GeoPicker
  * @package con4gis\MapsBundle\Resources\contao\classes
@@ -117,7 +122,10 @@ class GeoPicker extends \Backend
         $this->Template->headline = $GLOBALS['TL_LANG']['c4g_maps']['geopicker'];
         $this->Template->charset = $GLOBALS['TL_CONFIG']['characterSet'];
 
-        $objMapData = MapDataConfigurator::prepareMapData($this, $this->Database, array('backend' => true, 'type' => 'geopicker'));
+        $c4gSettings = C4gSettingsModel::findSettings();
+        $objMap = ContentModel::findByPk($c4gSettings->position_map);
+        $objMap->User = BackendUser::getInstance();
+        $objMapData = MapDataConfigurator::prepareMapData($objMap, $this->Database, array('backend' => true, 'type' => 'geopicker'));
 
         $objMapData['geopicker'] = array
         (
