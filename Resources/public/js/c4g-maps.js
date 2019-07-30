@@ -61,6 +61,7 @@ import {Attribution} from "ol/control";
 import {toStringHDMS} from "ol/coordinate";
 import {get} from "ol/proj";
 import ol_control_GeoBookmark from "ol-ext/control/GeoBookmark"
+import {HorizontalPanel} from "./components/c4g-horizontal-panel";
 
 let langConstants = {};
 
@@ -544,7 +545,8 @@ export class MapController {
     // add controls ===
     this.controls = {};
     //
-
+    this.controls.horizontalPanel = (new HorizontalPanel(null, null, null, null, controlContainerTopRight)).state.control;
+    this.map.addControl(this.controls.horizontalPanel);
 
     // account
     if (mapData.account && typeof Account === 'function') {

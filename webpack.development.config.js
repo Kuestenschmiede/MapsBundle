@@ -7,18 +7,21 @@ var config = {
     path: path.resolve('./Resources/public/build/')
   },
   devtool: "inline-source-map",
+  resolve: {
+    modules: ['node_modules', 'Resources/public/js'],
+    extensions: ['.jsx', '.js']
+  },
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules(?!\/ol)/,
         use: [{
-          loader: "echo-loader",
-        }, {
           loader: "babel-loader",
         }],
         include: [
-          path.resolve('.')
+          path.resolve('.'),
+          path.resolve('./Resources/public/js/components'),
         ],
       }
     ]
