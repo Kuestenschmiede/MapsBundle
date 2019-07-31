@@ -869,3 +869,11 @@ input[type=range]:focus::-ms-fill-upper {
   background: rgba(0,60,136,.7);
 }
 
+.c4g-horizontal-panel {
+  bottom: 760px;
+  left: 50%;
+  width: 70px;
+  height: 25px;
+}
+
+

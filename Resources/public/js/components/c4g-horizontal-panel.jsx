@@ -16,20 +16,30 @@ import ReactDOM from "react-dom";
 import {Control} from "ol/control";
 
 export class HorizontalPanel extends Component {
-  constructor(direction, open, className, childs, target) {
-    super();
+  constructor(props) {
+    super(props);
+    const scope = this;
+    // create control to toggle the panel
     let element = document.createElement('div');
     let button = document.createElement('button');
     element.className = "c4g-horizontal-panel ol-control";
     element.appendChild(button);
-    let control = new Control({element: element, target: target});
+    jQuery(button).on('click', function(event) {
+      if (scope.state.open) {
+        scope.close();
+      } else {
+        scope.open();
+      }
+    });
+    let control = new Control({element: element, target: props.target});
+
     // state variables (every property that has influence on this component)
     this.state = {
       // either "top" or "bottom"
-      direction: direction || "top",
-      open: open || false,
-      className: className || "c4g-horizontal-panel",
-      childs: childs || [],
+      direction: props.direction || "top",
+      open: props.open || false,
+      className: props.className || "c4g-horizontal-panel",
+      childs: props.childs || [],
       control: control
     };
   }
@@ -38,6 +48,7 @@ export class HorizontalPanel extends Component {
     let className = this.state.className + "-" + this.state.direction;
     className += " " + (this.state.open ? "c4g-open" : "c4g-close");
     const scope = this;
+
     function createChilds () {
       let div = document.createElement('div');
       scope.state.childs.forEach(function (element) {
@@ -45,10 +56,10 @@ export class HorizontalPanel extends Component {
       });
       return div;
     }
-    // const direction = this.state.direction;
+
     return (
       <div
-        class={className}
+        className={className}
         dangerouslySetInnerHTML={{__html: createChilds()}}
       ></div>
     );

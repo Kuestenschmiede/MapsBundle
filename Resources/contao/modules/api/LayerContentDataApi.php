@@ -58,8 +58,13 @@ class LayerContentDataApi extends \Frontend
         $maxY = explode(',',explode(';',$extent)[1])[1];
         $andbewhereclause = $objLayer->tab_whereclause ? ' AND ' . htmlspecialchars_decode($objLayer->tab_whereclause) : '';
         $onClause = $objLayer->tabJoinclause ? ' ' . htmlspecialchars_decode($objLayer->tabJoinclause) : '';
-        $sqlLoc = " WHERE ".$objConfig->geox.">".$minX." AND ".$objConfig->geox."<".$maxX." AND ".$objConfig->geoy.">".$minY." AND ".$objConfig->geoy."<".$maxY;
-        $sqlSelect = $objConfig->tableSource.".". $objConfig->geox." AS geox,".$objConfig->tableSource.".".$objConfig->geoy." AS geoy";
+        if ($objConfig->geox && $objConfig->geoy) {
+            $sqlLoc = " WHERE ".$objConfig->geox.">".$minX." AND ".$objConfig->geox."<".$maxX." AND ".$objConfig->geoy.">".$minY." AND ".$objConfig->geoy."<".$maxY;
+            $sqlSelect = $objConfig->tableSource.".". $objConfig->geox." AS geox,".$objConfig->tableSource.".".$objConfig->geoy." AS geoy";
+        } else {
+            $sqlSelect = $objConfig->tableSource.".". $objConfig->geolocation. " AS geolocation";
+        }
+        
         $sqlSelect = $objConfig->locstyle ? $sqlSelect . ", " .$objConfig->tableSource."." . $objConfig->locstyle . " AS locstyle" : $sqlSelect;
         $sqlSelect = $objConfig->label ? $sqlSelect . ", " . $objConfig->tableSource.".". $objConfig->label . " AS label" : $sqlSelect;
         $sqlSelect = $objConfig->tooltip ? $sqlSelect . ", ". $objConfig->tableSource."." . $objConfig->tooltip . " AS tooltip" : $sqlSelect;
@@ -72,6 +77,12 @@ class LayerContentDataApi extends \Frontend
         $result = \Database::getInstance()->prepare($strQuery)->execute()->fetchAllAssoc();
         foreach ($result as $key => $arrResult) {
             $arrResult['popup'] = $this->getPopup($objConfig, $arrResult);
+            $arrCoords = explode(",", $arrResult['geolocation']);
+            $arrResult['geox'] = mb_convert_encoding($arrCoords[0], 'UTF-8', mb_detect_encoding($arrCoords[0]));
+            $arrResult['geoy'] = mb_convert_encoding($arrCoords[1], 'UTF-8', mb_detect_encoding($arrCoords[1]));
+            foreach ($arrResult as $idx => $value) {
+                $arrResult[$idx] = mb_convert_encoding($value, 'UTF-8', mb_detect_encoding($value));
+            }
             $result[$key] = $arrResult;
         }
 

@@ -62,6 +62,8 @@ import {toStringHDMS} from "ol/coordinate";
 import {get} from "ol/proj";
 import ol_control_GeoBookmark from "ol-ext/control/GeoBookmark"
 import {HorizontalPanel} from "./components/c4g-horizontal-panel";
+import ReactDOM from "react-dom";
+import React from "react";
 
 let langConstants = {};
 
@@ -545,8 +547,13 @@ export class MapController {
     // add controls ===
     this.controls = {};
     //
-    this.controls.horizontalPanel = (new HorizontalPanel(null, null, null, null, controlContainerTopRight)).state.control;
-    this.map.addControl(this.controls.horizontalPanel);
+    // let horizontalPanel = new HorizontalPanel(null, null, null, null, document.querySelector('#' + mapData.mapDiv + ' .' + cssConstants.OL_OVERLAYCONTAINER_SE));
+    // ReactDOM.render(horizontalPanel, document.querySelector('#' + mapData.mapDiv + ' .' + cssConstants.OL_OVERLAYCONTAINER_SE));
+    console.log(document.querySelector('#' + mapData.mapDiv));
+    // TODO irgendeinen container für die React componenten schaffen
+    // ReactDOM.render(React.createElement(HorizontalPanel, {target: document.querySelector('#' + mapData.mapDiv + ' .' + cssConstants.OL_OVERLAYCONTAINER_SE)}), document.querySelector('#' + mapData.mapDiv + ' .' + cssConstants.OL_OVERLAYCONTAINER_SE));
+    // this.controls.horizontalPanel = (horizontalPanel).state.control;
+    // this.map.addControl(this.controls.horizontalPanel);
 
     // account
     if (mapData.account && typeof Account === 'function') {
