@@ -869,11 +869,62 @@ input[type=range]:focus::-ms-fill-upper {
   background: rgba(0,60,136,.7);
 }
 
-.c4g-horizontal-panel {
+.c4g-horizontal-panel-button-top {
   bottom: 760px;
   left: 50%;
   width: 70px;
   height: 25px;
+}
+.c4g-horizontal-panel-button-top.panel-slided-out {
+  bottom: 660px;
+  left: 50%;
+  width: 70px;
+  height: 25px;
+}
+.c4g-horizontal-panel-button-top.panel-slided-in {
+  bottom: 760px;
+  left: 50%;
+  width: 70px;
+  height: 25px;
+}
+
+.c4g-horizontal-panel-button-bottom {
+  top: 768px;
+  left: 50%;
+  width: 70px;
+  height: 25px;
+}
+.c4g-horizontal-panel-button-bottom.panel-slided-out {
+  top: 668px;
+  left: 50%;
+  width: 70px;
+  height: 25px;
+}
+.c4g-horizontal-panel-button-bottom.panel-slided-in {
+  top: 768px;
+  left: 50%;
+  width: 70px;
+  height: 25px;
+}
+
+.c4g-horizontal-panel-top.c4g-open {
+  width: 100%;
+  background-color: var(--main-color);
+  color: var(--shadow-color);
+  position: absolute;
+  top: 0;
+  height: 100px;
+  transition: all 0.3s;
+}
+
+.c4g-horizontal-panel-bottom.c4g-open {
+  width: 100%;
+  background-color: var(--main-color);
+  color: var(--shadow-color);
+  position: absolute;
+  bottom: 0;
+  height: 100px;
+  transition: all 0.3s;
 }
 
 

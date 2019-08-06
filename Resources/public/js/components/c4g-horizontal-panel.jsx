@@ -14,15 +14,17 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import {Control} from "ol/control";
+import {cssConstants} from "./../c4g-maps-constant";
 
 export class HorizontalPanel extends Component {
+
   constructor(props) {
     super(props);
     const scope = this;
     // create control to toggle the panel
     let element = document.createElement('div');
     let button = document.createElement('button');
-    element.className = "c4g-horizontal-panel ol-control";
+    element.className = "c4g-horizontal-panel-button-" + (props.direction || "top") + " ol-control";
     element.appendChild(button);
     jQuery(button).on('click', function(event) {
       if (scope.state.open) {
@@ -31,7 +33,10 @@ export class HorizontalPanel extends Component {
         scope.open();
       }
     });
+    let mapController = props.mapController;
     let control = new Control({element: element, target: props.target});
+    mapController.controls.horizontalPanel = control;
+    mapController.map.addControl(control);
 
     // state variables (every property that has influence on this component)
     this.state = {
@@ -60,17 +65,78 @@ export class HorizontalPanel extends Component {
     return (
       <div
         className={className}
-        dangerouslySetInnerHTML={{__html: createChilds()}}
       ></div>
     );
   }
 
   open() {
-    this.state.open = true;
+    this.setState({open: true});
+    this.slideOutCollidingElements();
   }
 
   close() {
-    this.state.open = false;
+    this.setState({open: false});
+    this.slideInCollidingElements();
+  }
+
+  /**
+   * Moves the buttons that would collide with the panel.
+   */
+  slideOutCollidingElements() {
+    const scope = this;
+    if (this.state.direction === "top") {
+      let elements = document.querySelectorAll('.' + cssConstants.CONTROL_CONTAINER_TL + ' .' + cssConstants.OL_UNSELECTABLE);
+      elements.forEach(function(element) {
+        element.style.top = "100px";
+      });
+      elements = document.querySelectorAll('.' + cssConstants.CONTROL_CONTAINER_TR + ' .' + cssConstants.OL_UNSELECTABLE);
+      elements.forEach(function(element) {
+        element.style.top = "100px";
+      });
+      this.state.control.element.style.top = "100px";
+    } else {
+      let elements = document.querySelectorAll('.' + cssConstants.CONTROL_CONTAINER_BL + ' .' + cssConstants.OL_UNSELECTABLE);
+      elements.forEach(function(element) {
+        element.style.bottom = "100px";
+      });
+      elements = document.querySelectorAll('.' + cssConstants.CONTROL_CONTAINER_BR + ' .' + cssConstants.OL_UNSELECTABLE);
+      elements.forEach(function(element) {
+        element.style.bottom = "100px";
+      });
+      // let topValue = this.props.mapController.map.getSize()[1] - 100;
+      // jQuery(this.state.control.element).style.top = topValue + "px";
+      jQuery(this.state.control.element).addClass("panel-slided-out").removeClass("panel-slided-in");
+    }
+
+  }
+
+  /**
+   * Undoes the previous button movement.
+   */
+  slideInCollidingElements() {
+    const scope = this;
+    if (this.state.direction === "top") {
+      let elements = document.querySelectorAll('.' + cssConstants.CONTROL_CONTAINER_TL + ' .' + cssConstants.OL_UNSELECTABLE);
+      elements.forEach(function(element) {
+        element.style.top = "0px";
+      });
+      elements = document.querySelectorAll('.' + cssConstants.CONTROL_CONTAINER_TR + ' .' + cssConstants.OL_UNSELECTABLE);
+      elements.forEach(function(element) {
+        element.style.top = "0px";
+      });
+      this.state.control.element.style.top = "0px";
+    } else {
+      let elements = document.querySelectorAll('.' + cssConstants.CONTROL_CONTAINER_BL + ' .' + cssConstants.OL_UNSELECTABLE);
+      elements.forEach(function(element) {
+        element.style.bottom = "0px";
+      });
+      elements = document.querySelectorAll('.' + cssConstants.CONTROL_CONTAINER_BR + ' .' + cssConstants.OL_UNSELECTABLE);
+      elements.forEach(function(element) {
+        element.style.bottom = "0px";
+      });
+      // this.state.control.element.style.top = this.props.mapController.map.getSize()[1] + "px";
+      jQuery(this.state.control.element).addClass("panel-slided-in").removeClass("panel-slided-out")
+    }
   }
 
   /**

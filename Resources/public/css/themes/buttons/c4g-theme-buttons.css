@@ -1009,7 +1009,7 @@ div.c4g-tooltip-popup:before {
   margin-right: .2em;
 }
 
-.c4g-horizontal-panel > button {
+.c4g-horizontal-panel-button-top > button, .c4g-horizontal-panel-button-bottom > button {
   width: 68px;
   height: 23px;
 }
