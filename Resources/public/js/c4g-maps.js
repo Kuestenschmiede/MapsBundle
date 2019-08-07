@@ -62,6 +62,7 @@ import {toStringHDMS} from "ol/coordinate";
 import {get} from "ol/proj";
 import ol_control_GeoBookmark from "ol-ext/control/GeoBookmark"
 import {HorizontalPanel} from "./components/c4g-horizontal-panel";
+import {RouterControls} from "./../../../../RoutingBundle/Resources/public/js/components/c4g-router-controls";
 import ReactDOM from "react-dom";
 import React from "react";
 
@@ -548,7 +549,17 @@ export class MapController {
     this.controls = {};
     // add container for react components
     this.reactContainer = document.createElement('div');
-    ReactDOM.render(React.createElement(HorizontalPanel, {target: document.querySelector('#' + mapData.mapDiv + ' .' + cssConstants.OL_OVERLAYCONTAINER_SE), mapController: this, direction: "top"}), this.reactContainer);
+    let routerProps = {
+      target: document.querySelector('#' + mapData.mapDiv + ' .' + cssConstants.OL_OVERLAYCONTAINER_SE),
+      mapController: this,
+      direction: "top",
+      router: null,
+      withPosition: false,
+      objFunctions: {},
+      objSettings: {},
+      containerAddresses: {}
+    };
+    ReactDOM.render(React.createElement(RouterControls, routerProps), this.reactContainer);
     this.$overlaycontainer_stopevent.append(this.reactContainer);
 
     // account
