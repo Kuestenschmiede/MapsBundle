@@ -10,6 +10,7 @@
     ]
   ],
   "plugins": [
+    "transform-react-jsx",
     "transform-class-properties",
     "transform-es2015-modules-commonjs"
   ],
