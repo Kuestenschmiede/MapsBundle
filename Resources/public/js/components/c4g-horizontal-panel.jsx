@@ -105,6 +105,7 @@ export class HorizontalPanel extends Component {
       });
       // let topValue = this.props.mapController.map.getSize()[1] - 100;
       // jQuery(this.state.control.element).style.top = topValue + "px";
+      console.log(this.state);
       jQuery(this.state.control.element).addClass("panel-slided-out").removeClass("panel-slided-in");
     }
 
