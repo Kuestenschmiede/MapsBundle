@@ -592,7 +592,7 @@ export class Layerswitcher {
             listItem.appendChild(childWrapper);
             wrapper.appendChild(listItem);
           } else {
-            // is not a child-element (pid == mapId)
+            // is not a child-element (pid == mapId)<
             wrapper.appendChild(listItem);
           }
 

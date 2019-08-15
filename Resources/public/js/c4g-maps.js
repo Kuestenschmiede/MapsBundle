@@ -61,9 +61,7 @@ import {Attribution} from "ol/control";
 import {toStringHDMS} from "ol/coordinate";
 import {get} from "ol/proj";
 import ol_control_GeoBookmark from "ol-ext/control/GeoBookmark"
-import {HorizontalPanel} from "./components/c4g-horizontal-panel";
 import {StarboardPanel} from "./components/c4g-starboard-panel";
-import {RouterControls} from "./../../../../RoutingBundle/Resources/public/js/components/c4g-router-controls";
 import ReactDOM from "react-dom";
 import React from "react";
 
@@ -550,7 +548,9 @@ export class MapController {
     this.controls = {};
     // add container for react components
     this.reactContainer = document.createElement('div');
-    ReactDOM.render(React.createElement(HorizontalPanel, {target: document.querySelector('#' + mapData.mapDiv + ' .' + cssConstants.OL_OVERLAYCONTAINER_SE), mapController: this, direction: "top"}), this.reactContainer);
+    this.reactContainer.className ="c4g-sideboard c4g-starboard-container ol-unselectable c4g-close";
+    this.reactContainer.style.right ="-100%";
+    ReactDOM.render(React.createElement(StarboardPanel, {target: document.querySelector('#' + mapData.mapDiv + ' .' + cssConstants.OL_OVERLAYCONTAINER), mapController: this, direction: "right"}), this.reactContainer);
     this.$overlaycontainer_stopevent.append(this.reactContainer);
     // account
     if (mapData.account && typeof Account === 'function') {
@@ -864,7 +864,7 @@ export class MapController {
     //this.rightSlideElements.push('.ol-overlay-container');
 
     if (typeof Starboard === 'function' && enableStarboard && !this.controls.starboard) {
-      this.initializeStarboard();
+      // this.initializeStarboard();
     }
 
     // backend-geopicker
