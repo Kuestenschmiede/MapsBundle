@@ -83,6 +83,7 @@ export var cssConstants = {
   PORTSIDE_CLOSE: 'c4g-portside-close',
   SPINNER: 'c4g-spinner',
   STARBOARD: 'c4g-starboard',
+
   STARBOARD_CONTAINER: 'c4g-starboard-container',
   STARBOARD_CONTROL: 'c4g-starboard-control',
   STARBOARD_WRAPPER: 'c4g-starboard-wrapper',

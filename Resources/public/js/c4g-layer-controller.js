@@ -1618,7 +1618,9 @@ export class C4gLayerController {
               }
             }
           }
-
+          if (elementContent.hover_location && !self.proxy.locationStyleController.arrLocStyles[elementContent.hover_style]) {
+            missingStyles.push(elementContent.hover_style);
+          }
           vectorStyle = self.proxy.locationStyleController.arrLocStyles[elementContent.locationStyle] && self.proxy.locationStyleController.arrLocStyles[elementContent.locationStyle].style;
           if(self.proxy.locationStyleController.arrLocStyles[elementContent.locationStyle] && self.proxy.locationStyleController.arrLocStyles[elementContent.locationStyle].fnStyleFunction) {
 

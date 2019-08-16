@@ -191,8 +191,9 @@ export class MapHover {
           typeof hovered.feature.getStyleFunction() === 'function') {
           self.lastHoveredFeature = hovered.feature;
 
-          self.lastLayerStyle = hovered.layer.getStyle();
-          self.lastFeatureStyle = self.lastLayerStyle(self.lastHoveredFeature);
+          // self.lastLayerStyle = hovered.layer.getStyle();
+          // self.lastFeatureStyle = self.lastLayerStyle(self.lastHoveredFeature);
+          self.lastFeatureStyle = hovered.feature.getStyle();
           //TODO get onhover style from db (vllt schon in proxy drin?)
           if (hovered.feature.get('hover_style') && proxy.locationStyleController.arrLocStyles[hovered.feature.get("hover_style")]) {
             if (proxy.locationStyleController.arrLocStyles[hovered.feature.get("hover_style")].fnStyleFunction) {
