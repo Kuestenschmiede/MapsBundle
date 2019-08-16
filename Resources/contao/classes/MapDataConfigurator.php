@@ -588,8 +588,8 @@ class MapDataConfigurator
         
         foreach ($baseLayers as $baseLayer) {
             if ($baseLayer['provider'] == "con4gisIo") {
-                $key = C4GUtils::getKey($objSettings, '4', 'id='.$baseLayer['con4gisIo']);
-                $arrKeys[$baseLayer['id']] = $key;
+                $catribution = C4GUtils::getKey($objSettings, '4', 'id='.$baseLayer['con4gisIo'], false);
+                $arrKeys[$baseLayer['id']] = $catribution;
             }
         }
         

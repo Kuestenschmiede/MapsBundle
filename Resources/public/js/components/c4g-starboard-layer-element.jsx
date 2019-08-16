@@ -42,10 +42,10 @@ export class C4gStarboardLayerElement extends Component {
                 {span}
                 <ul>
                 {this.state.childs.map(item => (
-                    <C4gStarboardLayerElement key={item.id} id={item.id} mapController={this.props.mapController} name={item.name} childs={item.childs}></C4gStarboardLayerElement>
+                    <C4gStarboardLayerElement key={item.id} hide={item.hide} id={item.id} mapController={this.props.mapController} name={item.name} childs={item.childs}></C4gStarboardLayerElement>
                 ))}
                 </ul>
-                <a href="#">{this.props.name}</a>
+                <a>{this.props.name}</a>
             </li>
         );
     }

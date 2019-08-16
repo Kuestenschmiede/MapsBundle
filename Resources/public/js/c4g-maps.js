@@ -548,17 +548,9 @@ export class MapController {
     this.controls = {};
     // add container for react components
     this.reactContainer = document.createElement('div');
-    let routerProps = {
-      target: document.querySelector('#' + mapData.mapDiv + ' .' + cssConstants.OL_OVERLAYCONTAINER_SE),
-      mapController: this,
-      direction: "top",
-      router: null,
-      withPosition: false,
-      objFunctions: {},
-      objSettings: {},
-      containerAddresses: {}
-    };
-    ReactDOM.render(React.createElement(RouterControls, routerProps), this.reactContainer);
+    this.reactContainer.className ="sc4g-sideboard c4g-starboard-container ol-unselectable c4g-close";
+    this.reactContainer.style.right = "-100%";
+    ReactDOM.render(React.createElement(StarboardPanel, {target: document.querySelector('#' + mapData.mapDiv + ' .' +cssConstants.OL_OVERLAYCONTAINER), mapController: this, direction: "right"}), this.reactContainer);
     this.$overlaycontainer_stopevent.append(this.reactContainer);
 
     // account
