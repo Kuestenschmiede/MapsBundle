@@ -19,19 +19,34 @@ use con4gis\MapsBundle\Classes\Services\LayerContentService;
 use con4gis\MapsBundle\Classes\Services\LayerService;
 use con4gis\MapsBundle\Resources\contao\classes\Utils;
 use con4gis\MapsBundle\Resources\contao\modules\api\LayerContentDataApi;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class LayerController extends BaseController
 {
     /**
+     * @var ContainerInterface
+     */
+    protected $container = null;
+    
+    /**
      * LayerController constructor.
      */
-    public function __construct()
+    public function __construct(ContainerInterface $container)
     {
-        $this->cacheInstance = C4GLayerApiCache::getInstance();
+        
+        $this->cacheInstance = C4GLayerApiCache::getInstance($container);
     }
-
+    
+    /**
+     * @Route("/con4gis/layerService/{mapId}/{lang}", name="layer_service", methods={"GET"})
+     * @param Request $request
+     * @param $mapId
+     * @param $lang
+     * @return JsonResponse
+     */
     public function layerAction(Request $request, $mapId, $lang)
     {
         $response = new JsonResponse();

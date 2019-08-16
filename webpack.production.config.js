@@ -6,16 +6,21 @@ var config = {
     filename: 'c4g-maps.js',
     path: path.resolve('./Resources/public/build/')
   },
+  resolve: {
+    modules: ['node_modules', 'Resources/public/js'],
+    extensions: ['.jsx', '.js']
+  },
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules(?!\/ol)/,
         use: [{
           loader: "babel-loader",
         }],
         include: [
-          path.resolve('.')
+          path.resolve('.'),
+          path.resolve('./Resources/public/js/components'),
         ],
       }
     ]
