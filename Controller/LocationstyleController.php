@@ -16,6 +16,7 @@ namespace con4gis\MapsBundle\Controller;
 use con4gis\CoreBundle\Controller\BaseController;
 use con4gis\MapsBundle\Classes\Caches\C4GLocationstyleApiCache;
 use con4gis\MapsBundle\Resources\contao\modules\api\LocationStyleApi;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -24,9 +25,9 @@ class LocationstyleController extends BaseController
     /**
      * BaselayerController constructor.
      */
-    public function __construct()
+    public function __construct(ContainerInterface $container)
     {
-        $this->cacheInstance = C4GLocationstyleApiCache::getInstance();
+        $this->cacheInstance = C4GLocationstyleApiCache::getInstance($container);
     }
 
     public function locationStyleAction(Request $request)
