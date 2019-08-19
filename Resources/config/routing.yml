@@ -1,12 +1,8 @@
 baselayer_service:
     path: /con4gis/baseLayerService/{profileId}/{lang}
-    defaults:
-        _scope: frontend
-        _controller: "con4gisMapsBundle:Baselayer:baseLayer"
-    methods: [GET]
-    requirements:
-        profileId: \d+
-        lang: .*
+    controller: con4gis\MapsBundle\Controller\BaselayerController::baseLayerAction
+    methods: GET
+
 
 baselayer_tile_service:
     path: /con4gis/baseLayerTileService/{baseLayerId}/{z}/{x}/{y}
@@ -19,13 +15,8 @@ baselayer_tile_service:
 
 layer_service:
     path: /con4gis/layerService/{mapId}/{lang}
-    defaults:
-        _scope: frontend
-        _controller: "con4gisMapsBundle:Layer:layer"
-    methods: [GET]
-    requirements:
-        mapId: \d+
-        lang: .*
+    controller: con4gis\MapsBundle\Controller\LayerController::layer
+    methods: GET
 
 layer_content_service:
     path: /con4gis/layerContentService/{layerId}
@@ -35,6 +26,7 @@ layer_content_service:
     methods: [GET]
     requirements:
         layerId: \d+
+
 layer_content_data_service:
     path: /con4gis/layerContentDataService/{layerId}/{extent}
     defaults:
@@ -103,3 +95,7 @@ geopicker_service:
         _scope: frontend
         _controller: "con4gisMapsBundle:Maps:geopicker"
     methods: [GET]
+
+controllers:
+    resource: '../../Controller/'
+    type:     annotation

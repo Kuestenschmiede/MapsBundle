@@ -18,6 +18,7 @@ use con4gis\MapsBundle\Classes\Caches\C4GBaselayerApiCache;
 use con4gis\MapsBundle\Classes\Services\BaseLayerService;
 use con4gis\MapsBundle\Resources\contao\modules\api\BaseLayerApi;
 use con4gis\MapsBundle\Resources\contao\modules\api\BaseLayerTileApi;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,11 +26,16 @@ use Symfony\Component\HttpFoundation\Response;
 class BaselayerController extends BaseController
 {
     /**
+     * @var ContainerInterface
+     */
+    protected $container = null;
+    
+    /**
      * BaselayerController constructor.
      */
-    public function __construct()
+    public function __construct(ContainerInterface $container)
     {
-        $this->cacheInstance = C4GBaselayerApiCache::getInstance();
+        $this->cacheInstance = C4GBaselayerApiCache::getInstance($container);
     }
 
     public function baseLayerAction(Request $request, $profileId, $lang)

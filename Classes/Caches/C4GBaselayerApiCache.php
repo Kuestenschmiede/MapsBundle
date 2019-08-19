@@ -25,9 +25,9 @@ class C4GBaselayerApiCache extends C4GApiCache
      */
     protected static $instance = null;
 
-    public static function getInstance() {
+    public static function getInstance($container) {
         if (!static::$instance) {
-            static::$instance = new self();
+            static::$instance = new self($container);
         }
         return static::$instance;
     }
@@ -35,9 +35,8 @@ class C4GBaselayerApiCache extends C4GApiCache
     /**
      * C4GLayerApiCache constructor.
      */
-    protected function __construct()
+    protected function __construct($container)
     {
-        $container = System::getContainer();
         $this->cacheInstance = new FilesystemAdapter(
             $namespace = 'con4gis_baselayerService',
             $defaultLifetime = 0,
