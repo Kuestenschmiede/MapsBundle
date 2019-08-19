@@ -506,6 +506,7 @@ class LayerService
             case "kml":
             case "osm":
             case "single":
+            case "geojson":
                 return $this->layerContentService->getLayerData($objLayer->id);
                 break;
             default:

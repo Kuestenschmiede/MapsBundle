@@ -35,7 +35,14 @@ export class C4gStarboardLayerElement extends Component {
         let layerClick = function(e) {
             e.stopPropagation();
             e.nativeEvent.stopImmediatePropagation();
-            scope.props.mapController.proxy.layerController.showLayer(scope.props.id)
+            if (!scope.state.active) {
+                scope.props.mapController.proxy.layerController.showLayer(scope.props.id);
+                scope.setState({"active": true});
+            }
+            else {
+                scope.props.mapController.proxy.layerController.hideLayer(scope.props.id);
+                scope.setState({"active": false});
+            }
         };
         return (
             <li className={cssConstants.CLOSE} onMouseUp={(event) => layerClick(event)}>
