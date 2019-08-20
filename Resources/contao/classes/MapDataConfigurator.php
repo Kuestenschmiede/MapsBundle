@@ -358,7 +358,6 @@ class MapDataConfigurator
                 $mapData['starboard']['open'] = $profile->starboard_open;
                 $mapData['starboard']['label'] = \Contao\Controller::replaceInsertTags($profile->starboard_label);
                 $mapData['starboard']['div'] = $profile->starboard_div;
-                $mapData['starboard']['filter'] = $profile->starboard_filter;
                 $mapData['starboard']['button'] = $profile->starboard_button;
                 $mapData['cluster_all'] = $profile->cluster_all;
                 $mapData['cluster_distance'] = $profile->cluster_distance;
@@ -369,9 +368,11 @@ class MapDataConfigurator
                 // Baselayerswitcher
                 $mapData['baselayerswitcher']['enable'] = $profile->baselayerswitcher;
                 $mapData['baselayerswitcher']['label'] = \Contao\Controller::replaceInsertTags($profile->baselayerswitcher_label);
+                $mapData['baselayerswitcher']['filter'] = $profile->baselayer_filter;
                 // Layerswitcher
                 $mapData['layerswitcher']['enable'] = $profile->layerswitcher;
                 $mapData['layerswitcher']['label'] = \Contao\Controller::replaceInsertTags($profile->layerswitcher_label);
+                $mapData['layerswitcher']['filter'] = $profile->layer_filter;
             }
 
             // map-tools

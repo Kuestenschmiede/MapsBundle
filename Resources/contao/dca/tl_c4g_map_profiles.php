@@ -112,10 +112,10 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
     'subpalettes' =>
         [
         'mouse_nav'                   => 'mouse_nav_wheel,mouse_nav_doubleclick_zoom,mouse_nav_zoombox,mouse_nav_dragmode,mouse_nav_kinetic',
-        'starboard'                   => 'baselayerswitcher,layerswitcher,starboard_open,starboard_label,starboard_filter,starboard_button,starboard_div,cluster_all',
+        'starboard'                   => 'baselayerswitcher,layerswitcher,starboard_open,starboard_label,starboard_button,starboard_div,cluster_all',
         'cluster_all'                 => 'cluster_distance,cluster_fillcolor,cluster_fontcolor,cluster_zoom, cluster_dist_spider',
-        'baselayerswitcher'           => 'baselayerswitcher_label',
-        'layerswitcher'               => 'layerswitcher_label',
+        'baselayerswitcher'           => 'baselayerswitcher_label,baselayer_filter',
+        'layerswitcher'               => 'layerswitcher_label,layer_filter',
         'attribution'                 => 'collapsed_attribution,add_attribution,cfg_logo_attribution,div_attribution',
         'hover_popups'                => 'hover_popups_stay',
         'permalink'                   => 'permalink_get_param',
@@ -414,14 +414,14 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'eval'                    => ['maxlength'=>254],
             'sql'                     => "varchar(254) NOT NULL default ''"
             ],
-        'starboard_filter' =>
-            [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_filter'],
-            'exclude'                 => true,
-            'default'                 => false,
-            'inputType'               => 'checkbox',
-            'sql'                     => "char(1) NOT NULL default '0'"
-            ],
+//        'starboard_filter' =>
+//            [
+//            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_filter'],
+//            'exclude'                 => true,
+//            'default'                 => false,
+//            'inputType'               => 'checkbox',
+//            'sql'                     => "char(1) NOT NULL default '0'"
+//            ],
         'starboard_button' =>
             [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_button'],
@@ -498,6 +498,14 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'eval'                    => ['maxlength'=>254],
             'sql'                     => "varchar(254) NOT NULL default ''"
             ],
+        'baselayer_filter' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayer_filter'],
+                'exclude'                 => true,
+                'default'                 => false,
+                'inputType'               => 'checkbox',
+                'sql'                     => "char(1) NOT NULL default '0'"
+            ],
         'layerswitcher' =>
             [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['layerswitcher'],
@@ -515,7 +523,14 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'eval'                    => ['maxlength'=>254],
             'sql'                     => "varchar(254) NOT NULL default ''"
             ],
-
+        'layer_filter' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['layer_filter'],
+                'exclude'                 => true,
+                'default'                 => false,
+                'inputType'               => 'checkbox',
+                'sql'                     => "char(1) NOT NULL default '0'"
+            ],
         'measuretool' =>
             [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['measuretool'],

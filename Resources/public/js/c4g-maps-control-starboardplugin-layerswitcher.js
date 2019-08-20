@@ -619,7 +619,7 @@ export class Layerswitcher {
       } // end of for-loop
 
       // Starboard Filter
-      if (this.starboard.options.filter) {
+      if (this.starboard.options.mapController.data.layerswitcher.filter) {
         var dv = document.createElement('div');
         dv.className = "c4g-starboard-filter c4g-content-select";
         var filter = document.createElement('input');
