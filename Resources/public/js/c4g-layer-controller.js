@@ -1637,7 +1637,14 @@ export class C4gLayerController {
 
                 for (f = 0; f < unstyledFeatures.length; f += 1) {
                   if (self.proxy.locationStyleController.arrLocStyles[unstyledFeatures[f].get('styleId')]) {
-                    unstyledFeatures[f].setStyle(self.proxy.locationStyleController.arrLocStyles[unstyledFeatures[f].get('styleId')].style);
+                    let style;
+                    if(self.proxy.locationStyleController.arrLocStyles[unstyledFeatures[f].get('styleId')] && self.proxy.locationStyleController.arrLocStyles[unstyledFeatures[f].get('styleId')].fnStyleFunction) {
+                      style = Function("feature", "data", "map", self.proxy.locationStyleController.arrLocStyles[unstyledFeatures[f].get('styleId')].fnStyleFunction);
+                    }
+                    else {
+                      style = self.proxy.locationStyleController.arrLocStyles[unstyledFeatures[f].get('styleId')].style
+                    }
+                    unstyledFeatures[f].setStyle(style);
                   }
                 }
 
