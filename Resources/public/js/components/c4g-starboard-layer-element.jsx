@@ -21,7 +21,9 @@ export class C4gStarboardLayerElement extends Component {
         const scope = this;
         this.state = {
             initialized: false,
-            childs: props.childs
+            childs: props.childs,
+            active: false,
+            disabled: props.mapController.proxy.checkLayerIsActiveForZoom(scope.props.id)
         };
 
     }
@@ -44,6 +46,10 @@ export class C4gStarboardLayerElement extends Component {
                 scope.setState({"active": false});
             }
         };
+        let cssClass = scope.state.active ? cssConstants.ACTIVE : cssConstants.INACTIVE;
+        if (!scope.props.mapController.proxy.checkLayerIsActiveForZoom(scope.props.id)) {
+            cssClass += " " + cssConstants.DISABLED;
+        }
         return (
             <li className={cssConstants.CLOSE} onMouseUp={(event) => layerClick(event)}>
                 {span}
@@ -52,7 +58,7 @@ export class C4gStarboardLayerElement extends Component {
                     <C4gStarboardLayerElement key={item.id} hide={item.hide} id={item.id} mapController={this.props.mapController} name={item.name} childs={item.childs}></C4gStarboardLayerElement>
                 ))}
                 </ul>
-                <a>{this.props.name}</a>
+                <a className={cssClass}>{this.props.name}</a>
             </li>
         );
     }
