@@ -558,7 +558,6 @@ export class MapController {
       objSettings: {},
       containerAddresses: {}
     };
-    ReactDOM.render(React.createElement(RouterControls, routerProps), this.reactContainer);
     this.$overlaycontainer_stopevent.append(this.reactContainer);
 
     // account
