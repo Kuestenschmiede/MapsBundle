@@ -21,7 +21,9 @@ export class C4gStarboardLayerElement extends Component {
         const scope = this;
         this.state = {
             initialized: false,
-            childs: props.childs
+            childs: props.childs,
+            active: false,
+            disabled: props.mapController.proxy.checkLayerIsActiveForZoom(scope.props.id)
         };
 
     }
@@ -35,17 +37,28 @@ export class C4gStarboardLayerElement extends Component {
         let layerClick = function(e) {
             e.stopPropagation();
             e.nativeEvent.stopImmediatePropagation();
-            scope.props.mapController.proxy.layerController.showLayer(scope.props.id)
+            if (!scope.state.active) {
+                scope.props.mapController.proxy.layerController.showLayer(scope.props.id);
+                scope.setState({"active": true});
+            }
+            else {
+                scope.props.mapController.proxy.layerController.hideLayer(scope.props.id);
+                scope.setState({"active": false});
+            }
         };
+        let cssClass = scope.state.active ? cssConstants.ACTIVE : cssConstants.INACTIVE;
+        if (!scope.props.mapController.proxy.checkLayerIsActiveForZoom(scope.props.id)) {
+            cssClass += " " + cssConstants.DISABLED;
+        }
         return (
             <li className={cssConstants.CLOSE} onMouseUp={(event) => layerClick(event)}>
                 {span}
                 <ul>
                 {this.state.childs.map(item => (
-                    <C4gStarboardLayerElement key={item.id} id={item.id} mapController={this.props.mapController} name={item.name} childs={item.childs}></C4gStarboardLayerElement>
+                    <C4gStarboardLayerElement key={item.id} hide={item.hide} id={item.id} mapController={this.props.mapController} name={item.name} childs={item.childs}></C4gStarboardLayerElement>
                 ))}
                 </ul>
-                <a href="#">{this.props.name}</a>
+                <a className={cssClass}>{this.props.name}</a>
             </li>
         );
     }

@@ -363,7 +363,7 @@ class BaseLayerService
                     $arrBaseLayer['image_src'] = $objFile->path;
                 }
                 break;
-                case 'geoimage':
+            case 'geoimage':
                 $objFile = \FilesModel::findByUuid($objBaseLayer->image_src);
                 if ($objFile && $objFile->path) {
                     $arrBaseLayer['image_src'] = $objFile->path;
