@@ -220,8 +220,8 @@ button.c4g-geosearch-start:before {
 }
 .c4g-overviewmap .ol-overviewmap {
   overflow: hidden;
-  width: 150px;
-  height: 100px;
+  width: 250px;
+  height: 143px;
   background-color: transparent !important;
 }
 .c4g-overviewmap.c4g-close .ol-overviewmap {
@@ -232,8 +232,8 @@ button.c4g-geosearch-start:before {
   opacity: 1;
   width: 150px;
   height: 100px;
-  right: 42px;
-  border-top: 2px solid;
+  margin: auto;
+  margin-top: 19px;
 }
 .c4g-overviewmap.c4g-close .ol-overviewmap-map {
   opacity: 0;
