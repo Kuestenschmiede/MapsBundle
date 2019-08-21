@@ -331,11 +331,16 @@ span.c4g-active ul li.c4g-active{
 /*
  *  Overview-map
  */
+
 .c4g-overviewmap .ol-overviewmap-box {
   border-color: rgba(24, 61, 93,.8);
   border-color: var(--main-color);
 }
 
+.ol-overviewmap-map .ol-viewport {
+  box-shadow: 0px 0px 20px -1px var(--main-color);
+  border: 1px solid var(--main-color);
+}
 
 /*
  *  Attribution
