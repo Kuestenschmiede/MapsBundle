@@ -387,6 +387,10 @@ class MapDataConfigurator
             //
             $mapData['attribution']['enable'] = $profile->attribution;
             if ($profile->attribution) {
+                $settings = C4gMapSettingsModel::findOnly();
+                if($settings->con4gisIoUrl && $settings->con4gisIoKey) {
+                    $mapData['attribution']['con4gisIO'] = 1;
+                }
                 $mapData['attribution']['collapsed'] = $profile->collapsed_attribution;
                 if ($profile->cfg_logo_attribution) {
                     $mapData['attribution']['cfg_logo'] = $profile->cfg_logo_attribution;
