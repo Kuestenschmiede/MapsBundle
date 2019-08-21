@@ -17,6 +17,7 @@ use con4gis\MapsBundle\Resources\contao\classes\GeoPicker;
 use con4gis\MapsBundle\Resources\contao\modules\api\InfoWindowApi;
 use con4gis\MapsBundle\Resources\contao\modules\api\SearchApi;
 use con4gis\MapsBundle\Resources\contao\modules\api\ReverseSearchApi;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,7 +25,15 @@ use Symfony\Component\HttpFoundation\Response;
 class MapsController extends BaseController
 {
     protected $cacheInstance;
-
+    
+    /**
+     * MapsController constructor.
+     */
+    public function __construct(ContainerInterface $container)
+    {
+        parent::__construct($container);
+    }
+    
     protected function initialize($withEntityManager = true)
     {
         parent::initialize(false);
