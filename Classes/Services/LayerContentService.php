@@ -180,7 +180,10 @@ class LayerContentService
         else if ( $objProfile->overpassEngine == "3") {
             $url = "https://overpass-api.de/api/interpreter";
         }
-        else { // @Todo
+        else if($objProfile->overpass_url) { // @Todo
+            $url = $objProfile->overpass_url;
+        }
+        else {
             $url = "";
         }
 
