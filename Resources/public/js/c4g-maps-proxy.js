@@ -522,6 +522,12 @@ export class MapProxy {
 
     if (parseInt(this.mapData.popupHandling, 10) !== 2) {
       let autoPan = parseInt(this.mapData.popupHandling, 10) === 1;
+      if (autoPan) {
+        let mapSelector = "#" + this.options.mapController.data.mapDiv + " > div > canvas";
+        let mapElement = document.querySelector(mapSelector);
+        let maxHeightPopup = mapElement.offsetHeight - 50;
+        $(popUpElement).css("max-height", maxHeightPopup);
+      }
       popup = new Overlay({
         element: popUpElement,
         positioning: 'bottom-left',
