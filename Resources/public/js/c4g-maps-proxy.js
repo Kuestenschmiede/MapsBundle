@@ -528,9 +528,9 @@ export class MapProxy {
         offset: [-50, 0],
         autoPan: autoPan,
         autoPanAnimation: {
-          duration: 0
+          duration: 250
         },
-        autoPanMargin: 100
+        autoPanMargin: 20
       });
     }
     else {
