@@ -62,7 +62,7 @@ class MapDataConfigurator
             $map = new C4gMapsModel();
             $map->id = 0;
         }
-        $language = Controller::replaceInsertTags("{{page::language}}");
+        $language = Controller::replaceInsertTags("{{page::language}}") ?  Controller::replaceInsertTags("{{page::language}}") : substr($GLOBALS['_SERVER']['HTTP_ACCEPT_LANGUAGE'], 0, 2);
         $mapData['id'] = $map->id;
         $mapData['lang'] = $language;
 
