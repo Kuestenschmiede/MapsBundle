@@ -387,6 +387,9 @@ class LayerService
                         $layer = C4gMapsModel::findByPk($layer->pid);
                     }
                 }
+                if ($layer->pid = 0) {
+                    $arrLayerData['activeForBaselayers'] = "all";
+                }
             }
         }
         
