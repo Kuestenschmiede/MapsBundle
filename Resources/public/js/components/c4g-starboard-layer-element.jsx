@@ -23,6 +23,7 @@ export class C4gStarboardLayerElement extends Component {
             initialized: false,
             childs: props.childs,
             active: false,
+            collapsed: true,
             disabled: props.mapController.proxy.checkLayerIsActiveForZoom(scope.props.id)
         };
 
@@ -31,8 +32,15 @@ export class C4gStarboardLayerElement extends Component {
     render() {
         const scope = this;
         let span = null;
-        if(this.props.hasChilds) {
-            span = <span className={cssConstants.ICON}></span>;
+        if(this.props.childs && this.props.childs.length) {
+            let spanClick = function(e) {
+                e.stopPropagation();
+                e.nativeEvent.stopImmediatePropagation();
+                if (scope.state.collapsed) {
+                    scope.setState({collapsed: false});
+                }
+            }
+            span = <span className={cssConstants.ICON} onMouseUp={(event) => spanClick(event)}></span>;
         }
         let layerClick = function(e) {
             e.stopPropagation();
@@ -50,15 +58,16 @@ export class C4gStarboardLayerElement extends Component {
         if (!scope.props.mapController.proxy.checkLayerIsActiveForZoom(scope.props.id)) {
             cssClass += " " + cssConstants.DISABLED;
         }
+        let openClose = this.state.collapsed ? cssConstants.CLOSE : cssConstants.OPEN;
         return (
-            <li className={cssConstants.CLOSE} onMouseUp={(event) => layerClick(event)}>
+            <li className={openClose}>
                 {span}
+                <a className={cssClass} onMouseUp={(event) => layerClick(event)}>{this.props.name}</a>
                 <ul>
                 {this.state.childs.map(item => (
                     <C4gStarboardLayerElement key={item.id} hide={item.hide} id={item.id} mapController={this.props.mapController} name={item.name} childs={item.childs}></C4gStarboardLayerElement>
                 ))}
                 </ul>
-                <a className={cssClass}>{this.props.name}</a>
             </li>
         );
     }
