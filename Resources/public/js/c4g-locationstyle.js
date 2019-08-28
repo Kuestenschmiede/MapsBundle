@@ -147,7 +147,7 @@ export class C4gLocationStyle {
       let newScale = self.getScaleFactor(styleData);
 
       // check if image has to be resized
-      if (imageStyle && newScale !== 0.0) {
+      if (imageStyle && newScale !== 0.0 && imageStyle.setScale) {
         imageStyle.setScale(newScale);
       }
 
@@ -361,14 +361,14 @@ export class C4gLocationStyle {
         });
         break;
       case 'point':
-        imageStyle = new Circle({
+        imageStyle = new CircleStyle({
           fill: fillStyle,
           stroke: strokeStyle,
           radius: styleData.radius.value || 7
         });
         break;
       default:
-        imageStyle = new Circle({
+        imageStyle = new CircleStyle({
           fill: fillStyle,
           stroke: strokeStyle,
           radius: styleData.radius.value || 7
