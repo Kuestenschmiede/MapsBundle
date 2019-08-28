@@ -14,11 +14,11 @@ import {Stroke} from "ol/style";
 import {Fill} from "ol/style";
 import {Style} from "ol/style";
 import {RegularShape} from "ol/style";
-import {Circle} from "ol/style";
-// import {Photo} from "ol/style"; // TODO, kommt aus ol-ext
 import {Icon} from "ol/style";
 import {Feature} from "ol";
 import {Point} from "ol/geom";
+import {Circle} from "ol/geom";
+import CircleStyle from 'ol/style/Circle';
 import {Text} from "ol/style";
 
 export class C4gLocationStyle {
@@ -34,7 +34,8 @@ export class C4gLocationStyle {
     this.maxzoom   = locStyleArr['maxzoom'];
     this.fnStyleFunction = locStyleArr['style_function_js'];
     if (this.fnStyleFunction) {
-      this.fnStyleFunction = this.fnStyleFunction.replace(/ol.Style./g, "window.olStyle.");
+      this.fnStyleFunction = this.fnStyleFunction.replace(/ol.Style./gi, "window.olStyle.");
+      this.fnStyleFunction = this.fnStyleFunction.replace(/ol.Geom./gi, "window.olStyle.");
       if (!window.olStyle) {
         window.olStyle = {
           Stroke,
@@ -42,6 +43,8 @@ export class C4gLocationStyle {
           Icon,
           Fill,
           Point,
+          CircleStyle,
+          Circle,
           Text
         };
       }
