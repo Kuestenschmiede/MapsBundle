@@ -58,15 +58,15 @@ export class StarboardLayerswitcher extends Component {
                     </div>
                 </div>
                 <div className={cssConstants.STARBOARD_CONTENT_CONTAINER}>
-                    <div className="contentHeadline"></div>
+                    <div className="contentHeadline"/>
                     <div className={cssConstants.STARBOARD_CONTENT_LAYERSWITCHER}>
                         <div className={cssConstants.STARBOARD_LAYERTREE}>
                             <ul>
                                 {this.state.layers.map(item => {
                                     if (item.pid === this.props.mapController.data.id) //skip childs of layers
                                         return <C4gStarboardLayerElement key={item.id} id={item.id} mapController={this.props.mapController}
-                                                                  childs={item.childs}
-                                                                  name={item.name}></C4gStarboardLayerElement>
+                                                                  childs={item.childs} hide={!!item.hide}
+                                                                  name={item.name}/>;
                                     return null;
                                 })}
                             </ul>
