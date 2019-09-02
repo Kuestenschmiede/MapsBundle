@@ -339,7 +339,7 @@ class LayerService
             $arrLayerData['hide'] = $objLayer->data_hidelayer;
         }
 
-        if ($objLayer->loc_minzoom>0 || $objLayer->loc_maxzoom>0) {
+        if ($objLayer->loc_minzoom > 0 || $objLayer->loc_maxzoom > 0) {
             $arrLayerData['zoom'] = [
                 'min' => $objLayer->loc_minzoom,
                 'max' => $objLayer->loc_maxzoom,

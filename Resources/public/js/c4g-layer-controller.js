@@ -54,6 +54,7 @@ export class C4gLayerController {
       dataType: this.mapController.data.jsonp ? "jsonp" : "json"
 
     }).done(function (data) {
+      self.rawData = data;
       self.addLayers(data.layer, data.foreignLayers);
       self.proxy.layers_loaded = true;
       utils.callHookFunctions(self.proxy.hook_layer_loaded, self.proxy.layerIds);
