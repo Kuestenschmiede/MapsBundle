@@ -20,11 +20,11 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['name'] = ['Name', 'Bitte geben Sie d
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['theme'] = ['Kartenlayout', 'Wählen Sie für die Kartendarstellung Ihr eigenes Thema aus.'];
 
 /** Basiskarten */
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayers'] = ['Basiskarten', 'Wählen Sie die Basiskarten, die in Karten dieses Profils im Starboard verfügbar sein sollen. Standard: alle'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayers'] = ['Basiskarten', 'Wählen Sie die Basiskarten, die in Karten dieses Profils im Starboard verfügbar sein sollen. Standard: alle (d.h. wenn nichts ausgewählt ist, werden alle Basiskarten übergeben.)'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['default_baselayer'] = ['Standard-Basiskarte', 'Wählen Sie die Basiskarte, die beim Laden der Karte vorausgewählt sein soll.'];
 
 /** Lokationsstile */
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['locstyles'] = ['Lokationsstile', 'Wählen Sie die Lokationsstile, die in den Kartenstrukturelementen dieses Profils geladen werden sollen. Standard: alle'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['locstyles'] = ['Lokationsstile', 'Wählen Sie die Lokationsstile, die in den Kartenstrukturelementen dieses Profils geladen werden sollen. Standard: alle (d.h. wenn nichts ausgewählt ist, werden alle Lokationsstile übergeben.)'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['label_color'] = ['Label-Farbe', 'Wählen Sie die Standardfarbe für Labels aus. Dies kann durch die Einstellung am Lokationsstil überschrieben werden.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['resize_locstyles_zoom'] = ['Lokationen beim Zoom skalieren', 'Setzen Sie diese Checkbox, wenn die Lokationen (mit Icons) beim Zoomen der Zoomstufe entsprechend skaliert werden sollen.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['resize_src_zoom'] = ['Initialer Zoom', 'Geben Sie den Zoomlevel an, bei dem die Lokationen ihre normale Größe haben sollen.'];

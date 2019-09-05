@@ -58,7 +58,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['popup_info'] = array('Popup information', 'I
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popup_extend'] = array('Extend popup information with forumpost', 'Gives the ability to render additional popup information from a forumpost.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popup_async'] = array('Load Popup Information later', 'Enables the loading of popup information during runtime.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popupHandling'] = array('Autopan to popup', '');
-$GLOBALS['TL_LANG']['tl_c4g_maps']['loc_linkurl'] = array('Direct link', 'Enter an URL (with http://) or click on the symbol to select a contao page. If you specify a link then the user jumps to the link via mouse click or mouse double click (depending on the map profile settings).');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['loc_linkurl'] = array('Direct link', 'Enter an URL (with http(s)://) or click on the symbol to select a contao page. If you specify a link then the user jumps to the link via mouse click or mouse double click (depending on the map profile settings).');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_onclick_zoomto'] = array('On mouse click zoom to zoom level', 'Enter a zoom level, to which is zoomed when clicking onto a map structure item. Works only when there is no direct link.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_minzoom'] = array('Min. zoom level', 'Enter the minimum zoom level, on which the items are shown. 0 means no restriction.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_maxzoom'] = array('Max. zoom level', 'Enter the maximum zoom level, on which the items are shown. 0 means no restriction.');
@@ -81,7 +81,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['split_geojson'] = array('Split GeoJson','Cli
 $GLOBALS['TL_LANG']['tl_c4g_maps']['geojson_attributes'] = array('Geojson attributes','Comma-seperated list of all attributes of the geojson. the first one is used as name in starboard.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['geojson_zoom'] = array('Zoombutton for geoJson','Adds a button to zoom to the feature. It replaces the function to enable/disable the feature.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['data_projection'] = array('Projection');
-$GLOBALS['TL_LANG']['tl_c4g_maps']['ovp_request'] = array('Request to Overpass API (XML-,QL-Format)', 'Request is sent via AJAX through a proxy (C4GOverpass.php) to the Overpass API. Format: see http://www.overpass-api.de.');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['ovp_request'] = array('Request to Overpass API (XML-,QL-Format)', 'Request is sent via AJAX through a proxy (C4GOverpass.php) to the Overpass API. Format: see  <a href="https://www.overpass-api.de">www.overpass-api.de</a>.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['ovp_bbox_limited'] = array('Request to Overpass API bounding box limited.', 'Sends the request on change of the displayed area (bounding box). The request itself has to contain the placeholder "(bbox)", which will be replaced by a "bbox-query" tag on runtime.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['data_forcenodes'] = array('Convert ways to nodes', 'Converts OSM-ways to nodes. Especially useful when POIs are inside the OSM data, some represented as ways (building shape), others as nodes.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['data_additionalgeometries'] = array('Show additional Geometries', 'OSM-data sometimes has additional geometries, such as "entries". Check this option if you want to display them, too.');
@@ -116,6 +116,8 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['hover_location'] = array('Hover on locations
 $GLOBALS['TL_LANG']['tl_c4g_maps']['hover_style'] = array('Location style on hover','Pick the location style to show on hover.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popupType'] = array("Popup type","How to generate popup informations");
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popupTemplate'] = array("Popup Template","Load popup informations from template");
+$GLOBALS['TL_LANG']['tl_c4g_maps']['awesomeicon'] = array('Icon for the tab', 'Here you can enter a Unicode that will be converted to an Awesome-Font icon (<a href="https://fontawesome.com/icons/">fontawesome.com/icons/</a>).');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['hide_when_in_tab'] = array("Hide if in Starboard tab", "If you set this checkbox, the layer will not be displayed in the Starboard if it is in its own Starboard tab. This is useful if you do not want to display the parent element of an existing structure level in the tab.");
 $GLOBALS['TL_LANG']['tl_c4g_maps']['cssClass'] = array("CSS class", "css class for starboard listelements");
 
 /**
