@@ -360,8 +360,11 @@ export class MapController {
         for (key in layers) {
           if (layers.hasOwnProperty(key)) {
             layer = layers[key];
-            if (layer.type == "overpass") {
+            if (layer.type === "overpass") {
               continue
+            }
+            if (layer.hide === "1") {
+              continue;
             }
             vectorArray = layer.content;
             if (vectorArray === undefined) {

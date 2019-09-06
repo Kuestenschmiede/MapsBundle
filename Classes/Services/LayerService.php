@@ -325,12 +325,13 @@ class LayerService
                 'popup' => $objLayer->cluster_popup
             ];
         }
+        
         if ($objLayer->filterByBaseLayer && unserialize($objLayer->filterByBaseLayer)) {
             $arrLayerData['activeForBaselayers'] = unserialize($objLayer->filterByBaseLayer);
-        }
-        else {
+        } else {
             $arrLayerData['activeForBaselayers'] = "all";
         }
+        
         // check parent hide status
         $parentLayer = C4gMapsModel::findById($objLayer->pid);
         if (!$parentLayer->is_map && $parentLayer->data_hidelayer) {
@@ -399,6 +400,7 @@ class LayerService
 
             }
         }
+        
         if ($objLayer->location_type === 'startab') {
             $arrLayerData['awesomeicon'] = $objLayer->awesomeicon;
         }
