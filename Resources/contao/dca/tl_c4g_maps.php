@@ -387,8 +387,9 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['center_rotation'],
                 'exclude'                 => true,
                 'inputType'               => 'c4g_text',
+                'default'                 => '0',
                 'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
-                'sql'                     => "int NOT NULL default 0 ''"
+                'sql'                     => "int(3) unsigned NOT NULL default '0'"
             ],
         'zoom' =>
             [
