@@ -523,7 +523,11 @@ export class Layerswitcher {
                   childItem.entryWrappers.push(childListItem);
                   let childEntry = document.createElement('a');
                   childEntry.setAttribute('href', '#');
-                  childEntry.appendChild(document.createTextNode(feature.properties[layer.geojson_attributes.split(',')[0]]));
+                  let text = feature.properties[layer.geojson_attributes.split(',')[0]];
+                  if (!text) {
+                    continue;
+                  }
+                  childEntry.appendChild(document.createTextNode(text));
                   childListItem.appendChild(childEntry);
                   let childUid = uid + "" + i;
                   let $childEntry = jQuery(childEntry);

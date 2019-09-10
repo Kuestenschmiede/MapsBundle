@@ -1641,59 +1641,90 @@ export class C4gLayerController {
                     unstyledFeatures[f].setStyle(self.proxy.locationStyleController.arrLocStyles[unstyledFeatures[f].get('styleId')].style);
                   }
                 }
-
-                fVectorSource = new VectorSource({
-                  features: features,
-                  projection: 'EPSG:3857',
-                  format: new GeoJSON()
-                });
-
-                fVectorLayer = utils.getVectorLayer(fVectorSource, vectorStyle, element.zIndex);
-
-                // layers.push(vectorLayer);
-                if (self.arrLayers[itemUid].fVectorLayer) {
-                  fLayerGroup = self.arrLayers[itemUid].vectorLayer;
-                  fLayers = fLayerGroup.getLayers();
-
-                  if (elementContent.data && elementContent.data.properties) {
+                if(element.split_geojson) {
+                  for (let i = 0; i < features.length; i++) {
+                    vectorSource = new VectorSource({
+                      projection: 'EPSG:3857',
+                      format: new GeoJSON()
+                    });
+                    vectorSource.addFeature(features[i]);
+                    vectorLayer = utils.getVectorLayer(vectorSource, vectorStyle, element.zIndex);
+                    for(let j = 0; j< element.geojson_attributes.split(',').length; j++){
+                      vectorLayer.set(element.geojson_attributes.split(',')[j],features[i].get(element.geojson_attributes.split(',')[j]))
+                    }
+                    layers.push(vectorLayer);
                     if (elementContent.data.properties.popup) {
-                      fVectorLayer.popup = elementContent.data.properties.popup;
+                      vectorLayer.popup = elementContent.data.properties.popup;
                     }
                     if (elementContent.data.properties.tooltip) {
-                      fVectorLayer.tooltip = elementContent.data.properties.tooltip;
+                      vectorLayer.tooltip = elementContent.data.properties.tooltip;
                     }
                     if (elementContent.data.properties.label) {
-                      fVectorLayer.label = elementContent.data.properties.label;
+                      vectorLayer.label = elementContent.data.properties.label;
                     }
                     if (elementContent.data.properties.zoom_onclick) {
-                      fVectorLayer.zoom_onclick = elementContent.data.properties.zoom_onclick;
-                    }
-                  }
-
-                  fLayers.push(fVectorLayer);
-                  fLayerGroup.setLayers(fLayers);
-                } else {
-                  if (elementContent.data && elementContent.data.properties) {
-                    if (elementContent.data.properties.popup) {
-                      fVectorLayer.popup = elementContent.data.properties.popup;
-                    }
-                    if (elementContent.data.properties.tooltip) {
-                      fVectorLayer.tooltip = elementContent.data.properties.tooltip;
-                    }
-                    if (elementContent.data.properties.label) {
-                      fVectorLayer.label = elementContent.data.properties.label;
-                    }
-                    if (elementContent.data.properties.zoom_onclick) {
-                      fVectorLayer.zoom_onclick = elementContent.data.properties.zoom_onclick;
+                      vectorLayer.zoom_onclick = elementContent.data.properties.zoom_onclick;
                     }
                   }
                   fLayerGroup = new Group({
-                    layers: [fVectorLayer]
+                    layers: layers
                   });
                   self.arrLayers[itemUid].vectorLayer = fLayerGroup;
                   self.mapController.map.addLayer(fLayerGroup);
                 }
+                else {
+                  fVectorSource = new VectorSource({
+                    features: features,
+                    projection: 'EPSG:3857',
+                    format: new GeoJSON()
+                  });
 
+                  fVectorLayer = utils.getVectorLayer(fVectorSource, vectorStyle, element.zIndex);
+
+                  // layers.push(vectorLayer);
+                  if (self.arrLayers[itemUid].fVectorLayer) {
+                    fLayerGroup = self.arrLayers[itemUid].vectorLayer;
+                    fLayers = fLayerGroup.getLayers();
+
+                    if (elementContent.data && elementContent.data.properties) {
+                      if (elementContent.data.properties.popup) {
+                        fVectorLayer.popup = elementContent.data.properties.popup;
+                      }
+                      if (elementContent.data.properties.tooltip) {
+                        fVectorLayer.tooltip = elementContent.data.properties.tooltip;
+                      }
+                      if (elementContent.data.properties.label) {
+                        fVectorLayer.label = elementContent.data.properties.label;
+                      }
+                      if (elementContent.data.properties.zoom_onclick) {
+                        fVectorLayer.zoom_onclick = elementContent.data.properties.zoom_onclick;
+                      }
+                    }
+
+                    fLayers.push(fVectorLayer);
+                    fLayerGroup.setLayers(fLayers);
+                  } else {
+                    if (elementContent.data && elementContent.data.properties) {
+                      if (elementContent.data.properties.popup) {
+                        fVectorLayer.popup = elementContent.data.properties.popup;
+                      }
+                      if (elementContent.data.properties.tooltip) {
+                        fVectorLayer.tooltip = elementContent.data.properties.tooltip;
+                      }
+                      if (elementContent.data.properties.label) {
+                        fVectorLayer.label = elementContent.data.properties.label;
+                      }
+                      if (elementContent.data.properties.zoom_onclick) {
+                        fVectorLayer.zoom_onclick = elementContent.data.properties.zoom_onclick;
+                      }
+                    }
+                    fLayerGroup = new Group({
+                      layers: [fVectorLayer]
+                    });
+                    self.arrLayers[itemUid].vectorLayer = fLayerGroup;
+                    self.mapController.map.addLayer(fLayerGroup);
+                  }
+                }
               }
             });
           } else {
