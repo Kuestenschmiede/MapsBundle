@@ -306,8 +306,13 @@ export class Sideboard extends Control {
     if (this.options && this.options.name) {
         capitalizedName = utils.capitalizeFirstLetter(this.options.name);
     }*/
+    if (this.options.extDiv) {
+      contentContainerOuterHeight = jQuery(this.wrapper).parent().parent().height() - (jQuery(this.titleBar).outerHeight(true) + jQuery(this.statusBar).outerHeight(true));
+    }
+    else {
+      contentContainerOuterHeight = jQuery(this.wrapper).height() - (jQuery(this.titleBar).outerHeight(true) + jQuery(this.statusBar).outerHeight(true));
 
-    contentContainerOuterHeight = jQuery(this.wrapper).height() - (jQuery(this.titleBar).outerHeight(true) + jQuery(this.statusBar).outerHeight(true));
+    }
     if (this.options && this.options.direction && this.options.direction !== "undefined" && this.options.direction === 'left') {
       if (this !== this.options.mapController["active" + this.identifier]) {
         containerOffsetWidth = 0;
