@@ -349,7 +349,7 @@ span.c4g-active ul li.c4g-active{
   color: rgba(255,255,255,.9);
   color: var(--font-color);
 }
-.ol-attribution a {
+#main .ol-attribution a {
   color: rgba(255,255,255,.9);
   color: var(--font-color);
   text-decoration: none;
