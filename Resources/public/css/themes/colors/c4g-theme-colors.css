@@ -351,7 +351,7 @@ span.c4g-active ul li.c4g-active{
 }
 .ol-attribution a {
   color: rgba(255,255,255,.9);
-  color: var(--font-color);
+  color: var(--font-color)!important;
   text-decoration: none;
 }
 .ol-attribution:not(.ol-collapsed) {
