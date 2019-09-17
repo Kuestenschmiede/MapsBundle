@@ -338,7 +338,7 @@ span.c4g-active ul li.c4g-active{
 }
 
 .ol-overviewmap-map .ol-viewport {
-  box-shadow: 0px 0px 5px 5px var(--main-color);
+  box-shadow: 0px 0px 8px 2px var(--main-color);
   border: 1px solid var(--main-color);
 }
 
