@@ -31,12 +31,13 @@ $GLOBALS['TL_LANG']['tl_c4g_map_themes']['buttonradius']  = array('Radius der Bu
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['colors']  = array('Farben-CSS', 'Wählen Sie einen Stil für die Farben aus.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['custom_colors'] = array('Eigene Farben-CSS', 'Wählen Sie diese Option, wenn Sie eine eigene CSS-Datei verwenden wollen.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['external_colors']  = array('Eigene Farben', 'Laden Sie Ihre eigene CSS-Datei hoch (Beispiele unter files/con4gis).');
-$GLOBALS['TL_LANG']['tl_c4g_map_themes']['maincolor']  = array('Hauptfarbe', 'Die Farbe überschreibt die CSS-Einstellungen.');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['maincolor']  = array('Hauptfarbe', 'Überschreibt die CSS-Einstellungen.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['mainopacity']  = array('Deckkraft der Hauptfarbe', 'Überschreibt die CSS-Einstellungen.');
-$GLOBALS['TL_LANG']['tl_c4g_map_themes']['fontcolor']  = array('Schriftfarbe', 'Die Farbe überschreibt die CSS-Einstellungen.');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['fontcolor']  = array('Schriftfarbe', 'Überschreibt die CSS-Einstellungen.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['fontopacity']  = array('Deckkraft der Schriftfarbe', 'Überschreibt die CSS-Einstellungen.');
-$GLOBALS['TL_LANG']['tl_c4g_map_themes']['shadowcolor']  = array('Schattenfarbe', 'Die Farbe überschreibt die CSS-Einstellungen.');
-$GLOBALS['TL_LANG']['tl_c4g_map_themes']['shadowopacity']  = array('Deckkraft der Schattenfarbe', 'Überschreibt die CSS-Einstellungen.');
+
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['shadowcolor']  = array('Zweitfarbe', 'Überschreibt die CSS-Einstellungen. Zum Beispiel für Hover-Effekte, Rahmen oder Formularelemente.');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['shadowopacity']  = array('Deckkraft der Zweitfarbe', 'Überschreibt die CSS-Einstellungen.');
 
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['effects'] = array('Effekte-CSS', 'Wählen Sie einen Stil für die Effekte aus.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['custom_effects'] = array('Eigene Effekte-CSS', 'Wählen Sie diese Option, wenn Sie eine eigene CSS-Datei verwenden wollen.');
