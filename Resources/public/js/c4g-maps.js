@@ -61,7 +61,7 @@ import {Attribution} from "ol/control";
 import {toStringHDMS} from "ol/coordinate";
 import {get} from "ol/proj";
 import ol_control_GeoBookmark from "ol-ext/control/GeoBookmark"
-import {StarboardPanel} from "./components/c4g-starboard-panel";
+import {StarboardPanel} from "./components/c4g-starboard-panel.jsx";
 import ReactDOM from "react-dom";
 import React from "react";
 
