@@ -26,18 +26,12 @@ export class HorizontalPanel extends Component {
     let button = document.createElement('button');
     element.className = (props.className || "c4g-horizontal-panel") + "-button-" + (props.direction || "top") + " ol-control";
     element.appendChild(button);
-    jQuery(button).on('click', function(event) {
-      if (scope.state.open) {
-        scope.close();
-      } else {
-        scope.open();
-      }
-    });
+    this.clickControl = this.clickControl.bind(this);
+    jQuery(button).on('click', this.clickControl);
     let mapController = props.mapController;
     let control = new Control({element: element, target: props.target});
     mapController.controls.horizontalPanel = control;
     mapController.map.addControl(control);
-
     // state variables (every property that has influence on this component)
     this.state = {
       // either "top" or "bottom"
@@ -68,7 +62,13 @@ export class HorizontalPanel extends Component {
       ></div>
     );
   }
-
+  clickControl() {
+    if (this.state.open) {
+      this.close();
+    } else {
+      this.open();
+    }
+  }
   open() {
     this.setState({open: true});
     this.slideOutCollidingElements();
