@@ -18,6 +18,11 @@ layer_service:
     controller: con4gis\MapsBundle\Controller\LayerController::layer
     methods: GET
 
+filter_service:
+    path: /con4gis/filterService
+    controller: con4gis\MapsBundle\Controller\FilterController::filter
+    methods: GET
+
 layer_content_service:
     path: /con4gis/layerContentService/{layerId}
     defaults:
