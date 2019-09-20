@@ -22,9 +22,31 @@ class LoadFeatureFiltersEvent extends Event
     const NAME = "maps.load.filters";
     
     /**
+     * The layerId for which filters should be generated.
+     * @var int
+     */
+    private $layerId = 0;
+    
+    /**
      * @var FeatureFilter[]
      */
     private $filters = [];
+    
+    /**
+     * @return int
+     */
+    public function getLayerId(): int
+    {
+        return $this->layerId;
+    }
+    
+    /**
+     * @param int $layerId
+     */
+    public function setLayerId(int $layerId): void
+    {
+        $this->layerId = $layerId;
+    }
     
     /**
      * @return array

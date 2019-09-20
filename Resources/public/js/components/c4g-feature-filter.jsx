@@ -11,6 +11,7 @@
  *
  */
 
+import React, { Component } from "react";
 import {HorizontalPanel} from "./c4g-horizontal-panel.jsx";
 
 export class FeatureFilter extends HorizontalPanel {
@@ -18,6 +19,7 @@ export class FeatureFilter extends HorizontalPanel {
     super(props);
 
     this.state.filters = {};
+    this.loadFilters();
   }
 
   render() {
@@ -30,10 +32,11 @@ export class FeatureFilter extends HorizontalPanel {
 
   loadFilters() {
     const scope = this;
-    let url = "con4gis/filterService/";
+    let url = "con4gis/filterService/" + this.props.mapController.data.id;
     fetch(url).then(function (response) {
       return response.json().then(function(jsonData) {
-        scope.setState({filters: jsonData})
+        jsonData = JSON.parse(jsonData);
+        scope.setState({filters: jsonData}, () => {console.log(scope.state.filters)})
       });
     })
   }

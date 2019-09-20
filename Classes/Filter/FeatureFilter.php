@@ -15,7 +15,7 @@
 namespace con4gis\MapsBundle\Classes\Filter;
 
 
-class FeatureFilter
+class FeatureFilter implements \JsonSerializable
 {
     /**
      * The name of the filter.
@@ -29,11 +29,38 @@ class FeatureFilter
      */
     private $values = [];
     
+    /**
+     * Holds translations for every value and the fieldname.
+     * @var array
+     */
+    private $translations = [];
+    
     public function addFilterValue($value)
     {
         if (!in_array($value, $this->values)) {
             $this->values[] = $value;
         }
+    }
+    
+    public function addTranslation($key, $translation)
+    {
+        $this->translations[$key] = $translation;
+    }
+    
+    /**
+     * Specify data which should be serialized to JSON
+     * @link https://php.net/manual/en/jsonserializable.jsonserialize.php
+     * @return mixed data which can be serialized by <b>json_encode</b>,
+     * which is a value of any type other than a resource.
+     * @since 5.4.0
+     */
+    public function jsonSerialize()
+    {
+        return [
+            "name" => $this->fieldName,
+            "values" => $this->values,
+            "translations" => $this->translations
+        ];
     }
     
     /**
@@ -68,5 +95,19 @@ class FeatureFilter
         $this->values = $values;
     }
     
+    /**
+     * @return array
+     */
+    public function getTranslations(): array
+    {
+        return $this->translations;
+    }
     
+    /**
+     * @param array $translations
+     */
+    public function setTranslations(array $translations): void
+    {
+        $this->translations = $translations;
+    }
 }

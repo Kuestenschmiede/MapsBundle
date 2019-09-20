@@ -19,6 +19,7 @@ use con4gis\CoreBundle\Controller\BaseController;
 use con4gis\MapsBundle\Classes\Services\FilterService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class FilterController extends BaseController
 {
@@ -36,9 +37,17 @@ class FilterController extends BaseController
         $this->filterService = $filterService;
     }
     
-    public function filterAction(Request $request)
+    /**
+     * @Route("/con4gis/filterService/{layerId}", name="filter_service", methods={"GET"})
+     * @param Request $request
+     * @param $layerId
+     * @return JsonResponse
+     */
+    public function filterAction(Request $request, $layerId)
     {
+        $this->get('contao.framework')->initialize();
         $filters = $this->filterService->createFilters();
+        $filters = \GuzzleHttp\json_encode($filters);
         return new JsonResponse($filters);
     }
 }

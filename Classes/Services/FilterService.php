@@ -27,6 +27,16 @@ class FilterService
     private $eventDispatcher = null;
     
     /**
+     * FilterService constructor.
+     * @param EventDispatcherInterface $eventDispatcher
+     */
+    public function __construct(EventDispatcherInterface $eventDispatcher)
+    {
+        $this->eventDispatcher = $eventDispatcher;
+    }
+    
+    
+    /**
      * @return FeatureFilter[]
      */
     public function createFilters()

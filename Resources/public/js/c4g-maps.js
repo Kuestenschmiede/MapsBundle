@@ -64,6 +64,7 @@ import ol_control_GeoBookmark from "ol-ext/control/GeoBookmark"
 import {StarboardPanel} from "./components/c4g-starboard-panel.jsx";
 import ReactDOM from "react-dom";
 import React from "react";
+import {FeatureFilter} from "./components/c4g-feature-filter.jsx";
 
 let langConstants = {};
 
@@ -548,10 +549,24 @@ export class MapController {
     this.controls = {};
     // add container for react components
     this.reactContainer = document.createElement('div');
-    this.reactContainer.className ="sc4g-sideboard c4g-starboard-container ol-unselectable c4g-close";
+    this.reactContainer.className ="c4g-sideboard c4g-starboard-container ol-unselectable c4g-close";
     this.reactContainer.style.right = "-100%";
-    ReactDOM.render(React.createElement(StarboardPanel, {target: document.querySelector('#' + mapData.mapDiv + ' .' +cssConstants.OL_OVERLAYCONTAINER), mapController: this, direction: "right"}), this.reactContainer);
+    ReactDOM.render(React.createElement(StarboardPanel, {
+      target: document.querySelector('#' + mapData.mapDiv + ' .' +cssConstants.OL_OVERLAYCONTAINER),
+      mapController: this,
+      direction: "right"
+    }), this.reactContainer);
     this.$overlaycontainer_stopevent.append(this.reactContainer);
+
+    // feature filter
+    this.filterContainer = document.createElement('div');
+    ReactDOM.render(React.createElement(FeatureFilter, {
+      target: document.querySelector('#' + mapData.mapDiv + ' .' + cssConstants.OL_OVERLAYCONTAINER_SE),
+      mapController: this,
+      direction: "top",
+      className: "c4g-feature-filter"
+    }), this.filterContainer);
+    this.$overlaycontainer_stopevent.append(this.filterContainer);
 
     // account
     if (mapData.account && typeof Account === 'function') {
