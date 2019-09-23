@@ -961,10 +961,14 @@ export class MapController {
         var mainColor = utils.getRgbaFromHexAndOpacity(mapData.themeData['maincolor'], mapData.themeData['mainopacity']);
         var fontColor = utils.getRgbaFromHexAndOpacity(mapData.themeData['fontcolor'], mapData.themeData['fontopacity']);
         var shadowColor = utils.getRgbaFromHexAndOpacity(mapData.themeData['shadowcolor'], mapData.themeData['shadowopacity']);
+        var popupMainColor = utils.getRgbaFromHexAndOpacity(mapData.themeData['popupMaincolor'], mapData.themeData['popupMainopacity']);
+        var popupFontColor = utils.getRgbaFromHexAndOpacity(mapData.themeData['popupFontcolor'], mapData.themeData['popupFontopacity']);
 
         if (domMapDiv && domMapDiv.style) {
           domMapDiv.style.setProperty('--main-color', mainColor);
           domMapDiv.style.setProperty('--font-color', fontColor);
+          domMapDiv.style.setProperty('--pu-main-color', popupMainColor);
+          domMapDiv.style.setProperty('--pu-font-color', popupFontColor);
           domMapDiv.style.setProperty('--shadow-color', shadowColor);
         }
       }
