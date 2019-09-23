@@ -41,6 +41,12 @@ $GLOBALS['TL_LANG']['tl_c4g_map_themes']['maincolor']  = array('Main color', 'Ov
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['mainopacity']  = array('Opacity of main color', 'Overwrites the CSS settings.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['fontcolor']  = array('Font color', 'Overwrites the CSS settings.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['fontopacity']  = array('Opacity of font color', 'Overwrites the CSS settings.');
+
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['popupMaincolor']  = array('Popup background color', 'Overwrites the CSS settings.');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['popupMainopacity']  = array('Opacity of popup background color', 'Overwrites the CSS settings.');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['popupFontcolor']  = array('Popup font color', 'Overwrites the CSS settings.');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['popupFontopacity']  = array('Opacity of popup font color', 'Overwrites the CSS settings.');
+
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['shadowcolor']  = array('Secondary color', 'Overwrites the CSS settings. For example, for hover effects, frames, or form elements.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['shadowopacity']  = array('Opacity of secondary color', 'Overwrites the CSS settings.');
 
