@@ -561,13 +561,17 @@ export class MapController {
     // feature filter
     this.filterContainer = document.createElement('div');
     ReactDOM.render(React.createElement(FeatureFilter, {
-      target: document.querySelector('#' + mapData.mapDiv + ' .' + cssConstants.OL_OVERLAYCONTAINER_SE),
+      target: document.querySelector('#' + mapData.mapDiv + ' .' + cssConstants.OL_OVERLAYCONTAINER),
       mapController: this,
       direction: "top",
       className: "c4g-feature-filter"
     }), this.filterContainer);
-    this.$overlaycontainer_stopevent.append(this.filterContainer);
-
+    if (true) {
+      this.$overlaycontainer_stopevent.append(this.filterContainer);
+    }
+    else {
+      $("#idFromBackend").append(this.filterContainer);
+    }
     // account
     if (mapData.account && typeof Account === 'function') {
       this.controls.account = new Account({

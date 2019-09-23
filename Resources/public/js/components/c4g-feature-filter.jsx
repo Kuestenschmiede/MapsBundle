@@ -13,21 +13,31 @@
 
 import React, { Component } from "react";
 import {HorizontalPanel} from "./c4g-horizontal-panel.jsx";
+import {FeatureFilterItem} from "./c4g-feature-filter-item.jsx";
 
-export class FeatureFilter extends HorizontalPanel {
+export class FeatureFilter extends Component {
   constructor(props) {
     super(props);
 
-    this.state.filters = {};
     this.loadFilters();
+    this.state = {
+      filters: [],
+      open: true
+    }
   }
 
   render() {
-    return (
-      <div>
-
-      </div>
-    );
+    let filters = this.state.filters;
+    if (filters && filters.length > 0) {
+      return (
+          <div className={"c4g-router-panel c4g-open"}>
+            {filters.map((feature, index) => {
+              return <FeatureFilterItem feature={feature} mapController={this.props.mapController} key={index}/>
+            })}
+          </div>
+      );
+    }
+    return (<div/>);
   }
 
   loadFilters() {

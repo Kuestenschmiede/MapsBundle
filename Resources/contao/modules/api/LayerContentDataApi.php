@@ -78,8 +78,10 @@ class LayerContentDataApi extends \Frontend
         foreach ($result as $key => $arrResult) {
             $arrResult['popup'] = $this->getPopup($objConfig, $arrResult);
             $arrCoords = explode(",", $arrResult['geolocation']);
-            $arrResult['geox'] = mb_convert_encoding($arrCoords[0], 'UTF-8', mb_detect_encoding($arrCoords[0]));
-            $arrResult['geoy'] = mb_convert_encoding($arrCoords[1], 'UTF-8', mb_detect_encoding($arrCoords[1]));
+            if ($arrResult['geolocation']) {
+                $arrResult['geox'] = mb_convert_encoding($arrCoords[0], 'UTF-8', mb_detect_encoding($arrCoords[0]));
+                $arrResult['geoy'] = mb_convert_encoding($arrCoords[1], 'UTF-8', mb_detect_encoding($arrCoords[1]));
+            }
             foreach ($arrResult as $idx => $value) {
                 $arrResult[$idx] = mb_convert_encoding($value, 'UTF-8', mb_detect_encoding($value));
             }

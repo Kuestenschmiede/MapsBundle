@@ -117,6 +117,7 @@ class ResourceLoader extends coreResourceLoader
         if ($resources['core']) {
             // load map-controller last, since it is the "main" script
             // and needs (nearly) all of the above scripts
+            parent::loadJavaScriptDeferred('routehack', self::BUNDLE_JS_PATH . 'RouteFeatureHook.js' . $staticOption);
             parent::loadJavaScriptDeferred('c4g-maps', self::BUNDLE_JS_PATH . 'c4g-maps.js' . $staticOption);
         }
 

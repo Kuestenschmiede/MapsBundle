@@ -24,13 +24,12 @@ import {Feature} from "ol";
 import OSMXML from "ol/format/OSMXML";
 import {all} from "ol/loadingstrategy";
 import {bbox} from "ol/loadingstrategy";
-import {Vector} from "ol/layer";
+import {Vector, Group} from "ol/layer";
 import {Cluster} from "ol/source";
 import Circle from "ol/geom/Circle";
 import {fromLonLat} from "ol/proj";
 import {GeoJSON} from "ol/format";
 import {getCenter, boundingExtent} from "ol/extent";
-import {Group} from "ol/layer";
 import * as olFormat from "ol/format";
 import ol_layer_AnimatedCluster from "ol-ext/layer/AnimatedCluster";
 

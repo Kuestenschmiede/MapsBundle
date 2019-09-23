@@ -30,7 +30,12 @@ class LoadFeatureFiltersEvent extends Event
     /**
      * @var FeatureFilter[]
      */
-    private $filters = [];
+    private $filters = [
+        [
+            "feature" => "operator",
+            "translation" => "Friesland muss bunter werden"
+        ]
+    ];
     
     /**
      * @return int
