@@ -36,6 +36,11 @@ $GLOBALS['TL_LANG']['tl_c4g_map_themes']['mainopacity']  = array('Deckkraft der 
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['fontcolor']  = array('Schriftfarbe', 'Überschreibt die CSS-Einstellungen.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['fontopacity']  = array('Deckkraft der Schriftfarbe', 'Überschreibt die CSS-Einstellungen.');
 
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['popupMaincolor']  = array('Popup Hintergrundfarbe', 'Überschreibt die CSS-Einstellungen. Wenn dieser Wert leer bleibt, wird automatisch die Hauptfarbe auch für das Popup gesetzt.');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['popupMainopacity']  = array('Deckkraft der Popup Hintergrundfarbe', 'Überschreibt die CSS-Einstellungen.');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['popupFontcolor']  = array('Popup Schriftfarbe', 'Überschreibt die CSS-Einstellungen. Wenn dieser Wert leer bleibt, wird automatisch die Schriftfarbe auch für das Popup gesetzt.');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['popupFontopacity']  = array('Deckkraft der Popup Schriftfarbe', 'Überschreibt die CSS-Einstellungen.');
+
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['shadowcolor']  = array('Zweitfarbe', 'Überschreibt die CSS-Einstellungen. Zum Beispiel für Hover-Effekte, Rahmen oder Formularelemente.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['shadowopacity']  = array('Deckkraft der Zweitfarbe', 'Überschreibt die CSS-Einstellungen.');
 
