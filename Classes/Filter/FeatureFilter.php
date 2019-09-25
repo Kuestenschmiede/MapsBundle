@@ -27,18 +27,12 @@ class FeatureFilter implements \JsonSerializable
      * The options for the filter field.
      * @var array
      */
-    private $values = [];
-    
-    /**
-     * Holds translations for every value and the fieldname.
-     * @var array
-     */
-    private $translations = [];
+    private $filters = [];
     
     public function addFilterValue($value)
     {
-        if (!in_array($value, $this->values)) {
-            $this->values[] = $value;
+        if (!in_array($value, $this->filters)) {
+            $this->filters[] = $value;
         }
     }
     
@@ -58,8 +52,7 @@ class FeatureFilter implements \JsonSerializable
     {
         return [
             "name" => $this->fieldName,
-            "values" => $this->values,
-            "translations" => $this->translations
+            "filters" => $this->filters,
         ];
     }
     

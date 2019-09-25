@@ -62,7 +62,7 @@ export class StarboardLayerswitcher extends Component {
         let objChildStates = {};
         for (let i = 0; i < layerElement.childs.length; i++) {
             let childs = false;
-            if (layerElement.childs[i].childs.length > 0) {
+            if (layerElement.childs[i].childs && layerElement.childs[i].childs.length > 0) {
                 childs = this.addChildStates(layerElement.childs[i]);
             }
             objChildStates[layerElement.childs[i].id] = {

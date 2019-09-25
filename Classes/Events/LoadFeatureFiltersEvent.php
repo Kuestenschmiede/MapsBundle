@@ -32,8 +32,13 @@ class LoadFeatureFiltersEvent extends Event
      */
     private $filters = [
         [
-            "feature" => "operator",
-            "translation" => "Friesland muss bunter werden"
+            'name' => "Filter",
+            'filters' => [
+                [
+                    'translation' => "Alle anzeigen",
+                    'value' => "all"
+                ]
+            ]
         ]
     ];
     

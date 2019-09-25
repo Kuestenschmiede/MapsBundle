@@ -1591,6 +1591,13 @@ export class C4gLayerController {
               dataProjection: dataProjection
             });
           }
+          for (let prop in elementContent.data.properties) {
+            if (elementContent.data.properties.hasOwnProperty(prop)) {
+              for(let i = 0; i < features.length; i++) {
+                features[i].set(prop, elementContent.data.properties[prop]);
+              }
+            }
+          }
 
           missingStyles = [];
           unstyledFeatures = [];

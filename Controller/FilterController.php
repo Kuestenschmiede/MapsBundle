@@ -45,7 +45,8 @@ class FilterController extends BaseController
      */
     public function filterAction(Request $request, $layerId)
     {
-        $this->get('contao.framework')->initialize();
+        $this->initializeContao();
+        $GLOBALS['TL_LANGUAGE'] = "de";
         $filters = $this->filterService->createFilters();
         $filters = \GuzzleHttp\json_encode($filters);
         return new JsonResponse($filters);
