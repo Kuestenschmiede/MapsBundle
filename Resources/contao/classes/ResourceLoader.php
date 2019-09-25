@@ -262,6 +262,26 @@ class ResourceLoader extends coreResourceLoader
             if ($theme->fontopacity) {
                 $themeData['fontopacity'] = deserialize($theme->fontopacity);
             }
+            if ($theme->popupMaincolor) {
+                $themeData['popupMaincolor'] = $theme->popupMaincolor;
+            } else if ($theme->maincolor) {
+                $themeData['popupMaincolor'] = $theme->maincolor;
+            }
+            if ($theme->popupMainopacity) {
+                $themeData['popupMainopacity'] = deserialize($theme->popupMainopacity);
+            } else if ($theme->mainopacity) {
+                $themeData['popupMainopacity'] = $theme->mainopacity;
+            }
+            if ($theme->popupFontcolor) {
+                $themeData['popupFontcolor'] = $theme->popupFontcolor;
+            }  else if ($theme->fontcolor) {
+            $themeData['popupFontcolor'] = $theme->fontcolor;
+            }
+            if ($theme->popupFontopacity) {
+                $themeData['popupFontopacity'] = deserialize($theme->popupFontopacity);
+            } else if ($theme->fontopacity) {
+                $themeData['popupFontcolor'] = $theme->fontopacity;
+            }
             if ($theme->shadowcolor) {
                 $themeData['shadowcolor'] = $theme->shadowcolor;
             }

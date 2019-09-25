@@ -33,7 +33,7 @@ export class C4gLocationStyle {
     this.minzoom   = locStyleArr['minzoom'];
     this.maxzoom   = locStyleArr['maxzoom'];
     this.fnStyleFunction = locStyleArr['style_function_js'];
-    if (this.fnStyleFunction) {
+    if (this.fnStyleFunction && this.fnStyleFunction.length > 0) {
       this.fnStyleFunction = this.fnStyleFunction.replace(/ol.Style./g, "window.olStyle.");
       if (!window.olStyle) {
         window.olStyle = {

@@ -2,6 +2,8 @@
   --font-color: rgba(255,255,255,.9);
   --main-color: rgba(24, 61, 93,.8);
   --shadow-color: rgba(0,155,222,.5);
+  --pu-font-color: rgba(255,255,255,.9);
+  --pu-main-color: rgba(24, 61, 93,.8);
 }
 
 .ol-control,
@@ -338,7 +340,7 @@ span.c4g-active ul li.c4g-active{
 }
 
 .ol-overviewmap-map .ol-viewport {
-  box-shadow: 0px 0px 20px -1px var(--main-color);
+  box-shadow: 0px 0px 8px 2px var(--main-color);
   border: 1px solid var(--main-color);
 }
 
@@ -351,7 +353,7 @@ span.c4g-active ul li.c4g-active{
 }
 .ol-attribution a {
   color: rgba(255,255,255,.9);
-  color: var(--font-color);
+  color: var(--font-color)!important;
   text-decoration: none;
 }
 .ol-attribution:not(.ol-collapsed) {
@@ -381,8 +383,10 @@ div.c4g-tooltip-popup,
 div.c4g-active.c4g-popup-wrapper {
   color: rgba(255,255,255,.9);
   color: var(--font-color);
+  color: var(--pu-font-color);
   background-color: rgba(24, 61, 93,.8);
   background-color: var(--main-color);
+  background-color: var(--pu-main-color);
   border-color: rgba(0,155,222,.5);
   border-color: var(--shadow-color);
 
@@ -395,6 +399,7 @@ div.c4g-active.c4g-popup-wrapper {
 div.c4g-popup-wrapper:before {
   border-top-color: rgba(24, 61, 93,.8);
   border-top-color: var(--main-color);
+  border-top-color: var(--pu-main-color);
 }
 .c4g_popup_header_featurename {
   color: rgba(255,255,255,.9);
@@ -428,8 +433,10 @@ div.c4g-popup-wrapper:before {
 button.c4g-popup-close {
   color: rgba(255,255,255,.9);
   color: var(--font-color);
+  color: var(--pu-font-color);
   background-color: rgba(24, 61, 93,.8);
   background-color: var(--main-color);
+  background-color: var(--pu-main-color);
 }
 button.c4g-popup-close:hover {
   color: rgba(255,255,255,.9);
