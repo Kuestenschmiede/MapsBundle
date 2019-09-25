@@ -23,20 +23,23 @@ export class FeatureFilter extends Component {
     this.loadFilters();
     this.state = {
       filters: [],
-      open: true
+      open: true,
+      arrChecked: [],
     }
   }
 
   render() {
+    const scope = this;
     let filters = this.state.filters;
     if (filters && filters.length > 0) {
+      let div = filters.map((feature, index) => {
+        let checkedItem = scope.state.arrChecked[index];
+        return <FeatureFilterList feature={feature} checkedItem={checkedItem} filterLayers={this.filterLayers} mapController={this.props.mapController} id={index} key={index}/>
+      })
       return (
-          <div className={"c4g-router-panel c4g-open"}>
-            <ul>
-            {filters.map((feature, index) => {
-              return <FeatureFilterList feature={feature} filterLayers={this.filterLayers} mapController={this.props.mapController} key={index}/>
-            })
-            }
+          <div className={"c4g-feature-filter"}>
+            <ul className={"c4g-feature-filter-list"}>
+              {div}
             </ul>
           </div>
 
@@ -44,24 +47,39 @@ export class FeatureFilter extends Component {
     }
     return (<div/>);
   }
-  filterLayers (property){
-    // console.log(this.props.mapController.map);
-    let arrLayers = this.props.mapController.map.getLayers().getArray();
-    arrLayers.map((feature, index) => {
-      this.filterLayer(feature, property);
-    });
+  filterLayers (property, listId){
+    let newState = this.state.arrChecked;
+    newState[listId] = property
+    this.setState({arrChecked: newState}, () => {
+        let arrLayers = this.props.mapController.map.getLayers().getArray();
+        arrLayers.map((feature, index) => {
+          this.filterLayer(feature);
+        });
+      }
+    );
+
   }
-  filterLayer (layer, property) {
+  filterLayer (layer) {
     if (layer.getLayers && typeof layer.getLayers === "function") {
       let arrLayers = layer.getLayers().getArray();
       arrLayers.map((feature, index) => {
-        this.filterLayer(feature, property);
+        this.filterLayer(feature);
       });
     }
     else if (layer.getStyle && typeof layer.getStyle === "function") {
       let source = layer.getSource();
       source.forEachFeature((feature) => {
-        if (property === "all" || feature.get(property)) {
+        let show = true
+        for (let key in this.state.arrChecked) {
+          if (this.state.arrChecked.hasOwnProperty(key)) {
+            let property = this.state.arrChecked[key]
+            if (!(property === "all" || feature.get(property))) {
+              show = false;
+            }
+          }
+
+        }
+        if (show) {
           if (feature.get('oldStyle')) {
             feature.setStyle(feature.get('oldStyle'));
           }
@@ -102,7 +120,11 @@ export class FeatureFilter extends Component {
     fetch(url).then(function (response) {
       return response.json().then(function(jsonData) {
         jsonData = JSON.parse(jsonData);
-        scope.setState({filters: jsonData}, () => {console.log(scope.state.filters)})
+        let arrChecked = [];
+        for (let i = 0; i < jsonData.length; i++) {
+          arrChecked.push("all");
+        }
+        scope.setState({filters: jsonData, arrChecked: arrChecked}, () => {console.log(scope.state.filters)})
       });
     })
   }

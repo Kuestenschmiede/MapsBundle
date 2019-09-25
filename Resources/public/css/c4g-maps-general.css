@@ -927,4 +927,10 @@ input[type=range]:focus::-ms-fill-upper {
   transition: all 0.3s;
 }
 
-
+.c4g-feature-filter-list > li {
+  display: inline-block;
+  padding-right: 5px;
+}
+ul.c4g-feature-filter-list {
+  display: flex;
+}

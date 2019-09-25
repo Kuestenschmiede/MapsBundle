@@ -22,14 +22,13 @@ export class FeatureFilterItem extends Component {
     render() {
         const scope = this;
         return (
-            <div className="form-check">
+            <div className="c4g-filter-form-element">
                 <label>
                     <input
                         type="radio"
-                        name="react-tips"
-                        onChange={(evt) => this.props.filterLayers(scope.props.feature.value)}
+                        onChange={(evt) => this.props.filterLayers(scope.props.feature.value, scope.props.parentId)}
+                        checked={scope.props.feature.value === scope.props.checkedItem}
                         value={this.props.feature.value}
-                        className="form-check-inputs"
                     />
                     {this.props.feature.translation}
                 </label>

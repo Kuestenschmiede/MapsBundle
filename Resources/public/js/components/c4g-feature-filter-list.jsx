@@ -19,14 +19,13 @@ export class FeatureFilterList extends Component {
         super(props);
     }
     render() {
-        let divstuff = this.props.feature.filters.map((feature, index) => {
-            return <FeatureFilterItem feature={feature} filterLayers={this.props.filterLayers} mapController={this.props.mapController} key={index}/>
-        })
         return (
             <li>
                 <strong>{this.props.feature.name}</strong>
                 <form>
-                    {divstuff}
+                    {this.props.feature.filters.map((feature, index) => {
+                        return <FeatureFilterItem feature={feature} parentId={this.props.id} checkedItem={this.props.checkedItem} filterLayers={this.props.filterLayers} mapController={this.props.mapController} key={index}/>
+                    })}
                 </form>
             </li>
         );
