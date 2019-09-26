@@ -49,6 +49,8 @@ class LayerController extends BaseController
      */
     public function layerAction(Request $request, $mapId, $lang)
     {
+        $this->initializeContao();
+        $GLOBALS['TL_LANGUAGE'] = $lang;
         $response = new JsonResponse();
         $this->initialize(false);
         $this->checkForCacheSettings('layerService');
