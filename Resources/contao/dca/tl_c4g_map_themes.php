@@ -243,7 +243,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
             ],
         'popupFontcolor' =>
             [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['popup_fontcolor'],
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['popupFontcolor'],
             'default'                 => '',
             'inputType'               => 'text',
             'eval'                    => ['maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'long wizard', 'mandatory'=>false],

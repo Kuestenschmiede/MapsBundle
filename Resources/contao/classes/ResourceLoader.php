@@ -275,12 +275,12 @@ class ResourceLoader extends coreResourceLoader
             if ($theme->popupFontcolor) {
                 $themeData['popupFontcolor'] = $theme->popupFontcolor;
             }  else if ($theme->fontcolor) {
-            $themeData['popupFontcolor'] = $theme->fontcolor;
+                $themeData['popupFontcolor'] = $theme->fontcolor;
             }
             if ($theme->popupFontopacity) {
                 $themeData['popupFontopacity'] = deserialize($theme->popupFontopacity);
             } else if ($theme->fontopacity) {
-                $themeData['popupFontcolor'] = $theme->fontopacity;
+                $themeData['popupFontopacity'] = $theme->fontopacity;
             }
             if ($theme->shadowcolor) {
                 $themeData['shadowcolor'] = $theme->shadowcolor;
