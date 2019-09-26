@@ -19,7 +19,7 @@ use Symfony\Component\EventDispatcher\Event;
 
 class LoadFeatureFiltersEvent extends Event
 {
-    const NAME = "maps.load.filters";
+    const NAME = "maps.filters.load";
     
     /**
      * The layerId for which filters should be generated.

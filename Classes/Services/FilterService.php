@@ -43,6 +43,7 @@ class FilterService
     {
         $event = new LoadFeatureFiltersEvent();
         $this->eventDispatcher->dispatch($event);
+
         return $event->getFilters();
     }
 }
