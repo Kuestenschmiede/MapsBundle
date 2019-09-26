@@ -15,7 +15,7 @@
 namespace con4gis\MapsBundle\Classes\Events;
 
 use con4gis\MapsBundle\Classes\Filter\FeatureFilter;
-use Symfony\Contracts\EventDispatcher\Event;
+use Symfony\Component\EventDispatcher\Event;
 
 class LoadFeatureFiltersEvent extends Event
 {
