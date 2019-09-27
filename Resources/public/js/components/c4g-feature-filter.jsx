@@ -21,6 +21,8 @@ export class FeatureFilter extends Component {
     super(props);
     this.filterLayers = this.filterLayers.bind(this);
     this.setOpen = this.setOpen.bind(this);
+    this.setWrapperRef = this.setWrapperRef.bind(this);
+    this.handleClickOutside = this.handleClickOutside.bind(this);
     this.loadFilters();
     this.state = {
       filters: [],
@@ -41,7 +43,7 @@ export class FeatureFilter extends Component {
       })
       return (
           <div className={"c4g-feature-filter"}>
-            <ul className={"c4g-feature-filter-list"}>
+            <ul className={"c4g-feature-filter-list"} ref={this.setWrapperRef}>
               {div}
             </ul>
           </div>
@@ -139,4 +141,29 @@ export class FeatureFilter extends Component {
       });
     })
   }
+  
+  componentDidMount() {
+    document.addEventListener('mousedown', this.handleClickOutside);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClickOutside);
+  }
+
+  /**
+   * Set the wrapper ref
+   */
+  setWrapperRef(node) {
+    this.wrapperRef = node;
+  }
+
+  /**
+   * hide FilterFeatureList if clicked on outside of element
+   */
+  handleClickOutside(event) {
+    if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
+      this.setState({openedList: -1});
+    }
+  }
+
 }
