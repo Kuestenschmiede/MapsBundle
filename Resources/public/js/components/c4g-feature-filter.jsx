@@ -63,7 +63,12 @@ export class FeatureFilter extends Component {
 
   }
   setOpen (openId) {
-    this.setState({openedList: openId})
+    if (this.state.openedList === openId) {
+      this.setState({openedList: -1});
+    }
+    else {
+      this.setState({openedList: openId});
+    }
   }
   filterLayer (layer) {
     if (layer.getLayers && typeof layer.getLayers === "function") {
@@ -75,10 +80,10 @@ export class FeatureFilter extends Component {
     else if (layer.getStyle && typeof layer.getStyle === "function") {
       let source = layer.getSource();
       source.forEachFeature((feature) => {
-        let show = true
+        let show = true;
         for (let key in this.state.arrChecked) {
           if (this.state.arrChecked.hasOwnProperty(key)) {
-            let property = this.state.arrChecked[key]
+            let property = this.state.arrChecked[key];
             if (!(property === "all" || feature.get(property))) {
               show = false;
             }

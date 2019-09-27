@@ -20,8 +20,10 @@ export class FeatureFilterList extends Component {
     }
     render() {
         const scope = this;
-        let form;
+        let form = null;
+        let className;
         if (this.props.open) {
+            className = "c4g-open";
             form =
                 <form>
                     {this.props.feature.filters.map((feature, index) => {
@@ -29,9 +31,12 @@ export class FeatureFilterList extends Component {
                     })}
                 </form>
         }
+        else {
+            className = "c4g-close";
+        }
         return (
             <li>
-                <strong onMouseUp={(evt) => this.props.setOpen(this.props.id)}>{this.props.feature.name}</strong>
+                <strong className={className} onMouseUp={(evt) => this.props.setOpen(this.props.id)}>{this.props.feature.name}<span/></strong>
                 {form}
             </li>
         );
