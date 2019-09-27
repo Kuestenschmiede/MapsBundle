@@ -43,7 +43,7 @@ export class FeatureFilter extends Component {
       })
       return (
           <div className={"c4g-feature-filter"}>
-            <ul className={"c4g-feature-filter-list"} ref={this.setWrapperRef}>
+            <ul className={"c4g-feature-filter-list"} onMouseUp={(evt) => this.setState({openedList: -1})} ref={this.setWrapperRef}>
               {div}
             </ul>
           </div>

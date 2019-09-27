@@ -36,7 +36,7 @@ export class FeatureFilterList extends Component {
         }
         return (
             <li>
-                <strong className={className} onMouseUp={(evt) => this.props.setOpen(this.props.id)}>{this.props.feature.name}<span/></strong>
+                <strong className={className} onMouseUp={(evt) => {this.props.setOpen(this.props.id); evt.stopPropagation(); evt.preventDefault();}}>{this.props.feature.name}<span/></strong>
                 {form}
             </li>
         );
