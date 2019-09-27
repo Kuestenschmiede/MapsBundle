@@ -41,9 +41,10 @@ class FilterService
      */
     public function createFilters()
     {
-        $event = new LoadFeatureFiltersEvent();
-        $this->eventDispatcher->dispatch($event);
-
-        return $event->getFilters();
+//        $event = new LoadFeatureFiltersEvent();
+//        $this->eventDispatcher->dispatch($event::NAME, $event);
+//
+//        return $event->getFilters();
+        return [];
     }
 }

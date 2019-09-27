@@ -16,6 +16,8 @@ namespace con4gis\MapsBundle\Controller;
 
 
 use con4gis\CoreBundle\Controller\BaseController;
+use con4gis\MapsBundle\Classes\Events\LoadFeatureFiltersEvent;
+use con4gis\MapsBundle\Classes\Events\LoadFeatureFiltersEventEvent;
 use con4gis\MapsBundle\Classes\Services\FilterService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,7 +49,12 @@ class FilterController extends BaseController
     {
         $this->initializeContao();
         $GLOBALS['TL_LANGUAGE'] = "de";
+        $this->initialize(false);
         $filters = $this->filterService->createFilters();
+        $event = new LoadFeatureFiltersEvent();
+        $event->setFilters($filters);
+        $this->eventDispatcher->dispatch($event::NAME, $event);
+        $filters = $event->getFilters();
         $filters = \GuzzleHttp\json_encode($filters);
         return new JsonResponse($filters);
     }
