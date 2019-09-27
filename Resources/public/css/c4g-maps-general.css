@@ -927,10 +927,65 @@ input[type=range]:focus::-ms-fill-upper {
   transition: all 0.3s;
 }
 
+ul.c4g-feature-filter-list {
+  display: flex;
+  padding: 30px 0;
+  background-color: var(--main-color);
+  color: white;
+  width: 100%;
+}
+.c4g-feature-filter li strong.c4g-close span:after {
+  content: "\f054";
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: inherit;
+  margin: 2px 0px -46px 15px;
+  position: absolute;
+  transition: transform 0.5s;
+}
+strong.c4g-open span:after {
+  content: "\f054";
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: inherit;
+  margin-left: 20px;
+  transform: rotate(90deg);
+  position: absolute;
+  margin: 2px 0px -46px 15px;
+  transition: 1s;
+}
+
+
+
+
 .c4g-feature-filter-list > li {
   display: inline-block;
   padding-right: 5px;
 }
-ul.c4g-feature-filter-list {
-  display: flex;
+
+ul.c4g-feature-filter-list li {
+  color: var(--font-color);
+  padding: 0 50px;
+}
+
+.c4g-feature-filter input[type="radio"] {
+  width: max-content;
+  margin: 20px;
+}
+.c4g-feature-filter li form {
+  position: absolute;
+  background-color: var(--main-color);
+  color: var(--font-color);
+  z-index: 1;
+  padding: 0px 20px 20px 0;
+  margin-left: -20px;
+  margin-top: 30px;
+}
+.c4g-feature-filter strong::selection,
+.c4g-feature-filter label::selection {
+  background: none;
+}
+.c4g-feature-filter strong:hover,
+.c4g-feature-filter label:hover {
+  cursor: pointer;
 }
