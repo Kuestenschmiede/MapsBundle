@@ -20,11 +20,13 @@ export class FeatureFilter extends Component {
   constructor(props) {
     super(props);
     this.filterLayers = this.filterLayers.bind(this);
+    this.setOpen = this.setOpen.bind(this);
     this.loadFilters();
     this.state = {
       filters: [],
       open: true,
       arrChecked: [],
+      openedList: -1
     }
   }
 
@@ -34,7 +36,8 @@ export class FeatureFilter extends Component {
     if (filters && filters.length > 0) {
       let div = filters.map((feature, index) => {
         let checkedItem = scope.state.arrChecked[index];
-        return <FeatureFilterList feature={feature} checkedItem={checkedItem} filterLayers={this.filterLayers} mapController={this.props.mapController} id={index} key={index}/>
+        let openedList = scope.state.openedList === index;
+        return <FeatureFilterList feature={feature} open={openedList} setOpen={this.setOpen} checkedItem={checkedItem} filterLayers={this.filterLayers} mapController={this.props.mapController} id={index} key={index}/>
       })
       return (
           <div className={"c4g-feature-filter"}>
@@ -58,6 +61,9 @@ export class FeatureFilter extends Component {
       }
     );
 
+  }
+  setOpen (openId) {
+    this.setState({openedList: openId})
   }
   filterLayer (layer) {
     if (layer.getLayers && typeof layer.getLayers === "function") {
