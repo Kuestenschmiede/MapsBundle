@@ -40,7 +40,7 @@ export class FeatureFilter extends Component {
       let div = filters.map((feature, index) => {
         let checkedItem = scope.state.arrChecked[index];
         let openedList = scope.state.openedList === index;
-        return <FeatureFilterList feature={feature} open={openedList} setOpen={this.setOpen} checkedItem={checkedItem} filterLayers={this.filterLayers} mapController={this.props.mapController} id={index} key={index}/>
+        return <FeatureFilterList feature={feature} open={openedList} setOpen={this.setOpen} checkedItem={checkedItem} filterLayers={this.filterLayers} id={index} key={index}/>
       })
       return (
           <div className={"c4g-feature-filter"}>

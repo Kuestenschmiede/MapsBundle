@@ -27,7 +27,7 @@ export class FeatureFilterList extends Component {
             form =
                 <form>
                     {this.props.feature.filters.map((feature, index) => {
-                        return <FeatureFilterItem feature={feature} parentId={this.props.id} checked={this.props.checkedItem} filterLayers={this.props.filterLayers} mapController={this.props.mapController} key={index}/>
+                        return <FeatureFilterItem feature={feature} parentId={this.props.id} checked={this.props.checkedItem} filterLayers={this.props.filterLayers} key={index}/>
                     })}
                 </form>
         }
