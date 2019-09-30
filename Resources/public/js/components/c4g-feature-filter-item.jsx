@@ -26,7 +26,7 @@ export class FeatureFilterItem extends Component {
                 <label>
                     <input
                         type="radio"
-                        onChange={(evt) => this.props.filterLayers(scope.props.feature.value, scope.props.parentId)}
+                        onChange={(evt) => {this.props.filterLayers(scope.props.feature.value, scope.props.parentId); evt.stopPropagation(); evt.preventDefault();}}
                         checked={scope.props.checked}
                         value={this.props.feature.value}
                     />
