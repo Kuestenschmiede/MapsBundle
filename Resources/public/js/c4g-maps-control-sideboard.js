@@ -306,7 +306,7 @@ export class Sideboard extends Control {
     if (this.options && this.options.name) {
         capitalizedName = utils.capitalizeFirstLetter(this.options.name);
     }*/
-    if (this.options.extDiv) {
+    if (this.options && this.options.extDiv) {
       contentContainerOuterHeight = jQuery(this.wrapper).parent().parent().height() - (jQuery(this.titleBar).outerHeight(true) + jQuery(this.statusBar).outerHeight(true));
     }
     else {
