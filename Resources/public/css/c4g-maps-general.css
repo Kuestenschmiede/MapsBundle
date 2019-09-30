@@ -933,7 +933,7 @@ ul.c4g-feature-filter-list {
   background-color: var(--main-color);
   color: white;
   width: 100%;
-  overflow-x: auto;
+  overflow-x: scroll;
   white-space: nowrap;
 }
 .c4g-feature-filter li strong.c4g-close span:after {
