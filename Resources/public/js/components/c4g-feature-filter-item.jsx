@@ -12,8 +12,6 @@
  */
 
 import React, { Component } from "react";
-import {Vector, Group} from "ol/layer";
-import {Circle as CircleStyle, Fill, Stroke, Style} from 'ol/style.js';
 
 export class FeatureFilterItem extends Component {
     constructor(props) {

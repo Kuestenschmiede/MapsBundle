@@ -127,7 +127,7 @@ export class FeatureFilter extends Component {
         for (let i = 0; i < jsonData.length; i++) {
           arrChecked.push("all");
         }
-        scope.setState({filters: jsonData, arrChecked: arrChecked}, () => {console.log(scope.state.filters)})
+        scope.setState({filters: jsonData, arrChecked: arrChecked})
       });
     })
   }
