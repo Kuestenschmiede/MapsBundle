@@ -23,6 +23,7 @@ export class FeatureFilter extends Component {
     this.setOpen = this.setOpen.bind(this);
     this.setWrapperRef = this.setWrapperRef.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
+    this.handleClickInside = this.handleClickInside.bind(this);
     this.loadFilters();
     this.state = {
       filters: [],
@@ -43,7 +44,7 @@ export class FeatureFilter extends Component {
       })
       return (
           <div className={"c4g-feature-filter"}>
-            <ul className={"c4g-feature-filter-list"} onMouseUp={(evt) => this.setState({openedList: -1})} ref={this.setWrapperRef}>
+            <ul className={"c4g-feature-filter-list"} onMouseUp={(evt) => this.handleClickInside(evt)} ref={this.setWrapperRef}>
               {div}
             </ul>
           </div>
@@ -165,5 +166,10 @@ export class FeatureFilter extends Component {
       this.setState({openedList: -1});
     }
   }
-
+  handleClickInside(event) {
+    let path = event.nativeEvent.path;
+    if (path[0] == event.currentTarget) {
+      this.setState({openedList: -1});
+    }
+  }
 }
