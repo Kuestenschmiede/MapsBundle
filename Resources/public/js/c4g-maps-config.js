@@ -19,7 +19,7 @@ export var config = {
   osm: {
 
     CycleMap: {
-      attributions: 'Style by <a target="_blank" href="http://www.opencyclemap.org/">OpenCycleMap</a>' + ' ' +
+      attributions: 'Style by <a target="_blank" rel="noopener" href="http://www.opencyclemap.org/">OpenCycleMap</a>' + ' ' +
         ATTRIBUTION,
       crossOrigin: 'anonymous',
       minZoom: 0,
@@ -28,7 +28,7 @@ export var config = {
     },
 
     German: {
-      attributions: 'Style by <a target="_blank" href="http://www.openstreetmap.de/germanstyle.html">openstreetmap.de</a>' + ' ' +
+      attributions: 'Style by <a target="_blank" rel="noopener" href="http://www.openstreetmap.de/germanstyle.html">openstreetmap.de</a>' + ' ' +
         ATTRIBUTION,
       crossOrigin: null,
       minZoom: 0,
@@ -37,7 +37,7 @@ export var config = {
     },
 
     LandscapeMap: {
-      attributions: 'Style by <a target="_blank" href="http://www.opencyclemap.org/">OpenCycleMap</a>' + ' ' +
+      attributions: 'Style by <a target="_blank" rel="noopener" href="http://www.opencyclemap.org/">OpenCycleMap</a>' + ' ' +
         ATTRIBUTION,
       crossOrigin: 'anonymous',
       minZoom: 0,
@@ -118,7 +118,7 @@ export var config = {
 
     Mapbox: {
       tileSize: [512, 512],
-      attributions: '© <a target="_blank" href="https://www.mapbox.com/about/maps/">Mapbox</a>' + ' ' +
+      attributions: '© <a target="_blank" rel="noopener" href="https://www.mapbox.com/about/maps/">Mapbox</a>' + ' ' +
         ATTRIBUTION,
       minZoom: 0,
       maxZoom: 22,
@@ -126,7 +126,7 @@ export var config = {
     },
 
     MapboxClassic: {
-      attributions: '© <a target="_blank" href="https://www.mapbox.com/about/maps/">Mapbox</a>' + ' ' +
+      attributions: '© <a target="_blank" rel="noopener" href="https://www.mapbox.com/about/maps/">Mapbox</a>' + ' ' +
         ATTRIBUTION,
       minZoom: 0,
       maxZoom: 22,
@@ -140,7 +140,7 @@ export var config = {
       format: new MVT(),
       tileGrid:  createXYZ({tileSize: 512, maxZoom: 22}), //ToDo maxZoom from configuration
       tilePixelRatio: 8,
-      attributions: '© <a target="_blank" href="https://openmaptiles.org/">OpenMapTiles</a>' + ' ' +
+      attributions: '© <a target="_blank" rel="noopener" href="https://openmaptiles.org/">OpenMapTiles</a>' + ' ' +
         ATTRIBUTION,
       minZoom: 0,
       maxZoom: 22,
@@ -151,7 +151,7 @@ export var config = {
       format: new MVT(),
       tileGrid:  createXYZ({tileSize: 512, maxZoom: 22}), //ToDo maxZoom from configuration
       tilePixelRatio: 8,
-      attributions: '© <a target="_blank" href="https://tilehosting.com/">TileHosting</a>' + ' ' +
+      attributions: '© <a target="_blank" rel="noopener" href="https://tilehosting.com/">TileHosting</a>' + ' ' +
         ATTRIBUTION,
       minZoom: 0,
       maxZoom: 22,
@@ -163,7 +163,7 @@ export var config = {
 
     HERE: {
       tileSize: [512, 512],
-      attributions: 'Map Tiles © <a target="_blank" href="https://developer.here.com">HERE</a>'+ ' ' +
+      attributions: 'Map Tiles © <a target="_blank" rel="noopener" href="https://developer.here.com">HERE</a>'+ ' ' +
         ATTRIBUTION,
       minZoom: 0,
       maxZoom: 22,
@@ -176,7 +176,7 @@ export var config = {
 
     Thunderforest: {
       tileSize: [512, 512],
-      attributions: 'Map Tiles © <a target="_blank" href="https://www.thunderforest.com/">Thunderforest</a>' + ' ' +
+      attributions: 'Map Tiles © <a target="_blank" rel="noopener" href="https://www.thunderforest.com/">Thunderforest</a>' + ' ' +
         ATTRIBUTION,
       minZoom: 0,
       maxZoom: 19,
