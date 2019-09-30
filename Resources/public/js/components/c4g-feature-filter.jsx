@@ -115,17 +115,6 @@ export class FeatureFilter extends Component {
         }
       })
     }
-    else {
-      console.log(layer);
-    }
-  }
-  getRandomColor() {
-    var letters = 'FFFF456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 8; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
   }
 
   loadFilters() {
@@ -168,7 +157,7 @@ export class FeatureFilter extends Component {
   }
   handleClickInside(event) {
     let path = event.nativeEvent.path;
-    if (path[0] == event.currentTarget) {
+    if (path[0] === event.currentTarget) {
       this.setState({openedList: -1});
     }
   }

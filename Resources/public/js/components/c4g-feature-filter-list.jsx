@@ -27,7 +27,7 @@ export class FeatureFilterList extends Component {
             form =
                 <form>
                     {this.props.feature.filters.map((feature, index) => {
-                        return <FeatureFilterItem feature={feature} parentId={this.props.id} checked={this.props.checkedItem === feature.value} filterLayers={this.props.filterLayers} mapController={this.props.mapController} key={index}/>
+                        return <FeatureFilterItem feature={feature} parentId={this.props.id} checked={this.props.checkedItem} filterLayers={this.props.filterLayers} mapController={this.props.mapController} key={index}/>
                     })}
                 </form>
         }
@@ -36,7 +36,7 @@ export class FeatureFilterList extends Component {
         }
         return (
             <li>
-                <strong className={className} onMouseUp={(evt) => {this.props.setOpen(this.props.id); evt.stopPropagation(); evt.preventDefault();}}>{this.props.feature.name}<span/></strong>
+                <strong className={className} onMouseUp={(evt) => {this.props.setOpen(this.props.id); evt.stopPropagation(); evt.preventDefault();}}><span/>{this.props.feature.name}</strong>
                 {form}
             </li>
         );
