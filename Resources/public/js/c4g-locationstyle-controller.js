@@ -61,6 +61,15 @@ export class C4gLocationStyleController {
             let style = new C4gLocationStyle(styleData, self);
             style.style = style.getStyleFunction(styleData);
             self.arrLocStyles[styleData.id] = style;
+            if(styleData.svgSrc && styleData.icon_scale && styleData.icon_size) {
+              setTimeout(()=> {
+                if (!window.triggerClick) {
+                  //ToDo für den Standard überarbeiten
+                  $("div.ol-unselectable.ol-control.ol-zoom-with-home > button.ol-zoom-home").trigger('click');
+                }
+                window.triggerClick = 1;
+              }, 400);
+            }
           }
         }
         if (index) {

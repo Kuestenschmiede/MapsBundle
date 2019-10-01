@@ -897,6 +897,7 @@ export class MapController {
         logoLink.href = 'https://con4gis.org';
         logoLink.title = 'built with con4gis';
         logoLink.target = '_blank';
+        logoLink.rel = 'noopener';
         logoLink.className = cssConstants.ATTRIBUTION_LOGO;
         logoGraphic = document.createElement('img');
         logoGraphic.src = 'bundles/con4gismaps/images/logo_con4gis.svg';
