@@ -80,25 +80,41 @@ class Utils
     {
         $language = $lang;
         // convert string into a more parsable form
-        $toReplace = str_replace("{{", "/", $toReplace);
-        $toReplace = str_replace("}}", "/", $toReplace);
-        $toReplace = str_replace("//", "/", $toReplace);
-        $arrReplace = explode("/", $toReplace);
+        $regex = "/{{ifnlng::(de|en)}}.+?{{ifnlng}}{{iflng::(de|en)}}.+?{{iflng}}/";
+//        $regex2 = "^{{iflng::(de|en)}}.+{{iflng}}$";
+        $matches = [];
+        $result = $toReplace;
+        preg_match_all($regex, $toReplace, $matches);
+        // if there are inserttags, they are listed now in $matches
+        foreach ($matches[0] as $match) {
+            $replacement = static::replaceSingleLangTag($match, $lang);
+            $result = str_replace($match, $replacement, $result);
+        }
+        return $result;
+    }
+    
+    private static function replaceSingleLangTag($toReplace, $lang)
+    {
+        $toReplace = str_replace("{{", "\\", $toReplace);
+        $toReplace = str_replace("}}", "\\", $toReplace);
+        $toReplace = str_replace("//", "\\", $toReplace);
+        $arrReplace = explode("\\", $toReplace);
         $result = "";
+        $cachedResult = "";
         foreach ($arrReplace as $key => $value) {
             if (strlen($value) > 6) {
                 // check if the value contains a language tag
                 if (substr($value, 0, 6) === "ifnlng") {
                     $arrLang = explode("::", $value);
-                    if ($arrLang[1] !== $language) {
+                    if ($arrLang[1] !== $lang) {
                         // language does not match, so get the value
-                        $result = $arrReplace[$key + 1];
+                        $result .= $arrReplace[$key + 1];
                     }
                 } else if (substr($value, 0, 6) === "iflng:") {
                     $arrLang = explode("::", $value);
-                    if ($arrLang[1] === $language) {
+                    if ($arrLang[1] === $lang) {
                         // language does match, so get the value
-                        $result = $arrReplace[$key + 1];
+                        $result .= $arrReplace[$key + 1];
                     }
                 }
             }

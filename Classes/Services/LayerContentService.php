@@ -15,6 +15,7 @@
 namespace con4gis\MapsBundle\Classes\Services;
 
 use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
+use con4gis\MapsBundle\Resources\contao\classes\Utils;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapLocstylesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapSettingsModel;
@@ -60,7 +61,7 @@ class LayerContentService
      * @param bool $secondFetch
      * @return array
      */
-    public function getLayerData($intId, $secondFetch = false)
+    public function getLayerData($intId, $secondFetch = false, $lang = "de")
     {
         // Find the requested layer
         $objLayer = C4gMapsModel::findById($intId);
@@ -86,7 +87,7 @@ class LayerContentService
                 $arrReturnData[] = $this->getGeoJSONLayerContent($objLayer);
                 break;
             case "single":
-                $arrReturnData[] = $this->getSingleLayerContent($objLayer);
+                $arrReturnData[] = $this->getSingleLayerContent($objLayer, $lang);
                 break;
             case "overpass":
                 $arrReturnData[] = $this->getOverpassLayerContent($objLayer, $objProfile);
@@ -153,7 +154,7 @@ class LayerContentService
         ];
     }
     
-    private function getSingleLayerContent($objLayer)
+    private function getSingleLayerContent($objLayer, $lang)
     {
         return [
             "id" => $objLayer->id,
@@ -161,7 +162,7 @@ class LayerContentService
             "format" => "GeoJSON",
             "origType" => "single",
             "locationStyle" => $objLayer->locstyle,
-            "data" => $this->createGeoJsonResult($objLayer, 'tl_c4g_maps'),
+            "data" => $this->createGeoJsonResult($objLayer, 'tl_c4g_maps', $lang),
             "loc_linkurl" => Controller::replaceInsertTags($objLayer->loc_linkurl),
             "hover_location" => $objLayer->hover_location,
             "hover_style" => $objLayer->hover_style,
@@ -747,7 +748,7 @@ class LayerContentService
         return $arrReturn;
     }
     
-    protected function createGeoJsonResult($objLayer, $strPopupTable = "")
+    protected function createGeoJsonResult($objLayer, $strPopupTable = "", $lang = "de")
     {
         $arrGeoJson = array();
         
@@ -767,7 +768,7 @@ class LayerContentService
         }
         else if(!$objLayer->popup_async && $objLayer->popup_info){
             $popup_async = false;
-            $popup_content = Controller::replaceInsertTags($objLayer->popup_info);
+            $popup_content = Utils::replaceInsertTags($objLayer->popup_info, $lang);
         }
         
         switch ($objLayer->location_type) {
