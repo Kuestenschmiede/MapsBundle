@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  full-screen fixes
  *  - cannot be grouped
  */
@@ -1022,7 +1022,4 @@ ul.c4g-feature-filter-list li {
 
 ul.c4g-feature-filter-list::-webkit-scrollbar {
   height: 5px;
-}
-ul.c4g-feature-filter-list::-webkit-scrollbar-thumb {
-  background: ;
 }
