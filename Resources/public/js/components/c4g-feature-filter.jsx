@@ -17,6 +17,7 @@ import {FeatureFilterList} from "./c4g-feature-filter-list.jsx";
 import {Fill, Stroke, Style} from "ol/style";
 
 export class FeatureFilter extends Component {
+
   constructor(props) {
     super(props);
     this.filterLayers = this.filterLayers.bind(this);
@@ -53,9 +54,10 @@ export class FeatureFilter extends Component {
     }
     return (<div/>);
   }
+
   filterLayers (property, listId){
     let newState = this.state.arrChecked;
-    newState[listId] = property
+    newState[listId] = property;
     this.setState({arrChecked: newState}, () => {
         let arrLayers = this.props.mapController.map.getLayers().getArray();
         arrLayers.map((feature, index) => {
@@ -65,6 +67,7 @@ export class FeatureFilter extends Component {
     );
 
   }
+
   setOpen (openId) {
     if (this.state.openedList === openId) {
       this.setState({openedList: -1});
@@ -73,14 +76,14 @@ export class FeatureFilter extends Component {
       this.setState({openedList: openId});
     }
   }
+
   filterLayer (layer) {
     if (layer.getLayers && typeof layer.getLayers === "function") {
       let arrLayers = layer.getLayers().getArray();
       arrLayers.map((feature, index) => {
         this.filterLayer(feature);
       });
-    }
-    else if (layer.getStyle && typeof layer.getStyle === "function") {
+    } else if (layer.getStyle && typeof layer.getStyle === "function") {
       let source = layer.getSource();
       source.forEachFeature((feature) => {
         let show = true;
