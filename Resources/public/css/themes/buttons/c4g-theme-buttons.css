@@ -666,7 +666,7 @@ button.ol-zoom-out {
   margin-right: 5px;
   position: absolute;
   right: 0;
-  top: 50%;
+  top: 15px;
   margin-top: -6px;
 }
 .c4g-layertree .c4g-closeable > a {
@@ -675,7 +675,7 @@ button.ol-zoom-out {
 .c4g-layertree span,
 .c4g-baselayertree span{
   float: left;
-  padding: 9.9px 5px;
+  padding: 8px 5px;
   position: relative;
   z-index: 1;
 }
