@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  full-screen fixes
  *  - cannot be grouped
  */
@@ -468,13 +468,32 @@ button.c4g-popup-close:before {
   content: "X";
 }
 
-.c4g_popup_header_featurename {
+.c4g_popup_header_featurename,
+.c4g-popup-content .name {
   font-size: 1.4em;
 }
 
 .c4g_popup_header_featuretype {
   font-weight: bold;
   font-size: 1.2em;
+}
+
+.c4g-popup-content li {
+  list-style: none;
+}
+
+.c4g-popup-content ul {
+  padding-inline-start: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.c4g-popup-content div:not(:first-child):not(:empty) {
+  margin-top: 16px;
+}
+
+.c4g-popup-content {
+  line-height: 1.2;
 }
 
 /*
