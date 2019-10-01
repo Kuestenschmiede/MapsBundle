@@ -664,7 +664,7 @@ export class C4gBaselayerController {
             layerOptions.attributions = routerAttribution;
           }
           if (this.mapController.data.attribution.con4gisIO) {
-            layerOptions.attributions += 'Mapservices via <a href="https://con4gis.io" target="_blank">con4gis.io</a>';
+            layerOptions.attributions += 'Mapservices via <a href="https://con4gis.io" target="_blank" rel="noopener">con4gis.io</a>';
           }
         }
       }

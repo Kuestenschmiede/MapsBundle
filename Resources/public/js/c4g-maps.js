@@ -548,16 +548,17 @@ export class MapController {
     // add controls ===
     this.controls = {};
     // add container for react components
-    this.reactContainer = document.createElement('div');
-    this.reactContainer.className ="c4g-sideboard c4g-starboard-container ol-unselectable c4g-close";
-    this.reactContainer.style.right = "-100%";
-    ReactDOM.render(React.createElement(StarboardPanel, {
-      target: document.querySelector('#' + mapData.mapDiv + ' .' +cssConstants.OL_OVERLAYCONTAINER),
-      mapController: this,
-      direction: "right"
-    }), this.reactContainer);
-    this.$overlaycontainer_stopevent.append(this.reactContainer);
-
+    if (mapData.starboard && mapData.starboard.enable) {
+      this.reactContainer = document.createElement('div');
+      this.reactContainer.className ="c4g-sideboard c4g-starboard-container ol-unselectable c4g-close";
+      this.reactContainer.style.right = "-100%";
+      ReactDOM.render(React.createElement(StarboardPanel, {
+        target: document.querySelector('#' + mapData.mapDiv + ' .' +cssConstants.OL_OVERLAYCONTAINER),
+        mapController: this,
+        direction: "right"
+      }), this.reactContainer);
+      this.$overlaycontainer_stopevent.append(this.reactContainer);
+    }
     // feature filter
     if (mapData.filterDiv) {
       this.filterContainer = document.createElement('div');

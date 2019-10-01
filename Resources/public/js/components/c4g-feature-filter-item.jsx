@@ -12,8 +12,6 @@
  */
 
 import React, { Component } from "react";
-import {Vector, Group} from "ol/layer";
-import {Circle as CircleStyle, Fill, Stroke, Style} from 'ol/style.js';
 
 export class FeatureFilterItem extends Component {
     constructor(props) {
@@ -26,8 +24,8 @@ export class FeatureFilterItem extends Component {
                 <label>
                     <input
                         type="radio"
-                        onChange={(evt) => this.props.filterLayers(scope.props.feature.value, scope.props.parentId)}
-                        checked={scope.props.feature.value === scope.props.checkedItem}
+                        onChange={(evt) => {this.props.filterLayers(scope.props.feature.value, scope.props.parentId);}}
+                        checked={scope.props.checked === scope.props.feature.value}
                         value={this.props.feature.value}
                     />
                     {this.props.feature.translation}

@@ -1,3 +1,5 @@
+const CompressionPlugin = require('compression-webpack-plugin');
+const webpack = require("webpack");
 var path = require('path');
 var config = {
   entry: './Resources/public/js/c4g-maps-main.js',
@@ -11,6 +13,9 @@ var config = {
     modules: ['node_modules', 'Resources/public/js'],
     extensions: ['.jsx', '.js']
   },
+  plugins: [
+    new CompressionPlugin()
+  ],
   module: {
     rules: [
       {

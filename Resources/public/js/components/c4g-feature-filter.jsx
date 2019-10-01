@@ -20,11 +20,16 @@ export class FeatureFilter extends Component {
   constructor(props) {
     super(props);
     this.filterLayers = this.filterLayers.bind(this);
+    this.setOpen = this.setOpen.bind(this);
+    this.setWrapperRef = this.setWrapperRef.bind(this);
+    this.handleClickOutside = this.handleClickOutside.bind(this);
+    this.handleClickInside = this.handleClickInside.bind(this);
     this.loadFilters();
     this.state = {
       filters: [],
       open: true,
       arrChecked: [],
+      openedList: -1
     }
   }
 
@@ -34,11 +39,12 @@ export class FeatureFilter extends Component {
     if (filters && filters.length > 0) {
       let div = filters.map((feature, index) => {
         let checkedItem = scope.state.arrChecked[index];
-        return <FeatureFilterList feature={feature} checkedItem={checkedItem} filterLayers={this.filterLayers} mapController={this.props.mapController} id={index} key={index}/>
+        let openedList = scope.state.openedList === index;
+        return <FeatureFilterList feature={feature} open={openedList} setOpen={this.setOpen} checkedItem={checkedItem} filterLayers={this.filterLayers} id={index} key={index}/>
       })
       return (
           <div className={"c4g-feature-filter"}>
-            <ul className={"c4g-feature-filter-list"}>
+            <ul className={"c4g-feature-filter-list"} onMouseUp={(evt) => this.handleClickInside(evt)} ref={this.setWrapperRef}>
               {div}
             </ul>
           </div>
@@ -59,6 +65,14 @@ export class FeatureFilter extends Component {
     );
 
   }
+  setOpen (openId) {
+    if (this.state.openedList === openId) {
+      this.setState({openedList: -1});
+    }
+    else {
+      this.setState({openedList: openId});
+    }
+  }
   filterLayer (layer) {
     if (layer.getLayers && typeof layer.getLayers === "function") {
       let arrLayers = layer.getLayers().getArray();
@@ -69,10 +83,10 @@ export class FeatureFilter extends Component {
     else if (layer.getStyle && typeof layer.getStyle === "function") {
       let source = layer.getSource();
       source.forEachFeature((feature) => {
-        let show = true
+        let show = true;
         for (let key in this.state.arrChecked) {
           if (this.state.arrChecked.hasOwnProperty(key)) {
-            let property = this.state.arrChecked[key]
+            let property = this.state.arrChecked[key];
             if (!(property === "all" || feature.get(property))) {
               show = false;
             }
@@ -101,17 +115,6 @@ export class FeatureFilter extends Component {
         }
       })
     }
-    else {
-      console.log(layer);
-    }
-  }
-  getRandomColor() {
-    var letters = 'FFFF456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 8; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
   }
 
   loadFilters() {
@@ -124,8 +127,38 @@ export class FeatureFilter extends Component {
         for (let i = 0; i < jsonData.length; i++) {
           arrChecked.push("all");
         }
-        scope.setState({filters: jsonData, arrChecked: arrChecked}, () => {console.log(scope.state.filters)})
+        scope.setState({filters: jsonData, arrChecked: arrChecked})
       });
     })
+  }
+  
+  componentDidMount() {
+    document.addEventListener('mousedown', this.handleClickOutside);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClickOutside);
+  }
+
+  /**
+   * Set the wrapper ref
+   */
+  setWrapperRef(node) {
+    this.wrapperRef = node;
+  }
+
+  /**
+   * hide FilterFeatureList if clicked on outside of element
+   */
+  handleClickOutside(event) {
+    if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
+      this.setState({openedList: -1});
+    }
+  }
+  handleClickInside(event) {
+    let path = event.nativeEvent.path;
+    if (path[0] === event.currentTarget) {
+      this.setState({openedList: -1});
+    }
   }
 }

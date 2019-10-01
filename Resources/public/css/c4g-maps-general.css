@@ -927,10 +927,83 @@ input[type=range]:focus::-ms-fill-upper {
   transition: all 0.3s;
 }
 
+ul.c4g-feature-filter-list {
+  display: flex;
+  padding: 30px 0;
+  background-color: var(--main-color);
+  color: white;
+  width: 100%;
+  overflow-x: scroll;
+  white-space: nowrap;
+}
+.c4g-feature-filter li strong.c4g-close span:after {
+  content: "\f054";
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: inherit;
+  padding:0 20px 0 20px;
+  margin: 0;
+
+}
+strong.c4g-open span:after {
+  content: "\f054";
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: inherit;
+  margin-left: 20px;
+  margin: 0;
+  padding: 0 20px;
+  position: static;
+}
+
+strong.c4g-close span{
+  position: relative;
+  float: left;
+  transition: 0.3s;
+}
+
+strong.c4g-open span {
+  transform: rotate(90deg);
+  position: relative;
+  float: left;
+  transition: 0.3s;
+}
+
 .c4g-feature-filter-list > li {
   display: inline-block;
   padding-right: 5px;
 }
-ul.c4g-feature-filter-list {
-  display: flex;
+
+ul.c4g-feature-filter-list li {
+  color: var(--font-color);
+  padding: 0 50px;
+}
+
+.c4g-feature-filter input[type="radio"] {
+  width: max-content;
+  margin: 20px;
+}
+.c4g-feature-filter li form {
+  position: absolute;
+  background-color: var(--main-color);
+  color: var(--font-color);
+  z-index: 91;
+  width: 100%;
+  padding: 0px 20px 20px 0;
+  margin-top: 35px;
+}
+.c4g-feature-filter strong::selection,
+.c4g-feature-filter label::selection {
+  background: none;
+}
+.c4g-feature-filter strong:hover,
+.c4g-feature-filter label:hover {
+  cursor: pointer;
+}
+
+ul.c4g-feature-filter-list::-webkit-scrollbar {
+  height: 5px;
+}
+ul.c4g-feature-filter-list::-webkit-scrollbar-thumb {
+  background: ;
 }
