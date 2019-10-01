@@ -435,7 +435,7 @@ class MapDataConfigurator
                 $mapData['geosearch']['zoombounds'] = $profile->geosearch_zoombounds;
                 $mapData['geosearch']['animate'] = $profile->geosearch_animate;
                 $mapData['geosearch']['markresult'] = $profile->geosearch_markresult;
-                $mapData['geosearch']['popup'] = $profile->geosearch_popup;
+                $mapData['geosearch']['popup'] = \Contao\Controller::replaceInsertTags($profile->geosearch_popup);
                 $mapData['geosearch']['attribution'] = \Contao\Controller::replaceInsertTags($profile->geosearch_attribution);
                 $mapData['geosearch']['collapsed'] = $profile->geosearch_collapsed;
                 $keyForward = null;
