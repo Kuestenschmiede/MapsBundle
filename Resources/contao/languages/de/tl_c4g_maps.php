@@ -106,6 +106,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['specialprofile_groups'] = array('Betroffene 
 $GLOBALS['TL_LANG']['tl_c4g_maps']['be_optimize_checkboxes_limit']    = array('Grenzwert für Optimierung großer Checkbox-Listen',
                                       'Definiert, wie viele Einträge enthalten sein müssen, bis die Checkbox-Listen in Chosenfields umgewandelt werden. (0 = niemals umwandeln)');
 
+$GLOBALS['TL_LANG']['tl_c4g_maps']['typeSelection'] = ['Angezeigte Typen von Kartenelementen', ''];
 $GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_locations'] = array('Lokationen clustern','Beim Clustern werden Strecken und Flächen in Punkte umgerechnet');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_distance'] = array('Cluster-Distanz','Ab welcher Entfernung in Pixeln soll geclustert werden? (Standard beträgt 20px)');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_fillcolor'] = array('Füllfarbe', 'Wählen Sie die Füllfarbe der Clusterblasen aus.');
