@@ -371,7 +371,7 @@ class LayerService
         if ($objLayer->location_type === 'link') {
             $arrLayerData = $this->handleLayerLink($objLayer, $arrLayerData, $lang);
         } else {
-            $arrLayerData['content'] = $this->getContentForType($objLayer);
+            $arrLayerData['content'] = $this->getContentForType($objLayer, $lang);
         }
         
         if ($arrLayerData['activeForBaselayers'] === "all" && $parentLayer) {
@@ -486,7 +486,7 @@ class LayerService
      * @param $objLayer
      * @return array|bool
      */
-    protected function getContentForType($objLayer)
+    protected function getContentForType($objLayer, $lang = "")
     {
         switch ($objLayer->location_type)
         {
@@ -508,7 +508,8 @@ class LayerService
             case "kml":
             case "osm":
             case "single":
-                return $this->layerContentService->getLayerData($objLayer->id);
+            case "geojson":
+                return $this->layerContentService->getLayerData($objLayer->id, false, $lang);
                 break;
             default:
                 if (!$objLayer->data_hidelayer) {
