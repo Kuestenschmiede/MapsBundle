@@ -216,6 +216,21 @@ export class MapController {
         permalink = false;
       }
     }
+    else {
+      permalink = utils.getUrlParam(mapData.permalink.get_parameter);
+      if (permalink) {
+        permalink = permalink.split('/');
+        if (permalink.length === 3) {
+          permalink[0] = parseFloat(permalink[0]);
+          mapData.center.lon = !isNaN(permalink[0]) ? permalink[0] : mapData.center.lon;
+          permalink[1] = parseFloat(permalink[1]);
+          mapData.center.lat = !isNaN(permalink[1]) ? permalink[1] : mapData.center.lat;
+          permalink[2] = parseInt(permalink[2], 10);
+          mapData.center.zoom = !isNaN(permalink[2]) ? permalink[2] : mapData.center.zoom;
+        }
+        permalink = false;
+      }
+    }
 
     if (mapData.minZoom && mapData.minZoom > 0) {
       minZoom = mapData.minZoom;

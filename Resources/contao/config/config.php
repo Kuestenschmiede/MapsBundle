@@ -66,6 +66,7 @@ if(TL_MODE == "BE") {
 array_insert($GLOBALS['FE_MOD']['con4gis'], 1,
     [
         'c4g_maps' => 'con4gis\MapsBundle\Resources\contao\modules\ModuleC4gMaps',
+        'c4g_search' => 'con4gis\MapsBundle\Resources\contao\modules\ModuleC4gSearch',
     ]);
 
 /**
