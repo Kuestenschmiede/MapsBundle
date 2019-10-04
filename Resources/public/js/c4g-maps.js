@@ -189,6 +189,14 @@ export class MapController {
             // decode deltaEncoding
             mapData.layers = utils.deltaDecode(mapData.layers);
             break;
+          case 3:
+            permalink[0] = parseFloat(permalink[0]);
+            mapData.center.lon = !isNaN(permalink[0]) ? permalink[0] : mapData.center.lon;
+            permalink[1] = parseFloat(permalink[1]);
+            mapData.center.lat = !isNaN(permalink[1]) ? permalink[1] : mapData.center.lat;
+            permalink[2] = parseInt(permalink[2], 10);
+            mapData.center.zoom = !isNaN(permalink[2]) ? permalink[2] : mapData.center.zoom;
+            break;
           case 2:
             // baselayer and layers only
             permalink[0] = parseInt(permalink[0], 10);
@@ -206,17 +214,13 @@ export class MapController {
           default:
             // invalid count of permalink parameters
             permalink = false;
-        }
-        if (mapData.layers.length < 1) {
-          mapData.layers = false;
-          permalink = false;
+            mapData.layers = false;
         }
       } else {
         // just to make sure this var is really "false"
         permalink = false;
       }
-    }
-    else {
+    } else {
       permalink = utils.getUrlParam(mapData.permalink.get_parameter);
       if (permalink) {
         permalink = permalink.split('/');

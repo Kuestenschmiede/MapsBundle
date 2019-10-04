@@ -15,16 +15,16 @@ import React, { Component } from "react";
 
 export class Suggestions extends Component {
 
-    constructor(props) {
-        super(props);
-    }
+  constructor(props) {
+    super(props);
+  }
 
-    render() {
-        const options = this.props.containerAddresses.arrNames.map((item, index) => (
-            <li key={index} onMouseUp={(evt) => this.props.handleSuggestionClick(index)}>
-                {item}
-            </li>
-        ))
-        return <ul className={"c4g-autocomplete-list"}>{options}</ul>
-    }
+  render() {
+    const options = this.props.containerAddresses.arrNames.map((item, index) => (
+      <li key={index} onMouseUp={(evt) => this.props.handleSuggestionClick(index)}>
+        {item}
+      </li>
+    ));
+    return <ul className={"c4g-autocomplete-list"}>{options}</ul>
+  }
 }
