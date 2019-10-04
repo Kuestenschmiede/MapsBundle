@@ -251,6 +251,17 @@ export class MapController {
           center = transform(center, "EPSG:3857", "EPSG:4326");
           currentPermalink[0] = center[0];
           currentPermalink[1] = center[1];
+          utils.setUrlParam(currentPermalink.join('/'), mapData.permalink.get_parameter, true)
+        }
+      }
+    });
+
+    window.c4gMapsHooks.hook_map_zoom = window.c4gMapsHooks.hook_map_zoom || [];
+    window.c4gMapsHooks.hook_map_zoom.push(function(proxy) {
+      let currentPermalink = utils.getUrlParam(mapData.permalink.get_parameter);
+      if (currentPermalink) {
+        currentPermalink = currentPermalink.split('/');
+        if (currentPermalink.length >= 3) {
           currentPermalink[2] = parseInt(view.getZoom(), 10) || currentPermalink[2];
           utils.setUrlParam(currentPermalink.join('/'), mapData.permalink.get_parameter, true)
         }
