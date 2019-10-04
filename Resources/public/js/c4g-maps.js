@@ -236,6 +236,22 @@ export class MapController {
       }
     }
 
+    // add view observer to update permalink on center change, if a permalink exists
+    // use other permalink variable to avoid interference with the actual permalink mechanism
+    window.c4gMapsHooks.map_center_changed = window.c4gMapsHooks.map_center_changed || [];
+    window.c4gMapsHooks.map_center_changed.push(function(center) {
+      let currentPermalink = utils.getUrlParam(mapData.permalink.get_parameter);
+      if (currentPermalink) {
+        currentPermalink = currentPermalink.split('/');
+        if (currentPermalink.length >= 3) {
+          center = transform(center, "EPSG:3857", "EPSG:4326");
+          currentPermalink[0] = center[0];
+          currentPermalink[1] = center[1];
+          utils.setUrlParam(currentPermalink.join('/'), mapData.permalink.get_parameter, true)
+        }
+      }
+    });
+
     if (mapData.minZoom && mapData.minZoom > 0) {
       minZoom = mapData.minZoom;
     } else {
