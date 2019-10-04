@@ -68,7 +68,7 @@ export class C4gLocationStyleController {
                   $("div.ol-unselectable.ol-control.ol-zoom-with-home > button.ol-zoom-home").trigger('click');
                 }
                 window.triggerClick = 1;
-              }, 400);
+              }, 600);
             }
           }
         }
