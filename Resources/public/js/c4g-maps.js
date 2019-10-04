@@ -196,6 +196,8 @@ export class MapController {
             mapData.center.lat = !isNaN(permalink[1]) ? permalink[1] : mapData.center.lat;
             permalink[2] = parseInt(permalink[2], 10);
             mapData.center.zoom = !isNaN(permalink[2]) ? permalink[2] : mapData.center.zoom;
+            // disable zooming to all locations
+            mapData.calc_extent = "CENTERZOOM";
             break;
           case 2:
             // baselayer and layers only
@@ -231,6 +233,8 @@ export class MapController {
           mapData.center.lat = !isNaN(permalink[1]) ? permalink[1] : mapData.center.lat;
           permalink[2] = parseInt(permalink[2], 10);
           mapData.center.zoom = !isNaN(permalink[2]) ? permalink[2] : mapData.center.zoom;
+          // disable zooming to all locations
+          mapData.calc_extent = "CENTERZOOM";
         }
         permalink = false;
       }
@@ -247,6 +251,7 @@ export class MapController {
           center = transform(center, "EPSG:3857", "EPSG:4326");
           currentPermalink[0] = center[0];
           currentPermalink[1] = center[1];
+          currentPermalink[2] = parseInt(view.getZoom(), 10) || currentPermalink[2];
           utils.setUrlParam(currentPermalink.join('/'), mapData.permalink.get_parameter, true)
         }
       }
