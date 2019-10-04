@@ -20,6 +20,10 @@ $GLOBALS['TL_LANG']['tl_module']['c4g_map_width'] = array('Breite der Karte', 'G
 $GLOBALS['TL_LANG']['tl_module']['c4g_map_height'] = array('Höhe der Karte', 'Geben Sie hier die Höhe der Karte im Frontend ein, wenn Sie eine vom definierten Standardwert abweichende Größe definieren möchten.');
 $GLOBALS['TL_LANG']['tl_module']['c4g_map_zoom'] = array('Zoom-Level', 'Geben Sie hier den Zoom-Level der Karte ein, wenn Sie einen vom definierten Standardwert abweichenden Zoom-Level definieren möchten');
 $GLOBALS['TL_LANG']['tl_module']['c4g_map_default_mapservice'] = array('Standardbasiskarte', 'Wählen Sie hier eine der im Kartenprofil der verwendeten Karte zugewiesenen Basiskarten aus, die beim Öffnen der Karte verwendet werden soll. Ist keine Basiskarte ausgewählt, dann wird die Standardbasiskarte aus dem Kartenprofil verwendet.');
+$GLOBALS['TL_LANG']['tl_module']['c4g_map_site_id'] = array('Kartenseite', 'Wählen Sie die Kartenseite aus, auf die die Suche weiterleiten soll.');
+$GLOBALS['TL_LANG']['tl_module']['c4g_map_zoomlevel'] = array('Zoomstufe', 'Geben Sie den Zoomlevel an, der bei Weiterleitung auf die Karte eingestellt sein soll.');
+$GLOBALS['TL_LANG']['tl_module']['c4g_map_placeholder'] = array('Platzhalter für Suchfeld', 'Geben Sie hier einen Platzhalter für das Suchfeld an. Dieser wird angezeigt, solange keine Eingabe getätigt wurde.');
+
 
 /**
  * Legend

@@ -130,6 +130,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['custom_div'] = ['DIV für den Karten
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['account'] = ['Accountbutton', 'Sobald Sie ein Frontendmodul auswählen, wird der Accountbutton dargestellt.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['caching'] = ['Kartensituation merken', 'Buttonstatus und Kartensituation werden im Browser zwischengespeichert.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['be_optimize_checkboxes_limit'] = ['Grenzwert für Optimierung großer Checkbox-Listen', 'Definiert wie viele Einträge enthalten sein müssen, bis die Checkbox-Listen in Chosenfields umgewandelt werden. (0 = niemals umwandeln)'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['filter_div'] = ['DIV für Kartenfilter', 'Geben Sie den CSS-Selektor für einen DIV ein, in dem der Kartenfilter dargestellt werden soll.'];
 
 
 /**

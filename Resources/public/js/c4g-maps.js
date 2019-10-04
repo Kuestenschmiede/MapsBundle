@@ -189,6 +189,16 @@ export class MapController {
             // decode deltaEncoding
             mapData.layers = utils.deltaDecode(mapData.layers);
             break;
+          case 3:
+            permalink[0] = parseFloat(permalink[0]);
+            mapData.center.lon = !isNaN(permalink[0]) ? permalink[0] : mapData.center.lon;
+            permalink[1] = parseFloat(permalink[1]);
+            mapData.center.lat = !isNaN(permalink[1]) ? permalink[1] : mapData.center.lat;
+            permalink[2] = parseInt(permalink[2], 10);
+            mapData.center.zoom = !isNaN(permalink[2]) ? permalink[2] : mapData.center.zoom;
+            // disable zooming to all locations
+            mapData.calc_extent = "CENTERZOOM";
+            break;
           case 2:
             // baselayer and layers only
             permalink[0] = parseInt(permalink[0], 10);
@@ -206,16 +216,57 @@ export class MapController {
           default:
             // invalid count of permalink parameters
             permalink = false;
-        }
-        if (mapData.layers.length < 1) {
-          mapData.layers = false;
-          permalink = false;
+            mapData.layers = false;
         }
       } else {
         // just to make sure this var is really "false"
         permalink = false;
       }
+    } else {
+      permalink = utils.getUrlParam(mapData.permalink.get_parameter);
+      if (permalink) {
+        permalink = permalink.split('/');
+        if (permalink.length === 3) {
+          permalink[0] = parseFloat(permalink[0]);
+          mapData.center.lon = !isNaN(permalink[0]) ? permalink[0] : mapData.center.lon;
+          permalink[1] = parseFloat(permalink[1]);
+          mapData.center.lat = !isNaN(permalink[1]) ? permalink[1] : mapData.center.lat;
+          permalink[2] = parseInt(permalink[2], 10);
+          mapData.center.zoom = !isNaN(permalink[2]) ? permalink[2] : mapData.center.zoom;
+          // disable zooming to all locations
+          mapData.calc_extent = "CENTERZOOM";
+        }
+        permalink = false;
+      }
     }
+
+    // add view observer to update permalink on center change, if a permalink exists
+    // use other permalink variable to avoid interference with the actual permalink mechanism
+    window.c4gMapsHooks.map_center_changed = window.c4gMapsHooks.map_center_changed || [];
+    window.c4gMapsHooks.map_center_changed.push(function(center) {
+      let currentPermalink = utils.getUrlParam(mapData.permalink.get_parameter);
+      if (currentPermalink) {
+        currentPermalink = currentPermalink.split('/');
+        if (currentPermalink.length >= 3) {
+          center = transform(center, "EPSG:3857", "EPSG:4326");
+          currentPermalink[0] = center[0];
+          currentPermalink[1] = center[1];
+          utils.setUrlParam(currentPermalink.join('/'), mapData.permalink.get_parameter, true)
+        }
+      }
+    });
+
+    window.c4gMapsHooks.hook_map_zoom = window.c4gMapsHooks.hook_map_zoom || [];
+    window.c4gMapsHooks.hook_map_zoom.push(function(proxy) {
+      let currentPermalink = utils.getUrlParam(mapData.permalink.get_parameter);
+      if (currentPermalink) {
+        currentPermalink = currentPermalink.split('/');
+        if (currentPermalink.length >= 3) {
+          currentPermalink[2] = parseInt(view.getZoom(), 10) || currentPermalink[2];
+          utils.setUrlParam(currentPermalink.join('/'), mapData.permalink.get_parameter, true)
+        }
+      }
+    });
 
     if (mapData.minZoom && mapData.minZoom > 0) {
       minZoom = mapData.minZoom;
