@@ -52,6 +52,7 @@ class FilterController extends BaseController
         $this->initialize(false);
         $filters = $this->filterService->createFilters();
         $event = new LoadFeatureFiltersEvent();
+        $event->setLayerId($layerId);
         $event->setFilters($filters);
         $this->eventDispatcher->dispatch($event::NAME, $event);
         $filters = $event->getFilters();
