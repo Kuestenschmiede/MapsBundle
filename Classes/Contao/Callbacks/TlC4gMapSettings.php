@@ -24,7 +24,9 @@ class TlC4gMapSettings extends \Backend
             $this->translateArrToDB('tl_calendar_events', [
                 'name'          => '{{ifnlng::de}}Events{{ifnlng}}{{iflng::de}}Events{{iflng}}',
                 'ptable'        => 'tl_calendar',
-                'ptable_option' => 'title',
+                'ptable_option' => 'tl_calendar.title',
+                'ptable_compare_field' => 'id',
+                'ptable_field'  => 'pid',
                 'geox'          => 'c4g_loc_geox',
                 'geoy'          => 'c4g_loc_geoy',
                 'label'         => 'c4g_loc_label',
@@ -104,13 +106,14 @@ class TlC4gMapSettings extends \Backend
         $label = $arrConfig['label'] ? $arrConfig['label'] : "";
         $locstyle = $arrConfig['locstyle'] ? $arrConfig['locstyle'] : "";
         $popup = $arrConfig['popup'] ? $arrConfig['popup'] : "";
+        $popupSwitch = $popup ? "expert" : "default";
         $tooltip = $arrConfig['tooltip'] ? $arrConfig['tooltip'] : "";
         $geox = $arrConfig['geox'] ? $arrConfig['geox'] : "";
         $geoy = $arrConfig['geoy'] ? $arrConfig['geoy'] : "";
         $geolocation = $arrConfig['geolocation'] ? $arrConfig['geolocation'] : "";
         $dbName = $arrConfig['name'];
         $time = time();
-        $strInsert = "INSERT INTO tl_c4g_map_tables (name, tableSource, label, locstyle, popup, tooltip, tstamp, ptableCompareField, ptableField, ptableBlob, ptableOptions, ptable, geoy, geox, geolocation) VALUES ('$dbName', '$tableSource', '$label', '$locstyle', '$popup', '$tooltip', $time , '$ptableCompareField', '$ptableField', '$ptableBlob', '$ptableOptions', '$ptable', '$geoy', '$geox','$geolocation');";
+        $strInsert = "INSERT INTO tl_c4g_map_tables (name, tableSource, label, locstyle, popup, tooltip, tstamp, ptableCompareField, ptableField, ptableBlob, ptableOptions, ptable, geoy, geox, geolocation, popupSwitch) VALUES ('$dbName', '$tableSource', '$label', '$locstyle', '$popup', '$tooltip', $time , '$ptableCompareField', '$ptableField', '$ptableBlob', '$ptableOptions', '$ptable', '$geoy', '$geox','$geolocation','$popupSwitch');";
         $result = $this->Database->prepare($strInsert)->execute();
         if($result && $result->insertId) {
             $insertId = $result->insertId;
