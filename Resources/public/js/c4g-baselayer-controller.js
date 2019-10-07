@@ -438,12 +438,11 @@ export class C4gBaselayerController {
       case 'geoimage':
         let  arrSource = JSON.parse(baseLayerConfig.geoImageJson);
         arrSource.url = baseLayerConfig.imageSrc ? baseLayerConfig.imageSrc : arrSource.url;
-        newBaselayer = new Image({
-
-          source: new ol_source_GeoImage(
+        newBaselayer = new Image(
+          jQuery.extend({source: new ol_source_GeoImage(
               arrSource
-          )
-        });
+            )}, layerOptions)
+        );
         break;
       case 'owm':
         newBaselayer = new TileLayer({
@@ -731,11 +730,11 @@ export class C4gBaselayerController {
           }
 
           var mapData = this.mapController.data;
-          if (mapData.zoomlevel || mapData.mouseposition) {
-            view.setMinZoom(parseInt(baseLayerConfig.minZoom, 10) || 0);
-            view.setMaxZoom(parseInt(baseLayerConfig.maxZoom, 10) || 19);
-            this.mapController.map.setView(view);
-          }
+          // if (mapData.zoomlevel || mapData.mouseposition) {
+          view.setMinZoom(parseInt(baseLayerConfig.minZoom, 10) || 0);
+          view.setMaxZoom(parseInt(baseLayerConfig.maxZoom, 10) || 19);
+          this.mapController.map.setView(view);
+          // }
         }
       }
     }
