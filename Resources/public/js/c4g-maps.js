@@ -30,7 +30,7 @@ import {Position} from "./c4g-maps-control-position";
 import {Infopage} from "./c4g-maps-control-portside-infopage";
 import {getLanguage} from "./c4g-maps-i18n";
 import {View} from "ol";
-import {transform} from "ol/proj";
+import {transform, transformExtent} from "ol/proj";
 import {Geolocation} from "ol";
 import {defaults as interactionDefaults} from "ol/interaction";
 import {defaults as controlDefaults} from "ol/control";
@@ -236,17 +236,35 @@ export class MapController {
       }
     }
 
-    view = new View({
-      // projection: get('EPSG:4326'),
-      // center: [parseFloat(mapData.center_lon), parseFloat(mapData.center_lat)],
-      // minResolution: undefined,
-      // maxResolution: undefined,
-      center: transform([parseFloat(mapData.center.lon), parseFloat(mapData.center.lat)], 'EPSG:4326', 'EPSG:3857'),
-      zoom: parseInt(mapData.center.zoom, 10),
-      minZoom: parseInt(minZoom, 10),
-      maxZoom: parseInt(maxZoom, 10),
-      rotation: parseFloat(mapData.center.rotation)
-    });
+    if (mapData.restr_bottomleft_lon
+      && mapData.restr_bottomleft_lat
+      && mapData.restr_topright_lon
+      && mapData.restr_topright_lat
+    ) {
+      let extent = [
+        parseFloat(mapData.restr_bottomleft_lon),
+        parseFloat(mapData.restr_bottomleft_lat),
+        parseFloat(mapData.restr_topright_lon),
+        parseFloat(mapData.restr_topright_lat)
+      ];
+      extent = transformExtent(extent, "EPSG:4326", "EPSG:3857");
+      view = new View({
+        extent: extent,
+        center: transform([parseFloat(mapData.center.lon), parseFloat(mapData.center.lat)], 'EPSG:4326', 'EPSG:3857'),
+        zoom: parseInt(mapData.center.zoom, 10),
+        minZoom: parseInt(minZoom, 10),
+        maxZoom: parseInt(maxZoom, 10),
+        rotation: parseFloat(mapData.center.rotation)
+      });
+    } else {
+      view = new View({
+        center: transform([parseFloat(mapData.center.lon), parseFloat(mapData.center.lat)], 'EPSG:4326', 'EPSG:3857'),
+        zoom: parseInt(mapData.center.zoom, 10),
+        minZoom: parseInt(minZoom, 10),
+        maxZoom: parseInt(maxZoom, 10),
+        rotation: parseFloat(mapData.center.rotation)
+      });
+    }
 
     // check userposition
     if (mapData.geolocation && !permalink) {

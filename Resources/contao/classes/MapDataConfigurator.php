@@ -256,8 +256,8 @@ class MapDataConfigurator
             // map-restriction
             $mapData['restrict_area'] = $map->restrict_area;
             if ($map->restrict_area) {
-                $mapData['restr_bottomleft_lon'] = $map->restr_bottomleft_lon;
-                $mapData['restr_bottomleft_lat'] = $map->restr_bottomleft_lat;
+                $mapData['restr_bottomleft_lon'] = $map->restr_bottomleft_geox;
+                $mapData['restr_bottomleft_lat'] = $map->restr_bottomleft_geoy;
                 $mapData['restr_topright_lon'] = $map->restr_topright_geox;
                 $mapData['restr_topright_lat'] = $map->restr_topright_geoy;
             }
