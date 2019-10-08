@@ -26,4 +26,4 @@ $GLOBALS['TL_LANG']['MOD']['con4gis_maps']          = ['con4gis '.$GLOBALS['con4
  * Frontend modules
  */
 $GLOBALS['TL_LANG']['FMD']['c4g_maps'] 				= ['Map (con4gis];', 'Integrate an OpenLayers map with con4gis-Maps.'];
-$GLOBALS['TL_LANG']['FMD']['c4g_search'] 			= ['Search (con4gis];', 'Integrate a search with con4gis-Maps.'];
+$GLOBALS['TL_LANG']['FMD']['c4g_search'] 			= ['External map search (con4gis)', 'Integrate a search with con4gis-Maps that redirects to the map.'];

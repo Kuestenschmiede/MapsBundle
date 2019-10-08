@@ -29,3 +29,4 @@ $GLOBALS['TL_LANG']['tl_module']['c4g_map_placeholder'] = array('Platzhalter fü
  * Legend
  */
 $GLOBALS['TL_LANG']['tl_module']['c4g_map_legend'] = 'Kartenkonfiguration';
+$GLOBALS['TL_LANG']['tl_module']['c4g_search_legend'] = 'Angaben zur Suche';
