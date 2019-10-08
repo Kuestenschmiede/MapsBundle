@@ -114,7 +114,7 @@ class BaseLayerService
 
                 $arrLayerData = $this->parseBaseLayer($objBaseLayers, $lang);
 
-                $objOverlays = C4gMapOverlaysModel::findBy('pid', $objBaseLayers->id);
+                $objOverlays = C4gMapOverlaysModel::findPublishedByPid($objBaseLayers->id);
                 if ($objOverlays !== null)
                 {
                     $arrLayerData['hasOverlays'] = true;

@@ -25,7 +25,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['opacity']       = array('Initial opa
 $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['api_key']    	= array('API Key, AppID', 'Please insert key for your user account.');
 $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['app_id']     	= array('Key', 'Please insert key for your application.');
 $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['api_port']      = array('Port', 'Please insert the api port.');
-
+$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['published']      = array('Published', 'Check this if you want to publish the overlay map.');
 $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider_custom'] = 'Custom';
 $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider_wms']    = 'WMS';
 $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider_owm']    = 'OpenWeatherMap';

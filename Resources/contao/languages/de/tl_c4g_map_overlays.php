@@ -25,6 +25,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['opacity']       = array('Initiale Si
 $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['api_key'] 	    = array('Applikationsschlüssel (API Key, AppID)', 'Bitte geben Sie hier den Schlüssel zu Ihrem Nutzerkonto an.');
 $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['app_id']  	    = array('Anwendungsschlüssel (Key)', 'Bitte geben Sie hier den Identifikationsschlüssel für Ihre Voreinstellungen an.');
 $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['api_port']      = array('Port', 'Bitte geben Sie den Port des API Server an.');
+$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['published']      = array('Veröffentlicht', 'Setzen Sie diese Checkbox, wenn Sie die Overlaykarte veröffentlichen wollen.');
 
 $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider_custom'] = 'Benutzerdefiniert';
 $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider_wms']    = 'WMS';
