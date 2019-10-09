@@ -104,7 +104,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                                          '{click_legend:hide},link_newwindow,link_open_on,hover_popups, popupHandling;'.
                                          '{cesium_legend:hide},cesium;'.
                                          '{overpassLegend:hide},overpassEngine;'.
-                                         '{miscellaneous_legend:hide},script,custom_div,account,be_optimize_checkboxes_limit,caching,geobookmarks,filter_div;'
+                                         '{miscellaneous_legend:hide},script,custom_div,account,be_optimize_checkboxes_limit,caching,geobookmarks,filter_div,filters;'
         ],
 
 
@@ -421,6 +421,15 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'inputType'               => 'text',
             'eval'                    => ['maxlength'=>254, 'allowHtml' => true],
             'sql'                     => "varchar(254) NOT NULL default ''"
+            ],
+        'filters' =>
+            [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['filters'],
+            'exclude'                 => true,
+            'inputType'               => 'select',
+            'options_callback'        => ["tl_c4g_map_profiles",'getFilters'],
+            'eval'                    => ['tl_class'=>'clr','chosen' => true, 'includeBlankOption'=>true],
+            'sql'                     => "int(10) NOT NULL default '0'"
             ],
         'starboard_filter' =>
             [
@@ -1195,6 +1204,21 @@ class tl_c4g_map_profiles extends Backend
         }
 
         return $arrModules;
+    }
+    /**
+     * Get all modules and return them as array
+     *
+     * @return array
+     */
+    public function getFilters(DataContainer $dc)
+    {
+        $return = [];
+        $filters = $this->Database->prepare("SELECT id,name FROM tl_c4g_map_filters ORDER BY name")
+            ->execute();
+        while ($filters->next()) {
+            $return[$filters->id] = $filters->name;
+        }
+        return $return;
     }
     public function getSearchParams($multiColumnWizard)
     {

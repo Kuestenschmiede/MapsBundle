@@ -55,9 +55,12 @@ export class FeatureFilter extends Component {
     return (<div/>);
   }
 
-  filterLayers (property, listId){
+  filterLayers (property, listId, value){
     let newState = this.state.arrChecked;
-    newState[listId] = property;
+    newState[listId] = {
+      identifier: property,
+      value: value
+    };
     this.setState({arrChecked: newState}, () => {
         let arrLayers = this.props.mapController.map.getLayers().getArray();
         arrLayers.map((feature, index) => {
@@ -89,8 +92,12 @@ export class FeatureFilter extends Component {
         let show = true;
         for (let key in this.state.arrChecked) {
           if (this.state.arrChecked.hasOwnProperty(key)) {
-            let property = this.state.arrChecked[key];
-            if (!(property === "all" || feature.get(property))) {
+            let objChecked = this.state.arrChecked[key];
+            let property = objChecked.identifier;
+            console.log(feature.get(property));
+            console.log(!objChecked.value);
+            console.log((feature.get(property) && !objChecked.value));
+            if (!(property === "all" || (feature.get(property) && !objChecked.value) || ((objChecked.value == feature.get(property)) && objChecked.value))) {
               show = false;
             }
           }
@@ -128,7 +135,9 @@ export class FeatureFilter extends Component {
         jsonData = JSON.parse(jsonData);
         let arrChecked = [];
         for (let i = 0; i < jsonData.length; i++) {
-          arrChecked.push("all");
+          arrChecked.push({
+            identifier: "all"
+          });
         }
         scope.setState({filters: jsonData, arrChecked: arrChecked})
       });

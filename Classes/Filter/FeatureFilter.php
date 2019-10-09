@@ -29,7 +29,7 @@ class FeatureFilter implements \JsonSerializable
      */
     private $filters = [
         [
-            "value" => "all",
+            "identifier" => "all",
             "translation" => "Alle anzeigen"
         ]
     ];

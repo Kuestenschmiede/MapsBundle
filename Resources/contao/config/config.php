@@ -50,6 +50,10 @@ array_insert($GLOBALS['BE_MOD'], array_search('con4gis_core', array_keys($GLOBAL
         [
             'tables' => ['tl_c4g_map_tables'],
             'icon' => 'bundles/con4gismaps/images/be-icons/mapstructure.png',
+        ],
+        'c4g_map_filters' =>
+        [
+            'tables' => ['tl_c4g_map_filters']
         ]
     ]]
 );
