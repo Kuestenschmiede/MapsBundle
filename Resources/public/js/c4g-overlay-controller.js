@@ -20,7 +20,8 @@ import {XYZ, BingMaps, TileWMS} from "ol/source";
 import {Image} from "ol/layer";
 import ol_source_GeoImage from "ol-ext/source/GeoImage";
 
-export class C4gOverlayController{
+export class C4gOverlayController {
+
   constructor(baselayer) {
     this.baselayer = baselayer;
     this.arrOverlays = [];
@@ -138,6 +139,7 @@ export class C4gOverlayController{
       case 'geoimage':
         let objSource = JSON.parse(overlayLayerConfig.geoImageJson);
         objSource.url = overlayLayerConfig.imageSrc ? overlayLayerConfig.imageSrc : objSource.url;
+        objSource.attributions = overlayLayerConfig.attribution;
         overlayLayer = new Image({
           source: new ol_source_GeoImage(
             objSource
