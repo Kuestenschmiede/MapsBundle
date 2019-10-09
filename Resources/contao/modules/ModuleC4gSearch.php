@@ -52,7 +52,6 @@ class ModuleC4gSearch extends \Module
         $arrSettings['searchPlaceholder'] = $this->c4g_map_placeholder;
         $arrSettings['zoomLevel'] = $this->c4g_map_zoomlevel ?: 10;
         $arrSettings['proxyUrl'] = $objSettings->con4gisIoUrl;
-        $arrSettings['keyReverse'] = C4GUtils::getKey($objSettings,3);
         $arrSettings['keyForward'] = C4GUtils::getKey($objSettings,2);
         $arrSettings['keyAutocomplete'] = C4GUtils::getKey($objSettings,7);
 

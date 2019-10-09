@@ -27,6 +27,8 @@ export class Search extends Component {
     };
     this.autocompleteAddress = this.autocompleteAddress.bind(this);
     this.handleSuggestionClick = this.handleSuggestionClick.bind(this);
+    this.setWrapperRef = this.setWrapperRef.bind(this);
+    this.handleClickOutside = this.handleClickOutside.bind(this);
     this.handleKey = this.handleKey.bind(this);
   }
 
@@ -37,7 +39,7 @@ export class Search extends Component {
 
     }
     return (
-      <form onSubmit={this.handleKey}>
+      <form onSubmit={this.handleKey} ref={this.setWrapperRef}>
         <input
           placeholder={this.props.objSettings.searchPlaceholder}
           ref={input => this.search = input}
@@ -55,7 +57,7 @@ export class Search extends Component {
     evt.nativeEvent.preventDefault();
     evt.nativeEvent.stopPropagation();
     this.performSearch();
-  }
+  };
 
   handleInputChange = () => {
     this.setState({
@@ -67,13 +69,13 @@ export class Search extends Component {
         }
       }
     })
-  }
+  };
 
   handleSuggestionClick = (id) => {
     let position = this.state.containerAddresses.arrPositions[id];
     let url = this.props.objSettings.mapUrl + "#" + position[1] + "/" + position[0] + "/" + this.props.objSettings.zoomLevel;
     window.open(url, "_self");
-  }
+  };
 
   autocompleteAddress() {
     const scope = this;
@@ -115,5 +117,28 @@ export class Search extends Component {
         window.open(url, "_self");
       }
     });
+  }
+  componentDidMount() {
+    document.addEventListener('mousedown', this.handleClickOutside);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClickOutside);
+  }
+
+  /**
+   * Set the wrapper ref
+   */
+  setWrapperRef(node) {
+    this.wrapperRef = node;
+  }
+
+  /**
+   * hide FilterFeatureList if clicked on outside of element
+   */
+  handleClickOutside(event) {
+    if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
+      this.setState({query: ""});
+    }
   }
 }
