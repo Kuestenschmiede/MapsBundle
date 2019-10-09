@@ -17,6 +17,9 @@ namespace con4gis\MapsBundle\Classes\Services;
 
 use con4gis\MapsBundle\Classes\Events\LoadFeatureFiltersEvent;
 use con4gis\MapsBundle\Classes\Filter\FeatureFilter;
+use con4gis\MapsBundle\Resources\contao\models\C4gMapFiltersModel;
+use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
+use Contao\Database;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class FilterService
@@ -39,12 +42,24 @@ class FilterService
     /**
      * @return FeatureFilter[]
      */
-    public function createFilters()
+    public function createFilters($profileId)
     {
-//        $event = new LoadFeatureFiltersEvent();
-//        $this->eventDispatcher->dispatch($event::NAME, $event);
-//
-//        return $event->getFilters();
-        return [];
+        $return = [];
+        $database = Database::getInstance();
+        $mapsProfileModel = C4gMapProfilesModel::findById($profileId);
+        $filterIds = unserialize($mapsProfileModel->filters);
+
+        foreach ($filterIds as $filterId) {
+            $filter = $tags = $database->prepare("SELECT * FROM tl_c4g_map_filters WHERE id=" . $filterId)
+                ->execute()->fetchAssoc();
+            $objFilter = new FeatureFilter();
+            $objFilter->setFieldName($filter['name']);
+            $childs = unserialize($filter['filters']);
+            foreach ($childs as $child) {
+                $objFilter->addFilterValue($child);
+            }
+            $return[] = $objFilter;
+        }
+        return $return;
     }
 }

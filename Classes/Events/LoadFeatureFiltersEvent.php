@@ -25,7 +25,7 @@ class LoadFeatureFiltersEvent extends Event
      * The layerId for which filters should be generated.
      * @var int
      */
-    private $layerId = 0;
+    private $profileId = 0;
     
     /**
      * @var FeatureFilter[]
@@ -35,17 +35,17 @@ class LoadFeatureFiltersEvent extends Event
     /**
      * @return int
      */
-    public function getLayerId(): int
+    public function getProfileId(): int
     {
-        return $this->layerId;
+        return $this->profileId;
     }
     
     /**
      * @param int $layerId
      */
-    public function setLayerId(int $layerId): void
+    public function setProfileId(int $profileId): void
     {
-        $this->layerId = $layerId;
+        $this->profileId = $profileId;
     }
     
     /**

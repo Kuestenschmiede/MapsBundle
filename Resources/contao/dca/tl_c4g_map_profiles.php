@@ -428,8 +428,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'exclude'                 => true,
             'inputType'               => 'select',
             'options_callback'        => ["tl_c4g_map_profiles",'getFilters'],
-            'eval'                    => ['tl_class'=>'clr','chosen' => true, 'includeBlankOption'=>true],
-            'sql'                     => "int(10) NOT NULL default '0'"
+            'eval'                    => ['chosen' => true, 'multiple' => true],
+            'sql'                     => "blob NULL"
             ],
         'starboard_filter' =>
             [

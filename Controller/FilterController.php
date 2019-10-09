@@ -40,19 +40,20 @@ class FilterController extends BaseController
     }
     
     /**
-     * @Route("/con4gis/filterService/{layerId}", name="filter_service", methods={"GET"})
+     * @Route("/con4gis/filterService/{profileId}/{lang}", name="filter_service", methods={"GET"})
      * @param Request $request
-     * @param $layerId
+     * @param $profileId
+     * @param $lang
      * @return JsonResponse
      */
-    public function filterAction(Request $request, $layerId)
+    public function filterAction(Request $request, $profileId, $lang)
     {
         $this->initializeContao();
-        $GLOBALS['TL_LANGUAGE'] = "de";
+        $GLOBALS['TL_LANGUAGE'] = $lang;
         $this->initialize(false);
-        $filters = $this->filterService->createFilters();
+        $filters = $this->filterService->createFilters($profileId);
         $event = new LoadFeatureFiltersEvent();
-        $event->setLayerId($layerId);
+        $event->setProfileId($profileId);
         $event->setFilters($filters);
         $this->eventDispatcher->dispatch($event::NAME, $event);
         $filters = $event->getFilters();

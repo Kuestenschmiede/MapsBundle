@@ -74,7 +74,6 @@ export class MapProxy {
     langConstants = getLanguage(mapData);
     this.mapData = mapData;
     this.mapId = mapData.id;
-
     this.api_baselayer_url = this.options.mapController.data.api.baselayer + '/' + mapData.profile + '/' + this.mapData.lang;
     this.api_layer_url = this.options.mapController.data.api.layer + '/' + this.mapId + '/' + this.mapData.lang;
     this.api_layercontent_url = this.options.mapController.data.api.layercontent;
