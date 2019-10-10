@@ -94,9 +94,6 @@ export class FeatureFilter extends Component {
           if (this.state.arrChecked.hasOwnProperty(key)) {
             let objChecked = this.state.arrChecked[key];
             let property = objChecked.identifier;
-            console.log(feature.get(property));
-            console.log(!objChecked.value);
-            console.log((feature.get(property) && !objChecked.value));
             if (!(property === "all" || (feature.get(property) && !objChecked.value) || ((objChecked.value == feature.get(property)) && objChecked.value))) {
               show = false;
             }

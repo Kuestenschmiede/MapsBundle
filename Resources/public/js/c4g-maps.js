@@ -303,7 +303,6 @@ export class MapController {
         parseFloat(mapData.restr_topright_lat)
       ];
       extent = transformExtent(extent, "EPSG:4326", "EPSG:3857");
-      console.log(extent);
       view = new View({
         extent: extent,
         center: transform([parseFloat(mapData.center.lon), parseFloat(mapData.center.lat)], 'EPSG:4326', 'EPSG:3857'),
