@@ -39,9 +39,9 @@ class LoadFeatureFiltersEvent extends Event
     {
         return $this->profileId;
     }
-    
+
     /**
-     * @param int $layerId
+     * @param int $profileId
      */
     public function setProfileId(int $profileId): void
     {
