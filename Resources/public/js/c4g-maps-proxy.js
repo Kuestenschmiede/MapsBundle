@@ -454,7 +454,15 @@ export class MapProxy {
       routeToButtonSpan,
       routingHandler,
       self = this;
-
+    if (parseInt(this.mapData.popupHandling, 10) !== 2) {
+      let autoPan = parseInt(this.mapData.popupHandling, 10) === 1;
+      if (autoPan) {
+        let mapSelector = "#" + this.options.mapController.data.mapDiv + " canvas";
+        let mapElement = document.querySelector(mapSelector);
+        let maxHeightPopup = mapElement.offsetHeight - 50;
+        $(window.c4gMapsPopup.popup.element).css("max-height", maxHeightPopup);
+      }
+    }
     feature = popupConfig.feature;
     layer = popupConfig.layer;
     if (feature.get('features')) {
@@ -522,10 +530,10 @@ export class MapProxy {
     if (parseInt(this.mapData.popupHandling, 10) !== 2) {
       let autoPan = parseInt(this.mapData.popupHandling, 10) === 1;
       if (autoPan) {
-        let mapSelector = "#" + this.options.mapController.data.mapDiv + " > div > canvas";
-        let mapElement = document.querySelector(mapSelector);
-        let maxHeightPopup = mapElement.offsetHeight - 50;
-        $(popUpElement).css("max-height", maxHeightPopup);
+        // let mapSelector = "#" + this.options.mapController.data.mapDiv + " > div > canvas";
+        // let mapElement = document.querySelector(mapSelector);
+        // let maxHeightPopup = mapElement.offsetHeight - 50;
+        // $(popUpElement).css("max-height", maxHeightPopup);
       }
       popup = new Overlay({
         element: popUpElement,

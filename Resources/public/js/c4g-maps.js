@@ -622,7 +622,7 @@ export class MapController {
       this.reactContainer.className ="c4g-sideboard c4g-starboard-container ol-unselectable c4g-close";
       this.reactContainer.style.right = "-100%";
       ReactDOM.render(React.createElement(StarboardPanel, {
-        target: document.querySelector('#' + mapData.mapDiv + ' .' +cssConstants.OL_OVERLAYCONTAINER),
+        target: document.querySelector('#' + mapData.mapDiv + ' .' +cssConstants.OL_OVERLAYCONTAINER_SE),
         mapController: this,
         direction: "right"
       }), this.reactContainer);

@@ -42,7 +42,7 @@ export class FeatureFilter extends Component {
         let checkedItem = scope.state.arrChecked[index];
         let openedList = scope.state.openedList === index;
         return <FeatureFilterList feature={feature} open={openedList} setOpen={this.setOpen} checkedItem={checkedItem} filterLayers={this.filterLayers} id={index} key={index}/>
-      })
+      });
       return (
           <div className={"c4g-feature-filter"}>
             <ul className={"c4g-feature-filter-list"} onMouseUp={(evt) => this.handleClickInside(evt)} ref={this.setWrapperRef}>

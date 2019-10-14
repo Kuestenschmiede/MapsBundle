@@ -127,7 +127,7 @@ export class MapHover {
 
       clustered = false;
       hovered = self.map.forEachFeatureAtPixel(event.pixel,
-        function (feature, layer) {
+        (feature, layer) => {
           return {
             feature: feature,
             layer: layer

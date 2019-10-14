@@ -27,7 +27,7 @@ export class StarboardPanel extends Component {
         let button = document.createElement('button');
         element.className = "c4g-sideboard c4g-starboard-control ol-unselectable ol-control c4g-close";
         element.appendChild(button);
-        jQuery(button).on('click', function(event) {
+        jQuery(element).on('click', function(event) {
             if (scope.state.open) {
                 scope.close();
             } else {
