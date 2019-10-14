@@ -31,7 +31,8 @@ export class FeatureFilter extends Component {
       open: true,
       arrChecked: [],
       openedList: -1
-    }
+    };
+    this.props.mapController.filter = this;
   }
 
   render() {

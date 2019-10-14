@@ -446,13 +446,6 @@ export class MapProxy {
     var feature,
       layer,
       popupContent,
-      router,
-      routeButtonWrapper,
-      routeFromButton,
-      routeFromButtonSpan,
-      routeToButton,
-      routeToButtonSpan,
-      routingHandler,
       self = this;
     if (parseInt(this.mapData.popupHandling, 10) !== 2) {
       let autoPan = parseInt(this.mapData.popupHandling, 10) === 1;

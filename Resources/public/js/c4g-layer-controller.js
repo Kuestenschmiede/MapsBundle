@@ -13,7 +13,7 @@ import {C4gLayer} from "./c4g-layer"
 import {utils} from "./c4g-maps-utils"
 import {cssConstants} from "./c4g-maps-constant";
 import {Customtab} from "./c4g-maps-control-starboardplugin-customtab";
-import {Style} from "ol/style";
+import {Stroke, Style} from "ol/style";
 import {Text} from "ol/style";
 import {Fill} from "ol/style";
 import {Vector as VectorSource} from "ol/source";
@@ -32,6 +32,7 @@ import {GeoJSON} from "ol/format";
 import {getCenter, boundingExtent} from "ol/extent";
 import * as olFormat from "ol/format";
 import ol_layer_AnimatedCluster from "ol-ext/layer/AnimatedCluster";
+var osmtogeojson = require('osmtogeojson');
 
 export class C4gLayerController {
 
@@ -550,20 +551,40 @@ export class C4gLayerController {
 
                     }
                     else if (response && response.elements) {
-                      rFeatures = [];
-                      for (let elementId = 0; elementId < response.elements.length; elementId++) {
-                        let element = response.elements[elementId];
-                        if (element.type ==="node" && !element.tags) {
-                          continue;
-                        }
-                        let tempFeature = self.featureFromOverpass(element,response.elements, contentData, requestContentData.settings.forceNodes);
-                        let addFeature = requestVectorSource.getFeatureById(element.id);
-                        if(tempFeature && !addFeature){
-                          rFeatures.push(tempFeature);
-                        }
-                      }
+                      const geojson = osmtogeojson(response);
+                      rFeatures = new GeoJSON().readFeatures(geojson, {featureProjection: projection});
                     }
                     try {
+                      for (let id in rFeatures) {
+                        if (rFeatures.hasOwnProperty(id)){
+                          let tempFeature = rFeatures[id];
+                          let show = true;
+                          for (let key in self.mapController.filter.state.arrChecked) {
+                            if (self.mapController.filter.state.arrChecked.hasOwnProperty(key)) {
+                              let objChecked = self.mapController.filter.state.arrChecked[key];
+                              let property = objChecked.identifier;
+                              if (!(property === "all" || (tempFeature.get(property) && !objChecked.value) || ((objChecked.value == tempFeature.get(property)) && objChecked.value))) {
+                                show = false;
+                              }
+                            }
+                          }
+                          if(!show) {
+                            if (!tempFeature.get('oldStyle')) {
+                              let layerStyle = self.mapController.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style;
+                              tempFeature.set('oldStyle',  layerStyle);
+                            }
+                            tempFeature.setStyle(new Style({
+                              stroke: new Stroke({
+                                color: "rgba(0,0,0,0)",
+                                width: 0
+                              }),
+                              fill: new Fill({
+                                color: "rgba(0,0,0,0)"
+                              })
+                            }))
+                          }
+                        }
+                      }
                       requestVectorSource.addFeatures(rFeatures);
                     } catch (e) {
                       console.warn('Could not add features to source. The "forceNodes"-option should be used.');
@@ -1217,7 +1238,6 @@ export class C4gLayerController {
         let geom = this.geomFromWay(element, elements, forceNodes);
         feature = new Feature(geom);
       }
-
     }
     else if(element.type === "relation"){
       let multiPolygon = null;
@@ -1237,7 +1257,7 @@ export class C4gLayerController {
               geom = new Point([member.lon,member.lat]).transform('EPSG:4326','EPSG:3857');
             }
             else{
-              geom = this.geomFromWay(member, elements, true);
+              geom = this.geomFromWay(member, elements, forceNodes);
             }
             if(geom.getType() === 'Point'){
               if(!arrCoords){
@@ -1251,7 +1271,7 @@ export class C4gLayerController {
                 multiPolygon.appendPolygon(geom);
               }
               else{
-                multiPolygon = new MultiPolygon(geom.getCoordinates());
+                multiPolygon = new MultiPolygon([geom.getCoordinates()]);
               }
             }
             else if(geom.getType() === 'LineString') {
@@ -1286,10 +1306,40 @@ export class C4gLayerController {
         feature.set('zoom_onclick', contentData.data.zoom_onclick || '');
         feature.set('label', contentData.data.label || '');
       }
-
+      let show = true;
+      if (!element.tags) {
+        show = false;
+      }
       for(let tags in element.tags){
         feature.set(tags, element.tags[tags]);
+        for (let key in this.mapController.filter.state.arrChecked) {
+          if (this.mapController.filter.state.arrChecked.hasOwnProperty(key)) {
+            let objChecked = this.mapController.filter.state.arrChecked[key];
+            let property = objChecked.identifier;
+            if (!(property === "all" || (tags && !objChecked.value) || ((objChecked.value == element.tags[tags]) && objChecked.value))) {
+              show = false;
+            }
+          }
+
+        }
       }
+      if(!show) {
+        if (!feature.get('oldStyle')) {
+          let layerStyle = this.mapController.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style;
+          feature.set('oldStyle',  layerStyle);
+        }
+        feature.setStyle(new Style({
+          stroke: new Stroke({
+            color: "rgba(0,0,0,0)",
+            width: 0
+          }),
+          fill: new Fill({
+            color: "rgba(0,0,0,0)"
+          })
+        }))
+      }
+      //seek 'n hide
+
       return feature;
     }
 
