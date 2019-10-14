@@ -555,33 +555,35 @@ export class C4gLayerController {
                       rFeatures = new GeoJSON().readFeatures(geojson, {featureProjection: projection});
                     }
                     try {
-                      for (let id in rFeatures) {
-                        if (rFeatures.hasOwnProperty(id)){
-                          let tempFeature = rFeatures[id];
-                          let show = true;
-                          for (let key in self.mapController.filter.state.arrChecked) {
-                            if (self.mapController.filter.state.arrChecked.hasOwnProperty(key)) {
-                              let objChecked = self.mapController.filter.state.arrChecked[key];
-                              let property = objChecked.identifier;
-                              if (!(property === "all" || (tempFeature.get(property) && !objChecked.value) || ((objChecked.value == tempFeature.get(property)) && objChecked.value))) {
-                                show = false;
+                      if(self.mapController.filter) {
+                        for (let id in rFeatures) {
+                          if (rFeatures.hasOwnProperty(id)){
+                            let tempFeature = rFeatures[id];
+                            let show = true;
+                            for (let key in self.mapController.filter.state.arrChecked) {
+                              if (self.mapController.filter.state.arrChecked.hasOwnProperty(key)) {
+                                let objChecked = self.mapController.filter.state.arrChecked[key];
+                                let property = objChecked.identifier;
+                                if (!(property === "all" || (tempFeature.get(property) && !objChecked.value) || ((objChecked.value == tempFeature.get(property)) && objChecked.value))) {
+                                  show = false;
+                                }
                               }
                             }
-                          }
-                          if(!show) {
-                            if (!tempFeature.get('oldStyle')) {
-                              let layerStyle = self.mapController.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style;
-                              tempFeature.set('oldStyle',  layerStyle);
+                            if(!show) {
+                              if (!tempFeature.get('oldStyle')) {
+                                let layerStyle = self.mapController.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style;
+                                tempFeature.set('oldStyle',  layerStyle);
+                              }
+                              tempFeature.setStyle(new Style({
+                                stroke: new Stroke({
+                                  color: "rgba(0,0,0,0)",
+                                  width: 0
+                                }),
+                                fill: new Fill({
+                                  color: "rgba(0,0,0,0)"
+                                })
+                              }))
                             }
-                            tempFeature.setStyle(new Style({
-                              stroke: new Stroke({
-                                color: "rgba(0,0,0,0)",
-                                width: 0
-                              }),
-                              fill: new Fill({
-                                color: "rgba(0,0,0,0)"
-                              })
-                            }))
                           }
                         }
                       }
@@ -1306,40 +1308,6 @@ export class C4gLayerController {
         feature.set('zoom_onclick', contentData.data.zoom_onclick || '');
         feature.set('label', contentData.data.label || '');
       }
-      let show = true;
-      if (!element.tags) {
-        show = false;
-      }
-      for(let tags in element.tags){
-        feature.set(tags, element.tags[tags]);
-        for (let key in this.mapController.filter.state.arrChecked) {
-          if (this.mapController.filter.state.arrChecked.hasOwnProperty(key)) {
-            let objChecked = this.mapController.filter.state.arrChecked[key];
-            let property = objChecked.identifier;
-            if (!(property === "all" || (tags && !objChecked.value) || ((objChecked.value == element.tags[tags]) && objChecked.value))) {
-              show = false;
-            }
-          }
-
-        }
-      }
-      if(!show) {
-        if (!feature.get('oldStyle')) {
-          let layerStyle = this.mapController.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style;
-          feature.set('oldStyle',  layerStyle);
-        }
-        feature.setStyle(new Style({
-          stroke: new Stroke({
-            color: "rgba(0,0,0,0)",
-            width: 0
-          }),
-          fill: new Fill({
-            color: "rgba(0,0,0,0)"
-          })
-        }))
-      }
-      //seek 'n hide
-
       return feature;
     }
 
