@@ -19,6 +19,7 @@ use con4gis\CoreBundle\Resources\contao\classes\HttpResultHelper;
 use con4gis\MapsBundle\Classes\Events\LoadLayersEvent;
 use con4gis\MapsBundle\Resources\contao\classes\Utils;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
+use Contao\Controller;
 use Contao\Database;
 use Contao\FrontendUser;
 use Contao\System;
@@ -308,7 +309,7 @@ class LayerService
         $arrLayerData = [];
         $arrLayerData['id'] = $objLayer->id;
         $arrLayerData['pid'] = $objLayer->pid;
-        $arrLayerData['name'] =  Utils::replaceInsertTags($stringClass::decodeEntities($objLayer->name), $lang);
+        $arrLayerData['name'] =  Controller::replaceInsertTags($stringClass::decodeEntities($objLayer->name), $lang);
         $arrLayerData['zoom_locations'] = $objLayer->zoom_locations;
         $arrLayerData['async_content'] = $objLayer->async_content;
         $arrLayerData['noFilter'] = $objLayer->exemptFromFilter;
@@ -348,7 +349,7 @@ class LayerService
         }
 
         if ($objLayer->data_layername) {
-            $arrLayerData['name'] = Utils::replaceInsertTags($stringClass::decodeEntities($objLayer->data_layername), $lang);
+            $arrLayerData['name'] = Controller::replaceInsertTags($stringClass::decodeEntities($objLayer->data_layername), $lang);
             $arrLayerData['display'] = true;
             $arrLayerData['hide_child'] = $objLayer->hide_child;
         } else {

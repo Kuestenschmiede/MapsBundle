@@ -768,7 +768,7 @@ class LayerContentService
         }
         else if(!$objLayer->popup_async && $objLayer->popup_info){
             $popup_async = false;
-            $popup_content = Utils::replaceInsertTags($objLayer->popup_info, $lang);
+            $popup_content = Controller::replaceInsertTags($objLayer->popup_info, $lang);
         }
         
         switch ($objLayer->location_type) {
