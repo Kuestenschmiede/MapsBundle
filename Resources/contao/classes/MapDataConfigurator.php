@@ -448,7 +448,7 @@ class MapDataConfigurator
 
                 switch ($profile->geosearch_engine) {
                     case '1':
-                        $mapData['attribution']['geosearch'] = 'Nominatim Search Courtesy of <a href="http://wiki.openstreetmap.org/wiki/Nominatim_usage_policy" target="_blank">OpenStreetMap</a>';
+                        $mapData['attribution']['geosearch'] = 'Nominatim Search Courtesy of <a href="https://operations.osmfoundation.org/policies/nominatim/" target="_blank">OpenStreetMap</a>';
                         break;
                     case '2':
                         $mapData['attribution']['geosearch'] = 'Nominatim Search Courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png" alt="" />';
@@ -462,7 +462,7 @@ class MapDataConfigurator
                         $mapData['attribution']['geosearch'] = $keyForward['attribution'];
                         break;
                     default:
-                        $mapData['attribution']['geosearch'] = 'Nominatim Search Courtesy of <a href="http://wiki.openstreetmap.org/wiki/Nominatim_usage_policy" target="_blank">OpenStreetMap</a>';
+                        $mapData['attribution']['geosearch'] = 'Nominatim Search Courtesy of <a href="https://operations.osmfoundation.org/policies/nominatim/" target="_blank">OpenStreetMap</a>';
                         break;
                 }
             }
