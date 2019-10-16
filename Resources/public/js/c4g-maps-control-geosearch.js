@@ -29,6 +29,7 @@ import {unByKey} from "ol/Observable";
 import {containsCoordinate} from "ol/extent";
 import {getWidth} from "ol/extent";
 import {getHeight} from "ol/extent";
+import {getVectorContext} from 'ol/render';
 
 'use strict';
 export class GeoSearch extends Control {
@@ -411,13 +412,15 @@ export class GeoSearch extends Control {
     completeSearch = function (markResult, animate) {
       var addMarker,
         markerSource,
+        markerLayer,
         animateMarker;
 
       markerSource = new VectorSource();
-      map.addLayer(new Vector({
+      markerLayer = new Vector({
         style: new Style(),
         source: markerSource
-      }));
+      });
+      map.addLayer(markerLayer);
 
       addMarker = function () {
         markerSource.addFeature(
@@ -477,11 +480,11 @@ export class GeoSearch extends Control {
             unByKey(listenerKey);
             return;
           }
-          // continue postcompose animation
+          // continue postrender animation
           frameState.animate = true;
         }; // end of "animationStep"
 
-        listenerKey = map.on('postcompose', animationStep);
+        listenerKey = markerLayer.on('postrender', animationStep);
 
       }; // end of "animateMarker"
 
@@ -671,13 +674,15 @@ export class GeoSearch extends Control {
               if (markResult) {
                 var addMarker,
                   markerSource,
+                  markerLayer,
                   animateMarker;
 
                 markerSource = new VectorSource();
-                map.addLayer(new Vector({
+                markerLayer = new Vector({
                   style: new Style(),
                   source: markerSource
-                }));
+                });
+                map.addLayer(markerLayer);
 
                 addMarker = function () {
                   markerSource.addFeature(
@@ -706,7 +711,7 @@ export class GeoSearch extends Control {
                       marker,
                       flashGeom;
 
-                    vectorContext = event.vectorContext;
+                    vectorContext = getVectorContext(event);
                     frameState = event.frameState;
                     flashGeom = feature.getGeometry().clone();
                     elapsed = frameState.time - start;
@@ -737,11 +742,11 @@ export class GeoSearch extends Control {
                       unByKey(listenerKey);
                       return;
                     }
-                    // continue postcompose animation
+                    // continue postrender animation
                     frameState.animate = true;
                   }; // end of "animationStep"
 
-                  listenerKey = map.on('postcompose', animationStep);
+                  listenerKey = markerLayer.on('postrender', animationStep);
 
                 }; // end of "animateMarker"
 
