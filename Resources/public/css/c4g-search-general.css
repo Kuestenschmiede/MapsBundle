@@ -5,17 +5,18 @@
     text-align: left;
 }
 .fa-search:before {
-    content: "\f002";
+    content: "\f689";
 }
 .fa-search {
     font-family: 'Font Awesome 5 Free';
     font-weight: 900;
-    font-size: inherit;
+    font-size: 2em;
     position: absolute;
     padding: 8px;
-    color: #4c997f;
+    /*color: #4c997f;*/
     background-color: #e8e8e8;
     margin: 1px;
+    font-style: normal;
 }
 .search_block {
     width: 100%;
@@ -26,12 +27,12 @@
     margin: 0;
 }
 .search_block >form > input[type=search] {
-    padding: 8px 0px 8px 30px;
+    padding: 15px 0px 15px 50px;
     width: 100%;
     margin: 0;
     background: #e8e8e8;
     border: 0px;
-    color: #375d77;
+    color: black;
     vertical-align: top;
     margin-bottom: 10px;
 }
@@ -50,8 +51,9 @@
 }
 .c4g-autocomplete-list li:nth-child(2n) {
     background: #e8e8e8;
-    color: #375d77;
+    color: black;
 }
 .c4g-autocomplete-list li:nth-child(2n+1) {
-    color: black;
+    background:white;
+    color: #4d4d4d;
 }

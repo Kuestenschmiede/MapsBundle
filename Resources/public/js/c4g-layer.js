@@ -25,7 +25,7 @@ export class C4gLayer{
     this.zoom_locations = layerArr['zoom_locations'];
     this.display = layerArr['display'];
     this.hasChilds = layerArr['hasChilds'];
-    this.childs = layerArr['childs'];
+    this.childs = layerArr['childs'] || [];
     this.childsCount = layerArr['childsCount'];
     this.renderSpecial = layerArr['renderSpecial'];
     this.editable = true;
