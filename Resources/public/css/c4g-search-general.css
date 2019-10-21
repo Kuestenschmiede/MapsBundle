@@ -36,6 +36,8 @@
     list-style: square;
     margin: 7px 0 0 0;
     background: white;
+    position: absolute;
+    z-index: 420;
 }
 .c4g-autocomplete-list li {
     margin: 0;
