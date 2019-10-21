@@ -84,22 +84,22 @@ class LayerContentService
         $arrReturnData = array();
         switch ($objLayer->location_type) {
             case "geojson":
-                $arrReturnData[] = $this->getGeoJSONLayerContent($objLayer);
+                $arrReturnData[] = $this->getGeoJSONLayerContent($objLayer, $lang);
                 break;
             case "single":
                 $arrReturnData[] = $this->getSingleLayerContent($objLayer, $lang);
                 break;
             case "overpass":
-                $arrReturnData[] = $this->getOverpassLayerContent($objLayer, $objProfile);
+                $arrReturnData[] = $this->getOverpassLayerContent($objLayer, $objProfile, $lang);
                 break;
             case "gpx":
-                $arrReturnData[] = $this->getGPXLayerContent($objLayer);
+                $arrReturnData[] = $this->getGPXLayerContent($objLayer, $lang);
                 break;
             case "kml":
-                $arrReturnData[] = $this->getKMLLayerContent($objLayer);
+                $arrReturnData[] = $this->getKMLLayerContent($objLayer, $lang);
                 break;
             case "osm":
-                $arrReturnData[] = $this->getOSMLayerContent($objLayer);
+                $arrReturnData[] = $this->getOSMLayerContent($objLayer, $lang);
                 break;
             case "c4gForum":
                 return $this->createC4gForumResult($objLayer, $secondFetch);
@@ -131,11 +131,11 @@ class LayerContentService
         return $arrReturnData;
     }
     
-    private function getGeoJSONLayerContent($objLayer)
+    private function getGeoJSONLayerContent($objLayer, $lang)
     {
         $arrGeoJsonData = $this->createGeoJsonResult($objLayer,'tl_c4g_maps');
         if ($arrGeoJsonData) {
-            $strGeoJsonData = Controller::replaceInsertTags(\GuzzleHttp\json_encode($arrGeoJsonData));
+            $strGeoJsonData = Utils::replaceInsertTags(\GuzzleHttp\json_encode($arrGeoJsonData), $lang);
         }
         if ($strGeoJsonData) {
           $arrGeoJsonData = \GuzzleHttp\json_decode($strGeoJsonData, true);
@@ -148,7 +148,7 @@ class LayerContentService
             "origType" => "geojson",
             "locationStyle" => $objLayer->locstyle,
             "data" => $arrGeoJsonData,
-            "loc_linkurl" => Controller::replaceInsertTags($objLayer->loc_linkurl),
+            "loc_linkurl" => Utils::replaceInsertTags($objLayer->loc_linkurl, $lang),
             "hover_location" => $objLayer->hover_location,
             "hover_style" => $objLayer->hover_style
         ];
@@ -163,13 +163,13 @@ class LayerContentService
             "origType" => "single",
             "locationStyle" => $objLayer->locstyle,
             "data" => $this->createGeoJsonResult($objLayer, 'tl_c4g_maps', $lang),
-            "loc_linkurl" => Controller::replaceInsertTags($objLayer->loc_linkurl),
+            "loc_linkurl" => Utils::replaceInsertTags($objLayer->loc_linkurl, $lang),
             "hover_location" => $objLayer->hover_location,
             "hover_style" => $objLayer->hover_style,
         ];
     }
     
-    private function getOverpassLayerContent($objLayer, $objProfile)
+    private function getOverpassLayerContent($objLayer, $objProfile, $lang)
     {
         $objSettings = C4gMapSettingsModel::findOnly();
         if ($objProfile->overpassEngine == "2") {
@@ -208,7 +208,7 @@ class LayerContentService
             "cluster_fontcolor" => $objLayer->cluster_fontcolor,
             "cluster_zoom" => $objLayer->cluster_zoom,
             "cluster_popup" => $objLayer->cluster_popup,
-            "loc_linkurl" => Controller::replaceInsertTags($objLayer->loc_linkurl),
+            "loc_linkurl" => Utils::replaceInsertTags($objLayer->loc_linkurl, $lang),
             "hover_location" => $objLayer->hover_location,
             "hover_style" => $objLayer->hover_style,
             "data" => [
@@ -234,7 +234,7 @@ class LayerContentService
         ];
     }
     
-    private function getGPXLayerContent($objLayer)
+    private function getGPXLayerContent($objLayer, $lang)
     {
         $arrReturnData = [
             "id" => $objLayer->id,
@@ -245,7 +245,7 @@ class LayerContentService
             "cluster_fillcolor" => $objLayer->cluster_fillcolor,
             "cluster_fontcolor" => $objLayer->cluster_fontcolor,
             "cluster_zoom" => $objLayer->cluster_zoom,
-            "loc_linkurl" => Controller::replaceInsertTags($objLayer->loc_linkurl),
+            "loc_linkurl" => Utils::replaceInsertTags($objLayer->loc_linkurl, $lang),
             "hover_location" => $objLayer->hover_location,
             "hover_style" => $objLayer->hover_style,
             "data" => [
@@ -271,14 +271,14 @@ class LayerContentService
             $arrReturnData["data"]["popup"]['content'] = "tl_c4g_maps" . ":" . $objLayer->id;
         } else {
             $arrReturnData["data"]["popup"]['async'] = false;
-            $arrReturnData["data"]["popup"]['content'] = Controller::replaceInsertTags($objLayer->popup_info);
+            $arrReturnData["data"]["popup"]['content'] = Utils::replaceInsertTags($objLayer->popup_info, $lang);
             $arrReturnData["data"]["popup"]['routing_link'] = $objLayer->routing_to;
             $arrReturnData["data"]["popup"]['showPopupOnActive'] = $objLayer->showPopupOnActive;
         }
         return $arrReturnData;
     }
     
-    private function getKMLLayerContent($objLayer)
+    private function getKMLLayerContent($objLayer, $lang)
     {
         $arrReturnData = [
             "id" => $objLayer->id,
@@ -289,7 +289,7 @@ class LayerContentService
             "cluster_fillcolor" => $objLayer->cluster_fillcolor,
             "cluster_fontcolor" => $objLayer->cluster_fontcolor,
             "cluster_zoom" => $objLayer->cluster_zoom,
-            "loc_linkurl" =>Controller::replaceInsertTags($objLayer->loc_linkurl),
+            "loc_linkurl" =>Utils::replaceInsertTags($objLayer->loc_linkurl, $lang),
             "hover_location" => $objLayer->hover_location,
             "hover_style" => $objLayer->hover_style,
             "data" => [
@@ -322,7 +322,7 @@ class LayerContentService
         return $arrReturnData;
     }
     
-    private function getOSMLayerContent($objLayer)
+    private function getOSMLayerContent($objLayer, $lang)
     {
         return [
             "id" => $objLayer->id,
@@ -333,7 +333,7 @@ class LayerContentService
             "cluster_fillcolor" => $objLayer->cluster_fillcolor,
             "cluster_fontcolor" => $objLayer->cluster_fontcolor,
             "cluster_zoom" => $objLayer->cluster_zoom,
-            "loc_linkurl" => Controller::replaceInsertTags($objLayer->loc_linkurl),
+            "loc_linkurl" => Utils::replaceInsertTags($objLayer->loc_linkurl, $lang),
             "hover_location" => $objLayer->hover_location,
             "hover_style" => $objLayer->hover_style,
             "data" => [
@@ -538,13 +538,13 @@ class LayerContentService
                         }
                         $link = preg_replace(['/\[[a-z]+\]/'], $matches, $link);
                     }
-                    $link = Controller::replaceInsertTags($link);
+                    $link = Utils::replaceInsertTags($link);
                     if (substr($link, 0, 1) == '(' && substr($link, -1, 1) == ')') {
                         $link = substr($link, 1);
                         $link = substr($link, 0, -1);
                     }
                 } else {
-                    $link = Controller::replaceInsertTags($objLayer->loc_linkurl);
+                    $link = Utils::replaceInsertTags($objLayer->loc_linkurl);
                 }
                 $event = false;
                 if ($objLayer->cluster_popup != 1) {
@@ -558,7 +558,7 @@ class LayerContentService
                                 $arrReturnData[$i]['data']['properties']['popup']['content'] = str_replace('</ul>', '', $arrReturnData[$i]['data']['properties']['popup']['content']);
                             }
                             $arrReturnData[$i]['data']['properties']['popup']['content'] .= $popupContent . '</li></ul>';
-                            $arrReturnData[$i]['data']['properties']['tooltip'] .= ', ' . Controller::replaceInsertTags($arrResult[$tooltipField]);
+                            $arrReturnData[$i]['data']['properties']['tooltip'] .= ', ' . Utils::replaceInsertTags($arrResult[$tooltipField]);
                             $event = true;
                         }
                     }
@@ -567,7 +567,7 @@ class LayerContentService
             
                 if (!$event) {
                     if ($sourceTable == 'tl_content') {
-                        $popupContent = Controller::getContentElement($arrResult['id']) ? Controller::replaceInsertTags(Controller::getContentElement($arrResult['id'])) : $popupContent;
+                        $popupContent = Controller::getContentElement($arrResult['id']) ? Utils::replaceInsertTags(Controller::getContentElement($arrResult['id'])) : $popupContent;
                         $popupContent = str_replace('TL_FILES_URL', '', $popupContent);
                     }
                 
@@ -600,9 +600,9 @@ class LayerContentService
                                     'content' => $popupContent,
                                     'routing_link' => $objLayer->routing_to
                                 ),
-                                'tooltip' => unserialize($arrResult[$tooltipField])['value'] ? unserialize($arrResult[$tooltipField])['value'] : Controller::replaceInsertTags($arrResult[$tooltipField]),
+                                'tooltip' => unserialize($arrResult[$tooltipField])['value'] ? unserialize($arrResult[$tooltipField])['value'] : Utils::replaceInsertTags($arrResult[$tooltipField]),
                                 "tooltip_length" => $objLayer->tooltip_length,
-                                'label' => Controller::replaceInsertTags($arrResult[$labelField]),
+                                'label' => Utils::replaceInsertTags($arrResult[$labelField]),
                                 'zoom_onclick' => $objLayer->loc_onclick_zoomto
                             ),
                         ),
@@ -759,7 +759,7 @@ class LayerContentService
         if ( ($objLayer->popupType == "text") && !$objLayer->popup_info && $objLayer->locstyle) {
             $locstyle = C4gMapLocstylesModel::findByPk($objLayer->locstyle);
             if ($locstyle->popup_info) {
-                $popup_content = Controller::replaceInsertTags($locstyle->popup_info);
+                $popup_content = Utils::replaceInsertTags($locstyle->popup_info);
                 $popup_async = false;
             } else {
                 $popup_content = '';
@@ -768,7 +768,7 @@ class LayerContentService
         }
         else if(!$objLayer->popup_async && $objLayer->popup_info){
             $popup_async = false;
-            $popup_content = Controller::replaceInsertTags($objLayer->popup_info, $lang);
+            $popup_content = Utils::replaceInsertTags($objLayer->popup_info, $lang);
         }
         
         switch ($objLayer->location_type) {
@@ -793,11 +793,11 @@ class LayerContentService
                             'routing_link' => $objLayer->routing_to,
                             'showPopupOnActive'=> $objLayer->showPopupOnActive
                         ),
-                        'tooltip' => Controller::replaceInsertTags($objLayer->tooltip),
+                        'tooltip' => Utils::replaceInsertTags($objLayer->tooltip, $lang),
                         "tooltip_length" => $objLayer->tooltip_length,
-                        'label' => Controller::replaceInsertTags($objLayer->loc_label),
+                        'label' => Utils::replaceInsertTags($objLayer->loc_label, $lang),
                         'zoom_onclick' => $objLayer -> loc_onclick_zoomto,
-                        'loc_linkurl' => Controller::replaceInsertTags($objLayer->loc_linkurl),
+                        'loc_linkurl' => Utils::replaceInsertTags($objLayer->loc_linkurl, $lang),
                         "hover_location" => $objLayer->hover_location,
                         "hover_style" => $objLayer->hover_style,
                     )
@@ -851,9 +851,9 @@ class LayerContentService
                         ),
                         'projection' => $projection,
                         'zoom_onclick' => $objLayer -> loc_onclick_zoomto,
-                        'tooltip' =>  Controller::replaceInsertTags($objLayer->tooltip),
+                        'tooltip' =>  Utils::replaceInsertTags($objLayer->tooltip, $lang),
                         "tooltip_length" => $objLayer->tooltip_length,
-                        'label' =>  Controller::replaceInsertTags($objLayer->loc_label)
+                        'label' =>  Utils::replaceInsertTags($objLayer->loc_label, $lang)
                     );
                 } else if ($data) {
                     // OL3 needs a feature or feature-collection
@@ -872,7 +872,7 @@ class LayerContentService
                             'tooltip' => $objLayer->tooltip,
                             'label' => $objLayer->loc_label,
                             'zoom_onclick' => $objLayer -> loc_onclick_zoomto,
-                            'loc_linkurl' => Controller::replaceInsertTags($objLayer->loc_linkurl),
+                            'loc_linkurl' => Utils::replaceInsertTags($objLayer->loc_linkurl, $lang),
                             "hover_location" => $objLayer->hover_location,
                             "hover_style" => $objLayer->hover_style,
                         )
@@ -1016,7 +1016,7 @@ class LayerContentService
                     "cluster_fontcolor" => $objLayer->cluster_fontcolor,
                     "cluster_zoom" => $objLayer->cluster_zoom,
                     "cluster_popup" => $objLayer->cluster_popup,
-                    "loc_linkurl" => Controller::replaceInsertTags($objLayer->loc_linkurl),
+                    "loc_linkurl" => Utils::replaceInsertTags($objLayer->loc_linkurl),
                     "hover_location" => $objLayer->hover_location,
                     "hover_style" => $objLayer->hover_style,
                     "data" => array
