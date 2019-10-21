@@ -39,15 +39,19 @@ export class Search extends Component {
 
     }
     return (
-      <form onSubmit={this.handleKey} ref={this.setWrapperRef}>
-        <input
-          placeholder={this.props.objSettings.searchPlaceholder}
-          ref={input => this.search = input}
-          onChange={this.handleInputChange}
-          type="search"
-        />
-        {suggestions}
-      </form>
+      <div className={"search_block"}>
+        <i className={"fa-search"}/>
+        <form onSubmit={this.handleKey} ref={this.setWrapperRef}>
+          <input
+              placeholder={this.props.objSettings.searchPlaceholder}
+              ref={input => this.search = input}
+              onChange={this.handleInputChange}
+              type="search"
+          />
+          {suggestions}
+        </form>
+      </div>
+
     );
   }
 

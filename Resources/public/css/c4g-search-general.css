@@ -1,0 +1,52 @@
+@import url("../../../../bundles/con4giscore/vendor/fontawesome/css/all.css");
+.search_block {
+    display: inline-block;
+    vertical-align: top;
+    text-align: left;
+}
+.fa-search:before {
+    content: "\f002";
+}
+.fa-search {
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    font-size: inherit;
+    position: absolute;
+    padding: 8px;
+    color: #4c997f;
+    background-color: #e8e8e8;
+    margin: 1px;
+}
+.search_block form {
+    max-width: calc(100vw - 300px - 23px - 23px - 30px - 33px);
+    white-space: normal;
+    margin: 0;
+}
+.search_block >form > input[type=search] {
+    padding: 8px 0px 8px 30px;
+    width: 100%;
+    margin: 0;
+    background: #e8e8e8;
+    border: 0px;
+    color: #375d77;
+    vertical-align: top;
+    margin-bottom: 10px;
+}
+.c4g-autocomplete-list {
+    list-style: square;
+    margin: 7px 0 0 0;
+    background: white;
+}
+.c4g-autocomplete-list li {
+    margin: 0;
+    padding: 5px 10px;
+    list-style-type: none;
+    cursor: pointer;
+}
+.c4g-autocomplete-list li:nth-child(2n) {
+    background: #e8e8e8;
+    color: #375d77;
+}
+.c4g-autocomplete-list li:nth-child(2n+1) {
+    color: black;
+}
