@@ -17,8 +17,11 @@
     background-color: #e8e8e8;
     margin: 1px;
 }
+.search_block {
+    width: 100%;
+}
 .search_block form {
-    max-width: calc(100vw - 300px - 23px - 23px - 30px - 33px);
+    /*min-width: calc(100vw - 300px - 23px - 23px - 30px - 33px);*/
     white-space: normal;
     margin: 0;
 }
