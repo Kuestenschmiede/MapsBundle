@@ -12,6 +12,8 @@
  */
 namespace con4gis\MapsBundle\Resources\contao\classes;
 
+use Contao\Controller;
+
 /**
  * Class Utils
  * @package con4gis\MapsBundle\Resources\contao\classes
@@ -90,7 +92,7 @@ class Utils
             $replacement = static::replaceSingleLangTag($match, $lang);
             $result = str_replace($match, $replacement, $result);
         }
-        return $result;
+        return Controller::replaceInsertTags($result);
     }
     
     private static function replaceSingleLangTag($toReplace, $lang)

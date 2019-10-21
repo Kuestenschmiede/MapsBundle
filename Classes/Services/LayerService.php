@@ -64,7 +64,7 @@ class LayerService
         {
             foreach ($arrLayers as $index=>$layer)
             {
-                $strLayerName =  \Contao\Controller::replaceInsertTags($layer['name']);
+                $strLayerName =  Utils::replaceInsertTags($layer['name'], $lang);
                 if (array_key_exists($strLayerName, $this->arrReassignedLayer))
                 {
                     foreach ($this->arrReassignedLayer[$strLayerName] as $reassignedLayer)
@@ -82,7 +82,7 @@ class LayerService
                 {
                     foreach ($layer['childs'] as $childIndex=>$childLayer)
                     {
-                        $strChildLayerName =  \Contao\Controller::replaceInsertTags($childLayer['name']);
+                        $strChildLayerName =  Utils::replaceInsertTags($childLayer['name'], $lang);
                         if (array_key_exists($strChildLayerName, $this->arrReassignedLayer))
                         {
                             foreach ($this->arrReassignedLayer[$strChildLayerName] as $reassignedLayer)
@@ -309,7 +309,7 @@ class LayerService
         $arrLayerData = [];
         $arrLayerData['id'] = $objLayer->id;
         $arrLayerData['pid'] = $objLayer->pid;
-        $arrLayerData['name'] =  Controller::replaceInsertTags($stringClass::decodeEntities($objLayer->name), $lang);
+        $arrLayerData['name'] =  Utils::replaceInsertTags($stringClass::decodeEntities($objLayer->name), $lang);
         $arrLayerData['zoom_locations'] = $objLayer->zoom_locations;
         $arrLayerData['async_content'] = $objLayer->async_content;
         $arrLayerData['noFilter'] = $objLayer->exemptFromFilter;
@@ -350,7 +350,7 @@ class LayerService
         }
 
         if ($objLayer->data_layername) {
-            $arrLayerData['name'] = Controller::replaceInsertTags($stringClass::decodeEntities($objLayer->data_layername), $lang);
+            $arrLayerData['name'] = Utils::replaceInsertTags($stringClass::decodeEntities($objLayer->data_layername), $lang);
             $arrLayerData['display'] = true;
             $arrLayerData['hide_child'] = $objLayer->hide_child;
         } else {
