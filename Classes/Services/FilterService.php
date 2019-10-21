@@ -19,6 +19,7 @@ use con4gis\MapsBundle\Classes\Events\LoadFeatureFiltersEvent;
 use con4gis\MapsBundle\Classes\Filter\FeatureFilter;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapFiltersModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
+use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use Contao\Database;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -42,10 +43,13 @@ class FilterService
     /**
      * @return FeatureFilter[]
      */
-    public function createFilters($profileId)
+    public function createFilters($layerId)
     {
         $return = [];
         $database = Database::getInstance();
+        $layer = C4gMapsModel::findByPk($layerId);
+        $profileId = $layer->profile;
+
         $mapsProfileModel = C4gMapProfilesModel::findById($profileId);
         $filterIds = unserialize($mapsProfileModel->filters);
 

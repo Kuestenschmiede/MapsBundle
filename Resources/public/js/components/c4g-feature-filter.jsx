@@ -127,7 +127,7 @@ export class FeatureFilter extends Component {
 
   loadFilters() {
     const scope = this;
-    let url = "con4gis/filterService/" + this.props.mapController.data.profile + "/" + this.props.mapController.data.lang;
+    let url = "con4gis/filterService/" + this.props.mapController.data.id + "/" + this.props.mapController.data.lang;
     fetch(url).then(function (response) {
       return response.json().then(function(jsonData) {
         jsonData = JSON.parse(jsonData);
