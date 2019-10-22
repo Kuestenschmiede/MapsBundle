@@ -759,7 +759,7 @@ class LayerContentService
         if ( ($objLayer->popupType == "text") && !$objLayer->popup_info && $objLayer->locstyle) {
             $locstyle = C4gMapLocstylesModel::findByPk($objLayer->locstyle);
             if ($locstyle->popup_info) {
-                $popup_content = Utils::replaceInsertTags($locstyle->popup_info);
+                $popup_content = Utils::replaceInsertTags($locstyle->popup_info, $lang);
                 $popup_async = false;
             } else {
                 $popup_content = '';
@@ -906,9 +906,10 @@ class LayerContentService
      * @param bool $key
      * @param bool $folder
      * @param int $count
+     * @param string $lang
      * @return array|bool
      */
-    public function getFolderData($objLayer, $key=false, $folder=false, $count=0)
+    public function getFolderData($objLayer, $key=false, $folder=false, $count=0, $lang = "de")
     {
         if (!$folder) {
             $folder = $this->getFolder($objLayer);
@@ -930,7 +931,7 @@ class LayerContentService
                     $fileFolder = pathinfo($path);
                     $arrSubFolder = $this->getFolderContent($objLayer, $fileFolder, $key, $count);
                     $count += 1;
-                    $data = $this->getFolderData($objLayer,  $arrSubFolder['id'], $folder."/".$value, $count);
+                    $data = $this->getFolderData($objLayer,  $arrSubFolder['id'], $folder."/".$value, $count, $lang);
                     if ($data) {
                         $arrSubFolder['childsCount'] = count($data);
                         $arrSubFolder['childs'] = $data;
@@ -938,7 +939,7 @@ class LayerContentService
                     }
                 } elseif (is_file($path)) {
                     $fileData = pathinfo($path);
-                    $arrFile = $this->getFileContent($objLayer, $folder, $fileData, $key, $countFiles);
+                    $arrFile = $this->getFileContent($objLayer, $folder, $fileData, $key, $countFiles, $lang);
                     $countFiles += 2;
                     if($arrFile) {
                         $arrData[] = $arrFile;
@@ -987,7 +988,7 @@ class LayerContentService
      * @param $count
      * @return array|bool
      */
-    private function getFileContent($objLayer, $folder, $fileInfo, $key, $count)
+    private function getFileContent($objLayer, $folder, $fileInfo, $key, $count, $lang)
     {
         
         switch ($fileInfo['extension']) {
@@ -1016,7 +1017,7 @@ class LayerContentService
                     "cluster_fontcolor" => $objLayer->cluster_fontcolor,
                     "cluster_zoom" => $objLayer->cluster_zoom,
                     "cluster_popup" => $objLayer->cluster_popup,
-                    "loc_linkurl" => Utils::replaceInsertTags($objLayer->loc_linkurl),
+                    "loc_linkurl" => Utils::replaceInsertTags($objLayer->loc_linkurl, $lang),
                     "hover_location" => $objLayer->hover_location,
                     "hover_style" => $objLayer->hover_style,
                     "data" => array
