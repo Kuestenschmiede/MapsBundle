@@ -80,19 +80,29 @@ class Utils
      */
     public static function replaceInsertTags(string $toReplace, string $lang)
     {
-        $language = $lang;
         // convert string into a more parsable form
         $regex = "/{{ifnlng::(de|en)}}.+?{{ifnlng}}{{iflng::(de|en)}}.+?{{iflng}}/";
-//        $regex2 = "^{{iflng::(de|en)}}.+{{iflng}}$";
+        $result = static::processRegex($regex, $toReplace, $lang);
+        $inverseRegex = "/{{iflng::(de|en)}}.+?{{iflng}}{{ifnlng::(de|en)}}.+?{{ifnlng}}/";
+        $result = static::processRegex($inverseRegex, $result, $lang);
+        // check for page language tag
+        if (strpos($result, "{{page::language}}")) {
+            $result = str_replace("{{page::language}}", $lang, $result);
+        }
+        return Controller::replaceInsertTags($result);
+    }
+    
+    private static function processRegex($regex, $replaceBuffer, $lang)
+    {
         $matches = [];
-        $result = $toReplace;
-        preg_match_all($regex, $toReplace, $matches);
+        $result = $replaceBuffer;
+        preg_match_all($regex, $replaceBuffer, $matches);
         // if there are inserttags, they are listed now in $matches
         foreach ($matches[0] as $match) {
             $replacement = static::replaceSingleLangTag($match, $lang);
             $result = str_replace($match, $replacement, $result);
         }
-        return Controller::replaceInsertTags($result);
+        return $result;
     }
     
     private static function replaceSingleLangTag($toReplace, $lang)

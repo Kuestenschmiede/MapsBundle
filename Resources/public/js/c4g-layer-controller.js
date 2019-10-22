@@ -335,7 +335,7 @@ export class C4gLayerController {
                   // calculate bubble-offset
                   iconOffset = [0, 0];
                   if (style[0]) {
-                    if (typeof style[0].getImage() && style[0].getImage().getRadius && typeof style[0].getImage().getRadius === "function") {
+                    if (style[0].getImage() && style[0].getImage().getRadius && typeof style[0].getImage().getRadius === "function") {
                       radius = parseInt(style[0].getImage().getRadius(), 10);
                       if (radius) {
                         iconOffset = [0, radius];
