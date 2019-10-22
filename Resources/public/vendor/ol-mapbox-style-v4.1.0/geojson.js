@@ -1,2 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[1],{116:function(n,o,a){"use strict";a.r(o);a(60);var s=a(37);Object(s.a)("map","data/geojson.json")}},[[116,0]]]);
-//# sourceMappingURL=geojson.js.map

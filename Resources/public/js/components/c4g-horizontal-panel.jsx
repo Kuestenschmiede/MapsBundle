@@ -62,6 +62,7 @@ export class HorizontalPanel extends Component {
       ></div>
     );
   }
+
   clickControl() {
     if (this.state.open) {
       this.close();
@@ -146,4 +147,6 @@ export class HorizontalPanel extends Component {
   addContent(content) {
     this.state.childs.push(content);
   }
+
+
 }
