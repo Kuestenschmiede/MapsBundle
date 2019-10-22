@@ -105,7 +105,7 @@ class LayerContentService
                 return $this->createC4gForumResult($objLayer, $secondFetch);
                 break;
             case "table":
-                return $this->getTableLayerContent($objLayer);
+                return $this->getTableLayerContent($objLayer, $lang);
                 
                 break;
             case 'link':
@@ -357,7 +357,7 @@ class LayerContentService
         ];
     }
     
-    private function getTableLayerContent($objLayer)
+    private function getTableLayerContent($objLayer, $lang)
     {
         $arrReturnData = [];
         $pidOption = '';
@@ -538,13 +538,13 @@ class LayerContentService
                         }
                         $link = preg_replace(['/\[[a-z]+\]/'], $matches, $link);
                     }
-                    $link = Utils::replaceInsertTags($link);
+                    $link = Utils::replaceInsertTags($link, $lang);
                     if (substr($link, 0, 1) == '(' && substr($link, -1, 1) == ')') {
                         $link = substr($link, 1);
                         $link = substr($link, 0, -1);
                     }
                 } else {
-                    $link = Utils::replaceInsertTags($objLayer->loc_linkurl);
+                    $link = Utils::replaceInsertTags($objLayer->loc_linkurl, $lang);
                 }
                 $event = false;
                 if ($objLayer->cluster_popup != 1) {
@@ -558,7 +558,7 @@ class LayerContentService
                                 $arrReturnData[$i]['data']['properties']['popup']['content'] = str_replace('</ul>', '', $arrReturnData[$i]['data']['properties']['popup']['content']);
                             }
                             $arrReturnData[$i]['data']['properties']['popup']['content'] .= $popupContent . '</li></ul>';
-                            $arrReturnData[$i]['data']['properties']['tooltip'] .= ', ' . Utils::replaceInsertTags($arrResult[$tooltipField]);
+                            $arrReturnData[$i]['data']['properties']['tooltip'] .= ', ' . Utils::replaceInsertTags($arrResult[$tooltipField], $lang);
                             $event = true;
                         }
                     }
@@ -567,7 +567,7 @@ class LayerContentService
             
                 if (!$event) {
                     if ($sourceTable == 'tl_content') {
-                        $popupContent = Controller::getContentElement($arrResult['id']) ? Utils::replaceInsertTags(Controller::getContentElement($arrResult['id'])) : $popupContent;
+                        $popupContent = Controller::getContentElement($arrResult['id']) ? Utils::replaceInsertTags(Controller::getContentElement($arrResult['id']), $lang) : $popupContent;
                         $popupContent = str_replace('TL_FILES_URL', '', $popupContent);
                     }
                 
@@ -600,9 +600,9 @@ class LayerContentService
                                     'content' => $popupContent,
                                     'routing_link' => $objLayer->routing_to
                                 ),
-                                'tooltip' => unserialize($arrResult[$tooltipField])['value'] ? unserialize($arrResult[$tooltipField])['value'] : Utils::replaceInsertTags($arrResult[$tooltipField]),
+                                'tooltip' => unserialize($arrResult[$tooltipField])['value'] ? unserialize($arrResult[$tooltipField])['value'] : Utils::replaceInsertTags($arrResult[$tooltipField], $lang),
                                 "tooltip_length" => $objLayer->tooltip_length,
-                                'label' => Utils::replaceInsertTags($arrResult[$labelField]),
+                                'label' => Utils::replaceInsertTags($arrResult[$labelField], $lang),
                                 'zoom_onclick' => $objLayer->loc_onclick_zoomto
                             ),
                         ),
