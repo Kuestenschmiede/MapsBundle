@@ -40,7 +40,7 @@ export class Search extends Component {
     }
     return (
       <div className={"search_block"}>
-        <i className={"fa-search"}/>
+        <i className={"c4g-search-icon"}/>
         <form onSubmit={this.handleKey} ref={this.setWrapperRef}>
           <input
               placeholder={this.props.objSettings.searchPlaceholder}

@@ -4,16 +4,15 @@
     vertical-align: top;
     text-align: left;
 }
-.fa-search:before {
+.c4g-search-icon:before {
     content: "\f689";
 }
-.fa-search {
+.c4g-search-icon {
     font-family: 'Font Awesome 5 Free';
     font-weight: 900;
     font-size: 2em;
     position: absolute;
-    padding: 8px;
-    /*color: #4c997f;*/
+    padding: 6px;
     background-color: #e8e8e8;
     margin: 1px;
     font-style: normal;
