@@ -105,7 +105,6 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['specialprofile_mobile'] = array('Specialprof
 $GLOBALS['TL_LANG']['tl_c4g_maps']['specialprofile_groups'] = array('Groups', 'The groups for which the specialprofile will be active.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['be_optimize_checkboxes_limit']    = array('Limit for optimization of large checkbox-lists',
                                       'Defines how much entries must be there after the checkbox-lists will be converted to chosenfields. (0 = do not convert)');
-$GLOBALS['TL_LANG']['tl_c4g_maps']['typeSelection'] = ['Types of map content elements shown', ''];
 $GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_locations'] = array('Cluster locations','BCluster locations');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_distance'] = array('Cluster distance','Cluster distance');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_fillcolor'] = array('Fill color', 'Select the fill color of the cluster bubble.');
