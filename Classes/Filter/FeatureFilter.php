@@ -25,6 +25,7 @@ class FeatureFilter implements \JsonSerializable
     
     /**
      * The options for the filter field.
+     * ToDo why this new translation way?
      * @var array
      */
     private $filters = [

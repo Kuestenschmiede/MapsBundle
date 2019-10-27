@@ -43,4 +43,22 @@ class C4gMapsModel extends \Model
         return static::findBy($arrColumns, $arrValues, $arrOptions);
     }
 
+    //ToDo Hier nur hotfix für das Laden der richtigen Filter
+    public static function findPublishedByProfile($intProfile, array $arrOptions = array())
+    {
+        $t = static::$strTable;
+        $arrColumns = array("$t.profile=?");
+        $arrValues = array($intProfile);
+
+        if (!C4GUtils::checkBackendUserLogin()) {
+            $time = time();
+            $arrColumns[] = "$t.published=1";
+        }
+
+        if (!isset($arrOptions['order'])) {
+            $arrOptions['order'] = "$t.sorting";
+        }
+
+        return static::findBy($arrColumns, $arrValues, $arrOptions);
+    }
 }
