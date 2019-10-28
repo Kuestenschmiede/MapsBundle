@@ -635,7 +635,8 @@ export class MapController {
       ReactDOM.render(React.createElement(StarboardPanel, {
         target: document.querySelector('#' + mapData.mapDiv + ' .' +cssConstants.OL_OVERLAYCONTAINER_SE),
         mapController: this,
-        direction: "right"
+        direction: "right",
+        open: !!mapData.starboard.open
       }), this.reactContainer);
       this.$overlaycontainer_stopevent.append(this.reactContainer);
     }
