@@ -34,8 +34,9 @@ export class FeatureFilterList extends Component {
         else {
             className = "c4g-close";
         }
+        let liClass = this.props.checkedItem.identifier === "all" ? "" : "c4g-item-checked";
         return (
-            <li>
+            <li className={liClass}>
                 <strong className={className} onMouseUp={(evt) => {this.props.setOpen(this.props.id); evt.stopPropagation(); evt.preventDefault();}}><span/>{this.props.feature.name}</strong>
                 {form}
             </li>
