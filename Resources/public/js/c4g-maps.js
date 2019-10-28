@@ -235,6 +235,17 @@ export class MapController {
           mapData.center.zoom = !isNaN(permalink[2]) ? permalink[2] : mapData.center.zoom;
           // disable zooming to all locations
           mapData.calc_extent = "CENTERZOOM";
+        } else if (permalink.length === 4) {
+          permalink[0] = parseFloat(permalink[0]);
+          mapData.center.lon = !isNaN(permalink[0]) ? permalink[0] : mapData.center.lon;
+          permalink[1] = parseFloat(permalink[1]);
+          mapData.center.lat = !isNaN(permalink[1]) ? permalink[1] : mapData.center.lat;
+          permalink[2] = parseInt(permalink[2], 10);
+          mapData.center.zoom = !isNaN(permalink[2]) ? permalink[2] : mapData.center.zoom;
+          permalink[3] = parseInt(permalink[3], 10);
+          mapData.default_baselayer = permalink[3];
+          // disable zooming to all locations
+          mapData.calc_extent = "CENTERZOOM";
         }
         permalink = false;
       }
