@@ -14,3 +14,21 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 
+export class Titlebar extends Component {
+
+  constructor(props) {
+    super(props);
+
+  }
+
+  render() {
+    return (
+      <div className={this.props.wrapperClass}>
+        <span className={this.props.headerClass}>{this.props.header}</span>
+        <button className={this.props.detailBtnClass} onMouseUp={this.props.detailBtnCb}></button>
+        <button className={this.props.closeBtnClass} onMouseUp={this.props.closeBtnCb}></button>
+      </div>
+    );
+  }
+
+}

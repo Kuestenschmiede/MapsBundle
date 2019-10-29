@@ -885,7 +885,7 @@ export class MapController {
     if ((mapData.geosearch.enable)) {
       this.controls.geosearch = new GeoSearch({
         mapController: this,
-        target: controlContainerTopRight,
+        target: controlContainerTopLeft,
         extDiv: mapData.geosearch.div || false,
         collapsible: true,
         collapsed: mapData.geosearch.collapsed,
@@ -926,7 +926,7 @@ export class MapController {
 
     // overview-map
     if (mapData.overviewmap) {
-      let overviewMapOptions = {target: controlContainerTopRight, mapController: this, collapsed: true};
+      let overviewMapOptions = {target: controlContainerTopLeft, mapController: this, collapsed: true};
       const scope = this;
       const addOverviewMap = function() {
         let activeBaselayer = scope.proxy.activeBaselayerId;
