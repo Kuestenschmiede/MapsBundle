@@ -61,7 +61,7 @@ export class StarboardLayerswitcher extends Component {
 
   componentDidMount() {
     if (this.props.open) {
-      // ToDo there must be a better solution to this....
+      // ToDo there must be a better solution to this...
       window.setTimeout(() => this.props.openfunc(), 500);
     }
   }
@@ -111,7 +111,7 @@ export class StarboardLayerswitcher extends Component {
                   if (item.pid === this.props.mapController.data.id) //skip childs of layers
                     return <C4gStarboardLayerElement key={item.id} id={item.id} mapController={this.props.mapController}
                                                      objStates={this.state.layerStates} parentCallback={this.callbackFunction}
-                                                     name={item.name}/>;
+                                                     name={item.name} collapsed={!item.initial_opened}/>;
                   return null;
                 })}
               </ul>
