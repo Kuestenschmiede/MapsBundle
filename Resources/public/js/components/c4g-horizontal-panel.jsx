@@ -24,7 +24,7 @@ export class HorizontalPanel extends Component {
     // create control to toggle the panel
     let element = document.createElement('div');
     let button = document.createElement('button');
-    element.className = (props.className || "c4g-horizontal-panel") + "-button-" + (props.direction || "top") + " ol-control";
+    element.className = (props.className || "c4g-horizontal-panel") + "-button-" + (props.direction || "top") + " ol-control " + "ol-unselectable";
     element.appendChild(button);
     this.clickControl = this.clickControl.bind(this);
     jQuery(button).on('click', this.clickControl);
