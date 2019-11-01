@@ -72,6 +72,15 @@
   display: none;
 }
 
+div.c4g-control-container-top-left.ol-unselectable > div.ol-unselectable.ol-control {
+  width: 38px;
+  margin-right: 0;
+}
+div.c4g-control-container-top-left.ol-unselectable > div.ol-unselectable.ol-control.c4g-geosearch {
+  width: 100%;
+  margin-right: 0;
+}
+
 /*
  *  Control-container
  */
@@ -175,7 +184,7 @@ div.ol-zoom-position,
 /*}*/
 
 .c4g-geosearch-wrapper {
-  float: left;
+  /*float: left;*/
 }
 
 .c4g-geosearch-wrapper .searchResultButton {

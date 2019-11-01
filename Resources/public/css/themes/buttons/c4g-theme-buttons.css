@@ -714,7 +714,6 @@ button.ol-zoom-out {
   border-radius: 0%;
   border-radius: var(--button-radius-percent);
   display: block;
-  float: right;
 }
 .c4g-geosearch.c4g-open, .c4g-geosearch.c4g-open:hover {
   background: none;

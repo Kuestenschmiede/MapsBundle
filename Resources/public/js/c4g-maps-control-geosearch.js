@@ -139,7 +139,7 @@ export class GeoSearch extends Control {
     element = document.createElement('div');
     element.className = options.className + ' ' + cssConstants.OL_UNSELECTABLE + ' ' + cssConstants.OL_CONTROL;
 
-    if ((options.collapsed && !options.extDiv) & !(this.config.caching && utils.getValue('geosearch') == '1')) {
+    if ((options.collapsed && !options.extDiv) && !(this.config.caching && utils.getValue('geosearch') == '1')) {
       jQuery(element).addClass(cssConstants.CLOSE);
     } else {
       jQuery(element).addClass(cssConstants.OPEN);

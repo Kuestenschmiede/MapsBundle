@@ -22,11 +22,12 @@ export class C4gStarboardLayerElement extends Component {
         this.state = {
             initialized: false,
             active: !props.objStates[props.id].hide,
-            collapsed: true,
+            collapsed: this.props.collapsed,
             disabled: props.mapController.proxy.checkLayerIsActiveForZoom(scope.props.id)
         };
 
     }
+
     static getDerivedStateFromProps(props, state) {
         if (state.active === props.objStates[props.id].hide) {
             return {
@@ -35,6 +36,7 @@ export class C4gStarboardLayerElement extends Component {
         }
         return null;
     }
+
     callbackFunction = (objChild = null) => {
         if (!objChild) {
             let objReturn = this.props.objStates;
@@ -57,6 +59,7 @@ export class C4gStarboardLayerElement extends Component {
         }
 
     };
+
     hideShowChilds = (objChild, newState) => {
         objChild.hide = newState;
         if (objChild.childs) {
@@ -68,6 +71,7 @@ export class C4gStarboardLayerElement extends Component {
         }
         return objChild
     };
+
     render() {
         const scope = this;
         let span = null;
