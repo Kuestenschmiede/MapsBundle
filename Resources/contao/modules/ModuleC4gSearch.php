@@ -44,6 +44,11 @@ class ModuleC4gSearch extends \Module
         $pageUrl = Controller::replaceInsertTags("{{link_url::" . $pageId . "}}");
         ResourceLoader::loadJavaScriptDeferred('c4g-search', "/bundles/con4gismaps/build/c4g-search.js");
         ResourceLoader::loadCssResourceDeferred("/bundles/con4gismaps/css/c4g-search-general.css");
+
+        //ToDo use contao components
+        ResourceLoader::loadJavaScriptDeferred('jquery-ui', "/bundles/con4giscore/vendor/jQuery/jquery-ui-1.12.1.custom/jquery-ui.js");
+        ResourceLoader::loadCssRessource('jquery-ui-css', "/bundles/con4giscore/vendor/jQuery/jquery-ui-1.12.1.custom/jquery-ui.css");
+
         $template = $this->Template;
         $objSettings = C4gSettingsModel::findSettings();
         $urlMap = Controller::replaceInsertTags("{{link_url::" . $this->c4g_map_site_id . "}}");

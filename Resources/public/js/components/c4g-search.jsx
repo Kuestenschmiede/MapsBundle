@@ -43,10 +43,12 @@ export class Search extends Component {
         <i className={"c4g-search-icon"}/>
         <form onSubmit={this.handleKey} ref={this.setWrapperRef}>
           <input
+              type="search"
+              name="mapsearch"
+              aria-label="Search destinations on the map"
               placeholder={this.props.objSettings.searchPlaceholder}
               ref={input => this.search = input}
               onChange={this.handleInputChange}
-              type="search"
           />
           {suggestions}
         </form>
