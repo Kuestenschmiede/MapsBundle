@@ -144,7 +144,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['name'],
             'exclude'                 => true,
             'inputType'               => 'text',
-            'eval'                    => ['mandatory'=>true, 'maxlength'=>30, 'tl_class'=>'w50'],
+            'eval'                    => ['mandatory'=>true, 'tl_class'=>'long'],
             'sql'                     => "varchar(255) NOT NULL default ''"
             ],
 
