@@ -92,6 +92,7 @@ export class GeoSearch extends Component {
 
     this.inputCallback = this.inputCallback.bind(this);
     this.startSearch = this.startSearch.bind(this);
+    this.zoomTo = this.zoomTo.bind(this);
   }
 
   render() {
@@ -102,7 +103,7 @@ export class GeoSearch extends Component {
           <input type="text" onKeyDown={this.inputCallback} id={"c4g-geosearch-input"}/>
           <button className={cssConstants.GEOSEARCH_START} title={this.langConstants.CTRL_START_SEARCH} onMouseUp={this.startSearch}/>
         </div>
-        <GeoSearchResults results={this.state.results}/>
+        <GeoSearchResults className={modeClass} results={this.state.results} zoomFunc={this.zoomTo}/>
       </React.Fragment>
     );
   }
@@ -123,35 +124,7 @@ export class GeoSearch extends Component {
     if (event.which === 13) {
       let searchInput = jQuery("#c4g-geosearch-input");
       if (searchInput.val()) {
-
         this.findLocation(searchInput.val());
-
-        // if (document.getElementById("resultcontainer")) {
-        //   document.getElementById("resultcontainer").parentNode.removeChild(document.getElementById("resultcontainer"));
-        // }
-        // if (this.config.results) {
-        //
-        //   var searchResultContainer = document.createElement('ul');
-        //   searchResultContainer.setAttribute("id", "resultcontainer");
-        //   for (var i = 0; i < self.results.length; i++) {
-        //     var searchResult = document.createElement('li');
-        //     var searchResultButton = document.createElement('button');
-        //     searchResultButton.setAttribute("id", i);
-        //     searchResultButton.setAttribute('class', 'searchResultButton');
-        //     searchResultButton.addEventListener('click', function () {
-        //       self.zoomTo(this.getAttribute("id"))
-        //     });
-        //
-        //     searchResultButton.setAttribute("name", self.results[i].display_name);
-        //     searchResultButton.innerHTML = self.results[i].display_name;
-        //     searchResult.appendChild(searchResultButton);
-        //     searchResultContainer.appendChild(searchResult);
-        //
-        //   }
-        //   if (searchWrapper) {
-        //     searchWrapper.appendChild(searchResultContainer);
-        //   }
-        // }
       }
       return false;
     }
@@ -241,9 +214,9 @@ export class GeoSearch extends Component {
               resultCoordinate = transform([parseFloat(result.lon), parseFloat(result.lat)], 'EPSG:4326', 'EPSG:3857');
 
               if (animate) {
-                scope.flyTo(map, resultCoordinate, scope.config.zoomlevel, scope.config.zoombounds, result.boundingbox, markResult, animate);
+                scope.flyTo(map, resultCoordinate, scope.config.zoomlevel, scope.config.zoombounds, result.boundingbox, markResult, animate, map.getView());
               } else {
-                scope.completeSearch(scope.config.markResult, scope.config.animate);
+                scope.completeSearch(scope.config.markResult, scope.config.animate, zoomType, animationDuration);
                 mapView.setCenter(resultCoordinate);
                 if (scope.config.zoomlevel >= 0) {
                   map.getView().setZoom(scope.config.zoomlevel);
@@ -362,7 +335,7 @@ export class GeoSearch extends Component {
 
   }
 
-  flyTo(map, location, zoomlevel, zoombounds, boundingbox, markResult, animate) {
+  flyTo(map, location, zoomlevel, zoombounds, boundingbox, markResult, animate, mapView) {
     let duration = 2000;
     let zoom = zoomlevel;
     let parts = 2;
@@ -403,7 +376,7 @@ export class GeoSearch extends Component {
           }, duration)
         }
 
-        scope.completeSearch(markResult, animate);
+        scope.completeSearch(markResult, animate, "bounce", duration, location);
       }
     }
 
@@ -421,7 +394,7 @@ export class GeoSearch extends Component {
     }, callback);
   }
 
-  completeSearch(markResult, animate) {
+  completeSearch(markResult, animate, zoomType, animationDuration, resultCoordinate) {
     // result marker & animation
     if (markResult) {
       let addMarker,
@@ -527,24 +500,20 @@ export class GeoSearch extends Component {
    */
   zoomTo(index) {
     let map,
-      animate,
-      markResult,
       result,
       resultCoordinate,
-      flyTo,
-      completeSearch,
-      animationDuration,
       mapController,
       zoomType;
 
     const scope = this;
     mapController = this.props.mapController;
     map = mapController.map;
+    let mapView = map.getView();
 
     result = scope.results[index];
     resultCoordinate = transform([parseFloat(result.lon), parseFloat(result.lat)], 'EPSG:4326', 'EPSG:3857');
 
-    if (animate) {
+    if (this.config.animate) {
       var resolution = mapView.getResolution();
       var viewExtent = mapView.calculateExtent(map.getSize());
       if (containsCoordinate(viewExtent, resultCoordinate)) {
@@ -563,10 +532,11 @@ export class GeoSearch extends Component {
         zoomType = 'bounce';
       }
 
-      this.flyTo(map, resultCoordinate, this.config.zoomlevel, this.config.zoombounds, result.boundingbox, this.config.markResult, this.config.animate);
+      this.flyTo(map, resultCoordinate, this.config.zoomlevel, this.config.zoombounds, result.boundingbox, this.config.markResult, this.config.animate, mapView);
     }
     else {
-      this.completeSearch(this.config.markResult, this.config.animate);
+      let animationDuration = 2000;
+      this.completeSearch(this.config.markResult, this.config.animate, zoomType, animationDuration, resultCoordinate);
       map.getView().setCenter(resultCoordinate);
       if (this.config.zoomlevel >= 0) {
         map.getView().setZoom(this.config.zoomlevel);

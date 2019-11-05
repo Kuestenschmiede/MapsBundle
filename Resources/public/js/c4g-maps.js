@@ -885,7 +885,7 @@ export class MapController {
     if ((mapData.geosearch.enable)) {
       let geosearchOptions = {
         mapController: this,
-        target: controlContainerTopLeft,
+        target: document.querySelector('#' + mapData.mapDiv + ' .c4g-control-container-top-left'),
         extDiv: mapData.geosearch.div || false,
         collapsible: true,
         collapsed: mapData.geosearch.collapsed,
@@ -906,10 +906,7 @@ export class MapController {
       // this.map.addControl(this.controls.geosearch);
       this.searchContainer = document.createElement('div');
       // this.v.style.right = "-100%";
-      ReactDOM.render(React.createElement(GeoSearch, {
-        target: document.querySelector('#' + mapData.mapDiv + ' .c4g-control-container-top-left'),
-        mapController: this
-      }), this.searchContainer);
+      ReactDOM.render(React.createElement(GeoSearch, geosearchOptions), this.searchContainer);
       this.$overlaycontainer_stopevent.append(this.searchContainer);
       // open if opened before
       // if ((mapData.caching && (utils.getValue(this.controls.geosearch.options.name) === '1'))) {

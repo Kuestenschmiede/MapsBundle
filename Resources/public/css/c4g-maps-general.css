@@ -76,10 +76,6 @@ div.c4g-control-container-top-left.ol-unselectable > div.ol-unselectable.ol-cont
   width: 38px;
   margin-right: 0;
 }
-div.c4g-control-container-top-left.ol-unselectable > div.ol-unselectable.ol-control.c4g-geosearch {
-  width: 100%;
-  margin-right: 0;
-}
 
 /*
  *  Control-container
@@ -216,6 +212,10 @@ button.c4g-geosearch-start:before {
   margin-left: auto;
   margin-right: auto;
   max-width: 640px;
+}
+
+.c4g-geosearch-results.c4g-close {
+  display: none;
 }
 
 /*

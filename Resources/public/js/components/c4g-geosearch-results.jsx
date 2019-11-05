@@ -23,11 +23,12 @@ export class GeoSearchResults extends Component {
   }
 
   render() {
+    const scope = this;
     return (
-      <div className={"c4g-geosearch-results"}>
+      <div className={"c4g-geosearch-results " + this.props.className}>
         <ul id={"resultcontainer"}>
           {this.props.results.map(function(element, index) {
-            return (<li key={index}><button key={index} id={index} className={"searchResultButton"} name={element}>{element}</button></li>)
+            return (<li key={index}><button key={index} id={index} className={"searchResultButton"} name={element} onMouseUp={() => scope.props.zoomFunc(index)}>{element}</button></li>)
           })}
         </ul>
       </div>
