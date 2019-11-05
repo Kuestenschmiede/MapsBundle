@@ -86,7 +86,8 @@ export class GeoSearch extends Component {
     this.state = {
       open: false,
       query: "", // the search query
-      results: []
+      results: [],
+      currentCoordinate: []
     };
 
 
@@ -134,6 +135,7 @@ export class GeoSearch extends Component {
     if (this.state.open) {
       this.setState({open: false});
     } else {
+      this.props.mapController.hideOtherComponents(this);
       this.setState({open: true});
     }
   }
@@ -315,7 +317,7 @@ export class GeoSearch extends Component {
               for (var i = 0; i < scope.results.length; i++) {
                 results.push(scope.results[i].display_name);
               }
-              scope.setState({results: results});
+              scope.setState({results: results, currentCoordinate: currentCoordinate});
             }
           }
 
@@ -509,6 +511,7 @@ export class GeoSearch extends Component {
     mapController = this.props.mapController;
     map = mapController.map;
     let mapView = map.getView();
+    let currentCoordinate = this.state.currentCoordinate;
 
     result = scope.results[index];
     resultCoordinate = transform([parseFloat(result.lon), parseFloat(result.lat)], 'EPSG:4326', 'EPSG:3857');

@@ -166,6 +166,7 @@ export class MapController {
       Document = Browser.Document;
     }
     this.proxy = new MapProxy({mapController: this});
+    this.components = this.components || {};
 
     // check permalink
     if (mapData.permalink.enable) {
@@ -906,7 +907,7 @@ export class MapController {
       // this.map.addControl(this.controls.geosearch);
       this.searchContainer = document.createElement('div');
       // this.v.style.right = "-100%";
-      ReactDOM.render(React.createElement(GeoSearch, geosearchOptions), this.searchContainer);
+      this.components.geosearch = ReactDOM.render(React.createElement(GeoSearch, geosearchOptions), this.searchContainer);
       this.$overlaycontainer_stopevent.append(this.searchContainer);
       // open if opened before
       // if ((mapData.caching && (utils.getValue(this.controls.geosearch.options.name) === '1'))) {
@@ -1074,6 +1075,17 @@ export class MapController {
         mapController: this,
         Container: controlContainerTopLeft
       });
+    }
+  }
+
+  hideOtherComponents(objComponent) {
+    let components = this.components;
+    for (let key in components) {
+      if (components.hasOwnProperty(key)) {
+        if (components[key] !== objComponent) {
+          components[key].setState({open:false});
+        }
+      }
     }
   }
 

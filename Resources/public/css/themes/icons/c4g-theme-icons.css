@@ -294,7 +294,7 @@ button.c4g-starboard-view-trigger-starboardplugin:before {
   font-size: inherit;
 }
 /* Geosearch */
-button.c4g-geosearch-start:before {
+.c4g-geosearch button:before, button.c4g-geosearch-start:before {
   content: "\f002";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
