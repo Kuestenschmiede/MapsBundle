@@ -481,6 +481,11 @@ export class MapProxy {
           window.c4gMapsPopup.popup.setPosition(self.options.mapController.map.getView().getCenter());
         }
       }
+      else if(feature.getGeometry() && feature.getGeometry().getType() === 'Polygon') {
+        let extent = feature.getGeometry().getExtent();
+        let center = [(extent[0] + extent[2]) / 2, (extent[1] + extent[3]) / 2,];
+        window.c4gMapsPopup.popup.setPosition(center);
+      }
     } else {
       // hide popup if there is no valid content left
       window.c4gMapsPopup.$popup.removeClass(cssConstants.ACTIVE);
