@@ -20,7 +20,7 @@ import {Print} from "./c4g-maps-control-print";
 import {Grid} from "./c4g-maps-control-grid";
 import {Zoomlevel} from "./c4g-maps-control-zoomlevel";
 import {OverviewMap} from "./c4g-maps-control-overviewmap";
-import {GeoSearch} from "./c4g-maps-control-geosearch";
+import {GeoSearch} from "./components/c4g-geosearch.jsx";
 import {Permalink} from "./c4g-maps-control-permalink";
 import {Starboard} from "./c4g-maps-control-starboard";
 import {Account} from "./c4g-maps-control-portside-account";
@@ -883,7 +883,7 @@ export class MapController {
 
     // geosearch
     if ((mapData.geosearch.enable)) {
-      this.controls.geosearch = new GeoSearch({
+      let geosearchOptions = {
         mapController: this,
         target: controlContainerTopLeft,
         extDiv: mapData.geosearch.div || false,
@@ -901,8 +901,16 @@ export class MapController {
         autopick: mapData.geopicker,
         caching: mapData.caching,
         results: mapData.geosearch.results
-      });
-      this.map.addControl(this.controls.geosearch);
+      };
+      // this.controls.geosearch = new GeoSearch();
+      // this.map.addControl(this.controls.geosearch);
+      this.searchContainer = document.createElement('div');
+      // this.v.style.right = "-100%";
+      ReactDOM.render(React.createElement(GeoSearch, {
+        target: document.querySelector('#' + mapData.mapDiv + ' .c4g-control-container-top-left'),
+        mapController: this
+      }), this.searchContainer);
+      this.$overlaycontainer_stopevent.append(this.searchContainer);
       // open if opened before
       // if ((mapData.caching && (utils.getValue(this.controls.geosearch.options.name) === '1'))) {
       //   this.controls.geosearch.open();

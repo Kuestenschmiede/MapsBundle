@@ -330,6 +330,15 @@ span.c4g-active ul li.c4g-active{
   border-color: var(--shadow-color);
 }
 
+.c4g-geosearch-results button {
+  color: rgba(255,255,255,.9);
+  color: var(--font-color);
+  background-color: rgba(24, 61, 93,.8);
+  background-color: var(--main-color);
+  background-image: none;
+  border: none;
+}
+
 /*
  *  Overview-map
  */
@@ -591,3 +600,5 @@ button.c4g-popup-close:hover {
   color: rgba(255,255,255,.9);
   color: var(--font-color);
 }
+
+
