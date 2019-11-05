@@ -919,6 +919,7 @@ export class MapController {
         logoLink.className = cssConstants.ATTRIBUTION_LOGO;
         logoGraphic = document.createElement('img');
         logoGraphic.src = 'bundles/con4gismaps/images/logo_con4gis.svg';
+        logoGraphic.alt = 'con4gis logo';
         logoLink.appendChild(logoGraphic);
         controlContainerBottomRight.appendChild(logoLink);
       }
