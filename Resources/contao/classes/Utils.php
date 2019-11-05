@@ -13,6 +13,7 @@
 namespace con4gis\MapsBundle\Resources\contao\classes;
 
 use Contao\Controller;
+use Contao\PageModel;
 
 /**
  * Class Utils
@@ -81,15 +82,11 @@ class Utils
     public static function replaceInsertTags(string $toReplace, string $lang)
     {
         // convert string into a more parsable form
-        $regex = "/{{ifnlng::(de|en)}}.+?{{ifnlng}}{{iflng::(de|en)}}.+?{{iflng}}/";
-        $result = static::processRegex($regex, $toReplace, $lang);
-        $inverseRegex = "/{{iflng::(de|en)}}.+?{{iflng}}{{ifnlng::(de|en)}}.+?{{ifnlng}}/";
-        $result = static::processRegex($inverseRegex, $result, $lang);
-        // check for page language tag
-        if (strpos($result, "{{page::language}}")) {
-            $result = str_replace("{{page::language}}", $lang, $result);
-        }
-        return Controller::replaceInsertTags($result);
+        $result = $toReplace;
+        global $objPage;
+        $objPage = $objPage ?: PageModel::findByPk(1);
+        $objPage->language = $lang;
+        return html_entity_decode(Controller::replaceInsertTags($result));
     }
     
     private static function processRegex($regex, $replaceBuffer, $lang)
