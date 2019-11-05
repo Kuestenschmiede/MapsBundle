@@ -86,7 +86,7 @@ class Utils
         global $objPage;
         $objPage = $objPage ?: PageModel::findByPk(1);
         $objPage->language = $lang;
-        return Controller::replaceInsertTags($result);
+        return html_entity_decode(Controller::replaceInsertTags($result));
     }
     
     private static function processRegex($regex, $replaceBuffer, $lang)
