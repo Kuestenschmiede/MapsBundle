@@ -13,6 +13,7 @@
 namespace con4gis\MapsBundle\Resources\contao\classes;
 
 use Contao\Controller;
+use Contao\Database;
 use Contao\PageModel;
 
 /**
@@ -85,7 +86,8 @@ class Utils
         // convert string into a more parsable form
         $result = $toReplace;
         global $objPage;
-        $objPage = $objPage ?: PageModel::findByPk(1);
+        $ids = Database::getInstance()->prepare("SELECT id FROM tl_page LIMIT 1")->execute()->fetchAllAssoc();
+        $objPage = $objPage ?: PageModel::findByPk($ids[0]);
         $objPage->language = $lang;
         return html_entity_decode(Controller::replaceInsertTags($result));
     }
