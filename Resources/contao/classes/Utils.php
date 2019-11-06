@@ -86,8 +86,8 @@ class Utils
         // convert string into a more parsable form
         $result = $toReplace;
         global $objPage;
-        $ids = Database::getInstance()->prepare("SELECT id FROM tl_page LIMIT 1")->execute()->fetchAllAssoc();
-        $objPage = $objPage ?: PageModel::findByPk($ids[0]);
+        $id = Database::getInstance()->prepare("SELECT id FROM tl_page LIMIT 1")->execute()->fetchAssoc();
+        $objPage = $objPage ?: PageModel::findByPk($id['id']);
         $objPage->language = $lang;
         return html_entity_decode(Controller::replaceInsertTags($result));
     }
