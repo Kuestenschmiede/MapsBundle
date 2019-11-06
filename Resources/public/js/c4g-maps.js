@@ -901,7 +901,8 @@ export class MapController {
         popup: mapData.geosearch.popup,
         autopick: mapData.geopicker,
         caching: mapData.caching,
-        results: mapData.geosearch.results
+        results: mapData.geosearch.results,
+        resultCount: mapData.geosearch.result_count
       };
       // this.controls.geosearch = new GeoSearch();
       // this.map.addControl(this.controls.geosearch);

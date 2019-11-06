@@ -80,6 +80,7 @@ export class GeoSearch extends Component {
     this.config.results = props.results;
 
     this.config.collapsed = props.collapsed;
+    this.config.resultCount = props.resultCount;
 
     this.config.caching = props.caching;
 
@@ -182,6 +183,9 @@ export class GeoSearch extends Component {
         format: "json",
         q: location
       };
+      if (this.config.resultCount) {
+        data.limit = this.config.resultCount;
+      }
       if (this.config.key) {
         data.key = this.config.key;
       }

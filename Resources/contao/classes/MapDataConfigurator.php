@@ -430,6 +430,7 @@ class MapDataConfigurator
                     $mapData['geosearch']['custom_attribution'] = \Contao\Controller::replaceInsertTags($profile->geosearch_customengine_attribution);
                 }
                 $mapData['geosearch']['results'] = $profile->geosearch_results;
+                $mapData['geosearch']['result_count'] = $profile->geosearch_result_count;
                 $mapData['geosearch']['div'] = $profile->geosearch_div;
                 $mapData['geosearch']['searchzoom'] = $profile->geosearch_zoomto;
                 $mapData['geosearch']['zoombounds'] = $profile->geosearch_zoombounds;

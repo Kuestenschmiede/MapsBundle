@@ -271,7 +271,7 @@ class LayerContentService
             $arrReturnData["data"]["popup"]['content'] = "tl_c4g_maps" . ":" . $objLayer->id;
         } else {
             $arrReturnData["data"]["popup"]['async'] = false;
-            $arrReturnData["data"]["popup"]['content'] = Utils::replaceInsertTags($objLayer->popup_info, $lang);
+            $arrReturnData["data"]["popup"]['content'] = Utils::replaceInsertTags($objLayer->popup_info ?: "", $lang);
             $arrReturnData["data"]["popup"]['routing_link'] = $objLayer->routing_to;
             $arrReturnData["data"]["popup"]['showPopupOnActive'] = $objLayer->showPopupOnActive;
         }
