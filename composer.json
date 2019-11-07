@@ -19,7 +19,10 @@
   ],
   "support": {
     "email": "support@con4gis.org",
-    "issues": "https://github.com/Kuestenschmiede/MapsBundle/issues"
+    "issues": "https://github.com/Kuestenschmiede/MapsBundle/issues",
+    "source": "https://github.com/Kuestenschmiede/MapsBundle",
+    "forum": "https://docs.con4gis.org/supportforum?state=forum:95",
+    "docs": "https://docs.con4gis.org/con4gis-maps"
   },
   "require": {
     "php": "^7.1",
@@ -27,6 +30,11 @@
     "contao/calendar-bundle": "^4.4",
     "con4gis/core": "^3.3",
     "phayes/geophp": "^1.2"
+  },
+  "suggest": {
+    "con4gis/routing": "Extends the map functions to include routing and radius search.",
+    "con4gis/editor": "Adds a map editor to the map functions. Usable in the Contao backend and for map projects in the frontend.",
+    "con4gis/import": "Useful to import map content."
   },
   "conflict": {
     "contao/core": "*",
