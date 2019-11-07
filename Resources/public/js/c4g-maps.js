@@ -902,7 +902,9 @@ export class MapController {
         autopick: mapData.geopicker,
         caching: mapData.caching,
         results: mapData.geosearch.results,
-        resultCount: mapData.geosearch.result_count
+        resultCount: mapData.geosearch.result_count,
+        resultsHeadline: mapData.geosearch.results_headline,
+        headline: mapData.geosearch.headline
       };
       // this.controls.geosearch = new GeoSearch();
       // this.map.addControl(this.controls.geosearch);

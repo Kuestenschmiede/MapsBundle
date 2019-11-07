@@ -119,7 +119,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         'attribution'                 => 'collapsed_attribution,add_attribution,cfg_logo_attribution,div_attribution',
         'hover_popups'                => 'hover_popups_stay',
         'permalink'                   => 'permalink_get_param',
-        'geosearch'                   => 'geosearch_engine,geosearch_show,geosearchParams,geosearch_results,geosearch_results_headline,geosearch_result_count,geosearch_zoomto,geosearch_zoombounds,geosearch_animate,geosearch_markresult,geosearch_popup,geosearch_attribution,geosearch_collapsed,geosearch_div',
+        'geosearch'                   => 'geosearch_headline,geosearch_engine,geosearch_show,geosearchParams,geosearch_results,geosearch_results_headline,geosearch_result_count,geosearch_zoomto,geosearch_zoombounds,geosearch_animate,geosearch_markresult,geosearch_popup,geosearch_attribution,geosearch_collapsed,geosearch_div',
         'geopicker'                   => 'geopicker_fieldx,geopicker_fieldy,geopicker_searchdiv,geopicker_attribution,geopicker_disabled,geopicker_anonymous',
         'cesium'                      => 'cesium_always',
         'overpassEngine_1'            => 'overpass_url',
@@ -682,6 +682,15 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'inputType'               => 'checkbox',
             'eval'                    => ['submitOnChange' => true],
             'sql'                     => "char(1) NOT NULL default ''"
+        ],
+    
+        'geosearch_headline' =>
+        [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_headline'],
+            'exclude'                 => true,
+            'default'                 => "Suche",
+            'inputType'               => 'text',
+            'sql'                     => "varchar(255) NOT NULL default 'Suche'"
         ],
 
         'geosearch_engine' =>

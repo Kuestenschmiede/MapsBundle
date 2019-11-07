@@ -27,6 +27,7 @@ import {getVectorContext} from "ol/render";
 import {unByKey} from "ol/Observable";
 import {utils} from "../c4g-maps-utils";
 import {containsCoordinate, getHeight, getWidth} from "ol/extent";
+import {Titlebar} from "./c4g-titlebar";
 
 export class GeoSearch extends Component {
 
@@ -88,24 +89,41 @@ export class GeoSearch extends Component {
       open: false,
       query: "", // the search query
       results: [],
-      currentCoordinate: []
+      currentCoordinate: [],
+      openResults: false,
+      detailOpenResults: false
     };
 
 
     this.inputCallback = this.inputCallback.bind(this);
     this.startSearch = this.startSearch.bind(this);
     this.zoomTo = this.zoomTo.bind(this);
+    this.closeResults = this.closeResults.bind(this);
+    this.openResults = this.openResults.bind(this);
   }
 
   render() {
     let modeClass = this.state.open ? "c4g-open" : "c4g-close";
+    let results = "";
+    if (this.state.openResults) {
+      results = <GeoSearchResults className={modeClass} results={this.state.results} zoomFunc={(idx) => {this.setState({detailOpenResults: false}); this.zoomTo(idx);}}
+                                  closeResults={this.closeResults} headline={this.props.resultsHeadline}
+                                  open={this.state.results.length >0} openResults={this.openResults} detailOpen={this.state.detailOpenResults}
+      />;
+    }
     return (
       <React.Fragment>
-        <div className={cssConstants.GEOSEARCH_WRAPPER + " " + modeClass}>
-          <input type="text" onKeyDown={this.inputCallback} id={"c4g-geosearch-input"}/>
-          <button className={cssConstants.GEOSEARCH_START} title={this.langConstants.CTRL_START_SEARCH} onMouseUp={this.startSearch}/>
+        <div className={cssConstants.GEOSEARCH_WRAPPER + " " + modeClass + " c4g-horizon"}>
+          <Titlebar wrapperClass={"c4g-geosearch-header c4g-horizon-header"} header={this.props.headline} headerClass={"c4g-geosearch-headline c4g-horizon-header-headline"}
+                                detailBtnClass={""} detailBtnCb={""} closeBtnClass={""} closeBtnCb={""}>
+
+          </Titlebar>
+          <div className={"c4g-horizon-content"}>
+            <input type="text" onKeyDown={this.inputCallback} id={"c4g-geosearch-input"}/>
+            <button className={cssConstants.GEOSEARCH_START} title={this.langConstants.CTRL_START_SEARCH} onMouseUp={this.startSearch}/>
+          </div>
         </div>
-        <GeoSearchResults className={modeClass} results={this.state.results} zoomFunc={this.zoomTo} closeResults={this.closeResults}/>
+        {results}
       </React.Fragment>
     );
   }
@@ -142,7 +160,11 @@ export class GeoSearch extends Component {
   }
 
   closeResults() {
-    this.setState({openResults: false});
+    this.setState({detailOpenResults: false});
+  }
+
+  openResults() {
+    this.setState({detailOpenResults: true});
   }
 
   findLocation(location, opt_options) {
@@ -325,7 +347,7 @@ export class GeoSearch extends Component {
               for (var i = 0; i < scope.results.length; i++) {
                 results.push(scope.results[i].display_name);
               }
-              scope.setState({results: results, currentCoordinate: currentCoordinate});
+              scope.setState({results: results, currentCoordinate: currentCoordinate, openResults: true});
             }
           }
 

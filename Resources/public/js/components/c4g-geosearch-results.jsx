@@ -25,15 +25,32 @@ export class GeoSearchResults extends Component {
 
   render() {
     const scope = this;
+    let resultContainer = "";
+    let closeBtnClass = "";
+    let closeBtnCb = "";
+    if (this.props.detailOpen) {
+      closeBtnClass = "c4g-geosearch-results-close";
+      closeBtnCb = this.props.closeResults;
+      resultContainer = <ul id={"resultcontainer"}>
+        {this.props.results.map(function(element, index) {
+          return (<li key={index}><button key={index} id={index} className={"searchResultButton"} name={element} onMouseUp={() => scope.props.zoomFunc(index)}>{element}</button></li>)
+        })}
+      </ul>;
+    }
+    let detailBtnClass = "";
+    let detailBtnCb = "";
+    let resultsExist = this.props.results.length > 0;
+    if (!this.props.detailOpen) {
+      detailBtnClass = "c4g-geosearch-options";
+      detailBtnCb = this.props.openResults;
+    }
     return (
-      <div className={"c4g-geosearch-results " + this.props.className}>
-        <Titlebar wrapperClass={"c4g-geosearch-results-header"} header={"headline"} headerClass={"c4g-geosearch-results-headline"}
-                  detailBtnClass={""} detailBtnCb={""} closeBtnClass={"c4g-geosearch-results-close"} closeBtnCb={this.props.closeResults}/>
-        <ul id={"resultcontainer"}>
-          {this.props.results.map(function(element, index) {
-            return (<li key={index}><button key={index} id={index} className={"searchResultButton"} name={element} onMouseUp={() => scope.props.zoomFunc(index)}>{element}</button></li>)
-          })}
-        </ul>
+      <div className={"c4g-geosearch-results " + this.props.className + " c4g-beach"}>
+        <Titlebar wrapperClass={"c4g-geosearch-results-header c4g-beach-header"} header={this.props.headline} headerClass={"c4g-geosearch-results-headline c4g-beach-header-headline"}
+                  detailBtnClass={detailBtnClass} detailBtnCb={detailBtnCb} closeBtnClass={closeBtnClass} closeBtnCb={closeBtnCb}/>
+        <div className={"c4g-beach-content"}>
+          {resultContainer}
+        </div>
       </div>
     );
   }

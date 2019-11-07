@@ -424,6 +424,7 @@ class MapDataConfigurator
             // geosearch
             //
             if ($profile->geosearch) {
+                $mapData['geosearch']['headline'] = $profile->geosearch_headline;
                 $mapData['geosearch']['geosearch_engine'] = $profile->geosearch_engine;
                 $mapData['geosearch']['enable'] = ($profile->geosearch && $profile->geosearch_show);
                 if ($profile->geosearch_customengine_attribution) {
