@@ -88,6 +88,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_show'] = ['Show search are
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearchParams'] = ['Parameters for the search', 'Enter keys and parameters in order to limit the search (<a href=https://wiki.openstreetmap.org/wiki/Nominatim>documentation</a>)'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_results'] = ['Search with a list of results', 'Shows the results as a list'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_result_count'] = ['Result count', 'Specify the maximum result count.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_results_headline'] = ['Result list headline', 'Set a custom headline for the result list.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_zoomto'] = ['Zoomlevel', 'Zoomlevel to set after searching, e.g. 16'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_zoombounds'] = ['Zoom to bounds', 'Zoom to the bounds of an area if provided by the search service (Nominatim).'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_animate'] = ['Enable animation', 'Fly to found location.'];

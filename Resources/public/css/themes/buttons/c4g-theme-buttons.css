@@ -245,7 +245,9 @@ div.ol-zoom-position,
 div.ol-zoom-slider,
 .ol-zoom-with-slider,
 .c4g-graticule,
-.ol-full-screen
+.ol-full-screen,
+.c4g-geosearch,
+.c4g-overviewmap
 {
   position: relative;
 }
