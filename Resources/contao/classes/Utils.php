@@ -13,6 +13,7 @@
 namespace con4gis\MapsBundle\Resources\contao\classes;
 
 use Contao\Controller;
+use Contao\Database;
 use Contao\PageModel;
 
 /**
