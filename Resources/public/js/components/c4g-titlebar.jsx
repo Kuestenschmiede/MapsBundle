@@ -22,11 +22,19 @@ export class Titlebar extends Component {
   }
 
   render() {
+    let detailButton = "";
+    if (this.props.detailBtnClass && this.props.detailBtnCb) {
+      detailButton = <button className={this.props.detailBtnClass} onMouseUp={this.props.detailBtnCb}></button>;
+    }
+    let closeButton = "";
+    if (this.props.closeBtnClass && this.props.closeBtnCb) {
+      closeButton = <button className={this.props.closeBtnClass} onMouseUp={this.props.closeBtnCb}></button>;
+    }
     return (
       <div className={this.props.wrapperClass}>
         <span className={this.props.headerClass}>{this.props.header}</span>
-        <button className={this.props.detailBtnClass} onMouseUp={this.props.detailBtnCb}></button>
-        <button className={this.props.closeBtnClass} onMouseUp={this.props.closeBtnCb}></button>
+        {detailButton}
+        {closeButton}
       </div>
     );
   }

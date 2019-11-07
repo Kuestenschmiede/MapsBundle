@@ -105,7 +105,7 @@ export class GeoSearch extends Component {
           <input type="text" onKeyDown={this.inputCallback} id={"c4g-geosearch-input"}/>
           <button className={cssConstants.GEOSEARCH_START} title={this.langConstants.CTRL_START_SEARCH} onMouseUp={this.startSearch}/>
         </div>
-        <GeoSearchResults className={modeClass} results={this.state.results} zoomFunc={this.zoomTo}/>
+        <GeoSearchResults className={modeClass} results={this.state.results} zoomFunc={this.zoomTo} closeResults={this.closeResults}/>
       </React.Fragment>
     );
   }
@@ -139,6 +139,10 @@ export class GeoSearch extends Component {
       this.props.mapController.hideOtherComponents(this);
       this.setState({open: true});
     }
+  }
+
+  closeResults() {
+    this.setState({openResults: false});
   }
 
   findLocation(location, opt_options) {
@@ -410,7 +414,40 @@ export class GeoSearch extends Component {
 
       markerSource = new VectorSource();
       markerLayer = new Vector({
-        style: new Style(),
+        style: [new Style({
+          image: new Circle({
+            radius: 7,
+            snapToPixel: false,
+            stroke: new Stroke({
+              color: 'rgba(200, 0, 0, ' + 0.9 + ')',
+              width: 2,
+              opacity: 0.9
+            })
+          })
+        }),
+        new Style({
+          image: new Circle({
+            radius: 20,
+            snapToPixel: false,
+            stroke: new Stroke({
+              color: 'rgba(200, 0, 0, ' + 0.9 + ')',
+              width: 2,
+              opacity: 0.9
+            })
+          })
+        }),
+        new Style({
+          image: new Circle({
+            radius: 33,
+            snapToPixel: false,
+            stroke: new Stroke({
+              color: 'rgba(200, 0, 0, ' + 0.9 + ')',
+              width: 2,
+              opacity: 0.9
+            })
+          })
+        })
+        ],
         source: markerSource
       });
       this.props.mapController.map.addLayer(markerLayer);
@@ -452,17 +489,7 @@ export class GeoSearch extends Component {
           }
           opacity = linear(elapsedRatio);
 
-          let marker = new Style({
-            image: new Circle({
-              radius: radius,
-              snapToPixel: false,
-              stroke: new Stroke({
-                color: 'rgba(200, 0, 0, ' + opacity + ')',
-                width: 3,
-                opacity: opacity
-              })
-            })
-          });
+          let marker = new Style();
 
           vectorContext.setStyle(marker);
           vectorContext.drawGeometry(flashGeom, null);
@@ -488,7 +515,7 @@ export class GeoSearch extends Component {
         if (zoomType === 'zoom') {
           window.setTimeout(addMarker, animationDuration / 2);
         } else {
-          window.setTimeout(addMarker, animationDuration);
+          window.setTimeout(addMarker, animationDuration / 2);
         }
       } else {
         addMarker();

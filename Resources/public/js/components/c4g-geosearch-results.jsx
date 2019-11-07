@@ -15,6 +15,7 @@ import React, { Component } from "react";
 import {Control} from "ol/control";
 import {getLanguage} from "./../c4g-maps-i18n";
 import {cssConstants} from "./../c4g-maps-constant";
+import {Titlebar} from "./c4g-titlebar.jsx";
 
 export class GeoSearchResults extends Component {
   constructor(props) {
@@ -26,6 +27,8 @@ export class GeoSearchResults extends Component {
     const scope = this;
     return (
       <div className={"c4g-geosearch-results " + this.props.className}>
+        <Titlebar wrapperClass={"c4g-geosearch-results-header"} header={"headline"} headerClass={"c4g-geosearch-results-headline"}
+                  detailBtnClass={""} detailBtnCb={""} closeBtnClass={"c4g-geosearch-results-close"} closeBtnCb={this.props.closeResults}/>
         <ul id={"resultcontainer"}>
           {this.props.results.map(function(element, index) {
             return (<li key={index}><button key={index} id={index} className={"searchResultButton"} name={element} onMouseUp={() => scope.props.zoomFunc(index)}>{element}</button></li>)
