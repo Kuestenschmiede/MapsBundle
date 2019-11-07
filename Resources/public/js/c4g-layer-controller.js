@@ -33,6 +33,8 @@ import {getCenter, boundingExtent} from "ol/extent";
 import {Group} from "ol/layer";
 import * as olFormat from "ol/format";
 import ol_layer_AnimatedCluster from "ol-ext/layer/AnimatedCluster";
+const osmtogeojson = require('osmtogeojson');
+
 
 export class C4gLayerController {
 
@@ -550,18 +552,12 @@ export class C4gLayerController {
 
                     }
                     else if (response && response.elements) {
-                      rFeatures = [];
-                      for (let elementId = 0; elementId < response.elements.length; elementId++) {
-                        let element = response.elements[elementId];
-                        if (element.type ==="node" && !element.tags) {
-                          continue;
-                        }
-                        let tempFeature = self.featureFromOverpass(element,response.elements, contentData, requestContentData.settings.forceNodes);
-                        let addFeature = requestVectorSource.getFeatureById(element.id);
-                        if(tempFeature && !addFeature){
-                          rFeatures.push(tempFeature);
-                        }
-                      }
+                      const geojson = osmtogeojson(response);
+                      const mapProj = self.mapController.map.getView().getProjection();
+                      rFeatures = new GeoJSON().readFeatures(geojson, {
+                        dataProjection: 'EPSG:4326',
+                        featureProjection: mapProj
+                      });
                     }
                     try {
                       requestVectorSource.addFeatures(rFeatures);
