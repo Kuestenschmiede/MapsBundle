@@ -96,6 +96,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearchParams'] = ['Parameter der 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_results'] = ['Suche mit Ergebnisliste', 'Stellt die ersten Ergebnisse der Suche unterhalb des Suchfeldes zu Auswahl in einer Liste dar.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_result_count'] = ['Anzahl Ergebnisse', 'Geben Sie die maximale Anzahl an Suchergebnissen an.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_results_headline'] = ['Überschrift Ergebnisliste', 'Geben Sie eine Überschrift für die Ergebnisliste an.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_result_locstyle'] = ['Lokationsstil Ergebnis', 'Wählen Sie einen Lokationsstil aus, mit dem das Suchergebnis auf der Karte markiert werden soll. Wenn nichts ausgewählt ist, werden rote konzentrische Kreise verwendet.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_zoomto'] = ['Zoomlevel', 'Zoomlevel nach einer erfolgreichen Suche, z.B. 16'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_zoombounds'] = ['Auf Gebiete zoomen', 'Zoomt auf die Gebietsumrisse, falls sie vom Such-Service (Nominatim) mitgeliefert wurden, an Stelle des angegebenen Zoomlevels.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_animate'] = ['Suche animieren', 'Die Karte führt nach der Suche einen animierten Flug zu dem gefundenen Ort durch.'];

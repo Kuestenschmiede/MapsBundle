@@ -433,6 +433,7 @@ class MapDataConfigurator
                 $mapData['geosearch']['results'] = $profile->geosearch_results;
                 $mapData['geosearch']['result_count'] = $profile->geosearch_result_count;
                 $mapData['geosearch']['results_headline'] = $profile->geosearch_results_headline;
+                $mapData['geosearch']['result_locstyle'] = $profile->geosearch_result_locstyle;
                 $mapData['geosearch']['div'] = $profile->geosearch_div;
                 $mapData['geosearch']['searchzoom'] = $profile->geosearch_zoomto;
                 $mapData['geosearch']['zoombounds'] = $profile->geosearch_zoombounds;

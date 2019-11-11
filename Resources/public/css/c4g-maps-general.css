@@ -1069,6 +1069,10 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
 /*  position: absolute;*/
 /*}*/
 
+.c4g-horizon-header-headline {
+  color: var(--font-color);
+}
+
 .c4g-geosearch-results .searchResultButton {
   overflow: hidden;
   font: inherit;
@@ -1093,6 +1097,6 @@ button.c4g-geosearch-options:before {
   font-size: inherit;
 }
 
-.c4g-titlebar-header {
-
+.c4g-titlebar-close, .c4g-beach-options {
+  float: right;
 }

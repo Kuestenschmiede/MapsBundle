@@ -451,3 +451,17 @@ button.c4g-popup-close:before {
   font-weight: 900;
   font-size: inherit;
 }
+
+button.c4g-titlebar-close:before {
+  content: "\f00d";
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: inherit;
+}
+
+button.c4g-beach-options:before {
+  content: "\f03a";
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: inherit;
+}

@@ -79,6 +79,17 @@ export class GeoSearch extends Component {
     this.config.autopick = props.autopick;
     this.config.mapController = props.mapController;
     this.config.results = props.results;
+    this.config.resultStyle = props.resultStyle;
+    if (this.config.resultStyle) {
+      const scope = this;
+      if (props.mapController.proxy.locationStyleController.arrLocStyles[this.config.resultStyle]) {
+        this.config.resultStyle = props.mapController.proxy.locationStyleController.arrLocStyles[this.config.resultStyle].style;
+      } else {
+        props.mapController.proxy.locationStyleController.loadLocationStyles([this.config.resultStyle], {done: function() {
+            scope.config.resultStyle = props.mapController.proxy.locationStyleController.arrLocStyles[scope.config.resultStyle].style;
+          }});
+      }
+    }
 
     this.config.collapsed = props.collapsed;
     this.config.resultCount = props.resultCount;
@@ -91,7 +102,8 @@ export class GeoSearch extends Component {
       results: [],
       currentCoordinate: [],
       openResults: false,
-      detailOpenResults: false
+      detailOpenResults: false,
+      currentResult: null
     };
 
 
@@ -100,23 +112,24 @@ export class GeoSearch extends Component {
     this.zoomTo = this.zoomTo.bind(this);
     this.closeResults = this.closeResults.bind(this);
     this.openResults = this.openResults.bind(this);
+    this.close = this.close.bind(this);
   }
 
   render() {
     let modeClass = this.state.open ? "c4g-open" : "c4g-close";
     let results = "";
     if (this.state.openResults) {
-      results = <GeoSearchResults className={modeClass} results={this.state.results} zoomFunc={(idx) => {this.setState({detailOpenResults: false}); this.zoomTo(idx);}}
-                                  closeResults={this.closeResults} headline={this.props.resultsHeadline}
+      results = <GeoSearchResults className={modeClass} results={this.state.results} zoomFunc={(idx) => {this.setState({detailOpenResults: false, currentResult: this.state.results[idx]}); this.zoomTo(idx);}}
+                                  closeResults={this.closeResults} headline={this.props.resultsHeadline} currentResult={this.state.currentResult}
                                   open={this.state.results.length >0} openResults={this.openResults} detailOpen={this.state.detailOpenResults}
       />;
     }
+
     return (
       <React.Fragment>
         <div className={cssConstants.GEOSEARCH_WRAPPER + " " + modeClass + " c4g-horizon"}>
           <Titlebar wrapperClass={"c4g-geosearch-header c4g-horizon-header"} header={this.props.headline} headerClass={"c4g-geosearch-headline c4g-horizon-header-headline"}
-                                detailBtnClass={""} detailBtnCb={""} closeBtnClass={""} closeBtnCb={""}>
-
+                                detailBtnClass={""} detailBtnCb={""} closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close}>
           </Titlebar>
           <div className={"c4g-horizon-content"}>
             <input type="text" onKeyDown={this.inputCallback} id={"c4g-geosearch-input"}/>
@@ -126,6 +139,10 @@ export class GeoSearch extends Component {
         {results}
       </React.Fragment>
     );
+  }
+
+  close() {
+    this.setState({open: false});
   }
 
   startSearch() {
@@ -347,7 +364,7 @@ export class GeoSearch extends Component {
               for (var i = 0; i < scope.results.length; i++) {
                 results.push(scope.results[i].display_name);
               }
-              scope.setState({results: results, currentCoordinate: currentCoordinate, openResults: true});
+              scope.setState({results: results, currentCoordinate: currentCoordinate, openResults: true, currentResult: results[0]});
             }
           }
 
@@ -435,8 +452,9 @@ export class GeoSearch extends Component {
         animateMarker;
 
       markerSource = new VectorSource();
-      markerLayer = new Vector({
-        style: [new Style({
+      let style = this.config.resultStyle;
+      if (!style) {
+        style = [new Style({
           image: new Circle({
             radius: 7,
             snapToPixel: false,
@@ -447,29 +465,32 @@ export class GeoSearch extends Component {
             })
           })
         }),
-        new Style({
-          image: new Circle({
-            radius: 20,
-            snapToPixel: false,
-            stroke: new Stroke({
-              color: 'rgba(200, 0, 0, ' + 0.9 + ')',
-              width: 2,
-              opacity: 0.9
+          new Style({
+            image: new Circle({
+              radius: 20,
+              snapToPixel: false,
+              stroke: new Stroke({
+                color: 'rgba(200, 0, 0, ' + 0.9 + ')',
+                width: 2,
+                opacity: 0.9
+              })
+            })
+          }),
+          new Style({
+            image: new Circle({
+              radius: 33,
+              snapToPixel: false,
+              stroke: new Stroke({
+                color: 'rgba(200, 0, 0, ' + 0.9 + ')',
+                width: 2,
+                opacity: 0.9
+              })
             })
           })
-        }),
-        new Style({
-          image: new Circle({
-            radius: 33,
-            snapToPixel: false,
-            stroke: new Stroke({
-              color: 'rgba(200, 0, 0, ' + 0.9 + ')',
-              width: 2,
-              opacity: 0.9
-            })
-          })
-        })
-        ],
+        ];
+      }
+      markerLayer = new Vector({
+        style: style,
         source: markerSource
       });
       this.props.mapController.map.addLayer(markerLayer);
