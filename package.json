@@ -32,7 +32,7 @@
     "ol": "^5.3.3",
     "ol-ext": "^3.1.7",
     "ol-mapbox-style": "^4.3.1",
-    "olcs": "^2.9.0",
+    "ol-cesium": "2.9.0",
     "osmtogeojson": "^3.0.0-beta.3"
   }
 }
