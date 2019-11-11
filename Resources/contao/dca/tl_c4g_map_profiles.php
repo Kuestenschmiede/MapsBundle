@@ -1146,10 +1146,6 @@ class tl_c4g_map_profiles extends Backend
                 $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['geosearch'] =
                     str_replace('geosearch_engine,','geosearch_engine,geosearch_customengine_url,geosearch_customengine_attribution,geosearch_key,',
                         $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['geosearch']);
-            } elseif ($objProfile->geosearch_engine == '4') {
-                $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['geosearch'] =
-                    str_replace('geosearch_engine,','geosearch_engine,geosearch_key,',
-                        $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['geosearch']);
             } elseif ($objProfile->geosearch_engine == '5') {
                 $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['geosearch'] =
                     str_replace('geosearch_engine,','geosearch_engine,geosearch_customengine_url,',

@@ -25,7 +25,7 @@ import {default as VectorTileSource} from "ol/source/VectorTile";
 import {BingMaps} from "ol/source";
 import {TileWMS} from "ol/source";
 import {Group as LayerGroup, Image} from "ol/layer";
-import OLCesium from "olcs/OLCesium";
+import OLCesium from 'ol-cesium/src/olcs/OLCesium.js';
 import {applyStyle} from 'ol-mapbox-style';
 import VectorTileLayer from 'ol/layer/VectorTile';
 import ol_source_GeoImage from "ol-ext/source/GeoImage";

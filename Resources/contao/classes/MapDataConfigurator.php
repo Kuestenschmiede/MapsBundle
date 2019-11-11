@@ -46,13 +46,13 @@ class MapDataConfigurator
         $mapData['mapId'] = $objThis->id;
 
         // import user, if not already done
-        if (!isset($objThis->User)) {
+        /*if (!isset($objThis->User)) {
             if ($options['backend']) {
                 $objThis->import('BackendUser', 'User');
             } else {
                 $objThis->import('FrontendUser', 'User');
             }
-        }
+        }*/
 
         //TODO: currently when in backend mode, not the correct things are loaded
         //TODO: no profile is found
