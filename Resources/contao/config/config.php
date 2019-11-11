@@ -13,11 +13,6 @@
 
 $GLOBALS['con4gis']['maps']['installed'] = true;
 
-//$GLOBALS['con4gis']['maps']['ol-version'] = 'v5.3.0';
-//$GLOBALS['con4gis']['maps']['ol-cesium-version'] = 'v2.5.0';
-//$GLOBALS['con4gis']['maps']['olms-version'] = 'v4.1.0';
-//$GLOBALS['con4gis']['maps']['ol-ext'] = 'v3.1.2';
-
 array_insert($GLOBALS['BE_MOD'], array_search('con4gis_core', array_keys($GLOBALS['BE_MOD'])) + 1,
     ['con4gis_maps' => [
         'c4g_map_baselayers' =>
