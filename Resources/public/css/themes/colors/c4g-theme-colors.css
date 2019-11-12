@@ -321,22 +321,12 @@ span.c4g-active ul li.c4g-active{
 /*
  *  Geosearch
  */
-.c4g-geosearch input {
-  color: rgba(24, 61, 93,.8);
-  color: var(--main-color);
-  background-color: rgba(255,255,255,.9);
-  background-color: var(--font-color);
-  border-color: rgba(0,155,222,.5);
-  border-color: var(--shadow-color);
-}
 
-.c4g-geosearch-results button {
-  color: rgba(255,255,255,.9);
-  color: var(--font-color);
-  background-color: rgba(24, 61, 93,.8);
-  background-color: var(--main-color);
-  background-image: none;
-  border: none;
+
+.c4g-geosearch input {
+  color: var(--main-color);
+  background-color: var(--font-color);
+  border-color: var(--shadow-color);
 }
 
 /*
@@ -601,4 +591,41 @@ button.c4g-popup-close:hover {
   color: var(--font-color);
 }
 
+/*--------Geosearch-------------*/
 
+.c4g-geosearch-wrapper.c4g-open{
+  background-color: var(--main-color);
+  color: var(--font-color);
+}
+
+button.c4g-titlebar-close, .c4g-geosearch-results button {
+  color: var(--font-color);
+}
+
+.c4g-horizon-content input {
+  color: var(--main-color);
+  background-color: var(--font-color);
+  border-color: var(--font-color);
+}
+
+button.c4g-geosearch-start {
+  background: var(--shadow-color);
+  color: var(--font-color);
+}
+
+.c4g-beach {
+  background-color: var(--main-color);
+  color: var(--font-color);
+}
+
+#main .c4g-beach-content ul li:nth-child(2n) button {
+  background: var(--main-color);
+  color: var(--font-color);
+}
+
+.c4g-geosearch-results .searchResultButton {
+  color: var(--main-color);
+  background: var(--font-color);
+}
+
+/*------------------------------------*/
