@@ -1029,7 +1029,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'exclude'                 => true,
             'default'                 => '0',
             'inputType'               => 'radio',
-            'options'                 => ['0','1','2'],
+            'options'                 => ['0','1','2','3'],
             'eval'                    => ['submitOnChange' => true,'includeBlankOption' => false],
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandlingReferences'],
             'sql'                     => "char(1) NOT NULL default '0'"

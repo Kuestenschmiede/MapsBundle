@@ -375,9 +375,11 @@ export class MapProxy {
           }
           self.popupController.addPopUp(popupInfos.content);
           if (popupInfos.content) {
-            window.c4gMapsPopup.$content.html('');
-            window.c4gMapsPopup.$popup.addClass(cssConstants.ACTIVE).addClass(cssConstants.LOADING);
-            window.c4gMapsPopup.spinner.show();
+            if (self.mapData.popupHandling !== '3') {
+              window.c4gMapsPopup.$content.html('');
+              window.c4gMapsPopup.$popup.addClass(cssConstants.ACTIVE).addClass(cssConstants.LOADING);
+              window.c4gMapsPopup.spinner.show();
+            }
 
             if (popupInfos.async === false || popupInfos.async == '0') {
               objPopup = {};

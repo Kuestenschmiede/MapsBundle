@@ -530,14 +530,16 @@ export class MapController {
       return;
     }
 
+    // save overlaycontainer
+    this.$overlaycontainer_stopevent = jQuery('#' + mapData.mapDiv + ' .' + cssConstants.OL_OVERLAYCONTAINER_SE);
+
     this.map.updateSize();
     this.proxy.initialize();
     // this.proxy.loadBaseLayers();
     // this.proxy.loadLayers();
     // ---
 
-    // save overlaycontainer
-    this.$overlaycontainer_stopevent = jQuery('#' + mapData.mapDiv + ' .' + cssConstants.OL_OVERLAYCONTAINER_SE);
+
     // add Spinner
     this.spinner = new Spinner({className: cssConstants.LARGE});
     // add mapHover
