@@ -35,28 +35,20 @@ export class GeoSearch extends Component {
     super(props);
 
     this.langConstants = getLanguage(props.mapController.data);
+    // control
     this.clickControl = this.clickControl.bind(this);
     let element = document.createElement('div');
     let button = document.createElement('button');
     element.className = "c4g-geosearch" + " ol-control " + "ol-unselectable";
     element.appendChild(button);
-
     jQuery(button).on('click', this.clickControl);
     let control = new Control({element: element, target: props.target});
     props.mapController.map.addControl(control);
+    // end control
 
     // prepare search-configuration
     //
     this.config = {};
-    // searchEngineUrl
-    // if (typeof options.engineUrl === 'string') {
-    //   // if it is a string, then it is (hopefully) a URL, that we can use directly
-    //   // @TODO add a URL-check
-    //   this.config.url = options.engineUrl;
-    // } else {
-    //   // if it is none of the above, then use the default URL
-    //   this.config.url = 'https://nominatim.openstreetmap.org/search';
-    // }
     if (props.mapController.data.geosearch.searchKey && props.mapController.data.geosearch.url) {
       this.config.url = props.mapController.data.geosearch.url + "search.php";
       this.config.key = props.mapController.data.geosearch.searchKey;
@@ -82,6 +74,7 @@ export class GeoSearch extends Component {
     this.config.resultStyle = props.resultStyle;
     if (this.config.resultStyle) {
       const scope = this;
+      // check if style is loaded, otherwise load it
       if (props.mapController.proxy.locationStyleController.arrLocStyles[this.config.resultStyle]) {
         this.config.resultStyle = props.mapController.proxy.locationStyleController.arrLocStyles[this.config.resultStyle].style;
       } else {

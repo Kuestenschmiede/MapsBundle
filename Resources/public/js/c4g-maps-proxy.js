@@ -15,6 +15,7 @@
 import {C4gBaselayerController} from "./c4g-baselayer-controller";
 import {C4gLayerController} from "./c4g-layer-controller";
 import {C4gLocationStyleController} from "./c4g-locationstyle-controller";
+import {C4gPopupController} from "./c4g-popup-controller";
 import {Spinner} from "./c4g-maps-misc-spinner";
 import {utils} from "./c4g-maps-utils";
 import {cssConstants} from "./c4g-maps-constant";
@@ -100,7 +101,8 @@ export class MapProxy {
     this.layerController = new C4gLayerController(this);
     this.layerController.loadLayers();
     this.locationStyleController = new C4gLocationStyleController(this);
-    this.addPopUp();
+    this.popupController = new C4gPopupController(this);
+    this.popupController.addPopUp();
 
     //TODO check this, nearly the same as below
     map.on('change:view', function () {
@@ -371,7 +373,7 @@ export class MapProxy {
             window.c4gMapsPopup.popup.setPosition(self.options.mapController.map.getView().getCenter());
 
           }
-          self.addPopUp(popupInfos.content);
+          self.popupController.addPopUp(popupInfos.content);
           if (popupInfos.content) {
             window.c4gMapsPopup.$content.html('');
             window.c4gMapsPopup.$popup.addClass(cssConstants.ACTIVE).addClass(cssConstants.LOADING);
@@ -386,7 +388,7 @@ export class MapProxy {
               if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_fillPopup === 'object') {
                 utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, {popup: objPopup, mapController: self.options.mapController});
               }
-              self.setPopup(objPopup);
+              self.popupController.setPopup(objPopup);
             } else {
               jQuery.ajax({
                 dataType: "json",
@@ -408,7 +410,7 @@ export class MapProxy {
                 if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_fillPopup === 'object') {
                   utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, {popup: objPopup, mapController: self.options.mapController});
                 }
-                self.setPopup(objPopup);
+                self.popupController.setPopup(objPopup);
               });
             }
           } else {
@@ -441,131 +443,6 @@ export class MapProxy {
     };
     proxy.options.mapController.map.on('postrender', func)
   }
-
-  setPopup(popupConfig) {
-    var feature,
-      layer,
-      popupContent,
-      self = this;
-    if (parseInt(this.mapData.popupHandling, 10) !== 2) {
-      let autoPan = parseInt(this.mapData.popupHandling, 10) === 1;
-      if (autoPan) {
-        let mapSelector = "#" + this.options.mapController.data.mapDiv + " canvas";
-        let mapElement = document.querySelector(mapSelector);
-        let maxHeightPopup = mapElement.offsetHeight - 50;
-        $(window.c4gMapsPopup.popup.element).css("max-height", maxHeightPopup);
-      }
-    }
-    feature = popupConfig.feature;
-    layer = popupConfig.layer;
-    if (feature.get('features')) {
-      let features = feature.get('features');
-      for (let i = 0; i < features.length; i++) {
-        popupContent += utils.replaceAllPlaceholders(popupConfig.popup.content, features[i], layer, this.options.mapController.data.lang);
-      }
-    }
-    else {
-      popupContent = utils.replaceAllPlaceholders(popupConfig.popup.content, feature, layer, this.options.mapController.data.lang);
-    }
-    if (popupContent.trim()) {
-      window.c4gMapsPopup.$content.html(popupContent);
-      if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_appendPopup === 'object') {
-        utils.callHookFunctions(window.c4gMapsHooks.proxy_appendPopup, {popup: popupConfig, mapController: this.options.mapController});
-      }
-      if (feature.getGeometry() && feature.getGeometry().getType() === 'Point') {
-        if (self.mapData.popupHandling && self.mapData.popupHandling !== '2') {
-          window.c4gMapsPopup.popup.setPosition(feature.getGeometry().getCoordinates());
-        }
-        else {
-
-          window.c4gMapsPopup.popup.setPosition(self.options.mapController.map.getView().getCenter());
-        }
-      }
-      else if(feature.getGeometry() && feature.getGeometry().getType() === 'Polygon') {
-        let extent = feature.getGeometry().getExtent();
-        let center = [(extent[0] + extent[2]) / 2, (extent[1] + extent[3]) / 2,];
-        window.c4gMapsPopup.popup.setPosition(center);
-      }
-    } else {
-      // hide popup if there is no valid content left
-      window.c4gMapsPopup.$popup.removeClass(cssConstants.ACTIVE);
-    }
-
-    window.c4gMapsPopup.$popup.removeClass(cssConstants.LOADING);
-    window.c4gMapsPopup.spinner.hide();
-  } // end of "setPopup()"
-
-
-  addPopUp(popupContent) {
-
-    let popUpElement,
-      popUpCloseElement,
-      popUpContent,
-      popup;
-
-
-    if (window.c4gMapsPopup && window.c4gMapsPopup.popup) {
-      this.options.mapController.map.removeOverlay(window.c4gMapsPopup.popup);
-    }
-
-    popUpElement = document.createElement('div');
-    popUpElement.setAttribute('id', 'c4g_popup_' + this.options.mapController.data.mapId);
-    popUpElement.className = 'c4g-popup-wrapper';
-
-    popUpCloseElement = document.createElement('button');
-    popUpCloseElement.className = "c4g-popup-close c4g-icon";
-
-    popUpContent = document.createElement('div');
-    popUpContent.className = "c4g-popup-content";
-
-    popUpElement.appendChild(popUpCloseElement);
-    popUpElement.appendChild(popUpContent);
-    jQuery(popUpCloseElement).click(function (event) {
-      event.preventDefault();
-      window.c4gMapsPopup.$popup.removeClass(cssConstants.ACTIVE);
-    });
-
-    if (parseInt(this.mapData.popupHandling, 10) !== 2) {
-      let autoPan = parseInt(this.mapData.popupHandling, 10) === 1;
-      if (autoPan) {
-        // let mapSelector = "#" + this.options.mapController.data.mapDiv + " > div > canvas";
-        // let mapElement = document.querySelector(mapSelector);
-        // let maxHeightPopup = mapElement.offsetHeight - 50;
-        // $(popUpElement).css("max-height", maxHeightPopup);
-      }
-      popup = new Overlay({
-        element: popUpElement,
-        positioning: 'bottom-left',
-        offset: [-50, 0],
-        autoPan: autoPan,
-        autoPanAnimation: {
-          duration: 250
-        },
-        autoPanMargin: 20
-      });
-    }
-    else {
-      $(popUpElement).addClass('c4g-popup-wrapper-nonose');
-      popup = new Overlay({
-        element: popUpElement,
-        positioning: 'center-center',
-        offset: [-50, 0],
-        autoPan: false,
-      });
-    }
-    window.c4gMapsPopup = {};
-    window.c4gMapsPopup.popup = popup;
-    // attach a spinner to the popup
-    window.c4gMapsPopup.spinner = new Spinner({target: popUpElement});
-
-    this.options.mapController.map.addOverlay(popup);
-
-    window.c4gMapsPopup.$popup = jQuery(window.c4gMapsPopup.popup.getElement());
-    window.c4gMapsPopup.$content = jQuery('.c4g-popup-content', window.c4gMapsPopup.$popup);
-    this.currentPopup = window.c4gMapsPopup;
-
-  } // end of "addPopUp()"
-
 
   /**
    * @TODO: [checkLocationStyles description]
