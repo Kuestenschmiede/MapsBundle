@@ -23,17 +23,27 @@ export class PopupContainer extends Component {
 
     this.state = {
       content: "",
-      open: props.open
+      open: props.open,
+      detailsOpen: false
     };
 
     this.close = this.close.bind(this);
+    this.toggleDetails = this.toggleDetails.bind(this);
   }
 
   render() {
+
+    // TODO className vorher zusammensetzen
+    let detailBtnClass = "";
+    let detailBtnCb = "";
+    if (!this.props.alwaysExtended) {
+      detailBtnClass = "c4g-beach-options";
+      detailBtnCb = this.toggleDetails;
+    }
     return (
-      <div className={"c4g-beach " + (this.state.open ? "c4g-open" : "c4g-close")}>
+      <div className={"c4g-beach " + (this.state.open ? "c4g-open" : "c4g-close") + (this.props.alwaysExtended ? " c4g-details-open" : (this.state.detailsOpen ? " c4g-details-open" : " c4g-details-closed"))}>
         <Titlebar wrapperClass={"c4g-beach-header"} headerClass={"c4g-beach-header-headline"} header={""}
-                  closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close} detailBtnClass={""} detailBtnCb={""}>
+                  closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close} detailBtnClass={detailBtnClass} detailBtnCb={detailBtnCb}>
 
         </Titlebar>
         <div className={"c4g-beach-content"} dangerouslySetInnerHTML={{__html: this.state.content}}>
@@ -52,6 +62,10 @@ export class PopupContainer extends Component {
 
   close() {
     this.setState({open: false});
+  }
+
+  toggleDetails() {
+    this.setState({detailsOpen: !this.state.detailsOpen});
   }
 
 }

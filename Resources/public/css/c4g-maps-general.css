@@ -1037,6 +1037,10 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
   display: none;
 }
 
+.c4g-beach.c4g-details-closed {
+  max-height: 100px;
+}
+
 
 
 

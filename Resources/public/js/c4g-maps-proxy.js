@@ -416,11 +416,14 @@ export class MapProxy {
               });
             }
           } else {
+            if (self.mapData.popupHandling !== '3') {
+              window.c4gMapsPopup.$popup.removeClass(cssConstants.ACTIVE);
+            }
+          }
+        } else {
+          if (self.mapData.popupHandling !== '3') {
             window.c4gMapsPopup.$popup.removeClass(cssConstants.ACTIVE);
           }
-
-        } else {
-          window.c4gMapsPopup.$popup.removeClass(cssConstants.ACTIVE);
         }
 
         // hooks

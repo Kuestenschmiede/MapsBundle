@@ -86,7 +86,6 @@ export class GeoSearch extends Component {
 
     this.config.collapsed = props.collapsed;
     this.config.resultCount = props.resultCount;
-
     this.config.caching = props.caching;
 
     this.state = {
