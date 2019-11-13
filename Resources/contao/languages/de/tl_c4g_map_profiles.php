@@ -86,6 +86,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geobookmarks'] = ['Favoriten (beta)'
 
 /** Suchwerkzeuge */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch'] = ['Suchwerkzeuge (Voraussetzung für Suche und Router)', 'Aktiviert die Suchengine, über die Orte, Adressen und POIs (Vorwärtssuche), aber auch Koordinaten (Rückwärtssuche) gesucht werden können.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_headline'] = ['Überschrift Suche', 'Geben Sie eine Überschrift für die Suche ein oder nichts, falls keine Überschrift angezeigt werden soll.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_engine'] = ['Suchengine', 'ACHTUNG! Bitte beachten Sie eventuell geltende Beschränkungen des gewählten Anbieters. Sollten Sie eine benutzerdefinierte URL angeben, achten Sie darauf die Attribution des Anbieters anzugeben, wenn es sich nicht um Ihren eigenen Server handelt.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_customengine_url'] = ['Benutzerdefinierte Suchengine-URL', 'Die URL unter der die Suchengine erreichbar ist.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_customengine_attribution'] = ['Benutzerdefinierte Suchengine-Attribution', 'WICHTIG! Der Copyright-Text des Anbieters der Suchengine.'];
@@ -93,6 +94,9 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_key'] = ['Authentifizierun
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_show'] = ['Suche in der Karte anzeigen', 'Stellt Button und Suchfeld in der Karte dar.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearchParams'] = ['Parameter der Suche', 'Geben Sie hier Schlüssel und Parameter ein, mit denen die Suche eingeschränkt werden soll. Beispielsweise können Sie mit countrycodes die Suche auf bestimmte Länder einschränken (<a href=https://wiki.openstreetmap.org/wiki/DE:Nominatim>Dokumentation</a>).'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_results'] = ['Suche mit Ergebnisliste', 'Stellt die ersten Ergebnisse der Suche unterhalb des Suchfeldes zu Auswahl in einer Liste dar.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_result_count'] = ['Anzahl Ergebnisse', 'Geben Sie die maximale Anzahl an Suchergebnissen an.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_results_headline'] = ['Überschrift Ergebnisliste', 'Geben Sie eine Überschrift für die Ergebnisliste an.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_result_locstyle'] = ['Lokationsstil Ergebnis', 'Wählen Sie einen Lokationsstil aus, mit dem das Suchergebnis auf der Karte markiert werden soll. Wenn nichts ausgewählt ist, werden rote konzentrische Kreise verwendet.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_zoomto'] = ['Zoomlevel', 'Zoomlevel nach einer erfolgreichen Suche, z.B. 16'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_zoombounds'] = ['Auf Gebiete zoomen', 'Zoomt auf die Gebietsumrisse, falls sie vom Such-Service (Nominatim) mitgeliefert wurden, an Stelle des angegebenen Zoomlevels.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_animate'] = ['Suche animieren', 'Die Karte führt nach der Suche einen animierten Flug zu dem gefundenen Ort durch.'];
@@ -163,6 +167,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['referencesOverpassEngine']['3'] = '�
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandlingReferences']['0'] = 'Klassisches Handling (Das Popup verweist auf das geöffnete Feature. Die Karte bewegt sich nicht.)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandlingReferences']['1'] = 'Kartenausschnitt an Popup anpassen (Das Popup verweist auf das geöffnete Feature. Die Karte bewegt sich, sodass dass Popup sichtbar ist.)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandlingReferences']['2'] = 'Zentriertes Popup (Das Popup wird in der Mitte der Karte angezeigt.)';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandlingReferences']['3'] = 'Das Popup wird in einer eigenen Leiste am unteren Kartenrand dargestellt.';
 
 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearchParams']['keys']       = ['Schlüssel','Beispiel:countrycodes'];

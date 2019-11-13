@@ -530,14 +530,16 @@ export class MapController {
       return;
     }
 
+    // save overlaycontainer
+    this.$overlaycontainer_stopevent = jQuery('#' + mapData.mapDiv + ' .' + cssConstants.OL_OVERLAYCONTAINER_SE);
+
     this.map.updateSize();
     this.proxy.initialize();
     // this.proxy.loadBaseLayers();
     // this.proxy.loadLayers();
     // ---
 
-    // save overlaycontainer
-    this.$overlaycontainer_stopevent = jQuery('#' + mapData.mapDiv + ' .' + cssConstants.OL_OVERLAYCONTAINER_SE);
+
     // add Spinner
     this.spinner = new Spinner({className: cssConstants.LARGE});
     // add mapHover
@@ -901,7 +903,11 @@ export class MapController {
         popup: mapData.geosearch.popup,
         autopick: mapData.geopicker,
         caching: mapData.caching,
-        results: mapData.geosearch.results
+        results: mapData.geosearch.results,
+        resultCount: mapData.geosearch.result_count,
+        resultsHeadline: mapData.geosearch.results_headline,
+        headline: mapData.geosearch.headline,
+        resultStyle: mapData.geosearch.result_locstyle
       };
       // this.controls.geosearch = new GeoSearch();
       // this.map.addControl(this.controls.geosearch);

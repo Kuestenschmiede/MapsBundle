@@ -27,6 +27,7 @@ import {getVectorContext} from "ol/render";
 import {unByKey} from "ol/Observable";
 import {utils} from "../c4g-maps-utils";
 import {containsCoordinate, getHeight, getWidth} from "ol/extent";
+import {Titlebar} from "./c4g-titlebar";
 
 export class GeoSearch extends Component {
 
@@ -34,28 +35,20 @@ export class GeoSearch extends Component {
     super(props);
 
     this.langConstants = getLanguage(props.mapController.data);
+    // control
     this.clickControl = this.clickControl.bind(this);
     let element = document.createElement('div');
     let button = document.createElement('button');
     element.className = "c4g-geosearch" + " ol-control " + "ol-unselectable";
     element.appendChild(button);
-
     jQuery(button).on('click', this.clickControl);
     let control = new Control({element: element, target: props.target});
     props.mapController.map.addControl(control);
+    // end control
 
     // prepare search-configuration
     //
     this.config = {};
-    // searchEngineUrl
-    // if (typeof options.engineUrl === 'string') {
-    //   // if it is a string, then it is (hopefully) a URL, that we can use directly
-    //   // @TODO add a URL-check
-    //   this.config.url = options.engineUrl;
-    // } else {
-    //   // if it is none of the above, then use the default URL
-    //   this.config.url = 'https://nominatim.openstreetmap.org/search';
-    // }
     if (props.mapController.data.geosearch.searchKey && props.mapController.data.geosearch.url) {
       this.config.url = props.mapController.data.geosearch.url + "search.php";
       this.config.key = props.mapController.data.geosearch.searchKey;
@@ -78,8 +71,21 @@ export class GeoSearch extends Component {
     this.config.autopick = props.autopick;
     this.config.mapController = props.mapController;
     this.config.results = props.results;
+    this.config.resultStyle = props.resultStyle;
+    if (this.config.resultStyle) {
+      const scope = this;
+      // check if style is loaded, otherwise load it
+      if (props.mapController.proxy.locationStyleController.arrLocStyles[this.config.resultStyle]) {
+        this.config.resultStyle = props.mapController.proxy.locationStyleController.arrLocStyles[this.config.resultStyle].style;
+      } else {
+        props.mapController.proxy.locationStyleController.loadLocationStyles([this.config.resultStyle], {done: function() {
+            scope.config.resultStyle = props.mapController.proxy.locationStyleController.arrLocStyles[scope.config.resultStyle].style;
+          }});
+      }
+    }
 
     this.config.collapsed = props.collapsed;
+    this.config.resultCount = props.resultCount;
 
     this.config.caching = props.caching;
 
@@ -87,26 +93,48 @@ export class GeoSearch extends Component {
       open: false,
       query: "", // the search query
       results: [],
-      currentCoordinate: []
+      currentCoordinate: [],
+      openResults: false,
+      detailOpenResults: false,
+      currentResult: null
     };
-
 
     this.inputCallback = this.inputCallback.bind(this);
     this.startSearch = this.startSearch.bind(this);
     this.zoomTo = this.zoomTo.bind(this);
+    this.closeResults = this.closeResults.bind(this);
+    this.openResults = this.openResults.bind(this);
+    this.close = this.close.bind(this);
   }
 
   render() {
     let modeClass = this.state.open ? "c4g-open" : "c4g-close";
+    let results = "";
+    if (this.state.openResults && this.config.results) {
+      results = <GeoSearchResults className={modeClass} results={this.state.results} zoomFunc={(idx) => {this.setState({detailOpenResults: false, currentResult: this.state.results[idx]}); this.zoomTo(idx);}}
+                                  closeResults={this.closeResults} headline={this.props.resultsHeadline} currentResult={this.state.currentResult}
+                                  open={this.state.results.length >0} openResults={this.openResults} detailOpen={this.state.detailOpenResults}
+      />;
+    }
+
     return (
       <React.Fragment>
-        <div className={cssConstants.GEOSEARCH_WRAPPER + " " + modeClass}>
-          <input type="text" onKeyDown={this.inputCallback} id={"c4g-geosearch-input"}/>
-          <button className={cssConstants.GEOSEARCH_START} title={this.langConstants.CTRL_START_SEARCH} onMouseUp={this.startSearch}/>
+        <div className={cssConstants.GEOSEARCH_WRAPPER + " " + modeClass + " c4g-horizon"}>
+          <Titlebar wrapperClass={"c4g-geosearch-header c4g-horizon-header"} header={this.props.headline} headerClass={"c4g-geosearch-headline c4g-horizon-header-headline"}
+                                detailBtnClass={""} detailBtnCb={""} closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close}>
+          </Titlebar>
+          <div className={"c4g-horizon-content"}>
+            <input type="text" onKeyDown={this.inputCallback} id={"c4g-geosearch-input"}/>
+            <button className={cssConstants.GEOSEARCH_START} title={this.langConstants.CTRL_START_SEARCH} onMouseUp={this.startSearch}/>
+          </div>
         </div>
-        <GeoSearchResults className={modeClass} results={this.state.results} zoomFunc={this.zoomTo}/>
+        {results}
       </React.Fragment>
     );
+  }
+
+  close() {
+    this.setState({open: false});
   }
 
   startSearch() {
@@ -138,6 +166,14 @@ export class GeoSearch extends Component {
       this.props.mapController.hideOtherComponents(this);
       this.setState({open: true});
     }
+  }
+
+  closeResults() {
+    this.setState({detailOpenResults: false});
+  }
+
+  openResults() {
+    this.setState({detailOpenResults: true});
   }
 
   findLocation(location, opt_options) {
@@ -182,6 +218,9 @@ export class GeoSearch extends Component {
         format: "json",
         q: location
       };
+      if (this.config.resultCount) {
+        data.limit = this.config.resultCount;
+      }
       if (this.config.key) {
         data.key = this.config.key;
       }
@@ -317,7 +356,7 @@ export class GeoSearch extends Component {
               for (var i = 0; i < scope.results.length; i++) {
                 results.push(scope.results[i].display_name);
               }
-              scope.setState({results: results, currentCoordinate: currentCoordinate});
+              scope.setState({results: results, currentCoordinate: currentCoordinate, openResults: true, currentResult: results[0]});
             }
           }
 
@@ -405,8 +444,45 @@ export class GeoSearch extends Component {
         animateMarker;
 
       markerSource = new VectorSource();
+      let style = this.config.resultStyle;
+      if (!style) {
+        style = [new Style({
+          image: new Circle({
+            radius: 7,
+            snapToPixel: false,
+            stroke: new Stroke({
+              color: 'rgba(200, 0, 0, ' + 0.9 + ')',
+              width: 2,
+              opacity: 0.9
+            })
+          })
+        }),
+          new Style({
+            image: new Circle({
+              radius: 20,
+              snapToPixel: false,
+              stroke: new Stroke({
+                color: 'rgba(200, 0, 0, ' + 0.9 + ')',
+                width: 2,
+                opacity: 0.9
+              })
+            })
+          }),
+          new Style({
+            image: new Circle({
+              radius: 33,
+              snapToPixel: false,
+              stroke: new Stroke({
+                color: 'rgba(200, 0, 0, ' + 0.9 + ')',
+                width: 2,
+                opacity: 0.9
+              })
+            })
+          })
+        ];
+      }
       markerLayer = new Vector({
-        style: new Style(),
+        style: style,
         source: markerSource
       });
       this.props.mapController.map.addLayer(markerLayer);
@@ -448,17 +524,7 @@ export class GeoSearch extends Component {
           }
           opacity = linear(elapsedRatio);
 
-          let marker = new Style({
-            image: new Circle({
-              radius: radius,
-              snapToPixel: false,
-              stroke: new Stroke({
-                color: 'rgba(200, 0, 0, ' + opacity + ')',
-                width: 3,
-                opacity: opacity
-              })
-            })
-          });
+          let marker = new Style();
 
           vectorContext.setStyle(marker);
           vectorContext.drawGeometry(flashGeom, null);
@@ -484,7 +550,7 @@ export class GeoSearch extends Component {
         if (zoomType === 'zoom') {
           window.setTimeout(addMarker, animationDuration / 2);
         } else {
-          window.setTimeout(addMarker, animationDuration);
+          window.setTimeout(addMarker, animationDuration / 2);
         }
       } else {
         addMarker();

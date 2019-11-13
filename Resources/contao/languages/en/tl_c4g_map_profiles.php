@@ -80,6 +80,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geobookmarks'] = ['Geo bookmarks (be
 
 /** Suchwerkzeuge */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch'] = ['Activate search (search field)', 'Activates searchengine for searching places and coordinates.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_headline'] = ['Search headline', 'Specify a headline for the search or leave it empty, if no headline should be displayed.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_engine'] = ['Searchengine', 'ATTENTION! Please take note to restrictions that may apply by the usage policy of the choosen provider. If you have choosen to use a custom URL, remember to add an attribution of that provider, if it\'s not your own server.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_customengine_url'] = ['Custom searchengine-URL', 'The URL wich leads to the searchengine.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_customengine_attribution'] = ['Custom searchengine-attribution', 'IMPORTANT! The copyrighttext of the searchengines provider.'];
@@ -87,6 +88,9 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_key'] = ['Key for search-e
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_show'] = ['Show search area', 'Shows the search button and input field on map.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearchParams'] = ['Parameters for the search', 'Enter keys and parameters in order to limit the search (<a href=https://wiki.openstreetmap.org/wiki/Nominatim>documentation</a>)'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_results'] = ['Search with a list of results', 'Shows the results as a list'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_result_count'] = ['Result count', 'Specify the maximum result count.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_results_headline'] = ['Result list headline', 'Set a custom headline for the result list.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_result_locstyle'] = ['Location style result', 'Select a location style that should be used for marking the result on the map. If no style is selected, red concentric circles are used.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_zoomto'] = ['Zoomlevel', 'Zoomlevel to set after searching, e.g. 16'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_zoombounds'] = ['Zoom to bounds', 'Zoom to the bounds of an area if provided by the search service (Nominatim).'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_animate'] = ['Enable animation', 'Fly to found location.'];
@@ -168,7 +172,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearchParams']['params']     = ['
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandlingReferences']['0'] = 'Classic handling (popup points to element position)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandlingReferences']['1'] = 'Mapview changing (map moves to show popup)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandlingReferences']['2'] = 'Centered popup (popup will be centered on map)';
-
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandlingReferences']['3'] = 'Popup will be rendered into an own container at the bottom of the map';
 /**
  * Buttons
  */

@@ -46,13 +46,13 @@ class MapDataConfigurator
         $mapData['mapId'] = $objThis->id;
 
         // import user, if not already done
-        if (!isset($objThis->User)) {
+        /*if (!isset($objThis->User)) {
             if ($options['backend']) {
                 $objThis->import('BackendUser', 'User');
             } else {
                 $objThis->import('FrontendUser', 'User');
             }
-        }
+        }*/
 
         //TODO: currently when in backend mode, not the correct things are loaded
         //TODO: no profile is found
@@ -424,12 +424,16 @@ class MapDataConfigurator
             // geosearch
             //
             if ($profile->geosearch) {
+                $mapData['geosearch']['headline'] = $profile->geosearch_headline;
                 $mapData['geosearch']['geosearch_engine'] = $profile->geosearch_engine;
                 $mapData['geosearch']['enable'] = ($profile->geosearch && $profile->geosearch_show);
                 if ($profile->geosearch_customengine_attribution) {
                     $mapData['geosearch']['custom_attribution'] = \Contao\Controller::replaceInsertTags($profile->geosearch_customengine_attribution);
                 }
                 $mapData['geosearch']['results'] = $profile->geosearch_results;
+                $mapData['geosearch']['result_count'] = $profile->geosearch_result_count;
+                $mapData['geosearch']['results_headline'] = $profile->geosearch_results_headline;
+                $mapData['geosearch']['result_locstyle'] = $profile->geosearch_result_locstyle;
                 $mapData['geosearch']['div'] = $profile->geosearch_div;
                 $mapData['geosearch']['searchzoom'] = $profile->geosearch_zoomto;
                 $mapData['geosearch']['zoombounds'] = $profile->geosearch_zoombounds;

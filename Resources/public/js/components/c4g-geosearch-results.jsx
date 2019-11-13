@@ -15,6 +15,7 @@ import React, { Component } from "react";
 import {Control} from "ol/control";
 import {getLanguage} from "./../c4g-maps-i18n";
 import {cssConstants} from "./../c4g-maps-constant";
+import {Titlebar} from "./c4g-titlebar.jsx";
 
 export class GeoSearchResults extends Component {
   constructor(props) {
@@ -24,13 +25,41 @@ export class GeoSearchResults extends Component {
 
   render() {
     const scope = this;
+    let resultContainer = "";
+    let closeBtnClass = "";
+    let closeBtnCb = "";
+    if (this.props.detailOpen) {
+      closeBtnClass = "c4g-beach-options";
+      closeBtnCb = this.props.closeResults;
+      resultContainer = <ul id={"resultcontainer"}>
+        {this.props.results.map(function(element, index) {
+          return (<li key={index}><button key={index} id={index} className={"searchResultButton"} name={element} onMouseUp={() => scope.props.zoomFunc(index)}>{element}</button></li>)
+        })}
+      </ul>;
+    }
+    let firstResult = "";
+    if (!this.props.detailOpen && this.props.results.length >= 1) {
+      let element = this.props.currentResult;
+      firstResult = <ul>
+        <li><button id={0} className={"searchResultButton"} name={element} onMouseUp={() => scope.props.zoomFunc(0)}>{element}</button>
+        </li>
+      </ul>;
+    }
+    let detailBtnClass = "";
+    let detailBtnCb = "";
+    let resultsExist = this.props.results.length > 0;
+    if (!this.props.detailOpen && this.props.results.length > 1) {
+      detailBtnClass = "c4g-beach-options";
+      detailBtnCb = this.props.openResults;
+    }
     return (
-      <div className={"c4g-geosearch-results " + this.props.className}>
-        <ul id={"resultcontainer"}>
-          {this.props.results.map(function(element, index) {
-            return (<li key={index}><button key={index} id={index} className={"searchResultButton"} name={element} onMouseUp={() => scope.props.zoomFunc(index)}>{element}</button></li>)
-          })}
-        </ul>
+      <div className={"c4g-geosearch-results " + this.props.className + " c4g-beach"}>
+        <Titlebar wrapperClass={"c4g-geosearch-results-header c4g-beach-header"} header={this.props.headline} headerClass={"c4g-geosearch-results-headline c4g-beach-header-headline"}
+                  detailBtnClass={detailBtnClass} detailBtnCb={detailBtnCb} closeBtnClass={closeBtnClass} closeBtnCb={closeBtnCb}/>
+        <div className={"c4g-beach-content"}>
+          {resultContainer}
+          {firstResult}
+        </div>
       </div>
     );
   }

@@ -12,10 +12,6 @@
  */
 
 $GLOBALS['con4gis']['maps']['installed'] = true;
-$GLOBALS['con4gis']['maps']['ol-version'] = 'v5.3.0';
-$GLOBALS['con4gis']['maps']['ol-cesium-version'] = 'v2.5.0';
-$GLOBALS['con4gis']['maps']['olms-version'] = 'v4.1.0';
-$GLOBALS['con4gis']['maps']['ol-ext'] = 'v3.1.2';
 
 array_insert($GLOBALS['BE_MOD'], array_search('con4gis_core', array_keys($GLOBALS['BE_MOD'])) + 1,
     ['con4gis_maps' => [
@@ -23,7 +19,7 @@ array_insert($GLOBALS['BE_MOD'], array_search('con4gis_core', array_keys($GLOBAL
         [
             'tables' => ['tl_c4g_map_baselayers', 'tl_c4g_map_overlays'],
             'icon' => 'bundles/con4gismaps/images/be-icons/baselayers.png',
-            'javascript'     => 'bundles/con4gismaps/js/c4g-maps-backend.js'
+            'javascript' => 'bundles/con4gismaps/js/c4g-maps-backend.js'
         ],
         'c4g_map_locstyles' =>
         [
@@ -62,8 +58,6 @@ if(TL_MODE == "BE") {
     $GLOBALS['TL_CSS'][] = '/bundles/con4gismaps/css/backend.css';
 }
 
-//$GLOBALS['BE_MOD']['con4gis'] =
-//    \con4gis\CoreBundle\Resources\contao\classes\C4GUtils::sortBackendModules($GLOBALS['BE_MOD']['con4gis']);
 /**
  * Frontend modules
  */
