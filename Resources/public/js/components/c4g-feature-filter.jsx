@@ -25,6 +25,7 @@ export class FeatureFilter extends Component {
     this.setWrapperRef = this.setWrapperRef.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
     this.handleClickInside = this.handleClickInside.bind(this);
+    this.hideFeature = this.hideFeature.bind(this);
     this.loadFilters();
     this.state = {
       filters: [],
@@ -89,40 +90,48 @@ export class FeatureFilter extends Component {
       });
     } else if (layer.getStyle && typeof layer.getStyle === "function") {
       let source = layer.getSource();
-      source.forEachFeature((feature) => {
-        let show = true;
-        for (let key in this.state.arrChecked) {
-          if (this.state.arrChecked.hasOwnProperty(key)) {
-            let objChecked = this.state.arrChecked[key];
-            let property = objChecked.identifier;
-            if (!(property === "all" || (feature.get(property) && !objChecked.value) || ((objChecked.value == feature.get(property)) && objChecked.value))) {
-              show = false;
-            }
-          }
-
-        }
-        if (show) {
-          if (feature.get('oldStyle')) {
-            feature.setStyle(feature.get('oldStyle'));
-          }
-        }
-        else {
-          if (!feature.get('oldStyle')) {
-            let oldStyle = feature.getStyle() || layer.getStyle();
-            feature.set('oldStyle',  oldStyle);
-          }
-          feature.setStyle(new Style({
-            stroke: new Stroke({
-              color: "rgba(0,0,0,0)",
-              width: 0
-            }),
-            fill: new Fill({
-              color: "rgba(0,0,0,0)"
-            })
-          }))
-        }
-      })
+      source.forEachFeature((feature) => this.hideFeature(layer, feature));
     }
+  }
+  hideFeature(layer, feature) {
+    if (feature.get('features')){
+      let features = feature.get('features');
+
+      features.forEach((feature) => this.hideFeature(layer, feature));
+    }
+    else {
+      let show = true;
+      for (let key in this.state.arrChecked) {
+        if (this.state.arrChecked.hasOwnProperty(key)) {
+          let objChecked = this.state.arrChecked[key];
+          let property = objChecked.identifier;
+          if (!(property === "all" || (feature.get(property) && !objChecked.value) || ((objChecked.value == feature.get(property)) && objChecked.value))) {
+            show = false;
+          }
+        }
+      }
+      if (show) {
+        if (feature.get('oldStyle')) {
+          feature.setStyle(feature.get('oldStyle'));
+        }
+      }
+      else {
+        if (!feature.get('oldStyle')) {
+          let oldStyle = feature.getStyle() || layer.getStyle();
+          feature.set('oldStyle',  oldStyle);
+        }
+        feature.setStyle(new Style({
+          stroke: new Stroke({
+            color: "rgba(0,0,0,0)",
+            width: 0
+          }),
+          fill: new Fill({
+            color: "rgba(0,0,0,0)"
+          })
+        }))
+      }
+    }
+
   }
 
   loadFilters() {
