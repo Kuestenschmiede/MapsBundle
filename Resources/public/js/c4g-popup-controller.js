@@ -20,10 +20,12 @@ import React from "react";
 import {PopupContainer} from "./components/c4g-popup-container.jsx";
 
 export class C4gPopupController {
+
   constructor(proxy) {
     this.mapController = proxy.options.mapController;
     this.mapData = proxy.options.mapController.data;
     this.currentPopup = null;
+    this.containerOpen = false;
   }
 
   addPopUp(popupContent) {
@@ -33,7 +35,8 @@ export class C4gPopupController {
       popUpContent,
       popup;
 
-    let popupOptions = {};
+    console.log("addPopup");
+    let popupOptions = {open: this.containerOpen};
     this.popupHandling = parseInt(this.mapData.popupHandling, 10);
 
     if (window.c4gMapsPopup && window.c4gMapsPopup.popup) {
@@ -41,6 +44,9 @@ export class C4gPopupController {
     }
 
     if (this.popupHandling === 3) {
+      if (this.popupContainer) {
+        ReactDOM.unmountComponentAtNode(this.popupContainer);
+      }
       this.popupContainer = document.createElement('div');
       this.popupComponent = ReactDOM.render(React.createElement(PopupContainer, popupOptions), this.popupContainer);
       this.mapController.$overlaycontainer_stopevent.append(this.popupContainer);
@@ -110,6 +116,16 @@ export class C4gPopupController {
       popupContent,
       self = this;
 
+    feature = popupConfig.feature;
+    layer = popupConfig.layer;
+    if (feature.get('features')) {
+      let features = feature.get('features');
+      for (let i = 0; i < features.length; i++) {
+        popupContent += utils.replaceAllPlaceholders(popupConfig.popup.content, features[i], layer, this.mapController.data.lang);
+      }
+    } else {
+      popupContent = utils.replaceAllPlaceholders(popupConfig.popup.content, feature, layer, this.mapController.data.lang);
+    }
     if (this.popupHandling !== 3) {
       if (parseInt(this.mapData.popupHandling, 10) !== 2) {
         let autoPan = parseInt(this.mapData.popupHandling, 10) === 1;
@@ -120,17 +136,7 @@ export class C4gPopupController {
           $(window.c4gMapsPopup.popup.element).css("max-height", maxHeightPopup);
         }
       }
-      feature = popupConfig.feature;
-      layer = popupConfig.layer;
-      if (feature.get('features')) {
-        let features = feature.get('features');
-        for (let i = 0; i < features.length; i++) {
-          popupContent += utils.replaceAllPlaceholders(popupConfig.popup.content, features[i], layer, this.mapController.data.lang);
-        }
-      }
-      else {
-        popupContent = utils.replaceAllPlaceholders(popupConfig.popup.content, feature, layer, this.mapController.data.lang);
-      }
+
       if (popupContent.trim()) {
         window.c4gMapsPopup.$content.html(popupContent);
         if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_appendPopup === 'object') {
@@ -139,13 +145,10 @@ export class C4gPopupController {
         if (feature.getGeometry() && feature.getGeometry().getType() === 'Point') {
           if (self.mapData.popupHandling && self.mapData.popupHandling !== '2') {
             window.c4gMapsPopup.popup.setPosition(feature.getGeometry().getCoordinates());
-          }
-          else {
-
+          } else {
             window.c4gMapsPopup.popup.setPosition(self.mapController.map.getView().getCenter());
           }
-        }
-        else if(feature.getGeometry() && feature.getGeometry().getType() === 'Polygon') {
+        } else if(feature.getGeometry() && feature.getGeometry().getType() === 'Polygon') {
           let extent = feature.getGeometry().getExtent();
           let center = [(extent[0] + extent[2]) / 2, (extent[1] + extent[3]) / 2,];
           window.c4gMapsPopup.popup.setPosition(center);
@@ -157,6 +160,8 @@ export class C4gPopupController {
 
       window.c4gMapsPopup.$popup.removeClass(cssConstants.LOADING);
       window.c4gMapsPopup.spinner.hide();
+    } else {
+      this.currentPopup.setState({content: popupContent});
     }
 
 
@@ -177,6 +182,8 @@ export class C4gPopupController {
   show () {
     if (this.popupHandling < 3) {
       this.currentPopup.show();
+    } else {
+      console.log("show");
     }
   }
 
@@ -199,7 +206,7 @@ export class C4gPopupController {
    */
   getContent () {
     if (this.popupHandling < 3) {
-      return this.getContent();
+      return this.currentPopup.getContent();
     }
 
   }
@@ -224,6 +231,8 @@ export class C4gPopupController {
   setContent (content) {
     if (this.popupHandling < 3) {
       this.currentPopup.setContent(content);
+    } else {
+      this.currentPopup.setContent(content);
     }
   }
 
@@ -236,6 +245,8 @@ export class C4gPopupController {
   setPosition (coordinates) {
     if (this.popupHandling < 3) {
       this.currentPopup.setPosition(coordinates);
+    } else {
+      this.containerOpen = true;
     }
   }
 

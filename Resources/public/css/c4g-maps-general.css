@@ -1031,9 +1031,11 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
 }
 
 /**
- * Search panel
+ * general beach settings
  */
-
+.c4g-beach.c4g-close {
+  display: none;
+}
 
 
 
