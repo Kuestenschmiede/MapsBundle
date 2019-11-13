@@ -418,11 +418,15 @@ export class MapProxy {
           } else {
             if (self.mapData.popupHandling !== '3') {
               window.c4gMapsPopup.$popup.removeClass(cssConstants.ACTIVE);
+            } else {
+              self.popupController.close();
             }
           }
         } else {
           if (self.mapData.popupHandling !== '3') {
             window.c4gMapsPopup.$popup.removeClass(cssConstants.ACTIVE);
+          } else {
+            self.popupController.close();
           }
         }
 

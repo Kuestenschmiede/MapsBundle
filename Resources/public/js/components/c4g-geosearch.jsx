@@ -132,6 +132,12 @@ export class GeoSearch extends Component {
     );
   }
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.state.openResults) {
+      this.props.mapController.hideOtherComponents(this);
+    }
+  }
+
   close() {
     this.setState({open: false});
   }

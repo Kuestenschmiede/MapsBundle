@@ -35,7 +35,7 @@ export class C4gPopupController {
       popUpContent,
       popup;
 
-    let popupOptions = {open: this.containerOpen, alwaysExtended: this.mapData.openDirectly};
+    let popupOptions = {open: this.containerOpen, alwaysExtended: this.mapData.openDirectly, hideOther: this.mapController.hideOtherBottomComponents};
     this.popupHandling = parseInt(this.mapData.popupHandling, 10);
 
     if (window.c4gMapsPopup && window.c4gMapsPopup.popup) {
@@ -45,11 +45,13 @@ export class C4gPopupController {
     if (this.popupHandling === 3) {
       if (this.popupContainer) {
         ReactDOM.unmountComponentAtNode(this.popupContainer);
+        delete this.mapController.components.popup;
       }
       this.popupContainer = document.createElement('div');
       this.popupComponent = ReactDOM.render(React.createElement(PopupContainer, popupOptions), this.popupContainer);
       this.mapController.$overlaycontainer_stopevent.append(this.popupContainer);
       this.currentPopup = this.popupComponent;
+      this.mapController.components.popup = this.popupComponent;
       window.c4gMapsPopup = {};
       window.c4gMapsPopup.popup = this;
     } else {
@@ -169,6 +171,8 @@ export class C4gPopupController {
   close () {
     if (this.popupHandling < 3) {
       this.currentPopup.close();
+    } else {
+      this.currentPopup.setState({open: false});
     }
   }
 

@@ -167,6 +167,8 @@ export class MapController {
     }
     this.proxy = new MapProxy({mapController: this});
     this.components = this.components || {};
+    this.hideOtherComponents = this.hideOtherComponents.bind(this);
+    this.hideOtherBottomComponents = this.hideOtherBottomComponents.bind(this);
 
     // check permalink
     if (mapData.permalink.enable) {
@@ -1090,6 +1092,17 @@ export class MapController {
       if (components.hasOwnProperty(key)) {
         if (components[key] !== objComponent) {
           components[key].setState({open:false});
+        }
+      }
+    }
+  }
+
+  hideOtherBottomComponents(objComponent) {
+    let components = this.components;
+    for (let key in components) {
+      if (components.hasOwnProperty(key)) {
+        if (components[key] !== objComponent) {
+          components[key].setState({openResults: false});
         }
       }
     }
