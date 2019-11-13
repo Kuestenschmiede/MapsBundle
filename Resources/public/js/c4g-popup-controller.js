@@ -35,7 +35,6 @@ export class C4gPopupController {
       popUpContent,
       popup;
 
-    console.log("addPopup");
     let popupOptions = {open: this.containerOpen};
     this.popupHandling = parseInt(this.mapData.popupHandling, 10);
 

@@ -48,7 +48,7 @@ export class GeoSearchResults extends Component {
     let detailBtnClass = "";
     let detailBtnCb = "";
     let resultsExist = this.props.results.length > 0;
-    if (!this.props.detailOpen) {
+    if (!this.props.detailOpen && this.props.results.length > 1) {
       detailBtnClass = "c4g-beach-options";
       detailBtnCb = this.props.openResults;
     }

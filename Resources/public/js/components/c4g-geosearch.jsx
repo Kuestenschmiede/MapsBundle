@@ -99,7 +99,6 @@ export class GeoSearch extends Component {
       currentResult: null
     };
 
-
     this.inputCallback = this.inputCallback.bind(this);
     this.startSearch = this.startSearch.bind(this);
     this.zoomTo = this.zoomTo.bind(this);
@@ -111,7 +110,7 @@ export class GeoSearch extends Component {
   render() {
     let modeClass = this.state.open ? "c4g-open" : "c4g-close";
     let results = "";
-    if (this.state.openResults) {
+    if (this.state.openResults && this.config.results) {
       results = <GeoSearchResults className={modeClass} results={this.state.results} zoomFunc={(idx) => {this.setState({detailOpenResults: false, currentResult: this.state.results[idx]}); this.zoomTo(idx);}}
                                   closeResults={this.closeResults} headline={this.props.resultsHeadline} currentResult={this.state.currentResult}
                                   open={this.state.results.length >0} openResults={this.openResults} detailOpen={this.state.detailOpenResults}
