@@ -35,7 +35,7 @@ export class FeatureFilterList extends Component {
         else {
             className = "c4g-close";
         }
-        className += " " + utils.removeUmlauts(this.props.feature.name);
+        className += " fi_" + utils.removeUmlauts(this.props.feature.name);
         let liClass = this.props.checkedItem.identifier === "all" ? "" : "c4g-item-checked";
         return (
             <li className={liClass}>
