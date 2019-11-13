@@ -9,15 +9,12 @@
  * @copyright  Küstenschmiede GmbH Software & Design
  * @link       https://www.con4gis.org
  */
-import {cssConstants} from "./c4g-maps-constant";
-import {Zoomlevel} from "./c4g-maps-control-zoomlevel";
 import * as popupFunctionsDE from "./c4g-maps-popup-info-de";
 import * as popupFunctionsEN from "./c4g-maps-popup-info-en";
 import {Vector} from "ol/layer";
-import {Polygon, LineString} from "ol/geom";
 import Circle from "ol/geom/Circle";
 import {transform} from "ol/proj";
-import {getDistance, getArea} from "ol/sphere";
+import {getArea, getDistance} from "ol/sphere";
 import {Extent} from "ol/interaction";
 import {Vector as VectorSource} from "ol/source";
 import {extend} from "ol/extent";
@@ -108,6 +105,25 @@ export var utils = {
 
     return output;
   }, // end of encodeGeoJsonProperty()
+  removeUmlauts: function (input) {
+    if (!input) {
+      return '';
+    }
+    return input.toLowerCase().replace(/\s/g, ""
+    ).replace(
+        /\\/g, '\\\\'
+    ).replace(
+        /\"/g, '\'\''
+    ).replace(
+        /ä/g, 'ae'
+    ).replace(
+        /ö/g, 'oe'
+    ).replace(
+        /ü/g, 'ue'
+    ).replace(
+        /ß/g, 'ss'
+    );
+  },
 
   /**
    * Decode input strings for GeoJSON-Objects properly,

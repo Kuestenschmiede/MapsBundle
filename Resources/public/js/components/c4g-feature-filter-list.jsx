@@ -12,6 +12,7 @@
  */
 
 import React, { Component } from "react";
+import {utils} from "../c4g-maps-utils"
 import {FeatureFilterItem} from "./c4g-feature-filter-item.jsx";
 
 export class FeatureFilterList extends Component {
@@ -34,6 +35,7 @@ export class FeatureFilterList extends Component {
         else {
             className = "c4g-close";
         }
+        className += " " + utils.removeUmlauts(this.props.feature.name);
         let liClass = this.props.checkedItem.identifier === "all" ? "" : "c4g-item-checked";
         return (
             <li className={liClass}>
