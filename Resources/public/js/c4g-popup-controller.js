@@ -46,6 +46,7 @@ export class C4gPopupController {
       if (this.popupContainer) {
         ReactDOM.unmountComponentAtNode(this.popupContainer);
         delete this.mapController.components.popup;
+        this.popupContainer.parentNode.removeChild(this.popupContainer);
       }
       this.popupContainer = document.createElement('div');
       this.popupComponent = ReactDOM.render(React.createElement(PopupContainer, popupOptions), this.popupContainer);
