@@ -39,9 +39,9 @@ export class PopupContainer extends Component {
       detailBtnClass = "c4g-beach-options";
       detailBtnCb = this.toggleDetails;
     }
-    let className = "c4g-beach ";
+    let className = "c4g-popup-wrapper c4g-beach ";
     if (this.state.open) {
-      className += "c4g-open";
+      className += "c4g-open c4g-active";
     } else {
       className += "c4g-close";
     }
@@ -60,7 +60,7 @@ export class PopupContainer extends Component {
                   closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close} detailBtnClass={detailBtnClass} detailBtnCb={detailBtnCb}>
 
         </Titlebar>
-        <div className={"c4g-beach-content"} dangerouslySetInnerHTML={{__html: this.state.content}}>
+        <div className={"c4g-beach-content c4g-popup-content"} dangerouslySetInnerHTML={{__html: this.state.content}}>
         </div>
       </div>
     );
