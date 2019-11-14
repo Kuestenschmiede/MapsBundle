@@ -915,7 +915,13 @@ export class MapController {
       // this.map.addControl(this.controls.geosearch);
       if (mapData.geosearch.div && mapData.geosearch.div_results) {
         this.searchContainer = document.querySelector("#" + mapData.geosearch.div);
+        if (!this.searchContainer) {
+          this.searchContainer = document.querySelector("." + mapData.geosearch.div);
+        }
         this.searchResultsContainer = document.querySelector("#" + mapData.geosearch.div_results);
+        if (!this.searchResultsContainer) {
+          this.searchResultsContainer = document.querySelector("." + mapData.geosearch.div_results);
+        }
         geosearchOptions.resultsDiv = this.searchResultsContainer;
       }
       // else {
