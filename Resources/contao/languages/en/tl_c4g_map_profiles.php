@@ -96,10 +96,10 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_zoombounds'] = ['Zoom to b
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_animate'] = ['Enable animation', 'Fly to found location.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_markresult'] = ['Mark found location', 'Highlights the found location for a short time.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_popup'] = ['Open popup', 'Opens the popup for a feature at the location of the search (Works best with polygons).'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_attribution'] = ['Show attribution of search service', 'Adds an attribution of the search service (Nominatim).  Deactivate only when you are sure it is allowed.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_attribution'] = ['Show attribution of search service', 'Adds an attribution of the search service (Nominatim). Deactivate only when you are sure it is allowed.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_collapsed'] = ['Collapsed searchfield', 'Collapsed the searchfield by default.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_div'] = ['DIV for search', 'Enter the ID of an existing DIV element if you want to put the search field somewhere else on your page.'];
-
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_results_div'] = ['DIV for search results', 'Enter the ID of an existing DIV element if you want to put the search results somewhere else on your page.'];
 /** Editor */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor'] = ['Show editor on the map', 'Shows a button which activates an Editor for drawing locations, lines and areas on the map.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_styles_point'] = ['Location styles for POIs', 'Choose location styles that can be used in the editor.'];

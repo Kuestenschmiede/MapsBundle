@@ -435,6 +435,7 @@ class MapDataConfigurator
                 $mapData['geosearch']['results_headline'] = $profile->geosearch_results_headline;
                 $mapData['geosearch']['result_locstyle'] = $profile->geosearch_result_locstyle;
                 $mapData['geosearch']['div'] = $profile->geosearch_div;
+                $mapData['geosearch']['div_results'] = $profile->geosearch_results_div;
                 $mapData['geosearch']['searchzoom'] = $profile->geosearch_zoomto;
                 $mapData['geosearch']['zoombounds'] = $profile->geosearch_zoombounds;
                 $mapData['geosearch']['animate'] = $profile->geosearch_animate;
