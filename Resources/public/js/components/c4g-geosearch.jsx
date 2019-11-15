@@ -111,7 +111,7 @@ export class GeoSearch extends Component {
     let results = "";
     if (this.state.openResults && this.config.results) {
       results = <GeoSearchResults className={modeClass} results={this.state.results} zoomFunc={(idx) => {this.setState({detailOpenResults: false, currentResult: this.state.results[idx]}); this.zoomTo(idx);}}
-                                  closeResults={this.closeResults} headline={this.props.resultsHeadline} currentResult={this.state.currentResult}
+                                  closeResults={this.closeResults} headline={this.props.resultsHeadline} currentResult={this.state.currentResult} resultsDiv={this.props.resultsDiv}
                                   open={this.state.results.length >0} openResults={this.openResults} detailOpen={this.state.detailOpenResults}
       />;
     }
@@ -130,6 +130,12 @@ export class GeoSearch extends Component {
         {results}
       </React.Fragment>
     );
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.state.openResults) {
+      this.props.mapController.hideOtherComponents(this);
+    }
   }
 
   close() {
