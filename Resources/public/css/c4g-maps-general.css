@@ -1117,6 +1117,14 @@ button.c4g-geosearch-options:before {
   z-index: 60;
 }
 
+.c4g-geosearch-results.c4g-beach.external {
+  bottom: unset;
+  top: 0;
+  position: relative;
+  left: unset;
+  right: unset;
+}
+
 .c4g-geosearch-results-header.c4g-beach-header { font-size: 1.5em; line-height: calc(1.5em + 20px); }
 .c4g-geosearch-results-header.c4g-beach-header span { margin-left: calc(2.5% + 15px); }
 .c4g-geosearch-results-header.c4g-beach-header button { margin-right: calc(2.5% + 10px); height: calc(1.5em + 20px); }
