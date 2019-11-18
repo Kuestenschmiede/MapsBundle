@@ -923,10 +923,9 @@ export class MapController {
           this.searchResultsContainer = document.querySelector("." + mapData.geosearch.div_results);
         }
         geosearchOptions.resultsDiv = this.searchResultsContainer;
+      } else {
+        this.searchContainer = document.createElement('div');
       }
-      // else {
-      //   this.searchContainer = document.createElement('div');
-      // }
       this.components.geosearch = ReactDOM.render(React.createElement(GeoSearch, geosearchOptions), this.searchContainer);
       if (!mapData.geosearch.div) {
         this.$overlaycontainer_stopevent.append(this.searchContainer);
