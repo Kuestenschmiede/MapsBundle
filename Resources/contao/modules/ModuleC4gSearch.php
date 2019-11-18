@@ -7,6 +7,7 @@ namespace con4gis\MapsBundle\Resources\contao\modules;
 use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
 use con4gis\CoreBundle\Resources\contao\classes\ResourceLoader;
 use con4gis\CoreBundle\Resources\contao\models\C4gSettingsModel;
+use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use Contao\Controller;
 use Contao\System;
 
@@ -51,8 +52,15 @@ class ModuleC4gSearch extends \Module
 
         $template = $this->Template;
         $objSettings = C4gSettingsModel::findSettings();
+        $objMapsProfile = C4gMapProfilesModel::findByPk($objSettings->defaultprofile);
         $urlMap = Controller::replaceInsertTags("{{link_url::" . $this->c4g_map_site_id . "}}");
         $arrSettings = [];
+        if($objMapsProfile->geosearchParams){
+            $arrSettings['geosearchParams'] = [];
+            foreach(unserialize($objMapsProfile->geosearchParams) as $geosearchParam){
+                $arrSettings['geosearchParams'] = array_merge($arrSettings['geosearchParams'], [$geosearchParam['keys'] => $geosearchParam['params']]);
+            }
+        }
         $arrSettings['mapUrl'] = $urlMap;
         $arrSettings['moduleId'] = $this->id;
         $arrSettings['searchPlaceholder'] = $this->c4g_map_placeholder;

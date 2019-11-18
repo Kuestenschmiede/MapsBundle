@@ -52,6 +52,7 @@ export class GeoSearch extends Component {
     if (props.mapController.data.geosearch.searchKey && props.mapController.data.geosearch.url) {
       this.config.url = props.mapController.data.geosearch.url + "search.php";
       this.config.key = props.mapController.data.geosearch.searchKey;
+      this.config.params = props.mapController.data.geosearch.params;
     }
     else {
       this.config.url = props.mapController.data.api.geosearch + "/" + props.mapController.data.profile;
@@ -222,6 +223,13 @@ export class GeoSearch extends Component {
       }
       if (this.config.key) {
         data.key = this.config.key;
+      }
+      if (this.config.params) {
+        for (let param in this.config.params) {
+          if (this.config.params.hasOwnProperty(param)) {
+            data[param] = this.config.params[param];
+          }
+        }
       }
       // AJAX -> @nominatim
       jQuery.ajax({

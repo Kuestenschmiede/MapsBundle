@@ -448,6 +448,12 @@ class MapDataConfigurator
                     $mapData['geosearch']['searchKey'] = $keyForward['key'];
                     $mapData['geosearch']['reverseKey'] = ((array) C4GUtils::getKey($objSettings, '3', "", false))['key'];
                     $mapData['geosearch']['url'] = rtrim($objSettings->con4gisIoUrl, "/") . "/";
+                    $mapData['geosearch']['params'] = [];
+                    if($profile->geosearchParams){
+                        foreach(unserialize($profile->geosearchParams) as $geosearchParam){
+                            $mapData['geosearch']['params'] = array_merge($mapData['geosearch']['params'], [$geosearchParam['keys'] => $geosearchParam['params']]);
+                        }
+                    }
                 }
 
                 switch ($profile->geosearch_engine) {
