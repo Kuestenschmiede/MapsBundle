@@ -106,6 +106,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_attribution'] = ['Copyrigh
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_collapsed'] = ['Suchfeld initial einklappen', 'Das Eingabefeld für die Sucheingabe wird erst nach Klick auf die Lupe geöffnet.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_div'] = ['DIV für die Suche', 'DIV zur Positionierung der Suche. Nur nötig, falls die Suche nicht direkt vor der Karte angezeigt werden soll. Muss manuell auf der Seite erzeugt werden, z.B. mit einem HTML Inhaltselement.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_results_div'] = ['DIV für die Suchergebnisse', 'DIV zur Positionierung der Suchergebnisse. Nur nötig, falls die Suchergebnisse nicht direkt vor der Karte angezeigt werden sollen. Muss manuell auf der Seite erzeugt werden, z.B. mit einem HTML Inhaltselement.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_placeholder'] = ["Platzhalter für Suchfeld", "Geben Sie einen Platzhalter an, der im Eingabefeld dargestellt wird, solange keine Eingabe getätigt wurde."];
 
 /** Geopicker (Position bestimmen) */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['is_backend_geopicker_default'] = ['Als Standardprofil für Backend-Geopicker verwenden', 'Setzen Sie diese Checkbox, um das Kartenprofil standardmäßig für den Backend-Geopicker zu verwenden.'];

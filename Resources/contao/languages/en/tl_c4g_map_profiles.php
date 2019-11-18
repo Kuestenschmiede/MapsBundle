@@ -100,6 +100,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_attribution'] = ['Show att
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_collapsed'] = ['Collapsed searchfield', 'Collapsed the searchfield by default.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_div'] = ['DIV for search', 'Enter the ID of an existing DIV element if you want to put the search field somewhere else on your page.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_results_div'] = ['DIV for search results', 'Enter the ID of an existing DIV element if you want to put the search results somewhere else on your page.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_placeholder'] = ["Placeholder for input field", "Specify a placeholder that is displayed until an input is made."];
+
 /** Editor */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor'] = ['Show editor on the map', 'Shows a button which activates an Editor for drawing locations, lines and areas on the map.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_styles_point'] = ['Location styles for POIs', 'Choose location styles that can be used in the editor.'];
