@@ -111,6 +111,9 @@ export class GeoSearch extends Component {
 
   render() {
     let modeClass = this.state.open ? "c4g-open" : "c4g-close";
+    if (this.props.extDiv) {
+      modeClass += " external ";
+    }
     let results = "";
     if (this.state.openResults && this.config.results) {
       results = <GeoSearchResults className={modeClass} results={this.state.results} zoomFunc={(idx) => {this.setState({detailOpenResults: false, currentResult: this.state.results[idx]}); this.zoomTo(idx);}}
