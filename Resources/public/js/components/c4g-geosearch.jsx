@@ -36,14 +36,16 @@ export class GeoSearch extends Component {
 
     this.langConstants = getLanguage(props.mapController.data);
     // control
-    this.clickControl = this.clickControl.bind(this);
-    let element = document.createElement('div');
-    let button = document.createElement('button');
-    element.className = "c4g-geosearch" + " ol-control " + "ol-unselectable";
-    element.appendChild(button);
-    jQuery(button).on('click', this.clickControl);
-    let control = new Control({element: element, target: props.target});
-    props.mapController.map.addControl(control);
+    if (this.props.collapsed) {
+      this.clickControl = this.clickControl.bind(this);
+      let element = document.createElement('div');
+      let button = document.createElement('button');
+      element.className = "c4g-geosearch" + " ol-control " + "ol-unselectable";
+      element.appendChild(button);
+      jQuery(button).on('click', this.clickControl);
+      let control = new Control({element: element, target: props.target});
+      props.mapController.map.addControl(control);
+    }
     // end control
 
     // prepare search-configuration
@@ -72,7 +74,7 @@ export class GeoSearch extends Component {
     this.config.mapController = props.mapController;
     this.config.results = props.results;
     this.config.resultStyle = props.resultStyle;
-    if (this.config.results && this.config.resultStyle) {
+    if (this.config.resultStyle) {
       const scope = this;
       // check if style is loaded, otherwise load it
       if (props.mapController.proxy.locationStyleController.arrLocStyles[this.config.resultStyle]) {
@@ -89,7 +91,7 @@ export class GeoSearch extends Component {
     this.config.caching = props.caching;
 
     this.state = {
-      open: false,
+      open: !props.collapsed,
       query: "", // the search query
       results: [],
       currentCoordinate: [],
@@ -115,12 +117,18 @@ export class GeoSearch extends Component {
                                   open={this.state.results.length >0} openResults={this.openResults} detailOpen={this.state.detailOpenResults}
       />;
     }
+    let closeBtnClass = "";
+    let closeBtnCb = "";
+    if (this.config.collapsed) {
+      closeBtnClass = "c4g-titlebar-close";
+      closeBtnCb = this.close;
+    }
 
     return (
       <React.Fragment>
         <div className={cssConstants.GEOSEARCH_WRAPPER + " " + modeClass + " c4g-horizon"}>
           <Titlebar wrapperClass={"c4g-geosearch-header c4g-horizon-header"} header={this.props.headline} headerClass={"c4g-geosearch-headline c4g-horizon-header-headline"}
-                                detailBtnClass={""} detailBtnCb={""} closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close}>
+                                detailBtnClass={""} detailBtnCb={""} closeBtnClass={closeBtnClass} closeBtnCb={closeBtnCb}>
           </Titlebar>
           <div className={"c4g-horizon-content"}>
             <input type="text" onKeyDown={this.inputCallback} id={"c4g-geosearch-input"}/>
