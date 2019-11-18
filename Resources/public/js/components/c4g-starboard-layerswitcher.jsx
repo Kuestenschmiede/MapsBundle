@@ -26,6 +26,7 @@ export class StarboardLayerswitcher extends Component {
       layerStates: {}
     };
     let funcHook = function (itemData) {
+      itemData = itemData.layerIds;
       let arrLayers = [];
       let objLayerStates = {};
       for (let i = 0; i < scope.props.mapController.proxy.layerController.rawData.layer.length; i++) {
@@ -34,6 +35,9 @@ export class StarboardLayerswitcher extends Component {
         if (layer.childs.length > 0) {
           childs = scope.addChildStates(layer);
         }
+        else if (layer.content && layer.content.length > 0) {
+          childs = scope.addContentChildStates(layer)
+        }
         objLayerStates[layer.id] = {
           name: layer.name,
           hide: !!layer.hide,
@@ -41,7 +45,7 @@ export class StarboardLayerswitcher extends Component {
         };
       }
       let tempLayers = scope.props.mapController.proxy.layerController.arrLayers;
-      for(let i = 0; i < itemData.length; i++) {
+      for (let i = 0; i < itemData.length; i++) {
         arrLayers.push(tempLayers[itemData[i]]);
       }
       if (scope.updater.isMounted(scope)) {
@@ -55,7 +59,7 @@ export class StarboardLayerswitcher extends Component {
         scope.state.layerStates = objLayerStates;
       }
     };
-    props.mapController.proxy.hook_layer_loaded.push(funcHook)
+    window.c4gMapsHooks.proxy_layer_drawn.push(funcHook)
 
   };
 
@@ -73,13 +77,49 @@ export class StarboardLayerswitcher extends Component {
       if (layerElement.childs[i].childs && layerElement.childs[i].childs.length > 0) {
         childs = this.addChildStates(layerElement.childs[i]);
       }
+      else if (layerElement.childs[i].content && layerElement.childs[i].content.length > 0) {
+        childs = this.addContentChildStates(layerElement.childs[i])
+      }
       objChildStates[layerElement.childs[i].id] = {
         name: layerElement.childs[i].name,
         hide: !!layerElement.childs[i].hide,
-        childs: childs
+        childs: childs,
+        content: layerElement.childs[i].content[0],
+        contentFeature : false
       };
     }
     return objChildStates;
+  };
+  addContentChildStates (layerElement) {
+    let objChildStates = {};
+    let vectorLayer = this.props.mapController.proxy.layerController.arrLayers[layerElement.id].vectorLayer;
+    let vectorSource = this.getSource(vectorLayer);
+    for (let i = 0; i < layerElement.content[0].data.features.length; i++) {
+      let feature = layerElement.content[0].data.features[i];
+      let olFeature = vectorSource.getFeatureById(feature.properties.id);
+      objChildStates[feature.properties.id] = {
+        name: feature.properties.label,
+        hide: !!layerElement.hide,
+        childs: false,
+        content: false,
+        contentFeature : olFeature
+      }
+    }
+    return objChildStates;
+  };
+
+  getSource = (layer) => {
+    if (layer.getSource && layer.getSource()) {
+      return layer.getSource();
+    }
+    else if (layer.getLayers && layer.getLayers()) {
+      let layers = layer.getLayers().getArray();
+      for (let singleLayer in layers) {
+        if(layers.hasOwnProperty(singleLayer)) {
+          return this.getSource(layers[singleLayer]);
+        }
+      }
+    }
   };
 
   callbackFunction = (childData) => {
@@ -91,7 +131,6 @@ export class StarboardLayerswitcher extends Component {
       let button = jQuery("." + cssConstants.STARBOARD_CONTROL + "> button");
       button.trigger('click');
     };
-
     return (
       <div className={cssConstants.STARBOARD_WRAPPER}>
         <div className={cssConstants.STARBOARD_TITLEBAR}>

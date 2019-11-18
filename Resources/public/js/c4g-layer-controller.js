@@ -878,7 +878,6 @@ export class C4gLayerController {
                 } else {
                   dataProjection = undefined;
                 }
-
                 features = (new olFormat[contentData.format]({})).readFeatures(contentData.data, {
                   featureProjection: featureProjection,
                   dataProjection: dataProjection
@@ -1602,7 +1601,21 @@ export class C4gLayerController {
             feature.set('styleId', elementContent.locationStyle);
             feature.set('label', elementContent.data.properties.label);
             features.push(feature);
-          } else {
+          }
+          else if (elementContent.format === "GeoJSON" && elementContent.data && elementContent.data.features) {
+            features = [];
+            for (let singleFeature in elementContent.data.features){
+              if (elementContent.data.features.hasOwnProperty(singleFeature)) {
+                let olFeature = (new olFormat.GeoJSON({})).readFeature(elementContent.data.features[singleFeature], {
+                  featureProjection: featureProjection,
+                  dataProjection: dataProjection
+                });
+                olFeature.setId(elementContent.data.features[singleFeature].properties.id);
+                features.push(olFeature);
+              }
+            }
+          }
+          else {
             // remaining geometries
             features = (new olFormat[elementContent.format]({})).readFeatures(elementContent.data, {
               featureProjection: featureProjection,

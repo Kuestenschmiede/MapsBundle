@@ -117,7 +117,7 @@ class LayerService
         return $return;
 
     }
-    protected function forceChildsInContent($layer)
+    public function forceChildsInContent($layer)
     {
         $arrChilds =[];
         foreach($layer['childs'] as $key => $child)
@@ -139,6 +139,20 @@ class LayerService
         }
         $layer['childs'] = $arrChilds;
         return $layer;
+    }
+    public function createGeoJSONFeature($objOptions, $locX = null, $locY = null, $geometry = null) {
+        $geometry = $geometry ? $geometry : [
+            "type" => "Point",
+            "coordinates" => [
+                $locX,
+                $locY
+            ]
+        ];
+        return [
+            "type" => "Feature",
+            "properties" => $objOptions,
+            "geometry" => $geometry
+        ];
     }
     
     /**
