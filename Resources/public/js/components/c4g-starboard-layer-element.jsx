@@ -84,7 +84,7 @@ export class C4gStarboardLayerElement extends Component {
             let id = objChild.contentFeature.getId();
             let vectorLayer = this.props.mapController.proxy.layerController.arrLayers[this.props.id].vectorLayer;
             let vectorSource = this.getSource(vectorLayer);
-            if (!vectorSource.getFeatureById(id)) {
+            if (vectorSource && !vectorSource.getFeatureById(id)) {
                 vectorSource.addFeature(objChild.contentFeature);
             }
         }
