@@ -909,7 +909,8 @@ export class MapController {
         resultCount: mapData.geosearch.result_count,
         resultsHeadline: mapData.geosearch.results_headline,
         headline: mapData.geosearch.headline,
-        resultStyle: mapData.geosearch.result_locstyle
+        resultStyle: mapData.geosearch.result_locstyle,
+        placeholder: mapData.geosearch.placeholder
       };
       // this.controls.geosearch = new GeoSearch();
       // this.map.addControl(this.controls.geosearch);

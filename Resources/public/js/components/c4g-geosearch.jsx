@@ -89,6 +89,7 @@ export class GeoSearch extends Component {
     this.config.collapsed = props.collapsed;
     this.config.resultCount = props.resultCount;
     this.config.caching = props.caching;
+    this.config.placeholder = props.placeholder;
 
     this.state = {
       open: !props.collapsed,
@@ -131,7 +132,7 @@ export class GeoSearch extends Component {
                                 detailBtnClass={""} detailBtnCb={""} closeBtnClass={closeBtnClass} closeBtnCb={closeBtnCb}>
           </Titlebar>
           <div className={"c4g-horizon-content"}>
-            <input type="text" onKeyDown={this.inputCallback} id={"c4g-geosearch-input"}/>
+            <input type="text" onKeyDown={this.inputCallback} id={"c4g-geosearch-input"} placeholder={this.config.placeholder}/>
             <button className={cssConstants.GEOSEARCH_START} title={this.langConstants.CTRL_START_SEARCH} onMouseUp={this.startSearch}/>
           </div>
         </div>
