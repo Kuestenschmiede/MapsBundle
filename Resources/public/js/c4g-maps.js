@@ -1071,6 +1071,20 @@ export class MapController {
       }
       ;
 
+      let mapWidth = "100%";
+      let mapHeight = "100%";
+    
+      if (mapData.width) {
+        mapWidth = mapData.width;
+      }
+      if (mapData.height) {
+        mapHeight = mapData.height;
+      }
+      if (domMapDiv && domMapDiv.style) {
+        domMapDiv.style.setProperty('--map-height', mapHeight);
+        domMapDiv.style.setProperty('--map-width', mapWidth);
+      }
+
       if (mapData.themeData['maincolor']) {
         var mainColor = utils.getRgbaFromHexAndOpacity(mapData.themeData['maincolor'], mapData.themeData['mainopacity']);
         var fontColor = utils.getRgbaFromHexAndOpacity(mapData.themeData['fontcolor'], mapData.themeData['fontopacity']);

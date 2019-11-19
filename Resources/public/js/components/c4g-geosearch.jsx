@@ -36,16 +36,16 @@ export class GeoSearch extends Component {
 
     this.langConstants = getLanguage(props.mapController.data);
     // control
-    if (this.props.collapsed) {
-      this.clickControl = this.clickControl.bind(this);
-      let element = document.createElement('div');
-      let button = document.createElement('button');
-      element.className = "c4g-geosearch" + " ol-control " + "ol-unselectable";
-      element.appendChild(button);
-      jQuery(button).on('click', this.clickControl);
-      let control = new Control({element: element, target: props.target});
-      props.mapController.map.addControl(control);
-    }
+    // if (this.props.collapsed) {
+    this.clickControl = this.clickControl.bind(this);
+    let element = document.createElement('div');
+    let button = document.createElement('button');
+    element.className = "c4g-geosearch" + " ol-control " + "ol-unselectable";
+    element.appendChild(button);
+    jQuery(button).on('click', this.clickControl);
+    let control = new Control({element: element, target: props.target});
+    props.mapController.map.addControl(control);
+    // }
     // end control
 
     // prepare search-configuration

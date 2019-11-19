@@ -374,6 +374,7 @@ class MapDataConfigurator
                 $mapData['layerswitcher']['label'] = \Contao\Controller::replaceInsertTags($profile->layerswitcher_label);
             }
             $mapData['filterDiv'] = $profile->filter_div;
+            $mapData['filterHandling'] = $profile->filterHandling;
 
             // map-tools
             //
