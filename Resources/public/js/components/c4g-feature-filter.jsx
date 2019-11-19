@@ -95,16 +95,22 @@ export class FeatureFilter extends Component {
   filterLayersMulti (property, listId, value) {
     let newState = this.state.arrChecked;
     let changedEntry = newState[listId];
-    if (property === "all") {
-      changedEntry = this.state.filters[listId].filters;
-    }
-    else{
-      let found = changedEntry.find((element) => element.identifier === property);
-      if (!found) {
+
+    let found = changedEntry.find((element) => element.identifier === property);
+    if (!found) {
+      if (property === "all") {
+        changedEntry = this.state.filters[listId].filters;
+      }
+      else {
         changedEntry.push({
           identifier: property,
           value: value
         });
+      }
+    }
+    else {
+      if (property === "all") {
+        changedEntry = [];
       }
       else {
         let rmIndex = changedEntry.indexOf(found);
@@ -113,6 +119,7 @@ export class FeatureFilter extends Component {
         }
       }
     }
+
     newState[listId] = changedEntry;
     this.setState({arrChecked: newState}, () => {
       let arrLayers = this.props.mapController.map.getLayers().getArray();

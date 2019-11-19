@@ -35,11 +35,17 @@ export class FeatureFilterMultiCheckbox extends Component {
         else {
             className = "c4g-close";
         }
+        let numberSpan = null;
+        if (this.props.checkedItems.length > 0) {
+            numberSpan = <span className={"sum"}> {this.props.checkedItems.length} </span>
+        }
+
         className += " fi_" + utils.removeUmlauts(this.props.feature.name);
         let liClass =  "c4g-item-checked";
         return (
             <li className={liClass}>
                 <strong className={className} onMouseUp={(evt) => {this.props.setOpen(this.props.id); evt.stopPropagation(); evt.preventDefault();}}><span/>{this.props.feature.name}</strong>
+                {numberSpan}
                 {form}
             </li>
         );
