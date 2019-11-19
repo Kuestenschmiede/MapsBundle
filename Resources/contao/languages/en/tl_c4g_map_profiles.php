@@ -143,6 +143,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['account'] = ['Account Button', 'Sele
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['caching'] = ['Remember Button States', 'If checked, button states are cached.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['be_optimize_checkboxes_limit'] = ['Convert large checkbox lists to Chosen Fields', 'If at least this many entries are in the list, it are converted to a chosen field. Select 0 to disable. this function.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['filter_div'] = ['DIV for map filter', 'Set a CSS selector for a DIV element in which the map filter will be displayed.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['filters'] = ['Filters', 'Choose your filters for the map'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['filterHandling'] = ['Filter as multicheckbox', 'Display the filter as a multicheckbox (logical Or instead of And).'];
 /**
  * Reference
  */
