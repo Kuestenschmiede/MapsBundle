@@ -27,18 +27,19 @@ export class GeoSearchResults extends Component {
   render() {
     const scope = this;
     let resultContainer = "";
-    let closeBtnClass = "";
-    let closeBtnCb = "";
+    let firstResult = "";
+    let detailBtnClass = "";
+    let detailBtnCb = "";
+    let closeBtnClass = "c4g-titlebar-close";
+    let closeBtnCb = this.props.closeCb;
+
     if (this.props.detailOpen) {
-      closeBtnClass = "c4g-beach-options";
-      closeBtnCb = this.props.closeResults;
       resultContainer = <ul id={"resultcontainer"}>
         {this.props.results.map(function(element, index) {
           return (<li key={index}><button key={index} id={index} className={"searchResultButton"} name={element} onMouseUp={() => scope.props.zoomFunc(index)}>{element}</button></li>)
         })}
       </ul>;
     }
-    let firstResult = "";
     if (!this.props.detailOpen && this.props.results.length >= 1) {
       let element = this.props.currentResult;
       firstResult = <ul>
@@ -46,12 +47,12 @@ export class GeoSearchResults extends Component {
         </li>
       </ul>;
     }
-    let detailBtnClass = "";
-    let detailBtnCb = "";
-    let resultsExist = this.props.results.length > 0;
     if (!this.props.detailOpen && this.props.results.length > 1) {
       detailBtnClass = "c4g-beach-options";
       detailBtnCb = this.props.openResults;
+    } else if (this.props.detailOpen && this.props.results.length > 1) {
+      detailBtnClass = "c4g-beach-options";
+      detailBtnCb = this.props.closeResults;
     }
     if (this.props.resultsDiv) {
       return ReactDOM.createPortal(
