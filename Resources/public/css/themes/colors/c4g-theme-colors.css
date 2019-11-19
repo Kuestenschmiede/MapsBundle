@@ -634,8 +634,6 @@ button.c4g-geosearch-start {
 
 .c4g-popup-container.c4g-beach .c4g-beach-options, .c4g-popup-container.c4g-beach a { color: var(--font-color); }
 
-.c4g-popup-container.c4g-beach .c4g-beach-header.c4g-beach-header button:nth-child(2n + 1) {
-  border-right: 1px solid var(--font-color);
-}
+.c4g-popup-container.c4g-beach .c4g-beach-header.c4g-beach-header button:nth-child(2n + 1) { border-right: 1px solid var(--font-color); }
 
 /*-------------*/
