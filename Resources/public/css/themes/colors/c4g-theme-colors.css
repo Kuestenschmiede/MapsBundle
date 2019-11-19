@@ -591,6 +591,9 @@ button.c4g-popup-close:hover {
   color: var(--font-color);
 }
 
+
+ul.c4g-feature-filter-list {  background: linear-gradient(var(--main-color) 45px, #fff0 0px); }
+ul.c4g-feature-filter-list li { color: ver(--font-color); }
 /*--------Geosearch-------------*/
 
 .c4g-geosearch-wrapper.c4g-open{

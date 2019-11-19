@@ -73,7 +73,7 @@
 }
 
 div.c4g-control-container-top-left.ol-unselectable > div.ol-unselectable.ol-control {
-  width: 38px;
+  width: 42px;
   margin-right: 0;
 }
 
@@ -954,18 +954,13 @@ input[type=range]:focus::-ms-fill-upper {
 
 #filter_block {
     position: absolute;
-    top: 30px;
     left: 0;
     z-index: 20;
 
 }
 
 ul.c4g-feature-filter-list {
-  display: block;
-  text-align: center;
   padding: 10px 0;
-  background: linear-gradient(var(--main-color) 45px, #fff0 0px);
-  color: var(--font-color);
   width: 100vw;
   overflow-x: auto;
   scrollbar-width: none;
@@ -978,8 +973,12 @@ ul.c4g-feature-filter-list {
   font-size: inherit;
   padding:0 20px 0 20px;
   margin: 0;
-
 }
+
+ul.c4g-feature-filter-list li.c4g-item-checked>*:last-child:not(form) {
+    margin: 0 60px 0 10px;
+}
+
 strong.c4g-open span:after {
   content: "\f054";
   font-family: 'Font Awesome 5 Free';
@@ -1006,21 +1005,17 @@ strong.c4g-open span {
 
 .c4g-feature-filter-list > li {
   display: inline-block;
-  padding-right: 5px;
 }
 
 ul.c4g-feature-filter-list li {
-  color: var(--font-color);
   vertical-align: top;
-  padding: 0 50px;
-  margin: 0;
-  padding: 0 0px;
-  margin-left: 10px;
-  margin-right: 10px;
+  margin: 0 10px;
+  padding: 0 ;
 }
 
-ul.c4g-feature-filter-list strong {
-    margin: 0 60px 0 10px;
+div#filter_block input {
+    width: max-content;
+    margin-right: 10px;
 }
 
 .c4g-feature-filter input[type="radio"] {
@@ -1032,7 +1027,7 @@ ul.c4g-feature-filter-list strong {
   color: var(--font-color);
   z-index: 91;
   width: calc(100% + 20px);
-  margin-top: 10px;
+  margin-top: 5px;
   padding-left: 10px;
   padding-right: 20px;
   padding-bottom: 10px;
@@ -1110,7 +1105,7 @@ button.c4g-titlebar-close, .c4g-geosearch-results button {
 
 .c4g-horizon-content input {
   height: 35px;
-    padding: 0;
+    padding: 0 0 0 5px;
     margin: 0;
     border: 0;
   outline: none;
@@ -1191,6 +1186,22 @@ button.c4g-geosearch-options:before {
 }
 
 #main .c4g-beach-content ul.resultcontainer, .c4g-beach-content.c4g-popup-content {  max-height: calc(var(--map-height) - 50px); overflow-y: auto;}
+
+#main .c4g-beach-content ul.resultcontainer::-webkit-scrollbar, .c4g-beach-content.c4g-popup-content::-webkit-scrollbar {
+    width: 10px;
+}
+
+#main .c4g-beach-content ul.resultcontainer::-webkit-scrollbar-track, .c4g-beach-content.c4g-popup-content::-webkit-scrollbar-track {
+    background: var(--main-color);
+}
+
+#main .c4g-beach-content ul.resultcontainer::-webkit-scrollbar-thumb, .c4g-beach-content.c4g-popup-content::-webkit-scrollbar-thumb {
+    background: var(--font-color);
+}
+
+#main .c4g-beach-content ul.resultcontainer::-webkit-scrollbar-thumb:hover, .c4g-beach-content.c4g-popup-content::-webkit-scrollbar-thumb:hover {
+    background: var(--shadow-color);
+}
 /*------------------------------------*/
 /*--------------PopUp-----------------*/
 

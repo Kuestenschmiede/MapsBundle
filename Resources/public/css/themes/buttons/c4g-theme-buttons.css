@@ -217,7 +217,7 @@
 }
 .c4g-control-container-bottom-right {
   position: absolute;
-  bottom: .2em;
+  bottom: 0;
   /* do not change "right"-value! */
   right: 0;
   margin-right: .2em;
