@@ -1074,7 +1074,6 @@ button.c4g-titlebar-close, .c4g-geosearch-results button {
   background: none;
   border: none;
   outline: none;
-  font-size: 1em;
   padding: 0;
   cursor: pointer;
 }
@@ -1153,3 +1152,44 @@ button.c4g-geosearch-options:before {
 }
 
 /*------------------------------------*/
+/*--------------PopUp-----------------*/
+
+div div.c4g-popup-wrapper.c4g-beach {
+  border-radius: 0;
+  margin-bottom: 0;
+}
+
+div.c4g-popup-wrapper.c4g-beach:before {
+  display: none;
+}
+
+.c4g-popup-wrapper.c4g-beach.c4g-details-closed .c4g-beach-content.c4g-popup-content > * ~ * { display: none; }
+.c4g-popup-wrapper.c4g-beach.c4g-details-closed .c4g-popup-content > * {
+  position: absolute;
+  height: max-content;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.c4g-popup-wrapper.c4g-beach button.c4g-beach-options {
+  background: none;
+  border: none;
+  outline: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.c4g-popup-wrapper.c4g-beach .c4g-beach-header span:empty { display: none; }
+
+.c4g-popup-wrapper.c4g-beach .c4g-beach-header.c4g-beach-header {
+  border-bottom: 1px solid var(--font-color);
+  width: 100%;
+  height: 50px;
+}
+.c4g-popup-wrapper.c4g-beach .c4g-beach-header.c4g-beach-header span { margin-left: calc(2.5% + 15px); }
+.c4g-popup-wrapper.c4g-beach .c4g-beach-header.c4g-beach-header button { height: calc(1.5em + 20px); max-height: 50px; font-size: 1.5em; width: 100%; }
+
+/*.c4g-popup-wrapper.c4g-beach button.c4g-titlebar-close { display: none; }
+
+/*-----------------------------------------*/
