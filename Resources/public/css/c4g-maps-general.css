@@ -1129,7 +1129,7 @@ button.c4g-geosearch-options:before {
 .c4g-geosearch-results-header.c4g-beach-header span { margin-left: calc(2.5% + 15px); }
 .c4g-geosearch-results-header.c4g-beach-header button { height: 50px; width: 50px; font-size: 1.5em; }
 
-#main .c4g-beach-content ul { padding: 0; margin: 0; list-style-type: none; }
+#main .c4g-beach-content ul { padding: 0; margin: 0; list-style-type: none; width: 100%;}
 #main .c4g-beach-content ul li { margin: 0; }
 
 .c4g-geosearch-results .searchResultButton {
@@ -1161,6 +1161,7 @@ button.c4g-geosearch-options:before {
   .c4g-beach { width: auto; }
 }
 
+#main .c4g-beach-content ul, .c4g-beach-content.c4g-popup-content {  max-height: calc(var(--map-height) - 50px); overflow-y: auto;}
 /*------------------------------------*/
 /*--------------PopUp-----------------*/
 
@@ -1181,7 +1182,7 @@ div div.c4g-popup-wrapper.c4g-beach {
 .c4g-popup-container.c4g-beach.c4g-details-closed .c4g-beach-content.c4g-popup-content > * ~ * { display: none; }
 .c4g-popup-container.c4g-beach.c4g-details-closed .c4g-popup-content > * {
   margin: auto;
-  line-height: 70px;
+  min-height: 70px;
 }
 
 .c4g-popup-container.c4g-beach button.c4g-beach-options {
