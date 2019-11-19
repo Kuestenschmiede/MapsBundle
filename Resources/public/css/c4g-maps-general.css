@@ -1125,17 +1125,18 @@ button.c4g-geosearch-options:before {
   right: unset;
 }
 
-.c4g-geosearch-results-header.c4g-beach-header { font-size: 1.5em; line-height: calc(1.5em + 20px); }
+.c4g-geosearch-results-header.c4g-beach-header { line-height: calc(1.5em + 20px); }
 .c4g-geosearch-results-header.c4g-beach-header span { margin-left: calc(2.5% + 15px); }
-.c4g-geosearch-results-header.c4g-beach-header button { margin-right: calc(2.5% + 10px); height: calc(1.5em + 20px); }
+.c4g-geosearch-results-header.c4g-beach-header button { height: 50px; width: 50px; font-size: 1.5em; }
 
 #main .c4g-beach-content ul { padding: 0; margin: 0; list-style-type: none; }
+#main .c4g-beach-content ul li { margin: 0; }
 
 .c4g-geosearch-results .searchResultButton {
   overflow: hidden;
   width: 100%;
   text-align: left;
-  line-height: 1;
+  line-height: 30px;
   padding: 10px;
   cursor: pointer;
   transition: .1s;
@@ -1150,8 +1151,8 @@ button.c4g-geosearch-options:before {
   font-family: "Font Awesome 5 Free";
   font-weight: bold;
   position: absolute;
-  font-size: 2em;
-  margin-top: -7px;
+  font-size: 2.5em;
+  margin-top: -1px;
   margin-left:-15px;
   display: none;
 }
@@ -1167,7 +1168,7 @@ button.c4g-geosearch-options:before {
   width: auto;
 }
 
-.c4g-beach-content {
+.c4g-beach-content.c4g-popup-content {
   padding: 0 20px;
 }
 
@@ -1194,16 +1195,12 @@ div div.c4g-popup-wrapper.c4g-beach {
 .c4g-popup-container.c4g-beach .c4g-beach-header span:empty { display: none; }
 
 .c4g-popup-container.c4g-beach .c4g-beach-header.c4g-beach-header {
-  border-bottom: 1px solid var(--font-color);
-  width: 100%;
+  width: 101px;
   height: 50px;
+  margin-left: calc(100% - 101px);
 }
 .c4g-popup-container.c4g-beach .c4g-beach-header.c4g-beach-header span { margin-left: calc(2.5% + 15px); }
 .c4g-popup-container.c4g-beach .c4g-beach-header.c4g-beach-header button { height: calc(1.5em + 20px); max-height: 50px; font-size: 1.5em; width: 50%; }
-
-.c4g-popup-container.c4g-beach .c4g-beach-header.c4g-beach-header button:nth-child(2n + 1) {
-  border-right: 1px solid var(--font-color);
-}
 
 .c4g-beach-header button:hover:before {
   font-size: 1.3em;
