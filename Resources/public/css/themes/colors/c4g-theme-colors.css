@@ -629,3 +629,8 @@ button.c4g-geosearch-start {
 }
 
 /*------------------------------------*/
+/*------------Pop Up-------------------*/
+
+.c4g-popup-container.c4g-beach .c4g-beach-options, .c4g-popup-container.c4g-beach a { color: var(--font-color); }
+
+/*-------------*/

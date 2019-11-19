@@ -1036,10 +1036,10 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
 .c4g-beach.c4g-close {
   display: none;
 }
-
+/*
 .c4g-beach.c4g-details-closed {
   max-height: 100px;
-}
+}*/
 
 
 
@@ -1061,7 +1061,7 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
 
 .c4g-geosearch-wrapper.c4g-close { display: none; }
 
-.c4g-geosearch-wrapper.c4g-open.external {
+.c4g-geosearch-wrapper.c4g-open.c4g-horizon {
   position: absolute;
   width: max-content;
   left: 48px;
@@ -1075,7 +1075,6 @@ button.c4g-titlebar-close, .c4g-geosearch-results button {
   background: none;
   border: none;
   outline: none;
-  font-size: 1em;
   padding: 0;
   cursor: pointer;
 }
@@ -1152,7 +1151,7 @@ button.c4g-geosearch-options:before {
   font-weight: bold;
   position: absolute;
   font-size: 2em;
-  margin-top: -10px;
+  margin-top: -7px;
   margin-left:-15px;
   display: none;
 }
@@ -1162,3 +1161,52 @@ button.c4g-geosearch-options:before {
 }
 
 /*------------------------------------*/
+/*--------------PopUp-----------------*/
+
+.c4g-beach {
+  width: auto;
+}
+
+.c4g-beach-content {
+  padding: 0 20px;
+}
+
+div div.c4g-popup-wrapper.c4g-beach {
+  border-radius: 0;
+  margin-bottom: 0;
+  width: auto;
+}
+
+.c4g-popup-container.c4g-beach.c4g-details-closed .c4g-beach-content.c4g-popup-content > * ~ * { display: none; }
+.c4g-popup-container.c4g-beach.c4g-details-closed .c4g-popup-content > * {
+  margin: auto;
+  line-height: 70px;
+}
+
+.c4g-popup-container.c4g-beach button.c4g-beach-options {
+  background: none;
+  border: none;
+  outline: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.c4g-popup-container.c4g-beach .c4g-beach-header span:empty { display: none; }
+
+.c4g-popup-container.c4g-beach .c4g-beach-header.c4g-beach-header {
+  border-bottom: 1px solid var(--font-color);
+  width: 100%;
+  height: 50px;
+}
+.c4g-popup-container.c4g-beach .c4g-beach-header.c4g-beach-header span { margin-left: calc(2.5% + 15px); }
+.c4g-popup-container.c4g-beach .c4g-beach-header.c4g-beach-header button { height: calc(1.5em + 20px); max-height: 50px; font-size: 1.5em; width: 50%; }
+
+.c4g-popup-container.c4g-beach .c4g-beach-header.c4g-beach-header button:nth-child(2n + 1) {
+  border-right: 1px solid var(--font-color);
+}
+
+.c4g-beach-header button:hover:before {
+  font-size: 1.3em;
+}
+
+/*-----------------------------------------*/
