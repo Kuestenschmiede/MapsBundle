@@ -39,7 +39,7 @@ export class PopupContainer extends Component {
       detailBtnClass = "c4g-beach-options";
       detailBtnCb = this.toggleDetails;
     }
-    let className = "c4g-popup-wrapper c4g-beach ";
+    let className = "c4g-popup-container c4g-beach ";
     if (this.state.open) {
       className += "c4g-open c4g-active";
     } else {
