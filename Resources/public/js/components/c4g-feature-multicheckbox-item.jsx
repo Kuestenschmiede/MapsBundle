@@ -26,6 +26,7 @@ export class FeatureFilterMultiCheckboxItem extends Component {
                     <input
                         type="checkbox"
                         checked={checked}
+                        onChange={(evt) => {evt.stopPropagation()}}
                         onClick={(evt) => {this.props.filterLayers(scope.props.feature.identifier, scope.props.parentId, scope.props.feature.value);}}
                         value={this.props.feature.identifier}
                     />

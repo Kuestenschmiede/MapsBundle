@@ -99,7 +99,7 @@ export class FeatureFilter extends Component {
     let found = changedEntry.find((element) => element.identifier === property);
     if (!found) {
       if (property === "all") {
-        changedEntry = this.state.filters[listId].filters;
+        changedEntry = JSON.parse(JSON.stringify(this.state.filters[listId].filters));
       }
       else {
         changedEntry.push({
