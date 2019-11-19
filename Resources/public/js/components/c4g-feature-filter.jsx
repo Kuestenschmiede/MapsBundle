@@ -95,17 +95,22 @@ export class FeatureFilter extends Component {
   filterLayersMulti (property, listId, value) {
     let newState = this.state.arrChecked;
     let changedEntry = newState[listId];
-    let found = changedEntry.find((element) => element.identifier === property);
-    if (!found) {
-      changedEntry.push({
-        identifier: property,
-        value: value
-      });
+    if (property === "all") {
+      changedEntry = this.state.filters[listId].filters;
     }
-    else {
-      let rmIndex = changedEntry.indexOf(found);
-      if (rmIndex > -1) {
-        changedEntry.splice(rmIndex, 1);
+    else{
+      let found = changedEntry.find((element) => element.identifier === property);
+      if (!found) {
+        changedEntry.push({
+          identifier: property,
+          value: value
+        });
+      }
+      else {
+        let rmIndex = changedEntry.indexOf(found);
+        if (rmIndex > -1) {
+          changedEntry.splice(rmIndex, 1);
+        }
       }
     }
     newState[listId] = changedEntry;

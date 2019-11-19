@@ -24,7 +24,7 @@ export class FeatureFilterMultiCheckboxItem extends Component {
             <div className="c4g-filter-form-element">
                 <label>
                     <input
-                        type="radio"
+                        type="checkbox"
                         checked={checked}
                         onClick={(evt) => {this.props.filterLayers(scope.props.feature.identifier, scope.props.parentId, scope.props.feature.value);}}
                         value={this.props.feature.identifier}
