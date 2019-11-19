@@ -41,7 +41,7 @@ export class FeatureFilter extends Component {
   render() {
     const scope = this;
     let filters = this.state.filters;
-    if (true) {
+    if (!!parseFloat(this.props.mapController.data.filterHandling)) {
       if (filters && filters.length > 0) {
         let div = filters.map((feature, index) => {
           let checkedItems = scope.state.arrChecked[index];
@@ -255,7 +255,14 @@ export class FeatureFilter extends Component {
         jsonData = JSON.parse(jsonData);
         let arrChecked = [];
         for (let i = 0; i < jsonData.length; i++) {
-          arrChecked.push([]);
+          if(!!parseFloat(scope.props.mapController.data.filterHandling)) {
+            arrChecked.push([]);
+          }
+          else {
+            arrChecked.push({
+              identifier: "all"
+            });
+          }
         }
         scope.setState({filters: jsonData, arrChecked: arrChecked})
       });
