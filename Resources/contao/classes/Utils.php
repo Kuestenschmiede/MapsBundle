@@ -89,6 +89,7 @@ class Utils
         $id = Database::getInstance()->prepare("SELECT id FROM tl_page LIMIT 1")->execute()->fetchAssoc();
         $objPage = $objPage ?: PageModel::findByPk($id['id']);
         $objPage->language = $lang;
+        $objPage->title = "";
         return html_entity_decode(Controller::replaceInsertTags($result));
     }
     

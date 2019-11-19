@@ -19,12 +19,23 @@ export class C4gStarboardLayerElement extends Component {
     constructor(props) {
         super(props);
         const scope = this;
-        this.state = {
-            initialized: false,
-            active: !props.objStates[props.id].hide,
-            collapsed: this.props.collapsed,
-            disabled: props.mapController.proxy.checkLayerIsActiveForZoom(scope.props.id)
-        };
+        if (scope.props.objStates[scope.props.id].contentFeature) {
+            this.state = {
+                initialized: false,
+                active: !props.objStates[props.id].hide,
+                collapsed: this.props.collapsed,
+                disabled: props.mapController.proxy.checkLayerIsActiveForZoom(scope.props.pid)
+            };
+        }
+        else {
+            this.state = {
+                initialized: false,
+                active: !props.objStates[props.id].hide,
+                collapsed: this.props.collapsed,
+                disabled: props.mapController.proxy.checkLayerIsActiveForZoom(scope.props.id)
+            };
+        }
+
 
     }
 
@@ -69,9 +80,57 @@ export class C4gStarboardLayerElement extends Component {
                 }
             }
         }
+        if (!newState && objChild.contentFeature) {
+            let id = objChild.contentFeature.getId();
+            let vectorLayer = this.props.mapController.proxy.layerController.arrLayers[this.props.id].vectorLayer;
+            let vectorSource = this.getSource(vectorLayer);
+            if (vectorSource && !vectorSource.getFeatureById(id)) {
+                vectorSource.addFeature(objChild.contentFeature);
+            }
+        }
         return objChild
     };
+    getSource = (layer) => {
+        if (layer.getSource && layer.getSource()) {
+            return layer.getSource();
+        }
+        else if (layer.getLayers && layer.getLayers()) {
+            let layers = layer.getLayers().getArray();
+            for (let singleLayer in layers) {
+                if(layers.hasOwnProperty(singleLayer)) {
+                    return this.getSource(layers[singleLayer]);
+                }
+            }
+        }
+    };
+    removeElement = (elementId) => {
 
+    }
+    layerClick = (e) => {
+        const scope = this;
+        e.stopPropagation();
+        e.nativeEvent.stopImmediatePropagation();
+        scope.callbackFunction();
+        if (scope.props.objStates[scope.props.id].contentFeature) {
+            let vectorLayer = scope.props.mapController.proxy.layerController.arrLayers[scope.props.pid].vectorLayer;
+            let vectorSource = scope.getSource(vectorLayer);
+            let feature = scope.props.objStates[scope.props.id].contentFeature;
+            if (scope.state.active && vectorSource.getFeatureById(scope.props.id)) {
+                vectorSource.removeFeature(feature);
+            }
+            else if (!scope.state.active && !vectorSource.getFeatureById(scope.props.id)){
+                vectorSource.addFeature(feature)
+            }
+        }
+        else {
+            if (!scope.state.active) {
+                scope.props.mapController.proxy.layerController.showLayer(scope.props.id);
+            } else {
+                scope.props.mapController.proxy.layerController.hideLayer(scope.props.id);
+            }
+        }
+
+    };
     render() {
         const scope = this;
         let span = null;
@@ -88,17 +147,6 @@ export class C4gStarboardLayerElement extends Component {
             };
             span = <span className={cssConstants.ICON} onMouseUp={(event) => spanClick(event)}/>;
         }
-        let layerClick = function(e) {
-            e.stopPropagation();
-            e.nativeEvent.stopImmediatePropagation();
-            scope.callbackFunction();
-            if (!scope.state.active) {
-                scope.props.mapController.proxy.layerController.showLayer(scope.props.id);
-            }
-            else {
-                scope.props.mapController.proxy.layerController.hideLayer(scope.props.id);
-            }
-        };
         let cssClass = scope.state.active ? cssConstants.ACTIVE : cssConstants.INACTIVE;
         if (!scope.props.mapController.proxy.checkLayerIsActiveForZoom(scope.props.id)) {
             cssClass += " " + cssConstants.DISABLED;
@@ -108,13 +156,14 @@ export class C4gStarboardLayerElement extends Component {
         return (
             <li className={openClose}>
                 {span}
-                <a className={cssClass} onMouseUp={(event) => layerClick(event)}>{this.props.name}</a>
+                <a className={cssClass} onMouseUp={(event) => this.layerClick(event)}>{this.props.name}</a>
                 <ul>
-                {Object.keys(objChilds).map(item => (
-                    <C4gStarboardLayerElement key={item} objStates={objChilds} parentCallback={this.callbackFunction} id={item} mapController={this.props.mapController} name={objChilds[item].name}/>
-                ))}
+                    {Object.keys(objChilds).map(item => (
+                        <C4gStarboardLayerElement key={item} pid={this.props.id} objStates={objChilds} parentCallback={this.callbackFunction} id={item} mapController={this.props.mapController} name={objChilds[item].name} content={objChilds[item].content}/>
+                    ))}
                 </ul>
             </li>
         );
     }
+
 }

@@ -1061,13 +1061,14 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
 
 .c4g-geosearch-wrapper.c4g-close { display: none; }
 
-.c4g-geosearch-wrapper.c4g-open {
+.c4g-geosearch-wrapper.c4g-open.external {
   position: absolute;
   width: max-content;
   left: 48px;
   right: 48px;
   margin: auto;
   padding: 10px;
+  z-index: 5;
 }
 
 button.c4g-titlebar-close, .c4g-geosearch-results button {
@@ -1114,6 +1115,14 @@ button.c4g-geosearch-options:before {
   margin: auto;
   width: 50%;
   z-index: 60;
+}
+
+.c4g-geosearch-results.c4g-beach.external {
+  bottom: unset;
+  top: 0;
+  position: relative;
+  left: unset;
+  right: unset;
 }
 
 .c4g-geosearch-results-header.c4g-beach-header { font-size: 1.5em; line-height: calc(1.5em + 20px); }

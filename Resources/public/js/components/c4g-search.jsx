@@ -89,7 +89,13 @@ export class Search extends Component {
     const settings = scope.props.objSettings;
 
     let url = settings.proxyUrl + "autocomplete.php?format=json&key=" + settings.keyAutocomplete + "&q=" + this.state.query;
-
+    if (settings.geosearchParams) {
+      for (let param in settings.geosearchParams) {
+        if (settings.geosearchParams.hasOwnProperty(param)) {
+          url += "&" + param + "=" + settings.geosearchParams[param];
+        }
+      }
+    }
     $.ajax({url: url}).done(function(data) {
       if (data.length > 0) {
         const containerAddresses = {
@@ -117,7 +123,13 @@ export class Search extends Component {
     const settings = scope.props.objSettings;
 
     let url = settings.proxyUrl + "search.php?format=json&key=" + settings.keyForward + "&q=" + this.state.query + "&limit=1";
-
+    if (settings.geosearchParams) {
+      for (let param in settings.geosearchParams) {
+        if (settings.geosearchParams.hasOwnProperty(param)) {
+          url += "&" + param + "=" + settings.geosearchParams[param];
+        }
+      }
+    }
     $.ajax({url: url}).done(function(data) {
       if (data.length > 0) {
         let url = scope.props.objSettings.mapUrl + "#" + data[0].lon + "/" + data[0].lat + "/" + scope.props.objSettings.zoomLevel;

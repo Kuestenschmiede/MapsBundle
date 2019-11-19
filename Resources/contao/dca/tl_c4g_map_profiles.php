@@ -119,7 +119,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         'attribution'                 => 'collapsed_attribution,add_attribution,cfg_logo_attribution,div_attribution',
         'hover_popups'                => 'hover_popups_stay',
         'permalink'                   => 'permalink_get_param',
-        'geosearch'                   => 'geosearch_headline,geosearch_engine,geosearch_show,geosearchParams,geosearch_results,geosearch_results_headline,geosearch_result_locstyle,geosearch_result_count,geosearch_zoomto,geosearch_zoombounds,geosearch_animate,geosearch_markresult,geosearch_popup,geosearch_attribution,geosearch_collapsed,geosearch_div',
+        'geosearch'                   => 'geosearch_headline,geosearch_engine,geosearch_show,geosearchParams,geosearch_result_locstyle,geosearch_placeholder,geosearch_results,geosearch_zoomto,geosearch_zoombounds,geosearch_animate,geosearch_markresult,geosearch_popup,geosearch_attribution,geosearch_collapsed,geosearch_div,geosearch_results_div',
         'geopicker'                   => 'geopicker_fieldx,geopicker_fieldy,geopicker_searchdiv,geopicker_attribution,geopicker_disabled,geopicker_anonymous',
         'cesium'                      => 'cesium_always',
         'overpassEngine_1'            => 'overpass_url',
@@ -729,6 +729,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',
+            'eval'                    => ['submitOnChange' => true],
             'sql'                     => "char(1) NOT NULL default '0'"
         ],
         'geosearch_results_headline' =>
@@ -748,6 +749,15 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'options_callback'        => ['tl_c4g_map_profiles','getAllLocStyles'],
             'eval'                    => ['mandatory'=>false],
             'sql'                     => "int(11) NOT NULL default '0'"
+        ],
+    
+        'geosearch_placeholder' =>
+        [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_placeholder'],
+            'exclude'                 => true,
+            'default'                 => "Adresse",
+            'inputType'               => 'text',
+            'sql'                     => "varchar(255) NOT NULL default 'Adresse'"
         ],
         
         'geosearch_result_count' =>
@@ -788,6 +798,15 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         'geosearch_div' =>
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_div'],
+            'exclude'                 => true,
+            'inputType'               => 'text',
+            'eval'                    => ['maxlength'=>30],
+            'sql'                     => "varchar(30) NOT NULL default ''"
+        ],
+    
+        'geosearch_results_div' =>
+        [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_results_div'],
             'exclude'                 => true,
             'inputType'               => 'text',
             'eval'                    => ['maxlength'=>30],
@@ -1139,7 +1158,7 @@ class tl_c4g_map_profiles extends Backend
         if (!$dc->id) {
             return;
         }
-        $objProfile = $this->Database->prepare("SELECT zoom_panel, geosearch_engine, be_optimize_checkboxes_limit FROM tl_c4g_map_profiles WHERE id=?")
+        $objProfile = $this->Database->prepare("SELECT zoom_panel, geosearch_engine, be_optimize_checkboxes_limit, geosearch_results FROM tl_c4g_map_profiles WHERE id=?")
         ->limit(1)
         ->execute($dc->id);
         if ($objProfile->numRows > 0) {
@@ -1157,6 +1176,12 @@ class tl_c4g_map_profiles extends Backend
             } elseif ($objProfile->geosearch_engine == '5') {
                 $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['geosearch'] =
                     str_replace('geosearch_engine,','geosearch_engine,geosearch_customengine_url,',
+                        $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['geosearch']);
+            }
+            
+            if ($objProfile->geosearch_results) {
+                $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['geosearch'] =
+                    str_replace(',geosearch_results,', ",geosearch_results,geosearch_results_headline,geosearch_result_count,",
                         $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['geosearch']);
             }
 

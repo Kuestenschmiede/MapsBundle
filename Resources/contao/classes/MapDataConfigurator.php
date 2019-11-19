@@ -435,6 +435,8 @@ class MapDataConfigurator
                 $mapData['geosearch']['results_headline'] = $profile->geosearch_results_headline;
                 $mapData['geosearch']['result_locstyle'] = $profile->geosearch_result_locstyle;
                 $mapData['geosearch']['div'] = $profile->geosearch_div;
+                $mapData['geosearch']['div_results'] = $profile->geosearch_results_div;
+                $mapData['geosearch']['placeholder'] = $profile->geosearch_placeholder;
                 $mapData['geosearch']['searchzoom'] = $profile->geosearch_zoomto;
                 $mapData['geosearch']['zoombounds'] = $profile->geosearch_zoombounds;
                 $mapData['geosearch']['animate'] = $profile->geosearch_animate;
@@ -448,6 +450,12 @@ class MapDataConfigurator
                     $mapData['geosearch']['searchKey'] = $keyForward['key'];
                     $mapData['geosearch']['reverseKey'] = ((array) C4GUtils::getKey($objSettings, '3', "", false))['key'];
                     $mapData['geosearch']['url'] = rtrim($objSettings->con4gisIoUrl, "/") . "/";
+                    $mapData['geosearch']['params'] = [];
+                    if($profile->geosearchParams){
+                        foreach(unserialize($profile->geosearchParams) as $geosearchParam){
+                            $mapData['geosearch']['params'] = array_merge($mapData['geosearch']['params'], [$geosearchParam['keys'] => $geosearchParam['params']]);
+                        }
+                    }
                 }
 
                 switch ($profile->geosearch_engine) {

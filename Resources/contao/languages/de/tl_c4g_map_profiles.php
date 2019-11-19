@@ -105,6 +105,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_popup'] = ['Popup öffnen'
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_attribution'] = ['Copyright für die Suche anzeigen', 'Fügt eine Attribution des verwendeten Suchservice (Nominatim) hinzu. Deaktivierung nicht empfohlen!'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_collapsed'] = ['Suchfeld initial einklappen', 'Das Eingabefeld für die Sucheingabe wird erst nach Klick auf die Lupe geöffnet.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_div'] = ['DIV für die Suche', 'DIV zur Positionierung der Suche. Nur nötig, falls die Suche nicht direkt vor der Karte angezeigt werden soll. Muss manuell auf der Seite erzeugt werden, z.B. mit einem HTML Inhaltselement.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_results_div'] = ['DIV für die Suchergebnisse', 'DIV zur Positionierung der Suchergebnisse. Nur nötig, falls die Suchergebnisse nicht direkt vor der Karte angezeigt werden sollen. Muss manuell auf der Seite erzeugt werden, z.B. mit einem HTML Inhaltselement.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_placeholder'] = ["Platzhalter für Suchfeld", "Geben Sie einen Platzhalter an, der im Eingabefeld dargestellt wird, solange keine Eingabe getätigt wurde."];
 
 /** Geopicker (Position bestimmen) */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['is_backend_geopicker_default'] = ['Als Standardprofil für Backend-Geopicker verwenden', 'Setzen Sie diese Checkbox, um das Kartenprofil standardmäßig für den Backend-Geopicker zu verwenden.'];
@@ -117,8 +119,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_disabled'] = ['Geopicker d
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_anonymous'] = ['Geopicker anonymisieren', 'Der Geopicker wird so manipuliert, dass eine genaue Bestimmung der Position nicht mehr möglich ist.'];
 
 /** Cesium */
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium'] = ['Cesium verwenden', 'Mit Cesium wird die 2D Karte in einen Globus umgewandelt.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium_always'] = ['Cesium immer verwenden', 'Soll Cesium für jede Basiskarte aktiviert sein? Falls nicht, kann Cesium auch für einzelne Karten in den Basiskarteneinstellungen aktiviert werden.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium'] = ['Cesium verwenden', 'Sofern in der/den gewählten Basiskarte(n) die Option Cesium (Globusdarstellung) aktiviert wurde, wird/werden diese als Globus dargestellt.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium_always'] = ['Cesium immer verwenden', 'Ist die Globus-Darstellung aller hier im Kartenprofil gewählten Basiskarten gewünscht, ist diese Option zu aktivieren. Keine weiteren Vorgaben in den Basiskarten notwendig.'];
 
 /** Einstellungen zum Klick-Verhalten */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['link_newwindow'] = ['Direktlinks in neuem Fenster öffnen', 'Direktlinks nicht im selben Fenster, sondern in einem neuen Fenster öffnen.'];
