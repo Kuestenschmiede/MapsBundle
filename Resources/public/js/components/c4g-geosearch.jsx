@@ -55,8 +55,7 @@ export class GeoSearch extends Component {
       this.config.url = props.mapController.data.geosearch.url + "search.php";
       this.config.key = props.mapController.data.geosearch.searchKey;
       this.config.params = props.mapController.data.geosearch.params;
-    }
-    else {
+    } else {
       this.config.url = props.mapController.data.api.geosearch + "/" + props.mapController.data.profile;
     }
     // zoomlevel when centering the found location
@@ -285,7 +284,7 @@ export class GeoSearch extends Component {
               resultCoordinate = transform([parseFloat(result.lon), parseFloat(result.lat)], 'EPSG:4326', 'EPSG:3857');
 
               if (animate) {
-                scope.flyTo(map, resultCoordinate, scope.config.zoomlevel, scope.config.zoombounds, result.boundingbox, markResult, animate, map.getView());
+                scope.flyTo(map, resultCoordinate, scope.config.zoomlevel, scope.config.zoombounds, result.bounding_box, markResult, animate, map.getView());
               } else {
                 scope.completeSearch(scope.config.markResult, scope.config.animate, zoomType, animationDuration);
                 mapView.setCenter(resultCoordinate);
@@ -631,7 +630,7 @@ export class GeoSearch extends Component {
         zoomType = 'bounce';
       }
 
-      this.flyTo(map, resultCoordinate, this.config.zoomlevel, this.config.zoombounds, result.boundingbox, this.config.markResult, this.config.animate, mapView);
+      this.flyTo(map, resultCoordinate, this.config.zoomlevel, this.config.zoombounds, result.bounding_box, this.config.markResult, this.config.animate, mapView);
     }
     else {
       let animationDuration = 2000;
