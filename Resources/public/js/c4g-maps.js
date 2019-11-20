@@ -1073,7 +1073,7 @@ export class MapController {
 
       let mapWidth = "100%";
       let mapHeight = "100%";
-    
+
       if (mapData.width) {
         mapWidth = mapData.width;
       }
