@@ -1008,3 +1008,37 @@ div.c4g-tooltip-popup:before {
   width: 68px;
   height: 23px;
 }
+
+.c4g-feature-filter button.c4g-btn-nav-previous, .c4g-feature-filter button.c4g-btn-nav-next {
+  position: absolute;
+  height: 45px;
+  width: 45px;
+  border: 0;
+  padding: 0;
+  outline: 0;
+  cursor: pointer;
+  font-family: "Font Awesome 5 Free";
+  font-weight: bold;
+  font-size: 1.75em;
+  z-index: 1;
+}
+
+.c4g-feature-filter button.c4g-btn-nav-previous:active:before, .c4g-feature-filter button.c4g-btn-nav-next:active:before {
+  font-size: 30px;
+}
+
+button.c4g-btn-nav-previous {
+  left: 0;
+}
+
+button.c4g-btn-nav-previous:before {
+  content: "\f359";
+}
+
+button.c4g-btn-nav-next {
+  right: 0;
+}
+
+button.c4g-btn-nav-next:before {
+  content: "\f35a";
+}
