@@ -421,7 +421,10 @@ export class GeoSearch extends Component {
       if (parts === 0 || !complete) {
         called = true;
 
-        if (zoombounds && boundingbox) {
+        if (zoombounds && boundingbox && boundingbox[0] !== null &&
+          boundingbox[1] !== null && boundingbox[2] !== null &&
+          boundingbox[3] !== null
+        ) {
           // translate osm-extent to ol3-extent
 
           let osmExtent = [];
