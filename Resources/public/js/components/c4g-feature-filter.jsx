@@ -24,7 +24,8 @@ export class FeatureFilter extends Component {
     this.filterLayers = this.filterLayers.bind(this);
     this.filterLayersMulti = this.filterLayersMulti.bind(this);
     this.setOpen = this.setOpen.bind(this);
-    this.setWrapperRef = this.setWrapperRef.bind(this);
+    this.wrapperRef = React.createRef();
+    this.ulRef = React.createRef();
     this.handleClickOutside = this.handleClickOutside.bind(this);
     this.handleClickInside = this.handleClickInside.bind(this);
     this.hideFeature = this.hideFeature.bind(this);
@@ -49,8 +50,10 @@ export class FeatureFilter extends Component {
           return <FeatureFilterMultiCheckbox feature={feature} open={openedList} setOpen={this.setOpen} checkedItems={checkedItems} filterLayers={this.filterLayersMulti} id={index} key={index}/>
         });
         return (
-            <div className={"c4g-feature-filter"}>
-              <ul className={"c4g-feature-filter-list"} onMouseUp={(evt) => this.handleClickInside(evt)} ref={this.setWrapperRef}>
+            <div className={"c4g-feature-filter"} ref={this.wrapperRef}>
+              <button className={"c4g-btn-nav-previous"} onMouseUp={(evt) => this.ulRef.current.scrollLeft -=100}/>
+              <button className={"c4g-btn-nav-next"} onMouseUp={(evt) => this.ulRef.current. scrollLeft +=100}/>
+              <ul className={"c4g-feature-filter-list"} onMouseUp={(evt) => this.handleClickInside(evt)} ref={this.ulRef}>
                 {div}
               </ul>
             </div>
@@ -66,8 +69,10 @@ export class FeatureFilter extends Component {
           return <FeatureFilterList feature={feature} open={openedList} setOpen={this.setOpen} checkedItem={checkedItem} filterLayers={this.filterLayers} id={index} key={index}/>
         });
         return (
-            <div className={"c4g-feature-filter"}>
-              <ul className={"c4g-feature-filter-list"} onMouseUp={(evt) => this.handleClickInside(evt)} ref={this.setWrapperRef}>
+            <div className={"c4g-feature-filter"} ref={this.wrapperRef}>
+              <button className={"c4g-btn-nav-previous"} onMouseUp={(evt) => this.ulRef.current.scrollLeft -=100}/>
+              <button className={"c4g-btn-nav-next"} onMouseUp={(evt) => this.ulRef.current. scrollLeft +=100}/>
+              <ul className={"c4g-feature-filter-list"} onMouseUp={(evt) => this.handleClickInside(evt)} ref={this.ulRef}>
                 {div}
               </ul>
             </div>
@@ -278,17 +283,10 @@ export class FeatureFilter extends Component {
   }
 
   /**
-   * Set the wrapper ref
-   */
-  setWrapperRef(node) {
-    this.wrapperRef = node;
-  }
-
-  /**
    * hide FilterFeatureList if clicked on outside of element
    */
   handleClickOutside(event) {
-    if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
+    if (this.wrapperRef && this.wrapperRef.current && !this.wrapperRef.current.contains(event.target)) {
       this.setState({openedList: -1});
     }
   }
