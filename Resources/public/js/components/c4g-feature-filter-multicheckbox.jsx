@@ -28,7 +28,8 @@ export class FeatureFilterMultiCheckbox extends Component {
             form =
                 <form>
                     {this.props.feature.filters.map((feature, index) => {
-                        return <FeatureFilterMultiCheckboxItem feature={feature} parentId={this.props.id} checked={this.props.checkedItems} filterLayers={this.props.filterLayers} key={index}/>
+                        let checked = !!(this.props.checkedItems.find((element) => element.identifier === feature.identifier));
+                        return <FeatureFilterMultiCheckboxItem feature={feature} parentId={this.props.id} checked={checked} filterLayers={this.props.filterLayers} key={index}/>
                     })}
                 </form>
         }
