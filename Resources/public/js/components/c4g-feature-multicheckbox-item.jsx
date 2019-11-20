@@ -18,16 +18,14 @@ export class FeatureFilterMultiCheckboxItem extends Component {
         super(props);
     }
     render() {
-        const scope = this;
-        let checked = scope.props.checked.find((element) => element.identifier === scope.props.feature.identifier);
         return (
             <div className="c4g-filter-form-element">
                 <label>
                     <input
                         type="checkbox"
-                        checked={checked}
+                        checked={this.props.checked}
                         onChange={(evt) => {evt.stopPropagation()}}
-                        onClick={(evt) => {this.props.filterLayers(scope.props.feature.identifier, scope.props.parentId, scope.props.feature.value);}}
+                        onClick={(evt) => {this.props.filterLayers(this.props.feature.identifier, this.props.parentId, this.props.feature.value);}}
                         value={this.props.feature.identifier}
                     />
                     {this.props.feature.translation}
