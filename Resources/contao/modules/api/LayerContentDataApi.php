@@ -105,6 +105,7 @@ class LayerContentDataApi extends \Frontend
             $popupContent = Controller::getContentElement($arrElement['id']) ? Controller::replaceInsertTags(Controller::getContentElement($arrElement['id'])) : $popupContent;
         } else {
             if ($config->popupSwitch === 'expert') {
+                $lastClass = '';
                 foreach ($popupElements as $key => $value) {
                     if (substr($value, 0, 1) == '{' && substr($value, -1, 1) == '}') {
                         // we have an inserttag
@@ -114,15 +115,27 @@ class LayerContentDataApi extends \Frontend
                         // no insert tag
                         $replacedValue = str_replace('[', '', $value);
                         $replacedValue = str_replace(']', '', $replacedValue);
-                        $elements = explode(':', $replacedValue);
-                        $column = $elements[0];
-                        $columnClass = 'c4g_maps_table_column_' . $column;
-                        $dataType = $elements[1];
-                        $additionalParam1 = $elements[2];
-                        $additionalParam2 = $elements[3];
+
+                        $elements = false;
+                        if ($replacedValue && strpos($replacedValue,':')) {
+                            $elements = explode(':', $replacedValue);
+                        }
+
+                        if ($elements && count($elements) > 1) {
+                            $column = $elements[0];
+                            $columnClass = 'c4g_maps_table_column_' . $column;
+                            $dataType = $elements[1];
+                            $additionalParam1 = $elements[2];
+                            $additionalParam2 = $elements[3];
+                            $lastClass = $columnClass;
+                        } else {
+                            $columnClass = 'c4g_maps_table_label';
+                            $dataType = 'label';
+                        }
+
                         switch ($dataType) {
                             case 'date':
-                                $popupContent .= '<div class="' . $columnClass . '">' . date('d.m.Y', $arrElement[$column]) . '</div>';
+                                $popupContent .= '<div id="' . $columnClass . '" class="' . $columnClass . '">' . date('d.m.Y', $arrElement[$column]) . '</div>';
                                 break;
                             case 'string':
                                 $columnText = $arrElement[$column];
@@ -133,7 +146,7 @@ class LayerContentDataApi extends \Frontend
                                     $columnText = substr($columnText, 0, $idxWhitespace);
                                     $columnText .= '...';
                                 }
-                                $popupContent .= '<div class="' . $columnClass . '">' . $columnText . '</div>';
+                                $popupContent .= '<div id="' . $columnClass . '" class="' . $columnClass . '">' . $columnText . '</div>';
                                 $popupContent = mb_convert_encoding($popupContent, 'UTF-8', mb_detect_encoding($popupContent));
                                 break;
                             case 'pagelink':
@@ -172,7 +185,7 @@ class LayerContentDataApi extends \Frontend
                                     $strTarget = '';
                                 }
                                 
-                                $popupContent .= '<a class="' . $columnClass .'"' . $strTarget . 'href="' . $link . '">' . $additionalParam1 . '</a>';
+                                $popupContent .= '<a  id="' . $columnClass .'" class="' . $columnClass .'"' . $strTarget . 'href="' . $link . '">' . $additionalParam1 . '</a>';
                                 break;
                             case 'pagelink2':
                                 if (!$additionalParam1) {
@@ -190,17 +203,17 @@ class LayerContentDataApi extends \Frontend
                                     }
                                 }
                     
-                                $popupContent .= '<a class="' . $columnClass . '" href="' . $link . '" target="_blank">' . $additionalParam1 . '</a>';
+                                $popupContent .= '<a id="' . $columnClass . '" class="' . $columnClass . '" href="' . $link . '" target="_blank">' . $additionalParam1 . '</a>';
                                 break;
                             case 'pagelink3':
                                 if (!$additionalParam1) {
                                     $additionalParam1 = 'details';
                                 }
                                 $linkPopup = $arrElement[$column];
-                                if(!(substr($link,0,4) === "http")){
+                                if(!(substr($linkPopup,0,4) === "http")){
                                     $linkPopup = 'https://' . $linkPopup;
                                 }
-                                $popupContent .= '<a class="' . $columnClass . '" href="' . $linkPopup . '" target="_blank">' . $additionalParam1 . '</a>';
+                                $popupContent .= '<a id="' . $columnClass . '" class="' . $columnClass . '" href="' . $linkPopup . '" target="_blank">' . $additionalParam1 . '</a>';
                                 break;
                             case 'responsiveImage':
                                 $responsiveImage = false;
@@ -220,6 +233,18 @@ class LayerContentDataApi extends \Frontend
                                 }
                                 else{
                                     $popupContent .= '<img src="' . $arrElement[$column] . '">';
+                                }
+                                break;
+                            case 'label':
+                                if ($replacedValue) {
+                                    //ToDo Klassen setzen und prüfen
+                                    //ToDo Entscheidung Label am Feld oder eigenständiger Text nicht möglich
+                                    if ($lastClass) {
+                                        $popupContent = substr($popupContent, 0, strlen($popupContent)-6);
+                                        $popupContent .= ' '.$replacedValue.'</div>';
+                                    } else {
+                                        $popupContent .= $replacedValue;
+                                    }
                                 }
                                 break;
                             default:
@@ -262,7 +287,7 @@ class LayerContentDataApi extends \Frontend
                 $popupElem = str_replace('[', '', $popupElem);
                 $popupElem = str_replace(']', '', $popupElem);
                 $arrElem = explode(':', $popupElem);
-                if ($arrElem[0]) {
+                if ($arrElem && count($arrElem) > 1) {
                     $addFieldsStr .= ", " .$config->tableSource."." . $arrElem[0] . " AS " . $arrElem[0];
                 }
             }
