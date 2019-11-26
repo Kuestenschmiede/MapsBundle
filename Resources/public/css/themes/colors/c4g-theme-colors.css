@@ -598,7 +598,7 @@ button.c4g-popup-close:hover {
 
 
 ul.c4g-feature-filter-list {  background: linear-gradient(var(--main-color) 45px, #fff0 0px); }
-ul.c4g-feature-filter-list li { color: ver(--font-color); }
+ul.c4g-feature-filter-list li { color: var(--font-color); }
 ul.c4g-feature-filter-list li span.sum {
   background: var(--shadow-color);
   border: 1px solid var(--font-color);
