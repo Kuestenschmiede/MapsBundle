@@ -257,7 +257,6 @@ export class FeatureFilter extends Component {
     let url = "con4gis/filterService/" + this.props.mapController.data.id + "/" + this.props.mapController.data.lang;
     fetch(url).then(function (response) {
       return response.json().then(function(jsonData) {
-        jsonData = JSON.parse(jsonData);
         let arrChecked = [];
         for (let i = 0; i < jsonData.length; i++) {
           if(!!parseFloat(scope.props.mapController.data.filterHandling)) {
