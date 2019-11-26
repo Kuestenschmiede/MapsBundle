@@ -57,7 +57,6 @@ class FilterController extends BaseController
         $event->setFilters($filters);
         $this->eventDispatcher->dispatch($event::NAME, $event);
         $filters = $event->getFilters();
-        $filters = \GuzzleHttp\json_encode($filters);
         return new JsonResponse($filters);
     }
 }
