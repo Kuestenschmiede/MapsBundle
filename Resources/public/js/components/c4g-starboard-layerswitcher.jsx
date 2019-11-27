@@ -92,19 +92,22 @@ export class StarboardLayerswitcher extends Component {
   };
   addContentChildStates (layerElement) {
     let objChildStates = {};
-    let vectorLayer = this.props.mapController.proxy.layerController.arrLayers[layerElement.id].vectorLayer;
-    let vectorSource = this.getSource(vectorLayer);
-    for (let i = 0; i < layerElement.content[0].data.features.length; i++) {
-      let feature = layerElement.content[0].data.features[i];
-      let olFeature = vectorSource.getFeatureById(feature.properties.id);
-      objChildStates[feature.properties.id] = {
-        name: feature.properties.label,
-        hide: !!layerElement.hide,
-        childs: false,
-        content: false,
-        contentFeature : olFeature
+    if (layerElement.content[0].combinedJSON) {
+      let vectorLayer = this.props.mapController.proxy.layerController.arrLayers[layerElement.id].vectorLayer;
+      let vectorSource = this.getSource(vectorLayer);
+      for (let i = 0; i < layerElement.content[0].data.features.length; i++) {
+        let feature = layerElement.content[0].data.features[i];
+        let olFeature = vectorSource.getFeatureById(feature.properties.id);
+        objChildStates[feature.properties.id] = {
+          name: feature.properties.title,
+          hide: !!layerElement.hide,
+          childs: false,
+          content: false,
+          contentFeature : olFeature
+        }
       }
     }
+
     return objChildStates;
   };
 
