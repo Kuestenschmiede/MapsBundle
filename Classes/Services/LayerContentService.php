@@ -411,14 +411,14 @@ class LayerContentService
             $addBeWhereClause = " WHERE " . $objLayer->tab_whereclause;
         }
         $stmt = '';
-    
-        if ($objLayer->tab_filter_alias) {
+
+       if ($objLayer->tab_filter_alias) {
             //$alias = $this->getInput()->get($objConfig['alias_getparam']);
             $alias = $_SERVER['HTTP_REFERER'];
             $strC = substr_count($alias, '/');
             $arrUrl = explode('/', $alias);
             $alias = explode('.', $arrUrl[$strC])[0];
-            if ($alias) {
+            if ($alias && ($sourceTable != 'tl_content')) {
                 if ($qWhere) {
                     $stmt = ' AND';
                 }
@@ -429,6 +429,19 @@ class LayerContentService
                     $stmt .= ' (( alias = "' . $alias . '" ) OR ( id = ' . $alias . ' ))';
                 } else {
                     $stmt .= ' (alias = "' . $alias . '")';
+                }
+            } else if ($alias && ($sourceTable == 'tl_content')) {
+                $query = "SELECT * FROM `$ptableArr[0]` WHERE alias = ?";
+                $result = \Database::getInstance()->prepare($query)->limit(1)->execute(strval($alias));
+                $sourcePid = intval($result->id);
+
+                if ($sourcePid) {
+                    if ($qWhere) {
+                        $stmt = ' AND';
+                    } else {
+                        $stmt = ' WHERE';
+                    }
+                    $stmt .= ' (pid = "' . $sourcePid . '")';
                 }
             }
         }
