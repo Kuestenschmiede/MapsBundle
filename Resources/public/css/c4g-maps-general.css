@@ -271,7 +271,7 @@ button.c4g-geosearch-start:before {
 
 .c4g-starboard-content-container {
   overflow-y: auto;
-  max-height: calc(var(--map-height) - 44px);
+  max-height: calc(var(--map-height) - 50px);
 }
 
 .c4g-control-container-top-left {
