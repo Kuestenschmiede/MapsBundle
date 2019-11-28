@@ -174,13 +174,13 @@ span.c4g-active ul li.c4g-active:before{
   font-size: inherit;
 }
 .c4g-starboard-control.c4g-open button:before {
-  content: "\f005";
+  content: "\f655";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;
 }
 .c4g-starboard-control.c4g-close button:before {
-  content: "\f005";
+  content: "\f655";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;
