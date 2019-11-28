@@ -38,7 +38,8 @@ export class FeatureFilterMultiCheckbox extends Component {
         }
         let numberSpan = null;
         if (this.props.checkedItems.length > 0) {
-            numberSpan = <span className={"sum"}> {this.props.checkedItems.length} </span>
+            let number = this.props.checkedItems[0].identifier === "all" ? this.props.checkedItems.length -1 : this.props.checkedItems.length;
+            numberSpan = <span className={"sum"}> {number} </span>
         }
 
         className += " fi_" + utils.removeUmlauts(this.props.feature.name);

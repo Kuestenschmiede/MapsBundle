@@ -104,6 +104,9 @@ export class C4gPopupController {
           autoPan: false,
         });
       }
+      if (window.c4gMapsPopup && window.c4gMapsPopup.popup && window.c4gMapsPopup.popup.currentPopup) {
+        this.mapController.map.removeOverlay(window.c4gMapsPopup.popup.currentPopup);
+      }
       window.c4gMapsPopup = {};
       window.c4gMapsPopup.popup = this;
       // attach a spinner to the popup
