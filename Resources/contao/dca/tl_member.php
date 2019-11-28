@@ -65,6 +65,7 @@ if (@class_exists("tl_member")) {
             'exclude'                 => true,
             'inputType'               => 'select',
             'options_callback'        => ['tl_member_c4g_maps','getLocStyles'],
+            'eval'                    => array('chosen' => true, 'includeBlankOption'=>true),
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
             ];
     }

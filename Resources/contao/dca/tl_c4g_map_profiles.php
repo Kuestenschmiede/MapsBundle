@@ -754,7 +754,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'exclude'                 => true,
             'inputType'               => 'select',
             'options_callback'        => ['tl_c4g_map_profiles','getAllLocStyles'],
-            'eval'                    => ['mandatory'=>false],
+            'eval'                    => ['mandatory'=>false,'chosen' => true,'includeBlankOption'=>true],
             'sql'                     => "int(11) NOT NULL default '0'"
         ],
     
