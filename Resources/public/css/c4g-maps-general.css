@@ -269,6 +269,11 @@ button.c4g-geosearch-start:before {
   min-width: 97%;
 }
 
+.c4g-starboard-content-container {
+  overflow-y: auto;
+  max-height: calc(var(--map-height) - 44px);
+}
+
 .c4g-control-container-top-left {
   z-index: 90;
 }
