@@ -536,6 +536,7 @@ class LayerContentService
                         floatval($geox),
                         floatval($geoy));
                 }
+
                 if ($objConfig->linkurl && !$objConfig->popup) {
                     $link = $objConfig->linkurl;
                     $link = str_replace('[id]', $result->id, $link);
@@ -557,7 +558,7 @@ class LayerContentService
                         $link = substr($link, 0, -1);
                     }
                 } else {
-                    $link = Utils::replaceInsertTags($objLayer->loc_linkurl, $lang);
+                    $link = $objLayer->loc_linkurl;
                 }
                 $event = false;
                 if ($objLayer->cluster_popup != 1) {
@@ -576,7 +577,19 @@ class LayerContentService
                         }
                     }
                 }
-            
+
+
+                if ($objLayer->tab_directlink && !$objLayer->loc_linkurl) {
+                    $protocol=$_SERVER['PROTOCOL'] = isset($_SERVER['HTTPS']) && !empty($_SERVER['HTTPS']) ? 'https' : 'http';
+                    $host = $_SERVER['HTTP_HOST'];
+                    $url = $protocol.'://'.$host;
+                    if ($sourceTable == 'tl_content') {
+                        //ToDo differences between news (news_url) and articles (page alias)
+                        $link = $url.'/{{news_url::'.$arrResult['pid'].'}}';
+                    } else if ($sourceTable == 'tl_event') {
+                        $link = $url.'/{{event_url::'.$arrResult['id'].'}}';
+                    }
+                }
             
                 if (!$event) {
                     if ($sourceTable == 'tl_content') {
@@ -595,7 +608,7 @@ class LayerContentService
                         "cluster_fontcolor" => $objLayer->cluster_fontcolor,
                         "cluster_zoom" => $objLayer->cluster_zoom,
                         "cluster_popup" => $objLayer->cluster_popup,
-                        "loc_linkurl" => $link,
+                        "loc_linkurl" => Utils::replaceInsertTags($link, $lang),
                         "hover_location" => $objLayer->hover_location,
                         "hover_style" => $objLayer->hover_style,
                         "data" => $arrGeoJson = array
@@ -614,7 +627,7 @@ class LayerContentService
                                     'routing_link' => $objLayer->routing_to
                                 ),
                                 'tooltip' => unserialize($arrResult[$tooltipField])['value'] ? unserialize($arrResult[$tooltipField])['value'] : Utils::replaceInsertTags($arrResult[$tooltipField], $lang),
-                                "tooltip_length" => $objLayer->tooltip_length,
+                                'tooltip_length' => $objLayer->tooltip_length,
                                 'label' => Utils::replaceInsertTags($arrResult[$labelField], $lang),
                                 'zoom_onclick' => $objLayer->loc_onclick_zoomto
                             ),
