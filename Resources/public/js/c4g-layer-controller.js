@@ -289,8 +289,8 @@ export class C4gLayerController {
 
           var contentFeatures = [];
           for (i = 0; i < this.arrLayers[itemUid].content.length; i += 1) {
-          contentData = this.arrLayers[itemUid].content[i];
-          styleForCluster = function (feature, resolution) {
+            contentData = this.arrLayers[itemUid].content[i];
+            styleForCluster = function (feature, resolution) {
 
             var size,
               style,
@@ -514,7 +514,6 @@ export class C4gLayerController {
                           rFeatures = format.readFeatures(response, {featureProjection: projection});
                         } catch (e) {
                           console.warn('Can not read feature.');
-                          //console.log(e.stack);
                         }
                       }
 
@@ -733,7 +732,6 @@ export class C4gLayerController {
                 source: vectorSource,
                 zoom: contentData.cluster_zoom
               });
-              //console.log(clusterSource);
               this.styleForCluster = styleForCluster;
 
               //vectorLayer = utils.getVectorLayer(clusterSource, styleForCluster);
@@ -799,6 +797,7 @@ export class C4gLayerController {
               featureProjection: featureProjection,
               dataProjection: dataProjection
             })[0];
+            const locStyles = self.proxy.locationStyleController.arrLocStyles;
             contentFeature.set('cluster_zoom', contentData.cluster_zoom);
             contentFeature.set('cluster_popup', contentData.cluster_popup);
             contentFeature.set('loc_linkurl', contentData.loc_linkurl);
@@ -807,16 +806,18 @@ export class C4gLayerController {
             contentFeature.set('hover_style', contentData.hover_style);
             contentFeature.set('popup', layerContent[i].data.properties.popup);
             contentFeature.set('zoom_onclick', contentData.zoom_onclick);
+            if (locStyles[contentData.locationStyle] && typeof locStyles[contentData.locationStyle].style === "function") {
+              contentFeature.set('style', locStyles[contentData.locationStyle].style);
+            }
             contentFeatures.push(contentFeature);
-
 
             if (i+1 === this.arrLayers[itemUid].content.length) {
               vectorSource = new VectorSource({
                 features: contentFeatures,
                 projection: 'EPSG:3857',
                 format: new GeoJSON(),
-
               });
+
               if (contentData && contentData.settings && contentData.settings.cluster) {
                 clusterSource = new Cluster({
                   distance: 40,
@@ -835,7 +836,15 @@ export class C4gLayerController {
                   });
 
               } else {
-                vectorLayer = utils.getVectorLayer(vectorSource, contentData && self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle] ? self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style : null, self.arrLayers[itemUid]);
+                let style = contentData && self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle] ? self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style : null;
+                let styleFunc = function(feature, resolution) {
+                  if (feature.get('style')) {
+                    return feature.get('style')();
+                  } else {
+                    return style();
+                  }
+                };
+                vectorLayer = utils.getVectorLayer(vectorSource, styleFunc, self.arrLayers[itemUid].zIndex);
               }
               layers.push(vectorLayer);
             }
