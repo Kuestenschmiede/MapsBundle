@@ -785,7 +785,7 @@ export class C4gLayerController {
             layers.push(vectorLayer);
           } else if ((this.arrLayers[itemUid].type === "table") || (this.arrLayers[itemUid].type === "link")) {
             var layerContent = this.arrLayers[itemUid].content;
-            contentData = layerContent[0];
+            contentData = layerContent[i];
             if (contentData && contentData.data.properties && contentData.data.properties.projection) {
               dataProjection = contentData.data.properties.projection;
               featureProjection = this.mapController.map.getView().getProjection();
@@ -802,6 +802,7 @@ export class C4gLayerController {
             contentFeature.set('cluster_zoom', contentData.cluster_zoom);
             contentFeature.set('cluster_popup', contentData.cluster_popup);
             contentFeature.set('loc_linkurl', contentData.loc_linkurl);
+            contentFeature.set('locstyle', contentData.locationStyle);
             contentFeature.set('hover_location', contentData.hover_location);
             contentFeature.set('hover_style', contentData.hover_style);
             contentFeature.set('popup', layerContent[i].data.properties.popup);
@@ -1062,6 +1063,9 @@ export class C4gLayerController {
                               }
 
                               contentFeature.set('loc_linkurl', layer.loc_linkurl);
+                              if (contentData['loc_linkurl']) {
+                                contentFeature.set('loc_linkurl',contentData['loc_linkurl'])
+                              }
                               contentFeature.set('hover_location', layer.hover_location);
                               contentFeature.set('hover_style', layer.hover_style);
                               let popup = contentData['popup'] ? contentData['popup'] : jQuery.extend({},layer.popup);
