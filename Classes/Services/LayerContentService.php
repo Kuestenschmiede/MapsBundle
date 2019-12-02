@@ -453,6 +453,8 @@ class LayerContentService
             if ($resultCount < 45000) {
                 $query = "SELECT * FROM `$sourceTable`" . $qWhere . $pidOption . $and . $whereClause . $addBeWhereClause . $stmt;
                 $result = \Database::getInstance()->prepare($query)->execute();
+            } else {
+                //ToDo ???
             }
         
         }
@@ -467,20 +469,24 @@ class LayerContentService
         }
         $tooltipField = $objConfig->tooltip;
         $labelField = $objConfig->label;
-    
+        $locstyleField = $objConfig->locstyle;
+
         if (!$result) {
             // TODO test
             return [];
         }
-        $locstyleField = $objConfig->locstyle;
+
+        //load dataset
         while ($arrResult = $result->fetchAssoc()) {
+            $show = 0;
+            $blobCount = 0;
+
+            //set locstyle
             $locstyle = $arrResult[$locstyleField];
             if (!$locstyle) {
                 $locstyle = $objLayer->locstyle;
             }
-            $show = 0;
-            $blobCount = 0;
-        
+
             //check blob fields
             if ($objConfig->ptable) {
                 foreach ($ptableArr as $key => $ptable) {
@@ -560,8 +566,10 @@ class LayerContentService
                 } else {
                     $link = $objLayer->loc_linkurl;
                 }
+
+                //ToDo check content
                 $event = false;
-                if ($objLayer->cluster_popup != 1) {
+                if ($objLayer->cluster_popup == 1) {
                     for ($i = 0; $i < count($arrReturnData); $i++) {
                         set_time_limit(60);
                         if ($arrReturnData[$i]['data']['geometry']['coordinates'] == $coordinates) {
@@ -572,22 +580,31 @@ class LayerContentService
                                 $arrReturnData[$i]['data']['properties']['popup']['content'] = str_replace('</ul>', '', $arrReturnData[$i]['data']['properties']['popup']['content']);
                             }
                             $arrReturnData[$i]['data']['properties']['popup']['content'] .= $popupContent . '</li></ul>';
-                            $arrReturnData[$i]['data']['properties']['tooltip'] .= ', ' . Utils::replaceInsertTags($arrResult[$tooltipField], $lang);
+
+                            if ($arrReturnData[$i]['data']['properties']['tooltip']) {
+                                $arrReturnData[$i]['data']['properties']['tooltip'] .= ', ' . Utils::replaceInsertTags($arrResult[$tooltipField], $lang);
+                            } else {
+                                $arrReturnData[$i]['data']['properties']['tooltip'] .= Utils::replaceInsertTags($arrResult[$tooltipField], $lang);
+                            }
                             $event = true;
                         }
                     }
                 }
 
-
+                //set event or content (tl_news) directlink
                 if ($objLayer->tab_directlink && !$objLayer->loc_linkurl) {
                     $protocol=$_SERVER['PROTOCOL'] = isset($_SERVER['HTTPS']) && !empty($_SERVER['HTTPS']) ? 'https' : 'http';
                     $host = $_SERVER['HTTP_HOST'];
                     $url = $protocol.'://'.$host;
                     if ($sourceTable == 'tl_content') {
                         //ToDo differences between news (news_url) and articles (page alias)
-                        $link = $url.'/{{news_url::'.$arrResult['pid'].'}}';
+                        if ($arrResult['pid']) {
+                            $link = $url.'/{{news_url::'.$arrResult['pid'].'}}';
+                        }
                     } else if ($sourceTable == 'tl_event') {
-                        $link = $url.'/{{event_url::'.$arrResult['id'].'}}';
+                        if ($arrResult['id']) {
+                            $link = $url.'/{{event_url::'.$arrResult['id'].'}}';
+                        }
                     }
                 }
             
@@ -595,6 +612,20 @@ class LayerContentService
                     if ($sourceTable == 'tl_content') {
                         $popupContent = Controller::getContentElement($arrResult['id']) ? Utils::replaceInsertTags(Controller::getContentElement($arrResult['id']), $lang) : $popupContent;
                         $popupContent = str_replace('TL_FILES_URL', '', $popupContent);
+                    }
+
+                    $tooltip = '';
+                    if ($tooltipField) {
+                        $ttfArr = unserialize($arrResult[$tooltipField]);
+                        if (is_array($ttfArr)) {
+                            $tooltip = $ttfArr['value'];
+                          /*  $pos = strpos($tooltip,', a:');
+                            if ($pos) {
+                                $tooltip = substr($tooltip, 0, $pos);
+                            }*/
+                        } else {
+                            $tooltip = $arrResult[$tooltipField];
+                        }
                     }
                 
                     $arrReturnDataSet = array
@@ -626,7 +657,7 @@ class LayerContentService
                                     'content' => $popupContent,
                                     'routing_link' => $objLayer->routing_to
                                 ),
-                                'tooltip' => unserialize($arrResult[$tooltipField])['value'] ? unserialize($arrResult[$tooltipField])['value'] : Utils::replaceInsertTags($arrResult[$tooltipField], $lang),
+                                'tooltip' =>  Utils::replaceInsertTags($tooltip, lang),
                                 'tooltip_length' => $objLayer->tooltip_length,
                                 'label' => Utils::replaceInsertTags($arrResult[$labelField], $lang),
                                 'zoom_onclick' => $objLayer->loc_onclick_zoomto
@@ -641,6 +672,7 @@ class LayerContentService
                             "cluster" => $objLayer->cluster_locations ? ($objLayer->cluster_distance ? $objLayer->cluster_distance : 20) : false,
                         )
                     );
+
                     if ($objLayer->async_content) {
                         if (!$arrReturnDataSet['data'] || !$arrReturnDataSet['data']['geometry'] || !$arrReturnDataSet['data']['geometry']['coordinates'] || count($arrReturnDataSet['data']['geometry']['coordinates']) != 2) continue;
                         $set['pid'] = $objLayer->id;
