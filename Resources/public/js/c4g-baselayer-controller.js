@@ -529,7 +529,7 @@ export class C4gBaselayerController {
       layerOptions,
       i,
       view;
-
+    
     let baseLayerConfig = this.arrBaselayers[baseLayerUid];
     if (this.proxy.layers_loaded) {
       this.filterLayersForBaselayer(baseLayerUid);
