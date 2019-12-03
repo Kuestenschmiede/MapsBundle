@@ -597,9 +597,12 @@ class LayerContentService
                     $host = $_SERVER['HTTP_HOST'];
                     $url = $protocol.'://'.$host;
                     if ($sourceTable == 'tl_content') {
-                        //ToDo differences between news (news_url) and articles (page alias)
                         if ($arrResult['pid']) {
-                            $link = $url.'/{{news_url::'.$arrResult['pid'].'}}';
+                            if ($arrResult['ptable'] == 'tl_news') {
+                                $link = $url.'/{{news_url::'.$arrResult['pid'].'}}';
+                            } else if ($arrResult['ptable'] == 'tl_article') {
+                                $link = $url.'/{{article_url::'.$arrResult['pid'].'}}';
+                            }
                         }
                     } else if ($sourceTable == 'tl_event') {
                         if ($arrResult['id']) {
@@ -619,10 +622,6 @@ class LayerContentService
                         $ttfArr = unserialize($arrResult[$tooltipField]);
                         if (is_array($ttfArr)) {
                             $tooltip = $ttfArr['value'];
-                          /*  $pos = strpos($tooltip,', a:');
-                            if ($pos) {
-                                $tooltip = substr($tooltip, 0, $pos);
-                            }*/
                         } else {
                             $tooltip = $arrResult[$tooltipField];
                         }
