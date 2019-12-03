@@ -90,7 +90,9 @@ class Utils
         $objPage = $objPage ?: PageModel::findByPk($id['id']);
         $objPage->language = $lang;
         $objPage->title = "";
-        return html_entity_decode(Controller::replaceInsertTags($result));
+        $result = html_entity_decode(Controller::replaceInsertTags($result));
+        $objPage = null;
+        return $result;
     }
     
     private static function processRegex($regex, $toReplace, $lang)
