@@ -88,7 +88,10 @@ class Utils
         $id = Database::getInstance()->prepare("SELECT id FROM tl_page LIMIT 1")->execute()->fetchAssoc();
         $objPage = $objPage ?: PageModel::findByPk($id['id']);
         $objPage->language = $lang;
-        return html_entity_decode(Controller::replaceInsertTags($result));
+        $objPage->title = "";
+        $result = html_entity_decode(Controller::replaceInsertTags($result));
+        $objPage = null;
+        return $result;
     }
     
     private static function processRegex($regex, $replaceBuffer, $lang)
