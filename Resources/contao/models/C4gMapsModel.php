@@ -13,18 +13,18 @@
 namespace con4gis\MapsBundle\Resources\contao\models;
 
 use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
+use Contao\Model;
 use Contao\System;
 
 /**
  * Class C4gMapsModel
  * @package con4gis\MapsBundle\Resources\contao\models
  */
-class C4gMapsModel extends \Model
+class C4gMapsModel extends Model
 {
     // Table name
     protected static $strTable = 'tl_c4g_maps';
-
-    //ToDo Funktioniert unter contao 4 offensichtlich nicht mehr so wie es soll.
+    
     public static function findPublishedByPid($intPid, array $arrOptions = array())
     {
         $t = static::$strTable;
@@ -33,7 +33,7 @@ class C4gMapsModel extends \Model
 
         if (!C4GUtils::checkBackendUserLogin()) {
             $time = time();
-            $arrColumns[] = "$t.published=1";
+            $arrColumns[] = "$t.published=1 AND ($t.publishStart='' OR $t.publishStart <= $time) AND ($t.publishStop='' OR $t.publishStop >= $time)";
         }
 
         if (!isset($arrOptions['order'])) {
