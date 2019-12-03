@@ -73,6 +73,7 @@ if (@class_exists("tl_calendar_events")) {
             'exclude'                 => true,
             'inputType'               => 'select',
             'options_callback'        => ['tl_calendar_events_c4g_maps','getLocStyles'],
+            'eval'                    => array('chosen' => true, 'includeBlankOption'=>true),
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
             ];
     }
