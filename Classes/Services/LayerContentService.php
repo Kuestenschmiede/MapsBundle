@@ -531,16 +531,28 @@ class LayerContentService
                     $api = new LayerContentDataApi();
                     $popupContent = $api->getPopup($objConfig, $arrResult)['content'];
                 }
-                if ($arrResult[$geolocation]) {
+                if ($arrResult[$geolocation] && $arrResult[$geolocation][0] && is_numeric($arrResult[$geolocation][0])) {
                     $geox = substr($arrResult[$geolocation], strpos($arrResult[$geolocation], ',') + 1);
                     $geoy = substr($arrResult[$geolocation], 0, strpos($arrResult[$geolocation], ','));
                     $coordinates = array(floatval($geox), floatval($geoy));
-                } else {
+                    $geometry = [
+                        'type' => 'Point',
+                        'coordinates' => $coordinates,
+                    ];
+                } else if ($arrResult[$geolocation]) { //WKT
+                    $polygon = \geoPHP::load($arrResult[$geolocation], 'wkt');
+                    $geometry = json_decode($polygon->out('json'));
+                }
+                else {
                     $geox = $arrResult[$geoxField];
                     $geoy = $arrResult[$geoyField];
                     $coordinates = array(
                         floatval($geox),
                         floatval($geoy));
+                    $geometry = [
+                        'type' => 'Point',
+                        'coordinates' => $coordinates,
+                    ];
                 }
 
                 if ($objConfig->linkurl && !$objConfig->popup) {
@@ -644,10 +656,7 @@ class LayerContentService
                         "data" => $arrGeoJson = array
                         (
                             'type' => 'Feature',
-                            'geometry' => array(
-                                'type' => 'Point',
-                                'coordinates' => $coordinates,
-                            ),
+                            'geometry' => $geometry,
                             'properties' => array
                             (
                                 'projection' => 'EPSG:4326',
