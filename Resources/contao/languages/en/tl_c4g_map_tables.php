@@ -25,7 +25,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_tables']['ptableCompareField']      = ['Link to 
 
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['geox']                    = ['X-coordinate', 'Please choose the field, which represents the X-coordinate'];
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['geoy']                    = ['Y-coordinate', 'Please choose the field, which represents the Y-coordinate'];
-$GLOBALS['TL_LANG']['tl_c4g_map_tables']['geolocation']             = ['Geolocation', 'Please choose the field, which represents the X- and Y-coordinate, WKT or WKB'];
+$GLOBALS['TL_LANG']['tl_c4g_map_tables']['geolocation']             = ['Geolocation', 'Please choose the field, which represents the X- and Y-coordinate, WKT or WKB.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['label']                   = ['Label', 'Please choose the field, which contains the label'];
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['locstyle']                = ['Lokationsstil', 'Please choose the field, which represents the Y-coordinate'];
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['popupSwitch']             = ['Popup mechanism', 'Select the popup mechanism you want to use to fill the popup in the map.'];
@@ -34,7 +34,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_tables']['popup']                   = ['Popup (e
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['tooltip']                 = ['Tooltip', 'Please choose the field, which contains the tooltip'];
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['cutTextAtLength']         = ['Cut text at certain length', 'Specify a number of characters for which the rest of the text is to be replaced by "...". 0 means no replacement.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['openLinksInTab']          = ['Open links in new tab', 'If you set this checkbox, all generated hyperlinks are opened in a new browser tab.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_tables']['dataType']                = ['Data type', 'Choose the data type'];
+$GLOBALS['TL_LANG']['tl_c4g_map_tables']['dataType']                = ['Data type', 'Choose the data type that is suitable for the geolocation. Not required for two coordinate fields.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['projName']                = ['Projection', 'Please enter the name of the projection'];
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['projCode']                = ['Projection code', 'Please enter the settings of the projection in the format suitable for Proj4js'];
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['popupSwitch_default'] = 'Field selection';

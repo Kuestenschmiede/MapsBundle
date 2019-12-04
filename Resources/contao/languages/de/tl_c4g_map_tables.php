@@ -25,7 +25,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_tables']['ptableCompareField']      = ['Verweis 
 
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['geox']                    = ['Geo X-Koordinate', 'Geben Sie hier das Feld ein, das die X-Koordinate (Breitengrad, WGS-84) enthält.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['geoy']                    = ['Geo Y-Koordinate', 'Geben Sie hier das Feld ein, das die Y-Koordinate (Längengrad, WGS-84) enthält.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_tables']['geolocation']             = ['Geolokation', 'Geben Sie hier das Feld ein, das das Koordinatenpaar, WKT oder WKB enthält'];
+$GLOBALS['TL_LANG']['tl_c4g_map_tables']['geolocation']             = ['Geolokation', 'Geben Sie hier das Feld ein, das das Koordinatenpaar, WKT oder WKB enthält.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['label']                   = ['Label', 'Geben Sie hier das Feld ein, das das Label enthält'];
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['locstyle']                = ['Lokationsstil', 'Geben Sie hier das Feld ein, das die ID des Lokationstils enthält'];
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['popupSwitch']             = ['Popup-Mechanismus', 'Wählen Sie den Popup-Mechanismus aus, den Sie zur Befüllung des Popups in der Karte verwenden wollen.'];
@@ -34,7 +34,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_tables']['popupSelection']          = ['Popup (F
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['tooltip']                 = ['Tooltip', 'Geben Sie hier das Feld ein, das den Tooltip enthält'];
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['cutTextAtLength']                 = ['Texte ab bestimmter Länge kürzen', 'Geben Sie hier eine Anzahl Zeichen an, bei der der Rest des Textes durch ein "..." ersetzt werden soll. 0 bedeutet keine Kürzung. Beachten Sie, dass ggf. mehr Zeichen als angegeben dargestellt werden, da die Ersetzung immer nur hinter vollständigen Worten durchgeführt wird.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['openLinksInTab']                 = ['Links in neuem Tab öffnen', 'Wenn Sie diese Checkbox setzen, werden alle generierten Hyperlinks in einem neuen Browser-Tab geöffnet.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_tables']['dataType']                 = ['Datentyp', 'Wählen Sie den vorliegenden Datentyp'];
+$GLOBALS['TL_LANG']['tl_c4g_map_tables']['dataType']                 = ['Datentyp', 'Wählen Sie den vorliegenden Datentyp passend zur Geolokation. Nicht erforderlich bei zwei Koordinatenfeldern.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['projName']                 = ['Projektion', 'Geben Sie den Namen der Projection an'];
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['projCode']                 = ['Projektions-Code', 'Geben Sie die Eigentschaften der Projektion im Proj4js-Format an'];
 
