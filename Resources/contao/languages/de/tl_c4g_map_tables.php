@@ -45,9 +45,10 @@ $GLOBALS['TL_LANG']['tl_c4g_map_tables']['dataTypeCoords'] = 'Koordinatenpaar';
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['dataTypeWKT'] = 'Well-Kown-Text (WKT)';
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['dataTypeWKB'] = 'Well-Kown-Binary (WKB)';
 
-$GLOBALS['TL_LANG']['tl_c4g_map_tables']['references']['dataType'][0] = 'Koordinatenpaar';
-$GLOBALS['TL_LANG']['tl_c4g_map_tables']['references']['dataType'][1] = 'Well-Kown-Text (WKT)';
-$GLOBALS['TL_LANG']['tl_c4g_map_tables']['references']['dataType'][2] = 'Well-Kown-Binary (WKB)';
+$GLOBALS['TL_LANG']['tl_c4g_map_tables']['references']['dataType'][1] = 'Koordinatenpaar (zwei Felder)';
+$GLOBALS['TL_LANG']['tl_c4g_map_tables']['references']['dataType'][2] = 'Koordinatenpaar (ein Feld)';
+$GLOBALS['TL_LANG']['tl_c4g_map_tables']['references']['dataType'][3] = 'Well-Kown-Text (WKT)';
+$GLOBALS['TL_LANG']['tl_c4g_map_tables']['references']['dataType'][4] = 'Well-Kown-Binary (WKB)';
 /**
  * Buttons
  */

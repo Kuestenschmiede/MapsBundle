@@ -41,9 +41,10 @@ $GLOBALS['TL_LANG']['tl_c4g_map_tables']['popupSwitch_default'] = 'Field selecti
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['popupSwitch_expert'] = 'Expert configuration (more flexible)';
 
 
-$GLOBALS['TL_LANG']['tl_c4g_map_tables']['references']['dataType'][0] = 'Pair of coordinates';
-$GLOBALS['TL_LANG']['tl_c4g_map_tables']['references']['dataType'][1] = 'Well-Kown-Text (WKT)';
-$GLOBALS['TL_LANG']['tl_c4g_map_tables']['references']['dataType'][2] = 'Well-Kown-Binary (WKB)';
+$GLOBALS['TL_LANG']['tl_c4g_map_tables']['references']['dataType'][1] = 'Pair of coordinates (two fields)';
+$GLOBALS['TL_LANG']['tl_c4g_map_tables']['references']['dataType'][2] = 'Pair of coordinates (one field)';
+$GLOBALS['TL_LANG']['tl_c4g_map_tables']['references']['dataType'][3] = 'Well-Kown-Text (WKT)';
+$GLOBALS['TL_LANG']['tl_c4g_map_tables']['references']['dataType'][4] = 'Well-Kown-Binary (WKB)';
 /**
  * Buttons
  */
