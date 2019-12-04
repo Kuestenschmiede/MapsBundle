@@ -35,6 +35,7 @@
     "ol": "^6.1.1",
     "ol-cesium": "^2.10.0",
     "ol-ext": "^3.1.7",
+    "proj4": "^2.6.0"
     "ol-mapbox-style": "^5.0.2",
     "osmtogeojson": "^3.0.0-beta.4",
     "react": "^16.11.0",

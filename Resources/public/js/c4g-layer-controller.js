@@ -32,7 +32,10 @@ import {GeoJSON} from "ol/format";
 import {getCenter, boundingExtent} from "ol/extent";
 import * as olFormat from "ol/format";
 import ol_layer_AnimatedCluster from "ol-ext/layer/AnimatedCluster";
-var osmtogeojson = require('osmtogeojson');
+import proj4 from 'proj4';
+import {register} from 'ol/proj/proj4';
+import Projection from 'ol/proj/Projection';
+const osmtogeojson = require('osmtogeojson');
 
 export class C4gLayerController {
 
@@ -812,6 +815,15 @@ export class C4gLayerController {
             var layerContent = this.arrLayers[itemUid].content;
             contentData = layerContent[i];
             if (contentData && contentData.data.properties && contentData.data.properties.projection) {
+              if (contentData.data.properties.projCode) {
+                // if (!proj4(contentData.data.properties.projection)) {
+                  proj4.defs(contentData.data.properties.projection, contentData.data.properties.projCode);
+                  register(proj4);
+                // }
+                dataProjection = new Projection({
+                  code: contentData.data.properties.projection
+                });
+              }
               dataProjection = contentData.data.properties.projection;
               featureProjection = this.mapController.map.getView().getProjection();
             } else {
