@@ -27,6 +27,9 @@ use Contao\Controller;
 use Contao\Database;
 use Contao\System;
 
+include_once(System::getContainer()->getParameter('kernel.project_dir')."/vendor/phayes/geophp/geoPHP.inc");
+
+
 class LayerContentService
 {
     /**
@@ -463,6 +466,8 @@ class LayerContentService
         $geoy = $objConfig->geoy;
         $geoxField = $geox;
         $geoyField = $geoy;
+        $customProj = $objConfig->projName;
+        $projCode = $objConfig->projCode;
         $geolocation = '';
         if (!$geox && !$geoy) {
             $geolocation = $objConfig->geolocation;
@@ -531,7 +536,7 @@ class LayerContentService
                     $api = new LayerContentDataApi();
                     $popupContent = $api->getPopup($objConfig, $arrResult)['content'];
                 }
-                if ($arrResult[$geolocation] && $arrResult[$geolocation][0] && is_numeric($arrResult[$geolocation][0])) {
+                if ($arrResult[$geolocation] && $objConfig->dataType == 0) {
                     $geox = substr($arrResult[$geolocation], strpos($arrResult[$geolocation], ',') + 1);
                     $geoy = substr($arrResult[$geolocation], 0, strpos($arrResult[$geolocation], ','));
                     $coordinates = array(floatval($geox), floatval($geoy));
@@ -539,9 +544,13 @@ class LayerContentService
                         'type' => 'Point',
                         'coordinates' => $coordinates,
                     ];
-                } else if ($arrResult[$geolocation]) { //WKT
-                    $polygon = \geoPHP::load($arrResult[$geolocation], 'wkt');
-                    $geometry = json_decode($polygon->out('json'));
+                } else if ($arrResult[$geolocation] && $objConfig->dataType == 1) { //WKT
+                    $geometry = \geoPHP::load($arrResult[$geolocation], 'wkt');
+                    $geometry = json_decode($geometry->out('json'), true);
+                }
+                else if ($arrResult[$geolocation] && $objConfig->dataType == 2) { //WKB
+                    $geometry = \geoPHP::load($arrResult[$geolocation], FALSE);
+                    $geometry = json_decode($geometry->out('json'), true);
                 }
                 else {
                     $geox = $arrResult[$geoxField];
@@ -554,7 +563,6 @@ class LayerContentService
                         'coordinates' => $coordinates,
                     ];
                 }
-
                 if ($objConfig->linkurl && !$objConfig->popup) {
                     $link = $objConfig->linkurl;
                     $link = str_replace('[id]', $result->id, $link);
@@ -659,7 +667,8 @@ class LayerContentService
                             'geometry' => $geometry,
                             'properties' => array
                             (
-                                'projection' => 'EPSG:4326',
+                                'projection' => $customProj ?: "EPSG:4326",
+                                'projCode' => $projCode ?: "",
                                 'popup' => array(
                                     'async' => false,
                                     'content' => $popupContent,
