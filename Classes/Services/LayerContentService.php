@@ -27,8 +27,6 @@ use Contao\Controller;
 use Contao\Database;
 use Contao\System;
 
-include_once(System::getContainer()->getParameter('kernel.project_dir')."/vendor/phayes/geophp/geoPHP.inc");
-
 
 class LayerContentService
 {
