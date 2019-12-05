@@ -492,7 +492,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             'options_callback'        => ['tl_c4g_maps','getLocationTypes'],
             'eval'                    => ['submitOnChange' => true],
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['references'],
-            'sql'                     => "char(10) NOT NULL default ''"
+            'sql'                     => "varchar(20) NOT NULL default ''"
             ],
         'loc_geox' =>
             [
