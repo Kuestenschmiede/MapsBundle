@@ -27,6 +27,8 @@ use Contao\Controller;
 use Contao\Database;
 use Contao\System;
 
+
+
 class LayerContentService
 {
     /**
@@ -411,14 +413,14 @@ class LayerContentService
             $addBeWhereClause = " WHERE " . $objLayer->tab_whereclause;
         }
         $stmt = '';
-    
-        if ($objLayer->tab_filter_alias) {
+
+       if ($objLayer->tab_filter_alias) {
             //$alias = $this->getInput()->get($objConfig['alias_getparam']);
             $alias = $_SERVER['HTTP_REFERER'];
             $strC = substr_count($alias, '/');
             $arrUrl = explode('/', $alias);
             $alias = explode('.', $arrUrl[$strC])[0];
-            if ($alias) {
+            if ($alias && ($sourceTable != 'tl_content')) {
                 if ($qWhere) {
                     $stmt = ' AND';
                 }
@@ -430,6 +432,19 @@ class LayerContentService
                 } else {
                     $stmt .= ' (alias = "' . $alias . '")';
                 }
+            } else if ($alias && ($sourceTable == 'tl_content')) {
+                $query = "SELECT * FROM `$ptableArr[0]` WHERE alias = ?";
+                $result = \Database::getInstance()->prepare($query)->limit(1)->execute(strval($alias));
+                $sourcePid = intval($result->id);
+
+                if ($sourcePid) {
+                    if ($qWhere) {
+                        $stmt = ' AND';
+                    } else {
+                        $stmt = ' WHERE';
+                    }
+                    $stmt .= ' (pid = "' . $sourcePid . '")';
+                }
             }
         }
     
@@ -440,6 +455,8 @@ class LayerContentService
             if ($resultCount < 45000) {
                 $query = "SELECT * FROM `$sourceTable`" . $qWhere . $pidOption . $and . $whereClause . $addBeWhereClause . $stmt;
                 $result = \Database::getInstance()->prepare($query)->execute();
+            } else {
+                //ToDo ???
             }
         
         }
@@ -448,26 +465,32 @@ class LayerContentService
         $geoy = $objConfig->geoy;
         $geoxField = $geox;
         $geoyField = $geoy;
+        $customProj = $objConfig->projName;
+        $projCode = $objConfig->projCode;
         $geolocation = '';
         if (!$geox && !$geoy) {
             $geolocation = $objConfig->geolocation;
         }
         $tooltipField = $objConfig->tooltip;
         $labelField = $objConfig->label;
-    
+        $locstyleField = $objConfig->locstyle;
+
         if (!$result) {
             // TODO test
             return [];
         }
-        $locstyleField = $objConfig->locstyle;
+
+        //load dataset
         while ($arrResult = $result->fetchAssoc()) {
+            $show = 0;
+            $blobCount = 0;
+
+            //set locstyle
             $locstyle = $arrResult[$locstyleField];
             if (!$locstyle) {
                 $locstyle = $objLayer->locstyle;
             }
-            $show = 0;
-            $blobCount = 0;
-        
+
             //check blob fields
             if ($objConfig->ptable) {
                 foreach ($ptableArr as $key => $ptable) {
@@ -512,16 +535,35 @@ class LayerContentService
                     $api = new LayerContentDataApi();
                     $popupContent = $api->getPopup($objConfig, $arrResult)['content'];
                 }
-                if ($arrResult[$geolocation]) {
-                    $geox = substr($arrResult[$geolocation], strpos($arrResult[$geolocation], ',') + 1);
-                    $geoy = substr($arrResult[$geolocation], 0, strpos($arrResult[$geolocation], ','));
-                    $coordinates = array(floatval($geox), floatval($geoy));
-                } else {
+                if ($objConfig->dataType == 1){
                     $geox = $arrResult[$geoxField];
                     $geoy = $arrResult[$geoyField];
                     $coordinates = array(
                         floatval($geox),
                         floatval($geoy));
+                    $geometry = [
+                        'type' => 'Point',
+                        'coordinates' => $coordinates,
+                    ];
+                }
+                else if ($arrResult[$geolocation] && $objConfig->dataType == 2) {
+                    $geox = substr($arrResult[$geolocation], strpos($arrResult[$geolocation], ',') + 1);
+                    $geoy = substr($arrResult[$geolocation], 0, strpos($arrResult[$geolocation], ','));
+                    $coordinates = array(floatval($geox), floatval($geoy));
+                    $geometry = [
+                        'type' => 'Point',
+                        'coordinates' => $coordinates,
+                    ];
+                } else if ($arrResult[$geolocation] && $objConfig->dataType == 3) { //WKT
+                    $geometry = \geoPHP::load($arrResult[$geolocation], 'wkt');
+                    $geometry = json_decode($geometry->out('json'), true);
+                }
+                else if ($arrResult[$geolocation] && $objConfig->dataType == 4) { //WKB
+                    $geometry = \geoPHP::load($arrResult[$geolocation], FALSE);
+                    $geometry = json_decode($geometry->out('json'), true);
+                }
+                else {
+                    print_r("I want it that way");
                 }
                 if ($objConfig->linkurl && !$objConfig->popup) {
                     $link = $objConfig->linkurl;
@@ -544,10 +586,12 @@ class LayerContentService
                         $link = substr($link, 0, -1);
                     }
                 } else {
-                    $link = Utils::replaceInsertTags($objLayer->loc_linkurl, $lang);
+                    $link = $objLayer->loc_linkurl;
                 }
+
+                //ToDo check content
                 $event = false;
-                if ($objLayer->cluster_popup != 1) {
+                if ($objLayer->cluster_popup == 1) {
                     for ($i = 0; $i < count($arrReturnData); $i++) {
                         set_time_limit(60);
                         if ($arrReturnData[$i]['data']['geometry']['coordinates'] == $coordinates) {
@@ -558,17 +602,51 @@ class LayerContentService
                                 $arrReturnData[$i]['data']['properties']['popup']['content'] = str_replace('</ul>', '', $arrReturnData[$i]['data']['properties']['popup']['content']);
                             }
                             $arrReturnData[$i]['data']['properties']['popup']['content'] .= $popupContent . '</li></ul>';
-                            $arrReturnData[$i]['data']['properties']['tooltip'] .= ', ' . Utils::replaceInsertTags($arrResult[$tooltipField], $lang);
+
+                            if ($arrReturnData[$i]['data']['properties']['tooltip']) {
+                                $arrReturnData[$i]['data']['properties']['tooltip'] .= ', ' . Utils::replaceInsertTags($arrResult[$tooltipField], $lang);
+                            } else {
+                                $arrReturnData[$i]['data']['properties']['tooltip'] .= Utils::replaceInsertTags($arrResult[$tooltipField], $lang);
+                            }
                             $event = true;
                         }
                     }
                 }
-            
+
+                //set event or content (tl_news) directlink
+                if ($objLayer->tab_directlink && !$objLayer->loc_linkurl) {
+                    $protocol=$_SERVER['PROTOCOL'] = isset($_SERVER['HTTPS']) && !empty($_SERVER['HTTPS']) ? 'https' : 'http';
+                    $host = $_SERVER['HTTP_HOST'];
+                    $url = $protocol.'://'.$host;
+                    if ($sourceTable == 'tl_content') {
+                        if ($arrResult['pid']) {
+                            if ($arrResult['ptable'] == 'tl_news') {
+                                $link = $url.'/{{news_url::'.$arrResult['pid'].'}}';
+                            } else if ($arrResult['ptable'] == 'tl_article') {
+                                $link = $url.'/{{article_url::'.$arrResult['pid'].'}}';
+                            }
+                        }
+                    } else if ($sourceTable == 'tl_event') {
+                        if ($arrResult['id']) {
+                            $link = $url.'/{{event_url::'.$arrResult['id'].'}}';
+                        }
+                    }
+                }
             
                 if (!$event) {
                     if ($sourceTable == 'tl_content') {
                         $popupContent = Controller::getContentElement($arrResult['id']) ? Utils::replaceInsertTags(Controller::getContentElement($arrResult['id']), $lang) : $popupContent;
                         $popupContent = str_replace('TL_FILES_URL', '', $popupContent);
+                    }
+
+                    $tooltip = '';
+                    if ($tooltipField) {
+                        $ttfArr = unserialize($arrResult[$tooltipField]);
+                        if (is_array($ttfArr)) {
+                            $tooltip = $ttfArr['value'];
+                        } else {
+                            $tooltip = $arrResult[$tooltipField];
+                        }
                     }
                 
                     $arrReturnDataSet = array
@@ -582,26 +660,24 @@ class LayerContentService
                         "cluster_fontcolor" => $objLayer->cluster_fontcolor,
                         "cluster_zoom" => $objLayer->cluster_zoom,
                         "cluster_popup" => $objLayer->cluster_popup,
-                        "loc_linkurl" => $link,
+                        "loc_linkurl" => Utils::replaceInsertTags($link, $lang),
                         "hover_location" => $objLayer->hover_location,
                         "hover_style" => $objLayer->hover_style,
                         "data" => $arrGeoJson = array
                         (
                             'type' => 'Feature',
-                            'geometry' => array(
-                                'type' => 'Point',
-                                'coordinates' => $coordinates,
-                            ),
+                            'geometry' => $geometry,
                             'properties' => array
                             (
-                                'projection' => 'EPSG:4326',
+                                'projection' => $customProj ?: "EPSG:4326",
+                                'projCode' => $projCode ?: "",
                                 'popup' => array(
                                     'async' => false,
                                     'content' => $popupContent,
                                     'routing_link' => $objLayer->routing_to
                                 ),
-                                'tooltip' => unserialize($arrResult[$tooltipField])['value'] ? unserialize($arrResult[$tooltipField])['value'] : Utils::replaceInsertTags($arrResult[$tooltipField], $lang),
-                                "tooltip_length" => $objLayer->tooltip_length,
+                                'tooltip' =>  Utils::replaceInsertTags($tooltip, lang),
+                                'tooltip_length' => $objLayer->tooltip_length,
                                 'label' => Utils::replaceInsertTags($arrResult[$labelField], $lang),
                                 'zoom_onclick' => $objLayer->loc_onclick_zoomto
                             ),
@@ -615,6 +691,7 @@ class LayerContentService
                             "cluster" => $objLayer->cluster_locations ? ($objLayer->cluster_distance ? $objLayer->cluster_distance : 20) : false,
                         )
                     );
+
                     if ($objLayer->async_content) {
                         if (!$arrReturnDataSet['data'] || !$arrReturnDataSet['data']['geometry'] || !$arrReturnDataSet['data']['geometry']['coordinates'] || count($arrReturnDataSet['data']['geometry']['coordinates']) != 2) continue;
                         $set['pid'] = $objLayer->id;

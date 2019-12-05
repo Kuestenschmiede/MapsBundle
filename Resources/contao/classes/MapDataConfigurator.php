@@ -374,6 +374,7 @@ class MapDataConfigurator
                 $mapData['layerswitcher']['label'] = \Contao\Controller::replaceInsertTags($profile->layerswitcher_label);
             }
             $mapData['filterDiv'] = $profile->filter_div;
+            $mapData['filterHandling'] = $profile->filterHandling;
 
             // map-tools
             //
@@ -466,8 +467,8 @@ class MapDataConfigurator
                         $mapData['attribution']['geosearch'] = 'Nominatim Search Courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png" alt="" />';
                         break;
                     case '3':
-                        if ($profile->attribution && $profile->geosearch_attribution) {
-                            $mapData['attribution']['geosearch'] = \Contao\Controller::replaceInsertTags($profile->geosearch_attribution);
+                        if ($profile->attribution && $profile->geosearch_customengine_attribution) {
+                            $mapData['attribution']['geosearch'] = \Contao\Controller::replaceInsertTags($profile->geosearch_customengine_attribution);
                         }
                         break;
                     case '4':

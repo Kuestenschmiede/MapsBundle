@@ -217,7 +217,7 @@
 }
 .c4g-control-container-bottom-right {
   position: absolute;
-  bottom: .2em;
+  bottom: 0;
   /* do not change "right"-value! */
   right: 0;
   margin-right: .2em;
@@ -1007,4 +1007,38 @@ div.c4g-tooltip-popup:before {
 .c4g-horizontal-panel-button-top > button, .c4g-horizontal-panel-button-bottom > button {
   width: 68px;
   height: 23px;
+}
+
+.c4g-feature-filter button.c4g-btn-nav-previous, .c4g-feature-filter button.c4g-btn-nav-next {
+  position: absolute;
+  height: 45px;
+  width: 45px;
+  border: 0;
+  padding: 0;
+  outline: 0;
+  cursor: pointer;
+  font-family: "Font Awesome 5 Free";
+  font-weight: bold;
+  font-size: 1.75em;
+  z-index: 1;
+}
+
+.c4g-feature-filter button.c4g-btn-nav-previous:active:before, .c4g-feature-filter button.c4g-btn-nav-next:active:before {
+  font-size: 30px;
+}
+
+button.c4g-btn-nav-previous {
+  left: 0;
+}
+
+button.c4g-btn-nav-previous:before {
+  content: "\f359";
+}
+
+button.c4g-btn-nav-next {
+  right: 0;
+}
+
+button.c4g-btn-nav-next:before {
+  content: "\f35a";
 }

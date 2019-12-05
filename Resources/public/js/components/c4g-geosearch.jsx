@@ -36,16 +36,16 @@ export class GeoSearch extends Component {
 
     this.langConstants = getLanguage(props.mapController.data);
     // control
-    if (this.props.collapsed) {
-      this.clickControl = this.clickControl.bind(this);
-      let element = document.createElement('div');
-      let button = document.createElement('button');
-      element.className = "c4g-geosearch" + " ol-control " + "ol-unselectable";
-      element.appendChild(button);
-      jQuery(button).on('click', this.clickControl);
-      let control = new Control({element: element, target: props.target});
-      props.mapController.map.addControl(control);
-    }
+    // if (this.props.collapsed) {
+    this.clickControl = this.clickControl.bind(this);
+    let element = document.createElement('div');
+    let button = document.createElement('button');
+    element.className = "c4g-geosearch" + " ol-control " + "ol-unselectable";
+    element.appendChild(button);
+    jQuery(button).on('click', this.clickControl);
+    let control = new Control({element: element, target: props.target});
+    props.mapController.map.addControl(control);
+    // }
     // end control
 
     // prepare search-configuration
@@ -55,8 +55,7 @@ export class GeoSearch extends Component {
       this.config.url = props.mapController.data.geosearch.url + "search.php";
       this.config.key = props.mapController.data.geosearch.searchKey;
       this.config.params = props.mapController.data.geosearch.params;
-    }
-    else {
+    } else {
       this.config.url = props.mapController.data.api.geosearch + "/" + props.mapController.data.profile;
     }
     // zoomlevel when centering the found location
@@ -108,6 +107,7 @@ export class GeoSearch extends Component {
     this.closeResults = this.closeResults.bind(this);
     this.openResults = this.openResults.bind(this);
     this.close = this.close.bind(this);
+    this.closeResultsCompletely = this.closeResultsCompletely.bind(this);
   }
 
   render() {
@@ -119,7 +119,7 @@ export class GeoSearch extends Component {
     if (this.state.openResults && this.config.results) {
       results = <GeoSearchResults className={modeClass} results={this.state.results} zoomFunc={(idx) => {this.setState({detailOpenResults: false, currentResult: this.state.results[idx]}); this.zoomTo(idx);}}
                                   closeResults={this.closeResults} headline={this.props.resultsHeadline} currentResult={this.state.currentResult} resultsDiv={this.props.resultsDiv}
-                                  open={this.state.results.length >0} openResults={this.openResults} detailOpen={this.state.detailOpenResults}
+                                  open={this.state.results.length >0} openResults={this.openResults} detailOpen={this.state.detailOpenResults} closeCb={this.closeResultsCompletely}
       />;
     }
     let closeBtnClass = "";
@@ -143,6 +143,10 @@ export class GeoSearch extends Component {
         {results}
       </React.Fragment>
     );
+  }
+
+  closeResultsCompletely() {
+    this.setState({openResults: false});
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -280,7 +284,7 @@ export class GeoSearch extends Component {
               resultCoordinate = transform([parseFloat(result.lon), parseFloat(result.lat)], 'EPSG:4326', 'EPSG:3857');
 
               if (animate) {
-                scope.flyTo(map, resultCoordinate, scope.config.zoomlevel, scope.config.zoombounds, result.boundingbox, markResult, animate, map.getView());
+                scope.flyTo(map, resultCoordinate, scope.config.zoomlevel, scope.config.zoombounds, result.bounding_box, markResult, animate, map.getView());
               } else {
                 scope.completeSearch(scope.config.markResult, scope.config.animate, zoomType, animationDuration);
                 mapView.setCenter(resultCoordinate);
@@ -417,7 +421,10 @@ export class GeoSearch extends Component {
       if (parts === 0 || !complete) {
         called = true;
 
-        if (zoombounds && boundingbox) {
+        if (zoombounds && boundingbox && boundingbox[0] !== null &&
+          boundingbox[1] !== null && boundingbox[2] !== null &&
+          boundingbox[3] !== null
+        ) {
           // translate osm-extent to ol3-extent
 
           let osmExtent = [];
@@ -626,7 +633,7 @@ export class GeoSearch extends Component {
         zoomType = 'bounce';
       }
 
-      this.flyTo(map, resultCoordinate, this.config.zoomlevel, this.config.zoombounds, result.boundingbox, this.config.markResult, this.config.animate, mapView);
+      this.flyTo(map, resultCoordinate, this.config.zoomlevel, this.config.zoombounds, result.bounding_box, this.config.markResult, this.config.animate, mapView);
     }
     else {
       let animationDuration = 2000;

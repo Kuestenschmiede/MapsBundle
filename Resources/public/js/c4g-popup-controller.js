@@ -35,7 +35,11 @@ export class C4gPopupController {
       popUpContent,
       popup;
 
-    let popupOptions = {open: this.containerOpen, alwaysExtended: this.mapData.openDirectly, hideOther: this.mapController.hideOtherBottomComponents};
+    let popupOptions = {
+      open: this.containerOpen,
+      alwaysExtended: this.mapData.openDirectly,
+      hideOther: this.mapController.hideOtherBottomComponents
+    };
     this.popupHandling = parseInt(this.mapData.popupHandling, 10);
 
     if (window.c4gMapsPopup && window.c4gMapsPopup.popup) {
@@ -99,6 +103,9 @@ export class C4gPopupController {
           offset: [-50, 0],
           autoPan: false,
         });
+      }
+      if (window.c4gMapsPopup && window.c4gMapsPopup.popup && window.c4gMapsPopup.popup.currentPopup) {
+        this.mapController.map.removeOverlay(window.c4gMapsPopup.popup.currentPopup);
       }
       window.c4gMapsPopup = {};
       window.c4gMapsPopup.popup = this;

@@ -104,7 +104,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                                          '{click_legend:hide},link_newwindow,link_open_on,hover_popups, popupHandling;'.
                                          '{cesium_legend:hide},cesium;'.
                                          '{overpassLegend:hide},overpassEngine;'.
-                                         '{miscellaneous_legend:hide},script,custom_div,account,be_optimize_checkboxes_limit,caching,geobookmarks,filter_div,filters;'
+                                         '{miscellaneous_legend:hide},script,custom_div,account,be_optimize_checkboxes_limit,caching,geobookmarks,filter_div,filters,filterHandling;'
         ],
 
 
@@ -432,6 +432,13 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'eval'                    => ['chosen' => true, 'multiple' => true],
             'sql'                     => "blob NULL"
         ],
+        'filterHandling' =>
+        [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['filterHandling'],
+            'exclude'                 => true,
+            'inputType'               => 'checkbox',
+            'sql'                     => "char(1) NOT NULL default '0'"
+        ],
         'starboard_filter' =>
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_filter'],
@@ -747,7 +754,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'exclude'                 => true,
             'inputType'               => 'select',
             'options_callback'        => ['tl_c4g_map_profiles','getAllLocStyles'],
-            'eval'                    => ['mandatory'=>false],
+            'eval'                    => ['mandatory'=>false,'chosen' => true,'includeBlankOption'=>true],
             'sql'                     => "int(11) NOT NULL default '0'"
         ],
     

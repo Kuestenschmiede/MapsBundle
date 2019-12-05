@@ -89,14 +89,19 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
         ],
     'palettes' =>
     [
-        '__selector__' => ['popupSwitch'],
-        'default' => '{defaultLegend},name,tableSource;{parentLegend},ptable,ptableOptions,ptableBackendField,ptableField,ptableCompareField;{geoLegend},geox,geoy,geolocation;{tableInformation},label,locstyle,tooltip,popupSwitch,cutTextAtLength;',
+        '__selector__' => ['popupSwitch', 'dataType'],
+        'default' => '{defaultLegend},name,tableSource;{parentLegend},ptable,ptableOptions,ptableBackendField,ptableField,ptableCompareField;{geoLegend},dataType;{projLegend:hide},projName,projCode;{tableInformation},label,locstyle,tooltip,popupSwitch,cutTextAtLength;',
     ],
     
     'subpalettes' =>
     [
-        'popupSwitch_default' => 'popupSelection',
-        'popupSwitch_expert' => 'popup,openLinksInTab',
+        'popupSwitch_default'   => 'popupSelection',
+        'popupSwitch_expert'    => 'popup,openLinksInTab',
+        'dataType_1'            => 'geox,geoy',
+        'dataType_2'            => 'geolocation',
+        'dataType_3'            => 'geolocation',
+        'dataType_4'            => 'geolocation',
+
     ],
 
     // Fields
@@ -177,6 +182,26 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'eval'                    => ['mandatory'=>false, 'multiple'=>true, 'chosen' => true, 'size' => 2],
             'sql'                     => "text NULL default ''"
         ],
+        'dataType' => [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['dataType'],
+            'exclude'                 => true,
+            'default'                 => '0',
+            'inputType'               => 'radio',
+            'options'                 => [1,2,3,4],
+            'reference'               => $GLOBALS['TL_LANG']['tl_c4g_map_tables']['references']['dataType'],
+            'eval'                    => ['mandatory'=>true, 'multiple'=>false, 'submitOnChange'=>true],
+            'sql'                     => "varchar(1) default 0"
+        ],
+        'geolocation' =>
+        [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['geolocation'],
+            'exclude'                 => true,
+            'default'                 => '',
+            'inputType'               => 'select',
+            'options_callback'        => ['tl_c4g_map_tables','getSourceTableFields'],
+            'eval'                    => ['mandatory'=>false, 'multiple'=>false, 'includeBlankOption' => true],
+            'sql'                     => "text NULL default ''"
+        ],
         'geox' =>
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['geox'],
@@ -193,16 +218,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'exclude'                 => true,
             'inputType'               => 'select',
             'default'                 => '',
-            'options_callback'        => ['tl_c4g_map_tables','getSourceTableFields'],
-            'eval'                    => ['mandatory'=>false, 'multiple'=>false, 'includeBlankOption' => true],
-            'sql'                     => "text NULL default ''"
-        ],
-        'geolocation' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['geolocation'],
-            'exclude'                 => true,
-            'default'                 => '',
-            'inputType'               => 'select',
             'options_callback'        => ['tl_c4g_map_tables','getSourceTableFields'],
             'eval'                    => ['mandatory'=>false, 'multiple'=>false, 'includeBlankOption' => true],
             'sql'                     => "text NULL default ''"
@@ -225,6 +240,24 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'default'                 => '',
             'options_callback'        => ['tl_c4g_map_tables','getSourceTableFields'],
             'eval'                    => ['mandatory'=>false, 'multiple'=>false, 'includeBlankOption' => true],
+            'sql'                     => "text NULL default ''"
+        ],
+        'projName' =>
+        [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['projName'],
+            'exclude'                 => true,
+            'inputType'               => 'text',
+            'default'                 => '',
+            'eval'                    => ['mandatory'=>false],
+            'sql'                     => "varchar(10) NULL default ''"
+        ],
+        'projCode' =>
+        [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['projCode'],
+            'exclude'                 => true,
+            'inputType'               => 'text',
+            'default'                 => '',
+            'eval'                    => ['mandatory'=>false, 'decodeEntities'=>true],
             'sql'                     => "text NULL default ''"
         ],
         'popupSwitch' =>
