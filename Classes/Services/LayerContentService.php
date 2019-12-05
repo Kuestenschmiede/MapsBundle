@@ -676,9 +676,9 @@ class LayerContentService
                                     'content' => $popupContent,
                                     'routing_link' => $objLayer->routing_to
                                 ),
-                                'tooltip' =>  Utils::replaceInsertTags($tooltip, lang),
+                                'tooltip' =>  Utils::replaceInsertTags($tooltip, $lang),
                                 'tooltip_length' => $objLayer->tooltip_length,
-                                'label' => Utils::replaceInsertTags($arrResult[$labelField], $lang),
+                                'label' => Utils::replaceInsertTags($arrResult[$labelField] ?: "", $lang),
                                 'zoom_onclick' => $objLayer->loc_onclick_zoomto
                             ),
                         ),
