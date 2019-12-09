@@ -155,7 +155,7 @@ export class StarboardLayerswitcher extends Component {
                   if (item.pid === this.props.mapController.data.id) //skip childs of layers
                     return <C4gStarboardLayerElement key={item.id} id={item.id} mapController={this.props.mapController}
                                                      objStates={this.state.layerStates} parentCallback={this.callbackFunction}
-                                                     name={item.name} collapsed={!item.initial_opened}/>;
+                                                     name={item.name} collapsed={!(parseInt(item.initial_opened, 10))}/>;
                   return null;
                 })}
               </ul>

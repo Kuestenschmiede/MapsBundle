@@ -159,7 +159,10 @@ export class C4gStarboardLayerElement extends Component {
                 <a className={cssClass} onMouseUp={(event) => this.layerClick(event)}>{this.props.name}</a>
                 <ul>
                     {Object.keys(objChilds).map(item => (
-                        <C4gStarboardLayerElement key={item} pid={this.props.id} objStates={objChilds} parentCallback={this.callbackFunction} id={item} mapController={this.props.mapController} name={objChilds[item].name} content={objChilds[item].content}/>
+                        <C4gStarboardLayerElement key={item} pid={this.props.id} objStates={objChilds}
+                                                  parentCallback={this.callbackFunction} id={item}
+                                                  mapController={this.props.mapController} name={objChilds[item].name}
+                                                  content={objChilds[item].content} collapsed={!this.props.objStates[this.props.id].childs.initial_opened}/>
                     ))}
                 </ul>
             </li>
