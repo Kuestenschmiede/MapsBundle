@@ -134,7 +134,7 @@ export class C4gStarboardLayerElement extends Component {
     render() {
         const scope = this;
         let span = null;
-        if(this.props.objStates && this.props.objStates[this.props.id] && this.props.objStates[this.props.id] && this.props.objStates[this.props.id].childs) {
+        if (this.props.objStates && this.props.objStates[this.props.id] && this.props.objStates[this.props.id].childs) {
             let spanClick = function(e) {
                 e.stopPropagation();
                 e.nativeEvent.stopImmediatePropagation();
@@ -145,7 +145,14 @@ export class C4gStarboardLayerElement extends Component {
                     scope.setState({collapsed: true});
                 }
             };
-            span = <span className={cssConstants.ICON} onMouseUp={(event) => spanClick(event)}/>;
+            let layers = this.props.mapController.proxy.layerController.arrLayers;
+            if ((layers[this.props.id].childs && layers[this.props.id].childs.length > 0)
+                || (layers[this.props.id].content && layers[this.props.id].content[0] && layers[this.props.id].content[0].combinedJSON))
+            {
+                span = <span className={cssConstants.ICON} onMouseUp={(event) => spanClick(event)}/>;
+            } else {
+                span = <span className={""} onMouseUp={(event) => spanClick(event)}/>;
+            }
         }
         let cssClass = scope.state.active ? cssConstants.ACTIVE : cssConstants.INACTIVE;
         if (!scope.props.mapController.proxy.checkLayerIsActiveForZoom(scope.props.id)) {
