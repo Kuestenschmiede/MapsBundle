@@ -40,6 +40,7 @@ export class StarboardPanel extends Component {
     mapController.map.addControl(control);
     this.open = this.open.bind(this);
     this.slideOutCollidingElements = this.slideOutCollidingElements.bind(this);
+    this.resizeFunction = this.resizeFunction.bind(this);
     // state variables (every property that has influence on this component)
     this.state = {
       // either "top" or "bottom"
@@ -68,7 +69,8 @@ export class StarboardPanel extends Component {
     }
     const scope = this;
     return (
-      <StarboardLayerswitcher key={this.props.mapController.id} mapController ={this.props.mapController} openfunc={this.open} open={this.state.open}></StarboardLayerswitcher>
+      <StarboardLayerswitcher key={this.props.mapController.id} mapController={this.props.mapController}
+                              openfunc={this.open} open={this.state.open} fnResize={this.resizeFunction}/>
     )
   }
 
@@ -80,6 +82,13 @@ export class StarboardPanel extends Component {
   close() {
     this.setState({open: false}, () => this.slideInCollidingElements());
     // this.state.open = false;
+  }
+
+  resizeFunction() {
+    const scope = this;
+    window.requestAnimationFrame(function() {
+      scope.slideOutCollidingElements();
+    });
   }
 
   /**
@@ -99,7 +108,6 @@ export class StarboardPanel extends Component {
         element.style.right = starboardWidth + "px";
       });
       jQuery(".c4g-starboard-container").css("right","0%");
-      this.state.control.element.style.right = starboardWidth + "px";
     } else {
       let elements = document.querySelectorAll('.' + cssConstants.CONTROL_CONTAINER_TL + ' .' + cssConstants.OL_UNSELECTABLE);
       elements.forEach(function(element) {

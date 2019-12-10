@@ -144,6 +144,7 @@ export class C4gStarboardLayerElement extends Component {
                 else {
                     scope.setState({collapsed: true});
                 }
+                scope.props.fnResize();
             };
             let layers = this.props.mapController.proxy.layerController.arrLayers;
             if ((layers[this.props.id].childs && layers[this.props.id].childs.length > 0)
@@ -167,7 +168,7 @@ export class C4gStarboardLayerElement extends Component {
                 <ul>
                     {Object.keys(objChilds).map(item => (
                         <C4gStarboardLayerElement key={item} pid={this.props.id} objStates={objChilds}
-                                                  parentCallback={this.callbackFunction} id={item}
+                                                  parentCallback={this.callbackFunction} id={item} fnResize={this.props.fnResize}
                                                   mapController={this.props.mapController} name={objChilds[item].name}
                                                   content={objChilds[item].content} collapsed={!this.props.objStates[this.props.id].childs.initial_opened}/>
                     ))}
