@@ -371,7 +371,11 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
             'exclude'                 => true,
             'inputType'               => 'select',
             'options_callback'        => ['\con4gis\MapsBundle\Classes\Contao\Callbacks\TlC4gMapLocstyles','getLocStyles', 'includeBlankOption' => true],
-            'sql'                     => "int(10) unsigned NOT NULL default '0'"
+            'sql'                     => "int(10) unsigned NOT NULL default '0'",
+            'xlabel' => array
+            (
+                array('tl_c4g_map_locstyles', 'locstylesLink')
+            )
         ],
         'style_function_js' =>
         [
@@ -674,5 +678,12 @@ class tl_c4g_map_locstyles extends Backend
         return $varValue;
     }
 
-    
+
+    public function locstylesLink(Contao\DataContainer $dc)
+    {
+        return ' <a href="contao/main.php?do=c4g_map_locstyles&amp;table=tl_c4g_map_locstyles&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . REQUEST_TOKEN . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['editLocstyles']) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['editLocstyles'])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
+    }
+
+
+
 }

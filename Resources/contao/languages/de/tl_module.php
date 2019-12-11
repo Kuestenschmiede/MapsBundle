@@ -24,6 +24,7 @@ $GLOBALS['TL_LANG']['tl_module']['c4g_map_site_id'] = array('Kartenseite', 'Wäh
 $GLOBALS['TL_LANG']['tl_module']['c4g_map_zoomlevel'] = array('Zoomstufe', 'Geben Sie den Zoomlevel an, der bei Weiterleitung auf die Karte eingestellt sein soll.');
 $GLOBALS['TL_LANG']['tl_module']['c4g_map_placeholder'] = array('Platzhalter für Suchfeld', 'Geben Sie hier einen Platzhalter für das Suchfeld an. Dieser wird angezeigt, solange keine Eingabe getätigt wurde.');
 
+$GLOBALS['TL_LANG']['tl_module']['editMaps'] = ['Strukturelemente bearbeiten'];
 
 /**
  * Legend

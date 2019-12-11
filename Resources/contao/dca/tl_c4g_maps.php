@@ -250,7 +250,11 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                                                'submitOnChange' => true, 'chosen' => true, 'alwaysSave' => true],
             'load_callback'           => [['tl_c4g_maps','getDefaultProfile']],
             'relation'                => ['type'=>'belongsTo', 'load'=>'eager'],
-            'sql'                     => "int(10) unsigned NOT NULL default '0'"
+            'sql'                     => "int(10) unsigned NOT NULL default '0'",
+            'xlabel' => array
+            (
+                array('tl_c4g_maps', 'profilesLink')
+            )
 
             ],
         'profile_mobile' =>
@@ -264,7 +268,11 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                                             'chosen' => true,
                                             'includeBlankOption'=>true
             ],
-            'sql'                     => "int(10) unsigned NOT NULL default '0'"
+            'sql'                     => "int(10) unsigned NOT NULL default '0'",
+            'xlabel' => array
+            (
+                array('tl_c4g_maps', 'profilesLink')
+            )
             ],
         'published' =>
             [
@@ -526,7 +534,11 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 [
                 ['tl_c4g_maps', 'editLocationStyle']
                 ],
-            'sql'                     => "int(10) unsigned NOT NULL default '0'"
+            'sql'                     => "int(10) unsigned NOT NULL default '0'",
+            'xlabel' => array
+            (
+                array('tl_c4g_maps', 'locstylesLink')
+            )
             ],
         'zIndex' =>
         [
@@ -558,7 +570,11 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             'inputType'               => 'select',
             'options_callback'        => ['tl_c4g_maps','getAllBaselayers'],
             'eval'                    => ['tl_class'=>'clr', 'chosen' => true, 'includeBlankOption'=>true, 'multiple' => true],
-            'sql'                     => "blob NULL"
+            'sql'                     => "blob NULL",
+            'xlabel' => array
+            (
+                array('tl_c4g_maps', 'baselayersLink')
+            )
         ],
         'loc_label' =>
             [
@@ -999,7 +1015,11 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             'foreignKey'              => 'tl_c4g_map_profiles.name',
             'eval'                    => ['tl_class'=>'w50', 'submitOnChange' => true, 'alwaysSave' => true,  'chosen' => true],
             'load_callback'           => [['tl_c4g_maps','getDefaultProfile']],
-            'sql'                     => "int(10) unsigned NOT NULL default '0'"
+            'sql'                     => "int(10) unsigned NOT NULL default '0'",
+            'xlabel' => array
+            (
+                array('tl_c4g_maps', 'profilesLink')
+            )
             ],
         'specialprofile_mobile' =>
             [
@@ -1009,7 +1029,11 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             'foreignKey'              => 'tl_c4g_map_profiles.name',
             'eval'                    => ['tl_class'=>'w50',
                                                'includeBlankOption'=>true,  'chosen' => true],
-            'sql'                     => "int(10) unsigned NOT NULL default '0'"
+            'sql'                     => "int(10) unsigned NOT NULL default '0'",
+            'xlabel' => array
+            (
+                array('tl_c4g_maps', 'profilesLink')
+            )
             ],
         'specialprofile_groups' =>
             [
@@ -1097,7 +1121,11 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 [
                 ['tl_c4g_maps', 'editLocationStyle']
                 ],
-            'sql'                     => "int(10) unsigned NOT NULL default '0'"
+            'sql'                     => "int(10) unsigned NOT NULL default '0'",
+            'xlabel' => array
+            (
+                array('tl_c4g_maps', 'locstylesLink')
+            )
             ],
         'be_optimize_checkboxes_limit' =>
             [
@@ -1672,5 +1700,20 @@ class tl_c4g_maps extends Backend
             $return[$baseLayers->id] = $baseLayers->name;
         }
         return $return;
+    }
+
+    public function baselayersLink(Contao\DataContainer $dc)
+    {
+        return ' <a href="contao/main.php?do=c4g_map_baselayers&amp;table=tl_c4g_map_baselayers&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . REQUEST_TOKEN . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_c4g_maps']['editBaselayers']) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_c4g_maps']['editBaselayers'])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
+    }
+
+    public function locstylesLink(Contao\DataContainer $dc)
+    {
+        return ' <a href="contao/main.php?do=c4g_map_locstyles&amp;table=tl_c4g_map_locstyles&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . REQUEST_TOKEN . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_c4g_maps']['editLocstyles']) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_c4g_maps']['editLocstyles'])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
+    }
+
+    public function profilesLink(Contao\DataContainer $dc)
+    {
+        return ' <a href="contao/main.php?do=c4g_map_profiles&amp;table=tl_c4g_map_profiles&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . REQUEST_TOKEN . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_c4g_maps']['editProfiles']) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_c4g_maps']['editProfiles'])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
     }
 }

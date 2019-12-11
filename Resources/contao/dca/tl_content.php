@@ -31,7 +31,11 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['c4g_map_id'] =
     'inputType'               => 'select',
     'options_callback'        => ['tl_content_c4g_maps', 'get_maps'],
     'eval'                    => ['submitOnChange'=>true],
-    'sql'                     => "int(10) unsigned NOT NULL default '0'"
+    'sql'                     => "int(10) unsigned NOT NULL default '0'",
+    'xlabel' => array
+    (
+        array('tl_content_c4g_maps', 'mapsLink')
+    )
     ];
 $GLOBALS['TL_DCA']['tl_content']['fields']['c4g_map_width'] =
     [
@@ -77,7 +81,11 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['c4g_map_default_mapservice'] =
                                     'mandatory'=>false,
                                     'chosen'=>true,
                                     'includeBlankOption'=>true],
-    'sql'                     => "int(10) unsigned NOT NULL default '0'"
+    'sql'                     => "int(10) unsigned NOT NULL default '0'",
+    'xlabel' => array
+    (
+        array('tl_content_c4g_maps', 'baselayersLink')
+    )
 
     ];
 if (@class_exists("tl_content")) {
@@ -149,7 +157,11 @@ if (@class_exists("tl_content")) {
             'inputType' => 'select',
             'options_callback' => ['tl_content_c4g_maps', 'getLocStyles'],
             'eval' => array('chosen' => true, 'includeBlankOption'=>true),
-            'sql' => "int(10) unsigned NOT NULL default '0'"
+            'sql' => "int(10) unsigned NOT NULL default '0'",
+            'xlabel' => array
+            (
+                array('tl_content_c4g_maps', 'locstylesLink')
+            )
             ];
     }
     
@@ -259,4 +271,20 @@ class tl_content_c4g_maps extends Backend
         }
         return $varValue;
     }
+
+    public function baselayersLink(Contao\DataContainer $dc)
+    {
+        return ' <a href="contao/main.php?do=c4g_map_baselayers&amp;table=tl_c4g_map_baselayers&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . REQUEST_TOKEN . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_content']['editBaselayers']) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_content']['editBaselayers'])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
+    }
+
+    public function locstylesLink(Contao\DataContainer $dc)
+    {
+        return ' <a href="contao/main.php?do=c4g_map_locstyles&amp;table=tl_c4g_map_locstyles&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . REQUEST_TOKEN . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_content']['editLocstyles']) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_content']['editLocstyles'])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
+    }
+
+    public function mapsLink(Contao\DataContainer $dc)
+    {
+        return ' <a href="contao/main.php?do=c4g_maps&amp;table=tl_c4g_maps&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . REQUEST_TOKEN . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_content']['editMaps']) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_content']['editMaps'])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
+    }
+
 }
