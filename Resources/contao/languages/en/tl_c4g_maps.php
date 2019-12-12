@@ -185,3 +185,4 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['location_legend']	    = 'Location';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['protection_legend']	    = 'Access protection';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['expert_legend']	    	= 'Expert';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['backend_legend']        = 'Backend settings';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['publish_legend']        = 'Publish settings';

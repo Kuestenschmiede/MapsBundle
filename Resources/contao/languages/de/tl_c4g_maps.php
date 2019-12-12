@@ -188,6 +188,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['location_legend']	    = 'Lokation';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['protection_legend']	    = 'Zugriffsschutz';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['expert_legend']	    	= 'Experteneinstellungen';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['backend_legend']        = 'Backendeinstellungen';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['publish_legend']        = 'Veröffentlichung';
 
 $GLOBALS['TL_LANG']['tl_c4g_maps']['editalias'] = array('Quellelement bearbeiten', 'Das Quellelement ID %s bearbeiten');
 
