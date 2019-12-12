@@ -74,7 +74,7 @@ export class GeoSearch extends Component {
     this.config.mapController = props.mapController;
     this.config.results = props.results;
     this.config.resultStyle = props.resultStyle;
-    if (this.config.resultStyle) {
+    if (this.config.resultStyle && parseInt(this.config.resultStyle, 10) > 0) {
       const scope = this;
       // check if style is loaded, otherwise load it
       if (props.mapController.proxy.locationStyleController.arrLocStyles[this.config.resultStyle]) {
