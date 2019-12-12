@@ -1001,6 +1001,24 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             'eval'                    => ['submitOnChange' => true],
             'sql'                     => "char(1) NOT NULL default ''"
             ],
+        'publishStart' =>
+        [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['publishStart'],
+            'exclude'                 => true,
+            'inputType'               => 'text',
+            'default'                 => '',
+            'eval'                    => array('rgxp'=>'datim', 'datepicker'=>true, 'tl_class'=>'w50 wizard'),
+            'sql'                     => "varchar(10) NOT NULL default ''"
+        ],
+        'publishStop' =>
+        [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['publishStop'],
+            'exclude'                 => true,
+            'inputType'               => 'text',
+            'default'                 => '',
+            'eval'                    => array('rgxp'=>'datim', 'datepicker'=>true, 'tl_class'=>'w50 wizard'),
+            'sql'                     => "varchar(10) NOT NULL default ''"
+        ],
         'permitted_groups' =>
             [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['permitted_groups'],
