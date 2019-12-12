@@ -65,7 +65,6 @@ export class StarboardLayerswitcher extends Component {
 
   componentDidMount() {
     if (this.props.open) {
-      // ToDo there must be a better solution to this...
       window.setTimeout(() => this.props.openfunc(), 500);
     }
   }
@@ -95,15 +94,17 @@ export class StarboardLayerswitcher extends Component {
     if (layerElement.content[0].combinedJSON) {
       let vectorLayer = this.props.mapController.proxy.layerController.arrLayers[layerElement.id].vectorLayer;
       let vectorSource = this.getSource(vectorLayer);
-      for (let i = 0; i < layerElement.content[0].data.features.length; i++) {
-        let feature = layerElement.content[0].data.features[i];
-        let olFeature = vectorSource.getFeatureById(feature.properties.id);
-        objChildStates[feature.properties.id] = {
-          name: feature.properties.title,
-          hide: !!layerElement.hide,
-          childs: false,
-          content: false,
-          contentFeature : olFeature
+      if (vectorSource) {
+        for (let i = 0; i < layerElement.content[0].data.features.length; i++) {
+          let feature = layerElement.content[0].data.features[i];
+          let olFeature = vectorSource.getFeatureById(feature.properties.id);
+          objChildStates[feature.properties.id] = {
+            name: feature.properties.title,
+            hide: !!layerElement.hide,
+            childs: false,
+            content: false,
+            contentFeature : olFeature
+          }
         }
       }
     }
@@ -153,7 +154,8 @@ export class StarboardLayerswitcher extends Component {
                   if (item.pid === this.props.mapController.data.id) //skip childs of layers
                     return <C4gStarboardLayerElement key={item.id} id={item.id} mapController={this.props.mapController}
                                                      objStates={this.state.layerStates} parentCallback={this.callbackFunction}
-                                                     name={item.name} collapsed={!item.initial_opened}/>;
+                                                     name={item.name} collapsed={!(parseInt(item.initial_opened, 10))}
+                                                      fnResize={this.props.fnResize}/>;
                   return null;
                 })}
               </ul>

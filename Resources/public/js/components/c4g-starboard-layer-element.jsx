@@ -134,7 +134,7 @@ export class C4gStarboardLayerElement extends Component {
     render() {
         const scope = this;
         let span = null;
-        if(this.props.objStates && this.props.objStates[this.props.id] && this.props.objStates[this.props.id] && this.props.objStates[this.props.id].childs) {
+        if (this.props.objStates && this.props.objStates[this.props.id] && this.props.objStates[this.props.id].childs) {
             let spanClick = function(e) {
                 e.stopPropagation();
                 e.nativeEvent.stopImmediatePropagation();
@@ -144,8 +144,16 @@ export class C4gStarboardLayerElement extends Component {
                 else {
                     scope.setState({collapsed: true});
                 }
+                scope.props.fnResize();
             };
-            span = <span className={cssConstants.ICON} onMouseUp={(event) => spanClick(event)}/>;
+            let layers = this.props.mapController.proxy.layerController.arrLayers;
+            if ((layers[this.props.id].childs && layers[this.props.id].childs.length > 0)
+                || (layers[this.props.id].content && layers[this.props.id].content[0] && layers[this.props.id].content[0].combinedJSON))
+            {
+                span = <span className={cssConstants.ICON} onMouseUp={(event) => spanClick(event)}/>;
+            } else {
+                span = <span className={""} onMouseUp={(event) => spanClick(event)}/>;
+            }
         }
         let cssClass = scope.state.active ? cssConstants.ACTIVE : cssConstants.INACTIVE;
         if (!scope.props.mapController.proxy.checkLayerIsActiveForZoom(scope.props.id)) {
@@ -159,7 +167,10 @@ export class C4gStarboardLayerElement extends Component {
                 <a className={cssClass} onMouseUp={(event) => this.layerClick(event)}>{this.props.name}</a>
                 <ul>
                     {Object.keys(objChilds).map(item => (
-                        <C4gStarboardLayerElement key={item} pid={this.props.id} objStates={objChilds} parentCallback={this.callbackFunction} id={item} mapController={this.props.mapController} name={objChilds[item].name} content={objChilds[item].content}/>
+                        <C4gStarboardLayerElement key={item} pid={this.props.id} objStates={objChilds}
+                                                  parentCallback={this.callbackFunction} id={item} fnResize={this.props.fnResize}
+                                                  mapController={this.props.mapController} name={objChilds[item].name}
+                                                  content={objChilds[item].content} collapsed={!this.props.objStates[this.props.id].childs.initial_opened}/>
                     ))}
                 </ul>
             </li>

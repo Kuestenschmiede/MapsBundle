@@ -39,6 +39,8 @@ export class StarboardPanel extends Component {
     mapController.controls.horizontalPanel = control;
     mapController.map.addControl(control);
     this.open = this.open.bind(this);
+    this.slideOutCollidingElements = this.slideOutCollidingElements.bind(this);
+    this.resizeFunction = this.resizeFunction.bind(this);
     // state variables (every property that has influence on this component)
     this.state = {
       // either "top" or "bottom"
@@ -67,7 +69,8 @@ export class StarboardPanel extends Component {
     }
     const scope = this;
     return (
-      <StarboardLayerswitcher key={this.props.mapController.id} mapController ={this.props.mapController} openfunc={this.open} open={this.state.open}></StarboardLayerswitcher>
+      <StarboardLayerswitcher key={this.props.mapController.id} mapController={this.props.mapController}
+                              openfunc={this.open} open={this.state.open} fnResize={this.resizeFunction}/>
     )
   }
 
@@ -81,31 +84,38 @@ export class StarboardPanel extends Component {
     // this.state.open = false;
   }
 
+  resizeFunction() {
+    const scope = this;
+    window.requestAnimationFrame(function() {
+      scope.slideOutCollidingElements();
+    });
+  }
+
   /**
    * Moves the buttons that would collide with the panel.
    */
   slideOutCollidingElements() {
     const scope = this;
+    let starboardWidth = jQuery(".c4g-starboard-container").width();
     if (this.state.direction === "right") {
       let elements = document.querySelectorAll('.' + cssConstants.CONTROL_CONTAINER_TR + ' .' + cssConstants.OL_UNSELECTABLE);
       elements.forEach(function(element) {
-        element.style.right = "240px";
+        element.style.right = starboardWidth + "px";
       });
-      this.state.control.element.style.right = "240px";
+      this.state.control.element.style.right = starboardWidth + "px";
       elements = document.querySelectorAll('.' + cssConstants.CONTROL_CONTAINER_BR + ' .' + cssConstants.OL_UNSELECTABLE);
       elements.forEach(function(element) {
-        element.style.right = "240px";
+        element.style.right = starboardWidth + "px";
       });
       jQuery(".c4g-starboard-container").css("right","0%");
-      this.state.control.element.style.right = "240px";
     } else {
       let elements = document.querySelectorAll('.' + cssConstants.CONTROL_CONTAINER_TL + ' .' + cssConstants.OL_UNSELECTABLE);
       elements.forEach(function(element) {
-        element.style.left = "240px";
+        element.style.left = starboardWidth + "px";
       });
       elements = document.querySelectorAll('.' + cssConstants.CONTROL_CONTAINER_BL + ' .' + cssConstants.OL_UNSELECTABLE);
       elements.forEach(function(element) {
-        element.style.left = "240px";
+        element.style.left = starboardWidth + "px";
       });
       // let topValue = this.props.mapController.map.getSize()[1] - 100;
       // jQuery(this.state.control.element).style.top = topValue + "px";

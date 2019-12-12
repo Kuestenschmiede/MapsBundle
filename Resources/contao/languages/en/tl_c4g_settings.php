@@ -17,6 +17,8 @@ $GLOBALS['TL_LANG']['tl_c4g_settings']['caching'] = ["Activate caching", "Activa
 $GLOBALS['TL_LANG']['tl_c4g_settings']['defaultprofile'] = ["Default profile", "Select a map profile to be used as the default profile. The profile will be loaded if no other profile has been set. For example for the Geopicker."];
 $GLOBALS['TL_LANG']['tl_c4g_settings']['defaultData'] = ["Generate default data", "Choose wether you want to generate default data"];
 
+$GLOBALS['TL_LANG']['tl_c4g_settings']['editProfiles'] = ['Edit profiles'];
+
 /** References */
 $GLOBALS['TL_LANG']['tl_c4g_settings']['references']['caching']['baseLayerService'] ='Baselayer';
 $GLOBALS['TL_LANG']['tl_c4g_settings']['references']['caching']['layerService'] ='Map structures';

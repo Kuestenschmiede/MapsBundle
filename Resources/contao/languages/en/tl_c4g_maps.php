@@ -132,6 +132,11 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['delete'] = array('Delete map structure item'
 $GLOBALS['TL_LANG']['tl_c4g_maps']['toggle'] = array('Publish/unpublish map structure item', 'Publish/unpublish map structure item ID %s');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['show']   = array('Details', 'Show details of map structure item ID %s');
 
+//xlabel buttons
+$GLOBALS['TL_LANG']['tl_c4g_maps']['editBaselayers'] = ['Edit baselayers'];
+$GLOBALS['TL_LANG']['tl_c4g_maps']['editLocstyles'] = ['Edit locstyles'];
+$GLOBALS['TL_LANG']['tl_c4g_maps']['editProfiles'] = ['Edit profiles'];
+
 /**
  * Misc
  */
@@ -180,3 +185,4 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['location_legend']	    = 'Location';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['protection_legend']	    = 'Access protection';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['expert_legend']	    	= 'Expert';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['backend_legend']        = 'Backend settings';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['publish_legend']        = 'Publish settings';

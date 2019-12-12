@@ -824,7 +824,7 @@ export class MapController {
       this.map.addControl(this.controls.rotate);
     }
     // infopage
-    if (mapData.infopage && typeof Infopage === 'function') {
+    if (mapData.infopage && typeof mapData.infopage === "string" && typeof Infopage === 'function') {
       this.controls.infopage = new Infopage({
         tipLabel: langConstants.CTRL_INFOPAGE,
         target: controlContainerTopLeft,

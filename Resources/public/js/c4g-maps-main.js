@@ -14,6 +14,7 @@ import {MapController} from "./c4g-maps";
 
 window.initMap = function(mapData) {
   let mapController = new MapController(mapData);
+  return mapController;
 };
 
 window.initMaps = function(mapData) {

@@ -70,6 +70,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['onclick_zoomto'] 	 = array('Zoomen 
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['minzoom'] 		 = array('Mindest-Zoomstufe', 'Geben Sie die Zoomstufe ein, ab der die Elemente des Karteneintrags angezeigt werden. 0=keine Einschränkung.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['maxzoom'] 		 = array('Maximale Zoomstufe', 'Geben Sie die Zoomstufe ein, bis zu der die Elemente des Karteneintrags angezeigt werden. 0=keine Einschränkung.');
 
+//xlabel buttons
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['editLocstyles'] = ['Lokationsstile bearbeiten'];
 
 /**
  * Reference

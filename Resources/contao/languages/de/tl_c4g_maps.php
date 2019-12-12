@@ -133,6 +133,11 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['toggle'] = array('Kartenstrukturelement ver�
 $GLOBALS['TL_LANG']['tl_c4g_maps']['toggle'] = array('Kartenstrukturelement veröffentlichen/unveröffentlichen', 'Kartenstrukturelement ID %s veröffentlichen/unveröffentlichen');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['show']   = array('Details', 'Die Details des Kartenstrukturelements ID %s anzeigen');
 
+//xlabel buttons
+$GLOBALS['TL_LANG']['tl_c4g_maps']['editBaselayers'] = ['Basiskarten bearbeiten'];
+$GLOBALS['TL_LANG']['tl_c4g_maps']['editLocstyles'] = ['Lokationsstile bearbeiten'];
+$GLOBALS['TL_LANG']['tl_c4g_maps']['editProfiles'] = ['Kartenprofile bearbeiten'];
+
 /**
  * Misc
  */
@@ -183,6 +188,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['location_legend']	    = 'Lokation';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['protection_legend']	    = 'Zugriffsschutz';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['expert_legend']	    	= 'Experteneinstellungen';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['backend_legend']        = 'Backendeinstellungen';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['publish_legend']        = 'Veröffentlichung';
 
 $GLOBALS['TL_LANG']['tl_c4g_maps']['editalias'] = array('Quellelement bearbeiten', 'Das Quellelement ID %s bearbeiten');
 

@@ -46,7 +46,11 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_map_id'] =
     'inputType'               => 'select',
     'options_callback'        => ['tl_module_c4g_maps', 'get_maps'],
     'eval'                    => ['submitOnChange'=>true],
-    'sql'                     => "int(10) unsigned NOT NULL default '0'"
+    'sql'                     => "int(10) unsigned NOT NULL default '0'",
+    'xlabel' => array
+    (
+        array('tl_module_c4g_maps', 'mapsLink')
+    )
     ];
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_map_width'] =
     [
@@ -92,7 +96,11 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_map_default_mapservice'] =
                                     'mandatory'=>false,
                                     'chosen'=>true,
                                     'includeBlankOption'=>true],
-    'sql'                     => "int(10) unsigned NOT NULL default '0'"
+    'sql'                     => "int(10) unsigned NOT NULL default '0'",
+    'xlabel' => array
+    (
+        array('tl_module_c4g_maps', 'baselayersLink')
+    )
 
     ];
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_map_site_id'] =
@@ -186,4 +194,15 @@ class tl_module_c4g_maps extends Backend
         }
         return $return;
     }
+
+    public function baselayersLink(Contao\DataContainer $dc)
+    {
+        return ' <a href="contao/main.php?do=c4g_map_baselayers&amp;table=tl_c4g_map_baselayers&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . REQUEST_TOKEN . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_modules']['editBaselayers']) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_modules']['editBaselayers'])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
+    }
+
+    public function mapsLink(Contao\DataContainer $dc)
+    {
+        return ' <a href="contao/main.php?do=c4g_maps&amp;table=tl_c4g_maps&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . REQUEST_TOKEN . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_modules']['editMaps']) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_modules']['editMaps'])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
+    }
+
 }
