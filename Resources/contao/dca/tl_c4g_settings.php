@@ -11,7 +11,7 @@
  * @link       https://www.con4gis.org
  */
 
-$GLOBALS['TL_DCA']['tl_c4g_settings']['palettes']['default'] .= '{c4g_maps_legend},disabledC4gMapObjects,defaultprofile,caching;';
+$GLOBALS['TL_DCA']['tl_c4g_settings']['palettes']['default'] .= '{c4g_maps_legend:hide},disabledC4gMapObjects,defaultprofile,caching;';
 
 /**
  * Add fields
