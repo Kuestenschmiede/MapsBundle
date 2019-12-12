@@ -134,67 +134,79 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
     'palettes' =>
         [
         '__selector__'                => ['is_map', 'profile','location_type', 'tab_source', 'show_locations', 'popup_extend', 'protect_element', 'use_specialprofile', 'cluster_locations', 'split_geojson'],
-        'default'                     => '{general_legend},name,profile,profile_mobile,published;'.
+        'default'                     => '{general_legend},name,profile,profile_mobile;'.
                                          '{map_legend},is_map;'.
                                          '{location_legend},location_type,data_layername,hide_child,initial_opened,exemptFromFilter,filterByBaseLayer,data_hidelayer,cssClass,zoom_locations, hover_location,loc_minzoom,loc_maxzoom;'.
                                          '{protection_legend:hide},protect_element;'.
+                                         '{publish_legend:hide},published,publishStart,publishStop;'.
                                          '{expert_legend:hide},use_specialprofile;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
-        'single'                      => '{general_legend},name,profile,profile_mobile,published;'.
+        'single'                      => '{general_legend},name,profile,profile_mobile;'.
                                          '{map_legend},is_map;'.
                                          '{location_legend},location_type,data_layername,initial_opened,exemptFromFilter,filterByBaseLayer,hide_child,data_hidelayer,loc_geox,loc_geoy,locstyle,zIndex,loc_only_in_parent,loc_label,tooltip, tooltip_length,enablePopup,showPopupOnActive,popup_info,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
                                          '{protection_legend:hide},protect_element;'.
+                                         '{publish_legend:hide},published,publishStart,publishStop;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
-        'table'                      =>  '{general_legend},name,profile,profile_mobile,published;'.
+        'table'                      =>  '{general_legend},name,profile,profile_mobile;'.
                                          '{map_legend},is_map;'.
                                          '{location_legend},location_type,data_layername,hide_child,initial_opened,exemptFromFilter,filterByBaseLayer,data_hidelayer,tab_source,tab_pid,tab_pid1,tab_labeldisplay,tab_tooltipdisplay,tab_directlink,tab_force_target_blank,tab_whereclause,tabJoinclause,tab_orderby,tab_filter_alias,locstyle,zIndex,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,cluster_locations,async_content,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
                                          '{protection_legend:hide},protect_element;'.
+                                         '{publish_legend:hide},published,publishStart,publishStop;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
-        'gpx'                        =>  '{general_legend},name,profile,profile_mobile,published;'.
+        'gpx'                        =>  '{general_legend},name,profile,profile_mobile;'.
                                          '{map_legend},is_map;'.
                                          '{location_legend},location_type,data_layername,hide_child,initial_opened,exemptFromFilter,filterByBaseLayer,data_hidelayer,data_file,data_url,locstyle,zIndex,loc_label,tooltip, tooltip_length,enablePopup,popup_info,popup_async,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
                                          '{protection_legend:hide},protect_element;'.
+                                         '{publish_legend:hide},published,publishStart,publishStop;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
-        'kml'                        =>  '{general_legend},name,profile,profile_mobile,published;'.
+        'kml'                        =>  '{general_legend},name,profile,profile_mobile;'.
                                          '{map_legend},is_map;'.
                                          '{location_legend},location_type,data_layername,hide_child,initial_opened,exemptFromFilter,filterByBaseLayer,data_hidelayer,data_file,data_url,loc_label,tooltip, tooltip_length,enablePopup,popup_info,popup_async,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
                                          '{protection_legend:hide},protect_element;'.
+                                         '{publish_legend:hide},published,publishStart,publishStop;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
-        'geojson'                    =>  '{general_legend},name,profile,profile_mobile,published;'.
+        'geojson'                    =>  '{general_legend},name,profile,profile_mobile;'.
                                          '{map_legend},is_map;'.
                                          '{location_legend},location_type,data_layername,hide_child,initial_opened,exemptFromFilter,filterByBaseLayer,data_hidelayer,data_file,split_geojson,data_content,data_projection,locstyle,zIndex,loc_label,tooltip, tooltip_length,enablePopup,popup_info,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
                                          '{protection_legend:hide},protect_element;'.
+                                         '{publish_legend:hide},published,publishStart,publishStop;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
-        'osm'                        =>  '{general_legend},name,profile,profile_mobile,published;'.
+        'osm'                        =>  '{general_legend},name,profile,profile_mobile;'.
                                          '{map_legend},is_map;'.
                                          '{location_legend},location_type,data_layername,hide_child,initial_opened,exemptFromFilter,filterByBaseLayer,data_hidelayer,data_file,data_url,data_forcenodes,locstyle,zIndex,loc_label,tooltip, tooltip_length,enablePopup,popupType,popup_info,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,cluster_locations,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
                                          '{protection_legend:hide},protect_element;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
                                          '{protection_legend:hide},protect_element;'.
+                                         '{publish_legend:hide},published,publishStart,publishStop;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
-        'overpass'                   =>  '{general_legend},name,profile,profile_mobile,published;'.
+        'overpass'                   =>  '{general_legend},name,profile,profile_mobile;'.
                                          '{map_legend},is_map;'.
                                          '{location_legend},location_type,data_layername,hide_child,initial_opened,exemptFromFilter,filterByBaseLayer,data_hidelayer,ovp_request,ovp_bbox_limited,data_forcenodes,data_additionalgeometries,locstyle,zIndex,loc_label,tooltip, tooltip_length,enablePopup,popupType,popup_info,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,cluster_locations,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
                                          '{protection_legend:hide},protect_element;'.
+                                         '{publish_legend:hide},published,publishStart,publishStop;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
-        'link'                       =>  '{general_legend},name,profile,profile_mobile,published;'.
+        'link'                       =>  '{general_legend},name,profile,profile_mobile;'.
                                          '{map_legend},is_map;'.
                                          '{location_legend},location_type,data_layername,data_hidelayer,initial_opened,link_id;'.
                                          '{protection_legend:hide},protect_element;'.
+                                         '{publish_legend:hide},published,publishStart,publishStop;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
-        'c4gForum'                   =>  '{general_legend},name,profile,profile_mobile,published;'.
+        'c4gForum'                   =>  '{general_legend},name,profile,profile_mobile;'.
                                          '{map_legend},is_map;'.
                                          '{location_legend},location_type,data_layername,hide_child,initial_opened,exemptFromFilter,filterByBaseLayer,data_hidelayer,forums,forum_jumpto,forum_reassign_layer,loc_label,tooltip, tooltip_length,enablePopup,popup_info,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,hide_when_in_tab,cssClass;'.
                                          '{protection_legend:hide},protect_element;'.
+                                         '{publish_legend:hide},published,publishStart,publishStop;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
-        'startab'                    =>  '{general_legend},name,profile,profile_mobile,published;' .
+        'startab'                    =>  '{general_legend},name,profile,profile_mobile;' .
                                          '{location_legend},location_type,data_layername,hide_child,initial_opened,exemptFromFilter,filterByBaseLayer,data_hidelayer,awesomeicon;'.
                                          '{protection_legend:hide},protect_element;'.
+                                         '{publish_legend:hide},published,publishStart,publishStop;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
-        'folder'                     =>  '{general_legend},name,profile,profile_mobile,published;'.
+        'folder'                     =>  '{general_legend},name,profile,profile_mobile;'.
                                          '{map_legend},is_map;'.
                                          '{location_legend},location_type,data_layername,hide_child,initial_opened,data_hidelayer,data_folder,locstyle,zIndex,loc_label,tooltip, tooltip_length,enablePopup,popup_info,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,hide_when_in_tab,cssClass;'.
                                          '{protection_legend:hide},protect_element;'.
+                                         '{publish_legend:hide},published,publishStart,publishStop;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
         ],
 
@@ -250,7 +262,11 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                                                'submitOnChange' => true, 'chosen' => true, 'alwaysSave' => true],
             'load_callback'           => [['tl_c4g_maps','getDefaultProfile']],
             'relation'                => ['type'=>'belongsTo', 'load'=>'eager'],
-            'sql'                     => "int(10) unsigned NOT NULL default '0'"
+            'sql'                     => "int(10) unsigned NOT NULL default '0'",
+            'xlabel' => array
+            (
+                array('tl_c4g_maps', 'profilesLink')
+            )
 
             ],
         'profile_mobile' =>
@@ -264,7 +280,11 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                                             'chosen' => true,
                                             'includeBlankOption'=>true
             ],
-            'sql'                     => "int(10) unsigned NOT NULL default '0'"
+            'sql'                     => "int(10) unsigned NOT NULL default '0'",
+            'xlabel' => array
+            (
+                array('tl_c4g_maps', 'profilesLink')
+            )
             ],
         'published' =>
             [
@@ -526,7 +546,11 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 [
                 ['tl_c4g_maps', 'editLocationStyle']
                 ],
-            'sql'                     => "int(10) unsigned NOT NULL default '0'"
+            'sql'                     => "int(10) unsigned NOT NULL default '0'",
+            'xlabel' => array
+            (
+                array('tl_c4g_maps', 'locstylesLink')
+            )
             ],
         'zIndex' =>
         [
@@ -558,7 +582,11 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             'inputType'               => 'select',
             'options_callback'        => ['tl_c4g_maps','getAllBaselayers'],
             'eval'                    => ['tl_class'=>'clr', 'chosen' => true, 'includeBlankOption'=>true, 'multiple' => true],
-            'sql'                     => "blob NULL"
+            'sql'                     => "blob NULL",
+            'xlabel' => array
+            (
+                array('tl_c4g_maps', 'baselayersLink')
+            )
         ],
         'loc_label' =>
             [
@@ -973,6 +1001,24 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             'eval'                    => ['submitOnChange' => true],
             'sql'                     => "char(1) NOT NULL default ''"
             ],
+        'publishStart' =>
+        [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['publishStart'],
+            'exclude'                 => true,
+            'inputType'               => 'text',
+            'default'                 => '',
+            'eval'                    => array('rgxp'=>'datim', 'datepicker'=>true, 'tl_class'=>'w50 wizard'),
+            'sql'                     => "varchar(10) NOT NULL default ''"
+        ],
+        'publishStop' =>
+        [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['publishStop'],
+            'exclude'                 => true,
+            'inputType'               => 'text',
+            'default'                 => '',
+            'eval'                    => array('rgxp'=>'datim', 'datepicker'=>true, 'tl_class'=>'w50 wizard'),
+            'sql'                     => "varchar(10) NOT NULL default ''"
+        ],
         'permitted_groups' =>
             [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['permitted_groups'],
@@ -999,7 +1045,11 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             'foreignKey'              => 'tl_c4g_map_profiles.name',
             'eval'                    => ['tl_class'=>'w50', 'submitOnChange' => true, 'alwaysSave' => true,  'chosen' => true],
             'load_callback'           => [['tl_c4g_maps','getDefaultProfile']],
-            'sql'                     => "int(10) unsigned NOT NULL default '0'"
+            'sql'                     => "int(10) unsigned NOT NULL default '0'",
+            'xlabel' => array
+            (
+                array('tl_c4g_maps', 'profilesLink')
+            )
             ],
         'specialprofile_mobile' =>
             [
@@ -1009,7 +1059,11 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             'foreignKey'              => 'tl_c4g_map_profiles.name',
             'eval'                    => ['tl_class'=>'w50',
                                                'includeBlankOption'=>true,  'chosen' => true],
-            'sql'                     => "int(10) unsigned NOT NULL default '0'"
+            'sql'                     => "int(10) unsigned NOT NULL default '0'",
+            'xlabel' => array
+            (
+                array('tl_c4g_maps', 'profilesLink')
+            )
             ],
         'specialprofile_groups' =>
             [
@@ -1097,7 +1151,11 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 [
                 ['tl_c4g_maps', 'editLocationStyle']
                 ],
-            'sql'                     => "int(10) unsigned NOT NULL default '0'"
+            'sql'                     => "int(10) unsigned NOT NULL default '0'",
+            'xlabel' => array
+            (
+                array('tl_c4g_maps', 'locstylesLink')
+            )
             ],
         'be_optimize_checkboxes_limit' =>
             [
@@ -1672,5 +1730,20 @@ class tl_c4g_maps extends Backend
             $return[$baseLayers->id] = $baseLayers->name;
         }
         return $return;
+    }
+
+    public function baselayersLink(Contao\DataContainer $dc)
+    {
+        return ' <a href="contao/main.php?do=c4g_map_baselayers&amp;table=tl_c4g_map_baselayers&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . REQUEST_TOKEN . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_c4g_maps']['editBaselayers']) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_c4g_maps']['editBaselayers'])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
+    }
+
+    public function locstylesLink(Contao\DataContainer $dc)
+    {
+        return ' <a href="contao/main.php?do=c4g_map_locstyles&amp;table=tl_c4g_map_locstyles&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . REQUEST_TOKEN . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_c4g_maps']['editLocstyles']) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_c4g_maps']['editLocstyles'])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
+    }
+
+    public function profilesLink(Contao\DataContainer $dc)
+    {
+        return ' <a href="contao/main.php?do=c4g_map_profiles&amp;table=tl_c4g_map_profiles&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . REQUEST_TOKEN . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_c4g_maps']['editProfiles']) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_c4g_maps']['editProfiles'])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
     }
 }

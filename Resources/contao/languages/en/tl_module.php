@@ -24,6 +24,8 @@ $GLOBALS['TL_LANG']['tl_module']['c4g_map_site_id'] = array('Map page', 'Select 
 $GLOBALS['TL_LANG']['tl_module']['c4g_map_zoomlevel'] = array('Zoomlevel', 'Specify the zoomlevel that should be applied when opening the map.');
 $GLOBALS['TL_LANG']['tl_module']['c4g_map_placeholder'] = array('Placeholder for input field', 'Specify a placeholder that should be displayed when no input has been made yet.');
 
+$GLOBALS['TL_LANG']['tl_module']['editMaps'] = ['Edit structure elements'];
+
 /**
  * Legend
  */

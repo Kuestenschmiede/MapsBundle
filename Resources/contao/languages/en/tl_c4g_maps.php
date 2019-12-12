@@ -98,6 +98,8 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['geolocation_zoom'] = array('Geolocation - zo
 $GLOBALS['TL_LANG']['tl_c4g_maps']['include_sublocations'] = array('Include sublocations of element', 'When unchecked, only elements of the first level appear on the map.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['link_id'] = array('Map structure item', 'Item to be linked into the map.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['protect_element'] = array('Protect this entry', 'Make this entry only visible to selected groups.');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['publishStart'] = ["Show from", "Do not show the map structure on the website before this day."];
+$GLOBALS['TL_LANG']['tl_c4g_maps']['publishStop'] = ["Show until", "Do not show the map structure on the website on and after this day."];
 $GLOBALS['TL_LANG']['tl_c4g_maps']['permitted_groups'] = array('Permitted groups', 'The groups for which the entry is visible.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['use_specialprofile'] = array('Activate special profile', 'Activate a special profile for selected membergroups.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['specialprofile'] = array('Specialprofile', 'The profile you want to use for selected groups.');
@@ -131,6 +133,11 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['cut']    = array('Move map structure item', 
 $GLOBALS['TL_LANG']['tl_c4g_maps']['delete'] = array('Delete map structure item', 'Delete map structure item ID %s');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['toggle'] = array('Publish/unpublish map structure item', 'Publish/unpublish map structure item ID %s');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['show']   = array('Details', 'Show details of map structure item ID %s');
+
+//xlabel buttons
+$GLOBALS['TL_LANG']['tl_c4g_maps']['editBaselayers'] = ['Edit baselayers'];
+$GLOBALS['TL_LANG']['tl_c4g_maps']['editLocstyles'] = ['Edit locstyles'];
+$GLOBALS['TL_LANG']['tl_c4g_maps']['editProfiles'] = ['Edit profiles'];
 
 /**
  * Misc
@@ -180,3 +187,4 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['location_legend']	    = 'Location';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['protection_legend']	    = 'Access protection';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['expert_legend']	    	= 'Expert';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['backend_legend']        = 'Backend settings';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['publish_legend']        = 'Publish settings';

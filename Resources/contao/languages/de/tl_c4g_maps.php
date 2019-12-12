@@ -98,6 +98,8 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['geolocation_zoom'] = array('Aktuelle Positio
 $GLOBALS['TL_LANG']['tl_c4g_maps']['include_sublocations'] = array('Hierarchisch untergeordnete Kartenstrukturelemente berücksichtigen', 'Bei Deaktivierung dieser Einstellung werden nur Elemente der ersten Ebene auf der Karte dargestellt.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['link_id'] = array('Kartenstrukturelement', 'Zu verknüpfendes Kartenstrukturelement.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['protect_element'] = array('Diesen Eintrag schützen', 'Macht diesen Eintrag nur für ausgewählte Gruppen sichtbar.');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['publishStart'] = ["Anzeigen ab", "Das Kartenstrukturelement erst ab diesem Tag auf der Webseite anzeigen."];
+$GLOBALS['TL_LANG']['tl_c4g_maps']['publishStop'] = ["Anzeigen bis", "Das Kartenstrukturelement nur bis zu diesem Tag auf der Webseite anzeigen."];
 $GLOBALS['TL_LANG']['tl_c4g_maps']['permitted_groups'] = array('Berechtigte Gruppen', 'Die Gruppen, für die dieser Eintrag sichtbar ist.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['use_specialprofile'] = array('Spezialprofil aktivieren', 'Aktiviert ein Spezialprofil, welches für die ausgewählten Gruppen gilt.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['specialprofile'] = array('Spezialprofil', 'Das Profil, was für die ausgewählten Gruppen aktiviert wird.');
@@ -132,6 +134,11 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['delete'] = array('Kartenstrukturelement lös
 $GLOBALS['TL_LANG']['tl_c4g_maps']['toggle'] = array('Kartenstrukturelement veröffentlichen/unveröffentlichen', 'Kartenstrukturelement ID %s veröffentlichen/unveröffentlichen');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['toggle'] = array('Kartenstrukturelement veröffentlichen/unveröffentlichen', 'Kartenstrukturelement ID %s veröffentlichen/unveröffentlichen');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['show']   = array('Details', 'Die Details des Kartenstrukturelements ID %s anzeigen');
+
+//xlabel buttons
+$GLOBALS['TL_LANG']['tl_c4g_maps']['editBaselayers'] = ['Basiskarten bearbeiten'];
+$GLOBALS['TL_LANG']['tl_c4g_maps']['editLocstyles'] = ['Lokationsstile bearbeiten'];
+$GLOBALS['TL_LANG']['tl_c4g_maps']['editProfiles'] = ['Kartenprofile bearbeiten'];
 
 /**
  * Misc
@@ -183,6 +190,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['location_legend']	    = 'Lokation';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['protection_legend']	    = 'Zugriffsschutz';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['expert_legend']	    	= 'Experteneinstellungen';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['backend_legend']        = 'Backendeinstellungen';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['publish_legend']        = 'Veröffentlichung';
 
 $GLOBALS['TL_LANG']['tl_c4g_maps']['editalias'] = array('Quellelement bearbeiten', 'Das Quellelement ID %s bearbeiten');
 
