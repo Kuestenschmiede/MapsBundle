@@ -177,7 +177,12 @@ export class C4gPopupController {
       window.c4gMapsPopup.$popup.removeClass(cssConstants.LOADING);
       window.c4gMapsPopup.spinner.hide();
     } else {
-      let routeButtons = parseInt(feature.get('popup').routing_link, 10);
+      let routeButtons = 0;
+      if (feature.get('popup')) {
+        routeButtons = parseInt(feature.get('popup').routing_link, 10);
+      } else if (layer.get('popup')) {
+        routeButtons = parseInt(layer.get('popup').routing_link, 10);
+      }
       this.currentPopup.setState({content: popupContent, showRouteButtons: routeButtons});
     }
 
