@@ -164,7 +164,7 @@ export class C4gStarboardLayerElement extends Component {
         return (
             <li className={openClose}>
                 {span}
-                <a className={cssClass} onMouseUp={(event) => this.layerClick(event)}>{this.props.name}</a>
+                <a className={cssClass} onMouseUp={(event) => this.layerClick(event)} onTouchStart={(event) => this.layerClick(event)}>{this.props.name}</a>
                 <ul>
                     {Object.keys(objChilds).map(item => (
                         <C4gStarboardLayerElement key={item} pid={this.props.id} objStates={objChilds}
