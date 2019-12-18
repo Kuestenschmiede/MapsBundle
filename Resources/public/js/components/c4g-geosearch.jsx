@@ -40,6 +40,7 @@ export class GeoSearch extends Component {
     this.clickControl = this.clickControl.bind(this);
     let element = document.createElement('div');
     let button = document.createElement('button');
+    button.setAttribute('aria-label', this.langConstants.CTRL_GEOSEARCH);
     element.className = "c4g-geosearch" + " ol-control " + "ol-unselectable";
     element.appendChild(button);
     jQuery(button).on('click', this.clickControl);
@@ -136,7 +137,7 @@ export class GeoSearch extends Component {
                                 detailBtnClass={""} detailBtnCb={""} closeBtnClass={closeBtnClass} closeBtnCb={closeBtnCb}>
           </Titlebar>
           <div className={"c4g-horizon-content"}>
-            <input type="text" onKeyDown={this.inputCallback} id={"c4g-geosearch-input"} placeholder={this.config.placeholder}/>
+            <input type="text" onKeyDown={this.inputCallback} id={"c4g-geosearch-input"} placeholder={this.config.placeholder} aria-label={this.config.placeholder}/>
             <button className={cssConstants.GEOSEARCH_START} title={this.langConstants.CTRL_START_SEARCH} onMouseUp={this.startSearch}/>
           </div>
         </div>

@@ -38,7 +38,8 @@ export class C4gPopupController {
     let popupOptions = {
       open: this.containerOpen,
       alwaysExtended: this.mapData.openDirectly,
-      hideOther: this.mapController.hideOtherBottomComponents
+      hideOther: this.mapController.hideOtherBottomComponents,
+      mapData: this.mapData
     };
     this.popupHandling = parseInt(this.mapData.popupHandling, 10);
 
@@ -127,6 +128,7 @@ export class C4gPopupController {
 
     feature = popupConfig.feature;
     layer = popupConfig.layer;
+
     if (feature.get('features')) {
       let features = feature.get('features');
       for (let i = 0; i < features.length; i++) {
@@ -134,6 +136,13 @@ export class C4gPopupController {
       }
     } else {
       popupContent = utils.replaceAllPlaceholders(popupConfig.popup.content, feature, layer, this.mapController.data.lang);
+    }
+    if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_appendPopup === 'object') {
+      utils.callHookFunctions(window.c4gMapsHooks.proxy_appendPopup, {
+        popup: popupConfig,
+        mapController: this.mapController,
+        comp: this.popupComponent || null
+      });
     }
     if (this.popupHandling !== 3) {
       if (parseInt(this.mapData.popupHandling, 10) !== 2) {
@@ -148,9 +157,7 @@ export class C4gPopupController {
 
       if (popupContent.trim()) {
         window.c4gMapsPopup.$content.html(popupContent);
-        if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_appendPopup === 'object') {
-          utils.callHookFunctions(window.c4gMapsHooks.proxy_appendPopup, {popup: popupConfig, mapController: this.mapController});
-        }
+
         if (feature.getGeometry() && feature.getGeometry().getType() === 'Point') {
           if (self.mapData.popupHandling && self.mapData.popupHandling !== '2') {
             window.c4gMapsPopup.popup.setPosition(feature.getGeometry().getCoordinates());
@@ -170,7 +177,13 @@ export class C4gPopupController {
       window.c4gMapsPopup.$popup.removeClass(cssConstants.LOADING);
       window.c4gMapsPopup.spinner.hide();
     } else {
-      this.currentPopup.setState({content: popupContent});
+      let routeButtons = 0;
+      if (feature.get('popup')) {
+        routeButtons = parseInt(feature.get('popup').routing_link, 10);
+      } else if (layer.get('popup')) {
+        routeButtons = parseInt(layer.get('popup').routing_link, 10);
+      }
+      this.currentPopup.setState({content: popupContent, showRouteButtons: routeButtons});
     }
 
 

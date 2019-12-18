@@ -15,6 +15,7 @@ import React, { Component } from "react";
 import {getLanguage} from "./../c4g-maps-i18n";
 import {cssConstants} from "./../c4g-maps-constant";
 import {Titlebar} from "./c4g-titlebar.jsx";
+import {utils} from "../c4g-maps-utils";
 
 export class PopupContainer extends Component {
 
@@ -24,9 +25,12 @@ export class PopupContainer extends Component {
     this.state = {
       content: "",
       open: props.open,
-      detailsOpen: false
+      detailsOpen: false,
+      showRouteButtons: 0
     };
     props.hideOther(this);
+    this.routeButtons = "";
+    this.language = getLanguage(this.props.mapData);
     this.close = this.close.bind(this);
     this.toggleDetails = this.toggleDetails.bind(this);
 
@@ -54,16 +58,21 @@ export class PopupContainer extends Component {
         className += " c4g-details-closed";
       }
     }
+
     return (
       <div className={className}>
         <Titlebar wrapperClass={"c4g-beach-header"} headerClass={"c4g-beach-header-headline"} header={""}
                   closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close} detailBtnClass={detailBtnClass} detailBtnCb={detailBtnCb}>
-
+          <div dangerouslySetInnerHTML={{__html: this.routeButtons.outerHTML}} />
         </Titlebar>
         <div className={"c4g-beach-content c4g-popup-content"} dangerouslySetInnerHTML={{__html: this.state.content}}>
         </div>
       </div>
     );
+  }
+
+  setRouteButtons(buttons) {
+    this.routeButtons = buttons;
   }
 
   setContent(content) {

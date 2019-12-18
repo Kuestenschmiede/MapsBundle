@@ -1118,7 +1118,14 @@ button.c4g-titlebar-close, .c4g-geosearch-results button {
   cursor: pointer;
 }
 
-.c4g-geosearch-results-close,.c4g-geosearch-options, .c4g-titlebar-close, .c4g-beach-options { float: right; }
+.c4g-geosearch-results-close,
+.c4g-geosearch-options,
+.c4g-titlebar-close,
+.c4g-beach-options,
+.c4g-icon.c4g-popup-route-from,
+.c4g-icon.c4g-popup-route-to {
+ float: right;
+}
 
 .c4g-horizon-content input {
   height: 35px;
@@ -1220,7 +1227,7 @@ button.c4g-geosearch-options:before {
 }
 
 .c4g-beach-content.c4g-popup-content {
-  padding: 0 20px;
+  padding: 0 20px 25px 20px;
   line-height: 1.5;
 }
 
@@ -1236,7 +1243,7 @@ div div.c4g-popup-wrapper.c4g-beach {
   min-height: 70px;
 }
 
-.c4g-popup-container.c4g-beach button.c4g-beach-options {
+.c4g-popup-container.c4g-beach button.c4g-beach-options, button.c4g-icon.c4g-popup-route-from, button.c4g-icon.c4g-popup-route-to {
   background: none;
   border: none;
   outline: none;
@@ -1247,12 +1254,11 @@ div div.c4g-popup-wrapper.c4g-beach {
 .c4g-popup-container.c4g-beach .c4g-beach-header span:empty { display: none; }
 
 .c4g-popup-container.c4g-beach .c4g-beach-header.c4g-beach-header {
-  width: 101px;
   height: 50px;
-  margin-left: calc(100% - 101px);
 }
+
 .c4g-popup-container.c4g-beach .c4g-beach-header.c4g-beach-header span { margin-left: calc(2.5% + 15px); }
-.c4g-popup-container.c4g-beach .c4g-beach-header.c4g-beach-header button { height: calc(1.5em + 20px); max-height: 50px; font-size: 1.5em; width: 50%; }
+.c4g-popup-container.c4g-beach .c4g-beach-header.c4g-beach-header button { height: calc(1.5em + 20px); max-height: 50px; font-size: 1.5em; width: 50px; }
 
 .c4g-beach-header button:hover:before {
   font-size: 1.3em;

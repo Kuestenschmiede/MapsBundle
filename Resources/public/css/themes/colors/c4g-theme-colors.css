@@ -685,6 +685,11 @@ background: var(--pu-main-color);
 
 .c4g-popup-container.c4g-beach .c4g-beach-options, .c4g-popup-container.c4g-beach a, .c4g-popup-container.c4g-beach button { color: var(--pu-font-color)!important; }
 
-.c4g-popup-container.c4g-beach .c4g-beach-header.c4g-beach-header button:nth-child(2n + 1) { border-right: 1px solid var(--pu-font-color); }
+.c4g-popup-container.c4g-beach .c4g-beach-header.c4g-beach-header button:nth-child(2n + 1):not(:first-child)
+{ border-right: 1px solid var(--pu-font-color); }
 
+.c4g-popup-route-wrapper button:first-child {
+  border-right: 1px solid var(--pu-font-color);
+  border-left: 1px solid var(--pu-font-color);
+}
 /*-------------*/

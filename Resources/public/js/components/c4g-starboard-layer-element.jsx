@@ -150,9 +150,9 @@ export class C4gStarboardLayerElement extends Component {
             if ((layers[this.props.id].childs && layers[this.props.id].childs.length > 0)
                 || (layers[this.props.id].content && layers[this.props.id].content[0] && layers[this.props.id].content[0].combinedJSON))
             {
-                span = <span className={cssConstants.ICON} onMouseUp={(event) => spanClick(event)}/>;
+                span = <span className={cssConstants.ICON} onMouseUp={(event) => spanClick(event)} onTouchStart={(event) => spanClick(event)}/>;
             } else {
-                span = <span className={""} onMouseUp={(event) => spanClick(event)}/>;
+                span = <span className={""} onMouseUp={(event) => spanClick(event)} onTouchStart={(event) => spanClick(event)}/>;
             }
         }
         let cssClass = scope.state.active ? cssConstants.ACTIVE : cssConstants.INACTIVE;
@@ -164,7 +164,7 @@ export class C4gStarboardLayerElement extends Component {
         return (
             <li className={openClose}>
                 {span}
-                <a className={cssClass} onMouseUp={(event) => this.layerClick(event)}>{this.props.name}</a>
+                <a className={cssClass} onMouseUp={(event) => this.layerClick(event)} onTouchStart={(event) => this.layerClick(event)}>{this.props.name}</a>
                 <ul>
                     {Object.keys(objChilds).map(item => (
                         <C4gStarboardLayerElement key={item} pid={this.props.id} objStates={objChilds}
