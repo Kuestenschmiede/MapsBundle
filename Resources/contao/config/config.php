@@ -13,8 +13,7 @@
 
 $GLOBALS['con4gis']['maps']['installed'] = true;
 
-array_insert($GLOBALS['BE_MOD'], array_search('con4gis_core', array_keys($GLOBALS['BE_MOD'])) + 1,
-    ['con4gis_maps' => [
+$GLOBALS['BE_MOD']['con4gis'] = array_merge($GLOBALS['BE_MOD']['con4gis'], [
         'c4g_map_baselayers' =>
         [
             'tables' => ['tl_c4g_map_baselayers', 'tl_c4g_map_overlays'],
@@ -51,11 +50,11 @@ array_insert($GLOBALS['BE_MOD'], array_search('con4gis_core', array_keys($GLOBAL
         [
             'tables' => ['tl_c4g_map_filters']
         ]
-    ]]
+    ]
 );
 
 if(TL_MODE == "BE") {
-    $GLOBALS['TL_CSS'][] = '/bundles/con4gismaps/css/backend.css';
+    $GLOBALS['TL_CSS'][] = '/bundles/con4gismaps/css/con4gis.css';
 }
 
 /**
