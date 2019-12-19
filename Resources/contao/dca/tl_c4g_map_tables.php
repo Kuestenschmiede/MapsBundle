@@ -45,8 +45,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             [
             'fields'                  => ['name','tableSource'],
             'format'                  => '<span style="color:#303E4D"><b>%s</b></span> -> %s',
-            'label_callback'          =>['tl_c4g_map_tables', 'getLabel'],
-                'showColumns'         => true
+            'label_callback'          => ['tl_c4g_map_tables', 'getLabel'],
+            'showColumns'             => true
             ],
         'global_operations' =>
             [

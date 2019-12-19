@@ -11,6 +11,7 @@
  *
  */
 
-#tl_navigation .tl_level_1_group .group-con4gis_maps {
-    background: url("../../con4giscore/images/con4gis.svg") 7px center no-repeat;
+
+li .c4g_map_baselayers, li .c4g_map_locstyles, li .c4g_map_themes, li .c4g_map_profiles, li .c4g_maps, li .c4g_map_tables, li .c4g_map_filters {
+  display: none !important;
 }
