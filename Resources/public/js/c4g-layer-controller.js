@@ -35,6 +35,7 @@ import ol_layer_AnimatedCluster from "ol-ext/layer/AnimatedCluster";
 import proj4 from 'proj4';
 import {register} from 'ol/proj/proj4';
 import Projection from 'ol/proj/Projection';
+import Collection from 'ol/Collection';
 const osmtogeojson = require('osmtogeojson');
 
 export class C4gLayerController {
@@ -57,6 +58,8 @@ export class C4gLayerController {
       dataType: this.mapController.data.jsonp ? "jsonp" : "json"
 
     }).done(function (data) {
+      self.objLayers = data.layer;
+      self.mapController.setObjLayers(self.objLayers);
       self.rawData = data;
       self.addLayers(data.layer, data.foreignLayers);
       self.proxy.layers_loaded = true;
@@ -850,8 +853,10 @@ export class C4gLayerController {
             contentFeatures.push(contentFeature);
 
             if (i+1 === this.arrLayers[itemUid].content.length) {
+              let masterFeature = new Collection(contentFeatures);
+
               vectorSource = new VectorSource({
-                features: contentFeatures,
+                features: masterFeature,
                 projection: 'EPSG:3857',
                 format: new GeoJSON(),
               });
@@ -907,6 +912,9 @@ export class C4gLayerController {
                 var missingStyles = [];
                 var unstyledFeatures = [];
                 for (let j = 0; j < features.length; j += 1) {
+                  if (features[j].get('id')) {
+                    features[j].setId(features[j].get('id'));
+                  }
                   if (features[j].get('styleId')) {
                     if (self.proxy.locationStyleController.arrLocStyles[features[j].get('styleId')] && self.proxy.locationStyleController.arrLocStyles[features[j].get('styleId')].style) {
                       features[j].setStyle(self.proxy.locationStyleController.arrLocStyles[features[j].get('styleId')].style);
@@ -916,7 +924,6 @@ export class C4gLayerController {
                     }
                   }
                 }
-
                 vectorStyle = self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle] && self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style;
 
                 if (missingStyles.length > 0) {
@@ -973,7 +980,26 @@ export class C4gLayerController {
         layers: layers
       });
       this.arrLayers[itemUid].vectorLayer = layerGroup;
+      let singleLayer = this.objLayers.find(element => element.id === itemUid);
+      let singleLayerIndex = this.objLayers.findIndex(element => element.id === itemUid);
+      this.objLayers[singleLayerIndex].vectorLayer = layerGroup;
+      self.mapController.setObjLayers(this.objLayers);
       self.mapController.map.addLayer(layerGroup);
+      // vectorSource = new VectorSource({
+      //   features: window.OLCOLLECTION[0],
+      //   projection: 'EPSG:3857',
+      //   format: new GeoJSON()
+      // });
+      // clusterSource = new Cluster({
+      //   distance: 40,
+      //   zoom: contentData.cluster_zoom,
+      //
+      //   //threshold: 2, //minimum element count
+      //   source: vectorSource
+      // });
+      //
+      // vectorLayer = utils.getVectorLayer(clusterSource, vectorStyle, self.arrLayers[itemUid]);
+      // self.mapController.map.addLayer(vectorLayer);
       //self.combine(self);
 
     }

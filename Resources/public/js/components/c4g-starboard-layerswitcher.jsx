@@ -20,17 +20,10 @@ export class StarboardLayerswitcher extends Component {
   constructor(props) {
     super(props);
     const scope = this;
-    this.state = {
-      initialized: false,
-      layers: [],
-      layerStates: {}
-    };
-    let funcHook = function (itemData) {
-      itemData = itemData.layerIds;
-      let arrLayers = [];
-      let objLayerStates = {};
-      for (let i = 0; i < scope.props.mapController.proxy.layerController.rawData.layer.length; i++) {
-        let layer = scope.props.mapController.proxy.layerController.rawData.layer[i];
+    let objLayerStates = {};
+    for (let i = 0; i < props.objLayers.length; i++) {
+      if (props.objLayers.hasOwnProperty(i)) {
+        let layer = props.objLayers[i];
         let childs = false;
         if (layer.childs.length > 0) {
           childs = scope.addChildStates(layer);
@@ -44,85 +37,121 @@ export class StarboardLayerswitcher extends Component {
           childs: childs
         };
       }
-      let tempLayers = scope.props.mapController.proxy.layerController.arrLayers;
-      for (let i = 0; i < itemData.length; i++) {
-        arrLayers.push(tempLayers[itemData[i]]);
-      }
-      if (scope.updater.isMounted(scope)) {
-        scope.setState({
-          "layers": arrLayers,
-          "layerStates": objLayerStates
-        });
-      }
-      else{
-        scope.state.layers = arrLayers;
-        scope.state.layerStates = objLayerStates;
-      }
+    }
+    this.state = {
+      initialized: false,
+      layerStates: objLayerStates
     };
-    window.c4gMapsHooks.proxy_layer_drawn.push(funcHook)
-
-  };
-
-  componentDidMount() {
-    if (this.props.open) {
-      window.setTimeout(() => this.props.openfunc(), 500);
-    }
   }
+  // componentDidUpdate() {
+  //   let objLayerStates = this.state.layerStates;
+  //   this.didUpdate = false;
+  //   for (let i = 0; i < this.props.objLayers.length; i++) {
+  //     if (this.props.objLayers.hasOwnProperty(i)) {
+  //       let layer = this.props.objLayers[i];
+  //       if (!this.state.layerStates[layer.id]) {
+  //         this.didUpdate = true;
+  //         let childs = false;
+  //         if (layer.childs.length > 0) {
+  //           childs = this.addChildStates(layer);
+  //         }
+  //         else if (layer.content && layer.content.length > 0) {
+  //           childs = this.addContentChildStates(layer)
+  //         }
+  //         objLayerStates[layer.id] = {
+  //           name: layer.name,
+  //           hide: !!layer.hide,
+  //           childs: childs
+  //         };
+  //       }
+  //     }
+  //     // if (this.updater.isMounted(this)) {
+  //     //   this.setState({
+  //     //     "layers": arrLayers,
+  //     //     "layerStates": objLayerStates
+  //     //   });
+  //     // }
+  //     // else{
+  //     //   scope.state.layers = arrLayers;
+  //     //   scope.state.layerStates = objLayerStates;
+  //     // }
+  //   };
+  //   // window.c4gMapsHooks.proxy_layer_drawn.push(funcHook)
+  //
+  // };
 
-  addChildStates (layerElement) {
-    let objChildStates = {};
-    for (let i = 0; i < layerElement.childs.length; i++) {
-      let childs = false;
-      if (layerElement.childs[i].childs && layerElement.childs[i].childs.length > 0) {
-        childs = this.addChildStates(layerElement.childs[i]);
-      }
-      else if (layerElement.childs[i].content && layerElement.childs[i].content.length > 0) {
-        childs = this.addContentChildStates(layerElement.childs[i])
-      }
-      objChildStates[layerElement.childs[i].id] = {
-        name: layerElement.childs[i].name,
-        hide: !!layerElement.childs[i].hide,
-        childs: childs,
-        content: layerElement.childs[i].content[0],
-        contentFeature : false
-      };
-    }
-    return objChildStates;
-  };
-  addContentChildStates (layerElement) {
-    let objChildStates = {};
-    if (layerElement.content[0].combinedJSON) {
-      let vectorLayer = this.props.mapController.proxy.layerController.arrLayers[layerElement.id].vectorLayer;
-      let vectorSource = this.getSource(vectorLayer);
-      if (vectorSource) {
-        for (let i = 0; i < layerElement.content[0].data.features.length; i++) {
-          let feature = layerElement.content[0].data.features[i];
-          let olFeature = vectorSource.getFeatureById(feature.properties.id);
-          objChildStates[feature.properties.id] = {
-            name: feature.properties.title,
-            hide: !!layerElement.hide,
-            childs: false,
-            content: false,
-            contentFeature : olFeature
-          }
-        }
-      }
-    }
+  // componentDidMount() {
+  //   if (this.props.open) {
+  //     // ToDo there must be a better solution to this...
+  //     window.setTimeout(() => this.props.openfunc(), 500);
+  //   }
+  //   if (this.didUpdate) {
+  //     this.setState({layerStates: objLayerStates});
+  //   }
+  // }
 
-    return objChildStates;
-  };
+  //
+  // addChildStates(layerElement) {
+  //   let objChildStates = {};
+  //   for (let i = 0; i < layerElement.childs.length; i++) {
+  //     let childs = false;
+  //     if (layerElement.childs[i].childs && layerElement.childs[i].childs.length > 0) {
+  //       childs = this.addChildStates(layerElement.childs[i]);
+  //     }
+  //     else if (layerElement.childs[i].content && layerElement.childs[i].content.length > 0) {
+  //       childs = this.addContentChildStates(layerElement.childs[i])
+  //     }
+  //     objChildStates[layerElement.childs[i].id] = {
+  //       name: layerElement.childs[i].name,
+  //       hide: !!layerElement.childs[i].hide,
+  //       childs: childs,
+  //       content: layerElement.childs[i].content[0],
+  //       contentFeature : false
+  //     };
+  //   }
+  //   return objChildStates;
+  // };
+  // addContentChildStates(layerElement) {
+  //   let objChildStates = {};
+  //   if (layerElement.content[0].combinedJSON) {
+  //     let vectorLayer = layerElement.vectorLayer
+  //     if (vectorLayer) {
+  //       for(let j = 0; j < layerElement.content.length; j++) {
+  //         for (let i = 0; i < layerElement.content[j].data.features.length; i++) {
+  //           let feature = layerElement.content[j].data.features[i];
+  //           let vectorSource = this.getSource(vectorLayer, j);
+  //           console.log(vectorSource.getFeatures());
+  //           let olFeature = vectorSource.getFeatureById(feature.properties.id);
+  //           objChildStates[feature.properties.id] = {
+  //             name: feature.properties.title,
+  //             hide: !!layerElement.hide,
+  //             childs: false,
+  //             content: false,
+  //             contentFeature : olFeature,
+  //             identifier: j
+  //           }
+  //         }
+  //       }
+  //
+  //     }
+  //   }
+  //
+  //   return objChildStates;
+  // };
 
-  getSource = (layer) => {
+  getSource = (layer, identifier = 0) => {
     if (layer.getSource && layer.getSource()) {
-      return layer.getSource();
+      let source = layer.getSource();
+      if (source.getSource && source.getSource()) {
+        return this.getSource(source);
+      }
+      else {
+        return source;
+      }
     }
     else if (layer.getLayers && layer.getLayers()) {
       let layers = layer.getLayers().getArray();
-      for (let singleLayer in layers) {
-        if(layers.hasOwnProperty(singleLayer)) {
-          return this.getSource(layers[singleLayer]);
-        }
-      }
+      return this.getSource(layers[identifier])
     }
   };
 
@@ -150,11 +179,11 @@ export class StarboardLayerswitcher extends Component {
           <div className={cssConstants.STARBOARD_CONTENT_LAYERSWITCHER}>
             <div className={cssConstants.STARBOARD_LAYERTREE}>
               <ul>
-                {this.state.layers.map(item => {
-                  if (item.pid === this.props.mapController.data.id) //skip childs of layers
-                    return <C4gStarboardLayerElement key={item.id} id={item.id} mapController={this.props.mapController}
-                                                     objStates={this.state.layerStates} parentCallback={this.callbackFunction}
-                                                     name={item.name} collapsed={!(parseInt(item.initial_opened, 10))}
+                {this.props.objLayers.map((item, id) => {
+                  // if (item.pid === this.props.mapController.data.id) //skip childs of layers
+                    return <C4gStarboardLayerElement key={id} mapController={this.props.mapController}
+                                                     parentCallback={this.callbackFunction}
+                                                     layer={item}
                                                       fnResize={this.props.fnResize}/>;
                   return null;
                 })}

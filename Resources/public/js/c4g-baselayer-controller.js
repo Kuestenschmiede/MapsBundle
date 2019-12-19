@@ -505,16 +505,16 @@ export class C4gBaselayerController {
         }
       }
     }
-    let starboard = this.proxy.options.mapController.controls.starboard;
-    if (this.proxy.options.mapController.data.layerswitcher.enable) {
-      if (starboard && starboard.initialized) {
-        if (!starboard.plugins.layerswitcher) {
-          starboard.plugins.layerswitcher = new Layerswitcher(starboard);
-        }
-        starboard.plugins.layerswitcher.loadContent();
-        // starboard.plugins.layerswitcher.activate();
-      }
-    }
+    // let starboard = this.proxy.options.mapController.controls.starboard;
+    // if (this.proxy.options.mapController.data.layerswitcher.enable) {
+    //   if (starboard && starboard.initialized) {
+    //     if (!starboard.plugins.layerswitcher) {
+    //       starboard.plugins.layerswitcher = new Layerswitcher(starboard);
+    //     }
+    //     starboard.plugins.layerswitcher.loadContent();
+    //     // starboard.plugins.layerswitcher.activate();
+    //   }
+    // }
 
   }
 
