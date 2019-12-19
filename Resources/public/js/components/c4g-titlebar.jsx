@@ -33,8 +33,8 @@ export class Titlebar extends Component {
     return (
       <div className={this.props.wrapperClass}>
         <span className={this.props.headerClass}>{this.props.header}</span>
-        {detailButton}
         {closeButton}
+        {detailButton}
         {this.props.children}
       </div>
     );
