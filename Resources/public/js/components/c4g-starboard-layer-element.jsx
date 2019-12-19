@@ -103,9 +103,11 @@ export class C4gStarboardLayerElement extends Component {
             }
         }
     };
+
     removeElement = (elementId) => {
 
     }
+
     layerClick = (e) => {
         const scope = this;
         e.stopPropagation();
@@ -131,9 +133,12 @@ export class C4gStarboardLayerElement extends Component {
         }
 
     };
+
     render() {
         const scope = this;
         let span = null;
+        let bodyClass = document.getElementsByTagName("body")[0].className;
+        let isMobile = bodyClass.includes("phone") || bodyClass.includes("tablet") || bodyClass.includes("ios");
         if (this.props.objStates && this.props.objStates[this.props.id] && this.props.objStates[this.props.id].childs) {
             let spanClick = function(e) {
                 e.stopPropagation();
@@ -146,13 +151,19 @@ export class C4gStarboardLayerElement extends Component {
                 }
                 scope.props.fnResize();
             };
+            let className = "";
             let layers = this.props.mapController.proxy.layerController.arrLayers;
             if ((layers[this.props.id].childs && layers[this.props.id].childs.length > 0)
                 || (layers[this.props.id].content && layers[this.props.id].content[0] && layers[this.props.id].content[0].combinedJSON))
             {
-                span = <span className={cssConstants.ICON} onMouseUp={(event) => spanClick(event)}/>;
+                className = cssConstants.ICON;
             } else {
-                span = <span className={""} onMouseUp={(event) => spanClick(event)}/>;
+                className = "";
+            }
+            if (isMobile) {
+                span = <span className={className} onTouchStart={(event) => spanClick(event)}/>;
+            } else {
+                span = <span className={className} onMouseUp={(event) => spanClick(event)}/>;
             }
         }
         let cssClass = scope.state.active ? cssConstants.ACTIVE : cssConstants.INACTIVE;
@@ -161,10 +172,16 @@ export class C4gStarboardLayerElement extends Component {
         }
         let openClose = this.state.collapsed ? cssConstants.CLOSE : cssConstants.OPEN;
         let objChilds = this.props.objStates[this.props.id].childs;
+        let anchor = "";
+        if (isMobile) {
+            anchor = <a className={cssClass} onTouchStart={(event) => this.layerClick(event)}>{this.props.name}</a>;
+        } else {
+            anchor = <a className={cssClass} onMouseUp={(event) => this.layerClick(event)}>{this.props.name}</a>
+        }
         return (
             <li className={openClose}>
                 {span}
-                <a className={cssClass} onMouseUp={(event) => this.layerClick(event)}>{this.props.name}</a>
+                {anchor}
                 <ul>
                     {Object.keys(objChilds).map(item => (
                         <C4gStarboardLayerElement key={item} pid={this.props.id} objStates={objChilds}

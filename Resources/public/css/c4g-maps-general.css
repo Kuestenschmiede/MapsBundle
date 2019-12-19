@@ -1285,4 +1285,15 @@ div div.c4g-popup-wrapper.c4g-beach {
   font-size: 1.3em;
 }
 
+/**
+ * mobile
+ */
+@media(max-height: 768px){
+  .c4g-beach-content { max-height: 500px !important; }
+}
+@media(max-height: 568px){
+  .c4g-beach-content { max-height: 300px !important; }
+}
+
+
 /*-----------------------------------------*/
