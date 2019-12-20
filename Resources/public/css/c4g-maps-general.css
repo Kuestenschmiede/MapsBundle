@@ -1181,10 +1181,10 @@ button.c4g-geosearch-options:before {
 .c4g-beach {
   position: absolute;
   bottom: 0;
-  left:48px;
-  right: 48px;
+  left:calc(42px + .4em);
+  right: calc(42px + .4em);
   margin: auto;
-  width: 50%;
+  width: auto;
   z-index: 60;
 }
 
@@ -1242,10 +1242,6 @@ button.c4g-geosearch-options:before {
 
 /*------------------------------------*/
 /*--------------PopUp-----------------*/
-
-.c4g-beach {
-  width: auto;
-}
 
 .c4g-beach-content.c4g-popup-content {
   padding: 0 20px 25px 20px;
