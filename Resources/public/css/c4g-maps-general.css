@@ -1213,7 +1213,7 @@ button.c4g-geosearch-options:before {
   transition: .1s;
 }
 
-.c4g-geosearch-results .searchResultButton:hover:before { display: block; }
+.c4g-geosearch-results .searchResultButton:hover:before { margin-left: 0; }
 
 .c4g-geosearch-results .searchResultButton:hover { padding-left: 20px; }
 
@@ -1221,11 +1221,13 @@ button.c4g-geosearch-options:before {
   content: "\f0da";
   font-family: "Font Awesome 5 Free";
   font-weight: bold;
-  position: absolute;
-  font-size: 2.5em;
-  margin-top: -1px;
-  margin-left:-15px;
-  display: none;
+  position: relative;
+  font-size: 25px;
+  margin-left: -20px;
+  margin-right: 10px;
+  display: inline;
+  top: 4px;
+  transition: .3s;
 }
 
 @media(max-width: 1100px){
