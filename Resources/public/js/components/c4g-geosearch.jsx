@@ -478,7 +478,7 @@ export class GeoSearch extends Component {
 
       markerSource = new VectorSource();
       let style = this.config.resultStyle;
-      if (!style) {
+      if (!style || style === "0") {
         style = [new Style({
           image: new Circle({
             radius: 7,
