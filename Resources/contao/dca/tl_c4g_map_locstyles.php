@@ -70,13 +70,19 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
             ],
         'global_operations' =>
             [
-            'all' =>
-                [
-                'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
-                'href'                => 'act=select',
-                'class'               => 'header_edit_all',
-                'attributes'          => 'onclick="Backend.getScrollOffset();" accesskey="e"'
-                ]
+            'all' => [
+                    'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
+                    'href'                => 'act=select',
+                    'class'               => 'header_edit_all',
+                    'attributes'          => 'onclick="Backend.getScrollOffset();" accesskey="e"'
+                ],
+                'back' => [
+                    'href'                => 'key=back',
+                    'class'               => 'header_back',
+                    'button_callback'     => ['\con4gis\CoreBundle\Classes\Helper\DcaHelper', 'back'],
+                    'icon'                => 'back.svg',
+                    'label'               => &$GLOBALS['TL_LANG']['MSC']['backBT'],
+                ],
             ],
         'operations' =>
             [
