@@ -1,0 +1,4 @@
+<!-- indexer::stop -->
+<div id="<?php echo 'c4g_search_' . $this->objSettings['moduleId'] ?>"></div>
+<script>window.objSettings=<?php echo json_encode($this->objSettings) ?></script>
+<!-- indexer::continue -->

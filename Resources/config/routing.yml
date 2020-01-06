@@ -3,6 +3,7 @@ baselayer_service:
     controller: con4gis\MapsBundle\Controller\BaselayerController::baseLayerAction
     methods: GET
 
+
 baselayer_tile_service:
     path: /con4gis/baseLayerTileService/{baseLayerId}/{z}/{x}/{y}
     defaults:
@@ -15,6 +16,11 @@ baselayer_tile_service:
 layer_service:
     path: /con4gis/layerService/{mapId}/{lang}
     controller: con4gis\MapsBundle\Controller\LayerController::layer
+    methods: GET
+
+filter_service:
+    path: /con4gis/filterService/{profileId}/{lang}
+    controller: con4gis\MapsBundle\Controller\FilterController::filter
     methods: GET
 
 layer_content_service:
@@ -97,5 +103,4 @@ geopicker_service:
 
 controllers:
     resource: '../../Controller/'
-    type: annotation
-
+    type:     annotation

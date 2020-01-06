@@ -19,10 +19,11 @@ $GLOBALS['TL_LANG']['MOD']['c4g_map_baselayers'] 	= ['Base layers', 'Maintain co
 $GLOBALS['TL_LANG']['MOD']['c4g_map_locstyles'] 	= ['Location styles', 'Maintain con4gis-Maps location styles.'];
 $GLOBALS['TL_LANG']['MOD']['c4g_map_profiles'] 		= ['Map profiles', 'Maintain con4gis-Maps map profiles.'];
 $GLOBALS['TL_LANG']['MOD']['c4g_map_themes'] 		= ['Map layouts', 'Maintain con4gis-Maps map layouts.'];
-$GLOBALS['TL_LANG']['MOD']['c4g_map_tables']        = ['Map structures: source tables', 'Enable custom data connections'];
-$GLOBALS['TL_LANG']['MOD']['con4gis_maps']          = ['con4gis '.$GLOBALS['con4gis']['version'] . ' - Mapping tools', 'con4gis Map modules.'];
+$GLOBALS['TL_LANG']['MOD']['c4g_map_tables']        = ['Source tables', 'Enable custom data connections for your map structures.'];
+$GLOBALS['TL_LANG']['MOD']['c4g_map_filters']       = ['Map filters', 'Maintain map filters.'];
 
 /**
  * Frontend modules
  */
 $GLOBALS['TL_LANG']['FMD']['c4g_maps'] 				= ['Map (con4gis];', 'Integrate an OpenLayers map with con4gis-Maps.'];
+$GLOBALS['TL_LANG']['FMD']['c4g_search'] 			= ['External map search (con4gis)', 'Integrate a search with con4gis-Maps that redirects to the map.'];

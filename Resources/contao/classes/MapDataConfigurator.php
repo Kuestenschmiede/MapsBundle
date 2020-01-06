@@ -374,6 +374,8 @@ class MapDataConfigurator
                 $mapData['layerswitcher']['label'] = \Contao\Controller::replaceInsertTags($profile->layerswitcher_label);
                 $mapData['layerswitcher']['filter'] = $profile->layer_filter;
             }
+            $mapData['filterDiv'] = $profile->filter_div;
+            $mapData['filterHandling'] = $profile->filterHandling;
 
             // map-tools
             //
@@ -424,13 +426,19 @@ class MapDataConfigurator
             // geosearch
             //
             if ($profile->geosearch) {
+                $mapData['geosearch']['headline'] = $profile->geosearch_headline;
                 $mapData['geosearch']['geosearch_engine'] = $profile->geosearch_engine;
                 $mapData['geosearch']['enable'] = ($profile->geosearch && $profile->geosearch_show);
                 if ($profile->geosearch_customengine_attribution) {
                     $mapData['geosearch']['custom_attribution'] = \Contao\Controller::replaceInsertTags($profile->geosearch_customengine_attribution);
                 }
                 $mapData['geosearch']['results'] = $profile->geosearch_results;
+                $mapData['geosearch']['result_count'] = $profile->geosearch_result_count;
+                $mapData['geosearch']['results_headline'] = $profile->geosearch_results_headline;
+                $mapData['geosearch']['result_locstyle'] = $profile->geosearch_result_locstyle;
                 $mapData['geosearch']['div'] = $profile->geosearch_div;
+                $mapData['geosearch']['div_results'] = $profile->geosearch_results_div;
+                $mapData['geosearch']['placeholder'] = $profile->geosearch_placeholder;
                 $mapData['geosearch']['searchzoom'] = $profile->geosearch_zoomto;
                 $mapData['geosearch']['zoombounds'] = $profile->geosearch_zoombounds;
                 $mapData['geosearch']['animate'] = $profile->geosearch_animate;
@@ -444,6 +452,12 @@ class MapDataConfigurator
                     $mapData['geosearch']['searchKey'] = $keyForward['key'];
                     $mapData['geosearch']['reverseKey'] = ((array) C4GUtils::getKey($objSettings, '3', "", false))['key'];
                     $mapData['geosearch']['url'] = rtrim($objSettings->con4gisIoUrl, "/") . "/";
+                    $mapData['geosearch']['params'] = [];
+                    if($profile->geosearchParams){
+                        foreach(unserialize($profile->geosearchParams) as $geosearchParam){
+                            $mapData['geosearch']['params'] = array_merge($mapData['geosearch']['params'], [$geosearchParam['keys'] => $geosearchParam['params']]);
+                        }
+                    }
                 }
 
                 switch ($profile->geosearch_engine) {
@@ -522,6 +536,7 @@ class MapDataConfigurator
             $mapData['hover_popups'] = $profile->hover_popups;
             $mapData['hover_popups_stay'] = $profile->hover_popups_stay;
             $mapData['popupHandling'] = $profile->popupHandling;
+            $mapData['openDirectly'] = $profile->openDirectly;
 
         }
 

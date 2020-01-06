@@ -11,7 +11,7 @@
  * @link       https://www.con4gis.org
  */
 
-$GLOBALS['TL_DCA']['tl_c4g_settings']['palettes']['default'] .= '{c4g_maps_legend},disabledC4gMapObjects,defaultprofile,caching;';
+$GLOBALS['TL_DCA']['tl_c4g_settings']['palettes']['default'] .= '{c4g_maps_legend:hide},disabledC4gMapObjects,defaultprofile,caching;';
 
 /**
  * Add fields
@@ -43,7 +43,11 @@ $GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['defaultprofile'] =
         'includeBlankOption'=>true, 'blankOptionLabel'=>&$GLOBALS['TL_LANG']['tl_c4g_maps']['default_profile'],
         'submitOnChange' => true, 'alwaysSave' => true],
     'relation'                => ['type'=>'belongsTo', 'load'=>'eager'],
-    'sql'                     => "int(10) unsigned NOT NULL default '0'"
+    'sql'                     => "int(10) unsigned NOT NULL default '0'",
+    'xlabel' => array
+    (
+        array('tl_settings_c4g_maps', 'profilesLink')
+    )
 
     ];
 //$GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['defaultData'] = [
@@ -80,4 +84,10 @@ class tl_settings_c4g_maps
 
         return $tables;
     }
+
+    public function profilesLink(Contao\DataContainer $dc)
+    {
+        return ' <a href="contao/main.php?do=c4g_map_profiles&amp;table=tl_c4g_map_profiles&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . REQUEST_TOKEN . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_c4g_settings']['editProfiles']) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_c4g_settings']['editProfiles'])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
+    }
+
 }

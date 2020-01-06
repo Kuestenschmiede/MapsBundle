@@ -17,6 +17,8 @@ $GLOBALS['TL_LANG']['tl_c4g_settings']['caching'] = ["Caching aktivieren", "Cach
 $GLOBALS['TL_LANG']['tl_c4g_settings']['defaultprofile'] = ["Standardprofil", "Wählen Sie ein Kartenprofil aus, welches als Standardprofil genutzt werden soll. Das Profil wird dann geladen, wenn kein anderes Profil gesetzt wurde. Zum Beispiel für den Geopicker."];
 $GLOBALS['TL_LANG']['tl_c4g_settings']['defaultData'] = ["Beispieldatensätze generieren", "Wählen Sie, ob Beispieldatensätze generiert werden sollen."];
 
+$GLOBALS['TL_LANG']['tl_c4g_settings']['editProfiles'] = ['Kartenprofile bearbeiten'];
+
 /** References */
 $GLOBALS['TL_LANG']['tl_c4g_settings']['references']['caching']['baseLayerService'] ='Basiskarten';
 $GLOBALS['TL_LANG']['tl_c4g_settings']['references']['caching']['layerService'] ='Kartenstrukturen';

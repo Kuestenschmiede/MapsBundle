@@ -72,8 +72,8 @@ class LayerController extends BaseController
         $modifiedData = $this->responseData;
         foreach ($modifiedData['layer'] as $key => $layer) {
             $modifiedData['layer'][$key] = $this->addCustomLogic($layer);
+//            $modifiedData['layer'][$key] = $layerService->forceChildsInContent($modifiedData['layer'][$key]);
         }
-        
         $response->setData($modifiedData);
         
         return $response;

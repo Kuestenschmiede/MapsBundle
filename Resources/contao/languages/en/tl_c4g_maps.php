@@ -81,7 +81,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['split_geojson'] = array('Split GeoJson','Cli
 $GLOBALS['TL_LANG']['tl_c4g_maps']['geojson_attributes'] = array('Geojson attributes','Comma-seperated list of all attributes of the geojson. the first one is used as name in starboard.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['geojson_zoom'] = array('Zoombutton for geoJson','Adds a button to zoom to the feature. It replaces the function to enable/disable the feature.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['data_projection'] = array('Projection');
-$GLOBALS['TL_LANG']['tl_c4g_maps']['ovp_request'] = array('Request to Overpass API (XML-,QL-Format)', 'Request is sent via AJAX through a proxy (C4GOverpass.php) to the Overpass API. Format: see  <a href="https://www.overpass-api.de">www.overpass-api.de</a>.');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['ovp_request'] = array('Request to Overpass API (XML-,QL-Format)', 'Request is sent via AJAX through a proxy (C4GOverpass.php) to the Overpass API. Format: see  <a href="https://www.overpass-api.de" rel="noopener" target="_blank">www.overpass-api.de</a>.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['ovp_bbox_limited'] = array('Request to Overpass API bounding box limited.', 'Sends the request on change of the displayed area (bounding box). The request itself has to contain the placeholder "(bbox)", which will be replaced by a "bbox-query" tag on runtime.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['data_forcenodes'] = array('Convert ways to nodes', 'Converts OSM-ways to nodes. Especially useful when POIs are inside the OSM data, some represented as ways (building shape), others as nodes.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['data_additionalgeometries'] = array('Show additional Geometries', 'OSM-data sometimes has additional geometries, such as "entries". Check this option if you want to display them, too.');
@@ -118,7 +118,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['hover_location'] = array('Hover on locations
 $GLOBALS['TL_LANG']['tl_c4g_maps']['hover_style'] = array('Location style on hover','Pick the location style to show on hover.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popupType'] = array("Popup type","How to generate popup informations");
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popupTemplate'] = array("Popup Template","Load popup informations from template");
-$GLOBALS['TL_LANG']['tl_c4g_maps']['awesomeicon'] = array('Icon for the tab', 'Here you can enter a Unicode that will be converted to an Awesome-Font icon (<a href="https://fontawesome.com/icons/">fontawesome.com/icons/</a>).');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['awesomeicon'] = array('Icon for the tab', 'Here you can enter a Unicode that will be converted to an Awesome-Font icon (<a href="https://fontawesome.com/icons/" rel="noopener" target="_blank">fontawesome.com/icons/</a>).');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['hide_when_in_tab'] = array("Hide if in Starboard tab", "If you set this checkbox, the layer will not be displayed in the Starboard if it is in its own Starboard tab. This is useful if you do not want to display the parent element of an existing structure level in the tab.");
 $GLOBALS['TL_LANG']['tl_c4g_maps']['cssClass'] = array("CSS class", "css class for starboard listelements");
 
@@ -133,6 +133,11 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['cut']    = array('Move map structure item', 
 $GLOBALS['TL_LANG']['tl_c4g_maps']['delete'] = array('Delete map structure item', 'Delete map structure item ID %s');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['toggle'] = array('Publish/unpublish map structure item', 'Publish/unpublish map structure item ID %s');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['show']   = array('Details', 'Show details of map structure item ID %s');
+
+//xlabel buttons
+$GLOBALS['TL_LANG']['tl_c4g_maps']['editBaselayers'] = ['Edit baselayers'];
+$GLOBALS['TL_LANG']['tl_c4g_maps']['editLocstyles'] = ['Edit locstyles'];
+$GLOBALS['TL_LANG']['tl_c4g_maps']['editProfiles'] = ['Edit profiles'];
 
 /**
  * Misc

@@ -83,7 +83,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['geojson_zoom'] = array('Zoombutton für GeoJ
 $GLOBALS['TL_LANG']['tl_c4g_maps']['data_projection'] = array('Koordinatensystem');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['data_forcenodes'] = array('Flächen und Wege in Knoten umwandeln', 'Generiert aus allen Flächen und Wegen in den OSM-Daten Knoten. Das ist oft sinnvoll, wenn die generierten Daten Gebäudeumrisse o.ä. enthalten.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['data_additionalgeometries'] = array('Zusätzliche Geometrien anzeigen', 'OSM-Daten liefern manchmal zusätzliche Geometrien, wie z.B. "Eingänge" mit. Mit dieser Option werden diese Daten ebenfalls auf der Karte angezeigt.');
-$GLOBALS['TL_LANG']['tl_c4g_maps']['ovp_request'] = array('Anfrage an Overpass API (XML-,QL-Format)', 'Diese Anfrage wird via AJAX browserseitig über einen Proxy (C4GOverpass.php) an die Overpass API geschickt. Doku zum Format: <a href="https://www.overpass-api.de">www.overpass-api.de</a>.');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['ovp_request'] = array('Anfrage an Overpass API (XML-,QL-Format)', 'Diese Anfrage wird via AJAX browserseitig über einen Proxy (C4GOverpass.php) an die Overpass API geschickt. Doku zum Format: <a href="https://www.overpass-api.de" rel="noopener" target="_blank">www.overpass-api.de</a>.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['ovp_bbox_limited'] = array('Anfrage an Overpass API auf den angezeigten Kartenbereich (BBOX) beschränken.', 'Sendet die Anfrage immer, wenn sich der Kartenausschnitt durch Benutzereingaben ändert. In der Anfrage muss an geeigneter Stelle der Platzhalter "(bbox)" eingetragen sein. Dieser wird dann durch ein "bbox-query"-Tag ersetzt.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['data_layername'] = array('Bezeichnung im Starboard', 'Falls Sie die Daten dieser Ebene im Starboard schaltbar machen möchten, dann geben Sie hier den Namen ein, der im Starboard angezeigt werden soll.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['hide_child'] = array('Kinder im Starboard ausblenden', 'Untergeordnete Kartenstrukturelemente werden im Starboard ausgeblendet. Sie werden als Kinder dieses Elements aktivert und deaktiviert.');
@@ -119,7 +119,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['hover_location'] = array('Hover-Effekt bei L
 $GLOBALS['TL_LANG']['tl_c4g_maps']['hover_style'] = array('Lokationsstil bei Hover-Effekt','Lokationsstil, der beim Hovern über die Lokation angezeigt werden soll.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popupType'] = array("Art der Popup-Generierung","Art der Popup-Generierung");
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popupTemplate'] = array("Popup Template","Popupinformationen aus einem Template laden");
-$GLOBALS['TL_LANG']['tl_c4g_maps']['awesomeicon'] = array('Icon für den Reiter', 'Hier können Sie einen Unicode eingeben, der in ein Awesome-Font Icon umgewandelt wird (<a href="https://fontawesome.com/icons/">fontawesome.com/icons/</a>).');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['awesomeicon'] = array('Icon für den Reiter', 'Hier können Sie einen Unicode eingeben, der in ein Awesome-Font Icon umgewandelt wird (<a href="https://fontawesome.com/icons/" rel="noopener" target="_blank">fontawesome.com/icons/</a>).');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['hide_when_in_tab'] = array("Ausblenden wenn im Starboard-Reiter", "Wenn Sie diese Checkbox setzen, wird die Ebene im Starboard nicht angezeigt, wenn es in einem eigenen Starboardreiter liegt. Das ist hilfreich, wenn Sie das Elternelement einer bereits vorhandenen Strukturebene im Reiter nicht anzeigen wollen.");
 $GLOBALS['TL_LANG']['tl_c4g_maps']['cssClass'] = array("CSS Klasse", "Die CSS Klasse wird am Listenelement im Starboard gesetzt.");
 /**
@@ -134,6 +134,11 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['delete'] = array('Kartenstrukturelement lös
 $GLOBALS['TL_LANG']['tl_c4g_maps']['toggle'] = array('Kartenstrukturelement veröffentlichen/unveröffentlichen', 'Kartenstrukturelement ID %s veröffentlichen/unveröffentlichen');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['toggle'] = array('Kartenstrukturelement veröffentlichen/unveröffentlichen', 'Kartenstrukturelement ID %s veröffentlichen/unveröffentlichen');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['show']   = array('Details', 'Die Details des Kartenstrukturelements ID %s anzeigen');
+
+//xlabel buttons
+$GLOBALS['TL_LANG']['tl_c4g_maps']['editBaselayers'] = ['Basiskarten bearbeiten'];
+$GLOBALS['TL_LANG']['tl_c4g_maps']['editLocstyles'] = ['Lokationsstile bearbeiten'];
+$GLOBALS['TL_LANG']['tl_c4g_maps']['editProfiles'] = ['Kartenprofile bearbeiten'];
 
 /**
  * Misc

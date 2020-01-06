@@ -64,6 +64,9 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['onclick_zoomto'] 	 = array('On mous
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['minzoom'] 		 = array('Min. zoom level', 'Enter the minimum zoom level, on which the items are shown. 0 means no restriction.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['maxzoom'] 		 = array('Max. zoom level', 'Enter the maximum zoom level, on which the items are shown. 0 means no restriction.');
 
+//xlabel buttons
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['editLocstyles'] = ['Edit locstyles'];
+
 /**
  * Reference
  */

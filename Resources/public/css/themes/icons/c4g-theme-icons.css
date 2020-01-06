@@ -176,7 +176,7 @@ span.c4g-active ul li.c4g-active:before{
 .c4g-starboard-control.c4g-open button:before {
   content: "\f005";
   font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
+  font-weight: 100;
   font-size: inherit;
 }
 .c4g-starboard-control.c4g-close button:before {
@@ -294,7 +294,7 @@ button.c4g-starboard-view-trigger-starboardplugin:before {
   font-size: inherit;
 }
 /* Geosearch */
-button.c4g-geosearch-start:before {
+.c4g-geosearch button:before, button.c4g-geosearch-start:before {
   content: "\f002";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
@@ -308,6 +308,12 @@ button.c4g-geosearch-start:before {
 }
 .c4g-geosearch.c4g-close button.c4g-geosearch-trigger:before {
   content: "\f002";
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: inherit;
+}
+button.c4g-geosearch-results-close:before {
+  content: "\f00d";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;
@@ -441,6 +447,20 @@ button.c4g-popup-close:before {
 }
 .c4g-geojson-button:after {
   content: "\f59f";
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: inherit;
+}
+
+button.c4g-titlebar-close:before {
+  content: "\f00d";
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: inherit;
+}
+
+button.c4g-beach-options:before {
+  content: "\f03a";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;

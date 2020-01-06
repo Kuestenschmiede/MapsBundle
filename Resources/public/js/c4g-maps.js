@@ -20,7 +20,7 @@ import {Print} from "./c4g-maps-control-print";
 import {Grid} from "./c4g-maps-control-grid";
 import {Zoomlevel} from "./c4g-maps-control-zoomlevel";
 import {OverviewMap} from "./c4g-maps-control-overviewmap";
-import {GeoSearch} from "./c4g-maps-control-geosearch";
+import {GeoSearch} from "./components/c4g-geosearch.jsx";
 import {Permalink} from "./c4g-maps-control-permalink";
 import {Starboard} from "./c4g-maps-control-starboard";
 import {Account} from "./c4g-maps-control-portside-account";
@@ -61,6 +61,10 @@ import {Attribution} from "ol/control";
 import {toStringHDMS} from "ol/coordinate";
 import {get} from "ol/proj";
 import ol_control_GeoBookmark from "ol-ext/control/GeoBookmark"
+import {StarboardPanel} from "./components/c4g-starboard-panel.jsx";
+import ReactDOM from "react-dom";
+import React from "react";
+import {FeatureFilter} from "./components/c4g-feature-filter.jsx";
 
 let langConstants = {};
 
@@ -162,6 +166,9 @@ export class MapController {
       Document = Browser.Document;
     }
     this.proxy = new MapProxy({mapController: this});
+    this.components = this.components || {};
+    this.hideOtherComponents = this.hideOtherComponents.bind(this);
+    this.hideOtherBottomComponents = this.hideOtherBottomComponents.bind(this);
 
     // check permalink
     if (mapData.permalink.enable) {
@@ -185,6 +192,16 @@ export class MapController {
             // decode deltaEncoding
             mapData.layers = utils.deltaDecode(mapData.layers);
             break;
+          case 3:
+            permalink[0] = parseFloat(permalink[0]);
+            mapData.center.lon = !isNaN(permalink[0]) ? permalink[0] : mapData.center.lon;
+            permalink[1] = parseFloat(permalink[1]);
+            mapData.center.lat = !isNaN(permalink[1]) ? permalink[1] : mapData.center.lat;
+            permalink[2] = parseInt(permalink[2], 10);
+            mapData.center.zoom = !isNaN(permalink[2]) ? permalink[2] : mapData.center.zoom;
+            // disable zooming to all locations
+            mapData.calc_extent = "CENTERZOOM";
+            break;
           case 2:
             // baselayer and layers only
             permalink[0] = parseInt(permalink[0], 10);
@@ -202,15 +219,71 @@ export class MapController {
           default:
             // invalid count of permalink parameters
             permalink = false;
-        }
-        if (mapData.layers.length < 1) {
-          mapData.layers = false;
-          permalink = false;
+            mapData.layers = false;
         }
       } else {
         // just to make sure this var is really "false"
         permalink = false;
       }
+    } else {
+      permalink = utils.getUrlParam(mapData.permalink.get_parameter);
+      if (permalink) {
+        permalink = permalink.split('/');
+        if (permalink.length === 3) {
+          permalink[0] = parseFloat(permalink[0]);
+          mapData.center.lon = !isNaN(permalink[0]) ? permalink[0] : mapData.center.lon;
+          permalink[1] = parseFloat(permalink[1]);
+          mapData.center.lat = !isNaN(permalink[1]) ? permalink[1] : mapData.center.lat;
+          permalink[2] = parseInt(permalink[2], 10);
+          mapData.center.zoom = !isNaN(permalink[2]) ? permalink[2] : mapData.center.zoom;
+          // disable zooming to all locations
+          mapData.calc_extent = "CENTERZOOM";
+        } else if (permalink.length === 4) {
+          permalink[0] = parseFloat(permalink[0]);
+          mapData.center.lon = !isNaN(permalink[0]) ? permalink[0] : mapData.center.lon;
+          permalink[1] = parseFloat(permalink[1]);
+          mapData.center.lat = !isNaN(permalink[1]) ? permalink[1] : mapData.center.lat;
+          permalink[2] = parseInt(permalink[2], 10);
+          mapData.center.zoom = !isNaN(permalink[2]) ? permalink[2] : mapData.center.zoom;
+          permalink[3] = parseInt(permalink[3], 10);
+          mapData.default_baselayer = permalink[3];
+          // disable zooming to all locations
+          mapData.calc_extent = "CENTERZOOM";
+        }
+        permalink = false;
+      }
+    }
+
+    if (mapData.permalink.enable) {
+      // add view observer to update permalink on center change, if a permalink exists
+      // use other permalink variable to avoid interference with the actual permalink mechanism
+      window.c4gMapsHooks.map_center_changed = window.c4gMapsHooks.map_center_changed || [];
+      window.c4gMapsHooks.map_center_changed.push(function(center) {
+        let currentPermalink = utils.getUrlParam(mapData.permalink.get_parameter);
+        if (currentPermalink) {
+          currentPermalink = currentPermalink.split('/');
+          if (currentPermalink.length >= 3) {
+            center = transform(center, "EPSG:3857", "EPSG:4326");
+            currentPermalink[0] = center[0];
+            currentPermalink[1] = center[1];
+            utils.setUrlParam(currentPermalink.join('/'), mapData.permalink.get_parameter, true)
+          }
+        }
+      });
+    }
+
+    if (mapData.permalink.enable) {
+      window.c4gMapsHooks.hook_map_zoom = window.c4gMapsHooks.hook_map_zoom || [];
+      window.c4gMapsHooks.hook_map_zoom.push(function(proxy) {
+        let currentPermalink = utils.getUrlParam(mapData.permalink.get_parameter);
+        if (currentPermalink) {
+          currentPermalink = currentPermalink.split('/');
+          if (currentPermalink.length >= 3) {
+            currentPermalink[2] = parseInt(view.getZoom(), 10) || currentPermalink[2];
+            utils.setUrlParam(currentPermalink.join('/'), mapData.permalink.get_parameter, true)
+          }
+        }
+      });
     }
 
     if (mapData.minZoom && mapData.minZoom > 0) {
@@ -466,14 +539,16 @@ export class MapController {
       return;
     }
 
+    // save overlaycontainer
+    this.$overlaycontainer_stopevent = jQuery('#' + mapData.mapDiv + ' .' + cssConstants.OL_OVERLAYCONTAINER_SE);
+
     this.map.updateSize();
     this.proxy.initialize();
     // this.proxy.loadBaseLayers();
     // this.proxy.loadLayers();
     // ---
 
-    // save overlaycontainer
-    this.$overlaycontainer_stopevent = jQuery('#' + mapData.mapDiv + ' .' + cssConstants.OL_OVERLAYCONTAINER_SE);
+
     // add Spinner
     this.spinner = new Spinner({className: cssConstants.LARGE});
     // add mapHover
@@ -564,8 +639,30 @@ export class MapController {
     // ===
     // add controls ===
     this.controls = {};
-    //
-
+    // add container for react components
+    if (mapData.starboard && mapData.starboard.enable) {
+      this.reactContainer = document.createElement('div');
+      this.reactContainer.className ="c4g-sideboard c4g-starboard-container ol-unselectable c4g-close";
+      this.reactContainer.style.right = "-100%";
+      ReactDOM.render(React.createElement(StarboardPanel, {
+        target: document.querySelector('#' + mapData.mapDiv + ' .' +cssConstants.OL_OVERLAYCONTAINER_SE),
+        mapController: this,
+        direction: "right",
+        open: !!mapData.starboard.open
+      }), this.reactContainer);
+      this.$overlaycontainer_stopevent.append(this.reactContainer);
+    }
+    // feature filter
+    if (mapData.filterDiv) {
+      this.filterContainer = document.createElement('div');
+      ReactDOM.render(React.createElement(FeatureFilter, {
+        target: document.querySelector(mapData.filterDiv),// + mapData.mapDiv + ' .' + cssConstants.OL_OVERLAYCONTAINER),
+        mapController: this,
+        direction: "top",
+        className: "c4g-feature-filter"
+      }), this.filterContainer);
+      $(mapData.filterDiv).append(this.filterContainer);
+    }
 
     // account
     if (mapData.account && typeof Account === 'function') {
@@ -734,7 +831,7 @@ export class MapController {
       this.map.addControl(this.controls.rotate);
     }
     // infopage
-    if (mapData.infopage && typeof Infopage === 'function') {
+    if (mapData.infopage && typeof mapData.infopage === "string" && typeof Infopage === 'function') {
       this.controls.infopage = new Infopage({
         tipLabel: langConstants.CTRL_INFOPAGE,
         target: controlContainerTopLeft,
@@ -798,9 +895,9 @@ export class MapController {
 
     // geosearch
     if ((mapData.geosearch.enable)) {
-      this.controls.geosearch = new GeoSearch({
+      let geosearchOptions = {
         mapController: this,
-        target: controlContainerTopRight,
+        target: document.querySelector('#' + mapData.mapDiv + ' .c4g-control-container-top-left'),
         extDiv: mapData.geosearch.div || false,
         collapsible: true,
         collapsed: mapData.geosearch.collapsed,
@@ -815,9 +912,32 @@ export class MapController {
         popup: mapData.geosearch.popup,
         autopick: mapData.geopicker,
         caching: mapData.caching,
-        results: mapData.geosearch.results
-      });
-      this.map.addControl(this.controls.geosearch);
+        results: mapData.geosearch.results,
+        resultCount: mapData.geosearch.result_count,
+        resultsHeadline: mapData.geosearch.results_headline,
+        headline: mapData.geosearch.headline,
+        resultStyle: mapData.geosearch.result_locstyle,
+        placeholder: mapData.geosearch.placeholder
+      };
+      // this.controls.geosearch = new GeoSearch();
+      // this.map.addControl(this.controls.geosearch);
+      if (mapData.geosearch.div && mapData.geosearch.div_results) {
+        this.searchContainer = document.querySelector("#" + mapData.geosearch.div);
+        if (!this.searchContainer) {
+          this.searchContainer = document.querySelector("." + mapData.geosearch.div);
+        }
+        this.searchResultsContainer = document.querySelector("#" + mapData.geosearch.div_results);
+        if (!this.searchResultsContainer) {
+          this.searchResultsContainer = document.querySelector("." + mapData.geosearch.div_results);
+        }
+        geosearchOptions.resultsDiv = this.searchResultsContainer;
+      } else {
+        this.searchContainer = document.createElement('div');
+      }
+      this.components.geosearch = ReactDOM.render(React.createElement(GeoSearch, geosearchOptions), this.searchContainer);
+      if (!mapData.geosearch.div) {
+        this.$overlaycontainer_stopevent.append(this.searchContainer);
+      }
       // open if opened before
       // if ((mapData.caching && (utils.getValue(this.controls.geosearch.options.name) === '1'))) {
       //   this.controls.geosearch.open();
@@ -841,7 +961,7 @@ export class MapController {
 
     // overview-map
     if (mapData.overviewmap) {
-      let overviewMapOptions = {target: controlContainerTopRight, mapController: this, collapsed: true};
+      let overviewMapOptions = {target: controlContainerTopLeft, mapController: this, collapsed: true};
       const scope = this;
       const addOverviewMap = function() {
         let activeBaselayer = scope.proxy.activeBaselayerId;
@@ -879,7 +999,7 @@ export class MapController {
     //this.rightSlideElements.push('.ol-overlay-container');
 
     if (typeof Starboard === 'function' && enableStarboard && !this.controls.starboard) {
-      this.initializeStarboard();
+      // this.initializeStarboard();
     }
 
     // backend-geopicker
@@ -915,7 +1035,7 @@ export class MapController {
         logoLink.href = 'https://con4gis.org';
         logoLink.title = 'built with con4gis';
         logoLink.target = '_blank';
-        logoLink.rel = 'noopener';
+        logoLink.rel = 'noopener noreferrer';
         logoLink.className = cssConstants.ATTRIBUTION_LOGO;
         logoGraphic = document.createElement('img');
         logoGraphic.src = 'bundles/con4gismaps/images/logo_con4gis.svg';
@@ -958,6 +1078,20 @@ export class MapController {
       }
       ;
 
+      let mapWidth = "100%";
+      let mapHeight = "100%";
+
+      if (mapData.width) {
+        mapWidth = mapData.width;
+      }
+      if (mapData.height) {
+        mapHeight = mapData.height;
+      }
+      if (domMapDiv && domMapDiv.style) {
+        domMapDiv.style.setProperty('--map-height', mapHeight);
+        domMapDiv.style.setProperty('--map-width', mapWidth);
+      }
+
       if (mapData.themeData['maincolor']) {
         var mainColor = utils.getRgbaFromHexAndOpacity(mapData.themeData['maincolor'], mapData.themeData['mainopacity']);
         var fontColor = utils.getRgbaFromHexAndOpacity(mapData.themeData['fontcolor'], mapData.themeData['fontopacity']);
@@ -987,6 +1121,28 @@ export class MapController {
     }
   }
 
+  hideOtherComponents(objComponent) {
+    let components = this.components;
+    for (let key in components) {
+      if (components.hasOwnProperty(key)) {
+        if (components[key] !== objComponent) {
+          components[key].setState({open:false});
+        }
+      }
+    }
+  }
+
+  hideOtherBottomComponents(objComponent) {
+    let components = this.components;
+    for (let key in components) {
+      if (components.hasOwnProperty(key)) {
+        if (components[key] !== objComponent) {
+          components[key].setState({openResults: false});
+        }
+      }
+    }
+  }
+
   initializeStarboard() {
     const mapData = this.data;
     let starboard_label;
@@ -1009,7 +1165,8 @@ export class MapController {
       layerSwitcherCreate: mapData.layerswitcher.enable,
       layerSwitcherTitle: mapData.layerswitcher.label
     });
-    this.map.addControl(this.controls.starboard);
+
+     this.map.addControl(this.controls.starboard);
 
     // open if opened before
     if (mapData.starboard.open || (mapData.caching && (utils.getValue(this.controls.starboard.options.name) === '1'))) {

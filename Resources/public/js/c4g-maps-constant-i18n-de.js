@@ -43,7 +43,6 @@ export var langConstantsGerman = {
   CTRL_RESET_ROTATION: 'Rotation (touch, ctrl+shift+mouse) zurücksetzen',
   CTRL_PORTSIDE: 'Portside ein-/ausblenden',
   CTRL_ROUTER: 'Router ein-/ausblenden',
-  CTRL_EDITOR: 'Editor ein-/ausblenden',
   CTRL_MEASURETOOLS: 'Messwerkzeuge ein-/ausblenden',
   CTRL_INFOPAGE: 'Infoseite ein-/ausblenden',
   CTRL_ADDITIONALPANEL: 'Panel ein-/ausblenden',

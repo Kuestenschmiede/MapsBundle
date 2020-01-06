@@ -14,11 +14,11 @@ import {Stroke} from "ol/style";
 import {Fill} from "ol/style";
 import {Style} from "ol/style";
 import {RegularShape} from "ol/style";
-import {Circle} from "ol/style";
-// import {Photo} from "ol/style"; // TODO, kommt aus ol-ext
 import {Icon} from "ol/style";
 import {Feature} from "ol";
 import {Point} from "ol/geom";
+import {Circle} from "ol/geom";
+import CircleStyle from 'ol/style/Circle';
 import {Text} from "ol/style";
 
 export class C4gLocationStyle {
@@ -33,8 +33,9 @@ export class C4gLocationStyle {
     this.minzoom   = locStyleArr['minzoom'];
     this.maxzoom   = locStyleArr['maxzoom'];
     this.fnStyleFunction = locStyleArr['style_function_js'];
-    if (this.fnStyleFunction && this.fnStyleFunction.length > 0) {
-      this.fnStyleFunction = this.fnStyleFunction.replace(/ol.Style./g, "window.olStyle.");
+    if (this.fnStyleFunction && typeof this.fnStyleFunction === "string") {
+      this.fnStyleFunction = this.fnStyleFunction.replace(/ol.Style./gi, "window.olStyle.");
+      this.fnStyleFunction = this.fnStyleFunction.replace(/ol.Geom./gi, "window.olStyle.");
       if (!window.olStyle) {
         window.olStyle = {
           Stroke,
@@ -42,6 +43,8 @@ export class C4gLocationStyle {
           Icon,
           Fill,
           Point,
+          CircleStyle,
+          Circle,
           Text
         };
       }
@@ -144,7 +147,7 @@ export class C4gLocationStyle {
       let newScale = self.getScaleFactor(styleData);
 
       // check if image has to be resized
-      if (imageStyle && newScale !== 0.0) {
+      if (imageStyle && newScale !== 0.0 && imageStyle.setScale) {
         imageStyle.setScale(newScale);
       }
 
@@ -358,14 +361,14 @@ export class C4gLocationStyle {
         });
         break;
       case 'point':
-        imageStyle = new Circle({
+        imageStyle = new CircleStyle({
           fill: fillStyle,
           stroke: strokeStyle,
           radius: styleData.radius.value || 7
         });
         break;
       default:
-        imageStyle = new Circle({
+        imageStyle = new CircleStyle({
           fill: fillStyle,
           stroke: strokeStyle,
           radius: styleData.radius.value || 7

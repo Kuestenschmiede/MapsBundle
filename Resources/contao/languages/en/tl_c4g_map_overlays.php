@@ -32,7 +32,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider_owm']    = 'OpenWeatherMap'
 $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider_geoimage']    = 'Geolocated Picture';
 
 $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['image_src']   			= ['Choose picture', 'Please choose the picture to be displayed as a baselayer.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['geoimage_json']           = ['JSON to georeference. Please enter a <a href="https://www.json.org/">JSON</a> to locate the picture. You may use <a href="http://viglino.github.io/Map-georeferencer/">this tool</a> or you set the parameters "imageCenter", "imageRotate" und "imageScale" on your own.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['geoimage_json']           = ['JSON to georeference. Please enter a <a href="https://www.json.org/" rel="noopener" target="_blank">JSON</a> to locate the picture. You may use <a href="http://viglino.github.io/Map-georeferencer/" target="_blank" rel="noopener" >this tool</a> or you set the parameters "imageCenter", "imageRotate" und "imageScale" on your own.'];
 /**
  * Reference
  */

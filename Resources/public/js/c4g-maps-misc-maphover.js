@@ -127,7 +127,7 @@ export class MapHover {
 
       clustered = false;
       hovered = self.map.forEachFeatureAtPixel(event.pixel,
-        function (feature, layer) {
+        (feature, layer) => {
           return {
             feature: feature,
             layer: layer
@@ -137,7 +137,7 @@ export class MapHover {
 
       if (!hovered) {
         self.hoverTooltip.hide();
-        canvas = document.querySelector("canvas");
+        canvas = document.querySelector(".ol-viewport");
         jQuery(canvas).css('cursor', 'default');
         if (mapData.hover_popups === '1' && mapData.hover_popups_stay != '1') {
           window.c4gMapsPopup.$popup.removeClass(cssConstants.ACTIVE);
@@ -151,7 +151,7 @@ export class MapHover {
       }
 
 
-      canvas = document.querySelector("canvas");
+      canvas = document.querySelector(".ol-viewport");
       jQuery(canvas).css('cursor', 'pointer');
 
       if (hovered.feature && typeof hovered.feature.get === 'function' && hovered.feature.get('features')) {

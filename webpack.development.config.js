@@ -1,24 +1,35 @@
+const CompressionPlugin = require('compression-webpack-plugin');
+const webpack = require("webpack");
 var path = require('path');
 var config = {
-  entry: './Resources/public/js/c4g-maps-main.js',
+  entry: {
+    'c4g-maps':'./Resources/public/js/c4g-maps-main.js',
+    'c4g-search': './Resources/public/js/c4g-search.js'
+  },
   mode: "development",
   output: {
-    filename: 'c4g-maps.js',
+    filename: '[name].js',
     path: path.resolve('./Resources/public/build/')
   },
   devtool: "inline-source-map",
+  resolve: {
+    modules: ['node_modules', 'Resources/public/js'],
+    extensions: ['.jsx', '.js']
+  },
+  plugins: [
+    new CompressionPlugin()
+  ],
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules(?!\/ol)/,
         use: [{
-          loader: "echo-loader",
-        }, {
           loader: "babel-loader",
         }],
         include: [
-          path.resolve('.')
+          path.resolve('.'),
+          path.resolve('./Resources/public/js/components'),
         ],
       }
     ]

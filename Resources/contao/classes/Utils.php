@@ -94,17 +94,17 @@ class Utils
         return $result;
     }
     
-    private static function processRegex($regex, $replaceBuffer, $lang)
+    private static function processRegex($regex, $toReplace, $lang)
     {
         $matches = [];
-        $result = $replaceBuffer;
-        preg_match_all($regex, $replaceBuffer, $matches);
+        $result = $toReplace;
+        preg_match_all($regex, $toReplace, $matches);
         // if there are inserttags, they are listed now in $matches
         foreach ($matches[0] as $match) {
             $replacement = static::replaceSingleLangTag($match, $lang);
             $result = str_replace($match, $replacement, $result);
         }
-        return $result;
+        return Controller::replaceInsertTags($result);
     }
     
     private static function replaceSingleLangTag($toReplace, $lang)

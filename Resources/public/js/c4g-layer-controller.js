@@ -13,7 +13,7 @@ import {C4gLayer} from "./c4g-layer"
 import {utils} from "./c4g-maps-utils"
 import {cssConstants} from "./c4g-maps-constant";
 import {Customtab} from "./c4g-maps-control-starboardplugin-customtab";
-import {Style} from "ol/style";
+import {Stroke, Style} from "ol/style";
 import {Text} from "ol/style";
 import {Fill} from "ol/style";
 import {Vector as VectorSource} from "ol/source";
@@ -24,13 +24,12 @@ import {Feature} from "ol";
 import OSMXML from "ol/format/OSMXML";
 import {all} from "ol/loadingstrategy";
 import {bbox} from "ol/loadingstrategy";
-import {Vector} from "ol/layer";
+import {Vector, Group} from "ol/layer";
 import {Cluster} from "ol/source";
 import Circle from "ol/geom/Circle";
 import {fromLonLat} from "ol/proj";
 import {GeoJSON} from "ol/format";
 import {getCenter, boundingExtent} from "ol/extent";
-import {Group} from "ol/layer";
 import * as olFormat from "ol/format";
 import ol_layer_AnimatedCluster from "ol-ext/layer/AnimatedCluster";
 import proj4 from 'proj4';
@@ -59,6 +58,7 @@ export class C4gLayerController {
       dataType: this.mapController.data.jsonp ? "jsonp" : "json"
 
     }).done(function (data) {
+      self.rawData = data;
       self.addLayers(data.layer, data.foreignLayers);
       self.proxy.layers_loaded = true;
       utils.callHookFunctions(self.proxy.hook_layer_loaded, self.proxy.layerIds);
@@ -555,13 +555,41 @@ export class C4gLayerController {
                     }
                     else if (response && response.elements) {
                       const geojson = osmtogeojson(response);
-                      const mapProj = self.mapController.map.getView().getProjection();
-                      rFeatures = new GeoJSON().readFeatures(geojson, {
-                        dataProjection: 'EPSG:4326',
-                        featureProjection: mapProj
-                      });
+                      rFeatures = new GeoJSON().readFeatures(geojson, {featureProjection: projection});
                     }
                     try {
+                      if(self.mapController.filter) {
+                        for (let id in rFeatures) {
+                          if (rFeatures.hasOwnProperty(id)){
+                            let tempFeature = rFeatures[id];
+                            let show = true;
+                            for (let key in self.mapController.filter.state.arrChecked) {
+                              if (self.mapController.filter.state.arrChecked.hasOwnProperty(key)) {
+                                let objChecked = self.mapController.filter.state.arrChecked[key];
+                                let property = objChecked.identifier;
+                                if (!(property === "all" || (tempFeature.get(property) && !objChecked.value) || ((objChecked.value == tempFeature.get(property)) && objChecked.value))) {
+                                  show = false;
+                                }
+                              }
+                            }
+                            if(!show) {
+                              if (!tempFeature.get('oldStyle')) {
+                                let layerStyle = self.mapController.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style;
+                                tempFeature.set('oldStyle',  layerStyle);
+                              }
+                              tempFeature.setStyle(new Style({
+                                stroke: new Stroke({
+                                  color: "rgba(0,0,0,0)",
+                                  width: 0
+                                }),
+                                fill: new Fill({
+                                  color: "rgba(0,0,0,0)"
+                                })
+                              }))
+                            }
+                          }
+                        }
+                      }
                       requestVectorSource.addFeatures(rFeatures);
                     } catch (e) {
                       console.warn('Could not add features to source. The "forceNodes"-option should be used.');
@@ -873,7 +901,6 @@ export class C4gLayerController {
                 } else {
                   dataProjection = undefined;
                 }
-
                 features = (new olFormat[contentData.format]({})).readFeatures(contentData.data, {
                   featureProjection: featureProjection,
                   dataProjection: dataProjection
@@ -1238,7 +1265,6 @@ export class C4gLayerController {
         let geom = this.geomFromWay(element, elements, forceNodes);
         feature = new Feature(geom);
       }
-
     }
     else if(element.type === "relation"){
       let multiPolygon = null;
@@ -1258,7 +1284,7 @@ export class C4gLayerController {
               geom = new Point([member.lon,member.lat]).transform('EPSG:4326','EPSG:3857');
             }
             else{
-              geom = this.geomFromWay(member, elements, true);
+              geom = this.geomFromWay(member, elements, forceNodes);
             }
             if(geom.getType() === 'Point'){
               if(!arrCoords){
@@ -1272,7 +1298,7 @@ export class C4gLayerController {
                 multiPolygon.appendPolygon(geom);
               }
               else{
-                multiPolygon = new MultiPolygon(geom.getCoordinates());
+                multiPolygon = new MultiPolygon([geom.getCoordinates()]);
               }
             }
             else if(geom.getType() === 'LineString') {
@@ -1306,10 +1332,6 @@ export class C4gLayerController {
       if(contentData.data){
         feature.set('zoom_onclick', contentData.data.zoom_onclick || '');
         feature.set('label', contentData.data.label || '');
-      }
-
-      for(let tags in element.tags){
-        feature.set(tags, element.tags[tags]);
       }
       return feature;
     }
@@ -1605,12 +1627,33 @@ export class C4gLayerController {
             feature.set('styleId', elementContent.locationStyle);
             feature.set('label', elementContent.data.properties.label);
             features.push(feature);
-          } else {
+          }
+          else if (elementContent.format === "GeoJSON" && elementContent.data && elementContent.data.features) {
+            features = [];
+            for (let singleFeature in elementContent.data.features){
+              if (elementContent.data.features.hasOwnProperty(singleFeature)) {
+                let olFeature = (new olFormat.GeoJSON({})).readFeature(elementContent.data.features[singleFeature], {
+                  featureProjection: featureProjection,
+                  dataProjection: dataProjection
+                });
+                olFeature.setId(elementContent.data.features[singleFeature].properties.id);
+                features.push(olFeature);
+              }
+            }
+          }
+          else {
             // remaining geometries
             features = (new olFormat[elementContent.format]({})).readFeatures(elementContent.data, {
               featureProjection: featureProjection,
               dataProjection: dataProjection
             });
+          }
+          for (let prop in elementContent.data.properties) {
+            if (elementContent.data.properties.hasOwnProperty(prop)) {
+              for(let i = 0; i < features.length; i++) {
+                features[i].set(prop, elementContent.data.properties[prop]);
+              }
+            }
           }
 
           missingStyles = [];
@@ -1642,7 +1685,6 @@ export class C4gLayerController {
           if (elementContent.hover_location && !self.proxy.locationStyleController.arrLocStyles[elementContent.hover_style]) {
             missingStyles.push(elementContent.hover_style);
           }
-          
           vectorStyle = self.proxy.locationStyleController.arrLocStyles[elementContent.locationStyle] && self.proxy.locationStyleController.arrLocStyles[elementContent.locationStyle].style;
           if(self.proxy.locationStyleController.arrLocStyles[elementContent.locationStyle] && self.proxy.locationStyleController.arrLocStyles[elementContent.locationStyle].fnStyleFunction) {
 
@@ -1659,7 +1701,14 @@ export class C4gLayerController {
 
                 for (f = 0; f < unstyledFeatures.length; f += 1) {
                   if (self.proxy.locationStyleController.arrLocStyles[unstyledFeatures[f].get('styleId')]) {
-                    unstyledFeatures[f].setStyle(self.proxy.locationStyleController.arrLocStyles[unstyledFeatures[f].get('styleId')].style);
+                    let style;
+                    if(self.proxy.locationStyleController.arrLocStyles[unstyledFeatures[f].get('styleId')] && self.proxy.locationStyleController.arrLocStyles[unstyledFeatures[f].get('styleId')].fnStyleFunction) {
+                      style = Function("feature", "data", "map", self.proxy.locationStyleController.arrLocStyles[unstyledFeatures[f].get('styleId')].fnStyleFunction);
+                    }
+                    else {
+                      style = self.proxy.locationStyleController.arrLocStyles[unstyledFeatures[f].get('styleId')].style
+                    }
+                    unstyledFeatures[f].setStyle(style);
                   }
                 }
                 if(element.split_geojson) {

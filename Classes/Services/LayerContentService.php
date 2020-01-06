@@ -530,27 +530,7 @@ class LayerContentService
             $popupContent = '';
             if (($show == $blobCount) && (($arrResult[$geoxField] && $arrResult[$geoyField]) || ($geolocation && $arrResult[$geolocation]))) {
                 // replace popup stuff
-                if ($objConfig->popupSelection || $objConfig->popup) {
-                    $api = new LayerContentDataApi();
-                    $popupContent = $api->getPopup($objConfig, $arrResult)['content'];
-                }
-                if ($arrResult[$geolocation] && $objConfig->dataType == 0) {
-                    $geox = substr($arrResult[$geolocation], strpos($arrResult[$geolocation], ',') + 1);
-                    $geoy = substr($arrResult[$geolocation], 0, strpos($arrResult[$geolocation], ','));
-                    $coordinates = array(floatval($geox), floatval($geoy));
-                    $geometry = [
-                        'type' => 'Point',
-                        'coordinates' => $coordinates,
-                    ];
-                } else if ($arrResult[$geolocation] && $objConfig->dataType == 1) { //WKT
-                    $geometry = \geoPHP::load($arrResult[$geolocation], 'wkt');
-                    $geometry = json_decode($geometry->out('json'), true);
-                }
-                else if ($arrResult[$geolocation] && $objConfig->dataType == 2) { //WKB
-                    $geometry = \geoPHP::load($arrResult[$geolocation], FALSE);
-                    $geometry = json_decode($geometry->out('json'), true);
-                }
-                else {
+                if ($objConfig->dataType == 1){
                     $geox = $arrResult[$geoxField];
                     $geoy = $arrResult[$geoyField];
                     $coordinates = array(
@@ -560,6 +540,22 @@ class LayerContentService
                         'type' => 'Point',
                         'coordinates' => $coordinates,
                     ];
+                } else if ($arrResult[$geolocation] && $objConfig->dataType == 2) {
+                    $geox = substr($arrResult[$geolocation], strpos($arrResult[$geolocation], ',') + 1);
+                    $geoy = substr($arrResult[$geolocation], 0, strpos($arrResult[$geolocation], ','));
+                    $coordinates = array(floatval($geox), floatval($geoy));
+                    $geometry = [
+                        'type' => 'Point',
+                        'coordinates' => $coordinates,
+                    ];
+                } else if ($arrResult[$geolocation] && $objConfig->dataType == 3) { //WKT
+                    $geometry = \geoPHP::load($arrResult[$geolocation], 'wkt');
+                    $geometry = json_decode($geometry->out('json'), true);
+                } else if ($arrResult[$geolocation] && $objConfig->dataType == 4) { //WKB
+                    $geometry = \geoPHP::load($arrResult[$geolocation], FALSE);
+                    $geometry = json_decode($geometry->out('json'), true);
+                } else {
+                    print_r("I want it that way");
                 }
                 if ($objConfig->linkurl && !$objConfig->popup) {
                     $link = $objConfig->linkurl;

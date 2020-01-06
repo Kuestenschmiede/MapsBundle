@@ -23,6 +23,8 @@ class LoadLayersEvent extends Event
 
     private $additionalData = [];
 
+    private $layerService = null;
+
     /**
      * @return array
      */
@@ -37,6 +39,22 @@ class LoadLayersEvent extends Event
     public function setLayerData(array $layerData)
     {
         $this->layerData = $layerData;
+    }
+
+    /**
+     * @return array
+     */
+    public function getLayerService(): array
+    {
+        return $this->layerService;
+    }
+
+    /**
+     * @param array $layerData
+     */
+    public function setLayerService(array $layerService)
+    {
+        $this->layerService = $layerService;
     }
 
     /**

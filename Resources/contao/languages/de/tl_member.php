@@ -19,6 +19,9 @@ $GLOBALS['TL_LANG']['tl_member']['c4g_loc_geoy']   = array('Geo Y-Koordinate', '
 $GLOBALS['TL_LANG']['tl_member']['c4g_loc_label']  = array('Label', 'Geben Sie hier ein Label ein, das auf der Karte bei der Lokation mit angezeigt wird.');
 $GLOBALS['TL_LANG']['tl_member']['c4g_locstyle']   = array('Lokationsstil', 'Über den Lokationsstil, der beim Kartenprofil definiert wird, legen Sie das Aussehen der Lokation innerhalb einer übergeordneten Karte fest. Ist kein Lokationsstil definiert, dann wird der beim Karteneintrag definierte Lokationsstil verwendet.');
 
+//xlabel buttons
+$GLOBALS['TL_LANG']['tl_member']['editLocstyles'] = ['Lokationsstile bearbeiten'];
+
 /**
  * Legend
  */

@@ -1,8 +1,16 @@
 {
-  "presets": [["env", {
-    "modules": "commonjs"
-  }]],
+  "presets": [
+    [
+      "react"
+    ],
+    [
+      "env", {
+        "modules": "commonjs"
+      }
+    ]
+  ],
   "plugins": [
+    "transform-react-jsx",
     "transform-class-properties",
     "transform-es2015-modules-commonjs"
   ],

@@ -117,7 +117,7 @@ class LayerService
         return $return;
 
     }
-    protected function forceChildsInContent($layer)
+    public function forceChildsInContent($layer)
     {
         $arrChilds =[];
         foreach($layer['childs'] as $key => $child)
@@ -139,6 +139,20 @@ class LayerService
         }
         $layer['childs'] = $arrChilds;
         return $layer;
+    }
+    public function createGeoJSONFeature($objOptions, $locX = null, $locY = null, $geometry = null) {
+        $geometry = $geometry ? $geometry : [
+            "type" => "Point",
+            "coordinates" => [
+                $locX,
+                $locY
+            ]
+        ];
+        return [
+            "type" => "Feature",
+            "properties" => $objOptions,
+            "geometry" => $geometry
+        ];
     }
     
     /**
@@ -341,7 +355,7 @@ class LayerService
             $arrLayerData['hide'] = $objLayer->data_hidelayer;
         }
 
-        if ($objLayer->loc_minzoom>0 || $objLayer->loc_maxzoom>0) {
+        if ($objLayer->loc_minzoom > 0 || $objLayer->loc_maxzoom > 0) {
             $arrLayerData['zoom'] = [
                 'min' => $objLayer->loc_minzoom,
                 'max' => $objLayer->loc_maxzoom,
@@ -388,6 +402,9 @@ class LayerService
                     } else {
                         $layer = C4gMapsModel::findByPk($layer->pid);
                     }
+                }
+                if ($layer->pid = 0) {
+                    $arrLayerData['activeForBaselayers'] = "all";
                 }
             }
         }
