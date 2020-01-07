@@ -71,13 +71,13 @@
   font-size: inherit;
 }
 .c4g-graticule button:before {
-  content: "\f00a";
+  content: "\f84c";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;
 }
 .c4g-graticule.c4g-enabled button:before {
-  content: "\f00a";
+  content: "\f850";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;
@@ -95,9 +95,9 @@
   font-size: inherit;
 }
 span.ol-compass:before {
-  content: "\f35b";
+  content: "\f062";
   font-family: 'Font Awesome 5 Free';
-  font-weight: 100;
+  font-weight: 900;
   font-size: inherit;
 }
 button.ol-full-screen-false:before {
@@ -107,7 +107,7 @@ button.ol-full-screen-false:before {
   font-size: inherit;
 }
 button.ol-full-screen-true:before {
-  content: "\f066";
+  content: "\f78c";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;
@@ -187,20 +187,20 @@ span.c4g-active ul li.c4g-active:before{
 }
 
 button.ol-zoom-in:before {
-  content: "\f067";
+  content: "\f055";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;
 }
 button.ol-zoom-out:before {
-  content: "\f068";
+  content: "\f056";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;
 }
 .ol-zoom-extent button:before,
 button.ol-zoom-extent:before {
-  content: "\f57c";
+  content: "\f0ac";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;
@@ -270,7 +270,7 @@ button.c4g-measuretools-view-trigger-draw-freehand:before {
   font-size: inherit;
 }
 button.c4g-print:before {
-  content: "\f019";
+  content: "\f302";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;
@@ -295,13 +295,14 @@ button.c4g-starboard-view-trigger-starboardplugin:before {
 }
 /* Geosearch */
 .c4g-geosearch button:before, button.c4g-geosearch-start:before {
-  content: "\f002";
+  content: "\f689";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;
 }
+/*
 .c4g-geosearch.c4g-open button.c4g-geosearch-trigger:before {
-  content: "\f101";
+  content: "\f689";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;
@@ -312,6 +313,8 @@ button.c4g-starboard-view-trigger-starboardplugin:before {
   font-weight: 900;
   font-size: inherit;
 }
+*/
+
 button.c4g-geosearch-results-close:before {
   content: "\f00d";
   font-family: 'Font Awesome 5 Free';
