@@ -70,7 +70,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
                 [
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['edit'],
                 'href'                => 'act=edit',
-                'icon'                => 'edit.gif'
+                'icon'                => 'bundles/con4giscore/images/be-icons/edit.svg',
                 ],
             'copy' =>
                 [
