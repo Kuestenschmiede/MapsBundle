@@ -163,6 +163,13 @@ export class C4gStarboardLayerElement extends Component {
         let clusterSource = layerController.clusterSource;
         let vectorLayer = layerController.vectorLayer;
         if (scope.state.active) {
+            if (scope.props.layer.loader >= 0) {
+                let loader = layerController.loaders[scope.props.layer.loader];
+                layerController.loaders[scope.props.layer.loader].preventLoading = true;
+                if (loader.request) {
+                    loader.request.abort();
+                }
+            }
             let vectorCollection = layerController.vectorCollection;
             let featureArray = vectorCollection.getArray();
             if (scope.props.layer.features && scope.props.layer.features.length > 0) {
@@ -181,6 +188,9 @@ export class C4gStarboardLayerElement extends Component {
             }
         }
         else {
+            if (scope.props.layer.loader >= 0 && layerController.loaders[scope.props.layer.loader] && layerController.loaders[scope.props.layer.loader].preventLoading) {
+                layerController.loaders[scope.props.layer.loader].preventLoading = false;
+            }
             let arrFeatures = layerController.vectorCollection.getArray();
             delete layerController.vectorCollection;
             delete layerController.vectorSource;

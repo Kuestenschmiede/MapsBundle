@@ -52,62 +52,69 @@ export class BetterLayerController {
             for (let i in scope.loaders) {
                 if (scope.loaders.hasOwnProperty(i)) {
                     const requestData = scope.loaders[i];
-                    let strBoundingBox = "";
-                    let url = requestData.url;
-                    let params = decodeURIComponent(requestData.params);
-                    if (url) {
-                        if (url.indexOf('{key}') > -1) {
-                            url = url.replace('{key}', self.ovpKey);
+                    if (!requestData.preventLoading) {
+                        if (requestData.request) {
+                            requestData.request.abort();
                         }
-                        if(params && params.substr(0, 1).trim() === "<"){
-                            strBoundingBox = '<bbox-query s="' + boundingArray[1] + '" n="' + boundingArray[3] + '" w="' + boundingArray[0] + '" e="' + boundingArray[2] + '"/>';
-                        }
-                        else{
-                            strBoundingBox = boundingArray[1] + ',' + boundingArray[0] + ',' + boundingArray[3] + ',' + boundingArray[2];
-                        }
-                        const bboxTag = params.indexOf('(bbox)') >= 0 ? /\(bbox\)/g : /\{{bbox\}}/g
-                        url += url.includes("?") ? "&" : "?";
-                        url += 'data=' + encodeURIComponent(params.replace(bboxTag, strBoundingBox));
-                        jQuery.ajax({
-                            url: url,
-                            loader: requestData
-                        }).done(function (response) {
-                            let features;
-                            let format = new OSMXML();
-                            if (format && response) {
-                                try {
-                                    features = format.readFeatures(response, {featureProjection: projection});
-                                } catch (e) {
-                                    console.warn('Can not read feature.');
-                                }
-                                let oldLength = scope.vectorCollection.getLength(); //necesarry to distinct redundant features
-
-                                scope.vectorCollection.extend(features);
-
-                                let addedFeatures = scope.vectorCollection.getArray().slice(oldLength);
-                                let layer;
-                                if (typeof this.loader.chain === "string") {
-                                    let chain = this.loader.chain.split(',');
-                                    let i = 1;
-                                    layer = scope.arrLayers[chain[0]];
-                                    while(chain[i]) {
-                                        layer = layer.childs[chain[i]];
-                                        i++;
-                                    }
-                                }
-                                else {
-                                    layer = scope.arrLayers[this.loader.chain]
-                                }
-
-                                layer.features = layer.features.concat(addedFeatures);
-                                scope.mapController.setObjLayers(scope.arrLayers);
-
+                        let strBoundingBox = "";
+                        let url = requestData.url;
+                        let params = decodeURIComponent(requestData.params);
+                        if (url) {
+                            if (url.indexOf('{key}') > -1) {
+                                url = url.replace('{key}', self.ovpKey);
                             }
-                        });
-                    }
+                            if(params && params.substr(0, 1).trim() === "<"){
+                                strBoundingBox = '<bbox-query s="' + boundingArray[1] + '" n="' + boundingArray[3] + '" w="' + boundingArray[0] + '" e="' + boundingArray[2] + '"/>';
+                            }
+                            else{
+                                strBoundingBox = boundingArray[1] + ',' + boundingArray[0] + ',' + boundingArray[3] + ',' + boundingArray[2];
+                            }
+                            const bboxTag = params.indexOf('(bbox)') >= 0 ? /\(bbox\)/g : /\{{bbox\}}/g
+                            url += url.includes("?") ? "&" : "?";
+                            url += 'data=' + encodeURIComponent(params.replace(bboxTag, strBoundingBox));
+                            requestData.request = jQuery.ajax({
+                                url: url,
+                                loader: requestData
+                            }).done(function (response) {
+                                delete this.loader.request;
+                                let features;
+                                let format = new OSMXML();
+                                if (format && response) {
+                                    try {
+                                        features = format.readFeatures(response, {featureProjection: projection});
+                                    } catch (e) {
+                                        console.warn('Can not read feature.');
+                                    }
+                                    let oldLength = scope.vectorCollection.getLength(); //necesarry to distinct redundant features
 
+                                    scope.vectorCollection.extend(features);
+
+                                    let addedFeatures = scope.vectorCollection.getArray().slice(oldLength);
+                                    let layer;
+                                    if (typeof this.loader.chain === "string") {
+                                        let chain = this.loader.chain.split(',');
+                                        let i = 1;
+                                        layer = scope.arrLayers[chain[0]];
+                                        while(chain[i]) {
+                                            layer = layer.childs[chain[i]];
+                                            i++;
+                                        }
+                                    }
+                                    else {
+                                        layer = scope.arrLayers[this.loader.chain]
+                                    }
+
+                                    layer.features = layer.features.concat(addedFeatures);
+                                    scope.mapController.setObjLayers(scope.arrLayers);
+
+                                }
+                            });
+                        }
+
+                    }
                 }
             }
+            scope.vectorSource.removeLoadedExtent(extent);
         }
         this.vectorSource = new VectorSource({
             features: this.vectorCollection,
@@ -250,6 +257,7 @@ export class BetterLayerController {
     getStructureFromLayer(layer, format, idChain) {
         let features = [];
         let childs = [];
+        let loaderId = -1;
         if (layer.content && layer.content.length > 0) {
             features = this.getFeaturesForLayer(layer);
         }
@@ -263,8 +271,8 @@ export class BetterLayerController {
                 url = data.url;
                 params = data.params;
                 locstyleId = layer.locstyle;
-
             }
+            loaderId = this.loaders.length;
             this.loaders.push({
                 chain: idChain,
                 url: url,
@@ -283,9 +291,10 @@ export class BetterLayerController {
         }
         return {
             "features"  : features,
+            "loader"    : loaderId,
             "name"      : layer.name,
             "hide"      : !!layer.hide,
-            "childs"     : childs
+            "childs"    : childs
         };
     }
     getFeaturesForLayer(layer) {
