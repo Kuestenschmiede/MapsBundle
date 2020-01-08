@@ -29,6 +29,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
         'label'                       => $GLOBALS['TL_LANG']['MOD']['c4g_maps'][0],
         'dataContainer'               => 'Table',
         'enableVersioning'            => true,
+        //'switchToEdit'                => true,
         'onload_callback'             => [
             ['tl_c4g_maps', 'updateDCA']],
         'onsubmit_callback'             => [
@@ -71,7 +72,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 ],
                 'back' => [
                     'href'                => 'key=back',
-                    'class'               => 'header_back_test',
+                    'class'               => 'header_back',
                     'button_callback'     => ['\con4gis\CoreBundle\Classes\Helper\DcaHelper', 'back'],
                     'icon'                => 'back.svg',
                     'label'               => &$GLOBALS['TL_LANG']['MSC']['backBT'],
@@ -83,19 +84,19 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 [
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['edit'],
                 'href'                => 'act=edit',
-                'icon'                => 'bundles/con4giscore/images/be-icons/edit.svg',
+                'icon'                => 'edit.svg',
                 ],
             'copy' =>
                 [
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['copy'],
                 'href'                => 'act=paste&amp;mode=copy',
-                'icon'                => 'copy.gif'
+                'icon'                => 'copy.svg'
                 ],
             'copyChilds' =>
                 [
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['copyChilds'],
                 'href'                => 'act=paste&amp;mode=copy&amp;childs=1',
-                'icon'                => 'copychilds.gif',
+                'icon'                => 'copychilds.svg',
                 'attributes'          => 'onclick="Backend.getScrollOffset();"',
                 'button_callback'     => ['tl_c4g_maps', 'copyPageWithSubpages']
                 ],
@@ -103,20 +104,20 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 [
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['cut'],
                 'href'                => 'act=paste&amp;mode=cut',
-                'icon'                => 'cut.gif',
+                'icon'                => 'cut.svg',
                 'attributes'          => 'onclick="Backend.getScrollOffset();"'
                 ],
             'delete' =>
                 [
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['delete'],
                 'href'                => 'act=delete',
-                'icon'                => 'delete.gif',
+                'icon'                => 'delete.svg',
                 'attributes'          => 'onclick="if (!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\')) return false; Backend.getScrollOffset();"'
                 ],
             'toggle' =>
                 [
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['toggle'],
-                'icon'                => 'visible.gif',
+                'icon'                => 'visible.svg',
                 'attributes'          => 'onclick="Backend.getScrollOffset(); return AjaxRequest.toggleVisibility(this, %s);"',
                 'button_callback'     => ['tl_c4g_maps', 'toggleIcon']
                 ],
@@ -1640,7 +1641,7 @@ class tl_c4g_maps extends Backend
         $href .= '&amp;tid='.$row['id'].'&amp;state='.($row['published'] ? '' : 1);
 
         if (!$row['published']) {
-            $icon = 'invisible.gif';
+            $icon = 'invisible.svg';
         }
 
 //        \con4gis\CoreBundle\Resources\contao\classes\C4GAutomator::purgeApiCache();

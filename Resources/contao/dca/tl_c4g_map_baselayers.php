@@ -76,33 +76,33 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                 [
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['edit'],
                 'href'                => 'act=edit',
-                'icon'                => 'bundles/con4giscore/images/be-icons/edit.svg',
+                'icon'                => 'edit.svg',
                 ],
             'copy' =>
                 [
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['copy'],
                 'href'                => 'act=paste&amp;mode=copy&amp;childs=1',
-                'icon'                => 'copy.gif',
+                'icon'                => 'copy.svg',
                 'attributes'          => 'onclick="Backend.getScrollOffset();"',
                 ],
             'cut' =>
                 [
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['cut'],
                 'href'                => 'act=paste&amp;mode=cut&amp;childs=1',
-                'icon'                => 'cut.gif',
+                'icon'                => 'cut.svg',
                 'attributes'          => 'onclick="Backend.getScrollOffset();"',
                 ],
             'delete' =>
                 [
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['delete'],
                 'href'                => 'act=delete',
-                'icon'                => 'delete.gif',
+                'icon'                => 'delete.svg',
                 'attributes'          => 'onclick="if (!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\')) return false; Backend.getScrollOffset();"'
                 ],
             'toggle' =>
                 [
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['toggle'],
-                'icon'                => 'visible.gif',
+                'icon'                => 'visible.svg',
                 'attributes'          => 'onclick="Backend.getScrollOffset(); return AjaxRequest.toggleVisibility(this, %s);"',
                 'button_callback'     => ['tl_c4g_map_baselayers', 'toggleIcon']
                 ],
@@ -651,7 +651,7 @@ class tl_c4g_map_baselayers extends Backend
 
         if (!$row['published'])
         {
-            $icon = 'invisible.gif';
+            $icon = 'invisible.svg';
         }
 
         return '<a href="'.$this->addToUrl($href).'" title="'.specialchars($title).'"'.$attributes.'>'.$this->generateImage($icon, $label).'</a> ';
