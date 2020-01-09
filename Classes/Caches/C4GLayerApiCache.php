@@ -4,7 +4,7 @@
  * the gis-kit for Contao CMS.
  *
  * @package    con4gis
- * @version    6
+ * @version    7
  * @author     con4gis contributors (see "authors.txt")
  * @license    LGPL-3.0-or-later
  * @copyright  Küstenschmiede GmbH Software & Design
@@ -12,9 +12,7 @@
  */
 namespace con4gis\MapsBundle\Classes\Caches;
 
-
 use con4gis\CoreBundle\Resources\contao\classes\C4GApiCache;
-use Contao\System;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -25,10 +23,12 @@ class C4GLayerApiCache extends C4GApiCache
      */
     protected static $instance = null;
 
-    public static function getInstance($container) {
+    public static function getInstance($container)
+    {
         if (!static::$instance) {
             static::$instance = new self($container);
         }
+
         return static::$instance;
     }
 

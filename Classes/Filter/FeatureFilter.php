@@ -4,16 +4,13 @@
  * the gis-kit for Contao CMS.
  *
  * @package   	con4gis
- * @version        6
+ * @version    7
  * @author  	    con4gis contributors (see "authors.txt")
  * @license 	    LGPL-3.0-or-later
  * @copyright 	Küstenschmiede GmbH Software & Design
  * @link              https://www.con4gis.org
- *
  */
-
 namespace con4gis\MapsBundle\Classes\Filter;
-
 
 class FeatureFilter implements \JsonSerializable
 {
@@ -21,8 +18,8 @@ class FeatureFilter implements \JsonSerializable
      * The name of the filter.
      * @var string
      */
-    private $fieldName = "";
-    
+    private $fieldName = '';
+
     /**
      * The options for the filter field.
      * ToDo why this new translation way?
@@ -30,23 +27,23 @@ class FeatureFilter implements \JsonSerializable
      */
     private $filters = [
         [
-            "identifier" => "all",
-            "translation" => "Alle anzeigen"
-        ]
+            'identifier' => 'all',
+            'translation' => 'Alle anzeigen',
+        ],
     ];
-    
+
     public function addFilterValue($value)
     {
         if (!in_array($value, $this->filters)) {
             $this->filters[] = $value;
         }
     }
-    
+
     public function addTranslation($key, $translation)
     {
         $this->translations[$key] = $translation;
     }
-    
+
     /**
      * Specify data which should be serialized to JSON
      * @link https://php.net/manual/en/jsonserializable.jsonserialize.php
@@ -57,11 +54,11 @@ class FeatureFilter implements \JsonSerializable
     public function jsonSerialize()
     {
         return [
-            "name" => $this->fieldName,
-            "filters" => $this->filters,
+            'name' => $this->fieldName,
+            'filters' => $this->filters,
         ];
     }
-    
+
     /**
      * @return string
      */
@@ -69,7 +66,7 @@ class FeatureFilter implements \JsonSerializable
     {
         return $this->fieldName;
     }
-    
+
     /**
      * @param string $fieldName
      */
@@ -77,7 +74,7 @@ class FeatureFilter implements \JsonSerializable
     {
         $this->fieldName = $fieldName;
     }
-    
+
     /**
      * @return array
      */
@@ -85,7 +82,7 @@ class FeatureFilter implements \JsonSerializable
     {
         return $this->values;
     }
-    
+
     /**
      * @param array $values
      */
@@ -93,7 +90,7 @@ class FeatureFilter implements \JsonSerializable
     {
         $this->values = $values;
     }
-    
+
     /**
      * @return array
      */
@@ -101,7 +98,7 @@ class FeatureFilter implements \JsonSerializable
     {
         return $this->translations;
     }
-    
+
     /**
      * @param array $translations
      */

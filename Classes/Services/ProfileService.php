@@ -4,7 +4,7 @@
  * the gis-kit for Contao CMS.
  *
  * @package    con4gis
- * @version    6
+ * @version    7
  * @author     con4gis contributors (see "authors.txt")
  * @license    LGPL-3.0-or-later
  * @copyright  Küstenschmiede GmbH Software & Design
@@ -36,7 +36,7 @@ class ProfileService
         $event = new LoadProfileEvent();
         $event->setProfileId(intval($profileId));
         $this->eventDispatcher->dispatch($event::NAME, $event);
+
         return $event->getProfileId();
     }
-
 }

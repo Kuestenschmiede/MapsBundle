@@ -4,7 +4,7 @@
  * the gis-kit for Contao CMS.
  *
  * @package    con4gis
- * @version    6
+ * @version    7
  * @author     con4gis contributors (see "authors.txt")
  * @license    LGPL-3.0-or-later
  * @copyright  Küstenschmiede GmbH Software & Design
@@ -13,10 +13,8 @@
 
 namespace con4gis\MapsBundle\Classes\Caches;
 
-
 use con4gis\CoreBundle\Resources\contao\classes\C4GAutomator;
 use Contao\System;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class C4GMapsAutomator extends C4GAutomator
 {
@@ -25,7 +23,6 @@ class C4GMapsAutomator extends C4GAutomator
      */
     public function purgeLayerApiCache()
     {
-        
         C4GLayerApiCache::getInstance(System::getContainer())->clearCache();
         // Add a log entry
     }

@@ -4,16 +4,13 @@
  * the gis-kit for Contao CMS.
  *
  * @package   	con4gis
- * @version        6
+ * @version    7
  * @author  	    con4gis contributors (see "authors.txt")
  * @license 	    LGPL-3.0-or-later
  * @copyright 	Küstenschmiede GmbH Software & Design
  * @link              https://www.con4gis.org
- *
  */
-
 namespace con4gis\MapsBundle\Classes\Contao\Callbacks;
-
 
 use Contao\Backend;
 use Contao\DataContainer;
@@ -33,17 +30,17 @@ class TlC4gMapLocstyles extends Backend
             // check if the file has already defined height and width
             $width = $svg->getAttribute('width');
             $height = $svg->getAttribute('height');
-            
+
             if ($width && $height) {
                 // no modification needed
                 return;
             }
-            
+
             // Absolute dimensions
             $viewBox = preg_split('/[\s,]+/', $svg->getAttribute('viewBox') ?: '');
             $viewBoxWidth = isset($viewBox[2]) ? (float) $viewBox[2] : 0;
             $viewBoxHeight = isset($viewBox[3]) ? (float) $viewBox[3] : 0;
-            
+
             if ($viewBoxWidth != 0 && $viewBoxHeight != 0) {
                 $svg->setAttribute('width', $viewBoxWidth);
                 $svg->setAttribute('height', $viewBoxHeight);
@@ -51,7 +48,7 @@ class TlC4gMapLocstyles extends Backend
             $image->save($svgFile->path);
         }
     }
-    
+
     /**
      * Return all Location Styles as array
      * @param object
@@ -59,13 +56,13 @@ class TlC4gMapLocstyles extends Backend
      */
     public function getLocStyles(\DataContainer $dc)
     {
-        $locStyles = $this->Database->prepare("SELECT id,name FROM tl_c4g_map_locstyles ORDER BY name")
+        $locStyles = $this->Database->prepare('SELECT id,name FROM tl_c4g_map_locstyles ORDER BY name')
             ->execute();
         $return[''] = '-';
-        while ($locStyles->next())
-        {
+        while ($locStyles->next()) {
             $return[$locStyles->id] = $locStyles->name;
         }
+
         return $return;
     }
 }
