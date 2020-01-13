@@ -26,6 +26,11 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['default_baselayer'] = ['Default Base
 /** Lokationsstile */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['locstyles'] = ['Location styles', 'Check the location styles available for map structure items using this profile. Default: all'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['label_color'] = ['Label Color', 'Select the default color for labels. Can be overriden by the settings in the location style.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['resize_locstyles_zoom'] = ['Scaling locations during zoom', 'Set this checkbox if the locations (with icons) should be scaled accordingly when zooming the zoom level.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['resize_src_zoom'] = ['Initial zoom', 'Specify the zoom level at which the locations should have their normal size.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['resize_scale_factor'] = ['Scaling factor', 'Specify a scaling factor (between 0 and 1) by which the locations should be scaled up or down when zooming.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['resize_min_scale'] = ['Minimum scaling', 'Specify a scaling that should not be undercut (locations are not scaled smaller than this value).'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['resize_max_scale'] = ['Maximum scaling', 'Specify a scaling that should not be exceeded (locations are not scaled larger than this value).'];
 
 /** Navigation */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['zoom_panel'] = ['Zoom Panel', 'Creates buttons to zoom in and out of the map.'];
@@ -65,6 +70,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_dist_spider'] = ['Cluster di
 /** Karteninformationen */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['attribution'] = ['Attribution', 'Shows the attribution. Deactivate only when you are sure it is allowed.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['collapsed_attribution'] = ['Show initially collapsed', 'Collapse the attribution by default. Otherwise the Attribution is visible when entering the page, but is still collapsible.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['add_attribution'] = ['Additional copyright text', 'is added to the copyright text of the map service used.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cfg_logo_attribution']  = ['Show con4gis-logo', 'Shows the con4gis-logo on the map. You can turn it off, but we would appreciate it if you\'d mention "con4gis" at a different location on your page.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['div_attribution'] = ['DIV attribution', 'Enter the ID of an existing DIV element if you want to put the attributon outside the map.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overviewmap'] = ['Overview map', 'Adds a button in the lower right corner of the map, which when pressed shows an overwiew map.'];
@@ -103,17 +109,6 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_collapsed'] = ['Collapsed 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_div'] = ['DIV for search', 'Enter the ID of an existing DIV element if you want to put the search field somewhere else on your page.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_results_div'] = ['DIV for search results', 'Enter the ID of an existing DIV element if you want to put the search results somewhere else on your page.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_placeholder'] = ["Placeholder for input field", "Specify a placeholder that is displayed until an input is made."];
-
-/** Editor */
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor'] = ['Show editor on the map', 'Shows a button which activates an Editor for drawing locations, lines and areas on the map.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_styles_point'] = ['Location styles for POIs', 'Choose location styles that can be used in the editor.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_styles_line'] = ['Location styles for lines', 'Choose location styles that can be used in the editor.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_styles_polygon'] = ['Location styles for polygons', 'Choose location styles that can be used in the editor.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_styles_circle'] = ['Location styles for circles', 'Choose location styles that can be used in the editor.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_styles_freehand'] = ['Location styles for freehand drawing', 'Choose location styles that can be used in the editor.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_vars'] = ['Additional fields', 'Fields available for POIs, lines and polygons can be addressed using ${key} in popup, label and tooltip.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_show_items'] = ['Show other map structure items while editing', 'Check this if you do not want to hide other map structure items in the editor.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_helpurl'] = ['Help page URL', 'If you enter an URL here, a help link to the given URL is displayed inside the editor.'];
 
 /** Geopicker (Position bestimmen) */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['is_backend_geopicker_default'] = ['Standard Profile for Backend Geopicker', 'If checked, this profile is used as backedn geopicker (structure elements, events, ...).'];

@@ -22,7 +22,6 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['strokeopacity']    = array('Deckkra
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['fillcolor']        = array('Farbe der Füllung','Bitte wählen Sie die Farbe der Füllung.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['fillopacity']      = array('Deckkraft der Füllung','Bitte wählen Sie die Deckkraft der Füllung.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['radius']           = array('Radius','Bitte wählen Sie den Radius in Pixeln.');
-//$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['radius2']           = array('Radius','Bitte wählen Sie den Radius in Pixeln.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['ol_icon']          = array('OpenLayers Icon','Bitte wählen Sie aus den verfügbaren OpenLayers Standardicons aus.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['ol_icon_size']     = array('Größe des Icons','Die Größe des Icons auf der Karte. Wird gegebenenfalls skaliert.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['ol_icon_offset']   = array('Positionsversatz des Icons (X/Y) in Pixel','Bei einem Versatz von "0" befindet sich die obere linke Ecke des Icons an der angegebenen Geo-Lokation. X=Positiv => nach rechts. X=negativ => nach links. Y=positiv => nach unten. Y=negativ => nach oben.');

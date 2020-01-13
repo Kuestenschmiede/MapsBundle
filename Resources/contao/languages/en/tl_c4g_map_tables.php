@@ -37,9 +37,13 @@ $GLOBALS['TL_LANG']['tl_c4g_map_tables']['openLinksInTab']          = ['Open lin
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['dataType']                = ['Data type', 'Choose the data type'];
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['projName']                = ['Projection', 'Please enter the name of the projection'];
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['projCode']                = ['Projection code', 'Please enter the settings of the projection in the format suitable for Proj4js'];
+
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['popupSwitch_default'] = 'Field selection';
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['popupSwitch_expert'] = 'Expert configuration (more flexible)';
 
+$GLOBALS['TL_LANG']['tl_c4g_map_tables']['dataTypeCoords'] = 'Coordinate pair';
+$GLOBALS['TL_LANG']['tl_c4g_map_tables']['dataTypeWKT'] = 'Well-Kown-Text (WKT)';
+$GLOBALS['TL_LANG']['tl_c4g_map_tables']['dataTypeWKB'] = 'Well-Kown-Binary (WKB)';
 
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['references']['dataType'][1] = 'Pair of coordinates (two fields)';
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['references']['dataType'][2] = 'Pair of coordinates (one field)';

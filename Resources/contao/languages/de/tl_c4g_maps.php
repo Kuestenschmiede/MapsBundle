@@ -57,6 +57,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['enablePopup'] = array('Popup aktivieren', 'S
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popup_info'] = array('Popup Information', 'Wird eine Popup-Information gesetzt, so wird sie durch einen Mausklick oder via Hover (abhängig von der Einstellung im Kartenprofil) auf der Lokation angezeigt.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popup_extend'] = array('Popup Information durch Forenbeitrag erweitern', 'Ermöglicht es zusätzliche Popup-Information aus einem Forenbeitrag zu generieren.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popup_async'] = array('Inhalt des Popups nachladen', 'Ermöglicht das Nachladen des Inhalts des Popups zur Laufzeit (Empfehlenswert bei großen Datenmengen).');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['popupHandling'] = array('Autopan zum Popup', '');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_linkurl'] = array('Direktverlinkung', 'Geben Sie eine URL ein (mit http(s)://) oder wählen Sie über das Symbol eine Contao-Seite aus. Wird eine Direktverlinkung angegeben, so wird sie über Mausklick oder Maus-Doppelklick (abhängig von der Einstellung im Kartenprofil) angesprungen.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_onclick_zoomto'] = array('Zoomen bei Mausklick auf Zoomstufe', 'Geben Sie die Zoomstufe ein, auf die bei Mausklick gezoomt werden soll. Funktioniert nur, wenn keine Direktverlinkung angegeben ist.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_minzoom'] = array('Mindest-Zoomstufe', 'Geben Sie die Zoomstufe ein, ab der die Elemente des Karteneintrags angezeigt werden. 0=keine Einschränkung.');

@@ -32,6 +32,11 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_src']         = array('Icon so
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['svgSize']          = array('SVG size','Choose the size of the SVG in pixels.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_size']        = array('Icon size','Size of the icon. Is scaled when needed.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_scale']       = array('Scale icon','1.0 = 100%');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_resize_zoom']         = array('Rescale icon on zoom', 'Set this checkbox if the icon should also be rescaled when zooming.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_resize_src_zoom']     = array('Initial zoom level','Specify the zoom level for which the icon should have the specified dimensions and scaling.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_resize_scale_factor'] = array('Scaling factor','Enter a value (0-1) by which the icon should be scaled per zoom level.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_resize_min_scale']    = array('minimum scaling','Specify a scaling factor that should not be undercut.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_resize_max_scale']    = array('Maximum scaling','Specify a scaling factor that should not be exceeded.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_offset']      = array('Offset for icon in pixel (X/Y)','An offset of "0" means, the upper left corner is printed on the location. X>0 => shifts icon to the right. X<0 => to the left. Y>0 => to the bottom. Y<0 => to the top.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_opacity']     = array('Icon opacity','Enter the opacity of the icon in %.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['iconcolor']        = array('Icon color','Do you want to change the icon color?');
@@ -77,7 +82,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['x']           = 'X';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['cross']       = 'Cross';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['triangle']    = 'Triangle';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['ol_icon']     = 'OpenLayers internal icon';
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['cust_icon']   = 'Custom icon';
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['cust_icon']   = 'Custom icon - Pixel';
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['cust_icon_svg']   = 'Custom Icon - Vector';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['style_function'] = 'Style function';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['photo']       = 'Photo';
 
