@@ -70,7 +70,7 @@ export class StarboardPanel extends Component {
     }
     const scope = this;
     return (
-      <StarboardLayerswitcher key={this.props.mapController.id} mapController ={this.props.mapController} objLayers={this.props.objLayers} openfunc={this.open} open={this.state.open}></StarboardLayerswitcher>
+      <StarboardLayerswitcher key={this.props.mapController.id} mapController ={this.props.mapController} objLayers={this.props.objLayers} parentCallback={this.props.parentCallback} layerStates={this.props.layerStates} openfunc={this.open} open={this.state.open}></StarboardLayerswitcher>
     )
   }
 

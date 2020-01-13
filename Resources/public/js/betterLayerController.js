@@ -223,15 +223,17 @@ export class BetterLayerController {
                 }
             }
             let features = [];
+            let arrStates = [];
             for (let structId in structure) {
                 if (structure.hasOwnProperty(structId)) {
+                    arrStates.push(self.getInitialStates(structure[structId]));
                     features = features.concat(self.getFeaturesFromStruct(structure[structId]));
                 }
             }
             self.arrLayers = structure;
             self.vectorCollection.extend(features);
             self.mapController.map.addLayer(self.vectorLayer);
-            self.mapController.setObjLayers(self.arrLayers);
+            self.mapController.setLayersInitial(self.arrLayers, arrStates);
 
             return true;
         }).fail(function () {
@@ -241,6 +243,20 @@ export class BetterLayerController {
             // this.proxy.starboard.spinner.hide();
         });
     } // end of "loadLayer()"
+    getInitialStates(layer) {
+        let childStates = [];
+        if (layer.childs && layer.childs.length > 0) {
+            for (let childId in layer.childs) {
+                if (layer.childs.hasOwnProperty(childId)) {
+                    childStates.push(this.getInitialStates(layer.childs[childId]));
+                }
+            }
+        }
+        return {
+            active: !layer.hide,
+            childStates: childStates
+        }
+    }
     getFeaturesFromStruct(structure) {
         let features = []
         if (structure.childs && structure.childs.length > 0) {

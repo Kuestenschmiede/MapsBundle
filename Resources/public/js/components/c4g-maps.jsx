@@ -72,9 +72,11 @@ export class MapController extends Component{
         //---
         let mapData = props.mapData;
         this.state = {
-            objLayers: []
+            objLayers: [],
+            arrLayerStates: []
         };
         this.setObjLayers = this.setObjLayers.bind(this);
+        this.setLayerStates = this.setLayerStates.bind(this);
         this.map = null;
 
         langConstants = getLanguage(mapData);
@@ -739,10 +741,22 @@ export class MapController extends Component{
             });
         }
     }
-    setObjLayers(objLayers) {
-        this.setState({objLayers: objLayers});
+    setLayersInitial(objLayers, arrLayers) {
+        this.setState({
+            objLayers: objLayers,
+            arrLayerStates: arrLayers
+        });
     }
-
+    setObjLayers(objLayers) {
+        this.setState({
+            objLayers: objLayers
+        });
+    }
+    setLayerStates(arrLayerStates) {
+        this.setState({
+            arrLayerStates: arrLayerStates
+        });
+    }
     hideOtherComponents(objComponent) {
         let components = this.components;
         for (let key in components) {
@@ -766,6 +780,6 @@ export class MapController extends Component{
     }
     render() {
         let target = document.querySelector('#' + this.props.mapData.mapDiv + ' .' +cssConstants.OL_OVERLAYCONTAINER_SE);
-        return (<StarboardPanel target={target} mapController={this} objLayers={this.state.objLayers} direction={"right"} open={!!this.props.mapData.starboard.open}/>);
+        return (<StarboardPanel target={target} mapController={this} objLayers={this.state.objLayers} layerStates={this.state.arrLayerStates} parentCallback={this.setLayerStates} direction={"right"} open={!!this.props.mapData.starboard.open}/>);
     }
 }
