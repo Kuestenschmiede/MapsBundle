@@ -286,7 +286,7 @@ export class MapsControls {
                 namespace: 'c4g_geobookmarks'/*,
                 className: cssConstants.GEOBOOKMARKS*/ //ToDo implement for own styling
             });
-            this.map.addControl(this.controls.geobookmarks);
+            map.addControl(this.controls.geobookmarks);
             this.rightSlideElements.push('.ol-bookmark');
 
         }
@@ -295,7 +295,7 @@ export class MapsControls {
             this.controls.scaleline = new ScaleLine({
                 target: controlContainerBottomLeft
             });
-            this.map.addControl(this.controls.scaleline);
+            map.addControl(this.controls.scaleline);
         }
 
         // zoom-level & mouse-position

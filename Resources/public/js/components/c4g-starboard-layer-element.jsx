@@ -70,7 +70,7 @@ export class C4gStarboardLayerElement extends Component {
                 }
             }
         });
-        layerController.vectorLayer.setSource(layerController.clusterSource);
+        layerController.vectorLayer.setSource(layerController.vectorSource);
     }
     hideLayer(features = null) {
         const scope = this;
@@ -88,8 +88,10 @@ export class C4gStarboardLayerElement extends Component {
         }
         let vectorCollection = layerController.vectorCollection;
         let featureArray = vectorCollection.getArray();
-        if (features && features.length > 0) {
 
+        if (features && features.length > 0) {
+            delete layerController.vectorCollection;
+            delete layerController.vectorSource;
             let length = vectorCollection.getLength();
             for (let featureId in features) {
                 if (features.hasOwnProperty(featureId)) {
@@ -98,9 +100,11 @@ export class C4gStarboardLayerElement extends Component {
                     length--;
                 }
             }
-            vectorCollection.set('length', length);
-            vectorCollection.dispatchEvent('change');
-            vectorSource.dispatchEvent('change');
+            layerController.vectorCollection = new Collection(featureArray);
+            layerController.vectorSource = new VectorSource({
+                features: layerController.vectorCollection
+            });
+            layerController.vectorLayer.setSource(layerController.vectorSource);
         }
 
     }

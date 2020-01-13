@@ -183,7 +183,7 @@ export class BetterLayerController {
             }
         });
         this.vectorLayer = new Vector({
-            source: this.clusterSource,
+            source: this.vectorSource,
             style: this.clusterStyleFunction
         });
         this.layerRequests = {};
@@ -258,15 +258,19 @@ export class BetterLayerController {
         }
     }
     getFeaturesFromStruct(structure) {
-        let features = []
-        if (structure.childs && structure.childs.length > 0) {
-            for (let structId in structure.childs) {
-                if (structure.childs.hasOwnProperty(structId)) {
-                    features = features.concat(this.getFeaturesFromStruct(structure.childs[structId]));
+        let features = [];
+        if (!structure.hide) {
+            if (structure.childs && structure.childs.length > 0) {
+                for (let structId in structure.childs) {
+                    if (structure.childs.hasOwnProperty(structId)) {
+                        if (!structure.childs[structId].hide) {
+                            features = features.concat(this.getFeaturesFromStruct(structure.childs[structId]));
+                        }
+                    }
                 }
             }
+            features = features.concat(structure.features);
         }
-        features = features.concat(structure.features);
         return features;
     }
 
@@ -277,7 +281,7 @@ export class BetterLayerController {
         if (layer.content && layer.content.length > 0) {
             features = this.getFeaturesForLayer(layer);
         }
-        if (layer.async_content) {
+        if (layer.async_content && false) {
             let url = "";
             let locstyleId = 0;
             let params = "";
