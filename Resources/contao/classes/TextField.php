@@ -18,7 +18,6 @@ namespace con4gis\MapsBundle\Resources\contao\classes;
  */
 class TextField extends \Contao\TextField
 {
-
     /**
      * Check custom setting 'require_input', which implements custom mandatory handling possibility
      * @return string
@@ -28,7 +27,7 @@ class TextField extends \Contao\TextField
         if (($this->require_input) && ($this->value == '')) {
             $this->required = true;
         }
+
         return parent::generateLabel();
     }
-
 }

@@ -11,6 +11,7 @@
  * @link       https://www.con4gis.org
  */
 namespace con4gis\MapsBundle\Resources\contao\classes;
+
 use con4gis\CoreBundle\Resources\contao\classes\ResourceLoader as coreResourceLoader;
 use con4gis\CoreBundle\Resources\contao\models\C4gSettingsModel;
 use con4gis\MapsBundle\Classes\Events\LoadMapResourcesEvent;
@@ -33,9 +34,8 @@ class ResourceLoader extends coreResourceLoader
     /**
      * @TODO: doku
      */
-    public static function loadResources($resources=array(), $mapData = [])
+    public static function loadResources($resources = [], $mapData = [])
     {
-
         global $objPage;
 
         // $objPage->hasJQuery;
@@ -44,13 +44,12 @@ class ResourceLoader extends coreResourceLoader
 
         if (!is_array($resources) || empty($resources)) {
             $allByDefault = true;
-            $resources = array();
+            $resources = [];
         } else {
             $allByDefault = false;
         }
 
-        $resources = array_merge(array
-        (
+        $resources = array_merge([
             'core' => $allByDefault,
             'openlayers' => $allByDefault,
             'geopicker' => $allByDefault,
@@ -74,7 +73,7 @@ class ResourceLoader extends coreResourceLoader
             'customtab' => $allByDefault,
             'cesium' => false, //Default
             'olms' => $allByDefault,
-        ),
+        ],
         $resources);
 
         // debug-mode active?
@@ -139,7 +138,7 @@ class ResourceLoader extends coreResourceLoader
                     $profiles = C4gMapProfilesModel::findAll();
                     if ($profiles && (count($profiles) > 0)) {
                         $length = count($profiles);
-                        $profile = $profiles[$length-1];
+                        $profile = $profiles[$length - 1];
                     } else {
                         return;
                     }
@@ -153,13 +152,15 @@ class ResourceLoader extends coreResourceLoader
 
         if ($profile->zoom_panel_button) {
             $zoom_pane_buttons = unserialize($profile->zoom_panel_button);
-            foreach($zoom_pane_buttons as $key => $zoom_panel_button){
+            foreach ($zoom_pane_buttons as $key => $zoom_panel_button) {
                 switch ($zoom_panel_button) {
                     case '3':
                         $zoom_position = true;
+
                         break;
                     case '2':
                         $zoom_home = true;
+
                         break;
                     default:
                 }
@@ -167,8 +168,7 @@ class ResourceLoader extends coreResourceLoader
         }
 
         // check which resources are needed
-        $resources = array
-        (
+        $resources = [
             'core' => true,
             // @TODO: check BE-Switch
             'openlayers' => true,
@@ -193,8 +193,8 @@ class ResourceLoader extends coreResourceLoader
             'plugins' => true,
             'customtab' => true,
             'cesium' => $profile->cesium,
-            'olms' => true //ToDo basemap check
-        );
+            'olms' => true, //ToDo basemap check
+        ];
 
         // load theme
         self::loadResources($resources, $mapData);
@@ -209,7 +209,7 @@ class ResourceLoader extends coreResourceLoader
     {
         // TODO defer CSS scripts?
         if ($themeId != -1) {
-          $theme = C4gMapThemesModel::findByPk($themeId);
+            $theme = C4gMapThemesModel::findByPk($themeId);
         }
 
         if (!$theme) {
@@ -218,25 +218,26 @@ class ResourceLoader extends coreResourceLoader
             parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/buttons/c4g-theme-buttons.css');
             parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/colors/c4g-theme-colors.css');
             parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/effects/c4g-theme-effects.css');
+
             return true;
         }
 
-        $themeData = array();
+        $themeData = [];
 
-        /**
+        /*
          * If custom stylesheet were uploaded, load them. If not, load the selected builtin style.
          */
         if ($theme->custom_icons) {
             $objFile = \FilesModel::findByUuid($theme->external_icons);
             parent::loadCssResource($objFile->path);
-        } else if ($theme->icons) {
+        } elseif ($theme->icons) {
             parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/icons/' . $theme->icons);
         }
 
         if ($theme->custom_buttons) {
             $objFile = \FilesModel::findByUuid($theme->external_buttons);
             parent::loadCssResource($objFile->path);
-        } else if ($theme->buttons) {
+        } elseif ($theme->buttons) {
             parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/buttons/' . $theme->buttons);
 
             if ($theme->buttonradius) {
@@ -247,7 +248,7 @@ class ResourceLoader extends coreResourceLoader
         if ($theme->custom_colors) {
             $objFile = \FilesModel::findByUuid($theme->external_colors);
             parent::loadCssResource($objFile->path);
-        } else if ($theme->colors) {
+        } elseif ($theme->colors) {
             parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/colors/' . $theme->colors);
 
             if ($theme->maincolor) {
@@ -264,22 +265,22 @@ class ResourceLoader extends coreResourceLoader
             }
             if ($theme->popupMaincolor) {
                 $themeData['popupMaincolor'] = $theme->popupMaincolor;
-            } else if ($theme->maincolor) {
+            } elseif ($theme->maincolor) {
                 $themeData['popupMaincolor'] = $theme->maincolor;
             }
             if ($theme->popupMainopacity) {
                 $themeData['popupMainopacity'] = deserialize($theme->popupMainopacity);
-            } else if ($theme->mainopacity) {
+            } elseif ($theme->mainopacity) {
                 $themeData['popupMainopacity'] = $theme->mainopacity;
             }
             if ($theme->popupFontcolor) {
                 $themeData['popupFontcolor'] = $theme->popupFontcolor;
-            }  else if ($theme->fontcolor) {
+            } elseif ($theme->fontcolor) {
                 $themeData['popupFontcolor'] = $theme->fontcolor;
             }
             if ($theme->popupFontopacity) {
                 $themeData['popupFontopacity'] = deserialize($theme->popupFontopacity);
-            } else if ($theme->fontopacity) {
+            } elseif ($theme->fontopacity) {
                 $themeData['popupFontopacity'] = $theme->fontopacity;
             }
             if ($theme->shadowcolor) {
@@ -295,7 +296,7 @@ class ResourceLoader extends coreResourceLoader
         if ($theme->custom_effects) {
             $objFile = \FilesModel::findByUuid($theme->external_effects);
             parent::loadCssResource($objFile->path);
-        } else if ($theme->effects) {
+        } elseif ($theme->effects) {
             parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/effects/' . $theme->effects);
         }
 
@@ -306,7 +307,7 @@ class ResourceLoader extends coreResourceLoader
      * Loads the default geopicker profile and resources according to that profile
      * @return void
      */
-    public static function loadGeopickerResources($additionalResources = array())
+    public static function loadGeopickerResources($additionalResources = [])
     {
         //load geopicker profile
         $profile = C4gMapProfilesModel::findBy('is_backend_geopicker_default', 1);
@@ -318,7 +319,7 @@ class ResourceLoader extends coreResourceLoader
                 $profiles = C4gMapProfilesModel::findAll();
                 if ($profiles && (!empty($profiles))) {
                     $length = count($profiles);
-                    $profile = $profiles[$length-1];
+                    $profile = $profiles[$length - 1];
                 } else {
                     return;
                 }

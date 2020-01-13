@@ -37,6 +37,7 @@ class Utils
         if (self::validateGeo($value)) {
             return (($value >= -180.0) && ($value <= 180.0));
         }
+
         return false;
     }
 
@@ -48,11 +49,12 @@ class Utils
     public static function validateLat($value)
     {
         if (strpos($value, '{{') !== -1) {
-          return true;
+            return true;
         }
         if (self::validateGeo($value)) {
             return (($value >= -90.0) && ($value <= 90.0));
         }
+
         return false;
     }
 
@@ -70,9 +72,10 @@ class Utils
         if ($value == 0) {
             return false;
         }
+
         return true;
     }
-    
+
     /**
      * Custom implementation of the replaceInsertTags function for the iflng and ifnlng tags to workaround
      * the issue that the global page object is null in the baselayer request.
@@ -85,15 +88,16 @@ class Utils
         // convert string into a more parsable form
         $result = $toReplace;
         global $objPage;
-        $id = Database::getInstance()->prepare("SELECT id FROM tl_page LIMIT 1")->execute()->fetchAssoc();
+        $id = Database::getInstance()->prepare('SELECT id FROM tl_page LIMIT 1')->execute()->fetchAssoc();
         $objPage = $objPage ?: PageModel::findByPk($id['id']);
         $objPage->language = $lang;
-        $objPage->title = "";
+        $objPage->title = '';
         $result = html_entity_decode(Controller::replaceInsertTags($result));
         $objPage = null;
+
         return $result;
     }
-    
+
     private static function processRegex($regex, $toReplace, $lang)
     {
         $matches = [];
@@ -104,28 +108,29 @@ class Utils
             $replacement = static::replaceSingleLangTag($match, $lang);
             $result = str_replace($match, $replacement, $result);
         }
+
         return Controller::replaceInsertTags($result);
     }
-    
+
     private static function replaceSingleLangTag($toReplace, $lang)
     {
-        $toReplace = str_replace("{{", "\\", $toReplace);
-        $toReplace = str_replace("}}", "\\", $toReplace);
-        $toReplace = str_replace("//", "\\", $toReplace);
-        $arrReplace = explode("\\", $toReplace);
-        $result = "";
-        $cachedResult = "";
+        $toReplace = str_replace('{{', '\\', $toReplace);
+        $toReplace = str_replace('}}', '\\', $toReplace);
+        $toReplace = str_replace('//', '\\', $toReplace);
+        $arrReplace = explode('\\', $toReplace);
+        $result = '';
+        $cachedResult = '';
         foreach ($arrReplace as $key => $value) {
             if (strlen($value) > 6) {
                 // check if the value contains a language tag
-                if (substr($value, 0, 6) === "ifnlng") {
-                    $arrLang = explode("::", $value);
+                if (substr($value, 0, 6) === 'ifnlng') {
+                    $arrLang = explode('::', $value);
                     if ($arrLang[1] !== $lang) {
                         // language does not match, so get the value
                         $result .= $arrReplace[$key + 1];
                     }
-                } else if (substr($value, 0, 6) === "iflng:") {
-                    $arrLang = explode("::", $value);
+                } elseif (substr($value, 0, 6) === 'iflng:') {
+                    $arrLang = explode('::', $value);
                     if ($arrLang[1] === $lang) {
                         // language does match, so get the value
                         $result .= $arrReplace[$key + 1];
@@ -133,12 +138,13 @@ class Utils
                 }
             }
         }
-        if ($result === "") {
+        if ($result === '') {
             $result = $toReplace;
         }
+
         return $result;
     }
-    
+
     /**
      * Returns an array of location types that are supported by maps per default.
      * @return array

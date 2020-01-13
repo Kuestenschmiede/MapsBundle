@@ -40,9 +40,9 @@ class MapDataConfigurator
      * @param  array  $options  [description]
      * @return [type]           [description]
      */
-    public static function prepareMapData($objThis, $database, $options = array())
+    public static function prepareMapData($objThis, $database, $options = [])
     {
-        $mapData = array();
+        $mapData = [];
         $mapData['mapId'] = $objThis->id;
 
         // import user, if not already done
@@ -62,7 +62,7 @@ class MapDataConfigurator
             $map = new C4gMapsModel();
             $map->id = 0;
         }
-        $language = Controller::replaceInsertTags("{{page::language}}") ?  Controller::replaceInsertTags("{{page::language}}") : substr($GLOBALS['_SERVER']['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+        $language = Controller::replaceInsertTags('{{page::language}}') ?  Controller::replaceInsertTags('{{page::language}}') : substr($GLOBALS['_SERVER']['HTTP_ACCEPT_LANGUAGE'], 0, 2);
         $mapData['id'] = $map->id;
         $mapData['lang'] = $language;
 
@@ -104,7 +104,7 @@ class MapDataConfigurator
                 $profiles = C4gMapProfilesModel::findAll();
                 if ($profiles && (count($profiles) > 0)) {
                     $length = count($profiles);
-                    $profileId = $profiles[$length-1];
+                    $profileId = $profiles[$length - 1];
                 }
             }
         }
@@ -131,7 +131,7 @@ class MapDataConfigurator
         // use default if the profile was not found
         if (!$profile) {
             if (!$options['type'] == 'geopicker') {
-                $profile = C4gMapProfilesModel::findBy('is_backend_geopicker_default',1);
+                $profile = C4gMapProfilesModel::findBy('is_backend_geopicker_default', 1);
                 if (!$profile) {
                     $settings = C4gSettingsModel::findAll();
                     $profile = $settings[0]->defaultprofile;
@@ -139,7 +139,7 @@ class MapDataConfigurator
                         $profiles = C4gMapProfilesModel::findAll();
                         if ($profiles && (count($profiles) > 0)) {
                             $length = count($profiles);
-                            $profile = $profiles[$length-1];
+                            $profile = $profiles[$length - 1];
                         }
                     }
                 }
@@ -159,7 +159,7 @@ class MapDataConfigurator
 
                 // map-information
                 //
-                $mapData['attribution'] = array();
+                $mapData['attribution'] = [];
                 $mapData['attribution']['enable'] = true;
                 $mapData['attribution']['collapsed'] = true;
                 $mapData['attribution']['cfg_logo'] = false;
@@ -170,14 +170,13 @@ class MapDataConfigurator
                 $mapData['caching'] = 0;
             }
         }
-        
+
         $mapData['profile'] = $profileId;
 
         // ------------------------------------------------------------------------
         // set basic map options
         // ------------------------------------------------------------------------
-        if (!$mapData['id'])
-        {
+        if (!$mapData['id']) {
             $mapData['mapId'] = 0;
             $mapData['id'] = 0;
         }
@@ -243,10 +242,9 @@ class MapDataConfigurator
             }
 
             // map-extend
-            if($map->show_locations == "1"){
+            if ($map->show_locations == '1') {
                 $mapData['calc_extent'] = 'LOCATIONS';
-            }
-            else{
+            } else {
                 $mapData['calc_extent'] = 'CENTERZOOM';
             }
             if ($mapData['calc_extent'] == 'LOCATIONS') {
@@ -287,7 +285,6 @@ class MapDataConfigurator
             //
             $mapData['default_baselayer'] = $profile->default_baselayer;
 
-
             // location-style resizing
             //
 //            $mapData['resize_locstyles_zoom'] = $profile->resize_locstyles_zoom;
@@ -296,26 +293,29 @@ class MapDataConfigurator
                     'srcZoom' => $profile->resize_src_zoom,
                     'scaleFactor' => $profile->resize_scale_factor,
                     'minScale' => $profile->resize_min_scale,
-                    'maxScale' => $profile->resize_max_scale
+                    'maxScale' => $profile->resize_max_scale,
                 ];
             }
 
             // map-navigation
             //
-            $mapData['zoom_panel']  = $profile->zoom_panel;
+            $mapData['zoom_panel'] = $profile->zoom_panel;
 
             if ($profile->zoom_panel_button) {
                 $zoom_panel_buttons = unserialize($profile->zoom_panel_button);
-                foreach($zoom_panel_buttons as $key => $zoom_panel_button){
+                foreach ($zoom_panel_buttons as $key => $zoom_panel_button) {
                     switch ($zoom_panel_button) {
                         case '3':
                             $mapData['zoom_position'] = true;
+
                             break;
                         case '2':
                             $mapData['zoom_home'] = true;
+
                             break;
                         case '1':
                             $mapData['zoom_extent'] = true;
+
                             break;
                         default:
                     }
@@ -334,6 +334,7 @@ class MapDataConfigurator
                         // falltrough
                     case '1':
                         $mapData['mouse_nav']['drag_rotate'] = true;
+
                         break;
                     default:
                 }
@@ -390,7 +391,7 @@ class MapDataConfigurator
             $mapData['attribution']['enable'] = $profile->attribution;
             if ($profile->attribution) {
                 $settings = C4gMapSettingsModel::findOnly();
-                if($settings->con4gisIoUrl && $settings->con4gisIoKey) {
+                if ($settings->con4gisIoUrl && $settings->con4gisIoKey) {
                     $mapData['attribution']['con4gisIO'] = 1;
                 }
                 $mapData['attribution']['collapsed'] = $profile->collapsed_attribution;
@@ -414,7 +415,7 @@ class MapDataConfigurator
             }
             $mapData['zoomlevel'] = $profile->zoomlevel;
             if ($profile->account > 0) {
-                $mapData['account'] = \Contao\Controller::replaceInsertTags("{{insert_module::".$profile->account."}}", false);
+                $mapData['account'] = \Contao\Controller::replaceInsertTags('{{insert_module::' . $profile->account . '}}', false);
             } else {
                 $maptData['account'] = '';
             }
@@ -447,14 +448,14 @@ class MapDataConfigurator
                 $mapData['geosearch']['attribution'] = \Contao\Controller::replaceInsertTags($profile->geosearch_attribution);
                 $mapData['geosearch']['collapsed'] = $profile->geosearch_collapsed;
                 $keyForward = null;
-                if ($profile->geosearch_engine == "4") {
-                    $keyForward = (array) C4GUtils::getKey($objSettings, '2', "", false);
+                if ($profile->geosearch_engine == '4') {
+                    $keyForward = (array) C4GUtils::getKey($objSettings, '2', '', false);
                     $mapData['geosearch']['searchKey'] = $keyForward['key'];
-                    $mapData['geosearch']['reverseKey'] = ((array) C4GUtils::getKey($objSettings, '3', "", false))['key'];
-                    $mapData['geosearch']['url'] = rtrim($objSettings->con4gisIoUrl, "/") . "/";
+                    $mapData['geosearch']['reverseKey'] = ((array) C4GUtils::getKey($objSettings, '3', '', false))['key'];
+                    $mapData['geosearch']['url'] = rtrim($objSettings->con4gisIoUrl, '/') . '/';
                     $mapData['geosearch']['params'] = [];
-                    if($profile->geosearchParams){
-                        foreach(unserialize($profile->geosearchParams) as $geosearchParam){
+                    if ($profile->geosearchParams) {
+                        foreach (unserialize($profile->geosearchParams) as $geosearchParam) {
                             $mapData['geosearch']['params'] = array_merge($mapData['geosearch']['params'], [$geosearchParam['keys'] => $geosearchParam['params']]);
                         }
                     }
@@ -463,20 +464,25 @@ class MapDataConfigurator
                 switch ($profile->geosearch_engine) {
                     case '1':
                         $mapData['attribution']['geosearch'] = 'Nominatim Search Courtesy of <a href="https://operations.osmfoundation.org/policies/nominatim/" target="_blank">OpenStreetMap</a>';
+
                         break;
                     case '2':
                         $mapData['attribution']['geosearch'] = 'Nominatim Search Courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png" alt="" />';
+
                         break;
                     case '3':
                         if ($profile->attribution && $profile->geosearch_customengine_attribution) {
                             $mapData['attribution']['geosearch'] = \Contao\Controller::replaceInsertTags($profile->geosearch_customengine_attribution);
                         }
+
                         break;
                     case '4':
                         $mapData['attribution']['geosearch'] = $keyForward['attribution'];
+
                         break;
                     default:
                         $mapData['attribution']['geosearch'] = 'Nominatim Search Courtesy of <a href="https://operations.osmfoundation.org/policies/nominatim/" target="_blank">OpenStreetMap</a>';
+
                         break;
                 }
             }
@@ -489,7 +495,7 @@ class MapDataConfigurator
                 $mapData['geopicker']['input_geo_x'] = '#' . $profile->geopicker_fieldx;
                 $mapData['geopicker']['input_geo_y'] = '#' . $profile->geopicker_fieldy;
                 $mapData['geopicker']['anonymous'] = $profile->geopicker_anonymous;
-                $mapData['geopicker']['disabled']  = $profile->geopicker_disabled;
+                $mapData['geopicker']['disabled'] = $profile->geopicker_disabled;
             }
 
             if ($profile->label_color) {
@@ -511,33 +517,32 @@ class MapDataConfigurator
             // cesium
             //
             if ($profile->cesium) {
-                $mapData['cesium'] = array();
+                $mapData['cesium'] = [];
                 $mapData['cesium']['enable'] = $profile->cesium;
                 $mapData['cesium']['always'] = $profile->cesium_always;
             }
 
             // overpass handling
             //
-            if ($profile->overpassEngine === "2") {
+            if ($profile->overpassEngine === '2') {
                 $key = C4GUtils::getKey($objSettings, '5');
                 $mapData['ovp_key'] = $key;
             }
-            
+
             // check baselayers if a key is needed
             $blKeys = static::checkBaselayers($profile, $objSettings);
             if (count($blKeys) > 0) {
                 $mapData['base_keys'] = $blKeys;
             }
-            
+
             // miscellaneous
             //
-            $mapData['infopage'] =  \Contao\Controller::replaceInsertTags($profile->infopage);
+            $mapData['infopage'] = \Contao\Controller::replaceInsertTags($profile->infopage);
             $mapData['link_newwindow'] = $profile->link_newwindow;
             $mapData['hover_popups'] = $profile->hover_popups;
             $mapData['hover_popups_stay'] = $profile->hover_popups_stay;
             $mapData['popupHandling'] = $profile->popupHandling;
             $mapData['openDirectly'] = $profile->openDirectly;
-
         }
 
         // mapservice
@@ -547,7 +552,6 @@ class MapDataConfigurator
             $mapData['minZoom'] = $baseLayer->minzoomlevel;
             $mapData['maxZoom'] = $baseLayer->maxzoomlevel;
         }
-
 
         // API
         //
@@ -588,10 +592,9 @@ class MapDataConfigurator
         // @TODO: Check
         $mapData['addIdToDiv'] = true;
 
-
         return $mapData;
     }
-    
+
     private static function checkBaselayers($profile, $objSettings)
     {
         $arrKeys = [];
@@ -605,14 +608,14 @@ class MapDataConfigurator
             return [];
         }
         $baseLayers = $blResult->fetchAll();
-        
+
         foreach ($baseLayers as $baseLayer) {
-            if ($baseLayer['provider'] == "con4gisIo") {
-                $catribution = C4GUtils::getKey($objSettings, '4', 'id='.$baseLayer['con4gisIo'], false); // this is a bad pun with key and attribution. But i wanted a cat instead of a kat
+            if ($baseLayer['provider'] == 'con4gisIo') {
+                $catribution = C4GUtils::getKey($objSettings, '4', 'id=' . $baseLayer['con4gisIo'], false); // this is a bad pun with key and attribution. But i wanted a cat instead of a kat
                 $arrKeys[$baseLayer['id']] = $catribution;
             }
         }
-        
+
         return $arrKeys;
     }
 }

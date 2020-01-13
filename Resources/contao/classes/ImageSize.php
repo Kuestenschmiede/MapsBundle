@@ -30,5 +30,4 @@ class ImageSize extends \Contao\ImageSize
 
         return $validatedInput;
     }
-
 }
