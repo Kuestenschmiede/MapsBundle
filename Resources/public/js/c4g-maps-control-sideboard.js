@@ -349,7 +349,7 @@ export class Sideboard extends Control {
       if (this.options.mapController["active" + this.identifier] === this) {
         //this.container.style.width = 'auto';
         containerOffsetWidth = this.container.offsetWidth;
-        this.options.mapController[this.options.direction + "SlideElements"].forEach(function (element) {
+        this.options.mapController.mapsControls[this.options.direction + "SlideElements"].forEach(function (element) {
           jQuery(element).css(self.options.direction, containerOffsetWidth);
         });
 
@@ -403,7 +403,7 @@ export class Sideboard extends Control {
         this.options.mapController["active" + this.identifier].close(true, true);
       } else {
         // slide other elements when no other sideboard was active on this side
-        this.options.mapController[this.options.direction + "SlideElements"].forEach(function (element) {
+        this.options.mapController.mapsControls[this.options.direction + "SlideElements"].forEach(function (element) {
           jQuery(element).css(self.options.direction, containerOffsetWidth);
         });
       }
@@ -494,7 +494,7 @@ export class Sideboard extends Control {
 
       if (!opt_openOtherSideboard) {
         // slide other elements
-        this.options.mapController[direction + "SlideElements"].forEach(function (element) {
+        this.options.mapController.mapsControls[direction + "SlideElements"].forEach(function (element) {
           jQuery(element).css(direction, 0);
         });
       }
