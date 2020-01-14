@@ -27,21 +27,10 @@ export class Grid extends Control {
    * @param    {Object}              opt_options  *optional* control options.
    */
   constructor (opt_options) {
-    super(opt_options);
-    var self = this;
     var options = opt_options || {};
 
     var element,
         button;
-
-    var objGrid = new Graticule({
-        /*
-        strokeStyle: new ol.style.Stroke({
-            width: 2,
-            lineDash: [0.5, 4]
-        }),*/
-        showLabels: true
-    });
 
     let langConstants = getLanguage(options.mapController.data);
     // default options
@@ -50,14 +39,20 @@ export class Grid extends Control {
       switchable: true,
       tipLabel: langConstants.CTRL_GRID,
       label: '#',
-      disableLabel: '[]'
+      disableLabel: '[]',
+      showLabels: true,
+      map: options.mapController.map,
+      visible: false
     }, options);
+    super(opt_options);
+    var self = this;
+    var objGrid = new Graticule(options);
 
     // @TODO move functions to prototype?
     //
     // function to enable the grid
     var enable = function () {
-      objGrid.setMap(self.getMap());
+      objGrid.setVisible(true);
       jQuery(element).addClass(cssConstants.ENABLED);
       // if (options.caching) {
       //     c4g.maps.utils.storeValue('grid', '1');
@@ -66,7 +61,7 @@ export class Grid extends Control {
 
     // function to disable the grid
     var disable = function () {
-      objGrid.setMap(null);
+      objGrid.setVisible(false);
       jQuery(element).removeClass(cssConstants.ENABLED);
       // if (options.caching) {
       //     c4g.maps.utils.storeValue('grid', '0');
@@ -78,7 +73,7 @@ export class Grid extends Control {
       event.stopPropagation();
       // loose focus, otherwise it looks messy
       this.blur();
-      if (objGrid.getMap()) {
+      if (objGrid.getVisible()) {
         disable();
       } else {
         enable();
@@ -99,6 +94,8 @@ export class Grid extends Control {
       button.addEventListener('click', toggle, {useCapture: false, passive: true});
       button.addEventListener('touchstart', toggle, {useCapture: false, passive: true});
     }
+
+    options.mapController.map.addLayer(objGrid);
 
     // inheritance-stuff
     Control.call(this, {

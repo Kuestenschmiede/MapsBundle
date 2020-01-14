@@ -74,6 +74,14 @@ class LayerController extends BaseController
             $modifiedData['layer'][$key] = $this->addCustomLogic($layer);
 //            $modifiedData['layer'][$key] = $layerService->forceChildsInContent($modifiedData['layer'][$key]);
         }
+//        $features = $layerService->getFeaturesFromLayerTree($modifiedData['layer']);
+//        $modifiedData['features'] = [
+//            'type'          => "FeatureCollection",
+//            'properties'    => [
+//                'projection' => "EPSG:4326"
+//            ],
+//            'features'      => $features
+//        ];
         $response->setData($modifiedData);
         
         return $response;

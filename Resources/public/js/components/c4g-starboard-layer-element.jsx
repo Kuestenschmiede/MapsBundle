@@ -13,185 +13,221 @@
 
 import React, { Component } from "react";
 import {cssConstants} from "./../c4g-maps-constant.js";
+import Collection from "ol/Collection";
+import {Vector as VectorSource} from "ol/source";
+import {Cluster} from "ol/source";
 
 export class C4gStarboardLayerElement extends Component {
 
     constructor(props) {
         super(props);
         const scope = this;
-        if (scope.props.objStates[scope.props.id].contentFeature) {
-            this.state = {
-                initialized: false,
-                active: !props.objStates[props.id].hide,
-                collapsed: this.props.collapsed,
-                disabled: props.mapController.proxy.checkLayerIsActiveForZoom(scope.props.pid)
-            };
-        }
-        else {
-            this.state = {
-                initialized: false,
-                active: !props.objStates[props.id].hide,
-                collapsed: this.props.collapsed,
-                disabled: props.mapController.proxy.checkLayerIsActiveForZoom(scope.props.id)
-            };
-        }
 
-
+        this.state = {
+            collapsed: true
+        }
+        this.layerClick = this.layerClick.bind(this);
+        this.spanClick = this.spanClick.bind(this);
+        this.parentCallback = this.parentCallback.bind(this);
     }
 
-    static getDerivedStateFromProps(props, state) {
-        if (state.active === props.objStates[props.id].hide) {
-            return {
-                active: !props.objStates[props.id].hide
+
+    showLayer(features = null) {
+        const scope = this;
+        features = features || scope.props.layer.features;
+        let layerController = scope.props.mapController.proxy.layerController;
+        let vectorSource = layerController.vectorSource;
+        let clusterSource = layerController.clusterSource;
+        let vectorLayer = layerController.vectorLayer;
+        if (scope.props.layer.loader >= 0 && layerController.loaders[scope.props.layer.loader] && layerController.loaders[scope.props.layer.loader].preventLoading) {
+            layerController.loaders[scope.props.layer.loader].preventLoading = false;
+        }
+        let arrFeatures = layerController.vectorCollection.getArray();
+        delete layerController.vectorCollection;
+        delete layerController.vectorSource;
+        delete layerController.clusterSource;
+        // delete layerController.vectorLayer;
+
+        if (features && features.length > 0) {
+            arrFeatures = arrFeatures.concat(features);
+        }
+        layerController.vectorCollection = new Collection(arrFeatures);
+        layerController.vectorSource = new VectorSource({
+            features: layerController.vectorCollection
+        });
+        layerController.clusterSource = new Cluster({
+            source: layerController.vectorSource,
+            geometryFunction: function (feature) {
+                let type = feature.getGeometry().getType();
+                if (type === "MultiPolygon") {
+                    return feature.getGeometry().getInteriorPoints()[0];
+                }
+                else if (type === "Polygon"){
+                    return feature.getGeometry().getInteriorPoint();
+                }
+                else {
+                    return  feature.getGeometry();
+                }
+            }
+        });
+        layerController.vectorLayer.setSource(layerController.vectorSource);
+    }
+    hideLayer(features = null) {
+        const scope = this;
+        features = features || scope.props.layer.features;
+        let layerController = scope.props.mapController.proxy.layerController;
+        let vectorSource = layerController.vectorSource;
+        let clusterSource = layerController.clusterSource;
+        let vectorLayer = layerController.vectorLayer;
+        if (scope.props.layer.loader >= 0) {
+            let loader = layerController.loaders[scope.props.layer.loader];
+            layerController.loaders[scope.props.layer.loader].preventLoading = true;
+            if (loader.request) {
+                loader.request.abort();
             }
         }
-        return null;
-    }
+        let vectorCollection = layerController.vectorCollection;
+        let featureArray = vectorCollection.getArray();
 
-    callbackFunction = (objChild = null) => {
-        if (!objChild) {
-            let objReturn = this.props.objStates;
-            let newState = !objReturn[this.props.id].hide;
-            objReturn[this.props.id].hide = newState;
-            if (objReturn[this.props.id].childs)
-            {
-                for (let key in objReturn[this.props.id].childs) {
-                    if (objReturn[this.props.id].childs.hasOwnProperty(key)) {
-                        this.hideShowChilds(objReturn[this.props.id].childs[key], newState);
+        if (features && features.length > 0) {
+            delete layerController.vectorCollection;
+            delete layerController.vectorSource;
+            let length = vectorCollection.getLength();
+            for (let featureId in features) {
+                if (features.hasOwnProperty(featureId)) {
+                    let delIndex = featureArray.indexOf(features[featureId]);
+                    featureArray.splice(delIndex, 1);
+                    length--;
+                }
+            }
+            layerController.vectorCollection = new Collection(featureArray);
+            layerController.vectorSource = new VectorSource({
+                features: layerController.vectorCollection
+            });
+            layerController.vectorLayer.setSource(layerController.vectorSource);
+        }
+
+    }
+    changeChildState (child, childState, active) {
+        if (active) {
+            this.showLayer(child.features);
+        }
+        else {
+            this.hideLayer(child.features);
+        }
+        if (child.childs && child.childs.length > 0) {
+            for (let childId in child.childs) {
+                if (child.childs.hasOwnProperty(childId)) {
+                    let currentChildState = childState.childStates[childId].active;
+                    if (currentChildState !== active) {
+                        childState.childStates[childId] = this.changeChildState(child.childs[childId], childState.childStates[childId], active);
                     }
                 }
             }
-            this.props.parentCallback(objReturn);
         }
-        else {
-            let objReturn = this.props.objStates;
-            objReturn[this.props.id].childs = objChild;
-            this.props.parentCallback(objReturn);
-        }
-
-    };
-
-    hideShowChilds = (objChild, newState) => {
-        objChild.hide = newState;
-        if (objChild.childs) {
-            for (let key in objChild.childs) {
-                if (objChild.childs.hasOwnProperty(key)) {
-                   this.hideShowChilds(objChild.childs[key], newState)
-                }
-            }
-        }
-        if (!newState && objChild.contentFeature) {
-            let id = objChild.contentFeature.getId();
-            let vectorLayer = this.props.mapController.proxy.layerController.arrLayers[this.props.id].vectorLayer;
-            let vectorSource = this.getSource(vectorLayer);
-            if (vectorSource && !vectorSource.getFeatureById(id)) {
-                vectorSource.addFeature(objChild.contentFeature);
-            }
-        }
-        return objChild
-    };
-    getSource = (layer) => {
-        if (layer.getSource && layer.getSource()) {
-            return layer.getSource();
-        }
-        else if (layer.getLayers && layer.getLayers()) {
-            let layers = layer.getLayers().getArray();
-            for (let singleLayer in layers) {
-                if(layers.hasOwnProperty(singleLayer)) {
-                    return this.getSource(layers[singleLayer]);
-                }
-            }
-        }
-    };
-
-    removeElement = (elementId) => {
-
+        childState.active = active;
+        return childState;
     }
-
-    layerClick = (e) => {
-        const scope = this;
+    parentCallback (key, newChildState) {
+        let newState = this.props.layerStates;
+        newState.childStates[key] = newChildState;
+        if (newState.active != newChildState.active) {
+            // newState.active = newChildState.active;
+            if (newChildState.active) {
+                this.showLayer();
+            }
+            else {
+                this.hideLayer();
+            }
+        }
+        this.props.parentCallback(this.props.id, newState)
+    }
+    layerClick(e) {
         e.stopPropagation();
         e.nativeEvent.stopImmediatePropagation();
-        scope.callbackFunction();
-        if (scope.props.objStates[scope.props.id].contentFeature) {
-            let vectorLayer = scope.props.mapController.proxy.layerController.arrLayers[scope.props.pid].vectorLayer;
-            let vectorSource = scope.getSource(vectorLayer);
-            let feature = scope.props.objStates[scope.props.id].contentFeature;
-            if (scope.state.active && vectorSource.getFeatureById(scope.props.id)) {
-                vectorSource.removeFeature(feature);
-            }
-            else if (!scope.state.active && !vectorSource.getFeatureById(scope.props.id)){
-                vectorSource.addFeature(feature)
-            }
+        if (!this.props.layerStates.active) {
+            this.showLayer();
         }
         else {
-            if (!scope.state.active) {
-                scope.props.mapController.proxy.layerController.showLayer(scope.props.id);
-            } else {
-                scope.props.mapController.proxy.layerController.hideLayer(scope.props.id);
+            this.hideLayer();
+        }
+        let newState = this.props.layerStates;
+        newState.active = !newState.active;
+        if (this.props.layer.childs && this.props.layer.childs.length > 0) {
+            let layerChilds = this.props.layer.childs;
+            for (let childId in layerChilds) {
+                if (layerChilds.hasOwnProperty(childId)) {
+                    let currentChildState = newState.childStates[childId].active;
+                    if (currentChildState !== newState.active) {
+                        newState.childStates[childId] = this.changeChildState(layerChilds[childId], newState.childStates[childId], newState.active);
+                    }
+                }
             }
         }
-
-    };
-
+        this.props.parentCallback(this.props.id, newState)
+    }
+    spanClick(e) {
+        e.stopPropagation();
+        e.nativeEvent.stopImmediatePropagation();
+        this.setState({
+            collapsed : !this.state.collapsed
+        });
+    }
     render() {
         const scope = this;
         let span = null;
-        let bodyClass = document.getElementsByTagName("body")[0].className;
-        let isMobile = bodyClass.includes("phone") || bodyClass.includes("tablet") || bodyClass.includes("ios");
-        if (this.props.objStates && this.props.objStates[this.props.id] && this.props.objStates[this.props.id].childs) {
-            let spanClick = function(e) {
-                e.stopPropagation();
-                e.nativeEvent.stopImmediatePropagation();
-                if (scope.state.collapsed) {
-                    scope.setState({collapsed: false});
-                }
-                else {
-                    scope.setState({collapsed: true});
-                }
-                scope.props.fnResize();
-            };
-            let className = "";
-            let layers = this.props.mapController.proxy.layerController.arrLayers;
-            if ((layers[this.props.id].childs && layers[this.props.id].childs.length > 0)
-                || (layers[this.props.id].content && layers[this.props.id].content[0] && layers[this.props.id].content[0].combinedJSON))
-            {
-                className = cssConstants.ICON;
-            } else {
-                className = "";
-            }
-            if (isMobile) {
-                span = <span className={className} onTouchStart={(event) => spanClick(event)}/>;
-            } else {
-                span = <span className={className} onMouseUp={(event) => spanClick(event)}/>;
-            }
+        // if(this.props.objStates && this.props.objStates[this.props.id] && this.props.objStates[this.props.id] && this.props.objStates[this.props.id].childs) {
+        //     let spanClick = function(e) {
+        //         e.stopPropagation();
+        //         e.nativeEvent.stopImmediatePropagation();
+        //         if (scope.state.collapsed) {
+        //             scope.setState({collapsed: false});
+        //         }
+        //         else {
+        //             scope.setState({collapsed: true});
+        //         }
+        //     };
+        //     span = <span className={cssConstants.ICON} onMouseUp={(event) => spanClick(event)}/>;
+        // }
+        if (this.props.layer.childs && this.props.layer.childs.length > 0) {
+            span = <span className={cssConstants.ICON} onMouseUp={(event) => this.spanClick(event)}/>;
         }
-        let cssClass = scope.state.active ? cssConstants.ACTIVE : cssConstants.INACTIVE;
-        if (!scope.props.mapController.proxy.checkLayerIsActiveForZoom(scope.props.id)) {
-            cssClass += " " + cssConstants.DISABLED;
-        }
+        let cssClass = this.props.layerStates.active ? cssConstants.ACTIVE : cssConstants.INACTIVE;
+        // if (!scope.props.mapController.proxy.checkLayerIsActiveForZoom(scope.props.id)) {
+        //     cssClass += " " + cssConstants.DISABLED;
+        // }
         let openClose = this.state.collapsed ? cssConstants.CLOSE : cssConstants.OPEN;
-        let objChilds = this.props.objStates[this.props.id].childs;
-        let anchor = "";
-        if (isMobile) {
-            anchor = <a className={cssClass} onTouchStart={(event) => this.layerClick(event)}>{this.props.name}</a>;
-        } else {
-            anchor = <a className={cssClass} onMouseUp={(event) => this.layerClick(event)}>{this.props.name}</a>
+        // let objChilds = this.props.objStates[this.props.id].childs;
+        let objChilds = this.props.layer.childs;
+        // if (this.props.objLayers.datShit) {
+        //     nameShit += this.props.objLayers.datShit;
+        // }
+        if (objChilds) {
+            return (
+                <li className={openClose}>
+                    {span}
+                    <a className={cssClass} onMouseUp={(event) => this.layerClick(event)}>{this.props.layer.name}</a>
+                    <ul>
+                        {objChilds.map((item, id) => (
+                            // <C4gStarboardLayerElement key={item} pid={this.props.id} objLayers={this.props.objLayers} objStates={objChilds} parentCallback={this.callbackFunction} id={item} mapController={this.props.mapController} name={objChilds[item].name} content={objChilds[item].content}/>
+                            <C4gStarboardLayerElement key={id} id={id} mapController={this.props.mapController}
+                                                      parentCallback={this.parentCallback}
+                                                      layerStates={this.props.layerStates.childStates[id]}
+                                                      layer={item}
+                                                      fnResize={this.props.fnResize}/>
+                        ))}
+                    </ul>
+                </li>
+            );
         }
-        return (
-            <li className={openClose}>
-                {span}
-                {anchor}
-                <ul>
-                    {Object.keys(objChilds).map(item => (
-                        <C4gStarboardLayerElement key={item} pid={this.props.id} objStates={objChilds}
-                                                  parentCallback={this.callbackFunction} id={item} fnResize={this.props.fnResize}
-                                                  mapController={this.props.mapController} name={objChilds[item].name}
-                                                  content={objChilds[item].content} collapsed={!this.props.objStates[this.props.id].childs.initial_opened}/>
-                    ))}
-                </ul>
-            </li>
-        );
-    }
+        else {
+            return (
+                <li className={openClose}>
+                    {span}
+                    <a className={cssClass} onMouseUp={(event) => this.layerClick(event)}>{this.props.layer.name}</a>
+                </li>
+            )
+        }
 
+    }
 }

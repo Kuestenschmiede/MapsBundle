@@ -14,6 +14,7 @@
 
 import {C4gBaselayerController} from "./c4g-baselayer-controller";
 import {C4gLayerController} from "./c4g-layer-controller";
+import {BetterLayerController} from "./betterLayerController";
 import {C4gLocationStyleController} from "./c4g-locationstyle-controller";
 import {C4gPopupController} from "./c4g-popup-controller";
 import {Spinner} from "./c4g-maps-misc-spinner";
@@ -98,7 +99,7 @@ export class MapProxy {
 
     this.baselayerController = new C4gBaselayerController(this);
     this.baselayerController.loadBaseLayers();
-    this.layerController = new C4gLayerController(this);
+    this.layerController = new BetterLayerController(this);
     this.layerController.loadLayers();
     this.locationStyleController = new C4gLocationStyleController(this);
     this.popupController = new C4gPopupController(this);
@@ -117,13 +118,13 @@ export class MapProxy {
         for (layerId in self.activeLayerIds) {
           if (self.activeLayerIds.hasOwnProperty(layerId)) {
             layer = self.layerController.arrLayers[layerId];
-            if (self.checkLayerIsActiveForZoom(layerId)) {
-              if (layer.isInactive) {
-                self.layerController.showLayer(layerId);
-              }
-            } else {
-              self.layerController.hideLayer(layerId, true);
-            }
+            // if (self.checkLayerIsActiveForZoom(layerId)) {
+            //   if (layer.isInactive) {
+            //     self.layerController.showLayer(layerId);
+            //   }
+            // } else {
+            //   self.layerController.hideLayer(layerId, true);
+            // }
           }
         }
 
@@ -149,13 +150,13 @@ export class MapProxy {
       for (layerId in self.activeLayerIds) {
         if (self.activeLayerIds.hasOwnProperty(layerId)) {
           layer = self.layerController.arrLayers[layerId];
-          if (self.checkLayerIsActiveForZoom(layerId)) {
-            if (layer.isInactive) {
-              self.layerController.showLayer(layerId);
-            }
-          } else {
-            self.layerController.hideLayer(layerId, true);
-          }
+          // if (self.checkLayerIsActiveForZoom(layerId)) {
+          //   if (layer.isInactive) {
+          //     self.layerController.showLayer(layerId);
+          //   }
+          // } else {
+          //   self.layerController.hideLayer(layerId, true);
+          // }
         }
       }
 

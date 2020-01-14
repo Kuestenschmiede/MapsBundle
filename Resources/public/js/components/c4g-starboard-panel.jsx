@@ -36,7 +36,7 @@ export class StarboardPanel extends Component {
     });
     let mapController = props.mapController;
     let control = new Control({element: element, target: props.target});
-    mapController.controls.horizontalPanel = control;
+    mapController.mapsControls.controls.horizontalPanel = control;
     mapController.map.addControl(control);
     this.open = this.open.bind(this);
     this.slideOutCollidingElements = this.slideOutCollidingElements.bind(this);
@@ -60,6 +60,7 @@ export class StarboardPanel extends Component {
   }
 
   render() {
+    console.log(this.props.objLayers);
     let className = this.state.className + "-" + this.state.direction;
     className += " " + (this.state.open ? "c4g-open" : "c4g-close");
     if (this.state.open) {
@@ -69,8 +70,7 @@ export class StarboardPanel extends Component {
     }
     const scope = this;
     return (
-      <StarboardLayerswitcher key={this.props.mapController.id} mapController={this.props.mapController}
-                              openfunc={this.open} open={this.state.open} fnResize={this.resizeFunction}/>
+      <StarboardLayerswitcher key={this.props.mapController.id} mapController ={this.props.mapController} objLayers={this.props.objLayers} parentCallback={this.props.parentCallback} layerStates={this.props.layerStates} openfunc={this.open} open={this.state.open}></StarboardLayerswitcher>
     )
   }
 
