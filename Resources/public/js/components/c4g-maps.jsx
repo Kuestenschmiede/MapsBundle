@@ -765,7 +765,7 @@ export class MapController extends Component{
     let components = this.components;
     for (let key in components) {
       if (components.hasOwnProperty(key)) {
-        if (components[key] !== objComponent) {
+        if (components[key] && (components[key] !== objComponent)) {
           components[key].setState({open:false});
         }
       }
@@ -776,7 +776,7 @@ export class MapController extends Component{
     let components = this.components;
     for (let key in components) {
       if (components.hasOwnProperty(key)) {
-        if (components[key] !== objComponent) {
+        if (components[key] && (components[key] !== objComponent)) {
           components[key].setState({openResults: false});
         }
       }
