@@ -60,7 +60,6 @@ export class StarboardPanel extends Component {
   }
 
   render() {
-    console.log(this.props.objLayers);
     let className = this.state.className + "-" + this.state.direction;
     className += " " + (this.state.open ? "c4g-open" : "c4g-close");
     if (this.state.open) {

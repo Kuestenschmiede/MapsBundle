@@ -326,7 +326,7 @@ export class MapProxy {
         feature = fFeatures[0];
       }
 
-      if (self.options.mapController.controls.editor && self.options.mapController.controls.editor.isOpen()) {
+      if (self.options.mapController.mapsControls.controls.editor && self.options.mapController.controls.editor.isOpen()) {
         // do not show popup when editor is open
         if (feature && feature.get('projectId')) {
             // but call click hooks
