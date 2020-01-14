@@ -221,8 +221,11 @@ button.c4g-geosearch-start:before {
 .ol-uncollapsible > button {
   display: none !important;
 }
+.c4g-overviewmap, .ol-overviewmap {
+  z-index: 91;
+}
 .c4g-overviewmap > button {
-  z-index: 50;
+  z-index: 91;
 }
 .c4g-overviewmap .ol-overviewmap {
   overflow: hidden;
@@ -240,6 +243,7 @@ button.c4g-geosearch-start:before {
   height: 100px;
   margin: auto;
   margin-top: 19px;
+
 }
 .c4g-overviewmap.c4g-close .ol-overviewmap-map {
   opacity: 0;

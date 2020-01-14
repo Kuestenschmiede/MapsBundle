@@ -406,6 +406,9 @@ class LayerService
         if ($objLayer->hide_when_in_tab) {
             $arrLayerData['hide_when_in_tab'] = true;
         }
+        if ($objLayer->hideInStarboard) {
+            $arrLayerData['hideInStarboard'] = true;
+        }
 
         $arrLayerData['type'] = $objLayer->location_type;
         if ($objLayer->location_type === 'link') {
