@@ -138,32 +138,32 @@ class LayerService
             'geometry' => $geometry,
         ];
     }
-    public function getFeaturesFromLayerTree($layerTree) {
+    public function getFeaturesFromLayerTree($layerTree)
+    {
         $features = [];
         foreach ($layerTree as $layer) {
             $features = array_merge($features, $this->getFeaturesForLayer($layer));
         }
+
         return $features;
     }
-    protected function getFeaturesForLayer($layer) {
+    protected function getFeaturesForLayer($layer)
+    {
         $features = [];
         foreach ($layer['content'] as $contentElement) {
             if ($contentElement['data'] && $contentElement['data']['type']) {
-                if ($contentElement['data']['type'] === "FeatureCollection") {
+                if ($contentElement['data']['type'] === 'FeatureCollection') {
                     if ($contentElement['data']['properties'] && $contentElement['data']['properties']['projection']) {
                         foreach ($contentElement['data']['features'] as $feature) {
                             $feature['properties']['projection'] = $contentElement['data']['properties']['projection'];
                             $features[] = $feature;
                         }
-                    }
-                    else {
+                    } else {
                         foreach ($contentElement['data']['features'] as $feature) {
                             $features[] = $feature;
                         }
                     }
-
-                }
-                else {
+                } else {
                     $features[] = $contentElement['data'];
                 }
             }
@@ -173,9 +173,10 @@ class LayerService
                 $features = array_merge($features, $this->getFeaturesForLayer($child));
             }
         }
+
         return $features;
     }
-    
+
     /**
      * Returns the layer structure for the map.
      * @param $intId

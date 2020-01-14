@@ -15,3 +15,7 @@
 li .c4g_map_baselayers, li .c4g_map_locstyles, li .c4g_map_themes, li .c4g_map_profiles, li .c4g_maps, li .c4g_map_tables, li .c4g_map_filters {
   display: none !important;
 }
+
+li .active .c4g_map_baselayers, li .active .c4g_map_locstyles, li .active .c4g_map_themes, li .active .c4g_map_profiles, li .active .c4g_maps, li .active .c4g_map_tables, li .active .c4g_map_filters {
+  display: block !important;
+}
