@@ -121,6 +121,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['popupType'] = array("Popup type","How to gen
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popupTemplate'] = array("Popup Template","Load popup informations from template");
 $GLOBALS['TL_LANG']['tl_c4g_maps']['awesomeicon'] = array('Icon for the tab', 'Here you can enter a Unicode that will be converted to an Awesome-Font icon (<a href="https://fontawesome.com/icons/" rel="noopener" target="_blank">fontawesome.com/icons/</a>).');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['hide_when_in_tab'] = array("Hide if in Starboard tab", "If you set this checkbox, the layer will not be displayed in the Starboard if it is in its own Starboard tab. This is useful if you do not want to display the parent element of an existing structure level in the tab.");
+$GLOBALS['TL_LANG']['tl_c4g_maps']['hideInStarboard'] = array("Hide in starboard", "If set, the element is not displayed. Child elements will be dislayed normally though.");
 $GLOBALS['TL_LANG']['tl_c4g_maps']['cssClass'] = array("CSS class", "css class for starboard listelements");
 
 /**

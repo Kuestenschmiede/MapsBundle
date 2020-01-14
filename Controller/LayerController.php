@@ -63,26 +63,18 @@ class LayerController extends BaseController
             /* @var LayerService $layerService */
             $layerService = $this->get('con4gis.layer_service');
             $this->responseData = $layerService->generate($mapId, $lang);
+            $modifiedData = $this->responseData;
+            // dispatch event for custom layer content
+            foreach ($modifiedData['layer'] as $key => $layer) {
+                $modifiedData['layer'][$key] = $this->addCustomLogic($layer);
+            }
+            $this->responseData = $modifiedData;
             if (self::$useCache) {
                 $this->storeDataInCache($request);
             }
         }
         
-        // dispatch event for custom layer content
-        $modifiedData = $this->responseData;
-        foreach ($modifiedData['layer'] as $key => $layer) {
-            $modifiedData['layer'][$key] = $this->addCustomLogic($layer);
-//            $modifiedData['layer'][$key] = $layerService->forceChildsInContent($modifiedData['layer'][$key]);
-        }
-//        $features = $layerService->getFeaturesFromLayerTree($modifiedData['layer']);
-//        $modifiedData['features'] = [
-//            'type'          => "FeatureCollection",
-//            'properties'    => [
-//                'projection' => "EPSG:4326"
-//            ],
-//            'features'      => $features
-//        ];
-        $response->setData($modifiedData);
+        $response->setData($this->responseData);
         
         return $response;
     }

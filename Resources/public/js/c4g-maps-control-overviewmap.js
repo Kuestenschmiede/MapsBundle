@@ -14,6 +14,7 @@ import {getLanguage} from "./c4g-maps-i18n";
 import {OSM} from "ol/source";
 import {Tile} from "ol/layer";
 import {OverviewMap as OvMap} from "ol/control";
+import TileLayer from "ol/layer/Tile";
 
 'use strict';
 export class OverviewMap {
@@ -40,7 +41,7 @@ export class OverviewMap {
     this.options = jQuery.extend({
       collapsed: true,
       tipLabel: langConstants.CTRL_OVERVIEWMAP,
-      layers: [new Tile({source: new OSM()})]
+      layers: [new TileLayer({source: options.source})]
     }, options);
     this.mapController = options.mapController;
 
@@ -75,8 +76,9 @@ export class OverviewMap {
       }
     });
 
+    let ovmTarget = document.querySelector(".c4g-control-container-bottom-left");
     this.ovm = new OvMap({
-      target: element,
+      target: ovmTarget,
       layers: options.layers,
       collapsed: options.collapsed || true
     });
