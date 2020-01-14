@@ -16,6 +16,7 @@ import ReactDOM from "react-dom";
 import {Control} from "ol/control";
 import {cssConstants} from "./../c4g-maps-constant";
 import {StarboardLayerswitcher} from "./c4g-starboard-layerswitcher";
+import {getLanguage} from "./../c4g-maps-i18n";
 
 export class StarboardPanel extends Component {
 
@@ -25,6 +26,8 @@ export class StarboardPanel extends Component {
     // create control to toggle the panel
     let element = document.createElement('div');
     let button = document.createElement('button');
+    let langConstants = getLanguage(props.mapController.data);
+    button.title = langConstants.CTRL_STARBOARD;
     element.className = "c4g-sideboard c4g-starboard-control ol-unselectable ol-control c4g-close";
     element.appendChild(button);
     jQuery(element).on('click', function(event) {

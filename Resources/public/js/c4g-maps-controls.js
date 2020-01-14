@@ -38,6 +38,7 @@ import {toStringHDMS} from "ol/coordinate";
 import {get} from "ol/proj";
 import ol_control_GeoBookmark from "ol-ext/control/GeoBookmark"
 import {FeatureFilter} from "./components/c4g-feature-filter.jsx";
+import {getLanguage} from "./c4g-maps-i18n";
 
 let langConstants = {};
 
@@ -55,6 +56,7 @@ export class MapsControls {
         this.controls = {};
         this.leftSlideElements = [];
         this.rightSlideElements = [];
+        langConstants = getLanguage(mapController.data);
     }
     init() {
         const map = this.mapController.map;
@@ -265,12 +267,12 @@ export class MapsControls {
             map.addControl(this.controls.attribution);
         }
 
-        // show permalink @ToDo adapt to react
+        // show permalink
         if (mapData.permalink.enable) {
             this.controls.permalink = new Permalink({
                 label: ' ',
                 tipLabel: langConstants.CTRL_PERMALINK,
-                // mapController: this.mapController,
+                mapController: this.mapController,
                 getParameter: mapData.permalink.get_parameter,
                 target: controlContainerBottomRight
             });
