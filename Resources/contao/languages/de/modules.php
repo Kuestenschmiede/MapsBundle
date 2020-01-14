@@ -14,13 +14,13 @@
 /**
  * Back end modules
  */
-$GLOBALS['TL_LANG']['MOD']['c4g_maps'] 					= ['Kartenstruktur', 'Karten von con4gis-Maps in Kartenstrukturen verwalten.'];
-$GLOBALS['TL_LANG']['MOD']['c4g_map_baselayers'] 		= ['Basiskarten', 'Basiskarten von con4gis-Maps verwalten.'];
-$GLOBALS['TL_LANG']['MOD']['c4g_map_locstyles'] 		= ['Lokationsstile', 'Lokationsstile von con4gis-Maps verwalten.'];
-$GLOBALS['TL_LANG']['MOD']['c4g_map_profiles'] 			= ['Kartenprofile', 'Kartenprofile von con4gis-Maps verwalten.'];
-$GLOBALS['TL_LANG']['MOD']['c4g_map_themes']            = ['Kartenlayout', 'Das Layout der Karte anpassen.'];
-$GLOBALS['TL_LANG']['MOD']['c4g_map_tables']            = ['Quelltabellen', 'Eigene Datenanbindungen anlegen und für die Kartenstruktur anpassen.'];
-$GLOBALS['TL_LANG']['MOD']['c4g_map_filters']           = ['Kartenfilter', 'Filter für die Karte verwalten.'];
+$GLOBALS['TL_LANG']['MOD']['c4g_maps'] 					= ['Maps: Kartenstruktur', 'Karten von con4gis-Maps in Kartenstrukturen verwalten.'];
+$GLOBALS['TL_LANG']['MOD']['c4g_map_baselayers'] 		= ['Maps: Basiskarten', 'Basiskarten von con4gis-Maps verwalten.'];
+$GLOBALS['TL_LANG']['MOD']['c4g_map_locstyles'] 		= ['Maps: Lokationsstile', 'Lokationsstile von con4gis-Maps verwalten.'];
+$GLOBALS['TL_LANG']['MOD']['c4g_map_profiles'] 			= ['Maps: Kartenprofile', 'Kartenprofile von con4gis-Maps verwalten.'];
+$GLOBALS['TL_LANG']['MOD']['c4g_map_themes']            = ['Maps: Kartenlayout', 'Das Layout der Karte anpassen.'];
+$GLOBALS['TL_LANG']['MOD']['c4g_map_tables']            = ['Maps: Quelltabellen', 'Eigene Datenanbindungen anlegen und für die Kartenstruktur anpassen.'];
+$GLOBALS['TL_LANG']['MOD']['c4g_map_filters']           = ['Maps: Kartenfilter', 'Filter für die Karte verwalten.'];
 
 /**
  * Frontend modules
