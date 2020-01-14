@@ -265,12 +265,12 @@ export class MapsControls {
             map.addControl(this.controls.attribution);
         }
 
-        // show permalink @ToDo adapt to react
+        // show permalink
         if (mapData.permalink.enable) {
             this.controls.permalink = new Permalink({
                 label: ' ',
                 tipLabel: langConstants.CTRL_PERMALINK,
-                // mapController: this.mapController,
+                mapController: this.mapController,
                 getParameter: mapData.permalink.get_parameter,
                 target: controlContainerBottomRight
             });
