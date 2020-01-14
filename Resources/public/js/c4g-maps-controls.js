@@ -184,12 +184,18 @@ export class MapsControls {
 
         // overview-map
         if (mapData.overviewmap) {
-            let overviewMapOptions = {target: controlContainerTopLeft, mapController: this.mapController, collapsed: true};
+            let overviewMapOptions = {
+                target: controlContainerTopLeft,
+                mapController: this.mapController,
+                collapsed: true
+            };
             const scope = this;
             const addOverviewMap = function() {
-                let activeBaselayer = proxy.activeBaselayerId;
-                proxy.baselayerController.showBaseLayer(activeBaselayer);
-                overviewMapOptions.layers = [proxy.baselayerController.arrBaselayers[activeBaselayer].layer];
+                // let activeBaselayer = 71;
+                console.log(proxy.baselayerController.arrBaselayers);
+                overviewMapOptions.source = proxy.baselayerController.arrBaselayers[proxy.activeBaselayerId].layer.getSource();
+                // proxy.baselayerController.showBaseLayer(activeBaselayer);
+                // overviewMapOptions.layers = [proxy.baselayerController.arrBaselayers[activeBaselayer].layer];
                 if (scope.overviewMap) {
                     // we are reloading the overview map, so keep the collapsed-property
                     overviewMapOptions.collapsed = !scope.overviewMap.isOpen();
