@@ -737,7 +737,7 @@ export class MapController extends Component{
     if (window.c4gMapsHooks !== undefined && Array.isArray(window.c4gMapsHooks.mapController_addControls)) {
       utils.callHookFunctions(window.c4gMapsHooks.mapController_addControls, {
         mapController: this,
-        Container: controlContainerTopLeft
+        Container: this.mapsControls.controlContainerTopLeft
       });
     }
   }
