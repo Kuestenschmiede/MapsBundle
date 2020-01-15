@@ -1,4 +1,6 @@
 <?php
+
+use con4gis\CoreBundle\Classes\C4GVersionProvider;
 use con4gis\CoreBundle\Resources\contao\models\C4gSettingsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapTablesModel;
@@ -1274,7 +1276,7 @@ class tl_c4g_maps extends Backend
     public function getLocationTypes(DataContainer $dc)
     {
         $return = \con4gis\MapsBundle\Resources\contao\classes\Utils::getLocationTypes();
-        if ($GLOBALS['con4gis']['forum']['installed']) {
+        if (C4GVersionProvider::isInstalled('con4gis/forum')) {
             $return[] = 'c4gForum';
         }
         if (isset($GLOBALS['c4g_locationtypes']) && is_array($GLOBALS['c4g_locationtypes']))
@@ -1478,7 +1480,7 @@ class tl_c4g_maps extends Backend
             $GLOBALS['TL_DCA']['tl_c4g_maps']['subpalettes']['is_map'] =
                 'width,height,margin,show_locations,'.$calcExtentFields.'center_geox,center_geoy,center_rotation,zoom,geolocation,'.$geolocationFields.'restrict_area,'.$restrictAreaFields;//',include_sublocations'
 
-            if ($GLOBALS['con4gis']['forum']['installed']) {
+            if (C4GVersionProvider::isInstalled('con4gis/forum')) {
                 $GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['overpass'] = str_replace('popup_info', 'popup_info,popup_extend', $GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['overpass']);
                 $GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['osm'] = str_replace('popup_info', 'popup_info,popup_extend', $GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['osm']);
             }
@@ -1486,7 +1488,7 @@ class tl_c4g_maps extends Backend
             // convert checkboxes to chosenfields, if there are to many locationstyles
             if (intval($objMap->be_optimize_checkboxes_limit) > 0) {
                 // subforums-options
-                if ($GLOBALS['con4gis']['forum']['installed']) {
+                if (C4GVersionProvider::isInstalled('con4gis/forum')) {
                     $objForumCount = $this->Database->prepare("SELECT COUNT(id) AS entry_count FROM tl_c4g_forum WHERE enable_maps = 1")->execute();
                     if ($objForumCount->numRows > 0) {
                         if (intval($objForumCount->entry_count) > intval($objMap->be_optimize_checkboxes_limit)) {
