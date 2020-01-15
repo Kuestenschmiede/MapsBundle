@@ -1293,7 +1293,7 @@ class tl_c4g_maps extends Backend
     public function getMapForums(DataContainer $dc)
     {
         //ToDo what if forum not installed?
-        $forumHelper = new \con4gis\ForumBundle\Resources\contao\classes\C4GForumHelper($this->Database);
+        $forumHelper = new \con4gis\ForumBundle\Classes\C4GForumHelper($this->Database);
         $forums = $forumHelper->getMapForums();
         foreach ($forums AS $forum) {
             $return[$forum['id']] = $forum['name'];
