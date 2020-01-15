@@ -349,7 +349,8 @@ export class MapsControls {
                 tipLabel: langConstants.CTRL_MEASURETOOLS,
                 target: controlContainerTopLeft,
                 caching: mapData.caching,
-                mapController: this.mapController
+                mapController: this.mapController,
+                direction: "left"
             });
             map.addControl(this.controls.measuretools);
             // open if opened before
