@@ -217,12 +217,21 @@ export class BetterLayerController {
                 })
             };
             let structure = [];
+            let features = [];
+
             for (let layerId in data.layer) {
                 if (data.layer.hasOwnProperty(layerId)) {
-                    structure.push(self.getStructureFromLayer(data.layer[layerId], format, structure.length));
+                    let newChild = self.getStructureFromLayer(data.layer[layerId], format, structure.length);
+                    if (newChild.hide_in_starboardDromedarCase) {
+                        structure = structure.concat(newChild.childs);
+                        features = features.concat(newChild.features);
+                    }
+                    else {
+                        structure.push(newChild);
+                    }
+
                 }
             }
-            let features = [];
             let arrStates = [];
             for (let structId in structure) {
                 if (structure.hasOwnProperty(structId)) {
@@ -305,17 +314,33 @@ export class BetterLayerController {
             for (let layerId in layer.childs) {
                 if (layer.childs.hasOwnProperty(layerId)) {
                     let childChain = idChain + "," + childs.length;
-                    childs.push(this.getStructureFromLayer(layer.childs[layerId], format, childChain));
+                    let newChild = this.getStructureFromLayer(layer.childs[layerId], format, childChain);
+                    if (newChild.hide_in_starboardDromedarCase) {
+                        childs = childs.concat(newChild.childs)
+                        features = features.concat(newChild.features)
+                    }
+                    else {
+                        childs.push(newChild);
+                    }
                 }
             }
         }
-        return {
-            "features"  : features,
-            "loader"    : loaderId,
-            "name"      : layer.name,
-            "hide"      : !!layer.hide,
-            "childs"    : childs
-        };
+        if (layer.hideInStarboard) {
+         return {
+             childs: childs,
+             features: features,
+             hide_in_starboardDromedarCase: true
+         }
+        }
+        else {
+            return {
+                "features"  : features,
+                "loader"    : loaderId,
+                "name"      : layer.name,
+                "hide"      : !!layer.hide,
+                "childs"    : childs
+            };
+        }
     }
     getFeaturesForLayer(layer) {
         let features = [];
