@@ -13,7 +13,7 @@
 
 namespace con4gis\MapsBundle\Classes\Caches;
 
-use con4gis\CoreBundle\Resources\contao\classes\C4GAutomator;
+use con4gis\CoreBundle\Classes\C4GAutomator;
 use Contao\System;
 
 class C4GMapsAutomator extends C4GAutomator
