@@ -343,7 +343,7 @@ class LayerService
      * @param mixed $objLayer
      * @return array
      */
-    protected function parseLayer($objLayer, $lang)
+    public function parseLayer($objLayer, $lang)
     {
         $stringClass = $GLOBALS['con4gis']['stringClass'];
         $arrLayerData = [];
