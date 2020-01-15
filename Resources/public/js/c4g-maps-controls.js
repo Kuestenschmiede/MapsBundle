@@ -69,6 +69,7 @@ export class MapsControls {
         let controlContainerTopLeft = document.createElement('div');
         controlContainerTopLeft.className = cssConstants.CONTROL_CONTAINER_TL + ' ' + cssConstants.OL_UNSELECTABLE;
         this.mapController.$overlaycontainer_stopevent.prepend(controlContainerTopLeft);
+        this.controlContainerTopLeft = controlContainerTopLeft;
         // bottom-left
         let controlContainerBottomLeft = document.createElement('div');
         controlContainerBottomLeft.className = cssConstants.CONTROL_CONTAINER_BL + ' ' + cssConstants.OL_UNSELECTABLE;
@@ -349,7 +350,8 @@ export class MapsControls {
                 tipLabel: langConstants.CTRL_MEASURETOOLS,
                 target: controlContainerTopLeft,
                 caching: mapData.caching,
-                mapController: this.mapController
+                mapController: this.mapController,
+                direction: "left"
             });
             map.addControl(this.controls.measuretools);
             // open if opened before

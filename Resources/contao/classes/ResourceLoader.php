@@ -12,7 +12,7 @@
  */
 namespace con4gis\MapsBundle\Resources\contao\classes;
 
-use con4gis\CoreBundle\Resources\contao\classes\ResourceLoader as coreResourceLoader;
+use con4gis\CoreBundle\Classes\ResourceLoader as coreResourceLoader;
 use con4gis\CoreBundle\Resources\contao\models\C4gSettingsModel;
 use con4gis\MapsBundle\Classes\Events\LoadMapResourcesEvent;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;

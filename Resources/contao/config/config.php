@@ -11,8 +11,6 @@
  * @link       https://www.con4gis.org
  */
 
-$GLOBALS['con4gis']['maps']['installed'] = true;
-
 $GLOBALS['BE_MOD']['con4gis'] = array_merge($GLOBALS['BE_MOD']['con4gis'], [
         'c4g_map_baselayers' =>
         [

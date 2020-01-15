@@ -1,4 +1,6 @@
-<?php if (!defined('TL_ROOT')) die('You can not access this file directly!');
+<?php use con4gis\CoreBundle\Classes\C4GVersionProvider;
+
+if (!defined('TL_ROOT')) die('You can not access this file directly!');
 /*
  * This file is part of con4gis,
  * the gis-kit for Contao CMS.
@@ -22,7 +24,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_search']       =   '{title_lege
                                                                     '{c4g_search_legend},c4g_map_site_id,c4g_map_zoomlevel,c4g_map_placeholder;'.
                                                                     '{protected_legend:hide},protected;'.
                                                                     '{expert_legend:hide},guests,cssID,space';
-if ($GLOBALS['con4gis']['forum']['installed'])
+if (C4GVersionProvider::isInstalled('con4gis/forum'))
 {
     $insert = '{c4g_forum_maps_legend},c4g_forum_enable_maps;{expert_legend:hide}';
     //insert c4g-maps support when forum is installed
