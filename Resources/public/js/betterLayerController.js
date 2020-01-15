@@ -45,6 +45,7 @@ export class BetterLayerController {
         const scope = this;
         this.proxy = proxy;
         this.loaders = [];
+        this.arrLocstyles = [];
         this.mapController = proxy.options.mapController;
         this.vectorCollection = new Collection();
         this.loaderFunction = function(extent, resolution, projection) {
@@ -122,48 +123,55 @@ export class BetterLayerController {
             strategy: bbox
         });
         this.clusterStyleFunction = function(feature, resolution) {
-            let size = "";
-            if (feature.get('features') && feature.get('features').length && feature.get('features').length > 1) {
-                size = feature.get('features').length.toString();
+            // let size = "";
+            // if (feature.get('features') && feature.get('features').length && feature.get('features').length > 1) {
+            //     size = feature.get('features').length.toString();
+            // }
+            // let geometryType = feature.getGeometry() ? feature.getGeometry().getType(): "Point";
+            // if (geometryType === "Point") {
+            //     return new Style({
+            //         text: new Text({
+            //             text: size,
+            //             offsetX: -10,
+            //             offsetY: -10,
+            //         }),
+            //         stroke: new Stroke({
+            //             color: 'blue',
+            //             width: 2
+            //         }),
+            //         fill: new Fill({
+            //             color: 'blue'
+            //         }),
+            //         image: new CircleStyle({
+            //             radius: 10,
+            //             fill: new Fill({
+            //                 color: 'blue'
+            //             }),
+            //             stroke: new Stroke({
+            //                 color: 'blue'
+            //             })
+            //         })
+            //     });
+            // }
+            // else {
+            //     return new Style({
+            //         stroke: new Stroke({
+            //             color: 'black',
+            //             width: 3
+            //         }),
+            //         fill: new Fill({
+            //             color: 'rgba(0, 0, 0, 0.4)'
+            //         }),
+            //         // geometry: feature.getGeometry()
+            //     });
+            // }
+            if (feature && feature.get && feature.get('locstyle')) {
+                let locstyle = feature.get('locstyle');
+                if (this.proxy.locationStyleController.arrLocStyles[locstyle].style) {
+                    return this.proxy.locationStyleController.arrLocStyles[locstyle].style
+                }
             }
-            let geometryType = feature.getGeometry() ? feature.getGeometry().getType(): "Point";
-            if (geometryType === "Point") {
-                return new Style({
-                    text: new Text({
-                        text: size,
-                        offsetX: -10,
-                        offsetY: -10,
-                    }),
-                    stroke: new Stroke({
-                        color: 'blue',
-                        width: 2
-                    }),
-                    fill: new Fill({
-                        color: 'blue'
-                    }),
-                    image: new CircleStyle({
-                        radius: 10,
-                        fill: new Fill({
-                            color: 'blue'
-                        }),
-                        stroke: new Stroke({
-                            color: 'blue'
-                        })
-                    })
-                });
-            }
-            else {
-                return new Style({
-                    stroke: new Stroke({
-                        color: 'black',
-                        width: 3
-                    }),
-                    fill: new Fill({
-                        color: 'rgba(0, 0, 0, 0.4)'
-                    }),
-                    // geometry: feature.getGeometry()
-                });
-            }
+            else {}
 
         };
 
@@ -240,6 +248,7 @@ export class BetterLayerController {
                 }
             }
             self.arrLayers = structure;
+            self.proxy.locationStyleController.loadLocationStyles(self.arrLocstyles);
             self.vectorCollection.extend(features);
             self.mapController.map.addLayer(self.vectorLayer);
             self.mapController.setLayersInitial(self.arrLayers, arrStates);
@@ -290,7 +299,11 @@ export class BetterLayerController {
         if (layer.content && layer.content.length > 0) {
             features = this.getFeaturesForLayer(layer);
         }
-        if (layer.async_content && false) {
+        let checkLocstyle = this.arrLocstyles.findIndex((element) => element === layer.locstyle);
+        if (checkLocstyle === -1 && layer.locstyle) {
+            this.arrLocstyles.push(layer.locstyle);
+        }
+        if (layer.async_content) {
             let url = "";
             let locstyleId = 0;
             let params = "";
@@ -300,6 +313,10 @@ export class BetterLayerController {
                 url = data.url;
                 params = data.params;
                 locstyleId = layer.locstyle;
+            }
+            checkLocstyle = this.arrLocstyles.findIndex((element) => element === locstyleId);
+            if (checkLocstyle === -1 && locstyleId) {
+                this.arrLocstyles.push(locstyleId);
             }
             loaderId = this.loaders.length;
             this.loaders.push({
@@ -357,13 +374,17 @@ export class BetterLayerController {
                         if (contentData.type === "FeatureCollection") {
                             for (let i in contentData.features) {
                                 if (contentData.features.hasOwnProperty(i)) {
-                                    let singleFeature = contentData.features[i];
-                                    features.push(format.readFeature(singleFeature));
+                                    let singleFeature = format.readFeature(contentData.features[i]);
+                                    singleFeature.set('locstyle', layer.locstyle)
+                                    features.push(singleFeature);
                                 }
                             }
                         }
                         else {
-                            features.push(format.readFeature(contentData));
+                            let feature = format.readFeature(contentData)
+                            feature.set('locstyle', layer.locstyle)
+
+                            features.push(feature);
                         }
                     }
                 }
