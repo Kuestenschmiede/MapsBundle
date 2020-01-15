@@ -13,8 +13,8 @@
 
 namespace con4gis\MapsBundle\Classes\Services;
 
-use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
-use con4gis\CoreBundle\Resources\contao\classes\HttpResultHelper;
+use con4gis\CoreBundle\Classes\C4GUtils;
+use con4gis\CoreBundle\Classes\HttpResultHelper;
 use con4gis\MapsBundle\Resources\contao\classes\Utils;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use Contao\FrontendUser;

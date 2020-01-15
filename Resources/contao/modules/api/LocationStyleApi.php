@@ -11,7 +11,7 @@
  * @link       https://www.con4gis.org
  */
 namespace con4gis\MapsBundle\Resources\contao\modules\api;
-use con4gis\CoreBundle\Resources\contao\classes\HttpResultHelper;
+use con4gis\CoreBundle\Classes\HttpResultHelper;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapLocstylesModel;
 
 /**

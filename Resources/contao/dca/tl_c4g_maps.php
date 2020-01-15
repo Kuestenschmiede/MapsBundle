@@ -1293,7 +1293,7 @@ class tl_c4g_maps extends Backend
     public function getMapForums(DataContainer $dc)
     {
         //ToDo what if forum not installed?
-        $forumHelper = new \con4gis\ForumBundle\Resources\contao\classes\C4GForumHelper($this->Database);
+        $forumHelper = new \con4gis\ForumBundle\Classes\C4GForumHelper($this->Database);
         $forums = $forumHelper->getMapForums();
         foreach ($forums AS $forum) {
             $return[$forum['id']] = $forum['name'];
@@ -1652,7 +1652,7 @@ class tl_c4g_maps extends Backend
             $icon = 'invisible.svg';
         }
 
-//        \con4gis\CoreBundle\Resources\contao\classes\C4GAutomator::purgeApiCache();
+//        \con4gis\CoreBundle\Classes\C4GAutomator::purgeApiCache();
         \con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator::purgeLayerApiCache();
 
         return '<a href="'.$this->addToUrl($href).'" title="'.specialchars($title).'"'.$attributes.'>'.\Image::getHtml($icon, $label).'</a> ';
