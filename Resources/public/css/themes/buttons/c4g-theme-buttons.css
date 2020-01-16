@@ -1,7 +1,7 @@
 :root {
   --button-radius-percent: 0%;
   --button-radius-pixel: 0px;
-  --button-size: 36px;
+  --button-size-pixel: 36px;
   --font-size: 16px;
 }
 
@@ -34,6 +34,8 @@
   text-align: center;
   height: 36px; /*1.974em;*/
   width: 36px; /*1.974em;*/
+  height: var(--button-size-pixel);
+  width: var(--button-size-pixel);
   line-height: .5em;
   border: none;
   border-radius: 0%;
@@ -948,9 +950,9 @@ div.c4g-tooltip-popup:before {
 }
 .c4g-baselayertree .c4g-overlay-toggle::-webkit-slider-thumb {
   height: 36px;
-  height: var(--button-size);
   width: 36px;
-  width: var(--button-size);
+  height: var(--button-size-pixel);
+  width: var(--button-size-pixel);
   border-radius: 0%;
   border-radius: var(--button-radius-percent);
 }
@@ -963,9 +965,9 @@ div.c4g-tooltip-popup:before {
 }
 .c4g-baselayertree .c4g-overlay-toggle::-moz-range-thumb {
   height: 36px;
-  height: var(--button-size);
-  hwidth: 36px;
-  width: var(--button-size);
+  width: 36px;
+  height: var(--button-size-pixel);
+  width: var(--button-size-pixel);
   border-radius: 0%;
   border-radius: var(--button-radius-percent);
 }
@@ -979,9 +981,9 @@ div.c4g-tooltip-popup:before {
 }
 .c4g-baselayertree .c4g-overlay-toggle::-ms-thumb {
   height: 36px;
-  height: var(--button-size);
   width: 36px;
-  width: var(--button-size);
+  height: var(--button-size-pixel);
+  width: var(--button-size-pixel);
   border-radius: 0%;
   border-radius: var(--button-radius-percent);
 }

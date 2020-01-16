@@ -243,6 +243,10 @@ class ResourceLoader extends coreResourceLoader
             if ($theme->buttonradius) {
                 $themeData['buttonradius'] = deserialize($theme->buttonradius)['value'];
             }
+
+            if ($theme->buttonsize) {
+                $themeData['buttonsize'] = deserialize($theme->buttonsize)['value'];
+            }
         }
 
         if ($theme->custom_colors) {

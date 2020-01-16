@@ -740,6 +740,10 @@ export class MapController extends Component{
         domMapDiv.style.setProperty('--button-radius-percent', mapData.themeData['buttonradius'] + '%');
         domMapDiv.style.setProperty('--button-radius-pixel', mapData.themeData['buttonradius'] + 'px');
       }
+
+      if (domMapDiv && mapData.themeData['buttonsize']) {
+        domMapDiv.style.setProperty('--button-size-pixel', mapData.themeData['buttonsize'] + 'px');
+      }
     }
     if (window.c4gMapsHooks !== undefined && Array.isArray(window.c4gMapsHooks.mapController_addControls)) {
       utils.callHookFunctions(window.c4gMapsHooks.mapController_addControls, {
