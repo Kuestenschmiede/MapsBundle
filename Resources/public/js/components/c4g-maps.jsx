@@ -598,8 +598,15 @@ export class MapController extends Component{
     // add container for react components
     if (mapData.starboard && mapData.starboard.enable) {
       this.reactContainer = document.createElement('div');
-      this.reactContainer.className ="c4g-sideboard c4g-starboard-container ol-unselectable c4g-close";
-      this.reactContainer.style.right = "-100%";
+      this.reactContainer.className ="c4g-sideboard c4g-starboard-container ol-unselectable";
+      if (mapData.starboard.open) {
+        this.reactContainer.style.right = "0";
+        this.reactContainer.className += " c4g-open";
+      } else {
+        this.reactContainer.style.right = "-100%";
+        this.reactContainer.className += " c4g-close";
+      }
+
 
       this.$overlaycontainer_stopevent.append(this.reactContainer);
     }

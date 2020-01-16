@@ -28,7 +28,12 @@ export class StarboardPanel extends Component {
     let button = document.createElement('button');
     let langConstants = getLanguage(props.mapController.data);
     button.title = langConstants.CTRL_STARBOARD;
-    element.className = "c4g-sideboard c4g-starboard-control ol-unselectable ol-control c4g-close";
+    element.className = "c4g-sideboard c4g-starboard-control ol-unselectable ol-control ";
+    if (props.open) {
+      element.className += "c4g-open";
+    } else {
+      element.className += "c4g-close";
+    }
     element.appendChild(button);
     jQuery(element).on('click', function(event) {
       if (scope.state.open) {
@@ -91,6 +96,14 @@ export class StarboardPanel extends Component {
     window.requestAnimationFrame(function() {
       scope.slideOutCollidingElements();
     });
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.state.open) {
+      this.slideOutCollidingElements();
+    } else {
+      this.slideInCollidingElements();
+    }
   }
 
   /**
