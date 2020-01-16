@@ -23,7 +23,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         'enableVersioning'            => true,
         'onload_callback'             => [['tl_c4g_map_profiles', 'updateDCA']],
         'onsubmit_callback'             => [
-            ['\con4gis\CoreBundle\Classes\C4GAutomator', 'purgeApiCache']
+            ['\con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator', 'purgeMapApiCache']
         ],
         'sql'                         =>
             [

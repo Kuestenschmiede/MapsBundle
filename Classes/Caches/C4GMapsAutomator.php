@@ -14,6 +14,7 @@
 namespace con4gis\MapsBundle\Classes\Caches;
 
 use con4gis\CoreBundle\Classes\C4GAutomator;
+use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
 use Contao\System;
 
 class C4GMapsAutomator extends C4GAutomator
@@ -24,7 +25,7 @@ class C4GMapsAutomator extends C4GAutomator
     public function purgeLayerApiCache()
     {
         C4GLayerApiCache::getInstance(System::getContainer())->clearCache();
-        // Add a log entry
+        C4gLogModel::addLogEntry('maps', 'cleared layer api cache');
     }
 
     /**
@@ -33,7 +34,7 @@ class C4GMapsAutomator extends C4GAutomator
     public function purgeBaselayerApiCache()
     {
         C4GBaselayerApiCache::getInstance(System::getContainer())->clearCache();
-        // Add a log entry
+        C4gLogModel::addLogEntry('maps', 'cleared baselayer api cache');
     }
 
     /**
@@ -42,6 +43,17 @@ class C4GMapsAutomator extends C4GAutomator
     public function purgeLocationstyleApiCache()
     {
         C4GLocationstyleApiCache::getInstance(System::getContainer())->clearCache();
-        // Add a log entry
+        C4gLogModel::addLogEntry('maps', 'cleared locationstyle api cache');
+    }
+
+
+    /**
+     * Purge the con4gis map caches.
+     */
+    public function purgeMapApiCache()
+    {
+        $this->purgeLayerApiCache();
+        $this->purgeBaselayerApiCache();
+        $this->purgeLocationstyleApiCache();
     }
 }

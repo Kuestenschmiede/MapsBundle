@@ -1654,7 +1654,6 @@ class tl_c4g_maps extends Backend
             $icon = 'invisible.svg';
         }
 
-//        \con4gis\CoreBundle\Classes\C4GAutomator::purgeApiCache();
         \con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator::purgeLayerApiCache();
 
         return '<a href="'.$this->addToUrl($href).'" title="'.specialchars($title).'"'.$attributes.'>'.\Image::getHtml($icon, $label).'</a> ';
