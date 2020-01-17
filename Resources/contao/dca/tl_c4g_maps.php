@@ -236,6 +236,10 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             [
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
             ],
+        'uuid' =>
+            [
+            'sql'                     => "bigint(20) unsigned NOT NULL default '0'"
+            ],
         'sorting' =>
             [
             'sql'                     => "int(10) unsigned NOT NULL default '0'"

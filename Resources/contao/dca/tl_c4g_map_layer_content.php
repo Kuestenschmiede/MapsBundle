@@ -50,6 +50,11 @@ $GLOBALS['TL_DCA']['tl_c4g_map_layer_content'] = array
             'sql'                     => "varchar(100) default ''",
             'default'                 => ''
         ),
+        'uuid' => array
+        (
+            'sql'                     => "bigint(20) unsigned NOT NULL default '0'",
+            'default'                 => ''
+        ),
         'type' => array
         (
             'sql'                     => "varchar(100) default ''",

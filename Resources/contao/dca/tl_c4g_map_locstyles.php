@@ -163,6 +163,10 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
             [
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
             ],
+        'uuid' =>
+            [
+            'sql'                     => "bigint(20) unsigned NOT NULL default '0'"
+            ],
         'name' =>
             [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['name'],
