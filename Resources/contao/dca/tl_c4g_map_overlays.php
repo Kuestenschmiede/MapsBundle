@@ -47,7 +47,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
             'panelLayout'             => 'filter;sort,search,limit',
             'headerFields'            => ['name'],
             'child_record_callback'   => ['tl_c4g_map_overlays', 'listOverlays'],
-            'child_record_class'      => 'no_padding'
+            'child_record_class'      => 'no_padding',
+            'icon'                    => 'bundles/con4giscore/images/be-icons/con4gis.org_dark.svg',
         ],
         
         'label' =>
@@ -111,7 +112,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
             [
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['show'],
                 'href'                => 'act=show',
-                'icon'                => 'show.gif'
+                'icon'                => 'show.svg'
             ]
         ]
     ],

@@ -40,7 +40,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_filters'] =
                     [
                         'mode'                    => 1,
                         'fields'                  => ['name'],
-                        'flag'                    => 1
+                        'flag'                    => 1,
+                        'icon'                    => 'bundles/con4giscore/images/be-icons/con4gis.org_dark.svg',
                     ],
                 'label' =>
                     [
@@ -88,7 +89,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_filters'] =
                             [
                                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_filters']['show'],
                                 'href'                => 'act=show',
-                                'icon'                => 'show.gif'
+                                'icon'                => 'show.svg'
                             ]
                     ]
             ],

@@ -4,6 +4,7 @@ use con4gis\CoreBundle\Classes\C4GVersionProvider;
 use con4gis\CoreBundle\Resources\contao\models\C4gSettingsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapTablesModel;
+use Contao\Image;
 
 if (!defined('TL_ROOT')) die('You cannot access this file directly!');
 
@@ -53,7 +54,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
         'sorting' =>
             [
             'mode'                    => 5,
-            'icon'                    => 'bundels/con4gisMapsBundle/images/core.png',
+            'icon'                    => 'bundles/con4giscore/images/be-icons/con4gis.org_dark.svg',
             'fields'                  => ['name'],
             'panelLayout'             => 'filter;sort,search,limit',
             'flag'                    => 1
@@ -127,7 +128,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 [
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['show'],
                 'href'                => 'act=show',
-                'icon'                => 'show.gif'
+                'icon'                => 'show.svg'
                 ]
             ]
         ],
@@ -1233,7 +1234,7 @@ class tl_c4g_maps extends Backend
         if ($objSubpages->numRows > 0) {
             return '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.specialchars($title).'"'.$attributes.'>'.$this->generateImage($icon, $label).'</a> ';
         } else {
-            return $this->generateImage(preg_replace('/\.gif$/i', '_.gif', $icon)).' ';
+            return $this->generateImage(preg_replace('/\.svg/i', '_.svg', $icon)).' ';
         }
     }
 
@@ -1401,6 +1402,7 @@ class tl_c4g_maps extends Backend
     public function generateLabel($row, $label, $dc_table, $folderAttribute)
     {
         $image = 'bundles/con4gismaps/images/be-icons/';
+
         if ($row['is_map']) {
             if ($row['location_type']<>'none') {
                 $image .= 'map_location';
@@ -1417,8 +1419,8 @@ class tl_c4g_maps extends Backend
         if (!$row['published']) {
             $image .= '_1';
         }
-        $image .= '.png';
-        return $this->generateImage($image, '', $folderAttribute) . ' ' . $label;
+        $image .= '.svg';
+        return Image::getHtml($image) . ' ' . $label;
     }
 
     /**
@@ -1712,7 +1714,7 @@ class tl_c4g_maps extends Backend
      */
     public function pickUrl(DataContainer $dc)
     {
-        return ' <a href="contao/page.php?do='.Input::get('do').'&amp;table='.$dc->table.'&amp;field='.$dc->field.'&amp;value='.str_replace(array('{{link_url::', '}}'), '', $dc->value).'" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['pagepicker']).'" onclick="Backend.getScrollOffset();Backend.openModalSelector({\'width\':765,\'title\':\''.specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['MOD']['page'][0])).'\',\'url\':this.href,\'id\':\''.$dc->field.'\',\'tag\':\'ctrl_'.$dc->field . ((Input::get('act') == 'editAll') ? '_' . $dc->id : '').'\',\'self\':this});return false">' . $this->generateImage('pickpage.gif', $GLOBALS['TL_LANG']['MSC']['pagepicker'], 'style="vertical-align:top;cursor:pointer"') . '</a>';
+        return ' <a href="contao/page.php?do='.Input::get('do').'&amp;table='.$dc->table.'&amp;field='.$dc->field.'&amp;value='.str_replace(array('{{link_url::', '}}'), '', $dc->value).'" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['pagepicker']).'" onclick="Backend.getScrollOffset();Backend.openModalSelector({\'width\':765,\'title\':\''.specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['MOD']['page'][0])).'\',\'url\':this.href,\'id\':\''.$dc->field.'\',\'tag\':\'ctrl_'.$dc->field . ((Input::get('act') == 'editAll') ? '_' . $dc->id : '').'\',\'self\':this});return false">' . $this->generateImage('pickpage.svg', $GLOBALS['TL_LANG']['MSC']['pagepicker'], 'style="vertical-align:top;cursor:pointer"') . '</a>';
     }
 
     //editLocationType
@@ -1723,7 +1725,7 @@ class tl_c4g_maps extends Backend
    	 */
    	public function editLocationStyle(DataContainer $dc)
    	{
-   		return ($dc->value < 1) ? '' : ' <a href="contao/main.php?do=c4g_map_locstyles&amp;act=edit&amp;id=' . $dc->value . '&amp;popup=1&amp;nb=1&amp;rt=' . REQUEST_TOKEN . '" title="' . sprintf(specialchars($GLOBALS['TL_LANG']['tl_c4g_maps']['editalias'][1]), $dc->value) . '" style="padding-left:3px" onclick="Backend.openModalIframe({\'width\':768,\'title\':\'' . specialchars(str_replace("'", "\\'", sprintf($GLOBALS['TL_LANG']['tl_c4g_maps']['editalias'][1], $dc->value))) . '\',\'url\':this.href});return false">' . Image::getHtml('alias.gif', $GLOBALS['TL_LANG']['tl_c4g_maps']['editalias'][0], 'style="vertical-align:top"') . '</a>';
+   		return ($dc->value < 1) ? '' : ' <a href="contao/main.php?do=c4g_map_locstyles&amp;act=edit&amp;id=' . $dc->value . '&amp;popup=1&amp;nb=1&amp;rt=' . REQUEST_TOKEN . '" title="' . sprintf(specialchars($GLOBALS['TL_LANG']['tl_c4g_maps']['editalias'][1]), $dc->value) . '" style="padding-left:3px" onclick="Backend.openModalIframe({\'width\':768,\'title\':\'' . specialchars(str_replace("'", "\\'", sprintf($GLOBALS['TL_LANG']['tl_c4g_maps']['editalias'][1], $dc->value))) . '\',\'url\':this.href});return false">' . Image::getHtml('alias.svg', $GLOBALS['TL_LANG']['tl_c4g_maps']['editalias'][0], 'style="vertical-align:top"') . '</a>';
    	}
 
     /**

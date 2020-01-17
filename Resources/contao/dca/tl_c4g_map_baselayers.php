@@ -44,7 +44,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
         'sorting' =>
             [
             'mode'                    => 5,
-            'icon'                    => 'bundels/con4gisMapsBundle/images/core.png',
+            'icon'                    => 'bundles/con4giscore/images/be-icons/con4gis.org_dark.svg',
             'panelLayout'             => 'search',
             'paste_button_callback'   => ['tl_c4g_map_baselayers', 'pasteElement']
             ],
@@ -110,13 +110,13 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                 [
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['show'],
                 'href'                => 'act=show',
-                'icon'                => 'show.gif'
+                'icon'                => 'show.svg'
                 ],
             'overlays' =>
                 [
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['overlays'],
                 'href'                => 'table=tl_c4g_map_overlays',
-                'icon'                => 'bundles/con4gismaps/images/be-icons/overlays.png'
+                'icon'                => 'bundles/con4gismaps/images/be-icons/overlays.svg'
                 ],
             ]
         ],
@@ -621,11 +621,11 @@ class tl_c4g_map_baselayers extends Backend
     public function pasteElement(DataContainer $dc, $row, $table, $cr, $arrClipboard=null)
     {
         if ($row['id'] > 0) {
-            $imagePasteAfter = Image::getHtml('pasteafter.gif', sprintf($GLOBALS['TL_LANG'][$table]['pasteafter'][1], $row['id']));
+            $imagePasteAfter = Image::getHtml('pasteafter.svg', sprintf($GLOBALS['TL_LANG'][$table]['pasteafter'][1], $row['id']));
             return '<a href="'.$this->addToUrl('act='.$arrClipboard["mode"].'&mode=1&childs=1&pid='.$row['id']).'" title="'.
             specialchars(sprintf($GLOBALS['TL_LANG'][$table]['pasteafter'][1], $row['id'])).'" onclick="Backend.getScrollOffset()">'.$imagePasteAfter.'</a> ';
         } else {
-            $imagePasteInto = Image::getHtml('pasteinto.gif', sprintf($GLOBALS['TL_LANG'][$table]['pasteinto'][1], $row['id']));
+            $imagePasteInto = Image::getHtml('pasteinto.svg', sprintf($GLOBALS['TL_LANG'][$table]['pasteinto'][1], $row['id']));
             return '<a href="'.$this->addToUrl('act='.$arrClipboard["mode"].'&mode=2&childs=1&pid='.$row['id']).'" title="'.
             specialchars(sprintf($GLOBALS['TL_LANG'][$table]['pasteafter'][1], $row['id'])).'" onclick="Backend.getScrollOffset()">'.$imagePasteInto.'</a> ';
         }
@@ -633,7 +633,7 @@ class tl_c4g_map_baselayers extends Backend
 
     public function addIcon($row, $label, DataContainer $dc=null, $imageAttribute='', $blnReturnImage=false, $blnProtected=false)
     {
-        return \Image::getHtml('bundles/con4gismaps/images/be-icons/baselayers.png', '', $imageAttribute).' '.$label;
+        return \Image::getHtml('bundles/con4gismaps/images/be-icons/baselayers.svg', '', $imageAttribute).' '.$label;
     }
     public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
     {
