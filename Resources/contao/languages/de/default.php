@@ -14,7 +14,7 @@
 /**
  * Miscellaneous
  */
-$GLOBALS['TL_LANG']['CTE']['c4g_maps'] 					= array('Karte (con4gis)','Einbinden einer Karte über OpenLayers.');
+$GLOBALS['TL_LANG']['CTE']['c4g_maps'] 					= array('Karte (con4gis/maps)', 'Anbindung einer Karte aus der Kartenstruktur.');
 
 $GLOBALS['TL_LANG']['c4g_maps']['sourcetable']['tl_calendar_events']['name'] 		= 'Events';
 $GLOBALS['TL_LANG']['c4g_maps']['sourcetable']['tl_calendar_events']['parent'] 		= 'Kalender';

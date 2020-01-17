@@ -25,5 +25,5 @@ $GLOBALS['TL_LANG']['MOD']['c4g_map_filters']       = ['Maps: Map filters', 'Mai
 /**
  * Frontend modules
  */
-$GLOBALS['TL_LANG']['FMD']['c4g_maps'] 				= ['Map (con4gis];', 'Integrate an OpenLayers map with con4gis-Maps.'];
-$GLOBALS['TL_LANG']['FMD']['c4g_search'] 			= ['External map search (con4gis)', 'Integrate a search with con4gis-Maps that redirects to the map.'];
+$GLOBALS['TL_LANG']['FMD']['c4g_maps'] 				= ['maps: Map', 'Integrate an OpenLayers map with con4gis-Maps.'];
+$GLOBALS['TL_LANG']['FMD']['c4g_search'] 			= ['maps: External map search', 'Integrate a search with con4gis-Maps that redirects to the map.'];

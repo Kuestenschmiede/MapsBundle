@@ -14,7 +14,7 @@
 /**
  * Miscellaneous
  */
-$GLOBALS['TL_LANG']['CTE']['c4g_maps'] 					= array('Map (con4gis)','Integration of a map with con4gis-Maps.');
+$GLOBALS['TL_LANG']['CTE']['c4g_maps'] 					= array('Map (con4gis/maps)','Connection of a map from the map structure.');
 
 $GLOBALS['TL_LANG']['c4g_maps']['sourcetable']['tl_calendar_events']['name'] 	= 'Events';
 $GLOBALS['TL_LANG']['c4g_maps']['sourcetable']['tl_calendar_events']['parent'] 	= 'Calendar';

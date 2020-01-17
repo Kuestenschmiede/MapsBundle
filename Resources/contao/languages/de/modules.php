@@ -25,5 +25,5 @@ $GLOBALS['TL_LANG']['MOD']['c4g_map_filters']           = ['Maps: Kartenfilter',
 /**
  * Frontend modules
  */
-$GLOBALS['TL_LANG']['FMD']['c4g_maps'] 					= ['Karte (con4gis)', 'Mit diesem Modul binden Sie eine OpenLayers-Karte ein.'];
-$GLOBALS['TL_LANG']['FMD']['c4g_search'] 			    = ['Externe Kartensuche (con4gis)', 'Mit diesem Modul binden Sie eine externe Kartensuche ein, die auf die Kartenseite weiterleitet.'];
+$GLOBALS['TL_LANG']['FMD']['c4g_maps'] 					= ['maps: Karte', 'Mit diesem Modul binden Sie eine OpenLayers-Karte ein.'];
+$GLOBALS['TL_LANG']['FMD']['c4g_search'] 			    = ['maps: Externe Kartensuche', 'Mit diesem Modul binden Sie eine externe Kartensuche ein, die auf die Kartenseite weiterleitet.'];

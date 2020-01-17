@@ -46,7 +46,6 @@ class C4GMapsAutomator extends C4GAutomator
         C4gLogModel::addLogEntry('maps', 'cleared locationstyle api cache');
     }
 
-
     /**
      * Purge the con4gis map caches.
      */

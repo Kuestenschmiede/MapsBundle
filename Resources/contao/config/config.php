@@ -66,12 +66,9 @@ if(TL_MODE == "BE") {
 /**
  * Frontend modules
  */
-array_insert($GLOBALS['FE_MOD']['con4gis'], 1,
-    [
-        'c4g_maps' => 'con4gis\MapsBundle\Resources\contao\modules\ModuleC4gMaps',
-        'c4g_search' => 'con4gis\MapsBundle\Resources\contao\modules\ModuleC4gSearch',
-    ]);
-
+$GLOBALS['FE_MOD']['con4gis']['c4g_maps'] = 'con4gis\MapsBundle\Resources\contao\modules\ModuleC4gMaps';
+$GLOBALS['FE_MOD']['con4gis']['c4g_search'] = 'con4gis\MapsBundle\Resources\contao\modules\ModuleC4gSearch';
+asort($GLOBALS['FE_MOD']['con4gis']);
 /**
  * Content elements
  */
