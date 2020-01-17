@@ -14,39 +14,47 @@
 $GLOBALS['BE_MOD']['con4gis'] = array_merge($GLOBALS['BE_MOD']['con4gis'], [
         'c4g_map_baselayers' =>
         [
+            'brick' => 'maps',
             'tables' => ['tl_c4g_map_baselayers', 'tl_c4g_map_overlays'],
-            'icon' => 'bundles/con4gismaps/images/be-icons/baselayers.png',
+            'icon' => 'bundles/con4gismaps/images/be-icons/baselayers.svg',
             'javascript' => 'bundles/con4gismaps/js/c4g-maps-backend.js'
         ],
         'c4g_map_locstyles' =>
         [
+            'brick' => 'maps',
             'tables' => ['tl_c4g_map_locstyles'],
-            'icon' => 'bundles/con4gismaps/images/be-icons/locstyles.png',
+            'icon' => 'bundles/con4gismaps/images/be-icons/locationstyles.svg',
         ],
         'c4g_map_themes'    =>
         [
+            'brick' => 'maps',
             'tables' => ['tl_c4g_map_themes'],
-            'icon'  => 'bundles/con4gismaps/images/be-icons/themes.png',
+            'icon'  => 'bundles/con4gismaps/images/be-icons/maplayout.svg',
         ],
         'c4g_map_profiles' =>
         [
+            'brick' => 'maps',
             'tables' => ['tl_c4g_map_profiles'],
-            'icon' => 'bundles/con4gismaps/images/be-icons/profiles.png',
+            'icon'  => 'bundles/con4giscore/images/be-icons/global_settings_16.svg',
         ],
         'c4g_maps' =>
         [
+            'brick' => 'maps',
             'tables' => ['tl_c4g_maps'],
-            'icon' => 'bundles/con4gismaps/images/be-icons/mapstructure.png',
-            'javascript'     => 'bundles/con4gismaps/js/c4g-maps-backend.js'
+            'icon' => 'bundles/con4gismaps/images/be-icons/mapstructure.svg',
+            'javascript' => 'bundles/con4gismaps/js/c4g-maps-backend.js'
         ],
         'c4g_map_tables' =>
         [
+            'brick' => 'maps',
             'tables' => ['tl_c4g_map_tables'],
-            'icon' => 'bundles/con4gismaps/images/be-icons/mapstructure.png',
+            'icon' => 'bundles/con4gismaps/images/be-icons/sourcetables.svg'
         ],
         'c4g_map_filters' =>
         [
-            'tables' => ['tl_c4g_map_filters']
+            'brick' => 'maps',
+            'tables' => ['tl_c4g_map_filters'],
+            'icon' => 'bundles/con4gismaps/images/be-icons/mapfilter.svg'
         ]
     ]
 );
