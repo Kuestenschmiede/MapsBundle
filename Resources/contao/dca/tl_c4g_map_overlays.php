@@ -141,6 +141,10 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
         [
             'sql'                     => "int(10) unsigned NOT NULL auto_increment"
         ],
+        'uuid' =>
+        [
+            'sql'                     => "bigint(20) unsigned NOT NULL default '0'"
+        ],
         'pid' =>
         [
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
