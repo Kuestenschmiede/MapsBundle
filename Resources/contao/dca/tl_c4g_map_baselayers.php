@@ -1,4 +1,6 @@
-<?php if (!defined('TL_ROOT')) die('You cannot access this file directly!');
+<?php use Contao\Image;
+
+if (!defined('TL_ROOT')) die('You cannot access this file directly!');
 /*
  * This file is part of con4gis,
  * the gis-kit for Contao CMS.
@@ -658,7 +660,7 @@ class tl_c4g_map_baselayers extends Backend
             $icon = 'invisible.svg';
         }
 
-        return '<a href="'.$this->addToUrl($href).'" title="'.specialchars($title).'"'.$attributes.'>'.$this->generateImage($icon, $label).'</a> ';
+        return '<a href="'.$this->addToUrl($href).'" title="'.specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label).'</a> ';
     }
     public function toggleVisibility($intId, $blnPublished)
     {

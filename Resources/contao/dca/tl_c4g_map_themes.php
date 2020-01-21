@@ -185,7 +185,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
             'default'                 => '36',
             'options'                 => ['px'],
             'eval'                    => ['tl_class'=>'long', 'mandatory'=>true],
-            'sql'                     => "varchar(100) NOT NULL default '36'"
+            'sql'                     => "varchar(100) NOT NULL default 'a:2:{s:4:\"unit\";s:2:\"px\";s:5:\"value\";s:2:\"36\";}'"
             ],
         'colors' =>
             [
