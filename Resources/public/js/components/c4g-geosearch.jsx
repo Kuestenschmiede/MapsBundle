@@ -153,7 +153,9 @@ export class GeoSearch extends Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.state.open) {
-      this.props.mapController.hideOtherComponents(this);
+      if (prevState.open !== this.state.open) {
+        this.props.mapController.setOpenComponent(this);
+      }
       jQuery(".c4g-geosearch-container-right").addClass("c4g-open").removeClass("c4g-close");
     } else {
       jQuery(".c4g-geosearch-container-right").addClass("c4g-close").removeClass("c4g-open");

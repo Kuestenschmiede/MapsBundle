@@ -747,8 +747,8 @@ export class MapController extends Component {
   }
 
   render() {
-    const mapData = this.props.mapData;
-    let target = document.querySelector('#' + this.props.mapData.mapDiv + ' .' + cssConstants.OL_OVERLAYCONTAINER_SE);
+    const mapData = this.data;
+    let target = document.querySelector('#' + mapData.mapDiv + ' .c4g-control-container-top-left');
     let sbPortal = ReactDOM.createPortal(
       <StarboardPanel ref={(node) => {this.components.starboard = node;}} target={target}
                       mapController={this} objLayers={this.state.objLayers}

@@ -111,32 +111,32 @@ export class StarboardPanel extends Component {
    * Moves the buttons that would collide with the panel.
    */
   slideOutCollidingElements() {
-    const scope = this;
-    let starboardWidth = jQuery(".c4g-starboard-container").width();
-    if (this.state.direction === "right") {
-      let elements = document.querySelectorAll('.' + cssConstants.CONTROL_CONTAINER_TR + ' .' + cssConstants.OL_UNSELECTABLE);
-      elements.forEach(function(element) {
-        element.style.right = starboardWidth + "px";
-      });
-      this.state.control.element.style.right = starboardWidth + "px";
-      elements = document.querySelectorAll('.' + cssConstants.CONTROL_CONTAINER_BR + ' .' + cssConstants.OL_UNSELECTABLE);
-      elements.forEach(function(element) {
-        element.style.right = starboardWidth + "px";
-      });
+    // const scope = this;
+    // let starboardWidth = jQuery(".c4g-starboard-container").width();
+    // if (this.state.direction === "right") {
+    //   let elements = document.querySelectorAll('.' + cssConstants.CONTROL_CONTAINER_TR + ' .' + cssConstants.OL_UNSELECTABLE);
+    //   elements.forEach(function(element) {
+    //     element.style.right = starboardWidth + "px";
+    //   });
+    //   this.state.control.element.style.right = starboardWidth + "px";
+    //   elements = document.querySelectorAll('.' + cssConstants.CONTROL_CONTAINER_BR + ' .' + cssConstants.OL_UNSELECTABLE);
+    //   elements.forEach(function(element) {
+    //     element.style.right = starboardWidth + "px";
+    //   });
       jQuery(".c4g-starboard-container").css("right","0%");
-    } else {
-      let elements = document.querySelectorAll('.' + cssConstants.CONTROL_CONTAINER_TL + ' .' + cssConstants.OL_UNSELECTABLE);
-      elements.forEach(function(element) {
-        element.style.left = starboardWidth + "px";
-      });
-      elements = document.querySelectorAll('.' + cssConstants.CONTROL_CONTAINER_BL + ' .' + cssConstants.OL_UNSELECTABLE);
-      elements.forEach(function(element) {
-        element.style.left = starboardWidth + "px";
-      });
-      // let topValue = this.props.mapController.map.getSize()[1] - 100;
-      // jQuery(this.state.control.element).style.top = topValue + "px";
-      // jQuery(this.state.control.element).addClass("panel-slided-out").removeClass("panel-slided-in");
-    }
+    // } else {
+    //   let elements = document.querySelectorAll('.' + cssConstants.CONTROL_CONTAINER_TL + ' .' + cssConstants.OL_UNSELECTABLE);
+    //   elements.forEach(function(element) {
+    //     element.style.left = starboardWidth + "px";
+    //   });
+    //   elements = document.querySelectorAll('.' + cssConstants.CONTROL_CONTAINER_BL + ' .' + cssConstants.OL_UNSELECTABLE);
+    //   elements.forEach(function(element) {
+    //     element.style.left = starboardWidth + "px";
+    //   });
+    //   // let topValue = this.props.mapController.map.getSize()[1] - 100;
+    //   // jQuery(this.state.control.element).style.top = topValue + "px";
+    //   // jQuery(this.state.control.element).addClass("panel-slided-out").removeClass("panel-slided-in");
+    // }
 
   }
 
@@ -144,29 +144,29 @@ export class StarboardPanel extends Component {
    * Undoes the previous button movement.
    */
   slideInCollidingElements() {
-    const scope = this;
-    if (this.state.direction === "right") {
-      let elements = document.querySelectorAll('.' + cssConstants.CONTROL_CONTAINER_TR + ' .' + cssConstants.OL_UNSELECTABLE);
-      elements.forEach(function(element) {
-        element.style.right = "0px";
-      });
-      elements = document.querySelectorAll('.' + cssConstants.CONTROL_CONTAINER_BR + ' .' + cssConstants.OL_UNSELECTABLE);
-      elements.forEach(function(element) {
-        element.style.right = "0px";
-      });
+    // const scope = this;
+    // if (this.state.direction === "right") {
+    //   let elements = document.querySelectorAll('.' + cssConstants.CONTROL_CONTAINER_TR + ' .' + cssConstants.OL_UNSELECTABLE);
+    //   elements.forEach(function(element) {
+    //     element.style.right = "0px";
+    //   });
+    //   elements = document.querySelectorAll('.' + cssConstants.CONTROL_CONTAINER_BR + ' .' + cssConstants.OL_UNSELECTABLE);
+    //   elements.forEach(function(element) {
+    //     element.style.right = "0px";
+    //   });
       jQuery(".c4g-starboard-container").css("right","-100%");
-      this.state.control.element.style.right = "0px";
-    } else {
-      let elements = document.querySelectorAll('.' + cssConstants.CONTROL_CONTAINER_TL + ' .' + cssConstants.OL_UNSELECTABLE);
-      elements.forEach(function(element) {
-        element.style.left = "0px";
-      });
-      elements = document.querySelectorAll('.' + cssConstants.CONTROL_CONTAINER_BL + ' .' + cssConstants.OL_UNSELECTABLE);
-      elements.forEach(function(element) {
-        element.style.left = "0px";
-      });
-      // this.state.control.element.style.top = this.props.mapController.map.getSize()[1] + "px";
-      // jQuery(this.state.control.element).addClass("panel-slided-in").removeClass("panel-slided-out")
-    }
+    //   this.state.control.element.style.right = "0px";
+    // } else {
+    //   let elements = document.querySelectorAll('.' + cssConstants.CONTROL_CONTAINER_TL + ' .' + cssConstants.OL_UNSELECTABLE);
+    //   elements.forEach(function(element) {
+    //     element.style.left = "0px";
+    //   });
+    //   elements = document.querySelectorAll('.' + cssConstants.CONTROL_CONTAINER_BL + ' .' + cssConstants.OL_UNSELECTABLE);
+    //   elements.forEach(function(element) {
+    //     element.style.left = "0px";
+    //   });
+    //   // this.state.control.element.style.top = this.props.mapController.map.getSize()[1] + "px";
+    //   // jQuery(this.state.control.element).addClass("panel-slided-in").removeClass("panel-slided-out")
+    // }
   }
 }
