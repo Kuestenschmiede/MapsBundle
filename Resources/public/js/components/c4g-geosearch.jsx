@@ -99,7 +99,7 @@ export class GeoSearch extends Component {
       results: [],
       currentCoordinate: [],
       openResults: false,
-      detailOpenResults: false,
+      // detailOpenResults: false,
       currentResult: null
     };
 
@@ -119,9 +119,9 @@ export class GeoSearch extends Component {
     }
     let results = "";
     if (this.state.openResults && this.config.results) {
-      results = <GeoSearchResults className={modeClass} results={this.state.results} zoomFunc={(idx) => {this.setState({detailOpenResults: false, currentResult: this.state.results[idx]}); this.zoomTo(idx);}}
+      results = <GeoSearchResults className={modeClass} results={this.state.results} zoomFunc={(idx) => {this.setState({currentResult: this.state.results[idx]}); this.zoomTo(idx);}}
                                   closeResults={this.closeResults} headline={this.props.resultsHeadline} currentResult={this.state.currentResult} resultsDiv={this.props.resultsDiv}
-                                  open={this.state.results.length >0} openResults={this.openResults} detailOpen={this.state.detailOpenResults} closeCb={this.closeResultsCompletely}
+                                  open={this.state.results.length >0} openResults={this.openResults} closeCb={this.closeResultsCompletely}
       />;
     }
     let closeBtnClass = "";
@@ -134,9 +134,9 @@ export class GeoSearch extends Component {
     return (
       <React.Fragment>
         <div className={cssConstants.GEOSEARCH_WRAPPER + " " + modeClass + " c4g-horizon"}>
-          <Titlebar wrapperClass={"c4g-geosearch-header c4g-horizon-header"} header={this.props.headline} headerClass={"c4g-geosearch-headline c4g-horizon-header-headline"}
-                                detailBtnClass={""} detailBtnCb={""} closeBtnClass={closeBtnClass} closeBtnCb={closeBtnCb}>
-          </Titlebar>
+          {/*<Titlebar wrapperClass={"c4g-geosearch-header c4g-horizon-header"} header={this.props.headline} headerClass={"c4g-geosearch-headline c4g-horizon-header-headline"}*/}
+          {/*                      detailBtnClass={""} detailBtnCb={""} closeBtnClass={closeBtnClass} closeBtnCb={closeBtnCb}>*/}
+          {/*</Titlebar>*/}
           <div className={"c4g-horizon-content"}>
             <input type="text" onKeyDown={this.inputCallback} id={"c4g-geosearch-input"} placeholder={this.config.placeholder} aria-label={this.config.placeholder}/>
             <button className={cssConstants.GEOSEARCH_START} title={this.langConstants.CTRL_START_SEARCH} onMouseUp={this.startSearch}/>
@@ -152,7 +152,7 @@ export class GeoSearch extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (this.state.openResults) {
+    if (this.state.open) {
       this.props.mapController.hideOtherComponents(this);
     }
   }
@@ -186,9 +186,11 @@ export class GeoSearch extends Component {
   clickControl() {
     if (this.state.open) {
       this.setState({open: false});
+      jQuery(this.props.mapController.searchContainer).removeClass("c4g-open").addClass("c4g-close");
     } else {
       this.props.mapController.hideOtherComponents(this);
       this.setState({open: true});
+      jQuery(this.props.mapController.searchContainer).removeClass("c4g-close").addClass("c4g-open");
     }
   }
 

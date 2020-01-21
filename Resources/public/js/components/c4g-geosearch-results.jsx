@@ -33,33 +33,33 @@ export class GeoSearchResults extends Component {
     let closeBtnClass = "c4g-titlebar-close";
     let closeBtnCb = this.props.closeCb;
 
-    if (this.props.detailOpen) {
-      resultContainer = <ul id={"resultcontainer"}>
-        {this.props.results.map(function(element, index) {
-          return (<li key={index}><button key={index} id={index} className={"searchResultButton"} name={element} onMouseUp={() => scope.props.zoomFunc(index)}>{element}</button></li>)
-        })}
-      </ul>;
-    }
-    if (!this.props.detailOpen && this.props.results.length >= 1) {
-      let element = this.props.currentResult;
-      firstResult = <ul>
-        <li><button id={0} className={"searchResultButton"} name={element} onMouseUp={() => scope.props.zoomFunc(0)}>{element}</button>
-        </li>
-      </ul>;
-    }
-    if (!this.props.detailOpen && this.props.results.length > 1) {
-      detailBtnClass = "c4g-beach-options";
-      detailBtnCb = this.props.openResults;
-    } else if (this.props.detailOpen && this.props.results.length > 1) {
-      detailBtnClass = "c4g-beach-options";
-      detailBtnCb = this.props.closeResults;
-    }
+
+    resultContainer = <ul id={"resultcontainer"}>
+      {this.props.results.map(function(element, index) {
+        return (<li key={index}><button key={index} id={index} className={"searchResultButton"} name={element} onMouseUp={() => scope.props.zoomFunc(index)}>{element}</button></li>)
+      })}
+    </ul>;
+
+    // if (!this.props.detailOpen && this.props.results.length >= 1) {
+    //   let element = this.props.currentResult;
+    //   firstResult = <ul>
+    //     <li><button id={0} className={"searchResultButton"} name={element} onMouseUp={() => scope.props.zoomFunc(0)}>{element}</button>
+    //     </li>
+    //   </ul>;
+    // }
+    // if (!this.props.detailOpen && this.props.results.length > 1) {
+    //   detailBtnClass = "c4g-beach-options";
+    //   detailBtnCb = this.props.openResults;
+    // } else if (this.props.detailOpen && this.props.results.length > 1) {
+    //   detailBtnClass = "c4g-beach-options";
+    //   detailBtnCb = this.props.closeResults;
+    // }
     if (this.props.resultsDiv) {
       return ReactDOM.createPortal(
         (
           <div className={"c4g-geosearch-results external " + this.props.className + " c4g-beach"}>
-            <Titlebar wrapperClass={"c4g-geosearch-results-header c4g-beach-header"} header={this.props.headline} headerClass={"c4g-geosearch-results-headline c4g-beach-header-headline"}
-                      detailBtnClass={detailBtnClass} detailBtnCb={detailBtnCb} closeBtnClass={closeBtnClass} closeBtnCb={closeBtnCb}/>
+            {/*<Titlebar wrapperClass={"c4g-geosearch-results-header c4g-beach-header"} header={this.props.headline} headerClass={"c4g-geosearch-results-headline c4g-beach-header-headline"}*/}
+            {/*          detailBtnClass={detailBtnClass} detailBtnCb={detailBtnCb} closeBtnClass={closeBtnClass} closeBtnCb={closeBtnCb}/>*/}
             <div className={"c4g-beach-content"}>
               {resultContainer}
               {firstResult}
@@ -71,8 +71,8 @@ export class GeoSearchResults extends Component {
     } else {
       return (
         <div className={"c4g-geosearch-results " + this.props.className + " c4g-beach"}>
-          <Titlebar wrapperClass={"c4g-geosearch-results-header c4g-beach-header"} header={this.props.headline} headerClass={"c4g-geosearch-results-headline c4g-beach-header-headline"}
-                    detailBtnClass={detailBtnClass} detailBtnCb={detailBtnCb} closeBtnClass={closeBtnClass} closeBtnCb={closeBtnCb}/>
+          {/*<Titlebar wrapperClass={"c4g-geosearch-results-header c4g-beach-header"} header={this.props.headline} headerClass={"c4g-geosearch-results-headline c4g-beach-header-headline"}*/}
+          {/*          detailBtnClass={detailBtnClass} detailBtnCb={detailBtnCb} closeBtnClass={closeBtnClass} closeBtnCb={closeBtnCb}/>*/}
           <div className={"c4g-beach-content"}>
             {resultContainer}
             {firstResult}

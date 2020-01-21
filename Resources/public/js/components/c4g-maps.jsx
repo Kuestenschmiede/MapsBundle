@@ -613,7 +613,7 @@ export class MapController extends Component{
     // feature filter
     if (mapData.filterDiv && false) {
       this.filterContainer = document.createElement('div');
-      ReactDOM.render(React.createElement(FeatureFilter, {
+      this.components.filter = ReactDOM.render(React.createElement(FeatureFilter, {
         target: document.querySelector(mapData.filterDiv),// + mapData.mapDiv + ' .' + cssConstants.OL_OVERLAYCONTAINER),
         mapController: this,
         direction: "top",
@@ -635,56 +635,7 @@ export class MapController extends Component{
     //   this.map.addControl(this.controls.additionalPanel);
     // }
 
-    // geosearch
-    if ((mapData.geosearch.enable)) {
-      let geosearchOptions = {
-        mapController: this,
-        target: document.querySelector('#' + mapData.mapDiv + ' .c4g-control-container-top-left'),
-        extDiv: mapData.geosearch.div || false,
-        collapsible: true,
-        collapsed: mapData.geosearch.collapsed,
-        label: ' ',
-        collapsedLabel: '',
-        // engineUrl: mapData.geosearch.engine,
-        searchZoom: mapData.geosearch.searchzoom,
-        zoomBounds: mapData.geosearch.zoombounds,
-        quicksearch: true,
-        animate: mapData.geosearch.animate,
-        markResult: mapData.geosearch.markresult,
-        popup: mapData.geosearch.popup,
-        autopick: mapData.geopicker,
-        caching: mapData.caching,
-        results: mapData.geosearch.results,
-        resultCount: mapData.geosearch.result_count,
-        resultsHeadline: mapData.geosearch.results_headline,
-        headline: mapData.geosearch.headline,
-        resultStyle: mapData.geosearch.result_locstyle,
-        placeholder: mapData.geosearch.placeholder
-      };
-      // this.controls.geosearch = new GeoSearch();
-      // this.map.addControl(this.controls.geosearch);
-      if (mapData.geosearch.div && mapData.geosearch.div_results) {
-        this.searchContainer = document.querySelector("#" + mapData.geosearch.div);
-        if (!this.searchContainer) {
-          this.searchContainer = document.querySelector("." + mapData.geosearch.div);
-        }
-        this.searchResultsContainer = document.querySelector("#" + mapData.geosearch.div_results);
-        if (!this.searchResultsContainer) {
-          this.searchResultsContainer = document.querySelector("." + mapData.geosearch.div_results);
-        }
-        geosearchOptions.resultsDiv = this.searchResultsContainer;
-      } else {
-        this.searchContainer = document.createElement('div');
-      }
-      this.components.geosearch = ReactDOM.render(React.createElement(GeoSearch, geosearchOptions), this.searchContainer);
-      if (!mapData.geosearch.div) {
-        this.$overlaycontainer_stopevent.append(this.searchContainer);
-      }
-      // open if opened before
-      // if ((mapData.caching && (utils.getValue(this.controls.geosearch.options.name) === '1'))) {
-      //   this.controls.geosearch.open();
-      // }
-    }
+
 
     // starboard
     if (mapData.geopicker && mapData.geopicker.type === "backend") {
@@ -795,10 +746,93 @@ export class MapController extends Component{
   }
 
   render() {
+    const mapData = this.props.mapData;
     let target = document.querySelector('#' + this.props.mapData.mapDiv + ' .' + cssConstants.OL_OVERLAYCONTAINER_SE);
-    return ReactDOM.createPortal(
-      <StarboardPanel target={target} mapController={this} objLayers={this.state.objLayers} layerStates={this.state.arrLayerStates} parentCallback={this.setLayerStates} direction={"right"} open={!!this.props.mapData.starboard.open}/>,
+    let sbPortal = ReactDOM.createPortal(
+      <StarboardPanel ref={(node) => {this.components.starboard = node;}} target={target}
+                      mapController={this} objLayers={this.state.objLayers}
+                      layerStates={this.state.arrLayerStates} parentCallback={this.setLayerStates}
+                      direction={"right"} open={!!this.props.mapData.starboard.open}
+      />,
       this.reactContainer
     );
+    let searchPortal = "";
+    if (mapData.geosearch && mapData.geosearch.enable) {
+      let geoSearchOptions = this.createGeosearchOptions();
+      geoSearchOptions.ref = (node) => {
+        this.components.geosearch = node;
+      };
+      searchPortal = ReactDOM.createPortal(
+        React.createElement(GeoSearch, geoSearchOptions),
+        this.searchContainer
+      );
+    }
+
+    return <React.Fragment>
+      {sbPortal}
+      {searchPortal}
+    </React.Fragment>;
+  }
+
+  componentDidMount() {
+    console.log(this.components);
+  }
+
+  createGeosearchOptions() {
+    const mapData = this.props.mapData;
+    // geosearch
+    let geosearchOptions = {};
+    if ((mapData.geosearch && mapData.geosearch.enable)) {
+      geosearchOptions = {
+        mapController: this,
+        target: document.querySelector('#' + mapData.mapDiv + ' .c4g-control-container-top-left'),
+        extDiv: mapData.geosearch.div || false,
+        collapsible: true,
+        collapsed: mapData.geosearch.collapsed,
+        label: ' ',
+        collapsedLabel: '',
+        // engineUrl: mapData.geosearch.engine,
+        searchZoom: mapData.geosearch.searchzoom,
+        zoomBounds: mapData.geosearch.zoombounds,
+        quicksearch: true,
+        animate: mapData.geosearch.animate,
+        markResult: mapData.geosearch.markresult,
+        popup: mapData.geosearch.popup,
+        autopick: mapData.geopicker,
+        caching: mapData.caching,
+        results: mapData.geosearch.results,
+        resultCount: mapData.geosearch.result_count,
+        resultsHeadline: mapData.geosearch.results_headline,
+        headline: mapData.geosearch.headline,
+        resultStyle: mapData.geosearch.result_locstyle,
+        placeholder: mapData.geosearch.placeholder
+      };
+      if (!this.searchContainer) {
+        if (mapData.geosearch.div && mapData.geosearch.div_results) {
+          this.searchContainer = document.querySelector("#" + mapData.geosearch.div);
+          if (!this.searchContainer) {
+            this.searchContainer = document.querySelector("." + mapData.geosearch.div);
+          }
+          this.searchResultsContainer = document.querySelector("#" + mapData.geosearch.div_results);
+          if (!this.searchResultsContainer) {
+            this.searchResultsContainer = document.querySelector("." + mapData.geosearch.div_results);
+          }
+          geosearchOptions.resultsDiv = this.searchResultsContainer;
+        } else {
+          this.searchContainer = document.createElement('div');
+          this.searchContainer.className = "c4g-geosearch-container-right ";
+          this.searchContainer.className += mapData.geosearch.collapsed ? "c4g-close" : "c4g-open";
+        }
+        // this.components.geosearch = ReactDOM.render(React.createElement(GeoSearch, geosearchOptions), this.searchContainer);
+        if (!mapData.geosearch.div) {
+          this.$overlaycontainer_stopevent.append(this.searchContainer);
+        }
+      }
+      // open if opened before
+      // if ((mapData.caching && (utils.getValue(this.controls.geosearch.options.name) === '1'))) {
+      //   this.controls.geosearch.open();
+      // }
+    }
+    return geosearchOptions;
   }
 }

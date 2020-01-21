@@ -113,8 +113,10 @@ export class C4gPopupController {
       // attach a spinner to the popup
       window.c4gMapsPopup.spinner = new Spinner({target: popUpElement});
 
-      this.mapController.map.addOverlay(popup);
-      this.currentPopup = popup;
+      if (popup) {
+        this.mapController.map.addOverlay(popup);
+        this.currentPopup = popup;
+      }
       window.c4gMapsPopup.$popup = jQuery(this.getElement());
       window.c4gMapsPopup.$content = jQuery('.c4g-popup-content', window.c4gMapsPopup.$popup);
     }

@@ -221,9 +221,9 @@ export class MapsControls {
         // backend-geopicker
         if (mapData.geopicker && (mapData.geopicker.type === "backend" || mapData.geopicker.type === "frontend")) {
             this.controls.geopicker = new GeoPicker({
-                mapContainer: this
+                mapContainer: this.mapController
             });
-            this.map.addInteraction(this.controls.geopicker);
+            this.mapController.map.addInteraction(this.controls.geopicker);
             if (mapData.geopicker.type === "frontend") {
                 // substring is needed here for taking out the #
                 if (mapData.geopicker.input_geo_x && mapData.geopicker.input_geo_x) {
@@ -236,7 +236,7 @@ export class MapsControls {
                             var numerized = [parseFloat(locGeox, 10), parseFloat(locGeoy, 10)];
                             var transformed = transform(numerized, get('EPSG:4326'), get('EPSG:3857'));
                             geoLocation = null;
-                            this.map.getView().setCenter(transformed);
+                            this.mapController.map.getView().setCenter(transformed);
                         }
                     }
                 }

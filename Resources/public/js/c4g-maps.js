@@ -67,8 +67,10 @@ export class MapController {
    *                                See "docs/mapData-values.md"
    *                                to get a list of valid values for this object.
    */
-  constructor(mapData) {
+  constructor(mapData, mapController) {
 
+    console.log(mapData);
+    console.log(mapController);
     //---
     this.map = null;
 
@@ -600,7 +602,7 @@ export class MapController {
       this.reactContainer = document.createElement('div');
       this.reactContainer.className ="c4g-sideboard c4g-starboard-container ol-unselectable c4g-close";
       this.reactContainer.style.right = "-100%";
-      ReactDOM.render(React.createElement(StarboardPanel, {
+      this.components.starboard = ReactDOM.render(React.createElement(StarboardPanel, {
         target: document.querySelector('#' + mapData.mapDiv + ' .' +cssConstants.OL_OVERLAYCONTAINER_SE),
         mapController: this,
         direction: "right",
@@ -611,77 +613,13 @@ export class MapController {
     // feature filter
     if (mapData.filterDiv) {
       this.filterContainer = document.createElement('div');
-      ReactDOM.render(React.createElement(FeatureFilter, {
+      this.components.filter = ReactDOM.render(React.createElement(FeatureFilter, {
         target: document.querySelector(mapData.filterDiv),// + mapData.mapDiv + ' .' + cssConstants.OL_OVERLAYCONTAINER),
         mapController: this,
         direction: "top",
         className: "c4g-feature-filter"
       }), this.filterContainer);
       $(mapData.filterDiv).append(this.filterContainer);
-    }
-
-    // @ToDo mapData.additionalPanel is always true, because it is set as an new object in the beginning. Therefore the second parameter of the boolean is requested, which throws an error
-    // additionalPanel is furthermore not found anywhere in Maps and should be loaded over a hook
-
-    // if (mapData.additionalPanel && typeof c4g.maps.control.additionalPanel === 'function') {
-    //   this.controls.additionalPanel = new c4g.maps.control.additionalPanel({
-    //     tipLabel: langConstants.CTRL_ADDITIONALPANEL,
-    //     target: controlContainerTopLeft,
-    //     caching: mapData.caching,
-    //     mapController: this
-    //   });
-    //   this.map.addControl(this.controls.additionalPanel);
-    // }
-
-    // geosearch
-    if ((mapData.geosearch.enable)) {
-      let geosearchOptions = {
-        mapController: this,
-        target: document.querySelector('#' + mapData.mapDiv + ' .c4g-control-container-top-left'),
-        extDiv: mapData.geosearch.div || false,
-        collapsible: true,
-        collapsed: mapData.geosearch.collapsed,
-        label: ' ',
-        collapsedLabel: '',
-        // engineUrl: mapData.geosearch.engine,
-        searchZoom: mapData.geosearch.searchzoom,
-        zoomBounds: mapData.geosearch.zoombounds,
-        quicksearch: true,
-        animate: mapData.geosearch.animate,
-        markResult: mapData.geosearch.markresult,
-        popup: mapData.geosearch.popup,
-        autopick: mapData.geopicker,
-        caching: mapData.caching,
-        results: mapData.geosearch.results,
-        resultCount: mapData.geosearch.result_count,
-        resultsHeadline: mapData.geosearch.results_headline,
-        headline: mapData.geosearch.headline,
-        resultStyle: mapData.geosearch.result_locstyle,
-        placeholder: mapData.geosearch.placeholder
-      };
-      // this.controls.geosearch = new GeoSearch();
-      // this.map.addControl(this.controls.geosearch);
-      if (mapData.geosearch.div && mapData.geosearch.div_results) {
-        this.searchContainer = document.querySelector("#" + mapData.geosearch.div);
-        if (!this.searchContainer) {
-          this.searchContainer = document.querySelector("." + mapData.geosearch.div);
-        }
-        this.searchResultsContainer = document.querySelector("#" + mapData.geosearch.div_results);
-        if (!this.searchResultsContainer) {
-          this.searchResultsContainer = document.querySelector("." + mapData.geosearch.div_results);
-        }
-        geosearchOptions.resultsDiv = this.searchResultsContainer;
-      } else {
-        this.searchContainer = document.createElement('div');
-      }
-      this.components.geosearch = ReactDOM.render(React.createElement(GeoSearch, geosearchOptions), this.searchContainer);
-      if (!mapData.geosearch.div) {
-        this.$overlaycontainer_stopevent.append(this.searchContainer);
-      }
-      // open if opened before
-      // if ((mapData.caching && (utils.getValue(this.controls.geosearch.options.name) === '1'))) {
-      //   this.controls.geosearch.open();
-      // }
     }
 
     // starboard
