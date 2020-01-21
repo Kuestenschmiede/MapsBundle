@@ -83,6 +83,7 @@ export class StarboardPanel extends Component {
 
   open() {
     this.setState({open: true}, () => this.slideOutCollidingElements());
+    this.props.mapController.setOpenComponent(this);
     // this.state.open = true;
   }
 

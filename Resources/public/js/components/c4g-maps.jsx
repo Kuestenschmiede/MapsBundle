@@ -59,7 +59,7 @@ import {FeatureFilter} from "./c4g-feature-filter.jsx";
 let langConstants = {};
 
 'use strict';
-export class MapController extends Component{
+export class MapController extends Component {
 
   /**
    * [MapController description]
@@ -73,7 +73,8 @@ export class MapController extends Component{
     let mapData = props.mapData;
     this.state = {
       objLayers: [],
-      arrLayerStates: []
+      arrLayerStates: [],
+      openComponent: null
     };
     this.setObjLayers = this.setObjLayers.bind(this);
     this.setLayerStates = this.setLayerStates.bind(this);
@@ -774,12 +775,25 @@ export class MapController extends Component{
     </React.Fragment>;
   }
 
+  setOpenComponent(component) {
+    this.setState({openComponent: component}, () => {
+      for (let key in this.components) {
+        if (this.components.hasOwnProperty(key)) {
+          let currentComp = this.components[key];
+          if (currentComp !== component) {
+            currentComp.setState({open: false});
+          }
+        }
+      }
+    });
+  }
+
   componentDidMount() {
     console.log(this.components);
   }
 
   createGeosearchOptions() {
-    const mapData = this.props.mapData;
+    const mapData = this.data;
     // geosearch
     let geosearchOptions = {};
     if ((mapData.geosearch && mapData.geosearch.enable)) {

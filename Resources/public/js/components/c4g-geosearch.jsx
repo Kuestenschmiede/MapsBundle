@@ -124,12 +124,12 @@ export class GeoSearch extends Component {
                                   open={this.state.results.length >0} openResults={this.openResults} closeCb={this.closeResultsCompletely}
       />;
     }
-    let closeBtnClass = "";
-    let closeBtnCb = "";
-    if (this.config.collapsed) {
-      closeBtnClass = "c4g-titlebar-close";
-      closeBtnCb = this.close;
-    }
+    // let closeBtnClass = "";
+    // let closeBtnCb = "";
+    // if (this.config.collapsed) {
+    //   closeBtnClass = "c4g-titlebar-close";
+    //   closeBtnCb = this.close;
+    // }
 
     return (
       <React.Fragment>
@@ -154,7 +154,11 @@ export class GeoSearch extends Component {
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.state.open) {
       this.props.mapController.hideOtherComponents(this);
+      jQuery(".c4g-geosearch-container-right").addClass("c4g-open").removeClass("c4g-close");
+    } else {
+      jQuery(".c4g-geosearch-container-right").addClass("c4g-close").removeClass("c4g-open");
     }
+
   }
 
   close() {
@@ -188,9 +192,10 @@ export class GeoSearch extends Component {
       this.setState({open: false});
       jQuery(this.props.mapController.searchContainer).removeClass("c4g-open").addClass("c4g-close");
     } else {
-      this.props.mapController.hideOtherComponents(this);
+      // this.props.mapController.hideOtherComponents(this);
       this.setState({open: true});
       jQuery(this.props.mapController.searchContainer).removeClass("c4g-close").addClass("c4g-open");
+      this.props.mapController.setOpenComponent(this);
     }
   }
 
