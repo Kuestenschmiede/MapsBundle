@@ -68,6 +68,12 @@ class LocationStyleApi
             if (is_array(deserialize($value))){
                 $arrData[$key] = deserialize($value);
             }
+            
+            if ($key === "style_function_js") {
+                if (is_array(deserialize($value)) && count(deserialize($value)) === 0) {
+                    $arrData[$key] = null;
+                }
+            }
 
             if (\Validator::isUuid($value))
             {
