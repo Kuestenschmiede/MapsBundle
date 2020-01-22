@@ -27,7 +27,7 @@ export class BaselayerSwitcher extends Component {
     let element = document.createElement('div');
     let button = document.createElement('button');
     let langConstants = getLanguage(props.mapController.data);
-    // button.title = langConstants.CTRL_STARBOARD;
+    button.title = "Basiskartenwechsler ein-/ausschalten"; // TODO i18n
     element.className = "c4g-baselayer-control ol-unselectable ol-control ";
     if (props.open) {
       element.className += "c4g-open";
@@ -35,7 +35,7 @@ export class BaselayerSwitcher extends Component {
       element.className += "c4g-close";
     }
     element.appendChild(button);
-    jQuery(element).on('click', function(event) {
+    jQuery(element).on('click', function (event) {
       if (scope.state.open) {
         scope.close();
       } else {
@@ -44,65 +44,88 @@ export class BaselayerSwitcher extends Component {
     });
     let mapController = props.mapController;
     let control = new Control({element: element, target: props.target});
-    mapController.mapsControls.controls.horizontalPanel = control;
+    mapController.mapsControls.controls.baselayerSwitcher = control;
     mapController.map.addControl(control);
     this.open = this.open.bind(this);
-    this.slideOutCollidingElements = this.slideOutCollidingElements.bind(this);
     this.resizeFunction = this.resizeFunction.bind(this);
+    let baselayerLoaded = false;
+    if (props.mapController.proxy.baselayerLoaded) {
+      baselayerLoaded = true;
+    } else {
+      props.mapController.proxy.hook_baselayer_loaded = props.mapController.proxy.hook_baselayer_loaded || [];
+      props.mapController.proxy.hook_baselayer_loaded.push(function() {
+        scope.setState({baselayerLoaded: true, currentBaselayer: props.mapController.proxy.activeBaselayerId});
+      });
+    }
     // state variables (every property that has influence on this component)
     this.state = {
-      // either "top" or "bottom"
-      direction: props.direction || "right",
       open: props.open || false,
-      className: props.className || "c4g-starboard-panel",
-      childs: props.childs || [],
-      control: control
+      className: props.className || "c4g-baselayerswitcher-panel",
+      control: control,
+      baselayerLoaded: baselayerLoaded,
+      currentBaselayer: 0
     };
   }
 
   componentDidMount() {
-    // if (this.state.open) {
-    //   // window.setTimeout(() => this.open(), 1000);
-    //   this.open();
-    // }
+
   }
 
   render() {
-    let className = this.state.className + "-" + this.state.direction;
+    let arrBaselayers = this.props.baselayerController.arrBaselayers;
+    let className = this.state.className;
     className += " " + (this.state.open ? "c4g-open" : "c4g-close");
     if (this.state.open) {
       jQuery(this.state.control.element).addClass("c4g-open").removeClass("c4g-close");
+      jQuery(".c4g-baselayer-container").addClass("c4g-open").removeClass("c4g-close");
     } else {
       jQuery(this.state.control.element).removeClass("c4g-open").addClass("c4g-close");
+      jQuery(".c4g-baselayer-container").removeClass("c4g-open").addClass("c4g-close");
     }
     const scope = this;
     return (
-      <StarboardLayerswitcher key={this.props.mapController.id} mapController ={this.props.mapController} objLayers={this.props.objLayers} parentCallback={this.props.parentCallback} layerStates={this.props.layerStates} openfunc={this.open} open={this.state.open}></StarboardLayerswitcher>
+      <div className={"c4g-baselayer-wrapper"}>
+        <div className={"contentHeadline"}>Basiskarten</div>
+        <div className={"c4g-baselayertree"}>
+          <ul>
+            {Object.keys(arrBaselayers).map(function(element, index) {
+              let baselayer = arrBaselayers[element];
+              let currentCls = scope.state.currentBaselayer === element ? "c4g-active" : "c4g-inactive";
+              return (<li key={element}>
+                <a onMouseUp={(event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    scope.entryClick(element);
+                  }
+                } className={currentCls}>{baselayer.name}</a>
+              </li>);
+            })}
+          </ul>
+        </div>
+      </div>
     )
   }
 
+  entryClick(id) {
+    this.props.baselayerController.showBaseLayer(id);
+    this.setState({currentBaselayer: id});
+  }
+
   open() {
-    this.setState({open: true}, () => this.slideOutCollidingElements());
+    this.setState({open: true});
     this.props.mapController.setOpenComponent(this);
-    // this.state.open = true;
+
   }
 
   close() {
-    this.setState({open: false}, () => this.slideInCollidingElements());
-    // this.state.open = false;
+    this.setState({open: false});
   }
 
   resizeFunction() {
-    const scope = this;
-    window.requestAnimationFrame(function() {
-      scope.slideOutCollidingElements();
-    });
+
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (this.state.open) {
-      this.slideOutCollidingElements();
-    } else {
-      this.slideInCollidingElements();
-    }
+
   }
+}
