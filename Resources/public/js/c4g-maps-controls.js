@@ -245,7 +245,6 @@ export class MapsControls {
 
         // show attribution
         if (mapData.attribution.enable) {
-            // @TODO: create own attribution-control
             if (mapData.attribution.cfg_logo) {
                 let logoLink = document.createElement('a');
                 logoLink.href = 'https://con4gis.org';
@@ -263,8 +262,8 @@ export class MapsControls {
                 label: ' ',
                 tipLabel: langConstants.CTRL_ATTRIBUTION,
                 collapseLabel: ' ',
-                target: mapData.attribution.div ? mapData.attribution.div : controlContainerBottomRight,
-                collapsible: mapData.attribution.div ? false : true
+                target: mapData.attribution.div ? mapData.attribution.div : controlContainerBottomLeft,
+                collapsible: !mapData.attribution.div
             };
             if (mapData.attribution.div) {
                 attrOptions["className"] = "ol-attribution ol-attribution-ext-div";
