@@ -95,14 +95,15 @@ export class BaselayerSwitcher extends Component {
               if (baselayer.preview_image) {
                 preview = <img className={"c4g-baselayer-preview"} src={baselayer.preview_image} alt=""/>
               }
-              return (<li key={element}>
+              return (<li key={element} className={preview ? "with-image" : "without-image"}>
                 <a onMouseUp={(event) => {
                     event.preventDefault();
                     event.stopPropagation();
                     scope.entryClick(element);
                   }
-                } className={currentCls}>{baselayer.name}</a>
+                } className={currentCls}>{baselayer.name}
                 {preview}
+                </a>
               </li>);
             })}
           </ul>
