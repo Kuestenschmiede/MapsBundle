@@ -55,6 +55,7 @@ import {StarboardPanel} from "./c4g-starboard-panel.jsx";
 import ReactDOM from "react-dom";
 import React, {Component} from "react";
 import {FeatureFilter} from "./c4g-feature-filter.jsx";
+import {BaselayerSwitcher} from "./c4g-baselayerswitcher.jsx";
 
 let langConstants = {};
 
@@ -610,6 +611,18 @@ export class MapController extends Component {
 
 
       this.$overlaycontainer_stopevent.append(this.reactContainer);
+
+      this.baselayerContainer = document.createElement('div');
+      this.baselayerContainer.className ="c4g-baselayer-container ol-unselectable";
+      if (mapData.starboard.open) {
+        // this.baselayerContainer.style.right = "0";
+        this.baselayerContainer.className += " c4g-open";
+      } else {
+        // this.baselayerContainer.style.right = "-100%";
+        this.baselayerContainer.className += " c4g-close";
+      }
+
+      this.$overlaycontainer_stopevent.append(this.baselayerContainer);
     }
     // feature filter
     if (mapData.filterDiv && false) {
@@ -768,10 +781,15 @@ export class MapController extends Component {
         this.searchContainer
       );
     }
+    let blsPortal = ReactDOM.createPortal(
+      <BaselayerSwitcher ref={(node) => {this.components.baselayerSwitcher = node;}} mapController={this} baselayerController={this.proxy.baselayerController} />,
+      this.baselayerContainer
+    );
 
     return <React.Fragment>
       {sbPortal}
       {searchPortal}
+      {blsPortal}
     </React.Fragment>;
   }
 

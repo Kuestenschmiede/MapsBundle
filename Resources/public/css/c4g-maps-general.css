@@ -413,6 +413,33 @@ button.c4g-portside-close:before {
   transition: all 0.5s;
 }
 
+/**
+ * Baselayer switcher
+ */
+.c4g-baselayer-container {
+  background-color: var(--main-color);
+  position: absolute;
+  top: 0;
+  height: 100%;
+  min-width: 240px;
+  max-width: 42%;
+  z-index: 60;
+}
+.c4g-baselayer-container.c4g-close {
+  right: -100%;
+}
+.c4g-baselayer-container.c4g-open {
+  right: 0;
+}
+
+.c4g-baselayer-container .contentHeadline {
+  border-color: rgba(24, 61, 93,.8);
+  border-color: var(--main-color);
+  color: rgba(255,255,255,.9);
+  color: var(--font-color);
+  font-size: 1.25em;
+}
+
 /*
  * Zoom buttons
  */
