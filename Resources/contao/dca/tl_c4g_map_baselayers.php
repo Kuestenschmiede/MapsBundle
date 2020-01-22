@@ -615,7 +615,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['preview_image'],
             'exclude'                 => true,
             'inputType'               => 'fileTree',
-            'eval'                    => ['fieldType'=>'radio', 'files'=>true, 'extensions'=>'gif,jpg,jpeg,png', 'tl_class'=>'clr', 'mandatory'=>true,'submitOnChange' => true],
+            'eval'                    => ['fieldType'=>'radio', 'files'=>true, 'extensions'=>'gif,jpg,jpeg,png', 'tl_class'=>'clr', 'mandatory'=>false,'submitOnChange' => true],
             'sql'                     => "binary(16) NULL"
         ],
     ]

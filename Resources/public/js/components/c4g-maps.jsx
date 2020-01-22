@@ -782,7 +782,8 @@ export class MapController extends Component {
       );
     }
     let blsPortal = ReactDOM.createPortal(
-      <BaselayerSwitcher ref={(node) => {this.components.baselayerSwitcher = node;}} mapController={this} baselayerController={this.proxy.baselayerController} />,
+      <BaselayerSwitcher ref={(node) => {this.components.baselayerSwitcher = node;}} target={target}
+                         mapController={this} baselayerController={this.proxy.baselayerController} />,
       this.baselayerContainer
     );
 
