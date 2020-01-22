@@ -91,6 +91,10 @@ export class BaselayerSwitcher extends Component {
             {Object.keys(arrBaselayers).map(function(element, index) {
               let baselayer = arrBaselayers[element];
               let currentCls = scope.state.currentBaselayer === element ? "c4g-active" : "c4g-inactive";
+              let preview = "";
+              if (baselayer.preview_image) {
+                preview = <img className={"c4g-baselayer-preview"} src={baselayer.preview_image} alt=""/>
+              }
               return (<li key={element}>
                 <a onMouseUp={(event) => {
                     event.preventDefault();
@@ -98,6 +102,7 @@ export class BaselayerSwitcher extends Component {
                     scope.entryClick(element);
                   }
                 } className={currentCls}>{baselayer.name}</a>
+                {preview}
               </li>);
             })}
           </ul>

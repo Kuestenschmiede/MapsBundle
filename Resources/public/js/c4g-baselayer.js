@@ -48,6 +48,7 @@ export class C4gBaselayer{
         this.overlays = baselayerArr['overlays'];
         this.imageSrc = baselayerArr['image_src'];
         this.geoImageJson = baselayerArr['geoimage_json'];
+        this.preview_image = baselayerArr['preview_image'];
         if(baselayerArr['layerGroup']){
             let layerGroup = [];
             for(let index in baselayerArr['layerGroup'] ){
