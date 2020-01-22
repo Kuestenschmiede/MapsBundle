@@ -10,11 +10,11 @@
  * @copyright  Küstenschmiede GmbH Software & Design
  * @link       https://www.con4gis.org
  */
-namespace con4gis\MapsBundle\Resources\contao\classes;
+namespace con4gis\MapsBundle\Classes;
 
 /**
  * Class ImageSize
- * @package con4gis\MapsBundle\Resources\contao\classes
+ * @package con4gis\MapsBundle\Classes
  */
 class ImageSize extends \Contao\ImageSize
 {

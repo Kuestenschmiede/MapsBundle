@@ -1,4 +1,4 @@
-<?php use con4gis\MapsBundle\Resources\contao\classes\Utils;
+<?php use con4gis\MapsBundle\Classes\Utils;
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
 
 if (!defined('TL_ROOT')) die('You can not access this file directly!');
@@ -35,7 +35,7 @@ if (@class_exists("tl_member")) {
             'inputType'               => 'c4g_text',
             'eval'                    => ['mandatory'=>false, 'maxlength'=>20, 'tl_class'=>'w50 wizard'],
             'save_callback'           => [['tl_member_c4g_maps','setLocLon']],
-            'wizard'                  => [['\con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink']],
+            'wizard'                  => [['\con4gis\MapsBundle\Classes\GeoPicker', 'getPickerLink']],
             'sql'                     => "varchar(20) NOT NULL default ''"
             ];
 
@@ -46,7 +46,7 @@ if (@class_exists("tl_member")) {
             'inputType'               => 'c4g_text',
             'eval'                    => ['mandatory'=>false, 'maxlength'=>20, 'tl_class'=>'w50 wizard'],
             'save_callback'           => [['tl_member_c4g_maps','setLocLat']],
-            'wizard'                  => [['\con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink']],
+            'wizard'                  => [['\con4gis\MapsBundle\Classes\GeoPicker', 'getPickerLink']],
             'sql'                     => "varchar(20) NOT NULL default ''"
             ];
 

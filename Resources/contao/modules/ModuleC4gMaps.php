@@ -12,7 +12,7 @@
  */
 namespace con4gis\MapsBundle\Resources\contao\modules;
 
-use con4gis\MapsBundle\Resources\contao\classes\MapDataConfigurator;
+use con4gis\MapsBundle\Classes\MapDataConfigurator;
 
 /**
  * Class ModuleC4gMaps
@@ -35,7 +35,7 @@ class ModuleC4gMaps extends \Module
         if (TL_MODE == 'BE') {
             $objTemplate = new \BackendTemplate('be_wildcard');
 
-            $objTemplate->wildcard = '### ' . $GLOBALS['TL_LANG']['FMD']['c4g_maps'][0] . ' ###<img src="bundles/con4gismaps/images/logo_con4gis-maps.png" style="float:right">';
+            $objTemplate->wildcard = '### ' . $GLOBALS['TL_LANG']['FMD']['c4g_maps'][0] . ' ###<img src="bundles/con4gismaps/images/be-icons/logo_con4gis-maps.svg" style="float:right">';
             $objTemplate->title = $this->headline;
             $objTemplate->id = $this->id;
             $objTemplate->link = $this->title;

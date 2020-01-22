@@ -10,7 +10,7 @@
  * @copyright  Küstenschmiede GmbH Software & Design
  * @link       https://www.con4gis.org
  */
-namespace con4gis\MapsBundle\Resources\contao\classes;
+namespace con4gis\MapsBundle\Classes;
 
 use con4gis\CoreBundle\Resources\contao\models\C4gSettingsModel;
 use Contao\BackendUser;
@@ -18,7 +18,7 @@ use Contao\ContentModel;
 
 /**
  * Class GeoPicker
- * @package con4gis\MapsBundle\Resources\contao\classes
+ * @package con4gis\MapsBundle\Classes
  */
 class GeoPicker extends \Backend
 {

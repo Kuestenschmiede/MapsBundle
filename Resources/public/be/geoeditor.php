@@ -25,5 +25,5 @@ if (!file_exists($initialize)) {
 require($initialize);
 
 // Run the controller
-$controller = new \con4gis\MapsBundle\Resources\contao\classes\GeoEditor();
+$controller = new \con4gis\MapsBundle\Classes\GeoEditor();
 $controller->run();

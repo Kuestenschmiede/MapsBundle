@@ -10,7 +10,7 @@
  * @copyright  Küstenschmiede GmbH Software & Design
  * @link       https://www.con4gis.org
  */
-namespace con4gis\MapsBundle\Resources\contao\classes;
+namespace con4gis\MapsBundle\Classes;
 
 use BugBuster\MobileDetection\Mobile_Detection;
 use con4gis\CoreBundle\Classes\C4GUtils;
@@ -27,7 +27,7 @@ use Contao\System;
 
 /**
  * Class MapDataConfigurator
- * @package con4gis\MapsBundle\Resources\contao\classes
+ * @package con4gis\MapsBundle\Classes
  */
 class MapDataConfigurator
 {

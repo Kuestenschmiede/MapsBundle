@@ -13,7 +13,7 @@
 namespace con4gis\MapsBundle\Controller;
 
 use con4gis\CoreBundle\Controller\BaseController;
-use con4gis\MapsBundle\Resources\contao\classes\GeoPicker;
+use con4gis\MapsBundle\Classes\GeoPicker;
 use con4gis\MapsBundle\Resources\contao\modules\api\InfoWindowApi;
 use con4gis\MapsBundle\Resources\contao\modules\api\SearchApi;
 use con4gis\MapsBundle\Resources\contao\modules\api\ReverseSearchApi;

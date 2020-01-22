@@ -10,7 +10,7 @@
  * @copyright  Küstenschmiede GmbH Software & Design
  * @link       https://www.con4gis.org
  */
-namespace con4gis\MapsBundle\Resources\contao\classes;
+namespace con4gis\MapsBundle\Classes;
 
 use con4gis\CoreBundle\Classes\ResourceLoader as coreResourceLoader;
 use con4gis\CoreBundle\Resources\contao\models\C4gSettingsModel;
@@ -21,7 +21,7 @@ use Contao\System;
 
 /**
  * Class ResourceLoader
- * @package con4gis\MapsBundle\Resources\contao\classes
+ * @package con4gis\MapsBundle\Classes
  */
 class ResourceLoader extends coreResourceLoader
 {
