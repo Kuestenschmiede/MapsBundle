@@ -101,7 +101,7 @@ export class BaselayerSwitcher extends Component {
                     event.stopPropagation();
                     scope.entryClick(element);
                   }
-                } className={currentCls}>{baselayer.name}
+                } className={currentCls}><span>{baselayer.name}</span>
                 {preview}
                 </a>
               </li>);
