@@ -277,6 +277,7 @@ span.c4g-active ul li.c4g-active{
   background-color: var(--shadow-color);
   color: rgba(255,255,255,.9);
   color: var(--font-color);
+  cursor: not-allowed;
 }
 .c4g-layertree a:hover,
 .c4g-baselayertree a:hover {
@@ -285,6 +286,13 @@ span.c4g-active ul li.c4g-active{
   color: rgba(24, 61, 93,.8);
   color: var(--main-color)!important;
 }
+
+.c4g-baselayertree li.without-image a.c4g-active:hover{
+  background: var(--shadow-color);
+  color: var(--font-color)!important;
+  cursor: not-allowed;
+}
+
 .c4g-layertree a:after,
 .c4g-baselayertree a:before {
   border-color: rgba(24, 61, 93,.8);
@@ -712,4 +720,8 @@ background: var(--pu-main-color);
 .c4g-baselayertree li.with-image a  span{
   background: var(--font-color);
   color: var(--main-color)!important;
+}
+
+.c4g-baselayer-wrapper .c4g-baselayer-header{
+  color: var(--font-color);
 }

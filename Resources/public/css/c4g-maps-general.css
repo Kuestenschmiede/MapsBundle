@@ -1354,19 +1354,20 @@ div div.c4g-popup-wrapper.c4g-beach {
 .c4g-baselayer-container.c4g-open .c4g-baselayertree{
   max-height: calc(var(--map-height) - .4em - 35px);
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .c4g-baselayer-container.c4g-open .c4g-baselayertree::-webkit-scrollbar{
   width: .2em;
 }
 
-.c4g-baselayer-wrapper .contentHeadline{
+.c4g-baselayer-wrapper .c4g-baselayer-header{
   line-height: 35px;
   padding: 0 .4em;
+  width: calc(100% - 1.2em - 32px);
 }
 
 .c4g-baselayertree li.with-image a {
-  padding: .4em;
   position: relative;
   background: none;
   display: block;
@@ -1389,6 +1390,9 @@ div div.c4g-popup-wrapper.c4g-beach {
   height: 35px;
   line-height: 35px;
   text-align: center;
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+  padding-left: calc(.4em + 16px);
 }
 
 .c4g-baselayertree li.with-image a:not(.c4g-active)  span{
@@ -1412,4 +1416,15 @@ div div.c4g-popup-wrapper.c4g-beach {
 .c4g-baselayertree li.with-image:hover a span{
   opacity: 1;
 }
+.c4g-baselayer-header button {
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  right: .2em;
+  top: .2em;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
 
