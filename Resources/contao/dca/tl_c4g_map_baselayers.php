@@ -44,20 +44,33 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
         [
         'sorting' =>
             [
-                'mode'                    => 2,
+                'mode'                    => 5,
                 'icon'                    => 'bundles/con4giscore/images/be-icons/con4gis.org_dark.svg',
-                'fields'                  => ['name'],
-                'headerFields'            => ['name','provider','minzoomlevel','maxzoomlevel'],
-                'panelLayout'             => 'filter,search',
+                'panelLayout'             => 'search',
                 'paste_button_callback'   => ['tl_c4g_map_baselayers', 'pasteElement']
             ],
         'label' =>
             [
-                'flag'                    => 1,
-                'fields'                  => ['icon','name','provider','minzoomlevel','maxzoomlevel'],
-                'label_callback'          => ['tl_c4g_map_baselayers', 'addIcon'],
-                'showColumns'             => true
+                'fields'                  => ['name','display_name','minzoomlevel','maxzoomlevel'],
+                'format'                  => '<span style="color:#303E4D"><b>%s</b></span> -> %s [˅%s,˄%s]',
+                'label_callback'          => ['tl_c4g_map_baselayers', 'addIcon']
             ],
+//        'sorting' =>
+//            [
+//                'mode'                    => 1,
+//                'icon'                    => 'bundles/con4giscore/images/be-icons/con4gis.org_dark.svg',
+//                'fields'                  => ['name'],
+//                //'headerFields'            => ['name','provider','minzoomlevel','maxzoomlevel'],
+//                'panelLayout'             => 'filter,search',
+//                'paste_button_callback'   => ['tl_c4g_map_baselayers', 'pasteElement']
+//            ],
+//        'label' =>
+//            [
+//                'flag'                    => 1,
+//                'fields'                  => ['icon','name','provider','minzoomlevel','maxzoomlevel'],
+//                'label_callback'          => ['tl_c4g_map_baselayers', 'addIcon'],
+//                'showColumns'             => true
+//            ],
         'global_operations' =>
             [
             'all' => [
@@ -85,14 +98,14 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             'copy' =>
                 [
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['copy'],
-                'href'                => 'act=paste&amp;mode=copy&amp;childs=1',
+                'href'                => 'act=paste&amp;mode=copy',
                 'icon'                => 'copy.svg',
                 'attributes'          => 'onclick="Backend.getScrollOffset();"',
                 ],
             'cut' =>
                 [
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['cut'],
-                'href'                => 'act=paste&amp;mode=cut&amp;childs=1',
+                'href'                => 'act=paste&amp;mode=cut',
                 'icon'                => 'cut.svg',
                 'attributes'          => 'onclick="Backend.getScrollOffset();"',
                 ],
@@ -642,21 +655,9 @@ class tl_c4g_map_baselayers extends Backend
         }
     }
 
-    /**
-     * Add an image to each record
-     *
-     * @param array                $row
-     * @param string               $label
-     * @param Contao\DataContainer $dc
-     * @param array                $args
-     *
-     * @return array
-     */
-    public function addIcon($row, $label, Contao\DataContainer $dc, $args)
+    public function addIcon($row, $label, DataContainer $dc=null, $imageAttribute='', $blnReturnImage=false, $blnProtected=false)
     {
-        $image = 'bundles/con4gismaps/images/be-icons/baselayers.svg';
-        $args[0] = '<div class="list_icon_new" style="background-image:url('.$image.')" data-icon="'.$image.'">&nbsp;</div>';
-        return $args;
+        return \Image::getHtml('bundles/con4gismaps/images/be-icons/baselayers.svg', '', $imageAttribute).' '.$label;
     }
 
     public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
