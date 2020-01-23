@@ -17,6 +17,7 @@ import {Control} from "ol/control";
 import {cssConstants} from "./../c4g-maps-constant";
 import {StarboardLayerswitcher} from "./c4g-starboard-layerswitcher";
 import {getLanguage} from "./../c4g-maps-i18n";
+import {OverlayControls} from "./c4g-overlay-controls.jsx";
 
 export class BaselayerSwitcher extends Component {
 
@@ -95,6 +96,10 @@ export class BaselayerSwitcher extends Component {
               if (baselayer.preview_image) {
                 preview = <img className={"c4g-baselayer-preview"} src={baselayer.preview_image} alt=""/>
               }
+              let overlays = "";
+              if (baselayer.overlayController.arrOverlays.length > 0) {
+                overlays = <OverlayControls overlayController={baselayer.overlayController}/>;
+              }
               return (<li key={element} className={preview ? "with-image" : "without-image"}>
                 <a onMouseUp={(event) => {
                     event.preventDefault();
@@ -104,6 +109,7 @@ export class BaselayerSwitcher extends Component {
                 } className={currentCls}><span>{baselayer.name}</span>
                 {preview}
                 </a>
+                {overlays}
               </li>);
             })}
           </ul>
