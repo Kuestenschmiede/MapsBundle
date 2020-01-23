@@ -651,7 +651,7 @@ button.ol-zoom-out {
   border-bottom: none;
 }
 .c4g-layertree a,
-.c4g-baselayertree a {
+.c4g-baselayertree li:not(.with-image) a {
   display: block;
   text-decoration: none;
   padding: 10px;
