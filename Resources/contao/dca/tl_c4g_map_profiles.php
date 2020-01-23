@@ -102,7 +102,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         [
         '__selector__'                => ['resize_locstyles_zoom', 'mouse_nav','starboard','cluster_all','baselayerswitcher','layerswitcher','attribution','hover_popups','permalink','geosearch','geopicker','overpassEngine', 'cesium', 'popupHandling'],
         'default'                     => '{general_legend},name,theme;'.
-                                         '{baselayer_legend:hide},baselayers, default_baselayer;'.
+                                         '{baselayer_legend:hide},baselayers, default_baselayer,baselayerswitcher;'.
                                          '{locstyle_legend:hide},locstyles, label_color,resize_locstyles_zoom;'.
                                          '{navigation_legend:hide},zoom_panel,zoom_panel_button,zoom_panel_slider,mouse_nav,touch_nav,keyboard_nav,fullscreen,print;'.
                                          '{starboard_legend:hide},starboard;'.
@@ -121,7 +121,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
     'subpalettes' =>
     [
         'mouse_nav'                   => 'mouse_nav_wheel,mouse_nav_doubleclick_zoom,mouse_nav_zoombox,mouse_nav_dragmode,mouse_nav_kinetic',
-        'starboard'                   => 'baselayerswitcher,layerswitcher,starboard_open,starboard_label,starboard_button,starboard_div,cluster_all',
+        'starboard'                   => 'layerswitcher,starboard_open,starboard_label,starboard_button,starboard_div,cluster_all',
         'cluster_all'                 => 'cluster_distance,cluster_fillcolor,cluster_fontcolor,cluster_zoom, cluster_dist_spider',
         'baselayerswitcher'           => 'baselayerswitcher_label,baselayer_filter',
         'layerswitcher'               => 'layerswitcher_label,layer_filter',
