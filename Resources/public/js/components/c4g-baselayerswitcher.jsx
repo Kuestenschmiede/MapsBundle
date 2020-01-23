@@ -16,7 +16,9 @@ import ReactDOM from "react-dom";
 import {Control} from "ol/control";
 import {cssConstants} from "./../c4g-maps-constant";
 import {StarboardLayerswitcher} from "./c4g-starboard-layerswitcher";
+import {Titlebar} from "./c4g-titlebar.jsx";
 import {getLanguage} from "./../c4g-maps-i18n";
+import {OverlayControls} from "./c4g-overlay-controls.jsx";
 
 export class BaselayerSwitcher extends Component {
 
@@ -47,6 +49,7 @@ export class BaselayerSwitcher extends Component {
     mapController.mapsControls.controls.baselayerSwitcher = control;
     mapController.map.addControl(control);
     this.open = this.open.bind(this);
+    this.close = this.close.bind(this);
     this.resizeFunction = this.resizeFunction.bind(this);
     let baselayerLoaded = false;
     if (props.mapController.proxy.baselayerLoaded) {
@@ -83,9 +86,11 @@ export class BaselayerSwitcher extends Component {
       jQuery(".c4g-baselayer-container").removeClass("c4g-open").addClass("c4g-close");
     }
     const scope = this;
+    let headline = this.props.mapController.data.baselayerswitcher.label ? this.props.mapController.data.baselayerswitcher.label : "Basiskarten";
     return (
       <div className={"c4g-baselayer-wrapper"}>
-        <div className={"contentHeadline"}>Basiskarten</div>
+        <Titlebar wrapperClass={"c4g-baselayer-header"} headerClass={"c4g-baselayer-headline"}
+          header={headline} closeBtnClass={"c4g-baselayer-close"} closeBtnCb={this.close}/>
         <div className={"c4g-baselayertree"}>
           <ul>
             {Object.keys(arrBaselayers).map(function(element, index) {
@@ -95,15 +100,24 @@ export class BaselayerSwitcher extends Component {
               if (baselayer.preview_image) {
                 preview = <img className={"c4g-baselayer-preview"} src={baselayer.preview_image} alt=""/>
               }
+              let overlays = "";
+              if (baselayer.overlayController.arrOverlays.length > 0) {
+                overlays = <OverlayControls overlayController={baselayer.overlayController}/>;
+              }
+              let nameNode = baselayer.name;
+              if (preview) {
+                nameNode = <span>{baselayer.name}</span>
+              }
               return (<li key={element} className={preview ? "with-image" : "without-image"}>
                 <a onMouseUp={(event) => {
                     event.preventDefault();
                     event.stopPropagation();
                     scope.entryClick(element);
                   }
-                } className={currentCls}><span>{baselayer.name}</span>
+                } className={currentCls}>{nameNode}
                 {preview}
                 </a>
+                {overlays}
               </li>);
             })}
           </ul>
