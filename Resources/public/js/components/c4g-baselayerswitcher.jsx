@@ -86,10 +86,11 @@ export class BaselayerSwitcher extends Component {
       jQuery(".c4g-baselayer-container").removeClass("c4g-open").addClass("c4g-close");
     }
     const scope = this;
+    let headline = this.props.mapController.data.baselayerswitcher.label ? this.props.mapController.data.baselayerswitcher.label : "Basiskarten";
     return (
       <div className={"c4g-baselayer-wrapper"}>
         <Titlebar wrapperClass={"c4g-baselayer-header"} headerClass={"c4g-baselayer-headline"}
-          header={"Basiskarten"} closeBtnClass={"c4g-baselayer-close"} closeBtnCb={this.close}/>
+          header={headline} closeBtnClass={"c4g-baselayer-close"} closeBtnCb={this.close}/>
         <div className={"c4g-baselayertree"}>
           <ul>
             {Object.keys(arrBaselayers).map(function(element, index) {
@@ -103,13 +104,17 @@ export class BaselayerSwitcher extends Component {
               if (baselayer.overlayController.arrOverlays.length > 0) {
                 overlays = <OverlayControls overlayController={baselayer.overlayController}/>;
               }
+              let nameNode = baselayer.name;
+              if (preview) {
+                nameNode = <span>{baselayer.name}</span>
+              }
               return (<li key={element} className={preview ? "with-image" : "without-image"}>
                 <a onMouseUp={(event) => {
                     event.preventDefault();
                     event.stopPropagation();
                     scope.entryClick(element);
                   }
-                } className={currentCls}><span>{baselayer.name}</span>
+                } className={currentCls}>{nameNode}
                 {preview}
                 </a>
                 {overlays}

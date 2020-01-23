@@ -351,18 +351,38 @@ button.c4g-starboard-view-trigger-layerswitcher:before {
   font-size: inherit;
 }
 
-
-.c4g-baselayertree>ul>li>a.c4g-active:before {
+.c4g-baselayertree>ul>li.without-image>a.c4g-active:before {
   font-weight: 100;
   content: "\f192";
   font-family: 'Font Awesome 5 Free';
   font-size: inherit;
 }
-.c4g-baselayertree>ul>li>a.c4g-inactive:before {
+
+.c4g-baselayertree>ul>li.with-image>a.c4g-active span:before {
+  font-weight: 100;
+  content: "\f192";
+  font-family: 'Font Awesome 5 Free';
+  font-size: inherit;
+  position: absolute;
+  left: .4em;
+
+}
+
+.c4g-baselayertree>ul>li.without-image a.c4g-inactive:before {
   font-weight: 100;
   content: "\f111";
   font-family: 'Font Awesome 5 Free';
   font-size: inherit;
+}
+
+.c4g-baselayertree>ul>li.with-image > a.c4g-inactive span:before {
+  font-weight: 100;
+  content: "\f111";
+  font-family: 'Font Awesome 5 Free';
+  font-size: inherit;
+  position: absolute;
+  left: .4em;
+
 }
 
 .c4g-layertree span.c4g-icon:before ,
@@ -467,4 +487,8 @@ button.c4g-beach-options:before {
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;
+}
+
+button.c4g-baselayer-close:before{
+  color: var(--font-color);
 }

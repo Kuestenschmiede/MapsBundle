@@ -642,6 +642,15 @@ button.ol-zoom-out {
 .c4g-baselayertree li {
   list-style-type: none;
 }
+
+.c4g-baselayertree li:not(:last-child){
+  padding: 0 .4em .2em .4em;
+}
+
+.c4g-baselayertree li:last-child {
+  padding: 0 .4em .4em .4em;
+}
+
 .c4g-layertree li ul,
 .c4g-baselayertree li ul {
   margin-left: 1em;
@@ -651,12 +660,12 @@ button.ol-zoom-out {
   border-bottom: none;
 }
 .c4g-layertree a,
-.c4g-baselayertree a {
+.c4g-baselayertree li:not(.with-image) a {
   display: block;
   text-decoration: none;
   padding: 10px;
   padding-right: 1.75em;
-  cursor: default;
+  cursor: pointer;
   position: relative;
 }
 .c4g-layertree a.c4g-disabled,
@@ -1043,4 +1052,11 @@ button.c4g-btn-nav-next {
 
 button.c4g-btn-nav-next:before {
   content: "\f35a";
+}
+
+button.c4g-baselayer-close:before{
+  content: "\f00d";
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: inherit;
 }
