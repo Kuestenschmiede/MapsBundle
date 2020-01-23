@@ -191,7 +191,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             [
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
             ],
-        'uuid' =>
+        'importId' =>
             [
             'sql'                     => "bigint(20) unsigned NOT NULL default '0'"
             ],
