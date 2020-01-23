@@ -124,19 +124,19 @@ export class GeoSearch extends Component {
                                   open={this.state.results.length >0} openResults={this.openResults} closeCb={this.closeResultsCompletely}
       />;
     }
-    // let closeBtnClass = "";
-    // let closeBtnCb = "";
-    // if (this.config.collapsed) {
-    //   closeBtnClass = "c4g-titlebar-close";
-    //   closeBtnCb = this.close;
-    // }
+    let closeBtnClass = "";
+    let closeBtnCb = "";
+    if (this.config.collapsed) {
+      closeBtnClass = "c4g-titlebar-close";
+      closeBtnCb = this.close;
+    }
 
     return (
       <React.Fragment>
         <div className={cssConstants.GEOSEARCH_WRAPPER + " " + modeClass + " c4g-horizon"}>
-          {/*<Titlebar wrapperClass={"c4g-geosearch-header c4g-horizon-header"} header={this.props.headline} headerClass={"c4g-geosearch-headline c4g-horizon-header-headline"}*/}
-          {/*                      detailBtnClass={""} detailBtnCb={""} closeBtnClass={closeBtnClass} closeBtnCb={closeBtnCb}>*/}
-          {/*</Titlebar>*/}
+          <Titlebar wrapperClass={"c4g-geosearch-header c4g-horizon-header"} header={this.props.headline} headerClass={"c4g-geosearch-headline c4g-horizon-header-headline"}
+                                detailBtnClass={""} detailBtnCb={""} closeBtnClass={closeBtnClass} closeBtnCb={closeBtnCb}>
+          </Titlebar>
           <div className={"c4g-horizon-content"}>
             <input type="text" onKeyDown={this.inputCallback} id={"c4g-geosearch-input"} placeholder={this.config.placeholder} aria-label={this.config.placeholder}/>
             <button className={cssConstants.GEOSEARCH_START} title={this.langConstants.CTRL_START_SEARCH} onMouseUp={this.startSearch}/>
