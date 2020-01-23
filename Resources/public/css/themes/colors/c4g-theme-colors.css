@@ -657,11 +657,19 @@ button.c4g-geosearch-start {
   background: var(--main-color);
 }
 
+.c4g-baselayer-container.c4g-open .c4g-baselayertree::-webkit-scrollbar-track {
+  background: var(--main-color);
+}
+
 .c4g-beach-content.c4g-popup-content::-webkit-scrollbar-track {
   background: var(--pu-main-color);
 }
 
 .c4g-beach-content ul#resultcontainer::-webkit-scrollbar-thumb {
+  background: var(--font-color);
+}
+
+.c4g-baselayer-container.c4g-open .c4g-baselayertree::-webkit-scrollbar-thumb {
   background: var(--font-color);
 }
 
@@ -672,6 +680,12 @@ button.c4g-geosearch-start {
 .c4g-beach-content ul#resultcontainer::-webkit-scrollbar-thumb:hover {
   background: var(--shadow-color);
 }
+
+.c4g-baselayer-container.c4g-open .c4g-baselayertree::-webkit-scrollbar-thumb:hover {
+  background: var(--shadow-color);
+}
+
+
 .c4g-beach-content.c4g-popup-content::-webkit-scrollbar-thumb:hover {
   background: var(--pu-shadow-color);
 }
@@ -693,3 +707,9 @@ background: var(--pu-main-color);
   border-left: 1px solid var(--pu-font-color);
 }
 /*-------------*/
+
+/*--------------------baselayertree-----------*/
+.c4g-baselayertree li.with-image a  span{
+  background: var(--font-color);
+  color: var(--main-color)!important;
+}
