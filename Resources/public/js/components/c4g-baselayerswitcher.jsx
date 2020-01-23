@@ -16,6 +16,7 @@ import ReactDOM from "react-dom";
 import {Control} from "ol/control";
 import {cssConstants} from "./../c4g-maps-constant";
 import {StarboardLayerswitcher} from "./c4g-starboard-layerswitcher";
+import {Titlebar} from "./c4g-titlebar.jsx";
 import {getLanguage} from "./../c4g-maps-i18n";
 import {OverlayControls} from "./c4g-overlay-controls.jsx";
 
@@ -48,6 +49,7 @@ export class BaselayerSwitcher extends Component {
     mapController.mapsControls.controls.baselayerSwitcher = control;
     mapController.map.addControl(control);
     this.open = this.open.bind(this);
+    this.close = this.close.bind(this);
     this.resizeFunction = this.resizeFunction.bind(this);
     let baselayerLoaded = false;
     if (props.mapController.proxy.baselayerLoaded) {
@@ -86,7 +88,8 @@ export class BaselayerSwitcher extends Component {
     const scope = this;
     return (
       <div className={"c4g-baselayer-wrapper"}>
-        <div className={"contentHeadline"}>Basiskarten</div>
+        <Titlebar wrapperClass={"c4g-baselayer-header"} headerClass={"c4g-baselayer-headline"}
+          header={"Basiskarten"} closeBtnClass={"c4g-baselayer-close"} closeBtnCb={this.close}/>
         <div className={"c4g-baselayertree"}>
           <ul>
             {Object.keys(arrBaselayers).map(function(element, index) {
