@@ -17,10 +17,11 @@ $GLOBALS['BE_MOD']['con4gis'] = array_merge($GLOBALS['BE_MOD']['con4gis'], [
             'brick' => 'maps',
             'tables' => ['tl_c4g_map_baselayers', 'tl_c4g_map_overlays'],
             'icon' => 'bundles/con4gismaps/images/be-icons/baselayers.svg',
-            'javascript' => 'bundles/con4gismaps/js/c4g-maps-backend.js'
+            'javascript' => 'bundles/con4gismaps/js/c4g-maps-backend.js',
         ],
         'c4g_map_locstyles' =>
         [
+            'classes' => 'test',
             'brick' => 'maps',
             'tables' => ['tl_c4g_map_locstyles'],
             'icon' => 'bundles/con4gismaps/images/be-icons/locationstyles.svg',
@@ -42,26 +43,22 @@ $GLOBALS['BE_MOD']['con4gis'] = array_merge($GLOBALS['BE_MOD']['con4gis'], [
             'brick' => 'maps',
             'tables' => ['tl_c4g_maps'],
             'icon' => 'bundles/con4gismaps/images/be-icons/mapstructure.svg',
-            'javascript' => 'bundles/con4gismaps/js/c4g-maps-backend.js'
+            'javascript' => 'bundles/con4gismaps/js/c4g-maps-backend.js',
         ],
         'c4g_map_tables' =>
         [
             'brick' => 'maps',
             'tables' => ['tl_c4g_map_tables'],
-            'icon' => 'bundles/con4gismaps/images/be-icons/sourcetables.svg'
+            'icon' => 'bundles/con4gismaps/images/be-icons/sourcetables.svg',
         ],
         'c4g_map_filters' =>
         [
             'brick' => 'maps',
             'tables' => ['tl_c4g_map_filters'],
-            'icon' => 'bundles/con4gismaps/images/be-icons/mapfilter.svg'
+            'icon' => 'bundles/con4gismaps/images/be-icons/mapfilter.svg',
         ]
     ]
 );
-
-if(TL_MODE == "BE") {
-    $GLOBALS['TL_CSS'][] = '/bundles/con4gismaps/css/con4gis.css';
-}
 
 /**
  * Frontend modules
@@ -98,7 +95,7 @@ $GLOBALS['con4gis']['dafaultData'] = ['Table'=>'Table'];
  */
 // @TODO maybe move to core
 $GLOBALS['BE_FFL']['c4g_text'] = '\TextField';
-$GLOBALS['BE_FFL']['c4g_imageSize'] = 'con4gis\MapsBundle\Resources\contao\classes\ImageSize';
+$GLOBALS['BE_FFL']['c4g_imageSize'] = 'con4gis\MapsBundle\Classes\ImageSize';
 
 $GLOBALS['TL_MODELS']['tl_c4g_maps'] = 'con4gis\MapsBundle\Resources\contao\models\C4gMapsModel';
 $GLOBALS['TL_MODELS']['tl_c4g_map_profiles'] = 'con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel';

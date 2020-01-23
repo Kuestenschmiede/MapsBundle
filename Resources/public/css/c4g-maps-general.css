@@ -1137,7 +1137,7 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
 .c4g-geosearch-container-right {
   position: absolute;
   top: .2em;
-  height: calc(100% - .4em);
+  max-height: calc(100% - .4em);
   min-width: 240px;
   max-width: 42%;
   background: var(--main-color);
@@ -1158,7 +1158,7 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
   left: calc(42px + .4em);
   right: calc(42px + .4em);
   margin: auto;
-  padding: 10px;
+  padding: .4em;
   z-index: 5;
   text-align: center;
 }
@@ -1197,7 +1197,7 @@ button.c4g-titlebar-close, .c4g-geosearch-results button {
 
 .c4g-horizon-content input {
   height: 28px;
-  max-width: calc(100% - 48px);
+  max-width: calc(100% - .8em);
     padding: 0 0 0 5px;
   margin: 0;
     border: 0;
@@ -1257,14 +1257,14 @@ button.c4g-geosearch-options:before {
   width: 100%;
   text-align: left;
   line-height: 15px;
-  padding: 10px;
+  padding: .4em;
   cursor: pointer;
   transition: .1s;
 }
 
 .c4g-geosearch-results .searchResultButton:hover:before { margin-left: 0; }
 
-.c4g-geosearch-results .searchResultButton:hover { padding-left: 20px; }
+.c4g-geosearch-results .searchResultButton:hover { padding-left: .4em; }
 
 .c4g-geosearch-results .searchResultButton:before{
   content: "\f0da";

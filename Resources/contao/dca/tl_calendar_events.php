@@ -10,8 +10,8 @@
  * @copyright  Küstenschmiede GmbH Software & Design
  * @link       https://www.con4gis.org
  */
-use \con4gis\MapsBundle\Resources\contao\classes\GeoPicker;
-use con4gis\MapsBundle\Resources\contao\classes\Utils;
+use \con4gis\MapsBundle\Classes\GeoPicker;
+use con4gis\MapsBundle\Classes\Utils;
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
 
 if (@class_exists("tl_calendar_events")) {
@@ -43,7 +43,7 @@ if (@class_exists("tl_calendar_events")) {
             'inputType'               => 'c4g_text',
             'eval'                    => ['mandatory'=>false, 'maxlength'=>20, 'tl_class'=>'w50 wizard'],
             'save_callback'           => [['tl_calendar_events_c4g_maps','setLocLon']],
-            'wizard'                  => [['\con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink']],
+            'wizard'                  => [['\con4gis\MapsBundle\Classes\GeoPicker', 'getPickerLink']],
             'sql'                     => "varchar(20) NOT NULL default ''"
             ];
 
@@ -54,7 +54,7 @@ if (@class_exists("tl_calendar_events")) {
             'inputType'               => 'c4g_text',
             'eval'                    => ['mandatory'=>false, 'maxlength'=>20, 'tl_class'=>'w50 wizard'],
             'save_callback'           => [['tl_calendar_events_c4g_maps','setLocLat']],
-            'wizard'                  => [['\con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink']],
+            'wizard'                  => [['\con4gis\MapsBundle\Classes\GeoPicker', 'getPickerLink']],
             'sql'                     => "varchar(20) NOT NULL default ''"
             ];
 

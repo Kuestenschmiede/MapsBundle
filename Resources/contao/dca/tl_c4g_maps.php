@@ -396,7 +396,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             'inputType'               => 'c4g_text',
             'eval'                    => ['maxlength'=>20, 'tl_class'=>'w50 wizard', 'require_input'=>true],
             'save_callback'           => [['tl_c4g_maps','setCenterLon']],
-            'wizard'                  => [['con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink']],
+            'wizard'                  => [['con4gis\MapsBundle\Classes\GeoPicker', 'getPickerLink']],
             'sql'                     => "varchar(20) NOT NULL default ''"
             ],
         'center_geoy' =>
@@ -406,7 +406,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             'inputType'               => 'c4g_text',
             'eval'                    => ['maxlength'=>20, 'tl_class'=>'w50 wizard', 'require_input'=>true],
             'save_callback'           => [['tl_c4g_maps','setCenterLat']],
-            'wizard'                  => [['con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink']],
+            'wizard'                  => [['con4gis\MapsBundle\Classes\GeoPicker', 'getPickerLink']],
             'sql'                     => "varchar(20) NOT NULL default ''"
             ],
         'center_rotation' =>
@@ -477,7 +477,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             'inputType'               => 'c4g_text',
             'eval'                    => ['maxlength'=>20, 'tl_class'=>'w50 wizard', 'require_input'=>true],
             'save_callback'           => [['tl_c4g_maps','setRestrLon']],
-            'wizard'                  => [['con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink']],
+            'wizard'                  => [['con4gis\MapsBundle\Classes\GeoPicker', 'getPickerLink']],
             'sql'                     => "varchar(20) NOT NULL default ''"
             ],
         'restr_bottomleft_geoy' =>
@@ -487,7 +487,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             'inputType'               => 'c4g_text',
             'eval'                    => ['maxlength'=>20, 'tl_class'=>'w50 wizard', 'require_input'=>true],
             'save_callback'           => [['tl_c4g_maps','setRestrLat']],
-            'wizard'                  => [['con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink']],
+            'wizard'                  => [['con4gis\MapsBundle\Classes\GeoPicker', 'getPickerLink']],
             'sql'                     => "varchar(20) NOT NULL default ''"
             ],
         'restr_topright_geox' =>
@@ -497,7 +497,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             'inputType'               => 'c4g_text',
             'eval'                    => ['maxlength'=>20, 'tl_class'=>'w50 wizard', 'require_input'=>true],
             'save_callback'           => [['tl_c4g_maps','setRestrLon']],
-            'wizard'                  => [['con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink']],
+            'wizard'                  => [['con4gis\MapsBundle\Classes\GeoPicker', 'getPickerLink']],
             'sql'                     => "varchar(20) NOT NULL default ''"
             ],
         'restr_topright_geoy' =>
@@ -507,7 +507,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             'inputType'               => 'c4g_text',
             'eval'                    => ['maxlength'=>20, 'tl_class'=>'w50 wizard', 'require_input'=>true],
             'save_callback'           => [['tl_c4g_maps','setRestrLat']],
-            'wizard'                  => [['con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink']],
+            'wizard'                  => [['con4gis\MapsBundle\Classes\GeoPicker', 'getPickerLink']],
             'sql'                     => "varchar(20) NOT NULL default ''"
             ],
         'include_sublocations' =>
@@ -536,7 +536,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             'inputType'               => 'c4g_text',
             'eval'                    => ['mandatory'=>true, 'maxlength'=>20, 'tl_class'=>'w50 wizard'],
             'save_callback'           => [['tl_c4g_maps','setLocLon']],
-            'wizard'                  => [['con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink']],
+            'wizard'                  => [['con4gis\MapsBundle\Classes\GeoPicker', 'getPickerLink']],
             'sql'                     => "varchar(20) NOT NULL default ''"
             ],
 
@@ -547,7 +547,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             'inputType'               => 'c4g_text',
             'eval'                    => ['mandatory'=>true, 'maxlength'=>20, 'tl_class'=>'w50 wizard'],
             'save_callback'           => [['tl_c4g_maps','setLocLat']],
-            'wizard'                  => [['con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink']],
+            'wizard'                  => [['con4gis\MapsBundle\Classes\GeoPicker', 'getPickerLink']],
             'sql'                     => "varchar(20) NOT NULL default ''"
             ],
         'locstyle' =>
@@ -1280,7 +1280,7 @@ class tl_c4g_maps extends Backend
      */
     public function getLocationTypes(DataContainer $dc)
     {
-        $return = \con4gis\MapsBundle\Resources\contao\classes\Utils::getLocationTypes();
+        $return = \con4gis\MapsBundle\Classes\Utils::getLocationTypes();
         if (C4GVersionProvider::isInstalled('con4gis/forum')) {
             $return[] = 'c4gForum';
         }
@@ -1570,7 +1570,7 @@ class tl_c4g_maps extends Backend
     public function setCenterLon($varValue, DataContainer $dc)
     {
         if ($dc->activeRecord->calc_extent == 'CENTERZOOM') {
-            if (!\con4gis\MapsBundle\Resources\contao\classes\Utils::validateLon($varValue)) {
+            if (!\con4gis\MapsBundle\Classes\Utils::validateLon($varValue)) {
                 throw new Exception($GLOBALS['TL_LANG']['c4g_maps']['geox_invalid']);
             }
         }
@@ -1583,7 +1583,7 @@ class tl_c4g_maps extends Backend
     public function setCenterLat($varValue, DataContainer $dc)
     {
         if ($dc->activeRecord->calc_extent == 'CENTERZOOM') {
-            if (!\con4gis\MapsBundle\Resources\contao\classes\Utils::validateLat($varValue)) {
+            if (!\con4gis\MapsBundle\Classes\Utils::validateLat($varValue)) {
                 throw new Exception($GLOBALS['TL_LANG']['c4g_maps']['geoy_invalid']);
             }
         }
@@ -1597,7 +1597,7 @@ class tl_c4g_maps extends Backend
     public function setRestrLon($varValue, DataContainer $dc)
     {
         if ($dc->activeRecord->restrict_area) {
-            if (!\con4gis\MapsBundle\Resources\contao\classes\Utils::validateLon($varValue)) {
+            if (!\con4gis\MapsBundle\Classes\Utils::validateLon($varValue)) {
                 throw new Exception($GLOBALS['TL_LANG']['c4g_maps']['geox_invalid']);
             }
         }
@@ -1610,7 +1610,7 @@ class tl_c4g_maps extends Backend
     public function setRestrLat($varValue, DataContainer $dc)
     {
         if ($dc->activeRecord->restrict_area) {
-            if (!\con4gis\MapsBundle\Resources\contao\classes\Utils::validateLat($varValue)) {
+            if (!\con4gis\MapsBundle\Classes\Utils::validateLat($varValue)) {
                 throw new Exception($GLOBALS['TL_LANG']['c4g_maps']['geoy_invalid']);
             }
         }
@@ -1622,7 +1622,7 @@ class tl_c4g_maps extends Backend
      */
     public function setLocLon($varValue, DataContainer $dc)
     {
-        if (!\con4gis\MapsBundle\Resources\contao\classes\Utils::validateLon($varValue)) {
+        if (!\con4gis\MapsBundle\Classes\Utils::validateLon($varValue)) {
             throw new Exception($GLOBALS['TL_LANG']['c4g_maps']['geox_invalid']);
         }
         return $varValue;
@@ -1633,7 +1633,7 @@ class tl_c4g_maps extends Backend
      */
     public function setLocLat($varValue, DataContainer $dc)
     {
-        if (!\con4gis\MapsBundle\Resources\contao\classes\Utils::validateLat($varValue)) {
+        if (!\con4gis\MapsBundle\Classes\Utils::validateLat($varValue)) {
             throw new Exception($GLOBALS['TL_LANG']['c4g_maps']['geoy_invalid']);
         }
         return $varValue;
@@ -1677,7 +1677,7 @@ class tl_c4g_maps extends Backend
         if (!$this->User->isAdmin && !$this->User->hasAccess('tl_c4g_maps::published', 'alexf')) {
 
             //ToDo loggerService
-            $this->log('Not enough permissions to publish/unpublish con4gis\MapsBundle\Resources\contao\classes\Utils ID "'.$intId.'"', 'tl_c4g_maps toggleVisibility', TL_ERROR);
+            $this->log('Not enough permissions to publish/unpublish con4gis\MapsBundle\Classes\Utils ID "'.$intId.'"', 'tl_c4g_maps toggleVisibility', TL_ERROR);
             $this->redirect('contao/main.php?act=error');
         }
         $this->createInitialVersion('tl_c4g_maps', $intId);

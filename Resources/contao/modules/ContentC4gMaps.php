@@ -12,7 +12,7 @@
  */
 namespace con4gis\MapsBundle\Resources\contao\modules;
 
-use con4gis\MapsBundle\Resources\contao\classes\MapDataConfigurator;
+use con4gis\MapsBundle\Classes\MapDataConfigurator;
 
 /**
  * Class ContentC4gMaps
@@ -35,7 +35,7 @@ class ContentC4gMaps extends \Module
             $objMap = $this->Database->prepare("SELECT * FROM tl_c4g_maps WHERE id=?")
                            ->limit(1)
                            ->execute($this->c4g_map_id);
-            $return = '<h1>' . $objMap->name . '<img src="bundles/con4gismaps/images/logo_con4gis-maps.png" style="float:right"></h1>';
+            $return = '<h1>' . $objMap->name . '<img src="bundles/con4gismaps/images/be-icons/logo_con4gis-maps.svg" style="float:right"></h1>';
 
             return $return;
         }

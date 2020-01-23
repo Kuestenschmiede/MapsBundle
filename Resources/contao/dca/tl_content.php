@@ -69,7 +69,7 @@ if (@class_exists("tl_content")) {
             'inputType' => 'c4g_text',
             'eval' => ['mandatory' => false, 'maxlength' => 20, 'tl_class' => 'w50 wizard'],
             'save_callback' => [['tl_content_c4g_maps', 'setLocLon']],
-            'wizard' => [['\con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink']],
+            'wizard' => [['\con4gis\MapsBundle\Classes\GeoPicker', 'getPickerLink']],
             'sql' => "varchar(20) NOT NULL default ''"
             ];
 
@@ -80,7 +80,7 @@ if (@class_exists("tl_content")) {
             'inputType' => 'c4g_text',
             'eval' => ['mandatory' => false, 'maxlength' => 20, 'tl_class' => 'w50 wizard'],
             'save_callback' => [['tl_content_c4g_maps', 'setLocLat']],
-            'wizard' => [['\con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink']],
+            'wizard' => [['\con4gis\MapsBundle\Classes\GeoPicker', 'getPickerLink']],
             'sql' => "varchar(20) NOT NULL default ''"
             ];
 
@@ -164,7 +164,7 @@ class tl_content_c4g_maps extends Backend
     {
         if ($varValue != 0)
         {
-            if (!\con4gis\MapsBundle\Resources\contao\classes\Utils::validateLon($varValue))
+            if (!\con4gis\MapsBundle\Classes\Utils::validateLon($varValue))
             {
                 throw new \Exception($GLOBALS['TL_LANG']['c4g_maps']['geox_invalid']);
             }
@@ -179,7 +179,7 @@ class tl_content_c4g_maps extends Backend
     {
         if ($varValue != 0)
         {
-            if (!\con4gis\MapsBundle\Resources\contao\classes\Utils::validateLat($varValue))
+            if (!\con4gis\MapsBundle\Classes\Utils::validateLat($varValue))
             {
                 throw new \Exception($GLOBALS['TL_LANG']['c4g_maps']['geoy_invalid']);
             }

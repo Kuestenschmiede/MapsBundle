@@ -10,7 +10,7 @@
  * @copyright  Küstenschmiede GmbH Software & Design
  * @link       https://www.con4gis.org
  */
-namespace con4gis\MapsBundle\Resources\contao\classes;
+namespace con4gis\MapsBundle\Classes;
 
 use Contao\Controller;
 use Contao\Database;
@@ -18,7 +18,7 @@ use Contao\PageModel;
 
 /**
  * Class Utils
- * @package con4gis\MapsBundle\Resources\contao\classes
+ * @package con4gis\MapsBundle\Classes
  */
 class Utils
 {

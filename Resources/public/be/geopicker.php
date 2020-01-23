@@ -30,5 +30,5 @@ require_once($initialize);
 // require($_SERVER['DOCUMENT_ROOT'] . '/con4gis/system/initialize.php'); // temp for symlink-support
 
 // Run the controller
-$controller = new \con4gis\MapsBundle\Resources\contao\classes\GeoPicker();
+$controller = new \con4gis\MapsBundle\Classes\GeoPicker();
 $controller->run();

@@ -14,7 +14,7 @@
 
 namespace con4gis\MapsBundle\Classes\Services;
 
-use con4gis\MapsBundle\Resources\contao\classes\Utils;
+use con4gis\MapsBundle\Classes\Utils;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapLocstylesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapSettingsModel;
