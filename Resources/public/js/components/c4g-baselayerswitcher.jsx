@@ -104,13 +104,17 @@ export class BaselayerSwitcher extends Component {
               if (baselayer.overlayController.arrOverlays.length > 0) {
                 overlays = <OverlayControls overlayController={baselayer.overlayController}/>;
               }
+              let nameNode = baselayer.name;
+              if (preview) {
+                nameNode = <span>{baselayer.name}</span>
+              }
               return (<li key={element} className={preview ? "with-image" : "without-image"}>
                 <a onMouseUp={(event) => {
                     event.preventDefault();
                     event.stopPropagation();
                     scope.entryClick(element);
                   }
-                } className={currentCls}><span>{baselayer.name}</span>
+                } className={currentCls}>{nameNode}
                 {preview}
                 </a>
                 {overlays}
