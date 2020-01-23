@@ -42,19 +42,21 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
     // List
     'list' =>
         [
-
         'sorting' =>
             [
-            'mode'                    => 5,
-            'icon'                    => 'bundles/con4giscore/images/be-icons/con4gis.org_dark.svg',
-            'panelLayout'             => 'search',
-            'paste_button_callback'   => ['tl_c4g_map_baselayers', 'pasteElement']
+                'mode'                    => 2,
+                'icon'                    => 'bundles/con4giscore/images/be-icons/con4gis.org_dark.svg',
+                'fields'                  => ['name'],
+                'headerFields'            => ['name','provider','minzoomlevel','maxzoomlevel'],
+                'panelLayout'             => 'filter,search',
+                'paste_button_callback'   => ['tl_c4g_map_baselayers', 'pasteElement']
             ],
         'label' =>
             [
-            'fields'                  => ['name','display_name','minzoomlevel','maxzoomlevel'],
-            'format'                  => '<span style="color:#303E4D"><b>%s</b></span> -> %s [˅%s,˄%s]',
-            'label_callback'          => ['tl_c4g_map_baselayers', 'addIcon']
+                'flag'                    => 1,
+                'fields'                  => ['icon','name','provider','minzoomlevel','maxzoomlevel'],
+                'label_callback'          => ['tl_c4g_map_baselayers', 'addIcon'],
+                'showColumns'             => true
             ],
         'global_operations' =>
             [
@@ -640,10 +642,23 @@ class tl_c4g_map_baselayers extends Backend
         }
     }
 
-    public function addIcon($row, $label, DataContainer $dc=null, $imageAttribute='', $blnReturnImage=false, $blnProtected=false)
+    /**
+     * Add an image to each record
+     *
+     * @param array                $row
+     * @param string               $label
+     * @param Contao\DataContainer $dc
+     * @param array                $args
+     *
+     * @return array
+     */
+    public function addIcon($row, $label, Contao\DataContainer $dc, $args)
     {
-        return \Image::getHtml('bundles/con4gismaps/images/be-icons/baselayers.svg', '', $imageAttribute).' '.$label;
+        $image = 'bundles/con4gismaps/images/be-icons/baselayers.svg';
+        $args[0] = '<div class="list_icon_new" style="background-image:url('.$image.')" data-icon="'.$image.'">&nbsp;</div>';
+        return $args;
     }
+
     public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
     {
         $this->import('BackendUser', 'User');

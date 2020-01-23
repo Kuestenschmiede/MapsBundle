@@ -111,7 +111,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_results_div'] = ['DIV for 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_placeholder'] = ["Placeholder for input field", "Specify a placeholder that is displayed until an input is made."];
 
 /** Geopicker (Position bestimmen) */
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['is_backend_geopicker_default'] = ['Standard Profile for Backend Geopicker', 'If checked, this profile is used as backedn geopicker (structure elements, events, ...).'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['is_backend_geopicker_default'] = ['Standard Profile Backend Geopicker', 'If checked, this profile is used as backedn geopicker (structure elements, events, ...).'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker'] = ['Show Geopicker (Frontend)', 'Adds a geopicker in the frontend, similar to the backend wizard to pick coordinates which can be used in forms.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_fieldx'] = ['Form field (Latitude)', 'The ID of an input field, where the latitude of the chosen location is stored.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_fieldy'] = ['Form field (Longitude)', 'The ID of an input field, where the longitude of the chosen location is stored.'];

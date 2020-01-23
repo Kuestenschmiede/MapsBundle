@@ -40,14 +40,15 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
             'mode'                    => 1,
             'fields'                  => ['name'],
             'panelLayout'             => 'filter;sort,search,limit',
-            'headerFields'            => ['name'],
+            'headerFields'            => ['name','maincolor','shadowcolor','fontcolor'],
             'flag'                    => 1,
             'icon'                    => 'bundles/con4giscore/images/be-icons/con4gis.org_dark.svg',
             ],
         'label' =>
             [
-            'fields'                  => ['name'],
-            'format'                  => '%s'
+            'fields'                  => ['icon','name','maincolor','shadowcolor','fontcolor'],
+            'label_callback'          => ['tl_c4g_map_themes', 'addIcon'],
+            'showColumns'             => true
             ],
         'global_operations' =>
             [
@@ -349,22 +350,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
  */
 class tl_c4g_map_themes extends Backend
 {
-//    private function copyFolder($source, $dest)
-//    {
-//        $handle = @opendir($source);
-//
-//        if(!$handle)
-//            return false;
-//
-//        while ($file = @readdir($handle))
-//        {
-//            copy($source.$file, $dest.$file);
-//        }
-//
-//        @closedir($handle);
-//
-//    }
-
     private function getFileArray($subDir) {
         $result = array();
         $maps3Path = TL_ROOT . '/web/bundles/con4gismaps/css/themes/'.$subDir.'/';
@@ -396,23 +381,6 @@ class tl_c4g_map_themes extends Backend
 
         }
 
-//        try {
-//            $dir = TL_ROOT . '/files/con4gis/examples/themes/'.$subDir.'/';
-//            if (is_dir($dir)) {
-//                foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir)) as $filename) {
-//                    if ($filename->isDir()) continue;
-//                    unlink($filename);
-//                }
-//                rmdir($dir);
-//            }
-//
-//            mkdir($dir, 0777, true);
-//            $this->copyFolder($maps3Path,$dir);
-//        }catch(Exception $e) {
-//            //do nothing
-//        }
-
-
         return $result;
     }
 
@@ -433,7 +401,33 @@ class tl_c4g_map_themes extends Backend
 
     public function getIconOptions()
     {
-//        \Contao\Message::addInfo($GLOBALS['TL_LANG']['tl_c4g_map_themes']['example_info']);
         return $this->getFileArray('icons');
+    }
+
+    /**
+     * Add an image to each record
+     *
+     * @param array                $row
+     * @param string               $label
+     * @param Contao\DataContainer $dc
+     * @param array                $args
+     *
+     * @return array
+     */
+    public function addIcon($row, $label, Contao\DataContainer $dc, $args)
+    {
+        $image = 'bundles/con4gismaps/images/be-icons/maplayout.svg';
+        $args[0] = '<div class="list_icon_new" style="background-image:url('.$image.')" data-icon="'.$image.'">&nbsp;</div>';
+
+        $maincolor = '#'.$args[2];
+        $args[2] = '<div style="color:'.$maincolor.';text-shadow: 1px 1px #000000;">'.$maincolor.'</div>';
+
+        $shadowcolor = '#'.$args[3];
+        $args[3] = '<div style="color:'.$shadowcolor.';text-shadow: 1px 1px #000000;">'.$shadowcolor.'</div>';
+
+        $fontcolor = '#'.$args[4];
+        $args[4] = '<div style="color:'.$fontcolor.';text-shadow: 1px 1px #000000;">'.$fontcolor.'</div>';
+
+        return $args;
     }
 }

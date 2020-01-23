@@ -113,7 +113,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_results_div'] = ['DIV für
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_placeholder'] = ["Platzhalter für Suchfeld", "Geben Sie einen Platzhalter an, der im Eingabefeld dargestellt wird, solange keine Eingabe getätigt wurde."];
 
 /** Geopicker (Position bestimmen) */
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['is_backend_geopicker_default'] = ['Als Standardprofil für Backend-Geopicker verwenden', 'Setzen Sie diese Checkbox, um das Kartenprofil standardmäßig für den Backend-Geopicker zu verwenden.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['is_backend_geopicker_default'] = ['Standardprofil Backend-Geopicker', 'Setzen Sie diese Checkbox, um das Kartenprofil standardmäßig für den Backend-Geopicker zu verwenden.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker'] = ['Geopicker anzeigen (Frontend)', 'Zeigt einen Geopicker, wie er im Backend zur Auswahl der Koordinaten verwendet wird im Frontend an. Nützlich z.B. in einem Formular.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_fieldx'] = ['Formularfeld für die x-Koordinate', 'Ein INPUT Feld, in das die gewählte X-Koordinate geschrieben wird.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_fieldy'] = ['Formularfeld für die y-Koordinate', 'Ein INPUT Feld, in das die gewählte Y-Koordinate geschrieben wird.'];
