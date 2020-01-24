@@ -55,22 +55,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                 'format'                  => '<span style="color:#303E4D"><b>%s</b></span> -> %s [˅%s,˄%s]',
                 'label_callback'          => ['tl_c4g_map_baselayers', 'addIcon']
             ],
-//        'sorting' =>
-//            [
-//                'mode'                    => 1,
-//                'icon'                    => 'bundles/con4giscore/images/be-icons/con4gis.org_dark.svg',
-//                'fields'                  => ['name'],
-//                //'headerFields'            => ['name','provider','minzoomlevel','maxzoomlevel'],
-//                'panelLayout'             => 'filter,search',
-//                'paste_button_callback'   => ['tl_c4g_map_baselayers', 'pasteElement']
-//            ],
-//        'label' =>
-//            [
-//                'flag'                    => 1,
-//                'fields'                  => ['icon','name','provider','minzoomlevel','maxzoomlevel'],
-//                'label_callback'          => ['tl_c4g_map_baselayers', 'addIcon'],
-//                'showColumns'             => true
-//            ],
         'global_operations' =>
             [
             'all' => [
