@@ -360,7 +360,7 @@ button.c4g-starboard-view-trigger-layerswitcher:before {
 
 .c4g-baselayertree>ul>li.with-image>a.c4g-active span:before {
   font-weight: 100;
-  content: "\f192";
+  content: "\f058";
   font-family: 'Font Awesome 5 Free';
   font-size: inherit;
   position: absolute;
@@ -375,15 +375,22 @@ button.c4g-starboard-view-trigger-layerswitcher:before {
   font-size: inherit;
 }
 
+
 .c4g-baselayertree>ul>li.with-image > a.c4g-inactive span:before {
   font-weight: 100;
-  content: "\f111";
+  content: "\f35a";
   font-family: 'Font Awesome 5 Free';
   font-size: inherit;
   position: absolute;
   left: .4em;
-
+  opacity: 0;
+  transition: .3s;
 }
+
+.c4g-baselayertree>ul>li.with-image:hover > a.c4g-inactive span:before {
+  opacity: 1;
+}
+
 
 .c4g-layertree span.c4g-icon:before ,
 .c4g-baselayertree span.c4g-icon:before {
@@ -489,6 +496,8 @@ button.c4g-beach-options:before {
   font-size: inherit;
 }
 
-button.c4g-baselayer-close:before{
-  color: var(--font-color);
+.c4g-baselayer-control button:before{
+  content: "\f279";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 600;
 }
