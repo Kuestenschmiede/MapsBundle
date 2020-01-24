@@ -22,6 +22,9 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['theme'] = ['Layout', 'Select your ow
 /** Basiskarten */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayers'] = ['Base layers', 'Check the baselayers you wish to see in the Starboard. Default: all'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['default_baselayer'] = ['Default Base Layer', 'Select the base layer to be pre-selected when the map is laoded.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayerswitcher'] = ['Show Base Maps', 'If checked, the base maps can be selected in the Starboard.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayerswitcher_label'] = ['Header Base Maps', 'Default: "Base Maps"'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayer_filter'] = ['Enables baselayer filter', 'Shows a filter field above the baselayerswitcher.'];
 
 /** Lokationsstile */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['locstyles'] = ['Location styles', 'Check the location styles available for map structure items using this profile. Default: all'];
@@ -52,9 +55,6 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard'] = ['Enable Starboard','E
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['layerswitcher'] = ['Show Map Elements', 'If checked the map elements are shown in the starboard.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['layerswitcher_label'] = ['Starboard Header Map Elements', 'Default: "Map Elements"'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['layer_filter'] = ['Enables layer filter', 'Shows a filter field above the layerswitcher.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayerswitcher'] = ['Show Base Maps', 'If checked, the base maps can be selected in the Starboard.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayerswitcher_label'] = ['Starboard Header Map Elements', 'Default: "Base Maps"'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayer_filter'] = ['Enables baselayer filter', 'Shows a filter field above the baselayerswitcher.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_open'] = ['Open Starboard Automatically', 'If checked, the starboard is open by default.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_label'] = ['Starboard Header', 'General Starboard Header.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_filter'] = ['Enable Starboard Filter', 'Shows the Starboard Filter.'];
@@ -111,7 +111,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_results_div'] = ['DIV for 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_placeholder'] = ["Placeholder for input field", "Specify a placeholder that is displayed until an input is made."];
 
 /** Geopicker (Position bestimmen) */
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['is_backend_geopicker_default'] = ['Standard Profile for Backend Geopicker', 'If checked, this profile is used as backedn geopicker (structure elements, events, ...).'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['is_backend_geopicker_default'] = ['Standard Profile Backend Geopicker', 'If checked, this profile is used as backedn geopicker (structure elements, events, ...).'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker'] = ['Show Geopicker (Frontend)', 'Adds a geopicker in the frontend, similar to the backend wizard to pick coordinates which can be used in forms.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_fieldx'] = ['Form field (Latitude)', 'The ID of an input field, where the latitude of the chosen location is stored.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_fieldy'] = ['Form field (Longitude)', 'The ID of an input field, where the longitude of the chosen location is stored.'];

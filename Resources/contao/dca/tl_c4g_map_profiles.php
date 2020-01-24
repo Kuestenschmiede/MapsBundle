@@ -24,10 +24,10 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         'dataContainer'               => 'Table',
         'enableVersioning'            => true,
         'onload_callback'             => [['tl_c4g_map_profiles', 'updateDCA']],
-        'onsubmit_callback'             => [
+        'onsubmit_callback'           => [
             ['\con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator', 'purgeMapApiCache']
         ],
-        'sql'                         =>
+        'sql' =>
             [
             'keys' =>
                 [
@@ -41,15 +41,18 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         [
         'sorting' =>
             [
-            'mode'                    => 1,
+            'mode'                    => 2,
             'fields'                  => ['name'],
-            'flag'                    => 1,
+            'panelLayout'             => 'filter,search',
+            'headerFields'            => ['name','theme','is_backend_geopicker_default'],
             'icon'                    => 'bundles/con4giscore/images/be-icons/con4gis.org_dark.svg',
             ],
         'label' =>
             [
-            'fields'                  => ['name'],
-            'format'                  => '%s'
+            'flag'                    => 1,
+            'fields'                  => ['name','theme:tl_c4g_map_themes.name','is_backend_geopicker_default'],
+            'showColumns'             => true,
+//            'label_callback'          => ['tl_c4g_map_profiles', 'addIcon'],
             ],
         'global_operations' =>
             [
@@ -113,7 +116,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                                          '{click_legend:hide},link_newwindow,link_open_on,hover_popups, popupHandling;'.
                                          '{cesium_legend:hide},cesium;'.
                                          '{overpassLegend:hide},overpassEngine;'.
-                                         '{miscellaneous_legend:hide},script,custom_div,account,be_optimize_checkboxes_limit,caching,geobookmarks,filter_div,filters,filterHandling;'
+                                         '{miscellaneous_legend:hide},script,custom_div,be_optimize_checkboxes_limit,caching,filter_div,filters,filterHandling;'
         ],
 
 
@@ -156,6 +159,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         'name' =>
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['name'],
+            'search'				  => true,
             'exclude'                 => true,
             'inputType'               => 'text',
             'eval'                    => ['mandatory'=>true, 'tl_class'=>'long'],
@@ -165,6 +169,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         'theme' =>
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['theme'],
+            'search'				  => true,
             'exclude'                 => true,
             'inputType'               => 'select',
             'options_callback'        => ['tl_c4g_map_profiles', 'getAllThemes'],
@@ -1034,7 +1039,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         'infopage' =>
         [
             'label'					=> &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['infopage'],
-            'search'				=> true,
+            'search'				=> false,
             'inputType'				=> 'textarea',
             'eval'                  => ['mandatory'=>false, 'rte'=>'tinyMCE', 'helpwizard'=>true],
             'explanation'           => 'insertTags',
@@ -1341,6 +1346,23 @@ class tl_c4g_map_profiles extends Backend
             'params'  => $arrColumnParams
         ];
         return $return;
+    }
+
+    /**
+     * Add an image to each record
+     *
+     * @param array                $row
+     * @param string               $label
+     * @param Contao\DataContainer $dc
+     * @param array                $args
+     *
+     * @return array
+     */
+    public function addIcon($row, $label, Contao\DataContainer $dc, $args)
+    {
+        $image = 'bundles/con4gismaps/images/be-icons/geopicker.svg';
+        $args[0] = '<div class="list_icon_new" style="background-image:url('.$image.')" data-icon="'.$image.'">&nbsp;</div>';
+        return $args;
     }
 
     public function baselayersLink(Contao\DataContainer $dc)

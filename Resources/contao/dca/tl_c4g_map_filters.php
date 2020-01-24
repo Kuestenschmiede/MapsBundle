@@ -45,8 +45,9 @@ $GLOBALS['TL_DCA']['tl_c4g_map_filters'] =
                     ],
                 'label' =>
                     [
-                        'fields'                  => ['name'],
-                        'format'                  => '%s'
+                        'fields'                  => ['icon','name'],
+                        'label_callback'          => ['tl_c4g_map_filters', 'addIcon'],
+                        'showColumns'             => true
                     ],
                 'global_operations' =>
                     [
@@ -170,5 +171,21 @@ $GLOBALS['TL_DCA']['tl_c4g_map_filters'] =
  */
 class tl_c4g_map_filters extends Backend
 {
+    /**
+     * Add an image to each record
+     *
+     * @param array                $row
+     * @param string               $label
+     * @param Contao\DataContainer $dc
+     * @param array                $args
+     *
+     * @return array
+     */
+    public function addIcon($row, $label, Contao\DataContainer $dc, $args)
+    {
+        $image = 'bundles/con4gismaps/images/be-icons/mapfilter.svg';
+        $args[0] = '<div class="list_icon_new" style="background-image:url('.$image.')" data-icon="'.$image.'">&nbsp;</div>';
+        return $args;
+    }
 
 }

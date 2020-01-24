@@ -53,20 +53,20 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
     // List
     'list' =>
         [
-
         'sorting' =>
             [
             'mode'                    => 1,
             'fields'                  => ['name'],
             'panelLayout'             => 'filter;sort,search,limit',
-            'headerFields'            => ['name'],
+            'headerFields'            => ['name','styletype','minzoom','maxzoom'],
             'flag'                    => 1,
             'icon'                    => 'bundles/con4giscore/images/be-icons/con4gis.org_dark.svg'
             ],
         'label' =>
             [
-            'fields'                  => ['name'],
-            'format'                  => '%s'
+            'fields'                  => ['icon','name','styletype','minzoom','maxzoom'],
+            'label_callback'          => ['tl_c4g_map_locstyles', 'addIcon'],
+            'showColumns'             => true
             ],
         'global_operations' =>
             [
@@ -695,5 +695,20 @@ class tl_c4g_map_locstyles extends Backend
     }
 
 
-
+    /**
+     * Add an image to each record
+     *
+     * @param array                $row
+     * @param string               $label
+     * @param Contao\DataContainer $dc
+     * @param array                $args
+     *
+     * @return array
+     */
+    public function addIcon($row, $label, Contao\DataContainer $dc, $args)
+    {
+        $image = 'bundles/con4gismaps/images/be-icons/locationstyles.svg';
+        $args[0] = '<div class="list_icon_new" style="background-image:url('.$image.')" data-icon="'.$image.'">&nbsp;</div>';
+        return $args;
+    }
 }

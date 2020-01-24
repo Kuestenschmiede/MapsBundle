@@ -42,19 +42,18 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
     // List
     'list' =>
         [
-
         'sorting' =>
             [
-            'mode'                    => 5,
-            'icon'                    => 'bundles/con4giscore/images/be-icons/con4gis.org_dark.svg',
-            'panelLayout'             => 'search',
-            'paste_button_callback'   => ['tl_c4g_map_baselayers', 'pasteElement']
+                'mode'                    => 5,
+                'icon'                    => 'bundles/con4giscore/images/be-icons/con4gis.org_dark.svg',
+                'panelLayout'             => 'search',
+                'paste_button_callback'   => ['tl_c4g_map_baselayers', 'pasteElement']
             ],
         'label' =>
             [
-            'fields'                  => ['name','display_name','minzoomlevel','maxzoomlevel'],
-            'format'                  => '<span style="color:#303E4D"><b>%s</b></span> -> %s [˅%s,˄%s]',
-            'label_callback'          => ['tl_c4g_map_baselayers', 'addIcon']
+                'fields'                  => ['name','display_name','minzoomlevel','maxzoomlevel'],
+                'format'                  => '<span style="color:#303E4D"><b>%s</b></span> -> %s [˅%s,˄%s]',
+                'label_callback'          => ['tl_c4g_map_baselayers', 'addIcon']
             ],
         'global_operations' =>
             [
@@ -83,14 +82,14 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             'copy' =>
                 [
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['copy'],
-                'href'                => 'act=paste&amp;mode=copy&amp;childs=1',
+                'href'                => 'act=paste&amp;mode=copy',
                 'icon'                => 'copy.svg',
                 'attributes'          => 'onclick="Backend.getScrollOffset();"',
                 ],
             'cut' =>
                 [
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['cut'],
-                'href'                => 'act=paste&amp;mode=cut&amp;childs=1',
+                'href'                => 'act=paste&amp;mode=cut',
                 'icon'                => 'cut.svg',
                 'attributes'          => 'onclick="Backend.getScrollOffset();"',
                 ],
@@ -644,6 +643,7 @@ class tl_c4g_map_baselayers extends Backend
     {
         return \Image::getHtml('bundles/con4gismaps/images/be-icons/baselayers.svg', '', $imageAttribute).' '.$label;
     }
+
     public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
     {
         $this->import('BackendUser', 'User');

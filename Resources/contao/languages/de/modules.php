@@ -14,16 +14,16 @@
 /**
  * Back end modules
  */
-$GLOBALS['TL_LANG']['MOD']['c4g_maps'] 					= ['Maps: Kartenstruktur', 'Karten von con4gis-Maps in Kartenstrukturen verwalten.'];
-$GLOBALS['TL_LANG']['MOD']['c4g_map_baselayers'] 		= ['Maps: Basiskarten', 'Basiskarten von con4gis-Maps verwalten.'];
-$GLOBALS['TL_LANG']['MOD']['c4g_map_locstyles'] 		= ['Maps: Lokationsstile', 'Lokationsstile von con4gis-Maps verwalten.'];
-$GLOBALS['TL_LANG']['MOD']['c4g_map_profiles'] 			= ['Maps: Kartenprofile', 'Kartenprofile von con4gis-Maps verwalten.'];
-$GLOBALS['TL_LANG']['MOD']['c4g_map_themes']            = ['Maps: Kartenlayout', 'Das Layout der Karte anpassen.'];
-$GLOBALS['TL_LANG']['MOD']['c4g_map_tables']            = ['Maps: Quelltabellen', 'Eigene Datenanbindungen anlegen und für die Kartenstruktur anpassen.'];
-$GLOBALS['TL_LANG']['MOD']['c4g_map_filters']           = ['Maps: Kartenfilter', 'Filter für die Karte verwalten.'];
+$GLOBALS['TL_LANG']['MOD']['c4g_maps'] 					= ['(maps) Kartenstruktur', 'Karten von con4gis-Maps in Kartenstrukturen verwalten.'];
+$GLOBALS['TL_LANG']['MOD']['c4g_map_baselayers'] 		= ['(maps) Basiskarten', 'Basiskarten von con4gis-Maps verwalten.'];
+$GLOBALS['TL_LANG']['MOD']['c4g_map_locstyles'] 		= ['(maps) Lokationsstile', 'Lokationsstile von con4gis-Maps verwalten.'];
+$GLOBALS['TL_LANG']['MOD']['c4g_map_profiles'] 			= ['(maps) Kartenprofile', 'Kartenprofile von con4gis-Maps verwalten.'];
+$GLOBALS['TL_LANG']['MOD']['c4g_map_themes']            = ['(maps) Kartenlayout', 'Das Layout der Karte anpassen.'];
+$GLOBALS['TL_LANG']['MOD']['c4g_map_tables']            = ['(maps) Quelltabellen', 'Eigene Datenanbindungen anlegen und für die Kartenstruktur anpassen.'];
+$GLOBALS['TL_LANG']['MOD']['c4g_map_filters']           = ['(maps) Kartenfilter', 'Filter für die Karte verwalten.'];
 
 /**
  * Frontend modules
  */
-$GLOBALS['TL_LANG']['FMD']['c4g_maps'] 					= ['maps: Karte', 'Mit diesem Modul binden Sie eine OpenLayers-Karte ein.'];
-$GLOBALS['TL_LANG']['FMD']['c4g_search'] 			    = ['maps: Externe Kartensuche', 'Mit diesem Modul binden Sie eine externe Kartensuche ein, die auf die Kartenseite weiterleitet.'];
+$GLOBALS['TL_LANG']['FMD']['c4g_maps'] 					= ['(maps) Karte', 'Mit diesem Modul binden Sie eine OpenLayers-Karte ein.'];
+$GLOBALS['TL_LANG']['FMD']['c4g_search'] 			    = ['(maps) Externe Kartensuche', 'Mit diesem Modul binden Sie eine externe Kartensuche ein, die auf die Kartenseite weiterleitet.'];

@@ -38,14 +38,13 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             [
             'mode'                    => 2,
             'panelLayout'             => 'filter;sort,search,limit',
-            'headerFields'            => ['id','name'],
+            'headerFields'            => ['name','tablesource'],
             'icon'                    => 'tbundles/con4giscore/images/be-icons/con4gis.org_dark.svg'
             ],
         'label' =>
             [
-            'fields'                  => ['name','tableSource'],
-            'format'                  => '<span style="color:#303E4D"><b>%s</b></span> -> %s',
-            'label_callback'          => ['tl_c4g_map_tables', 'getLabel'],
+            'fields'                  => ['icon','name','tableSource'],
+            'label_callback'          => ['tl_c4g_map_tables', 'addIcon'],
             'showColumns'             => true
             ],
         'global_operations' =>
@@ -368,12 +367,6 @@ class tl_c4g_map_tables extends Backend
         return serialize($varValue);
     }
     
-    public function getLabel($row, $label)
-    {
-        $label = [\Contao\Controller::replaceInsertTags($row['name']), $row['tableSource']];
-        return $label;
-    }
-    
     public function concatResult($varValue)
     {
         $varValue = implode(",", unserialize($varValue));
@@ -383,5 +376,24 @@ class tl_c4g_map_tables extends Backend
     public function separateResult($varValue)
     {
         return explode(",", $varValue);
+    }
+
+    /**
+     * Add an image to each record
+     *
+     * @param array                $row
+     * @param string               $label
+     * @param Contao\DataContainer $dc
+     * @param array                $args
+     *
+     * @return array
+     */
+    public function addIcon($row, $label, Contao\DataContainer $dc, $args)
+    {
+        $image = 'bundles/con4gismaps/images/be-icons/sourcetables.svg';
+        $args[0] = '<div class="list_icon_new" style="background-image:url('.$image.')" data-icon="'.$image.'">&nbsp;</div>';
+
+        $args[1] = \Contao\Controller::replaceInsertTags($args[1]);
+        return $args;
     }
 }

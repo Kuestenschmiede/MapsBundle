@@ -18,7 +18,6 @@ use con4gis\MapsBundle\Resources\contao\models\C4gMapOverlaysModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapSettingsModel;
 use Contao\Database;
-use Contao\Files;
 use Contao\FilesModel;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -379,7 +378,7 @@ class BaseLayerService
         if ($imageFile) {
             $arrBaseLayer['preview_image'] = $imageFile->path;
         }
-        
+
         return $arrBaseLayer;
     }
 }

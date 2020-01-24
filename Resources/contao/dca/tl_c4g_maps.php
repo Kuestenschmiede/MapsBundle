@@ -32,7 +32,6 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
         'label'                       => $GLOBALS['TL_LANG']['MOD']['c4g_maps'][0],
         'dataContainer'               => 'Table',
         'enableVersioning'            => true,
-        //'switchToEdit'                => true,
         'onload_callback'             => [
             ['tl_c4g_maps', 'updateDCA']],
         'onsubmit_callback'             => [
@@ -55,14 +54,14 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             [
             'mode'                    => 5,
             'icon'                    => 'bundles/con4giscore/images/be-icons/con4gis.org_dark.svg',
-            'fields'                  => ['name'],
+            'fields'                  => ['name','profile'],
             'panelLayout'             => 'filter;sort,search,limit',
             'flag'                    => 1
             ],
         'label' =>
             [
-            'fields'                  => ['name'],
-            'format'                  => '%s',
+            'fields'                  => ['name','profile:tl_c4g_map_profiles.name'],
+            'format'                  => ' %s ('.$GLOBALS['TL_LANG']['tl_c4g_maps']['profile'][0].': %s)',
             'label_callback'          => ['tl_c4g_maps','generateLabel']
             ],
         'global_operations' =>
@@ -139,11 +138,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
         '__selector__'                => ['is_map', 'profile','location_type', 'tab_source', 'show_locations', 'popup_extend', 'protect_element', 'use_specialprofile', 'cluster_locations', 'split_geojson'],
         'default'                     => '{general_legend},name,profile,profile_mobile;'.
                                          '{map_legend},is_map;'.
-                                         '{location_legend},location_type,data_layername,hide_child,initial_opened,exemptFromFilter,filterByBaseLayer,data_hidelayer,cssClass,zoom_locations, hover_location,loc_minzoom,loc_maxzoom;'.
-                                         '{protection_legend:hide},protect_element;'.
-                                         '{publish_legend:hide},published,publishStart,publishStop;'.
-                                         '{expert_legend:hide},use_specialprofile;'.
-                                         '{backend_legend:hide},be_optimize_checkboxes_limit;',
+                                         '{expert_legend:hide},use_specialprofile;',
         'single'                      => '{general_legend},name;'.
                                          '{map_legend},is_map;'.
                                          '{location_legend},location_type,data_layername,initial_opened,exemptFromFilter,filterByBaseLayer,hide_child,data_hidelayer,loc_geox,loc_geoy,locstyle,zIndex,loc_only_in_parent,loc_label,tooltip, tooltip_length,enablePopup,showPopupOnActive,popup_info,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations, hover_location,hide_when_in_tab,hideInStarboard,cssClass;'.
@@ -1420,7 +1415,12 @@ class tl_c4g_maps extends Backend
             $image .= '_1';
         }
         $image .= '.svg';
-        return Image::getHtml($image) . ' ' . $label;
+
+        if (!$row['is_map']) {
+            $label = ' '.$row['name'];
+        }
+
+        return Image::getHtml($image) . $label;
     }
 
     /**
