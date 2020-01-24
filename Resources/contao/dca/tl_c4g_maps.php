@@ -32,7 +32,6 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
         'label'                       => $GLOBALS['TL_LANG']['MOD']['c4g_maps'][0],
         'dataContainer'               => 'Table',
         'enableVersioning'            => true,
-        //'switchToEdit'                => true,
         'onload_callback'             => [
             ['tl_c4g_maps', 'updateDCA']],
         'onsubmit_callback'             => [
@@ -55,14 +54,14 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             [
             'mode'                    => 5,
             'icon'                    => 'bundles/con4giscore/images/be-icons/con4gis.org_dark.svg',
-            'fields'                  => ['name'],
+            'fields'                  => ['name','profile'],
             'panelLayout'             => 'filter;sort,search,limit',
             'flag'                    => 1
             ],
         'label' =>
             [
-            'fields'                  => ['name'],
-            'format'                  => '%s',
+            'fields'                  => ['name','profile:tl_c4g_map_profiles.name'],
+            'format'                  => ' %s ('.$GLOBALS['TL_LANG']['tl_c4g_maps']['profile'][0].': %s)',
             'label_callback'          => ['tl_c4g_maps','generateLabel']
             ],
         'global_operations' =>
@@ -1420,7 +1419,12 @@ class tl_c4g_maps extends Backend
             $image .= '_1';
         }
         $image .= '.svg';
-        return Image::getHtml($image) . ' ' . $label;
+
+        if (!$row['is_map']) {
+            $label = ' '.$row['name'];
+        }
+
+        return Image::getHtml($image) . $label;
     }
 
     /**
