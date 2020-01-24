@@ -116,7 +116,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                                          '{click_legend:hide},link_newwindow,link_open_on,hover_popups, popupHandling;'.
                                          '{cesium_legend:hide},cesium;'.
                                          '{overpassLegend:hide},overpassEngine;'.
-                                         '{miscellaneous_legend:hide},script,custom_div,account,be_optimize_checkboxes_limit,caching,geobookmarks,filter_div,filters,filterHandling;'
+                                         '{miscellaneous_legend:hide},script,custom_div,be_optimize_checkboxes_limit,caching,filter_div,filters,filterHandling;'
         ],
 
 
