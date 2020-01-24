@@ -192,7 +192,7 @@ class LayerService
             $objMap = C4gMapsModel::findById($intId);
 
             // Only return map entries
-            if ($objMap == null || !$objMap->is_map) {
+            if ($objMap == null || !$objMap->location_type == 'none') {
                 HttpResultHelper::NotFound();
             }
         }
@@ -375,7 +375,7 @@ class LayerService
 
         // check parent hide status
         $parentLayer = C4gMapsModel::findById($objLayer->pid);
-        if (!$parentLayer->is_map && $parentLayer->data_hidelayer) {
+        if (!$parentLayer->location_type == 'none' && $parentLayer->data_hidelayer) {
             $arrLayerData['hide'] = $parentLayer->data_hidelayer;
         } else {
             $arrLayerData['hide'] = $objLayer->data_hidelayer;

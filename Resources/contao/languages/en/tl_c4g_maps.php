@@ -18,7 +18,6 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['name'] = array('Name', 'Name of the map/the 
 $GLOBALS['TL_LANG']['tl_c4g_maps']['profile'] = array('Map profile', 'Please select the map profile to be used. Map profiles are maintained by selecting "Map profiles" in the section "Layout". When no map profiles are defined "OpenStreetMap Mapnik" is used by default.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['profile_mobile'] = array('Map profile mobile', 'Optional: map profile used on mobile devices.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['published'] = array('Published', 'Defines if the map/the location is published.');
-$GLOBALS['TL_LANG']['tl_c4g_maps']['is_map'] = array('Use as map', 'Check if you want to create a map.');
 // $GLOBALS['TL_LANG']['tl_c4g_maps']['mapsize'] = array('Map size (width, height)', 'Enter the size of the map in the frontend.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['width'] = array('Map width', 'Enter the width of the map in the frontend.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['height'] = array('Map height', 'Enter the height of the map in the frontend.');
@@ -42,7 +41,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['restr_bottomleft_geox'] = array('GEO latitud
 $GLOBALS['TL_LANG']['tl_c4g_maps']['restr_bottomleft_geoy'] = array('GEO longitude bottom', 'GEO Y-coordinate (longitude, WGS-84) of the lower left corner of the restricted navigation area.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['restr_topright_geox'] = array('GEO latitude right', 'GEO X-coordinate (latitude, WGS-84) of the upper right corner of the restricted navigation area.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['restr_topright_geoy'] = array('Geo longitude top', 'GEO Y-coordinate (longitude, WGS-84) of the upper right corner of the restricted navigation area.');
-$GLOBALS['TL_LANG']['tl_c4g_maps']['location_type'] = array('Location type', 'Select how to define one or a set of locations. Note that it is possible to define several location items for a map as child of the map.');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['location_type'] = array('Element type', 'Select how to define one or a set of locations. Note that it is possible to define several location items for a map as child of the map.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_geox'] = array('GEO latitude', 'Enter the GEO X-coordinate (latitude, WGS-84) of the location.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_geoy'] = array('GEO longitude', 'Enter the GEO Y-coordinate (longitude, WGS-84) of the map center.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['locstyle'] = array('Location style', 'The location style, which is defined in the map profiles, defines the design of the location marker. Without location styles defined, a red dot is drawn for every location by default.');
@@ -152,7 +151,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['default_profile'] = 'Internal default (OpenS
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['CENTERZOOM'] = 'Provide center und zoomlevel';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['LOCATIONS'] = 'Show all locations';
 
-$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['none']      = 'No location';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['none']      = 'Map (no location)';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['single']    = 'Single GEO coordinate';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['table']     = 'Other table';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['gpx']       = 'GPX';
@@ -184,9 +183,10 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['popupType']['popup_info'] = "c
 /**
  * Legends
  */
-$GLOBALS['TL_LANG']['tl_c4g_maps']['general_legend']		= 'General';
-$GLOBALS['TL_LANG']['tl_c4g_maps']['map_legend']		    = 'Map';
-$GLOBALS['TL_LANG']['tl_c4g_maps']['location_legend']	    = 'Location';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['general_legend']		= 'General settings';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['map_legend']		    = 'Map settings';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['profile_legend']		= 'Profile settings';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['location_legend']	    = 'Structure element settings';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['protection_legend']	    = 'Access protection';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['expert_legend']	    	= 'Expert';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['backend_legend']        = 'Backend settings';

@@ -18,7 +18,6 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['name'] = array('Name', 'Name der Karte bzw. 
 $GLOBALS['TL_LANG']['tl_c4g_maps']['profile'] = array('Kartenprofil', 'Wählen Sie hier bitte ein Kartenprofil, das die Darstellung bestimmt. Kartenprofile werden über den Menüpunkt "Kartenprofile" unter "Layout" gepflegt. Falls Sie kein eigenes Kartenprofil wählen, dann wird standardmäßig mit OpenStreetMaps Mapnik Karten gearbeitet.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['profile_mobile'] = array('Kartenprofil mobil', 'Optional: Kartenprofil, das für mobile Endgeräte verwendet wird.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['published'] = array('Veröffentlicht', 'Legt fest, ob die Karte bzw. die Lokation veröffentlicht wird.');
-$GLOBALS['TL_LANG']['tl_c4g_maps']['is_map'] = array('Als Karte verwenden', 'Soll dieses Element eine im Frontend darstellbare Karte repräsentieren?');
 // $GLOBALS['TL_LANG']['tl_c4g_maps']['mapsize'] = array('Größe der Karte (Breite, Höhe)', 'Geben Sie hier die Größe der Karte im Frontend ein.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['width'] = array('Breite der Karte', 'Geben Sie hier die Breite der Karte im Frontend ein.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['height'] = array('Höhe der Karte', 'Geben Sie hier die Höhe der Karte im Frontend ein.');
@@ -42,7 +41,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['restr_bottomleft_geox'] = array('Geo X-Koord
 $GLOBALS['TL_LANG']['tl_c4g_maps']['restr_bottomleft_geoy'] = array('Geo Y-Koordinate unten', 'Geo Y-Koordinate (Längengrad, WGS-84) der linken, unteren Ecke für den eingeschränkten Navigationsbereich.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['restr_topright_geox'] = array('Geo X-Koordinate rechts', 'Geo X-Koordinate (Breitengrad, WGS-84) der rechten, oberen Ecke für den eingeschränkten Navigationsbereich.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['restr_topright_geoy'] = array('Geo Y-Koordinate oben', 'Geo Y-Koordinate (Längengrad, WGS-84) der rechten, oberen Ecke für den eingeschränkten Navigationsbereich.');
-$GLOBALS['TL_LANG']['tl_c4g_maps']['location_type'] = array('Typ des Kartenelements (Lokationstyp)', 'Legen Sie fest, welche Art von Lokation bzw. Lokationen dieses Element repräsentieren soll. Es ist möglich, im Baum beliebig viele Lokationselemente pro Karte als Kindelement zu definieren.');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['location_type'] = array('Elementtyp', 'Wähle Sie Karte oder legen Sie fest, welche Art von Lokation bzw. Lokationen dieses Element repräsentieren soll. Es ist möglich, im Baum beliebig viele Lokationselemente pro Karte als Kindelement zu definieren.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_geox'] = array('Geo X-Koordinate', 'Geben Sie hier die X-Koordinate (Breitengrad, WGS-84) der Lokation ein.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_geoy'] = array('Geo Y-Koordinate', 'Geben Sie hier die Y-Koordinate (Längengrad, WGS-84) der Lokation ein.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['locstyle'] = array('Lokationsstil', 'Über den Lokationsstil, der beim Kartenprofil definiert wird, legen Sie das Aussehen der Lokation fest. Ist kein Lokationsstil definiert, dann wird standardmäßig ein roter Punkt gezeichnet. ');
@@ -153,7 +152,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['default_profile'] = 'Internes Standardprofil
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['CENTERZOOM'] = 'Angabe von Center und Zoom-Level';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['LOCATIONS'] = 'Alle Lokationen sollen sichtbar sein';
 
-$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['none']      = 'Keine Lokation';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['none']      = 'Karte (Keine Lokation)';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['single']    = 'Einzelne Geo-Koordinate';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['table']     = 'Aus anderer Tabelle';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['gpx']       = 'Daten im GPX-Format';
@@ -186,9 +185,10 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['popupType']['popup_info'] = "c
 /**
  * Legends
  */
-$GLOBALS['TL_LANG']['tl_c4g_maps']['general_legend']		= 'Allgemeine Daten';
-$GLOBALS['TL_LANG']['tl_c4g_maps']['map_legend']		    = 'Karte';
-$GLOBALS['TL_LANG']['tl_c4g_maps']['location_legend']	    = 'Lokation';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['general_legend']		= 'Grundeinstellungen';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['map_legend']		    = 'Karteneinstellungen';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['profile_legend']		= 'Profileinstellungen';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['location_legend']	    = 'Einstellungen zum Kartenstrukturelement';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['protection_legend']	    = 'Zugriffsschutz';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['expert_legend']	    	= 'Experteneinstellungen';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['backend_legend']        = 'Backendeinstellungen';
