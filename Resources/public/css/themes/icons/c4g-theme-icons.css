@@ -187,13 +187,13 @@ span.c4g-active ul li.c4g-active:before{
 }
 
 button.ol-zoom-in:before {
-  content: "\f055";
+  content: "\f067";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;
 }
 button.ol-zoom-out:before {
-  content: "\f056";
+  content: "\f068";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;

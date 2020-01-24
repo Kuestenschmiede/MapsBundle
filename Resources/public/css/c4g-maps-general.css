@@ -359,23 +359,23 @@ li.c4g-close ul {
   padding: 0;
 }
 
-.c4g-starboard-control {
-  /*top: 50%;*/
-  /*right: 0;*/
-  -webkit-transform: translate(0, -2em);
-  -moz-transform: translate(0, -2em);
-  -ms-transform: translate(0, -2em);
-  -o-transform: translate(0, -2em);
-  transform: translate(0, -2em);
-}
-.c4g-starboard-control button {
-  overflow: visible;
-  position: relative;
-  /*height: 4em;*/
+/*.c4g-starboard-control {*/
+/*  !*top: 50%;*!*/
+/*  !*right: 0;*!*/
+/*  -webkit-transform: translate(0, -2em);*/
+/*  -moz-transform: translate(0, -2em);*/
+/*  -ms-transform: translate(0, -2em);*/
+/*  -o-transform: translate(0, -2em);*/
+/*  transform: translate(0, -2em);*/
+/*}*/
+/*.c4g-starboard-control button {*/
+/*  overflow: visible;*/
+/*  position: relative;*/
+/*  !*height: 4em;*!*/
 
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
+/*  border-top-right-radius: 0;*/
+/*  border-bottom-right-radius: 0;*/
+/*}*/
 
 .c4g-portside-control {
   display: block;

@@ -28,7 +28,7 @@ export class StarboardPanel extends Component {
     let button = document.createElement('button');
     let langConstants = getLanguage(props.mapController.data);
     button.title = langConstants.CTRL_STARBOARD;
-    element.className = "c4g-sideboard c4g-starboard-control ol-unselectable ol-control ";
+    element.className = "c4g-starboard-control ol-unselectable ol-control ";
     if (props.open) {
       element.className += "c4g-open";
     } else {
