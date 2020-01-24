@@ -725,3 +725,7 @@ background: var(--pu-main-color);
 .c4g-baselayer-wrapper .c4g-baselayer-header{
   color: var(--font-color);
 }
+
+button.c4g-baselayer-close:before{
+  color: var(--font-color);
+}
