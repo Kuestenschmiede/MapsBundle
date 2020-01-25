@@ -106,7 +106,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         '__selector__'                => ['resize_locstyles_zoom', 'mouse_nav','starboard','cluster_all','baselayerswitcher','layerswitcher','attribution','hover_popups','permalink','geosearch','geopicker','overpassEngine', 'cesium', 'popupHandling'],
         'default'                     => '{general_legend},name,theme;'.
                                          '{baselayer_legend:hide},baselayers, default_baselayer,baselayerswitcher;'.
-                                         '{locstyle_legend:hide},locstyles, label_color,resize_locstyles_zoom;'.
                                          '{navigation_legend:hide},zoom_panel,zoom_panel_button,zoom_panel_slider,mouse_nav,touch_nav,keyboard_nav,fullscreen,print;'.
                                          '{starboard_legend:hide},starboard;'.
                                          '{information_legend:hide},attribution,overviewmap,graticule,scaleline,mouseposition,permalink,zoomlevel,infopage;'.
@@ -116,6 +115,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                                          '{click_legend:hide},link_newwindow,link_open_on,hover_popups, popupHandling;'.
                                          '{cesium_legend:hide},cesium;'.
                                          '{overpassLegend:hide},overpassEngine;'.
+                                         '{locstyle_legend:hide}, label_color,resize_locstyles_zoom;'.
                                          '{miscellaneous_legend:hide},script,custom_div,be_optimize_checkboxes_limit,caching,filter_div,filters,filterHandling;'
         ],
 
@@ -205,20 +205,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'options_callback'        => ['tl_c4g_map_profiles','getAllBaseLayers'],
             'eval'                    => ['mandatory'=>false, 'multiple'=>false],
             'sql'                     => "blob NULL"
-        ],
-
-        'locstyles' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['locstyles'],
-            'exclude'                 => true,
-            'inputType'               => 'checkbox',
-            'options_callback'        => ['tl_c4g_map_profiles','getAllLocStyles'],
-            'eval'                    => ['mandatory'=>false, 'multiple'=>true],
-            'sql'                     => "blob NULL",
-            'xlabel' => array
-            (
-                array('tl_c4g_map_profiles', 'locstylesLink')
-            )
         ],
 
         'label_color' =>
