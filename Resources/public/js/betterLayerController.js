@@ -9,8 +9,8 @@
  * @copyright  Küstenschmiede GmbH Software & Design
  * @link       https://www.con4gis.org
  */
-import {C4gLayer} from "./c4g-layer"
-import {utils} from "./c4g-maps-utils"
+import {C4gLayer} from "./c4g-layer";
+import {utils} from "./c4g-maps-utils";
 import {cssConstants} from "./c4g-maps-constant";
 import {Customtab} from "./c4g-maps-control-starboardplugin-customtab";
 import {Stroke, Style} from "ol/style";
@@ -122,7 +122,7 @@ export class BetterLayerController {
             loader: this.loaderFunction,
             strategy: bbox
         });
-        this.clusterStyleFunction = function(feature, resolution) {
+        this.clusterStyleFunction = function(feature, proxy, resolution) {
             // let size = "";
             // if (feature.get('features') && feature.get('features').length && feature.get('features').length > 1) {
             //     size = feature.get('features').length.toString();
@@ -167,12 +167,11 @@ export class BetterLayerController {
             // }
             if (feature && feature.get && feature.get('locstyle')) {
                 let locstyle = feature.get('locstyle');
-                if (this.proxy.locationStyleController.arrLocStyles[locstyle].style) {
-                    return this.proxy.locationStyleController.arrLocStyles[locstyle].style
+                if (proxy.locationStyleController.arrLocStyles[locstyle].style) {
+                    return proxy.locationStyleController.arrLocStyles[locstyle].style;
                 }
+            } else {
             }
-            else {}
-
         };
 
         this.clusterSource = new Cluster({
@@ -192,7 +191,7 @@ export class BetterLayerController {
         });
         this.vectorLayer = new Vector({
             source: this.vectorSource,
-            style: this.clusterStyleFunction
+            style: this.clusterStyleFunction(this.getFeaturesForLayer(this), this.proxy, undefined)
         });
         this.layerRequests = {};
         this.ovpKey = this.mapController.data.ovp_key;
