@@ -10,11 +10,13 @@
  * @link       https://www.con4gis.org
  */
 
-import {cssConstants} from "./c4g-maps-constant";
-import {Control} from "ol/control";
+import {cssConstants} from './c4g-maps-constant';
+import {Control} from 'ol/control';
+import {toBlob} from 'dom-to-image-more';
+import {saveAs} from 'file-saver';
+
 
 'use strict';
-
 export class Print extends Control {
 
   /**
@@ -45,23 +47,27 @@ export class Print extends Control {
       return false;
     }
 
-    var view = options.mapController.map.getView();
+    var map = options.mapController.map;
     var mapData = options.mapController.data;
 
-    var toggle = function (event) {
-      event.stopPropagation();
-      let canvas = document.getElementsByClassName("ol-unselectable")[0];
+    // export options for html-to-image.
+    // See: https://github.com/bubkoo/html-to-image#options
+    var exportOptions = {
+      filter: function(element) {
+        return element.className ? element.className.indexOf('ol-control') === -1 : true;
+      },
+      bgcolor: '#000000'
+    };
 
-      canvas.toBlob(function(blob) {
-        let a = document.createElement("a");
-        document.body.appendChild(a);
-        a.style = "display: none";
-        let url = window.URL.createObjectURL(blob);
-        a.href = url;
-        a.download = 'map.png';
-        a.click();
-        window.URL.revokeObjectURL(url);
-      });
+    var toggle = function (event) {
+       event.stopPropagation();
+       if (map.getTarget()) {
+          let target = document.getElementById(map.getTarget());
+          toBlob(target, exportOptions)
+              .then(function(blob) {
+                 saveAs(blob, 'map.png');
+               });
+       }
     };
 
     // wrapper div
