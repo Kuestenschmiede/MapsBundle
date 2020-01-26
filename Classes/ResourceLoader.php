@@ -318,8 +318,8 @@ class ResourceLoader extends coreResourceLoader
         // use default if the profile was not found
         if (!$profile) {
             $settings = C4gSettingsModel::findAll();
-            $profile = $settings[0]->defaultprofile;
-            if (!$profile) {
+            $profileId = $settings[0]->defaultprofile;
+            if (!$profileId) {
                 $profiles = C4gMapProfilesModel::findAll();
                 if ($profiles && (!empty($profiles))) {
                     $length = count($profiles);
@@ -329,7 +329,10 @@ class ResourceLoader extends coreResourceLoader
                 }
             }
         }
-        self::loadResourcesForProfile($profile->id, true, $profile);
+        if ($profile && !$profileId) {
+            $profileId = $profile->id;
+        }
+        self::loadResourcesForProfile($profileId, true, $profile);
         if (count($additionalResources) > 0) {
             self::loadResources($additionalResources);
         }

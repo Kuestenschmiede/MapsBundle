@@ -104,7 +104,7 @@ class MapDataConfigurator
                 $profiles = C4gMapProfilesModel::findAll();
                 if ($profiles && (count($profiles) > 0)) {
                     $length = count($profiles);
-                    $profileId = $profiles[$length - 1];
+                    $profileId = $profiles[$length - 1]->id;
                 }
             }
         }
@@ -134,8 +134,8 @@ class MapDataConfigurator
                 $profile = C4gMapProfilesModel::findBy('is_backend_geopicker_default', 1);
                 if (!$profile) {
                     $settings = C4gSettingsModel::findAll();
-                    $profile = $settings[0]->defaultprofile;
-                    if (!$profile) {
+                    $profileId = $settings[0]->defaultprofile;
+                    if (!$profileId) {
                         $profiles = C4gMapProfilesModel::findAll();
                         if ($profiles && (count($profiles) > 0)) {
                             $length = count($profiles);
@@ -144,7 +144,7 @@ class MapDataConfigurator
                     }
                 }
             }
-            if ($profile) {
+            if ($profile && !$profileId) {
                 $profileId = $profile->id;
             } else {
                 // set defaults for geopicker
