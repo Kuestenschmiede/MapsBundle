@@ -152,7 +152,8 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['default_profile'] = 'Internes Standardprofil
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['CENTERZOOM'] = 'Angabe von Center und Zoom-Level';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['LOCATIONS'] = 'Alle Lokationen sollen sichtbar sein';
 
-$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['none']      = 'Karte (Keine Lokation)';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['map']       = 'Karte (keine Lokation)';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['none']      = 'Strukturebene (keine Lokation)';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['single']    = 'Einzelne Geo-Koordinate';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['table']     = 'Aus anderer Tabelle';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['gpx']       = 'Daten im GPX-Format';

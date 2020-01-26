@@ -192,7 +192,7 @@ class LayerService
             $objMap = C4gMapsModel::findById($intId);
 
             // Only return map entries
-            if ($objMap == null || !$objMap->location_type == 'none') {
+            if ($objMap == null || !$objMap->location_type == 'map') {
                 HttpResultHelper::NotFound();
             }
         }
@@ -202,7 +202,7 @@ class LayerService
 
         if ($objMap) {
             // append map itself as structure element
-            if ($objMap->location_type != 'none') {
+            if ($objMap->location_type != 'map') {
                 $mapLayer = $this->parseLayer($objMap, $lang);
                 unset($mapLayer['raw']);
                 $arrLayer[] = $mapLayer;
@@ -462,7 +462,7 @@ class LayerService
         $linkedLayer = C4gMapsModel::findByPk($objLayer->link_id);
 
         // check if linked element is overpass request and assign correct content values
-        if ($linkedLayer->location_type !== 'none') {
+        if (($linkedLayer->location_type !== 'none') && ($linkedLayer->location_type !== 'map')) {
             // TODO check with nested link structures
             $arrLayerData['content'] = $this->getContentForType($linkedLayer);
         } else {
@@ -500,7 +500,7 @@ class LayerService
         $arrLayerData['childs'] = [];
 
         foreach ($childLayers as $childLayer) {
-            if ($childLayer->location_type !== 'none') {
+            if (($childLayer->location_type !== 'none') && ($childLayer->location_type !== 'map')) {
                 // we reached the "bottom" of the tree leaf
                 $childData = $this->parseLayer($childLayer, $lang);
                 $childData['pid'] = $parentLayer->id;
