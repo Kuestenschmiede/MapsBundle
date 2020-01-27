@@ -87,7 +87,11 @@ export class BetterLayerController {
                                         console.warn('Can not read feature.');
                                     }
                                     let oldLength = scope.vectorCollection.getLength(); //necesarry to distinct redundant features
-
+                                    for (let featureId in features) {
+                                        if (features.hasOwnProperty(featureId)) {
+                                            features[featureId].set('locstyle', this.loader.locstyleId);
+                                        }
+                                    }
                                     scope.vectorCollection.extend(features);
 
                                     let addedFeatures = scope.vectorCollection.getArray().slice(oldLength);
@@ -122,55 +126,16 @@ export class BetterLayerController {
             loader: this.loaderFunction,
             strategy: bbox
         });
-        this.clusterStyleFunction = function(feature, proxy, resolution) {
-            // let size = "";
-            // if (feature.get('features') && feature.get('features').length && feature.get('features').length > 1) {
-            //     size = feature.get('features').length.toString();
-            // }
-            // let geometryType = feature.getGeometry() ? feature.getGeometry().getType(): "Point";
-            // if (geometryType === "Point") {
-            //     return new Style({
-            //         text: new Text({
-            //             text: size,
-            //             offsetX: -10,
-            //             offsetY: -10,
-            //         }),
-            //         stroke: new Stroke({
-            //             color: 'blue',
-            //             width: 2
-            //         }),
-            //         fill: new Fill({
-            //             color: 'blue'
-            //         }),
-            //         image: new CircleStyle({
-            //             radius: 10,
-            //             fill: new Fill({
-            //                 color: 'blue'
-            //             }),
-            //             stroke: new Stroke({
-            //                 color: 'blue'
-            //             })
-            //         })
-            //     });
-            // }
-            // else {
-            //     return new Style({
-            //         stroke: new Stroke({
-            //             color: 'black',
-            //             width: 3
-            //         }),
-            //         fill: new Fill({
-            //             color: 'rgba(0, 0, 0, 0.4)'
-            //         }),
-            //         // geometry: feature.getGeometry()
-            //     });
-            // }
+        this.clusterStyleFunction = function(feature, resolution) {
             if (feature && feature.get && feature.get('locstyle')) {
                 let locstyle = feature.get('locstyle');
-                if (proxy.locationStyleController.arrLocStyles[locstyle].style) {
-                    return proxy.locationStyleController.arrLocStyles[locstyle].style;
+                if (scope.proxy.locationStyleController.arrLocStyles && scope.proxy.locationStyleController.arrLocStyles[locstyle] && scope.proxy.locationStyleController.arrLocStyles[locstyle].style) {
+                    let style = scope.proxy.locationStyleController.arrLocStyles[locstyle].style;
+                    if (typeof style === "function") {
+                        return style(feature, resolution, false);
+                    }
+                    return scope.proxy.locationStyleController.arrLocStyles[locstyle].style;
                 }
-            } else {
             }
         };
 
@@ -191,7 +156,7 @@ export class BetterLayerController {
         });
         this.vectorLayer = new Vector({
             source: this.vectorSource,
-            style: this.clusterStyleFunction(this.getFeaturesForLayer(this), this.proxy, undefined)
+            style: this.clusterStyleFunction
         });
         this.layerRequests = {};
         this.ovpKey = this.mapController.data.ovp_key;
@@ -295,12 +260,15 @@ export class BetterLayerController {
         let features = [];
         let childs = [];
         let loaderId = -1;
+        let possibleLocstyle = layer.locstyle;
         if (layer.content && layer.content.length > 0) {
             features = this.getFeaturesForLayer(layer);
+            possibleLocstyle = layer.locstyle || layer.content[0].locationStyle
         }
-        let checkLocstyle = this.arrLocstyles.findIndex((element) => element === layer.locstyle);
-        if (checkLocstyle === -1 && layer.locstyle) {
-            this.arrLocstyles.push(layer.locstyle);
+
+        let checkLocstyle = this.arrLocstyles.findIndex((element) => element === possibleLocstyle);
+        if (checkLocstyle === -1 && possibleLocstyle) {
+            this.arrLocstyles.push(possibleLocstyle);
         }
         if (layer.async_content) {
             let url = "";
@@ -363,25 +331,27 @@ export class BetterLayerController {
         const featureProjection = "EPSG:3857";
         for (let contentId in layer.content) {
             if (layer.content.hasOwnProperty(contentId)) {
-                let contentData = layer.content[contentId].data;
+                let content = layer.content[contentId];
+                let contentData = content.data;
                 if (contentData && contentData.properties) {
                     let format = new olFormat[layer.content[contentId].type]({
                         featureProjection: featureProjection,
                         dataProjection: contentData.properties.projection
                     });
                     if (layer.content[contentId].type === "GeoJSON") {
+                        let locstyle = layer.locstyle || content.locationStyle;
                         if (contentData.type === "FeatureCollection") {
                             for (let i in contentData.features) {
                                 if (contentData.features.hasOwnProperty(i)) {
                                     let singleFeature = format.readFeature(contentData.features[i]);
-                                    singleFeature.set('locstyle', layer.locstyle)
+                                    singleFeature.set('locstyle', locstyle)
                                     features.push(singleFeature);
                                 }
                             }
                         }
                         else {
                             let feature = format.readFeature(contentData)
-                            feature.set('locstyle', layer.locstyle)
+                            feature.set('locstyle', locstyle)
 
                             features.push(feature);
                         }
