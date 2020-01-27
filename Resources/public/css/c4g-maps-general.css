@@ -280,8 +280,11 @@ button.c4g-geosearch-start:before {
 }
 
 .c4g-starboard-content-container {
-  overflow-y: auto;
-  max-height: calc(var(--map-height) - 50px);
+  max-height: calc(var(--map-height) - .4em - (calc(32px + .4em)));
+}
+
+.c4g-starboard-content-container::-webkit-scrollbar {
+  width: .2em!important;
 }
 
 .c4g-control-container-top-left {
@@ -1177,29 +1180,13 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
   right: 0;
 }
 
+.c4g-horizon-content {
+  padding: 0 .4em .4em;
+}
+
 .c4g-geosearch-wrapper.c4g-close { display: none; }
 
-.c4g-geosearch-wrapper.c4g-open.c4g-horizon {
-  /*position: absolute;*/
-  top: .2em;
-  left: calc(42px + .4em);
-  right: calc(42px + .4em);
-  margin: auto;
-  padding: .4em;
-  z-index: 5;
-}
 
-.c4g-geosearch-wrapper.c4g-open.c4g-horizon div span.c4g-geosearch-headline.c4g-horizon-header-headline {
-  font-size: 20px;
-  line-height: 35px;
-}
-
-.c4g-geosearch-wrapper.c4g-open.c4g-horizon .c4g-titlebar-close{
-  position: absolute;
-  right: 10px;
-  font-size: 15px;
-  line-height: 28px;
-}
 
 button.c4g-titlebar-close, .c4g-geosearch-results button {
   background: none;
@@ -1220,8 +1207,8 @@ button.c4g-titlebar-close, .c4g-geosearch-results button {
 
 .c4g-horizon-content input {
   height: 28px;
-  max-width: calc(100% - .8em);
-    padding: 0 0 0 5px;
+  max-width: calc(100% - 35px - .4em);
+    padding: 0 0 0 .4em;
   margin: 0;
     border: 0;
   outline: none;
@@ -1239,6 +1226,7 @@ button.c4g-geosearch-start {
   outline: none;
   cursor: pointer;
   height: 28px;
+  width: 35px;
 }
 
 button.c4g-geosearch-options:before {
@@ -1272,15 +1260,15 @@ button.c4g-geosearch-options:before {
 .c4g-geosearch-results-header.c4g-beach-header span { padding-left: 10px; font-size: 20px;}
 .c4g-geosearch-results-header.c4g-beach-header button { height: 40px; width: 40px; font-size: 15px; }
 
-.c4g-beach-content ul { padding: 0; margin: 0; list-style-type: none; width: 100%;}
-.c4g-beach-content ul li { margin: 0!important; }
+.c4g-beach-content ul { padding: 0 0 .4em 0; list-style-type: none; }
+.c4g-beach-content ul li { padding: 0 .4em; }
 
 .c4g-geosearch-results .searchResultButton {
   overflow: hidden;
   width: 100%;
   text-align: left;
-  line-height: 15px;
-  padding: .4em;
+  line-height: 30px;
+  height: 30px;
   cursor: pointer;
   transition: .1s;
 }
@@ -1290,28 +1278,21 @@ button.c4g-geosearch-options:before {
 .c4g-geosearch-results .searchResultButton:hover { padding-left: .4em; }
 
 .c4g-geosearch-results .searchResultButton:before{
-  content: "\f0da";
+  content: "\f35a";
   font-family: "Font Awesome 5 Free";
   font-weight: bold;
   position: relative;
-  font-size: 25px;
+  font-size: 20px;
   margin-left: -20px;
   margin-right: 10px;
   display: inline;
-  top: 4px;
+  top: 2px;
   transition: .3s;
 }
 
-@media(max-width: 1100px){
-  .c4g-beach { width: auto; }
-}
+.c4g-geosearch-results.c4g-open.c4g-beach { max-height: calc(var(--map-height) - 0.4em - (28px + 0.4em) - (32px + 0.4em)); overflow-y: auto;}
 
-.c4g-beach-content.c4g-popup-content {  max-height: calc(var(--map-height) - .4em - 48px); overflow-y: auto;}
-.c4g-beach-content ul#resultcontainer { max-height: calc(var(--map-height) - 1.2em - 28px - 35px); overflow-y: auto; }
-
-.c4g-geosearch-results.c4g-open.c4g-beach { max-height: calc(var(--map-height) - .4em - 48px);}
-
-.c4g-beach-content ul#resultcontainer::-webkit-scrollbar, .c4g-beach-content.c4g-popup-content::-webkit-scrollbar {
+.c4g-geosearch-results.c4g-open.c4g-beach::-webkit-scrollbar, .c4g-beach-content.c4g-popup-content::-webkit-scrollbar {
   width: .2em;
 }
 
@@ -1375,7 +1356,8 @@ div div.c4g-popup-wrapper.c4g-beach {
 }
 
 .c4g-baselayer-container.c4g-open .c4g-baselayertree{
-  max-height: calc(var(--map-height) - .4em - 35px);
+  max-height: calc(var(--map-height) - .4em - (calc(32px + .4em)));
+
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -1385,13 +1367,17 @@ div div.c4g-popup-wrapper.c4g-beach {
 }
 
 .c4g-baselayer-wrapper .c4g-baselayer-header,
-.c4g-starboard-wrapper .c4g-starboard-headline {
-  line-height: 35px;
+.c4g-starboard-wrapper .c4g-starboard-header,
+.c4g-geosearch-wrapper .c4g-geosearch-header{
+  line-height: calc(32px + .4em);
+  height: calc(32px + .4em);
   padding: 0 .4em;
   width: calc(100% - 1.2em - 32px);
 }
 
-.c4g-starboard-headline span{
+.c4g-baselayer-wrapper .c4g-baselayer-header span,
+.c4g-starboard-wrapper .c4g-starboard-header span,
+.c4g-geosearch-wrapper .c4g-geosearch-header span{
   font-size: 20px;
 }
 
@@ -1446,7 +1432,8 @@ div div.c4g-popup-wrapper.c4g-beach {
   opacity: 1;
 }
 .c4g-baselayer-header button,
-.c4g-starboard-headline .c4g-starboard-close{
+.c4g-starboard-header button,
+.c4g-geosearch-header button{
   width: 32px;
   height: 32px;
   position: absolute;

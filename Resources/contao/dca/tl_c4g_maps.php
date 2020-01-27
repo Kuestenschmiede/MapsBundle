@@ -1382,7 +1382,7 @@ class tl_c4g_maps extends Backend
         $image = 'bundles/con4gismaps/images/be-icons/';
 
         //Backwards compatibility (data < con4gis 7): so that maps are set as maps again. is_map can removed in later versions.
-        if ($row['location_type'] == 'none' && $row['is_map'] == '1'){
+        if (($row['location_type'] == 'none') && ($row['is_map'] == '1')){
             $row['location_type'] = 'map';
             $row['is_map'] = '0';
             Database::getInstance()->prepare("UPDATE tl_c4g_maps SET location_type=?, is_map=? WHERE is_map=?")->execute($row['location_type'],$row['is_map'],'1');
@@ -1460,7 +1460,6 @@ class tl_c4g_maps extends Backend
                 $calcExtentFields = 'min_gap,';
             }
             if($objMap->hover_location == '1') {
-                $hover_style = 'hover_style';
                 foreach ($GLOBALS['TL_DCA']['tl_c4g_maps']['palettes'] as $paletteKey=>$paletteString)
                 {
                     if (!is_array($paletteString) && strpos($paletteString, "hover_location")!==false)
