@@ -76,6 +76,7 @@ export class BaselayerSwitcher extends Component {
 
   render() {
     let arrBaselayers = this.props.baselayerController.arrBaselayers;
+    let baseLayerIds = this.props.baselayerController.baselayerIds;
     let className = this.state.className;
     className += " " + (this.state.open ? "c4g-open" : "c4g-close");
     if (this.state.open) {
@@ -93,7 +94,7 @@ export class BaselayerSwitcher extends Component {
           header={headline} closeBtnClass={"c4g-baselayer-close"} closeBtnCb={this.close}/>
         <div className={"c4g-baselayertree"}>
           <ul>
-            {Object.keys(arrBaselayers).map(function(element, index) {
+            {baseLayerIds.map(function(element, index) {
               let baselayer = arrBaselayers[element];
               let currentCls = scope.state.currentBaselayer === element ? "c4g-active" : "c4g-inactive";
               let preview = "";
@@ -108,7 +109,7 @@ export class BaselayerSwitcher extends Component {
               if (preview) {
                 nameNode = <span>{baselayer.name}</span>
               }
-              return (<li key={element} className={preview ? "with-image" : "without-image"}>
+              return (<li key={index} className={preview ? "with-image" : "without-image"}>
                 <a onMouseUp={(event) => {
                     event.preventDefault();
                     event.stopPropagation();

@@ -40,7 +40,7 @@ export class StarboardLayerswitcher extends Component {
     const mapData = this.props.mapController.data;
     return (
       <div className={cssConstants.STARBOARD_WRAPPER}>
-        <Titlebar wrapperClass={cssConstants.STARBOARD_TITLEBAR} headerClass={cssConstants.STARBOARD_HEADLINE}
+        <Titlebar wrapperClass={"c4g-starboard-header"} headerClass={cssConstants.STARBOARD_HEADLINE}
           header={mapData.starboard.label || "Starboard"} closeBtnClass={cssConstants.STARBOARD_CLOSE} closeBtnCb={closeStarboard}>
         </Titlebar>
         <div className={cssConstants.CONTROL + " " + cssConstants.STARBOARD_BUTTONBAR}>
