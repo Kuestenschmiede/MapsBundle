@@ -62,7 +62,6 @@ export class StarboardLayerswitcher extends Component {
                                                      layer={item}
                                                      layerStates={this.props.layerStates[id]}
                                                      fnResize={this.props.fnResize}/>;
-                  return null;
                 })}
               </ul>
             </div>
