@@ -164,7 +164,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['folder']    = 'Daten im Verzei
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['overpass']  = 'Anfrage an Overpass API (OSM)';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['link']      = 'Verknüpfung zu anderem Kartenstrukturelement';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['c4gForum']  = 'Forenbereiche aus con4gis-Forum';
-$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['startab']  = 'Eigener Starboardreiter';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['startab']   = 'Eigener Starboardreiter';
 
 
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['OFF']       = 'Nicht anzeigen';
