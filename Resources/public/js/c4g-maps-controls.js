@@ -398,7 +398,8 @@ export class MapsControls {
                 tipLabel: langConstants.CTRL_INFOPAGE,
                 target: controlContainerTopLeft,
                 caching: mapData.caching,
-                mapController: this.mapController
+                mapController: this.mapController,
+                direction: "left"
             });
             map.addControl(this.controls.infopage);
             // open if opened before
