@@ -94,17 +94,18 @@ div.c4g-control-container-top-left.ol-unselectable > div.ol-unselectable.ol-cont
  width: .2em!important;
 }
 
-.c4g-control-container-top-left > div {
-  margin-bottom: 3px;
+.c4g-control-container-top-left > div:not(:last-child) {
+  margin-bottom: .2em;
 }
-
+/*
 .c4g-control-container-bottom-left {
   position: absolute;
   bottom: 2.3em;
-  /* do not change "left"-value! */
+  /* do not change "left"-value! *//*
   left: 0px;
   margin-left: .4em;
-}
+}*/
+
 .c4g-control-container-bottom-left-sub div {
   display: block;
   white-space: normal;
@@ -683,7 +684,9 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
   text-align: right;.c4g-geosearch-wrapper.c4g-open
 }
 .ol-attribution ul {
-  padding: 0 2px;
+  padding: 0 .4em;
+  margin: 0;
+  float: right;
   height:auto;
   font-size: 10px;
   line-height: 14px;
@@ -1249,6 +1252,7 @@ button.c4g-geosearch-options:before {
   text-align: left;
   line-height: 30px;
   height: 30px;
+  padding-right: .2em;
   cursor: pointer;
   transition: .1s;
 }
@@ -1264,7 +1268,7 @@ button.c4g-geosearch-options:before {
   position: relative;
   font-size: 20px;
   margin-left: -20px;
-  margin-right: 10px;
+  margin-right: .4em;
   display: inline;
   top: 2px;
   transition: .3s;
