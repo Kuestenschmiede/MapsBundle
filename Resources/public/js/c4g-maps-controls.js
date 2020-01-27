@@ -393,20 +393,20 @@ export class MapsControls {
             map.addControl(this.controls.rotate);
         }
         // infopage
-        if (mapData.infopage && typeof mapData.infopage === "string" && typeof Infopage === 'function') {
-            this.controls.infopage = new Infopage({
-                tipLabel: langConstants.CTRL_INFOPAGE,
-                target: controlContainerTopLeft,
-                caching: mapData.caching,
-                mapController: this.mapController,
-                direction: "left"
-            });
-            map.addControl(this.controls.infopage);
-            // open if opened before
-            if ((mapData.caching && (utils.getValue(this.controls.infopage.options.name) === '1'))) {
-                this.controls.infopage.open();
-            }
-        }
+        // if (mapData.infopage && typeof mapData.infopage === "string" && typeof Infopage === 'function') {
+        //     this.controls.infopage = new Infopage({
+        //         tipLabel: langConstants.CTRL_INFOPAGE,
+        //         target: controlContainerTopLeft,
+        //         caching: mapData.caching,
+        //         mapController: this.mapController,
+        //         direction: "left"
+        //     });
+        //     map.addControl(this.controls.infopage);
+        //     // open if opened before
+        //     if ((mapData.caching && (utils.getValue(this.controls.infopage.options.name) === '1'))) {
+        //         this.controls.infopage.open();
+        //     }
+        // }
         // account
         if (mapData.account && typeof Account === 'function') {
             this.controls.account = new Account({

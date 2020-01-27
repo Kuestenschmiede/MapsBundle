@@ -56,6 +56,7 @@ import ReactDOM from "react-dom";
 import React, {Component} from "react";
 import {FeatureFilter} from "./c4g-feature-filter.jsx";
 import {BaselayerSwitcher} from "./c4g-baselayerswitcher.jsx";
+import {Infopage} from "./c4g-infopage.jsx";
 
 let langConstants = {};
 
@@ -636,6 +637,13 @@ export class MapController extends Component {
       $(mapData.filterDiv).append(this.filterContainer);
     }
 
+    // infopage container
+    if (mapData.infopage) {
+      this.infoPageContainer = document.createElement('div');
+      this.infoPageContainer.className = "c4g-infopage-container ol-unselectable c4g-close";
+      this.$overlaycontainer_stopevent.append(this.infoPageContainer);
+    }
+
     // @ToDo mapData.additionalPanel is always true, because it is set as an new object in the beginning. Therefore the second parameter of the boolean is requested, which throws an error
     // additionalPanel is furthermore not found anywhere in Maps and should be loaded over a hook
 
@@ -781,6 +789,14 @@ export class MapController extends Component {
         this.searchContainer
       );
     }
+    let infoPortal = "";
+    if (mapData.infopage) {
+      infoPortal = ReactDOM.createPortal(
+        <Infopage ref={(node) => {this.components.infopage = node;}} target={target}
+                  infoContent={mapData.infopage} mapController={this}/>,
+        this.infoPageContainer
+      );
+    }
     let blsPortal = ReactDOM.createPortal(
       <BaselayerSwitcher ref={(node) => {this.components.baselayerSwitcher = node;}} target={target}
                          mapController={this} baselayerController={this.proxy.baselayerController} />,
@@ -791,6 +807,7 @@ export class MapController extends Component {
       {sbPortal}
       {searchPortal}
       {blsPortal}
+      {infoPortal}
     </React.Fragment>;
   }
 
