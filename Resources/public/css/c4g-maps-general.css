@@ -302,15 +302,14 @@ button.c4g-geosearch-start:before {
   font-size: 16px;
   text-align: left;
 }
-.c4g-starboard-wrapper > div,
+
 .c4g-portside-wrapper > div {
   margin: 0px 3px 1px 3px;
 }
-.c4g-portside-wrapper > .c4g-portside-titlebar,
-.c4g-starboard-wrapper > .c4g-starboard-titlebar {
+.c4g-portside-wrapper > .c4g-portside-titlebar{
   margin: 0px 3px 5px 3px;
 }
-.c4g-starboard-titlebar,
+
 .c4g-portside-titlebar{
   /*height: 30px;*/
   line-height: 2;
@@ -333,7 +332,7 @@ button.c4g-geosearch-start:before {
 /*.c4g-starboard-titlebar span {*/
   /*margin: 2.5px 2px;*/
 /*}*/
-.c4g-starboard-titlebar span,
+
 .c4g-portside-titlebar .c4g-portside-buttonbar {
   float: right;
 }
@@ -1365,10 +1364,15 @@ div div.c4g-popup-wrapper.c4g-beach {
   width: .2em;
 }
 
-.c4g-baselayer-wrapper .c4g-baselayer-header{
+.c4g-baselayer-wrapper .c4g-baselayer-header,
+.c4g-starboard-wrapper .c4g-starboard-headline {
   line-height: 35px;
   padding: 0 .4em;
   width: calc(100% - 1.2em - 32px);
+}
+
+.c4g-starboard-headline span{
+  font-size: 20px;
 }
 
 .c4g-baselayertree li.with-image a {
@@ -1421,12 +1425,14 @@ div div.c4g-popup-wrapper.c4g-beach {
 .c4g-baselayertree li.with-image:hover a span{
   opacity: 1;
 }
-.c4g-baselayer-header button {
+.c4g-baselayer-header button,
+.c4g-starboard-headline .c4g-starboard-close{
   width: 32px;
   height: 32px;
   position: absolute;
   right: .2em;
   top: .2em;
+  margin: 0;
   border: none;
   background: none;
   cursor: pointer;
