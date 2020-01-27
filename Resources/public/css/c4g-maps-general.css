@@ -451,6 +451,26 @@ button.c4g-portside-close:before {
   font-size: 1.25em;
 }
 
+/**
+ * Infopage
+ */
+.c4g-infopage-container {
+  background-color: var(--main-color);
+  position: absolute;
+  top: 0;
+  height: 100%;
+  min-width: 240px;
+  max-width: 42%;
+  z-index: 60;
+}
+.c4g-infopage-container.c4g-close {
+  right: -100%;
+}
+.c4g-infopage-container.c4g-open {
+  right: 0;
+  top: .2em;
+}
+
 /*
  * Zoom buttons
  */
