@@ -119,8 +119,7 @@
 .c4g-starboard-content-container {
   background: transparent;/*var(--font-color);*/
 }
-.c4g-portside-container button,
-.c4g-starboard-container button {
+.c4g-portside-container button{
   color: rgba(255,255,255,.9);
   color: var(--font-color);
   border-color: rgba(0,155,222,.5);
@@ -144,9 +143,7 @@
   background-color: var(--font-color);
 }
 .c4g-portside-container button:focus,
-.c4g-portside-container button:hover,
-.c4g-starboard-container button:focus,
-.c4g-starboard-container button:hover {
+.c4g-portside-container button:hover{
   color: rgba(0,155,222,.5);
   color: var(--shadow-color);
   background-color: rgba(24, 61, 93,.8);
@@ -661,7 +658,7 @@ button.c4g-geosearch-start {
 /*------------------------------------*/
 /*------------Pop Up-------------------*/
 
-.c4g-beach-content ul#resultcontainer::-webkit-scrollbar-track {
+.c4g-geosearch-results.c4g-open.c4g-beach::-webkit-scrollbar-track {
   background: var(--main-color);
 }
 
@@ -673,7 +670,7 @@ button.c4g-geosearch-start {
   background: var(--pu-main-color);
 }
 
-.c4g-beach-content ul#resultcontainer::-webkit-scrollbar-thumb {
+.c4g-geosearch-results.c4g-open.c4g-beach::-webkit-scrollbar-thumb {
   background: var(--font-color);
 }
 
@@ -685,7 +682,7 @@ button.c4g-geosearch-start {
   background: var(--pu-font-color);
 }
 
-.c4g-beach-content ul#resultcontainer::-webkit-scrollbar-thumb:hover {
+.c4g-geosearch-results.c4g-open.c4g-beach::-webkit-scrollbar-thumb:hover {
   background: var(--shadow-color);
 }
 
@@ -726,6 +723,7 @@ background: var(--pu-main-color);
   color: var(--font-color);
 }
 
-button.c4g-baselayer-close:before{
+button.c4g-baselayer-close:before,
+button.c4g-starboard-close:before{
   color: var(--font-color);
 }
