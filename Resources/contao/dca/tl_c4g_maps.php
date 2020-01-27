@@ -291,6 +291,10 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             'eval'                    => ['tl_class'=>'clr'],
             'sql'                     => "char(1) NOT NULL default '1'"
             ],
+        'is_map' =>
+            [
+                'sql'                     => "char(1) NOT NULL default ''" //Backwards compatibility
+            ],
         'width' =>
             [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['width'],
@@ -1376,6 +1380,13 @@ class tl_c4g_maps extends Backend
     public function generateLabel($row, $label, $dc_table, $folderAttribute)
     {
         $image = 'bundles/con4gismaps/images/be-icons/';
+
+        //Backwards compatibility (data < con4gis 7): so that maps are set as maps again. is_map can removed in later versions.
+        if ($row['location_type'] == 'none' && $row['is_map'] == '1'){
+            $row['location_type'] = 'map';
+            $row['is_map'] = '0';
+            Database::getInstance()->prepare("UPDATE tl_c4g_maps SET location_type=?, is_map=? WHERE is_map=?")->execute($row['location_type'],$row['is_map'],'1');
+        }
 
         switch ($row['location_type']) {
             case 'map':
