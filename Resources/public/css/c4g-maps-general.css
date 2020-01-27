@@ -74,7 +74,7 @@
 
 div.c4g-control-container-top-left.ol-unselectable > div.ol-unselectable.ol-control {
   width: auto;
-  margin-right: 0;
+  margin-right: .2em;
 }
 
 /*
@@ -87,7 +87,13 @@ div.c4g-control-container-top-left.ol-unselectable > div.ol-unselectable.ol-cont
   left: .2em;
   overflow-y: auto;
   max-height: 100%;
+  transform: rotateY(180deg);
 }
+
+.c4g-control-container-top-left::-webkit-scrollbar{
+ width: .2em!important;
+}
+
 .c4g-control-container-top-left > div {
   margin-bottom: 3px;
 }
@@ -284,8 +290,9 @@ button.c4g-geosearch-start:before {
 
 .c4g-portside-wrapper {
   position: relative;
-  height: 100%;
-  margin: 0 0 0 48px;
+  height: calc(100% - .4em);
+  top: .2em;
+  margin: 0 0 0 calc(48px + .4em);
   font-size: 16px;
 }
 .c4g-starboard-wrapper {
