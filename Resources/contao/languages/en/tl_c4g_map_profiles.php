@@ -20,7 +20,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['name'] = ['Name', 'Enter a name for 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['theme'] = ['Layout', 'Select your own theme.'];
 
 /** Basiskarten */
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayers'] = ['Base layers', 'Check the baselayers you wish to see in the Starboard. Default: all'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayers'] = ['Base layers', 'Check the baselayers you wish to see in the Starboard. Default: all. The sorting can be adjusted via the baselayer module (list).'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['default_baselayer'] = ['Default Base Layer', 'Select the base layer to be pre-selected when the map is laoded.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayerswitcher'] = ['Show Base Maps', 'If checked, the base maps can be selected in the Starboard.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayerswitcher_label'] = ['Header Base Maps', 'Default: "Base Maps"'];

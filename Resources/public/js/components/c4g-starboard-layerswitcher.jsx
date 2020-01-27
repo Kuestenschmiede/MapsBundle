@@ -14,6 +14,7 @@
 import React, { Component } from "react";
 import {cssConstants} from "./../c4g-maps-constant.js";
 import {C4gStarboardLayerElement} from "./c4g-starboard-layer-element";
+import {Titlebar} from "./c4g-titlebar.jsx";
 
 export class StarboardLayerswitcher extends Component {
 
@@ -36,15 +37,14 @@ export class StarboardLayerswitcher extends Component {
       let button = jQuery("." + cssConstants.STARBOARD_CONTROL + "> button");
       button.trigger('click');
     };
+    const mapData = this.props.mapController.data;
     return (
       <div className={cssConstants.STARBOARD_WRAPPER}>
-        <div className={cssConstants.STARBOARD_TITLEBAR}>
-          <div className={cssConstants.CONTROL + " " + cssConstants.STARBOARD_BUTTONBAR}>
-            <button
-              className={cssConstants.STARBOARD_CLOSE}
-              onMouseUp={closeStarboard}
-            />
-          </div>
+        <Titlebar wrapperClass={"c4g-starboard-header"} headerClass={cssConstants.STARBOARD_HEADLINE}
+          header={mapData.starboard.label || "Starboard"} closeBtnClass={cssConstants.STARBOARD_CLOSE} closeBtnCb={closeStarboard}>
+        </Titlebar>
+        <div className={cssConstants.CONTROL + " " + cssConstants.STARBOARD_BUTTONBAR}>
+
         </div>
         <div className={cssConstants.STARBOARD_CONTENT_CONTAINER}>
           <div className="contentHeadline"/>
@@ -58,7 +58,6 @@ export class StarboardLayerswitcher extends Component {
                                                      layer={item}
                                                      layerStates={this.props.layerStates[id]}
                                                      fnResize={this.props.fnResize}/>;
-                  return null;
                 })}
               </ul>
             </div>

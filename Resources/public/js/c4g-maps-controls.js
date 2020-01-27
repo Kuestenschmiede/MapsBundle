@@ -243,35 +243,6 @@ export class MapsControls {
             }
         }
 
-        // show attribution
-        if (mapData.attribution.enable) {
-            if (mapData.attribution.cfg_logo) {
-                let logoLink = document.createElement('a');
-                logoLink.href = 'https://con4gis.org';
-                logoLink.title = 'built with con4gis';
-                logoLink.target = '_blank';
-                logoLink.rel = 'noopener noreferrer';
-                logoLink.className = cssConstants.ATTRIBUTION_LOGO;
-                let logoGraphic = document.createElement('img');
-                logoGraphic.src = 'bundles/con4gismaps/images/logo_con4gis.svg';
-                logoGraphic.alt = 'con4gis logo';
-                logoLink.appendChild(logoGraphic);
-                controlContainerBottomRight.appendChild(logoLink);
-            }
-            const attrOptions = {
-                label: ' ',
-                tipLabel: langConstants.CTRL_ATTRIBUTION,
-                collapseLabel: ' ',
-                target: mapData.attribution.div ? mapData.attribution.div : controlContainerBottomLeft,
-                collapsible: !mapData.attribution.div
-            };
-            if (mapData.attribution.div) {
-                attrOptions["className"] = "ol-attribution ol-attribution-ext-div";
-            }
-            this.controls.attribution = new Attribution(attrOptions);
-            this.controls.attribution.setCollapsed(mapData.attribution.div ? false : mapData.attribution.collapsed === '1');
-            map.addControl(this.controls.attribution);
-        }
 
         // show permalink
         if (mapData.permalink.enable) {
@@ -332,6 +303,37 @@ export class MapsControls {
                 map.addControl(this.controls.mouseposition);
             }
         }
+        // show attribution
+        if (mapData.attribution.enable) {
+            if (mapData.attribution.cfg_logo) {
+                let logoLink = document.createElement('a');
+                logoLink.href = 'https://con4gis.org';
+                logoLink.title = 'built with con4gis';
+                logoLink.target = '_blank';
+                logoLink.rel = 'noopener noreferrer';
+                logoLink.className = cssConstants.ATTRIBUTION_LOGO;
+                let logoGraphic = document.createElement('img');
+                logoGraphic.src = 'bundles/con4gismaps/images/logo_con4gis.svg';
+                logoGraphic.alt = 'con4gis logo';
+                logoLink.appendChild(logoGraphic);
+                controlContainerBottomRight.appendChild(logoLink);
+            }
+            const attrOptions = {
+                label: ' ',
+                tipLabel: langConstants.CTRL_ATTRIBUTION,
+                collapseLabel: ' ',
+                target: mapData.attribution.div ? mapData.attribution.div : controlContainerBottomLeft,
+                collapsible: !mapData.attribution.div
+            };
+            if (mapData.attribution.div) {
+                attrOptions["className"] = "ol-attribution ol-attribution-ext-div";
+            }
+            this.controls.attribution = new Attribution(attrOptions);
+            this.controls.attribution.setCollapsed(mapData.attribution.div ? false : mapData.attribution.collapsed === '1');
+            map.addControl(this.controls.attribution);
+        }
+
+
         // fullscreen
         if (mapData.fullscreen) {
             this.controls.fullscreen = new FullScreen({
@@ -393,19 +395,20 @@ export class MapsControls {
             map.addControl(this.controls.rotate);
         }
         // infopage
-        if (mapData.infopage && typeof mapData.infopage === "string" && typeof Infopage === 'function') {
-            this.controls.infopage = new Infopage({
-                tipLabel: langConstants.CTRL_INFOPAGE,
-                target: controlContainerTopLeft,
-                caching: mapData.caching,
-                mapController: this.mapController
-            });
-            map.addControl(this.controls.infopage);
-            // open if opened before
-            if ((mapData.caching && (utils.getValue(this.controls.infopage.options.name) === '1'))) {
-                this.controls.infopage.open();
-            }
-        }
+        // if (mapData.infopage && typeof mapData.infopage === "string" && typeof Infopage === 'function') {
+        //     this.controls.infopage = new Infopage({
+        //         tipLabel: langConstants.CTRL_INFOPAGE,
+        //         target: controlContainerTopLeft,
+        //         caching: mapData.caching,
+        //         mapController: this.mapController,
+        //         direction: "left"
+        //     });
+        //     map.addControl(this.controls.infopage);
+        //     // open if opened before
+        //     if ((mapData.caching && (utils.getValue(this.controls.infopage.options.name) === '1'))) {
+        //         this.controls.infopage.open();
+        //     }
+        // }
         // account
         if (mapData.account && typeof Account === 'function') {
             this.controls.account = new Account({

@@ -78,20 +78,6 @@ export class C4gBaselayerController {
       i,
       j;
 
-    // sort baselayer (for internal list)
-    baselayers.sort(function (a, b) {
-      if ((!a.sort && !b.sort) || (parseInt(a.sort, 10) === parseInt(b.sort, 10))) {
-        if (!a.name || !b.name) {
-          return (!b.name) ? -1 : 1;
-        }
-        return (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : -1;
-      }
-      if (!a.sort || !b.sort) {
-        return (!b.sort) ? -1 : 1;
-      }
-      return (parseInt(a.sort, 10) > parseInt(b.sort, 10)) ? 1 : -1;
-    });
-
     // build baselayer-list
     if (baselayers.length > 0) {
       for (i = 0; i < baselayers.length; i += 1) {

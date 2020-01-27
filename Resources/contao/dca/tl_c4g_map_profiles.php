@@ -182,7 +182,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             )
         ],
 
-
         'baselayers' =>
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayers'],
@@ -1169,7 +1168,7 @@ class tl_c4g_map_profiles extends Backend
      */
     public function getAllBaseLayers(DataContainer $dc)
     {
-        $baseLayers = $this->Database->prepare("SELECT id,name FROM tl_c4g_map_baselayers ORDER BY name")
+        $baseLayers = $this->Database->prepare("SELECT id,name FROM tl_c4g_map_baselayers ORDER BY sorting")
             ->execute();
         while ($baseLayers->next()) {
             $return[$baseLayers->id] = $baseLayers->name;

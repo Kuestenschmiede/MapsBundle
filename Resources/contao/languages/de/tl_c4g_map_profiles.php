@@ -20,7 +20,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['name'] = ['Name', 'Bitte geben Sie d
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['theme'] = ['Kartenlayout', 'Wählen Sie für die Kartendarstellung Ihr eigenes Thema aus.'];
 
 /** Basiskarten */
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayers'] = ['Basiskarten', 'Wählen Sie die Basiskarten, die in Karten dieses Profils im Starboard verfügbar sein sollen. Standard: alle (d.h. wenn nichts ausgewählt ist, werden alle Basiskarten übergeben.)'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayers'] = ['Basiskarten', 'Wählen Sie die Basiskarten, die in Karten dieses Profils im Starboard verfügbar sein sollen. Standard: alle (d.h. wenn nichts ausgewählt ist, werden alle Basiskarten übergeben). Die Sortierung kann über das Basiskartenmodul angepasst werden (Liste).'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['default_baselayer'] = ['Standard-Basiskarte', 'Wählen Sie die Basiskarte, die beim Laden der Karte vorausgewählt sein soll.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayerswitcher'] = ['Basiskartenauswahl anzeigen', 'Wenn Sie diese Checkbox auswählen, wird im Starboard die Auswahlliste der Basiskarten in einem eigenen Tab angezeigt.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayerswitcher_label'] = ['Überschrift der Basiskartenauswahl', 'Standard: "Basiskarten"'];
