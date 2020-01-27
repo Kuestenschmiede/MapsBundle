@@ -24,6 +24,7 @@
   padding: 2px;
   border: none;
 }
+
 .ol-control button,
 .c4g-control button {
   display: block;
@@ -41,11 +42,13 @@
   border-radius: 0%;
   border-radius: var(--button-radius-percent);
 }
+
 .ol-control button::-moz-focus-inner {
   border: none;
   padding: 0;
   margin: 0;
 }
+
 .ol-control button:focus,
 .ol-control button:hover {
   text-decoration: none;
@@ -196,16 +199,16 @@
   top: .2em;
   left: .2em;
 }
-.c4g-control-container-top-left > div {
-  margin-bottom: 3px;
-}
+
+/*
 .c4g-control-container-bottom-left {
   position: absolute;
   bottom: 3em;
-  /* do not change "left"-value! */
+  /* do not change "left"-value! *//*
   left: 0px;
   margin-left: .4em;
-}
+}*/
+
 .c4g-control-container-top-right {
   position: absolute;
   top: .2em;
@@ -762,19 +765,19 @@ button.ol-zoom-out {
  *  Attributions
  */
 .ol-attribution {
-  border-radius: 2px;/*var(--button-radius-percent);*/
+  border-radius: 2px;
+  position: static;
 }
+
 .ol-attribution.ol-collapsed {
   border-radius: var(--button-radius-percent);
 }
+
 .ol-attribution img {
   margin-top: -.2em;
   max-height: 1.6em;
 }
-.ol-attribution button,
-.ol-attribution ul {
-  display: inline-block;
-}
+
 .ol-attribution.ol-collapsed ul,
 .ol-attribution:not(.ol-collapsed) button:hover:after {
   display: none;
@@ -1060,4 +1063,15 @@ button.c4g-baselayer-close:before{
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;
+}
+
+.c4g-control-container-bottom-left {
+  left: calc(32px + 1.4em);
+  position: absolute;
+  bottom: .2em;
+}
+
+.c4g-control-container-bottom-left.ol-unselectable div {
+  width: max-content;
+  margin: .2em 0 0;
 }
