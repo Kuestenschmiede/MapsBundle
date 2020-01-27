@@ -36,9 +36,13 @@ export class StarboardLayerswitcher extends Component {
       let button = jQuery("." + cssConstants.STARBOARD_CONTROL + "> button");
       button.trigger('click');
     };
+    const mapData = this.props.mapController.data;
     return (
       <div className={cssConstants.STARBOARD_WRAPPER}>
         <div className={cssConstants.STARBOARD_TITLEBAR}>
+          <div className={cssConstants.STARBOARD_HEADLINE}>
+            <span>{mapData.starboard.label || "Starboard"}</span>
+          </div>
           <div className={cssConstants.CONTROL + " " + cssConstants.STARBOARD_BUTTONBAR}>
             <button
               className={cssConstants.STARBOARD_CLOSE}
