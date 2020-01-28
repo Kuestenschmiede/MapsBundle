@@ -14,13 +14,13 @@
 /**
  * Back end modules
  */
-$GLOBALS['TL_LANG']['MOD']['c4g_maps'] 				= ['(maps) Map structures', 'Maintain con4gis-Maps items in map structures.'];
-$GLOBALS['TL_LANG']['MOD']['c4g_map_baselayers'] 	= ['(maps) Base layers', 'Maintain con4gis-Maps base layers.'];
-$GLOBALS['TL_LANG']['MOD']['c4g_map_locstyles'] 	= ['(maps) Location styles', 'Maintain con4gis-Maps location styles.'];
-$GLOBALS['TL_LANG']['MOD']['c4g_map_profiles'] 		= ['(maps) Map profiles', 'Maintain con4gis-Maps map profiles.'];
-$GLOBALS['TL_LANG']['MOD']['c4g_map_themes'] 		= ['(maps) Map layouts', 'Maintain con4gis-Maps map layouts.'];
-$GLOBALS['TL_LANG']['MOD']['c4g_map_tables']        = ['(maps) Source tables', 'Enable custom data connections for your map structures.'];
-$GLOBALS['TL_LANG']['MOD']['c4g_map_filters']       = ['(maps) Map filters', 'Maintain map filters.'];
+$GLOBALS['TL_LANG']['MOD']['c4g_maps'] 				= ['Map structures', 'Maintain con4gis-Maps items in map structures.'];
+$GLOBALS['TL_LANG']['MOD']['c4g_map_baselayers'] 	= ['Base layers', 'Maintain con4gis-Maps base layers.'];
+$GLOBALS['TL_LANG']['MOD']['c4g_map_locstyles'] 	= ['Location styles', 'Maintain con4gis-Maps location styles.'];
+$GLOBALS['TL_LANG']['MOD']['c4g_map_profiles'] 		= ['Map profiles', 'Maintain con4gis-Maps map profiles.'];
+$GLOBALS['TL_LANG']['MOD']['c4g_map_themes'] 		= ['Map layouts', 'Maintain con4gis-Maps map layouts.'];
+$GLOBALS['TL_LANG']['MOD']['c4g_map_tables']        = ['Source tables', 'Enable custom data connections for your map structures.'];
+$GLOBALS['TL_LANG']['MOD']['c4g_map_filters']       = ['Map filters', 'Maintain map filters.'];
 
 /**
  * Frontend modules

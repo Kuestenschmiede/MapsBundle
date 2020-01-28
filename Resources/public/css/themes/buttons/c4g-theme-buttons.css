@@ -18,7 +18,6 @@
  *  Controls - general
  */
 .ol-control {
-  position: relative;
   border-radius: 0%;
   border-radius: var(--button-radius-percent);
   padding: 2px;
@@ -114,21 +113,23 @@
   top: 1.1em;
 }
 
-.ol-zoom-with-slider .ol-zoom-out {
-  margin-top: 204px;
-}
 .ol-zoomslider {
   background-color: transparent!important;
-  top: 2.3em;
-  left: .2em;
+  padding: 0;
+  margin: auto;
   height: 200px;
+  width: var(--button-size-pixel);
   z-index: 200;
-  /*border: none;*/
-  /*border-radius: 0 0 100% 100%;*/
 }
-.ol-touch .ol-zoom-with-slider .ol-zoom-out {
-  margin-top: 212px;
+
+.ol-zoomslider button {
+  width: var(--button-size-pixel);
+  margin: 0;
+  outline: none;
 }
+
+.ol-zoomslider button
+
 .ol-touch .ol-zoomslider {
   top: 2.75em;
 }
