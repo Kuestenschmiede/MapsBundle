@@ -731,6 +731,11 @@ export class MapController extends Component {
         Container: this.mapsControls.controlContainerTopLeft
       });
     }
+    const scope = this;
+    this.map.on("change:size", function() {
+      scope.setState({});
+      domMapDiv.style.setProperty('--map-height', scope.map.getSize()[1]);
+    });
   }
 
   setLayersInitial(objLayers, arrLayers) {
