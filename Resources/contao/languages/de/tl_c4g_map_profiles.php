@@ -201,6 +201,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayer_legend'] = 'Basiskarten';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['locstyle_legend'] = 'Lokationsstile';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['navigation_legend'] = 'Navigation';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_legend'] = 'Starboard-Einstellungen';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['attribution_legend'] = 'Copyright Informationen (Attributionen)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['information_legend'] = 'Karteninformationen';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['measure_legend'] = 'Messwerkzeuge';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_legend'] = 'Kartensuche';
