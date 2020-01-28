@@ -18,7 +18,7 @@
  *  Controls - general
  */
 .ol-control {
-  position: absolute;
+  position: relative;
   border-radius: 0%;
   border-radius: var(--button-radius-percent);
   padding: 2px;
