@@ -53,9 +53,7 @@
 /*
  *  Controls
  */
-.ol-control {
-  position: absolute;
-}
+
 .ol-control button,
 .c4g-control button {
   display: block;
@@ -1372,16 +1370,21 @@ div div.c4g-popup-wrapper.c4g-beach {
 
 .c4g-baselayer-wrapper .c4g-baselayer-header,
 .c4g-starboard-wrapper .c4g-starboard-header,
-.c4g-geosearch-wrapper .c4g-geosearch-header{
+.c4g-geosearch-wrapper .c4g-geosearch-header,
+.c4g-infopage-wrapper .c4g-infopage-header{
   line-height: calc(32px + .4em);
   height: calc(32px + .4em);
   padding: 0 .4em;
+  margin: 0;
   width: calc(100% - 1.2em - 32px);
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .c4g-baselayer-wrapper .c4g-baselayer-header span,
 .c4g-starboard-wrapper .c4g-starboard-header span,
-.c4g-geosearch-wrapper .c4g-geosearch-header span{
+.c4g-geosearch-wrapper .c4g-geosearch-header span,
+.c4g-infopage-wrapper .c4g-infopage-header span{
   font-size: 20px;
 }
 
@@ -1437,7 +1440,8 @@ div div.c4g-popup-wrapper.c4g-beach {
 }
 .c4g-baselayer-header button,
 .c4g-starboard-header button,
-.c4g-geosearch-header button{
+.c4g-geosearch-header button,
+.c4g-infopage-header button{
   width: 32px;
   height: 32px;
   position: absolute;
@@ -1448,5 +1452,3 @@ div div.c4g-popup-wrapper.c4g-beach {
   background: none;
   cursor: pointer;
 }
-
-
