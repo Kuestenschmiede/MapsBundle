@@ -69,6 +69,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_dist_spider'] = ['Cluster di
 
 /** Karteninformationen */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['attribution'] = ['Attribution', 'Shows the attribution. Deactivate only when you are sure it is allowed.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['always_show_attribution'] = ['Always show', 'The copyright text is always displayed and must not be closed (recommended).'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['collapsed_attribution'] = ['Show initially collapsed', 'Collapse the attribution by default. Otherwise the Attribution is visible when entering the page, but is still collapsible.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['add_attribution'] = ['Additional copyright text', 'is added to the copyright text of the map service used.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cfg_logo_attribution']  = ['Show con4gis-logo', 'Shows the con4gis-logo on the map. You can turn it off, but we would appreciate it if you\'d mention "con4gis" at a different location on your page.'];
