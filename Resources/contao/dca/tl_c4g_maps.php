@@ -67,12 +67,11 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             ],
         'global_operations' =>
             [
-                'toggleNodes' => array
-                (
+                'toggleNodes' => [
                     'href'                => 'ptg=all',
                     'class'               => 'header_toggle',
                     'showOnSelect'        => true
-                ),
+                ],
                 'all' => [
                     'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
                     'href'                => 'act=select',
