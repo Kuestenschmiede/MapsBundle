@@ -347,21 +347,6 @@ export class MapsControls {
             map.addControl(this.controls.fullscreen);
         }
 
-        // measuretools
-        if (mapData.measuretools.enable && typeof Measuretools === 'function') {
-            this.controls.measuretools = new Measuretools({
-                tipLabel: langConstants.CTRL_MEASURETOOLS,
-                target: controlContainerTopLeft,
-                caching: mapData.caching,
-                mapController: this.mapController,
-                direction: "left"
-            });
-            map.addControl(this.controls.measuretools);
-            // open if opened before
-            if ((mapData.caching && (utils.getValue(this.controls.measuretools.options.name) === '1'))) {
-                this.controls.measuretools.open();
-            }
-        }
         //
         if (mapData.print) {
             this.controls.print = new Print({
