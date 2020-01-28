@@ -27,8 +27,7 @@
   background-color: var(--shadow-color);
 }
 
-.c4g-portside-wrapper,
-.c4g-starboard-wrapper {
+.c4g-portside-wrapper {
   background-color: rgba(24, 61, 93,.8);
   background-color: var(--main-color);
   color: rgba(255,255,255,.9);
@@ -82,8 +81,7 @@
 /*
  *  Portside & Starboard
  */
-.c4g-portside-container,
-.c4g-starboard-container {
+.c4g-portside-container{
   background-color: transparent;/*var(--shadow-color);*/
 }
 .c4g-portside-headline {
@@ -739,4 +737,16 @@ button.c4g-starboard-close:before{
 
 .ol-zoomslider button:hover, .ol-zoomslider button:focus{
   background-color: var(--main-color);
+}
+
+c4g-infopage-container {
+  background-color: var(--main-color);
+}
+
+.c4g-sideboard {
+  background-color: var(--main-color);
+}
+
+.c4g-infopage-content * {
+  color: var(--font-color);
 }

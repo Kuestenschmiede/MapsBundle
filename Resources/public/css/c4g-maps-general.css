@@ -421,8 +421,7 @@ button.c4g-portside-close:before {
 /**
  * Baselayer switcher
  */
-.c4g-baselayer-container {
-  background-color: var(--main-color);
+.c4g-sideboard {
   position: absolute;
   height: 100%;
   min-width: 240px;
@@ -444,21 +443,13 @@ button.c4g-portside-close:before {
 /**
  * Infopage
  */
-.c4g-infopage-container {
-  background-color: var(--main-color);
-  position: absolute;
-  top: 0;
-  height: 100%;
-  min-width: 240px;
-  max-width: 42%;
-  z-index: 60;
-}
+
 .c4g-infopage-container.c4g-close {
   right: -100%;
 }
-.c4g-infopage-container.c4g-open {
-  right: 0;
-  top: .2em;
+
+.c4g-infopage-content {
+  padding: .2em;
 }
 
 /**
