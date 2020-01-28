@@ -734,7 +734,7 @@ export class MapController extends Component {
     const scope = this;
     this.map.on("change:size", function() {
       scope.setState({});
-      domMapDiv.style.setProperty('--map-height', scope.map.getSize()[1]);
+      domMapDiv.style.setProperty('--map-height', scope.map.getSize()[1] + "px");
     });
   }
 
