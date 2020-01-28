@@ -261,7 +261,6 @@ button.c4g-geosearch-start:before {
 /*
  *  Portside & Starboard
  */
-.c4g-starboard-container,
 .c4g-portside-container {
   position: absolute;
   top: 0;
@@ -299,8 +298,6 @@ button.c4g-geosearch-start:before {
 }
 .c4g-starboard-wrapper {
   position: relative;
-  top: .2em;
-  height: calc(100% - .4em);
   font-size: 16px;
   text-align: left;
 }
@@ -427,7 +424,6 @@ button.c4g-portside-close:before {
 .c4g-baselayer-container {
   background-color: var(--main-color);
   position: absolute;
-  top: 0;
   height: 100%;
   min-width: 240px;
   max-width: 42%;
@@ -435,10 +431,6 @@ button.c4g-portside-close:before {
 }
 .c4g-baselayer-container.c4g-close {
   right: -100%;
-}
-.c4g-baselayer-container.c4g-open {
-  right: 0;
-  top: .2em;
 }
 
 .c4g-baselayer-container .contentHeadline {
@@ -537,17 +529,23 @@ button.ol-zoom-position:before{
   max-width: 640px;
   line-height: 1.5em;
 }
+
+div.c4g-active.c4g-popup-wrapper *:last-child {
+  margin-bottom: .2em;
+}
+
 .c4g-popup-wrapper.c4g-active {
   display: block;
 }
+
 .c4g-popup-wrapper .c4g-popup-close {
   position: absolute;
-  right: 24px;
-  top: 10px;
+  right: .4em;
+  top: .4em;
 }
 /*Todo für die Höhenberechnung muss die eigentliche Karte und nicht der Bildschirm verwendet werden.*/
 .c4g-popup-wrapper .c4g-popup-content {
-  padding: 30px 10px 20px;
+  padding: .2em .4em .4em;
   overflow-y: auto;
   max-height: 75vh;
   max-width: 75vw;
@@ -1359,22 +1357,15 @@ div div.c4g-popup-wrapper.c4g-beach {
   font-size: 1.3em;
 }
 
-/**
- * mobile
- */.c4g-baselayer-container.c4g-open
-@media(max-height: 768px){
-  .c4g-beach-content { max-height: 500px !important; }
-}
-@media(max-height: 568px){
-  .c4g-beach-content { max-height: 300px !important; }
-}
 
 
 /*-----------------------------------------*/
 /*----------baselayertree-----------------*/
 
-.c4g-baselayer-container.c4g-open {
+.c4g-sideboard  {
   max-height: calc(var(--map-height) - .4em);
+  right: 0;
+  top: .2em;
 }
 
 .c4g-baselayer-container.c4g-open .c4g-baselayertree{

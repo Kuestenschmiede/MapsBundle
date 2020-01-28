@@ -402,6 +402,10 @@ div.c4g-active.c4g-popup-wrapper {
   filter: drop-shadow(0 1px 4px rgba(0,155,222,.5));
   filter: drop-shadow(0 1px 4px var(--shadow-color));
 }
+
+div.c4g-active.c4g-popup-wrapper * {
+  color: var(--pu-font-color);
+}
 /*div.c4g-tooltip-popup:before,*/
 div.c4g-popup-wrapper:before {
   border-top-color: rgba(24, 61, 93,.8);
