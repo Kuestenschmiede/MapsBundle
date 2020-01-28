@@ -615,7 +615,7 @@ export class MapController extends Component {
       this.$overlaycontainer_stopevent.append(this.reactContainer);
 
       this.baselayerContainer = document.createElement('div');
-      this.baselayerContainer.className ="c4g-baselayer-container ol-unselectable";
+      this.baselayerContainer.className ="c4g-sideboard c4g-baselayer-container ol-unselectable";
       if (mapData.starboard.open) {
         // this.baselayerContainer.style.right = "0";
         this.baselayerContainer.className += " c4g-open";
@@ -641,14 +641,14 @@ export class MapController extends Component {
     // infopage container
     if (mapData.infopage) {
       this.infoPageContainer = document.createElement('div');
-      this.infoPageContainer.className = "c4g-infopage-container ol-unselectable c4g-close";
+      this.infoPageContainer.className = "c4g-sideboard c4g-infopage-container ol-unselectable c4g-close";
       this.$overlaycontainer_stopevent.append(this.infoPageContainer);
     }
 
     // measuretools container
     if (mapData.measuretools) {
       this.measuretoolsContainer = document.createElement('div');
-      this.measuretoolsContainer.className = "c4g-measuretools-container ol-unselectable c4g-close";
+      this.measuretoolsContainer.className = "c4g-sideboard c4g-measuretools-container ol-unselectable c4g-close";
       this.$overlaycontainer_stopevent.append(this.measuretoolsContainer);
     }
     // @ToDo mapData.additionalPanel is always true, because it is set as an new object in the beginning. Therefore the second parameter of the boolean is requested, which throws an error

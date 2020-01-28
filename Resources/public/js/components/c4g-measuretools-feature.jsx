@@ -31,7 +31,7 @@ export class MeasuredFeature extends Component {
           let obj = scope.props.measuredValues[element];
           return (<p key={index}>
             <strong>{obj.description}</strong>
-            <span>{obj.value}</span>
+            <span>{obj.value + " m"}</span>
           </p>)
         })}
       </div>
