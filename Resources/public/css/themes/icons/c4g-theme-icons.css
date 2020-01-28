@@ -125,13 +125,13 @@ span.c4g-active ul li.c4g-active:before{
   font-size: 14px;
 }
 
-.c4g-measure.c4g-open > button:before {
+.c4g-measuretools-control > button:before {
   content: "\f545";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;
 }
-.c4g-measure.c4g-close > button:before {
+.c4g-measuretools-control.c4g-close > button:before {
   content: "\f545";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;

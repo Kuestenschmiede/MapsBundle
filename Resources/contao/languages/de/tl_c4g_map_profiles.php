@@ -71,6 +71,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_dist_spider'] = ['Cluster-Di
 
 /** Karteninformationen */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['attribution'] = ['Copyright-Text (Attribution)', 'Blendet einen Copyright-Text (eine sogenannte Attribution) ein. Deaktivierung nicht empfohlen!'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['always_show_attribution'] = ['Immer anzeigen', 'Der Copyright-Text wird immer angezeigt und darf nicht geschlossen werden (empfohlen).'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['collapsed_attribution'] = ['Initial geschlossen', 'Zeigt den Copyright-Text initial geschlossen an. Auch wenn diese Option nicht gewählt ist kann die Attribution vom Benutzer geschlossen werden.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['add_attribution'] = ['Zusätzlicher Copyright-Text', 'wird an den Copyright-Text des verwendeten Kartendienstes angefügt.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cfg_logo_attribution']  = ['con4gis-Logo einblenden', 'Blendet das con4gis-Logo auf der Karte ein. Sie können diese Option deaktivieren. Wir würden uns in diesem Fall über eine Erwähnung von "con4gis" an anderer Stelle freuen.'];

@@ -323,13 +323,15 @@ export class MapsControls {
                 tipLabel: langConstants.CTRL_ATTRIBUTION,
                 collapseLabel: ' ',
                 target: mapData.attribution.div ? mapData.attribution.div : controlContainerBottomLeft,
-                collapsible: !mapData.attribution.div
+                collapsible: ((!mapData.attribution.div) && (!mapData.attribution.always_show))
             };
             if (mapData.attribution.div) {
                 attrOptions["className"] = "ol-attribution ol-attribution-ext-div";
             }
             this.controls.attribution = new Attribution(attrOptions);
-            this.controls.attribution.setCollapsed(mapData.attribution.div ? false : mapData.attribution.collapsed === '1');
+            if (!mapData.attribution.always_show) {
+                this.controls.attribution.setCollapsed(mapData.attribution.div ? false : mapData.attribution.collapsed === '1');
+            }
             map.addControl(this.controls.attribution);
         }
 
