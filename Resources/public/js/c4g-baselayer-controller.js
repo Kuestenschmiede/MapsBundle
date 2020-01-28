@@ -189,7 +189,7 @@ export class C4gBaselayerController {
       case 'stamen':
         if (sourceConfigs.stamen[baseLayerConfig.style]) {
           // Stamen
-          if (baseLayerConfig.style == 'Watercolor') {
+          if (baseLayerConfig.style === 'Watercolor') {
             newBaselayer = new LayerGroup({
               layers: [new TileLayer({
                 source: new Stamen({
