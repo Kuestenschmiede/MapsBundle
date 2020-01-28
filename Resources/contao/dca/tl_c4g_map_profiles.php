@@ -108,7 +108,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                                          '{baselayer_legend:hide},baselayers, default_baselayer,baselayerswitcher;'.
                                          '{navigation_legend:hide},zoom_panel,zoom_panel_button,zoom_panel_slider,mouse_nav,touch_nav,keyboard_nav,fullscreen,print;'.
                                          '{starboard_legend:hide},starboard;'.
-                                         '{information_legend:hide},attribution,overviewmap,graticule,scaleline,mouseposition,permalink,zoomlevel,infopage;'.
+                                         '{attribution_legend:hide},attribution;'.
+                                         '{information_legend:hide},overviewmap,graticule,scaleline,mouseposition,permalink,zoomlevel,infopage;'.
                                          '{geosearch_legend:hide},geosearch;'.
                                          '{measure_legend:hide},measuretool;'.
                                          '{geopicker_legend:hide},is_backend_geopicker_default,geopicker;'.
