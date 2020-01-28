@@ -57,6 +57,7 @@ import React, {Component} from "react";
 import {FeatureFilter} from "./c4g-feature-filter.jsx";
 import {BaselayerSwitcher} from "./c4g-baselayerswitcher.jsx";
 import {Infopage} from "./c4g-infopage.jsx";
+import {Measuretools} from "./c4g-measuretools.jsx";
 
 let langConstants = {};
 
@@ -70,7 +71,7 @@ export class MapController extends Component {
    *                                to get a list of valid values for this object.
    */
   constructor(props) {
-    super(props)
+    super(props);
     //---
     let mapData = props.mapData;
     this.state = {
@@ -644,6 +645,12 @@ export class MapController extends Component {
       this.$overlaycontainer_stopevent.append(this.infoPageContainer);
     }
 
+    // measuretools container
+    if (mapData.measuretools) {
+      this.measuretoolsContainer = document.createElement('div');
+      this.measuretoolsContainer.className = "c4g-measuretools-container ol-unselectable c4g-close";
+      this.$overlaycontainer_stopevent.append(this.measuretoolsContainer);
+    }
     // @ToDo mapData.additionalPanel is always true, because it is set as an new object in the beginning. Therefore the second parameter of the boolean is requested, which throws an error
     // additionalPanel is furthermore not found anywhere in Maps and should be loaded over a hook
 
@@ -802,12 +809,21 @@ export class MapController extends Component {
                          mapController={this} baselayerController={this.proxy.baselayerController} />,
       this.baselayerContainer
     );
+    let measurePortal = "";
+    if (mapData.measuretools) {
+      measurePortal = ReactDOM.createPortal(
+        <Measuretools ref={(node) => {this.components.measuretools = node;}} target={target}
+          mapController={this}/>,
+        this.measuretoolsContainer
+      );
+    }
 
     return <React.Fragment>
       {sbPortal}
       {searchPortal}
       {blsPortal}
       {infoPortal}
+      {measurePortal}
     </React.Fragment>;
   }
 

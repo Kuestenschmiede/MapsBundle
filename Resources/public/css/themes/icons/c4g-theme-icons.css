@@ -237,33 +237,33 @@ button.c4g-starboard-close:before{
   font-size: inherit;
 }
 
-button.c4g-measuretools-view-trigger-select:before {
+button.c4g-measure-select:before {
   content: "\f245";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;
 }
 
-button.c4g-measuretools-view-trigger-draw-line:before {
+button.c4g-measure-line:before {
   content: "\f1e0";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;
 }
-button.c4g-measuretools-view-trigger-draw-polygon:before {
+button.c4g-measure-polygon:before {
   content: "\f5ee";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;
 }
-button.c4g-measuretools-view-trigger-draw-circle:before {
+button.c4g-measure-circle:before {
   content: "\f111";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;
 }
 
-button.c4g-measuretools-view-trigger-draw-freehand:before {
+button.c4g-measure-freehand:before {
   content: "\f303";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
