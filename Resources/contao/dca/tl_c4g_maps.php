@@ -1,6 +1,7 @@
 <?php
 
 use con4gis\CoreBundle\Classes\C4GVersionProvider;
+use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
 use con4gis\CoreBundle\Resources\contao\models\C4gSettingsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapTablesModel;
@@ -511,7 +512,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             'options_callback'        => ['tl_c4g_maps','getLocationTypes'],
             'eval'                    => ['submitOnChange' => true],
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['references'],
-            'sql'                     => "varchar(20) NOT NULL default 'map'"
+            'sql'                     => "varchar(100) NOT NULL default 'map'"
             ],
         'loc_geox' =>
             [
@@ -1377,7 +1378,7 @@ class tl_c4g_maps extends Backend
     /**
      * Generate the icons to be used
      */
-    public function generateLabel($row, $label, $dc_table, $folderAttribute)
+    public function generateLabel($row, $label, \DataContainer $dc, $args)
     {
         $image = 'bundles/con4gismaps/images/be-icons/';
 
@@ -1423,10 +1424,31 @@ class tl_c4g_maps extends Backend
                 $image .= 'c4gForum';
                 break;
             case 'startab':
-                $image .= 'startab';
+                $image .= 'starboard';
                 break;
             case 'folder':
-                $image .= 'mapfolder';
+                $image .= 'from_path';
+                break;
+            case 'gnrcPrjct':
+                $image .= 'editor';
+                break;
+            case 'tPois':
+                $image .= 'tracking_pois';
+                break;
+            case 'tTracks':
+                $image .= 'tracking_tracks';
+                break;
+            case 'tLive':
+                $image .= 'tracking_live';
+                break;
+            case 'ffOperat':
+                $image .= 'operation';
+                break;
+            case 'mpCntnt':
+                $image .= 'data_category';
+                break;
+            case 'mpCntnt_directory':
+                $image .= 'data_directory';
                 break;
             default:
                 $image .= '';
@@ -1697,13 +1719,9 @@ class tl_c4g_maps extends Backend
     {
         // Check permissions to publish
         if (!$this->User->isAdmin && !$this->User->hasAccess('tl_c4g_maps::published', 'alexf')) {
-
-            //ToDo loggerService
-            $this->log('Not enough permissions to publish/unpublish con4gis\MapsBundle\Classes\Utils ID "'.$intId.'"', 'tl_c4g_maps toggleVisibility', TL_ERROR);
+            C4gLogModel::addLogEntry('maps','Not enough permissions to publish/unpublish con4gis\MapsBundle\Classes\Utils ID "'.$intId.'"');
             $this->redirect('contao/main.php?act=error');
         }
-        $this->createInitialVersion('tl_c4g_maps', $intId);
-        #$this->Versions->initialize('tl_c4g_maps', $intId);
 
         $objVersions = new Versions('tl_c4g_maps', $intId);
         $objVersions->initialize();
@@ -1726,8 +1744,8 @@ class tl_c4g_maps extends Backend
         $this->Database->prepare("UPDATE tl_c4g_maps SET tstamp=". time() .", published='" . ($blnVisible ? 1 : '') . "' WHERE id=?")
                        ->execute($intId);
 
-        $this->createNewVersion('tl_c4g_maps', $intId);
-        #x$this->Versions->create('tl_c4g_maps', $intId);
+        $objVersions = new Versions('tl_c4g_maps', $intId);
+        $objVersions->initialize();
     }
 
     /**

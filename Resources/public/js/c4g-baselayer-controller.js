@@ -129,7 +129,7 @@ export class C4gBaselayerController {
   } // end of "addBaseLayers()"
 
   createBaseLayer(layerOptions, baseLayerConfig, sourceConfigs){
-    var newBaselayer;
+    var newBaselayer = {};
     layerOptions = layerOptions || {};
     switch (baseLayerConfig.provider) {
       case 'custom':
@@ -189,14 +189,28 @@ export class C4gBaselayerController {
       case 'stamen':
         if (sourceConfigs.stamen[baseLayerConfig.style]) {
           // Stamen
-          newBaselayer = new TileLayer({
-            source: new Stamen(
-              jQuery.extend(
-                sourceConfigs.stamen[baseLayerConfig.style],
-                layerOptions
+          if (baseLayerConfig.style === 'Watercolor') {
+            newBaselayer = new LayerGroup({
+              layers: [new TileLayer({
+                source: new Stamen({
+                  layer: 'watercolor'
+                })
+              }),
+                new TileLayer({
+                  source: new Stamen({
+                    layer: 'terrain-labels'
+                  })
+                })]
+            });
+          } else {
+            newBaselayer = new TileLayer({
+              source: new Stamen(
+                  jQuery.extend(
+                      sourceConfigs.stamen[baseLayerConfig.style]
+                  )
               )
-            )
-          });
+            });
+          }
         }
         else {
           console.warn('unsupported osm-style -> switch to default');
@@ -205,9 +219,8 @@ export class C4gBaselayerController {
       case 'con4gisIo':
         let config = this.baseKeys[baseLayerConfig.id];
         layerOptions.url = baseLayerConfig.url.replace('{key}', config['key']);
-        layerOptions.attributions = config.attribution + ' ' + layerOptions.attributions;
         layerOptions.crossOrigin = 'anonymous';
-        layerOptions.attributions = config.attribution + " " + layerOptions.attributions;
+        layerOptions.attributions = config.attribution + ' ' + layerOptions.attributions;
         newBaselayer = new TileLayer({
           source: new XYZ(layerOptions)
         });
@@ -552,17 +565,14 @@ export class C4gBaselayerController {
       } else if (!layerOptions.attributions) {
         switch (baseLayerConfig.provider) {
           case 'osm':
-            if (sourceConfigs.stamen[baseLayerConfig.style]) {
-              layerOptions.attributions = sourceConfigs.stamen[baseLayerConfig.style].attributions;
-              /*
-                            } else if (mapQuestSourceConfigs[baseLayerConfig.style]) {
-                              layerOptions.attributions = mapQuestSourceConfigs[baseLayerConfig.style].attributions;
-              */
-            } else if (sourceConfigs.osm[baseLayerConfig.style]) {
+            if (sourceConfigs.osm[baseLayerConfig.style]) {
               layerOptions.attributions = sourceConfigs.osm[baseLayerConfig.style].attributions;
             } else {
               layerOptions.attributions = OSM_ATTRIBUTION;
             }
+            break;
+          case 'stamen':
+            layerOptions.attributions = sourceConfigs.stamen[baseLayerConfig.style].attributions;
             break;
           case 'mapbox':
             layerOptions.attributions = sourceConfigs.mapbox[baseLayerConfig.mapbox_type].attributions;
@@ -575,6 +585,9 @@ export class C4gBaselayerController {
             break;
           case 'thunder':
             layerOptions.attributions = sourceConfigs.thunderforest[baseLayerConfig.thunderforest_type].attributions;
+            break;
+          case 'con4gisIo':
+            layerOptions.attributions = 'Mapservices via <a href="https://con4gis.io" target="_blank" rel="noopener">con4gis.io</a>. '+OSM_ATTRIBUTION;
             break;
           default:
             layerOptions.attributions = OSM_ATTRIBUTION;
@@ -648,9 +661,6 @@ export class C4gBaselayerController {
           }
           else {
             layerOptions.attributions = routerAttribution;
-          }
-          if (this.mapController.data.attribution.con4gisIO) {
-            layerOptions.attributions += 'Mapservices via <a href="https://con4gis.io" target="_blank" rel="noopener">con4gis.io</a>';
           }
         }
       }
