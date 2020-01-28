@@ -86,8 +86,7 @@
 .c4g-starboard-container {
   background-color: transparent;/*var(--shadow-color);*/
 }
-.c4g-portside-headline,
-.c4g-starboard-headline {
+.c4g-portside-headline {
   color: rgba(255,255,255,.9);
   color: var(--font-color);
   background-color: transparent;/*var(--main-color);*/
@@ -719,11 +718,21 @@ background: var(--pu-main-color);
   color: var(--main-color)!important;
 }
 
-.c4g-baselayer-wrapper .c4g-baselayer-header{
+.c4g-baselayer-wrapper .c4g-baselayer-header,
+.c4g-infopage-wrapper .c4g-infopage-header,
+.c4g-starboard-wrapper .c4g-starboard-header {
   color: var(--font-color);
 }
 
 button.c4g-baselayer-close:before,
 button.c4g-starboard-close:before{
   color: var(--font-color);
+}
+
+.ol-zoomslider button {
+  background-color: var(--shadow-color);
+}
+
+.ol-zoomslider button:hover, .ol-zoomslider button:focus{
+  background-color: var(--main-color);
 }
