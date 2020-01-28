@@ -83,9 +83,10 @@
   font-size: inherit;
 }
 .ol-attribution button:before {
-  content: "\f101";
+  content: "\f1f9";
+  /*content: "\f101";*/
   font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
+  font-weight: 100;
   font-size: inherit;
 }
 .ol-attribution.ol-collapsed button:before {
