@@ -83,9 +83,10 @@
   font-size: inherit;
 }
 .ol-attribution button:before {
-  content: "\f101";
+  content: "\f1f9";
+  /*content: "\f101";*/
   font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
+  font-weight: 100;
   font-size: inherit;
 }
 .ol-attribution.ol-collapsed button:before {
@@ -125,13 +126,13 @@ span.c4g-active ul li.c4g-active:before{
   font-size: 14px;
 }
 
-.c4g-measure.c4g-open > button:before {
+.c4g-measuretools-control > button:before {
   content: "\f545";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;
 }
-.c4g-measure.c4g-close > button:before {
+.c4g-measuretools-control.c4g-close > button:before {
   content: "\f545";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
@@ -149,13 +150,13 @@ span.c4g-active ul li.c4g-active:before{
   font-weight: 900;
   font-size: inherit;
 }
-.c4g-infopage.c4g-open > button:before {
+.c4g-infopage-control > button:before {
   content: "\f129";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;
 }
-.c4g-infopage.c4g-close > button:before {
+.c4g-infopage-control .c4g-open > button:before {
   content: "\f129";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
@@ -237,33 +238,33 @@ button.c4g-starboard-close:before{
   font-size: inherit;
 }
 
-button.c4g-measuretools-view-trigger-select:before {
+button.c4g-measure-select:before {
   content: "\f245";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;
 }
 
-button.c4g-measuretools-view-trigger-draw-line:before {
+button.c4g-measure-line:before {
   content: "\f1e0";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;
 }
-button.c4g-measuretools-view-trigger-draw-polygon:before {
+button.c4g-measure-polygon:before {
   content: "\f5ee";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;
 }
-button.c4g-measuretools-view-trigger-draw-circle:before {
+button.c4g-measure-circle:before {
   content: "\f111";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;
 }
 
-button.c4g-measuretools-view-trigger-draw-freehand:before {
+button.c4g-measure-freehand:before {
   content: "\f303";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;

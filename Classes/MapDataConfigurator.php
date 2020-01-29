@@ -394,6 +394,7 @@ class MapDataConfigurator
                 if ($settings->con4gisIoUrl && $settings->con4gisIoKey) {
                     $mapData['attribution']['con4gisIO'] = 1;
                 }
+                $mapData['attribution']['always_show'] = $profile->always_show_attribution;
                 $mapData['attribution']['collapsed'] = $profile->collapsed_attribution;
                 if ($profile->cfg_logo_attribution) {
                     $mapData['attribution']['cfg_logo'] = $profile->cfg_logo_attribution;

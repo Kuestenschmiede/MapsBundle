@@ -50,7 +50,6 @@ export class BaselayerSwitcher extends Component {
     mapController.map.addControl(control);
     this.open = this.open.bind(this);
     this.close = this.close.bind(this);
-    this.resizeFunction = this.resizeFunction.bind(this);
     let baselayerLoaded = false;
     if (props.mapController.proxy.baselayerLoaded) {
       baselayerLoaded = true;
@@ -140,13 +139,5 @@ export class BaselayerSwitcher extends Component {
 
   close() {
     this.setState({open: false});
-  }
-
-  resizeFunction() {
-
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-
   }
 }

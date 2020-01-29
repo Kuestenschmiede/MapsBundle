@@ -52,12 +52,6 @@ export class Measuretools extends Sideboard {
     Sideboard.call(this, this.options);
   }
 
-
-  /**
-   * Methods
-   */
-
-
   /**
    * Executed when the panel will be opened for the first time.
    * [init description]

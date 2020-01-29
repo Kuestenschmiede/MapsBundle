@@ -1,6 +1,7 @@
 <?php
 
 use con4gis\CoreBundle\Classes\C4GVersionProvider;
+use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
 use con4gis\CoreBundle\Resources\contao\models\C4gSettingsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapTablesModel;
@@ -66,6 +67,11 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             ],
         'global_operations' =>
             [
+                'toggleNodes' => [
+                    'href'                => 'ptg=all',
+                    'class'               => 'header_toggle',
+                    'showOnSelect'        => true
+                ],
                 'all' => [
                     'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
                     'href'                => 'act=select',
@@ -353,7 +359,6 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             'default'                 => '0',
             'eval'                    => ['submitOnChange'=>true,'tl_class'=>'clr'],
             'load_callback'           => [['tl_c4g_maps','getOldValue']],
-
             'sql'                     => "char(1) NOT NULL default '2'"
             ],
         'min_gap' =>
@@ -511,7 +516,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             'options_callback'        => ['tl_c4g_maps','getLocationTypes'],
             'eval'                    => ['submitOnChange' => true],
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['references'],
-            'sql'                     => "varchar(20) NOT NULL default 'map'"
+            'sql'                     => "varchar(100) NOT NULL default 'map'"
             ],
         'loc_geox' =>
             [
@@ -1377,8 +1382,23 @@ class tl_c4g_maps extends Backend
     /**
      * Generate the icons to be used
      */
-    public function generateLabel($row, $label, $dc_table, $folderAttribute)
+    public function generateLabel($row, $label, $dc)
     {
+        //needed for published toggle
+//        if (!$row['location_type']) {
+//            \Contao\Controller::reload();
+
+//            $objMap = $this->Database->prepare("SELECT name, location_type, published, is_map FROM tl_c4g_maps WHERE id=?")
+//                ->limit(1)
+//                ->execute($row['id']);
+//            if ($objMap->numRows > 0) {
+//                $row['name'] = $objMap->name;
+//                $row['location_type'] = $objMap->location_type;
+//                $row['published'] = $objMap->published;
+//                $row['is_map'] = $objMap->is_map;
+//            }
+//        }
+
         $image = 'bundles/con4gismaps/images/be-icons/';
 
         //Backwards compatibility (data < con4gis 7): so that maps are set as maps again. is_map can removed in later versions.
@@ -1423,10 +1443,31 @@ class tl_c4g_maps extends Backend
                 $image .= 'c4gForum';
                 break;
             case 'startab':
-                $image .= 'startab';
+                $image .= 'starboard';
                 break;
             case 'folder':
-                $image .= 'mapfolder';
+                $image .= 'from_path';
+                break;
+            case 'gnrcPrjct':
+                $image .= 'editor';
+                break;
+            case 'tPois':
+                $image .= 'tracking_pois';
+                break;
+            case 'tTracks':
+                $image .= 'tracking_tracks';
+                break;
+            case 'tLive':
+                $image .= 'tracking_live';
+                break;
+            case 'ffOperat':
+                $image .= 'operation';
+                break;
+            case 'mpCntnt':
+                $image .= 'data_category';
+                break;
+            case 'mpCntnt_directory':
+                $image .= 'data_directory';
                 break;
             default:
                 $image .= '';
@@ -1682,8 +1723,6 @@ class tl_c4g_maps extends Backend
             $icon = 'invisible.svg';
         }
 
-        \con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator::purgeLayerApiCache();
-
         return '<a href="'.$this->addToUrl($href).'" title="'.specialchars($title).'"'.$attributes.'>'.\Image::getHtml($icon, $label).'</a> ';
     }
 
@@ -1693,17 +1732,13 @@ class tl_c4g_maps extends Backend
      * @param integer
      * @param boolean
      */
-    public function toggleVisibility($intId, $blnVisible)
+    public function toggleVisibility($intId, $blnVisible, Contao\DataContainer $dc=null)
     {
         // Check permissions to publish
         if (!$this->User->isAdmin && !$this->User->hasAccess('tl_c4g_maps::published', 'alexf')) {
-
-            //ToDo loggerService
-            $this->log('Not enough permissions to publish/unpublish con4gis\MapsBundle\Classes\Utils ID "'.$intId.'"', 'tl_c4g_maps toggleVisibility', TL_ERROR);
+            C4gLogModel::addLogEntry('maps','Not enough permissions to publish/unpublish con4gis\MapsBundle\Classes\Utils ID "'.$intId.'"');
             $this->redirect('contao/main.php?act=error');
         }
-        $this->createInitialVersion('tl_c4g_maps', $intId);
-        #$this->Versions->initialize('tl_c4g_maps', $intId);
 
         $objVersions = new Versions('tl_c4g_maps', $intId);
         $objVersions->initialize();
@@ -1726,8 +1761,32 @@ class tl_c4g_maps extends Backend
         $this->Database->prepare("UPDATE tl_c4g_maps SET tstamp=". time() .", published='" . ($blnVisible ? 1 : '') . "' WHERE id=?")
                        ->execute($intId);
 
-        $this->createNewVersion('tl_c4g_maps', $intId);
-        #x$this->Versions->create('tl_c4g_maps', $intId);
+//ToDo Label Icons on toggle
+//        // Trigger the label_callback
+//        $callback = $GLOBALS['TL_DCA']['tl_c4g_maps']['list']['label']['label_callback'];
+//        $row = ['id' => $intId];
+//        $this->import($callback[0]);
+//        $image = $this->{$callback[0]}->{$callback[1]}($row,'');
+
+        // Trigger the onsubmit_callback
+        if (is_array($GLOBALS['TL_DCA']['tl_c4g_maps']['config']['onsubmit_callback']))
+        {
+            foreach ($GLOBALS['TL_DCA']['tl_c4g_maps']['config']['onsubmit_callback'] as $callback)
+            {
+                if (is_array($callback))
+                {
+                    $this->import($callback[0]);
+                    $this->{$callback[0]}->{$callback[1]}($dc);
+                }
+                elseif (is_callable($callback))
+                {
+                    $callback($dc);
+                }
+            }
+        }
+
+        $objVersions = new Versions('tl_c4g_maps', $intId);
+        $objVersions->initialize();
     }
 
     /**

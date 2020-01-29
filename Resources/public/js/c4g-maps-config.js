@@ -55,7 +55,7 @@ export var config = {
 
   stamen: {
     Toner: {
-      attributions: ATTRIBUTION,
+      attributions: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.',
       layer: 'toner',
       minZoom: 0,
       maxZoom: 18,
@@ -63,7 +63,7 @@ export var config = {
     },
 
     TonerLabels: {
-      attributions: ATTRIBUTION,
+      attributions: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.',
       layer: 'toner-labels',
       minZoom: 0,
       maxZoom: 18,
@@ -71,7 +71,7 @@ export var config = {
     },
 
     TonerLines: {
-      attributions: ATTRIBUTION,
+      attributions: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.',
       layer: 'toner-lines',
       minZoom: 0,
       maxZoom: 18,
@@ -79,7 +79,7 @@ export var config = {
     },
 
     Terrain: {
-      attributions: ATTRIBUTION,
+      attributions: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.',
       layer: 'terrain',
       minZoom: 0,
       maxZoom: 18,
@@ -87,7 +87,7 @@ export var config = {
     },
 
     Watercolor: {
-      attributions: ATTRIBUTION,
+      attributions: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.',
       layer: 'watercolor',
       minZoom: 0,
       maxZoom: 18,

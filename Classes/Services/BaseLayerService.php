@@ -347,7 +347,7 @@ class BaseLayerService
                 $layerGroup = unserialize($objBaseLayer->layerGroup);
                 foreach ($layerGroup as $key => $layer) {
                     $objChildLayer = $this->Database->prepare('SELECT * FROM tl_c4g_map_baselayers WHERE id=?')->execute($layer['baselayers']);
-                    $layer['entry'] = $this->parseBaseLayer($objChildLayer);
+                    $layer['entry'] = $this->parseBaseLayer($objChildLayer, $lang);
                     $layerGroup[$key] = $layer;
                 }
                 $arrBaseLayer['layerGroup'] = array_reverse($layerGroup);

@@ -323,13 +323,15 @@ export class MapsControls {
                 tipLabel: langConstants.CTRL_ATTRIBUTION,
                 collapseLabel: ' ',
                 target: mapData.attribution.div ? mapData.attribution.div : controlContainerBottomLeft,
-                collapsible: !mapData.attribution.div
+                collapsible: ((!mapData.attribution.div) && (!mapData.attribution.always_show))
             };
             if (mapData.attribution.div) {
                 attrOptions["className"] = "ol-attribution ol-attribution-ext-div";
             }
             this.controls.attribution = new Attribution(attrOptions);
-            this.controls.attribution.setCollapsed(mapData.attribution.div ? false : mapData.attribution.collapsed === '1');
+            if (!mapData.attribution.always_show) {
+                this.controls.attribution.setCollapsed(mapData.attribution.div ? false : mapData.attribution.collapsed === '1');
+            }
             map.addControl(this.controls.attribution);
         }
 
@@ -345,21 +347,6 @@ export class MapsControls {
             map.addControl(this.controls.fullscreen);
         }
 
-        // measuretools
-        if (mapData.measuretools.enable && typeof Measuretools === 'function') {
-            this.controls.measuretools = new Measuretools({
-                tipLabel: langConstants.CTRL_MEASURETOOLS,
-                target: controlContainerTopLeft,
-                caching: mapData.caching,
-                mapController: this.mapController,
-                direction: "left"
-            });
-            map.addControl(this.controls.measuretools);
-            // open if opened before
-            if ((mapData.caching && (utils.getValue(this.controls.measuretools.options.name) === '1'))) {
-                this.controls.measuretools.open();
-            }
-        }
         //
         if (mapData.print) {
             this.controls.print = new Print({

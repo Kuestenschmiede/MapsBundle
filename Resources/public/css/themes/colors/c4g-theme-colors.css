@@ -27,8 +27,7 @@
   background-color: var(--shadow-color);
 }
 
-.c4g-portside-wrapper,
-.c4g-starboard-wrapper {
+.c4g-portside-wrapper {
   background-color: rgba(24, 61, 93,.8);
   background-color: var(--main-color);
   color: rgba(255,255,255,.9);
@@ -82,12 +81,10 @@
 /*
  *  Portside & Starboard
  */
-.c4g-portside-container,
-.c4g-starboard-container {
+.c4g-portside-container{
   background-color: transparent;/*var(--shadow-color);*/
 }
-.c4g-portside-headline,
-.c4g-starboard-headline {
+.c4g-portside-headline {
   color: rgba(255,255,255,.9);
   color: var(--font-color);
   background-color: transparent;/*var(--main-color);*/
@@ -402,6 +399,10 @@ div.c4g-active.c4g-popup-wrapper {
   -webkit-filter: drop-shadow(0 1px 4px var(--shadow-color));
   filter: drop-shadow(0 1px 4px rgba(0,155,222,.5));
   filter: drop-shadow(0 1px 4px var(--shadow-color));
+}
+
+div.c4g-active.c4g-popup-wrapper * {
+  color: var(--pu-font-color);
 }
 /*div.c4g-tooltip-popup:before,*/
 div.c4g-popup-wrapper:before {
@@ -719,11 +720,33 @@ background: var(--pu-main-color);
   color: var(--main-color)!important;
 }
 
-.c4g-baselayer-wrapper .c4g-baselayer-header{
+.c4g-baselayer-wrapper .c4g-baselayer-header,
+.c4g-infopage-wrapper .c4g-infopage-header,
+.c4g-starboard-wrapper .c4g-starboard-header {
   color: var(--font-color);
 }
 
 button.c4g-baselayer-close:before,
 button.c4g-starboard-close:before{
+  color: var(--font-color);
+}
+
+.ol-zoomslider button {
+  background-color: var(--shadow-color);
+}
+
+.ol-zoomslider button:hover, .ol-zoomslider button:focus{
+  background-color: var(--main-color);
+}
+
+c4g-infopage-container {
+  background-color: var(--main-color);
+}
+
+.c4g-sideboard {
+  background-color: var(--main-color);
+}
+
+.c4g-infopage-content * {
   color: var(--font-color);
 }
