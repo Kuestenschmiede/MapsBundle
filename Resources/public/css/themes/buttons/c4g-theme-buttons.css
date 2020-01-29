@@ -639,30 +639,30 @@ button.ol-zoom-out {
 /*  border-bottom-right-radius: 0;*/
 /*}*/
 .c4g-layertree ul,
-.c4g-baselayertree ul {
+.c4g-baselayertree-content ul {
   margin: 0;
   padding: 0;
 }
 .c4g-layertree li,
-.c4g-baselayertree li {
+.c4g-baselayertree-content li {
   list-style-type: none;
 }
 
-.c4g-baselayertree li:not(:last-child){
+.c4g-baselayertree-content li:not(:last-child){
   padding-bottom: .2em;
 }
 
 
 .c4g-layertree li ul,
-.c4g-baselayertree li ul {
+.c4g-baselayertree-content li ul {
   margin-left: 1em;
 }
 .c4g-layertree li ul li,
-.c4g-baselayertree li ul li {
+.c4g-baselayertree-content li ul li {
   border-bottom: none;
 }
 .c4g-layertree a,
-.c4g-baselayertree li:not(.with-image) a {
+.c4g-baselayertree-content li:not(.with-image) a {
   display: block;
   text-decoration: none;
   padding: 10px 1.75em 10px .2em;
@@ -670,11 +670,11 @@ button.ol-zoom-out {
   position: relative;
 }
 .c4g-layertree a.c4g-disabled,
-.c4g-baselayertree a.c4g-disabled {
+.c4g-baselayertree-content a.c4g-disabled {
   opacity: .5;
 }
 .c4g-layertree a:after,
-.c4g-baselayertree a:after {
+.c4g-baselayertree-content a:after {
   display: inline-block;
   float: right;
   margin-right: 5px;
@@ -687,13 +687,13 @@ button.ol-zoom-out {
   padding-left: 10px;
 }
 .c4g-layertree span,
-.c4g-baselayertree span{
+.c4g-baselayertree-content span{
   float: left;
   padding: 8px 5px;
   position: relative;
   z-index: 1;
 }
-.c4g-baselayertree a:before {
+.c4g-baselayertree-content a:before {
   display: inline-block;
   margin-right: 5px;
 }
