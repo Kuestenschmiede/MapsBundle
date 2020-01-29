@@ -64,11 +64,11 @@ export class OverviewMap {
 
     jQuery(trigger).click(function () {
       if (jQuery(element).hasClass(cssConstants.CLOSE)) {
-        jQuery(element).removeClass(cssConstants.CLOSE)
-            .addClass(cssConstants.OPEN);
+        jQuery(element).removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN);
+        jQuery(options.ovmTarget).removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN);
       } else {
-        jQuery(element).addClass(cssConstants.CLOSE)
-            .removeClass(cssConstants.OPEN);
+        jQuery(element).addClass(cssConstants.CLOSE).removeClass(cssConstants.OPEN);
+        jQuery(options.ovmTarget).addClass(cssConstants.CLOSE).removeClass(cssConstants.OPEN);
       }
       try {
         this.blur();
@@ -76,7 +76,7 @@ export class OverviewMap {
       }
     });
 
-    let ovmTarget = document.querySelector(".c4g-control-container-bottom-left");
+    let ovmTarget = options.ovmTarget;
     this.ovm = new OvMap({
       target: ovmTarget,
       layers: options.layers,

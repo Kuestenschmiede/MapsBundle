@@ -360,6 +360,7 @@ class MapDataConfigurator
                 $mapData['starboard']['label'] = \Contao\Controller::replaceInsertTags($profile->starboard_label);
                 $mapData['starboard']['div'] = $profile->starboard_div;
                 $mapData['starboard']['button'] = $profile->starboard_button;
+                $mapData['starboard']['showLocstyles'] = $profile->starboard_locstyles;
                 $mapData['cluster_all'] = $profile->cluster_all;
                 $mapData['cluster_distance'] = $profile->cluster_distance;
                 $mapData['cluster_fillcolor'] = $profile->cluster_fillcolor;
