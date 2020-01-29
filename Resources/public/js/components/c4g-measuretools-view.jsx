@@ -25,10 +25,10 @@ export class MeasuretoolsView extends Component {
 
     this.headlines = {
       "select": "Auswahlmodus",
-      "line": "Auswahlmodus",
-      "polygon": "Auswahlmodus",
-      "circle": "Auswahlmodus",
-      "freehand": "Auswahlmodus"
+      "line": "Strecken messen",
+      "polygon": "Flächen messen",
+      "circle": "Kreise messen",
+      "freehand": "Freihand messen"
     };
     this.updateFunctions = this.createMeasureFunctions();
   }
@@ -67,15 +67,19 @@ export class MeasuretoolsView extends Component {
   }
 
   componentDidMount() {
-    this.updateFunctions.initFunction();
+    if (this.props.mode !== "select") {
+      this.updateFunctions.initFunction();
+    }
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (!prevProps.active && this.props.active) {
-      this.updateFunctions.activateFunction();
-    }
-    if (prevProps.active && !this.props.active) {
-      this.updateFunctions.deactivateFunction();
+    if (this.props.mode !== "select") {
+      if (!prevProps.active && this.props.active) {
+        this.updateFunctions.activateFunction();
+      }
+      if (prevProps.active && !this.props.active) {
+        this.updateFunctions.deactivateFunction();
+      }
     }
   }
 
@@ -105,7 +109,11 @@ export class MeasuretoolsView extends Component {
         source = scope.props.measureTools.measureLineLayer.getSource();
       }
 
+
       features = new Collection();
+      if (scope.props.mode.toLowerCase() === "select") {
+        return;
+      }
 
       switch (scope.props.mode) {
         case "line":
@@ -173,7 +181,6 @@ export class MeasuretoolsView extends Component {
         // feature.set('listElementValueName', inputElement);
         feature.set('featureId', featureIdCount);
         let measuredFeature = {};
-        // TODO daten eintragen
         measuredFeature.id = featureIdCount;
         measuredFeature.label = strType + " " + featureIdCount;
         feature.set('featureLabel', measuredFeature.label);
@@ -246,7 +253,6 @@ export class MeasuretoolsView extends Component {
         //   scope.mainSection.appendChild(scope.mainSectionInfo);
         //   scope.update();
         // }
-        console.log("feature löschen");
         // TODO removeFeature implementieren
       }; // end of "removeMeasureFeature()"
 
@@ -329,7 +335,6 @@ export class MeasuretoolsView extends Component {
 
         // reactivate mapHover
         scope.props.mapController.mapHover.activate();
-
         if (scope.props.mode.toLowerCase() !== 'point') {
           try {
             interaction.finishDrawing();

@@ -85,19 +85,19 @@ export class Measuretools extends Component {
                            onMouseUp={() => scope.setState({currentMode: element})} />;
           })}
         </div>
-        <MeasuretoolsView mode={"select"} measureTools={this} active={this.state.currentMode === "select"}
+        <MeasuretoolsView mode={"select"} measureTools={this} active={this.state.currentMode === "select" && this.state.open}
                           lang={this.langConstants} addFeature={this.addMeasuredFeature} features={this.state.measuredFeatures}
                           modifyFeature={this.modifyMeasuredFeature} mapController={this.props.mapController}/>
-        <MeasuretoolsView mode={"line"} measureTools={this} active={this.state.currentMode === "line"}
+        <MeasuretoolsView mode={"line"} measureTools={this} active={this.state.currentMode === "line" && this.state.open}
                           lang={this.langConstants} addFeature={this.addMeasuredFeature} features={this.state.measuredFeatures}
                           modifyFeature={this.modifyMeasuredFeature} mapController={this.props.mapController}/>
-        <MeasuretoolsView mode={"polygon"} measureTools={this} active={this.state.currentMode === "polygon"}
+        <MeasuretoolsView mode={"polygon"} measureTools={this} active={this.state.currentMode === "polygon" && this.state.open}
                           lang={this.langConstants} addFeature={this.addMeasuredFeature} features={this.state.measuredFeatures}
                           modifyFeature={this.modifyMeasuredFeature} mapController={this.props.mapController}/>
-        <MeasuretoolsView mode={"circle"} measureTools={this} active={this.state.currentMode === "circle"}
+        <MeasuretoolsView mode={"circle"} measureTools={this} active={this.state.currentMode === "circle" && this.state.open}
                           lang={this.langConstants} addFeature={this.addMeasuredFeature} features={this.state.measuredFeatures}
                           modifyFeature={this.modifyMeasuredFeature} mapController={this.props.mapController}/>
-        <MeasuretoolsView mode={"freehand"} measureTools={this} active={this.state.currentMode === "freehand"}
+        <MeasuretoolsView mode={"freehand"} measureTools={this} active={this.state.currentMode === "freehand" && this.state.open}
                           lang={this.langConstants} addFeature={this.addMeasuredFeature} features={this.state.measuredFeatures}
                           modifyFeature={this.modifyMeasuredFeature} mapController={this.props.mapController}/>
       </div>
@@ -164,5 +164,51 @@ export class Measuretools extends Component {
     // this.spinner.hide();
     return true;
   } // end of "init()"
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevState.open && !this.state.open) {
+      // measuretools were closed
+      this.props.mapController.map.removeLayer(this.measureLayerGroup);
+      this.removeTooltips();
+      this.removedOnce = true;
+    } else if (!prevState.open && this.state.open) {
+      if (this.removedOnce) {
+        try {
+          this.props.mapController.map.addLayer(this.measureLayerGroup);
+        } catch(e) {
+          console.warn(e);
+        }
+      }
+      this.addTooltips();
+    }
+  }
+
+  removeTooltips() {
+    let arrLayers = this.measureLayerGroup.getLayersArray();
+    for (let i = 0; i < arrLayers.length; i++) {
+      let layer = arrLayers[i];
+      let arrFeatures = layer.getSource().getFeatures();
+      if (arrFeatures) {
+        for (let j = 0; j < arrFeatures.length; j++) {
+          let feature = arrFeatures[j];
+          feature.get('tooltip').hide();
+        }
+      }
+    }
+  }
+
+  addTooltips() {
+    let arrLayers = this.measureLayerGroup.getLayersArray();
+    for (let i = 0; i < arrLayers.length; i++) {
+      let layer = arrLayers[i];
+      let arrFeatures = layer.getSource().getFeatures();
+      if (arrFeatures) {
+        for (let j = 0; j < arrFeatures.length; j++) {
+          let feature = arrFeatures[j];
+          feature.get('tooltip').show();
+        }
+      }
+    }
+  }
 
 }
