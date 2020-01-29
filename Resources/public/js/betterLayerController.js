@@ -136,6 +136,9 @@ export class BetterLayerController {
                     }
                     return scope.proxy.locationStyleController.arrLocStyles[locstyle].style;
                 }
+                else {
+                    return null;
+                }
             }
         };
 

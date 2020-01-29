@@ -71,6 +71,7 @@ export class C4gLocationStyleController {
               }, 600);
             }
           }
+          self.proxy.layerController.vectorLayer.setStyle(self.proxy.layerController.clusterStyleFunction);
         }
         if (index) {
           success[index] = true;
