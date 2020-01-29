@@ -221,6 +221,7 @@ export class MeasuretoolsView extends Component {
         name = feature.get('featureLabel');
         length = utils.measureGeometry(feature.getGeometry(), true);
         feature.set('measuredLength', length.rawValue);
+        featureTooltip.setContent(name + length.htmlValue);
         let featureId = feature.get('featureId');
         let newFeature = {};
         newFeature.label = name;
@@ -233,27 +234,28 @@ export class MeasuretoolsView extends Component {
 
         if (feature.get('geometryType') === 'circle') {
           radius = utils.measureGeometry(feature.getGeometry());
-          if (newFeature.measuredValues['radius']) {
-            newFeature.measuredValues['radius'].value = radius.rawValue;
-          }
+          newFeature.measuredValues['radius'] = {
+            description: "Radius: ",
+            value: 0
+          };
+          newFeature.measuredValues['radius'].value = radius.rawValue;
+          featureTooltip.setContent(name + radius.htmlValue);
         } else if (feature.get('geometryType') === 'polygon') {
           area = utils.measureGeometry(feature.getGeometry());
-          if (newFeature.measuredValues['area']) {
-            newFeature.measuredValues['area'].value = area.rawValue;
-          }
+          newFeature.measuredValues['area'] = {
+            description: "Flächeninhalt: ",
+            value: 0
+          };
+          newFeature.measuredValues['area'].value = area.rawValue;
+          featureTooltip.setContent("<strong>" + name + "</strong>" + "<br>" + area.htmlValue);
+          console.log(featureTooltip.getContent());
         }
+        feature.set('tooltip', featureTooltip);
         scope.props.modifyFeature(newFeature, featureId);
       }; // end of "updateMeasureFeature()"
 
       removeMeasureFeature = function (feature) {
-        // scope.mainSection.removeChild(feature.get('listElement'));
-        //
-        // // last element? -> add infomessage
-        // if (scope.mainSection.childElementCount < 1) {
-        //   scope.mainSection.appendChild(scope.mainSectionInfo);
-        //   scope.update();
-        // }
-        // TODO removeFeature implementieren
+        scope.props.removeFeature(feature.get('featureId'));
       }; // end of "removeMeasureFeature()"
 
       //Start Workaround
