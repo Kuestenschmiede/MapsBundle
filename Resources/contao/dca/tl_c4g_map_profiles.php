@@ -109,7 +109,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                                          '{navigation_legend:hide},zoom_panel,zoom_panel_button,zoom_panel_slider,mouse_nav,touch_nav,keyboard_nav,fullscreen,print;'.
                                          '{starboard_legend:hide},starboard;'.
                                          '{attribution_legend:hide},attribution;'.
-                                         '{information_legend:hide},overviewmap,graticule,scaleline,mouseposition,permalink,zoomlevel,infopage;'.
+                                         '{information_legend:hide},overviewmap,graticule,scaleline,mouseposition,permalink,zoomlevel,infopage,initial_open_comp;'.
                                          '{geosearch_legend:hide},geosearch;'.
                                          '{measure_legend:hide},measuretool;'.
                                          '{geopicker_legend:hide},is_backend_geopicker_default,geopicker;'.
@@ -125,7 +125,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
     'subpalettes' =>
     [
         'mouse_nav'                   => 'mouse_nav_wheel,mouse_nav_doubleclick_zoom,mouse_nav_zoombox,mouse_nav_dragmode,mouse_nav_kinetic',
-        'starboard'                   => 'layerswitcher,starboard_open,starboard_label,starboard_button,starboard_locstyles,starboard_div,cluster_all',
+        'starboard'                   => 'layerswitcher,starboard_label,starboard_button,starboard_locstyles,starboard_div,cluster_all',
         'cluster_all'                 => 'cluster_distance,cluster_fillcolor,cluster_fontcolor,cluster_zoom, cluster_dist_spider',
         'baselayerswitcher'           => 'baselayerswitcher_label,baselayer_filter',
         'layerswitcher'               => 'layerswitcher_label,layer_filter',
@@ -1046,6 +1046,18 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'eval'                  => ['mandatory'=>false, 'rte'=>'tinyMCE', 'helpwizard'=>true],
             'explanation'           => 'insertTags',
             'sql'                   => "text NULL"
+        ],
+    
+        'initial_open_comp' =>
+        [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp'],
+            'filter'                  => false,
+            'references'              => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp']['refs'],
+            'inputType'               => 'select',
+            'default'                 => '',
+            'options'                 => ['', 'starboard', 'search', 'baselayers', 'measuretools'],
+            'eval'                    => ['tl_class'=>'clr'],
+            'sql'                     => "varchar(30) NOT NULL default ''"
         ],
 
         'link_newwindow' =>

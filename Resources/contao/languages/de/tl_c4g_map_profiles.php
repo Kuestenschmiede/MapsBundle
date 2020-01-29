@@ -83,6 +83,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['scaleline'] = ['Maßstabsleiste', 'Z
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouseposition'] = ['Mauskoordinaten', 'Blendet die Geo-Koordinaten des Punktes ein, der sich unterhalb des Mauszeigers befindet.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['zoomlevel'] = ['Zoom-Level anzeigen', 'Zeigt den aktuellen Zoom-Level an.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['infopage'] = ['Infoseite (Legende)', 'Sobald Sie dieses Feld befüllen, wird der Infobutton in der Karte angezeigt. Bei klick werden sämtliche Inhalte entsprechend Ihrer Eingaben dargestellt.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp'] = ['Initial geöffnetes Kartenelement', 'Hier können Sie auswählen, ob ein Element initial geöffnet dargestellt werden soll und wenn ja welches.'];
 
 /** Kartenwerkzeuge */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['measuretool'] = ['Messwerkzeuge', 'Blendet einen Schalter ein, mit dem Werkzeuge zum Messen von Entfernungen und Flächen aktiviert werden können.'];
@@ -179,6 +180,12 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandlingReferences']['3'] = 'Da
 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearchParams']['keys']       = ['Schlüssel','Beispiel:countrycodes'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearchParams']['params']     = ['Parameter', 'Beispiel: de'];
+
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp']['refs'][''] = 'keine';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp']['refs']['starboard'] = 'Starboard';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp']['refs']['search'] = 'Suche';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp']['refs']['baselayers'] = 'Basiskartenwechsler';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp']['refs']['measuretools'] = 'Messwerkzeuge';
 
 /**
  * Buttons

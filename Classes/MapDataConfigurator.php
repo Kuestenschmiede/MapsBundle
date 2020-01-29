@@ -540,6 +540,7 @@ class MapDataConfigurator
             // miscellaneous
             //
             $mapData['infopage'] = \Contao\Controller::replaceInsertTags($profile->infopage);
+            $mapData['initial_open_comp'] = $profile->initial_open_comp;
             $mapData['link_newwindow'] = $profile->link_newwindow;
             $mapData['hover_popups'] = $profile->hover_popups;
             $mapData['hover_popups_stay'] = $profile->hover_popups_stay;

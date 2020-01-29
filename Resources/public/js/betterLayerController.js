@@ -163,8 +163,6 @@ export class BetterLayerController {
         });
         this.layerRequests = {};
         this.ovpKey = this.mapController.data.ovp_key;
-        proj4.defs("EPSG:31467", "+proj=tmerc +lat_0=0 +lon_0=9 +k=1 +x_0=3500000 +y_0=0 +ellps=bessel +datum=potsdam +units=m +no_defs");
-        register(proj4);
     }
 
 
@@ -181,22 +179,12 @@ export class BetterLayerController {
         }).done(function (data) {
             self.objLayers = data.layer;
             // self.mapController.setObjLayers(self.objLayers);
-            let format = {
-                    "EPSG:4326": new GeoJSON({
-                    dataProjection: "EPSG:4326",
-                    featureProjection: "EPSG:3857"
-                }),
-                    "EPSG:31467": new GeoJSON({
-                    dataProjection: "EPSG:31467",
-                    featureProjection: "EPSG:3857"
-                })
-            };
             let structure = [];
             let features = [];
 
             for (let layerId in data.layer) {
                 if (data.layer.hasOwnProperty(layerId)) {
-                    let newChild = self.getStructureFromLayer(data.layer[layerId], format, structure.length);
+                    let newChild = self.getStructureFromLayer(data.layer[layerId], structure.length);
                     if (newChild.hide_in_starboardDromedarCase) {
                         structure = structure.concat(newChild.childs);
                         features = features.concat(newChild.features);
@@ -259,7 +247,7 @@ export class BetterLayerController {
         return features;
     }
 
-    getStructureFromLayer(layer, format, idChain) {
+    getStructureFromLayer(layer, idChain) {
         let features = [];
         let childs = [];
         let loaderId = -1;
@@ -301,7 +289,7 @@ export class BetterLayerController {
             for (let layerId in layer.childs) {
                 if (layer.childs.hasOwnProperty(layerId)) {
                     let childChain = idChain + "," + childs.length;
-                    let newChild = this.getStructureFromLayer(layer.childs[layerId], format, childChain);
+                    let newChild = this.getStructureFromLayer(layer.childs[layerId], childChain);
                     if (newChild.hide_in_starboardDromedarCase) {
                         childs = childs.concat(newChild.childs)
                         features = features.concat(newChild.features)
@@ -336,28 +324,72 @@ export class BetterLayerController {
             if (layer.content.hasOwnProperty(contentId)) {
                 let content = layer.content[contentId];
                 let contentData = content.data;
-                if (contentData && contentData.properties) {
-                    let format = new olFormat[layer.content[contentId].type]({
-                        featureProjection: featureProjection,
-                        dataProjection: contentData.properties.projection
-                    });
+                if (contentData) {
+                    let dataProjection = "EPSG:4326";
+                    if (contentData.properties && contentData.properties.projection && contentData.properties.projCode) {
+                        // if (!proj4(contentData.data.properties.projection)) {
+                        proj4.defs(contentData.properties.projection, contentData.properties.projCode);
+                        register(proj4);
+                        // }
+                        dataProjection = new Projection({
+                            code: contentData.properties.projection
+                        });
+                    }
+                    let format;
+                    if (layer.content[contentId].type === "urlData") {
+                        if (layer.type === "kml") {
+                            format = new olFormat.KML({
+                                featureProjection: featureProjection,
+                                dataProjection: dataProjection
+                            });
+                        }
+                        else if (layer.type === "gpx") {
+                            format = new olFormat.GPX({
+                                featureProjection: featureProjection,
+                                dataProjection: dataProjection
+                            });
+                        }
+                    }
+                    else {
+                        format = new olFormat[layer.content[contentId].type]({
+                            featureProjection: featureProjection,
+                            dataProjection: contentData.properties.projection
+                        });
+                    }
+
+                    let locstyle = layer.locstyle || content.locationStyle;
                     if (layer.content[contentId].type === "GeoJSON") {
-                        let locstyle = layer.locstyle || content.locationStyle;
                         if (contentData.type === "FeatureCollection") {
                             for (let i in contentData.features) {
                                 if (contentData.features.hasOwnProperty(i)) {
                                     let singleFeature = format.readFeature(contentData.features[i]);
-                                    singleFeature.set('locstyle', locstyle)
+                                    singleFeature.set('locstyle', locstyle);
                                     features.push(singleFeature);
                                 }
                             }
                         }
                         else {
-                            let feature = format.readFeature(contentData)
-                            feature.set('locstyle', locstyle)
+                            let feature = format.readFeature(contentData);
+                            feature.set('locstyle', locstyle);
 
                             features.push(feature);
                         }
+                    }
+                    else if (format) {
+                        fetch(contentData.url).then((response) => {
+                            response.text().then((text) => {
+                                let parser = new DOMParser();
+                                let data = parser.parseFromString(text, "text/xml");
+                                let tempFeatures = format.readFeature(data.childNodes[0].outerHTML);
+                                for (let featId in tempFeatures) {
+                                    if (tempFeatures.hasOwnProperty(featId)) {
+                                        let feature = tempFeatures[featId];
+                                        feature.set('locstyle', locstyle);
+                                        features.push(feature);
+                                    }
+                                }
+                            });
+                        });
                     }
                 }
             }
