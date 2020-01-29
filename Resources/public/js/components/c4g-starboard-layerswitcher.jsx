@@ -32,8 +32,9 @@ export class StarboardLayerswitcher extends Component {
     newStates[key] = newState;
     this.props.parentCallback(newStates)
   };
+
   render() {
-    let closeStarboard = function(){
+    let closeStarboard = function() {
       let button = jQuery("." + cssConstants.STARBOARD_CONTROL + "> button");
       button.trigger('click');
     };

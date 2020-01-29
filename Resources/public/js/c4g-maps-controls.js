@@ -186,7 +186,7 @@ export class MapsControls {
         // overview-map
         if (mapData.overviewmap) {
             let ovmTarget = document.createElement("div");
-            ovmTarget.className = "c4g-sideboard c4g-overviewmap-container";
+            ovmTarget.className = "c4g-sideboard c4g-overviewmap-container c4g-close";
             this.mapController.$overlaycontainer_stopevent.append(ovmTarget);
             let overviewMapOptions = {
                 target: controlContainerTopLeft,
