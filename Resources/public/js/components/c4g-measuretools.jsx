@@ -54,13 +54,15 @@ export class Measuretools extends Component {
     this.addMeasuredFeature = this.addMeasuredFeature.bind(this);
     this.modifyMeasuredFeature = this.modifyMeasuredFeature.bind(this);
     this.removeMeasuredFeature = this.removeMeasuredFeature.bind(this);
+    this.incrementFeatureId = this.incrementFeatureId.bind(this);
     this.modes = ["select", "line", "polygon", "circle", "freehand"];
 
     this.state = {
       open: false,
       currentMode: "select",
       control: control,
-      measuredFeatures: []
+      measuredFeatures: [],
+      featureIdCtr: 0
     };
     this.init();
   }
@@ -86,23 +88,27 @@ export class Measuretools extends Component {
                            onMouseUp={() => scope.setState({currentMode: element})} />;
           })}
         </div>
-        <MeasuretoolsView mode={"select"} measureTools={this} active={this.state.currentMode === "select" && this.state.open}
-                          lang={this.langConstants} addFeature={this.addMeasuredFeature} features={this.state.measuredFeatures}
+        <MeasuretoolsView mode={"select"} measureTools={this} active={this.state.currentMode === "select" && this.state.open} featureId={this.state.featureIdCtr}
+                          lang={this.langConstants} addFeature={this.addMeasuredFeature} features={this.state.measuredFeatures} incrFeatId={this.incrementFeatureId}
                           modifyFeature={this.modifyMeasuredFeature} mapController={this.props.mapController} removeFeature={this.removeMeasuredFeature}/>
-        <MeasuretoolsView mode={"line"} measureTools={this} active={this.state.currentMode === "line" && this.state.open}
-                          lang={this.langConstants} addFeature={this.addMeasuredFeature} features={this.state.measuredFeatures}
+        <MeasuretoolsView mode={"line"} measureTools={this} active={this.state.currentMode === "line" && this.state.open} featureId={this.state.featureIdCtr}
+                          lang={this.langConstants} addFeature={this.addMeasuredFeature} features={this.state.measuredFeatures} incrFeatId={this.incrementFeatureId}
                           modifyFeature={this.modifyMeasuredFeature} mapController={this.props.mapController} removeFeature={this.removeMeasuredFeature}/>
-        <MeasuretoolsView mode={"polygon"} measureTools={this} active={this.state.currentMode === "polygon" && this.state.open}
-                          lang={this.langConstants} addFeature={this.addMeasuredFeature} features={this.state.measuredFeatures}
+        <MeasuretoolsView mode={"polygon"} measureTools={this} active={this.state.currentMode === "polygon" && this.state.open} featureId={this.state.featureIdCtr}
+                          lang={this.langConstants} addFeature={this.addMeasuredFeature} features={this.state.measuredFeatures} incrFeatId={this.incrementFeatureId}
                           modifyFeature={this.modifyMeasuredFeature} mapController={this.props.mapController} removeFeature={this.removeMeasuredFeature}/>
-        <MeasuretoolsView mode={"circle"} measureTools={this} active={this.state.currentMode === "circle" && this.state.open}
-                          lang={this.langConstants} addFeature={this.addMeasuredFeature} features={this.state.measuredFeatures}
+        <MeasuretoolsView mode={"circle"} measureTools={this} active={this.state.currentMode === "circle" && this.state.open} featureId={this.state.featureIdCtr}
+                          lang={this.langConstants} addFeature={this.addMeasuredFeature} features={this.state.measuredFeatures} incrFeatId={this.incrementFeatureId}
                           modifyFeature={this.modifyMeasuredFeature} mapController={this.props.mapController} removeFeature={this.removeMeasuredFeature}/>
-        <MeasuretoolsView mode={"freehand"} measureTools={this} active={this.state.currentMode === "freehand" && this.state.open}
-                          lang={this.langConstants} addFeature={this.addMeasuredFeature} features={this.state.measuredFeatures}
+        <MeasuretoolsView mode={"freehand"} measureTools={this} active={this.state.currentMode === "freehand" && this.state.open} featureId={this.state.featureIdCtr}
+                          lang={this.langConstants} addFeature={this.addMeasuredFeature} features={this.state.measuredFeatures} incrFeatId={this.incrementFeatureId}
                           modifyFeature={this.modifyMeasuredFeature} mapController={this.props.mapController} removeFeature={this.removeMeasuredFeature}/>
       </div>
     );
+  }
+
+  incrementFeatureId() {
+    this.setState({featureIdCtr: this.state.featureIdCtr + 1});
   }
 
   addMeasuredFeature(feature) {

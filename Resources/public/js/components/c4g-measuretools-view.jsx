@@ -30,6 +30,7 @@ export class MeasuretoolsView extends Component {
       "circle": "Kreise messen",
       "freehand": "Freihand messen"
     };
+    this.featureIdCtr = this.props.featureId;
     this.updateFunctions = this.createMeasureFunctions();
   }
 
@@ -81,6 +82,7 @@ export class MeasuretoolsView extends Component {
         this.updateFunctions.deactivateFunction();
       }
     }
+    this.featureIdCtr = this.props.featureId;
   }
 
   createMeasureFunctions() {
@@ -97,7 +99,7 @@ export class MeasuretoolsView extends Component {
         getLengthOfMeasure,
         removeMeasureFeature;
 
-      featureIdCount = 1;
+      featureIdCount = scope.featureIdCtr;
 
       if (scope.props.mode.toLowerCase() === 'freehand') {
         source = scope.props.measureTools.measureFreehandLayer.getSource();
@@ -179,6 +181,7 @@ export class MeasuretoolsView extends Component {
           measureLine = true;
         }
         // feature.set('listElementValueName', inputElement);
+        featureIdCount = scope.featureIdCtr;
         feature.set('featureId', featureIdCount);
         let measuredFeature = {};
         measuredFeature.id = featureIdCount;
@@ -205,7 +208,7 @@ export class MeasuretoolsView extends Component {
         }
         scope.props.addFeature(measuredFeature);
         // increase the id-counter
-        featureIdCount += 1;
+        scope.props.incrFeatId();
         // scope.update();
       }; // end of "addMeasureFeature()"
 
@@ -221,7 +224,7 @@ export class MeasuretoolsView extends Component {
         name = feature.get('featureLabel');
         length = utils.measureGeometry(feature.getGeometry(), true);
         feature.set('measuredLength', length.rawValue);
-        featureTooltip.setContent(name + length.htmlValue);
+        featureTooltip.setContent("<strong>" + name + "</strong>" + "<br>" + length.htmlValue);
         let featureId = feature.get('featureId');
         let newFeature = {};
         newFeature.label = name;
@@ -229,6 +232,7 @@ export class MeasuretoolsView extends Component {
         newFeature.measuredValues = {};
         if (length) {
           newFeature.measuredValues.line = {};
+          newFeature.measuredValues['line'].description = "Länge: ";
           newFeature.measuredValues['line'].value = length.rawValue;
         }
 
@@ -239,7 +243,7 @@ export class MeasuretoolsView extends Component {
             value: 0
           };
           newFeature.measuredValues['radius'].value = radius.rawValue;
-          featureTooltip.setContent(name + radius.htmlValue);
+          featureTooltip.setContent("<strong>" + name + "</strong>" + "<br>" + radius.htmlValue);
         } else if (feature.get('geometryType') === 'polygon') {
           area = utils.measureGeometry(feature.getGeometry());
           newFeature.measuredValues['area'] = {
@@ -250,7 +254,7 @@ export class MeasuretoolsView extends Component {
           featureTooltip.setContent("<strong>" + name + "</strong>" + "<br>" + area.htmlValue);
         }
         feature.set('tooltip', featureTooltip);
-        scope.props.modifyFeature(newFeature, featureId);
+        scope.props.modifyFeature(newFeature, newFeature.id);
       }; // end of "updateMeasureFeature()"
 
       removeMeasureFeature = function (feature) {
