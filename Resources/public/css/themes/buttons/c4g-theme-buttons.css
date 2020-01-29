@@ -953,11 +953,11 @@ div.c4g-tooltip-popup:before {
   border-radius: var(--button-radius-pixel);
 }
 
-.c4g-baselayertree .c4g-overlay-toggle::-webkit-slider-runnable-track {
+.c4g-baselayertree-content .c4g-overlay-toggle::-webkit-slider-runnable-track {
   border-radius: 0px;
   border-radius: var(--button-radius-pixel);
 }
-.c4g-baselayertree .c4g-overlay-toggle::-webkit-slider-thumb {
+.c4g-baselayertree-content .c4g-overlay-toggle::-webkit-slider-thumb {
   height: 36px;
   width: 36px;
   height: var(--button-size-pixel);
@@ -965,14 +965,14 @@ div.c4g-tooltip-popup:before {
   border-radius: 0%;
   border-radius: var(--button-radius-percent);
 }
-.c4g-baselayertree .c4g-overlay-toggle:focus::-webkit-slider-runnable-track {
+.c4g-baselayertree-content .c4g-overlay-toggle:focus::-webkit-slider-runnable-track {
   background: var(--font-color);
 }
-.c4g-baselayertree .c4g-overlay-toggle::-moz-range-track {
+.c4g-baselayertree-content .c4g-overlay-toggle::-moz-range-track {
   border-radius: 0%;
   border-radius: var(--button-radius-percent);
 }
-.c4g-baselayertree .c4g-overlay-toggle::-moz-range-thumb {
+.c4g-baselayertree-content .c4g-overlay-toggle::-moz-range-thumb {
   height: 36px;
   width: 36px;
   height: var(--button-size-pixel);
@@ -980,15 +980,15 @@ div.c4g-tooltip-popup:before {
   border-radius: 0%;
   border-radius: var(--button-radius-percent);
 }
-.c4g-baselayertree .c4g-overlay-toggle::-ms-fill-lower {
+.c4g-baselayertree-content .c4g-overlay-toggle::-ms-fill-lower {
   border-radius: 0px;
   border-radius: var(--button-radius-pixel);
 }
-.c4g-baselayertree .c4g-overlay-toggle::-ms-fill-upper {
+.c4g-baselayertree-content .c4g-overlay-toggle::-ms-fill-upper {
   border-radius: 0px;
   border-radius: var(--button-radius-pixel);
 }
-.c4g-baselayertree .c4g-overlay-toggle::-ms-thumb {
+.c4g-baselayertree-content .c4g-overlay-toggle::-ms-thumb {
   height: 36px;
   width: 36px;
   height: var(--button-size-pixel);
