@@ -1,4 +1,4 @@
-﻿.c4g-beach-content ul#resultcontainer, .c4g-beach-content.c4g-popup-content/*
+﻿.ol-attribution li.c4g-beach-content ul#resultcontainer, .c4g-beach-content.c4g-popup-content/*
  *  full-screen fixes
  *  - cannot be grouped
  */
@@ -688,19 +688,38 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
   text-align: right;.c4g-geosearch-wrapper.c4g-open
 }
 .ol-attribution ul {
-  padding: 0 .4em;
-  margin: 0;
-  float: right;
+
   height:auto;
   font-size: 10px;
   line-height: 14px;
   white-space: normal;
+  background: white;
+  color: black;
 }
+
+.ol-attribution:not(.ol-uncollapsible) ul {
+  float: right;
+  margin: .1em .1em .2em .2em;
+  padding: .4em;
+  min-height: calc(32px - .4em);
+}
+
+.ol-attribution.ol-uncollapsible ul {
+  float: none;
+  margin: 0;
+  padding: 2px;
+}
+
+
+
+.ol-attribution ul a{
+  color: black!important;
+}
+
 .ol-attribution li {
   display: block;
   list-style: none;
   line-height: inherit;
-  max-width: 214px;
 }
 .ol-attribution li a {
 }

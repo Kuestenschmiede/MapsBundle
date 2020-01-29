@@ -351,15 +351,6 @@ span.c4g-active ul li.c4g-active{
 /*
  *  Attribution
  */
-.ol-attribution ul {
-  color: rgba(255,255,255,.9);
-  color: var(--font-color);
-}
-#main .ol-attribution a {
-  color: rgba(255,255,255,.9);
-  color: var(--font-color)!important;
-  text-decoration: none;
-}
 .ol-attribution:not(.ol-collapsed) {
   background: rgba(24, 61, 93,.8);
   background: var(--main-color);

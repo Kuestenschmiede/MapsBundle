@@ -777,6 +777,7 @@ ul.c4g-overlays li a{
 .ol-attribution {
   border-radius: 2px;
   position: static;
+  max-width: calc(100% - .2em);
 }
 
 .ol-attribution.ol-collapsed {
@@ -1068,6 +1069,7 @@ button.c4g-baselayer-close:before{
 }
 
 .c4g-control-container-bottom-left {
+  max-width: calc(58% - 32px - 1.6em);
   left: calc(32px + 1.4em);
   position: absolute;
   bottom: .2em;
