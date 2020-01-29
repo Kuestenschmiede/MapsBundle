@@ -525,7 +525,6 @@ export var utils = {
     } else {
       result = 0;
     }
-
     return result;
   },
 
