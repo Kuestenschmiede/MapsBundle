@@ -786,7 +786,7 @@ export class MapController extends Component {
       <StarboardPanel ref={(node) => {this.components.starboard = node;}} target={target}
                       mapController={this} objLayers={this.state.objLayers}
                       layerStates={this.state.arrLayerStates} parentCallback={this.setLayerStates}
-                      direction={"right"} open={!!this.props.mapData.starboard.open}
+                      direction={"right"} open={(this.props.mapData.initial_open_comp === "starboard")}
       />,
       this.reactContainer
     );
@@ -805,12 +805,12 @@ export class MapController extends Component {
     if (mapData.infopage) {
       infoPortal = ReactDOM.createPortal(
         <Infopage ref={(node) => {this.components.infopage = node;}} target={target}
-                  infoContent={mapData.infopage} mapController={this}/>,
+                  infoContent={mapData.infopage} mapController={this} open={mapData.initial_open_comp === "infopage"}/>,
         this.infoPageContainer
       );
     }
     let blsPortal = ReactDOM.createPortal(
-      <BaselayerSwitcher ref={(node) => {this.components.baselayerSwitcher = node;}} target={target}
+      <BaselayerSwitcher ref={(node) => {this.components.baselayerSwitcher = node;}} target={target} open={mapData.initial_open_comp === "baselayers"}
                          mapController={this} baselayerController={this.proxy.baselayerController} />,
       this.baselayerContainer
     );
@@ -818,7 +818,7 @@ export class MapController extends Component {
     if (mapData.measuretools) {
       measurePortal = ReactDOM.createPortal(
         <Measuretools ref={(node) => {this.components.measuretools = node;}} target={target}
-          mapController={this}/>,
+          mapController={this} open={mapData.initial_open_comp === "measuretools"}/>,
         this.measuretoolsContainer
       );
     }
@@ -859,7 +859,7 @@ export class MapController extends Component {
         target: document.querySelector('#' + mapData.mapDiv + ' .c4g-control-container-top-left'),
         extDiv: mapData.geosearch.div || false,
         collapsible: true,
-        collapsed: mapData.geosearch.collapsed,
+        collapsed: mapData.initial_open_comp !== "search",
         label: ' ',
         collapsedLabel: '',
         // engineUrl: mapData.geosearch.engine,

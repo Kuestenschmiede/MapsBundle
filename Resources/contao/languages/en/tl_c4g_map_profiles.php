@@ -81,6 +81,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['scaleline'] = ['Scale line', 'Shows 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouseposition'] = ['Mouse coordinates', 'Shows the GEO coordinates of the current mouse position.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['zoomlevel'] = ['Show zoomlevel', 'Displays the current zoomlevel.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['infopage'] = ['Info page (legend)', 'With content you will see the info button on map.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp'] = ['Initially opened map control', 'Here you can select whether an element should be displayed initially open and if so, which one.'];
 
 /** Kartenwerkzeuge */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['measuretool'] = ['Measure tools', 'Shows a button which activates tools for measuring distances/areas.'];
