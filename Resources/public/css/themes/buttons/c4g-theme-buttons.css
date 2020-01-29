@@ -644,7 +644,7 @@ button.ol-zoom-out {
   padding: 0;
 }
 .c4g-layertree li,
-.c4g-baselayertree-content li {
+.c4g-baselayertree-content ul li {
   list-style-type: none;
 }
 
@@ -653,16 +653,25 @@ button.ol-zoom-out {
 }
 
 
-.c4g-layertree li ul,
-.c4g-baselayertree-content li ul {
+.c4g-layertree li ul {
   margin-left: 1em;
 }
 .c4g-layertree li ul li,
 .c4g-baselayertree-content li ul li {
   border-bottom: none;
 }
+
+ul.c4g-overlays li {
+  position: relative;
+  padding: .4em 0;
+}
+
+ul.c4g-overlays li a{
+  display: block;
+}
+
 .c4g-layertree a,
-.c4g-baselayertree-content li:not(.with-image) a {
+.c4g-baselayertree-content li.without-image a {
   display: block;
   text-decoration: none;
   padding: 10px 1.75em 10px .2em;
@@ -686,13 +695,17 @@ button.ol-zoom-out {
 .c4g-layertree .c4g-closeable > a {
   padding-left: 10px;
 }
-.c4g-layertree span,
-.c4g-baselayertree-content span{
+.c4g-layertree span{
   float: left;
   padding: 8px 5px;
   position: relative;
   z-index: 1;
 }
+
+.c4g-baselayertree-content span {
+  z-index: 1;
+}
+
 .c4g-baselayertree-content a:before {
   display: inline-block;
   margin-right: 5px;
@@ -957,14 +970,7 @@ div.c4g-tooltip-popup:before {
   border-radius: 0px;
   border-radius: var(--button-radius-pixel);
 }
-.c4g-baselayertree-content .c4g-overlay-toggle::-webkit-slider-thumb {
-  height: 36px;
-  width: 36px;
-  height: var(--button-size-pixel);
-  width: var(--button-size-pixel);
-  border-radius: 0%;
-  border-radius: var(--button-radius-percent);
-}
+
 .c4g-baselayertree-content .c4g-overlay-toggle:focus::-webkit-slider-runnable-track {
   background: var(--font-color);
 }

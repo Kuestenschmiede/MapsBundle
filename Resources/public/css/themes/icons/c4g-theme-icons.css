@@ -400,9 +400,7 @@ button.c4g-starboard-view-trigger-layerswitcher:before {
   font-weight: 900;
   font-size: inherit;
 }
-.c4g-baselayertree-content input[type='range']{
-  float: right;
-}
+
 .c4g-baselayertree-content input[type=range]{
    -webkit-appearance: none;
  }

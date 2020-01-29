@@ -273,10 +273,8 @@ span.c4g-active ul li.c4g-active{
   cursor: not-allowed;
 }
 .c4g-layertree a:hover,
-.c4g-baselayertree-content  a:hover {
-  background-color: rgba(255,255,255,.9);
+.c4g-baselayertree-content ul li.without-image a:hover {
   background-color: var(--font-color);
-  color: rgba(24, 61, 93,.8);
   color: var(--main-color)!important;
 }
 
@@ -520,23 +518,17 @@ button.c4g-popup-close:hover {
 }
 
 .c4g-baselayertree-content .c4g-overlay-toggle::-webkit-slider-runnable-track {
-  box-shadow: 1px 1px 1px rgba(0,155,222,.5);
-  box-shadow: 1px 1px 1px var(--shadow-color);
-  background: rgba(255,255,255,.9)!important;
   background: var(--font-color)!important;
-  border: 0px solid rgba(0,155,222,.5);
   border: 0px solid var(--shadow-color);
 }
 .c4g-baselayertree-content .c4g-overlay-toggle::-webkit-slider-thumb {
-  box-shadow: 0px 0px 0px rgba(0,155,222,.5);
-  box-shadow: 0px 0px 0px var(--shadow-color);
-  background: rgba(0,155,222,.5);
-  background: var(--shadow-color);
-}
+  box-shadow: 0px 0px 7px 2px var(--font-color);
+}/*
 .c4g-baselayertree-content .c4g-overlay-toggle:focus::-webkit-slider-runnable-track {
   background: rgba(255,255,255,.9);
   background: var(--font-color);
 }
+
 .c4g-baselayertree-content .c4g-overlay-toggle::-moz-range-track {
   box-shadow: 1px 1px 1px rgba(0,155,222,.5);
   box-shadow: 1px 1px 1px var(--shadow-color);
@@ -544,7 +536,7 @@ button.c4g-popup-close:hover {
   background: var(--font-color);
   border: 0px solid rgba(0,155,222,.5);
   border: 0px solid var(--shadow-color);
-}
+}*/
 .c4g-baselayertree-content .c4g-overlay-toggle::-moz-range-thumb {
   box-shadow: 0px 0px 0px rgba(0,155,222,.5);
   box-shadow: 0px 0px 0px var(--shadow-color);
@@ -725,7 +717,7 @@ background: var(--pu-main-color);
 /*-------------*/
 
 /*--------------------baselayertree-----------*/
-.c4g-baselayertree-content li.with-image a  span{
+.c4g-baselayertree-content li.with-image > a  span{
   background: var(--font-color);
   color: var(--main-color)!important;
 }
