@@ -248,7 +248,6 @@ export class MeasuretoolsView extends Component {
           };
           newFeature.measuredValues['area'].value = area.rawValue;
           featureTooltip.setContent("<strong>" + name + "</strong>" + "<br>" + area.htmlValue);
-          console.log(featureTooltip.getContent());
         }
         feature.set('tooltip', featureTooltip);
         scope.props.modifyFeature(newFeature, featureId);
@@ -308,7 +307,7 @@ export class MeasuretoolsView extends Component {
         function (event) {
           if (activeSketch && activeTooltip) {
             activeTooltip.setPosition(event.coordinate);
-            updateMeasureFeature(activeSketch);
+            // updateMeasureFeature(activeSketch);
           }
         }, scope);
 

@@ -76,7 +76,8 @@ export class OverviewMap {
       }
     });
 
-    let ovmTarget = document.querySelector(".c4g-control-container-bottom-left");
+    // let ovmTarget = document.querySelector(".c4g-control-container-bottom-left");
+    let ovmTarget = options.ovmTarget;
     this.ovm = new OvMap({
       target: ovmTarget,
       layers: options.layers,
