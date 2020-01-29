@@ -837,7 +837,7 @@ export class MapController extends Component {
       for (let key in this.components) {
         if (this.components.hasOwnProperty(key)) {
           let currentComp = this.components[key];
-          if (currentComp !== component) {
+          if (currentComp && currentComp !== component) {
             currentComp.setState({open: false});
           }
         }
