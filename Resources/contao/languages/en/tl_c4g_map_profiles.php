@@ -59,6 +59,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_open'] = ['Open Starboard 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_label'] = ['Starboard Header', 'General Starboard Header.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_filter'] = ['Enable Starboard Filter', 'Shows the Starboard Filter.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_button'] = ['Activate Button for Starboard','Creates a Button in order to show and hide all elements in the starboard with one click.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_locstyles'] = ['Show location styles on the Starboard','If possible, the location styles of the map are displayed on the corresponding element in the starboard.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_div'] = ['DIV for Starboard', 'Enter the ID of an existing DIV element if you want to put the Starboard somewhere else on your page.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_all'] = ['Cluster über alle Layer', 'Erstellt ein Cluster über alle Layer. Überschreibt die Einstellungen im Strukturelement. Achtung! Diese Funktion ist nicht für alle Strukturelemente geeignet.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_distance'] = ['Cluster distance', 'Cluster distance (default 20px)'];

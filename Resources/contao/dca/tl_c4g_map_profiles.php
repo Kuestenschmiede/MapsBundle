@@ -116,7 +116,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                                          '{click_legend:hide},link_newwindow,link_open_on,hover_popups, popupHandling;'.
                                          '{cesium_legend:hide},cesium;'.
                                          '{overpassLegend:hide},overpassEngine;'.
-                                         '{locstyle_legend:hide}, label_color,resize_locstyles_zoom;'.
+                                         '{locstyle_legend:hide},label_color,resize_locstyles_zoom;'.
                                          '{miscellaneous_legend:hide},script,custom_div,be_optimize_checkboxes_limit,caching,filter_div,filters,filterHandling;'
         ],
 
@@ -125,7 +125,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
     'subpalettes' =>
     [
         'mouse_nav'                   => 'mouse_nav_wheel,mouse_nav_doubleclick_zoom,mouse_nav_zoombox,mouse_nav_dragmode,mouse_nav_kinetic',
-        'starboard'                   => 'layerswitcher,starboard_open,starboard_label,starboard_button,starboard_div,cluster_all',
+        'starboard'                   => 'layerswitcher,starboard_open,starboard_label,starboard_button,starboard_locstyles,starboard_div,cluster_all',
         'cluster_all'                 => 'cluster_distance,cluster_fillcolor,cluster_fontcolor,cluster_zoom, cluster_dist_spider',
         'baselayerswitcher'           => 'baselayerswitcher_label,baselayer_filter',
         'layerswitcher'               => 'layerswitcher_label,layer_filter',
@@ -471,6 +471,14 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'inputType'               => 'checkbox',
             'sql'                     => "char(1) NOT NULL default '0'"
         ],
+        'starboard_locstyles' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_locstyles'],
+                'exclude'                 => true,
+                'default'                 => false,
+                'inputType'               => 'checkbox',
+                'sql'                     => "char(1) NOT NULL default '0'"
+            ],
         'cluster_all' =>
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_all'],
