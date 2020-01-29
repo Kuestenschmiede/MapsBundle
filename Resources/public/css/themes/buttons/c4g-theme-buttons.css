@@ -649,12 +649,9 @@ button.ol-zoom-out {
 }
 
 .c4g-baselayertree li:not(:last-child){
-  padding: 0 .4em .2em .4em;
+  padding-bottom: .2em;
 }
 
-.c4g-baselayertree li:last-child {
-  padding: 0 .4em .4em .4em;
-}
 
 .c4g-layertree li ul,
 .c4g-baselayertree li ul {
@@ -668,8 +665,7 @@ button.ol-zoom-out {
 .c4g-baselayertree li:not(.with-image) a {
   display: block;
   text-decoration: none;
-  padding: 10px;
-  padding-right: 1.75em;
+  padding: 10px 1.75em 10px .2em;
   cursor: pointer;
   position: relative;
 }
