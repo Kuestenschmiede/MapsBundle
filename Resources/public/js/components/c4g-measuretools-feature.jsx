@@ -12,6 +12,7 @@
  */
 import React, { Component } from "react";
 import {getLanguage} from "../c4g-maps-i18n";
+import {utils} from "../c4g-maps-utils";
 
 export class MeasuredFeature extends Component {
 
@@ -29,13 +30,41 @@ export class MeasuredFeature extends Component {
         </div>
         {Object.keys(this.props.measuredValues).map(function(element, index) {
           let obj = scope.props.measuredValues[element];
+          let hrValue = 0.0;
+          switch (element) {
+            case "line":
+            case "radius":
+              hrValue = scope.convertMetersToKm(obj.value);
+              break;
+            case "area":
+              hrValue = scope.convertSquareMetersToSquareKm(obj.value);
+              break;
+          }
           return (<p key={index}>
             <strong>{obj.description}</strong>
-            <span>{obj.value + " m"}</span>
+            <span>{hrValue}</span>
           </p>)
         })}
       </div>
     );
+  }
+
+  convertMetersToKm(distance) {
+    let kmValue = distance / 1000;
+    if (kmValue > 0) {
+      return kmValue + " km";
+    } else {
+      return distance + " m";
+    }
+  }
+
+  convertSquareMetersToSquareKm(area) {
+    let kmValue = area / 1000000;
+    if (kmValue > 0) {
+      return kmValue + " km²";
+    } else {
+      return area + " m²";
+    }
   }
 
 }

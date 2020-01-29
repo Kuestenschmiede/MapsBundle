@@ -16,6 +16,7 @@ import {config} from "./c4g-maps-config";
 import {utils} from "./c4g-maps-utils";
 import {cssConstants} from "./c4g-maps-constant";
 import TileLayer from "ol/layer/Tile";
+import TileJSON from "ol/source/TileJSON";
 import {XYZ} from "ol/source";
 import {OSM} from "ol/source";
 import {ATTRIBUTION as OSM_ATTRIBUTION} from "ol/source/OSM";
@@ -260,6 +261,10 @@ export class C4gBaselayerController {
       case 'klokan':
         if (baseLayerConfig.api_key && baseLayerConfig.klokan_type) {
 
+          if(baseLayerConfig.url.charAt(baseLayerConfig.url.length - 1) != '/') {
+            baseLayerConfig.url = baseLayerConfig.url+'/';
+          }
+
           if (baseLayerConfig.klokan_type === 'OpenMapTiles') {
             layerOptions.url = baseLayerConfig.url + '{z}/{x}/{y}.pbf';
             newBaselayer = new VectorTileLayer({
@@ -268,25 +273,30 @@ export class C4gBaselayerController {
                 layerOptions))
             });
 
-            //ToDo style url
-            fetch(baseLayerConfig.url + '/styles/'+baseLayerConfig.style+'/style.json').then(function(response) {
+            fetch(baseLayerConfig.url + 'styles/' + baseLayerConfig.style +'.json').then(function(response) {
               response.json().then(function(glStyle) {
                 applyStyle(newBaselayer, glStyle, 'openmaptiles');
               });
             });
           } else {
-            layerOptions.url = baseLayerConfig.url + '/data/v3/{z}/{x}/{y}.pbf?key='+baseLayerConfig.api_key;
-            newBaselayer = new VectorTileLayer({
-              source: new VectorTileSource(jQuery.extend(
-                sourceConfigs.klokan[baseLayerConfig.klokan_type],
-                layerOptions))
+            //layerOptions.url = baseLayerConfig.url + '{z}/{x}/{y}.pbf?key='+baseLayerConfig.api_key;
+             newBaselayer = new TileLayer({
+               source: new TileJSON({
+                  url: baseLayerConfig.url + 'styles/' + baseLayerConfig.style+'.json?key='+baseLayerConfig.api_key,
+                  crossOrigin: 'anonymous'
+               })
             });
-
-            fetch(baseLayerConfig.url + '/styles/'+baseLayerConfig.style+'/style.json?key='+baseLayerConfig.api_key).then(function(response) {
-              response.json().then(function(glStyle) {
-                applyStyle(newBaselayer, glStyle, 'openmaptiles');
-              });
-            });
+            // newBaselayer = new VectorTileLayer({
+            //   source: new VectorTileSource(jQuery.extend(
+            //     sourceConfigs.klokan[baseLayerConfig.klokan_type],
+            //     layerOptions))
+            // });
+            //
+            // fetch(baseLayerConfig.url + baseLayerConfig.style+'/style.json?key='+baseLayerConfig.api_key).then(function(response) {
+            //   response.json().then(function(glStyle) {
+            //     applyStyle(newBaselayer, glStyle, 'openmaptiles');
+            //   });
+            // });
           }
         } else {
           console.warn('wrong klokan configuration!');

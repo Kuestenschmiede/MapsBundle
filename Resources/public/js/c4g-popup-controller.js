@@ -195,7 +195,9 @@ export class C4gPopupController {
     if (this.popupHandling < 3) {
       this.currentPopup.close();
     } else {
-      this.currentPopup.setState({open: false});
+      if (this.currentPopup) {
+        this.currentPopup.setState({open: false});
+      }
     }
   }
 

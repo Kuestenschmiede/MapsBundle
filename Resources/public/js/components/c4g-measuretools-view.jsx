@@ -25,11 +25,12 @@ export class MeasuretoolsView extends Component {
 
     this.headlines = {
       "select": "Auswahlmodus",
-      "line": "Auswahlmodus",
-      "polygon": "Auswahlmodus",
-      "circle": "Auswahlmodus",
-      "freehand": "Auswahlmodus"
+      "line": "Strecken messen",
+      "polygon": "Flächen messen",
+      "circle": "Kreise messen",
+      "freehand": "Freihand messen"
     };
+    this.featureIdCtr = this.props.featureId;
     this.updateFunctions = this.createMeasureFunctions();
   }
 
@@ -67,16 +68,21 @@ export class MeasuretoolsView extends Component {
   }
 
   componentDidMount() {
-    this.updateFunctions.initFunction();
+    if (this.props.mode !== "select") {
+      this.updateFunctions.initFunction();
+    }
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (!prevProps.active && this.props.active) {
-      this.updateFunctions.activateFunction();
+    if (this.props.mode !== "select") {
+      if (!prevProps.active && this.props.active) {
+        this.updateFunctions.activateFunction();
+      }
+      if (prevProps.active && !this.props.active) {
+        this.updateFunctions.deactivateFunction();
+      }
     }
-    if (prevProps.active && !this.props.active) {
-      this.updateFunctions.deactivateFunction();
-    }
+    this.featureIdCtr = this.props.featureId;
   }
 
   createMeasureFunctions() {
@@ -93,7 +99,7 @@ export class MeasuretoolsView extends Component {
         getLengthOfMeasure,
         removeMeasureFeature;
 
-      featureIdCount = 1;
+      featureIdCount = scope.featureIdCtr;
 
       if (scope.props.mode.toLowerCase() === 'freehand') {
         source = scope.props.measureTools.measureFreehandLayer.getSource();
@@ -105,7 +111,11 @@ export class MeasuretoolsView extends Component {
         source = scope.props.measureTools.measureLineLayer.getSource();
       }
 
+
       features = new Collection();
+      if (scope.props.mode.toLowerCase() === "select") {
+        return;
+      }
 
       switch (scope.props.mode) {
         case "line":
@@ -171,9 +181,9 @@ export class MeasuretoolsView extends Component {
           measureLine = true;
         }
         // feature.set('listElementValueName', inputElement);
+        featureIdCount = scope.featureIdCtr;
         feature.set('featureId', featureIdCount);
         let measuredFeature = {};
-        // TODO daten eintragen
         measuredFeature.id = featureIdCount;
         measuredFeature.label = strType + " " + featureIdCount;
         feature.set('featureLabel', measuredFeature.label);
@@ -198,7 +208,7 @@ export class MeasuretoolsView extends Component {
         }
         scope.props.addFeature(measuredFeature);
         // increase the id-counter
-        featureIdCount += 1;
+        scope.props.incrFeatId();
         // scope.update();
       }; // end of "addMeasureFeature()"
 
@@ -214,6 +224,7 @@ export class MeasuretoolsView extends Component {
         name = feature.get('featureLabel');
         length = utils.measureGeometry(feature.getGeometry(), true);
         feature.set('measuredLength', length.rawValue);
+        featureTooltip.setContent("<strong>" + name + "</strong>" + "<br>" + length.htmlValue);
         let featureId = feature.get('featureId');
         let newFeature = {};
         newFeature.label = name;
@@ -221,33 +232,33 @@ export class MeasuretoolsView extends Component {
         newFeature.measuredValues = {};
         if (length) {
           newFeature.measuredValues.line = {};
+          newFeature.measuredValues['line'].description = "Länge: ";
           newFeature.measuredValues['line'].value = length.rawValue;
         }
 
         if (feature.get('geometryType') === 'circle') {
           radius = utils.measureGeometry(feature.getGeometry());
-          if (newFeature.measuredValues['radius']) {
-            newFeature.measuredValues['radius'].value = radius.rawValue;
-          }
+          newFeature.measuredValues['radius'] = {
+            description: "Radius: ",
+            value: 0
+          };
+          newFeature.measuredValues['radius'].value = radius.rawValue;
+          featureTooltip.setContent("<strong>" + name + "</strong>" + "<br>" + radius.htmlValue);
         } else if (feature.get('geometryType') === 'polygon') {
           area = utils.measureGeometry(feature.getGeometry());
-          if (newFeature.measuredValues['area']) {
-            newFeature.measuredValues['area'].value = area.rawValue;
-          }
+          newFeature.measuredValues['area'] = {
+            description: "Flächeninhalt: ",
+            value: 0
+          };
+          newFeature.measuredValues['area'].value = area.rawValue;
+          featureTooltip.setContent("<strong>" + name + "</strong>" + "<br>" + area.htmlValue);
         }
-        scope.props.modifyFeature(newFeature, featureId);
+        feature.set('tooltip', featureTooltip);
+        scope.props.modifyFeature(newFeature, newFeature.id);
       }; // end of "updateMeasureFeature()"
 
       removeMeasureFeature = function (feature) {
-        // scope.mainSection.removeChild(feature.get('listElement'));
-        //
-        // // last element? -> add infomessage
-        // if (scope.mainSection.childElementCount < 1) {
-        //   scope.mainSection.appendChild(scope.mainSectionInfo);
-        //   scope.update();
-        // }
-        console.log("feature löschen");
-        // TODO removeFeature implementieren
+        scope.props.removeFeature(feature.get('featureId'));
       }; // end of "removeMeasureFeature()"
 
       //Start Workaround
@@ -300,7 +311,7 @@ export class MeasuretoolsView extends Component {
         function (event) {
           if (activeSketch && activeTooltip) {
             activeTooltip.setPosition(event.coordinate);
-            updateMeasureFeature(activeSketch);
+            // updateMeasureFeature(activeSketch);
           }
         }, scope);
 
@@ -329,7 +340,6 @@ export class MeasuretoolsView extends Component {
 
         // reactivate mapHover
         scope.props.mapController.mapHover.activate();
-
         if (scope.props.mode.toLowerCase() !== 'point') {
           try {
             interaction.finishDrawing();

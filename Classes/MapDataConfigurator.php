@@ -360,6 +360,7 @@ class MapDataConfigurator
                 $mapData['starboard']['label'] = \Contao\Controller::replaceInsertTags($profile->starboard_label);
                 $mapData['starboard']['div'] = $profile->starboard_div;
                 $mapData['starboard']['button'] = $profile->starboard_button;
+                $mapData['starboard']['showLocstyles'] = $profile->starboard_locstyles;
                 $mapData['cluster_all'] = $profile->cluster_all;
                 $mapData['cluster_distance'] = $profile->cluster_distance;
                 $mapData['cluster_fillcolor'] = $profile->cluster_fillcolor;
@@ -539,6 +540,7 @@ class MapDataConfigurator
             // miscellaneous
             //
             $mapData['infopage'] = \Contao\Controller::replaceInsertTags($profile->infopage);
+            $mapData['initial_open_comp'] = $profile->initial_open_comp;
             $mapData['link_newwindow'] = $profile->link_newwindow;
             $mapData['hover_popups'] = $profile->hover_popups;
             $mapData['hover_popups_stay'] = $profile->hover_popups_stay;

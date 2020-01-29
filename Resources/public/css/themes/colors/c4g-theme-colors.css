@@ -261,12 +261,11 @@ span.c4g-active ul li.c4g-active{
 
 .c4g-layertree a,
 .c4g-layertree span,
-.c4g-baselayertree a,
-.c4g-baselayertree span {
+.c4g-baselayertree-content  a {
   color: rgba(255,255,255,.9);
   color: var(--font-color)!important;
 }
-.c4g-baselayertree a.c4g-active {
+.c4g-baselayertree-content  a.c4g-active {
   background-color: rgba(0,155,222,.5);
   background-color: var(--shadow-color);
   color: rgba(255,255,255,.9);
@@ -274,21 +273,19 @@ span.c4g-active ul li.c4g-active{
   cursor: not-allowed;
 }
 .c4g-layertree a:hover,
-.c4g-baselayertree a:hover {
-  background-color: rgba(255,255,255,.9);
+.c4g-baselayertree-content ul li.without-image a:hover {
   background-color: var(--font-color);
-  color: rgba(24, 61, 93,.8);
   color: var(--main-color)!important;
 }
 
-.c4g-baselayertree li.without-image a.c4g-active:hover{
+.c4g-baselayertree-content  li.without-image a.c4g-active:hover{
   background: var(--shadow-color);
   color: var(--font-color)!important;
   cursor: not-allowed;
 }
 
 .c4g-layertree a:after,
-.c4g-baselayertree a:before {
+.c4g-baselayertree-content  a:before {
   border-color: rgba(24, 61, 93,.8);
   border-color: var(--main-color);
 }
@@ -520,33 +517,27 @@ button.c4g-popup-close:hover {
   background-color: var(--shadow-color);
 }
 
-.c4g-baselayertree .c4g-overlay-toggle::-webkit-slider-runnable-track {
-  box-shadow: 1px 1px 1px rgba(0,155,222,.5);
-  box-shadow: 1px 1px 1px var(--shadow-color);
-  background: rgba(255,255,255,.9)!important;
+.c4g-baselayertree-content .c4g-overlay-toggle::-webkit-slider-runnable-track {
   background: var(--font-color)!important;
-  border: 0px solid rgba(0,155,222,.5);
   border: 0px solid var(--shadow-color);
 }
-.c4g-baselayertree .c4g-overlay-toggle::-webkit-slider-thumb {
-  box-shadow: 0px 0px 0px rgba(0,155,222,.5);
-  box-shadow: 0px 0px 0px var(--shadow-color);
-  background: rgba(0,155,222,.5);
-  background: var(--shadow-color);
-}
-.c4g-baselayertree .c4g-overlay-toggle:focus::-webkit-slider-runnable-track {
+.c4g-baselayertree-content .c4g-overlay-toggle::-webkit-slider-thumb {
+  box-shadow: 0px 0px 7px 2px var(--font-color);
+}/*
+.c4g-baselayertree-content .c4g-overlay-toggle:focus::-webkit-slider-runnable-track {
   background: rgba(255,255,255,.9);
   background: var(--font-color);
 }
-.c4g-baselayertree .c4g-overlay-toggle::-moz-range-track {
+
+.c4g-baselayertree-content .c4g-overlay-toggle::-moz-range-track {
   box-shadow: 1px 1px 1px rgba(0,155,222,.5);
   box-shadow: 1px 1px 1px var(--shadow-color);
   background: rgba(255,255,255,.9);
   background: var(--font-color);
   border: 0px solid rgba(0,155,222,.5);
   border: 0px solid var(--shadow-color);
-}
-.c4g-baselayertree .c4g-overlay-toggle::-moz-range-thumb {
+}*/
+.c4g-baselayertree-content .c4g-overlay-toggle::-moz-range-thumb {
   box-shadow: 0px 0px 0px rgba(0,155,222,.5);
   box-shadow: 0px 0px 0px var(--shadow-color);
   border: 1px solid rgba(0,155,222,.5);
@@ -554,12 +545,12 @@ button.c4g-popup-close:hover {
   background: rgba(0,155,222,.5);
   background: var(--shadow-color);
 }
-.c4g-baselayertree .c4g-overlay-toggle::-ms-track {
+.c4g-baselayertree-content .c4g-overlay-toggle::-ms-track {
   background: transparent;
   border-color: transparent;
   color: transparent;
 }
-.c4g-baselayertree .c4g-overlay-toggle::-ms-fill-lower {
+.c4g-baselayertree-content .c4g-overlay-toggle::-ms-fill-lower {
   background: rgba(0,155,222,.5);
   background: var(--shadow-color);
   border: 0px solid rgba(0,155,222,.5);
@@ -567,7 +558,7 @@ button.c4g-popup-close:hover {
   box-shadow: 1px 1px 1px rgba(0,155,222,.5);
   box-shadow: 1px 1px 1px var(--shadow-color);
 }
-.c4g-baselayertree .c4g-overlay-toggle::-ms-fill-upper {
+.c4g-baselayertree-content .c4g-overlay-toggle::-ms-fill-upper {
   background: rgba(0,155,222,.5);
   background: var(--shadow-color);
   border: 0px solid rgba(0,155,222,.5);
@@ -575,7 +566,7 @@ button.c4g-popup-close:hover {
   box-shadow: 1px 1px 1px rgba(0,155,222,.5);
   box-shadow: 1px 1px 1px var(--shadow-color);
 }
-.c4g-baselayertree .c4g-overlay-toggle::-ms-thumb {
+.c4g-baselayertree-content .c4g-overlay-toggle::-ms-thumb {
   box-shadow: 0px 0px 0px rgba(0,155,222,.5);
   box-shadow: 0px 0px 0px var(--shadow-color);
   border: 1px solid rgba(0,155,222,.5);
@@ -583,11 +574,11 @@ button.c4g-popup-close:hover {
   background: rgba(0,155,222,.5);
   background: var(--shadow-color);
 }
-.c4g-baselayertree .c4g-overlay-toggle:focus::-ms-fill-lower {
+.c4g-baselayertree-content .c4g-overlay-toggle:focus::-ms-fill-lower {
   background: rgba(0,155,222,.5);
   background: var(--shadow-color);
 }
-.c4g-baselayertree .c4g-overlay-toggle:focus::-ms-fill-upper {
+.c4g-baselayertree-content .c4g-overlay-toggle:focus::-ms-fill-upper {
   background: rgba(0,155,222,.5);
   background: var(--shadow-color);
 }
@@ -663,7 +654,11 @@ button.c4g-geosearch-start {
   background: var(--main-color);
 }
 
-.c4g-baselayer-container.c4g-open .c4g-baselayertree::-webkit-scrollbar-track {
+.c4g-measuretools-content::-webkit-scrollbar-track {
+  background: var(--main-color);
+}
+
+.c4g-baselayer-container.c4g-open .c4g-baselayertree-content::-webkit-scrollbar-track {
   background: var(--main-color);
 }
 
@@ -671,11 +666,15 @@ button.c4g-geosearch-start {
   background: var(--pu-main-color);
 }
 
+.c4g-measuretools-content::-webkit-scrollbar-thumb {
+  background: var(--font-color);
+}
+
 .c4g-geosearch-results.c4g-open.c4g-beach::-webkit-scrollbar-thumb {
   background: var(--font-color);
 }
 
-.c4g-baselayer-container.c4g-open .c4g-baselayertree::-webkit-scrollbar-thumb {
+.c4g-baselayer-container.c4g-open .c4g-baselayertree-content::-webkit-scrollbar-thumb {
   background: var(--font-color);
 }
 
@@ -687,10 +686,13 @@ button.c4g-geosearch-start {
   background: var(--shadow-color);
 }
 
-.c4g-baselayer-container.c4g-open .c4g-baselayertree::-webkit-scrollbar-thumb:hover {
+.c4g-baselayer-container.c4g-open .c4g-baselayertree-content::-webkit-scrollbar-thumb:hover {
   background: var(--shadow-color);
 }
 
+.c4g-measuretools-content::-webkit-scrollbar-thumb:hover {
+  background: var(--shadow-color);
+}
 
 .c4g-beach-content.c4g-popup-content::-webkit-scrollbar-thumb:hover {
   background: var(--pu-shadow-color);
@@ -715,14 +717,12 @@ background: var(--pu-main-color);
 /*-------------*/
 
 /*--------------------baselayertree-----------*/
-.c4g-baselayertree li.with-image a  span{
+.c4g-baselayertree-content li.with-image > a  span{
   background: var(--font-color);
   color: var(--main-color)!important;
 }
 
-.c4g-baselayer-wrapper .c4g-baselayer-header,
-.c4g-infopage-wrapper .c4g-infopage-header,
-.c4g-starboard-wrapper .c4g-starboard-header {
+.c4g-sideboard > div div[class*=header]{
   color: var(--font-color);
 }
 
@@ -749,4 +749,27 @@ c4g-infopage-container {
 
 .c4g-infopage-content * {
   color: var(--font-color);
+}
+
+.c4g-measuretools-content *:not(input) {
+  color: var(--font-color);
+}
+
+.c4g-measuretools-content input {
+  color: var(--main-color);
+}
+
+.c4g-measuretools-mode-switcher button.c4g-inactive{
+  background-color: var(--font-color);
+  color: var(--main-color);
+}
+
+.c4g-measuretools-mode-switcher button.c4g-inactive:hover{
+  border: 1px solid var(--shadow-color);
+}
+
+.c4g-measuretools-mode-switcher button.c4g-active {
+  color: var(--font-color);
+  background: none;
+  cursor: not-allowed;
 }

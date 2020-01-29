@@ -61,6 +61,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_filter'] = ['Starboardfilt
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['filters'] = ['Filter', 'Wählen Sie die seperat erstellten Filter aus'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['filterHandling'] = ['Filter als Mehrfachauswahl', 'Stellt die Filter auf Mehrfachauswahl um (Logisches Oder statt Und).'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_button'] = ['Auswahl-Button aktivieren','Erstellt einen Button, mit dem alle Elemente des Starboards zeitgleich ein- und ausgeblendet werden. Achtung! Abhängig von der Struktur kann das zu langen Ladezeiten führen.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_locstyles'] = ['Lokationsstile im Starboard anzeigen','Wenn möglich, werden die Lokationsstile der Karte am zugehörigen Element im Starboard dargestellt.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_div'] = ['DIV für das Starboard', 'DIV zur Positionierung des Starboards außerhalb der Karte. Muss manuell auf der Seite erzeugt werden, z.B. mit einem HTML Inhaltselement.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_all'] = ['Cluster über alle Layer', 'Erstellt ein Cluster über alle Layer. Überschreibt die Einstellungen im Strukturelement. Achtung! Diese Funktion ist nicht für alle Strukturelemente geeignet.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_distance'] = ['Cluster-Distanz', 'Ab welcher Entfernung in Pixeln soll geclustert werden?'];
@@ -82,6 +83,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['scaleline'] = ['Maßstabsleiste', 'Z
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouseposition'] = ['Mauskoordinaten', 'Blendet die Geo-Koordinaten des Punktes ein, der sich unterhalb des Mauszeigers befindet.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['zoomlevel'] = ['Zoom-Level anzeigen', 'Zeigt den aktuellen Zoom-Level an.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['infopage'] = ['Infoseite (Legende)', 'Sobald Sie dieses Feld befüllen, wird der Infobutton in der Karte angezeigt. Bei klick werden sämtliche Inhalte entsprechend Ihrer Eingaben dargestellt.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp'] = ['Initial geöffnetes Kartenelement', 'Hier können Sie auswählen, ob ein Element initial geöffnet dargestellt werden soll und wenn ja welches.'];
 
 /** Kartenwerkzeuge */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['measuretool'] = ['Messwerkzeuge', 'Blendet einen Schalter ein, mit dem Werkzeuge zum Messen von Entfernungen und Flächen aktiviert werden können.'];
@@ -178,6 +180,12 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandlingReferences']['3'] = 'Da
 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearchParams']['keys']       = ['Schlüssel','Beispiel:countrycodes'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearchParams']['params']     = ['Parameter', 'Beispiel: de'];
+
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp']['refs'][''] = 'keine';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp']['refs']['starboard'] = 'Starboard';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp']['refs']['search'] = 'Suche';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp']['refs']['baselayers'] = 'Basiskartenwechsler';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp']['refs']['measuretools'] = 'Messwerkzeuge';
 
 /**
  * Buttons
