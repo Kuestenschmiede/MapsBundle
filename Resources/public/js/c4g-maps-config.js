@@ -13,6 +13,7 @@
 import {ATTRIBUTION} from "ol/source/OSM";
 import {MVT} from "ol/format";
 import {createXYZ} from "ol/tilegrid";
+import {XYZ} from "ol/source";
 
 'use strict';
 export var config = {
@@ -163,13 +164,13 @@ export var config = {
 
     HERE: {
       tileSize: [512, 512],
-      attributions: 'Map Tiles © <a target="_blank" rel="noopener" href="https://developer.here.com">HERE</a>'+ ' ' +
-        ATTRIBUTION,
+      attributions: 'Map Tiles &copy; ' + new Date().getFullYear() + ' ' +
+          '<a href="http://developer.here.com">HERE</a>' + ' ' +
+          ATTRIBUTION,
       minZoom: 0,
       maxZoom: 22,
       crossOrigin: 'anonymous',
     }
-
   },
 
   thunderforest: {

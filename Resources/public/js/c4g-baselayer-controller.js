@@ -332,6 +332,7 @@ export class C4gBaselayerController {
           }
 
           newBaselayer = new TileLayer({
+            preload: Infinity,
             source: new XYZ(jQuery.extend(
               sourceConfigs.here[baseLayerConfig.here_type],
               layerOptions))
