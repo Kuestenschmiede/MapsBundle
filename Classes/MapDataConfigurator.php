@@ -166,7 +166,6 @@ class MapDataConfigurator
                 $mapData['scaleline'] = false;
                 $mapData['mouseposition'] = false;
                 $mapData['zoomlevel'] = 1;
-                $mapData['account'] = 0;
                 $mapData['caching'] = 0;
             }
         }
@@ -416,11 +415,6 @@ class MapDataConfigurator
                 $mapData['permalink']['get_parameter'] = $profile->permalink_get_param;
             }
             $mapData['zoomlevel'] = $profile->zoomlevel;
-            if ($profile->account > 0) {
-                $mapData['account'] = \Contao\Controller::replaceInsertTags('{{insert_module::' . $profile->account . '}}', false);
-            } else {
-                $maptData['account'] = '';
-            }
 
             if ($profile->caching) {
                 $mapData['caching'] = 1;

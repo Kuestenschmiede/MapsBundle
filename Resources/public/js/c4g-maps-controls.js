@@ -18,7 +18,6 @@ import {Grid} from "./c4g-maps-control-grid";
 import {Zoomlevel} from "./c4g-maps-control-zoomlevel";
 import {OverviewMap} from "./c4g-maps-control-overviewmap";
 import {Permalink} from "./c4g-maps-control-permalink";
-import {Account} from "./c4g-maps-control-portside-account";
 import {GeoPicker} from "./c4g-maps-interaction-geopicker";
 import {Home} from "./c4g-maps-control-home";
 import {Position} from "./c4g-maps-control-position";
@@ -373,6 +372,7 @@ export class MapsControls {
             });
             map.addControl(this.controls.graticule);
         }
+
         // rotate-control
         //TODO: use something like "mapData.rotate"
         //   Check: mapData.mouse_nav (defined?)
@@ -380,38 +380,10 @@ export class MapsControls {
             this.controls.rotate = new Rotate({
                 label: ' ',
                 tipLabel: langConstants.CTRL_RESET_ROTATION,
-                target: controlContainerTopLeft
+                target: controlContainerTopLeft,
+                autoHide: true
             });
             map.addControl(this.controls.rotate);
-        }
-        // infopage
-        // if (mapData.infopage && typeof mapData.infopage === "string" && typeof Infopage === 'function') {
-        //     this.controls.infopage = new Infopage({
-        //         tipLabel: langConstants.CTRL_INFOPAGE,
-        //         target: controlContainerTopLeft,
-        //         caching: mapData.caching,
-        //         mapController: this.mapController,
-        //         direction: "left"
-        //     });
-        //     map.addControl(this.controls.infopage);
-        //     // open if opened before
-        //     if ((mapData.caching && (utils.getValue(this.controls.infopage.options.name) === '1'))) {
-        //         this.controls.infopage.open();
-        //     }
-        // }
-        // account
-        if (mapData.account && typeof Account === 'function') {
-            this.controls.account = new Account({
-                tipLabel: langConstants.CTRL_ACCOUNT,
-                target: controlContainerTopLeft,
-                caching: mapData.caching,
-                mapController: this.mapController
-            });
-            map.addControl(this.controls.account);
-            // open if opened before
-            if ((mapData.caching && (utils.getValue(this.controls.account.options.name) === '1'))) {
-                this.controls.account.open();
-            }
         }
     }
 

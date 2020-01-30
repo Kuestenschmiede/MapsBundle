@@ -700,20 +700,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'sql'                     => "char(1) NOT NULL default ''"
         ],
 
-        'account' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['account'],
-            'exclude'                 => true,
-            'inputType'               => 'select',
-            'options_callback'        => ['tl_c4g_map_profiles', 'getModules'],
-            'eval'                    => ['includeBlankOption'=>true, 'mandatory'=>false, 'chosen'=>true, 'submitOnChange'=>false, 'tl_class'=>'w50 wizard'],
-            'wizard' =>
-            [
-                ['tl_c4g_map_profiles', 'editModule']
-            ],
-            'sql'                     => "int(10) unsigned NOT NULL default '0'"
-        ],
-
         'geosearch' =>
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch'],

@@ -55,8 +55,6 @@ export var cssConstants = {
   INFOPAGE: 'c4g-infopage',
   ADDITIONALPANEL_VIEW_TRIGGER: 'c4g-additionalpanel-view-trigger',
   ADDITIONALPANEL: 'c4g-additionalpanel',
-  ACCOUNT_VIEW_TRIGGER: 'c4g-account-view-trigger',
-  ACCOUNT: 'c4g-account',
   OVERVIEWMAP: 'c4g-overviewmap',
   OVERVIEWMAP_WRAPPER: 'c4g-overviewmap-wrapper',
   GEOBOOKMARKS: 'c4g-geobookmarks',

@@ -141,7 +141,6 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['openDirectly'] = ['Popup direkt aufk
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overpassEngine'] = ['Overpass-Servertechnik', 'Auswahl der Overpass-Servertechnik'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overpass_url'] = ['Alternative URL der Overpass-API ', 'Geben Sie hier die URL des Overpass API Servers ein, wenn Sie z.B. einen eigenen Overpass API Server nutzen möchten.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['custom_div'] = ['DIV für den Kartenbereich', 'DIV zur Umpositionierung des Kartenbereichs. Mit Hilfe dieser Einstellung lässt sich die Karte z.B. mitten in ein Formular hinein verschieben. Das DIV muss manuell auf der Seite erzeugt werden, z.B. mit einem HTML Inhaltselement oder HTML Formularfeld.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['account'] = ['Accountbutton', 'Sobald Sie ein Frontendmodul auswählen, wird der Accountbutton dargestellt.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['caching'] = ['Kartensituation merken', 'Buttonstatus und Kartensituation werden im Browser zwischengespeichert.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['be_optimize_checkboxes_limit'] = ['Grenzwert für Optimierung großer Checkbox-Listen', 'Definiert wie viele Einträge enthalten sein müssen, bis die Checkbox-Listen in Chosenfields umgewandelt werden. (0 = niemals umwandeln)'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['filter_div'] = ['DIV für Kartenfilter', 'Geben Sie den CSS-Selektor für einen DIV ein, in dem der Kartenfilter dargestellt werden soll.'];
