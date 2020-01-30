@@ -22,6 +22,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
         [
         'dataContainer'               => 'Table',
         'enableVersioning'            => true,
+        'onload_callback' => [['tl_c4g_map_themes', 'showInfoMessage']],
         'sql'                         =>
             [
             'keys' =>
@@ -429,5 +430,14 @@ class tl_c4g_map_themes extends Backend
         $args[4] = '<div style="color:'.$fontcolor.';text-shadow: 1px 1px #000000;">'.$fontcolor.'</div>';
 
         return $args;
+    }
+
+
+    /**
+     * @param \Contao\DataContainer $dc
+     */
+    public function showInfoMessage(Contao\DataContainer $dc)
+    {
+        \Contao\Message::addInfo($GLOBALS['TL_LANG']['tl_c4g_map_themes']['infotext']);
     }
 }

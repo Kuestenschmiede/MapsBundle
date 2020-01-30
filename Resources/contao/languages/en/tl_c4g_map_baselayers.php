@@ -14,6 +14,9 @@
 /**
  * Fields
  */
+
+use Contao\StringUtil;
+
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['name']           		= array('Name', 'Please enter the name of the base layer.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['display_name']   		= array('Name in "Starboard"', 'Default: content of field "Name".');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['sort']   		  		= array('Sort', 'Enter a number here to define a user defined order for the base layers in the layer switcher control.');
@@ -152,3 +155,12 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['overlays']   = array('Overlay laye
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['general_legend']			= 'General';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['protection_legend']	    = 'Access protection';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['cesium_legend']           = 'Cesium settings';
+
+/**
+ * Info text
+ */
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['infotext'] = 'The base map is the lowest map layer (the map image). '.
+    'You can load raster or vector maps via different map providers or via your own map servers. The same applies to overlays. '.
+    'Overlays are pieces of map, partially transparent maps or fixed map information that is an integral part of the map as an overlying layer. '.
+    'Overlays can be added for each map using the left button in the base map list. '.
+    'More on <a href="https://docs.con4gis.org/basiskarten_con4gis-Maps" title="con4gis docs base maps" target="_blank" rel="noopener"><b>docs.con4gis.org</b></a>';

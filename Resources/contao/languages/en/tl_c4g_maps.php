@@ -27,7 +27,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['margin'] = array('Map margin', 'Enter the ma
 // $GLOBALS['TL_LANG']['tl_c4g_maps']['auto_width_min'] = array('Minimum map width (px)', '');
 // $GLOBALS['TL_LANG']['tl_c4g_maps']['auto_width_max'] = array('Maximum map width (px)', '');
 // $GLOBALS['TL_LANG']['tl_c4g_maps']['auto_height'] = array('Align map height to browser height', '');
-// $GLOBALS['TL_LANG']['tl_c4g_maps']['auto_height_gap'] = array('Bottom gap (px)', '');
+// $GLOBALS['TL_LANG']['tl_c4g_maps']['auto_height_gap'] = array('Bottom gap (px)', '');/**
 // $GLOBALS['TL_LANG']['tl_c4g_maps']['auto_height_min'] = array('Minimum map height (px)', '');
 // $GLOBALS['TL_LANG']['tl_c4g_maps']['auto_height_max'] = array('Maximum map height (px)', '');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['show_locations'] = array('Show all Locations', 'Adjusts the view of the map to fit all locations. Does not work with locations from asynchronous request (e.g. Overpass).');
@@ -194,3 +194,10 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['backend_legend']        = 'Backend settings'
 $GLOBALS['TL_LANG']['tl_c4g_maps']['publish_legend']        = 'Publish settings';
 
 $GLOBALS['TL_LANG']['tl_c4g_maps']['editalias'] = array('Edit source element', 'Edit the source element ID %s');
+
+/**
+ * Info text
+ */
+$GLOBALS['TL_LANG']['tl_c4g_maps']['infotext'] = 'The map structure describes the map and all map contents. Here you can build powerful structures that can be switched via the starboard. '.
+    'The map is the parent element. You can add points, routes and areas to the map yourself or connect them via the numerous location types. '.
+    'Mehr auf <a href="https://docs.con4gis.org/kartenstrukturen_con4gis_maps" title="con4gis Docs map structure" target="_blank" rel="noopener"><b>docs.con4gis.org</b></a>';

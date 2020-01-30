@@ -64,3 +64,9 @@ $GLOBALS['TL_LANG']['tl_c4g_map_tables']['parentLegend']		= 'Elterntabellen (opt
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['geoLegend']		    = 'Lokation (setzen Sie entweder X- und Y-Koordinate oder die Geolokation)';
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['projLegend']		    = 'Eigene Projektion';
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['tableInformation']	= 'Zuordnung der Tabellenspalten (optional)';
+
+/**
+ * Info text
+ */
+$GLOBALS['TL_LANG']['tl_c4g_map_tables']['infotext'] = 'An dieser Stelle könnt Ihr Contao-Tabellen oder eigene Tabellen mit der Karte verknüpfen. '.
+    'Mehr auf <a href="https://docs.con4gis.org/kartenstrukturen-quelltabellen" title="con4gis Docs Quelltabellen" target="_blank" rel="noopener"><b>docs.con4gis.org</b></a>';

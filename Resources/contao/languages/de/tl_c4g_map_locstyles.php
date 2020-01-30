@@ -136,3 +136,10 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['zoom_legend']  	= 'Zoomstufen';
  * Globals
  */
 $GLOBALS['TL_LANG']['MSC']['ow_value'] = 'Label im Editor';
+
+/**
+ * Info text
+ */
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['infotext'] = 'Lokationsstile beschreiben die Art der Darstellung eines Kartenelements. Bspw. kann eine Lokation als Photo, Icon oder Symbol dargestellt werden. '.
+    'Auch Farben für Linien und Flächen werden hier definiert und die genaue Position der Bilder und Label (Positionsversatz). '.
+    'Mehr auf <a href="https://docs.con4gis.org/lokationsstile-in-con4gis-maps" title="con4gis Docs Lokationsstile" target="_blank" rel="noopener"><b>docs.con4gis.org</b></a>';

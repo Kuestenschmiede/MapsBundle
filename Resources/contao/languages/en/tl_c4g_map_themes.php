@@ -57,3 +57,9 @@ $GLOBALS['TL_LANG']['tl_c4g_map_themes']['buttons_legend'] = 'Buttons';
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['colors_legend']  = 'Colors';
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['effects_legend'] = 'Effects';
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['icons_legend']   = 'Icons';
+
+/**
+ * Info text
+ */
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['infotext'] = 'The map layout gives you the possibility to easily override the colors of the map and shapes of the controls. '.
+    'Mehr auf <a href="https://docs.con4gis.org/kartenlayouts_con4gis_maps" title="con4gis Docs map layout" target="_blank" rel="noopener"><b>docs.con4gis.org</b></a>';

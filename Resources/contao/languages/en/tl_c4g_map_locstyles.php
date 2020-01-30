@@ -137,3 +137,10 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['zoom_legend']  	= 'Zoom settings';
  * Globals
  */
 $GLOBALS['TL_LANG']['MSC']['ow_value'] = 'Editor label';
+
+/**
+ * Info text
+ */
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['infotext'] = 'Location styles describe the way a map element is displayed. For example, a location can be displayed as a photo, icon or symbol. '.
+    'Colors for lines and areas are also defined here as well as the exact position of the images and labels (position offset). '.
+    'More on <a href="https://docs.con4gis.org/lokationsstile-in-con4gis-maps" title="con4gis Docs location styles" target="_blank" rel="noopener"><b>docs.con4gis.org</b></a>';

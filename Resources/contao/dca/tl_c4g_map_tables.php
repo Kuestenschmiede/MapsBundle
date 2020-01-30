@@ -29,7 +29,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
                 'id' => 'primary'
             ]
         ],
-        'onload_callback' => [['con4gis\MapsBundle\Classes\Contao\Callbacks\TlC4gMapSettings','addDefaultTables']]
+        'onload_callback' => [['con4gis\MapsBundle\Classes\Contao\Callbacks\TlC4gMapSettings','addDefaultTables'],['tl_c4g_map_tables', 'showInfoMessage']]
     ],
     'list' =>
         [
@@ -395,5 +395,14 @@ class tl_c4g_map_tables extends Backend
 
         $args[1] = \Contao\Controller::replaceInsertTags($args[1]);
         return $args;
+    }
+
+
+    /**
+     * @param \Contao\DataContainer $dc
+     */
+    public function showInfoMessage(Contao\DataContainer $dc)
+    {
+        \Contao\Message::addInfo($GLOBALS['TL_LANG']['tl_c4g_map_tables']['infotext']);
     }
 }

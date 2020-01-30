@@ -59,3 +59,9 @@ $GLOBALS['TL_LANG']['tl_c4g_map_themes']['buttons_legend'] = 'Bedienelemente';
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['colors_legend']  = 'Farben';
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['effects_legend'] = 'Effekte';
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['icons_legend']   = 'Icons';
+
+/**
+ * Info text
+ */
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['infotext'] = 'Das Kartenlayout gibt Euch die Möglichkeiten die Farben der Karte und Formen der Bedienelemente auf einfache Art und Weise zu überschreiben. '.
+    'Mehr auf <a href="https://docs.con4gis.org/kartenlayouts_con4gis_maps" title="con4gis Docs Kartenlayout" target="_blank" rel="noopener"><b>docs.con4gis.org</b></a>';

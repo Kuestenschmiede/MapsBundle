@@ -65,3 +65,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_tables']['geoLegend']		    = 'Location (set eith
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['tableInformation']	= 'Assign table columns (optional)';
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['projLegend']		    = 'Custom projection';
 
+/**
+ * Info text
+ */
+$GLOBALS['TL_LANG']['tl_c4g_map_tables']['infotext'] = 'At this point you can link Contao tables or your own tables to the map. '.
+    'Mehr auf <a href="https://docs.con4gis.org/kartenstrukturen-quelltabellen" title="con4gis Docs source tablesAt this point you can link Contao tables or your own tables to the map. " target="_blank" rel="noopener"><b>docs.con4gis.org</b></a>';

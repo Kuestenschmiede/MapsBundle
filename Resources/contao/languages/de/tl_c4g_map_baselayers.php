@@ -151,3 +151,12 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['overlays']   = array('Overlaykarte
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['general_legend']		= 'Allgemeine Daten';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['protection_legend']	= 'Zugriffsschutz';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['cesium_legend']       = 'Cesium Einstellungen';
+
+/**
+ * Info text
+ */
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['infotext'] = 'Die Basiskarte ist die unterste Kartenschicht (das Kartenbild). '.
+    'Über verschiedene Kartenanbieter oder über eigene Kartenserver könnt Ihr Raster- oder Vektorkarten laden. Gleiches gilt für Overlays. '.
+    'Overlays sind Kartenstücke, teiltransparente Karten oder feste Karteninformationen, die als aufliegende Schicht fester Bestandteil der Karte ist. '.
+    'Overlays lassen sich über den linken Button in der Basiskartenauflistung für jede Karte hinzubringen. '.
+    'Mehr auf <a href="https://docs.con4gis.org/basiskarten_con4gis-Maps" title="con4gis Docs Basiskarten" target="_blank" rel="noopener"><b>docs.con4gis.org</b></a>';

@@ -41,6 +41,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
             ['\con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator', 'purgeLocationstyleApiCache'],
             ['\con4gis\MapsBundle\Classes\Contao\Callbacks\TlC4gMapLocstyles', 'editSvgIcon']
         ],
+        'onload_callback' => [['tl_c4g_map_locstyles', 'showInfoMessage']],
         'sql'                         =>
             [
             'keys' =>
@@ -710,5 +711,14 @@ class tl_c4g_map_locstyles extends Backend
         $image = 'bundles/con4gismaps/images/be-icons/locationstyles.svg';
         $args[0] = '<div class="list_icon_new" style="background-image:url('.$image.')" data-icon="'.$image.'">&nbsp;</div>';
         return $args;
+    }
+
+
+    /**
+     * @param \Contao\DataContainer $dc
+     */
+    public function showInfoMessage(Contao\DataContainer $dc)
+    {
+        \Contao\Message::addInfo($GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['infotext']);
     }
 }

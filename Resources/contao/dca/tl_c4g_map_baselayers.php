@@ -29,6 +29,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
         'onsubmit_callback'             => [
             [\con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator::class, 'purgeBaselayerApiCache']
         ],
+        'onload_callback' => [['tl_c4g_map_baselayers', 'showInfoMessage']],
         'sql'                         =>
             [
             'keys' =>
@@ -38,7 +39,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                 ]
             ],
         ],
-
     // List
     'list' =>
         [
@@ -753,6 +753,14 @@ class tl_c4g_map_baselayers extends Backend
             }
             return $arrReturn;
         }
+    }
+
+    /**
+     * @param \Contao\DataContainer $dc
+     */
+    public function showInfoMessage(Contao\DataContainer $dc)
+    {
+        \Contao\Message::addInfo($GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['infotext']);
     }
 }
 

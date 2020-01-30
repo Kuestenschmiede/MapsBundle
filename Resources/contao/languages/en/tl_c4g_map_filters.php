@@ -38,3 +38,9 @@ $GLOBALS['TL_LANG'][$strName]['edit']       = array('Edit filter', 'Edit filter 
 $GLOBALS['TL_LANG'][$strName]['copy']       = array('Copy filter', 'Copy filter ID %s');
 $GLOBALS['TL_LANG'][$strName]['delete']     = array('Delete filter', 'Delete filter ID %s');
 $GLOBALS['TL_LANG'][$strName]['show']       = array('Show filter', 'Show details of filter ID %s');
+
+/**
+ * Info text
+ */
+$GLOBALS['TL_LANG']['tl_c4g_map_filters']['infotext'] = 'WRITE ME TEXT '.
+    'More on <a href="https://docs.con4gis.org/kartenfilter_con4gis-Maps" title="con4gis Docs map filter" target="_blank" rel="noopener"><b>docs.con4gis.org</b></a>';
