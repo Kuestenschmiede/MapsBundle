@@ -2,6 +2,7 @@
   --button-radius-percent: 0%;
   --button-radius-pixel: 0px;
   --button-size-pixel: 36px;
+  --button-fontsize-pixel: 16px;
   --font-size: 16px;
 }
 
@@ -29,7 +30,8 @@
   display: block;
   margin: 1px;
   padding: 0;
-  font-size: 1.14em;
+  font-size: 16px;
+  font-size: var(--button-fontsize-pixel);
   text-decoration: none;
   text-align: center;
   height: 36px; /*1.974em;*/

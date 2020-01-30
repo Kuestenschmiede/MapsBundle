@@ -28,6 +28,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_themes']['custom_buttons'] = array('Eigene Butto
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['external_buttons']  = array('Eigene Buttons', 'Laden Sie Ihre eigene CSS-Datei hoch (Beispiele unter files/con4gis).');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['buttonradius']  = array('Radius der Button', 'Geben Sie hier den Buttonradius in Prozent ein.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['buttonsize'] = array('Größe der Button', 'Geben Sie hier die Größe der Button (Bedienelemente links) in Pixel an. Standard ist 36x36 px.');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['button_fontsize'] = array('Größe der Buttonschrift (Icon)', 'Geben Sie hier die Größe der Buttonschrift an. Dadurch wird die Größe des Icons verändert.');
 
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['colors']  = array('Farben-CSS', 'Wählen Sie einen Stil für die Farben aus.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['custom_colors'] = array('Eigene Farben-CSS', 'Wählen Sie diese Option, wenn Sie eine eigene CSS-Datei verwenden wollen.');

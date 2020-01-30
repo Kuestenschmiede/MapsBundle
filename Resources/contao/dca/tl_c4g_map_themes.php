@@ -101,7 +101,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
     'palettes' =>
         [
         '__selector__' => ['custom_colors', 'custom_buttons', 'custom_effects', 'custom_icons'],
-        'default' => '{theme_legend}, name, useglobal; {colors_legend}, maincolor, mainopacity, fontcolor, fontopacity, shadowcolor, shadowopacity, popupMaincolor, popupMainopacity, popupFontcolor, popupFontopacity, colors, custom_colors; {buttons_legend}, buttonradius, buttonsize, buttons, custom_buttons; {effects_legend}, effects, custom_effects; {icons_legend}, icons, custom_icons',
+        'default' => '{theme_legend}, name, useglobal; {colors_legend}, maincolor, mainopacity, fontcolor, fontopacity, shadowcolor, shadowopacity, popupMaincolor, popupMainopacity, popupFontcolor, popupFontopacity, colors, custom_colors; {buttons_legend}, buttonradius, buttonsize, button_fontsize, buttons, custom_buttons; {effects_legend}, effects, custom_effects; {icons_legend}, icons, custom_icons',
         ],
 
     //Subpalettes
@@ -188,6 +188,15 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
             'options'                 => ['px'],
             'eval'                    => ['tl_class'=>'long', 'mandatory'=>true],
             'sql'                     => "varchar(100) NOT NULL default 'a:2:{s:4:\"unit\";s:2:\"px\";s:5:\"value\";s:2:\"36\";}'"
+            ],
+        'button_fontsize' =>
+            [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['button_fontsize'],
+            'inputType'               => 'inputUnit',
+            'default'                 => '16',
+            'options'                 => ['px'],
+            'eval'                    => ['tl_class'=>'long', 'mandatory'=>true],
+            'sql'                     => "varchar(100) NOT NULL default 'a:2:{s:4:\"unit\";s:2:\"px\";s:5:\"value\";s:2:\"16\";}'"
             ],
         'colors' =>
             [

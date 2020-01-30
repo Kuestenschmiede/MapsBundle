@@ -28,6 +28,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_themes']['custom_buttons'] = array('Custom butto
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['external_buttons']  = array('Custom buttons', 'Upload your own CSS-File.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['buttonradius']  = array('Button radius', 'Button radius in percent.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['buttonsize'] = array('Button size', 'Specify the size of the buttons (controls on the left) in pixel here. Default is 36x36 px.');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['button_fontsize'] = array('Size of the button font (icon)', 'Specify the size of the button font here. This changes the size of the icon.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['colors']  = array('Colors', 'Choose a style for the colors.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['custom_colors'] = array('Custom colors', 'Check this options, if you want to use your own CSS.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['external_colors']  = array('Custom colors', 'Upload your own CSS-File.');
