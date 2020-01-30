@@ -891,7 +891,7 @@ export class MapController extends Component {
           geosearchOptions.resultsDiv = this.searchResultsContainer;
         } else {
           this.searchContainer = document.createElement('div');
-          this.searchContainer.className = "c4g-geosearch-container-right ";
+          this.searchContainer.className = "c4g-sideboard c4g-geosearch-container-right ";
           this.searchContainer.className += mapData.geosearch.collapsed ? "c4g-close" : "c4g-open";
         }
         // this.components.geosearch = ReactDOM.render(React.createElement(GeoSearch, geosearchOptions), this.searchContainer);
