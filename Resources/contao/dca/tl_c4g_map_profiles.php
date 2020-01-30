@@ -125,9 +125,9 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
     'subpalettes' =>
     [
         'mouse_nav'                   => 'mouse_nav_wheel,mouse_nav_doubleclick_zoom,mouse_nav_zoombox,mouse_nav_dragmode,mouse_nav_kinetic',
-        'starboard'                   => 'layerswitcher,starboard_label,starboard_button,starboard_locstyles,starboard_div,cluster_all',
+        'starboard'                   => 'layerswitcher,starboard_label,starboard_button,starboard_locstyles,starboard_div,starboard_filter,cluster_all',
         'cluster_all'                 => 'cluster_distance,cluster_fillcolor,cluster_fontcolor,cluster_zoom, cluster_dist_spider',
-        'baselayerswitcher'           => 'baselayerswitcher_label,baselayer_filter',
+        'baselayerswitcher'           => 'baselayerswitcher_label,baselayerswitcher_filter',
         'layerswitcher'               => 'layerswitcher_label,layer_filter',
         'attribution'                 => 'always_show_attribution,collapsed_attribution,add_attribution,cfg_logo_attribution,div_attribution',
         'hover_popups'                => 'hover_popups_stay',
@@ -546,6 +546,14 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'inputType'               => 'text',
             'eval'                    => ['maxlength'=>254],
             'sql'                     => "varchar(254) NOT NULL default ''"
+        ],
+        'baselayerswitcher_filter' =>
+        [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayerswitcher_filter'],
+            'exclude'                 => true,
+            'default'                 => false,
+            'inputType'               => 'checkbox',
+            'sql'                     => "char(1) NOT NULL default '0'"
         ],
         'layerswitcher' =>
         [

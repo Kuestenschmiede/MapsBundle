@@ -65,7 +65,8 @@ export class BaselayerSwitcher extends Component {
       className: props.className || "c4g-baselayerswitcher-panel",
       control: control,
       baselayerLoaded: baselayerLoaded,
-      currentBaselayer: 0
+      currentBaselayer: 0,
+      baselayerFilter: ""
     };
   }
 
@@ -73,11 +74,26 @@ export class BaselayerSwitcher extends Component {
 
   }
 
+  getFilteredBaselayerIds() {
+    let arrBaselayers = this.props.baselayerController.arrBaselayers;
+    let ids = this.props.baselayerController.baselayerIds;
+    let returnIds = [];
+    if (this.state.baselayerFilter === "") {
+      returnIds = ids;
+    } else {
+      for (let i = 0; i < ids.length; i++) {
+        let baselayer = arrBaselayers[ids[i]];
+        if (baselayer.name.indexOf(this.state.baselayerFilter) !== -1) {
+          returnIds.push(ids[i]);
+        }
+      }
+    }
+    return returnIds;
+  }
+
   render() {
     let arrBaselayers = this.props.baselayerController.arrBaselayers;
-    let baseLayerIds = this.props.baselayerController.baselayerIds;
-    let className = this.state.className;
-    className += " " + (this.state.open ? "c4g-open" : "c4g-close");
+    let baseLayerIds = this.getFilteredBaselayerIds();
     if (this.state.open) {
       jQuery(this.state.control.element).addClass("c4g-open").removeClass("c4g-close");
       jQuery(".c4g-baselayer-container").addClass("c4g-open").removeClass("c4g-close");
@@ -92,6 +108,9 @@ export class BaselayerSwitcher extends Component {
         <Titlebar wrapperClass={"c4g-baselayer-header"} headerClass={"c4g-baselayer-headline"}
           header={headline} closeBtnClass={"c4g-baselayer-close"} closeBtnCb={this.close}/>
         <div className={"c4g-baselayertree-content"}>
+          <div className={"c4g-baselayer-filter"}>
+            <input className={"c4g-baselayer-filter-field"} type="text" onInput={() => {this.filterBaselayers(this.value)}}/>
+          </div>
           <ul>
             {baseLayerIds.map(function(element, index) {
               let baselayer = arrBaselayers[element];
@@ -124,6 +143,11 @@ export class BaselayerSwitcher extends Component {
         </div>
       </div>
     )
+  }
+
+  filterBaselayers(fieldValue) {
+    let filterValue = jQuery(".c4g-baselayer-filter-field").val();
+    this.setState({baselayerFilter: filterValue});
   }
 
   entryClick(id) {

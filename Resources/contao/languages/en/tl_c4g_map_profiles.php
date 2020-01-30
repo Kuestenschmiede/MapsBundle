@@ -24,7 +24,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayers'] = ['Base layers', 'Chec
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['default_baselayer'] = ['Default Base Layer', 'Select the base layer to be pre-selected when the map is laoded.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayerswitcher'] = ['Show Base Maps', 'If checked, the base maps can be selected in the Starboard.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayerswitcher_label'] = ['Header Base Maps', 'Default: "Base Maps"'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayer_filter'] = ['Enables baselayer filter', 'Shows a filter field above the baselayerswitcher.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayerswitcher_filter'] = ['Enables baselayer filter', 'Shows a filter field above the baselayerswitcher.'];
 
 /** Lokationsstile */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['locstyles'] = ['Location styles', 'Check the location styles available for map structure items using this profile. Default: all'];

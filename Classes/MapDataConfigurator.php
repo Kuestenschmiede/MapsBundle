@@ -369,7 +369,7 @@ class MapDataConfigurator
                 // Baselayerswitcher
                 $mapData['baselayerswitcher']['enable'] = $profile->baselayerswitcher;
                 $mapData['baselayerswitcher']['label'] = \Contao\Controller::replaceInsertTags($profile->baselayerswitcher_label);
-                $mapData['baselayerswitcher']['filter'] = $profile->baselayer_filter;
+                $mapData['baselayerswitcher']['filter'] = $profile->baselayerswitcher_filter;
                 // Layerswitcher
                 $mapData['layerswitcher']['enable'] = $profile->layerswitcher;
                 $mapData['layerswitcher']['label'] = \Contao\Controller::replaceInsertTags($profile->layerswitcher_label);
