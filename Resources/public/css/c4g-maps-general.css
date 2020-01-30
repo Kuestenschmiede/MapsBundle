@@ -275,10 +275,6 @@ button.c4g-geosearch-start:before {
   min-width: 97%;
 }
 
-.c4g-starboard-content-container {
-  max-height: calc(var(--map-height) - .4em - (calc(32px + .4em)));
-}
-
 .c4g-starboard-content-container::-webkit-scrollbar {
   width: .2em!important;
 }
@@ -334,7 +330,6 @@ button.c4g-geosearch-start:before {
   float: right;
 }
 
-.c4g-starboard-content-container,
 .c4g-portside-content-container {
   overflow-wrap: break-word;
   overflow-y: auto;
@@ -487,7 +482,7 @@ button.ol-zoom-position:before{
 /*
  * Popups
  */
-.c4g-popup-wrapper {
+.ol-selectable  .c4g-popup-wrapper {
   border: 1px solid;
   border-radius: 5px;
   position: relative;
@@ -511,12 +506,6 @@ div.c4g-active.c4g-popup-wrapper *:last-child {
   top: .4em;
 }
 /*Todo für die Höhenberechnung muss die eigentliche Karte und nicht der Bildschirm verwendet werden.*/
-.c4g-popup-wrapper .c4g-popup-content {
-  padding: .2em .4em .4em;
-  overflow-y: auto;
-  max-height: 75vh;
-  max-width: 75vw;
-}
 
 .c4g-tooltip-popup {
   z-index: 20;
@@ -897,9 +886,6 @@ input.c4g-panel-button {
   .c4g-measure .c4g-portside-content-container {
     max-width: none;
   }
-  .c4g-popup-wrapper {
-    max-width: 360px;
-  }
 }
 @media screen and (max-width: 460px) {
   .c4g-attribution-logo {
@@ -1197,24 +1183,6 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
 .c4g-geosearch-wrapper.c4g-close { display: none; }
 
 
-
-button.c4g-titlebar-close, .c4g-geosearch-results button {
-  background: none;
-  border: none;
-  outline: none;
-  padding: 0;
-  cursor: pointer;
-}
-
-.c4g-geosearch-results-close,
-.c4g-geosearch-options,
-.c4g-titlebar-close,
-.c4g-beach-options,
-.c4g-icon.c4g-popup-route-from,
-.c4g-icon.c4g-popup-route-to {
- float: right;
-}
-
 .c4g-horizon-content input {
   height: 28px;
   max-width: calc(100% - 35px - .4em);
@@ -1247,16 +1215,16 @@ button.c4g-geosearch-options:before {
 }
 
 /* Results*/
-
+/*
 .c4g-beach {
-  /*position: absolute;*/
+  /*position: absolute;*//*
   bottom: 0;
   left:calc(42px + .4em);
   right: calc(42px + .4em);
   margin: auto;
   width: auto;
   z-index: 60;
-}
+}*/
 
 .c4g-geosearch-results.c4g-beach.external {
   bottom: unset;
@@ -1269,9 +1237,6 @@ button.c4g-geosearch-options:before {
 .c4g-geosearch-results-header.c4g-beach-header { line-height: 40px; }
 .c4g-geosearch-results-header.c4g-beach-header span { padding-left: 10px; font-size: 20px;}
 .c4g-geosearch-results-header.c4g-beach-header button { height: 40px; width: 40px; font-size: 15px; }
-
-.c4g-beach-content ul { padding: 0 0 .4em 0; list-style-type: none; }
-.c4g-beach-content ul li { padding: 0 .4em; }
 
 .c4g-geosearch-results .searchResultButton {
   overflow: hidden;
@@ -1310,39 +1275,11 @@ button.c4g-geosearch-options:before {
 /*------------------------------------*/
 /*--------------PopUp-----------------*/
 
-.c4g-beach-content.c4g-popup-content {
-  padding: 0 20px 25px 20px;
-  line-height: 1.5;
-}
-
 div div.c4g-popup-wrapper.c4g-beach {
   border-radius: 0;
   margin-bottom: 0;
   width: auto;
 }
-
-.c4g-popup-container.c4g-beach.c4g-details-closed .c4g-beach-content.c4g-popup-content > * ~ * { display: none; }
-.c4g-popup-container.c4g-beach.c4g-details-closed .c4g-popup-content > * {
-  margin: auto;
-  min-height: 70px;
-}
-
-.c4g-popup-container.c4g-beach button.c4g-beach-options, button.c4g-icon.c4g-popup-route-from, button.c4g-icon.c4g-popup-route-to {
-  background: none;
-  border: none;
-  outline: none;
-  padding: 0;
-  cursor: pointer;
-}
-
-.c4g-popup-container.c4g-beach .c4g-beach-header span:empty { display: none; }
-
-.c4g-popup-container.c4g-beach .c4g-beach-header.c4g-beach-header {
-  height: 50px;
-}
-
-.c4g-popup-container.c4g-beach .c4g-beach-header.c4g-beach-header span { margin-left: calc(2.5% + 15px); }
-.c4g-popup-container.c4g-beach .c4g-beach-header.c4g-beach-header button { height: calc(1.5em + 20px); max-height: 50px; font-size: 1.5em; width: 50px; }
 
 .c4g-beach-header button:hover:before {
   font-size: 1.3em;
@@ -1352,13 +1289,6 @@ div div.c4g-popup-wrapper.c4g-beach {
 
 /*-----------------------------------------*/
 /*----------baselayertree-----------------*/
-
-.c4g-baselayer-container.c4g-open .c4g-baselayertree-content{
-  max-height: calc(var(--map-height) - .4em - (calc(32px + .4em)) - .4em);
-
-  overflow-y: auto;
-  overflow-x: hidden;
-}
 
 .c4g-baselayer-container.c4g-open .c4g-baselayertree-content::-webkit-scrollbar{
   width: .2em;
@@ -1470,8 +1400,6 @@ div div.c4g-popup-wrapper.c4g-beach {
   line-height: calc(32px + .4em);
   height: calc(32px + .4em);
   margin: 0;
-  text-overflow: ellipsis;
-  overflow: hidden;
 }
 
 .c4g-sideboard > div div[class*=header] span {
@@ -1479,9 +1407,11 @@ div div.c4g-popup-wrapper.c4g-beach {
   width: calc(100% - 1.2em - 32px);
   padding: 0 .4em;
   font-size: 20px;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
-.c4g-sideboard > div div[class*=header] button {
+.c4g-sideboard > div div[class*=header] button[class*=close] {
   width: 32px;
   height: 32px;
   position: absolute;
@@ -1490,12 +1420,21 @@ div div.c4g-popup-wrapper.c4g-beach {
   margin: 0;
   border: none;
   background: none;
+  outline: none;
   cursor: pointer;
 }
 
 .c4g-sideboard > div > div[class*=content]{
   padding: 0 .4em .4em;
+  max-height: calc(var(--map-height) - .8em - 32px - .4em);
+  overflow-y: auto;
+  overflow-x: hidden;
 }
+
+.c4g-sideboard > div > div[class*=content]::-webkit-scrollbar{
+  width: .2em;
+}
+
 
 .c4g-measuretools-mode-switcher {
   height: 32px ;

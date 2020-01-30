@@ -693,10 +693,7 @@ button.c4g-geosearch-start {
 .c4g-popup-container.c4g-beach {
 background: var(--pu-main-color);
   color: var(--pu-font-color);
-  filter: drop-shadow(0 0px .2em var(--shadow-color));
 }
-
-.c4g-popup-container.c4g-beach .c4g-beach-options, .c4g-popup-container.c4g-beach a, .c4g-popup-container.c4g-beach button { color: var(--pu-font-color)!important; }
 
 .c4g-popup-container.c4g-beach .c4g-beach-header.c4g-beach-header button:nth-child(2n + 1):not(:first-child)
 { border-right: 1px solid var(--pu-font-color); }

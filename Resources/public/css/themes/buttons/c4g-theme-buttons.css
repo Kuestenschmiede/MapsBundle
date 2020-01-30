@@ -849,17 +849,17 @@ div.c4g-permalink-popup button.c4g-copy {
 /*
  *  Popups
  */
-div.c4g-popup-wrapper {
+.ol-selectable div.c4g-popup-wrapper {
   display: none;
 }
-div.c4g-active.c4g-popup-wrapper {
+.ol-selectable div.c4g-active.c4g-popup-wrapper {
   display: block;
   min-width: 100px;
   margin-bottom: 10px;
   border-radius: 15px;
   border: 1px solid;
 }
-div.c4g-popup-wrapper:before {
+.ol-selectable div.c4g-popup-wrapper:before {
   pointer-events: none;
   content: " ";
   position: absolute;
@@ -871,13 +871,10 @@ div.c4g-popup-wrapper:before {
   margin-bottom: 10px;
   border: 10px solid transparent;
 }
-div.c4g-popup-wrapper-nonose:before {
+.ol-selectable div.c4g-popup-wrapper-nonose:before {
   display:none;
 }
-button.c4g-popup-close {
-  position: absolute;
-  top: 6px;
-  right: 6px;
+.ol-selectable button.c4g-popup-close {
   width: 1.4em;
   border: none;
   cursor: pointer;
