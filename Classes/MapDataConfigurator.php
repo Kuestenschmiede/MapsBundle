@@ -407,7 +407,6 @@ class MapDataConfigurator
                 }
             }
             $mapData['overviewmap'] = $profile->overviewmap;
-            $mapData['geobookmarks'] = $profile->geobookmarks;
             $mapData['scaleline'] = $profile->scaleline;
             $mapData['mouseposition'] = $profile->mouseposition;
             $mapData['permalink']['enable'] = $profile->permalink;

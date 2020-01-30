@@ -50,7 +50,6 @@ export var langConstantsEnglish = {
   CTRL_GEOSEARCH: 'Toggle geosearch',
   CTRL_START_SEARCH: 'start search',
   CTRL_OVERVIEWMAP: 'Toggle overviewmap',
-  CTRL_GEOBOOKMARKS: 'Manage favorites',
   CTRL_SIDEBOARD: 'Toggle sideboard',
   CTRL_STARBOARD: 'Toggle starboard',
   CTRL_ATTRIBUTION: 'Show attribution',
@@ -88,8 +87,6 @@ export var langConstantsEnglish = {
   MEASURETOOLS_VIEW_TRIGGER_DRAW_POLYGON: 'Measure areas',
   MEASURETOOLS_VIEW_TRIGGER_DRAW_CIRCLE: 'Measure radius',
   MEASURETOOLS_VIEW_TRIGGER_DRAW_FREEHAND: 'Measure freehand',
-
-  GEOBOOKMARKS_PLACEHOLDER: 'Enter new caption',
 
   INFOPAGE: 'Infopage',
   INFOPAGE_VIEW_TRIGGER: 'Show informations',

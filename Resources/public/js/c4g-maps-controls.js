@@ -257,20 +257,7 @@ export class MapsControls {
             });
             map.addControl(this.controls.permalink);
         }
-        // geobookmarks - not ready
-        if (mapData.geobookmarks) {
-            this.controls.geobookmarks = new ol_control_GeoBookmark({
-                //target: controlContainerTopRight
-                label: ' ',
-                tipLabel: langConstants.CTRL_GEOBOOKMARKS,
-                placeholder: langConstants.GEOBOOKMARKS_PLACEHOLDER,
-                namespace: 'c4g_geobookmarks'/*,
-                className: cssConstants.GEOBOOKMARKS*/ //ToDo implement for own styling
-            });
-            map.addControl(this.controls.geobookmarks);
-            this.rightSlideElements.push('.ol-bookmark');
 
-        }
         // scaleline
         if (mapData.scaleline) {
             this.controls.scaleline = new ScaleLine({
