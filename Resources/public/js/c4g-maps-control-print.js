@@ -54,7 +54,11 @@ export class Print extends Control {
     // See: https://github.com/bubkoo/html-to-image#options
     var exportOptions = {
       filter: function(element) {
-        return element.className ? (((element.className.indexOf('ol-control') === -1) || element.className.indexOf('ol-attribution') !== -1) && (element.className.indexOf('c4g-open') === -1)) : true;
+        return element.className ? (
+            ((element.className.indexOf('ol-control') === -1) || //print no controls (buttons)
+                element.className.indexOf('ol-uncollapsible') !== -1) && //exception attributions if always to be displayed
+            (element.className.indexOf('c4g-open') === -1) //print no sideboards (right panels)
+        ) : true;
       },
       bgcolor: '#000000'
     };
