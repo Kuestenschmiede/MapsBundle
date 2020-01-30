@@ -1029,10 +1029,10 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp'],
             'filter'                  => false,
-            'references'              => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp']['refs'],
             'inputType'               => 'select',
             'default'                 => '',
             'options'                 => ['', 'starboard', 'search', 'baselayers', 'measuretools'],
+            'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp']['refs'],
             'eval'                    => ['tl_class'=>'clr'],
             'sql'                     => "varchar(30) NOT NULL default ''"
         ],
