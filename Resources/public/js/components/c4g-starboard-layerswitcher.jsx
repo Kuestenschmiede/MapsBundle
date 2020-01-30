@@ -22,8 +22,11 @@ export class StarboardLayerswitcher extends Component {
     super(props);
     const scope = this;
 
+    this.setLayerFilter = this.setLayerFilter.bind(this);
+
     this.state = {
-      initialized: false
+      initialized: false,
+      layerFilter: ""
     };
   }
 
@@ -33,12 +36,101 @@ export class StarboardLayerswitcher extends Component {
     this.props.parentCallback(newStates)
   };
 
+  setLayerFilter() {
+    let filterValue = jQuery(".c4g-starboard-layerswitcher-filter-field").val();
+    this.setState({layerFilter: filterValue});
+  }
+
+  /**
+   * checks recursively if and which childs of the given layer match the current filter.
+   */
+  checkChildFilterMatch(layer, opt_show) {
+    let filter = this.state.layerFilter;
+    // // reset flag
+    // layer.showInFilter = false;
+    // // TODO when parent matches, childs are automatically a match
+    // // layer.showInFilter = ((layer.name.indexOf(this.state.layerFilter) !== -1)
+    // //   || (layer.name.indexOf(this.state.layerFilter.toLowerCase()) !== -1));
+    // if (layer.childs && layer.childs.length > 0) {
+    //   // has childs, we need to dig deeper
+    //   for (let i = 0; i < layer.childs.length; i++) {
+    //     layer.childs[i] = this.checkChildFilterMatch(layer.childs[i]);
+    //     // if (layer.showInFilter) {
+    //     //   // childs are shown
+    //     //   layer.childs[i].showInFilter = true;
+    //     // }
+    //     // layer.showInFilter = layer.showInFilter || layer.childs[i].showInFilter;
+    //   }
+    //   layer.showInFilter = layer.showInFilter || ((layer.name.indexOf(this.state.layerFilter) !== -1)
+    //     || (layer.name.indexOf(this.state.layerFilter.toLowerCase()) !== -1));
+    // } else {
+    //   layer.showInFilter = ((layer.name.indexOf(this.state.layerFilter) !== -1)
+    //     || (layer.name.indexOf(this.state.layerFilter.toLowerCase()) !== -1));
+    // }
+    // if (this.state.layerFilter === "") {
+    //   layer.showInFilter = true;
+    // }
+    // return layer;
+    if (opt_show) {
+
+    }
+    // TODO
+    // first check if layer name matches filter
+    if (layer.name.indexOf(filter) !== -1 || layer.name.indexOf(filter.toLowerCase()) !== -1) {
+      // if yes, every child matches too.
+      
+      // TODO set for every child (and their childs)
+    } else {
+      // TODO check childs
+    }
+
+    // second check if layer childs match filter
+    // if yes, layer matches.
+    // third check which childs actually match the filter
+    return layer;
+  }
+
+  filterMatches(string) {
+    if (string.indexOf(this.state.layerFilter) !== -1
+      || string.indexOf(this.state.layerFilter.toLowerCase()) !== -1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  filterLayers(layers) {
+    let returnLayers = [];
+    for (let i = 0; i < layers.length; i++) {
+      let currentLayer = layers[i];
+      // check if layer matches
+      if (this.filterMatches(currentLayer.name)) {
+        returnLayers.push(layers[i]);
+      } else {
+        if (currentLayer.childs && currentLayer.childs.length > 0) {
+          // layer has childs
+          let checkedChilds = this.filterLayers(currentLayer.childs);
+          if (checkedChilds.length > 0) {
+            layers[i].childs = checkedChilds;
+            returnLayers.push(layers[i]);
+          }
+        } else {
+          // has no childs and does not match; don't add it
+        }
+      }
+    }
+    return returnLayers;
+  }
+
   render() {
     let closeStarboard = function() {
       let button = jQuery("." + cssConstants.STARBOARD_CONTROL + "> button");
       button.trigger('click');
     };
     const mapData = this.props.mapController.data;
+    let layers = this.filterLayers(this.props.objLayers);
+    console.log(layers);
+    console.log(this.props.layerStates);
     return (
       <div className={cssConstants.STARBOARD_WRAPPER}>
         <Titlebar wrapperClass={"c4g-starboard-header"} headerClass={cssConstants.STARBOARD_HEADLINE}
@@ -47,12 +139,15 @@ export class StarboardLayerswitcher extends Component {
         <div className={cssConstants.CONTROL + " " + cssConstants.STARBOARD_BUTTONBAR}>
 
         </div>
+        <div className={"c4g-starboard-layerswitcher-filter"}>
+          <input className={"c4g-starboard-layerswitcher-filter-field"} type="text" onInput={this.setLayerFilter}/>
+        </div>
         <div className={cssConstants.STARBOARD_CONTENT_CONTAINER}>
           <div className="contentHeadline"/>
           <div className={cssConstants.STARBOARD_CONTENT_LAYERSWITCHER}>
             <div className={cssConstants.STARBOARD_LAYERTREE}>
               <ul>
-                {this.props.objLayers.map((item, id) => {
+                {layers.map((item, id) => {
                   // if (item.pid === this.props.mapController.data.id) //skip childs of layers
                     return <C4gStarboardLayerElement key={id} id={id} mapController={this.props.mapController}
                                                      parentCallback={this.callbackFunction}
