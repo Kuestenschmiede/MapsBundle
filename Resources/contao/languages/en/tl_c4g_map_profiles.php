@@ -87,7 +87,6 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp'] = ['Initially op
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['measuretool'] = ['Measure tools', 'Shows a button which activates tools for measuring distances/areas.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['permalink'] = ['Permalink', 'Displays a link representing the current map state, which may be bookmarked or sent via E-Mail for example.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['permalink_get_param'] = ['Use GET-parameter for permalink-values', 'If you want to use a GET-parameter for the permalink instead of the URL-hash you can name it here.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geobookmarks'] = ['Geo bookmarks (beta)', 'So you can store position/zoom bookmarks in your browser'];
 
 /** Suchwerkzeuge */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch'] = ['Activate search (search field)', 'Activates searchengine for searching places and coordinates.'];

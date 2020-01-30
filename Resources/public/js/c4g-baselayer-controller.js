@@ -132,14 +132,17 @@ export class C4gBaselayerController {
   createBaseLayer(layerOptions, baseLayerConfig, sourceConfigs){
     var newBaselayer = {};
     layerOptions = layerOptions || {};
+
+    let isSecure = window.isSecureContext;
+    if (isSecure) {
+      layerOptions.crossOrigin = 'anonymous';
+    }
+
     switch (baseLayerConfig.provider) {
       case 'custom':
         // custom
         let noUrl = true;
         if (baseLayerConfig.url) {
-          if(baseLayerConfig.url.indexOf('https') !== -1){
-            layerOptions.crossOrigin = 'anonymous';
-          }
           layerOptions.url = baseLayerConfig.url;
           noUrl = false;
         } else if (baseLayerConfig.urls) {
@@ -220,7 +223,6 @@ export class C4gBaselayerController {
       case 'con4gisIo':
         let config = this.baseKeys[baseLayerConfig.id];
         layerOptions.url = baseLayerConfig.url.replace('{key}', config['key']);
-        layerOptions.crossOrigin = 'anonymous';
         layerOptions.attributions = config.attribution + ' ' + layerOptions.attributions;
         newBaselayer = new TileLayer({
           source: new XYZ(layerOptions)
@@ -282,8 +284,7 @@ export class C4gBaselayerController {
             //layerOptions.url = baseLayerConfig.url + '{z}/{x}/{y}.pbf?key='+baseLayerConfig.api_key;
              newBaselayer = new TileLayer({
                source: new TileJSON({
-                  url: baseLayerConfig.url + 'styles/' + baseLayerConfig.style+'.json?key='+baseLayerConfig.api_key,
-                  crossOrigin: 'anonymous'
+                  url: baseLayerConfig.url + 'styles/' + baseLayerConfig.style+'.json?key='+baseLayerConfig.api_key
                })
             });
             // newBaselayer = new VectorTileLayer({
@@ -331,6 +332,7 @@ export class C4gBaselayerController {
           }
 
           newBaselayer = new TileLayer({
+            preload: Infinity,
             source: new XYZ(jQuery.extend(
               sourceConfigs.here[baseLayerConfig.here_type],
               layerOptions))
@@ -418,7 +420,7 @@ export class C4gBaselayerController {
                 TRANSPARENT: baseLayerConfig.params.transparent
               },
               gutter: baseLayerConfig.gutter,
-              attributions: baseLayerConfig.attribution + ' ' + OSM_ATTRIBUTION,
+              attributions: baseLayerConfig.attribution + ' ' + OSM_ATTRIBUTION
             }),
             //extent: ol.proj.transformExtent([5.59334, 50.0578, 9.74158, 52.7998], 'EPSG:4326', 'EPSG:3857')
           });

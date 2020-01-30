@@ -1010,14 +1010,6 @@ div.c4g-tooltip-popup:before {
     display: none;
   }
 }
-.ol-control.ol-bookmark,
-.ol-control.c4g-geobookmarks {
-  top: 3em;
-  /*right: 3px;*/
-  left: initial;
-  right: 0;
-  margin-right: .2em;
-}
 
 .c4g-horizontal-panel-button-top > button, .c4g-horizontal-panel-button-bottom > button {
   width: 68px;
