@@ -38,7 +38,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['resize_max_scale'] = ['Maximum scali
 /** Navigation */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['zoom_panel'] = ['Zoom Panel', 'Creates buttons to zoom in and out of the map.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['zoom_panel_button'] = ['Additional Button in Zoom Panel', 'Display an additional button in the zoom panel. Clicking the button centers the map to the selected position.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['zoom_panel_slider'] = ['Zoom Panel Slider', 'Creates a slider instead of buttons to zoom in and out.'];
+//$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['zoom_panel_slider'] = ['Zoom Panel Slider', 'Creates a slider instead of buttons to zoom in and out.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouse_nav'] = ['Navigation with Mouse', 'Activates the ability to zoom in and out and move the map with your mouse.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouse_nav_wheel'] = ['Mousewheel Zoom', 'If checked, the user can zoom in and out using the mouse wheel.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouse_nav_doubleclick_zoom'] = ['Zoom with Double Click', 'If checked, the user can zoom in with a double click.'];

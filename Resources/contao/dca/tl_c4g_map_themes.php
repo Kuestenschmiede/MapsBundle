@@ -193,10 +193,10 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
             [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['button_fontsize'],
             'inputType'               => 'inputUnit',
-            'default'                 => '16',
+            'default'                 => '18',
             'options'                 => ['px'],
             'eval'                    => ['tl_class'=>'long', 'mandatory'=>true],
-            'sql'                     => "varchar(100) NOT NULL default 'a:2:{s:4:\"unit\";s:2:\"px\";s:5:\"value\";s:2:\"16\";}'"
+            'sql'                     => "varchar(100) NOT NULL default 'a:2:{s:4:\"unit\";s:2:\"px\";s:5:\"value\";s:2:\"18\";}'"
             ],
         'colors' =>
             [

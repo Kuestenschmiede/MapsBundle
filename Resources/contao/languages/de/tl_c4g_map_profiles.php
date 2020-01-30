@@ -38,7 +38,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['resize_max_scale'] = ['Maximale Skal
 /** Navigation */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['zoom_panel'] = ['Steuerelement zum Zoomen', 'Erzeugen von Buttons zum Hinein- und Herauszoomen.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['zoom_panel_button'] = ['Zusatzbutton im Steuerelement zum Zoomen', 'Erzeugt einen zusätzlichen Button im Zoom-Steuerelement. Ein Klick auf das Icon zoomt an die ausgewählte Position. Hinweis: mit Slider steht die Komponente nicht zur Verfügung.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['zoom_panel_slider'] = ['Slider zum Zoomen', 'Erzeugt einen Slider mit Steuerelementen zum Zoomen. Hiermit werden alle anderen Zoom-Buttons ausgeblendet.'];
+//$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['zoom_panel_slider'] = ['Slider zum Zoomen', 'Erzeugt einen Slider mit Steuerelementen zum Zoomen. Hiermit werden alle anderen Zoom-Buttons ausgeblendet.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouse_nav'] = ['Navigation mit der Maus', 'Aktiviert die Möglichkeit, mit Hilfe der Maus zu zoomen und den angezeigten Kartenausschnitt zu verschieben.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouse_nav_wheel'] = ['Mausrad zum Zoomen benutzen', 'Setzen Sie diese Checkbox, um das Hinein- und Herauszoomen mit dem Mausrad zu aktivieren.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouse_nav_doubleclick_zoom'] = ['Doppelklick zum Zoomen benutzen', 'Setzen Sie diese Checkbox, um das Hineinzoomen per Doppelklick zu aktivieren.'];
