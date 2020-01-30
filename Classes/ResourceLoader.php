@@ -61,7 +61,6 @@ class ResourceLoader extends coreResourceLoader
             'account' => $allByDefault,
             'geosearch' => $allByDefault,
             'overviewmap' => $allByDefault,
-            'geobookmarks' => $allByDefault,
             'baselayerswitcher' => $allByDefault,
             'layerswitcher' => $allByDefault,
             'starboard' => $allByDefault,
@@ -180,7 +179,6 @@ class ResourceLoader extends coreResourceLoader
             'zoomlevel' => ($profile->zoomlevel),
             'geosearch' => ($profile->geosearch && $profile->geosearch_show),
             'overviewmap' => ($profile->overviewmap),
-            'geobookmarks' => ($profile->geobookmarks),
             'baselayerswitcher' => ($profile->starboard && $profile->baselayerswitcher),
             'layerswitcher' => ($profile->starboard && $profile->layerswitcher),
             'starboard' => ($profile->starboard),
@@ -246,6 +244,10 @@ class ResourceLoader extends coreResourceLoader
 
             if ($theme->buttonsize) {
                 $themeData['buttonsize'] = deserialize($theme->buttonsize)['value'];
+            }
+
+            if ($theme->button_fontsize) {
+                $themeData['fontsize'] = deserialize($theme->button_fontsize)['value'];
             }
         }
 

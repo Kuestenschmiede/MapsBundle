@@ -16,7 +16,7 @@ import {OSM} from "ol/source";
 import {ATTRIBUTION as OSM_ATTRIBUTION} from "ol/source/OSM";
 import {Tile} from "ol/layer";
 import {Stamen} from "ol/source";
-import {XYZ, BingMaps, TileWMS} from "ol/source";
+import {XYZ, TileWMS} from "ol/source";
 import {Image} from "ol/layer";
 import ol_source_GeoImage from "ol-ext/source/GeoImage";
 
@@ -43,6 +43,11 @@ export class C4gOverlayController {
 
     overlayLayerConfig = this.arrOverlays[overlayId];
 
+    let isSecure = window.isSecureContext;
+    if (isSecure) {
+      layerOptions.crossOrigin = 'anonymous';
+    }
+
     switch (overlayLayerConfig.provider) {
       case 'osm':
         if (osmSourceConfigs[overlayLayerConfig.style]) {
@@ -64,11 +69,6 @@ export class C4gOverlayController {
               )
             )
           });
-          // } else if (mapQuestSourceConfigs[overlayLayerConfig.style]) {
-          //   // mapQuest
-          //   overlayLayer = new Tile({
-          //     source: new ol.source.MapQuest(mapQuestSourceConfigs[overlayLayerConfig.style])
-          //   });
         } else if (overlayLayerConfig.style === 'osm_custom') {
           // custom
           noUrl = true;
@@ -92,23 +92,6 @@ export class C4gOverlayController {
           }
         } else {
           console.warn('unsupported osm-style -> switch to default');
-        }
-        break;
-      case 'google':
-        //@todo
-        console.warn('google-maps are currently unsupported');
-        break;
-      case 'bing':
-        if (baseLayerConfig.apiKey && overlayLayerConfig.style) {
-          overlayLayer = new Tile({
-            source: new BingMaps({
-              culture: navigator.languages ? navigator.languages[0] : (navigator.language || navigator.userLanguage),
-              key: overlayLayerConfig.apiKey,
-              imagerySet: overlayLayerConfig.style
-            })
-          });
-        } else {
-          console.warn('wrong bing-key or invalid imagery-set!');
         }
         break;
       case 'wms':

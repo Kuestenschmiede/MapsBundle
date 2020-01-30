@@ -321,7 +321,7 @@ class MapDataConfigurator
                 }
             }
 
-            $mapData['zoom_slider'] = ($profile->zoom_panel_slider == 1);
+            $mapData['zoom_slider'] = false;//($profile->zoom_panel_slider == 1);
             if ($profile->mouse_nav) {
                 $mapData['mouse_nav']['drag_pan'] = $profile->mouse_nav;
                 $mapData['mouse_nav']['wheel_zoom'] = $profile->mouse_nav_wheel;
@@ -407,7 +407,6 @@ class MapDataConfigurator
                 }
             }
             $mapData['overviewmap'] = $profile->overviewmap;
-            $mapData['geobookmarks'] = $profile->geobookmarks;
             $mapData['scaleline'] = $profile->scaleline;
             $mapData['mouseposition'] = $profile->mouseposition;
             $mapData['permalink']['enable'] = $profile->permalink;

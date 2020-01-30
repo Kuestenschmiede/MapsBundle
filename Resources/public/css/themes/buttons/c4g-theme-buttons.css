@@ -2,6 +2,7 @@
   --button-radius-percent: 0%;
   --button-radius-pixel: 0px;
   --button-size-pixel: 36px;
+  --button-fontsize-pixel: 16px;
   --font-size: 16px;
 }
 
@@ -29,7 +30,8 @@
   display: block;
   margin: 1px;
   padding: 0;
-  font-size: 1.14em;
+  font-size: 16px;
+  font-size: var(--button-fontsize-pixel);
   text-decoration: none;
   text-align: center;
   height: 36px; /*1.974em;*/
@@ -847,17 +849,17 @@ div.c4g-permalink-popup button.c4g-copy {
 /*
  *  Popups
  */
-div.c4g-popup-wrapper {
+.ol-selectable div.c4g-popup-wrapper {
   display: none;
 }
-div.c4g-active.c4g-popup-wrapper {
+.ol-selectable div.c4g-active.c4g-popup-wrapper {
   display: block;
   min-width: 100px;
   margin-bottom: 10px;
   border-radius: 15px;
   border: 1px solid;
 }
-div.c4g-popup-wrapper:before {
+.ol-selectable div.c4g-popup-wrapper:before {
   pointer-events: none;
   content: " ";
   position: absolute;
@@ -869,13 +871,10 @@ div.c4g-popup-wrapper:before {
   margin-bottom: 10px;
   border: 10px solid transparent;
 }
-div.c4g-popup-wrapper-nonose:before {
+.ol-selectable div.c4g-popup-wrapper-nonose:before {
   display:none;
 }
-button.c4g-popup-close {
-  position: absolute;
-  top: 6px;
-  right: 6px;
+.ol-selectable button.c4g-popup-close {
   width: 1.4em;
   border: none;
   cursor: pointer;
@@ -1012,14 +1011,6 @@ div.c4g-tooltip-popup:before {
   .ol-control {
     display: none;
   }
-}
-.ol-control.ol-bookmark,
-.ol-control.c4g-geobookmarks {
-  top: 3em;
-  /*right: 3px;*/
-  left: initial;
-  right: 0;
-  margin-right: .2em;
 }
 
 .c4g-horizontal-panel-button-top > button, .c4g-horizontal-panel-button-bottom > button {

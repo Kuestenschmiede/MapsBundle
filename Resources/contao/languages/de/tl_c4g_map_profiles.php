@@ -38,7 +38,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['resize_max_scale'] = ['Maximale Skal
 /** Navigation */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['zoom_panel'] = ['Steuerelement zum Zoomen', 'Erzeugen von Buttons zum Hinein- und Herauszoomen.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['zoom_panel_button'] = ['Zusatzbutton im Steuerelement zum Zoomen', 'Erzeugt einen zusätzlichen Button im Zoom-Steuerelement. Ein Klick auf das Icon zoomt an die ausgewählte Position. Hinweis: mit Slider steht die Komponente nicht zur Verfügung.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['zoom_panel_slider'] = ['Slider zum Zoomen', 'Erzeugt einen Slider mit Steuerelementen zum Zoomen. Hiermit werden alle anderen Zoom-Buttons ausgeblendet.'];
+//$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['zoom_panel_slider'] = ['Slider zum Zoomen', 'Erzeugt einen Slider mit Steuerelementen zum Zoomen. Hiermit werden alle anderen Zoom-Buttons ausgeblendet.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouse_nav'] = ['Navigation mit der Maus', 'Aktiviert die Möglichkeit, mit Hilfe der Maus zu zoomen und den angezeigten Kartenausschnitt zu verschieben.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouse_nav_wheel'] = ['Mausrad zum Zoomen benutzen', 'Setzen Sie diese Checkbox, um das Hinein- und Herauszoomen mit dem Mausrad zu aktivieren.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouse_nav_doubleclick_zoom'] = ['Doppelklick zum Zoomen benutzen', 'Setzen Sie diese Checkbox, um das Hineinzoomen per Doppelklick zu aktivieren.'];
@@ -89,7 +89,6 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp'] = ['Initial geö
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['measuretool'] = ['Messwerkzeuge', 'Blendet einen Schalter ein, mit dem Werkzeuge zum Messen von Entfernungen und Flächen aktiviert werden können.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['permalink'] = ['Permalinkgenerator', 'Berechnet einen kopierbaren Link, der den aktuellen Kartenausschnitt der Karte repräsentiert und der z.B. in E-Mails verschickt werden kann.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['permalink_get_param'] = ['GET-Parameter für Permalink-Werte verwenden', 'Vergeben Sie hier einen Namen für einen GET-Parameter, wenn Sie die Permanlink-Werte nicht im Hash-Teil der URL übergeben wollen (z.B. weil dieser bereits von anderen Erweiterungen verwendet wird).'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geobookmarks'] = ['Favoriten (beta)', 'Favorisierte Kartenpositionen können so im Browser gespeichert werden.'];
 
 /** Suchwerkzeuge */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch'] = ['Suchwerkzeuge (Voraussetzung für Suche und Router)', 'Aktiviert die Suchengine, über die Orte, Adressen und POIs (Vorwärtssuche), aber auch Koordinaten (Rückwärtssuche) gesucht werden können.'];
@@ -195,7 +194,9 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['copy']       = ['Kartenprofil dupliz
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['delete']     = ['Kartenprofil löschen', 'Kartenprofil ID %s löschen'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['show']       = ['Details', 'Die Details des Kartenprofils ID %s anzeigen'];
 
-//xlabel buttons
+/**
+ * xlabel buttons
+ */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editBaselayers'] = ['Basiskarten bearbeiten'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editLocstyles'] = ['Lokationsstile bearbeiten'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editThemes'] = ['Kartenlayout bearbeiten'];

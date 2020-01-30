@@ -52,7 +52,6 @@ export var langConstantsGerman = {
   CTRL_GEOSEARCH: 'Suche ein-/ausblenden',
   CTRL_START_SEARCH: 'Suche starten',
   CTRL_OVERVIEWMAP: 'Übersichtskarte ein-/ausblenden',
-  CTRL_GEOBOOKMARKS: 'Favoriten verwalten',
   CTRL_SIDEBOARD: 'Sideboard ein-/ausblenden',
   CTRL_STARBOARD: 'Starboard ein-/ausblenden',
   CTRL_ATTRIBUTION: 'Attribution anzeigen',
@@ -77,8 +76,6 @@ export var langConstantsGerman = {
   MEASURETOOLS_VIEW_TRIGGER_DRAW_POLYGON: 'Flächen messen',
   MEASURETOOLS_VIEW_TRIGGER_DRAW_CIRCLE: 'Radius messen',
   MEASURETOOLS_VIEW_TRIGGER_DRAW_FREEHAND: 'Freihand messen',
-
-  GEOBOOKMARKS_PLACEHOLDER: 'Neue Bezeichnung',
 
   INFOPAGE: 'Informationen',
   ADDITIONALPANEL: 'Panel',

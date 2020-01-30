@@ -38,7 +38,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['resize_max_scale'] = ['Maximum scali
 /** Navigation */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['zoom_panel'] = ['Zoom Panel', 'Creates buttons to zoom in and out of the map.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['zoom_panel_button'] = ['Additional Button in Zoom Panel', 'Display an additional button in the zoom panel. Clicking the button centers the map to the selected position.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['zoom_panel_slider'] = ['Zoom Panel Slider', 'Creates a slider instead of buttons to zoom in and out.'];
+//$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['zoom_panel_slider'] = ['Zoom Panel Slider', 'Creates a slider instead of buttons to zoom in and out.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouse_nav'] = ['Navigation with Mouse', 'Activates the ability to zoom in and out and move the map with your mouse.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouse_nav_wheel'] = ['Mousewheel Zoom', 'If checked, the user can zoom in and out using the mouse wheel.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouse_nav_doubleclick_zoom'] = ['Zoom with Double Click', 'If checked, the user can zoom in with a double click.'];
@@ -87,7 +87,6 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp'] = ['Initially op
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['measuretool'] = ['Measure tools', 'Shows a button which activates tools for measuring distances/areas.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['permalink'] = ['Permalink', 'Displays a link representing the current map state, which may be bookmarked or sent via E-Mail for example.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['permalink_get_param'] = ['Use GET-parameter for permalink-values', 'If you want to use a GET-parameter for the permalink instead of the URL-hash you can name it here.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geobookmarks'] = ['Geo bookmarks (beta)', 'So you can store position/zoom bookmarks in your browser'];
 
 /** Suchwerkzeuge */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch'] = ['Activate search (search field)', 'Activates searchengine for searching places and coordinates.'];
@@ -177,6 +176,13 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandlingReferences']['0'] = 'Cl
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandlingReferences']['1'] = 'Mapview changing (map moves to show popup)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandlingReferences']['2'] = 'Centered popup (popup will be centered on map)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandlingReferences']['3'] = 'Popup will be rendered into an own container at the bottom of the map';
+
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp']['refs'][''] = 'none';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp']['refs']['starboard'] = 'Starboard';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp']['refs']['search'] = 'Geosearch';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp']['refs']['baselayers'] = 'Base map switcher';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp']['refs']['measuretools'] = 'Measure Tools';
+
 /**
  * Buttons
  */
@@ -186,7 +192,9 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['copy'] = ['Duplicate map profile', '
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['delete'] = ['Delete map profile', 'Delete map profile ID %s'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['show'] = ['Details', 'Show details of map profile ID %s'];
 
-//xlabel buttons
+/**
+ * xlabel buttons
+ */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editBaselayers'] = ['Edit baselayers'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editLocstyles'] = ['Edit locstyles'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editThemes'] = ['Edit themes'];

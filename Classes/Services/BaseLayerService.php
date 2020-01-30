@@ -12,14 +12,11 @@
  */
 namespace con4gis\MapsBundle\Classes\Services;
 
-use con4gis\CoreBundle\Classes\C4GUtils;
-use con4gis\CoreBundle\Classes\Helper\ArrayHelper;
 use con4gis\MapsBundle\Classes\Utils;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapBaselayersModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapOverlaysModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapSettingsModel;
-use con4gis\ProjectsBundle\Classes\Common\C4GBrickCommon;
 use Contao\Database;
 use Contao\FilesModel;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -115,11 +112,11 @@ class BaseLayerService
                 $arrBaseLayer[] = $arrLayerData;
             }
         }
-        
-        usort($arrBaseLayer, function($a, $b) {
+
+        usort($arrBaseLayer, function ($a, $b) {
             if ($a['sort'] < $b['sort']) {
                 return -1;
-            } else if ($a['sort'] > $b['sort']) {
+            } elseif ($a['sort'] > $b['sort']) {
                 return 1;
             } else {
                 return 0;
