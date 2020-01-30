@@ -176,6 +176,13 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandlingReferences']['0'] = 'Cl
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandlingReferences']['1'] = 'Mapview changing (map moves to show popup)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandlingReferences']['2'] = 'Centered popup (popup will be centered on map)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandlingReferences']['3'] = 'Popup will be rendered into an own container at the bottom of the map';
+
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp']['refs'][''] = 'none';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp']['refs']['starboard'] = 'Starboard';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp']['refs']['search'] = 'Geosearch';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp']['refs']['baselayers'] = 'Base map switcher';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp']['refs']['measuretools'] = 'Measure Tools';
+
 /**
  * Buttons
  */
@@ -185,7 +192,9 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['copy'] = ['Duplicate map profile', '
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['delete'] = ['Delete map profile', 'Delete map profile ID %s'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['show'] = ['Details', 'Show details of map profile ID %s'];
 
-//xlabel buttons
+/**
+ * xlabel buttons
+ */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editBaselayers'] = ['Edit baselayers'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editLocstyles'] = ['Edit locstyles'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editThemes'] = ['Edit themes'];

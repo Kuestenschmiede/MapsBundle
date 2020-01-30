@@ -194,7 +194,9 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['copy']       = ['Kartenprofil dupliz
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['delete']     = ['Kartenprofil löschen', 'Kartenprofil ID %s löschen'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['show']       = ['Details', 'Die Details des Kartenprofils ID %s anzeigen'];
 
-//xlabel buttons
+/**
+ * xlabel buttons
+ */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editBaselayers'] = ['Basiskarten bearbeiten'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editLocstyles'] = ['Lokationsstile bearbeiten'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editThemes'] = ['Kartenlayout bearbeiten'];
