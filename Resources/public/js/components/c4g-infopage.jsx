@@ -48,7 +48,7 @@ export class Infopage extends Component {
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
     this.state = {
-      open: false,
+      open: props.open || false,
       control: control
     }
   }

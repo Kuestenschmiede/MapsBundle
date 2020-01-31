@@ -26,7 +26,7 @@ import {View} from "ol";
 import {transform} from "ol/proj";
 import {Map} from "ol";
 import {Zoom} from "ol/control";
-import {ZoomSlider} from "ol/control";
+//import {ZoomSlider} from "ol/control";
 import {ZoomToExtent} from "ol/control";
 import {FullScreen} from "ol/control";
 import {Rotate} from "ol/control";
@@ -35,7 +35,7 @@ import {MousePosition} from "ol/control";
 import {Attribution} from "ol/control";
 import {toStringHDMS} from "ol/coordinate";
 import {get} from "ol/proj";
-import ol_control_GeoBookmark from "ol-ext/control/GeoBookmark"
+//import ol_control_GeoBookmark from "ol-ext/control/GeoBookmark"
 import {FeatureFilter} from "./components/c4g-feature-filter.jsx";
 import {getLanguage} from "./c4g-maps-i18n";
 
@@ -88,138 +88,184 @@ export class MapsControls {
         // element needs to be moved when Starboard will be opened
         this.rightSlideElements.push(controlContainerBottomRight);
 
+        let buttons = [
+            {name:'zoom', sort: mapData.zoom},
+            {name:'zoomPosition', sort: mapData.zoomPosition},
+            {name:'zoomHome', sort: mapData.zoomHome},
+            {name:'zoomExtent', sort: mapData.zoomExtent},
+            {name:'fullscreen', sort: mapData.fullscreen},
+            {name:'print', sort: mapData.print},
+            {name:'rotate', sort: mapData.rotate},
+            {name:'graticule', sort: mapData.graticule},
+            {name:'layerswitcher', sort: mapData.layerswitcher.enable},
+            {name:'baselayerswitcher', sort: mapData.baselayerswitcher.enable},
+            {name:'geosearch', sort: mapData.geosearch.enable},
+            {name:'legend', sort: mapData.legend},
+            {name:'measure', sort: mapData.measuretools.enable},
+            {name:'overview', sort: mapData.overviewmap},
+            {name:'permalink', sort: mapData.permalink.enable},
+            ];
 
+        const sortBy = (key) => {
+            return (a, b) => (a[key] > b[key]) ? 1 : ((b[key] > a[key]) ? -1 : 0);
+        };
 
-        // zoom-controls
-        if (mapData.zoom_panel || mapData.zoom_slider) {
-            this.controls.zoom = new Zoom({
-                zoomInLabel: ' ',
-                zoomOutLabel: ' ',
-                zoomInTipLabel: langConstants.CTRL_ZOOM_IN,
-                zoomOutTipLabel: langConstants.CTRL_ZOOM_OUT,
-                target: controlContainerTopLeft
-            });
-            map.addControl(this.controls.zoom);
-
-            if (mapData.zoom_slider) {
-                this.controls.zoomslider = new ZoomSlider(
-                    {
-                        label: ' ',
-                        tipLabel: langConstants.CTRL_ZOOM_SLIDER,
+        buttons.sort(sortBy('sort'));
+        for (let i = 0; i < buttons.length; i++) {
+            let button = buttons[i];
+            if (parseInt(button.sort) <= 0) {
+                continue;
+            }
+            switch (button.name) {
+                case 'zoom':
+                    // zoom-controls
+                    this.controls.zoom = new Zoom({
+                        zoomInLabel: ' ',
+                        zoomOutLabel: ' ',
+                        zoomInTipLabel: langConstants.CTRL_ZOOM_IN,
+                        zoomOutTipLabel: langConstants.CTRL_ZOOM_OUT,
                         target: controlContainerTopLeft
+                    });
+                    map.addControl(this.controls.zoom);
+                    break;
+                case 'zoomExtent':
+                    if (mapData.zoomExtent) {
+                        this.controls.zoomExtent = new ZoomToExtent({
+                            label: ' ',
+                            tipLabel: langConstants.CTRL_ZOOM_EXT,
+                            target: controlContainerTopLeft
+                        });
+                        map.addControl(this.controls.zoomExtent);
                     }
-                );
-                map.addControl(this.controls.zoomslider);
+                    break;
+                case 'zoomHome':
+                    if (mapData.zoomHome) {
+                        this.controls.zoomHome = new Home({
+                            label: ' ',
+                            disableLabel: ' ',
+                            tipLabel: langConstants.CTRL_ZOOM_HOME,
+                            target: controlContainerTopLeft,
+                            mapController: this.mapController,
+                        });
+                        map.addControl(this.controls.zoomHome);
+                    }
+                    break;
+                case 'zoomPosition':
+                    if (mapData.zoomPosition) {
+                        this.controls.zoomPosition = new Position({
+                            label: ' ',
+                            disableLabel: ' ',
+                            tipLabel: langConstants.CTRL_ZOOM_POS,
+                            target: controlContainerTopLeft,
+                            mapController: this.mapController
+                        });
+                        map.addControl(this.controls.zoomPosition);
+                    }
+                    break;
+                case 'fullscreen':
+                    // fullscreen
+                    this.controls.fullscreen = new FullScreen({
+                        label: ' ',
+                        labelActive: ' ',
+                        tipLabel: langConstants.CTRL_FULLSCREEN,
+                        target: controlContainerTopLeft
+                    });
+                    map.addControl(this.controls.fullscreen);
+                    break;
+                case 'print':
+                    this.controls.print = new Print({
+                        label: ' ',
+                        tipLabel: langConstants.CTRL_PRINT,
+                        target: controlContainerTopLeft,
+                        mapController: this.mapController
+                    });
+                    map.addControl(this.controls.print);
+                    break;
+                case 'rotate':
+                    this.controls.rotate = new Rotate({
+                        label: ' ',
+                        tipLabel: langConstants.CTRL_RESET_ROTATION,
+                        target: controlContainerTopLeft,
+                        autoHide: true
+                    });
+                    map.addControl(this.controls.rotate);
+                    break;
+                case 'graticule':
+                    this.controls.graticule = new Grid({
+                        label: ' ',
+                        disableLabel: ' ',
+                        tipLabel: langConstants.CTRL_GRID,
+                        caching: mapData.caching,
+                        target: controlContainerTopLeft,
+                        mapController: this.mapController
+                    });
+                    map.addControl(this.controls.graticule);
+                    break;
+                case 'legend':
+                    //todo
+                    break;
+                case 'layerswitcher':
+                    //todo
+                    break;
+                case 'baselayerswitcher':
+                    //todo
+                    break;
+                case 'geosearch':
+                    //todo
+                    break;
+                case 'measure':
+                    //todo
+                    break;
+                case 'overview':
+                    let ovmTarget = document.createElement("div");
+                    ovmTarget.className = "c4g-sideboard c4g-overviewmap-container c4g-close";
+                    this.mapController.$overlaycontainer_stopevent.append(ovmTarget);
+                    let overviewMapOptions = {
+                        target: controlContainerTopLeft,
+                        mapController: this.mapController,
+                        collapsed: true,
+                        ovmTarget: ovmTarget
+                    };
+                    const scope = this;
+                    const addOverviewMap = function() {
+                        // let activeBaselayer = 71;
+                        overviewMapOptions.source = proxy.baselayerController.arrBaselayers[proxy.activeBaselayerId].layer.getSource();
+                        // proxy.baselayerController.showBaseLayer(activeBaselayer);
+                        // overviewMapOptions.layers = [proxy.baselayerController.arrBaselayers[activeBaselayer].layer];
+                        if (scope.overviewMap) {
+                            // we are reloading the overview map, so keep the collapsed-property
+                            overviewMapOptions.collapsed = !scope.overviewMap.isOpen();
+                        }
+                        scope.overviewMap = new OverviewMap(overviewMapOptions);
+                        scope.controls.overviewmap = scope.overviewMap.getOverviewMap();
+                        map.addControl(scope.controls.overviewmap);
+                    };
+                    if (proxy.baselayers_loaded) {
+                        addOverviewMap();
+                    } else {
+                        proxy.hook_baselayer_loaded.push(addOverviewMap);
+                    }
+                    // add hook to synchronize overviewmap with baselayer
+                    window.c4gMapsHooks.baselayer_changed = window.c4gMapsHooks.baselayer_changed || [];
+                    window.c4gMapsHooks.baselayer_changed.push(function(baselayerId) {
+                        map.removeControl(scope.controls.overviewmap);
+                        scope.overviewMap.removeFromMap();
+                        addOverviewMap();
+                    });
+                    break;
+                case 'permalink':
+                    this.controls.permalink = new Permalink({
+                        label: ' ',
+                        tipLabel: langConstants.CTRL_PERMALINK,
+                        mapController: this.mapController,
+                        getParameter: mapData.permalink.get_parameter,
+                        target: controlContainerBottomRight
+                    });
+                    map.addControl(this.controls.permalink);
+                default:
             }
         }
-        if (mapData.zoom_extent && !mapData.zoom_slider) {
-            this.controls.zoom_extent = new ZoomToExtent({
-                label: ' ',
-                tipLabel: langConstants.CTRL_ZOOM_EXT,
-                target: controlContainerTopLeft
-            });
-            map.addControl(this.controls.zoom_extent);
-        }
-        if (mapData.zoom_home && !mapData.zoom_slider) {
-            this.controls.zoom_home = new Home({
-                label: ' ',
-                disableLabel: ' ',
-                tipLabel: langConstants.CTRL_ZOOM_HOME,
-                target: controlContainerTopLeft,
-                mapController: this.mapController
-            });
-            map.addControl(this.controls.zoom_home);
-        }
 
-        if (mapData.zoom_position && !mapData.zoom_slider) {
-            this.controls.zoom_position = new Position({
-                label: ' ',
-                disableLabel: ' ',
-                tipLabel: langConstants.CTRL_ZOOM_POS,
-                target: controlContainerTopLeft,
-                mapController: this.mapController
-            });
-            map.addControl(this.controls.zoom_position);
-        }
-
-        // combined zoom-controls
-        if (mapData.zoom_slider) {
-            jQuery('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM).addClass(cssConstants.OL_ZOOM_WITH_SLIDER).removeClass(cssConstants.OL_ZOOM);
-            jQuery('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_IN).after(jQuery('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_SLIDER + ' button').addClass(cssConstants.OL_ZOOM_SLIDER));
-            jQuery('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_SLIDER + '.' + cssConstants.OL_CONTROL).remove();
-        }
-
-        if (mapData.zoom_panel && mapData.zoom_extent) {
-            jQuery('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM).addClass(cssConstants.OL_ZOOM_WITH_EXT).removeClass(cssConstants.OL_ZOOM);
-            jQuery('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_IN).after(jQuery('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_EXT + ' button').addClass(cssConstants.OL_ZOOM_EXT));
-            jQuery('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_EXT + '.' + cssConstants.OL_CONTROL).remove();
-        }
-
-        if (mapData.zoom_panel && mapData.zoom_home) {
-            jQuery('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM).addClass(cssConstants.OL_ZOOM_WITH_HOME).removeClass(cssConstants.OL_ZOOM);
-            jQuery('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_IN).after(jQuery('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_HOME + ' button').addClass(cssConstants.OL_ZOOM_HOME));
-            let removeElement = controlContainerTopLeft.querySelector('.' + cssConstants.OL_ZOOM_HOME + '.' + cssConstants.OL_UNSELECTABLE + '.button');
-            if (removeElement) {
-                try {
-                    removeElement.remove();
-                } catch (err) {
-                    //ie 11 error
-                }
-            }
-        }
-
-        if (mapData.zoom_panel && mapData.zoom_position) {
-            jQuery('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM).addClass(cssConstants.OL_ZOOM_WITH_POS).removeClass(cssConstants.OL_ZOOM);
-            jQuery('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_IN).after(jQuery('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_POS + ' button').addClass(cssConstants.OL_ZOOM_POS));
-            jQuery('#' + mapData.mapDiv + ' .' + cssConstants.OL_ZOOM_POS + '.' + cssConstants.OL_CONTROL).remove();
-            let removeElement = controlContainerTopLeft.querySelector('.' + cssConstants.OL_ZOOM_POS + '.' + cssConstants.OL_UNSELECTABLE + '.button');
-            if (removeElement) {
-                try {
-                    removeElement.remove();
-                } catch (err) {
-                    //ie 11 error
-                }
-            }
-        }
-
-        // overview-map
-        if (mapData.overviewmap) {
-            let ovmTarget = document.createElement("div");
-            ovmTarget.className = "c4g-sideboard c4g-overviewmap-container c4g-close";
-            this.mapController.$overlaycontainer_stopevent.append(ovmTarget);
-            let overviewMapOptions = {
-                target: controlContainerTopLeft,
-                mapController: this.mapController,
-                collapsed: true,
-                ovmTarget: ovmTarget
-            };
-            const scope = this;
-            const addOverviewMap = function() {
-                // let activeBaselayer = 71;
-                overviewMapOptions.source = proxy.baselayerController.arrBaselayers[proxy.activeBaselayerId].layer.getSource();
-                // proxy.baselayerController.showBaseLayer(activeBaselayer);
-                // overviewMapOptions.layers = [proxy.baselayerController.arrBaselayers[activeBaselayer].layer];
-                if (scope.overviewMap) {
-                    // we are reloading the overview map, so keep the collapsed-property
-                    overviewMapOptions.collapsed = !scope.overviewMap.isOpen();
-                }
-                scope.overviewMap = new OverviewMap(overviewMapOptions);
-                scope.controls.overviewmap = scope.overviewMap.getOverviewMap();
-                map.addControl(scope.controls.overviewmap);
-            };
-            if (proxy.baselayers_loaded) {
-                addOverviewMap();
-            } else {
-                proxy.hook_baselayer_loaded.push(addOverviewMap);
-            }
-            // add hook to synchronize overviewmap with baselayer
-            window.c4gMapsHooks.baselayer_changed = window.c4gMapsHooks.baselayer_changed || [];
-            window.c4gMapsHooks.baselayer_changed.push(function(baselayerId) {
-                map.removeControl(scope.controls.overviewmap);
-                scope.overviewMap.removeFromMap();
-                addOverviewMap();
-            });
-        }
         // backend-geopicker
         if (mapData.geopicker && (mapData.geopicker.type === "backend" || mapData.geopicker.type === "frontend")) {
             this.controls.geopicker = new GeoPicker({
@@ -245,18 +291,6 @@ export class MapsControls {
             }
         }
 
-
-        // show permalink
-        if (mapData.permalink.enable) {
-            this.controls.permalink = new Permalink({
-                label: ' ',
-                tipLabel: langConstants.CTRL_PERMALINK,
-                mapController: this.mapController,
-                getParameter: mapData.permalink.get_parameter,
-                target: controlContainerBottomRight
-            });
-            map.addControl(this.controls.permalink);
-        }
 
         // scaleline
         if (mapData.scaleline) {
@@ -322,55 +356,6 @@ export class MapsControls {
                 this.controls.attribution.setCollapsed(mapData.attribution.div ? false : mapData.attribution.collapsed === '1');
             }
             map.addControl(this.controls.attribution);
-        }
-
-
-        // fullscreen
-        if (mapData.fullscreen) {
-            this.controls.fullscreen = new FullScreen({
-                label: ' ',
-                labelActive: ' ',
-                tipLabel: langConstants.CTRL_FULLSCREEN,
-                target: controlContainerTopLeft
-            });
-            map.addControl(this.controls.fullscreen);
-        }
-
-        //
-        if (mapData.print) {
-            this.controls.print = new Print({
-                label: "",
-                tipLabel: langConstants.CTRL_PRINT,
-                target: controlContainerTopLeft,
-                mapController: this.mapController
-            });
-            map.addControl(this.controls.print);
-        }
-
-        // show graticule (grid)
-        if (mapData.graticule) {
-            this.controls.graticule = new Grid({
-                label: ' ',
-                disableLabel: ' ',
-                tipLabel: langConstants.CTRL_GRID,
-                caching: mapData.caching,
-                target: controlContainerTopLeft,
-                mapController: this.mapController
-            });
-            map.addControl(this.controls.graticule);
-        }
-
-        // rotate-control
-        //TODO: use something like "mapData.rotate"
-        //   Check: mapData.mouse_nav (defined?)
-        if (mapData.mouse_nav && (mapData.mouse_nav.drag_rotate || (mapData.mouse_nav.drag_rotate && mapData.mouse_nav.drag_rotate_zoom))) {
-            this.controls.rotate = new Rotate({
-                label: ' ',
-                tipLabel: langConstants.CTRL_RESET_ROTATION,
-                target: controlContainerTopLeft,
-                autoHide: true
-            });
-            map.addControl(this.controls.rotate);
         }
     }
 

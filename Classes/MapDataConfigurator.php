@@ -148,11 +148,10 @@ class MapDataConfigurator
                 $profileId = $profile->id;
             } else {
                 // set defaults for geopicker
-                $mapData['zoom_panel'] = true;
-                $mapData['zoom_slider'] = false;
-                $mapData['zoom_extent'] = false;
-                $mapData['zoom_home'] = false;
-                $mapData['zoom_position'] = false;
+                $mapData['zoom_panel'] = 1;
+                $mapData['zoom_extent'] = 0;
+                $mapData['zoom_home'] = 0;
+                $mapData['zoom_position'] = 0;
                 $mapData['mouse_nav']['wheel_zoom'] = true;
                 $mapData['mouse_nav']['doubleclick_zoom'] = true;
                 $mapData['mouse_nav']['drag_pan'] = true;
@@ -279,10 +278,29 @@ class MapDataConfigurator
         if ($profile) {
             // general
             //
+            $mapFunctions =  unserialize($profile->mapFunctions);
+            $buttons = array_flip($mapFunctions);
 
             // basemaps
             //
             $mapData['default_baselayer'] = $profile->default_baselayer;
+
+            //+1 for older define checks key = button / value = sorting position
+            $mapData['zoom'] = array_key_exists('zoom',$buttons) ? $buttons['zoom'] +1 : 0;
+            $mapData['fullscreen'] = array_key_exists('fullscreen',$buttons) ? $buttons['fullscreen'] +1 : 0;
+            $mapData['zoomPosition'] = array_key_exists('zoomPosition',$buttons) ? $buttons['zoomPosition'] +1 : 0;
+            $mapData['zoomHome'] = array_key_exists('zoomHome',$buttons) ? $buttons['zoomHome'] +1 : 0;
+            $mapData['zoomExtent'] = array_key_exists('zoomExtent',$buttons) ? $buttons['zoomExtent'] +1 : 0;
+            $mapData['print'] = array_key_exists('print',$buttons) ? $buttons['print'] +1 : 0;
+            $mapData['rotate'] = array_key_exists('rotate',$buttons) ? $buttons['rotate'] +1 : 0;
+            $mapData['graticule'] = array_key_exists('graticule',$buttons) ? $buttons['graticule'] +1 : 0;
+            $mapData['layerswitcher']['enable'] = array_key_exists('layerswitcher',$buttons) ? $buttons['layerswitcher'] +1 : 0;
+            $mapData['baselayerswitcher']['enable'] = array_key_exists('baselayerswitcher',$buttons) ? $buttons['baselayerswitcher'] +1 : 0;
+            $mapData['geosearch']['enable'] = array_key_exists('geosearch',$buttons) ? $buttons['geosearch'] +1 : 0;
+            $mapData['legend'] = array_key_exists('legend',$buttons) ? $buttons['legend'] +1 : 0;
+            $mapData['measuretools']['enable'] = array_key_exists('measure',$buttons) ? $buttons['measure'] +1 : 0;
+            $mapData['overviewmap'] = array_key_exists('overview',$buttons) ? $buttons['overview'] +1 : 0;
+            $mapData['permalink']['enable'] = array_key_exists('permalink',$buttons) ? $buttons['permalink'] +1 : 0;
 
             // location-style resizing
             //
@@ -296,47 +314,11 @@ class MapDataConfigurator
                 ];
             }
 
-            // map-navigation
-            //
-            $mapData['zoom_panel'] = $profile->zoom_panel;
-
-            if ($profile->zoom_panel_button) {
-                $zoom_panel_buttons = unserialize($profile->zoom_panel_button);
-                foreach ($zoom_panel_buttons as $key => $zoom_panel_button) {
-                    switch ($zoom_panel_button) {
-                        case '3':
-                            $mapData['zoom_position'] = true;
-
-                            break;
-                        case '2':
-                            $mapData['zoom_home'] = true;
-
-                            break;
-                        case '1':
-                            $mapData['zoom_extent'] = true;
-
-                            break;
-                        default:
-                    }
-                }
-            }
-
-            $mapData['zoom_slider'] = false;//($profile->zoom_panel_slider == 1);
             if ($profile->mouse_nav) {
                 $mapData['mouse_nav']['drag_pan'] = $profile->mouse_nav;
                 $mapData['mouse_nav']['wheel_zoom'] = $profile->mouse_nav_wheel;
                 $mapData['mouse_nav']['doubleclick_zoom'] = $profile->mouse_nav_doubleclick_zoom;
                 $mapData['mouse_nav']['drag_zoom'] = $profile->mouse_nav_zoombox;
-                switch ($profile->mouse_nav_dragmode) {
-                    case '2':
-                        $mapData['mouse_nav']['drag_rotate_zoom'] = true;
-                        // falltrough
-                    case '1':
-                        $mapData['mouse_nav']['drag_rotate'] = true;
-
-                        break;
-                    default:
-                }
                 $mapData['mouse_nav']['kinetic'] = $profile->mouse_nav_kinetic;
                 $mapData['mouse_nav']['toolbar'] = $profile->mouse_nav_toolbar;
             }
@@ -348,13 +330,11 @@ class MapDataConfigurator
                 $mapData['keyboard_nav']['pan'] = $profile->keyboard_nav;
                 $mapData['keyboard_nav']['zoom'] = $profile->keyboard_nav;
             }
-            $mapData['fullscreen'] = $profile->fullscreen;
-            $mapData['print'] = $profile->print;
 
             // Starboard
             //
-            if ($profile->starboard) {
-                $mapData['starboard']['enable'] = $profile->starboard;
+            //if (array_key_exists('starboard',$buttons)) { //ToDo
+                $mapData['starboard']['enable'] = 1; //ToDo
                 $mapData['starboard']['open'] = $profile->starboard_open;
                 $mapData['starboard']['label'] = \Contao\Controller::replaceInsertTags($profile->starboard_label);
                 $mapData['starboard']['div'] = $profile->starboard_div;
@@ -366,25 +346,30 @@ class MapDataConfigurator
                 $mapData['cluster_fontcolor'] = $profile->cluster_fontcolor;
                 $mapData['cluster_zoom'] = $profile->cluster_zoom;
                 $mapData['cluster_dist_spider'] = $profile->cluster_dist_spider;
-                // Baselayerswitcher
-                $mapData['baselayerswitcher']['enable'] = $profile->baselayerswitcher;
-                $mapData['baselayerswitcher']['label'] = \Contao\Controller::replaceInsertTags($profile->baselayerswitcher_label);
-                $mapData['baselayerswitcher']['filter'] = $profile->baselayerswitcher_filter;
+            //}
+
+            if (array_key_exists('layerswitcher',$buttons)) {
                 // Layerswitcher
-                $mapData['layerswitcher']['enable'] = $profile->layerswitcher;
+                //$mapData['layerswitcher']['enable'] = $profile->layerswitcher;
                 $mapData['layerswitcher']['label'] = \Contao\Controller::replaceInsertTags($profile->layerswitcher_label);
                 $mapData['layerswitcher']['filter'] = $profile->layer_filter;
             }
+
+            if (array_key_exists('baselayerswitcher',$buttons)) {
+                // Baselayerswitcher
+                //$mapData['baselayerswitcher']['enable'] = $profile->baselayerswitcher;
+                $mapData['baselayerswitcher']['label'] = \Contao\Controller::replaceInsertTags($profile->baselayerswitcher_label);
+                $mapData['baselayerswitcher']['filter'] = $profile->baselayer_filter;
+            }
+
             $mapData['filterDiv'] = $profile->filter_div;
             $mapData['filterHandling'] = $profile->filterHandling;
 
             // map-tools
             //
-            if ($profile->measuretool) {
-                $mapData['measuretools']['enable'] = $profile->measuretool;
-            }
-
-            $mapData['graticule'] = $profile->graticule;
+//            if ($profile->measuretool) {
+//                $mapData['measuretools']['enable'] = $profile->measuretool;
+//            }
 
             // map-information
             //
@@ -406,11 +391,11 @@ class MapDataConfigurator
                     $mapData['attribution']['additional'] = \Contao\Controller::replaceInsertTags($profile->add_attribution);
                 }
             }
-            $mapData['overviewmap'] = $profile->overviewmap;
+            //$mapData['overviewmap'] = $profile->overviewmap;
             $mapData['scaleline'] = $profile->scaleline;
             $mapData['mouseposition'] = $profile->mouseposition;
-            $mapData['permalink']['enable'] = $profile->permalink;
-            if ($profile->permalink) {
+
+            if ($mapData['permalink']['enable']) {
                 $mapData['permalink']['get_parameter'] = $profile->permalink_get_param;
             }
             $mapData['zoomlevel'] = $profile->zoomlevel;
@@ -424,7 +409,7 @@ class MapDataConfigurator
             if ($profile->geosearch) {
                 $mapData['geosearch']['headline'] = $profile->geosearch_headline;
                 $mapData['geosearch']['geosearch_engine'] = $profile->geosearch_engine;
-                $mapData['geosearch']['enable'] = ($profile->geosearch && $profile->geosearch_show);
+                //$mapData['geosearch']['enable'] = ($profile->geosearch && $profile->geosearch_show);
                 if ($profile->geosearch_customengine_attribution) {
                     $mapData['geosearch']['custom_attribution'] = \Contao\Controller::replaceInsertTags($profile->geosearch_customengine_attribution);
                 }
