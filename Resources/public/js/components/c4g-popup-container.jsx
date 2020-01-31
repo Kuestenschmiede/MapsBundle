@@ -39,13 +39,9 @@ export class PopupContainer extends Component {
   render() {
     let detailBtnClass = "";
     let detailBtnCb = "";
-    if (!this.props.alwaysExtended) {
-      detailBtnClass = "c4g-beach-options";
-      detailBtnCb = this.toggleDetails;
-    }
-    let className = "c4g-sideboard c4g-popup-container c4g-beach ";
+    let className = "c4g-sideboard c4g-popup-container ";
     if (this.state.open) {
-      className += "c4g-open c4g-active";
+      className += "c4g-open ";
     } else {
       className += "c4g-close";
     }
@@ -63,7 +59,7 @@ export class PopupContainer extends Component {
       <div className={className}>
         <div className={"c4g-popup-wrapper"}>
           <Titlebar wrapperClass={"c4g-beach-header"} headerClass={"c4g-beach-header-headline"} header={""}
-                    closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close} detailBtnClass={detailBtnClass} detailBtnCb={detailBtnCb}>
+                    closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close} detailBtnClass={""} detailBtnCb={""}>
             <div dangerouslySetInnerHTML={{__html: this.routeButtons.outerHTML}} />
           </Titlebar>
           <div className={"c4g-beach-content c4g-popup-content"} dangerouslySetInnerHTML={{__html: this.state.content}}>

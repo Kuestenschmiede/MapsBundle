@@ -1245,6 +1245,7 @@ button.c4g-geosearch-options:before {
   line-height: 30px;
   height: 30px;
   padding-right: .2em;
+  border: none;
   cursor: pointer;
   transition: .1s;
 }
@@ -1257,8 +1258,6 @@ button.c4g-geosearch-options:before {
   content: "\f35a";
   font-family: "Font Awesome 5 Free";
   font-weight: bold;
-  position: relative;
-  font-size: 20px;
   margin-left: -20px;
   margin-right: .4em;
   display: inline;
@@ -1396,6 +1395,11 @@ div div.c4g-popup-wrapper.c4g-beach {
   z-index: 60;
 }
 
+.c4g-sideboard ul {
+  margin: 0;
+  padding: 0;
+}
+
 .c4g-sideboard > div div[class*=header] {
   line-height: calc(32px + .4em);
   height: calc(32px + .4em);
@@ -1481,6 +1485,19 @@ ul.c4g-overlays span {
   max-width: calc(50% - .2em);
   text-overflow: ellipsis;
   overflow-x: hidden;
+}
+
+.c4g-geosearch-form input {
+  max-width: calc(100% - .2em - 35px);
+  height: 28px;
+  padding: 0;
+  vertical-align: top;
+  border: none;
+  padding-left: .2em;
+}
+
+.c4g-geosearch-form {
+  padding: 0 .4em .4em;
 }
 
 /*----------------*/

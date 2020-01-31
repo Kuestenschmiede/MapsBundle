@@ -25,7 +25,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayers'] = ['Basiskarten', 'Wäh
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['default_baselayer'] = ['Standard-Basiskarte', 'Wählen Sie die Basiskarte, die beim Laden der Karte vorausgewählt sein soll.'];
 //$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayerswitcher'] = ['Basiskartenauswahl anzeigen', 'Wenn Sie diese Checkbox auswählen, wird im Starboard die Auswahlliste der Basiskarten in einem eigenen Tab angezeigt.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayerswitcher_label'] = ['Überschrift der Basiskartenauswahl', 'Standard: "Basiskarten"'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayer_filter'] = ['Basiskartenfilter aktivieren', 'Blendet einen Suchfilter für die Starboardeinträge (Basiskarten) oberhalb des Baumes ein.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayerswitcher_filter'] = ['Basiskartenfilter aktivieren', 'Blendet einen Suchfilter für die Starboardeinträge (Basiskarten) oberhalb des Baumes ein.'];
 
 /** Lokationsstile */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['locstyles'] = ['Lokationsstile', 'Wählen Sie die Lokationsstile, die in den Kartenstrukturelementen dieses Profils geladen werden sollen. Standard: alle (d.h. wenn nichts ausgewählt ist, werden alle Lokationsstile übergeben.)'];
