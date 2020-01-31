@@ -58,7 +58,7 @@ export class Measuretools extends Component {
     this.modes = ["select", "line", "polygon", "circle", "freehand"];
 
     this.state = {
-      open: false,
+      open: props.open || false,
       currentMode: "select",
       control: control,
       measuredFeatures: [],
