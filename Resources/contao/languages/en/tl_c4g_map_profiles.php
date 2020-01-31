@@ -146,6 +146,22 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['filterHandling'] = ['Filter as multi
 /**
  * Reference
  */
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['zoom'] = ['Zooming controls','Create buttons for zooming in and out.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['zoomPosition'] = ['Zoom to position','Zooms to the current device position on safe sides.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['zoomHome'] = ['Zoom back (house)','Zooms back to the preset position on the map.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['zoomExtent'] = ['Zoom out (world)','Zooms back to the smallest possible zoom level.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['fullscreen'] = ['Full screen mode','Shows a button to switch to the full screen mode of the browser.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['print'] = ['Map export','Shows a button that allows the map to be exported as PNG. Please pay attention to the copyright information of the map provider.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['graticule'] = ['Geographical network','Fades in a switch that displays a geographic grid that visualizes longitude and latitude using horizontal and vertical lines.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['layerswitcher'] = ['Map structure element selection (Starboard)','If you select this checkbox, the selection list of map structural elements is displayed in a separate tab on the Starboard.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['baselayerswitcher'] = ['Base map selection','If you select this checkbox, the selection list of base maps is displayed in a separate tab on the starboard.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['geosearch'] = ['Map search','Represents button and search field in the map.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['legend'] = ['Legend','Here you can store your own information (e.g. as legend).'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['rotate'] = ['Rotate map with [Ctrl + Shift + Click].','Activates the possibility to rotate (and zoom) the map using the Ctrl+Shift keys and the left mouse button. Also works with 2-finger touch.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['measure'] = ['Measure tools','Hides a button that can be used to activate tools for measuring distances and areas.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['overview'] = ['Overview map','Creates the possibility to display a small map of the surroundings via a button on the right side of the map.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['permalink'] = ['Permalink generator','Calculates a copyable link which represents the current map section of the map and which can be sent e.g. in e-mails.'];
+
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['CLICK']   = 'Single mouseclick';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['DBLCL']   = 'Double mouseclick';
 
