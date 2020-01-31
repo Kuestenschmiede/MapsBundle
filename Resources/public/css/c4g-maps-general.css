@@ -53,14 +53,7 @@
 /*
  *  Controls
  */
-.ol-control button,
-.c4g-control button {
-  display: block;
-  font-size: 1.14em;
-  height: 1.375em;
-  width: 1.375em;
-  line-height: .5em;
-}
+
 .ol-control button[title]:after {
   display: none;
 }

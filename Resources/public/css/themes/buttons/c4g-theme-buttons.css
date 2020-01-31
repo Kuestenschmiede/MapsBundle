@@ -38,7 +38,6 @@
   width: 36px; /*1.974em;*/
   height: var(--button-size-pixel);
   width: var(--button-size-pixel);
-  line-height: .5em;
   border: none;
   border-radius: 0%;
   border-radius: var(--button-radius-percent);
@@ -188,29 +187,13 @@
   bottom: 42px;
   right: 0;
   left: auto;
-
   border-radius: 4px;
-  /*border-bottom-right-radius: 0;*/
 }
 
 
 /*
  *  Control-container
  */
-.c4g-control-container-top-left {
-  position: absolute;
-  top: .2em;
-  left: .2em;
-}
-
-/*
-.c4g-control-container-bottom-left {
-  position: absolute;
-  bottom: 3em;
-  /* do not change "left"-value! *//*
-  left: 0px;
-  margin-left: .4em;
-}*/
 
 .c4g-control-container-top-right {
   position: absolute;
@@ -316,7 +299,6 @@ button.ol-zoom-out {
 }
 
 .c4g-control-container-bottom-left-sub {
-  margin-top: .4em;
   padding: 0 .4em;
   font-size: 12px;
   border-radius: 4px;
@@ -941,12 +923,6 @@ div.c4g-tooltip-popup:before {
   font-size: 2em;
 }
 
-.c4g-control-container-top-left::-webkit-scrollbar,
-.c4g-starboard-content-container::-webkit-scrollbar,
-.c4g-portside-content-container::-webkit-scrollbar,
-.c4g-popup-wrapper .c4g-popup-content::-webkit-scrollbar{
-  width: 12px/*calc(var(--button-size)/2.2)*/;
-}
 .c4g-control-container-top-left::-webkit-scrollbar-track,
 .c4g-starboard-content-container::-webkit-scrollbar-track,
 .c4g-portside-content-container::-webkit-scrollbar-track,
