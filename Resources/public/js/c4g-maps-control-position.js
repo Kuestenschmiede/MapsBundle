@@ -37,7 +37,7 @@ export class Position extends Control {
 
     // default options
     options = jQuery.extend({
-      className: cssConstants.OL_ZOOM_POS,
+      className: cssConstants.OL_ZOOM_POS+' '+cssConstants.OL_CONTROL,
       switchable: true,
       enabled: true,
       mapController: undefined

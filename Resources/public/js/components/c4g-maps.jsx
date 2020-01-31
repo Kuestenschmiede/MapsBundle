@@ -86,18 +86,18 @@ export class MapController extends Component {
     langConstants = getLanguage(mapData);
 
     var self = this,
-      permalink = false,
-      minZoom,
-      maxZoom,
-      view,
-      geoLocation,
-      controls = [],
-      interactions = [],
-      displayAllLocations,
-      domMapDiv,
-      kinetic,
-      starboard_label,
-      enableStarboard = true;
+        permalink = false,
+        minZoom,
+        maxZoom,
+        view,
+        geoLocation,
+        controls = [],
+        interactions = [],
+        displayAllLocations,
+        domMapDiv,
+        kinetic,
+        starboard_label,
+        enableStarboard = true;
 
     //--
     mapData = jQuery.extend({
@@ -248,7 +248,7 @@ export class MapController extends Component {
     // add view observer to update permalink on center change, if a permalink exists
     // use other permalink variable to avoid interference with the actual permalink mechanism
     window.c4gMapsHooks.map_center_changed = window.c4gMapsHooks.map_center_changed || [];
-    window.c4gMapsHooks.map_center_changed.push(function(center) {
+    window.c4gMapsHooks.map_center_changed.push(function (center) {
       let currentPermalink = utils.getUrlParam(mapData.permalink.get_parameter);
       if (currentPermalink) {
         currentPermalink = currentPermalink.split('/');
@@ -262,7 +262,7 @@ export class MapController extends Component {
     });
 
     window.c4gMapsHooks.hook_map_zoom = window.c4gMapsHooks.hook_map_zoom || [];
-    window.c4gMapsHooks.hook_map_zoom.push(function(proxy) {
+    window.c4gMapsHooks.hook_map_zoom.push(function (proxy) {
       let currentPermalink = utils.getUrlParam(mapData.permalink.get_parameter);
       if (currentPermalink) {
         currentPermalink = currentPermalink.split('/');
@@ -297,9 +297,9 @@ export class MapController extends Component {
     }
 
     if (mapData.restr_bottomleft_lon
-      && mapData.restr_bottomleft_lat
-      && mapData.restr_topright_lon
-      && mapData.restr_topright_lat
+        && mapData.restr_bottomleft_lat
+        && mapData.restr_topright_lon
+        && mapData.restr_topright_lat
     ) {
       let extent = [
         parseFloat(mapData.restr_bottomleft_lon),
@@ -419,18 +419,18 @@ export class MapController extends Component {
     if (mapData.calc_extent === "LOCATIONS") {
       displayAllLocations = function (layerIds) {
         var layers = self.proxy.layerController.arrLayers,
-          layer,
-          geometry,
-          coords,
-          padding,
-          coordinates,
-          extent,
-          featureList,
-          featureArray,
-          key,
-          vectorArray,
-          layerGroup,
-          center;
+            layer,
+            geometry,
+            coords,
+            padding,
+            coordinates,
+            extent,
+            featureList,
+            featureArray,
+            key,
+            vectorArray,
+            layerGroup,
+            center;
         // delete function from hook array
         delete this[this.indexOf(displayAllLocations)];
         coordinates = [];
@@ -453,9 +453,9 @@ export class MapController extends Component {
             if (vectorArray && vectorArray.forEach && typeof vectorArray.forEach === 'function') {
               vectorArray.forEach(function (vectorLayer) {
                 if (vectorLayer &&
-                  vectorLayer.data &&
-                  vectorLayer.data.geometry &&
-                  vectorLayer.data.geometry.coordinates) {
+                    vectorLayer.data &&
+                    vectorLayer.data.geometry &&
+                    vectorLayer.data.geometry.coordinates) {
                   if (vectorLayer.data.geometry.type === "Point") {
                     coords = transform([parseFloat(vectorLayer.data.geometry.coordinates[0]),
                       parseFloat(vectorLayer.data.geometry.coordinates[1])], 'EPSG:4326', 'EPSG:3857');
@@ -569,7 +569,7 @@ export class MapController extends Component {
       if (mapData.mouse_nav.drag_rotate_zoom) {
         this.map.addInteraction(new DragRotateAndZoom({condition: customCondition}));
       } else if (mapData.mouse_nav.drag_rotate) {
-        this.map.addInteraction(new DragRotate({condition:customCondition}));
+        this.map.addInteraction(new DragRotate({condition: customCondition}));
       }
     }
     // touch navigation
@@ -599,10 +599,11 @@ export class MapController extends Component {
     // add controls ===
     this.mapsControls = new MapsControls(this);
     this.mapsControls.init();
+
     // add container for react components
-    if (mapData.starboard && mapData.starboard.enable) {
+    if (mapData.layerswitcher.enable) {
       this.reactContainer = document.createElement('div');
-      this.reactContainer.className ="c4g-sideboard c4g-starboard-container ol-unselectable";
+      this.reactContainer.className = "c4g-sideboard c4g-starboard-container ol-unselectable";
       if (mapData.starboard.open) {
         this.reactContainer.style.right = "0";
         this.reactContainer.className += " c4g-open";
@@ -611,11 +612,12 @@ export class MapController extends Component {
         this.reactContainer.className += " c4g-close";
       }
 
-
       this.$overlaycontainer_stopevent.append(this.reactContainer);
+    }
 
+    if (mapData.baselayerswitcher.enable) {
       this.baselayerContainer = document.createElement('div');
-      this.baselayerContainer.className ="c4g-sideboard c4g-baselayer-container ol-unselectable";
+      this.baselayerContainer.className = "c4g-sideboard c4g-baselayer-container ol-unselectable";
       if (mapData.starboard.open) {
         // this.baselayerContainer.style.right = "0";
         this.baselayerContainer.className += " c4g-open";
@@ -626,6 +628,7 @@ export class MapController extends Component {
 
       this.$overlaycontainer_stopevent.append(this.baselayerContainer);
     }
+
     // feature filter
     if (mapData.filterDiv && false) {
       this.filterContainer = document.createElement('div');
@@ -639,32 +642,21 @@ export class MapController extends Component {
     }
 
     // infopage container
-    if (mapData.infopage) {
+    if (mapData.legend) {
       this.infoPageContainer = document.createElement('div');
       this.infoPageContainer.className = "c4g-sideboard c4g-infopage-container ol-unselectable c4g-close";
       this.$overlaycontainer_stopevent.append(this.infoPageContainer);
     }
 
     // measuretools container
-    if (mapData.measuretools) {
+    if (mapData.measuretools.enable) {
       this.measuretoolsContainer = document.createElement('div');
       this.measuretoolsContainer.className = "c4g-sideboard c4g-measuretools-container ol-unselectable c4g-close";
       this.$overlaycontainer_stopevent.append(this.measuretoolsContainer);
     }
+
     // @ToDo mapData.additionalPanel is always true, because it is set as an new object in the beginning. Therefore the second parameter of the boolean is requested, which throws an error
     // additionalPanel is furthermore not found anywhere in Maps and should be loaded over a hook
-
-    // if (mapData.additionalPanel && typeof c4g.maps.control.additionalPanel === 'function') {
-    //   this.controls.additionalPanel = new c4g.maps.control.additionalPanel({
-    //     tipLabel: langConstants.CTRL_ADDITIONALPANEL,
-    //     target: controlContainerTopLeft,
-    //     caching: mapData.caching,
-    //     mapController: this
-    //   });
-    //   this.map.addControl(this.controls.additionalPanel);
-    // }
-
-
 
     // starboard
     if (mapData.geopicker && mapData.geopicker.type === "backend") {
@@ -786,16 +778,22 @@ export class MapController extends Component {
   render() {
     const mapData = this.data;
     let target = document.querySelector('#' + mapData.mapDiv + ' .c4g-control-container-top-left');
-    let sbPortal = ReactDOM.createPortal(
-      <StarboardPanel ref={(node) => {this.components.starboard = node;}} target={target}
-                      mapController={this} objLayers={this.state.objLayers}
-                      layerStates={this.state.arrLayerStates} parentCallback={this.setLayerStates}
-                      direction={"right"} open={(this.props.mapData.initial_open_comp === "starboard")}
-      />,
-      this.reactContainer
-    );
+
+    let sbPortal = "";
+    if (mapData.layerswitcher.enable) { //ToDo
+      sbPortal = ReactDOM.createPortal(
+          <StarboardPanel ref={(node) => {
+            this.components.starboard = node;
+          }} target={target}
+                          mapController={this} objLayers={this.state.objLayers}
+                          layerStates={this.state.arrLayerStates} parentCallback={this.setLayerStates}
+                          direction={"right"} open={(this.props.mapData.initial_open_comp === "starboard")}
+          />,
+          this.reactContainer
+      );
+    }
     let searchPortal = "";
-    if (mapData.geosearch && mapData.geosearch.enable) {
+    if (mapData.geosearch.enable) {
       let geoSearchOptions = this.createGeosearchOptions();
       geoSearchOptions.ref = (node) => {
         this.components.geosearch = node;
@@ -806,20 +804,26 @@ export class MapController extends Component {
       );
     }
     let infoPortal = "";
-    if (mapData.infopage) {
+    if (mapData.legend) {
       infoPortal = ReactDOM.createPortal(
         <Infopage ref={(node) => {this.components.infopage = node;}} target={target}
-                  infoContent={mapData.infopage} mapController={this} open={mapData.initial_open_comp === "infopage"}/>,
+                  infoContent={mapData.infopage} mapController={this} open={mapData.initial_open_comp === "legend"}/>,
         this.infoPageContainer
       );
     }
-    let blsPortal = ReactDOM.createPortal(
-      <BaselayerSwitcher ref={(node) => {this.components.baselayerSwitcher = node;}} target={target} open={mapData.initial_open_comp === "baselayers"}
-                         mapController={this} baselayerController={this.proxy.baselayerController} />,
-      this.baselayerContainer
-    );
+
+    let blsPortal = "";
+    if (mapData.baselayerswitcher.enable) { //ToDo
+      blsPortal = ReactDOM.createPortal(
+          <BaselayerSwitcher ref={(node) => {
+            this.components.baselayerSwitcher = node;
+          }} target={target} open={mapData.initial_open_comp === "baselayers"}
+                             mapController={this} baselayerController={this.proxy.baselayerController}/>,
+          this.baselayerContainer
+      );
+    }
     let measurePortal = "";
-    if (mapData.measuretools) {
+    if (mapData.measuretools.enable) {
       measurePortal = ReactDOM.createPortal(
         <Measuretools ref={(node) => {this.components.measuretools = node;}} target={target}
           mapController={this} open={mapData.initial_open_comp === "measuretools"}/>,
