@@ -1435,6 +1435,10 @@ div div.c4g-popup-wrapper.c4g-beach {
   width: .2em;
 }
 
+.c4g-sideboard.c4g-close {
+  right: -100%;
+}
+
 
 .c4g-measuretools-mode-switcher {
   height: 32px ;
