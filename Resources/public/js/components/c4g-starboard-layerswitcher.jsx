@@ -91,8 +91,8 @@ export class StarboardLayerswitcher extends Component {
   }
 
   filterMatches(string) {
-    if (string.indexOf(this.state.layerFilter) !== -1
-      || string.indexOf(this.state.layerFilter.toLowerCase()) !== -1) {
+    if (string.toLowerCase().indexOf(this.state.layerFilter) !== -1
+      || string.toLowerCase().indexOf(this.state.layerFilter.toLowerCase()) !== -1) {
       return true;
     } else {
       return false;
@@ -110,7 +110,7 @@ export class StarboardLayerswitcher extends Component {
       // check if layer matches
       if (this.filterMatches(currentLayer.name)) {
         returnLayers.push(layers[i]);
-        returnStates.push(states[i])
+        returnStates.push(states[i]);
       } else {
         if (currentLayer.childs && currentLayer.childs.length > 0) {
           // layer has childs
@@ -137,6 +137,8 @@ export class StarboardLayerswitcher extends Component {
     };
     const mapData = this.props.mapController.data;
     let layers, states;
+    // deep clone arrays before passing them as arguments
+    // otherwise we would modify the objects inside the props
     [layers, states] = this.filterLayers(JSON.parse(JSON.stringify(this.props.objLayers)),
       JSON.parse(JSON.stringify(this.props.layerStates)));
     return (
