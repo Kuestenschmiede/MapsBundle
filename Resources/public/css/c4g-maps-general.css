@@ -1487,17 +1487,20 @@ ul.c4g-overlays span {
   overflow-x: hidden;
 }
 
-.c4g-geosearch-form input {
+.c4g-geosearch-form input, .c4g-sideboard > div div[class*=filter] input {
   max-width: calc(100% - .2em - 35px);
   height: 28px;
   padding: 0;
   vertical-align: top;
   border: none;
   padding-left: .2em;
+  outline: none;
 }
 
-.c4g-geosearch-form {
+.c4g-geosearch-form, .c4g-sideboard > div div[class*=filter] {
   padding: 0 .4em .4em;
+  height: 28px;
+  line-height: 28px;
 }
 
 /*----------------*/

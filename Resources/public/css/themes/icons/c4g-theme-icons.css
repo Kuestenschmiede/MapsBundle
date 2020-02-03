@@ -499,3 +499,13 @@ button.c4g-beach-options:before {
   font-family: "Font Awesome 5 Free";
   font-weight: 600;
 }
+
+.c4g-sideboard > div div[class*=filter]:after {
+  content: "\f0b0";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 600;
+  position: absolute;
+  width: 35px;
+  height: 28px;
+  text-align: center;
+}
