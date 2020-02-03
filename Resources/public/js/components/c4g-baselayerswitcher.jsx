@@ -107,10 +107,11 @@ export class BaselayerSwitcher extends Component {
       <div className={"c4g-baselayer-wrapper"}>
         <Titlebar wrapperClass={"c4g-baselayer-header"} headerClass={"c4g-baselayer-headline"}
           header={headline} closeBtnClass={"c4g-baselayer-close"} closeBtnCb={this.close}/>
+        <div className={"c4g-baselayer-filter"}>
+          <input className={"c4g-baselayer-filter-field"} type="text" placeholder={"\uf002"}
+                 onInput={() => {this.filterBaselayers(this.value)}}/>
+        </div>
         <div className={"c4g-baselayertree-content"}>
-          <div className={"c4g-baselayer-filter"}>
-            <input className={"c4g-baselayer-filter-field"} type="text" onInput={() => {this.filterBaselayers(this.value)}}/>
-          </div>
           <ul>
             {baseLayerIds.map(function(element, index) {
               let baselayer = arrBaselayers[element];

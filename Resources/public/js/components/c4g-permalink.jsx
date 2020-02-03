@@ -49,6 +49,7 @@ export class Permalink extends Component {
     mapController.mapsControls.controls.horizontalPanel = control;
     mapController.map.addControl(control);
     this.open = this.open.bind(this);
+    this.close = this.close.bind(this);
     this.langConstants = getLanguage(this.props.mapController.data);
 
     this.state = {
@@ -60,6 +61,9 @@ export class Permalink extends Component {
   render() {
     return (
       <div className={"c4g-permalink-wrapper"}>
+        <Titlebar wrapperClass={"c4g-permalink-header"} headerClass={"c4g-permalink-header-headline"}
+                  header={"Permalink"} closeBtnClass={"c4g-permalink-close"} closeBtnCb={this.close}>
+        </Titlebar>
         <div className={"c4g-permalink-content"}>
           <input type="text" id={"permalink-text"} value={this.state.link} readOnly={true}/>
           <button className={cssConstants.COPY + ' ' + cssConstants.ICON} title={this.langConstants.COPY_TO_CLIPBOARD}
@@ -93,6 +97,7 @@ export class Permalink extends Component {
     jQuery(this.element).addClass(cssConstants.OPEN);
     jQuery(".c4g-permalink-container").removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN);
     this.setState({open: true});
+    this.props.mapController.setOpenComponent(this);
   }
 
   close() {

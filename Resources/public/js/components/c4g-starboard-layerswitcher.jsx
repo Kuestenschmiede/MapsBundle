@@ -97,11 +97,11 @@ export class StarboardLayerswitcher extends Component {
         <Titlebar wrapperClass={"c4g-starboard-header"} headerClass={cssConstants.STARBOARD_HEADLINE}
           header={mapData.starboard.label || "Starboard"} closeBtnClass={cssConstants.STARBOARD_CLOSE} closeBtnCb={closeStarboard}>
         </Titlebar>
+        <div className={"c4g-starboard-layerswitcher-filter"}>
+          <input className={"c4g-starboard-layerswitcher-filter-field"} type="text" onInput={this.setLayerFilter} placeholder={"\uf002"}/>
+        </div>
         <div className={cssConstants.CONTROL + " " + cssConstants.STARBOARD_BUTTONBAR}>
 
-        </div>
-        <div className={"c4g-starboard-layerswitcher-filter"}>
-          <input className={"c4g-starboard-layerswitcher-filter-field"} type="text" onInput={this.setLayerFilter}/>
         </div>
         <div className={cssConstants.STARBOARD_CONTENT_CONTAINER}>
           <div className="contentHeadline"/>
