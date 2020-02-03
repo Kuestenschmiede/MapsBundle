@@ -778,9 +778,15 @@ export class MapController extends Component {
   render() {
     const mapData = this.data;
     let target = document.querySelector('#' + mapData.mapDiv + ' .c4g-control-container-top-left');
-
+    let components = [
+      {name: "layerswitcher", sort: mapData.layerswitcher.enable},
+      {name: "geosearch", sort: mapData.geosearch.enable},
+      {name: "legend", sort: mapData.legend},
+      {name: "baselayerswitcher", sort: mapData.baselayerswitcher.enable},
+      {name: "measuretools", sort: mapData.measuretools.enable}
+    ];
     let sbPortal = "";
-    if (mapData.layerswitcher.enable) { //ToDo
+    if (mapData.layerswitcher.enable) {
       sbPortal = ReactDOM.createPortal(
           <StarboardPanel ref={(node) => {
             this.components.starboard = node;
@@ -813,7 +819,7 @@ export class MapController extends Component {
     }
 
     let blsPortal = "";
-    if (mapData.baselayerswitcher.enable) { //ToDo
+    if (mapData.baselayerswitcher.enable) {
       blsPortal = ReactDOM.createPortal(
           <BaselayerSwitcher ref={(node) => {
             this.components.baselayerSwitcher = node;
@@ -830,13 +836,32 @@ export class MapController extends Component {
         this.measuretoolsContainer
       );
     }
+    let result = [];
+    components.sort(function(a, b) {
+      return (a.sort > b.sort) ? 1 : -1;
+    });
+    for (let i = 0; i < components.length; i++) {
+      switch (components[i].name) {
+        case "measuretools":
+          result.push(measurePortal);
+          break;
+        case "baselayerswitcher":
+          result.push(blsPortal);
+          break;
+        case "geosearch":
+          result.push(searchPortal);
+          break;
+        case "layerswitcher":
+          result.push(sbPortal);
+          break;
+        case "legend":
+          result.push(infoPortal);
+          break;
+      }
+    }
 
     return <React.Fragment>
-      {sbPortal}
-      {searchPortal}
-      {blsPortal}
-      {infoPortal}
-      {measurePortal}
+      {result}
     </React.Fragment>;
   }
 
