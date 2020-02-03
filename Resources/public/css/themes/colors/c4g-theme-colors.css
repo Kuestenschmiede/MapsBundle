@@ -775,3 +775,7 @@ c4g-infopage-container {
   background: var(--shadow-color);
   color: var(--font-color);
 }
+
+.c4g-geosearch-form input, .c4g-sideboard > div div[class*=filter] input::placeholder{
+  color: var(--main-color);
+}

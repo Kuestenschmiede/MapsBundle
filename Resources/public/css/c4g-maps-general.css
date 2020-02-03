@@ -1409,6 +1409,7 @@ div div.c4g-popup-wrapper.c4g-beach {
   font-size: 20px;
   text-overflow: ellipsis;
   overflow: hidden;
+  white-space: nowrap;
 }
 
 .c4g-sideboard > div div[class*=header] button[class*=close] {
@@ -1426,10 +1427,30 @@ div div.c4g-popup-wrapper.c4g-beach {
 
 .c4g-sideboard > div > div[class*=content]{
   padding: 0 .4em .4em;
-  max-height: calc(var(--map-height) - .8em - 32px - .4em);
   overflow-y: auto;
   overflow-x: hidden;
 }
+
+.c4g-sideboard > div[class*=wrapper] > div[class*=header] + div[class*=content] {
+  max-height: calc(var(--map-height) - .8em - 32px - .4em);
+}
+
+.c4g-sideboard > div[class*=wrapper] > div[class*=header] + div[class*=filter] + div[class*=content] {
+  max-height: calc(var(--map-height) - .8em - 32px - .4em - 28px - .4em);
+}
+
+.c4g-sideboard > div[class*=wrapper] > div[class*=header] + div[class*=switcher] + div[class*=content] {
+  max-height: calc(var(--map-height) - .8em - 32px - .4em - 28px - .4em);
+}
+
+.c4g-sideboard > div[class*=wrapper] > div[class*=header] + div[class*=switcher] + div[class*=content] {
+  max-height: calc(var(--map-height) - .8em - 32px - .4em - 28px - .4em);
+}
+
+.c4g-sideboard > div[class*=wrapper] > div[class*=header] + div[class*=switcher] + div[class*=filter] + div[class*=content] {
+  max-height: calc(var(--map-height) - .8em - 32px - .4em - 28px - .4em);
+}
+
 
 .c4g-sideboard > div > div[class*=content]::-webkit-scrollbar{
   width: .2em;
@@ -1495,6 +1516,10 @@ ul.c4g-overlays span {
   border: none;
   padding-left: .2em;
   outline: none;
+}
+
+.c4g-geosearch-form input, .c4g-sideboard > div div[class*=filter] input::placeholder{
+  padding-left: .2em;
 }
 
 .c4g-geosearch-form, .c4g-sideboard > div div[class*=filter] {
