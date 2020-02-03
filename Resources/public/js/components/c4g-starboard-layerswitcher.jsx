@@ -99,27 +99,35 @@ export class StarboardLayerswitcher extends Component {
     }
   }
 
-  filterLayers(layers) {
+  filterLayers(layers, states) {
     let returnLayers = [];
+    let returnStates = [];
+    if (this.state.layerFilter === "") {
+      return [layers, states];
+    }
     for (let i = 0; i < layers.length; i++) {
       let currentLayer = layers[i];
       // check if layer matches
       if (this.filterMatches(currentLayer.name)) {
         returnLayers.push(layers[i]);
+        returnStates.push(states[i])
       } else {
         if (currentLayer.childs && currentLayer.childs.length > 0) {
           // layer has childs
-          let checkedChilds = this.filterLayers(currentLayer.childs);
+          let checkedChilds, checkedStates;
+          [checkedChilds, checkedStates] = this.filterLayers(currentLayer.childs, states[i].childStates);
           if (checkedChilds.length > 0) {
             layers[i].childs = checkedChilds;
+            states[i].childStates = checkedStates;
             returnLayers.push(layers[i]);
+            returnStates.push(states[i]);
           }
         } else {
           // has no childs and does not match; don't add it
         }
       }
     }
-    return returnLayers;
+    return [returnLayers, returnStates];
   }
 
   render() {
@@ -128,9 +136,9 @@ export class StarboardLayerswitcher extends Component {
       button.trigger('click');
     };
     const mapData = this.props.mapController.data;
-    let layers = this.filterLayers(this.props.objLayers);
-    console.log(layers);
-    console.log(this.props.layerStates);
+    let layers, states;
+    [layers, states] = this.filterLayers(JSON.parse(JSON.stringify(this.props.objLayers)),
+      JSON.parse(JSON.stringify(this.props.layerStates)));
     return (
       <div className={cssConstants.STARBOARD_WRAPPER}>
         <Titlebar wrapperClass={"c4g-starboard-header"} headerClass={cssConstants.STARBOARD_HEADLINE}
@@ -152,14 +160,13 @@ export class StarboardLayerswitcher extends Component {
                     return <C4gStarboardLayerElement key={id} id={id} mapController={this.props.mapController}
                                                      parentCallback={this.callbackFunction}
                                                      layer={item}
-                                                     layerStates={this.props.layerStates[id]}
+                                                     layerStates={states[id]}
                                                      fnResize={this.props.fnResize}/>;
                 })}
               </ul>
             </div>
           </div>
         </div>
-
       </div>
     );
   }
