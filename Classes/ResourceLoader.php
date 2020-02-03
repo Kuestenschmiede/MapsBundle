@@ -145,26 +145,9 @@ class ResourceLoader extends coreResourceLoader
             }
         }
 
-        /*$zoom_extent = false;*/
-        $zoom_home = false;
-        $zoom_position = false;
 
-        if ($profile->zoom_panel_button) {
-            $zoom_pane_buttons = unserialize($profile->zoom_panel_button);
-            foreach ($zoom_pane_buttons as $key => $zoom_panel_button) {
-                switch ($zoom_panel_button) {
-                    case '3':
-                        $zoom_position = true;
-
-                        break;
-                    case '2':
-                        $zoom_home = true;
-
-                        break;
-                    default:
-                }
-            }
-        }
+        $mapFunctions =  unserialize($profile->mapFunctions);
+        $buttons = array_flip($mapFunctions);
 
         // check which resources are needed
         $resources = [
@@ -172,20 +155,21 @@ class ResourceLoader extends coreResourceLoader
             // @TODO: check BE-Switch
             'openlayers' => true,
             'geopicker' => ($profile->geopicker || $geopicker),
-            'grid' => ($profile->graticule),
-            'home' => $zoom_home,
-            'position' => $zoom_position,
+            'grid' => array_key_exists('graticule',$buttons),
+            'home' => array_key_exists('zoomHome',$buttons),
+            'position' => array_key_exists('zoomPosition',$buttons),
             'permalink' => ($profile->permalink),
             'zoomlevel' => ($profile->zoomlevel),
             'geosearch' => ($profile->geosearch && $profile->geosearch_show),
-            'overviewmap' => ($profile->overviewmap),
-            'baselayerswitcher' => ($profile->starboard && $profile->baselayerswitcher),
-            'layerswitcher' => ($profile->starboard && $profile->layerswitcher),
-            'starboard' => ($profile->starboard),
+            'overviewmap' => array_key_exists('overview',$buttons),
+            'baselayerswitcher' => ($profile->baselayerswitcher),
+            'layerswitcher' => array_key_exists('layerswitcher',$buttons), //ToDo
+            'starboard' => 1, //ToDo
             'router' => ($profile->geosearch && $profile->router),
             'editor' => ($profile->editor),
-            'measuretools' => ($profile->measuretool),
-            'infopage' => ($profile->infopage),
+            'measuretools' => array_key_exists('measure',$buttons),
+            'infopage' => ($profile->infopage), //ToDo
+            'legend' => ($profile->legend),
             'account' => ($profile->account),
             // @TODO BE-Switch?
             'plugins' => true,

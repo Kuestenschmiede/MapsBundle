@@ -761,3 +761,12 @@ c4g-infopage-container {
   background: none;
   cursor: not-allowed;
 }
+
+.c4g-sideboard > div > div[class*=content] *:not(button) {
+  color: var(--font-color);
+}
+
+.c4g-geosearch-form input {
+  background-color: var(--font-color);
+  color: var(--main-color);
+}

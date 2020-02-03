@@ -39,7 +39,7 @@ export class Home extends Control {
 
     // default options
     options = jQuery.extend({
-      className: cssConstants.OL_ZOOM_HOME,
+      className: cssConstants.OL_ZOOM_HOME+' '+cssConstants.OL_CONTROL,
       switchable: true,
       enabled: true,
       mapController: undefined
