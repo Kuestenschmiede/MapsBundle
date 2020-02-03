@@ -52,19 +52,19 @@
 }
 
 /* Viewport controls */
-.c4g-permalink button:before {
+.c4g-permalink-control button:before {
   content: "\f0c1";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;
 }
-.c4g-permalink-popup button.c4g-copy:before {
+.c4g-permalink-content button.c4g-copy:before {
   content: "\f0ea";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;
 }
-.c4g-permalink-popup button.c4g-refresh:before {
+.c4g-permalink-content button.c4g-refresh:before {
   content: "\f021";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;

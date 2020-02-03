@@ -201,21 +201,6 @@ export class MapsControls {
                     });
                     map.addControl(this.controls.graticule);
                     break;
-                case 'legend':
-                    //todo
-                    break;
-                case 'layerswitcher':
-                    //todo
-                    break;
-                case 'baselayerswitcher':
-                    //todo
-                    break;
-                case 'geosearch':
-                    //todo
-                    break;
-                case 'measure':
-                    //todo
-                    break;
                 case 'overview':
                     let ovmTarget = document.createElement("div");
                     ovmTarget.className = "c4g-sideboard c4g-overviewmap-container c4g-close";
@@ -253,15 +238,6 @@ export class MapsControls {
                         addOverviewMap();
                     });
                     break;
-                case 'permalink':
-                    this.controls.permalink = new Permalink({
-                        label: ' ',
-                        tipLabel: langConstants.CTRL_PERMALINK,
-                        mapController: this.mapController,
-                        getParameter: mapData.permalink.get_parameter,
-                        target: controlContainerBottomRight
-                    });
-                    map.addControl(this.controls.permalink);
                 default:
             }
         }

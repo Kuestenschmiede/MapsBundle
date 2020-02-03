@@ -41,55 +41,6 @@ export class StarboardLayerswitcher extends Component {
     this.setState({layerFilter: filterValue});
   }
 
-  /**
-   * checks recursively if and which childs of the given layer match the current filter.
-   */
-  checkChildFilterMatch(layer, opt_show) {
-    let filter = this.state.layerFilter;
-    // // reset flag
-    // layer.showInFilter = false;
-    // // TODO when parent matches, childs are automatically a match
-    // // layer.showInFilter = ((layer.name.indexOf(this.state.layerFilter) !== -1)
-    // //   || (layer.name.indexOf(this.state.layerFilter.toLowerCase()) !== -1));
-    // if (layer.childs && layer.childs.length > 0) {
-    //   // has childs, we need to dig deeper
-    //   for (let i = 0; i < layer.childs.length; i++) {
-    //     layer.childs[i] = this.checkChildFilterMatch(layer.childs[i]);
-    //     // if (layer.showInFilter) {
-    //     //   // childs are shown
-    //     //   layer.childs[i].showInFilter = true;
-    //     // }
-    //     // layer.showInFilter = layer.showInFilter || layer.childs[i].showInFilter;
-    //   }
-    //   layer.showInFilter = layer.showInFilter || ((layer.name.indexOf(this.state.layerFilter) !== -1)
-    //     || (layer.name.indexOf(this.state.layerFilter.toLowerCase()) !== -1));
-    // } else {
-    //   layer.showInFilter = ((layer.name.indexOf(this.state.layerFilter) !== -1)
-    //     || (layer.name.indexOf(this.state.layerFilter.toLowerCase()) !== -1));
-    // }
-    // if (this.state.layerFilter === "") {
-    //   layer.showInFilter = true;
-    // }
-    // return layer;
-    if (opt_show) {
-
-    }
-    // TODO
-    // first check if layer name matches filter
-    if (layer.name.indexOf(filter) !== -1 || layer.name.indexOf(filter.toLowerCase()) !== -1) {
-      // if yes, every child matches too.
-      
-      // TODO set for every child (and their childs)
-    } else {
-      // TODO check childs
-    }
-
-    // second check if layer childs match filter
-    // if yes, layer matches.
-    // third check which childs actually match the filter
-    return layer;
-  }
-
   filterMatches(string) {
     if (string.toLowerCase().indexOf(this.state.layerFilter) !== -1
       || string.toLowerCase().indexOf(this.state.layerFilter.toLowerCase()) !== -1) {

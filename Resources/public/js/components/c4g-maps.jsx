@@ -16,7 +16,7 @@ import {Spinner} from "../c4g-maps-misc-spinner";
 import {MapHover} from "../c4g-maps-misc-maphover";
 import {utils} from "../c4g-maps-utils";
 import {GeoSearch} from "./c4g-geosearch.jsx";
-import {Permalink} from "../c4g-maps-control-permalink";
+// import {Permalink} from "../c4g-maps-control-permalink";
 import {MapsControls} from "../c4g-maps-controls";
 import {getLanguage} from "../c4g-maps-i18n";
 import {View} from "ol";
@@ -58,6 +58,7 @@ import {FeatureFilter} from "./c4g-feature-filter.jsx";
 import {BaselayerSwitcher} from "./c4g-baselayerswitcher.jsx";
 import {Infopage} from "./c4g-infopage.jsx";
 import {Measuretools} from "./c4g-measuretools.jsx";
+import {Permalink} from "./c4g-permalink.jsx";
 
 let langConstants = {};
 
@@ -655,6 +656,12 @@ export class MapController extends Component {
       this.$overlaycontainer_stopevent.append(this.measuretoolsContainer);
     }
 
+    // permalink container
+    if (mapData.permalink.enable) {
+      this.permalinkContainer = document.createElement('div');
+      this.permalinkContainer.className = "c4g-sideboard c4g-permalink-container ol-unselectable c4g-close";
+      this.$overlaycontainer_stopevent.append(this.permalinkContainer);
+    }
     // @ToDo mapData.additionalPanel is always true, because it is set as an new object in the beginning. Therefore the second parameter of the boolean is requested, which throws an error
     // additionalPanel is furthermore not found anywhere in Maps and should be loaded over a hook
 
@@ -783,7 +790,8 @@ export class MapController extends Component {
       {name: "geosearch", sort: mapData.geosearch.enable},
       {name: "legend", sort: mapData.legend},
       {name: "baselayerswitcher", sort: mapData.baselayerswitcher.enable},
-      {name: "measuretools", sort: mapData.measuretools.enable}
+      {name: "measuretools", sort: mapData.measuretools.enable},
+      {name: "permalink", sort: mapData.permalink.enable}
     ];
     let sbPortal = "";
     if (mapData.layerswitcher.enable) {
@@ -836,6 +844,13 @@ export class MapController extends Component {
         this.measuretoolsContainer
       );
     }
+    let permaPortal = "";
+    if (mapData.permalink.enable) {
+      permaPortal = ReactDOM.createPortal(
+        <Permalink ref={(node) => {this.components.permalink = node;}} mapController={this} target={target}/>,
+        this.permalinkContainer
+      );
+    }
     let result = [];
     components.sort(function(a, b) {
       return (a.sort > b.sort) ? 1 : -1;
@@ -856,6 +871,9 @@ export class MapController extends Component {
           break;
         case "legend":
           result.push(infoPortal);
+          break;
+        case "permalink":
+          result.push(permaPortal);
           break;
       }
     }
