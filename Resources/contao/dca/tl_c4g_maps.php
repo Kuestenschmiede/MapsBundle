@@ -140,7 +140,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
     // Palettes
     'palettes' =>
         [
-        '__selector__'                => ['profile','location_type', 'tab_source', 'show_locations', 'popup_extend', 'protect_element', 'use_specialprofile', 'cluster_locations', 'split_geojson'],
+        '__selector__'                => ['location_type', 'tab_source', 'show_locations', 'popup_extend', 'protect_element', 'use_specialprofile', 'cluster_locations', 'split_geojson'],
         'map'                         => '{general_legend},name,location_type;'.
                                          '{map_legend},width,height,margin,show_locations,center_geox,center_geoy,center_rotation,zoom,geolocation,restrict_area;'.
                                          '{profile_legend},profile,profile_mobile,use_specialprofile;',
@@ -258,7 +258,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             'exclude'                 => true,
             'inputType'               => 'select',
             'foreignKey'              => 'tl_c4g_map_profiles.name',
-            'eval'                    => ['tl_class'=>'w50',
+            'eval'                    => ['tl_class'=>'long',
                                                'includeBlankOption'=>true, 'blankOptionLabel'=>&$GLOBALS['TL_LANG']['tl_c4g_maps']['default_profile'],
                                                'submitOnChange' => true, 'chosen' => true, 'alwaysSave' => true],
             'load_callback'           => [['tl_c4g_maps','getDefaultProfile']],
@@ -277,7 +277,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             'inputType'               => 'select',
             'foreignKey'              => 'tl_c4g_map_profiles.name',
             'eval'                    => [
-                                            'tl_class'=>'w50',
+                                            'tl_class'=>'long',
                                             'chosen' => true,
                                             'includeBlankOption'=>true
             ],
@@ -1037,7 +1037,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',
-            'eval'                    => ['submitOnChange' => true],
+            'eval'                    => ['tl_class'=>'long','submitOnChange' => true],
             'sql'                     => "char(1) NOT NULL default ''"
             ],
         'specialprofile' =>
@@ -1046,7 +1046,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             'exclude'                 => true,
             'inputType'               => 'select',
             'foreignKey'              => 'tl_c4g_map_profiles.name',
-            'eval'                    => ['tl_class'=>'w50', 'submitOnChange' => true, 'alwaysSave' => true,  'chosen' => true],
+            'eval'                    => ['tl_class'=>'long','submitOnChange' => true, 'alwaysSave' => true,  'chosen' => true],
             'load_callback'           => [['tl_c4g_maps','getDefaultProfile']],
             'sql'                     => "int(10) unsigned NOT NULL default '0'",
             'xlabel' => array
@@ -1060,8 +1060,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             'exclude'                 => true,
             'inputType'               => 'select',
             'foreignKey'              => 'tl_c4g_map_profiles.name',
-            'eval'                    => ['tl_class'=>'w50',
-                                               'includeBlankOption'=>true,  'chosen' => true],
+            'eval'                    => ['tl_class'=>'long', 'includeBlankOption'=>true,  'chosen' => true],
             'sql'                     => "int(10) unsigned NOT NULL default '0'",
             'xlabel' => array
             (

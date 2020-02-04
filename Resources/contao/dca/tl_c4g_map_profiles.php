@@ -1135,25 +1135,25 @@ class tl_c4g_map_profiles extends Backend
         if ($objProfile->numRows > 0) {
 
             if ($objProfile->geosearch_engine == '2') {
-                $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['geosearch'] =
+                $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['palettes']['default'] =
                     str_replace('geosearch_engine,','geosearch_engine,geosearch_key,',
-                        $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['geosearch']);
+                        $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['palettes']['default']);
                 // make key-field mandatory
                 $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['fields']['geosearch_key']['eval']['mandatory'] = true;
             } elseif ($objProfile->geosearch_engine == '3') {
-                $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['geosearch'] =
+                $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['palettes']['default'] =
                     str_replace('geosearch_engine,','geosearch_engine,geosearch_customengine_url,geosearch_customengine_attribution,geosearch_key,',
-                        $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['geosearch']);
+                        $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['palettes']['default']);
             } elseif ($objProfile->geosearch_engine == '5') {
-                $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['geosearch'] =
+                $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['palettes']['default'] =
                     str_replace('geosearch_engine,','geosearch_engine,geosearch_customengine_url,',
-                        $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['geosearch']);
+                        $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['palettes']['default']);
             }
             
             if ($objProfile->geosearch_results) {
-                $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['geosearch'] =
+                $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['palettes']['default'] =
                     str_replace(',geosearch_results,', ",geosearch_results,geosearch_results_headline,geosearch_result_count,",
-                        $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['subpalettes']['geosearch']);
+                        $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['palettes']['default']);
             }
 
 
