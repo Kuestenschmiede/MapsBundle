@@ -38,17 +38,6 @@
 /*
  *  Tooltips
  */
-.ol-control button[title]:after {
-  display: none;
-}
-.ol-control button[title]:focus:after,
-.ol-control button[title]:hover:after {
-  display: none;
-  background: rgba(255,255,255,.9);
-  background: var(--font-color);
-  color: inherit;
-  border: 3px solid transparent;
-}
 
 /*
  *  Spinner
@@ -705,7 +694,7 @@ background: var(--pu-main-color);
   color: var(--main-color)!important;
 }
 
-.c4g-sideboard > div div[class*=header]{
+.c4g-sideboard > div div[class*=header] *{
   color: var(--font-color);
 }
 
@@ -757,7 +746,7 @@ c4g-infopage-container {
   cursor: not-allowed;
 }
 
-.c4g-sideboard > div > div[class*=content] *:not(button) {
+.c4g-sideboard > div > div[class*=content] *:not(button):not(input) {
   color: var(--font-color);
 }
 
@@ -766,11 +755,30 @@ c4g-infopage-container {
   color: var(--main-color);
 }
 
-.c4g-sideboard > div div[class*=filter].without-button:after {
+.c4g-sideboard > div div[class*=filter].without-button:after   {
   background: var(--shadow-color);
   color: var(--font-color);
 }
 
 .c4g-geosearch-form input, .c4g-sideboard > div div[class*=filter] input::placeholder{
   color: var(--main-color);
+}
+
+.c4g-sideboard > div[class*=wrapper] {
+  background: var(--main-color);
+}
+
+.c4g-sideboard > div > div[class*=content] input[type=text] ~ button {
+  background: var(--font-color);
+  color: var(--main-color);
+}
+
+.c4g-sideboard > div > div[class*=content] input[type=text] ~ button:hover{
+  border: 1px solid var(--shadow-color);
+}
+
+.c4g-sideboard > div > div[class*=content] input[type=text] ~ button:active{
+  background: none;
+  color: var(--font-color);
+  border: none;
 }
