@@ -84,7 +84,6 @@ export class Permalink extends Component {
   componentDidMount() {
     this.textField = document.querySelector("#permalink-text");
     let copyButton = document.querySelector("." + cssConstants.COPY + "." + cssConstants.ICON);
-    console.log(copyButton);
     try {
       new ClipboardJS(copyButton);
     } catch(error) {

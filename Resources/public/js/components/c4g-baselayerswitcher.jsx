@@ -107,7 +107,7 @@ export class BaselayerSwitcher extends Component {
       <div className={"c4g-baselayer-wrapper"}>
         <Titlebar wrapperClass={"c4g-baselayer-header"} headerClass={"c4g-baselayer-headline"}
           header={headline} closeBtnClass={"c4g-baselayer-close"} closeBtnCb={this.close}/>
-        <div className={"c4g-baselayer-filter"}>
+        <div className={"c4g-baselayer-filter without-button"}>
           <input className={"c4g-baselayer-filter-field"} type="text" placeholder={"\uf002"}
                  onInput={() => {this.filterBaselayers(this.value)}}/>
         </div>
