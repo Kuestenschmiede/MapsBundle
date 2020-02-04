@@ -45,7 +45,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'fields'                  => ['name'],
             'panelLayout'             => 'filter,search',
             'headerFields'            => ['name','theme','is_backend_geopicker_default'],
-            'icon'                    => 'bundles/con4giscore/images/be-icons/con4gis.org_dark.svg',
+            'icon'                    => 'bundles/con4giscore/images/be-icons/con4gis_blue.svg',
             ],
         'label' =>
             [

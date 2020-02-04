@@ -45,7 +45,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
         'sorting' =>
             [
                 'mode'                    => 5,
-                'icon'                    => 'bundles/con4giscore/images/be-icons/con4gis.org_dark.svg',
+                'icon'                    => 'bundles/con4giscore/images/be-icons/con4gis_blue.svg',
                 'panelLayout'             => 'search',
                 'paste_button_callback'   => ['tl_c4g_map_baselayers', 'pasteElement']
             ],

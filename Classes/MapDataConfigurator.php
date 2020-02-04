@@ -278,7 +278,7 @@ class MapDataConfigurator
         if ($profile) {
             // general
             //
-            $mapFunctions =  unserialize($profile->mapFunctions);
+            $mapFunctions = unserialize($profile->mapFunctions);
             $buttons = array_flip($mapFunctions);
 
             // basemaps
@@ -286,21 +286,21 @@ class MapDataConfigurator
             $mapData['default_baselayer'] = $profile->default_baselayer;
 
             //+1 for older define checks key = button / value = sorting position
-            $mapData['zoom'] = array_key_exists('zoom',$buttons) ? $buttons['zoom'] +1 : 0;
-            $mapData['fullscreen'] = array_key_exists('fullscreen',$buttons) ? $buttons['fullscreen'] +1 : 0;
-            $mapData['zoomPosition'] = array_key_exists('zoomPosition',$buttons) ? $buttons['zoomPosition'] +1 : 0;
-            $mapData['zoomHome'] = array_key_exists('zoomHome',$buttons) ? $buttons['zoomHome'] +1 : 0;
-            $mapData['zoomExtent'] = array_key_exists('zoomExtent',$buttons) ? $buttons['zoomExtent'] +1 : 0;
-            $mapData['print'] = array_key_exists('print',$buttons) ? $buttons['print'] +1 : 0;
-            $mapData['rotate'] = array_key_exists('rotate',$buttons) ? $buttons['rotate'] +1 : 0;
-            $mapData['graticule'] = array_key_exists('graticule',$buttons) ? $buttons['graticule'] +1 : 0;
-            $mapData['layerswitcher']['enable'] = array_key_exists('layerswitcher',$buttons) ? $buttons['layerswitcher'] +1 : 0;
-            $mapData['baselayerswitcher']['enable'] = array_key_exists('baselayerswitcher',$buttons) ? $buttons['baselayerswitcher'] +1 : 0;
-            $mapData['geosearch']['enable'] = array_key_exists('geosearch',$buttons) ? $buttons['geosearch'] +1 : 0;
-            $mapData['legend'] = array_key_exists('legend',$buttons) ? $buttons['legend'] +1 : 0;
-            $mapData['measuretools']['enable'] = array_key_exists('measure',$buttons) ? $buttons['measure'] +1 : 0;
-            $mapData['overviewmap'] = array_key_exists('overview',$buttons) ? $buttons['overview'] +1 : 0;
-            $mapData['permalink']['enable'] = array_key_exists('permalink',$buttons) ? $buttons['permalink'] +1 : 0;
+            $mapData['zoom'] = array_key_exists('zoom', $buttons) ? $buttons['zoom'] + 1 : 0;
+            $mapData['fullscreen'] = array_key_exists('fullscreen', $buttons) ? $buttons['fullscreen'] + 1 : 0;
+            $mapData['zoomPosition'] = array_key_exists('zoomPosition', $buttons) ? $buttons['zoomPosition'] + 1 : 0;
+            $mapData['zoomHome'] = array_key_exists('zoomHome', $buttons) ? $buttons['zoomHome'] + 1 : 0;
+            $mapData['zoomExtent'] = array_key_exists('zoomExtent', $buttons) ? $buttons['zoomExtent'] + 1 : 0;
+            $mapData['print'] = array_key_exists('print', $buttons) ? $buttons['print'] + 1 : 0;
+            $mapData['rotate'] = array_key_exists('rotate', $buttons) ? $buttons['rotate'] + 1 : 0;
+            $mapData['graticule'] = array_key_exists('graticule', $buttons) ? $buttons['graticule'] + 1 : 0;
+            $mapData['layerswitcher']['enable'] = array_key_exists('layerswitcher', $buttons) ? $buttons['layerswitcher'] + 1 : 0;
+            $mapData['baselayerswitcher']['enable'] = array_key_exists('baselayerswitcher', $buttons) ? $buttons['baselayerswitcher'] + 1 : 0;
+            $mapData['geosearch']['enable'] = array_key_exists('geosearch', $buttons) ? $buttons['geosearch'] + 1 : 0;
+            $mapData['legend'] = array_key_exists('legend', $buttons) ? $buttons['legend'] + 1 : 0;
+            $mapData['measuretools']['enable'] = array_key_exists('measure', $buttons) ? $buttons['measure'] + 1 : 0;
+            $mapData['overviewmap'] = array_key_exists('overview', $buttons) ? $buttons['overview'] + 1 : 0;
+            $mapData['permalink']['enable'] = array_key_exists('permalink', $buttons) ? $buttons['permalink'] + 1 : 0;
 
             // location-style resizing
             //
@@ -336,26 +336,26 @@ class MapDataConfigurator
             //if (array_key_exists('starboard',$buttons)) { //ToDo
                 $mapData['starboard']['enable'] = 1; //ToDo
                 $mapData['starboard']['open'] = $profile->starboard_open;
-                $mapData['starboard']['label'] = \Contao\Controller::replaceInsertTags($profile->starboard_label);
-                $mapData['starboard']['div'] = $profile->starboard_div;
-                $mapData['starboard']['button'] = $profile->starboard_button;
-                $mapData['starboard']['showLocstyles'] = $profile->starboard_locstyles;
-                $mapData['cluster_all'] = $profile->cluster_all;
-                $mapData['cluster_distance'] = $profile->cluster_distance;
-                $mapData['cluster_fillcolor'] = $profile->cluster_fillcolor;
-                $mapData['cluster_fontcolor'] = $profile->cluster_fontcolor;
-                $mapData['cluster_zoom'] = $profile->cluster_zoom;
-                $mapData['cluster_dist_spider'] = $profile->cluster_dist_spider;
+            $mapData['starboard']['label'] = \Contao\Controller::replaceInsertTags($profile->starboard_label);
+            $mapData['starboard']['div'] = $profile->starboard_div;
+            $mapData['starboard']['button'] = $profile->starboard_button;
+            $mapData['starboard']['showLocstyles'] = $profile->starboard_locstyles;
+            $mapData['cluster_all'] = $profile->cluster_all;
+            $mapData['cluster_distance'] = $profile->cluster_distance;
+            $mapData['cluster_fillcolor'] = $profile->cluster_fillcolor;
+            $mapData['cluster_fontcolor'] = $profile->cluster_fontcolor;
+            $mapData['cluster_zoom'] = $profile->cluster_zoom;
+            $mapData['cluster_dist_spider'] = $profile->cluster_dist_spider;
             //}
 
-            if (array_key_exists('layerswitcher',$buttons)) {
+            if (array_key_exists('layerswitcher', $buttons)) {
                 // Layerswitcher
                 //$mapData['layerswitcher']['enable'] = $profile->layerswitcher;
                 $mapData['layerswitcher']['label'] = \Contao\Controller::replaceInsertTags($profile->layerswitcher_label);
                 $mapData['layerswitcher']['filter'] = $profile->layer_filter;
             }
 
-            if (array_key_exists('baselayerswitcher',$buttons)) {
+            if (array_key_exists('baselayerswitcher', $buttons)) {
                 // Baselayerswitcher
                 //$mapData['baselayerswitcher']['enable'] = $profile->baselayerswitcher;
                 $mapData['baselayerswitcher']['label'] = \Contao\Controller::replaceInsertTags($profile->baselayerswitcher_label);

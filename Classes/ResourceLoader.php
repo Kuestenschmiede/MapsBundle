@@ -145,8 +145,7 @@ class ResourceLoader extends coreResourceLoader
             }
         }
 
-
-        $mapFunctions =  unserialize($profile->mapFunctions);
+        $mapFunctions = unserialize($profile->mapFunctions);
         $buttons = array_flip($mapFunctions);
 
         // check which resources are needed
@@ -155,19 +154,19 @@ class ResourceLoader extends coreResourceLoader
             // @TODO: check BE-Switch
             'openlayers' => true,
             'geopicker' => ($profile->geopicker || $geopicker),
-            'grid' => array_key_exists('graticule',$buttons),
-            'home' => array_key_exists('zoomHome',$buttons),
-            'position' => array_key_exists('zoomPosition',$buttons),
+            'grid' => array_key_exists('graticule', $buttons),
+            'home' => array_key_exists('zoomHome', $buttons),
+            'position' => array_key_exists('zoomPosition', $buttons),
             'permalink' => ($profile->permalink),
             'zoomlevel' => ($profile->zoomlevel),
             'geosearch' => ($profile->geosearch && $profile->geosearch_show),
-            'overviewmap' => array_key_exists('overview',$buttons),
+            'overviewmap' => array_key_exists('overview', $buttons),
             'baselayerswitcher' => ($profile->baselayerswitcher),
-            'layerswitcher' => array_key_exists('layerswitcher',$buttons), //ToDo
+            'layerswitcher' => array_key_exists('layerswitcher', $buttons), //ToDo
             'starboard' => 1, //ToDo
             'router' => ($profile->geosearch && $profile->router),
             'editor' => ($profile->editor),
-            'measuretools' => array_key_exists('measure',$buttons),
+            'measuretools' => array_key_exists('measure', $buttons),
             'infopage' => ($profile->infopage), //ToDo
             'legend' => ($profile->legend),
             'account' => ($profile->account),

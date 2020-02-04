@@ -43,7 +43,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
             'panelLayout'             => 'filter;sort,search,limit',
             'headerFields'            => ['name','maincolor','shadowcolor','fontcolor'],
             'flag'                    => 1,
-            'icon'                    => 'bundles/con4giscore/images/be-icons/con4gis.org_dark.svg',
+            'icon'                    => 'bundles/con4giscore/images/be-icons/con4gis_blue.svg',
             ],
         'label' =>
             [
