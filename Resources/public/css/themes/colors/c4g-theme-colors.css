@@ -766,7 +766,16 @@ c4g-infopage-container {
   color: var(--font-color);
 }
 
-.c4g-geosearch-form input {
+.c4g-geosearch-form input, .c4g-sideboard > div div[class*=filter] input {
   background-color: var(--font-color);
+  color: var(--main-color);
+}
+
+.c4g-sideboard > div div[class*=filter]:after {
+  background: var(--shadow-color);
+  color: var(--font-color);
+}
+
+.c4g-geosearch-form input, .c4g-sideboard > div div[class*=filter] input::placeholder{
   color: var(--main-color);
 }

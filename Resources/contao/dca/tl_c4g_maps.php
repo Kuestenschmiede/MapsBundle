@@ -1439,7 +1439,7 @@ class tl_c4g_maps extends Backend
                 $image .= 'link';
                 break;
             case 'c4gForum':
-                $image .= 'c4gForum';
+                $image .= 'c4gforum';
                 break;
             case 'startab':
                 $image .= 'starboard';
