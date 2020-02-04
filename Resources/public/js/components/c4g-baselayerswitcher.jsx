@@ -83,7 +83,7 @@ export class BaselayerSwitcher extends Component {
     } else {
       for (let i = 0; i < ids.length; i++) {
         let baselayer = arrBaselayers[ids[i]];
-        if (baselayer.name.indexOf(this.state.baselayerFilter) !== -1) {
+        if (baselayer.name.toLowerCase().indexOf(this.state.baselayerFilter.toLowerCase()) !== -1) {
           returnIds.push(ids[i]);
         }
       }
