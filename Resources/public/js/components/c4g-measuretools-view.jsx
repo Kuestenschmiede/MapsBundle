@@ -136,7 +136,7 @@ export class MeasuretoolsView extends Component {
         features: features,
         source: source,
         type: olType,
-        freehand: scope.props.mode === 'Freehand',
+        freehand: scope.props.mode === 'freehand',
         // @TODO: use custom style? (BE-option)
         // style: use default style
       });
