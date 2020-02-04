@@ -123,6 +123,7 @@ div.c4g-control-container-top-left.ol-unselectable > div.ol-unselectable.ol-cont
   display: block;
 }
 
+/*
 .c4g-control-container-bottom-left-sub,
 .c4g-control-container-top-right div,
 .c4g-control-container-bottom-right div,
@@ -140,7 +141,7 @@ div.ol-zoom-position,
 .ol-full-screen
 {
   position: relative;
-}
+}*/
 
 .c4g-control-container-top-right .ol-control {
   float: right;
@@ -1389,6 +1390,7 @@ div div.c4g-popup-wrapper.c4g-beach {
   min-width: 240px;
   max-width: 42%;
   z-index: 60;
+  transition: .5s;
 }
 
 .c4g-sideboard ul {

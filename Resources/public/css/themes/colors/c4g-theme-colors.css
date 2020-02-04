@@ -595,11 +595,6 @@ ul.c4g-feature-filter-list li span.sum {
 }
 /*--------Geosearch-------------*/
 
-.c4g-geosearch-wrapper.c4g-open{
-  background-color: var(--main-color);
-  color: var(--font-color);
-}
-
 .c4g-geosearch-results.c4g-beach {
   background-color: var(--pu-main-color);
   color: var(--pu-font-color);
