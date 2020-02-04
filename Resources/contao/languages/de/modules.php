@@ -27,3 +27,4 @@ $GLOBALS['TL_LANG']['MOD']['c4g_map_filters']           = ['Kartenfilter', 'Filt
  */
 $GLOBALS['TL_LANG']['FMD']['c4g_maps'] 					= ['(maps) Karte', 'Mit diesem Modul binden Sie eine OpenLayers-Karte ein.'];
 $GLOBALS['TL_LANG']['FMD']['c4g_search'] 			    = ['(maps) Externe Kartensuche', 'Mit diesem Modul binden Sie eine externe Kartensuche ein, die auf die Kartenseite weiterleitet.'];
+$GLOBALS['TL_LANG']['FMD']['c4g_external_map_element']  = ['(maps) Externes Kartenelement', 'Mit diesem Modul bringen Sie einen externen DIV dazu, in dem ein ausgewähltes Kartenelement dargestellt wird.'];

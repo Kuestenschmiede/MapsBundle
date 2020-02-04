@@ -23,8 +23,18 @@ $GLOBALS['TL_LANG']['tl_module']['c4g_map_default_mapservice'] = array('Default 
 $GLOBALS['TL_LANG']['tl_module']['c4g_map_site_id'] = array('Map page', 'Select the map page to which the search should redirect.');
 $GLOBALS['TL_LANG']['tl_module']['c4g_map_zoomlevel'] = array('Zoomlevel', 'Specify the zoomlevel that should be applied when opening the map.');
 $GLOBALS['TL_LANG']['tl_module']['c4g_map_placeholder'] = array('Placeholder for input field', 'Specify a placeholder that should be displayed when no input has been made yet.');
+$GLOBALS['TL_LANG']['tl_module']['c4g_element_type'] = array('Element type', 'Choose the element which you want to display externally.');
 
 $GLOBALS['TL_LANG']['tl_module']['editMaps'] = ['Edit structure elements'];
+
+$GLOBALS['TL_LANG']['tl_module']['element_type_refs']['starboard'] = "Starboard";
+$GLOBALS['TL_LANG']['tl_module']['element_type_refs']['baselayer'] = "Baselayer switcher";
+$GLOBALS['TL_LANG']['tl_module']['element_type_refs']['permalink'] = "Permalink";
+$GLOBALS['TL_LANG']['tl_module']['element_type_refs']['search'] = "Search";
+$GLOBALS['TL_LANG']['tl_module']['element_type_refs']['measuretools'] = "Measuretools";
+$GLOBALS['TL_LANG']['tl_module']['element_type_refs']['legend'] = "Legend";
+$GLOBALS['TL_LANG']['tl_module']['element_type_refs']['overviewmap'] = "Overview map";
+$GLOBALS['TL_LANG']['tl_module']['element_type_refs']['filter'] = "Map filter";
 
 /**
  * Legend

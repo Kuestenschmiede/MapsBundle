@@ -20,6 +20,7 @@ use con4gis\MapsBundle\Resources\contao\models\C4gMapBaselayersModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapSettingsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
+use con4gis\MapsBundle\Resources\contao\modules\ExternalMapElement;
 use Contao\Controller;
 use Contao\Input;
 use Contao\Model\Collection;
@@ -280,6 +281,10 @@ class MapDataConfigurator
             //
             $mapFunctions =  unserialize($profile->mapFunctions);
             $buttons = array_flip($mapFunctions);
+            
+            // external elements
+            $externalElements = unserialize($profile->external_elements);
+            $externalClasses = ExternalMapElement::$arrClasses;
 
             // basemaps
             //
@@ -297,7 +302,7 @@ class MapDataConfigurator
             $mapData['layerswitcher']['enable'] = array_key_exists('layerswitcher',$buttons) ? $buttons['layerswitcher'] +1 : 0;
             $mapData['baselayerswitcher']['enable'] = array_key_exists('baselayerswitcher',$buttons) ? $buttons['baselayerswitcher'] +1 : 0;
             $mapData['geosearch']['enable'] = array_key_exists('geosearch',$buttons) ? $buttons['geosearch'] +1 : 0;
-            $mapData['legend'] = array_key_exists('legend',$buttons) ? $buttons['legend'] +1 : 0;
+            $mapData['legend']['enable'] = array_key_exists('legend',$buttons) ? $buttons['legend'] +1 : 0;
             $mapData['measuretools']['enable'] = array_key_exists('measure',$buttons) ? $buttons['measure'] +1 : 0;
             $mapData['overviewmap'] = array_key_exists('overview',$buttons) ? $buttons['overview'] +1 : 0;
             $mapData['permalink']['enable'] = array_key_exists('permalink',$buttons) ? $buttons['permalink'] +1 : 0;
@@ -337,7 +342,7 @@ class MapDataConfigurator
                 $mapData['starboard']['enable'] = 1; //ToDo
                 $mapData['starboard']['open'] = $profile->starboard_open;
                 $mapData['starboard']['label'] = \Contao\Controller::replaceInsertTags($profile->starboard_label);
-                $mapData['starboard']['div'] = $profile->starboard_div;
+                $mapData['starboard']['div'] = (in_array('starboard', $externalElements)) ? $externalClasses['starboard'] : "";
                 $mapData['starboard']['button'] = $profile->starboard_button;
                 $mapData['starboard']['showLocstyles'] = $profile->starboard_locstyles;
                 $mapData['cluster_all'] = $profile->cluster_all;
@@ -360,6 +365,7 @@ class MapDataConfigurator
                 //$mapData['baselayerswitcher']['enable'] = $profile->baselayerswitcher;
                 $mapData['baselayerswitcher']['label'] = \Contao\Controller::replaceInsertTags($profile->baselayerswitcher_label);
                 $mapData['baselayerswitcher']['filter'] = $profile->baselayer_filter;
+                $mapData['baselayerswitcher']['div'] = (in_array('baselayer', $externalElements)) ? $externalClasses['baselayer'] : "";
             }
 
             $mapData['filterDiv'] = $profile->filter_div;
@@ -397,6 +403,7 @@ class MapDataConfigurator
 
             if ($mapData['permalink']['enable']) {
                 $mapData['permalink']['get_parameter'] = $profile->permalink_get_param;
+                $mapData['permalink']['div'] = (in_array('permalink', $externalElements)) ? $externalClasses['permalink'] : "";
             }
             $mapData['zoomlevel'] = $profile->zoomlevel;
 
@@ -417,7 +424,7 @@ class MapDataConfigurator
                 $mapData['geosearch']['result_count'] = $profile->geosearch_result_count;
                 $mapData['geosearch']['results_headline'] = $profile->geosearch_results_headline;
                 $mapData['geosearch']['result_locstyle'] = $profile->geosearch_result_locstyle;
-                $mapData['geosearch']['div'] = $profile->geosearch_div;
+                $mapData['geosearch']['div'] = (in_array('search', $externalElements)) ? $externalClasses['search'] : "";;
                 $mapData['geosearch']['div_results'] = $profile->geosearch_results_div;
                 $mapData['geosearch']['placeholder'] = $profile->geosearch_placeholder;
                 $mapData['geosearch']['searchzoom'] = $profile->geosearch_zoomto;
@@ -518,6 +525,7 @@ class MapDataConfigurator
             // miscellaneous
             //
             $mapData['infopage'] = \Contao\Controller::replaceInsertTags($profile->infopage);
+            $mapData['legend']['div'] = (in_array('legend', $externalElements)) ? $externalClasses['legend'] : "";
             $mapData['initial_open_comp'] = $profile->initial_open_comp;
             $mapData['link_newwindow'] = $profile->link_newwindow;
             $mapData['hover_popups'] = $profile->hover_popups;

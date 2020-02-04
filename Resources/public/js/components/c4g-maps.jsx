@@ -603,8 +603,14 @@ export class MapController extends Component {
 
     // add container for react components
     if (mapData.layerswitcher.enable) {
-      this.reactContainer = document.createElement('div');
-      this.reactContainer.className = "c4g-sideboard c4g-starboard-container ol-unselectable";
+      if (mapData.starboard.div) {
+        this.reactContainer = document.querySelector("." + mapData.starboard.div);
+        this.reactContainer.className += " c4g-external c4g-sideboard c4g-starboard-container ol-unselectable";
+      } else {
+        this.reactContainer = document.createElement('div');
+        this.reactContainer.className = "c4g-sideboard c4g-starboard-container ol-unselectable";
+        this.$overlaycontainer_stopevent.append(this.reactContainer);
+      }
       if (mapData.starboard.open) {
         this.reactContainer.style.right = "0";
         this.reactContainer.className += " c4g-open";
@@ -612,26 +618,26 @@ export class MapController extends Component {
         this.reactContainer.style.right = "-100%";
         this.reactContainer.className += " c4g-close";
       }
-
-      this.$overlaycontainer_stopevent.append(this.reactContainer);
     }
 
     if (mapData.baselayerswitcher.enable) {
-      this.baselayerContainer = document.createElement('div');
-      this.baselayerContainer.className = "c4g-sideboard c4g-baselayer-container ol-unselectable";
+      if (mapData.baselayerswitcher.div) {
+        this.baselayerContainer = document.querySelector("." + mapData.baselayerswitcher.div);
+        this.baselayerContainer.className += " c4g-sideboard c4g-external c4g-baselayer-container ol-unselectable";
+      } else {
+        this.baselayerContainer = document.createElement('div');
+        this.baselayerContainer.className = "c4g-sideboard c4g-baselayer-container ol-unselectable";
+        this.$overlaycontainer_stopevent.append(this.baselayerContainer);
+      }
       if (mapData.starboard.open) {
-        // this.baselayerContainer.style.right = "0";
         this.baselayerContainer.className += " c4g-open";
       } else {
-        // this.baselayerContainer.style.right = "-100%";
         this.baselayerContainer.className += " c4g-close";
       }
-
-      this.$overlaycontainer_stopevent.append(this.baselayerContainer);
     }
 
     // feature filter
-    if (mapData.filterDiv && false) {
+    if (mapData.filterDiv) {
       this.filterContainer = document.createElement('div');
       this.components.filter = ReactDOM.render(React.createElement(FeatureFilter, {
         target: document.querySelector(mapData.filterDiv),// + mapData.mapDiv + ' .' + cssConstants.OL_OVERLAYCONTAINER),
@@ -639,21 +645,31 @@ export class MapController extends Component {
         direction: "top",
         className: "c4g-feature-filter"
       }), this.filterContainer);
-      $(mapData.filterDiv).append(this.filterContainer);
+      $("." + mapData.filterDiv).append(this.filterContainer);
     }
 
     // infopage container
-    if (mapData.legend) {
-      this.infoPageContainer = document.createElement('div');
-      this.infoPageContainer.className = "c4g-sideboard c4g-infopage-container ol-unselectable c4g-close";
-      this.$overlaycontainer_stopevent.append(this.infoPageContainer);
+    if (mapData.legend.enable) {
+      if (mapData.legend.div) {
+        this.infoPageContainer = document.querySelector("." + mapData.legend.div);
+        this.infoPageContainer.className += " c4g-sideboard c4g-external c4g-infopage-container ol-unselectable c4g-close";
+      } else {
+        this.infoPageContainer = document.createElement('div');
+        this.infoPageContainer.className = "c4g-sideboard c4g-infopage-container ol-unselectable c4g-close";
+        this.$overlaycontainer_stopevent.append(this.infoPageContainer);
+      }
     }
 
     // measuretools container
     if (mapData.measuretools.enable) {
-      this.measuretoolsContainer = document.createElement('div');
-      this.measuretoolsContainer.className = "c4g-sideboard c4g-measuretools-container ol-unselectable c4g-close";
-      this.$overlaycontainer_stopevent.append(this.measuretoolsContainer);
+      if (mapData.measuretools.div) {
+        this.measuretoolsContainer = document.querySelector("." + mapData.measuretools.div);
+        this.measuretoolsContainer.className += " c4g-external c4g-sideboard c4g-measuretools-container ol-unselectable c4g-close";
+      } else {
+        this.measuretoolsContainer = document.createElement('div');
+        this.measuretoolsContainer.className = "c4g-sideboard c4g-measuretools-container ol-unselectable c4g-close";
+        this.$overlaycontainer_stopevent.append(this.measuretoolsContainer);
+      }
     }
 
     // permalink container

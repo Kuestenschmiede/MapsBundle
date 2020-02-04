@@ -24,25 +24,27 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_search']       =   '{title_lege
                                                                     '{c4g_search_legend},c4g_map_site_id,c4g_map_zoomlevel,c4g_map_placeholder;'.
                                                                     '{protected_legend:hide},protected;'.
                                                                     '{expert_legend:hide},guests,cssID,space';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_external_map_element'] = '{title_legend},name,headline,type,c4g_element_type;';
+
 if (C4GVersionProvider::isInstalled('con4gis/forum'))
 {
     $insert = '{c4g_forum_maps_legend},c4g_forum_enable_maps;{expert_legend:hide}';
     //insert c4g-maps support when forum is installed
     $GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_forum'] = str_replace('{expert_legend:hide}', $insert, $GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_forum']);
     $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_enable_maps'] =
-        [
+    [
         'label' => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_enable_maps'],
         'exclude' => true,
         'default' => '',
         'inputType' => 'checkbox',
         'sql' => "char(1) NOT NULL default ''"
-        ];
+    ];
 }
 /***
  * Fields
  */
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_map_id'] =
-    [
+[
     'label'                   => &$GLOBALS['TL_LANG']['tl_module']['c4g_map_id'],
     'exclude'                 => true,
     'inputType'               => 'select',
@@ -53,34 +55,42 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_map_id'] =
     (
         array('tl_module_c4g_maps', 'mapsLink')
     )
-    ];
+];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_map_site_id'] =
-    [
-        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['c4g_map_site_id'],
-        'exclude'                 => true,
-        'inputType'               => 'pageTree',
-        'eval'                    => ['fieldType'=>'radio'],
-        'sql'                     => "int(10) unsigned NOT NULL default '0'"
-    ];
+[
+    'label'                   => &$GLOBALS['TL_LANG']['tl_module']['c4g_map_site_id'],
+    'exclude'                 => true,
+    'inputType'               => 'pageTree',
+    'eval'                    => ['fieldType'=>'radio'],
+    'sql'                     => "int(10) unsigned NOT NULL default '0'"
+];
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_map_zoomlevel'] =
-    [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_module']['c4g_map_zoomlevel'],
-            'exclude'                 => true,
-            'inputType'               => 'c4g_text',
-            'default'                 => '10',
-            'eval'                    => ['tl_class'=>'clr'],
-            'sql'                     => "varchar(20) NOT NULL default '10'"
-    ];
+[
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['c4g_map_zoomlevel'],
+        'exclude'                 => true,
+        'inputType'               => 'c4g_text',
+        'default'                 => '10',
+        'eval'                    => ['tl_class'=>'clr'],
+        'sql'                     => "varchar(20) NOT NULL default '10'"
+];
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_map_placeholder'] =
-    [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_module']['c4g_map_placeholder'],
-            'exclude'                 => true,
-            'inputType'               => 'c4g_text',
-            'default'                 => 'Suche',
-            'eval'                    => ['tl_class'=>'clr'],
-            'sql'                     => "varchar(20) NOT NULL default '10'"
-    ];
+[
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['c4g_map_placeholder'],
+        'exclude'                 => true,
+        'inputType'               => 'c4g_text',
+        'default'                 => 'Suche',
+        'eval'                    => ['tl_class'=>'clr'],
+        'sql'                     => "varchar(20) NOT NULL default '10'"
+];
+$GLOBALS['TL_DCA']['tl_module']['fields']['c4g_element_type'] =
+[
+    'label'                   => &$GLOBALS['TL_LANG']['tl_module']['c4g_element_type'],
+    'exclude'                 => true,
+    'inputType'               => 'select',
+    'options'                 => $GLOBALS['TL_LANG']['tl_module']['element_type_refs'],
+    'sql'                     => "varchar(25) NOT NULL default ''"
+];
 
 /**
  * Class tl_module_c4g_maps

@@ -104,7 +104,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
     'palettes' =>
         [
         '__selector__'                => ['resize_locstyles_zoom', 'mouse_nav','cluster_all','attribution','hover_popups','geopicker','overpassEngine', 'cesium', 'popupHandling'],
-        'default'                     => '{general_legend},name,theme,mapFunctions,initial_open_comp;'.
+        'default'                     => '{general_legend},name,theme,mapFunctions,initial_open_comp,external_elements;'.
                                          '{navigation_legend:hide},mouse_nav,touch_nav,keyboard_nav;'.
                                          '{baselayer_legend:hide},baselayers, default_baselayer,baselayerswitcher_label,baselayer_filter;'.
                                          '{starboard_legend:hide},layerswitcher_label,layer_filter,starboard_label,starboard_button,starboard_locstyles,starboard_div,cluster_all;'.
@@ -181,6 +181,16 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'eval'                    => ['tl_class'=>'clr'],
                 'sql'                     => "varchar(30) NOT NULL default ''"
             ],
+    
+        'external_elements' =>
+        [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['external_elements'],
+            'exclude'                 => true,
+            'inputType'               => 'checkbox',
+            'options'                 => $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs'],
+            'eval'                    => ['mandatory'=>false, 'multiple'=>true],
+            'sql'                     => "blob NULL"
+        ],
 
         'theme' =>
         [

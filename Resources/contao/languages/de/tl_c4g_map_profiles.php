@@ -19,6 +19,7 @@
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['name'] = ['Name', 'Bitte geben Sie den Namen des Kartenprofils an.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['theme'] = ['Kartenlayout', 'Wählen Sie für die Kartendarstellung Ihr eigenes Thema aus.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions'] = ['Buttonleiste', 'Hier können Sie die Kartenbutton aktivieren und sortieren.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['external_elements'] = ['Externe Elemente', 'Hier können Sie auswählen, welche Bestandteile außerhalb der Karte dargestellt werden sollen.'];
 
 /** Basiskarten */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayers'] = ['Basiskarten', 'Wählen Sie die Basiskarten, die in Karten dieses Profils im Starboard verfügbar sein sollen. Standard: alle (d.h. wenn nichts ausgewählt ist, werden alle Basiskarten übergeben). Die Sortierung kann über das Basiskartenmodul angepasst werden (Liste).'];
@@ -221,6 +222,15 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['miscellaneous_legend'] = 'Sonstiges'
  * Globals
  */
 $GLOBALS['TL_LANG']['MSC']['ow_value'] = 'Label im Editor';
+
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['starboard'] = "Starboard";
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['baselayer'] = "Baselayerswitcher";
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['permalink'] = "Permalink";
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['search'] = "Suche";
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['measuretools'] = "Messwerkzeuge";
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['legend'] = "Legende";
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['overviewmap'] = "Übersichtskarte";
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['filter'] = "Kartenfilter";
 
 /**
  * Info text

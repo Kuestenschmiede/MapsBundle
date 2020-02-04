@@ -1,0 +1,3 @@
+<div class="<?php echo $this->className ?>">
+
+</div>
