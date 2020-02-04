@@ -100,6 +100,7 @@ class LayerService
 
         return $return;
     }
+    
     public function forceChildsInContent($layer)
     {
         $arrChilds = [];
@@ -122,6 +123,7 @@ class LayerService
 
         return $layer;
     }
+    
     public function createGeoJSONFeature($objOptions, $locX = null, $locY = null, $geometry = null)
     {
         $geometry = $geometry ? $geometry : [
@@ -138,6 +140,7 @@ class LayerService
             'geometry' => $geometry,
         ];
     }
+    
     public function getFeaturesFromLayerTree($layerTree)
     {
         $features = [];
@@ -147,6 +150,7 @@ class LayerService
 
         return $features;
     }
+    
     protected function getFeaturesForLayer($layer)
     {
         $features = [];
@@ -250,9 +254,6 @@ class LayerService
                         }
                     }
                     $arrLayerData['childs'] = $this->setChildHide($arrLayerData['childs'], $objLayers);
-
-                    // HOOK: add custom logic
-//                    $arrLayerData = $this->addCustomLogic($arrLayerData);
                     // only add if there is a result
                     if (is_array($arrLayerData) && count($arrLayerData) > 0) {
                         unset($arrLayerData['raw']);

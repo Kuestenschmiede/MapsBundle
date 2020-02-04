@@ -302,7 +302,7 @@ class MapDataConfigurator
             $mapData['layerswitcher']['enable'] = array_key_exists('layerswitcher', $buttons) ? $buttons['layerswitcher'] + 1 : 0;
             $mapData['baselayerswitcher']['enable'] = array_key_exists('baselayerswitcher', $buttons) ? $buttons['baselayerswitcher'] + 1 : 0;
             $mapData['geosearch']['enable'] = array_key_exists('geosearch', $buttons) ? $buttons['geosearch'] + 1 : 0;
-            $mapData['legend'] = array_key_exists('legend', $buttons) ? $buttons['legend'] + 1 : 0;
+            $mapData['legend']['enable'] = array_key_exists('legend', $buttons) ? $buttons['legend'] + 1 : 0;
             $mapData['measuretools']['enable'] = array_key_exists('measure', $buttons) ? $buttons['measure'] + 1 : 0;
             $mapData['overviewmap'] = array_key_exists('overview', $buttons) ? $buttons['overview'] + 1 : 0;
             $mapData['permalink']['enable'] = array_key_exists('permalink', $buttons) ? $buttons['permalink'] + 1 : 0;
@@ -339,8 +339,8 @@ class MapDataConfigurator
             // Starboard
             //
             //if (array_key_exists('starboard',$buttons)) { //ToDo
-                $mapData['starboard']['enable'] = 1; //ToDo
-                $mapData['starboard']['open'] = $profile->starboard_open;
+            $mapData['starboard']['enable'] = 1; //ToDo
+            $mapData['starboard']['open'] = $profile->starboard_open;
             $mapData['starboard']['label'] = \Contao\Controller::replaceInsertTags($profile->starboard_label);
             $mapData['starboard']['div'] = $profile->starboard_div;
             $mapData['starboard']['button'] = $profile->starboard_button;
