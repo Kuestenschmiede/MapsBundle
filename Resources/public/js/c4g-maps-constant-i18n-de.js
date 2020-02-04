@@ -69,7 +69,7 @@ export var langConstantsGerman = {
   SIDEBOARD: 'Sideboard',
 
   MEASURETOOLS: 'Messwerkzeuge',
-  MEASURETOOLS_INFO: 'Wählen Sie weiter unten einen Messtyp aus und starten Sie die Messung durch das Klicken auf der Karte.',
+  MEASURETOOLS_INFO: 'Wählen Sie einen Messtyp aus und starten Sie die Messung durch das Klicken auf der Karte.',
   MEASURETOOLS_INFO_ADDITIONAL: '(Einzelne Messungen können mit einem Doppelklick beendet werden.)',
   MEASURETOOLS_VIEW_TRIGGER_SELECT: 'Auswahl Modus',
   MEASURETOOLS_VIEW_TRIGGER_DRAW_LINESTRING: 'Strecken messen',

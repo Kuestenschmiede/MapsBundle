@@ -80,7 +80,7 @@ export var langConstantsEnglish = {
   STARBOARD_VIEW_TRIGGER_LAYERSWITCHER: 'Layerswitcher',
 
   MEASURETOOLS: 'Measuretools',
-  MEASURETOOLS_INFO: 'Select a measuretype below and start measuring by clicking on the map.',
+  MEASURETOOLS_INFO: 'Select a measuretype and start measuring by clicking on the map.',
   MEASURETOOLS_INFO_ADDITIONAL: '(To stop a measurement, double-click on the map.)',
   MEASURETOOLS_VIEW_TRIGGER_SELECT: 'Select-mode',
   MEASURETOOLS_VIEW_TRIGGER_DRAW_LINESTRING: 'Measure tracks',
