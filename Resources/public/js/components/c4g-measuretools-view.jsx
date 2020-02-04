@@ -311,7 +311,7 @@ export class MeasuretoolsView extends Component {
         function (event) {
           if (activeSketch && activeTooltip) {
             activeTooltip.setPosition(event.coordinate);
-            // updateMeasureFeature(activeSketch);
+            updateMeasureFeature(activeSketch);
           }
         }, scope);
 
