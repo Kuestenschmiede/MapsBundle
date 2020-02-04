@@ -28,6 +28,7 @@
   }
 }
 
+/*
 button,
 button span,
 input,
@@ -50,6 +51,8 @@ input,
 
 }
 
+*/
+
 .ol-overviewmap-box,
 .c4g-layertree a,
 .c4g-layertree ul,
@@ -60,11 +63,7 @@ input,
   transition: all .3s;
 }
 
-.c4g-layertree ul {
-  height: 100%;
-  /*display: grid;*/
-}
-
+/*
 .c4g-layertree .c4g-open > ul {
   -webkit-transition: all .5s;
   -o-transition: all .5s;
@@ -75,4 +74,4 @@ input,
   -webkit-transition: background .5s, color .5s, text-shadow .5s;
   -o-transition: background .5s, color .5s, text-shadow .5s;
   transition: background .5s, color .5s, text-shadow .5s;
-}
+}*/

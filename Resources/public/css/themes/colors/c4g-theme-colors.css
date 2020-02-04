@@ -595,11 +595,6 @@ ul.c4g-feature-filter-list li span.sum {
 }
 /*--------Geosearch-------------*/
 
-.c4g-geosearch-wrapper.c4g-open{
-  background-color: var(--main-color);
-  color: var(--font-color);
-}
-
 .c4g-geosearch-results.c4g-beach {
   background-color: var(--pu-main-color);
   color: var(--pu-font-color);
@@ -771,7 +766,7 @@ c4g-infopage-container {
   color: var(--main-color);
 }
 
-.c4g-sideboard > div div[class*=filter]:after {
+.c4g-sideboard > div div[class*=filter].without-button:after {
   background: var(--shadow-color);
   color: var(--font-color);
 }
