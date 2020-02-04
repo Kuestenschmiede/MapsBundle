@@ -133,7 +133,7 @@ class tl_content_c4g_maps extends Backend
      */
     public function get_maps(DataContainer $dc)
     {
-        $maps = $this->Database->prepare ( "SELECT * FROM tl_c4g_maps WHERE location_type='none' AND published=1" )->execute ();
+        $maps = $this->Database->prepare ( "SELECT * FROM tl_c4g_maps WHERE location_type='map' AND published=1" )->execute ();
         if ($maps->numRows > 0) {
             while ( $maps->next () ) {
                 if (!isset($this->firstMapId)) {

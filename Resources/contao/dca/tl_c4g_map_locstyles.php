@@ -61,7 +61,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
             'panelLayout'             => 'filter;sort,search,limit',
             'headerFields'            => ['name','styletype','minzoom','maxzoom'],
             'flag'                    => 1,
-            'icon'                    => 'bundles/con4giscore/images/be-icons/con4gis.org_dark.svg'
+            'icon'                    => 'bundles/con4giscore/images/be-icons/con4gis_blue.svg'
             ],
         'label' =>
             [
@@ -708,7 +708,26 @@ class tl_c4g_map_locstyles extends Backend
      */
     public function addIcon($row, $label, Contao\DataContainer $dc, $args)
     {
-        $image = 'bundles/con4gismaps/images/be-icons/locationstyles.svg';
+        //$image = 'bundles/con4gismaps/images/be-icons/locationstyles.svg';
+
+        if ($row) {
+            $svg_src = $row['svgSrc'];
+            if (\Validator::isUuid($svg_src)) {
+                $iconSrc = \FilesModel::findByUuid($svg_src);
+                if ($iconSrc) {
+                    $image = $iconSrc->path;
+                }
+            }
+
+            $icon_src = $row['icon_src'];
+            if (\Validator::isUuid($icon_src)) {
+                $iconSrc = \FilesModel::findByUuid($icon_src);
+                if ($iconSrc) {
+                    $image = $iconSrc->path;
+                }
+            }
+        }
+
         $args[0] = '<div class="list_icon_new" style="background-image:url('.$image.')" data-icon="'.$image.'">&nbsp;</div>';
         return $args;
     }

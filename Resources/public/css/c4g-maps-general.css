@@ -289,6 +289,7 @@ button.c4g-geosearch-start:before {
 }
 .c4g-starboard-wrapper {
   position: relative;
+  height: 100%;
   font-size: 16px;
   text-align: left;
 }
@@ -1455,6 +1456,27 @@ div div.c4g-popup-wrapper.c4g-beach {
   max-height: calc(var(--map-height) - .8em - 32px - .4em - 28px - .4em);
 }
 
+.c4g-sideboard > div > div[class*=content] input[type=text]{
+  height: 28px;
+  padding: 0 .2em;
+  margin-right: .2em;
+  border: none;
+  outline: none;
+  text-overflow: ellipsis;
+}
+
+.c4g-sideboard > div > div[class*=content] input[type=text] ~ button {
+  height: 28px;
+  width: 32px;
+  border: none;
+  outline: none;
+  vertical-align: top;
+  cursor: pointer;
+}
+
+.c4g-sideboard > div > div[class*=content] input[type=text] ~ button:not(:last-child){
+  margin-right: .2em;
+}
 
 .c4g-sideboard > div > div[class*=content]::-webkit-scrollbar{
   width: .2em;
@@ -1530,6 +1552,13 @@ ul.c4g-overlays span {
   padding: 0 .4em .4em;
   height: 28px;
   line-height: 28px;
+}
+
+.c4g-sideboard > div[class*=wrapper] {
+position: relative;
+height: 100%;
+font-size: 16px;
+text-align: left;
 }
 
 /*----------------*/

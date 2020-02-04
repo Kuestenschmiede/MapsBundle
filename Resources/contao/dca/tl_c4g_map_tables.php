@@ -39,7 +39,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'mode'                    => 2,
             'panelLayout'             => 'filter;sort,search,limit',
             'headerFields'            => ['name','tablesource'],
-            'icon'                    => 'tbundles/con4giscore/images/be-icons/con4gis.org_dark.svg'
+            'icon'                    => 'tbundles/con4giscore/images/be-icons/con4gis_blue.svg'
             ],
         'label' =>
             [
