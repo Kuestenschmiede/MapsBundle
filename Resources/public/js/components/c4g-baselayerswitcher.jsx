@@ -85,6 +85,18 @@ export class BaselayerSwitcher extends Component {
         let baselayer = arrBaselayers[ids[i]];
         if (baselayer.name.toLowerCase().indexOf(this.state.baselayerFilter.toLowerCase()) !== -1) {
           returnIds.push(ids[i]);
+        } else {
+          // check if an overlay matches
+          let overlays = baselayer.overlayController.arrOverlays;
+          let overlayKeys = Object.keys(overlays);
+          if (overlayKeys.length > 0) {
+            for (let j = 0; j < overlayKeys.length; j++) {
+              if (overlays[overlayKeys[j]].name.toLowerCase().indexOf(this.state.baselayerFilter.toLowerCase()) !== -1) {
+                returnIds.push(ids[i]);
+                break;
+              }
+            }
+          }
         }
       }
     }
