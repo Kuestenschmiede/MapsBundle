@@ -1,4 +1,6 @@
-<?php if (!defined('TL_ROOT')) die('You cannot access this file directly!');
+<?php use Contao\Image;
+
+if (!defined('TL_ROOT')) die('You cannot access this file directly!');
 /*
  * This file is part of con4gis,
  * the gis-kit for Contao CMS.
@@ -727,8 +729,8 @@ class tl_c4g_map_locstyles extends Backend
                 }
             }
         }
-
-        $args[0] = '<div class="list_icon_new" style="background-image:url('.$image.')" data-icon="'.$image.'">&nbsp;</div>';
+        //background-image:url('.$image.')
+        $args[0] = '<img src="'.$image.'" width="16" alt="">';
         return $args;
     }
 
