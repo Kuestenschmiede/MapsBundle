@@ -100,7 +100,7 @@ export class MapsControls {
             {name:'layerswitcher', sort: mapData.layerswitcher.enable},
             {name:'baselayerswitcher', sort: mapData.baselayerswitcher.enable},
             {name:'geosearch', sort: mapData.geosearch.enable},
-            {name:'legend', sort: mapData.legend},
+            {name:'legend', sort: mapData.legend.enable},
             {name:'measure', sort: mapData.measuretools.enable},
             {name:'overview', sort: mapData.overviewmap},
             {name:'permalink', sort: mapData.permalink.enable},
