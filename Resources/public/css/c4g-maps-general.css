@@ -683,10 +683,16 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
 }
 
 .ol-attribution:not(.ol-uncollapsible) ul {
-  float: right;
-  margin: .1em .1em .2em .2em;
-  padding: .4em;
-  min-height: calc(32px - .4em);
+  display: inline-block;
+  margin: 0;
+  padding: 0 .4em;
+  min-height: var(--button-size-pixel);
+  max-width: calc(100% - var(--button-size-pixel) - .8em - .2em);
+}
+
+.ol-attribution button {
+  float: left;
+  vertical-align: top;
 }
 
 .ol-attribution.ol-uncollapsible ul {
@@ -1438,10 +1444,6 @@ div div.c4g-popup-wrapper.c4g-beach {
 }
 
 .c4g-sideboard > div[class*=wrapper] > div[class*=header] + div[class*=filter] + div[class*=content] {
-  max-height: calc(var(--map-height) - .8em - 32px - .4em - 28px - .4em);
-}
-
-.c4g-sideboard > div[class*=wrapper] > div[class*=header] + div[class*=switcher] + div[class*=content] {
   max-height: calc(var(--map-height) - .8em - 32px - .4em - 28px - .4em);
 }
 

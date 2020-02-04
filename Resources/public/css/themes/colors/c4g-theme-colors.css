@@ -766,7 +766,7 @@ c4g-infopage-container {
   color: var(--main-color);
 }
 
-.c4g-sideboard > div div[class*=filter]:after {
+.c4g-sideboard > div div[class*=filter].without-button:after {
   background: var(--shadow-color);
   color: var(--font-color);
 }
