@@ -71,7 +71,6 @@ export class StarboardLayerswitcher extends Component {
     <React.Fragment>
       <div className="contentHeadline"/>
       <div className={"c4g-content-layertree"}>
-        {buttonSwitcher}
         <div className={cssConstants.STARBOARD_CONTENT_CONTAINER}>
           <div className="contentHeadline"/>
           <div className={"c4g-content-layertree"}>
