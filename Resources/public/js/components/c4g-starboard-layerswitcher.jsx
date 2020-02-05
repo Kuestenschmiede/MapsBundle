@@ -41,46 +41,6 @@ export class StarboardLayerswitcher extends Component {
     this.setState({layerFilter: filterValue});
   }
 
-  filterMatches(string) {
-    if (string.toLowerCase().indexOf(this.state.layerFilter) !== -1
-        || string.toLowerCase().indexOf(this.state.layerFilter.toLowerCase()) !== -1) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  filterLayers(layers, states) {
-    let returnLayers = [];
-    let returnStates = [];
-    if (this.state.layerFilter === "") {
-      return [layers, states];
-    }
-    for (let i = 0; i < layers.length; i++) {
-      let currentLayer = layers[i];
-      // check if layer matches
-      if (this.filterMatches(currentLayer.name)) {
-        returnLayers.push(layers[i]);
-        returnStates.push(states[i]);
-      } else {
-        if (currentLayer.childs && currentLayer.childs.length > 0) {
-          // layer has childs
-          let checkedChilds, checkedStates;
-          [checkedChilds, checkedStates] = this.filterLayers(currentLayer.childs, states[i].childStates);
-          if (checkedChilds.length > 0) {
-            layers[i].childs = checkedChilds;
-            states[i].childStates = checkedStates;
-            returnLayers.push(layers[i]);
-            returnStates.push(states[i]);
-          }
-        } else {
-          // has no childs and does not match; don't add it
-        }
-      }
-    }
-    return [returnLayers, returnStates];
-  }
-
   filterFunc(strFilter, layer) {
     let show = false;
     if (layer.name.toLowerCase().indexOf(strFilter) !== -1
