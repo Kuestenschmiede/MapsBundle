@@ -17,6 +17,7 @@ import {Control} from "ol/control";
 import {cssConstants} from "./../c4g-maps-constant";
 import {StarboardLayerswitcher} from "./c4g-starboard-layerswitcher";
 import {getLanguage} from "./../c4g-maps-i18n";
+import {Titlebar} from "./c4g-titlebar";
 
 export class StarboardPanel extends Component {
 
@@ -49,6 +50,7 @@ export class StarboardPanel extends Component {
     this.open = this.open.bind(this);
     this.slideOutCollidingElements = this.slideOutCollidingElements.bind(this);
     this.resizeFunction = this.resizeFunction.bind(this);
+    this.close = this.close.bind(this);
     // state variables (every property that has influence on this component)
     this.state = {
       // either "top" or "bottom"
@@ -65,6 +67,8 @@ export class StarboardPanel extends Component {
   }
 
   render() {
+    const scope = this;
+    const mapData = this.props.mapController.data;
     let className = this.state.className + "-" + this.state.direction;
     className += " " + (this.state.open ? "c4g-open" : "c4g-close");
     if (this.state.open) {
@@ -72,12 +76,44 @@ export class StarboardPanel extends Component {
     } else {
       jQuery(this.state.control.element).removeClass("c4g-open").addClass("c4g-close");
     }
-    const scope = this;
+    // TODO buttons will be used for starboard tabs
+    let buttons = [];
+    let buttonSwitcher = "";
+    if (buttons.length > 0) {
+      buttonSwitcher = <div className={cssConstants.CONTROL + " c4g-starboard-switcher"}>
+        {this.props.tabLayers.map(function(index, element) {
+          return <button key={index}/>;
+        })}
+      </div>;
+    }
+    let tabs = "";
+    if (this.props.tabLayers.length > 0) {
+      tabs = <React.Fragment>
+        {this.props.tabLayers.map(function(element, index) {
+          return <StarboardLayerswitcher key={index} mapController ={scope.props.mapController}
+                                         objLayers={scope.props.tabLayers[index]} parentCallback={scope.props.parentCallback}
+                                         layerStates={scope.props.tabStates} openfunc={scope.open}
+                                         open={scope.state.open} />;
+        })}
+      </React.Fragment>;
+    }
     return (
-      <StarboardLayerswitcher key={this.props.mapController.id} mapController ={this.props.mapController}
-                              objLayers={this.props.objLayers} parentCallback={this.props.parentCallback}
-                              layerStates={this.props.layerStates} openfunc={this.open}
-                              open={this.state.open} />
+      <div className={cssConstants.STARBOARD_WRAPPER}>
+        <Titlebar wrapperClass={"c4g-starboard-header"} headerClass={cssConstants.STARBOARD_HEADLINE}
+                  header={mapData.starboard.label || "Starboard"} closeBtnClass={cssConstants.STARBOARD_CLOSE} closeBtnCb={this.close}>
+        </Titlebar>
+        <div className={"c4g-starboard-layertree-filter without-button"}>
+          <input className={"c4g-starboard-layertree-filter-field"} type="text" onInput={this.setLayerFilter} placeholder={"\uf002"}/>
+        </div>
+        {buttonSwitcher}
+        <div className={cssConstants.STARBOARD_CONTENT_CONTAINER}>
+          <StarboardLayerswitcher key={this.props.tabLayers.length} mapController ={this.props.mapController}
+                                objLayers={this.props.objLayers} parentCallback={this.props.parentCallback}
+                                layerStates={this.props.layerStates} openfunc={this.open}
+                                open={this.state.open} />
+          {tabs}
+        </div>
+      </div>
     )
   }
 

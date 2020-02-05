@@ -46,7 +46,7 @@ export class GeoSearchResults extends Component {
     if (this.props.resultsDiv) {
       return ReactDOM.createPortal(
         (
-          <div className={"c4g-geosearch-results external " + this.props.className + " c4g-beach"}>
+          <div className={"c4g-geosearch-results-content c4g-external " + this.props.className + " c4g-beach"}>
             {/*<Titlebar wrapperClass={"c4g-geosearch-results-header c4g-beach-header"} header={this.props.headline} headerClass={"c4g-geosearch-results-headline c4g-beach-header-headline"}*/}
             {/*          detailBtnClass={detailBtnClass} detailBtnCb={detailBtnCb} closeBtnClass={closeBtnClass} closeBtnCb={closeBtnCb}/>*/}
             <div className={"c4g-beach-content"}>
@@ -58,7 +58,7 @@ export class GeoSearchResults extends Component {
       );
     } else {
       return (
-        <div className={"c4g-geosearch-results " + this.props.className + " c4g-beach"}>
+        <div className={"c4g-geosearch-results-content " + this.props.className + " c4g-beach"}>
           {/*<Titlebar wrapperClass={"c4g-geosearch-results-header c4g-beach-header"} header={this.props.headline} headerClass={"c4g-geosearch-results-headline c4g-beach-header-headline"}*/}
           {/*          detailBtnClass={detailBtnClass} detailBtnCb={detailBtnCb} closeBtnClass={closeBtnClass} closeBtnCb={closeBtnCb}/>*/}
           <div className={"c4g-beach-content"}>
