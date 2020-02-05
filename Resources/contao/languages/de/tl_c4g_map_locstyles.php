@@ -15,21 +15,21 @@
  * Fields
  */
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['name']             = array('Name', 'Bitte geben Sie den Namen des Lokationsstils an.');
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['styletype']        = array('Darstellung als','Bitte wählen Sie die Darstellungsart der Lokation.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['styletype']        = array('Darstellung als','Bitte wählen Sie die Darstellungsart der Lokation (Punkt, Icon, etc.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['strokecolor']      = array('Farbe der Linie','Bitte wählen Sie die Farbe der Linie.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['strokewidth']      = array('Breite der Linie','Bitte wählen Sie die Breite der Linie.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['strokeopacity']    = array('Deckkraft der Linie','Bitte wählen Sie die Deckkraft der Linie.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['fillcolor']        = array('Farbe der Füllung','Bitte wählen Sie die Farbe der Füllung.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['fillopacity']      = array('Deckkraft der Füllung','Bitte wählen Sie die Deckkraft der Füllung.');
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['radius']           = array('Radius','Bitte wählen Sie den Radius in Pixeln.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['radius']           = array('Radius','Bitte wählen Sie den Radius in Pixeln (gilt für Darstellung als Punkt, Stern, Dreieck, Quadrat, Kreuz).');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['ol_icon']          = array('OpenLayers Icon','Bitte wählen Sie aus den verfügbaren OpenLayers Standardicons aus.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['ol_icon_size']     = array('Größe des Icons','Die Größe des Icons auf der Karte. Wird gegebenenfalls skaliert.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['ol_icon_offset']   = array('Positionsversatz des Icons (X/Y) in Pixel','Bei einem Versatz von "0" befindet sich die obere linke Ecke des Icons an der angegebenen Geo-Lokation. X=Positiv => nach rechts. X=negativ => nach links. Y=positiv => nach unten. Y=negativ => nach oben.');
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['svgSrc']           = array('SVG Quelle','Wählen Sie bitte hier das anzuzeigende SVG-Icon aus. Bitte beachten Sie, dass für die Anzeige in Firefox die Höhe und Breite des Icons innerhalb der SVG-Datei gesetzt sein müssen ("height"- und "width"-Attribute).');
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['svg_add_attributes']           = array('SVG-Attribute ergänzen','Wenn Sie diese Checkbox setzen, wird die SVG-Datei beim Speichern dahingehend angepasst, dass sie mit Firefox kompatibel ist.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['svgSrc']           = array('SVG Quelle','Wählen Sie Ihr SVG-Icon aus. Bitte beachten Sie, dass für die Anzeige im Firefox Höhe und Breite des Icons innerhalb der SVG-Datei gesetzt sein sollten ("height"- und "width"-Attribute). Alternativ aktivieren Sie die folgende Checkbox "SVG-Attribute ergänzen".');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['svg_add_attributes']           = array('SVG-Attribute ergänzen','Ihre SVG-Datei wird beim Speichern so angepasst, dass sie mit Firefox kompatibel ist wenn Sie diese Checkbox aktivieren.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['givenSvgWidth']    = array('Größeneinstellung des SVG','Wählen Sie bitte hier, ob in der SVG-Datei die Größe mit "width" und "height" angegeben ist.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_src']         = array('Icon Quelle','Wählen Sie bitte hier das anzuzeigende Icon aus.');
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_size']        = array('Größe des Icons','Bei manchen Bildformaten ist es notwendig die Originalmaße der Bilddatei anzugeben. Wenn Sie das Icon in einer anderen Größe als das Original anzeigen wollen, nutzen Sie dann bitte die "Icon skalieren"-Option.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_size']        = array('Größe des Icons','Tragen Sie die Originalmaße (Breite und Höhe) des Icons ein. Wenn das Icon zu groß/zu klein ist nutzen Sie bitte die "Icon skalieren"-Option.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['svgSize']          = array('Größe des SVG','Geben Sie hier die Größe an, in der Sie das SVG auf der Karte darstellen wollen.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_scale']       = array('Icon skalieren','Sie können die Größe skalieren: 1.0 = 100%');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_resize_zoom']       = array('Icon bei Zoom neu skalieren', 'Setzen Sie diese Checkbox, wenn das Icon beim Zoomen auch neu mitskaliert werden soll.');
@@ -40,7 +40,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_resize_max_scale']       = arr
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_offset']      = array('Positionsversatz des Icons (X/Y) in Pixel','Bei einem Versatz von "0" befindet sich die obere linke Ecke des Icons an der angegebenen Geo-Lokation. X=Positiv => nach rechts. X=negativ => nach links. Y=positiv => nach unten. Y=negativ => nach oben.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_opacity']     = array('Deckkraft des Icons','Bitte wählen Sie die Deckkraft des Icons in % aus.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['iconcolor']        = array('Farbe des Icons','Hiermit können Sie die Icon-Farbe verändern.');
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['photoKind']        = array('Art des Photostils','Bitte wählen Sie den Photostil für den Lokationsstil ein.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['photoKind']        = array('Art des Fotostils','Bitte wählen Sie den Fotostil für den Lokationsstil ein.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['onhover_locstyle'] = array('Lokationsstil bei Maus-Hover','Wählen Sie einen Lokationsstil aus, der eingestellt wird, während sich der Maus-Cursor über der Lokation befindet.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['style_function_js']   = array('Code für StyleFunction','Geben Sie hier Code für eine eigene StyleFunciton ein (Nur den Körper der Funktion. Rückgabe eines Ol-Styles)');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['line_arrows']      = array('Richtungspfeile aktivieren','Stellen Sie ein, ob bei der Darstellung von Strecken Richtungspfeile angezeigt werden sollen.');
@@ -140,6 +140,5 @@ $GLOBALS['TL_LANG']['MSC']['ow_value'] = 'Label im Editor';
 /**
  * Info text
  */
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['infotext'] = 'Lokationsstile beschreiben die Art der Darstellung eines Kartenelements. Bspw. kann eine Lokation als Photo, Icon oder Symbol dargestellt werden. '.
-    'Auch Farben für Linien und Flächen werden hier definiert und die genaue Position der Bilder und Label (Positionsversatz). '.
-    'Mehr auf <a href="https://docs.con4gis.org/lokationsstile-in-con4gis-maps" title="con4gis Docs Lokationsstile" target="_blank" rel="noopener"><b>docs.con4gis.org</b></a>';
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['infotext'] = 'Hier stellen Sie die Icons für Ihre Kartenelemente ein (aus der Dateiverwaltung oder vordefiniert). Sie können die Position der Icons anpassen, damit z.B. die Spitze eines Markers direkt auf den Punkt zeigt (Positionsversatz).'
+   'Mehr auf <a href="https://docs.con4gis.org/lokationsstile-in-con4gis-maps" title="con4gis Docs Lokationsstile" target="_blank" rel="noopener"><b>docs.con4gis.org</b></a>';
