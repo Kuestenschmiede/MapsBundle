@@ -26,6 +26,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
         'dataContainer'               => 'Table',
         'ctable'                      => ['tl_c4g_map_overlays'],
         'enableVersioning'            => true,
+        'markAsCopy'                  => 'name',
         'onsubmit_callback'             => [
             [\con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator::class, 'purgeBaselayerApiCache']
         ],

@@ -21,6 +21,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_filters'] =
             [
                 'dataContainer'               => 'Table',
                 'enableVersioning'            => true,
+                'markAsCopy'                  => 'name',
                 'onload_callback' => [['tl_c4g_map_filters', 'showInfoMessage']],
 
                 'sql'                         =>
