@@ -175,7 +175,7 @@ div.ol-zoom-position,
  */
 /*.c4g-geosearch {*/
   /*margin-left: 46px;*/
-/*}*/
+/*}
 
 
 .c4g-geosearch-wrapper .searchResultButton {
@@ -187,10 +187,7 @@ div.ol-zoom-position,
     text-align: left;
     line-height:1;
 }
-
-.c4g-geosearch-wrapper ul {
-  list-style-type: none;
-}
+*/
 
 .c4g-geosearch.c4g-close .c4g-geosearch-wrapper {
   display: none;
@@ -508,9 +505,6 @@ div.c4g-active.c4g-popup-wrapper *:last-child {
 .c4g-tooltip-popup {
   z-index: 20;
 }
-button.c4g-popup-close:before {
-  content: "X";
-}
 
 .c4g_popup_header_featurename,
 .c4g-popup-content .name {
@@ -520,24 +514,6 @@ button.c4g-popup-close:before {
 .c4g_popup_header_featuretype {
   font-weight: bold;
   font-size: 1.2em;
-}
-
-.c4g-popup-content li {
-  list-style: none;
-}
-
-.c4g-popup-content ul {
-  padding-inline-start: 0;
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.c4g-popup-content div:not(:first-child):not(:empty) {
-  margin-top: 16px;
-}
-
-.c4g-popup-content {
-  line-height: 1.2;
 }
 
 /*
@@ -1136,10 +1112,10 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
 
 /**
  * general beach settings
- */
+
 .c4g-beach.c4g-close {
   display: none;
-}
+} */
 /*
 .c4g-beach.c4g-details-closed {
   max-height: 100px;
@@ -1158,234 +1134,6 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
 /*  position: absolute;*/
 /*}*/
 
-
-/*--------Geosearch-------------*/
-
-/* Searchpanel*/
-
-
-.c4g-geosearch-container-right {
-  position: absolute;
-  top: .2em;
-  height: calc(100% - .4em);
-  min-width: 240px;
-  max-width: 42%;
-  background: var(--main-color);
-  z-index: 60;
-}
-.c4g-geosearch-container-right.c4g-close {
-  right: -100%;
-}
-.c4g-geosearch-container-right.c4g-open {
-  right: 0;
-}
-
-.c4g-horizon-content {
-  padding: 0 .4em .4em;
-}
-
-.c4g-geosearch-wrapper.c4g-close { display: none; }
-
-
-.c4g-horizon-content input {
-  height: 28px;
-  max-width: calc(100% - 35px - .4em);
-    padding: 0 0 0 .4em;
-  margin: 0;
-    border: 0;
-  outline: none;
-  vertical-align: top;
-}
-
-.c4g-horizon-content input:focus{
-  border: 0;
-}
-
-button.c4g-geosearch-start {
-  border: 0;
-  font-size: 1.3em;
-  padding: 4px 5px 4px 7px;
-  outline: none;
-  cursor: pointer;
-  height: 28px;
-  width: 35px;
-}
-
-button.c4g-geosearch-options:before {
-  content: "\f013";
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
-  font-size: inherit;
-}
-
-/* Results*/
-/*
-.c4g-beach {
-  /*position: absolute;*//*
-  bottom: 0;
-  left:calc(42px + .4em);
-  right: calc(42px + .4em);
-  margin: auto;
-  width: auto;
-  z-index: 60;
-}*/
-
-.c4g-geosearch-results.c4g-beach.external {
-  bottom: unset;
-  top: 0;
-  position: relative;
-  left: unset;
-  right: unset;
-}
-
-.c4g-geosearch-results-header.c4g-beach-header { line-height: 40px; }
-.c4g-geosearch-results-header.c4g-beach-header span { padding-left: 10px; font-size: 20px;}
-.c4g-geosearch-results-header.c4g-beach-header button { height: 40px; width: 40px; font-size: 15px; }
-
-.c4g-geosearch-results .searchResultButton {
-  overflow: hidden;
-  width: 100%;
-  text-align: left;
-  line-height: 30px;
-  height: 30px;
-  padding-right: .2em;
-  border: none;
-  cursor: pointer;
-  transition: .1s;
-}
-
-.c4g-geosearch-results .searchResultButton:hover:before { margin-left: 0; }
-
-.c4g-geosearch-results .searchResultButton:hover { padding-left: .4em; }
-
-.c4g-geosearch-results .searchResultButton:before{
-  content: "\f35a";
-  font-family: "Font Awesome 5 Free";
-  font-weight: bold;
-  margin-left: -20px;
-  margin-right: .4em;
-  display: inline;
-  top: 2px;
-  transition: .3s;
-}
-
-.c4g-geosearch-results.c4g-open.c4g-beach { max-height: calc(var(--map-height) - 0.4em - (28px + 0.4em) - (32px + 0.4em)); overflow-y: auto;}
-
-.c4g-geosearch-results.c4g-open.c4g-beach::-webkit-scrollbar, .c4g-beach-content.c4g-popup-content::-webkit-scrollbar {
-  width: .2em;
-}
-
-/*------------------------------------*/
-/*--------------PopUp-----------------*/
-
-div div.c4g-popup-wrapper.c4g-beach {
-  border-radius: 0;
-  margin-bottom: 0;
-  width: auto;
-}
-
-.c4g-beach-header button:hover:before {
-  font-size: 1.3em;
-}
-
-
-
-/*-----------------------------------------*/
-/*----------baselayertree-----------------*/
-
-.c4g-baselayer-container.c4g-open .c4g-baselayertree-content::-webkit-scrollbar{
-  width: .2em;
-}
-
-/*
-.c4g-baselayer-wrapper .c4g-baselayer-header,
-.c4g-starboard-wrapper .c4g-starboard-header,
-.c4g-geosearch-wrapper .c4g-geosearch-header,
-.c4g-infopage-wrapper .c4g-infopage-header{
-  line-height: calc(32px + .4em);
-  height: calc(32px + .4em);
-  padding: 0 .4em;
-  margin: 0;
-  width: calc(100% - 1.2em - 32px);
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-
-
-.c4g-baselayer-wrapper .c4g-baselayer-header span,
-.c4g-starboard-wrapper .c4g-starboard-header span,
-.c4g-geosearch-wrapper .c4g-geosearch-header span,
-.c4g-infopage-wrapper .c4g-infopage-header span{
-  font-size: 20px;
-}*/
-
-.c4g-baselayertree-content li.with-image > a {
-  position: relative;
-  background: none;
-  display: block;
-  cursor: pointer;
-}
-
-.c4g-baselayertree-content li.with-image > a.c4g-active{
-  cursor: not-allowed;
-}
-
-
-.c4g-baselayertree-content li.with-image > a  span{
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  margin: auto;
-  width: 60%;
-  height: 35px;
-  line-height: 35px;
-  text-align: center;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  padding: 5px calc(.6em + 16px);
-}
-
-.c4g-baselayertree-content li.with-image > a:not(.c4g-active)  span{
-  opacity: .7;
-  transition: .3s;
-}
-
-.c4g-baselayertree-content li.with-image > a img {
-  max-width: 360px;
-  width: 100%;
-}
-
-.c4g-baselayertree-content li.with-image > a:not(.c4g-active) img{
-  filter: blur(2px);
-  transition: .3s;
-}
-
-.c4g-baselayertree-content li.with-image:hover a img {
-  filter: blur(0px);
-}
-
-.c4g-baselayertree-content li.with-image:hover a span{
-  opacity: 1;
-}
-
-/*
-.c4g-baselayer-header button,
-.c4g-starboard-header button,
-.c4g-geosearch-header button,
-.c4g-infopage-header button{
-  width: 32px;
-  height: 32px;
-  position: absolute;
-  right: .2em;
-  top: .2em;
-  margin: 0;
-  border: none;
-  background: none;
-  cursor: pointer;
-}*/
-
 /*---------------------------.c4g-sideboard------------------------*/
 
 .c4g-sideboard  {
@@ -1400,10 +1148,20 @@ div div.c4g-popup-wrapper.c4g-beach {
   transition: .5s;
 }
 
-.c4g-sideboard ul {
-  margin: 0;
-  padding: 0;
+.c4g-sideboard.c4g-close {
+  right: -100%;
 }
+
+.c4g-sideboard > div[class*=wrapper] {
+  position: relative;
+  height: 100%;
+  font-size: 16px;
+  text-align: left;
+}
+
+
+
+/*--------------------header--------------*/
 
 .c4g-sideboard > div div[class*=header] {
   line-height: calc(32px + .4em);
@@ -1434,26 +1192,106 @@ div div.c4g-popup-wrapper.c4g-beach {
   cursor: pointer;
 }
 
+.c4g-sideboard > div[class*=wrapper] > div[class*=header] + div[class*=content] {
+  max-height: calc((var(--map-height) - .4em) - (32px + .4em) - .4em);
+}
+
+/*---------------------------------*/
+/*----------switcher---------------*/
+
+.c4g-sideboard > div div[class*=switcher] {
+  line-height: calc(32px + .4em);
+  height: calc(32px + .4em);
+  padding: 0 .4em;
+  margin: 0;
+}
+
+.c4g-sideboard > div div[class*=switcher] button {
+  width: 32px;
+  height: 32px;
+  border: none;
+  outline: none;
+}
+
+.c4g-sideboard > div div[class*=switcher] button:not(.c4g-active){
+  cursor: pointer;
+}
+
+.c4g-sideboard > div div[class*=switcher] button:not(:last-child){
+  margin: 0 .2em 0 0;
+}
+
+.c4g-sideboard > div div[class*=switcher] button:last-child {
+  margin-right: .4em
+}
+
+.c4g-sideboard > div[class*=wrapper] > div[class*=header] + div[class*=switcher] + div[class*=content] {
+  max-height: calc((var(--map-height) - .4em) - ((32px + .4em) * 2) - .4em);
+}
+
+/*----------------------------*/
+/*-----------filter-----------*/
+
+.c4g-geosearch-form, .c4g-sideboard > div div[class*=filter] {
+  line-height: calc(32px + .4em);
+  height: calc(32px + .4em);
+  padding: 0 .4em;
+  margin: 0;
+}
+
+.c4g-geosearch-form input, .c4g-sideboard > div div[class*=filter] input {
+  max-width: calc(100% - .2em - 35px);
+  line-height: 32px;
+  height: 32px;
+  padding: 0 0 0 .2em;
+  vertical-align: top;
+  border: none;
+  outline: none;
+}
+
+.c4g-sideboard > div div[class*=filter].without-button:after {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 600;
+  position: absolute;
+  width: 35px;
+  height: 32px;
+  text-align: center;
+}
+
+.c4g-geosearch-form input, .c4g-sideboard > div div[class*=filter] input::placeholder{
+  padding-left: .2em;
+}
+
+.c4g-geosearch-form input, .c4g-sideboard > div div[class*=filter] input:focus::placeholder{
+  color: transparent;
+}
+
+
+.c4g-sideboard > div[class*=wrapper] > div[class*=header] + div[class*=filter] + div[class*=content] {
+  max-height: calc((var(--map-height) - .4em) - ((32px + .4em) * 2) - .4em);
+}
+
+/*----------------------------*/
+/*-----------content----------*/
+
 .c4g-sideboard > div > div[class*=content]{
   padding: 0 .4em .4em;
   overflow-y: auto;
   overflow-x: hidden;
 }
 
-.c4g-sideboard > div[class*=wrapper] > div[class*=header] + div[class*=content] {
-  max-height: calc(var(--map-height) - .8em - 32px - .4em);
+.c4g-sideboard > div > div[class*=content] .contentHeadline {
+  font-size: 20px;
+  padding: .4em 0;
 }
 
-.c4g-sideboard > div[class*=wrapper] > div[class*=header] + div[class*=filter] + div[class*=content] {
-  max-height: calc(var(--map-height) - .8em - 32px - .4em - 28px - .4em);
+.c4g-sideboard:not(.c4g-popup-container) ul {
+  margin: 0;
+  padding: 0;
 }
 
-.c4g-sideboard > div[class*=wrapper] > div[class*=header] + div[class*=switcher] + div[class*=content] {
-  max-height: calc(var(--map-height) - .8em - 32px - .4em - 28px - .4em);
-}
-
-.c4g-sideboard > div[class*=wrapper] > div[class*=header] + div[class*=switcher] + div[class*=filter] + div[class*=content] {
-  max-height: calc(var(--map-height) - .8em - 32px - .4em - 28px - .4em);
+.c4g-sideboard:not(.c4g-popup-container) ul li {
+  list-style-type: none;
 }
 
 .c4g-sideboard > div > div[class*=content] input[type=text]{
@@ -1482,49 +1320,67 @@ div div.c4g-popup-wrapper.c4g-beach {
   width: .2em;
 }
 
-.c4g-sideboard.c4g-close {
-  right: -100%;
+.c4g-sideboard > div[class*=wrapper] > div[class*=header] + div[class*=switcher] + div[class*=filter] + div[class*=content] {
+  max-height: calc((var(--map-height) - .4em) - ((32px + .4em) * 3) - .4em);
 }
 
+/*-------------------*/
 
-.c4g-measuretools-mode-switcher {
-  height: 32px ;
-}
+/*----------baselayertree-----------------*/
 
-.c4g-measuretools-mode-switcher button {
-  width: 32px;
-  height: 32px;
-  margin: 0 .2em;
+.c4g-baselayertree-content li.with-image > a {
+  position: relative;
   background: none;
-  border: none;
-  outline: none;
+  display: block;
   cursor: pointer;
 }
 
-.c4g-measuretools-mode-switcher button:first-child {
-  margin-left: .4em
+.c4g-baselayertree-content li.with-image > a.c4g-active{
+  cursor: not-allowed;
 }
 
-.c4g-measuretools-mode-switcher button:last-child {
-  margin-right: .4em
+
+.c4g-baselayertree-content li.with-image > a  span{
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  width: 60%;
+  height: 35px;
+  line-height: 35px;
+  text-align: center;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  padding: 5px calc(.6em + 16px);
 }
 
-.c4g-measuretools-content input {
-  padding: 0 .2em;
+.c4g-baselayertree-content li:not(:last-child){
+  padding-bottom: .2em;
 }
 
-.c4g-measuretools-content {
-  max-height: calc(var(--map-height) - .4em - (32px + .4em) - (32px + .2em) - .2em);
-  overflow-y: auto;
+.c4g-baselayertree-content li.with-image > a:not(.c4g-active)  span{
+  opacity: .7;
+  transition: .3s;
 }
 
-.c4g-measuretools-content .contentHeadline {
-  font-size: 20px;
-  padding: .4em 0;
+.c4g-baselayertree-content li.with-image > a img {
+  max-width: 360px;
+  width: 100%;
 }
 
-.c4g-measuretools-content::-webkit-scrollbar{
-  width: .2em;
+.c4g-baselayertree-content li.with-image > a:not(.c4g-active) img{
+  filter: blur(2px);
+  transition: .3s;
+}
+
+.c4g-baselayertree-content li.with-image:hover a img {
+  filter: blur(0px);
+}
+
+.c4g-baselayertree-content li.with-image:hover a span{
+  opacity: 1;
 }
 
 ul.c4g-overlays span {
@@ -1533,32 +1389,73 @@ ul.c4g-overlays span {
   text-overflow: ellipsis;
   overflow-x: hidden;
 }
+/*----------------*/
 
-.c4g-geosearch-form input, .c4g-sideboard > div div[class*=filter] input {
-  max-width: calc(100% - .2em - 35px);
-  height: 28px;
-  padding: 0;
-  vertical-align: top;
-  border: none;
-  padding-left: .2em;
+/*----Geosearch-----*/
+
+button.c4g-geosearch-start {
+  height: 32px;
+  width: 35px;
+  font-size: 20px;
+  border: 0;
   outline: none;
+  vertical-align: top;
+  cursor: pointer;
 }
 
-.c4g-geosearch-form input, .c4g-sideboard > div div[class*=filter] input::placeholder{
-  padding-left: .2em;
+/*
+button.c4g-geosearch-options:before {
+  content: "\f013";
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: inherit;
+}
+*/
+
+/* Results*/
+
+.c4g-geosearch-results-content.c4g-beach.external {
+  bottom: unset;
+  top: 0;
+  position: relative;
+  left: unset;
+  right: unset;
 }
 
-.c4g-geosearch-form, .c4g-sideboard > div div[class*=filter] {
-  padding: 0 .4em .4em;
-  height: 28px;
-  line-height: 28px;
+/*
+.c4g-geosearch-results-header.c4g-beach-header { line-height: 40px; }
+.c4g-geosearch-results-header.c4g-beach-header span { padding-left: 10px; font-size: 20px;}
+.c4g-geosearch-results-header.c4g-beach-header button { height: 40px; width: 40px; font-size: 15px; }
+*/
+
+.c4g-geosearch-results-content .searchResultButton {
+  overflow: hidden;
+  width: 100%;
+  text-align: left;
+  line-height: 30px;
+  height: 30px;
+  padding: 0 .2em;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: .1s;
 }
 
-.c4g-sideboard > div[class*=wrapper] {
-position: relative;
-height: 100%;
-font-size: 16px;
-text-align: left;
+.c4g-geosearch-results-content .searchResultButton:hover:before, .c4g-geosearch-results-content .searchResultButton.c4g-active:before { margin-left: 0; }
+
+.c4g-geosearch-results-content .searchResultButton:hover, .c4g-geosearch-results-content .searchResultButton.c4g-active { padding-left: .4em; }
+
+.c4g-geosearch-results-content .searchResultButton:before{
+  content: "\f35a";
+  font-family: "Font Awesome 5 Free";
+  font-weight: bold;
+  margin-left: -20px;
+  margin-right: .4em;
+  display: inline;
+  top: 2px;
+  transition: .3s;
 }
+
+/*----------------*/
 
 /*----------------*/

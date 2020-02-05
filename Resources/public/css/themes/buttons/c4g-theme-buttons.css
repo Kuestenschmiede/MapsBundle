@@ -579,14 +579,6 @@ button.ol-zoom-out {
 /*  border-bottom-right-radius: 0;*/
 /*}*/
 
-.c4g-layertree li,
-.c4g-baselayertree-content ul li {
-  list-style-type: none;
-}
-
-.c4g-baselayertree-content li:not(:last-child){
-  padding-bottom: .2em;
-}
 
 
 .c4g-layertree li ul {
