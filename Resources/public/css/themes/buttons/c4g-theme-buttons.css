@@ -694,12 +694,6 @@ ul.c4g-overlays li a{
   height: 38px;
   width: 38px;
 }
-.c4g-overviewmap button {
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin: 3px;
-}
 .c4g-overviewmap .ol-overviewmap-box {
   border: 1px solid;
   border-radius: 0%;
