@@ -612,6 +612,7 @@ export class MapController {
     }
     // feature filter
     if (mapData.filterDiv) {
+      mapData.filterDiv = mapData.filterDiv[0] === "." || mapData.filterDiv[0] === "#" ? mapData.filterDiv : "." + mapData.filterDiv;
       this.filterContainer = document.createElement('div');
       this.components.filter = ReactDOM.render(React.createElement(FeatureFilter, {
         target: document.querySelector(mapData.filterDiv),// + mapData.mapDiv + ' .' + cssConstants.OL_OVERLAYCONTAINER),

@@ -638,6 +638,7 @@ export class MapController extends Component {
 
     // feature filter
     if (mapData.filterDiv) {
+      mapData.filterDiv = mapData.filterDiv[0] === "." || mapData.filterDiv[0] === "#" ? mapData.filterDiv : "." + mapData.filterDiv;
       this.filterContainer = document.createElement('div');
       this.components.filter = ReactDOM.render(React.createElement(FeatureFilter, {
         target: document.querySelector(mapData.filterDiv),// + mapData.mapDiv + ' .' + cssConstants.OL_OVERLAYCONTAINER),
@@ -645,7 +646,7 @@ export class MapController extends Component {
         direction: "top",
         className: "c4g-feature-filter"
       }), this.filterContainer);
-      $("." + mapData.filterDiv).append(this.filterContainer);
+      $(mapData.filterDiv).append(this.filterContainer);
     }
 
     // infopage container

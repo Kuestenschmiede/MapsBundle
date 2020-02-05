@@ -579,14 +579,6 @@ button.ol-zoom-out {
 /*  border-bottom-right-radius: 0;*/
 /*}*/
 
-.c4g-layertree li,
-.c4g-baselayertree-content ul li {
-  list-style-type: none;
-}
-
-.c4g-baselayertree-content li:not(:last-child){
-  padding-bottom: .2em;
-}
 
 
 .c4g-layertree li ul {
@@ -693,12 +685,6 @@ ul.c4g-overlays li a{
 .c4g-overviewmap{
   height: 38px;
   width: 38px;
-}
-.c4g-overviewmap button {
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin: 3px;
 }
 .c4g-overviewmap .ol-overviewmap-box {
   border: 1px solid;
