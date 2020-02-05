@@ -100,7 +100,7 @@ export class StarboardPanel extends Component {
         {this.props.tabLayers.map(function(element, index) {
           return <StarboardLayerswitcher key={index} mapController ={scope.props.mapController}
                                          objLayers={scope.props.tabLayers[index]} parentCallback={scope.props.parentCallback}
-                                         layerStates={scope.props.tabStates} openfunc={scope.open}
+                                         layerStates={scope.props.tabStates} openfunc={scope.open} headline={element[0].name}
                                          open={scope.state.open} active={(index + 1) === scope.state.activeTab}/>;
         })}
       </React.Fragment>;
@@ -114,7 +114,7 @@ export class StarboardPanel extends Component {
         <div className={cssConstants.STARBOARD_CONTENT_CONTAINER}>
           <StarboardLayerswitcher key={this.props.tabLayers.length} mapController ={this.props.mapController}
                                 objLayers={this.props.objLayers} parentCallback={this.props.parentCallback}
-                                layerStates={this.props.layerStates} openfunc={this.open}
+                                layerStates={this.props.layerStates} openfunc={this.open} headline={mapData.layerswitcher.label || "Kartenelemente"}
                                 open={this.state.open} active={scope.state.activeTab === 0}/>
           {tabs}
         </div>

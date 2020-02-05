@@ -70,7 +70,7 @@ export class StarboardLayerswitcher extends Component {
     }
     return (
     <React.Fragment>
-      <div className="contentHeadline">{mapData.layerswitcher.label || "Kartenelemente"}</div>
+      <div className="contentHeadline">{this.props.headline}</div>
       <div className={"c4g-content-layertree"}>
         <div className={cssConstants.STARBOARD_CONTENT_CONTAINER}>
           <div className="contentHeadline"/>
