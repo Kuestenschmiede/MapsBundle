@@ -1308,6 +1308,11 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
   margin-left: .2em;
 }
 
+.c4g-sideboard > div > div[class*=content] input[type=text] {
+  font-family: 'Font Awesome 5 Free', arial!important;
+  font-weight: 900;
+}
+
 .c4g-sideboard > div > div[class*=content]::-webkit-scrollbar{
   width: .2em;
 }
@@ -1326,6 +1331,11 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
 
 .c4g-sideboard > div > div[class*=content] div[class*=filter] input {
   max-width: calc(100% - .4em - 35px);
+}
+
+.c4g-sideboard > div > div[class*=content] div[class*=filter] input {
+  font-family: 'Font Awesome 5 Free', arial!important;
+  font-weight: 900;
 }
 
 .c4g-sideboard > div > div[class*=content] div[class*=filter].without-button:after {
