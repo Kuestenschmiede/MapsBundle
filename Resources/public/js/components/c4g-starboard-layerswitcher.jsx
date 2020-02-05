@@ -37,7 +37,7 @@ export class StarboardLayerswitcher extends Component {
   };
 
   setLayerFilter() {
-    let filterValue = jQuery(".c4g-starboard-layerswitcher-filter-field").val();
+    let filterValue = jQuery(".c4g-starboard-layertree-filter-field").val() || ""; //fallback
     this.setState({layerFilter: filterValue});
   }
 
