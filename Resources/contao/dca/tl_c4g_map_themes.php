@@ -22,6 +22,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
         [
         'dataContainer'               => 'Table',
         'enableVersioning'            => true,
+        'markAsCopy'                  => 'name',
         'onload_callback' => [['tl_c4g_map_themes', 'showInfoMessage']],
         'sql'                         =>
             [
@@ -100,18 +101,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
     //Palettes
     'palettes' =>
         [
-        //'__selector__' => ['custom_colors', 'custom_buttons', 'custom_effects', 'custom_icons'],
         'default' => '{theme_legend}, name, useglobal; {colors_legend}, maincolor, mainopacity, fontcolor, fontopacity, shadowcolor, shadowopacity, popupMaincolor, popupMainopacity, popupFontcolor, popupFontopacity; {buttons_legend}, buttonradius, buttonsize, button_fontsize;',
         ],
-
-    //Subpalettes
-//    'subpalettes' =>
-//        [
-//        'custom_buttons' => 'external_buttons',
-//        'custom_colors'  => 'external_colors',
-//        'custom_effects' => 'external_effects',
-//        'custom_icons'   => 'external_icons'
-//        ],
 
     //Fields
     'fields' =>
@@ -148,29 +139,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
             'inputType'               => 'checkbox',
             'sql'                     => "char(1) NOT NULL default ''"
             ],
-//        'buttons' =>
-//            [
-//            'label'                     => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['buttons'],
-//            'inputType'                 => 'select',
-//            'options_callback'          => ['tl_c4g_map_themes', 'getButtonOptions'],
-//            'eval'                      => ['mandatory' => false, 'includeBlankOption' => false],
-//            'sql'                       => "blob NULL"
-//            ],
-//        'custom_buttons' =>
-//            [
-//            'label'                     => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['custom_buttons'],
-//            'inputType'                 => 'checkbox',
-//            'default'                   => '',
-//            'eval'                      => ['mandatory' => false, 'tl_class' => 'm12', 'submitOnChange' => true],
-//            'sql'                       => "varchar(1) NOT NULL"
-//            ],
-//        'external_buttons' =>
-//            [
-//            'label'                     => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['external_buttons'],
-//            'inputType'                 => 'fileTree',
-//            'eval'                      => ['mandatory' => false, 'filesOnly' => true, 'extensions' => 'css', 'fieldType' => 'radio'],
-//            'sql'                       => "blob NULL"
-//            ],
         'buttonradius' =>
             [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['buttonradius'],
@@ -198,29 +166,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
             'eval'                    => ['tl_class'=>'long', 'mandatory'=>true],
             'sql'                     => "varchar(100) NOT NULL default 'a:2:{s:4:\"unit\";s:2:\"px\";s:5:\"value\";s:2:\"18\";}'"
             ],
-//        'colors' =>
-//            [
-//            'label'                     => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['colors'],
-//            'inputType'                 => 'select',
-//            'options_callback'          => ['tl_c4g_map_themes', 'getColorOptions'],
-//            'eval'                      => ['mandatory' => false, 'multiple' => false, 'includeBlankOption' => false],
-//            'sql'                       => "blob NULL"
-//            ],
-//        'custom_colors' =>
-//            [
-//            'label'                     => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['custom_colors'],
-//            'inputType'                 => 'checkbox',
-//            'default'                   => '',
-//            'eval'                      => ['mandatory' => false, 'tl_class' => 'm12', 'submitOnChange' => true],
-//            'sql'                       => "varchar(1) NOT NULL"
-//            ],
-//        'external_colors' =>
-//            [
-//            'label'                     => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['external_colors'],
-//            'inputType'                 => 'fileTree',
-//            'eval'                      => ['mandatory' => false, 'filesOnly' => true, 'extensions' => 'css', 'fieldType' => 'radio'],
-//            'sql'                       => "blob NULL"
-//            ],
         'maincolor' =>
             [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['maincolor'],
@@ -305,53 +250,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
             'options'                 => ['%'],
             'eval'                    => ['rgxp'=>'prcnt', 'tl_class'=>'long', 'mandatory'=>true],
             'sql'                     => "varchar(100) NOT NULL default ''"
-            ],
-//        'effects' =>
-//            [
-//            'label'                     => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['effects'],
-//            'inputType'                 => 'select',
-//            'options_callback'          => ['tl_c4g_map_themes', 'getEffectOptions'],
-//            'eval'                      => ['mandatory' => false, 'multiple' => false, 'includeBlankOption' => false],
-//            'sql'                       => "blob NULL"
-//            ],
-//        'custom_effects' =>
-//            [
-//            'label'                     => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['custom_effects'],
-//            'inputType'                 => 'checkbox',
-//            'default'                   => '',
-//            'eval'                      => ['mandatory' => false, 'tl_class' => 'm12', 'submitOnChange' => true],
-//            'sql'                       => "varchar(1) NOT NULL"
-//            ],
-//        'external_effects' =>
-//            [
-//            'label'                     => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['external_effects'],
-//            'inputType'                 => 'fileTree',
-//            'eval'                      => ['mandatory' => false, 'filesOnly' => true, 'extensions' => 'css', 'fieldType' => 'radio'],
-//            'sql'                       => "blob NULL"
-//            ],
-//        'icons' =>
-//            [
-//            'label'                     => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['icons'],
-//            'inputType'                 => 'select',
-//            'options_callback'          => ['tl_c4g_map_themes', 'getIconOptions'],
-//            'eval'                      => ['mandatory' => false, 'multiple' => false, 'includeBlankOption' => false],
-//            'sql'                       => "blob NULL"
-//            ],
-//        'custom_icons' =>
-//            [
-//            'label'                     => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['custom_icons'],
-//            'inputType'                 => 'checkbox',
-//            'default'                   => '',
-//            'eval'                      => ['mandatory' => false, 'tl_class' => 'm12', 'submitOnChange' => true],
-//            'sql'                       => "varchar(1) NOT NULL"
-//            ],
-//        'external_icons' =>
-//            [
-//            'label'                     => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['external_icons'],
-//            'inputType'                 => 'fileTree',
-//            'eval'                      => ['mandatory' => false, 'filesOnly' => true, 'extensions' => 'css', 'fieldType' => 'radio'],
-//            'sql'                       => "blob NULL"
-//            ],
+            ]
         ]
     ];
 

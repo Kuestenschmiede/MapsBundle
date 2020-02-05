@@ -33,6 +33,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
         'label'                       => $GLOBALS['TL_LANG']['MOD']['c4g_maps'][0],
         'dataContainer'               => 'Table',
         'enableVersioning'            => true,
+        'markAsCopy'                  => 'name',
         'onload_callback'             => [['tl_c4g_maps', 'updateDCA'], ['tl_c4g_maps', 'showInfoMessage']],
         'onsubmit_callback'             => [
             [\con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator::class, 'purgeLayerApiCache']

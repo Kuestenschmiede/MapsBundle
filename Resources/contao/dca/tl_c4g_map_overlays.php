@@ -51,6 +51,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
             'child_record_callback'   => ['tl_c4g_map_overlays', 'listOverlays'],
             'child_record_class'      => 'no_padding',
             'icon'                    => 'bundles/con4giscore/images/be-icons/con4gis_blue.svg',
+        'markAsCopy'                  => 'name',
         ],
         
         'label' =>

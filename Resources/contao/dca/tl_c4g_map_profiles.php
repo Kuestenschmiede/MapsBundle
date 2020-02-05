@@ -23,6 +23,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         [
         'dataContainer'               => 'Table',
         'enableVersioning'            => true,
+        'markAsCopy'                  => 'name',
         'onload_callback'             => [['tl_c4g_map_profiles', 'updateDCA'],['tl_c4g_map_profiles', 'showInfoMessage']],
         'onsubmit_callback'           => [
             ['\con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator', 'purgeMapApiCache']

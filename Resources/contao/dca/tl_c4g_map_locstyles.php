@@ -39,7 +39,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
         'label'                       => $GLOBALS['TL_LANG']['MOD']['c4g_map_locstyles'][0],
         'dataContainer'               => 'Table',
         'enableVersioning'            => true,
-        'onsubmit_callback'             => [
+        'markAsCopy'                  => 'name',
+        'onsubmit_callback'           => [
             ['\con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator', 'purgeLocationstyleApiCache'],
             ['\con4gis\MapsBundle\Classes\Contao\Callbacks\TlC4gMapLocstyles', 'editSvgIcon']
         ],

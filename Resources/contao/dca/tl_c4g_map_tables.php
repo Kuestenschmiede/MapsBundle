@@ -22,6 +22,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
     [
         'dataContainer'               => 'Table',
         'enableVersioning'            => true,
+        'markAsCopy'                  => 'name',
         'sql'                         =>
         [
             'keys' =>

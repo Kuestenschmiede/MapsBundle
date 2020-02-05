@@ -20,6 +20,8 @@ import {Point} from "ol/geom";
 import {Circle} from "ol/geom";
 import CircleStyle from 'ol/style/Circle';
 import {Text} from "ol/style";
+import ol_style_Photo from "ol-ext/style/Photo";
+
 
 export class C4gLocationStyle {
 
@@ -350,7 +352,7 @@ export class C4gLocationStyle {
 
         break;
       case 'photo' :
-        imageStyle = new Photo({
+        imageStyle = new ol_style_Photo({
           kind: styleData.photoKind,
           crop: true,
           opacity: parseFloat(styleData.icon_opacity.value, 10) / 100,
@@ -359,6 +361,7 @@ export class C4gLocationStyle {
           stroke: strokeStyle,
           src: styleData.icon_src
         });
+
         break;
       case 'point':
         imageStyle = new CircleStyle({
