@@ -1156,13 +1156,13 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
 
 /*--------------------header--------------*/
 
-.c4g-sideboard > div div[class*=header] {
+.c4g-sideboard > div > div[class*=header] {
   line-height: calc(32px + .4em);
   height: calc(32px + .4em);
   margin: 0;
 }
 
-.c4g-sideboard > div div[class*=header] span {
+.c4g-sideboard > div > div[class*=header] span {
   display: block;
   width: calc(100% - 1.2em - 32px);
   padding: 0 .4em;
@@ -1172,7 +1172,7 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
   white-space: nowrap;
 }
 
-.c4g-sideboard > div div[class*=header] button[class*=close] {
+.c4g-sideboard > div > div[class*=header] button[class*=close] {
   width: 32px;
   height: 32px;
   position: absolute;
@@ -1192,29 +1192,29 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
 /*---------------------------------*/
 /*----------switcher---------------*/
 
-.c4g-sideboard > div div[class*=switcher] {
+.c4g-sideboard > div > div[class*=switcher] {
   line-height: calc(32px + .4em);
   height: calc(32px + .4em);
   padding: 0 .4em;
   margin: 0;
 }
 
-.c4g-sideboard > div div[class*=switcher] button {
+.c4g-sideboard > div > div[class*=switcher] button {
   width: 32px;
   height: 32px;
   border: none;
   outline: none;
 }
 
-.c4g-sideboard > div div[class*=switcher] button:not(.c4g-active){
+.c4g-sideboard > div > div[class*=switcher] button:not(.c4g-active){
   cursor: pointer;
 }
 
-.c4g-sideboard > div div[class*=switcher] button:not(:last-child){
+.c4g-sideboard > div > div[class*=switcher] button:not(:last-child){
   margin: 0 .2em 0 0;
 }
 
-.c4g-sideboard > div div[class*=switcher] button:last-child {
+.c4g-sideboard > div > div[class*=switcher] button:last-child {
   margin-right: .4em
 }
 
@@ -1225,14 +1225,14 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
 /*----------------------------*/
 /*-----------filter-----------*/
 
-.c4g-geosearch-form, .c4g-sideboard > div div[class*=filter] {
+.c4g-geosearch-form, .c4g-sideboard > div > div[class*=filter] {
   line-height: calc(32px + .4em);
   height: calc(32px + .4em);
   padding: 0 .4em;
   margin: 0;
 }
 
-.c4g-geosearch-form input, .c4g-sideboard > div div[class*=filter] input {
+.c4g-geosearch-form input, .c4g-sideboard > div > div[class*=filter] input {
   max-width: calc(100% - .2em - 35px);
   line-height: 32px;
   height: 32px;
@@ -1242,7 +1242,7 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
   outline: none;
 }
 
-.c4g-sideboard > div div[class*=filter].without-button:after {
+.c4g-sideboard > div > div[class*=filter].without-button:after {
   font-family: "Font Awesome 5 Free";
   font-weight: 600;
   position: absolute;
@@ -1251,11 +1251,11 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
   text-align: center;
 }
 
-.c4g-geosearch-form input, .c4g-sideboard > div div[class*=filter] input::placeholder{
+.c4g-geosearch-form input, .c4g-sideboard > div > div[class*=filter] input::placeholder{
   padding-left: .2em;
 }
 
-.c4g-geosearch-form input, .c4g-sideboard > div div[class*=filter] input:focus::placeholder{
+.c4g-geosearch-form input, .c4g-sideboard > div > div[class*=filter] input:focus::placeholder{
   color: transparent;
 }
 
@@ -1290,7 +1290,6 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
 .c4g-sideboard > div > div[class*=content] input[type=text]{
   height: 28px;
   padding: 0 .2em;
-  margin-right: .2em;
   border: none;
   outline: none;
   text-overflow: ellipsis;
@@ -1305,8 +1304,8 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
   cursor: pointer;
 }
 
-.c4g-sideboard > div > div[class*=content] input[type=text] ~ button:not(:last-child){
-  margin-right: .2em;
+.c4g-sideboard > div > div[class*=content] input[type=text] ~ button {
+  margin-left: .2em;
 }
 
 .c4g-sideboard > div > div[class*=content]::-webkit-scrollbar{
@@ -1316,6 +1315,37 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
 .c4g-sideboard > div[class*=wrapper] > div[class*=header] + div[class*=switcher] + div[class*=filter] + div[class*=content] {
   max-height: calc((var(--map-height) - .4em) - ((32px + .4em) * 3) - .4em);
 }
+
+/*------filter in content-------*/
+
+.c4g-sideboard > div > div[class*=content] div[class*=filter] {
+  position: relative;
+  height: 28px;
+  line-height: 28px;
+}
+
+.c4g-sideboard > div > div[class*=content] div[class*=filter] input {
+  max-width: calc(100% - .4em - 35px);
+}
+
+.c4g-sideboard > div > div[class*=content] div[class*=filter].without-button:after {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 600;
+  position: absolute;
+  width: 35px;
+  height: 28px;
+  text-align: center;
+}
+
+.c4g-sideboard > div > div[class*=content] div[class*=filter] input::placeholder{
+  padding-left: .2em;
+}
+
+.c4g-sideboard > div > div[class*=content] div[class*=filter] input:focus::placeholder{
+  color: transparent;
+}
+
+/*-------------------*/
 
 /*-------------------*/
 
@@ -1457,5 +1487,15 @@ button.c4g-geosearch-options:before {
   max-height: calc((var(--map-height) - .4em) - (32px + .4em) - .4em);
 }
 /*----------------*/
+
+/*---Starboard-----*/
+
+.c4g-layertree > ul {
+  margin: .4em 0 0 0 ;
+}
+
+.c4g-layertree ul {
+  padding: 0;
+}
 
 /*----------------*/
