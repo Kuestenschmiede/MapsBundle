@@ -19,7 +19,6 @@
  *  Controls - general
  */
 .ol-control {
-  border-radius: 0%;
   border-radius: var(--button-radius-percent);
   padding: 2px;
   border: none;
@@ -57,6 +56,7 @@
 /*
  *  Tooltips
  */
+/*
 .ol-control button[title]:hover:after,
 .ol-control button[title]:focus:after {
   z-index: 160;
@@ -259,9 +259,7 @@ button.ol-zoom-out {
   font-size: 12px;
   border-radius: 4px;
 }
-.c4g-zoom-level {
-  min-width: 5em;
-}
+
 .c4g-zoom-level:before {
   content: ' Zoom: ';
   font-weight: bold;
@@ -778,7 +776,13 @@ div.c4g-permalink-popup button.c4g-copy {
   margin-bottom: 10px;
   border-radius: 15px;
   border: 1px solid;
+  padding: .4em;
 }
+
+.ol-selectable div.c4g-active.c4g-popup-wrapper img {
+  max-height: calc((var(--map-height) - .4em) - (32px + .4em) - .4em);
+}
+
 .ol-selectable div.c4g-popup-wrapper:before {
   pointer-events: none;
   content: " ";
