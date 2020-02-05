@@ -163,17 +163,17 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
         'gpx'                         => '{general_legend},name,location_type;'.
                                          '{location_legend},data_layername,hide_child,initial_opened,exemptFromFilter,filterByBaseLayer,data_hidelayer,data_file,data_url,locstyle,zIndex,loc_label,tooltip, tooltip_length,enablePopup,popup_info,popup_async,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations, hover_location,hide_when_in_tab,hideInStarboard,cssClass;'.
-                                         '{protection_legend:hide},protect_element;'.
+                                         '{protection_legend:hide},protect_element,excludeFromSingleLayer;'.
                                          '{publish_legend:hide},published,publishStart,publishStop;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
         'kml'                         => '{general_legend},name,location_type;'.
                                          '{location_legend},data_layername,hide_child,initial_opened,exemptFromFilter,filterByBaseLayer,data_hidelayer,data_file,data_url,loc_label,tooltip, tooltip_length,enablePopup,popup_info,popup_async,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations, hover_location,hide_when_in_tab,hideInStarboard,cssClass;'.
-                                         '{protection_legend:hide},protect_element;'.
+                                         '{protection_legend:hide},protect_element,excludeFromSingleLayer;'.
                                          '{publish_legend:hide},published,publishStart,publishStop;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
         'geojson'                     => '{general_legend},name,location_type;'.
                                          '{location_legend},data_layername,hide_child,initial_opened,exemptFromFilter,filterByBaseLayer,data_hidelayer,data_file,split_geojson,data_content,data_projection,locstyle,zIndex,loc_label,tooltip, tooltip_length,enablePopup,popup_info,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations, hover_location,hide_when_in_tab,hideInStarboard,cssClass;'.
-                                         '{protection_legend:hide},protect_element;'.
+                                         '{protection_legend:hide},protect_element,excludeFromSingleLayer;'.
                                          '{publish_legend:hide},published,publishStart,publishStop;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
         'osm'                         => '{general_legend},name,location_type;'.
@@ -1178,6 +1178,14 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             'eval'                    => ['tl_class'=>'w50 clr'],
             'sql'                     => "varchar(255) NOT NULL default ''"
             ],
+        'excludeFromSingleLayer' =>
+            [
+            'label'                   => ["Moin", "Bitte ausfüllen"],
+            'exclude'                 => true,
+            'inputType'               => 'checkbox',
+            'default'                 => false,
+            'sql'                     => "char(1) NOT NULL default ''"
+            ]
         ]
     ];
 

@@ -173,7 +173,7 @@ export class BetterLayerController {
       return false;
     }
 
-    jQuery.ajax(this.proxy.api_layer_url,{
+    jQuery.ajax(this.proxy.api_layer_url, {
       dataType: this.mapController.data.jsonp ? "jsonp" : "json"
 
     }).done(function (data) {
@@ -256,7 +256,9 @@ export class BetterLayerController {
           }
         }
       }
-      features = features.concat(structure.features);
+      if (structure.features) {
+        features = features.concat(structure.features);
+      }
     }
     return features;
   }
@@ -264,6 +266,7 @@ export class BetterLayerController {
   getStructureFromLayer(layer, idChain) {
     let features = [];
     let childs = [];
+    let vectorLayer = false;
     let loaderId = -1;
     let possibleLocstyle = layer.locstyle;
     if (layer.content && layer.content.length > 0) {
@@ -305,7 +308,7 @@ export class BetterLayerController {
           let childChain = idChain + "," + childs.length;
           let newChild = this.getStructureFromLayer(layer.childs[layerId], childChain);
           if (newChild.hide_in_starboardDromedarCase) {
-            childs = childs.concat(newChild.childs)
+            childs = childs.concat(newChild.childs);
             features = features.concat(newChild.features)
           }
           else {
@@ -313,6 +316,15 @@ export class BetterLayerController {
           }
         }
       }
+    }
+    if (layer.excludeFromSingleLayer) {
+        let vectorSource = new VectorSource({features: features});
+        vectorLayer = new Vector({
+            source: vectorSource,
+            style: this.clusterStyleFunction
+        });
+        this.mapController.map.addLayer(vectorLayer);
+        features = false;
     }
     if (layer.hideInStarboard) {
       return {
@@ -323,11 +335,12 @@ export class BetterLayerController {
     }
     else {
       return {
-        "features"  : features,
-        "loader"    : loaderId,
-        "name"      : layer.name,
-        "hide"      : !!layer.hide,
-        "childs"    : childs
+        "features"      : features,
+        "vectorLayer"   : vectorLayer,
+        "loader"        : loaderId,
+        "name"          : layer.name,
+        "hide"          : !!layer.hide,
+        "childs"        : childs
       };
     }
   }

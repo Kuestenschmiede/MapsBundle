@@ -36,77 +36,82 @@ export class C4gStarboardLayerElement extends Component {
     const scope = this;
     features = features || scope.props.layer.features;
     let layerController = scope.props.mapController.proxy.layerController;
-    let vectorSource = layerController.vectorSource;
-    let clusterSource = layerController.clusterSource;
-    let vectorLayer = layerController.vectorLayer;
     if (scope.props.layer.loader >= 0 && layerController.loaders[scope.props.layer.loader] && layerController.loaders[scope.props.layer.loader].preventLoading) {
       layerController.loaders[scope.props.layer.loader].preventLoading = false;
     }
-    let arrFeatures = layerController.vectorCollection.getArray();
-    delete layerController.vectorCollection;
-    delete layerController.vectorSource;
-    delete layerController.clusterSource;
-    // delete layerController.vectorLayer;
+    if (features) {
+      let arrFeatures = layerController.vectorCollection.getArray();
+      delete layerController.vectorCollection;
+      delete layerController.vectorSource;
+      delete layerController.clusterSource;
+      // delete layerController.vectorLayer;
 
-    if (features && features.length > 0) {
-      arrFeatures = arrFeatures.concat(features);
-    }
-    layerController.vectorCollection = new Collection(arrFeatures);
-    layerController.vectorSource = new VectorSource({
-      features: layerController.vectorCollection
-    });
-    layerController.clusterSource = new Cluster({
-      source: layerController.vectorSource,
-      geometryFunction: function (feature) {
-        let type = feature.getGeometry().getType();
-        if (type === "MultiPolygon") {
-          return feature.getGeometry().getInteriorPoints()[0];
-        }
-        else if (type === "Polygon"){
-          return feature.getGeometry().getInteriorPoint();
-        }
-        else {
-          return  feature.getGeometry();
-        }
+      if (features && features.length > 0) {
+        arrFeatures = arrFeatures.concat(features);
       }
-    });
-    layerController.vectorLayer.setSource(layerController.vectorSource);
+      layerController.vectorCollection = new Collection(arrFeatures);
+      layerController.vectorSource = new VectorSource({
+        features: layerController.vectorCollection
+      });
+      layerController.clusterSource = new Cluster({
+        source: layerController.vectorSource,
+        geometryFunction: function (feature) {
+          let type = feature.getGeometry().getType();
+          if (type === "MultiPolygon") {
+            return feature.getGeometry().getInteriorPoints()[0];
+          }
+          else if (type === "Polygon"){
+            return feature.getGeometry().getInteriorPoint();
+          }
+          else {
+            return  feature.getGeometry();
+          }
+        }
+      });
+      layerController.vectorLayer.setSource(layerController.vectorSource);
+    }
+    else if (scope.props.layer.vectorLayer) {
+      layerController.mapController.map.addLayer(scope.props.layer.vectorLayer);
+    }
   }
+
   hideLayer(features = null) {
     const scope = this;
     features = features || scope.props.layer.features;
     let layerController = scope.props.mapController.proxy.layerController;
-    let vectorSource = layerController.vectorSource;
-    let clusterSource = layerController.clusterSource;
-    let vectorLayer = layerController.vectorLayer;
-    if (scope.props.layer.loader >= 0) {
-      let loader = layerController.loaders[scope.props.layer.loader];
-      layerController.loaders[scope.props.layer.loader].preventLoading = true;
-      if (loader.request) {
-        loader.request.abort();
-      }
-    }
-    let vectorCollection = layerController.vectorCollection;
-    let featureArray = vectorCollection.getArray();
 
-    if (features && features.length > 0) {
-      delete layerController.vectorCollection;
-      delete layerController.vectorSource;
-      let length = vectorCollection.getLength();
-      for (let featureId in features) {
-        if (features.hasOwnProperty(featureId)) {
-          let delIndex = featureArray.indexOf(features[featureId]);
-          featureArray.splice(delIndex, 1);
-          length--;
+    if (features) {
+      if (scope.props.layer.loader >= 0) {
+        let loader = layerController.loaders[scope.props.layer.loader];
+        layerController.loaders[scope.props.layer.loader].preventLoading = true;
+        if (loader.request) {
+          loader.request.abort();
         }
       }
-      layerController.vectorCollection = new Collection(featureArray);
-      layerController.vectorSource = new VectorSource({
-        features: layerController.vectorCollection
-      });
-      layerController.vectorLayer.setSource(layerController.vectorSource);
-    }
+      let vectorCollection = layerController.vectorCollection;
+      let featureArray = vectorCollection.getArray();
 
+      if (features && features.length > 0) {
+        delete layerController.vectorCollection;
+        delete layerController.vectorSource;
+        let length = vectorCollection.getLength();
+        for (let featureId in features) {
+          if (features.hasOwnProperty(featureId)) {
+            let delIndex = featureArray.indexOf(features[featureId]);
+            featureArray.splice(delIndex, 1);
+            length--;
+          }
+        }
+        layerController.vectorCollection = new Collection(featureArray);
+        layerController.vectorSource = new VectorSource({
+          features: layerController.vectorCollection
+        });
+        layerController.vectorLayer.setSource(layerController.vectorSource);
+      }
+    }
+    else if (scope.props.layer.vectorLayer) {
+      layerController.mapController.map.removeLayer(scope.props.layer.vectorLayer);
+    }
   }
   changeChildState (child, childState, active) {
     if (active) {
