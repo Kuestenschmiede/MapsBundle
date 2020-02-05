@@ -54,7 +54,6 @@ export class PopupContainer extends Component {
         className += " c4g-details-closed";
       }
     }
-
     return (
       <div className={className}>
         <div className={"c4g-popup-wrapper"}>

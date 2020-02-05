@@ -39,7 +39,8 @@ export class C4gPopupController {
       open: this.containerOpen,
       alwaysExtended: this.mapData.openDirectly,
       hideOther: this.mapController.hideOtherBottomComponents,
-      mapData: this.mapData
+      mapData: this.mapData,
+      mapController: this.mapController
     };
     this.popupHandling = parseInt(this.mapData.popupHandling, 10);
 
@@ -57,6 +58,8 @@ export class C4gPopupController {
       this.popupComponent = ReactDOM.render(React.createElement(PopupContainer, popupOptions), this.popupContainer);
       this.mapController.$overlaycontainer_stopevent.append(this.popupContainer);
       this.currentPopup = this.popupComponent;
+      // close open sideboards
+      this.mapController.hideOtherComponents(this.currentPopup);
       this.mapController.components.popup = this.popupComponent;
       window.c4gMapsPopup = {};
       window.c4gMapsPopup.popup = this;
