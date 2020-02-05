@@ -141,8 +141,8 @@ export class GeoSearch extends Component {
             <input type="text" onKeyDown={this.inputCallback} id={"c4g-geosearch-input"} placeholder={this.config.placeholder} aria-label={this.config.placeholder}/>
             <button className={cssConstants.GEOSEARCH_START} title={this.langConstants.CTRL_START_SEARCH} onMouseUp={this.startSearch}/>
           </div>
+          {results}
         </div>
-        {results}
       </React.Fragment>
     );
   }

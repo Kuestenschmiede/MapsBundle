@@ -699,7 +699,7 @@ export class GeoSearch extends Control {
                     listenerKey;
 
                   start = new Date().getTime();
-                  duration = 3000;
+                  duration = 6000;
 
                   animationStep = function (event) {
                     var vectorContext,

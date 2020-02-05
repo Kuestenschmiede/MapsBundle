@@ -33,27 +33,16 @@ export class GeoSearchResults extends Component {
     let closeBtnClass = "c4g-titlebar-close";
     let closeBtnCb = this.props.closeCb;
 
-
     resultContainer = <ul id={"resultcontainer"}>
       {this.props.results.map(function(element, index) {
-        return (<li key={index}><button key={index} id={index} className={"searchResultButton"} name={element} onMouseUp={() => scope.props.zoomFunc(index)}>{element}</button></li>)
+        let buttonClass = "searchResultButton";
+        if (element === scope.props.currentResult) {
+          buttonClass += " c4g-active";
+        }
+        return (<li key={index}><button key={index} id={index} className={buttonClass} name={element} onMouseUp={() => scope.props.zoomFunc(index)}>{element}</button></li>)
       })}
     </ul>;
 
-    // if (!this.props.detailOpen && this.props.results.length >= 1) {
-    //   let element = this.props.currentResult;
-    //   firstResult = <ul>
-    //     <li><button id={0} className={"searchResultButton"} name={element} onMouseUp={() => scope.props.zoomFunc(0)}>{element}</button>
-    //     </li>
-    //   </ul>;
-    // }
-    // if (!this.props.detailOpen && this.props.results.length > 1) {
-    //   detailBtnClass = "c4g-beach-options";
-    //   detailBtnCb = this.props.openResults;
-    // } else if (this.props.detailOpen && this.props.results.length > 1) {
-    //   detailBtnClass = "c4g-beach-options";
-    //   detailBtnCb = this.props.closeResults;
-    // }
     if (this.props.resultsDiv) {
       return ReactDOM.createPortal(
         (
@@ -62,7 +51,6 @@ export class GeoSearchResults extends Component {
             {/*          detailBtnClass={detailBtnClass} detailBtnCb={detailBtnCb} closeBtnClass={closeBtnClass} closeBtnCb={closeBtnCb}/>*/}
             <div className={"c4g-beach-content"}>
               {resultContainer}
-              {firstResult}
             </div>
           </div>
         ),
@@ -75,7 +63,6 @@ export class GeoSearchResults extends Component {
           {/*          detailBtnClass={detailBtnClass} detailBtnCb={detailBtnCb} closeBtnClass={closeBtnClass} closeBtnCb={closeBtnCb}/>*/}
           <div className={"c4g-beach-content"}>
             {resultContainer}
-            {firstResult}
           </div>
         </div>
       );

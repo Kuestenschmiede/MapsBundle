@@ -835,7 +835,7 @@ export class MapController extends Component {
       );
     }
     let infoPortal = "";
-    if (mapData.legend) {
+    if (mapData.legend.enable) {
       infoPortal = ReactDOM.createPortal(
         <Infopage ref={(node) => {this.components.infopage = node;}} target={target}
                   infoContent={mapData.infopage} mapController={this} open={mapData.initial_open_comp === "legend"}/>,
