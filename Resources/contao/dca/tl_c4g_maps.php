@@ -138,6 +138,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             ]
         ],
 
+
     // Palettes
     'palettes' =>
         [
@@ -1492,13 +1493,16 @@ class tl_c4g_maps extends Backend
     {
         if (!$dc->id) return;
 
-        $objMap = $this->Database->prepare("SELECT show_locations, hover_location, restrict_area, geolocation, be_optimize_checkboxes_limit, popupType FROM tl_c4g_maps WHERE id=?")
+        $objMap = $this->Database->prepare("SELECT location_type, show_locations, hover_location, restrict_area, geolocation, be_optimize_checkboxes_limit, popupType FROM tl_c4g_maps WHERE id=?")
             ->limit(1)
             ->execute($dc->id);
+
         if ($objMap->numRows > 0) {
-            if($objMap->show_locations == '1') {
+            if ($objMap->location_type == 'map' && $objMap->show_locations == '1') {
                 $calcExtentFields = 'min_gap,';
+                $GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['map'] = str_replace(",show_locations,", ",show_locations,".$calcExtentFields, $GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['map']);
             }
+
             if($objMap->hover_location == '1') {
                 foreach ($GLOBALS['TL_DCA']['tl_c4g_maps']['palettes'] as $paletteKey=>$paletteString)
                 {
@@ -1509,16 +1513,17 @@ class tl_c4g_maps extends Backend
                     }
                 }
             }
-            if ($objMap->geolocation) {
+
+            if ($objMap->location_type == 'map' && $objMap->geolocation) {
                 $geolocationFields = 'geolocation_zoom,';
-            } else {
-                $geolocationFields = '';
+                $GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['map'] = str_replace(",geolocation,", ",geolocation,".$geolocationFields, $GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['map']);
             }
-            if ($objMap->restrict_area) {
+
+            if ($objMap->location_type == 'map' && $objMap->restrict_area) {
                 $restrictAreaFields = ',restr_bottomleft_geox,restr_bottomleft_geoy,restr_topright_geox,restr_topright_geoy';
-            } else {
-                $restrictAreaFields = '';
+                $GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['map'] = str_replace(",restrict_area;", ",restrict_area".$restrictAreaFields.';', $GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['map']);
             }
+
             if ($objMap->popupType == "template")
             {
                 // we have to use this, because of current table naming with underscores
@@ -1538,12 +1543,6 @@ class tl_c4g_maps extends Backend
                     if (!is_array($paletteString) && strpos($paletteString, "popup_info")!==false)
                     {
                         $GLOBALS['TL_DCA']['tl_c4g_maps']['palettes'][$paletteKey] = str_replace("popup_info", "", $paletteString);
-                    }
-
-                    if ($paletteKey == 'none') {
-                        $GLOBALS['TL_DCA']['tl_c4g_maps']['palettes'][$paletteKey] = str_replace(",show_locations,", ",show_locations,".$calcExtentFields, $paletteString);
-                        $GLOBALS['TL_DCA']['tl_c4g_maps']['palettes'][$paletteKey] = str_replace(",geolocation,", ",geolocation,".$geolocationFields, $paletteString);
-                        $GLOBALS['TL_DCA']['tl_c4g_maps']['palettes'][$paletteKey] = str_replace(",restrict_area;", ",restrict_area".$restrictAreaFields.';', $paletteString);
                     }
                 }
             }
