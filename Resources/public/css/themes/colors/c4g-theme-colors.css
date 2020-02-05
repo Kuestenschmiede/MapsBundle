@@ -249,16 +249,12 @@ span.c4g-active ul li.c4g-active{
 }
 
 .c4g-layertree a,
-.c4g-layertree span,
-.c4g-baselayertree-content  a {
+.c4g-layertree span{
   color: rgba(255,255,255,.9);
   color: var(--font-color)!important;
 }
 .c4g-baselayertree-content  a.c4g-active {
-  background-color: rgba(0,155,222,.5);
   background-color: var(--shadow-color);
-  color: rgba(255,255,255,.9);
-  color: var(--font-color);
   cursor: not-allowed;
 }
 .c4g-layertree a:hover,
@@ -584,14 +580,14 @@ ul.c4g-feature-filter-list li span.sum {
 }
 /*--------Geosearch-------------*/
 
-.c4g-geosearch-results.c4g-beach {
+.c4g-geosearch-results-content.c4g-beach {
   background-color: var(--pu-main-color);
   color: var(--pu-font-color);
 }
 
-button.c4g-titlebar-close, .c4g-geosearch-results button,
-.c4g-beach-header button.c4g-titlebar-close:hover, .c4g-geosearch-results .c4g-beach-header button:hover,
-.c4g-beach-header button.c4g-titlebar-close:focus, .c4g-geosearch-results .c4g-beach-header button:focus {
+button.c4g-titlebar-close, .c4g-geosearch-results-content button,
+.c4g-beach-header button.c4g-titlebar-close:hover, .c4g-geosearch-results-content .c4g-beach-header button:hover,
+.c4g-beach-header button.c4g-titlebar-close:focus, .c4g-geosearch-results-content .c4g-beach-header button:focus {
   color: var(--pu-font-color);
 }
 
@@ -616,7 +612,7 @@ button.c4g-geosearch-start {
   color: var(--pu-font-color);
 }
 
-.c4g-geosearch-results .searchResultButton {
+.c4g-geosearch-results-content .searchResultButton {
   color: var(--pu-main-color);
   background: var(--pu-font-color);
 }
@@ -625,7 +621,7 @@ button.c4g-geosearch-start {
 /*------------------------------------*/
 /*------------Pop Up-------------------*/
 
-.c4g-geosearch-results.c4g-open.c4g-beach::-webkit-scrollbar-track {
+.c4g-geosearch-results-content.c4g-open.c4g-beach::-webkit-scrollbar-track {
   background: var(--main-color);
 }
 
@@ -645,7 +641,7 @@ button.c4g-geosearch-start {
   background: var(--font-color);
 }
 
-.c4g-geosearch-results.c4g-open.c4g-beach::-webkit-scrollbar-thumb {
+.c4g-geosearch-results-content.c4g-open.c4g-beach::-webkit-scrollbar-thumb {
   background: var(--font-color);
 }
 
@@ -657,7 +653,7 @@ button.c4g-geosearch-start {
   background: var(--pu-font-color);
 }
 
-.c4g-geosearch-results.c4g-open.c4g-beach::-webkit-scrollbar-thumb:hover {
+.c4g-geosearch-results-content.c4g-open.c4g-beach::-webkit-scrollbar-thumb:hover {
   background: var(--shadow-color);
 }
 
@@ -766,6 +762,10 @@ c4g-infopage-container {
 
 .c4g-sideboard > div[class*=wrapper] {
   background: var(--main-color);
+}
+
+.c4g-sideboard > div > div[class*=content] input[type=text] {
+  color: var(--main-color);
 }
 
 .c4g-sideboard > div > div[class*=content] input[type=text] ~ button {

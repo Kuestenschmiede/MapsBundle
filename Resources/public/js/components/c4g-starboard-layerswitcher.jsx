@@ -41,44 +41,19 @@ export class StarboardLayerswitcher extends Component {
     this.setState({layerFilter: filterValue});
   }
 
-  filterMatches(string) {
-    if (string.toLowerCase().indexOf(this.state.layerFilter) !== -1
-      || string.toLowerCase().indexOf(this.state.layerFilter.toLowerCase()) !== -1) {
-      return true;
+  filterFunc(strFilter, layer) {
+    let show = false;
+    if (layer.name.toLowerCase().indexOf(strFilter) !== -1
+        || layer.name.toLowerCase().indexOf(strFilter.toLowerCase()) !== -1) {
+      show = true;
     } else {
-      return false;
-    }
-  }
-
-  filterLayers(layers, states) {
-    let returnLayers = [];
-    let returnStates = [];
-    if (this.state.layerFilter === "") {
-      return [layers, states];
-    }
-    for (let i = 0; i < layers.length; i++) {
-      let currentLayer = layers[i];
-      // check if layer matches
-      if (this.filterMatches(currentLayer.name)) {
-        returnLayers.push(layers[i]);
-        returnStates.push(states[i]);
-      } else {
-        if (currentLayer.childs && currentLayer.childs.length > 0) {
-          // layer has childs
-          let checkedChilds, checkedStates;
-          [checkedChilds, checkedStates] = this.filterLayers(currentLayer.childs, states[i].childStates);
-          if (checkedChilds.length > 0) {
-            layers[i].childs = checkedChilds;
-            states[i].childStates = checkedStates;
-            returnLayers.push(layers[i]);
-            returnStates.push(states[i]);
-          }
-        } else {
-          // has no childs and does not match; don't add it
+      for (let childId in layer.childs) {
+        if (layer.childs.hasOwnProperty(childId)) {
+          show = this.filterFunc(strFilter, layer.childs[childId]);
         }
       }
     }
-    return [returnLayers, returnStates];
+    return show;
   }
 
   render() {
@@ -88,23 +63,36 @@ export class StarboardLayerswitcher extends Component {
 
     // deep clone arrays before passing them as arguments
     // otherwise we would modify the objects inside the props
-    [layers, states] = this.filterLayers(JSON.parse(JSON.stringify(this.props.objLayers)),
-      JSON.parse(JSON.stringify(this.props.layerStates)));
+    // [layers, states] = this.filterLayers(JSON.parse(JSON.stringify(this.props.objLayers)),
+    //   JSON.parse(JSON.stringify(this.props.layerStates)));
+    layers = this.props.objLayers;
+    states = this.props.layerStates;
     return (
     <React.Fragment>
       <div className="contentHeadline"/>
       <div className={"c4g-content-layertree"}>
-        <div className={cssConstants.STARBOARD_LAYERTREE}>
-          <ul>
-            {layers.map((item, id) => {
-              // if (item.pid === this.props.mapController.data.id) //skip childs of layers
-                return <C4gStarboardLayerElement key={id} id={id} mapController={this.props.mapController}
-                                                 parentCallback={this.callbackFunction}
-                                                 layer={item}
-                                                 layerStates={states[id]}
-                                                 fnResize={this.props.fnResize}/>;
-            })}
-          </ul>
+        {buttonSwitcher}
+        <div className={cssConstants.STARBOARD_CONTENT_CONTAINER}>
+          <div className="contentHeadline"/>
+          <div className={"c4g-content-layertree"}>
+            <div className={cssConstants.STARBOARD_LAYERTREE}>
+              <ul>
+                {layers.map((item, id) => {
+
+                  // if (item.pid === this.props.mapController.data.id) //skip childs of layers
+                  if (this.filterFunc(this.state.layerFilter, item)) {
+                    return <C4gStarboardLayerElement key={id} id={id} mapController={this.props.mapController}
+                                                     parentCallback={this.callbackFunction}
+                                                     layer={item}
+                                                     layerStates={states[id]}
+                                                     strFilter={this.state.layerFilter}
+                                                     filterFunc={this.filterFunc}
+                                                     fnResize={this.props.fnResize}/>;
+                  }
+                })}
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </React.Fragment>
