@@ -43,11 +43,11 @@ export class StarboardLayerswitcher extends Component {
   filterFunc(strFilter, layer, digDeeper = true) {
     let show = false;
     if (layer.name.toLowerCase().indexOf(strFilter) !== -1
-        || layer.name.toLowerCase().indexOf(strFilter.toLowerCase()) !== -1) {
+        || layer.name.toUpperCase().indexOf(strFilter.toUpperCase()) !== -1) {
       show = true;
     } else if (digDeeper) {
       for (let childId in layer.childs) {
-        if (layer.childs.hasOwnProperty(childId)) {
+        if (layer.childs.hasOwnProperty(childId) && !show) {
           show = this.filterFunc(strFilter, layer.childs[childId]);
         }
       }
@@ -71,32 +71,27 @@ export class StarboardLayerswitcher extends Component {
     return (
     <React.Fragment>
       <div className="contentHeadline">{this.props.headline}</div>
+      <div className={"c4g-starboard-layertree-filter without-button"}>
+        <input className={"c4g-starboard-layertree-filter-field"} type="text" onInput={this.setLayerFilter} placeholder={"\uf002"}/>
+      </div>
       <div className={"c4g-content-layertree"}>
-        <div className={cssConstants.STARBOARD_CONTENT_CONTAINER}>
-          <div className="contentHeadline"/>
-          <div className={"c4g-starboard-layertree-filter without-button"}>
-            <input className={"c4g-starboard-layertree-filter-field"} type="text" onInput={this.setLayerFilter} placeholder={"\uf002"}/>
-          </div>
-          <div className={"c4g-content-layertree"}>
-            <div className={cssConstants.STARBOARD_LAYERTREE}>
-              <ul>
-                {layers.map((item, id) => {
+        <div className={cssConstants.STARBOARD_LAYERTREE}>
+          <ul>
+            {layers.map((item, id) => {
 
-                  // if (item.pid === this.props.mapController.data.id) //skip childs of layers
-                  if (this.filterFunc(this.state.layerFilter, item)) {
-                    return <C4gStarboardLayerElement key={id} id={id} mapController={this.props.mapController}
-                                                     parentCallback={this.callbackFunction}
-                                                     layer={item}
-                                                     layerStates={states[id]}
-                                                     byPassChilds={this.filterFunc(this.state.layerFilter, item, false)}
-                                                     strFilter={this.state.layerFilter}
-                                                     filterFunc={this.filterFunc}
-                                                     fnResize={this.props.fnResize}/>;
-                  }
-                })}
-              </ul>
-            </div>
-          </div>
+              // if (item.pid === this.props.mapController.data.id) //skip childs of layers
+              if (this.filterFunc(this.state.layerFilter, item)) {
+                return <C4gStarboardLayerElement key={id} id={id} mapController={this.props.mapController}
+                                                 parentCallback={this.callbackFunction}
+                                                 layer={item}
+                                                 layerStates={states[id]}
+                                                 byPassChilds={this.filterFunc(this.state.layerFilter, item, false)}
+                                                 strFilter={this.state.layerFilter}
+                                                 filterFunc={this.filterFunc}
+                                                 fnResize={this.props.fnResize}/>;
+              }
+            })}
+          </ul>
         </div>
       </div>
     </React.Fragment>
