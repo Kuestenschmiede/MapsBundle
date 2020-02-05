@@ -58,12 +58,17 @@ export class StarboardPanel extends Component {
       open: props.open || false,
       className: props.className || "c4g-starboard-panel",
       childs: props.childs || [],
-      control: control
+      control: control,
+      activeTab: 0
     };
   }
 
   componentDidMount() {
 
+  }
+
+  setActiveTab(idx) {
+    this.setState({activeTab: idx});
   }
 
   render() {
@@ -76,15 +81,18 @@ export class StarboardPanel extends Component {
     } else {
       jQuery(this.state.control.element).removeClass("c4g-open").addClass("c4g-close");
     }
-    // TODO buttons will be used for starboard tabs
-    let buttons = [];
     let buttonSwitcher = "";
-    if (buttons.length > 0) {
+    let buttons = [];
+    if (this.props.tabLayers.length > 0) {
+      let regularButton = <button key={this.props.tabLayers.length} onMouseUp={() => {scope.setActiveTab(0)}}/>;
+      buttons.push(regularButton);
+      buttons.push(this.props.tabLayers.map(function(element, index) {
+          return <button key={index} onMouseUp={() => {scope.setActiveTab(index + 1)}}/>;
+        })
+      );
       buttonSwitcher = <div className={cssConstants.CONTROL + " c4g-starboard-switcher"}>
-        {this.props.tabLayers.map(function(index, element) {
-          return <button key={index}/>;
-        })}
-      </div>;
+        {buttons}
+      </div>
     }
     let tabs = "";
     if (this.props.tabLayers.length > 0) {
@@ -93,7 +101,7 @@ export class StarboardPanel extends Component {
           return <StarboardLayerswitcher key={index} mapController ={scope.props.mapController}
                                          objLayers={scope.props.tabLayers[index]} parentCallback={scope.props.parentCallback}
                                          layerStates={scope.props.tabStates} openfunc={scope.open}
-                                         open={scope.state.open} />;
+                                         open={scope.state.open} active={(index + 1) === scope.state.activeTab}/>;
         })}
       </React.Fragment>;
     }
@@ -107,7 +115,7 @@ export class StarboardPanel extends Component {
           <StarboardLayerswitcher key={this.props.tabLayers.length} mapController ={this.props.mapController}
                                 objLayers={this.props.objLayers} parentCallback={this.props.parentCallback}
                                 layerStates={this.props.layerStates} openfunc={this.open}
-                                open={this.state.open} />
+                                open={this.state.open} active={scope.state.activeTab === 0}/>
           {tabs}
         </div>
       </div>

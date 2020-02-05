@@ -56,7 +56,6 @@ export class StarboardLayerswitcher extends Component {
   }
 
   render() {
-
     const mapData = this.props.mapController.data;
     let layers, states;
 
@@ -66,9 +65,12 @@ export class StarboardLayerswitcher extends Component {
     //   JSON.parse(JSON.stringify(this.props.layerStates)));
     layers = this.props.objLayers;
     states = this.props.layerStates;
+    if (!this.props.active) {
+      return null;
+    }
     return (
     <React.Fragment>
-      <div className="contentHeadline"/>
+      <div className="contentHeadline">{mapData.layerswitcher.label || "Kartenelemente"}</div>
       <div className={"c4g-content-layertree"}>
         <div className={cssConstants.STARBOARD_CONTENT_CONTAINER}>
           <div className="contentHeadline"/>
