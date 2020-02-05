@@ -406,7 +406,6 @@ button.ol-zoom-out {
 /*}*/
 
 .c4g-editor-draw-options,
-.c4g-starboard-content-container .contentHeadline,
 .c4g-portside-content-container .contentHeadline {
   margin-left: 5px;
   margin-right: 5px;
@@ -582,6 +581,7 @@ button.ol-zoom-out {
 .c4g-layertree li ul {
   margin-left: 1em;
 }
+
 .c4g-layertree li ul li,
 .c4g-baselayertree-content li ul li {
   border-bottom: none;
