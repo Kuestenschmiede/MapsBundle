@@ -23,7 +23,6 @@ export class StarboardLayerswitcher extends Component {
     const scope = this;
 
     this.setLayerFilter = this.setLayerFilter.bind(this);
-
     this.state = {
       initialized: false,
       layerFilter: ""
@@ -41,12 +40,12 @@ export class StarboardLayerswitcher extends Component {
     this.setState({layerFilter: filterValue});
   }
 
-  filterFunc(strFilter, layer) {
+  filterFunc(strFilter, layer, digDeeper = true) {
     let show = false;
     if (layer.name.toLowerCase().indexOf(strFilter) !== -1
         || layer.name.toLowerCase().indexOf(strFilter.toLowerCase()) !== -1) {
       show = true;
-    } else {
+    } else if (digDeeper) {
       for (let childId in layer.childs) {
         if (layer.childs.hasOwnProperty(childId)) {
           show = this.filterFunc(strFilter, layer.childs[childId]);
@@ -73,6 +72,9 @@ export class StarboardLayerswitcher extends Component {
       <div className={"c4g-content-layertree"}>
         <div className={cssConstants.STARBOARD_CONTENT_CONTAINER}>
           <div className="contentHeadline"/>
+          <div className={"c4g-starboard-layertree-filter without-button"}>
+            <input className={"c4g-starboard-layertree-filter-field"} type="text" onInput={this.setLayerFilter} placeholder={"\uf002"}/>
+          </div>
           <div className={"c4g-content-layertree"}>
             <div className={cssConstants.STARBOARD_LAYERTREE}>
               <ul>
@@ -84,6 +86,7 @@ export class StarboardLayerswitcher extends Component {
                                                      parentCallback={this.callbackFunction}
                                                      layer={item}
                                                      layerStates={states[id]}
+                                                     byPassChilds={this.filterFunc(this.state.layerFilter, item, false)}
                                                      strFilter={this.state.layerFilter}
                                                      filterFunc={this.filterFunc}
                                                      fnResize={this.props.fnResize}/>;

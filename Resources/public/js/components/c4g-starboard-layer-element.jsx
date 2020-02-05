@@ -195,7 +195,7 @@ export class C4gStarboardLayerElement extends Component {
                                           parentCallback={this.parentCallback}
                                           strFilter={this.props.strFilter}
                                           filterFunc={this.props.filterFunc}
-                                          byPassChilds={this.props.filterFunc(this.props.strFilter, item)}
+                                          byPassChilds={this.props.byPassChilds || this.props.filterFunc(this.props.strFilter, item, false)}
                                           layerStates={this.props.layerStates.childStates[id]}
                                           layer={item}
                                           fnResize={this.props.fnResize}/>

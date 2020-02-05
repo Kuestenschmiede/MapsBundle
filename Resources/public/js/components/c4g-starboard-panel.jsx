@@ -102,9 +102,6 @@ export class StarboardPanel extends Component {
         <Titlebar wrapperClass={"c4g-starboard-header"} headerClass={cssConstants.STARBOARD_HEADLINE}
                   header={mapData.starboard.label || "Starboard"} closeBtnClass={cssConstants.STARBOARD_CLOSE} closeBtnCb={this.close}>
         </Titlebar>
-        <div className={"c4g-starboard-layertree-filter without-button"}>
-          <input className={"c4g-starboard-layertree-filter-field"} type="text" onInput={this.setLayerFilter} placeholder={"\uf002"}/>
-        </div>
         {buttonSwitcher}
         <div className={cssConstants.STARBOARD_CONTENT_CONTAINER}>
           <StarboardLayerswitcher key={this.props.tabLayers.length} mapController ={this.props.mapController}
