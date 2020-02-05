@@ -281,7 +281,7 @@ class MapDataConfigurator
             //
             $mapFunctions = unserialize($profile->mapFunctions);
             $buttons = array_flip($mapFunctions);
-            
+
             // external elements
             $externalElements = unserialize($profile->external_elements);
             $externalClasses = ExternalMapElement::$arrClasses;
@@ -365,10 +365,10 @@ class MapDataConfigurator
                 //$mapData['baselayerswitcher']['enable'] = $profile->baselayerswitcher;
                 $mapData['baselayerswitcher']['label'] = \Contao\Controller::replaceInsertTags($profile->baselayerswitcher_label);
                 $mapData['baselayerswitcher']['filter'] = $profile->baselayer_filter;
-                $mapData['baselayerswitcher']['div'] = (in_array('baselayer', $externalElements)) ? $externalClasses['baselayer'] : "";
+                $mapData['baselayerswitcher']['div'] = (in_array('baselayer', $externalElements)) ? $externalClasses['baselayer'] : '';
             }
 
-            $mapData['filterDiv'] = $profile->filter_div;
+            $mapData['filterDiv'] = (in_array('filter', $externalElements)) ? $externalClasses['filter'] : "";
             $mapData['filterHandling'] = $profile->filterHandling;
 
             // map-tools
@@ -403,7 +403,7 @@ class MapDataConfigurator
 
             if ($mapData['permalink']['enable']) {
                 $mapData['permalink']['get_parameter'] = $profile->permalink_get_param;
-                $mapData['permalink']['div'] = (in_array('permalink', $externalElements)) ? $externalClasses['permalink'] : "";
+                $mapData['permalink']['div'] = (in_array('permalink', $externalElements)) ? $externalClasses['permalink'] : '';
             }
             $mapData['zoomlevel'] = $profile->zoomlevel;
 
@@ -424,7 +424,8 @@ class MapDataConfigurator
                 $mapData['geosearch']['result_count'] = $profile->geosearch_result_count;
                 $mapData['geosearch']['results_headline'] = $profile->geosearch_results_headline;
                 $mapData['geosearch']['result_locstyle'] = $profile->geosearch_result_locstyle;
-                $mapData['geosearch']['div'] = (in_array('search', $externalElements)) ? $externalClasses['search'] : "";;
+                $mapData['geosearch']['div'] = (in_array('search', $externalElements)) ? $externalClasses['search'] : '';
+                ;
                 $mapData['geosearch']['div_results'] = $profile->geosearch_results_div;
                 $mapData['geosearch']['placeholder'] = $profile->geosearch_placeholder;
                 $mapData['geosearch']['searchzoom'] = $profile->geosearch_zoomto;
@@ -525,7 +526,7 @@ class MapDataConfigurator
             // miscellaneous
             //
             $mapData['infopage'] = \Contao\Controller::replaceInsertTags($profile->infopage);
-            $mapData['legend']['div'] = (in_array('legend', $externalElements)) ? $externalClasses['legend'] : "";
+            $mapData['legend']['div'] = (in_array('legend', $externalElements)) ? $externalClasses['legend'] : '';
             $mapData['initial_open_comp'] = $profile->initial_open_comp;
             $mapData['link_newwindow'] = $profile->link_newwindow;
             $mapData['hover_popups'] = $profile->hover_popups;

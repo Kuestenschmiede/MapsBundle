@@ -188,106 +188,69 @@ class ResourceLoader extends coreResourceLoader
      */
     public static function loadTheme($themeId = -1)
     {
-        // TODO defer CSS scripts?
         if ($themeId != -1) {
             $theme = C4gMapThemesModel::findByPk($themeId);
         }
 
-        if (!$theme) {
-            // load default theme
-            parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/icons/c4g-theme-icons.css');
-            parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/buttons/c4g-theme-buttons.css');
-            parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/colors/c4g-theme-colors.css');
-            parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/effects/c4g-theme-effects.css');
-
-            return true;
-        }
+        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/icons/c4g-theme-icons.css');
+        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/buttons/c4g-theme-buttons.css');
+        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/colors/c4g-theme-colors.css');
+        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/effects/c4g-theme-effects.css');
 
         $themeData = [];
 
-        /*
-         * If custom stylesheet were uploaded, load them. If not, load the selected builtin style.
-         */
-        if ($theme->custom_icons) {
-            $objFile = \FilesModel::findByUuid($theme->external_icons);
-            parent::loadCssResource($objFile->path);
-        } elseif ($theme->icons) {
-            parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/icons/' . $theme->icons);
+        if ($theme->buttonradius) {
+            $themeData['buttonradius'] = deserialize($theme->buttonradius)['value'];
         }
 
-        if ($theme->custom_buttons) {
-            $objFile = \FilesModel::findByUuid($theme->external_buttons);
-            parent::loadCssResource($objFile->path);
-        } elseif ($theme->buttons) {
-            parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/buttons/' . $theme->buttons);
-
-            if ($theme->buttonradius) {
-                $themeData['buttonradius'] = deserialize($theme->buttonradius)['value'];
-            }
-
-            if ($theme->buttonsize) {
-                $themeData['buttonsize'] = deserialize($theme->buttonsize)['value'];
-            }
-
-            if ($theme->button_fontsize) {
-                $themeData['fontsize'] = deserialize($theme->button_fontsize)['value'];
-            }
+        if ($theme->buttonsize) {
+            $themeData['buttonsize'] = deserialize($theme->buttonsize)['value'];
         }
 
-        if ($theme->custom_colors) {
-            $objFile = \FilesModel::findByUuid($theme->external_colors);
-            parent::loadCssResource($objFile->path);
-        } elseif ($theme->colors) {
-            parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/colors/' . $theme->colors);
-
-            if ($theme->maincolor) {
-                $themeData['maincolor'] = $theme->maincolor;
-            }
-            if ($theme->mainopacity) {
-                $themeData['mainopacity'] = deserialize($theme->mainopacity);
-            }
-            if ($theme->fontcolor) {
-                $themeData['fontcolor'] = $theme->fontcolor;
-            }
-            if ($theme->fontopacity) {
-                $themeData['fontopacity'] = deserialize($theme->fontopacity);
-            }
-            if ($theme->popupMaincolor) {
-                $themeData['popupMaincolor'] = $theme->popupMaincolor;
-            } elseif ($theme->maincolor) {
-                $themeData['popupMaincolor'] = $theme->maincolor;
-            }
-            if ($theme->popupMainopacity) {
-                $themeData['popupMainopacity'] = deserialize($theme->popupMainopacity);
-            } elseif ($theme->mainopacity) {
-                $themeData['popupMainopacity'] = $theme->mainopacity;
-            }
-            if ($theme->popupFontcolor) {
-                $themeData['popupFontcolor'] = $theme->popupFontcolor;
-            } elseif ($theme->fontcolor) {
-                $themeData['popupFontcolor'] = $theme->fontcolor;
-            }
-            if ($theme->popupFontopacity) {
-                $themeData['popupFontopacity'] = deserialize($theme->popupFontopacity);
-            } elseif ($theme->fontopacity) {
-                $themeData['popupFontopacity'] = $theme->fontopacity;
-            }
-            if ($theme->shadowcolor) {
-                $themeData['shadowcolor'] = $theme->shadowcolor;
-            }
-            if ($theme->shadowopacity) {
-                $themeData['shadowopacity'] = deserialize($theme->shadowopacity);
-            }
-
-            $themeData['useglobal'] = $theme->useglobal;
+        if ($theme->button_fontsize) {
+            $themeData['fontsize'] = deserialize($theme->button_fontsize)['value'];
         }
 
-        if ($theme->custom_effects) {
-            $objFile = \FilesModel::findByUuid($theme->external_effects);
-            parent::loadCssResource($objFile->path);
-        } elseif ($theme->effects) {
-            parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/effects/' . $theme->effects);
+        if ($theme->maincolor) {
+            $themeData['maincolor'] = $theme->maincolor;
         }
+        if ($theme->mainopacity) {
+            $themeData['mainopacity'] = deserialize($theme->mainopacity);
+        }
+        if ($theme->fontcolor) {
+            $themeData['fontcolor'] = $theme->fontcolor;
+        }
+        if ($theme->fontopacity) {
+            $themeData['fontopacity'] = deserialize($theme->fontopacity);
+        }
+        if ($theme->popupMaincolor) {
+            $themeData['popupMaincolor'] = $theme->popupMaincolor;
+        } elseif ($theme->maincolor) {
+            $themeData['popupMaincolor'] = $theme->maincolor;
+        }
+        if ($theme->popupMainopacity) {
+            $themeData['popupMainopacity'] = deserialize($theme->popupMainopacity);
+        } elseif ($theme->mainopacity) {
+            $themeData['popupMainopacity'] = $theme->mainopacity;
+        }
+        if ($theme->popupFontcolor) {
+            $themeData['popupFontcolor'] = $theme->popupFontcolor;
+        } elseif ($theme->fontcolor) {
+            $themeData['popupFontcolor'] = $theme->fontcolor;
+        }
+        if ($theme->popupFontopacity) {
+            $themeData['popupFontopacity'] = deserialize($theme->popupFontopacity);
+        } elseif ($theme->fontopacity) {
+            $themeData['popupFontopacity'] = $theme->fontopacity;
+        }
+        if ($theme->shadowcolor) {
+            $themeData['shadowcolor'] = $theme->shadowcolor;
+        }
+        if ($theme->shadowopacity) {
+            $themeData['shadowopacity'] = deserialize($theme->shadowopacity);
+        }
+
+        $themeData['useglobal'] = $theme->useglobal;
 
         return $themeData;
     }

@@ -23,7 +23,6 @@ export class StarboardLayerswitcher extends Component {
     const scope = this;
 
     this.setLayerFilter = this.setLayerFilter.bind(this);
-
     this.state = {
       initialized: false,
       layerFilter: ""
@@ -41,92 +40,66 @@ export class StarboardLayerswitcher extends Component {
     this.setState({layerFilter: filterValue});
   }
 
-  filterMatches(string) {
-    if (string.toLowerCase().indexOf(this.state.layerFilter) !== -1
-      || string.toLowerCase().indexOf(this.state.layerFilter.toLowerCase()) !== -1) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  filterLayers(layers, states) {
-    let returnLayers = [];
-    let returnStates = [];
-    if (this.state.layerFilter === "") {
-      return [layers, states];
-    }
-    for (let i = 0; i < layers.length; i++) {
-      let currentLayer = layers[i];
-      // check if layer matches
-      if (this.filterMatches(currentLayer.name)) {
-        returnLayers.push(layers[i]);
-        returnStates.push(states[i]);
-      } else {
-        if (currentLayer.childs && currentLayer.childs.length > 0) {
-          // layer has childs
-          let checkedChilds, checkedStates;
-          [checkedChilds, checkedStates] = this.filterLayers(currentLayer.childs, states[i].childStates);
-          if (checkedChilds.length > 0) {
-            layers[i].childs = checkedChilds;
-            states[i].childStates = checkedStates;
-            returnLayers.push(layers[i]);
-            returnStates.push(states[i]);
-          }
-        } else {
-          // has no childs and does not match; don't add it
+  filterFunc(strFilter, layer, digDeeper = true) {
+    let show = false;
+    if (layer.name.toLowerCase().indexOf(strFilter) !== -1
+        || layer.name.toLowerCase().indexOf(strFilter.toLowerCase()) !== -1) {
+      show = true;
+    } else if (digDeeper) {
+      for (let childId in layer.childs) {
+        if (layer.childs.hasOwnProperty(childId)) {
+          show = this.filterFunc(strFilter, layer.childs[childId]);
         }
       }
     }
-    return [returnLayers, returnStates];
+    return show;
   }
 
   render() {
-    let closeStarboard = function() {
-      let button = jQuery("." + cssConstants.STARBOARD_CONTROL + "> button");
-      button.trigger('click');
-    };
     const mapData = this.props.mapController.data;
     let layers, states;
-    // TODO buttons will be used for starboard tabs
-    let buttons = [];
-    let buttonSwitcher = "";
-    if (buttons.length > 0) {
-      buttonSwitcher = <div className={cssConstants.CONTROL + " c4g-starboard-switcher"}>
 
-      </div>;
-    }
     // deep clone arrays before passing them as arguments
     // otherwise we would modify the objects inside the props
-    [layers, states] = this.filterLayers(JSON.parse(JSON.stringify(this.props.objLayers)),
-      JSON.parse(JSON.stringify(this.props.layerStates)));
+    // [layers, states] = this.filterLayers(JSON.parse(JSON.stringify(this.props.objLayers)),
+    //   JSON.parse(JSON.stringify(this.props.layerStates)));
+    layers = this.props.objLayers;
+    states = this.props.layerStates;
+    if (!this.props.active) {
+      return null;
+    }
     return (
-      <div className={cssConstants.STARBOARD_WRAPPER}>
-        <Titlebar wrapperClass={"c4g-starboard-header"} headerClass={cssConstants.STARBOARD_HEADLINE}
-          header={mapData.starboard.label || "Starboard"} closeBtnClass={cssConstants.STARBOARD_CLOSE} closeBtnCb={closeStarboard}>
-        </Titlebar>
-        <div className={"c4g-starboard-layertree-filter without-button"}>
-          <input className={"c4g-starboard-layertree-filter-field"} type="text" onInput={this.setLayerFilter} placeholder={"\uf002"}/>
-        </div>
-        {buttonSwitcher}
+    <React.Fragment>
+      <div className="contentHeadline">{this.props.headline}</div>
+      <div className={"c4g-content-layertree"}>
         <div className={cssConstants.STARBOARD_CONTENT_CONTAINER}>
           <div className="contentHeadline"/>
+          <div className={"c4g-starboard-layertree-filter without-button"}>
+            <input className={"c4g-starboard-layertree-filter-field"} type="text" onInput={this.setLayerFilter} placeholder={"\uf002"}/>
+          </div>
           <div className={"c4g-content-layertree"}>
             <div className={cssConstants.STARBOARD_LAYERTREE}>
               <ul>
                 {layers.map((item, id) => {
+
                   // if (item.pid === this.props.mapController.data.id) //skip childs of layers
+                  if (this.filterFunc(this.state.layerFilter, item)) {
                     return <C4gStarboardLayerElement key={id} id={id} mapController={this.props.mapController}
                                                      parentCallback={this.callbackFunction}
                                                      layer={item}
                                                      layerStates={states[id]}
+                                                     byPassChilds={this.filterFunc(this.state.layerFilter, item, false)}
+                                                     strFilter={this.state.layerFilter}
+                                                     filterFunc={this.filterFunc}
                                                      fnResize={this.props.fnResize}/>;
+                  }
                 })}
               </ul>
             </div>
           </div>
         </div>
       </div>
+    </React.Fragment>
     );
   }
 }

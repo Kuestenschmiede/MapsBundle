@@ -100,7 +100,7 @@ class LayerService
 
         return $return;
     }
-    
+
     public function forceChildsInContent($layer)
     {
         $arrChilds = [];
@@ -123,7 +123,7 @@ class LayerService
 
         return $layer;
     }
-    
+
     public function createGeoJSONFeature($objOptions, $locX = null, $locY = null, $geometry = null)
     {
         $geometry = $geometry ? $geometry : [
@@ -140,7 +140,7 @@ class LayerService
             'geometry' => $geometry,
         ];
     }
-    
+
     public function getFeaturesFromLayerTree($layerTree)
     {
         $features = [];
@@ -150,7 +150,7 @@ class LayerService
 
         return $features;
     }
-    
+
     protected function getFeaturesForLayer($layer)
     {
         $features = [];

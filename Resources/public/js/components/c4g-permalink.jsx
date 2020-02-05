@@ -79,6 +79,9 @@ export class Permalink extends Component {
     if ((prevState.open !== this.state.open) || prevState.link !== this.state.link) {
       this.generateLinkFromCurrentState({target: this.textfield});
     }
+    if (prevState.open && !this.state.open) {
+      jQuery(".c4g-permalink-container").removeClass(cssConstants.OPEN).addClass(cssConstants.CLOSE);
+    }
   }
 
   componentDidMount() {

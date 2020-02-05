@@ -78,7 +78,9 @@ export class MapController extends Component {
     this.state = {
       objLayers: [],
       arrLayerStates: [],
-      openComponent: null
+      openComponent: null,
+      objTabLayers: [],
+      arrTabLayerStates: []
     };
     this.setObjLayers = this.setObjLayers.bind(this);
     this.setLayerStates = this.setLayerStates.bind(this);
@@ -777,6 +779,13 @@ export class MapController extends Component {
     });
   }
 
+  setTabLayers(layers, states) {
+    this.setState({
+      objTabLayers: layers,
+      arrTabLayerStates: states
+    });
+  }
+
   hideOtherComponents(objComponent) {
     let components = this.components;
     for (let key in components) {
@@ -816,7 +825,7 @@ export class MapController extends Component {
           <StarboardPanel ref={(node) => {
             this.components.starboard = node;
           }} target={target}
-                          mapController={this} objLayers={this.state.objLayers}
+                          mapController={this} objLayers={this.state.objLayers} tabLayers={this.state.objTabLayers} tabStates={this.state.arrTabLayerStates}
                           layerStates={this.state.arrLayerStates} parentCallback={this.setLayerStates}
                           direction={"right"} open={(this.props.mapData.initial_open_comp === "starboard")}
           />,
