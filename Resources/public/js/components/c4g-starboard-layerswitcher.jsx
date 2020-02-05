@@ -57,20 +57,10 @@ export class StarboardLayerswitcher extends Component {
   }
 
   render() {
-    let closeStarboard = function() {
-      let button = jQuery("." + cssConstants.STARBOARD_CONTROL + "> button");
-      button.trigger('click');
-    };
+
     const mapData = this.props.mapController.data;
     let layers, states;
-    // TODO buttons will be used for starboard tabs
-    let buttons = [];
-    let buttonSwitcher = "";
-    if (buttons.length > 0) {
-      buttonSwitcher = <div className={cssConstants.CONTROL + " c4g-starboard-switcher"}>
 
-      </div>;
-    }
     // deep clone arrays before passing them as arguments
     // otherwise we would modify the objects inside the props
     // [layers, states] = this.filterLayers(JSON.parse(JSON.stringify(this.props.objLayers)),
@@ -78,14 +68,9 @@ export class StarboardLayerswitcher extends Component {
     layers = this.props.objLayers;
     states = this.props.layerStates;
     return (
-      <div className={cssConstants.STARBOARD_WRAPPER}>
-        <Titlebar wrapperClass={"c4g-starboard-header"} headerClass={cssConstants.STARBOARD_HEADLINE}
-          header={mapData.starboard.label || "Starboard"} closeBtnClass={cssConstants.STARBOARD_CLOSE} closeBtnCb={closeStarboard}>
-        </Titlebar>
-        <div className={"c4g-starboard-layertree-filter without-button"}>
-          <input className={"c4g-starboard-layertree-filter-field"} type="text" onInput={this.setLayerFilter} placeholder={"\uf002"}/>
-        </div>
-        {buttonSwitcher}
+    <React.Fragment>
+      <div className="contentHeadline"/>
+      <div className={"c4g-content-layertree"}>
         <div className={cssConstants.STARBOARD_CONTENT_CONTAINER}>
           <div className="contentHeadline"/>
           <div className={"c4g-content-layertree"}>
@@ -109,6 +94,7 @@ export class StarboardLayerswitcher extends Component {
           </div>
         </div>
       </div>
+    </React.Fragment>
     );
   }
 }

@@ -48,13 +48,13 @@ export class C4gLayerController {
     this.layerRequests = {};
     this.ovpKey = this.mapController.data.ovp_key;
   }
-  
+
   loadLayers () {
     let self = this;
     if (this.mapId === 0) {
       return false;
     }
-    
+
     jQuery.ajax(this.proxy.api_layer_url,{
       dataType: this.mapController.data.jsonp ? "jsonp" : "json"
 
@@ -293,577 +293,649 @@ export class C4gLayerController {
     if (this.arrLayers[itemUid].content) {
       layers = [];
 
-          var contentFeatures = [];
-          for (i = 0; i < this.arrLayers[itemUid].content.length; i += 1) {
-            contentData = this.arrLayers[itemUid].content[i];
-            styleForCluster = function (feature, resolution) {
+      var contentFeatures = [];
+      for (i = 0; i < this.arrLayers[itemUid].content.length; i += 1) {
+        contentData = this.arrLayers[itemUid].content[i];
+        styleForCluster = function (feature, resolution) {
 
-            var size,
-              style,
-              fFeatures,
-              iconOffset,
-              radius,
-              k,
-              fillcolor,
-              fontcolor;
+          var size,
+            style,
+            fFeatures,
+            iconOffset,
+            radius,
+            k,
+            fillcolor,
+            fontcolor;
 
-            if (contentData && contentData.locationStyle && self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle]) {
-              style = self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style(feature, resolution);
+          if (contentData && contentData.locationStyle && self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle]) {
+            style = self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style(feature, resolution);
 
-              if (!style) {
-                style = [];
-                self.fittingExtends[itemUid] = vectorSource.getExtent();
+            if (!style) {
+              style = [];
+              self.fittingExtends[itemUid] = vectorSource.getExtent();
+            }
+
+            if (feature !== undefined && feature !== null && feature.self !== window) {
+              if(feature.get('features')){
+                fFeatures = feature.get('features');
               }
-
-              if (feature !== undefined && feature !== null && feature.self !== window) {
-                if(feature.get('features')){
-                  fFeatures = feature.get('features');
-                }
-                else{
-                  fFeatures = [];
-                  fFeatures[0] = feature;
-                }
-                size = fFeatures.length;
-                if (size > 1) {
-                  if (fFeatures[0].getStyle() && size < 1000) { // limit for performance
-                    style[0] = fFeatures[0].getStyle()[0];
-                    for (k = 0; k < fFeatures.length; k += 1) {
-                      if (!fFeatures[k].getStyle()) {
-                        style = self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style(fFeatures[0], resolution);
-                        break;
-                      }
-                    }
-                  } else {
-                    style = self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style(fFeatures[0], resolution);
-                  }
-                  if (!style) {
-                    style = [];
-                  }
-
-                  // calculate bubble-offset
-                  iconOffset = [0, 0];
-                  if (style[0]) {
-                    if (style[0].getImage() && style[0].getImage().getRadius && typeof style[0].getImage().getRadius === "function") {
-                      radius = parseInt(style[0].getImage().getRadius(), 10);
-                      if (radius) {
-                        iconOffset = [0, radius];
-                      }
-                    } else if (style[0].getImage() && style[0].getImage().getAnchor && typeof style[0].getImage().getAnchor === "function") {
-                      iconOffset = style[0].getImage().getAnchor() || [0, 0];
+              else{
+                fFeatures = [];
+                fFeatures[0] = feature;
+              }
+              size = fFeatures.length;
+              if (size > 1) {
+                if (fFeatures[0].getStyle() && size < 1000) { // limit for performance
+                  style[0] = fFeatures[0].getStyle()[0];
+                  for (k = 0; k < fFeatures.length; k += 1) {
+                    if (!fFeatures[k].getStyle()) {
+                      style = self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style(fFeatures[0], resolution);
+                      break;
                     }
                   }
+                } else {
+                  style = self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style(fFeatures[0], resolution);
+                }
+                if (!style) {
+                  style = [];
+                }
 
-                  fillcolor = utils.getRgbaFromHexAndOpacity('4975A8',{
+                // calculate bubble-offset
+                iconOffset = [0, 0];
+                if (style[0]) {
+                  if (style[0].getImage() && style[0].getImage().getRadius && typeof style[0].getImage().getRadius === "function") {
+                    radius = parseInt(style[0].getImage().getRadius(), 10);
+                    if (radius) {
+                      iconOffset = [0, radius];
+                    }
+                  } else if (style[0].getImage() && style[0].getImage().getAnchor && typeof style[0].getImage().getAnchor === "function") {
+                    iconOffset = style[0].getImage().getAnchor() || [0, 0];
+                  }
+                }
+
+                fillcolor = utils.getRgbaFromHexAndOpacity('4975A8',{
+                  unit: '%',
+                  value: 70
+                });
+
+                if (contentData.cluster_fillcolor) {
+                  fillcolor = utils.getRgbaFromHexAndOpacity(contentData.cluster_fillcolor,{
                     unit: '%',
                     value: 70
                   });
-
-                  if (contentData.cluster_fillcolor) {
-                    fillcolor = utils.getRgbaFromHexAndOpacity(contentData.cluster_fillcolor,{
-                      unit: '%',
-                      value: 70
-                    });
-                  }
-                  fontcolor = '#FFFFFF';
-                  if (contentData.cluster_fontcolor) {
-                    fontcolor = utils.getRgbaFromHexAndOpacity(contentData.cluster_fontcolor,{
-                      unit: '%',
-                      value: 100
-                    });
-                  }
-
-                  style.push(
-                    new Style({
-                      text: new Text({
-                        text: "●",
-                        font: "60px sans-serif",
-                        offsetX: -1 * iconOffset[0],
-                        offsetY: -1 * iconOffset[1],
-                        fill: new Fill({
-                          color: fillcolor
-                        })
-                      })
-                    })
-                  );
-                  style.push(
-                    new Style({
-                      text: new Text({
-                        text: size.toString(),
-                        offsetX: -1 * iconOffset[0],
-                        offsetY: -1 * iconOffset[1] + 3,
-                        fill: new Fill({
-                          color: fontcolor
-                        })
-                      })
-                    })
-                  );
-                } else if (size === 1 && fFeatures[0].getStyle()) {
-                  return fFeatures[0].getStyle();
                 }
+                fontcolor = '#FFFFFF';
+                if (contentData.cluster_fontcolor) {
+                  fontcolor = utils.getRgbaFromHexAndOpacity(contentData.cluster_fontcolor,{
+                    unit: '%',
+                    value: 100
+                  });
+                }
+
+                style.push(
+                  new Style({
+                    text: new Text({
+                      text: "●",
+                      font: "60px sans-serif",
+                      offsetX: -1 * iconOffset[0],
+                      offsetY: -1 * iconOffset[1],
+                      fill: new Fill({
+                        color: fillcolor
+                      })
+                    })
+                  })
+                );
+                style.push(
+                  new Style({
+                    text: new Text({
+                      text: size.toString(),
+                      offsetX: -1 * iconOffset[0],
+                      offsetY: -1 * iconOffset[1] + 3,
+                      fill: new Fill({
+                        color: fontcolor
+                      })
+                    })
+                  })
+                );
+              } else if (size === 1 && fFeatures[0].getStyle()) {
+                return fFeatures[0].getStyle();
               }
-
-            }
-            return style;
-          }; // end of styleForCluster()
-
-          if (contentData && (contentData.type === "urlData")) {
-            requestData = {};
-            requestData.url = contentData.data.url;
-            if (contentData.data.params) {
-              requestData.params = decodeURIComponent(contentData.data.params);
             }
 
-            if (contentData.settings.boundingBox) {
-              requestContentData = contentData;
-              requestVectorSource = new VectorSource({
-                loader: function (extent, resolution, projection) {
-                  var boundingArray,
-                    strBoundingBox,
-                    url;
-                  boundingArray = transformExtent(extent, projection, 'EPSG:4326');
-                  //different cases for Overpass_QL and XML query format
-                  if(requestData.params && requestData.params.substr(0, 1).trim() === "<"){
-                    strBoundingBox = '<bbox-query s="' + boundingArray[1] + '" n="' + boundingArray[3] + '" w="' + boundingArray[0] + '" e="' + boundingArray[2] + '"/>';
+          }
+          return style;
+        }; // end of styleForCluster()
 
-                  }
-                  else{
-                    strBoundingBox = boundingArray[1] + ',' + boundingArray[0] + ',' + boundingArray[3] + ',' + boundingArray[2];
-                  }
+        if (contentData && (contentData.type === "urlData")) {
+          requestData = {};
+          requestData.url = contentData.data.url;
+          if (contentData.data.params) {
+            requestData.params = decodeURIComponent(contentData.data.params);
+          }
 
-                  url = requestData.url;
-                  if (url.indexOf('{key}') > -1) {
-                    url = url.replace('{key}', self.ovpKey);
-                  }
+          if (contentData.settings.boundingBox) {
+            requestContentData = contentData;
+            requestVectorSource = new VectorSource({
+              loader: function (extent, resolution, projection) {
+                var boundingArray,
+                  strBoundingBox,
+                  url;
+                boundingArray = transformExtent(extent, projection, 'EPSG:4326');
+                //different cases for Overpass_QL and XML query format
+                if(requestData.params && requestData.params.substr(0, 1).trim() === "<"){
+                  strBoundingBox = '<bbox-query s="' + boundingArray[1] + '" n="' + boundingArray[3] + '" w="' + boundingArray[0] + '" e="' + boundingArray[2] + '"/>';
 
-                  if (requestData.params) {
-                    const bboxTag = requestData.params.indexOf('(bbox)') >= 0 ? /\(bbox\)/g : /\{{bbox\}}/g
-                    url += url.includes("?") ? "&" : "?";
-                    url += 'data=' + encodeURIComponent(requestData.params.replace(bboxTag, strBoundingBox));
-                  }
+                }
+                else{
+                  strBoundingBox = boundingArray[1] + ',' + boundingArray[0] + ',' + boundingArray[3] + ',' + boundingArray[2];
+                }
 
-                  if (self.layerRequests === undefined) {
-                    self.layerRequests = {};
-                  }
-                  if (self.layerRequests['layerRequest' + itemUid] !== undefined) {
-                    self.layerRequests['layerRequest' + itemUid].abort();
-                  }
+                url = requestData.url;
+                if (url.indexOf('{key}') > -1) {
+                  url = url.replace('{key}', self.ovpKey);
+                }
 
-                  self.layerRequests['layerRequest' + itemUid] = jQuery.ajax({
-                    url: url
-                  }).done(function (response) {
-                    var j,
-                      format,
-                      feature,
-                      rFeatures,
-                      osmNodes,
-                      osmNds,
-                      nodeIdx,
-                      ndIdx,
-                      infoNodes,
-                      newTag,
-                      ref;
+                if (requestData.params) {
+                  const bboxTag = requestData.params.indexOf('(bbox)') >= 0 ? /\(bbox\)/g : /\{{bbox\}}/g
+                  url += url.includes("?") ? "&" : "?";
+                  url += 'data=' + encodeURIComponent(requestData.params.replace(bboxTag, strBoundingBox));
+                }
 
-                    delete self.layerRequests['layerRequest' + itemUid];
+                if (self.layerRequests === undefined) {
+                  self.layerRequests = {};
+                }
+                if (self.layerRequests['layerRequest' + itemUid] !== undefined) {
+                  self.layerRequests['layerRequest' + itemUid].abort();
+                }
 
-                    // preprocessing the osm_xml to find relation-nodes with information
-                    if (response && response.children && response.children[0]) {
-                      // 1) find nodes with data
-                      osmNodes = response.children[0].getElementsByTagName('node');
-                      if (osmNodes) {
-                        infoNodes = {};
-                        for (nodeIdx in osmNodes) {
-                          if (osmNodes.hasOwnProperty(nodeIdx) && osmNodes[nodeIdx] && osmNodes[nodeIdx].children && osmNodes[nodeIdx].children.length > 0) {
-                            infoNodes[osmNodes[nodeIdx].getAttribute('id')] = osmNodes[nodeIdx];
-                            // infoNodes[osmNodes[nodeIdx].getAttribute('id')] = nodeIdx;
-                          }
+                self.layerRequests['layerRequest' + itemUid] = jQuery.ajax({
+                  url: url
+                }).done(function (response) {
+                  var j,
+                    format,
+                    feature,
+                    rFeatures,
+                    osmNodes,
+                    osmNds,
+                    nodeIdx,
+                    ndIdx,
+                    infoNodes,
+                    newTag,
+                    ref;
+
+                  delete self.layerRequests['layerRequest' + itemUid];
+
+                  // preprocessing the osm_xml to find relation-nodes with information
+                  if (response && response.children && response.children[0]) {
+                    // 1) find nodes with data
+                    osmNodes = response.children[0].getElementsByTagName('node');
+                    if (osmNodes) {
+                      infoNodes = {};
+                      for (nodeIdx in osmNodes) {
+                        if (osmNodes.hasOwnProperty(nodeIdx) && osmNodes[nodeIdx] && osmNodes[nodeIdx].children && osmNodes[nodeIdx].children.length > 0) {
+                          infoNodes[osmNodes[nodeIdx].getAttribute('id')] = osmNodes[nodeIdx];
+                          // infoNodes[osmNodes[nodeIdx].getAttribute('id')] = nodeIdx;
                         }
                       }
+                    }
 
-                      // 2) check and handle relations
-                      osmNds = response.children[0].getElementsByTagName('nd');
-                      if (osmNds) {
-                        for (ndIdx in osmNds) {
-                          if (ndIdx) {
-                            if (osmNds.hasOwnProperty(ndIdx) && osmNds[ndIdx]) {
-                              try {
+                    // 2) check and handle relations
+                    osmNds = response.children[0].getElementsByTagName('nd');
+                    if (osmNds) {
+                      for (ndIdx in osmNds) {
+                        if (ndIdx) {
+                          if (osmNds.hasOwnProperty(ndIdx) && osmNds[ndIdx]) {
+                            try {
 
-                                ref = osmNds[ndIdx].getAttribute('ref');
-                                if (infoNodes && ref && infoNodes[ref]) {
-                                  if (requestContentData && requestContentData.settings) {
-                                    if (requestContentData.settings.showAdditionalGeometries) {
-                                      // mark as additional information
-                                      if (response) {
-                                        newTag = response.createElement('tag');
-                                        if (newTag && osmNds[ndIdx].parentElement && osmNds[ndIdx].parentElement.getAttribute('id')) {
-                                          newTag.setAttribute('k', 'c4g_osm_ref');
-                                          newTag.setAttribute('v', osmNds[ndIdx].parentElement.getAttribute('id'));
-                                          infoNodes[ref].appendChild(newTag);
-                                        }
+                              ref = osmNds[ndIdx].getAttribute('ref');
+                              if (infoNodes && ref && infoNodes[ref]) {
+                                if (requestContentData && requestContentData.settings) {
+                                  if (requestContentData.settings.showAdditionalGeometries) {
+                                    // mark as additional information
+                                    if (response) {
+                                      newTag = response.createElement('tag');
+                                      if (newTag && osmNds[ndIdx].parentElement && osmNds[ndIdx].parentElement.getAttribute('id')) {
+                                        newTag.setAttribute('k', 'c4g_osm_ref');
+                                        newTag.setAttribute('v', osmNds[ndIdx].parentElement.getAttribute('id'));
+                                        infoNodes[ref].appendChild(newTag);
                                       }
-                                    } else {
-                                      // remove additional information
-                                      infoNodes[ref].innerHTML = '';
                                     }
+                                  } else {
+                                    // remove additional information
+                                    infoNodes[ref].innerHTML = '';
                                   }
                                 }
-                              } catch (e) {
-                                console.warn('Could not check and handle relations.');
+                              }
+                            } catch (e) {
+                              console.warn('Could not check and handle relations.');
+                            }
+                          }
+                        }
+                      }
+                    }
+                    // import osm_xml
+                    format = new OSMXML();
+                    if (format && response) {
+                      try {
+                        rFeatures = format.readFeatures(response, {featureProjection: projection});
+                      } catch (e) {
+                        console.warn('Can not read feature.');
+                      }
+                    }
+
+                    // postprocessing features
+                    if (rFeatures && rFeatures.length > 0) {
+                      for (j = 0; j < rFeatures.length; j += 1) {
+
+                        if (rFeatures[j].getGeometry().getType() === "Point") {
+                          rFeatures[j].set('osm_type', 'node');
+                        } else {
+                          rFeatures[j].set('osm_type', 'way');
+                        }
+                        rFeatures[j].set('c4g_type', 'osm');
+                        rFeatures[j].set('cluster_zoom', contentData.cluster_zoom);
+                        rFeatures[j].set('cluster_popup', contentData.cluster_popup);
+                        rFeatures[j].set('loc_linkurl', contentData.loc_linkurl);
+                        rFeatures[j].set('hover_location', contentData.hover_location);
+                        rFeatures[j].set('hover_style', contentData.hover_style);
+                        rFeatures[j].set('zoom_onclick', contentData.data.zoom_onclick);
+                        rFeatures[j].set('label', contentData.data.label);
+
+                        if (requestContentData.settings.forceNodes) {
+                          // convert tracks and areas to points
+                          if (rFeatures[j].getGeometry().getType() === "Polygon") {
+                            let centerPoint = rFeatures[j].getGeometry().getInteriorPoint().getCoordinates();
+                            rFeatures[j].setGeometry(new Point([centerPoint[0],centerPoint[1]]));
+                          } else if (rFeatures[j].getGeometry().getType() === "LineString") {
+                            let lineExtent = rFeatures[j].getGeometry().getExtent();
+                            let centerPoint = getCenter(lineExtent);
+                            rFeatures[j].setGeometry(new Point(centerPoint));
+                          }
+                        }
+                      }
+                    }
+
+                  }
+                  else if (response && response.elements) {
+                    const geojson = osmtogeojson(response);
+                    rFeatures = new GeoJSON().readFeatures(geojson, {featureProjection: projection});
+                  }
+                  try {
+                    if(self.mapController.filter) {
+                      for (let id in rFeatures) {
+                        if (rFeatures.hasOwnProperty(id)){
+                          let tempFeature = rFeatures[id];
+                          let show = true;
+                          for (let key in self.mapController.filter.state.arrChecked) {
+                            if (self.mapController.filter.state.arrChecked.hasOwnProperty(key)) {
+                              let objChecked = self.mapController.filter.state.arrChecked[key];
+                              let property = objChecked.identifier;
+                              if (!(property === "all" || (tempFeature.get(property) && !objChecked.value) || ((objChecked.value == tempFeature.get(property)) && objChecked.value))) {
+                                show = false;
                               }
                             }
                           }
-                        }
-                      }
-                      // import osm_xml
-                      format = new OSMXML();
-                      if (format && response) {
-                        try {
-                          rFeatures = format.readFeatures(response, {featureProjection: projection});
-                        } catch (e) {
-                          console.warn('Can not read feature.');
-                        }
-                      }
-
-                      // postprocessing features
-                      if (rFeatures && rFeatures.length > 0) {
-                        for (j = 0; j < rFeatures.length; j += 1) {
-
-                          if (rFeatures[j].getGeometry().getType() === "Point") {
-                            rFeatures[j].set('osm_type', 'node');
-                          } else {
-                            rFeatures[j].set('osm_type', 'way');
-                          }
-                          rFeatures[j].set('c4g_type', 'osm');
-                          rFeatures[j].set('cluster_zoom', contentData.cluster_zoom);
-                          rFeatures[j].set('cluster_popup', contentData.cluster_popup);
-                          rFeatures[j].set('loc_linkurl', contentData.loc_linkurl);
-                          rFeatures[j].set('hover_location', contentData.hover_location);
-                          rFeatures[j].set('hover_style', contentData.hover_style);
-                          rFeatures[j].set('zoom_onclick', contentData.data.zoom_onclick);
-                          rFeatures[j].set('label', contentData.data.label);
-
-                          if (requestContentData.settings.forceNodes) {
-                            // convert tracks and areas to points
-                            if (rFeatures[j].getGeometry().getType() === "Polygon") {
-                              let centerPoint = rFeatures[j].getGeometry().getInteriorPoint().getCoordinates();
-                              rFeatures[j].setGeometry(new Point([centerPoint[0],centerPoint[1]]));
-                            } else if (rFeatures[j].getGeometry().getType() === "LineString") {
-                              let lineExtent = rFeatures[j].getGeometry().getExtent();
-                              let centerPoint = getCenter(lineExtent);
-                              rFeatures[j].setGeometry(new Point(centerPoint));
+                          if(!show) {
+                            if (!tempFeature.get('oldStyle')) {
+                              let layerStyle = self.mapController.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style;
+                              tempFeature.set('oldStyle',  layerStyle);
                             }
+                            tempFeature.setStyle(new Style({
+                              stroke: new Stroke({
+                                color: "rgba(0,0,0,0)",
+                                width: 0
+                              }),
+                              fill: new Fill({
+                                color: "rgba(0,0,0,0)"
+                              })
+                            }))
                           }
                         }
                       }
+                    }
+                    requestVectorSource.addFeatures(rFeatures);
+                  } catch (e) {
+                    console.warn('Could not add features to source. The "forceNodes"-option should be used.');
+                  }
+                  //self.combineLayers(self);
+                }); // end of AJAX
 
-                    }
-                    else if (response && response.elements) {
-                      const geojson = osmtogeojson(response);
-                      rFeatures = new GeoJSON().readFeatures(geojson, {featureProjection: projection});
-                    }
-                    try {
-                      if(self.mapController.filter) {
-                        for (let id in rFeatures) {
-                          if (rFeatures.hasOwnProperty(id)){
-                            let tempFeature = rFeatures[id];
-                            let show = true;
-                            for (let key in self.mapController.filter.state.arrChecked) {
-                              if (self.mapController.filter.state.arrChecked.hasOwnProperty(key)) {
-                                let objChecked = self.mapController.filter.state.arrChecked[key];
-                                let property = objChecked.identifier;
-                                if (!(property === "all" || (tempFeature.get(property) && !objChecked.value) || ((objChecked.value == tempFeature.get(property)) && objChecked.value))) {
-                                  show = false;
-                                }
-                              }
-                            }
-                            if(!show) {
-                              if (!tempFeature.get('oldStyle')) {
-                                let layerStyle = self.mapController.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style;
-                                tempFeature.set('oldStyle',  layerStyle);
-                              }
-                              tempFeature.setStyle(new Style({
-                                stroke: new Stroke({
-                                  color: "rgba(0,0,0,0)",
-                                  width: 0
-                                }),
-                                fill: new Fill({
-                                  color: "rgba(0,0,0,0)"
-                                })
-                              }))
-                            }
-                          }
-                        }
-                      }
-                      requestVectorSource.addFeatures(rFeatures);
-                    } catch (e) {
-                      console.warn('Could not add features to source. The "forceNodes"-option should be used.');
-                    }
-                    //self.combineLayers(self);
-                  }); // end of AJAX
+              },
+              strategy: bbox,
+              projection: 'EPSG:3857'
+            });
 
-                },
-                strategy: bbox,
-                projection: 'EPSG:3857'
+            vectorSource = requestVectorSource;
+          } else {
+
+            if (typeof olFormat[contentData.format] === "function") {
+
+              //StaticVector
+              vectorSource = new VectorSource({
+                format: new olFormat[contentData.format](),
+                url: requestData.url,
+                projection: 'EPSG:3857',
+                strategy: all
               });
 
-              vectorSource = requestVectorSource;
-            } else {
-
-              if (typeof olFormat[contentData.format] === "function") {
-
-                //StaticVector
-                vectorSource = new VectorSource({
-                  format: new olFormat[contentData.format](),
-                  url: requestData.url,
-                  projection: 'EPSG:3857',
-                  strategy: all
-                });
-
-                if (contentData.settings && contentData.settings.refresh === true) {
-                  if (self.layerRequests === undefined) {
-                    self.layerRequests = {};
-                  }
-
-                  refreshInterval = (typeof contentData.settings.interval === 'number') ? contentData.settings.interval : 10000;
-                  /* do it with better ajax-handling
-                   self.layerRequests['layerRequest' + itemUid] = window.setInterval(function () {
-                   vectorSource.clear();
-                   }, refreshInterval);
-                   */
-
-                  // Anfang Einschub neue AJAX-Layer
-                  refreshAjaxVars.blnHasPositionIds = false;
-                  refreshAjaxVars.arrPositionIds = [];
-                  refreshAjaxVars.objFeatures = {};
-
-                  vectorSource.set('refreshInterval', refreshInterval);
-
-                  vectorSource.set('refreshFunction', function () {
-
-                    if (!vectorSource.get('hasIds')) {
-                      vectorSource.forEachFeature(function (feature) {
-                        if (feature.get('positionId')) {
-                          refreshAjaxVars.blnHasPositionIds = true;
-                          refreshAjaxVars.arrPositionIds.push(feature.get('positionId'));
-                          refreshAjaxVars.objFeatures[feature.get('positionId')] = feature;
-                        }
-                      });
-                      if (refreshAjaxVars.blnHasPositionIds) {
-                        vectorSource.set('hasIds', true);
-                      }
-                    }
-
-                    jQuery.ajax({
-                      url: requestData.url,
-                      done: function (data) {
-
-                        if (data.renewableResponse) {
-                          // update of stations
-                          jQuery.each(data.features, function (index, featureData) {
-                            if (featureData.type && featureData.type === "Feature") {
-                              var feature = (new olFormat[contentData.format]()).readFeature(featureData, {
-                                dataProjection: 'EPSG:4326',
-                                featureProjection: 'EPSG:3857'
-                              });
-                              var layer = self.arrLayers[featureData.properties.id];
-                              var popupContent = featureData.properties.popup;
-                              layer.vectorLayer.getLayers().forEach(function(element, index, array) {
-                                if (!self.proxy.locationStyleController.arrLocStyles[featureData.properties.styleId]) {
-                                  self.proxy.locationStyleController.loadLocationStyles([featureData.properties.styleId], {done: function() {
-                                      element.setStyle(self.proxy.locationStyleController.arrLocStyles[featureData.properties.styleId].style);
-                                    }});
-                                } else {
-                                  element.setStyle(self.proxy.locationStyleController.arrLocStyles[featureData.properties.styleId].style);
-                                }
-                                element.getSource().forEachFeature(function(nestedFeature) {
-                                  nestedFeature.set('popup', popupContent);
-                                });
-                              });
-                              layer.content[0].locationStyle = featureData.properties.styleId;
-
-                              if (!self.proxy.locationStyleController.arrLocStyles[featureData.properties.styleId]) {
-                                self.proxy.locationStyleController.loadLocationStyles([featureData.properties.styleId], {done: function() {
-                                    feature.setStyle(self.proxy.locationStyleController.arrLocStyles[featureData.properties.styleId].style);
-                                  }});
-                              } else {
-                                feature.setStyle(self.proxy.locationStyleController.arrLocStyles[featureData.properties.styleId].style);
-                              }
-
-                              if (self.proxy.activeLayerIds[layer.id]) {
-                                self.hideLayer(layer.id);
-                                self.showLayer(layer.id);
-                              }
-                              // vectorSource.addFeature(feature);
-                            }
-                          });
-                        }
-
-                        if (data.features) {
-
-                          refreshAjaxVars.arrNewPositionIds = [];
-                          refreshAjaxVars.objNewFeatures = {};
-
-                          jQuery.each(data.features, function (index, featureData) {
-                            if (featureData.type && featureData.type == "Feature") {
-                              refreshAjaxVars.feature = (new olFormat[contentData.format]()).readFeature(featureData, {
-                                dataProjection: 'EPSG:4326',
-                                featureProjection: 'EPSG:3857'
-                              });
-                              refreshAjaxVars.feature.set('cluster_zoom', contentData.cluster_zoom);
-                              refreshAjaxVars.feature.set('loc_linkurl', contentData.loc_linkurl);
-                              refreshAjaxVars.feature.set('hover_location', contentData.hover_location);
-                              refreshAjaxVars.feature.set('hover_style', contentData.hover_style);
-                              if (refreshAjaxVars.feature.get('positionId')) {
-                                refreshAjaxVars.arrNewPositionIds.push(refreshAjaxVars.feature.get('positionId'));
-                                refreshAjaxVars.objNewFeatures[refreshAjaxVars.feature.get('positionId')] = refreshAjaxVars.feature;
-                              }
-                            }
-                          });
-
-                          jQuery.each(refreshAjaxVars.arrPositionIds, function (index, positionId) {
-                            if (refreshAjaxVars.arrNewPositionIds.indexOf(positionId) == -1) {
-                              // positions id in neuer antwort nicht mehr enthalten -> lösche feature
-                              if (typeof refreshAjaxVars.objFeatures[positionId] !== "undefined") {
-                                vectorSource.removeFeature(refreshAjaxVars.objFeatures[positionId]);
-                                delete(refreshAjaxVars.arrPositionIds[index]);
-                              }
-                            }
-                          });
-
-                          jQuery.each(refreshAjaxVars.arrNewPositionIds, function (index, positionId) {
-                            if (refreshAjaxVars.arrPositionIds.indexOf(positionId) == -1) {
-                              // positions id ist noch nicht vorhanden -> neues feature
-                              refreshAjaxVars.arrPositionIds.push(positionId);
-                              refreshAjaxVars.objFeatures[positionId] = refreshAjaxVars.objNewFeatures[positionId];
-                              vectorSource.addFeature(refreshAjaxVars.objNewFeatures[positionId]);
-                            }
-                          });
-                        }
-
-                      }
-                    });
-                  });
-
-                  self.proxy.requestFunctions['request_' + itemUid] = {
-                    'function': vectorSource.get('refreshFunction'),
-                    'interval': refreshInterval
-                  };
-
-
-                  // Ende Einschub neue AJAX-Layer
-
+              if (contentData.settings && contentData.settings.refresh === true) {
+                if (self.layerRequests === undefined) {
+                  self.layerRequests = {};
                 }
 
-              } else {
-                console.warn('Format type ' + contentData.format + ' in ol.format not found.');
+                refreshInterval = (typeof contentData.settings.interval === 'number') ? contentData.settings.interval : 10000;
+                /* do it with better ajax-handling
+                 self.layerRequests['layerRequest' + itemUid] = window.setInterval(function () {
+                 vectorSource.clear();
+                 }, refreshInterval);
+                 */
+
+                // Anfang Einschub neue AJAX-Layer
+                refreshAjaxVars.blnHasPositionIds = false;
+                refreshAjaxVars.arrPositionIds = [];
+                refreshAjaxVars.objFeatures = {};
+
+                vectorSource.set('refreshInterval', refreshInterval);
+
+                vectorSource.set('refreshFunction', function () {
+
+                  if (!vectorSource.get('hasIds')) {
+                    vectorSource.forEachFeature(function (feature) {
+                      if (feature.get('positionId')) {
+                        refreshAjaxVars.blnHasPositionIds = true;
+                        refreshAjaxVars.arrPositionIds.push(feature.get('positionId'));
+                        refreshAjaxVars.objFeatures[feature.get('positionId')] = feature;
+                      }
+                    });
+                    if (refreshAjaxVars.blnHasPositionIds) {
+                      vectorSource.set('hasIds', true);
+                    }
+                  }
+
+                  jQuery.ajax({
+                    url: requestData.url,
+                    done: function (data) {
+
+                      if (data.renewableResponse) {
+                        // update of stations
+                        jQuery.each(data.features, function (index, featureData) {
+                          if (featureData.type && featureData.type === "Feature") {
+                            var feature = (new olFormat[contentData.format]()).readFeature(featureData, {
+                              dataProjection: 'EPSG:4326',
+                              featureProjection: 'EPSG:3857'
+                            });
+                            var layer = self.arrLayers[featureData.properties.id];
+                            var popupContent = featureData.properties.popup;
+                            layer.vectorLayer.getLayers().forEach(function(element, index, array) {
+                              if (!self.proxy.locationStyleController.arrLocStyles[featureData.properties.styleId]) {
+                                self.proxy.locationStyleController.loadLocationStyles([featureData.properties.styleId], {done: function() {
+                                    element.setStyle(self.proxy.locationStyleController.arrLocStyles[featureData.properties.styleId].style);
+                                  }});
+                              } else {
+                                element.setStyle(self.proxy.locationStyleController.arrLocStyles[featureData.properties.styleId].style);
+                              }
+                              element.getSource().forEachFeature(function(nestedFeature) {
+                                nestedFeature.set('popup', popupContent);
+                              });
+                            });
+                            layer.content[0].locationStyle = featureData.properties.styleId;
+
+                            if (!self.proxy.locationStyleController.arrLocStyles[featureData.properties.styleId]) {
+                              self.proxy.locationStyleController.loadLocationStyles([featureData.properties.styleId], {done: function() {
+                                  feature.setStyle(self.proxy.locationStyleController.arrLocStyles[featureData.properties.styleId].style);
+                                }});
+                            } else {
+                              feature.setStyle(self.proxy.locationStyleController.arrLocStyles[featureData.properties.styleId].style);
+                            }
+
+                            if (self.proxy.activeLayerIds[layer.id]) {
+                              self.hideLayer(layer.id);
+                              self.showLayer(layer.id);
+                            }
+                            // vectorSource.addFeature(feature);
+                          }
+                        });
+                      }
+
+                      if (data.features) {
+
+                        refreshAjaxVars.arrNewPositionIds = [];
+                        refreshAjaxVars.objNewFeatures = {};
+
+                        jQuery.each(data.features, function (index, featureData) {
+                          if (featureData.type && featureData.type == "Feature") {
+                            refreshAjaxVars.feature = (new olFormat[contentData.format]()).readFeature(featureData, {
+                              dataProjection: 'EPSG:4326',
+                              featureProjection: 'EPSG:3857'
+                            });
+                            refreshAjaxVars.feature.set('cluster_zoom', contentData.cluster_zoom);
+                            refreshAjaxVars.feature.set('loc_linkurl', contentData.loc_linkurl);
+                            refreshAjaxVars.feature.set('hover_location', contentData.hover_location);
+                            refreshAjaxVars.feature.set('hover_style', contentData.hover_style);
+                            if (refreshAjaxVars.feature.get('positionId')) {
+                              refreshAjaxVars.arrNewPositionIds.push(refreshAjaxVars.feature.get('positionId'));
+                              refreshAjaxVars.objNewFeatures[refreshAjaxVars.feature.get('positionId')] = refreshAjaxVars.feature;
+                            }
+                          }
+                        });
+
+                        jQuery.each(refreshAjaxVars.arrPositionIds, function (index, positionId) {
+                          if (refreshAjaxVars.arrNewPositionIds.indexOf(positionId) == -1) {
+                            // positions id in neuer antwort nicht mehr enthalten -> lösche feature
+                            if (typeof refreshAjaxVars.objFeatures[positionId] !== "undefined") {
+                              vectorSource.removeFeature(refreshAjaxVars.objFeatures[positionId]);
+                              delete(refreshAjaxVars.arrPositionIds[index]);
+                            }
+                          }
+                        });
+
+                        jQuery.each(refreshAjaxVars.arrNewPositionIds, function (index, positionId) {
+                          if (refreshAjaxVars.arrPositionIds.indexOf(positionId) == -1) {
+                            // positions id ist noch nicht vorhanden -> neues feature
+                            refreshAjaxVars.arrPositionIds.push(positionId);
+                            refreshAjaxVars.objFeatures[positionId] = refreshAjaxVars.objNewFeatures[positionId];
+                            vectorSource.addFeature(refreshAjaxVars.objNewFeatures[positionId]);
+                          }
+                        });
+                      }
+
+                    }
+                  });
+                });
+
+                self.proxy.requestFunctions['request_' + itemUid] = {
+                  'function': vectorSource.get('refreshFunction'),
+                  'interval': refreshInterval
+                };
+
+
+                // Ende Einschub neue AJAX-Layer
+
               }
+
+            } else {
+              console.warn('Format type ' + contentData.format + ' in ol.format not found.');
             }
+          }
 
-            if (contentData.settings.cluster) {
+          if (contentData.settings.cluster) {
 
-              window.clusterSource = new Cluster({
-                distance: 40,
-                //threshold: 2, //minimum element count
-                source: vectorSource,
-                zoom: contentData.cluster_zoom
+            window.clusterSource = new Cluster({
+              distance: 40,
+              //threshold: 2, //minimum element count
+              source: vectorSource,
+              zoom: contentData.cluster_zoom
+            });
+            this.styleForCluster = styleForCluster;
+
+            //vectorLayer = utils.getVectorLayer(clusterSource, styleForCluster);
+
+            vectorLayer = new ol_layer_AnimatedCluster(
+              {	name: 'Cluster',
+                source: window.clusterSource,
+                // Use a style function for cluster symbolisation
+                style: styleForCluster
               });
-              this.styleForCluster = styleForCluster;
 
+
+          } else {
+            if(self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle] && self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].fnStyleFunction) {
+
+              vectorStyle = Function("feature","data","map",self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].fnStyleFunction);
+              vectorLayer = utils.getVectorLayer(vectorSource, vectorStyle, self.arrLayers[itemUid]);
+
+            }
+            else{
+              vectorLayer = utils.getVectorLayer(vectorSource, self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle] ? self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style : null, self.arrLayers[itemUid]);
+            }
+          }
+
+          /* Fit to extend */
+          if (contentData.settings && contentData.settings.fitToExtend) {
+
+            self.fittingExtends = self.fittingExtends || {};
+
+            vectorSource.on('change', function () {
+
+              // check currently stored id's
+              for (i in self.fittingExtends) {
+                if (self.fittingExtends.hasOwnProperty(i)) {
+                  if (typeof self.proxy.activeLayerIds[i] === "undefined" || self.proxy.activeLayerIds[0] == "invisible") {
+                    delete self.fittingExtends[i];
+                  }
+                }
+              }
+
+              self.fittingExtends[itemUid] = vectorSource.getExtent();//vectorSource.getFeatures();
+              utils.fitToExtents(self.fittingExtends, self.mapController.map);
+            });
+
+          }
+          // end of fit to extend
+
+          fnAttachDataToLayer(vectorLayer, contentData.data);
+          layers.push(vectorLayer);
+        } else if ((this.arrLayers[itemUid].type === "table") || (this.arrLayers[itemUid].type === "link")) {
+          var layerContent = this.arrLayers[itemUid].content;
+          contentData = layerContent[i];
+          if (contentData && contentData.data.properties && contentData.data.properties.projection) {
+            if (contentData.data.properties.projCode) {
+              // if (!proj4(contentData.data.properties.projection)) {
+              proj4.defs(contentData.data.properties.projection, contentData.data.properties.projCode);
+              register(proj4);
+              // }
+              dataProjection = new Projection({
+                code: contentData.data.properties.projection
+              });
+            }
+            dataProjection = contentData.data.properties.projection;
+            featureProjection = this.mapController.map.getView().getProjection();
+          } else {
+            dataProjection = undefined;
+          }
+
+          // force all nodes into one layer
+
+          var contentFeature = new olFormat[layerContent[i].format]({}).readFeatures(layerContent[i].data, {
+            featureProjection: featureProjection,
+            dataProjection: dataProjection
+          })[0];
+          const locStyles = self.proxy.locationStyleController.arrLocStyles;
+          contentFeature.set('cluster_zoom', contentData.cluster_zoom);
+          contentFeature.set('cluster_popup', contentData.cluster_popup);
+          contentFeature.set('loc_linkurl', contentData.loc_linkurl);
+          contentFeature.set('locstyle', contentData.locationStyle);
+          contentFeature.set('hover_location', contentData.hover_location);
+          contentFeature.set('hover_style', contentData.hover_style);
+          contentFeature.set('popup', layerContent[i].data.properties.popup);
+          contentFeature.set('zoom_onclick', contentData.zoom_onclick);
+          if (locStyles[contentData.locationStyle] && typeof locStyles[contentData.locationStyle].style === "function") {
+            contentFeature.set('style', locStyles[contentData.locationStyle].style);
+          }
+          contentFeatures.push(contentFeature);
+
+          if (i+1 === this.arrLayers[itemUid].content.length) {
+            let masterFeature = new Collection(contentFeatures);
+
+            vectorSource = new VectorSource({
+              features: masterFeature,
+              projection: 'EPSG:3857',
+              format: new GeoJSON(),
+            });
+
+            if (contentData && contentData.settings && contentData.settings.cluster) {
+              clusterSource = new Cluster({
+                distance: 40,
+                zoom: contentData.cluster_zoom,
+
+                //threshold: 2, //minimum element count
+                source: vectorSource
+              });
               //vectorLayer = utils.getVectorLayer(clusterSource, styleForCluster);
 
               vectorLayer = new ol_layer_AnimatedCluster(
                 {	name: 'Cluster',
-                  source: window.clusterSource,
+                  source: clusterSource,
                   // Use a style function for cluster symbolisation
                   style: styleForCluster
                 });
 
-
             } else {
-              if(self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle] && self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].fnStyleFunction) {
-
-                vectorStyle = Function("feature","data","map",self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].fnStyleFunction);
-                vectorLayer = utils.getVectorLayer(vectorSource, vectorStyle, self.arrLayers[itemUid]);
-
-              }
-              else{
-                vectorLayer = utils.getVectorLayer(vectorSource, self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle] ? self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style : null, self.arrLayers[itemUid]);
-              }
+              let style = contentData && self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle] ? self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style : null;
+              let styleFunc = function(feature, resolution) {
+                if (feature.get('style')) {
+                  return feature.get('style')();
+                } else {
+                  return style();
+                }
+              };
+              vectorLayer = utils.getVectorLayer(vectorSource, styleFunc, self.arrLayers[itemUid].zIndex);
             }
+            layers.push(vectorLayer);
+          }
+          //return;
+        } else {
+          if (this.arrLayers[itemUid].content.length > 1) {
+            //TODO: refactoren und kürzen!
+            // we have overpass request with reassigned forum layers
+            // forum layers can not be drawn via the normal drawLayer, because they do not have a Uid
+            if (contentData && (typeof olFormat[contentData.format] === "function")) {
+              if (contentData.data.properties && contentData.data.properties.projection) {
+                dataProjection = contentData.data.properties.projection;
+                featureProjection = this.mapController.map.getView().getProjection();
+              } else {
+                dataProjection = undefined;
+              }
+              features = (new olFormat[contentData.format]({})).readFeatures(contentData.data, {
+                featureProjection: featureProjection,
+                dataProjection: dataProjection
+              });
 
-            /* Fit to extend */
-            if (contentData.settings && contentData.settings.fitToExtend) {
-
-              self.fittingExtends = self.fittingExtends || {};
-
-              vectorSource.on('change', function () {
-
-                // check currently stored id's
-                for (i in self.fittingExtends) {
-                  if (self.fittingExtends.hasOwnProperty(i)) {
-                    if (typeof self.proxy.activeLayerIds[i] === "undefined" || self.proxy.activeLayerIds[0] == "invisible") {
-                      delete self.fittingExtends[i];
-                    }
+              var missingStyles = [];
+              var unstyledFeatures = [];
+              for (let j = 0; j < features.length; j += 1) {
+                if (features[j].get('id')) {
+                  features[j].setId(features[j].get('id'));
+                }
+                if (features[j].get('styleId')) {
+                  if (self.proxy.locationStyleController.arrLocStyles[features[j].get('styleId')] && self.proxy.locationStyleController.arrLocStyles[features[j].get('styleId')].style) {
+                    features[j].setStyle(self.proxy.locationStyleController.arrLocStyles[features[j].get('styleId')].style);
+                  } else {
+                    missingStyles.push(features[j].get('styleId'));
+                    unstyledFeatures.push(features[j]);
                   }
                 }
-
-                self.fittingExtends[itemUid] = vectorSource.getExtent();//vectorSource.getFeatures();
-                utils.fitToExtents(self.fittingExtends, self.mapController.map);
-              });
-
-            }
-            // end of fit to extend
-
-            fnAttachDataToLayer(vectorLayer, contentData.data);
-            layers.push(vectorLayer);
-          } else if ((this.arrLayers[itemUid].type === "table") || (this.arrLayers[itemUid].type === "link")) {
-            var layerContent = this.arrLayers[itemUid].content;
-            contentData = layerContent[i];
-            if (contentData && contentData.data.properties && contentData.data.properties.projection) {
-              if (contentData.data.properties.projCode) {
-                // if (!proj4(contentData.data.properties.projection)) {
-                  proj4.defs(contentData.data.properties.projection, contentData.data.properties.projCode);
-                  register(proj4);
-                // }
-                dataProjection = new Projection({
-                  code: contentData.data.properties.projection
-                });
               }
-              dataProjection = contentData.data.properties.projection;
-              featureProjection = this.mapController.map.getView().getProjection();
-            } else {
-              dataProjection = undefined;
-            }
+              vectorStyle = self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle] && self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style;
 
-            // force all nodes into one layer
-
-            var contentFeature = new olFormat[layerContent[i].format]({}).readFeatures(layerContent[i].data, {
-              featureProjection: featureProjection,
-              dataProjection: dataProjection
-            })[0];
-            const locStyles = self.proxy.locationStyleController.arrLocStyles;
-            contentFeature.set('cluster_zoom', contentData.cluster_zoom);
-            contentFeature.set('cluster_popup', contentData.cluster_popup);
-            contentFeature.set('loc_linkurl', contentData.loc_linkurl);
-            contentFeature.set('locstyle', contentData.locationStyle);
-            contentFeature.set('hover_location', contentData.hover_location);
-            contentFeature.set('hover_style', contentData.hover_style);
-            contentFeature.set('popup', layerContent[i].data.properties.popup);
-            contentFeature.set('zoom_onclick', contentData.zoom_onclick);
-            if (locStyles[contentData.locationStyle] && typeof locStyles[contentData.locationStyle].style === "function") {
-              contentFeature.set('style', locStyles[contentData.locationStyle].style);
-            }
-            contentFeatures.push(contentFeature);
-
-            if (i+1 === this.arrLayers[itemUid].content.length) {
-              let masterFeature = new Collection(contentFeatures);
-
-              vectorSource = new VectorSource({
-                features: masterFeature,
-                projection: 'EPSG:3857',
-                format: new GeoJSON(),
-              });
-
-              if (contentData && contentData.settings && contentData.settings.cluster) {
+              if (missingStyles.length > 0) {
+                //TODO there are unstyled features because some styles were not loaded
+              } else {
+                vectorSource = new VectorSource({
+                  features: features,
+                  projection: 'EPSG:3857',
+                  format: new GeoJSON()
+                });
                 clusterSource = new Cluster({
                   distance: 40,
                   zoom: contentData.cluster_zoom,
@@ -871,112 +943,40 @@ export class C4gLayerController {
                   //threshold: 2, //minimum element count
                   source: vectorSource
                 });
-                //vectorLayer = utils.getVectorLayer(clusterSource, styleForCluster);
 
-                vectorLayer = new ol_layer_AnimatedCluster(
-                  {	name: 'Cluster',
-                    source: clusterSource,
-                    // Use a style function for cluster symbolisation
-                    style: styleForCluster
-                  });
-
-              } else {
-                let style = contentData && self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle] ? self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style : null;
-                let styleFunc = function(feature, resolution) {
-                  if (feature.get('style')) {
-                    return feature.get('style')();
-                  } else {
-                    return style();
+                vectorLayer = utils.getVectorLayer(clusterSource, vectorStyle, self.arrLayers[itemUid]);
+                if (contentData.data && contentData.data.properties) {
+                  if (contentData.data.properties.popup) {
+                    vectorLayer.popup = contentData.data.properties.popup;
                   }
-                };
-                vectorLayer = utils.getVectorLayer(vectorSource, styleFunc, self.arrLayers[itemUid].zIndex);
+                  if (contentData.data.properties.tooltip) {
+                    vectorLayer.tooltip = contentData.data.properties.tooltip;
+                  }
+                  if (contentData.data.properties.label) {
+                    vectorLayer.label = contentData.data.properties.label;
+                  }
+                  if (contentData.data.properties.onclick_zoom) {
+                    vectorLayer.onclick_zoom = contentData.data.properties.onclick_zoom;
+                  }
+                }
+                layers.push(vectorLayer);
+
               }
-              layers.push(vectorLayer);
-            }
-            //return;
-          } else {
-            if (this.arrLayers[itemUid].content.length > 1) {
-              //TODO: refactoren und kürzen!
-              // we have overpass request with reassigned forum layers
-              // forum layers can not be drawn via the normal drawLayer, because they do not have a Uid
-              if (contentData && (typeof olFormat[contentData.format] === "function")) {
-                if (contentData.data.properties && contentData.data.properties.projection) {
-                  dataProjection = contentData.data.properties.projection;
-                  featureProjection = this.mapController.map.getView().getProjection();
-                } else {
-                  dataProjection = undefined;
-                }
-                features = (new olFormat[contentData.format]({})).readFeatures(contentData.data, {
-                  featureProjection: featureProjection,
-                  dataProjection: dataProjection
-                });
 
-                var missingStyles = [];
-                var unstyledFeatures = [];
-                for (let j = 0; j < features.length; j += 1) {
-                  if (features[j].get('id')) {
-                    features[j].setId(features[j].get('id'));
-                  }
-                  if (features[j].get('styleId')) {
-                    if (self.proxy.locationStyleController.arrLocStyles[features[j].get('styleId')] && self.proxy.locationStyleController.arrLocStyles[features[j].get('styleId')].style) {
-                      features[j].setStyle(self.proxy.locationStyleController.arrLocStyles[features[j].get('styleId')].style);
-                    } else {
-                      missingStyles.push(features[j].get('styleId'));
-                      unstyledFeatures.push(features[j]);
-                    }
-                  }
-                }
-                vectorStyle = self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle] && self.proxy.locationStyleController.arrLocStyles[contentData.locationStyle].style;
-
-                if (missingStyles.length > 0) {
-                  //TODO there are unstyled features because some styles were not loaded
-                } else {
-                  vectorSource = new VectorSource({
-                    features: features,
-                    projection: 'EPSG:3857',
-                    format: new GeoJSON()
-                  });
-                  clusterSource = new Cluster({
-                    distance: 40,
-                    zoom: contentData.cluster_zoom,
-
-                    //threshold: 2, //minimum element count
-                    source: vectorSource
-                  });
-
-                  vectorLayer = utils.getVectorLayer(clusterSource, vectorStyle, self.arrLayers[itemUid]);
-                  if (contentData.data && contentData.data.properties) {
-                      if (contentData.data.properties.popup) {
-                          vectorLayer.popup = contentData.data.properties.popup;
-                      }
-                      if (contentData.data.properties.tooltip) {
-                          vectorLayer.tooltip = contentData.data.properties.tooltip;
-                      }
-                      if (contentData.data.properties.label) {
-                          vectorLayer.label = contentData.data.properties.label;
-                      }
-                      if (contentData.data.properties.onclick_zoom) {
-                          vectorLayer.onclick_zoom = contentData.data.properties.onclick_zoom;
-                      }
-                  }
-                  layers.push(vectorLayer);
-
-                }
-
-              } else {
-                if (contentData) {
-                  console.warn('Format type ' + contentData.format + ' in ol.format not found.');
-                } else {
-                  //no contentData, maybe a link
-                }
-              }
             } else {
-              // normal, not overpass layer
-              self.drawLayer(itemUid);
-              return;
+              if (contentData) {
+                console.warn('Format type ' + contentData.format + ' in ol.format not found.');
+              } else {
+                //no contentData, maybe a link
+              }
             }
+          } else {
+            // normal, not overpass layer
+            self.drawLayer(itemUid);
+            return;
           }
         }
+      }
       // add vector layer group
       layerGroup = new Group({
         layers: layers
@@ -1004,271 +1004,270 @@ export class C4gLayerController {
       // self.mapController.map.addLayer(vectorLayer);
       //self.combine(self);
 
-    }
-    else if(this.arrLayers[itemUid].async_content == 1){
-          styleForCluster = function(feature, resolution){
-              var styleId,
-                  style,
-                  iconOffset,
-                  radius,
-                  fillcolor,
-                  fontcolor;
-              if(feature && feature.get('features')){
-                  if(styleId = feature.get('features')[0].get('locationStyle')){
-                      if(self.proxy.locationStyleController.arrLocStyles[styleId] && self.proxy.locationStyleController.arrLocStyles[styleId].style){
-                          style = self.proxy.locationStyleController.arrLocStyles[styleId].style(feature.get('features')[0],resolution);
-                      }
-                  }
-                  if(!style){
-                      style = [];
-                  }
-                  if(feature.get('features').length > 1){
-                      // calculate bubble-offset
-                      iconOffset = [0, 0];
-                      if (style[0]) {
-                          if (typeof style[0].getImage().getRadius === "function") {
-                              radius = parseInt(style[0].getImage().getRadius(), 10);
-                              if (radius) {
-                                  iconOffset = [0, radius];
-                              }
-                          } else if (typeof style[0].getImage().getAnchor === "function") {
-                              iconOffset = style[0].getImage().getAnchor() || [0, 0];
-                          }
-                      }
-
-                      fillcolor = utils.getRgbaFromHexAndOpacity('4975A8',{
-                          unit: '%',
-                          value: 70
-                      });
-
-                      if(contentData.cluster_fillcolor) {
-                          fillcolor = utils.getRgbaFromHexAndOpacity(contentData.cluster_fillcolor,{
-                              unit: '%',
-                              value: 70
-                          });
-                      }
-                      if(feature.get('features')[0].get('cluster_fillcolor')){
-                          fillcolor = utils.getRgbaFromHexAndOpacity(feature.get('features')[0].get('cluster_fillcolor'),{
-                              unit: '%',
-                              value: 70
-                          });
-                      }
-                      fontcolor = '#FFFFFF';
-                      if(feature.get('features')[0].get('cluster_fontcolor')){
-                          fontcolor = utils.getRgbaFromHexAndOpacity(feature.get('features')[0].get('cluster_fontcolor'),{
-                              unit: '%',
-                              value: 100
-                          });
-                      }
-
-                      style.push(
-                          new Style({
-                              text: new Text({
-                                  text: "●",
-                                  font: "60px sans-serif",
-                                  offsetX: -1 * iconOffset[0],
-                                  offsetY: -1 * iconOffset[1],
-                                  fill: new Fill({
-                                      color: fillcolor
-                                  })
-                              })
-                          })
-                      );
-                      style.push(
-                          new Style({
-                              text: new Text({
-                                  text: feature.get('features').length.toString(),
-                                  offsetX: -1 * iconOffset[0],
-                                  offsetY: -1 * iconOffset[1] + 3,
-                                  fill: new Fill({
-                                      color: fontcolor
-                                  })
-                              })
-                          })
-                      );
-                  }
-
+    } else if(this.arrLayers[itemUid].async_content == 1) {
+      styleForCluster = function(feature, resolution) {
+        var styleId,
+          style,
+          iconOffset,
+          radius,
+          fillcolor,
+          fontcolor;
+        if(feature && feature.get('features')){
+          if(styleId = feature.get('features')[0].get('locationStyle')){
+            if(self.proxy.locationStyleController.arrLocStyles[styleId] && self.proxy.locationStyleController.arrLocStyles[styleId].style){
+              style = self.proxy.locationStyleController.arrLocStyles[styleId].style(feature.get('features')[0],resolution);
+            }
+          }
+          if(!style){
+            style = [];
+          }
+          if(feature.get('features').length > 1){
+            // calculate bubble-offset
+            iconOffset = [0, 0];
+            if (style[0]) {
+              if (typeof style[0].getImage().getRadius === "function") {
+                radius = parseInt(style[0].getImage().getRadius(), 10);
+                if (radius) {
+                  iconOffset = [0, radius];
+                }
+              } else if (typeof style[0].getImage().getAnchor === "function") {
+                iconOffset = style[0].getImage().getAnchor() || [0, 0];
               }
-
-              if(style){
-                  return style;
-              }
-          };
-          requestVectorSource = new VectorSource({
-              loader: function (extent, resolution, projection) {
-                  var boundingArray,
-                      strBoundingBox,
-                      url;
-                  self.mapController.spinner.show();
-                  boundingArray = transformExtent(extent, projection, 'EPSG:4326');
-                  strBoundingBox = boundingArray[0]+','+boundingArray[1]+';'+boundingArray[2]+','+boundingArray[3];
-                  if (self.layerRequests === undefined) {
-                      self.layerRequests = {};
-                  }
-                  if (self.layerRequests['layerDataRequest' + itemUid] !== undefined) {
-                      self.layerRequests['layerDataRequest' + itemUid].abort();
-                  }
-                  if(!self.proxy.locationStyleController.arrLocStyles[self.arrLayers[itemUid].locstyle]){
-                      self.proxy.locationStyleController.loadLocationStyles([self.arrLayers[itemUid].locstyle], {done: function() {}});
-                  }
-
-                  self.layerRequests['layerDataRequest' + itemUid] = jQuery.ajax({
-                      url: self.proxy.api_layercontentdata_url + '/' + self.arrLayers[itemUid].id +'/'+strBoundingBox,
-                  }).done( function (data){
-                      if(data.length > 0 && !contentFeatures){
-                          contentFeatures = [];
-                      }
-                      let layer = self.arrLayers[itemUid];
-                      loopData:
-                          for(let i = 0; i < data.length; i++){
-                              contentData = data[i];
-                              for(let j = 0; j < contentFeatures.length; j++){
-                                  if(contentData.id === contentFeatures[j].id) continue loopData;
-                              }
-                              var resultCoordinate = transform([parseFloat(contentData['geox']), parseFloat(contentData['geoy'])], 'EPSG:4326', 'EPSG:3857')
-                              var point = new Point(resultCoordinate);
-                              contentFeature = new Feature(point);
-                              contentFeature.setId(contentData.id);
-                              if (layer.cluster) {
-                                contentFeature.set('cluster_zoom', layer.cluster.zoom);
-                                contentFeature.set('cluster_popup', layer.cluster.popup);
-                                contentFeature.set('cluster_fillcolor', layer.cluster.fillcolor);
-                                contentFeature.set('cluster_fontcolor', layer.cluster.fontcolor);
-                              }
-
-                              contentFeature.set('loc_linkurl', layer.loc_linkurl);
-                              if (contentData['loc_linkurl']) {
-                                contentFeature.set('loc_linkurl',contentData['loc_linkurl'])
-                              }
-                              contentFeature.set('hover_location', layer.hover_location);
-                              contentFeature.set('hover_style', layer.hover_style);
-                              let popup = contentData['popup'] ? contentData['popup'] : jQuery.extend({},layer.popup);
-                              if(popup && popup.content && popup.content.search && popup.content.search('itemId')){
-                                popup.content = popup.content.replace('itemId',contentData['id']);
-                              }
-                              if(contentData['label']){
-                                   contentFeature.set('label',contentData['label'])
-                              }
-                              if(contentData['tooltip']){
-                                  contentFeature.set('tooltip',contentData['tooltip'])
-                              }
-                              contentFeature.set('popup', popup);
-                              contentFeature.set('zoom_onclick', layer.zoom_onclick);
-                              contentFeature.set('tid', contentData['id']);
-                              let locstyle = contentData['locstyle'] || layer.locstyle;
-                              contentFeature.set('locationStyle', locstyle);
-                              if(locstyle && self.proxy.locationStyleController.arrLocStyles[locstyle] && self.proxy.locationStyleController.arrLocStyles[locstyle].style){
-                                  contentFeature.setStyle(self.proxy.locationStyleController.arrLocStyles[locstyle].style);
-                                  contentFeatures.push(contentFeature);
-                              }
-                              else{
-                                  if (!unstyledFeatures) {
-                                    unstyledFeatures = [];
-                                  }
-                                  if (!missingStyles) {
-                                    missingStyles = [];
-                                  }
-                                  contentFeature.set('styleId',locstyle);
-                                  unstyledFeatures.push(contentFeature);
-                                  missingStyles[locstyle] = locstyle;
-                              }
-
-                          }
-                      if(missingStyles){
-                          self.proxy.locationStyleController.loadLocationStyles(missingStyles, {done: function() {
-                                  for(i = 0; i < unstyledFeatures.length; i++){
-                                      var styleId =unstyledFeatures[i].get('styleId');
-                                      unstyledFeatures[i].setStyle(self.proxy.locationStyleController.arrLocStyles[styleId].style);
-                                      requestVectorSource.addFeature(unstyledFeatures[i]);
-                                  }
-                                  missingStyles = undefined;
-                              }});
-                      }
-
-                      if(data.length > 0){
-                          requestVectorSource.addFeatures(contentFeatures);
-                      }
-                  })
-                      .always(function () {
-                          self.mapController.spinner.hide();
-                      })
-
-              },
-              strategy: bbox
-          });
-
-          if(this.arrLayers[itemUid].cluster){
-            let layer = self.arrLayers[itemUid];
-            let map = self.mapController.map;
-            let currentZoom = map.getView().getZoom();
-            let clusterDistance = this.arrLayers[itemUid].cluster.distance || 20;
-            if (currentZoom >= layer.cluster.zoom) {
-              clusterDistance = 0;
             }
 
-            clusterSource = new Cluster({
-              distance: clusterDistance,
-              //threshold: 2, //minimum element count
-              source: requestVectorSource
+            fillcolor = utils.getRgbaFromHexAndOpacity('4975A8',{
+              unit: '%',
+              value: 70
             });
-              vectorLayer = new ol_layer_AnimatedCluster(
-                  {	name: 'Cluster',
-                      source: clusterSource,
-                      // Use a style function for cluster symbolisation
-                      style: styleForCluster
-                  });
+
+            if(contentData.cluster_fillcolor) {
+              fillcolor = utils.getRgbaFromHexAndOpacity(contentData.cluster_fillcolor,{
+                unit: '%',
+                value: 70
+              });
+            }
+            if(feature.get('features')[0].get('cluster_fillcolor')){
+              fillcolor = utils.getRgbaFromHexAndOpacity(feature.get('features')[0].get('cluster_fillcolor'),{
+                unit: '%',
+                value: 70
+              });
+            }
+            fontcolor = '#FFFFFF';
+            if(feature.get('features')[0].get('cluster_fontcolor')){
+              fontcolor = utils.getRgbaFromHexAndOpacity(feature.get('features')[0].get('cluster_fontcolor'),{
+                unit: '%',
+                value: 100
+              });
+            }
+
+            style.push(
+              new Style({
+                text: new Text({
+                  text: "●",
+                  font: "60px sans-serif",
+                  offsetX: -1 * iconOffset[0],
+                  offsetY: -1 * iconOffset[1],
+                  fill: new Fill({
+                    color: fillcolor
+                  })
+                })
+              })
+            );
+            style.push(
+              new Style({
+                text: new Text({
+                  text: feature.get('features').length.toString(),
+                  offsetX: -1 * iconOffset[0],
+                  offsetY: -1 * iconOffset[1] + 3,
+                  fill: new Fill({
+                    color: fontcolor
+                  })
+                })
+              })
+            );
           }
-          else{
-              vectorLayer = new Vector(
-                  {
-                      name: 'Layer',
-                      source: requestVectorSource
-                  }
-              );
+
+        }
+
+        if(style){
+          return style;
+        }
+      };
+      requestVectorSource = new VectorSource({
+        loader: function (extent, resolution, projection) {
+          var boundingArray,
+            strBoundingBox,
+            url;
+          self.mapController.spinner.show();
+          boundingArray = transformExtent(extent, projection, 'EPSG:4326');
+          strBoundingBox = boundingArray[0]+','+boundingArray[1]+';'+boundingArray[2]+','+boundingArray[3];
+          if (self.layerRequests === undefined) {
+            self.layerRequests = {};
           }
-          layers = layers || [];
-          layers.push(vectorLayer);
-        layerGroup = new Group({
-            layers: layers
-        });
-        this.arrLayers[itemUid].vectorLayer = layerGroup;
-        self.mapController.map.addLayer(layerGroup);
+          if (self.layerRequests['layerDataRequest' + itemUid] !== undefined) {
+            self.layerRequests['layerDataRequest' + itemUid].abort();
+          }
+          if(!self.proxy.locationStyleController.arrLocStyles[self.arrLayers[itemUid].locstyle]){
+            self.proxy.locationStyleController.loadLocationStyles([self.arrLayers[itemUid].locstyle], {done: function() {}});
+          }
 
-
-      }
-       else{
-        self.mapController.spinner.show();
-        jQuery.ajax({
-          dataType: self.mapController.data.jsonp ? "jsonp" : "json",
-          url: self.proxy.api_layercontent_url + '/' + self.arrLayers[itemUid].id,
-        }).done(function(data){
-            let j,
-                newLocationStyles;
-
-            if (data.length > 0) {
-                newLocationStyles = [];
-
-                for (j = 0; j < data.length; j += 1) {
-
-                    self.arrLayers[itemUid].content = self.arrLayers[itemUid].content || [];
-
-                    self.arrLayers[itemUid].content.push(data[j]);
-                    newLocationStyles.push(data[j].locationStyle);
-  
+          self.layerRequests['layerDataRequest' + itemUid] = jQuery.ajax({
+            url: self.proxy.api_layercontentdata_url + '/' + self.arrLayers[itemUid].id +'/'+strBoundingBox,
+          }).done( function (data){
+            if(data.length > 0 && !contentFeatures){
+              contentFeatures = [];
+            }
+            let layer = self.arrLayers[itemUid];
+            loopData:
+              for(let i = 0; i < data.length; i++){
+                contentData = data[i];
+                for(let j = 0; j < contentFeatures.length; j++){
+                  if(contentData.id === contentFeatures[j].id) continue loopData;
+                }
+                var resultCoordinate = transform([parseFloat(contentData['geox']), parseFloat(contentData['geoy'])], 'EPSG:4326', 'EPSG:3857')
+                var point = new Point(resultCoordinate);
+                contentFeature = new Feature(point);
+                contentFeature.setId(contentData.id);
+                if (layer.cluster) {
+                  contentFeature.set('cluster_zoom', layer.cluster.zoom);
+                  contentFeature.set('cluster_popup', layer.cluster.popup);
+                  contentFeature.set('cluster_fillcolor', layer.cluster.fillcolor);
+                  contentFeature.set('cluster_fontcolor', layer.cluster.fontcolor);
                 }
 
-                self.proxy.checkLocationStyles({
-                    done: function () {
-                        // @TODO: check this!
-                        self.loadLayerContent(itemUid);
-                    }
-                });
+                contentFeature.set('loc_linkurl', layer.loc_linkurl);
+                if (contentData['loc_linkurl']) {
+                  contentFeature.set('loc_linkurl',contentData['loc_linkurl'])
+                }
+                contentFeature.set('hover_location', layer.hover_location);
+                contentFeature.set('hover_style', layer.hover_style);
+                let popup = contentData['popup'] ? contentData['popup'] : jQuery.extend({},layer.popup);
+                if(popup && popup.content && popup.content.search && popup.content.search('itemId')){
+                  popup.content = popup.content.replace('itemId',contentData['id']);
+                }
+                if(contentData['label']){
+                  contentFeature.set('label',contentData['label'])
+                }
+                if(contentData['tooltip']){
+                  contentFeature.set('tooltip',contentData['tooltip'])
+                }
+                contentFeature.set('popup', popup);
+                contentFeature.set('zoom_onclick', layer.zoom_onclick);
+                contentFeature.set('tid', contentData['id']);
+                let locstyle = contentData['locstyle'] || layer.locstyle;
+                contentFeature.set('locationStyle', locstyle);
+                if(locstyle && self.proxy.locationStyleController.arrLocStyles[locstyle] && self.proxy.locationStyleController.arrLocStyles[locstyle].style){
+                  contentFeature.setStyle(self.proxy.locationStyleController.arrLocStyles[locstyle].style);
+                  contentFeatures.push(contentFeature);
+                }
+                else{
+                  if (!unstyledFeatures) {
+                    unstyledFeatures = [];
+                  }
+                  if (!missingStyles) {
+                    missingStyles = [];
+                  }
+                  contentFeature.set('styleId',locstyle);
+                  unstyledFeatures.push(contentFeature);
+                  missingStyles[locstyle] = locstyle;
+                }
 
+              }
+            if(missingStyles){
+              self.proxy.locationStyleController.loadLocationStyles(missingStyles, {done: function() {
+                  for(i = 0; i < unstyledFeatures.length; i++){
+                    var styleId =unstyledFeatures[i].get('styleId');
+                    unstyledFeatures[i].setStyle(self.proxy.locationStyleController.arrLocStyles[styleId].style);
+                    requestVectorSource.addFeature(unstyledFeatures[i]);
+                  }
+                  missingStyles = undefined;
+                }});
             }
-        }).always(function () {
-            self.mapController.spinner.hide();
+
+            if(data.length > 0){
+              requestVectorSource.addFeatures(contentFeatures);
+            }
+          })
+            .always(function () {
+              self.mapController.spinner.hide();
+            })
+
+        },
+        strategy: bbox
+      });
+
+      if(this.arrLayers[itemUid].cluster){
+        let layer = self.arrLayers[itemUid];
+        let map = self.mapController.map;
+        let currentZoom = map.getView().getZoom();
+        let clusterDistance = this.arrLayers[itemUid].cluster.distance || 20;
+        if (currentZoom >= layer.cluster.zoom) {
+          clusterDistance = 0;
+        }
+
+        clusterSource = new Cluster({
+          distance: clusterDistance,
+          //threshold: 2, //minimum element count
+          source: requestVectorSource
         });
+        vectorLayer = new ol_layer_AnimatedCluster(
+          {	name: 'Cluster',
+            source: clusterSource,
+            // Use a style function for cluster symbolisation
+            style: styleForCluster
+          });
       }
+      else{
+        vectorLayer = new Vector(
+          {
+            name: 'Layer',
+            source: requestVectorSource
+          }
+        );
+      }
+      layers = layers || [];
+      layers.push(vectorLayer);
+      layerGroup = new Group({
+        layers: layers
+      });
+      this.arrLayers[itemUid].vectorLayer = layerGroup;
+      self.mapController.map.addLayer(layerGroup);
+
+
+    }
+    else{
+      self.mapController.spinner.show();
+      jQuery.ajax({
+        dataType: self.mapController.data.jsonp ? "jsonp" : "json",
+        url: self.proxy.api_layercontent_url + '/' + self.arrLayers[itemUid].id,
+      }).done(function(data){
+        let j,
+          newLocationStyles;
+
+        if (data.length > 0) {
+          newLocationStyles = [];
+
+          for (j = 0; j < data.length; j += 1) {
+
+            self.arrLayers[itemUid].content = self.arrLayers[itemUid].content || [];
+
+            self.arrLayers[itemUid].content.push(data[j]);
+            newLocationStyles.push(data[j].locationStyle);
+
+          }
+
+          self.proxy.checkLocationStyles({
+            done: function () {
+              // @TODO: check this!
+              self.loadLayerContent(itemUid);
+            }
+          });
+
+        }
+      }).always(function () {
+        self.mapController.spinner.hide();
+      });
+    }
 
 
   } // end of "loadLayerContent()"
@@ -1297,54 +1296,54 @@ export class C4gLayerController {
       let multiLineString = null;
       let arrCoords = null;
       let point = null;
-        for(let i = 0; i< element.members.length; i++){
-          if(element.members[i].role === "outer"){ //@ToDo add handling for outer border
-            continue;
+      for(let i = 0; i< element.members.length; i++){
+        if(element.members[i].role === "outer"){ //@ToDo add handling for outer border
+          continue;
+        }
+        let member = elements.find(function(objMemb){
+          return objMemb.id === element.members[i].ref;
+        });
+        if(member){
+          let geom;
+          if(member.type === 'node'){
+            geom = new Point([member.lon,member.lat]).transform('EPSG:4326','EPSG:3857');
           }
-          let member = elements.find(function(objMemb){
-            return objMemb.id === element.members[i].ref;
-          });
-          if(member){
-            let geom;
-            if(member.type === 'node'){
-              geom = new Point([member.lon,member.lat]).transform('EPSG:4326','EPSG:3857');
+          else{
+            geom = this.geomFromWay(member, elements, forceNodes);
+          }
+          if(geom.getType() === 'Point'){
+            if(!arrCoords){
+              arrCoords = [];
+
+            }
+            arrCoords.push(geom.getCoordinates());
+          }
+          else if(geom.getType() === 'Polygon') {
+            if(multiPolygon){
+              multiPolygon.appendPolygon(geom);
             }
             else{
-              geom = this.geomFromWay(member, elements, forceNodes);
-            }
-            if(geom.getType() === 'Point'){
-              if(!arrCoords){
-                arrCoords = [];
-
-              }
-              arrCoords.push(geom.getCoordinates());
-            }
-            else if(geom.getType() === 'Polygon') {
-              if(multiPolygon){
-                multiPolygon.appendPolygon(geom);
-              }
-              else{
-                multiPolygon = new MultiPolygon([geom.getCoordinates()]);
-              }
-            }
-            else if(geom.getType() === 'LineString') {
-              if(multiLineString){
-                multiLineString.appendLineString(geom);
-              }
-              else{
-                multiLineString = new LineString(geom.getCoordinates());
-              }
+              multiPolygon = new MultiPolygon([geom.getCoordinates()]);
             }
           }
+          else if(geom.getType() === 'LineString') {
+            if(multiLineString){
+              multiLineString.appendLineString(geom);
+            }
+            else{
+              multiLineString = new LineString(geom.getCoordinates());
+            }
+          }
+        }
 
-        }
-        if(arrCoords){
-          let extent = boundingExtent(arrCoords);
-          point = new Point(getCenter(extent));
-        }
-        if(point || multiPolygon || multiLineString){
-          feature = new Feature(point ? point : (multiLineString ? multiLineString : multiPolygon));
-        }
+      }
+      if(arrCoords){
+        let extent = boundingExtent(arrCoords);
+        point = new Point(getCenter(extent));
+      }
+      if(point || multiPolygon || multiLineString){
+        feature = new Feature(point ? point : (multiLineString ? multiLineString : multiPolygon));
+      }
     }
     if(feature){
       feature.setId(element.id);
@@ -1473,10 +1472,10 @@ export class C4gLayerController {
   }
 
   showChildLayer(layerUid, childUid) {
-      let layer = this.arrLayers[layerUid];
-      childUid = childUid.replace(layerUid,'');
-      let childLayer = layer.vectorLayer.getLayers().getArray()[childUid];
-      childLayer.set('visible', true);
+    let layer = this.arrLayers[layerUid];
+    childUid = childUid.replace(layerUid,'');
+    let childLayer = layer.vectorLayer.getLayers().getArray()[childUid];
+    childLayer.set('visible', true);
   }
 
   showLayer(layerUid) {
