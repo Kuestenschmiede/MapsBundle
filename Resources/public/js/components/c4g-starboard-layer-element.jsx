@@ -190,11 +190,12 @@ export class C4gStarboardLayerElement extends Component {
           <a className={cssClass} onMouseUp={(event) => this.layerClick(event)}>{this.props.layer.name}</a>
           <ul>
             {objChilds.map((item, id) => {
-              if (this.props.filterFunc(this.props.strFilter, item)) {
+              if (this.props.byPassChilds || this.props.filterFunc(this.props.strFilter, item)) {
                 return <C4gStarboardLayerElement key={id} id={id} mapController={this.props.mapController}
                                           parentCallback={this.parentCallback}
                                           strFilter={this.props.strFilter}
                                           filterFunc={this.props.filterFunc}
+                                          byPassChilds={this.props.filterFunc(this.props.strFilter, item)}
                                           layerStates={this.props.layerStates.childStates[id]}
                                           layer={item}
                                           fnResize={this.props.fnResize}/>
