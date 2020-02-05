@@ -43,11 +43,11 @@ export class StarboardLayerswitcher extends Component {
   filterFunc(strFilter, layer, digDeeper = true) {
     let show = false;
     if (layer.name.toLowerCase().indexOf(strFilter) !== -1
-        || layer.name.toLowerCase().indexOf(strFilter.toLowerCase()) !== -1) {
+        || layer.name.toUpperCase().indexOf(strFilter.toUpperCase()) !== -1) {
       show = true;
     } else if (digDeeper) {
       for (let childId in layer.childs) {
-        if (layer.childs.hasOwnProperty(childId)) {
+        if (layer.childs.hasOwnProperty(childId) && !show) {
           show = this.filterFunc(strFilter, layer.childs[childId]);
         }
       }
