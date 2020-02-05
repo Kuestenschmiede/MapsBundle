@@ -43,7 +43,7 @@ export class StarboardLayerswitcher extends Component {
 
   filterMatches(string) {
     if (string.toLowerCase().indexOf(this.state.layerFilter) !== -1
-      || string.toLowerCase().indexOf(this.state.layerFilter.toLowerCase()) !== -1) {
+        || string.toLowerCase().indexOf(this.state.layerFilter.toLowerCase()) !== -1) {
       return true;
     } else {
       return false;
@@ -81,6 +81,21 @@ export class StarboardLayerswitcher extends Component {
     return [returnLayers, returnStates];
   }
 
+  filterFunc(strFilter, layer) {
+    let show = false;
+    if (layer.name.toLowerCase().indexOf(strFilter) !== -1
+        || layer.name.toLowerCase().indexOf(strFilter.toLowerCase()) !== -1) {
+      show = true;
+    } else {
+      for (let childId in layer.childs) {
+        if (layer.childs.hasOwnProperty(childId)) {
+          show = this.filterFunc(strFilter, layer.childs[childId]);
+        }
+      }
+    }
+    return show;
+  }
+
   render() {
     let closeStarboard = function() {
       let button = jQuery("." + cssConstants.STARBOARD_CONTROL + "> button");
@@ -98,8 +113,10 @@ export class StarboardLayerswitcher extends Component {
     }
     // deep clone arrays before passing them as arguments
     // otherwise we would modify the objects inside the props
-    [layers, states] = this.filterLayers(JSON.parse(JSON.stringify(this.props.objLayers)),
-      JSON.parse(JSON.stringify(this.props.layerStates)));
+    // [layers, states] = this.filterLayers(JSON.parse(JSON.stringify(this.props.objLayers)),
+    //   JSON.parse(JSON.stringify(this.props.layerStates)));
+    layers = this.props.objLayers;
+    states = this.props.layerStates;
     return (
       <div className={cssConstants.STARBOARD_WRAPPER}>
         <Titlebar wrapperClass={"c4g-starboard-header"} headerClass={cssConstants.STARBOARD_HEADLINE}
@@ -115,12 +132,17 @@ export class StarboardLayerswitcher extends Component {
             <div className={cssConstants.STARBOARD_LAYERTREE}>
               <ul>
                 {layers.map((item, id) => {
+
                   // if (item.pid === this.props.mapController.data.id) //skip childs of layers
+                  if (this.filterFunc(this.state.layerFilter, item)) {
                     return <C4gStarboardLayerElement key={id} id={id} mapController={this.props.mapController}
                                                      parentCallback={this.callbackFunction}
                                                      layer={item}
                                                      layerStates={states[id]}
+                                                     strFilter={this.state.layerFilter}
+                                                     filterFunc={this.filterFunc}
                                                      fnResize={this.props.fnResize}/>;
+                  }
                 })}
               </ul>
             </div>
