@@ -1285,7 +1285,7 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
   padding: .4em 0;
 }
 
-.c4g-sideboard:not(.c4g-popup-container) ul {
+.c4g-sideboard:not(.c4g-popup-container):not(.c4g-starboard-container) ul {
   margin: 0;
   padding: 0;
 }
