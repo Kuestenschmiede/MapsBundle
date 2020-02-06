@@ -22,6 +22,7 @@ import Projection from 'ol/proj/Projection';
 import Collection from 'ol/Collection';
 import {utils} from './c4g-maps-utils';
 import {Style, Text, Fill} from 'ol/style';
+import {Point} from "ol/geom";
 const osmtogeojson = require('osmtogeojson');
 
 export class BetterLayerController {
@@ -188,6 +189,7 @@ export class BetterLayerController {
     if (this.mapController.data.cluster_all) {
       this.vectorSource = new Cluster({
         source: this.vectorSource,
+        geometryFunction: this.geometryFunction,
         distance: this.mapController.data.cluster_distance
       });
     }
@@ -404,6 +406,7 @@ export class BetterLayerController {
       if (layer.cluster) {
         vectorSource = new Cluster({
           source: vectorSource,
+          geometryFunction: this.geometryFunction,
           distance: parseInt(layer.cluster.distance, 10)
         });
       }
@@ -512,6 +515,15 @@ export class BetterLayerController {
       }
     }
     return features;
+  }
+  geometryFunction (feature) {
+    let geometry = feature.getGeometry();
+    if (geometry instanceof Point) {
+      return geometry;
+    }
+    else {
+      return null;
+    }
   }
   performOvp (requestData, mapConf, responseFunc) {
     let boundingArray = transformExtent(mapConf.extent, mapConf.projection, 'EPSG:4326');
