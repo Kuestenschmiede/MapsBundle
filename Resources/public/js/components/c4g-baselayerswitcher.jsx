@@ -19,6 +19,7 @@ import {StarboardLayerswitcher} from "./c4g-starboard-layerswitcher";
 import {Titlebar} from "./c4g-titlebar.jsx";
 import {getLanguage} from "./../c4g-maps-i18n";
 import {OverlayControls} from "./c4g-overlay-controls.jsx";
+import {utils} from "../c4g-maps-utils";
 
 export class BaselayerSwitcher extends Component {
 
@@ -176,5 +177,14 @@ export class BaselayerSwitcher extends Component {
 
   close() {
     this.setState({open: false});
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.props.mapController.data.caching && !this.state.open) {
+      let panelVal = utils.getValue('panel');
+      if (panelVal === this.constructor.name) {
+        utils.storeValue('panel', "");
+      }
+    }
   }
 }

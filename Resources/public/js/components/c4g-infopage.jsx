@@ -15,6 +15,7 @@ import React, { Component } from "react";
 import {Titlebar} from "./c4g-titlebar.jsx";
 import {getLanguage} from "../c4g-maps-i18n";
 import {Control} from "ol/control";
+import {utils} from "../c4g-maps-utils";
 
 export class Infopage extends Component {
 
@@ -80,6 +81,15 @@ export class Infopage extends Component {
 
   close() {
     this.setState({open: false});
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.props.mapController.data.caching && !this.state.open) {
+      let panelVal = utils.getValue('panel');
+      if (panelVal === this.constructor.name) {
+        utils.storeValue('panel', "");
+      }
+    }
   }
 
 }

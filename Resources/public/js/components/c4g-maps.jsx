@@ -926,19 +926,25 @@ export class MapController extends Component {
         }
       }
       if (scope.data.caching) {
-        console.log(component);
-        utils.storeValue('panel', component);
+        utils.storeValue('panel', component.constructor.name);
       }
     });
   }
 
   componentDidMount() {
-    console.log(this.components);
     if (this.data.caching) {
       let storedPanel = utils.getValue('panel');
       if (storedPanel) {
-        console.log(storedPanel);
-        storedPanel.setState({open: true});
+        for (let key in this.components) {
+          if (this.components.hasOwnProperty(key)) {
+            if (this.components[key] && this.components[key].constructor.name === storedPanel) {
+              this.components[key].setState({
+                open: true
+              });
+              storedPanel = this.components[key];
+            }
+          }
+        }
         this.setOpenComponent(storedPanel);
       }
     }

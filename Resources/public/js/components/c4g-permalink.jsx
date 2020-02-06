@@ -82,6 +82,12 @@ export class Permalink extends Component {
     if (prevState.open && !this.state.open) {
       jQuery(".c4g-permalink-container").removeClass(cssConstants.OPEN).addClass(cssConstants.CLOSE);
     }
+    if (this.props.mapController.data.caching && !this.state.open) {
+      let panelVal = utils.getValue('panel');
+      if (panelVal === this.constructor.name) {
+        utils.storeValue('panel', "");
+      }
+    }
   }
 
   componentDidMount() {
