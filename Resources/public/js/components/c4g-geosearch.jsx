@@ -43,6 +43,9 @@ export class GeoSearch extends Component {
     button.setAttribute('aria-label', this.langConstants.CTRL_GEOSEARCH);
     button.setAttribute('title', this.langConstants.CTRL_GEOSEARCH);
     element.className = "c4g-geosearch" + " ol-control " + "ol-unselectable";
+    if (props.external) {
+      element.className += " c4g-external";
+    }
     element.appendChild(button);
     jQuery(button).on('click', this.clickControl);
     let control = new Control({element: element, target: props.target});
@@ -160,7 +163,12 @@ export class GeoSearch extends Component {
     } else {
       jQuery(".c4g-geosearch-container-right").addClass("c4g-close").removeClass("c4g-open");
     }
-
+    if (this.props.mapController.data.caching && !this.state.open) {
+      let panelVal = utils.getValue('panel');
+      if (panelVal === this.constructor.name) {
+        utils.storeValue('panel', "");
+      }
+    }
   }
 
   close() {

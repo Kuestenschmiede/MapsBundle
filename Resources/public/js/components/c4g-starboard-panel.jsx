@@ -18,6 +18,7 @@ import {cssConstants} from "./../c4g-maps-constant";
 import {StarboardLayerswitcher} from "./c4g-starboard-layerswitcher";
 import {getLanguage} from "./../c4g-maps-i18n";
 import {Titlebar} from "./c4g-titlebar";
+import {utils} from "../c4g-maps-utils";
 
 export class StarboardPanel extends Component {
 
@@ -34,6 +35,9 @@ export class StarboardPanel extends Component {
       element.className += "c4g-open";
     } else {
       element.className += "c4g-close";
+    }
+    if (props.external) {
+      element.className += " c4g-external";
     }
     element.appendChild(button);
     jQuery(element).on('click', function(event) {
@@ -143,6 +147,12 @@ export class StarboardPanel extends Component {
       this.slideOutCollidingElements();
     } else {
       this.slideInCollidingElements();
+    }
+    if (this.props.mapController.data.caching && !this.state.open) {
+      let panelVal = utils.getValue('panel');
+      if (panelVal === this.constructor.name) {
+        utils.storeValue('panel', "");
+      }
     }
   }
 

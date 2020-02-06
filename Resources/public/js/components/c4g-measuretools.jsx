@@ -19,6 +19,7 @@ import {MeasuretoolsView} from "./c4g-measuretools-view.jsx";
 import {Group, Vector} from "ol/layer";
 import {Vector as VectorSource} from "ol/source";
 import {Collection} from "ol";
+import {utils} from "../c4g-maps-utils";
 
 export class Measuretools extends Component {
 
@@ -36,6 +37,9 @@ export class Measuretools extends Component {
       element.className += "c4g-open";
     } else {
       element.className += "c4g-close";
+    }
+    if (props.external) {
+      element.className += " c4g-external";
     }
     element.appendChild(button);
     jQuery(element).on('click', function (event) {
@@ -198,6 +202,12 @@ export class Measuretools extends Component {
         }
       }
       this.addTooltips();
+    }
+    if (this.props.mapController.data.caching && !this.state.open) {
+      let panelVal = utils.getValue('panel');
+      if (panelVal === this.constructor.name) {
+        utils.storeValue('panel', "");
+      }
     }
   }
 

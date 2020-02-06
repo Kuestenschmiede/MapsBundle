@@ -832,7 +832,7 @@ export class MapController extends Component {
           }} target={target}
                           mapController={this} objLayers={this.state.objLayers} tabLayers={this.state.objTabLayers} tabStates={this.state.arrTabLayerStates}
                           layerStates={this.state.arrLayerStates} parentCallback={this.setLayerStates} tabCallback={this.setTabStates}
-                          direction={"right"} open={(this.props.mapData.initial_open_comp === "starboard")}
+                          direction={"right"} open={(this.props.mapData.initial_open_comp === "starboard")} external={this.reactContainer.className.indexOf("c4g-external") !== -1}
           />,
           this.reactContainer
       );
@@ -851,7 +851,7 @@ export class MapController extends Component {
     let infoPortal = "";
     if (mapData.legend.enable) {
       infoPortal = ReactDOM.createPortal(
-        <Infopage ref={(node) => {this.components.infopage = node;}} target={target}
+        <Infopage ref={(node) => {this.components.infopage = node;}} target={target} external={this.infoPageContainer.className.indexOf("c4g-external") !== -1}
                   infoContent={mapData.infopage} mapController={this} open={mapData.initial_open_comp === "legend"}/>,
         this.infoPageContainer
       );
@@ -862,7 +862,7 @@ export class MapController extends Component {
       blsPortal = ReactDOM.createPortal(
           <BaselayerSwitcher ref={(node) => {
             this.components.baselayerSwitcher = node;
-          }} target={target} open={mapData.initial_open_comp === "baselayers"}
+          }} target={target} open={mapData.initial_open_comp === "baselayers"} external={this.baselayerContainer.className.indexOf("c4g-external") !== -1}
                              mapController={this} baselayerController={this.proxy.baselayerController}/>,
           this.baselayerContainer
       );
@@ -870,7 +870,7 @@ export class MapController extends Component {
     let measurePortal = "";
     if (mapData.measuretools.enable) {
       measurePortal = ReactDOM.createPortal(
-        <Measuretools ref={(node) => {this.components.measuretools = node;}} target={target}
+        <Measuretools ref={(node) => {this.components.measuretools = node;}} target={target} external={this.measuretoolsContainer.className.indexOf("c4g-external") !== -1}
           mapController={this} open={mapData.initial_open_comp === "measuretools"}/>,
         this.measuretoolsContainer
       );
@@ -878,7 +878,8 @@ export class MapController extends Component {
     let permaPortal = "";
     if (mapData.permalink.enable) {
       permaPortal = ReactDOM.createPortal(
-        <Permalink ref={(node) => {this.components.permalink = node;}} mapController={this} target={target}/>,
+        <Permalink ref={(node) => {this.components.permalink = node;}} mapController={this} target={target}
+                   external={this.permalinkContainer.className.indexOf("c4g-external") !== -1}/>,
         this.permalinkContainer
       );
     }
@@ -926,19 +927,25 @@ export class MapController extends Component {
         }
       }
       if (scope.data.caching) {
-        console.log(component);
-        utils.storeValue('panel', component);
+        utils.storeValue('panel', component.constructor.name);
       }
     });
   }
 
   componentDidMount() {
-    console.log(this.components);
     if (this.data.caching) {
       let storedPanel = utils.getValue('panel');
       if (storedPanel) {
-        console.log(storedPanel);
-        storedPanel.setState({open: true});
+        for (let key in this.components) {
+          if (this.components.hasOwnProperty(key)) {
+            if (this.components[key] && this.components[key].constructor.name === storedPanel) {
+              this.components[key].setState({
+                open: true
+              });
+              storedPanel = this.components[key];
+            }
+          }
+        }
         this.setOpenComponent(storedPanel);
       }
     }
@@ -949,6 +956,19 @@ export class MapController extends Component {
     // geosearch
     let geosearchOptions = {};
     if ((mapData.geosearch && mapData.geosearch.enable)) {
+
+      if (!this.searchContainer) {
+        if (mapData.geosearch.div) {
+          this.searchContainer = document.querySelector("." + mapData.geosearch.div);
+        } else {
+          this.searchContainer = document.createElement('div');
+          this.searchContainer.className = "c4g-sideboard c4g-geosearch-container-right ";
+          this.searchContainer.className += mapData.geosearch.collapsed ? "c4g-close" : "c4g-open";
+        }
+        if (!mapData.geosearch.div) {
+          this.$overlaycontainer_stopevent.append(this.searchContainer);
+        }
+      }
       geosearchOptions = {
         mapController: this,
         target: document.querySelector('#' + mapData.mapDiv + ' .c4g-control-container-top-left'),
@@ -971,20 +991,9 @@ export class MapController extends Component {
         resultsHeadline: mapData.geosearch.results_headline,
         headline: mapData.geosearch.headline,
         resultStyle: mapData.geosearch.result_locstyle,
-        placeholder: mapData.geosearch.placeholder
+        placeholder: mapData.geosearch.placeholder,
+        external: this.searchContainer.className.indexOf("c4g-external") !== -1
       };
-      if (!this.searchContainer) {
-        if (mapData.geosearch.div) {
-          this.searchContainer = document.querySelector("." + mapData.geosearch.div);
-        } else {
-          this.searchContainer = document.createElement('div');
-          this.searchContainer.className = "c4g-sideboard c4g-geosearch-container-right ";
-          this.searchContainer.className += mapData.geosearch.collapsed ? "c4g-close" : "c4g-open";
-        }
-        if (!mapData.geosearch.div) {
-          this.$overlaycontainer_stopevent.append(this.searchContainer);
-        }
-      }
     }
     return geosearchOptions;
   }
