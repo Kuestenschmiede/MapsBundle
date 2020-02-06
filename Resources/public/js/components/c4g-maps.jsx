@@ -84,6 +84,7 @@ export class MapController extends Component {
     };
     this.setObjLayers = this.setObjLayers.bind(this);
     this.setLayerStates = this.setLayerStates.bind(this);
+    this.setTabStates = this.setTabStates.bind(this);
     this.map = null;
 
     langConstants = getLanguage(mapData);
@@ -784,6 +785,12 @@ export class MapController extends Component {
     });
   }
 
+  setTabStates(states) {
+    this.setState({
+      arrTabLayerStates: states
+    });
+  }
+
   hideOtherComponents(objComponent) {
     let components = this.components;
     for (let key in components) {
@@ -824,7 +831,7 @@ export class MapController extends Component {
             this.components.starboard = node;
           }} target={target}
                           mapController={this} objLayers={this.state.objLayers} tabLayers={this.state.objTabLayers} tabStates={this.state.arrTabLayerStates}
-                          layerStates={this.state.arrLayerStates} parentCallback={this.setLayerStates}
+                          layerStates={this.state.arrLayerStates} parentCallback={this.setLayerStates} tabCallback={this.setTabStates}
                           direction={"right"} open={(this.props.mapData.initial_open_comp === "starboard")}
           />,
           this.reactContainer

@@ -207,6 +207,6 @@ export class C4gStarboardLayerElement extends Component {
         </li>
       )
     }
-    }
+  }
 
 }

@@ -1176,9 +1176,12 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['excludeFromSingleLayer'],
             'exclude'                 => true,
-            'inputType'               => 'checkbox',
-            'default'                 => false,
-            'sql'                     => "char(1) NOT NULL default ''"
+            'inputType'               => 'radio',
+            'options'                 => ['2','1','0'],
+            'eval'                    => ['mandatory'=>true, 'submitOnChange' => true],
+            'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['excludeFromSingleLayer'],
+            'default'                 => '2',
+            'sql'                     => "char(1) NOT NULL default '2'"
             ]
         ]
     ];
@@ -1386,21 +1389,6 @@ class tl_c4g_maps extends Backend
      */
     public function generateLabel($row, $label, $dc)
     {
-        //needed for published toggle
-//        if (!$row['location_type']) {
-//            \Contao\Controller::reload();
-
-//            $objMap = $this->Database->prepare("SELECT name, location_type, published, is_map FROM tl_c4g_maps WHERE id=?")
-//                ->limit(1)
-//                ->execute($row['id']);
-//            if ($objMap->numRows > 0) {
-//                $row['name'] = $objMap->name;
-//                $row['location_type'] = $objMap->location_type;
-//                $row['published'] = $objMap->published;
-//                $row['is_map'] = $objMap->is_map;
-//            }
-//        }
-
         $image = 'bundles/con4gismaps/images/be-icons/';
 
         //Backwards compatibility (data < con4gis 7): so that maps are set as maps again. is_map can removed in later versions.
@@ -1409,8 +1397,6 @@ class tl_c4g_maps extends Backend
             $row['is_map'] = '0';
             Database::getInstance()->prepare("UPDATE tl_c4g_maps SET location_type=?, is_map=? WHERE is_map=?")->execute($row['location_type'],$row['is_map'],'1');
         }
-
-        $excludeFromSingleLayer = '';
 
         switch ($row['location_type']) {
             case 'map':
@@ -1424,19 +1410,15 @@ class tl_c4g_maps extends Backend
                 break;
             case 'table':
                 $image .= 'table';
-                $excludeFromSingleLayer = '1';
                 break;
             case 'gpx':
                 $image .= 'gpx';
-                $excludeFromSingleLayer = '1';
                 break;
             case 'kml':
                 $image .= 'kml';
-                $excludeFromSingleLayer = '1';
                 break;
             case 'geojson':
                 $image .= 'geojson';
-                $excludeFromSingleLayer = '1';
                 break;
             case 'osm':
                 $image .= 'osm';
@@ -1455,7 +1437,6 @@ class tl_c4g_maps extends Backend
                 break;
             case 'folder':
                 $image .= 'from_path';
-                $excludeFromSingleLayer = '1';
                 break;
             case 'gnrcPrjct':
                 $image .= 'editor';
@@ -1490,10 +1471,6 @@ class tl_c4g_maps extends Backend
 
         if ($row['location_type'] != 'map') {
             $label = ' '.$row['name'];
-        }
-
-        if ($excludeFromSingleLayer && ($row['excludeFromSingleLayer'] === '')) {
-            Database::getInstance()->prepare("UPDATE tl_c4g_maps SET excludeFromSingleLayer=? WHERE id=?")->execute($excludeFromSingleLayer, $row['id']);
         }
 
         return Image::getHtml($image) . $label;
