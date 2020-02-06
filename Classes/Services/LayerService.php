@@ -411,6 +411,9 @@ class LayerService
         if ($objLayer->hideInStarboard) {
             $arrLayerData['hideInStarboard'] = true;
         }
+        if ($objLayer->excludeFromSingleLayer) {
+            $arrLayerData['excludeFromSingleLayer'] = true;
+        }
 
         $arrLayerData['type'] = $objLayer->location_type;
         if ($objLayer->location_type === 'link') {
@@ -461,7 +464,9 @@ class LayerService
     {
         $arrLayerData['link_id'] = $objLayer->link_id;
         $linkedLayer = C4gMapsModel::findByPk($objLayer->link_id);
-
+        if (!$linkedLayer->published) {
+            return $arrLayerData;
+        }
         // check if linked element is overpass request and assign correct content values
         if (($linkedLayer->location_type !== 'none') && ($linkedLayer->location_type !== 'map')) {
             // TODO check with nested link structures

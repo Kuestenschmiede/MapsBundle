@@ -953,6 +953,9 @@ class LayerContentService
             // link has not been resolved yet
             $linkedLayer = C4gMapsModel::findById($layer->link_id);
             $arrReturnData = $this->getLayerData($linkedLayer->id);
+            if (!$arrReturnData['published']) {
+                return false;
+            }
             $this->resolvedLinks[$layer->link_id] = $arrReturnData;
         } else {
             $arrReturnData = $this->resolvedLinks[$layer->link_id];

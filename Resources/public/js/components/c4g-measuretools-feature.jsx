@@ -13,11 +13,14 @@
 import React, { Component } from "react";
 import {getLanguage} from "../c4g-maps-i18n";
 import {utils} from "../c4g-maps-utils";
+import {TooltipPopUp} from "./../c4g-maps-misc-tooltippopup";
 
 export class MeasuredFeature extends Component {
 
   constructor(props) {
     super(props);
+
+    this.changeFeatureLabel = this.changeFeatureLabel.bind(this);
   }
 
   render() {
@@ -26,7 +29,8 @@ export class MeasuredFeature extends Component {
       <div>
         <div>
           <label htmlFor={"measureElement_" + this.props.idx}>Name: </label>
-          <input type="text" name={"measureElement_" + this.props.idx} defaultValue={this.props.label}/>
+          <input type="text" name={"measureElement_" + this.props.idx} defaultValue={this.props.label}
+                  onInput={this.changeFeatureLabel}/>
         </div>
         {Object.keys(this.props.measuredValues).map(function(element, index) {
           let obj = scope.props.measuredValues[element];
@@ -42,11 +46,18 @@ export class MeasuredFeature extends Component {
           }
           return (<p key={index}>
             <strong>{obj.description}</strong>
-            <span>{hrValue}</span>
+            <span className={"c4g-measure-value-" + scope.props.idx}>{hrValue}</span>
           </p>)
         })}
       </div>
     );
+  }
+
+  changeFeatureLabel() {
+    let feature = this.props.feature;
+    feature.label = document.querySelector('input[name="measureElement_' + this.props.idx + '"]').value;
+    let length = document.querySelector('.c4g-measure-value-' + this.props.idx).innerHTML;
+    this.props.modifyFeature(feature, feature.id);
   }
 
   convertMetersToKm(distance) {

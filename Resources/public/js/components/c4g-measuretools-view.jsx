@@ -32,6 +32,7 @@ export class MeasuretoolsView extends Component {
     };
     this.featureIdCtr = this.props.featureId;
     this.updateFunctions = this.createMeasureFunctions();
+    this.modifyFeature = this.modifyFeature.bind(this);
   }
 
   render() {
@@ -53,8 +54,8 @@ export class MeasuretoolsView extends Component {
             <div>
               {Object.keys(this.props.features).map(function(element, index) {
                 let feat = scope.props.features[element];
-                return (<MeasuredFeature key={index} idx={index} label={feat.label}
-                                         measuredValues={feat.measuredValues} />);
+                return (<MeasuredFeature key={index} idx={index} label={feat.label} feature={feat}
+                                         measuredValues={feat.measuredValues} modifyFeature={scope.modifyFeature}/>);
               })}
             </div>
           </div>
@@ -65,6 +66,18 @@ export class MeasuretoolsView extends Component {
       return null;
     }
 
+  }
+
+  modifyFeature(feature, id) {
+    let arrFeatures = this.props.features;
+    for (let i = 0; i < arrFeatures.length; i++) {
+      if (arrFeatures[i].id === id) {
+        arrFeatures[i].olFeature.set('featureLabel', feature.label);
+        this.updateMeasureFeature(arrFeatures[i].olFeature);
+        break;
+      }
+    }
+    this.props.modifyFeature(feature, id);
   }
 
   componentDidMount() {
@@ -206,6 +219,7 @@ export class MeasuretoolsView extends Component {
             value: 0
           };
         }
+        measuredFeature.olFeature = feature;
         scope.props.addFeature(measuredFeature);
         // increase the id-counter
         scope.props.incrFeatId();
@@ -230,6 +244,7 @@ export class MeasuretoolsView extends Component {
         newFeature.label = name;
         newFeature.id = featureId;
         newFeature.measuredValues = {};
+        newFeature.olFeature = feature;
         if (length) {
           newFeature.measuredValues.line = {};
           newFeature.measuredValues['line'].description = "Länge: ";
@@ -256,6 +271,8 @@ export class MeasuretoolsView extends Component {
         feature.set('tooltip', featureTooltip);
         scope.props.modifyFeature(newFeature, newFeature.id);
       }; // end of "updateMeasureFeature()"
+
+      scope.updateMeasureFeature = updateMeasureFeature;
 
       removeMeasureFeature = function (feature) {
         scope.props.removeFeature(feature.get('featureId'));
