@@ -704,16 +704,6 @@ ul.c4g-overlays li a{
   display: none;
 }
 
-.ol-attribution.ol-uncollapsible {
-  bottom: 0;
-  right: 0;
-  height: 1.1em;
-
-  line-height: 1em;
-
-  border-radius: 4px 0 0;
-}
-
 .ol-attribution.ol-uncollapsible button {
   display: none;
 }
