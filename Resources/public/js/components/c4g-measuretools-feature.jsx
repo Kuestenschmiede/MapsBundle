@@ -56,7 +56,6 @@ export class MeasuredFeature extends Component {
   changeFeatureLabel() {
     let feature = this.props.feature;
     feature.label = document.querySelector('input[name="measureElement_' + this.props.idx + '"]').value;
-    let length = document.querySelector('.c4g-measure-value-' + this.props.idx).innerHTML;
     this.props.modifyFeature(feature, feature.id);
   }
 
