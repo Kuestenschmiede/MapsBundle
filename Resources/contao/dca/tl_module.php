@@ -24,7 +24,10 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_search']       =   '{title_lege
                                                                     '{c4g_search_legend},c4g_map_site_id,c4g_map_zoomlevel,c4g_map_placeholder;'.
                                                                     '{protected_legend:hide},protected;'.
                                                                     '{expert_legend:hide},guests,cssID,space';
-$GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_external_map_element'] = '{title_legend},name,headline,type,c4g_element_type;';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_external_map_element'] = '{title_legend},name,headline,type;'.
+                                                                          '{c4g_external_legend},c4g_element_type;'.
+                                                                          '{protected_legend:hide},protected;'.
+                                                                          '{expert_legend:hide},guests,cssID,space';
 
 if (C4GVersionProvider::isInstalled('con4gis/forum'))
 {
