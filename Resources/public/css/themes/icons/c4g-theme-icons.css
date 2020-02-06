@@ -5,11 +5,14 @@
   font-style: normal;
 }
 
+.ol-control button:before {
+  font-family: 'Font Awesome 5 Free';
+}
+
 
 .mod_c4g_maps input[type='checkbox'] + label,
 .c4g-layertree a:after,
 .c4g-baselayertree a:before,
-.ol-control button,
 .c4g-control button,
 .c4g-icon {
   display: inline-block;
@@ -36,6 +39,7 @@
   font-weight: 900;
   font-size: inherit;
 }
+
 .mod_c4g_maps input[type='checkbox'] {
   display: none;
 }
