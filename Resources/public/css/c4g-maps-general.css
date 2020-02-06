@@ -40,9 +40,6 @@
 /*
  *  Z-Indexes
  */
-.ol-control {
-  z-index: 40;
-}
 
 .ol-dragbox {
   border: 1px dashed black;
@@ -668,7 +665,7 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
 .ol-attribution.ol-uncollapsible ul {
   float: none;
   margin: 0;
-  padding: 2px;
+  padding: .2em;
 }
 
 
@@ -696,13 +693,7 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
 .ol-attribution:not(.ol-collapsed) button:hover:after {
   display: none;
 }
-.ol-attribution.ol-uncollapsible {
-  bottom: 0;
-  right: 0;
-  height: 1.1em;
-  line-height: 1em;
-  border-radius: 4px 0 0;
-}
+
 .ol-attribution.ol-uncollapsible button {
   display: none;
 }

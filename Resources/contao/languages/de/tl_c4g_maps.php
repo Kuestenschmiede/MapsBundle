@@ -18,18 +18,9 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['name'] = array('Name', 'Name der Karte bzw. 
 $GLOBALS['TL_LANG']['tl_c4g_maps']['profile'] = array('Kartenprofil', 'Wählen Sie hier bitte ein Kartenprofil, das die Darstellung bestimmt. Kartenprofile werden über den Menüpunkt "Kartenprofile" unter "Layout" gepflegt. Falls Sie kein eigenes Kartenprofil wählen, dann wird standardmäßig mit OpenStreetMaps Mapnik Karten gearbeitet.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['profile_mobile'] = array('Kartenprofil mobil', 'Optional: Kartenprofil, das für mobile Endgeräte verwendet wird.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['published'] = array('Veröffentlicht', 'Legt fest, ob die Karte bzw. die Lokation veröffentlicht wird.');
-// $GLOBALS['TL_LANG']['tl_c4g_maps']['mapsize'] = array('Größe der Karte (Breite, Höhe)', 'Geben Sie hier die Größe der Karte im Frontend ein.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['width'] = array('Breite der Karte', 'Geben Sie hier die Breite der Karte im Frontend ein.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['height'] = array('Höhe der Karte', 'Geben Sie hier die Höhe der Karte im Frontend ein.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['margin'] = array('Abstand der Karte', 'Geben Sie hier den Abstand der Karte zu umliegenden Elementen ein.');
-// $GLOBALS['TL_LANG']['tl_c4g_maps']['auto_width'] = array('Rechten Kartenrand am Browser ausrichten', 'Wählen Sie diese Option, um den rechten Kartenrand am Browserfenster auszurichten.');
-// $GLOBALS['TL_LANG']['tl_c4g_maps']['auto_width_gap'] = array('Abstand zum rechten Rand (Pixel)', 'Geben Sie den Abstand des rechten Randes des Browserfensters zum rechten Rand der Karte in Pixeln ein.');
-// $GLOBALS['TL_LANG']['tl_c4g_maps']['auto_width_min'] = array('Mindestbreite (Pixel)', 'Geben Sie die Mindestbreite der Karte ein, die nicht unterschritten werden darf.');
-// $GLOBALS['TL_LANG']['tl_c4g_maps']['auto_width_max'] = array('Maximale Breite (Pixel)', 'Geben Sie die maximale Breite der Karte ein, die nicht überschritten werden darf.');
-// $GLOBALS['TL_LANG']['tl_c4g_maps']['auto_height'] = array('Unteren Kartenrand am Browser ausrichten', 'Wählen Sie diese Option, um den unteren Kartenrand am Browserfenster auszurichten.');
-// $GLOBALS['TL_LANG']['tl_c4g_maps']['auto_height_gap'] = array('Abstand zum unteren Rand (Pixel)', 'Geben Sie den Abstand des unteren Randes des Browserfensters zum unteren Rand der Karte in Pixeln ein.');
-// $GLOBALS['TL_LANG']['tl_c4g_maps']['auto_height_min'] = array('Mindesthöhe (Pixel)', 'Geben Sie die Mindesthöhe der Karte ein, die nicht unterschritten werden darf.');
-// $GLOBALS['TL_LANG']['tl_c4g_maps']['auto_height_max'] = array('Maximale Höhe (Pixel)', 'Geben Sie die maximale Höhe der Karte ein, die nicht überschritten werden darf.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['show_locations'] = array('Alle Lokationen anzeigen', 'Passt den Kartenausschnitt so an, dass alle Lokationen gezeigt werden. Funktioniert nicht mit Daten, die erst zur Laufzeit geladen werden (z.B. Overpass-Abfragen).');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['min_gap'] = array('Mindestabstand der Lokationen zum Kartenrand in Pixeln', 'Diese Einstellung ist sinnvoll, wenn nach der automatischen Ermittlung des anzuzeigenden Kartenausschnitts Ihre Icons aufgrund ihrer Größe über den Kartenrand hinausgehen.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['center_geox'] = array('Geo X-Koordinate', 'Geben Sie hier die X-Koordinate (Breitengrad, WGS-84) der Kartenmitte ein.');
@@ -123,6 +114,8 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['awesomeicon'] = array('Icon für den Reiter'
 $GLOBALS['TL_LANG']['tl_c4g_maps']['hide_when_in_tab'] = array("Ausblenden wenn im Starboard-Reiter", "Wenn Sie diese Checkbox setzen, wird die Ebene im Starboard nicht angezeigt, wenn es in einem eigenen Starboardreiter liegt. Das ist hilfreich, wenn Sie das Elternelement einer bereits vorhandenen Strukturebene im Reiter nicht anzeigen wollen.");
 $GLOBALS['TL_LANG']['tl_c4g_maps']['hideInStarboard'] = array("Im Starboard nicht darstellen", "Wenn Sie diese Checkbox setzen, wird die Ebene im Starboard nicht angezeigt. Darunter liegende Kindelemente werden aber normal dargestellt.");
 $GLOBALS['TL_LANG']['tl_c4g_maps']['cssClass'] = array("CSS Klasse", "Die CSS Klasse wird am Listenelement im Starboard gesetzt.");
+
+$GLOBALS['TL_LANG']['tl_c4g_maps']['excludeFromSingleLayer'] = array("Strukturelement separat händeln.", "Dieser Parameter ist bestmöglich vorbelegt. Nur im Einzelfall, insbesondere bei Massendaten, kann es sinnvoll sein die Checkbox zu verändern.");
 /**
  * Buttons
  */

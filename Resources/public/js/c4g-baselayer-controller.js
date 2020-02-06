@@ -32,8 +32,6 @@ import VectorTileLayer from 'ol/layer/VectorTile';
 import ol_source_GeoImage from "ol-ext/source/GeoImage";
 import Projection from "ol/proj/Projection";
 import {ImageStatic} from "ol/source";
-import {Layerswitcher} from "./c4g-maps-control-starboardplugin-layerswitcher";
-import {Baselayerswitcher} from "./c4g-maps-control-starboardplugin-baselayerswitcher";
 
 export class C4gBaselayerController {
   constructor(proxy) {

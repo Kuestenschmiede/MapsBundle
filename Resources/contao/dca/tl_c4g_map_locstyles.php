@@ -469,7 +469,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_offset'],
             'exclude'                 => true,
-            'default'                 => ['0','10'],
+            'default'                 => ['0','0'],
             'inputType'               => 'imageSize',
             'options'                  => $imageSizes,
             'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],

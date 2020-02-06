@@ -18,11 +18,6 @@
 /*
  *  Controls - general
  */
-.ol-control {
-  border-radius: var(--button-radius-percent);
-  padding: 2px;
-  border: none;
-}
 
 .ol-control button,
 .c4g-control button {
@@ -241,7 +236,6 @@ button.ol-zoom-out {
 .ol-scale-line {
   display: inline-block;
   padding: 2px;
-  border-radius: 4px;
 }
 .ol-scale-line-inner {
   margin: 1px;
@@ -257,7 +251,6 @@ button.ol-zoom-out {
 .c4g-control-container-bottom-left-sub {
   padding: 0 .4em;
   font-size: 12px;
-  border-radius: 4px;
 }
 
 .c4g-zoom-level:before {
@@ -680,10 +673,7 @@ ul.c4g-overlays li a{
 /*
  *  Overview-map
  */
-.c4g-overviewmap{
-  height: 38px;
-  width: 38px;
-}
+
 .c4g-overviewmap .ol-overviewmap-box {
   border: 1px solid;
   border-radius: 0%;
@@ -712,16 +702,6 @@ ul.c4g-overlays li a{
 .ol-attribution.ol-collapsed ul,
 .ol-attribution:not(.ol-collapsed) button:hover:after {
   display: none;
-}
-
-.ol-attribution.ol-uncollapsible {
-  bottom: 0;
-  right: 0;
-  height: 1.1em;
-
-  line-height: 1em;
-
-  border-radius: 4px 0 0;
 }
 
 .ol-attribution.ol-uncollapsible button {
@@ -978,8 +958,8 @@ button.c4g-baselayer-close:before{
 }
 
 .c4g-control-container-bottom-left {
-  max-width: calc(100% - 32px - 1.6em);
-  left: calc(var(--button-size-pixel) + 1.4em);
+  max-width: calc(100% - var(--button-size-pixel) - 1.6em);
+  left: calc(var(--button-size-pixel) + .8em);
   position: absolute;
   bottom: .2em;
 }

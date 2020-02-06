@@ -11,22 +11,15 @@
  */
 
 import {cssConstants} from "./c4g-maps-constant";
-import {utils} from "./c4g-maps-utils";
-import {Measuretools} from "./c4g-maps-control-portside-measuretools";
 import {Print} from "./c4g-maps-control-print";
 import {Grid} from "./c4g-maps-control-grid";
 import {Zoomlevel} from "./c4g-maps-control-zoomlevel";
 import {OverviewMap} from "./c4g-maps-control-overviewmap";
-import {Permalink} from "./c4g-maps-control-permalink";
 import {GeoPicker} from "./c4g-maps-interaction-geopicker";
 import {Home} from "./c4g-maps-control-home";
 import {Position} from "./c4g-maps-control-position";
-import {Infopage} from "./c4g-maps-control-portside-infopage";
-import {View} from "ol";
 import {transform} from "ol/proj";
-import {Map} from "ol";
 import {Zoom} from "ol/control";
-//import {ZoomSlider} from "ol/control";
 import {ZoomToExtent} from "ol/control";
 import {FullScreen} from "ol/control";
 import {Rotate} from "ol/control";
@@ -35,8 +28,6 @@ import {MousePosition} from "ol/control";
 import {Attribution} from "ol/control";
 import {toStringHDMS} from "ol/coordinate";
 import {get} from "ol/proj";
-//import ol_control_GeoBookmark from "ol-ext/control/GeoBookmark"
-import {FeatureFilter} from "./components/c4g-feature-filter.jsx";
 import {getLanguage} from "./c4g-maps-i18n";
 
 let langConstants = {};
@@ -267,6 +258,20 @@ export class MapsControls {
             }
         }
 
+        //con4gis logo
+        if (mapData.attribution.cfg_logo) {
+            let logoLink = document.createElement('a');
+            logoLink.href = 'https://con4gis.org';
+            logoLink.title = 'built with con4gis';
+            logoLink.target = '_blank';
+            logoLink.rel = 'noopener noreferrer';
+            logoLink.className = cssConstants.ATTRIBUTION_LOGO;
+            let logoGraphic = document.createElement('img');
+            logoGraphic.src = 'bundles/con4gismaps/images/logo_con4gis.svg';
+            logoGraphic.alt = 'con4gis logo';
+            logoLink.appendChild(logoGraphic);
+            controlContainerBottomLeft.appendChild(logoLink);
+        }
 
         // scaleline
         if (mapData.scaleline) {
@@ -304,19 +309,6 @@ export class MapsControls {
         }
         // show attribution
         if (mapData.attribution.enable) {
-            if (mapData.attribution.cfg_logo) {
-                let logoLink = document.createElement('a');
-                logoLink.href = 'https://con4gis.org';
-                logoLink.title = 'built with con4gis';
-                logoLink.target = '_blank';
-                logoLink.rel = 'noopener noreferrer';
-                logoLink.className = cssConstants.ATTRIBUTION_LOGO;
-                let logoGraphic = document.createElement('img');
-                logoGraphic.src = 'bundles/con4gismaps/images/logo_con4gis.svg';
-                logoGraphic.alt = 'con4gis logo';
-                logoLink.appendChild(logoGraphic);
-                controlContainerBottomRight.appendChild(logoLink);
-            }
             const attrOptions = {
                 label: ' ',
                 tipLabel: langConstants.CTRL_ATTRIBUTION,
