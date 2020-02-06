@@ -102,7 +102,7 @@ button.c4g-permalink-close:before{
   font-size: inherit;
 }
 span.ol-compass:before {
-  content: "\f062";
+  content: "\f021";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;
@@ -164,18 +164,6 @@ span.c4g-active ul li.c4g-active:before{
 }
 .c4g-infopage-control .c4g-open > button:before {
   content: "\f129";
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
-  font-size: inherit;
-}
-.c4g-account.c4g-open > button:before {
-  font-weight: 100;
-  content: "\f007";
-  font-family: 'Font Awesome 5 Free';
-  font-size: inherit;
-}
-.c4g-account.c4g-close > button:before {
-  content: "\f007";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;
