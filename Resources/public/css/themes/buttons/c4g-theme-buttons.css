@@ -23,17 +23,14 @@
 .c4g-control button {
   display: block;
   padding: 0;
-  font-size: 16px;
   font-size: var(--button-fontsize-pixel);
   text-decoration: none;
   text-align: center;
-  height: 36px; /*1.974em;*/
-  width: 36px; /*1.974em;*/
   height: var(--button-size-pixel);
   width: var(--button-size-pixel);
   border: none;
-  border-radius: 0%;
   border-radius: var(--button-radius-percent);
+  cursor: crosshair;
 }
 
 .ol-control button::-moz-focus-inner {
@@ -704,16 +701,6 @@ ul.c4g-overlays li a{
   display: none;
 }
 
-.ol-attribution.ol-uncollapsible {
-  bottom: 0;
-  right: 0;
-  height: 1.1em;
-
-  line-height: 1em;
-
-  border-radius: 4px 0 0;
-}
-
 .ol-attribution.ol-uncollapsible button {
   display: none;
 }
@@ -973,6 +960,11 @@ button.c4g-baselayer-close:before{
   position: absolute;
   bottom: .2em;
 }
+
+.c4g-control-container-bottom-left > a {
+  display: block;
+}
+
 
 .c4g-control-container-bottom-left.ol-unselectable div {
   width: max-content;

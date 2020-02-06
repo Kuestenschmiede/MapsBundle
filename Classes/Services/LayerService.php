@@ -411,8 +411,12 @@ class LayerService
         if ($objLayer->hideInStarboard) {
             $arrLayerData['hideInStarboard'] = true;
         }
+
+        $arrLayerData['excludeFromSingleLayer'] = false;
         if ($objLayer->excludeFromSingleLayer) {
-            $arrLayerData['excludeFromSingleLayer'] = true;
+            if (($objLayer->excludeFromSingleLayer === '1') || in_array($objLayer->location_type, ['table','gpx','kml','geojson','overpass','folder'])) {
+                $arrLayerData['excludeFromSingleLayer'] = true;
+            }
         }
 
         $arrLayerData['type'] = $objLayer->location_type;
