@@ -6,17 +6,13 @@
   --pu-main-color: rgba(24, 61, 93,.8);
 }
 
-.ol-control,
 .ol-control button,
 .c4g-permalink-popup button {
-  color: rgba(255,255,255,.9);
   color: var(--font-color);
-  background-color: rgba(24, 61, 93,.8);
   background-color: var(--main-color);
   background-image: none;
 }
 
-.ol-control:hover,
 .ol-control button:focus,
 .ol-control button:hover,
 .c4g-permalink-popup button:focus,
@@ -336,10 +332,6 @@ span.c4g-active ul li.c4g-active{
 /*
  *  Attribution
  */
-.ol-attribution:not(.ol-collapsed) {
-  background: rgba(24, 61, 93,.8);
-  background: var(--main-color);
-}
 
 /*
  * Permalink
