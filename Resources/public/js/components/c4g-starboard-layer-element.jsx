@@ -15,7 +15,9 @@ import React, { Component } from "react";
 import {cssConstants} from "./../c4g-maps-constant.js";
 import Collection from "ol/Collection";
 import {Vector as VectorSource} from "ol/source";
-import {Cluster} from "ol/source";
+import {Vector} from "ol/layer";
+import {Cluster as ClusterSource} from "ol/source";
+import {Cluster} from "ol/layer";
 
 export class C4gStarboardLayerElement extends Component {
 
@@ -32,8 +34,22 @@ export class C4gStarboardLayerElement extends Component {
   }
 
 
-  showLayer(features = null) {
+  showLayer(showElements = null) {
     const scope = this;
+    let features = false;
+    let vectorLayer = false;
+    if (showElements) {
+      if (showElements.isArray && showElements.isArray()) {
+        features = showElements;
+      }
+      else if (showElements instanceof Vector) {
+        vectorLayer = showElements;
+      }
+    }
+    else {
+      features = features || scope.props.layer.features;
+      vectorLayer = vectorLayer || scope.props.layer.vectorLayer;
+    }
     features = features || scope.props.layer.features;
     let layerController = scope.props.mapController.proxy.layerController;
     if (scope.props.layer.loader >= 0 && layerController.loaders[scope.props.layer.loader] && layerController.loaders[scope.props.layer.loader].preventLoading) {
@@ -53,7 +69,7 @@ export class C4gStarboardLayerElement extends Component {
       layerController.vectorSource = new VectorSource({
         features: layerController.vectorCollection
       });
-      layerController.clusterSource = new Cluster({
+      layerController.clusterSource = new ClusterSource({
         source: layerController.vectorSource,
         geometryFunction: function (feature) {
           let type = feature.getGeometry().getType();
@@ -70,14 +86,27 @@ export class C4gStarboardLayerElement extends Component {
       });
       layerController.vectorLayer.setSource(layerController.vectorSource);
     }
-    else if (scope.props.layer.vectorLayer) {
+    else if (vectorLayer) {
       layerController.mapController.map.addLayer(scope.props.layer.vectorLayer);
     }
   }
 
-  hideLayer(features = null) {
+  hideLayer(hideElements = null) {
     const scope = this;
-    features = features || scope.props.layer.features;
+    let features = false;
+    let vectorLayer = false;
+    if (hideElements) {
+      if (hideElements.isArray && hideElements.isArray()) {
+        features = hideElements;
+      }
+      else if (hideElements instanceof Vector) {
+        vectorLayer = hideElements;
+      }
+    }
+    else {
+      features = features || scope.props.layer.features;
+      vectorLayer = vectorLayer || scope.props.layer.vectorLayer;
+    }
     let layerController = scope.props.mapController.proxy.layerController;
 
     if (features) {
@@ -109,16 +138,16 @@ export class C4gStarboardLayerElement extends Component {
         layerController.vectorLayer.setSource(layerController.vectorSource);
       }
     }
-    else if (scope.props.layer.vectorLayer) {
-      layerController.mapController.map.removeLayer(scope.props.layer.vectorLayer);
+    else if (vectorLayer) {
+      layerController.mapController.map.removeLayer(vectorLayer);
     }
   }
   changeChildState (child, childState, active) {
     if (active) {
-      this.showLayer(child.features);
+      this.showLayer(child.features || child.vectorLayer);
     }
     else {
-      this.hideLayer(child.features);
+      this.hideLayer(child.features || child.vectorLayer);
     }
     if (child.childs && child.childs.length > 0) {
       for (let childId in child.childs) {
