@@ -115,7 +115,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['hide_when_in_tab'] = array("Ausblenden wenn 
 $GLOBALS['TL_LANG']['tl_c4g_maps']['hideInStarboard'] = array("Im Starboard nicht darstellen", "Wenn Sie diese Checkbox setzen, wird die Ebene im Starboard nicht angezeigt. Darunter liegende Kindelemente werden aber normal dargestellt.");
 $GLOBALS['TL_LANG']['tl_c4g_maps']['cssClass'] = array("CSS Klasse", "Die CSS Klasse wird am Listenelement im Starboard gesetzt.");
 
-$GLOBALS['TL_LANG']['tl_c4g_maps']['excludeFromSingleLayer'] = array("Strukturelement separat händeln.", "Dieser Parameter ist bestmöglich vorbelegt. Nur im Einzelfall, insbesondere bei Massendaten, kann es sinnvoll sein die Checkbox zu verändern.");
+$GLOBALS['TL_LANG']['tl_c4g_maps']['excludeFromSingleLayer'] = array("Strukturelement separat händeln.", "Dieser Parameter ist bestmöglich vorbelegt. Nur im Einzelfall, insbesondere bei Massendaten, kann es sinnvoll sein die Auswahl zu verändern.");
 /**
  * Buttons
  */
@@ -175,6 +175,10 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['THREAD']   = 'Verschieben, wen
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['popupType']['text'] = "Text";
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['popupType']['template'] = "Template-Datei";
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['popupType']['popup_info'] = "con4gis Vorgaben";
+
+$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['excludeFromSingleLayer']['0'] = "Deaktiviert";
+$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['excludeFromSingleLayer']['1'] = "Aktiviert";
+$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['excludeFromSingleLayer']['2'] = "Standard (empfohlen)";
 
 /**
  * Legends
