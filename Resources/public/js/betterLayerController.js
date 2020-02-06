@@ -9,30 +9,13 @@
  * @copyright  Küstenschmiede GmbH Software & Design
  * @link       https://www.con4gis.org
  */
-import {C4gLayer} from "./c4g-layer";
-import {utils} from "./c4g-maps-utils";
-import {cssConstants} from "./c4g-maps-constant";
-import {Customtab} from "./c4g-maps-control-starboardplugin-customtab";
-import {Stroke, Style} from "ol/style";
-import {Text} from "ol/style";
-import {Fill} from "ol/style";
 import {Vector as VectorSource} from "ol/source";
 import {transformExtent} from "ol/proj";
-import {transform} from "ol/proj";
-import {Point, LineString, Polygon, MultiPolygon} from "ol/geom";
-import {Feature} from "ol";
 import OSMXML from "ol/format/OSMXML";
-import {all} from "ol/loadingstrategy";
 import {bbox} from "ol/loadingstrategy";
 import {Vector, Group} from "ol/layer";
 import {Cluster} from "ol/source";
-import Circle from "ol/geom/Circle";
-import CircleStyle from 'ol/style/Circle';
-import {fromLonLat} from "ol/proj";
-import {GeoJSON} from "ol/format";
-import {getCenter, boundingExtent} from "ol/extent";
 import * as olFormat from "ol/format";
-import ol_layer_AnimatedCluster from "ol-ext/layer/AnimatedCluster";
 import proj4 from 'proj4';
 import {register} from 'ol/proj/proj4';
 import Projection from 'ol/proj/Projection';
@@ -120,13 +103,16 @@ export class BetterLayerController {
         }
       }
       scope.vectorSource.removeLoadedExtent(extent);
-    }
+    };
     this.vectorSource = new VectorSource({
       features: this.vectorCollection,
       loader: this.loaderFunction,
       strategy: bbox
     });
     this.clusterStyleFunction = function(feature, resolution) {
+      if (feature && feature.get && feature.get('features')) {
+        feature = feature.get('features')[0];
+      }
       if (feature && feature.get && feature.get('locstyle')) {
         let locstyle = feature.get('locstyle');
         if (scope.proxy.locationStyleController.arrLocStyles && scope.proxy.locationStyleController.arrLocStyles[locstyle] && scope.proxy.locationStyleController.arrLocStyles[locstyle].style) {
@@ -319,11 +305,19 @@ export class BetterLayerController {
     }
     if (layer.excludeFromSingleLayer) {
         let vectorSource = new VectorSource({features: features});
+        if (layer.cluster) {
+          vectorSource = new Cluster({
+            source: vectorSource,
+            distance: parseInt(layer.cluster.distance, 10)
+          });
+        }
         vectorLayer = new Vector({
             source: vectorSource,
             style: this.clusterStyleFunction
         });
-        this.mapController.map.addLayer(vectorLayer);
+        if (!layer.hide) {
+          this.mapController.map.addLayer(vectorLayer);
+        }
         features = false;
     }
     if (layer.hideInStarboard) {

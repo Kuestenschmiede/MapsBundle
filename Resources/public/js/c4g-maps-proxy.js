@@ -13,11 +13,9 @@
 'use strict';
 
 import {C4gBaselayerController} from "./c4g-baselayer-controller";
-import {C4gLayerController} from "./c4g-layer-controller";
 import {BetterLayerController} from "./betterLayerController";
 import {C4gLocationStyleController} from "./c4g-locationstyle-controller";
 import {C4gPopupController} from "./c4g-popup-controller";
-import {Spinner} from "./c4g-maps-misc-spinner";
 import {utils} from "./c4g-maps-utils";
 import {cssConstants} from "./c4g-maps-constant";
 import {getLanguage} from "./c4g-maps-i18n";
@@ -26,7 +24,6 @@ import {Point, LineString} from "ol/geom";
 import {toLonLat} from "ol/proj";
 import {Style, Circle, Fill, Text, Stroke} from "ol/style";
 import {Feature} from "ol";
-import {Overlay} from "ol";
 import {Vector as VectorSource} from "ol/source";
 import {Cluster} from "ol/source";
 

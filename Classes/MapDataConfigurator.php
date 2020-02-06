@@ -368,7 +368,7 @@ class MapDataConfigurator
                 $mapData['baselayerswitcher']['div'] = (in_array('baselayer', $externalElements)) ? $externalClasses['baselayer'] : '';
             }
 
-            $mapData['filterDiv'] = (in_array('filter', $externalElements)) ? $externalClasses['filter'] : "";
+            $mapData['filterDiv'] = (in_array('filter', $externalElements)) ? $externalClasses['filter'] : '';
             $mapData['filterHandling'] = $profile->filterHandling;
 
             // map-tools
