@@ -367,9 +367,12 @@ export class BetterLayerController {
                 features[featureId].set('locstyle', layer.locstyle)
               }
             }
-            vectorSource.getSource().addFeatures(features);
-            vectorSource.addFeatures(features);
-
+            if (vectorSource instanceof Cluster) {
+              vectorSource.getSource().addFeatures(features);
+            }
+            else {
+              vectorSource.addFeatures(features);
+            }
           } catch (e) {
             console.warn('Can not read feature.');
           }
