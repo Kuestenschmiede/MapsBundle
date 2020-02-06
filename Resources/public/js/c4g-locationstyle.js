@@ -315,7 +315,8 @@ export class C4gLocationStyle {
           let width, height;
           width = (styleData.icon_size[0]*styleData.icon_scale);
           height = (styleData.icon_size[1]*styleData.icon_scale);
-
+          let anchorX = 1 / (parseInt(width) / (parseInt(styleData.icon_offset[0]) * -1));
+          let anchorY = 1 / (parseInt(height) / (parseInt(styleData.icon_offset[1]) * -1));
           let strokewidth = 0;
           if (styleData.strokewidth && styleData.strokewidth.value) {
             strokewidth = styleData.strokewidth.value;
@@ -345,6 +346,8 @@ export class C4gLocationStyle {
           };
 
           imageStyle = new Icon({
+            anchor: [anchorX, anchorY],
+            //opacity: parseFloat(styleData.icon_opacity.value) / 100,
             img: canvas,
             imgSize: [canvas.width, canvas.height]
           });
