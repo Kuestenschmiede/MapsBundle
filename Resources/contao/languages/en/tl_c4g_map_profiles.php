@@ -166,7 +166,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['permali
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['CLICK']   = 'Single mouseclick';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['DBLCL']   = 'Double mouseclick';
 
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['default_theme']   = 'con4gis Default-Theme';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['default_theme']   = 'con4gis Default-Layout';
 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_mouse_nav_dragmode']['0'] = 'Off';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_mouse_nav_dragmode']['1'] = 'Rotate map';

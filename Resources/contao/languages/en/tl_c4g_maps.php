@@ -18,18 +18,9 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['name'] = array('Name', 'Name of the map/the 
 $GLOBALS['TL_LANG']['tl_c4g_maps']['profile'] = array('Map profile', 'Please select the map profile to be used. Map profiles are maintained by selecting "Map profiles" in the section "Layout". When no map profiles are defined "OpenStreetMap Mapnik" is used by default.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['profile_mobile'] = array('Map profile mobile', 'Optional: map profile used on mobile devices.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['published'] = array('Published', 'Defines if the map/the location is published.');
-// $GLOBALS['TL_LANG']['tl_c4g_maps']['mapsize'] = array('Map size (width, height)', 'Enter the size of the map in the frontend.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['width'] = array('Map width', 'Enter the width of the map in the frontend.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['height'] = array('Map height', 'Enter the height of the map in the frontend.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['margin'] = array('Map margin', 'Enter the margin of the map in the frontend.');
-// $GLOBALS['TL_LANG']['tl_c4g_maps']['auto_width'] = array('Align map width to browser width', '.');
-// $GLOBALS['TL_LANG']['tl_c4g_maps']['auto_width_gap'] = array('Right gap (px)', '');
-// $GLOBALS['TL_LANG']['tl_c4g_maps']['auto_width_min'] = array('Minimum map width (px)', '');
-// $GLOBALS['TL_LANG']['tl_c4g_maps']['auto_width_max'] = array('Maximum map width (px)', '');
-// $GLOBALS['TL_LANG']['tl_c4g_maps']['auto_height'] = array('Align map height to browser height', '');
-// $GLOBALS['TL_LANG']['tl_c4g_maps']['auto_height_gap'] = array('Bottom gap (px)', '');/**
-// $GLOBALS['TL_LANG']['tl_c4g_maps']['auto_height_min'] = array('Minimum map height (px)', '');
-// $GLOBALS['TL_LANG']['tl_c4g_maps']['auto_height_max'] = array('Maximum map height (px)', '');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['show_locations'] = array('Show all Locations', 'Adjusts the view of the map to fit all locations. Does not work with locations from asynchronous request (e.g. Overpass).');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['min_gap'] = array('Minimum gap in pixel from locations to map border', 'Use this setting when your icons reach beyond the map border after determining the extent.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['center_geox'] = array('GEO latitude', 'Enter the GEO X-coordinate (latitude, WGS-84) of the map center.');
@@ -123,6 +114,9 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['hide_when_in_tab'] = array("Hide if in Starb
 $GLOBALS['TL_LANG']['tl_c4g_maps']['hideInStarboard'] = array("Hide in starboard", "If set, the element is not displayed. Child elements will be dislayed normally though.");
 $GLOBALS['TL_LANG']['tl_c4g_maps']['cssClass'] = array("CSS class", "css class for starboard listelements");
 
+$GLOBALS['TL_LANG']['tl_c4g_maps']['excludeFromSingleLayer'] = array("Handle structure element separately.", "This parameter has the best possible default settings. Only in individual cases, especially with mass data, can it be useful to change the checkbox.");
+
+
 /**
  * Buttons
  */
@@ -189,7 +183,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['map_legend']		    = 'Map settings';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['profile_legend']		= 'Profile settings';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['location_legend']	    = 'Structure element settings';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['protection_legend']	    = 'Access protection';
-$GLOBALS['TL_LANG']['tl_c4g_maps']['expert_legend']	    	= 'Expert';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['expert_legend']         = 'Expert settings';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['backend_legend']        = 'Backend settings';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['publish_legend']        = 'Publish settings';
 
