@@ -120,13 +120,16 @@ export class BetterLayerController {
         }
       }
       scope.vectorSource.removeLoadedExtent(extent);
-    }
+    };
     this.vectorSource = new VectorSource({
       features: this.vectorCollection,
       loader: this.loaderFunction,
       strategy: bbox
     });
     this.clusterStyleFunction = function(feature, resolution) {
+      if (feature && feature.get && feature.get('features')) {
+        feature = feature.get('features')[0];
+      }
       if (feature && feature.get && feature.get('locstyle')) {
         let locstyle = feature.get('locstyle');
         if (scope.proxy.locationStyleController.arrLocStyles && scope.proxy.locationStyleController.arrLocStyles[locstyle] && scope.proxy.locationStyleController.arrLocStyles[locstyle].style) {
@@ -319,11 +322,19 @@ export class BetterLayerController {
     }
     if (layer.excludeFromSingleLayer) {
         let vectorSource = new VectorSource({features: features});
+        if (layer.cluster) {
+          vectorSource = new Cluster({
+            source: vectorSource,
+            distance: parseInt(layer.cluster.distance, 10)
+          });
+        }
         vectorLayer = new Vector({
             source: vectorSource,
             style: this.clusterStyleFunction
         });
-        this.mapController.map.addLayer(vectorLayer);
+        if (!layer.hide) {
+          this.mapController.map.addLayer(vectorLayer);
+        }
         features = false;
     }
     if (layer.hideInStarboard) {
