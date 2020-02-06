@@ -43,6 +43,9 @@ export class GeoSearch extends Component {
     button.setAttribute('aria-label', this.langConstants.CTRL_GEOSEARCH);
     button.setAttribute('title', this.langConstants.CTRL_GEOSEARCH);
     element.className = "c4g-geosearch" + " ol-control " + "ol-unselectable";
+    if (props.external) {
+      element.className += " c4g-external";
+    }
     element.appendChild(button);
     jQuery(button).on('click', this.clickControl);
     let control = new Control({element: element, target: props.target});
