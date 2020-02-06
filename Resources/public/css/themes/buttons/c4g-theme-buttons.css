@@ -964,6 +964,11 @@ button.c4g-baselayer-close:before{
   bottom: .2em;
 }
 
+.c4g-control-container-bottom-left > a {
+  display: block;
+}
+
+
 .c4g-control-container-bottom-left.ol-unselectable div {
   width: max-content;
   margin: .2em 0 0;
