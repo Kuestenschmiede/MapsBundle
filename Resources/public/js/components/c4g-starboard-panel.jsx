@@ -36,6 +36,9 @@ export class StarboardPanel extends Component {
     } else {
       element.className += "c4g-close";
     }
+    if (props.external) {
+      element.className += " c4g-external";
+    }
     element.appendChild(button);
     jQuery(element).on('click', function(event) {
       if (scope.state.open) {
