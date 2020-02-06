@@ -98,8 +98,8 @@ export class StarboardPanel extends Component {
     if (this.props.tabLayers.length > 0) {
       tabs = <React.Fragment>
         {this.props.tabLayers.map(function(element, index) {
-          return <StarboardLayerswitcher key={index} mapController ={scope.props.mapController}
-                                         objLayers={scope.props.tabLayers[index]} parentCallback={scope.props.parentCallback}
+          return <StarboardLayerswitcher key={index} mapController={scope.props.mapController}
+                                         objLayers={scope.props.tabLayers[index]} parentCallback={scope.props.tabCallback}
                                          layerStates={scope.props.tabStates} openfunc={scope.open} headline={element[0].name}
                                          open={scope.state.open} active={(index + 1) === scope.state.activeTab}/>;
         })}
