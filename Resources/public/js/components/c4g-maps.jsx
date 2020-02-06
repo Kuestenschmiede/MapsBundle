@@ -563,16 +563,14 @@ export class MapController extends Component {
       if (mapData.mouse_nav.drag_zoom) {
         this.map.addInteraction(new DragZoom({condition: shiftKeyOnly}));
       }
-      // drag rotate (& zoom)
-      let customCondition = function (mapBrowserEvent) {
-        var browserEvent = mapBrowserEvent.originalEvent;
-        return (browserEvent.ctrlKey && browserEvent.shiftKey);
-      };
+      // drag rotate & zoom
+      if (mapData.rotate) {
+        let customCondition = function (mapBrowserEvent) {
+          var browserEvent = mapBrowserEvent.originalEvent;
+          return (browserEvent.ctrlKey && browserEvent.shiftKey);
+        };
 
-      if (mapData.mouse_nav.drag_rotate_zoom) {
         this.map.addInteraction(new DragRotateAndZoom({condition: customCondition}));
-      } else if (mapData.mouse_nav.drag_rotate) {
-        this.map.addInteraction(new DragRotate({condition: customCondition}));
       }
     }
     // touch navigation
