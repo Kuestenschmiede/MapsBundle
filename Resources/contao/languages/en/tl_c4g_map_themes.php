@@ -58,6 +58,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_themes']['buttons_legend'] = 'Buttons';
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['colors_legend']  = 'Colors';
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['effects_legend'] = 'Effects';
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['icons_legend']   = 'Icons';
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['expert_legend']  = 'Expert settings';
 
 /**
  * Info text
