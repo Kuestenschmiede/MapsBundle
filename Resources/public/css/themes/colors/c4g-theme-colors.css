@@ -370,8 +370,7 @@ div.c4g-active.c4g-popup-wrapper * {
   color: var(--pu-font-color);
 }
 /*div.c4g-tooltip-popup:before,*/
-div.c4g-popup-wrapper:before {
-  border-top-color: rgba(24, 61, 93,.8);
+.ol-selectable div.c4g-popup-wrapper:before{
   border-top-color: var(--pu-main-color);
 }
 .c4g_popup_header_featurename {

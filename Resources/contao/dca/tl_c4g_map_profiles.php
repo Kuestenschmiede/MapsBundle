@@ -117,7 +117,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                                          '{cesium_legend:hide},cesium;'.
                                          '{overpassLegend:hide},overpassEngine;'.
                                          '{locstyle_legend:hide},label_color,resize_locstyles_zoom;'.
-                                         '{miscellaneous_legend:hide},script,custom_div,be_optimize_checkboxes_limit,caching,filter_div,filters,filterHandling;'
+                                         '{miscellaneous_legend:hide},script,custom_div,be_optimize_checkboxes_limit,caching,filter_div,filters,filterHandling,cluster_all;'
         ],
 
 

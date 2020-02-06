@@ -110,39 +110,79 @@ export class BetterLayerController {
       strategy: bbox
     });
     this.clusterStyleFunction = function(feature, resolution) {
+      let size = false;
+      let returnStyle = [];
       if (feature && feature.get && feature.get('features')) {
-        feature = feature.get('features')[0];
+        let features = feature.get('features');
+        size = features.length;
+        feature = features[0];
       }
       if (feature && feature.get && feature.get('locstyle')) {
         let locstyle = feature.get('locstyle');
         if (scope.proxy.locationStyleController.arrLocStyles && scope.proxy.locationStyleController.arrLocStyles[locstyle] && scope.proxy.locationStyleController.arrLocStyles[locstyle].style) {
           let style = scope.proxy.locationStyleController.arrLocStyles[locstyle].style;
           if (typeof style === "function") {
-            return style(feature, resolution, false);
+            returnStyle = style(feature, resolution, false);
           }
-          return scope.proxy.locationStyleController.arrLocStyles[locstyle].style;
-        }
-        else {
-          return null;
+          else {
+            returnStyle = scope.proxy.locationStyleController.arrLocStyles[locstyle].style;
+          }
         }
       }
-    };
+      if (size > 1) {
+        let iconOffset = [0, 0];
+        if (returnStyle[0]) {
+          if (returnStyle[0].getImage() && returnStyle[0].getImage().getRadius && typeof returnStyle[0].getImage().getRadius === "function") {
+            let radius = parseInt(returnStyle[0].getImage().getRadius(), 10);
+            if (radius) {
+              iconOffset = [-radius, radius];
+            }
+          } else if (returnStyle[0].getImage() && returnStyle[0].getImage().getAnchor && typeof returnStyle[0].getImage().getAnchor === "function") {
+            iconOffset = returnStyle[0].getImage().getAnchor() || [0, 0];
+          }
+        }
 
-    this.clusterSource = new Cluster({
-      source: this.vectorSource,
-      geometryFunction: function (feature) {
-        let type = feature.getGeometry().getType();
-        if (type === "MultiPolygon") {
-          return null;//feature.getGeometry().getInteriorPoints()[0];
-        }
-        else if (type === "Polygon"){
-          return null;//feature.getGeometry().getInteriorPoint();
-        }
-        else {
-          return  feature.getGeometry();
-        }
+        let fillcolor = utils.getRgbaFromHexAndOpacity('4975A8',{
+          unit: '%',
+          value: 70
+        });
+
+        let fontcolor = '#FFFFFF';
+
+        returnStyle.push(
+            new Style({
+              text: new Text({
+                text: "●",
+                font: "60px sans-serif",
+                offsetX: -1 * iconOffset[0],
+                offsetY: -1 * iconOffset[1],
+                fill: new Fill({
+                  color: fillcolor
+                })
+              })
+            })
+        );
+        returnStyle.push(
+            new Style({
+              text: new Text({
+                text: size.toString(),
+                offsetX: -1 * iconOffset[0],
+                offsetY: -1 * iconOffset[1] + 3,
+                fill: new Fill({
+                  color: fontcolor
+                })
+              })
+            })
+        );
       }
-    });
+      return returnStyle
+    };
+    if (this.mapController.data.cluster_all) {
+      this.vectorSource = new Cluster({
+        source: this.vectorSource,
+        distance: this.mapController.data.cluster_distance
+      });
+    }
     this.vectorLayer = new Vector({
       source: this.vectorSource,
       style: this.clusterStyleFunction
