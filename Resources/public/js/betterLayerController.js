@@ -20,6 +20,8 @@ import proj4 from 'proj4';
 import {register} from 'ol/proj/proj4';
 import Projection from 'ol/proj/Projection';
 import Collection from 'ol/Collection';
+import {utils} from './c4g-maps-utils';
+import {Style, Text, Fill} from 'ol/style';
 const osmtogeojson = require('osmtogeojson');
 
 export class BetterLayerController {
@@ -53,7 +55,7 @@ export class BetterLayerController {
               else{
                 strBoundingBox = boundingArray[1] + ',' + boundingArray[0] + ',' + boundingArray[3] + ',' + boundingArray[2];
               }
-              const bboxTag = params.indexOf('(bbox)') >= 0 ? /\(bbox\)/g : /\{{bbox\}}/g
+              const bboxTag = params.indexOf('(bbox)') >= 0 ? /\(bbox\)/g : /\{{bbox\}}/g;
               url += url.includes("?") ? "&" : "?";
               url += 'data=' + encodeURIComponent(params.replace(bboxTag, strBoundingBox));
               requestData.request = jQuery.ajax({
@@ -69,16 +71,19 @@ export class BetterLayerController {
                   } catch (e) {
                     console.warn('Can not read feature.');
                   }
-                  let oldLength = scope.vectorCollection.getLength(); //necesarry to distinct redundant features
-                  for (let featureId in features) {
-                    if (features.hasOwnProperty(featureId)) {
-                      features[featureId].set('locstyle', this.loader.locstyleId);
-                    }
-                  }
-                  scope.vectorCollection.extend(features);
-
-                  let addedFeatures = scope.vectorCollection.getArray().slice(oldLength);
+                  let addedFeatures;
                   let layer;
+                  if (!this.loader.exclude) {
+                    let oldLength = scope.vectorCollection.getLength(); //necesarry to distinct redundant features
+                    for (let featureId in features) {
+                      if (features.hasOwnProperty(featureId)) {
+                        features[featureId].set('locstyle', this.loader.locstyleId);
+                      }
+                    }
+                    scope.vectorCollection.extend(features);
+                    addedFeatures = scope.vectorCollection.getArray().slice(oldLength);
+                  }
+
                   if (typeof this.loader.chain === "string") {
                     let chain = this.loader.chain.split(',');
                     let i = 1;
@@ -91,10 +96,14 @@ export class BetterLayerController {
                   else {
                     layer = scope.arrLayers[this.loader.chain]
                   }
-
-                  layer.features = layer.features.concat(addedFeatures);
+                  if (layer.features) {
+                    layer.features = layer.features.concat(addedFeatures);
+                  }
+                  else if (layer.vectorLayer) {
+                    let source = layer.vectorLayer.getSource().getSource();
+                    source.addFeatures(features);
+                  }
                   scope.mapController.setObjLayers(scope.arrLayers);
-
                 }
               });
             }
@@ -102,7 +111,6 @@ export class BetterLayerController {
           }
         }
       }
-      scope.vectorSource.removeLoadedExtent(extent);
     };
     this.vectorSource = new VectorSource({
       features: this.vectorCollection,
@@ -304,7 +312,7 @@ export class BetterLayerController {
     if (checkLocstyle === -1 && possibleLocstyle) {
       this.arrLocstyles.push(possibleLocstyle);
     }
-    if (layer.async_content) {
+    if (layer.async_content && !layer.excludeFromSingleLayer) {
       let url = "";
       let locstyleId = 0;
       let params = "";
@@ -327,6 +335,7 @@ export class BetterLayerController {
         params: params,
         layerId: layerId
       });
+
     }
     if (layer.childs && layer.childs.length > 0) {
       for (let layerId in layer.childs) {
@@ -344,21 +353,65 @@ export class BetterLayerController {
       }
     }
     if (layer.excludeFromSingleLayer) {
-        let vectorSource = new VectorSource({features: features});
-        if (layer.cluster) {
-          vectorSource = new Cluster({
-            source: vectorSource,
-            distance: parseInt(layer.cluster.distance, 10)
-          });
-        }
-        vectorLayer = new Vector({
-            source: vectorSource,
-            style: this.clusterStyleFunction
+      let vectorSource = new VectorSource();
+      if (layer.async_content) {
+        vectorSource = new VectorSource({"strategy": bbox})
+        const scope = this;
+        let responseFunc = function (response) {
+          let features;
+          let format = new OSMXML();
+          try {
+            features = format.readFeatures(response, {featureProjection: "EPSG:3857"});
+            for (let featureId in features) {
+              if (features.hasOwnProperty(featureId)) {
+                features[featureId].set('locstyle', layer.locstyle)
+              }
+            }
+            vectorSource.getSource().addFeatures(features);
+            vectorSource.addFeatures(features);
+
+          } catch (e) {
+            console.warn('Can not read feature.');
+          }
+        };
+        let loaderFunc = function(extent, resolution, projection) {
+          if (extent[0] === Infinity || extent[0] === -Infinity) {
+            vectorSource.removeLoadedExtent();
+          }
+          else if (layer.content && layer.content[0] && layer.content[0].data) {
+            let data = layer.content[0].data;
+            scope.performOvp({
+                  "url": data.url,
+                  "params": data.params,
+                  "locstyleId": layer.locstyle
+                }, {
+                  "extent": extent,
+                  "resolution": resolution,
+                  "projection": projection
+                },
+                responseFunc)
+          }
+        };
+        vectorSource.setLoader(loaderFunc);
+      }
+      else {
+        vectorSource.setFeatures(features);
+      }
+
+      if (layer.cluster) {
+        vectorSource = new Cluster({
+          source: vectorSource,
+          distance: parseInt(layer.cluster.distance, 10)
         });
-        if (!layer.hide) {
-          this.mapController.map.addLayer(vectorLayer);
-        }
-        features = false;
+      }
+      vectorLayer = new Vector({
+          source: vectorSource,
+          style: this.clusterStyleFunction
+      });
+      if (!layer.hide) {
+        this.mapController.map.addLayer(vectorLayer);
+      }
+      features = false;
     }
     if (layer.hideInStarboard) {
       return {
@@ -456,5 +509,27 @@ export class BetterLayerController {
       }
     }
     return features;
+  }
+  performOvp (requestData, mapConf, responseFunc) {
+    let boundingArray = transformExtent(mapConf.extent, mapConf.projection, 'EPSG:4326');
+    let strBoundingBox = "";
+    let url = requestData.url;
+    let params = decodeURIComponent(requestData.params);
+    if (url) {
+      if (url.indexOf('{key}') > -1) {
+        url = url.replace('{key}', self.ovpKey);
+      }
+      if (params && params.substr(0, 1).trim() === "<") {
+        strBoundingBox = '<bbox-query s="' + boundingArray[1] + '" n="' + boundingArray[3] + '" w="' + boundingArray[0] + '" e="' + boundingArray[2] + '"/>';
+      } else {
+        strBoundingBox = boundingArray[1] + ',' + boundingArray[0] + ',' + boundingArray[3] + ',' + boundingArray[2];
+      }
+      const bboxTag = params.indexOf('(bbox)') >= 0 ? /\(bbox\)/g : /\{{bbox\}}/g;
+      url += url.includes("?") ? "&" : "?";
+      url += 'data=' + encodeURIComponent(params.replace(bboxTag, strBoundingBox));
+      fetch(url).then((response) => {
+        response.text().then(responseFunc);
+      });
+    }
   }
 }
