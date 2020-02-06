@@ -258,6 +258,20 @@ export class MapsControls {
             }
         }
 
+        //con4gis logo
+        if (mapData.attribution.cfg_logo) {
+            let logoLink = document.createElement('a');
+            logoLink.href = 'https://con4gis.org';
+            logoLink.title = 'built with con4gis';
+            logoLink.target = '_blank';
+            logoLink.rel = 'noopener noreferrer';
+            logoLink.className = cssConstants.ATTRIBUTION_LOGO;
+            let logoGraphic = document.createElement('img');
+            logoGraphic.src = 'bundles/con4gismaps/images/logo_con4gis.svg';
+            logoGraphic.alt = 'con4gis logo';
+            logoLink.appendChild(logoGraphic);
+            controlContainerBottomLeft.appendChild(logoLink);
+        }
 
         // scaleline
         if (mapData.scaleline) {
@@ -295,19 +309,6 @@ export class MapsControls {
         }
         // show attribution
         if (mapData.attribution.enable) {
-            if (mapData.attribution.cfg_logo) {
-                let logoLink = document.createElement('a');
-                logoLink.href = 'https://con4gis.org';
-                logoLink.title = 'built with con4gis';
-                logoLink.target = '_blank';
-                logoLink.rel = 'noopener noreferrer';
-                logoLink.className = cssConstants.ATTRIBUTION_LOGO;
-                let logoGraphic = document.createElement('img');
-                logoGraphic.src = 'bundles/con4gismaps/images/logo_con4gis.svg';
-                logoGraphic.alt = 'con4gis logo';
-                logoLink.appendChild(logoGraphic);
-                controlContainerBottomRight.appendChild(logoLink);
-            }
             const attrOptions = {
                 label: ' ',
                 tipLabel: langConstants.CTRL_ATTRIBUTION,
