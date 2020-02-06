@@ -56,35 +56,7 @@ export class C4gStarboardLayerElement extends Component {
       layerController.loaders[scope.props.layer.loader].preventLoading = false;
     }
     if (features) {
-      let arrFeatures = layerController.vectorCollection.getArray();
-      delete layerController.vectorCollection;
-      delete layerController.vectorSource;
-      delete layerController.clusterSource;
-      // delete layerController.vectorLayer;
-
-      if (features && features.length > 0) {
-        arrFeatures = arrFeatures.concat(features);
-      }
-      layerController.vectorCollection = new Collection(arrFeatures);
-      layerController.vectorSource = new VectorSource({
-        features: layerController.vectorCollection
-      });
-      layerController.clusterSource = new ClusterSource({
-        source: layerController.vectorSource,
-        geometryFunction: function (feature) {
-          let type = feature.getGeometry().getType();
-          if (type === "MultiPolygon") {
-            return feature.getGeometry().getInteriorPoints()[0];
-          }
-          else if (type === "Polygon"){
-            return feature.getGeometry().getInteriorPoint();
-          }
-          else {
-            return  feature.getGeometry();
-          }
-        }
-      });
-      layerController.vectorLayer.setSource(layerController.vectorSource);
+      layerController.vectorCollection.extend(features);
     }
     else if (vectorLayer) {
       layerController.mapController.map.addLayer(scope.props.layer.vectorLayer);
@@ -117,25 +89,12 @@ export class C4gStarboardLayerElement extends Component {
           loader.request.abort();
         }
       }
-      let vectorCollection = layerController.vectorCollection;
-      let featureArray = vectorCollection.getArray();
-
-      if (features && features.length > 0) {
-        delete layerController.vectorCollection;
-        delete layerController.vectorSource;
-        let length = vectorCollection.getLength();
+      if (features.length > 0) {
         for (let featureId in features) {
           if (features.hasOwnProperty(featureId)) {
-            let delIndex = featureArray.indexOf(features[featureId]);
-            featureArray.splice(delIndex, 1);
-            length--;
+            layerController.vectorCollection.remove(features[featureId]);
           }
         }
-        layerController.vectorCollection = new Collection(featureArray);
-        layerController.vectorSource = new VectorSource({
-          features: layerController.vectorCollection
-        });
-        layerController.vectorLayer.setSource(layerController.vectorSource);
       }
     }
     else if (vectorLayer) {
