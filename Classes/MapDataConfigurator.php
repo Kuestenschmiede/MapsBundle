@@ -342,7 +342,7 @@ class MapDataConfigurator
             $mapData['starboard']['enable'] = 1; //ToDo
             $mapData['starboard']['open'] = $profile->starboard_open;
             $mapData['starboard']['label'] = \Contao\Controller::replaceInsertTags($profile->starboard_label);
-            $mapData['starboard']['div'] = $profile->starboard_div;
+            $mapData['starboard']['div'] = (in_array('starboard', $externalElements)) ? $externalClasses['starboard'] : '';
             $mapData['starboard']['button'] = $profile->starboard_button;
             $mapData['starboard']['showLocstyles'] = $profile->starboard_locstyles;
             $mapData['cluster_all'] = $profile->cluster_all;

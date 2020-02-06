@@ -915,6 +915,7 @@ export class MapController extends Component {
   }
 
   setOpenComponent(component) {
+    const scope = this;
     this.setState({openComponent: component}, () => {
       for (let key in this.components) {
         if (this.components.hasOwnProperty(key)) {
@@ -924,11 +925,23 @@ export class MapController extends Component {
           }
         }
       }
+      if (scope.data.caching) {
+        console.log(component);
+        utils.storeValue('panel', component);
+      }
     });
   }
 
   componentDidMount() {
     console.log(this.components);
+    if (this.data.caching) {
+      let storedPanel = utils.getValue('panel');
+      if (storedPanel) {
+        console.log(storedPanel);
+        storedPanel.setState({open: true});
+        this.setOpenComponent(storedPanel);
+      }
+    }
   }
 
   createGeosearchOptions() {
@@ -961,30 +974,17 @@ export class MapController extends Component {
         placeholder: mapData.geosearch.placeholder
       };
       if (!this.searchContainer) {
-        if (mapData.geosearch.div && mapData.geosearch.div_results) {
-          this.searchContainer = document.querySelector("#" + mapData.geosearch.div);
-          if (!this.searchContainer) {
-            this.searchContainer = document.querySelector("." + mapData.geosearch.div);
-          }
-          this.searchResultsContainer = document.querySelector("#" + mapData.geosearch.div_results);
-          if (!this.searchResultsContainer) {
-            this.searchResultsContainer = document.querySelector("." + mapData.geosearch.div_results);
-          }
-          geosearchOptions.resultsDiv = this.searchResultsContainer;
+        if (mapData.geosearch.div) {
+          this.searchContainer = document.querySelector("." + mapData.geosearch.div);
         } else {
           this.searchContainer = document.createElement('div');
           this.searchContainer.className = "c4g-sideboard c4g-geosearch-container-right ";
           this.searchContainer.className += mapData.geosearch.collapsed ? "c4g-close" : "c4g-open";
         }
-        // this.components.geosearch = ReactDOM.render(React.createElement(GeoSearch, geosearchOptions), this.searchContainer);
         if (!mapData.geosearch.div) {
           this.$overlaycontainer_stopevent.append(this.searchContainer);
         }
       }
-      // open if opened before
-      // if ((mapData.caching && (utils.getValue(this.controls.geosearch.options.name) === '1'))) {
-      //   this.controls.geosearch.open();
-      // }
     }
     return geosearchOptions;
   }
