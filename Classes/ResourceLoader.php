@@ -58,7 +58,6 @@ class ResourceLoader extends coreResourceLoader
             'position' => $allByDefault,
             'permalink' => $allByDefault,
             'zoomlevel' => $allByDefault,
-            'account' => $allByDefault,
             'geosearch' => $allByDefault,
             'overviewmap' => $allByDefault,
             'baselayerswitcher' => $allByDefault,
