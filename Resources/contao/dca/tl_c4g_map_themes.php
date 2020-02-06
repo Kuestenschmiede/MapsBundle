@@ -101,7 +101,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
     //Palettes
     'palettes' =>
         [
-        'default' => '{theme_legend}, name, useglobal; {colors_legend}, maincolor, mainopacity, fontcolor, fontopacity, shadowcolor, shadowopacity, popupMaincolor, popupMainopacity, popupFontcolor, popupFontopacity; {buttons_legend}, buttonradius, buttonsize, button_fontsize;',
+        'default' => '{theme_legend}, name; {colors_legend}, maincolor, mainopacity, fontcolor, fontopacity, shadowcolor, shadowopacity, popupMaincolor, popupMainopacity, popupFontcolor, popupFontopacity; {buttons_legend}, buttonradius, buttonsize, button_fontsize; {expert_legend}, useglobal;',
         ],
 
     //Fields
@@ -130,14 +130,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
             'inputType'               => 'text',
             'eval'                    => ['mandatory'=>true, 'maxlength'=>75],
             'sql'                     => "varchar(100) NOT NULL default ''"
-            ],
-        'useglobal' =>
-            [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['useglobal'],
-            'exclude'                 => true,
-            'default'                 => false,
-            'inputType'               => 'checkbox',
-            'sql'                     => "char(1) NOT NULL default ''"
             ],
         'buttonradius' =>
             [
@@ -250,6 +242,14 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
             'options'                 => ['%'],
             'eval'                    => ['rgxp'=>'prcnt', 'tl_class'=>'long', 'mandatory'=>true],
             'sql'                     => "varchar(100) NOT NULL default ''"
+            ],
+        'useglobal' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['useglobal'],
+                'exclude'                 => true,
+                'default'                 => false,
+                'inputType'               => 'checkbox',
+                'sql'                     => "char(1) NOT NULL default ''"
             ]
         ]
     ];

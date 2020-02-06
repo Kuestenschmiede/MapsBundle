@@ -60,6 +60,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_themes']['buttons_legend'] = 'Größe und Form d
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['colors_legend']  = 'Farben für Karten-Button, Dialoge und Schriften';
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['effects_legend'] = 'Effekte';
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['icons_legend']   = 'Icons';
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['expert_legend']  = 'Experteneinstellungen';
+
 
 /**
  * Info text
