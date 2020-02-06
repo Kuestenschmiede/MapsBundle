@@ -70,6 +70,7 @@ div.c4g-control-container-top-left > div {
    margin-right: .2em;
 }
 
+
 .c4g-control-container-top-left::-webkit-scrollbar{
  width: .2em;
 }
@@ -1119,7 +1120,7 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
 
 /*---------------------------.c4g-sideboard------------------------*/
 
-.c4g-sideboard  {
+.c4g-sideboard:not(.c4g-external)  {
   position: absolute;
   right: 0;
   top: .2em;
@@ -1131,28 +1132,30 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
   transition: .5s;
 }
 
-.c4g-sideboard.c4g-close {
+.c4g-sideboard:not(.c4g-external).c4g-close {
   right: -100%;
 }
 
-.c4g-sideboard > div[class*=wrapper] {
+.c4g-sideboard:not(.c4g-external) > div[class*=wrapper] {
   position: relative;
   height: 100%;
   font-size: 16px;
   text-align: left;
 }
 
-
-
 /*--------------------header--------------*/
 
-.c4g-sideboard > div > div[class*=header] {
+.c4g-sideboard:not(.c4g-external) > div > div[class*=header] {
   line-height: calc(32px + .4em);
   height: calc(32px + .4em);
   margin: 0;
 }
 
-.c4g-sideboard > div > div[class*=header] span {
+.c4g-sideboard.c4g-external > div > div[class*=header] {
+ padding: .4em;
+}
+
+.c4g-sideboard:not(.c4g-external) > div > div[class*=header] span {
   display: block;
   width: calc(100% - 1.2em - 32px);
   padding: 0 .4em;
@@ -1162,7 +1165,7 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
   white-space: nowrap;
 }
 
-.c4g-sideboard > div > div[class*=header] button[class*=close] {
+.c4g-sideboard:not(.c4g-external) > div > div[class*=header] button[class*=close] {
   width: 32px;
   height: 32px;
   position: absolute;
@@ -1175,54 +1178,58 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
   cursor: pointer;
 }
 
-.c4g-sideboard > div[class*=wrapper] > div[class*=header] + div[class*=content] {
+.c4g-external > div > div[class*=header] button[class*=close] {
+  display: none;
+}
+
+.c4g-sideboard:not(.c4g-external) > div[class*=wrapper] > div[class*=header] + div[class*=content] {
   max-height: calc((var(--map-height) - .4em) - (32px + .4em) - .4em);
 }
 
 /*---------------------------------*/
 /*----------switcher---------------*/
 
-.c4g-sideboard > div > div[class*=switcher] {
+.c4g-sideboard:not(.c4g-external) > div > div[class*=switcher] {
   line-height: calc(32px + .4em);
   height: calc(32px + .4em);
   padding: 0 .4em;
   margin: 0;
 }
 
-.c4g-sideboard > div > div[class*=switcher] button {
+.c4g-sideboard:not(.c4g-external) > div > div[class*=switcher] button {
   width: 32px;
   height: 32px;
   border: none;
   outline: none;
 }
 
-.c4g-sideboard > div > div[class*=switcher] button:not(.c4g-active){
+.c4g-sideboard:not(.c4g-external) > div > div[class*=switcher] button:not(.c4g-active){
   cursor: pointer;
 }
 
-.c4g-sideboard > div > div[class*=switcher] button:not(:last-child){
+.c4g-sideboard:not(.c4g-external) > div > div[class*=switcher] button:not(:last-child){
   margin: 0 .2em 0 0;
 }
 
-.c4g-sideboard > div > div[class*=switcher] button:last-child {
+.c4g-sideboard:not(.c4g-external) > div > div[class*=switcher] button:last-child {
   margin-right: .4em
 }
 
-.c4g-sideboard > div[class*=wrapper] > div[class*=header] + div[class*=switcher] + div[class*=content] {
+.c4g-sideboard:not(.c4g-external) > div[class*=wrapper] > div[class*=header] + div[class*=switcher] + div[class*=content] {
   max-height: calc((var(--map-height) - .4em) - ((32px + .4em) * 2) - .4em);
 }
 
 /*----------------------------*/
 /*-----------filter-----------*/
 
-.c4g-geosearch-form, .c4g-sideboard > div > div[class*=filter] {
+.c4g-geosearch-form, .c4g-sideboard:not(.c4g-external) > div > div[class*=filter] {
   line-height: calc(32px + .4em);
   height: calc(32px + .4em);
   padding: 0 .4em;
   margin: 0;
 }
 
-.c4g-geosearch-form input, .c4g-sideboard > div > div[class*=filter] input {
+.c4g-geosearch-form input, .c4g-sideboard:not(.c4g-external) > div > div[class*=filter] input {
   max-width: calc(100% - .2em - 35px);
   line-height: 32px;
   height: 32px;
@@ -1232,7 +1239,7 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
   outline: none;
 }
 
-.c4g-sideboard > div > div[class*=filter].without-button:after {
+.c4g-sideboard:not(.c4g-external) > div > div[class*=filter].without-button:after {
   font-family: "Font Awesome 5 Free";
   font-weight: 600;
   position: absolute;
@@ -1241,16 +1248,16 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
   text-align: center;
 }
 
-.c4g-geosearch-form input, .c4g-sideboard > div > div[class*=filter] input::placeholder{
+.c4g-geosearch-form input, .c4g-sideboard:not(.c4g-external) > div > div[class*=filter] input::placeholder{
   padding-left: .2em;
 }
 
-.c4g-geosearch-form input, .c4g-sideboard > div > div[class*=filter] input:focus::placeholder{
+.c4g-geosearch-form input, .c4g-sideboard:not(.c4g-external) > div > div[class*=filter] input:focus::placeholder{
   color: transparent;
 }
 
 
-.c4g-sideboard > div[class*=wrapper] > div[class*=header] + div[class*=filter] + div[class*=content] {
+.c4g-sideboard:not(.c4g-external) > div[class*=wrapper] > div[class*=header] + div[class*=filter] + div[class*=content] {
   max-height: calc((var(--map-height) - .4em) - ((32px + .4em) * 2) - .4em);
 }
 
@@ -1263,8 +1270,11 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
   overflow-x: hidden;
 }
 
-.c4g-sideboard > div > div[class*=content] .contentHeadline {
+.c4g-sideboard:not(.c4g-external) > div > div[class*=content] .contentHeadline {
   font-size: 20px;
+}
+
+.c4g-sideboard > div > div[class*=content] .contentHeadline {
   padding: .4em 0;
 }
 
@@ -1273,7 +1283,7 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
   padding: 0;
 }
 
-.c4g-sideboard:not(.c4g-popup-container) ul li {
+.c4g-sideboard:not(.c4g-external):not(.c4g-popup-container) ul li {
   list-style-type: none;
 }
 
@@ -1285,7 +1295,7 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
   text-overflow: ellipsis;
 }
 
-.c4g-sideboard > div > div[class*=content] input[type=text] ~ button {
+.c4g-sideboard:not(.c4g-external) > div > div[class*=content] input[type=text] ~ button {
   height: 28px;
   width: 32px;
   border: none;
@@ -1294,11 +1304,11 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
   cursor: pointer;
 }
 
-.c4g-sideboard > div > div[class*=content] input[type=text] ~ button {
+.c4g-sideboard:not(.c4g-external) > div > div[class*=content] input[type=text] ~ button {
   margin-left: .2em;
 }
 
-.c4g-sideboard > div > div[class*=content] input[type=text] {
+.c4g-sideboard:not(.c4g-external) > div > div[class*=content] input[type=text] {
   font-family: 'Font Awesome 5 Free', arial!important;
   font-weight: 900;
 }
@@ -1307,7 +1317,7 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
   width: .2em;
 }
 
-.c4g-sideboard > div[class*=wrapper] > div[class*=header] + div[class*=switcher] + div[class*=filter] + div[class*=content] {
+.c4g-sideboard:not(.c4g-external) > div[class*=wrapper] > div[class*=header] + div[class*=switcher] + div[class*=filter] + div[class*=content] {
   max-height: calc((var(--map-height) - .4em) - ((32px + .4em) * 3) - .4em);
 }
 
