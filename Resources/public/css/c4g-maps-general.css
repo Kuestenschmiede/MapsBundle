@@ -40,9 +40,6 @@
 /*
  *  Z-Indexes
  */
-.ol-control {
-  z-index: 40;
-}
 
 .ol-dragbox {
   border: 1px dashed black;
