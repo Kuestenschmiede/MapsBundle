@@ -40,74 +40,129 @@ export class BetterLayerController {
         if (scope.loaders.hasOwnProperty(i)) {
           const requestData = scope.loaders[i];
           if (!requestData.preventLoading) {
-            if (requestData.request) {
-              requestData.request.abort();
-            }
-            let strBoundingBox = "";
-            let url = requestData.url;
-            let params = decodeURIComponent(requestData.params);
-            if (url) {
-              if (url.indexOf('{key}') > -1) {
-                url = url.replace('{key}', self.ovpKey);
-              }
-              if(params && params.substr(0, 1).trim() === "<"){
-                strBoundingBox = '<bbox-query s="' + boundingArray[1] + '" n="' + boundingArray[3] + '" w="' + boundingArray[0] + '" e="' + boundingArray[2] + '"/>';
-              }
-              else{
-                strBoundingBox = boundingArray[1] + ',' + boundingArray[0] + ',' + boundingArray[3] + ',' + boundingArray[2];
-              }
-              const bboxTag = params.indexOf('(bbox)') >= 0 ? /\(bbox\)/g : /\{{bbox\}}/g;
-              url += url.includes("?") ? "&" : "?";
-              url += 'data=' + encodeURIComponent(params.replace(bboxTag, strBoundingBox));
-              requestData.request = jQuery.ajax({
-                url: url,
-                loader: requestData
-              }).done(function (response) {
-                delete this.loader.request;
-                let features;
-                let format = new OSMXML();
-                if (format && response) {
-                  try {
-                    features = format.readFeatures(response, {featureProjection: projection});
-                  } catch (e) {
-                    console.warn('Can not read feature.');
-                  }
-                  let addedFeatures;
-                  let layer;
-                  if (!this.loader.exclude) {
-                    let oldLength = scope.vectorCollection.getLength(); //necesarry to distinct redundant features
-                    for (let featureId in features) {
-                      if (features.hasOwnProperty(featureId)) {
-                        features[featureId].set('locstyle', this.loader.locstyleId);
-                      }
-                    }
-                    scope.vectorCollection.extend(features);
-                    addedFeatures = scope.vectorCollection.getArray().slice(oldLength);
-                  }
-
-                  if (typeof this.loader.chain === "string") {
-                    let chain = this.loader.chain.split(',');
-                    let i = 1;
-                    layer = scope.arrLayers[chain[0]];
-                    while(chain[i]) {
-                      layer = layer.childs[chain[i]];
-                      i++;
-                    }
-                  }
-                  else {
-                    layer = scope.arrLayers[this.loader.chain]
-                  }
-                  if (layer.features) {
-                    layer.features = layer.features.concat(addedFeatures);
-                  }
-                  else if (layer.vectorLayer) {
-                    let source = layer.vectorLayer.getSource().getSource();
-                    source.addFeatures(features);
-                  }
-                  scope.mapController.setObjLayers(scope.arrLayers);
+            let responseFunc = function (response) {
+              let features;
+              let format = new OSMXML();
+              if (format && response) {
+                try {
+                  features = format.readFeatures(response, {featureProjection: projection});
+                } catch (e) {
+                  console.warn('Can not read feature.');
                 }
-              });
-            }
+                let addedFeatures;
+                let layer;
+                let oldLength = scope.vectorCollection.getLength(); //necesarry to distinct redundant features
+                for (let featureId in features) {
+                  if (features.hasOwnProperty(featureId)) {
+                    features[featureId].set('locstyle', requestData.locstyleId);
+                  }
+                }
+                scope.vectorCollection.extend(features);
+                addedFeatures = scope.vectorCollection.getArray().slice(oldLength);
+
+                if (typeof requestData.chain === "string") {
+                  let chain = requestData.chain.split(',');
+                  let i = 1;
+                  layer = scope.arrLayers[chain[0]];
+                  while(chain[i]) {
+                    layer = layer.childs[chain[i]];
+                    i++;
+                  }
+                }
+                else {
+                  layer = scope.arrLayers[requestData.chain]
+                }
+                if (layer.features) {
+                  layer.features = layer.features.concat(addedFeatures);
+                }
+                else if (layer.vectorLayer) {
+                  let source = layer.vectorLayer.getSource().getSource();
+                  source.addFeatures(features);
+                }
+                scope.mapController.setObjLayers(scope.arrLayers);
+              }
+            };
+            scope.performOvp({
+                  "url": requestData.url,
+                  "params": requestData.params,
+                  "locstyleId": requestData.locstyle
+                }, {
+                  "extent": extent,
+                  "resolution": resolution,
+                  "projection": projection
+                },
+                responseFunc);
+
+
+            // if (requestData.request) {
+            //   requestData.request.abort();
+            // }
+            // let strBoundingBox = "";
+            // let url = requestData.url;
+            // let params = decodeURIComponent(requestData.params);
+            // if (url) {
+            //   if (url.indexOf('{key}') > -1) {
+            //     url = url.replace('{key}', self.ovpKey);
+            //   }
+            //   if(params && params.substr(0, 1).trim() === "<"){
+            //     strBoundingBox = '<bbox-query s="' + boundingArray[1] + '" n="' + boundingArray[3] + '" w="' + boundingArray[0] + '" e="' + boundingArray[2] + '"/>';
+            //   }
+            //   else{
+            //     strBoundingBox = boundingArray[1] + ',' + boundingArray[0] + ',' + boundingArray[3] + ',' + boundingArray[2];
+            //   }
+            //   const bboxTag = params.indexOf('(bbox)') >= 0 ? /\(bbox\)/g : /\{{bbox\}}/g;
+            //   url += url.includes("?") ? "&" : "?";
+            //   url += 'data=' + encodeURIComponent(params.replace(bboxTag, strBoundingBox));
+            //
+            //   requestData.request = jQuery.ajax({
+            //     url: url,
+            //     loader: requestData
+            //   }).done(function (response) {
+            //     delete this.loader.request;
+            //     let features;
+            //     let format = new OSMXML();
+            //     if (format && response) {
+            //       try {
+            //         features = format.readFeatures(response, {featureProjection: projection});
+            //       } catch (e) {
+            //         console.warn('Can not read feature.');
+            //       }
+            //       let addedFeatures;
+            //       let layer;
+            //       if (!this.loader.exclude) {
+            //         let oldLength = scope.vectorCollection.getLength(); //necesarry to distinct redundant features
+            //         for (let featureId in features) {
+            //           if (features.hasOwnProperty(featureId)) {
+            //             features[featureId].set('locstyle', this.loader.locstyleId);
+            //           }
+            //         }
+            //         scope.vectorCollection.extend(features);
+            //         addedFeatures = scope.vectorCollection.getArray().slice(oldLength);
+            //       }
+            //
+            //       if (typeof this.loader.chain === "string") {
+            //         let chain = this.loader.chain.split(',');
+            //         let i = 1;
+            //         layer = scope.arrLayers[chain[0]];
+            //         while(chain[i]) {
+            //           layer = layer.childs[chain[i]];
+            //           i++;
+            //         }
+            //       }
+            //       else {
+            //         layer = scope.arrLayers[this.loader.chain]
+            //       }
+            //       if (layer.features) {
+            //         layer.features = layer.features.concat(addedFeatures);
+            //       }
+            //       else if (layer.vectorLayer) {
+            //         let source = layer.vectorLayer.getSource().getSource();
+            //         source.addFeatures(features);
+            //       }
+            //       scope.mapController.setObjLayers(scope.arrLayers);
+            //     }
+            //   });
+            // }
 
           }
         }
@@ -357,7 +412,7 @@ export class BetterLayerController {
     if (layer.excludeFromSingleLayer) {
       let vectorSource = new VectorSource();
       if (layer.async_content) {
-        vectorSource = new VectorSource({"strategy": bbox})
+        vectorSource = new VectorSource({"strategy": bbox});
         const scope = this;
         let responseFunc = function (response) {
           let features;
