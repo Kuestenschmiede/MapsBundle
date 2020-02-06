@@ -61,7 +61,6 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_label'] = ['Starboard Head
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_filter'] = ['Enable Starboard Filter', 'Shows the Starboard Filter.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_button'] = ['Activate Button for Starboard','Creates a Button in order to show and hide all elements in the starboard with one click.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_locstyles'] = ['Show location styles on the Starboard','If possible, the location styles of the map are displayed on the corresponding element in the starboard.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_div'] = ['DIV for Starboard', 'Enter the ID of an existing DIV element if you want to put the Starboard somewhere else on your page.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_all'] = ['Cluster über alle Layer', 'Erstellt ein Cluster über alle Layer. Überschreibt die Einstellungen im Strukturelement. Achtung! Diese Funktion ist nicht für alle Strukturelemente geeignet.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_distance'] = ['Cluster distance', 'Cluster distance (default 20px)'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_fillcolor'] = ['Fill color', 'Select the fill color of the cluster bubble.'];
@@ -109,8 +108,6 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_markresult'] = ['Mark foun
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_popup'] = ['Open popup', 'Opens the popup for a feature at the location of the search (Works best with polygons).'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_attribution'] = ['Show attribution of search service', 'Adds an attribution of the search service (Nominatim). Deactivate only when you are sure it is allowed.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_collapsed'] = ['Collapsed searchfield', 'Collapsed the searchfield by default.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_div'] = ['DIV for search', 'Enter the ID of an existing DIV element if you want to put the search field somewhere else on your page.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_results_div'] = ['DIV for search results', 'Enter the ID of an existing DIV element if you want to put the search results somewhere else on your page.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_placeholder'] = ["Placeholder for input field", "Specify a placeholder that is displayed until an input is made."];
 
 /** Geopicker (Position bestimmen) */
@@ -135,13 +132,12 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['hover_popups_stay'] = ['Mouse Hover 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandling'] = ['Popup handling', 'popup- or map position handling.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['openDirectly'] = ['Maximize popup initially', 'If checked, popups open maximized instead of a preview mode that can be maximized.'];
 
-/** Sonstiges */
+/** Experteneinstellungen */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overpassEngine'] = ['Overpass Server Technology', 'Choose your preferred Overpass Server Technology'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overpass_url'] = ['URL of Overpass-API'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['custom_div'] = ['Div element for Map', 'If given, the map is placed within a div element with the given id.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['caching'] = ['Remember Button States', 'If checked, button states are cached.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['be_optimize_checkboxes_limit'] = ['Convert large checkbox lists to Chosen Fields', 'If at least this many entries are in the list, it are converted to a chosen field. Select 0 to disable. this function.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['filter_div'] = ['DIV for map filter', 'Set a CSS selector for a DIV element in which the map filter will be displayed.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['filters'] = ['Filters', 'Choose your filters for the map'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['filterHandling'] = ['Filter as multicheckbox', 'Display the filter as a multicheckbox (logical Or instead of And).'];
 /**
@@ -234,7 +230,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overpassLegend'] = 'Overpass-API';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_legend'] = 'Geopicker';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium_legend'] = 'Cesium (globe view)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['click_legend'] = 'Click settings';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['miscellaneous_legend'] = 'Miscellaneous';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['expert_legend'] = 'Expert settings';
 
 /**
  * Globals

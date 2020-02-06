@@ -105,19 +105,18 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
     'palettes' =>
         [
         '__selector__'                => ['resize_locstyles_zoom', 'mouse_nav','cluster_all','attribution','hover_popups','geopicker','overpassEngine', 'cesium', 'popupHandling'],
-        'default'                     => '{general_legend},name,theme,mapFunctions,initial_open_comp,external_elements;'.
+        'default'                     => '{general_legend},name,theme,mapFunctions,initial_open_comp;'.
                                          '{navigation_legend:hide},mouse_nav,touch_nav,keyboard_nav;'.
                                          '{baselayer_legend:hide},baselayers, default_baselayer,baselayerswitcher_label,baselayer_filter;'.
-                                         '{starboard_legend:hide},layerswitcher_label,layer_filter,starboard_label,starboard_button,starboard_locstyles,starboard_div,cluster_all;'.
+                                         '{starboard_legend:hide},layerswitcher_label,layer_filter,starboard_label,starboard_button,starboard_locstyles,cluster_all;'.
                                          '{attribution_legend:hide},attribution;'.
                                          '{information_legend:hide},scaleline,mouseposition,permalink_get_param,zoomlevel,infopage;'.
-                                         '{geosearch_legend:hide},geosearch_headline,geosearch_engine,geosearchParams,geosearch_result_locstyle,geosearch_placeholder,geosearch_results,geosearch_zoomto,geosearch_zoombounds,geosearch_animate,geosearch_markresult,geosearch_popup,geosearch_attribution,geosearch_collapsed,geosearch_div,geosearch_results_div;'.
+                                         '{geosearch_legend:hide},geosearch_headline,geosearch_engine,geosearchParams,geosearch_result_locstyle,geosearch_placeholder,geosearch_results,geosearch_zoomto,geosearch_zoombounds,geosearch_animate,geosearch_markresult,geosearch_popup,geosearch_attribution,geosearch_collapsed;'.
                                          '{geopicker_legend:hide},is_backend_geopicker_default,geopicker;'.
                                          '{click_legend:hide},link_newwindow,link_open_on,hover_popups, popupHandling;'.
-                                         '{cesium_legend:hide},cesium;'.
                                          '{overpassLegend:hide},overpassEngine;'.
                                          '{locstyle_legend:hide},label_color,resize_locstyles_zoom;'.
-                                         '{miscellaneous_legend:hide},script,custom_div,be_optimize_checkboxes_limit,caching,filter_div,filters,filterHandling,cluster_all;'
+                                         '{expert_legend:hide},caching,cluster_all,cesium,external_elements,filters,filterHandling,be_optimize_checkboxes_limit,custom_div;'
         ],
 
 
@@ -380,22 +379,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'eval'                    => ['maxlength'=>254],
             'sql'                     => "varchar(254) NOT NULL default ''"
         ],
-        'starboard_div' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_div'],
-            'exclude'                 => true,
-            'inputType'               => 'text',
-            'eval'                    => ['maxlength'=>254],
-            'sql'                     => "varchar(254) NOT NULL default ''"
-        ],
-        'filter_div' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['filter_div'],
-            'exclude'                 => true,
-            'inputType'               => 'text',
-            'eval'                    => ['maxlength'=>254, 'allowHtml' => true],
-            'sql'                     => "varchar(254) NOT NULL default ''"
-        ],
         'filters' =>
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['filters'],
@@ -617,9 +600,9 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_engine'],
             'exclude'                 => true,
-            'default'                 => '3',
+            'default'                 => '4',
             'inputType'               => 'radio',
-            'options'                 => ['3','4','2','1','5'],
+            'options'                 => ['4','1','2','5','3'],
             'eval'                    => ['submitOnChange' => true,'includeBlankOption' => false],
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine'],
             'sql'                     => "char(1) NOT NULL default '3'"
@@ -708,24 +691,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'inputType'               => 'text',
             'eval'                    => ['maxlength'=>254],
             'sql'                     => "varchar(255) NOT NULL default ''"
-        ],
-
-        'geosearch_div' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_div'],
-            'exclude'                 => true,
-            'inputType'               => 'text',
-            'eval'                    => ['maxlength'=>30],
-            'sql'                     => "varchar(30) NOT NULL default ''"
-        ],
-    
-        'geosearch_results_div' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_results_div'],
-            'exclude'                 => true,
-            'inputType'               => 'text',
-            'eval'                    => ['maxlength'=>30],
-            'sql'                     => "varchar(30) NOT NULL default ''"
         ],
 
         'geosearch_zoomto' =>
@@ -885,8 +850,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overpassEngine'],
             'inputType'               => 'radio',
-            'default'                 => '1',
-            'options'                 => ['1','2','3'],
+            'default'                 => '2',
+            'options'                 => ['2','3','1'],
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['referencesOverpassEngine'],
             'eval'                    => ['tl_class'=>'clr long','submitOnChange' => true],
             'sql'                     => "varchar(255) NOT NULL default '1'"

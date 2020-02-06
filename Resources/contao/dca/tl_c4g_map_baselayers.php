@@ -231,20 +231,20 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider'],
             'filter'                  => true,
             'inputType'               => 'radio',
-            'default'                 => 'osm',
+            'default'                 => 'con4gisIo',
             'options'                 => [
-                'custom' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_custom'],
-                'bing' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_bing'],
                 'con4gisIo' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_con4gisIo'],
+                'osm' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm'],
+                'bing' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_bing'],
                 'here' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_here'],
                 'klokan' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_klokan'],
                 'mapbox' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapbox'],
-                'osm' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm'],
                 'stamen' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stamen'],
                 'thunder' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_thunderforest'],
                 'wms' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_wms'],
                 'geoimage' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_geoimage'],
-                'group' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_group']
+                'group' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_group'],
+                'custom' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_custom']
             ],
             'eval'                    => ['submitOnChange'=>true, 'tl_class'=>'clr'],
             'sql'                     => "varchar(10) NOT NULL default ''"
