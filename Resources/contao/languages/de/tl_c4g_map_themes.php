@@ -34,17 +34,12 @@ $GLOBALS['TL_LANG']['tl_c4g_map_themes']['colors']  = array('Farben-CSS', 'Wähl
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['custom_colors'] = array('Eigene Farben-CSS', 'Wählen Sie diese Option, wenn Sie eine eigene CSS-Datei verwenden wollen.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['external_colors']  = array('Eigene Farben', 'Laden Sie Ihre eigene CSS-Datei hoch (Beispiele unter files/con4gis).');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['maincolor']  = array('Hauptfarbe (z.B. für Button und Dialoge)', 'Überschreibt die voreingestellte con4gis CSS-Farbeinstellung.');
-$GLOBALS['TL_LANG']['tl_c4g_map_themes']['mainopacity']  = array('Deckkraft der Hauptfarbe', 'Überschreibt die voreingestellten con4gis CSS-Einstellungen.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['fontcolor']  = array('Schriftfarbe', 'Überschreibt die voreingestellten con4gis CSS-Einstellungen.');
-$GLOBALS['TL_LANG']['tl_c4g_map_themes']['fontopacity']  = array('Deckkraft der Schriftfarbe', 'Überschreibt die voreingestellten con4gis CSS-Einstellungen.');
 
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['popupMaincolor']  = array('Popup Hintergrundfarbe', 'Überschreibt die voreingestellten con4gis CSS-Einstellungen. Wenn dieser Wert leer bleibt, wird automatisch die Hauptfarbe auch für das Popup gesetzt.');
-$GLOBALS['TL_LANG']['tl_c4g_map_themes']['popupMainopacity']  = array('Deckkraft der Popup Hintergrundfarbe', 'Überschreibt die voreingestellten con4gis CSS-Einstellungen.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['popupFontcolor']  = array('Popup Schriftfarbe', 'Überschreibt die voreingestellten con4gis CSS-Einstellungen. Wenn dieser Wert leer bleibt, wird automatisch die Schriftfarbe auch für das Popup gesetzt.');
-$GLOBALS['TL_LANG']['tl_c4g_map_themes']['popupFontopacity']  = array('Deckkraft der Popup Schriftfarbe', 'Überschreibt die voreingestellten con4gis CSS-Einstellungen.');
 
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['shadowcolor']  = array('Zweitfarbe (z.B. für Hover der Buttons und Scrollbars)', 'Überschreibt die voreingestellten con4gis CSS-Einstellungen. Zum Beispiel für Hover-Effekte, Rahmen oder Formularelemente.');
-$GLOBALS['TL_LANG']['tl_c4g_map_themes']['shadowopacity']  = array('Deckkraft der Zweitfarbe', 'Überschreibt die voreingestellten con4gis CSS-Einstellungen.');
 
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['effects'] = array('Effekte-CSS', 'Wählen Sie einen Stil für die Effekte aus.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['custom_effects'] = array('Eigene Effekte-CSS', 'Wählen Sie diese Option, wenn Sie eine eigene CSS-Datei verwenden wollen.');

@@ -211,42 +211,40 @@ class ResourceLoader extends coreResourceLoader
         }
 
         if ($theme->maincolor) {
-            $themeData['maincolor'] = $theme->maincolor;
-        }
-        if ($theme->mainopacity) {
-            $themeData['mainopacity'] = deserialize($theme->mainopacity);
+            $maincolor = unserialize($theme->maincolor);
+            $themeData['maincolor'] = $maincolor[0];
+            $themeData['mainopacity'] = $maincolor[1];
         }
         if ($theme->fontcolor) {
-            $themeData['fontcolor'] = $theme->fontcolor;
+            $fontcolor = unserialize($theme->fontcolor);
+            $themeData['fontcolor'] = $fontcolor[0];
+            $themeData['fontopacity'] = $fontcolor[1];
         }
-        if ($theme->fontopacity) {
-            $themeData['fontopacity'] = deserialize($theme->fontopacity);
-        }
+
         if ($theme->popupMaincolor) {
-            $themeData['popupMaincolor'] = $theme->popupMaincolor;
-        } elseif ($theme->maincolor) {
-            $themeData['popupMaincolor'] = $theme->maincolor;
+            $popupMaincolor = unserialize($theme->popupMaincolor);
+            $themeData['popupMaincolor'] = $popupMaincolor[0];
+            $themeData['popupMainopacity'] = $popupMaincolor[1];
+        } else if ($theme->maincolor) {
+            $maincolor = unserialize($theme->maincolor);
+            $themeData['popupMaincolor'] = $maincolor[0];
+            $themeData['popupMainopacity'] = $maincolor[1];
         }
-        if ($theme->popupMainopacity) {
-            $themeData['popupMainopacity'] = deserialize($theme->popupMainopacity);
-        } elseif ($theme->mainopacity) {
-            $themeData['popupMainopacity'] = $theme->mainopacity;
-        }
+
         if ($theme->popupFontcolor) {
-            $themeData['popupFontcolor'] = $theme->popupFontcolor;
+            $popupFontcolor = unserialize($theme->popupFontcolor);
+            $themeData['popupFontcolor'] = $popupFontcolor[0];
+            $themeData['popupFontopacity'] = $popupFontcolor[1];
         } elseif ($theme->fontcolor) {
-            $themeData['popupFontcolor'] = $theme->fontcolor;
+            $fontcolor = unserialize($theme->fontcolor);
+            $themeData['popupFontcolor'] = $fontcolor[0];
+            $themeData['popupFontopacity'] = $fontcolor[1];
         }
-        if ($theme->popupFontopacity) {
-            $themeData['popupFontopacity'] = deserialize($theme->popupFontopacity);
-        } elseif ($theme->fontopacity) {
-            $themeData['popupFontopacity'] = $theme->fontopacity;
-        }
+
         if ($theme->shadowcolor) {
-            $themeData['shadowcolor'] = $theme->shadowcolor;
-        }
-        if ($theme->shadowopacity) {
-            $themeData['shadowopacity'] = deserialize($theme->shadowopacity);
+            $shadowcolor = unserialize($theme->shadowcolor);
+            $themeData['shadowcolor'] = $shadowcolor[0];
+            $themeData['shadowopacity'] = $shadowcolor[1];
         }
 
         $themeData['useglobal'] = $theme->useglobal;
