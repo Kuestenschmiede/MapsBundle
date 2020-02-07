@@ -70,11 +70,11 @@ export class C4gLocationStyle {
 
     // general
     strokeStyle = new Stroke({
-      color: utils.getRgbaFromHexAndOpacity(styleData.strokecolor, styleData.strokeopacity),
+      color: utils.getRgbaFromHexAndOpacity(styleData.strokecolor[0], styleData.strokecolor[1]),
       width: parseInt(styleData.strokewidth.value, 10)
     });
     fillStyle = new Fill({
-      color: utils.getRgbaFromHexAndOpacity(styleData.fillcolor, styleData.fillopacity)
+      color: utils.getRgbaFromHexAndOpacity(styleData.fillcolor[0], styleData.fillcolor[1])
     });
 
     imageStyle = this.createImageStyle(styleData, strokeStyle, fillStyle);
@@ -135,7 +135,7 @@ export class C4gLocationStyle {
           textAlign: styleData.label_align_hor,
           textBaseline: styleData.label_align_ver,
           fill: new Fill({
-            color: utils.getRgbaFromHexAndOpacity(styleData.font_color || defaultColor, styleData.font_opacity)
+            color: utils.getRgbaFromHexAndOpacity(styleData.font_color[0] || defaultColor, styleData.font_color[1])
           }),
           stroke: textStyleOutline
         };
