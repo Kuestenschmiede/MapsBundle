@@ -128,6 +128,16 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
                                          '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,label_outl_box,font_style,font_weight;'.
                                          '{popup_legend},tooltip,popup_info;'.
                                          '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;',
+        'x'                           => 'name,styletype,strokewidth,strokecolor,radius;'.
+                                        '{arrow_legend},line_arrows;'.
+                                        '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,label_outl_box,font_style,font_weight;'.
+                                        '{popup_legend},tooltip,popup_info;'.
+                                        '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;',
+        'cross'                       => 'name,styletype,strokewidth,strokecolor,radius;'.
+                                        '{arrow_legend},line_arrows;'.
+                                        '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,label_outl_box,font_style,font_weight;'.
+                                        '{popup_legend},tooltip,popup_info;'.
+                                        '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;',
         'cust_icon'                   => 'name,styletype,icon_src, icon_scale, icon_size,icon_resize_zoom,icon_opacity,icon_offset;'.
                                          '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,label_outl_box,font_style,font_weight;'.
                                          '{popup_legend},tooltip,popup_info;'.
