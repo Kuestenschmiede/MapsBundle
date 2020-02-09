@@ -219,7 +219,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
                 'inputType'               => 'text',
                 'default'                 => 'ee0016',
                 'eval'                    => array('maxlength'=>6, 'multiple'=>true, 'size'=>2, 'colorpicker'=>true, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'long wizard'),
-                'sql'                     => "varchar(64) NOT NULL default 'ee0016'"
+                'sql'                     => "varchar(64) NOT NULL default ''"
             ],
         'fillcolor' =>
             [
@@ -227,7 +227,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
                 'inputType'               => 'text',
                 'default'                 => 'ee0011',
                 'eval'                    => array('maxlength'=>6, 'multiple'=>true, 'size'=>2, 'colorpicker'=>true, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'long wizard'),
-                'sql'                     => "varchar(64) NOT NULL default 'ee0011'"
+                'sql'                     => "varchar(64) NOT NULL default ''"
             ],
         'radius' =>
             [
@@ -468,17 +468,19 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
         ],
 
         'font_color' =>
-            [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['font_color'],
-                'inputType'               => 'text',
-                'eval'                    => array('maxlength'=>6, 'multiple'=>true, 'size'=>2, 'colorpicker'=>true, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'),
-                'sql'                     => "varchar(64) NOT NULL default ''"
-            ],
+        [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['font_color'],
+            'inputType'               => 'text',
+            'eval'                    => array('maxlength'=>6, 'multiple'=>true, 'size'=>2, 'colorpicker'=>true, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'),
+            'sql'                     => "varchar(64) NOT NULL default ''"
+        ],
         'font_size' =>
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['font_size'],
             'exclude'                 => true,
-            'inputType'               => 'text',
+            'inputType'               => 'inputUnit',
+            'default'                 => '',
+            'options'                 => ['px'],
             'eval'                    => ['rgxp'=>'digit', 'tl_class' => 'w50'],
             'sql'                     => "varchar(100) NOT NULL default ''"
         ],
