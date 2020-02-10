@@ -37,7 +37,7 @@ export class C4gPopupController {
 
     let popupOptions = {
       open: this.containerOpen,
-      alwaysExtended: this.mapData.openDirectly,
+      alwaysExtended: false,//this.mapData.openDirectly,
       hideOther: this.mapController.hideOtherBottomComponents,
       mapData: this.mapData,
       mapController: this.mapController

@@ -401,7 +401,7 @@ export class BetterLayerController {
         };
         vectorSource.setLoader(loaderFunc);
       }
-      else if (features){
+      else if (features && features.length){
         vectorSource.setFeatures(features);
       }
       else {
