@@ -290,6 +290,7 @@ export class BetterLayerController {
   }
 
   getStructureFromLayer(layer, idChain) {
+    let scope = this;
     let features = [];
     let childs = [];
     let vectorLayer = false;
@@ -345,8 +346,9 @@ export class BetterLayerController {
       }
     }
     if (layer.excludeFromSingleLayer) {
+      let customStyleFunc = false;
       let vectorSource = new VectorSource();
-      if (layer.async_content) {
+      if (layer.async_content && layer.async_content !== "0") {
         vectorSource = new VectorSource({"strategy": bbox});
         const scope = this;
         let responseFunc = function (response) {
@@ -399,8 +401,100 @@ export class BetterLayerController {
         };
         vectorSource.setLoader(loaderFunc);
       }
-      else {
+      else if (features){
         vectorSource.setFeatures(features);
+      }
+      else {
+        let content = layer.content[0];
+        let featureProjection = "EPSG:3857";
+        let dataProjection = "EPSG:4326";
+
+        customStyleFunc = function (feature, resolution) {
+          let size = false;
+          let returnStyle = [];
+          if (feature && feature.get && feature.get('features')) {
+            let features = feature.get('features');
+            size = features.length;
+            feature = features[0];
+          }
+          if (layer && layer.locstyle && layer.locstyle !== "0") {
+            if (scope.proxy.locationStyleController.arrLocStyles && scope.proxy.locationStyleController.arrLocStyles[layer.locstyle] && scope.proxy.locationStyleController.arrLocStyles[layer.locstyle].style) {
+              let style = scope.proxy.locationStyleController.arrLocStyles[layer.locstyle].style;
+              if (typeof style === "function") {
+                returnStyle = style(feature, resolution, false);
+              }
+              else {
+                returnStyle = scope.proxy.locationStyleController.arrLocStyles[locstyle].style;
+              }
+            }
+          }
+          if (size > 1) {
+            let iconOffset = [0, 0];
+            if (returnStyle[0]) {
+              if (returnStyle[0].getImage() && returnStyle[0].getImage().getRadius && typeof returnStyle[0].getImage().getRadius === "function") {
+                let radius = parseInt(returnStyle[0].getImage().getRadius(), 10);
+                if (radius) {
+                  iconOffset = [-radius, radius];
+                }
+              } else if (returnStyle[0].getImage() && returnStyle[0].getImage().getAnchor && typeof returnStyle[0].getImage().getAnchor === "function") {
+                iconOffset = returnStyle[0].getImage().getAnchor() || [0, 0];
+              }
+            }
+
+            let fillcolor = utils.getRgbaFromHexAndOpacity('4975A8',{
+              unit: '%',
+              value: 70
+            });
+
+            let fontcolor = '#FFFFFF';
+
+            returnStyle.push(
+                new Style({
+                  text: new Text({
+                    text: "●",
+                    font: "60px sans-serif",
+                    offsetX: -1 * iconOffset[0],
+                    offsetY: -1 * iconOffset[1],
+                    fill: new Fill({
+                      color: fillcolor
+                    })
+                  })
+                })
+            );
+            returnStyle.push(
+                new Style({
+                  text: new Text({
+                    text: size.toString(),
+                    offsetX: -1 * iconOffset[0],
+                    offsetY: -1 * iconOffset[1] + 3,
+                    fill: new Fill({
+                      color: fontcolor
+                    })
+                  })
+                })
+            );
+          }
+          return returnStyle
+        };
+
+        if (content.data.properties && content.data.properties.projection && content.data.properties.projCode) {
+          // if (!proj4(contentData.data.properties.projection)) {
+          proj4.defs(content.data.properties.projection, content.data.properties.projCode);
+          register(proj4);
+          // }
+          dataProjection = new Projection({
+            code: content.data.properties.projection
+          });
+        }
+        let format = new olFormat[content['format']]({
+          featureProjection: featureProjection,
+          dataProjection: dataProjection
+        });
+
+        vectorSource = new VectorSource({
+          format: format,
+          url: content.data.url
+        });
       }
 
       if (layer.cluster) {
@@ -412,7 +506,7 @@ export class BetterLayerController {
       }
       vectorLayer = new Vector({
           source: vectorSource,
-          style: this.clusterStyleFunction
+          style: customStyleFunc || this.clusterStyleFunction
       });
       if (!layer.hide) {
         this.mapController.map.addLayer(vectorLayer);
@@ -458,16 +552,10 @@ export class BetterLayerController {
           let format;
           if (layer.content[contentId].type === "urlData") {
             if (layer.type === "kml") {
-              format = new olFormat.KML({
-                featureProjection: featureProjection,
-                dataProjection: dataProjection
-              });
+              return false
             }
             else if (layer.type === "gpx") {
-              format = new olFormat.GPX({
-                featureProjection: featureProjection,
-                dataProjection: dataProjection
-              });
+              return false;
             }
           }
           else {
