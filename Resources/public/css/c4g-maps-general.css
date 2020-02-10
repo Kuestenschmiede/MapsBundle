@@ -70,6 +70,9 @@ div.c4g-control-container-top-left > div {
    margin-right: .2em;
 }
 
+div.c4g-control-container-top-left > div.c4g-external {
+  display: none;
+}
 
 .c4g-control-container-top-left::-webkit-scrollbar{
  width: .2em;
@@ -1187,6 +1190,28 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
 }
 
 /*---------------------------------*/
+
+/*----------hide button------------*/
+
+.c4g-sideboard:not(.c4g-external) > div > div[class*=header] + button[class*=hide] {
+  width: calc(100% - .8em);
+  height: 20px;
+  margin: 0 .4em;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.c4g-sideboard:not(.c4g-external) > div > div[class*=header] + button[class*=hide]:after {
+  content: "\f0de";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+}
+
+.c4g-sideboard:not(.c4g-external) > div > div[class*=header] + button[class*=hide] + div[class*=content] {
+  max-height: calc((var(--map-height) - .4em) - (32px + .4em) - 28px - .4em);
+}
+
+/*---------------------------------*/
 /*----------switcher---------------*/
 
 .c4g-sideboard:not(.c4g-external) > div > div[class*=switcher] {
@@ -1222,14 +1247,14 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
 /*----------------------------*/
 /*-----------filter-----------*/
 
-.c4g-geosearch-form, .c4g-sideboard:not(.c4g-external) > div > div[class*=filter] {
+.c4g-geosearch-form, .c4g-sideboard > div > div[class*=filter] {
   line-height: calc(32px + .4em);
   height: calc(32px + .4em);
   padding: 0 .4em;
   margin: 0;
 }
 
-.c4g-geosearch-form input, .c4g-sideboard:not(.c4g-external) > div > div[class*=filter] input {
+.c4g-geosearch-form input, .c4g-sideboard > div > div[class*=filter] input {
   max-width: calc(100% - .2em - 35px);
   line-height: 32px;
   height: 32px;
@@ -1239,7 +1264,7 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
   outline: none;
 }
 
-.c4g-sideboard:not(.c4g-external) > div > div[class*=filter].without-button:after {
+.c4g-sideboard > div > div[class*=filter].without-button:after {
   font-family: "Font Awesome 5 Free";
   font-weight: 600;
   position: absolute;
@@ -1248,11 +1273,11 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
   text-align: center;
 }
 
-.c4g-geosearch-form input, .c4g-sideboard:not(.c4g-external) > div > div[class*=filter] input::placeholder{
+.c4g-geosearch-form input, .c4g-sideboard) > div > div[class*=filter] input::placeholder{
   padding-left: .2em;
 }
 
-.c4g-geosearch-form input, .c4g-sideboard:not(.c4g-external) > div > div[class*=filter] input:focus::placeholder{
+.c4g-geosearch-form input, .c4g-sideboard > div > div[class*=filter] input:focus::placeholder{
   color: transparent;
 }
 
@@ -1287,7 +1312,7 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
   list-style-type: none;
 }
 
-.c4g-sideboard > div > div[class*=content] input[type=text]{
+.c4g-sideboard > div > div[class*=content] input:not([type=range]) {
   height: 28px;
   padding: 0 .2em;
   border: none;
@@ -1295,7 +1320,7 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
   text-overflow: ellipsis;
 }
 
-.c4g-sideboard:not(.c4g-external) > div > div[class*=content] input[type=text] ~ button {
+.c4g-sideboard:not(.c4g-external) > div > div[class*=content] input ~ button {
   height: 28px;
   width: 32px;
   border: none;
@@ -1304,7 +1329,7 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
   cursor: pointer;
 }
 
-.c4g-sideboard:not(.c4g-external) > div > div[class*=content] input[type=text] ~ button {
+.c4g-sideboard:not(.c4g-external) > div > div[class*=content] input ~ button {
   margin-left: .2em;
 }
 
@@ -1398,7 +1423,7 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
   transition: .3s;
 }
 
-.c4g-baselayertree-content li.with-image > a img {
+.c4g-sideboard:not(.c4g-external) .c4g-baselayertree-content li.with-image > a img {
   max-width: 360px;
   width: 100%;
 }
