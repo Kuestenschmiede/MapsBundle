@@ -13,7 +13,7 @@
 'use strict';
 
 import {C4gBaselayerController} from "./c4g-baselayer-controller";
-import {BetterLayerController} from "./betterLayerController";
+import {BetterLayerController} from "./c4g-layer-controller";
 import {C4gLocationStyleController} from "./c4g-locationstyle-controller";
 import {C4gPopupController} from "./c4g-popup-controller";
 import {utils} from "./c4g-maps-utils";
