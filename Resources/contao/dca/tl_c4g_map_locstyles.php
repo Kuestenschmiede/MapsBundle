@@ -149,7 +149,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
                                          '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;'.
                                          '{editor_legend:hide},editor_icon,editor_icon_size,editor_sort,editor_vars,editor_collect;',
         'style_function'              => 'name,styletype,style_function_js;',
-        'photo'                       => 'name,styletype,radius,photoKind,icon_src,strokecolor,icon_opacity;'.
+        'photo'                       => 'name,styletype,radius,photoKind,icon_src,strokewidth,strokecolor,icon_opacity;'.
                                          '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,label_outl_box,font_style,font_weight;'.
                                          '{popup_legend},tooltip,popup_info;'.
                                          '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;'.
@@ -211,7 +211,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
             'default'                 => '2',
             'options'                 => ['px'],
             'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'long', 'mandatory'=>false],
-            'sql'                     => "varchar(100) NOT NULL default '2'"
+            'sql'                     => "varchar(100) NOT NULL default 'a:2:{s:4:\"unit\";s:2:\"px\";s:5:\"value\";s:1:\"2\";}'"
             ],
         'strokecolor' =>
             [

@@ -71,7 +71,7 @@ export class C4gLocationStyle {
     // general
     strokeStyle = new Stroke({
       color: utils.getRgbaFromHexAndOpacity(styleData.strokecolor[0], styleData.strokecolor[1]),
-      width: parseInt(styleData.strokewidth.value, 10)
+      width: parseInt(styleData.strokewidth.value ? styleData.strokewidth.value : 2, 10)
     });
     fillStyle = new Fill({
       color: utils.getRgbaFromHexAndOpacity(styleData.fillcolor[0], styleData.fillcolor[1])
