@@ -211,7 +211,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
             'default'                 => '2',
             'options'                 => ['px'],
             'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'long', 'mandatory'=>false],
-            'sql'                     => "varchar(100) NOT NULL default '2'"
+            'sql'                     => "varchar(100) NOT NULL default 'a:2:{s:4:\"unit\";s:2:\"px\";s:5:\"value\";s:1:\"2\";}'"
             ],
         'strokecolor' =>
             [

@@ -103,8 +103,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['vector']            =
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['pixel']             = 'Raster';
 
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['default']           = 'Standard';
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['round']             = 'Kreis';
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['anchored']          = 'Verankert';
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['round']             = 'abgerundet';
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['anchored']          = 'verankert';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['folio']             = 'Portfolio';
 
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['true']              = 'Bekannte Größe';
