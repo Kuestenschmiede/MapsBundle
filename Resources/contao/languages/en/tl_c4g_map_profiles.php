@@ -130,7 +130,6 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['link_open_on'] = ['Open Links on', '
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['hover_popups'] = ['Popups on Mouse Hover', 'Shows a popup if the mouse pointer rests on a location.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['hover_popups_stay'] = ['Mouse Hover Popups stay open', 'Popups that have been opened on mouse hover are not closed when the mouse pointer leaves the location.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandling'] = ['Popup handling', 'popup- or map position handling.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['openDirectly'] = ['Maximize popup initially', 'If checked, popups open maximized instead of a preview mode that can be maximized.'];
 
 /** Experteneinstellungen */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overpassEngine'] = ['Overpass Server Technology', 'Choose your preferred Overpass Server Technology'];
@@ -222,8 +221,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['locstyle_legend'] = 'Location styles
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['navigation_legend'] = 'Navigation';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_legend'] = 'Starboard (map content switcher)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['attribution_legend'] = 'Copyright informations (attributions)';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['information_legend'] = 'Map information';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['measure_legend'] = 'Measure tools';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['information_legend'] = 'Additional map informations';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_legend'] = 'Geosearch';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_legend'] = 'Map editor';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overpassLegend'] = 'Overpass-API';

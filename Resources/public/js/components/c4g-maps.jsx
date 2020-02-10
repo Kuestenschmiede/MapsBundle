@@ -700,9 +700,20 @@ export class MapController extends Component {
 
     // permalink container
     if (mapData.permalink.enable) {
-      this.permalinkContainer = document.createElement('div');
-      this.permalinkContainer.className = "c4g-sideboard c4g-permalink-container ol-unselectable c4g-close";
-      this.$overlaycontainer_stopevent.append(this.permalinkContainer);
+      if (mapData.permalink.div) {
+        this.permalinkContainer = document.querySelector(".c4g-external-permalink-container");
+        if (!this.permalinkContainer) {
+          this.permalinkContainer = document.createElement('div');
+          this.permalinkContainer.className = "c4g-sideboard c4g-permalink-container ol-unselectable c4g-close";
+          this.$overlaycontainer_stopevent.append(this.permalinkContainer);
+        } else {
+          this.permalinkContainer.className += " c4g-external";
+        }
+      } else {
+        this.permalinkContainer = document.createElement('div');
+        this.permalinkContainer.className = "c4g-sideboard c4g-permalink-container ol-unselectable c4g-close";
+        this.$overlaycontainer_stopevent.append(this.permalinkContainer);
+      }
     }
     // @ToDo mapData.additionalPanel is always true, because it is set as an new object in the beginning. Therefore the second parameter of the boolean is requested, which throws an error
     // additionalPanel is furthermore not found anywhere in Maps and should be loaded over a hook

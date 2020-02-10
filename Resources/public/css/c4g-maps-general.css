@@ -248,24 +248,24 @@ button.c4g-geosearch-start:before {
 /*
  *  Portside & Starboard
  */
-.c4g-portside-container {
-  position: absolute;
-  top: 0;
-  height: 100%;
-  min-width: 240px;
-  max-width: 42%;
-  /*background: #FFFFFF;*/
-  z-index: 60;
-}
+/*.c4g-portside-container {*/
+/*  position: absolute;*/
+/*  top: 0;*/
+/*  height: 100%;*/
+/*  min-width: 240px;*/
+/*  max-width: 42%;*/
+/*  !*background: #FFFFFF;*!*/
+/*  z-index: 60;*/
+/*}*/
 
-/* important for browser zoom  */
-.c4g-portside-content-container {
-  min-width: 97%;
-}
+/*!* important for browser zoom  *!*/
+/*.c4g-portside-content-container {*/
+/*  min-width: 97%;*/
+/*}*/
 
-.c4g-starboard-content-container::-webkit-scrollbar {
-  width: .2em!important;
-}
+/*.c4g-starboard-content-container::-webkit-scrollbar {*/
+/*  width: .2em!important;*/
+/*}*/
 
 .c4g-control-container-top-left {
   z-index: 90;
@@ -1131,9 +1131,12 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
   max-height: calc(var(--map-height) - .4em);
   height: 100%;
   min-width: 240px;
-  max-width: 42%;
+  max-width: 240px;
   z-index: 60;
   transition: .5s;
+}
+.c4g-sideboard:not(.c4g-external):not(.c4g-measuretools-container)  {
+  max-width: 42%;
 }
 
 .c4g-sideboard:not(.c4g-external).c4g-close {

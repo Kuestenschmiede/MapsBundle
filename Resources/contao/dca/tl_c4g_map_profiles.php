@@ -106,16 +106,15 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         '__selector__'                => ['resize_locstyles_zoom', 'mouse_nav','cluster_all','attribution','hover_popups','geopicker','overpassEngine', 'cesium', 'popupHandling'],
         'default'                     => '{general_legend},name,theme,mapFunctions,initial_open_comp;'.
                                          '{navigation_legend:hide},mouse_nav,touch_nav,keyboard_nav;'.
+                                         '{click_legend:hide},link_newwindow,link_open_on,hover_popups, popupHandling;'.
                                          '{baselayer_legend:hide},baselayers, default_baselayer,baselayerswitcher_label,baselayer_filter;'.
                                          '{starboard_legend:hide},layerswitcher_label,layer_filter,starboard_label,starboard_button,starboard_locstyles,cluster_all;'.
+                                         '{geosearch_legend:hide},geosearch_headline,geosearch_engine,geosearchParams,geosearch_result_locstyle,geosearch_placeholder,geosearch_results,geosearch_zoomto,geosearch_zoombounds,geosearch_animate,geosearch_markresult,geosearch_popup,geosearch_attribution,geosearch_collapsed;'.
                                          '{attribution_legend:hide},attribution;'.
                                          '{information_legend:hide},scaleline,mouseposition,permalink_get_param,zoomlevel,infopage;'.
-                                         '{geosearch_legend:hide},geosearch_headline,geosearch_engine,geosearchParams,geosearch_result_locstyle,geosearch_placeholder,geosearch_results,geosearch_zoomto,geosearch_zoombounds,geosearch_animate,geosearch_markresult,geosearch_popup,geosearch_attribution,geosearch_collapsed;'.
                                          '{geopicker_legend:hide},is_backend_geopicker_default,geopicker;'.
-                                         '{click_legend:hide},link_newwindow,link_open_on,hover_popups, popupHandling;'.
-                                         '{overpassLegend:hide},overpassEngine;'.
                                          '{locstyle_legend:hide},label_color,resize_locstyles_zoom;'.
-                                         '{expert_legend:hide},caching,cluster_all,cesium,external_elements,filters,filterHandling,be_optimize_checkboxes_limit,custom_div;'
+                                         '{expert_legend:hide},overpassEngine,caching,cluster_all,cesium,external_elements,filters,filterHandling,be_optimize_checkboxes_limit,custom_div;'
         ],
 
 
@@ -131,8 +130,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         'overpassEngine_1'            => 'overpass_url',
         'overpassEngine_2'            => '',
         'overpassEngine_3'            => '',
-        'resize_locstyles_zoom'       => 'resize_src_zoom,resize_scale_factor,resize_min_scale,resize_max_scale',
-        'popupHandling_3'             => 'openDirectly'
+        'resize_locstyles_zoom'       => 'resize_src_zoom,resize_scale_factor,resize_min_scale,resize_max_scale'
     ],
 
     // Fields
@@ -933,13 +931,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'eval'                    => ['submitOnChange' => true,'includeBlankOption' => false],
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandlingReferences'],
             'sql'                     => "char(1) NOT NULL default '0'"
-        ],
-        'openDirectly' => [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['openDirectly'],
-            'exclude'                 => true,
-            'default'                 => false,
-            'inputType'               => 'checkbox',
-            'sql'                     => "char(1) NOT NULL default ''"
         ],
         'be_optimize_checkboxes_limit' =>
         [
