@@ -137,5 +137,5 @@ $GLOBALS['TL_LANG']['MSC']['ow_value'] = 'Label im Editor';
 /**
  * Info text
  */
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['infotext'] = 'Hier stellen Sie die Icons für Ihre Kartenelemente ein (aus der Dateiverwaltung oder vordefiniert). Sie können die Position der Icons anpassen, damit z.B. die Spitze eines Markers direkt auf den Punkt zeigt (Positionsversatz).'.
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['infotext'] = 'Hier stellen Sie die Icons für Ihre Kartenelemente ein (aus der Dateiverwaltung oder vordefiniert). Sie können die Position der Icons anpassen, damit z.B. die Spitze eines Markers direkt auf den Punkt zeigt (Positionsversatz). '.
    'Mehr auf <a href="https://docs.con4gis.org/lokationsstile-in-con4gis-maps" title="con4gis Docs Lokationsstile" target="_blank" rel="noopener"><b>docs.con4gis.org</b></a>';

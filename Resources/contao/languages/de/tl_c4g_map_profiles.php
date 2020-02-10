@@ -120,7 +120,6 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['link_open_on'] = ['Direktlinks öffn
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['hover_popups'] = ['Popups über Maus-Hover-Effekt anzeigen', 'Popups werden angezeigt sobald der Mauszeiger über der Lokation verweilt und nicht erst nach einem Mausklick.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['hover_popups_stay'] = ['Maus-Hover-Popups geöffnet lassen', 'Popups bleiben geöffnet auch, wenn der Mauszeiger die Lokation verlässt.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandling'] = ['Popupverhalten', 'Popup- oder Kartenposition anpassen.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['openDirectly'] = ['Popup direkt aufklappen', 'Wenn diese Checkbox gesetzt ist, werden Popups nicht erst in der Vorschau-Ansicht geöffnet, sondern direkt maximiert.'];
 
 /** Sonstiges */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overpassEngine'] = ['Overpass-Servertechnik', 'Auswahl der Overpass-Servertechnik'];
@@ -171,7 +170,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandlingReferences']['3'] = 'Da
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearchParams']['keys']       = ['Schlüssel','Beispiel:countrycodes'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearchParams']['params']     = ['Parameter', 'Beispiel: de'];
 
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp']['refs'][''] = 'keine';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp']['refs'][''] = 'keines';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp']['refs']['starboard'] = 'Starboard';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp']['refs']['search'] = 'Suche';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp']['refs']['baselayers'] = 'Basiskartenwechsler';
@@ -203,8 +202,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['locstyle_legend'] = 'Lokationsstile'
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['navigation_legend'] = 'Navigation';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_legend'] = 'Starboard (Karteninhalte schalten)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['attribution_legend'] = 'Copyright Informationen (Attributionen)';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['information_legend'] = 'Karteninformationen';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['measure_legend'] = 'Messwerkzeuge';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['information_legend'] = 'Zusätzliche Karteninformationen';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_legend'] = 'Kartensuche';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_legend'] = 'Karteneditor';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_legend'] = 'Geopicker (Position bestimmen)';

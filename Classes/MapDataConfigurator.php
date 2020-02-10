@@ -532,7 +532,6 @@ class MapDataConfigurator
             $mapData['hover_popups'] = $profile->hover_popups;
             $mapData['hover_popups_stay'] = $profile->hover_popups_stay;
             $mapData['popupHandling'] = $profile->popupHandling;
-            $mapData['openDirectly'] = $profile->openDirectly;
         }
 
         // mapservice
