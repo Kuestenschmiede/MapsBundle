@@ -39,7 +39,7 @@ export class C4gStarboardLayerElement extends Component {
     let features = false;
     let vectorLayer = false;
     if (showElements) {
-      if (showElements.isArray && showElements.isArray()) {
+      if (Array.isArray(showElements)) {
         features = showElements;
       }
       else if (showElements instanceof Vector) {
@@ -68,7 +68,7 @@ export class C4gStarboardLayerElement extends Component {
     let features = false;
     let vectorLayer = false;
     if (hideElements) {
-      if (hideElements.isArray && hideElements.isArray()) {
+      if (Array.isArray(hideElements)) {
         features = hideElements;
       }
       else if (hideElements instanceof Vector) {

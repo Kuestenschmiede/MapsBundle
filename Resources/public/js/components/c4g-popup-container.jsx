@@ -57,11 +57,11 @@ export class PopupContainer extends Component {
     return (
       <div className={className}>
         <div className={"c4g-popup-wrapper"}>
-          <Titlebar wrapperClass={"c4g-beach-header"} headerClass={"c4g-beach-header-headline"} header={""}
+          <Titlebar wrapperClass={"c4g-popup-header"} headerClass={"c4g-popup-header-headline"} header={""}
                     closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close} detailBtnClass={""} detailBtnCb={""}>
             <div dangerouslySetInnerHTML={{__html: this.routeButtons.outerHTML}} />
           </Titlebar>
-          <div className={"c4g-beach-content c4g-popup-content"} dangerouslySetInnerHTML={{__html: this.state.content}}>
+          <div className={"c4g-popup-content c4g-popup-content"} dangerouslySetInnerHTML={{__html: this.state.content}}>
           </div>
         </div>
       </div>

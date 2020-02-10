@@ -137,7 +137,7 @@ export class GeoSearch extends Component {
     return (
       <React.Fragment>
         <div className={cssConstants.GEOSEARCH_WRAPPER + " " + modeClass + " c4g-horizon"}>
-          <Titlebar wrapperClass={"c4g-geosearch-header c4g-horizon-header"} header={this.props.headline} headerClass={"c4g-geosearch-headline c4g-horizon-header-headline"}
+          <Titlebar wrapperClass={"c4g-geosearch-header"} header={this.props.headline} headerClass={"c4g-geosearch-headline"}
                                 detailBtnClass={""} detailBtnCb={""} closeBtnClass={closeBtnClass} closeBtnCb={closeBtnCb}>
           </Titlebar>
           <div className={"c4g-geosearch-filter"}>
@@ -243,16 +243,6 @@ export class GeoSearch extends Component {
         markResult = opt_options.markResult;
       }
     }
-
-
-    // @TODO
-    // check bounds
-    //   are there restriction-bounds on the map?
-    //   -> else use extent-bounds
-
-    // @TODO
-    // highlight found area/location
-
 
     if (this.config.quicksearch) {
       let data = {
