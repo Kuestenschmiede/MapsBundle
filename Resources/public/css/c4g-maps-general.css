@@ -681,6 +681,7 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
   display: block;
   list-style: none;
   line-height: inherit;
+  white-space: nowrap;
 }
 .ol-attribution li a {
 }
@@ -1219,6 +1220,10 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
   height: calc(32px + .4em);
   padding: 0 .4em;
   margin: 0;
+}
+
+.c4g-sideboard:not(.c4g-external) > div > div[class*=switcher] > div {
+  float: right;
 }
 
 .c4g-sideboard:not(.c4g-external) > div > div[class*=switcher] button {

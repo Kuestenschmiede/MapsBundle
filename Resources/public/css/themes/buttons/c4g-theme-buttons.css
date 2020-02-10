@@ -30,6 +30,7 @@
   width: var(--button-size-pixel);
   border: none;
   border-radius: var(--button-radius-percent);
+  cursor: pointer;
 }
 
 .ol-control button::-moz-focus-inner {
