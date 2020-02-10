@@ -99,7 +99,6 @@ export class MapProxy {
     this.layerController = new BetterLayerController(this);
     this.layerController.loadLayers();
     this.locationStyleController = new C4gLocationStyleController(this);
-    // this.locationStyleController.loadLocationStyles(this.layerController.arrLocstyles);
     this.popupController = new C4gPopupController(this);
     this.popupController.addPopUp();
 

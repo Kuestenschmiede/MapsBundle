@@ -19,10 +19,12 @@ import * as olFormat from "ol/format";
 import proj4 from 'proj4';
 import {register} from 'ol/proj/proj4';
 import Projection from 'ol/proj/Projection';
+import {transform} from "ol/proj";
 import Collection from 'ol/Collection';
 import {utils} from './c4g-maps-utils';
 import {Style, Text, Fill} from 'ol/style';
 import {Point} from "ol/geom";
+import Feature from 'ol/Feature';
 const osmtogeojson = require('osmtogeojson');
 
 export class BetterLayerController {
@@ -351,58 +353,108 @@ export class BetterLayerController {
       if (layer.async_content && layer.async_content !== "0") {
         vectorSource = new VectorSource({"strategy": bbox});
         const scope = this;
-        let responseFunc = function (response) {
-          let features;
-          if (typeof response === "string") {
-            let format = new OSMXML();
-            try {
-              features = format.readFeatures(response, {featureProjection: "EPSG:3857"});
-            } catch (e) {
-              console.warn('Can not read feature.');
-            }
-          }
-          else if (typeof response === "object"){
-            let geojson = osmtogeojson(response);
-            features = new olFormat.GeoJSON().readFeatures(geojson, {featureProjection: "EPSG:3857"});
-          }
-          else {
-            return false;
-          }
-          for (let featureId in features) {
-            if (features.hasOwnProperty(featureId)) {
-              features[featureId].set('locstyle', layer.locstyle)
-            }
-          }
-          if (vectorSource instanceof Cluster) {
-            vectorSource.getSource().addFeatures(features);
-          }
-          else {
-            vectorSource.addFeatures(features);
-          }
 
-        };
         let loaderFunc = function(extent, resolution, projection) {
           if (extent[0] === Infinity || extent[0] === -Infinity) {
             vectorSource.removeLoadedExtent();
           }
           else if (layer.content && layer.content[0] && layer.content[0].data) {
             let data = layer.content[0].data;
+            let responseFunc = function (response) {
+              let features;
+              if (typeof response === "string") {
+                let format = new OSMXML();
+                try {
+                  features = format.readFeatures(response, {featureProjection: "EPSG:3857"});
+                } catch (e) {
+                  console.warn('Can not read feature.');
+                }
+              }
+              else if (typeof response === "object"){
+                let geojson = osmtogeojson(response);
+                features = new olFormat.GeoJSON().readFeatures(geojson, {featureProjection: "EPSG:3857"});
+              }
+              else {
+                return false;
+              }
+              for (let featureId in features) {
+                if (features.hasOwnProperty(featureId)) {
+                  features[featureId].set('locstyle', layer.locstyle)
+                }
+              }
+              if (vectorSource instanceof Cluster) {
+                vectorSource.getSource().addFeatures(features);
+              }
+              else {
+                vectorSource.addFeatures(features);
+              }
+            };
             scope.performOvp({
                   "url": data.url,
                   "params": data.params,
                   "locstyleId": layer.locstyle
-                }, {
+                },
+                {
                   "extent": extent,
                   "resolution": resolution,
                   "projection": projection
                 },
                 responseFunc)
           }
+          else if (layer.type === "table") {
+            let responseFunc = function (data) {
+              let features = [];
+              for(let i = 0; i < data.length; i++){
+                let contentData = data[i];
+
+                var resultCoordinate = transform([parseFloat(contentData['geox']), parseFloat(contentData['geoy'])], 'EPSG:4326', 'EPSG:3857')
+                var point = new Point(resultCoordinate);
+                let contentFeature = new Feature(point);
+                contentFeature.setId(contentData.id);
+
+                contentFeature.set('hover_location', layer.hover_location);
+                contentFeature.set('hover_style', layer.hover_style);
+                let popup = contentData['popup'] ? contentData['popup'] : jQuery.extend({},layer.popup);
+                if(popup && popup.content && popup.content.search && popup.content.search('itemId')){
+                  popup.content = popup.content.replace('itemId',contentData['id']);
+                }
+                if(contentData['label']){
+                  contentFeature.set('label',contentData['label'])
+                }
+                if(contentData['tooltip']){
+                  contentFeature.set('tooltip',contentData['tooltip'])
+                }
+                contentFeature.set('popup', popup);
+                contentFeature.set('zoom_onclick', layer.zoom_onclick);
+                contentFeature.set('tid', contentData['id']);
+                let locstyle = contentData['locstyle'] || layer.locstyle;
+                contentFeature.set('locstyle', locstyle);
+                features.push(contentFeature);
+              }
+              if (vectorSource instanceof Cluster) {
+                vectorSource.getSource().addFeatures(features);
+              }
+              else {
+                vectorSource.addFeatures(features);
+              }
+
+            };
+            scope.getOwnData({
+              "layerId": layer.id,
+              "locstyleId": layer.locstyle
+            },
+            {
+              "extent": extent,
+              "resolution": resolution,
+              "projection": projection
+            },
+            responseFunc)
+          }
         };
         vectorSource.setLoader(loaderFunc);
       }
       else if (features && features.length){
-        vectorSource.setFeatures(features);
+        vectorSource.addFeatures(features);
       }
       else {
         let content = layer.content[0];
@@ -477,7 +529,7 @@ export class BetterLayerController {
           return returnStyle
         };
 
-        if (content.data.properties && content.data.properties.projection && content.data.properties.projCode) {
+        if (content.data && content.data.properties && content.data.properties.projection && content.data.properties.projCode) {
           // if (!proj4(contentData.data.properties.projection)) {
           proj4.defs(content.data.properties.projection, content.data.properties.projCode);
           register(proj4);
@@ -613,7 +665,8 @@ export class BetterLayerController {
       return null;
     }
   }
-  performOvp (requestData, mapConf, responseFunc) {
+
+  performOvp(requestData, mapConf, responseFunc) {
     let boundingArray = transformExtent(mapConf.extent, mapConf.projection, 'EPSG:4326');
     let strBoundingBox = "";
     let url = requestData.url;
@@ -640,4 +693,21 @@ export class BetterLayerController {
       }
     }
   }
+  getOwnData (requestData, mapConf, responseFunc) {
+    const scope = this;
+    // @Todelü implement handling for other projections
+    let boundingArray = transformExtent(mapConf.extent, mapConf.projection, 'EPSG:4326');
+    let strBoundingBox = boundingArray[0] + ',' + boundingArray [1] + ';' + boundingArray[2] + ',' + boundingArray[3];
+
+    let url = scope.proxy.api_layercontentdata_url + '/' + requestData.layerId + '/' + strBoundingBox;
+    fetch(url).then((response) => {
+      response.json().then(responseFunc);
+    })
+    .catch((error) => {
+      console.log('Fetch Error :-S', error);
+    })
+    ;
+
+  }
+
 }
