@@ -119,9 +119,9 @@ class BaseLayerService
                 return -1;
             } elseif ($a['sort'] > $b['sort']) {
                 return 1;
-            } else {
-                return 0;
             }
+
+            return 0;
         });
 
         return $arrBaseLayer;
@@ -374,8 +374,8 @@ class BaseLayerService
                 default:
                     die('This should not have happened!');
             }
-        } catch(Exception $e) {
-            C4gLogModel::addLogEntry('map','Error while loading baselayer type '.$objBaseLayer->provider);
+        } catch (Exception $e) {
+            C4gLogModel::addLogEntry('map', 'Error while loading baselayer type ' . $objBaseLayer->provider);
             die('This should not have happened!');
         }
 

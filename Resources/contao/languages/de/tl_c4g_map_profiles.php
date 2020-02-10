@@ -230,5 +230,5 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['filter'] = "Kar
 /**
  * Info text
  */
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['infotext'] = 'Im Kartenprofil werden die Steuerungs- und Auswahlbutton für die Karte festgelegt. Die Funktionen zu/hinter den Button können individuell eingestellt werden. Außerdem Einstellungen zum Popup, zu Copyright-Hinweisen und zur Adresssuche.'.
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['infotext'] = 'Im Kartenprofil werden die Steuerungs- und Auswahlbutton für die Karte festgelegt. Die Funktionen zu/hinter den Button können individuell eingestellt werden. Außerdem Einstellungen zum Popup, zu Copyright-Hinweisen und zur Adresssuche. '.
     'Mehr auf <a href="https://docs.con4gis.org/kartenprofile_con4gis_maps" title="con4gis Docs Kartenprofile" target="_blank" rel="noopener"><b>docs.con4gis.org</b></a>';

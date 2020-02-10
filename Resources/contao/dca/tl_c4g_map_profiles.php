@@ -52,8 +52,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             [
             'flag'                    => 1,
             'fields'                  => ['name','theme:tl_c4g_map_themes.name','is_backend_geopicker_default'],
-            'showColumns'             => true,
-//            'label_callback'          => ['tl_c4g_map_profiles', 'addIcon'],
+            'showColumns'             => true
             ],
         'global_operations' =>
             [
@@ -163,10 +162,11 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         'mapFunctions' => [
             'exclude'                 => true,
             'inputType'               => 'checkboxWizard',
+            'default'                 => ['zoom'],
             'options'                 => ['zoom', 'zoomPosition','zoomHome','zoomExtent','fullscreen','print','rotate','graticule', 'layerswitcher', 'baselayerswitcher', 'geosearch', 'legend', 'measure', 'overview', 'permalink'],
             'eval'                    => ['multiple'=>true, 'helpwizard'=>true],
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference'],
-            'sql'                     => "text NOT NULL default ''" //a:2:{i:0;s:10:"layout.css";i:1;s:14:"responsive.css";}
+            'sql'                     => "text NOT NULL default 'a:1:{i:0;s:4:\"zoom\";}'"
         ],
 
         'initial_open_comp' =>
@@ -976,63 +976,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'inputType'               => 'checkbox',
             'eval'                    => ['submitOnChange' => false],
             'sql'                     => "char(1) NOT NULL default ''"
-        ],
-
-        //now this fields are options of the map functions field
-        'zoom_panel' =>
-            [
-                'sql'                     => "char(1) NOT NULL default '1'"
-            ],
-        'fullscreen' =>
-            [
-                'sql'                     => "char(1) NOT NULL default ''"
-            ],
-        'zoom_panel_button' =>
-            [
-                'sql'                     => "blob NULL"
-            ],
-        'print' =>
-            [
-                'sql'                     => "char(1) NOT NULL default ''"
-            ],
-        'mouse_nav_dragmode' =>
-            [
-                'sql'                     => "char(1) NOT NULL default '0'"
-            ],
-        'graticule' =>
-            [
-                'sql'                     => "char(1) NOT NULL default ''"
-            ],
-        'starboard' =>
-            [
-                'sql'                     => "char(1) NOT NULL default '1'"
-            ],
-        'geosearch_show' =>
-            [
-                'sql'                     => "char(1) NOT NULL default '1'"
-            ],
-        'baselayerswitcher' =>
-            [
-                'sql'                     => "char(1) NOT NULL default '1'"
-            ],
-        'layerswitcher' =>
-            [
-                'sql'                     => "char(1) NOT NULL default '1'"
-            ],
-        'measuretool' =>
-            [
-                'sql'                     => "char(1) NOT NULL default '0'"
-            ],
-        'overviewmap' =>
-            [
-                'sql'                     => "char(1) NOT NULL default ''"
-            ],
-        'permalink' =>
-            [
-                'sql'                     => "char(1) NOT NULL default ''"
-            ],
-
-
+        ]
     ]
 ];
 
@@ -1094,7 +1038,8 @@ class tl_c4g_map_profiles extends Backend
         if (!$dc->id) {
             return;
         }
-        $objProfile = $this->Database->prepare("SELECT zoom_panel, geosearch_engine, be_optimize_checkboxes_limit, geosearch_results FROM tl_c4g_map_profiles WHERE id=?")
+
+        $objProfile = $this->Database->prepare("SELECT geosearch_engine, be_optimize_checkboxes_limit, geosearch_results FROM tl_c4g_map_profiles WHERE id=?")
         ->limit(1)
         ->execute($dc->id);
         if ($objProfile->numRows > 0) {
@@ -1241,23 +1186,6 @@ class tl_c4g_map_profiles extends Backend
             'params'  => $arrColumnParams
         ];
         return $return;
-    }
-
-    /**
-     * Add an image to each record
-     *
-     * @param array                $row
-     * @param string               $label
-     * @param Contao\DataContainer $dc
-     * @param array                $args
-     *
-     * @return array
-     */
-    public function addIcon($row, $label, Contao\DataContainer $dc, $args)
-    {
-        $image = 'bundles/con4gismaps/images/be-icons/geopicker.svg';
-        $args[0] = '<div class="list_icon_new" style="background-image:url('.$image.')" data-icon="'.$image.'">&nbsp;</div>';
-        return $args;
     }
 
     public function baselayersLink(Contao\DataContainer $dc)
