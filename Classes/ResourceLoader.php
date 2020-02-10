@@ -225,7 +225,7 @@ class ResourceLoader extends coreResourceLoader
             $popupMaincolor = unserialize($theme->popupMaincolor);
             $themeData['popupMaincolor'] = $popupMaincolor[0];
             $themeData['popupMainopacity'] = $popupMaincolor[1];
-        } else if ($theme->maincolor) {
+        } elseif ($theme->maincolor) {
             $maincolor = unserialize($theme->maincolor);
             $themeData['popupMaincolor'] = $maincolor[0];
             $themeData['popupMainopacity'] = $maincolor[1];
