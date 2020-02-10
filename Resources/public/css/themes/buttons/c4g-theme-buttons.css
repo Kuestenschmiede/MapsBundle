@@ -30,7 +30,6 @@
   width: var(--button-size-pixel);
   border: none;
   border-radius: var(--button-radius-percent);
-  cursor: crosshair;
 }
 
 .ol-control button::-moz-focus-inner {
