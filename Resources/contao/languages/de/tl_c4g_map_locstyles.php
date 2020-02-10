@@ -16,8 +16,8 @@
  */
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['name']             = array('Name', 'Bitte geben Sie den Namen des Lokationsstils an.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['styletype']        = array('Darstellung als','Bitte wählen Sie die Darstellungsart der Lokation (Punkt, Icon, etc.');
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['strokecolor']      = array('Farbe der Linie','Bitte wählen Sie die Farbe der Linie.');
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['strokewidth']      = array('Breite der Linie','Bitte wählen Sie die Breite der Linie.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['strokecolor']      = array('Farbe der Linie / Rahmen','Bitte wählen Sie die Farbe der Linie bzw. des Rahmens.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['strokewidth']      = array('Breite der Linie / Rahmen','Bitte wählen Sie die Breite der Linie bzw. des Rahmens.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['fillcolor']        = array('Farbe der Füllung','Bitte wählen Sie die Farbe der Füllung.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['radius']           = array('Radius','Bitte wählen Sie den Radius in Pixeln (gilt für Darstellung als Punkt, Stern, Dreieck, Quadrat, Kreuz).');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['ol_icon']          = array('OpenLayers Icon','Bitte wählen Sie aus den verfügbaren OpenLayers Standardicons aus.');
