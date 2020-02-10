@@ -15,6 +15,7 @@ namespace con4gis\MapsBundle\Classes\Services;
 
 use con4gis\CoreBundle\Classes\C4GUtils;
 use con4gis\CoreBundle\Classes\HttpResultHelper;
+use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
 use con4gis\MapsBundle\Classes\Utils;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use Contao\FrontendUser;
@@ -543,38 +544,43 @@ class LayerService
      */
     protected function getContentForType($objLayer, $lang = '')
     {
-        switch ($objLayer->location_type) {
-            case 'c4gForum':
-                return $this->getC4gForumData($objLayer);
+        try {
+            switch ($objLayer->location_type) {
+                case 'c4gForum':
+                    return $this->getC4gForumData($objLayer);
 
-                break;
-            case 'table':
-                if ($objLayer->async_content) {
+                    break;
+                case 'table':
+                    if ($objLayer->async_content) {
+                        return false;
+                    }
+
+                    return $this->layerContentService->getLayerData($objLayer->id);
+
+                    break;
+                // same function call, so fallthrough
+                case 'link':
+                case 'overpass':
+                case 'gpx':
+                case 'kml':
+                case 'osm':
+                case 'single':
+                case 'geojson':
+                    return $this->layerContentService->getLayerData($objLayer->id, false, $lang);
+
+                    break;
+                default:
+                    if (!$objLayer->data_hidelayer) {
+                        return $this->layerContentService->getLayerData($objLayer->id);
+                    }
+
                     return false;
-                }
 
-                    return $this->layerContentService->getLayerData($objLayer->id);
-
-                break;
-            // same function call, so fallthrough
-            case 'link':
-            case 'overpass':
-            case 'gpx':
-            case 'kml':
-            case 'osm':
-            case 'single':
-            case 'geojson':
-                return $this->layerContentService->getLayerData($objLayer->id, false, $lang);
-
-                break;
-            default:
-                if (!$objLayer->data_hidelayer) {
-                    return $this->layerContentService->getLayerData($objLayer->id);
-                }
-
-                return false;
-
-                break;
+                    break;
+            }
+        } catch (\Exception $e) {
+            C4gLogModel::addLogEntry('map','Error while loading the location type '.$objLayer->location_type);
+            return false;
         }
     }
 

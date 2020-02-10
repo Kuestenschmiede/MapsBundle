@@ -606,7 +606,13 @@ export class MapController extends Component {
     if (mapData.layerswitcher.enable) {
       if (mapData.starboard.div) {
         this.reactContainer = document.querySelector("." + mapData.starboard.div);
-        this.reactContainer.className += " c4g-external c4g-sideboard c4g-starboard-container ol-unselectable";
+        if (!this.reactContainer) {
+          this.reactContainer = document.createElement('div');
+          this.reactContainer.className = "c4g-sideboard c4g-starboard-container ol-unselectable";
+          this.$overlaycontainer_stopevent.append(this.reactContainer);
+        } else {
+          this.reactContainer.className += " c4g-external c4g-sideboard c4g-starboard-container ol-unselectable";
+        }
       } else {
         this.reactContainer = document.createElement('div');
         this.reactContainer.className = "c4g-sideboard c4g-starboard-container ol-unselectable";
@@ -624,7 +630,13 @@ export class MapController extends Component {
     if (mapData.baselayerswitcher.enable) {
       if (mapData.baselayerswitcher.div) {
         this.baselayerContainer = document.querySelector("." + mapData.baselayerswitcher.div);
-        this.baselayerContainer.className += " c4g-sideboard c4g-external c4g-baselayer-container ol-unselectable";
+        if (!this.baselayerContainer) {
+          this.baselayerContainer = document.createElement('div');
+          this.baselayerContainer.className = "c4g-sideboard c4g-baselayer-container ol-unselectable";
+          this.$overlaycontainer_stopevent.append(this.baselayerContainer);
+        } else {
+          this.baselayerContainer.className += " c4g-sideboard c4g-external c4g-baselayer-container ol-unselectable";
+        }
       } else {
         this.baselayerContainer = document.createElement('div');
         this.baselayerContainer.className = "c4g-sideboard c4g-baselayer-container ol-unselectable";
@@ -654,7 +666,13 @@ export class MapController extends Component {
     if (mapData.legend.enable) {
       if (mapData.legend.div) {
         this.infoPageContainer = document.querySelector("." + mapData.legend.div);
-        this.infoPageContainer.className += " c4g-sideboard c4g-external c4g-infopage-container ol-unselectable c4g-close";
+        if (!this.infoPageContainer) {
+          this.infoPageContainer = document.createElement('div');
+          this.infoPageContainer.className = "c4g-sideboard c4g-infopage-container ol-unselectable c4g-close";
+          this.$overlaycontainer_stopevent.append(this.infoPageContainer);
+        } else {
+          this.infoPageContainer.className += " c4g-sideboard c4g-external c4g-infopage-container ol-unselectable c4g-close";
+        }
       } else {
         this.infoPageContainer = document.createElement('div');
         this.infoPageContainer.className = "c4g-sideboard c4g-infopage-container ol-unselectable c4g-close";
@@ -666,7 +684,13 @@ export class MapController extends Component {
     if (mapData.measuretools.enable) {
       if (mapData.measuretools.div) {
         this.measuretoolsContainer = document.querySelector("." + mapData.measuretools.div);
-        this.measuretoolsContainer.className += " c4g-external c4g-sideboard c4g-measuretools-container ol-unselectable c4g-close";
+        if (!this.measuretoolsContainer) {
+          this.measuretoolsContainer = document.createElement('div');
+          this.measuretoolsContainer.className = "c4g-sideboard c4g-measuretools-container ol-unselectable c4g-close";
+          this.$overlaycontainer_stopevent.append(this.measuretoolsContainer);
+        } else {
+          this.measuretoolsContainer.className += " c4g-external c4g-sideboard c4g-measuretools-container ol-unselectable c4g-close";
+        }
       } else {
         this.measuretoolsContainer = document.createElement('div');
         this.measuretoolsContainer.className = "c4g-sideboard c4g-measuretools-container ol-unselectable c4g-close";
@@ -960,6 +984,12 @@ export class MapController extends Component {
       if (!this.searchContainer) {
         if (mapData.geosearch.div) {
           this.searchContainer = document.querySelector("." + mapData.geosearch.div);
+          if (!this.searchContainer) {
+            this.searchContainer = document.createElement('div');
+            this.searchContainer.className = "c4g-sideboard c4g-geosearch-container-right ";
+            this.searchContainer.className += mapData.geosearch.collapsed ? "c4g-close" : "c4g-open";
+            this.$overlaycontainer_stopevent.append(this.searchContainer);
+          }
         } else {
           this.searchContainer = document.createElement('div');
           this.searchContainer.className = "c4g-sideboard c4g-geosearch-container-right ";

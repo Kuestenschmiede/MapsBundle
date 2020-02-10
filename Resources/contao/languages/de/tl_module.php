@@ -42,3 +42,4 @@ $GLOBALS['TL_LANG']['tl_module']['element_type_refs']['filter'] = "Kartenfilter"
  */
 $GLOBALS['TL_LANG']['tl_module']['c4g_map_legend'] = 'Kartenkonfiguration';
 $GLOBALS['TL_LANG']['tl_module']['c4g_search_legend'] = 'Angaben zur Suche';
+$GLOBALS['TL_LANG']['tl_module']['c4g_external_legend'] = 'Kartenkomponenten ausßerhalb der Karte darstellen';

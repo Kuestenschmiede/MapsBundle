@@ -41,3 +41,4 @@ $GLOBALS['TL_LANG']['tl_module']['element_type_refs']['filter'] = "Map filter";
  */
 $GLOBALS['TL_LANG']['tl_module']['c4g_map_legend'] = 'Map configuration';
 $GLOBALS['TL_LANG']['tl_module']['c4g_search_legend'] = 'Search configuration';
+$GLOBALS['TL_LANG']['tl_module']['c4g_external_legend'] = 'Display map components outside the map';

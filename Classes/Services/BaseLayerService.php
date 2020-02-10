@@ -12,6 +12,7 @@
  */
 namespace con4gis\MapsBundle\Classes\Services;
 
+use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
 use con4gis\MapsBundle\Classes\Utils;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapBaselayersModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapOverlaysModel;
@@ -204,35 +205,10 @@ class BaseLayerService
         $arrBaseLayer['name'] = Utils::replaceInsertTags($decodedName, $lang);
 
         $arrBaseLayer['provider'] = $objBaseLayer->provider;
-        switch ($objBaseLayer->provider) {
-            case 'custom':
-                if (!empty($objBaseLayer->osm_style_url1) && empty($objBaseLayer->osm_style_url2)) {
-                    $arrBaseLayer['url'] = str_replace('$', '', $objBaseLayer->osm_style_url1);
-                } else {
-                    if (!empty($objBaseLayer->osm_style_url1)) {
-                        $arrBaseLayer['urls'][] = str_replace('$', '', $objBaseLayer->osm_style_url1);
-                    }
-                    if (!empty($objBaseLayer->osm_style_url2)) {
-                        $arrBaseLayer['urls'][] = str_replace('$', '', $objBaseLayer->osm_style_url2);
-                    }
-                    if (!empty($objBaseLayer->osm_style_url3)) {
-                        $arrBaseLayer['urls'][] = str_replace('$', '', $objBaseLayer->osm_style_url3);
-                    }
-                    if (!empty($objBaseLayer->osm_style_url4)) {
-                        $arrBaseLayer['urls'][] = str_replace('$', '', $objBaseLayer->osm_style_url4);
-                    }
-                }
 
-                $arrBaseLayer['extend'] = $objBaseLayer->extend;
-
-                break;
-            case 'osm':
-                $arrBaseLayer['style'] = $objBaseLayer->osm_style;
-                if (!empty($objBaseLayer->osm_keyname)) {
-                    $arrBaseLayer['apiKey'] = $objBaseLayer->osm_keyname;
-                }
-                // custom?
-                if ($arrBaseLayer['style'] == 'osm_custom') {
+        try {
+            switch ($objBaseLayer->provider) {
+                case 'custom':
                     if (!empty($objBaseLayer->osm_style_url1) && empty($objBaseLayer->osm_style_url2)) {
                         $arrBaseLayer['url'] = str_replace('$', '', $objBaseLayer->osm_style_url1);
                     } else {
@@ -249,128 +225,160 @@ class BaseLayerService
                             $arrBaseLayer['urls'][] = str_replace('$', '', $objBaseLayer->osm_style_url4);
                         }
                     }
-                }
 
-                break;
-            case 'stamen':
-                $arrBaseLayer['style'] = $objBaseLayer->stamen_style;
-                if (!empty($objBaseLayer->osm_keyname)) {
-                    $arrBaseLayer['apiKey'] = $objBaseLayer->osm_keyname;
-                }
+                    $arrBaseLayer['extend'] = $objBaseLayer->extend;
 
-                break;
-            case 'con4gisIo':
-                $objSettings = C4gMapSettingsModel::findOnly();
-                $arrBaseLayer['url'] = rtrim($objSettings->con4gisIoUrl, '/') . '/' . 'tiles.php?key={key}&z={z}&x={x}&y={y}';
+                    break;
+                case 'osm':
+                    $arrBaseLayer['style'] = $objBaseLayer->osm_style;
+                    if (!empty($objBaseLayer->osm_keyname)) {
+                        $arrBaseLayer['apiKey'] = $objBaseLayer->osm_keyname;
+                    }
+                    // custom?
+                    if ($arrBaseLayer['style'] == 'osm_custom') {
+                        if (!empty($objBaseLayer->osm_style_url1) && empty($objBaseLayer->osm_style_url2)) {
+                            $arrBaseLayer['url'] = str_replace('$', '', $objBaseLayer->osm_style_url1);
+                        } else {
+                            if (!empty($objBaseLayer->osm_style_url1)) {
+                                $arrBaseLayer['urls'][] = str_replace('$', '', $objBaseLayer->osm_style_url1);
+                            }
+                            if (!empty($objBaseLayer->osm_style_url2)) {
+                                $arrBaseLayer['urls'][] = str_replace('$', '', $objBaseLayer->osm_style_url2);
+                            }
+                            if (!empty($objBaseLayer->osm_style_url3)) {
+                                $arrBaseLayer['urls'][] = str_replace('$', '', $objBaseLayer->osm_style_url3);
+                            }
+                            if (!empty($objBaseLayer->osm_style_url4)) {
+                                $arrBaseLayer['urls'][] = str_replace('$', '', $objBaseLayer->osm_style_url4);
+                            }
+                        }
+                    }
 
-                break;
-            case 'mapbox':
-                $arrBaseLayer['url'] = 'https://api.mapbox.com/styles/v1/';
-                $arrBaseLayer['url_classic'] = 'https://api.tiles.mapbox.com/v4/';
-                $arrBaseLayer['mapbox_type'] = $objBaseLayer->mapbox_type;
-                if ($objBaseLayer->hide_in_be) {
-                    $arrBaseLayer['hide_in_be'] = $objBaseLayer->hide_in_be;
-                } else {
+                    break;
+                case 'stamen':
+                    $arrBaseLayer['style'] = $objBaseLayer->stamen_style;
+                    if (!empty($objBaseLayer->osm_keyname)) {
+                        $arrBaseLayer['apiKey'] = $objBaseLayer->osm_keyname;
+                    }
+
+                    break;
+                case 'con4gisIo':
+                    $objSettings = C4gMapSettingsModel::findOnly();
+                    $arrBaseLayer['url'] = rtrim($objSettings->con4gisIoUrl, '/') . '/' . 'tiles.php?key={key}&z={z}&x={x}&y={y}';
+
+                    break;
+                case 'mapbox':
+                    $arrBaseLayer['url'] = 'https://api.mapbox.com/styles/v1/';
+                    $arrBaseLayer['url_classic'] = 'https://api.tiles.mapbox.com/v4/';
+                    $arrBaseLayer['mapbox_type'] = $objBaseLayer->mapbox_type;
+                    if ($objBaseLayer->hide_in_be) {
+                        $arrBaseLayer['hide_in_be'] = $objBaseLayer->hide_in_be;
+                    } else {
+                        $arrBaseLayer['app_id'] = $objBaseLayer->app_id;
+                        $arrBaseLayer['api_key'] = $objBaseLayer->api_key;
+                    }
+
+                    break;
+                case 'klokan':
+                    $arrBaseLayer['url'] = $objBaseLayer->url;
+                    $klokan_type = $objBaseLayer->klokan_type;
+                    if ($klokan_type != 'OpenMapTiles') {
+                        $klokan_type = 'TileHosting';
+                    }
+                    $arrBaseLayer['style'] = $objBaseLayer->klokan_type;
+                    $arrBaseLayer['klokan_type'] = $klokan_type;
                     $arrBaseLayer['app_id'] = $objBaseLayer->app_id;
                     $arrBaseLayer['api_key'] = $objBaseLayer->api_key;
-                }
 
-                break;
-            case 'klokan':
-                $arrBaseLayer['url'] = $objBaseLayer->url;
-                $klokan_type = $objBaseLayer->klokan_type;
-                if ($klokan_type != 'OpenMapTiles') {
-                    $klokan_type = 'TileHosting';
-                }
-                $arrBaseLayer['style'] = $objBaseLayer->klokan_type;
-                $arrBaseLayer['klokan_type'] = $klokan_type;
-                $arrBaseLayer['app_id'] = $objBaseLayer->app_id;
-                $arrBaseLayer['api_key'] = $objBaseLayer->api_key;
+                    break;
+                case 'here':
+                    $arrBaseLayer['style'] = $objBaseLayer->here_type;
+                    $arrBaseLayer['here_type'] = 'HERE';
+                    if ($objBaseLayer->hide_in_be) {
+                        $arrBaseLayer['hide_in_be'] = $objBaseLayer->hide_in_be;
+                    } else {
+                        $arrBaseLayer['app_id'] = $objBaseLayer->app_id;
+                        $arrBaseLayer['api_key'] = $objBaseLayer->api_key;
+                    }
 
-                break;
-            case 'here':
-                $arrBaseLayer['style'] = $objBaseLayer->here_type;
-                $arrBaseLayer['here_type'] = 'HERE';
-                if ($objBaseLayer->hide_in_be) {
-                    $arrBaseLayer['hide_in_be'] = $objBaseLayer->hide_in_be;
-                } else {
+                    break;
+                case 'thunder':
+                    $arrBaseLayer['style'] = $objBaseLayer->thunderforest_type;
+                    $arrBaseLayer['thunderforest_type'] = 'Thunderforest';
+                    if ($objBaseLayer->hide_in_be) {
+                        $arrBaseLayer['hide_in_be'] = $objBaseLayer->hide_in_be;
+                    } else {
+                        $arrBaseLayer['api_key'] = $objBaseLayer->api_key;
+                    }
+
+                    break;
+                case 'google':
+                    $arrBaseLayer['style'] = $objBaseLayer->google_style;
+
+                    break;
+                case 'bing':
+                    $arrBaseLayer['style'] = $objBaseLayer->bing_style;
+                    if (!empty($objBaseLayer->bing_key)) {
+                        $arrBaseLayer['apiKey'] = $objBaseLayer->bing_key;
+                    }
+
+                    break;
+                case 'wms':
+                    $arrBaseLayer['url'] = $objBaseLayer->wms_url;
+
+                    $arrBaseLayer['params'] = [];
+                    $arrBaseLayer['params']['layers'] = $objBaseLayer->wms_params_layers;
+                    $arrBaseLayer['params']['version'] = $objBaseLayer->wms_params_version;
+                    $arrBaseLayer['params']['format'] = $objBaseLayer->wms_params_format;
+                    $arrBaseLayer['params']['transparent'] = $objBaseLayer->wms_params_transparent ? true : false;
+                    $arrBaseLayer['params']['srs'] = $objBaseLayer->wms_params_srs;
+
+                    $arrBaseLayer['gutter'] = $objBaseLayer->wms_gutter;
+
+                    break;
+                case 'owm':
+                    $arrBaseLayer['url'] = 'http://maps.owm.io:' . $objBaseLayer->api_port . '/';
+
                     $arrBaseLayer['app_id'] = $objBaseLayer->app_id;
                     $arrBaseLayer['api_key'] = $objBaseLayer->api_key;
-                }
 
-                break;
-            case 'thunder':
-                $arrBaseLayer['style'] = $objBaseLayer->thunderforest_type;
-                $arrBaseLayer['thunderforest_type'] = 'Thunderforest';
-                if ($objBaseLayer->hide_in_be) {
-                    $arrBaseLayer['hide_in_be'] = $objBaseLayer->hide_in_be;
-                } else {
-                    $arrBaseLayer['api_key'] = $objBaseLayer->api_key;
-                }
+                    break;
+                case 'group':
+                    $layerGroup = unserialize($objBaseLayer->layerGroup);
+                    foreach ($layerGroup as $key => $layer) {
+                        $objChildLayer = $this->Database->prepare('SELECT * FROM tl_c4g_map_baselayers WHERE id=?')->execute($layer['baselayers']);
+                        $layer['entry'] = $this->parseBaseLayer($objChildLayer, $lang);
+                        $layerGroup[$key] = $layer;
+                    }
+                    $arrBaseLayer['layerGroup'] = array_reverse($layerGroup);
 
-                break;
-            case 'google':
-                $arrBaseLayer['style'] = $objBaseLayer->google_style;
+                    break;
+                case 'image':
+                    $objFile = \FilesModel::findByUuid($objBaseLayer->image_src);
+                    if ($objFile && $objFile->path) {
+                        $arrBaseLayer['image_src'] = $objFile->path;
+                    }
 
-                break;
-            case 'bing':
-                $arrBaseLayer['style'] = $objBaseLayer->bing_style;
-                if (!empty($objBaseLayer->bing_key)) {
-                    $arrBaseLayer['apiKey'] = $objBaseLayer->bing_key;
-                }
+                    break;
+                case 'geoimage':
+                    $objFile = \FilesModel::findByUuid($objBaseLayer->image_src);
+                    if ($objFile && $objFile->path) {
+                        $arrBaseLayer['image_src'] = $objFile->path;
+                        $jsonGeoRef = $objBaseLayer->geoimage_json;
+                        $jsonGeoRef = $jsonGeoRef[0] == '{' ? $jsonGeoRef : '{' . $jsonGeoRef;
+                        $jsonGeoRef = $jsonGeoRef[strlen($jsonGeoRef) - 1] == '}' ? $jsonGeoRef : $jsonGeoRef . '}';
+                        $arrBaseLayer['geoimage_json'] = $jsonGeoRef;
+                    }
 
-                break;
-            case 'wms':
-                $arrBaseLayer['url'] = $objBaseLayer->wms_url;
-
-                $arrBaseLayer['params'] = [];
-                $arrBaseLayer['params']['layers'] = $objBaseLayer->wms_params_layers;
-                $arrBaseLayer['params']['version'] = $objBaseLayer->wms_params_version;
-                $arrBaseLayer['params']['format'] = $objBaseLayer->wms_params_format;
-                $arrBaseLayer['params']['transparent'] = $objBaseLayer->wms_params_transparent ? true : false;
-                $arrBaseLayer['params']['srs'] = $objBaseLayer->wms_params_srs;
-
-                $arrBaseLayer['gutter'] = $objBaseLayer->wms_gutter;
-
-                break;
-            case 'owm':
-                $arrBaseLayer['url'] = 'http://maps.owm.io:' . $objBaseLayer->api_port . '/';
-
-                $arrBaseLayer['app_id'] = $objBaseLayer->app_id;
-                $arrBaseLayer['api_key'] = $objBaseLayer->api_key;
-
-                break;
-            case 'group':
-                $layerGroup = unserialize($objBaseLayer->layerGroup);
-                foreach ($layerGroup as $key => $layer) {
-                    $objChildLayer = $this->Database->prepare('SELECT * FROM tl_c4g_map_baselayers WHERE id=?')->execute($layer['baselayers']);
-                    $layer['entry'] = $this->parseBaseLayer($objChildLayer, $lang);
-                    $layerGroup[$key] = $layer;
-                }
-                $arrBaseLayer['layerGroup'] = array_reverse($layerGroup);
-
-                break;
-            case 'image':
-                $objFile = \FilesModel::findByUuid($objBaseLayer->image_src);
-                if ($objFile && $objFile->path) {
-                    $arrBaseLayer['image_src'] = $objFile->path;
-                }
-
-                break;
-            case 'geoimage':
-                $objFile = \FilesModel::findByUuid($objBaseLayer->image_src);
-                if ($objFile && $objFile->path) {
-                    $arrBaseLayer['image_src'] = $objFile->path;
-                    $jsonGeoRef = $objBaseLayer->geoimage_json;
-                    $jsonGeoRef = $jsonGeoRef[0] == '{' ? $jsonGeoRef : '{' . $jsonGeoRef;
-                    $jsonGeoRef = $jsonGeoRef[strlen($jsonGeoRef) - 1] == '}' ? $jsonGeoRef : $jsonGeoRef . '}';
-                    $arrBaseLayer['geoimage_json'] = $jsonGeoRef;
-                }
-
-                break;
-            default:
-                die('This should not have happened!');
+                    break;
+                default:
+                    die('This should not have happened!');
+            }
+        } catch(Exception $e) {
+            C4gLogModel::addLogEntry('map','Error while loading baselayer type '.$objBaseLayer->provider);
+            die('This should not have happened!');
         }
+
         if (!empty($objBaseLayer->attribution)) {
             $arrBaseLayer['attribution'] = $objBaseLayer->attribution;
         }

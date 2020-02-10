@@ -123,24 +123,34 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
     'palettes' =>
         [
         '__selector__'                => ['styletype','line_arrows', 'icon_resize_zoom'],
-        'default'                     => 'name,styletype,strokewidth,strokecolor,strokeopacity,fillcolor,fillopacity,radius;'.
+        'default'                     => 'name,styletype,strokewidth,strokecolor,fillcolor,radius;'.
                                          '{arrow_legend},line_arrows;'.
-                                         '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,label_outl_box,font_opacity,font_style,font_weight;'.
+                                         '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,label_outl_box,font_style,font_weight;'.
                                          '{popup_legend},tooltip,popup_info;'.
                                          '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;',
+        'x'                           => 'name,styletype,strokewidth,strokecolor,radius;'.
+                                        '{arrow_legend},line_arrows;'.
+                                        '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,label_outl_box,font_style,font_weight;'.
+                                        '{popup_legend},tooltip,popup_info;'.
+                                        '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;',
+        'cross'                       => 'name,styletype,strokewidth,strokecolor,radius;'.
+                                        '{arrow_legend},line_arrows;'.
+                                        '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,label_outl_box,font_style,font_weight;'.
+                                        '{popup_legend},tooltip,popup_info;'.
+                                        '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;',
         'cust_icon'                   => 'name,styletype,icon_src, icon_scale, icon_size,icon_resize_zoom,icon_opacity,icon_offset;'.
-                                         '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,label_outl_box,font_opacity,font_style,font_weight;'.
+                                         '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,label_outl_box,font_style,font_weight;'.
                                          '{popup_legend},tooltip,popup_info;'.
                                          '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;'.
                                          '{editor_legend:hide},editor_icon,editor_icon_size,editor_sort,editor_vars,editor_collect;',
-        'cust_icon_svg'               => 'name, styletype, svgSrc,svg_add_attributes, icon_scale, icon_size,icon_resize_zoom, strokewidth, strokecolor, strokeopacity, fillcolor, fillopacity,icon_offset;'.
-                                         '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,label_outl_box,font_opacity,font_style,font_weight;'.
+        'cust_icon_svg'               => 'name, styletype, svgSrc,svg_add_attributes, icon_scale, icon_size,icon_resize_zoom, strokewidth, strokecolor, fillcolor, icon_offset;'.
+                                         '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,label_outl_box,font_style,font_weight;'.
                                          '{popup_legend},tooltip,popup_info;'.
                                          '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;'.
                                          '{editor_legend:hide},editor_icon,editor_icon_size,editor_sort,editor_vars,editor_collect;',
         'style_function'              => 'name,styletype,style_function_js;',
         'photo'                       => 'name,styletype,radius,photoKind,icon_src,strokecolor,icon_opacity;'.
-                                         '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,label_outl_box,font_opacity,font_style,font_weight;'.
+                                         '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,label_outl_box,font_style,font_weight;'.
                                          '{popup_legend},tooltip,popup_info;'.
                                          '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;'.
                                          '{editor_legend:hide},editor_icon,editor_icon_size,editor_sort,editor_vars,editor_collect;'
@@ -205,37 +215,19 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
             ],
         'strokecolor' =>
             [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['strokecolor'],
-            'default'                 => 'ee0016',
-            'inputType'               => 'text',
-            'eval'                    => ['maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'long wizard', 'mandatory'=>false],
-            'sql'                     => "varchar(6) NOT NULL default 'ee0016'"
-            ],
-        'strokeopacity' =>
-            [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['strokeopacity'],
-            'inputType'               => 'inputUnit',
-            'default'                 => '100',
-            'options'                 => ['%'],
-            'eval'                    => ['rgxp'=>'prcnt', 'tl_class'=>'long', 'mandatory'=>false],
-            'sql'                     => "varchar(100) NOT NULL default '100'"
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['strokecolor'],
+                'inputType'               => 'text',
+                'default'                 => 'ee0016',
+                'eval'                    => array('maxlength'=>6, 'multiple'=>true, 'size'=>2, 'colorpicker'=>true, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'long wizard'),
+                'sql'                     => "varchar(64) NOT NULL default ''"
             ],
         'fillcolor' =>
             [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['fillcolor'],
-            'inputType'               => 'text',
-            'default'                 => 'ee0011',
-            'eval'                    => ['maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'long wizard'],
-            'sql'                     => "varchar(6) NOT NULL default 'ee0011'"
-            ],
-        'fillopacity' =>
-            [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['fillopacity'],
-            'inputType'               => 'inputUnit',
-            'default'                 => '50',
-            'options'                 => ['%'],
-            'eval'                    => ['rgxp'=>'prcnt', 'tl_class'=>'long', 'mandatory'=>false],
-            'sql'                     => "varchar(100) NOT NULL default '50'"
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['fillcolor'],
+                'inputType'               => 'text',
+                'default'                 => 'ee0011',
+                'eval'                    => array('maxlength'=>6, 'multiple'=>true, 'size'=>2, 'colorpicker'=>true, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'long wizard'),
+                'sql'                     => "varchar(64) NOT NULL default ''"
             ],
         'radius' =>
             [
@@ -350,14 +342,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
             'options'                  => $imageSizes,
             'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'long'],
             'sql'                     => "varchar(100) NOT NULL default ''"
-        ],
-        'iconcolor' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['iconcolor'],
-            'inputType'               => 'text',
-            'default'                 => '',
-            'eval'                    => ['maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'long wizard'],
-            'sql'                     => "varchar(6) NOT NULL default ''"
         ],
         'icon_opacity' =>
         [
@@ -482,19 +466,21 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
             'inputType'               => 'text',
             'sql'                     => "varchar(100) NOT NULL default ''"
         ],
+
         'font_color' =>
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['font_color'],
-            'default'                 => '',
             'inputType'               => 'text',
-            'eval'                    => ['maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'],
-            'sql'                     => "varchar(6) NOT NULL default ''"
+            'eval'                    => array('maxlength'=>6, 'multiple'=>true, 'size'=>2, 'colorpicker'=>true, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'),
+            'sql'                     => "varchar(64) NOT NULL default ''"
         ],
         'font_size' =>
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['font_size'],
             'exclude'                 => true,
-            'inputType'               => 'text',
+            'inputType'               => 'inputUnit',
+            'default'                 => '',
+            'options'                 => ['px'],
             'eval'                    => ['rgxp'=>'digit', 'tl_class' => 'w50'],
             'sql'                     => "varchar(100) NOT NULL default ''"
         ],
@@ -521,15 +507,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
             'default'                 => '',
             'options'                 => ['px'],
             'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'w50'],
-            'sql'                     => "varchar(100) NOT NULL default ''"
-        ],
-        'font_opacity' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['font_opacity'],
-            'inputType'               => 'inputUnit',
-            'default'                 => '100',
-            'options'                 => ['%'],
-            'eval'                    => ['rgxp'=>'prcnt', 'tl_class'=>'clr'],
             'sql'                     => "varchar(100) NOT NULL default ''"
         ],
 

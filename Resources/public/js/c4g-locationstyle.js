@@ -70,11 +70,11 @@ export class C4gLocationStyle {
 
     // general
     strokeStyle = new Stroke({
-      color: utils.getRgbaFromHexAndOpacity(styleData.strokecolor, styleData.strokeopacity),
+      color: utils.getRgbaFromHexAndOpacity(styleData.strokecolor[0], styleData.strokecolor[1]),
       width: parseInt(styleData.strokewidth.value, 10)
     });
     fillStyle = new Fill({
-      color: utils.getRgbaFromHexAndOpacity(styleData.fillcolor, styleData.fillopacity)
+      color: utils.getRgbaFromHexAndOpacity(styleData.fillcolor[0], styleData.fillcolor[1])
     });
 
     imageStyle = this.createImageStyle(styleData, strokeStyle, fillStyle);
@@ -135,7 +135,7 @@ export class C4gLocationStyle {
           textAlign: styleData.label_align_hor,
           textBaseline: styleData.label_align_ver,
           fill: new Fill({
-            color: utils.getRgbaFromHexAndOpacity(styleData.font_color || defaultColor, styleData.font_opacity)
+            color: utils.getRgbaFromHexAndOpacity(styleData.font_color[0] || defaultColor, styleData.font_color[1])
           }),
           stroke: textStyleOutline
         };
@@ -315,7 +315,8 @@ export class C4gLocationStyle {
           let width, height;
           width = (styleData.icon_size[0]*styleData.icon_scale);
           height = (styleData.icon_size[1]*styleData.icon_scale);
-
+          let anchorX = 1 / (parseInt(width) / (parseInt(styleData.icon_offset[0]) * -1));
+          let anchorY = 1 / (parseInt(height) / (parseInt(styleData.icon_offset[1]) * -1));
           let strokewidth = 0;
           if (styleData.strokewidth && styleData.strokewidth.value) {
             strokewidth = styleData.strokewidth.value;
@@ -345,6 +346,8 @@ export class C4gLocationStyle {
           };
 
           imageStyle = new Icon({
+            anchor: [anchorX, anchorY],
+            //opacity: parseFloat(styleData.icon_opacity.value) / 100,
             img: canvas,
             imgSize: [canvas.width, canvas.height]
           });
