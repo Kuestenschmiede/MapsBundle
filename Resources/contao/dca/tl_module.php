@@ -92,6 +92,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_element_type'] =
     'exclude'                 => true,
     'inputType'               => 'select',
     'options'                 => $GLOBALS['TL_LANG']['tl_module']['element_type_refs'],
+    'eval'                    => ['tl_class'=>'clr'],
     'sql'                     => "varchar(25) NOT NULL default ''"
 ];
 
