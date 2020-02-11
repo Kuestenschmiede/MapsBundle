@@ -27,13 +27,13 @@ $GLOBALS['TL_LANG']['tl_c4g_map_themes']['buttonradius']  = array('Radius der Bu
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['buttonsize'] = array('Größe der Button', 'Geben Sie die Größe der Button (Bedienelemente links) in Pixel an. Standard ist 36 px.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['button_fontsize'] = array('Größe der Buttonschrift (Icon)', 'Geben Sie die Größe der Buttonschrift an. Dadurch verändert sich die Größe des Icons. Standard ist 18 px.');
 
-$GLOBALS['TL_LANG']['tl_c4g_map_themes']['maincolor']  = array('Hauptfarbe und Deckkraft', 'Farbe für Button und Dialoge (u.A.). Die Deckkraft in % angeben. Überschreibt die voreingestellte con4gis CSS-Farbeinstellung.');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['maincolor']  = array('Hauptfarbe und Deckkraft', 'Zum Beispiel für Button und Dialoge. Die Deckkraft in % angeben. Überschreibt die voreingestellte con4gis CSS-Farbeinstellung.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['fontcolor']  = array('Schriftfarbe und Deckkraft', 'Die Deckkraft in % angeben. Überschreibt die voreingestellten con4gis CSS-Einstellungen.');
 
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['popupMaincolor']  = array('Popup Hintergrundfarbe und Deckkraft', 'Die Deckkraft in % angeben. Überschreibt die voreingestellten con4gis CSS-Einstellungen. Wenn dieser Wert leer bleibt, wird automatisch die Hauptfarbe auch für das Popup gesetzt.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['popupFontcolor']  = array('Popup Schriftfarbe und Deckkraft', 'Die Deckkraft in % angeben. Überschreibt die voreingestellten con4gis CSS-Einstellungen. Wenn dieser Wert leer bleibt, wird automatisch die Schriftfarbe auch für das Popup gesetzt.');
 
-$GLOBALS['TL_LANG']['tl_c4g_map_themes']['shadowcolor']  = array('Zweitfarbe und Deckkraft', 'Die Deckkraft in % angeben. Überschreibt die voreingestellten con4gis CSS-Einstellungen. Zum Beispiel für Hover-Effekte, Rahmen oder Formularelemente.');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['shadowcolor']  = array('Zweitfarbe und Deckkraft', 'Zum Beispiel für Hover-Effekte, Rahmen oder Formularelemente. Die Deckkraft in % angeben. Überschreibt die voreingestellten con4gis CSS-Einstellungen.');
 
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['icons']   = array('Icons-CSS', 'Wählen Sie einen Stil für die Icons aus.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['custom_icons'] = array('Eigene Icon-CSS', 'Wählen Sie diese Option, wenn Sie eine eigene CSS-Datei verwenden wollen.');
