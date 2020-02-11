@@ -30,6 +30,7 @@ export class ZoomPosition extends Component {
     let mapController = props.mapController;
     let view = mapController.map.getView();
     let mapData = mapController.data;
+    let langConstants = getLanguage(mapData);
 
     let toggle = function (event) {
       event.stopPropagation();
@@ -65,7 +66,7 @@ export class ZoomPosition extends Component {
     // set onClick to the toggle-function
     button.addEventListener('click', toggle, {useCapture: false, passive: true});
     button.addEventListener('touchstart', toggle, {useCapture: false, passive: true});
-    let controlContainerTopLeft = document.querySelector('.' + cssConstants.CONTROL_CONTAINER_TL + ' .' + cssConstants.OL_UNSELECTABLE);
+    let controlContainerTopLeft = document.querySelector('.' + cssConstants.CONTROL_CONTAINER_TL + '.' + cssConstants.OL_UNSELECTABLE);
 
     let control = new Control({
       element: element,

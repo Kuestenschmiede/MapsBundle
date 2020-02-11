@@ -40,17 +40,6 @@ import {PinchRotate} from "ol/interaction";
 import {PinchZoom} from "ol/interaction";
 import {KeyboardZoom} from "ol/interaction";
 import {KeyboardPan} from "ol/interaction";
-import {Zoom} from "ol/control";
-import {ZoomSlider} from "ol/control";
-import {ZoomToExtent} from "ol/control";
-import {FullScreen} from "ol/control";
-import {Rotate} from "ol/control";
-import {ScaleLine} from "ol/control";
-import {MousePosition} from "ol/control";
-import {Attribution} from "ol/control";
-import {toStringHDMS} from "ol/coordinate";
-import {get} from "ol/proj";
-import ol_control_GeoBookmark from "ol-ext/control/GeoBookmark"
 import {StarboardPanel} from "./c4g-starboard-panel.jsx";
 import ReactDOM from "react-dom";
 import React, {Component} from "react";
@@ -59,6 +48,16 @@ import {BaselayerSwitcher} from "./c4g-baselayerswitcher.jsx";
 import {Infopage} from "./c4g-infopage.jsx";
 import {Measuretools} from "./c4g-measuretools.jsx";
 import {Permalink} from "./c4g-permalink.jsx";
+import {Zoom} from "./c4g-zoom.jsx";
+import {ZoomExtent} from "./c4g-zoom-extent.jsx";
+import {ZoomHome} from "./c4g-zoom-home.jsx";
+import {ZoomPosition} from "./c4g-zoom-position.jsx";
+import {Grid} from "./c4g-grid.jsx";
+import {Rotate} from "./c4g-rotate.jsx";
+import {Fullscreen} from "./c4g-fullscreen.jsx";
+import {Print} from "./c4g-print.jsx";
+import {OverviewMap} from "./c4g-overviewmap.jsx";
+import TileLayer from "ol/layer/Tile";
 
 let langConstants = {};
 
@@ -715,6 +714,13 @@ export class MapController extends Component {
         this.$overlaycontainer_stopevent.append(this.permalinkContainer);
       }
     }
+
+    if (mapData.overviewmap) {
+      this.overviewContainer = document.createElement("div");
+      this.overviewContainer.className = "c4g-sideboard c4g-overviewmap-container c4g-close";
+      this.$overlaycontainer_stopevent.append(this.overviewContainer);
+    }
+
     // @ToDo mapData.additionalPanel is always true, because it is set as an new object in the beginning. Therefore the second parameter of the boolean is requested, which throws an error
     // additionalPanel is furthermore not found anywhere in Maps and should be loaded over a hook
 
@@ -849,6 +855,7 @@ export class MapController extends Component {
   }
 
   render() {
+    const scope = this;
     const mapData = this.data;
     let target = document.querySelector('#' + mapData.mapDiv + ' .c4g-control-container-top-left');
     let components = [
@@ -857,7 +864,16 @@ export class MapController extends Component {
       {name: "legend", sort: mapData.legend},
       {name: "baselayerswitcher", sort: mapData.baselayerswitcher.enable},
       {name: "measuretools", sort: mapData.measuretools.enable},
-      {name: "permalink", sort: mapData.permalink.enable}
+      {name: "permalink", sort: mapData.permalink.enable},
+      {name: "zoom", sort: mapData.zoom},
+      {name: "zoomPosition", sort: mapData.zoomPosition},
+      {name: "zoomHome", sort: mapData.zoomHome},
+      {name: "zoomExtent", sort: mapData.zoomExtent},
+      {name: "fullscreen", sort: mapData.fullscreen},
+      {name: "print", sort: mapData.print},
+      {name: "rotate", sort: mapData.rotate},
+      {name: "graticule", sort: mapData.graticule},
+      {name: "overview", sort: mapData.overviewmap},
     ];
     let sbPortal = "";
     if (mapData.layerswitcher.enable) {
@@ -918,6 +934,33 @@ export class MapController extends Component {
         this.permalinkContainer
       );
     }
+    let overviewPortal = "";
+    if (mapData.overviewmap) {
+      let layers = [];
+      if (this.proxy.baselayers_loaded) {
+        layers = [this.proxy.baselayerController.arrBaselayers[this.proxy.activeBaselayerId].layer];
+      }
+      overviewPortal = React.createElement(OverviewMap, {
+        ref: (node) => {this.components.overviewMap = node;},
+        mapController: this,
+        target: target,
+        layers: layers,
+        ovmTarget: this.overviewContainer,
+        collapsed: true
+      });
+      this.proxy.hook_baselayer_visibility = this.proxy.hook_baselayer_visibility || [];
+      this.proxy.hook_baselayer_visibility.push(function(baselayerConfig) {
+        let id = baselayerConfig.id;
+        let currentBaselayer = scope.proxy.baselayerController.arrBaselayers[id];
+        let currentSource = currentBaselayer.layer.getSource();
+        scope.components.overviewMap.getOverviewMap().getOverviewMap().addLayer(new TileLayer({source: currentSource}));
+      });
+      // overviewPortal = React.createElement(
+      //   <OverviewMap ref={(node) => {this.components.overviewMap = node;}} mapController={this} target={target} layers={layers}
+      //              external={this.overviewContainer.className.indexOf("c4g-external") !== -1} ovmTarget={this.overviewContainer}/>
+      // );
+    }
+
     let result = [];
     components.sort(function(a, b) {
       return (a.sort > b.sort) ? 1 : -1;
@@ -941,6 +984,33 @@ export class MapController extends Component {
           break;
         case "permalink":
           result.push(permaPortal);
+          break;
+        case 'zoom':
+          result.push(React.createElement(Zoom, {mapController: this}));
+          break;
+        case 'zoomExtent':
+          result.push(React.createElement(ZoomExtent, {mapController: this}));
+          break;
+        case 'zoomHome':
+          result.push(React.createElement(ZoomHome, {mapController: this}));
+          break;
+        case 'zoomPosition':
+          result.push(React.createElement(ZoomPosition, {mapController: this}));
+          break;
+        case 'fullscreen':
+          result.push(React.createElement(Fullscreen, {mapController: this}));
+          break;
+        case 'print':
+          result.push(React.createElement(Print, {mapController: this}));
+          break;
+        case 'rotate':
+          result.push(React.createElement(Rotate, {mapController: this}));
+          break;
+        case 'graticule':
+          result.push(React.createElement(Grid, {mapController: this}));
+          break;
+        case 'overview':
+          result.push(overviewPortal);
           break;
       }
     }

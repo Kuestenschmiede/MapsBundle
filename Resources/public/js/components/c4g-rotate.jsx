@@ -17,17 +17,17 @@ import {Control, FullScreen} from "ol/control";
 import {cssConstants} from "./../c4g-maps-constant";
 import {utils} from "../c4g-maps-utils";
 import {getLanguage} from "../c4g-maps-i18n";
-import {Rotate} from "ol/control";
+import {Rotate as OlRotate} from "ol/control";
 
 export class Rotate extends Component {
 
   constructor(props) {
     super(props);
 
-    let controlContainerTopLeft = document.querySelector('.' + cssConstants.CONTROL_CONTAINER_TL + ' .' + cssConstants.OL_UNSELECTABLE);
+    let controlContainerTopLeft = document.querySelector('.' + cssConstants.CONTROL_CONTAINER_TL + '.' + cssConstants.OL_UNSELECTABLE);
     let langConstants = getLanguage(props.mapController.data);
 
-    let control = new Rotate({
+    let control = new OlRotate({
       label: ' ',
       labelActive: ' ',
       tipLabel: langConstants.CTRL_RESET_ROTATION,
