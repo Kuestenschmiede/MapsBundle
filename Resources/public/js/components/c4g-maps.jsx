@@ -995,6 +995,7 @@ export class MapController extends Component {
       if (!this.searchContainer) {
         if (mapData.geosearch.div) {
           this.searchContainer = document.querySelector("." + mapData.geosearch.div);
+          this.searchContainer.className += " c4g-external";
           if (!this.searchContainer) {
             this.searchContainer = document.createElement('div');
             this.searchContainer.className = "c4g-sideboard c4g-geosearch-container-right ";
