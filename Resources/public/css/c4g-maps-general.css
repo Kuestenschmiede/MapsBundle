@@ -668,7 +668,7 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
 .ol-attribution.ol-uncollapsible ul {
   float: none;
   margin: 0;
-  padding: .2em;
+  padding: .2em .6em .2em .2em;
 }
 
 
@@ -1245,7 +1245,7 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
 }
 
 .c4g-sideboard:not(.c4g-external) > div > div[class*=switcher] button:last-child {
-  margin-right: .4em
+  margin-right: .2em
 }
 
 .c4g-sideboard:not(.c4g-external) > div[class*=wrapper] > div[class*=header] + div[class*=switcher] + div[class*=content] {
