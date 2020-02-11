@@ -16,9 +16,9 @@
  */
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['name']             = array('Name', 'Bitte geben Sie den Namen des Lokationsstils an.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['styletype']        = array('Darstellung als','Bitte wählen Sie die Darstellungsart der Lokation (Punkt, Icon, etc.');
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['strokecolor']      = array('Farbe der Linie / Rahmen','Bitte wählen Sie die Farbe der Linie bzw. des Rahmens.');
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['strokewidth']      = array('Breite der Linie / Rahmen','Bitte wählen Sie die Breite der Linie bzw. des Rahmens.');
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['fillcolor']        = array('Farbe der Füllung','Bitte wählen Sie die Farbe der Füllung.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['strokecolor']      = array('Farbe der Linie/Rahmen und Deckkraft','Bitte wählen Sie die Farbe der Linie bzw. des Rahmens und die Deckkraft in %.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['strokewidth']      = array('Breite der Linie/Rahmen','Bitte wählen Sie die Breite der Linie bzw. des Rahmens.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['fillcolor']        = array('Farbe der Füllung und Deckkraft','Bitte wählen Sie die Farbe der Füllung und die Deckkraft in %.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['radius']           = array('Radius','Bitte wählen Sie den Radius in Pixeln (gilt für Darstellung als Punkt, Stern, Dreieck, Quadrat, Kreuz).');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['ol_icon']          = array('OpenLayers Icon','Bitte wählen Sie aus den verfügbaren OpenLayers Standardicons aus.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['ol_icon_size']     = array('Größe des Icons','Die Größe des Icons auf der Karte. Wird gegebenenfalls skaliert.');
@@ -50,7 +50,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_align_hor']  = array('Horizon
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_align_ver']  = array('Vertikale Ausrichtung','Bitte definieren Sie, wie sich das Label relativ zur Lokation vertikal ausrichten soll.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_offset']     = array('Positionsversatz des Labels (X/Y)','Verschiebt das Label um die angegebene Anzahl von Pixeln.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['font_family']      = array('Schriftart','Geben Sie die für das Label zu verwendende Schriftart an (Notierung wie in CSS).');
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['font_color']       = array('Schriftfarbe','Wählen Sie die für die Schrift des Labels zu verwendende Farbe.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['font_color']       = array('Schriftfarbe und Deckkraft','Wählen Sie die für die Schrift des Labels zu verwendende Farbe und Deckkraft in %.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['font_size']        = array('Schriftgröße','Wählen Sie die für die Schrift des Labels zu verwendende Schriftgröße.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_outl_color'] = array('Farbe Schriftrand','Falls die Schrift Ihres Labels einen Rand bekommen soll, dann tragen Sie hier die Randfarbe ein.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_outl_box']   = array('Art des Schriftrands','Im Normalfall folgt der Schriftrand der Schrift. Mit anwählen der Checkbox wird der Hintergrund in eine einfache Box umgewandelt.');
@@ -92,6 +92,10 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['marker-green.png']  =
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['left']              = 'Lokation links vom Label';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['center']            = 'Mittig';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['right']             = 'Lokation rechts vom Label';
+
+
+
+
 
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['top']               = 'Lokation über dem Label';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['middle']            = 'Mittig';
