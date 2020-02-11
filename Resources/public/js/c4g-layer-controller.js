@@ -308,7 +308,7 @@ export class BetterLayerController {
     if (checkLocstyle === -1 && possibleLocstyle) {
       this.arrLocstyles.push(possibleLocstyle);
     }
-    if (layer.async_content && !layer.excludeFromSingleLayer) {
+    if (layer.async_content && layer.async_content != 0 && !layer.excludeFromSingleLayer) {
       let url = "";
       let locstyleId = 0;
       let params = "";
