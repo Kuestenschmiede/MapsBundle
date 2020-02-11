@@ -228,11 +228,10 @@ button.c4g-geosearch-start:before {
 }
 .ol-overviewmap-map {
   opacity: 1;
-  width: 150px;
-  height: 100px;
+  width: 220px;
+  height: 143px;
   margin: auto;
   margin-top: 19px;
-
 }
 .c4g-overviewmap.c4g-close .ol-overviewmap-map {
   opacity: 0;
@@ -708,23 +707,9 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
 /*
  * Permalink
  */
-.c4g-permalink {
-  float: right;
-}
-div.c4g-permalink-popup {
-  display: block !important;
-  min-width: 250px;
-  overflow: hidden;
-}
-div.c4g-permalink-popup input[type='text'] {
-  display: inline-block;
-  min-width: 250px;
-}
-.c4g-permalink-popup.c4g-close {
-  height: 0;
-}
-.c4g-permalink button:before {
-  content: "P";
+div #permalink-text {
+  display: block;
+  min-width: 240px;
 }
 
 @media print {
@@ -1173,6 +1158,19 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 .c4g-sideboard > div > div[class*=content] input ~ button {
+  margin-left: .2em;
+}
+
+.c4g-sideboard > div > div[class*=content] textarea ~ button {
+  height: 28px;
+  width: 32px;
+  border: none;
+  outline: none;
+  vertical-align: top;
+  cursor: pointer;
+}
+
+.c4g-sideboard > div > div[class*=content] textarea ~ button {
   margin-left: .2em;
 }
 

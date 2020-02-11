@@ -193,34 +193,35 @@ export class MapsControls {
                     map.addControl(this.controls.graticule);
                     break;
                 case 'overview':
-                    let ovmTarget = document.createElement("div");
+                    var ovmTarget = document.createElement("div");
                     ovmTarget.className = "c4g-sideboard c4g-overviewmap-container c4g-close";
                     this.mapController.$overlaycontainer_stopevent.append(ovmTarget);
-                    let overviewMapOptions = {
-                        target: controlContainerTopLeft,
-                        mapController: this.mapController,
-                        collapsed: true,
-                        ovmTarget: ovmTarget
-                    };
+
                     const scope = this;
                     const addOverviewMap = function() {
-                        // let activeBaselayer = 71;
-                        overviewMapOptions.source = proxy.baselayerController.arrBaselayers[proxy.activeBaselayerId].layer.getSource();
-                        // proxy.baselayerController.showBaseLayer(activeBaselayer);
-                        // overviewMapOptions.layers = [proxy.baselayerController.arrBaselayers[activeBaselayer].layer];
+                        var overviewMapOptions = {
+                            target: controlContainerTopLeft,
+                            mapController: scope.mapController,
+                            ovmTarget: ovmTarget,
+                            layers: [proxy.baselayerController.arrBaselayers[proxy.activeBaselayerId].layer]
+                        };
+
                         if (scope.overviewMap) {
                             // we are reloading the overview map, so keep the collapsed-property
                             overviewMapOptions.collapsed = !scope.overviewMap.isOpen();
                         }
+
                         scope.overviewMap = new OverviewMap(overviewMapOptions);
                         scope.controls.overviewmap = scope.overviewMap.getOverviewMap();
                         map.addControl(scope.controls.overviewmap);
                     };
+
                     if (proxy.baselayers_loaded) {
                         addOverviewMap();
                     } else {
                         proxy.hook_baselayer_loaded.push(addOverviewMap);
                     }
+
                     // add hook to synchronize overviewmap with baselayer
                     window.c4gMapsHooks.baselayer_changed = window.c4gMapsHooks.baselayer_changed || [];
                     window.c4gMapsHooks.baselayer_changed.push(function(baselayerId) {
