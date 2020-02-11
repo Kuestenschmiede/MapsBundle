@@ -33,6 +33,7 @@ export class BetterLayerController {
     const scope = this;
     this.proxy = proxy;
     this.loaders = [];
+    this.controllers = [];
     this.arrLocstyles = [];
     this.mapController = proxy.options.mapController;
     this.vectorCollection = new Collection();
@@ -41,66 +42,56 @@ export class BetterLayerController {
         if (scope.loaders.hasOwnProperty(i)) {
           const requestData = scope.loaders[i];
           if (!requestData.preventLoading) {
-            let responseFunc = function (response) {
-              let features;
-              if (typeof response === "string") {
-                let format = new OSMXML();
-                try {
-                  features = format.readFeatures(response, {featureProjection: projection});
-                } catch (e) {
-                  console.warn('Can not read feature.');
+            if (!requestData.params && !requestData.url) {
+              let responseFunc = function (data) {
+                let features = [];
+                for(let i = 0; i < data.length; i++){
+                  let contentData = data[i];
+                  let feature = scope.parseOwnData(contentData, layer);
+                  features.push(feature);
                 }
+                scope.addFeatures(features, requestData.chain);
+                scope.mapController.setObjLayers(scope.arrLayers);
               }
-              else if (typeof response === "object"){
-                let geojson = osmtogeojson(response);
-                features = new olFormat.GeoJSON().readFeatures(geojson, {featureProjection: projection});
-              }
-              else {
-                return false;
-              }
+            }
+            else {
+              let responseFunc = function (response) {
+                let features;
+                if (typeof response === "string") {
+                  let format = new OSMXML();
+                  try {
+                    features = format.readFeatures(response, {featureProjection: projection});
+                  } catch (e) {
+                    console.warn('Can not read feature.');
+                  }
+                }
+                else if (typeof response === "object"){
+                  let geojson = osmtogeojson(response);
+                  features = new olFormat.GeoJSON().readFeatures(geojson, {featureProjection: projection});
+                }
+                else {
+                  return false;
+                }
+                for (let featureId in features) {
+                  if (features.hasOwnProperty(featureId)) {
+                    features[featureId].set('locstyle', requestData.locstyleId);
+                  }
+                }
+                scope.addFeatures(features, requestData.chain);
+                scope.mapController.setObjLayers(scope.arrLayers);
+              };
+              scope.performOvp({
+                    "url": requestData.url,
+                    "params": requestData.params,
+                    "locstyleId": requestData.locstyle
+                  }, {
+                    "extent": extent,
+                    "resolution": resolution,
+                    "projection": projection
+                  },
+                  responseFunc);
+            }
 
-              let addedFeatures;
-              let layer;
-              let oldLength = scope.vectorCollection.getLength(); //necesarry to distinct redundant features
-              for (let featureId in features) {
-                if (features.hasOwnProperty(featureId)) {
-                  features[featureId].set('locstyle', requestData.locstyleId);
-                }
-              }
-              scope.vectorCollection.extend(features);
-              addedFeatures = scope.vectorCollection.getArray().slice(oldLength);
-
-              if (typeof requestData.chain === "string") {
-                let chain = requestData.chain.split(',');
-                let i = 1;
-                layer = scope.arrLayers[chain[0]];
-                while(chain[i]) {
-                  layer = layer.childs[chain[i]];
-                  i++;
-                }
-              }
-              else {
-                layer = scope.arrLayers[requestData.chain]
-              }
-              if (layer.features) {
-                layer.features = layer.features.concat(addedFeatures);
-              }
-              else if (layer.vectorLayer) {
-                let source = layer.vectorLayer.getSource().getSource();
-                source.addFeatures(features);
-              }
-              scope.mapController.setObjLayers(scope.arrLayers);
-            };
-            scope.performOvp({
-                  "url": requestData.url,
-                  "params": requestData.params,
-                  "locstyleId": requestData.locstyle
-                }, {
-                  "extent": extent,
-                  "resolution": resolution,
-                  "projection": projection
-                },
-                responseFunc);
           }
         }
       }
@@ -391,6 +382,7 @@ export class BetterLayerController {
             };
             scope.performOvp({
                   "url": data.url,
+                  "layerId": layer.id,
                   "params": data.params,
                   "locstyleId": layer.locstyle
                 },
@@ -406,30 +398,8 @@ export class BetterLayerController {
               let features = [];
               for(let i = 0; i < data.length; i++){
                 let contentData = data[i];
-
-                var resultCoordinate = transform([parseFloat(contentData['geox']), parseFloat(contentData['geoy'])], 'EPSG:4326', 'EPSG:3857')
-                var point = new Point(resultCoordinate);
-                let contentFeature = new Feature(point);
-                contentFeature.setId(contentData.id);
-
-                contentFeature.set('hover_location', layer.hover_location);
-                contentFeature.set('hover_style', layer.hover_style);
-                let popup = contentData['popup'] ? contentData['popup'] : jQuery.extend({},layer.popup);
-                if(popup && popup.content && popup.content.search && popup.content.search('itemId')){
-                  popup.content = popup.content.replace('itemId',contentData['id']);
-                }
-                if(contentData['label']){
-                  contentFeature.set('label',contentData['label'])
-                }
-                if(contentData['tooltip']){
-                  contentFeature.set('tooltip',contentData['tooltip'])
-                }
-                contentFeature.set('popup', popup);
-                contentFeature.set('zoom_onclick', layer.zoom_onclick);
-                contentFeature.set('tid', contentData['id']);
-                let locstyle = contentData['locstyle'] || layer.locstyle;
-                contentFeature.set('locstyle', locstyle);
-                features.push(contentFeature);
+                let feature = scope.parseOwnData(contentData, layer);
+                features.push(feature);
               }
               if (vectorSource instanceof Cluster) {
                 vectorSource.getSource().addFeatures(features);
@@ -439,7 +409,7 @@ export class BetterLayerController {
               }
 
             };
-            scope.getOwnData({
+            scope.performOwnData({
               "layerId": layer.id,
               "locstyleId": layer.locstyle
             },
@@ -667,6 +637,12 @@ export class BetterLayerController {
   }
 
   performOvp(requestData, mapConf, responseFunc) {
+    if (this.controllers[requestData.layerId]) {    //abort request, if new exists
+      this.controllers[requestData.layerId].abort();
+      delete this.controllers[requestData.layerId];
+    }
+    this.controllers[requestData.layerId] = new AbortController();
+    const signal = this.controllers[requestData.layerId].signal;
     let boundingArray = transformExtent(mapConf.extent, mapConf.projection, 'EPSG:4326');
     let strBoundingBox = "";
     let url = requestData.url;
@@ -681,33 +657,103 @@ export class BetterLayerController {
       if (params && params.substr(0, 1).trim() === "<") {
         strBoundingBox = '<bbox-query s="' + boundingArray[1] + '" n="' + boundingArray[3] + '" w="' + boundingArray[0] + '" e="' + boundingArray[2] + '"/>';
         url += 'data=' + encodeURIComponent(params.replace(bboxTag, strBoundingBox));
-        fetch(url).then((response) => {
-          response.text().then(responseFunc);
+        fetch(url, {signal}).then((response) => {
+          response.text().then(responseFunc).catch((error) => {console.log(error.message)});
+        })
+        .catch((error) => {
+          if (error.code && error.code !== 20) {
+            console.log('Fetch Error :-S', error.message);
+          }
         });
       } else {
         strBoundingBox = boundingArray[1] + ',' + boundingArray[0] + ',' + boundingArray[3] + ',' + boundingArray[2];
         url += 'data=' + encodeURIComponent(params.replace(bboxTag, strBoundingBox));
-        fetch(url).then((response) => {
-          response.json().then(responseFunc);
+        fetch(url, {signal}).then((response) => {
+          response.json().then(responseFunc).catch((error) => {console.log(error.message)});
+        })
+        .catch((error) => {
+          if (error.code && error.code !== 20) {
+            console.log('Fetch Error :-S', error.message);
+          }
         });
       }
     }
   }
-  getOwnData (requestData, mapConf, responseFunc) {
+  performOwnData (requestData, mapConf, responseFunc) {
     const scope = this;
+    if (this.controllers[requestData.layerId]) {    //abort request, if new exists
+      this.controllers[requestData.layerId].abort();
+      delete this.controllers[requestData.layerId];
+    }
     // @Todelü implement handling for other projections
     let boundingArray = transformExtent(mapConf.extent, mapConf.projection, 'EPSG:4326');
     let strBoundingBox = boundingArray[0] + ',' + boundingArray [1] + ';' + boundingArray[2] + ',' + boundingArray[3];
 
     let url = scope.proxy.api_layercontentdata_url + '/' + requestData.layerId + '/' + strBoundingBox;
-    fetch(url).then((response) => {
-      response.json().then(responseFunc);
+
+    this.controllers[requestData.layerId] = new AbortController();
+    const signal = this.controllers[requestData.layerId].signal;
+    fetch(url, {signal}).then((response) => {
+      response.json().then(responseFunc).catch((error) => {console.log(error.message)});
     })
     .catch((error) => {
-      console.log('Fetch Error :-S', error);
-    })
-    ;
-
+      if (error.code && error.code !== 20) {
+        console.log('Fetch Error :-S', error.message);
+      }
+    });
   }
+  parseOwnData (contentData, layer) {
+    var resultCoordinate = transform([parseFloat(contentData['geox']), parseFloat(contentData['geoy'])], 'EPSG:4326', 'EPSG:3857')
+    var point = new Point(resultCoordinate);
+    let contentFeature = new Feature(point);
+    contentFeature.setId(contentData.id);
 
+    contentFeature.set('hover_location', layer.hover_location);
+    contentFeature.set('hover_style', layer.hover_style);
+    let popup = contentData['popup'] ? contentData['popup'] : jQuery.extend({},layer.popup);
+    if(popup && popup.content && popup.content.search && popup.content.search('itemId')){
+      popup.content = popup.content.replace('itemId',contentData['id']);
+    }
+    if(contentData['label']){
+      contentFeature.set('label',contentData['label'])
+    }
+    if(contentData['tooltip']){
+      contentFeature.set('tooltip',contentData['tooltip'])
+    }
+    contentFeature.set('popup', popup);
+    contentFeature.set('zoom_onclick', layer.zoom_onclick);
+    contentFeature.set('tid', contentData['id']);
+    let locstyle = contentData['locstyle'] || layer.locstyle;
+    contentFeature.set('locstyle', locstyle);
+    return contentFeature;
+  }
+  addFeatures (features, chain) {
+    const scope = this;
+    let addedFeatures;
+    let layer;
+    let oldLength = scope.vectorCollection.getLength(); //necesarry to distinct redundant features
+
+    scope.vectorCollection.extend(features);
+    addedFeatures = scope.vectorCollection.getArray().slice(oldLength);
+
+    if (typeof chain === "string") {
+      let arrChain = chain.split(',');
+      let i = 1;
+      layer = scope.arrLayers[arrChain[0]];
+      while(chain[i]) {
+        layer = layer.childs[arrChain[i]];
+        i++;
+      }
+    }
+    else {
+      layer = scope.arrLayers[chain]
+    }
+    if (layer.features) {
+      layer.features = layer.features.concat(addedFeatures);
+    }
+    else if (layer.vectorLayer) {
+      let source = layer.vectorLayer.getSource().getSource();
+      source.addFeatures(features);
+    }
+  }
 }

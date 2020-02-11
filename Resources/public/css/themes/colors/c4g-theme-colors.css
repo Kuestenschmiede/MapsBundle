@@ -612,54 +612,17 @@ button.c4g-geosearch-start {
 /*------------------------------------*/
 /*------------Pop Up-------------------*/
 
-.c4g-geosearch-results-content.c4g-open.c4g-beach::-webkit-scrollbar-track {
+.c4g-sideboard > div > div[class*=content]::-webkit-scrollbar-track {
   background: var(--main-color);
 }
 
-.c4g-measuretools-content::-webkit-scrollbar-track {
-  background: var(--main-color);
-}
-
-.c4g-baselayer-container.c4g-open .c4g-baselayertree-content::-webkit-scrollbar-track {
-  background: var(--main-color);
-}
-
-.c4g-beach-content.c4g-popup-content::-webkit-scrollbar-track {
-  background: var(--pu-main-color);
-}
-
-.c4g-measuretools-content::-webkit-scrollbar-thumb {
+.c4g-sideboard > div > div[class*=content]::-webkit-scrollbar-thumb {
   background: var(--font-color);
 }
 
-.c4g-geosearch-results-content.c4g-open.c4g-beach::-webkit-scrollbar-thumb {
-  background: var(--font-color);
-}
-
-.c4g-baselayer-container.c4g-open .c4g-baselayertree-content::-webkit-scrollbar-thumb {
-  background: var(--font-color);
-}
-
-.c4g-beach-content.c4g-popup-content::-webkit-scrollbar-thumb {
-  background: var(--pu-font-color);
-}
-
-.c4g-geosearch-results-content.c4g-open.c4g-beach::-webkit-scrollbar-thumb:hover {
+.c4g-sideboard > div > div[class*=content]::-webkit-scrollbar-thumb:hover {
   background: var(--shadow-color);
 }
-
-.c4g-baselayer-container.c4g-open .c4g-baselayertree-content::-webkit-scrollbar-thumb:hover {
-  background: var(--shadow-color);
-}
-
-.c4g-measuretools-content::-webkit-scrollbar-thumb:hover {
-  background: var(--shadow-color);
-}
-
-.c4g-beach-content.c4g-popup-content::-webkit-scrollbar-thumb:hover {
-  background: var(--pu-shadow-color);
-}
-
 
 .c4g-popup-container.c4g-beach {
 background: var(--pu-main-color);
@@ -733,7 +696,7 @@ c4g-infopage-container {
   cursor: not-allowed;
 }
 
-.c4g-sideboard > div > div[class*=content] *:not(button):not(input):not(select):not(output) {
+.c4g-sideboard > div > div[class*=content] *:not(button):not(input):not(select):not(output):not(option) {
   color: var(--font-color);
 }
 
@@ -774,9 +737,41 @@ c4g-infopage-container {
   border: none;
 }
 
-.c4g-sideboard:not(.c4g-external) > div > div[class*=header] + button[class*=hide] {
+.c4g-sideboard > div > div[class*=header] + button[class*=hide] {
   background: var(--shadow-color);
   color: var(--font-color);
   border: none;
   outline: none;
 }
+
+/*------------external-------------*/
+
+.c4g-external {
+  background-color: var(--main-color);
+}
+
+.c4g-external > div div[class*=header] * {
+  color: var(--font-color);
+}
+
+.c4g-external input {
+  color: var(--main-color);
+}
+
+/*-----external-permalink--------*/
+.c4g-external .c4g-permalink-content button {
+  color: var(--main-color);
+  background-color: var(--font-color);
+}
+
+.c4g-external .c4g-permalink-content button:hover {
+  border: 1px solid var(--shadow-color);
+}
+
+.c4g-external .c4g-permalink-content button:active {
+  color: var(--font-color);
+  background: none;
+  border-color: transparent;
+}
+/*-------------*/
+/*-------------*/
