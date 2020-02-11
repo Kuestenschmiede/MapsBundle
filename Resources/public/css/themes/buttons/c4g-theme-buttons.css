@@ -923,12 +923,14 @@ div.c4g-tooltip-popup:before {
   cursor: pointer;
   font-family: "Font Awesome 5 Free";
   font-weight: bold;
-  font-size: 1.75em;
+  font-size: 30px;
   z-index: 1;
 }
 
 .c4g-feature-filter button.c4g-btn-nav-previous:active:before, .c4g-feature-filter button.c4g-btn-nav-next:active:before {
-  font-size: 30px;
+  font-size: 20px;
+  vertical-align: middle;
+  transition: .1s;
 }
 
 button.c4g-btn-nav-previous {
@@ -958,7 +960,7 @@ button.c4g-baselayer-close:before{
   max-width: calc(100% - var(--button-size-pixel) - 1.6em);
   left: calc(var(--button-size-pixel) + .8em);
   position: absolute;
-  bottom: .2em;
+  bottom: 1.2em;
 }
 
 .c4g-control-container-bottom-left > a {

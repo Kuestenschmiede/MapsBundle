@@ -987,117 +987,6 @@ input[type=range]:focus::-ms-fill-upper {
   transition: all 0.3s;
 }
 
-#filter_block {
-  width: 100%;
-    position: absolute;
-    left: 0;
-    z-index: 20;
-
-}
-
-ul.c4g-feature-filter-list {
-  padding: 10px 0;
-  width: 100vw;
-  overflow-x: auto;
-  scrollbar-width: none;
-  white-space: nowrap;
-}
-.c4g-feature-filter li strong.c4g-close span:after {
-  content: "\f054";
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
-  font-size: inherit;
-  padding:0 20px 0 20px;
-  margin: 0;
-}
-
-ul.c4g-feature-filter-list li.c4g-item-checked>strong {
-    margin: 0 60px 0 10px;
-}
-
-ul.c4g-feature-filter-list li span.sum {
-  font-size: .5em;
-  vertical-align: top;
-  font-weight: bold;
-  margin-left: -55px;
-  padding: 0 5px;
-  border-bottom-right-radius: 50%;
-  border-bottom-left-radius: 0;
-  border-top-left-radius: 50%;
-  border-top-right-radius: 50%;
-}
-
-strong.c4g-open span:after {
-  content: "\f054";
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
-  font-size: inherit;
-  margin-left: 20px;
-  margin: 0;
-  padding: 0 20px;
-  position: static;
-}
-
-strong.c4g-close span{
-  position: relative;
-  float: left;
-  transition: 0.3s;
-}
-
-strong.c4g-open span {
-  transform: rotate(90deg);
-  position: relative;
-  float: left;
-  transition: 0.3s;
-}
-
-.c4g-feature-filter-list > li {
-  display: inline-block;
-}
-
-ul.c4g-feature-filter-list li {
-  vertical-align: top;
-  margin: 0 10px;
-  padding: 0 ;
-}
-
-div#filter_block input {
-    width: max-content;
-    margin-right: 10px;
-}
-
-.c4g-feature-filter input[type="radio"] {
-  width: max-content;
-  margin: 20px;
-}
-.c4g-feature-filter li form {
-  background-color: var(--main-color);
-  color: var(--font-color);
-  z-index: 91;
-  width: calc(100% + 20px);
-  margin-top: 5px;
-  padding-left: 10px;
-  padding-right: 20px;
-  padding-bottom: 10px;
-}
-
-.c4g-filter-form-element{
-text-align: left;
-}
-
-.c4g-feature-filter strong::selection,
-.c4g-feature-filter label::selection {
-  background: none;
-}
-.c4g-feature-filter strong:hover,
-.c4g-feature-filter label:hover {
-  cursor: pointer;
-}
-
-ul.c4g-feature-filter-list::-webkit-scrollbar {
-  height: 5px;
-}
-
 /*---------------------------.c4g-sideboard------------------------*/
 
 .c4g-sideboard  {
@@ -1526,3 +1415,117 @@ button.c4g-geosearch-start {
   vertical-align: top;
   margin-left: .2em;
 }
+/*----------------*/
+/*----------------*/
+
+/*-------external-filter---------*/
+
+.c4g-feature-filter {
+  height: 45px;
+}
+
+ul.c4g-feature-filter-list {
+  position: absolute;
+  width: calc(100% - 90px);
+  line-height: 45px;
+  margin: 0 0 0 45px;
+  padding: 0;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none;
+  z-index: 1;
+}
+
+.c4g-feature-filter li strong.c4g-close span:after {
+  content: "\f054";
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: inherit;
+  padding:0 20px 0 20px;
+  margin: 0;
+}
+
+strong.c4g-open span:after {
+  content: "\f054";
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: inherit;
+  margin-left: 20px;
+  margin: 0;
+  padding: 0 20px;
+  position: static;
+}
+
+ul.c4g-feature-filter-list li.c4g-item-checked>strong {
+  margin: 0 60px 0 10px;
+}
+
+ul.c4g-feature-filter-list li span.sum {
+  font-size: .5em;
+  vertical-align: top;
+  font-weight: bold;
+  margin-left: -55px;
+  padding: 0 5px;
+  border-bottom-right-radius: 50%;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 50%;
+  border-top-right-radius: 50%;
+}
+
+strong.c4g-close span{
+  position: relative;
+  float: left;
+  transition: 0.3s;
+}
+
+strong.c4g-open span {
+  transform: rotate(90deg);
+  position: relative;
+  float: left;
+  transition: 0.3s;
+}
+
+.c4g-feature-filter-list > li {
+  display: inline-block;
+}
+
+ul.c4g-feature-filter-list li {
+  vertical-align: top;
+  margin: 0 10px;
+  padding: 0 ;
+}
+
+div#filter_block input {
+  width: max-content;
+  margin-right: 10px;
+}
+
+.c4g-feature-filter input[type="radio"] {
+  width: max-content;
+  margin: 20px;
+}
+.c4g-feature-filter li form {
+  background-color: var(--main-color);
+  color: var(--font-color);
+  z-index: 91;
+  padding-left: .4em;
+}
+
+.c4g-filter-form-element{
+  text-align: left;
+}
+
+.c4g-feature-filter strong::selection,
+.c4g-feature-filter label::selection {
+  background: none;
+}
+.c4g-feature-filter strong:hover,
+.c4g-feature-filter label:hover {
+  cursor: pointer;
+}
+
+ul.c4g-feature-filter-list::-webkit-scrollbar {
+  height: 5px;
+}
+
+/*----------------*/

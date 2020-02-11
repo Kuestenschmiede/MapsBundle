@@ -635,7 +635,7 @@ export class MapController extends Component {
           this.baselayerContainer.className = "c4g-sideboard c4g-baselayer-container ol-unselectable";
           this.$overlaycontainer_stopevent.append(this.baselayerContainer);
         } else {
-          this.baselayerContainer.className += " c4g-sideboard c4g-external c4g-baselayer-container ol-unselectable";
+          this.baselayerContainer.className += " c4g-external c4g-baselayer-container ol-unselectable";
         }
       } else {
         this.baselayerContainer = document.createElement('div');
