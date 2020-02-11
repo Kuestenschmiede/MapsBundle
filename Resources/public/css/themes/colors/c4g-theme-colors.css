@@ -336,17 +336,17 @@ span.c4g-active ul li.c4g-active{
 /*
  * Permalink
  */
-.c4g-permalink-popup input {
-  color: rgba(255,255,255,.9);
-  color: var(--font-color);
-  background-color: rgba(24, 61, 93,.8);
-  background-color: var(--main-color);
-}
-.c4g-permalink-popup input:hover,
-.c4g-permalink-popup input:focus {
-  background-color: rgba(24, 61, 93,.8);
-  background-color: var(--main-color);
-}
+/*#permalink-text {*/
+/*  color: rgba(255,255,255,.9);*/
+/*  color: var(--font-color);*/
+/*  background-color: rgba(24, 61, 93,.8);*/
+/*  background-color: var(--main-color);*/
+/*}*/
+/*#permalink-text:hover,*/
+/*#permalink-text:focus {*/
+/*  background-color: rgba(24, 61, 93,.8);*/
+/*  background-color: var(--main-color);*/
+/*}*/
 
 /*
  *  Popup
@@ -696,7 +696,7 @@ c4g-infopage-container {
   cursor: not-allowed;
 }
 
-.c4g-sideboard > div > div[class*=content] *:not(button):not(input):not(select):not(output):not(option) {
+.c4g-sideboard > div > div[class*=content] *:not(button):not(input):not(textarea):not(select):not(output):not(option) {
   color: var(--font-color);
 }
 
@@ -715,10 +715,14 @@ c4g-infopage-container {
 }
 
 .c4g-sideboard > div[class*=wrapper] {
-  background: var(--main-color);
+  background: none;
 }
 
 .c4g-sideboard > div > div[class*=content] input {
+  color: var(--main-color);
+}
+
+.c4g-sideboard > div > div[class*=content] textarea {
   color: var(--main-color);
 }
 
@@ -732,6 +736,21 @@ c4g-infopage-container {
 }
 
 .c4g-sideboard > div > div[class*=content] input ~ button:active{
+  background: none;
+  color: var(--font-color);
+  border: none;
+}
+
+.c4g-sideboard > div > div[class*=content] textarea ~ button {
+  background: var(--font-color);
+  color: var(--main-color);
+}
+
+.c4g-sideboard > div > div[class*=content] textarea ~ button:hover{
+  border: 1px solid var(--shadow-color);
+}
+
+.c4g-sideboard > div > div[class*=content] textarea ~ button:active{
   background: none;
   color: var(--font-color);
   border: none;

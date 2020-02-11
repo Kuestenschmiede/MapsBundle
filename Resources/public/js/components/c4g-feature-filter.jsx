@@ -50,7 +50,7 @@ export class FeatureFilter extends Component {
           let openedList = scope.state.openedList === index;
           return <FeatureFilterMultiCheckbox feature={feature} open={openedList} setOpen={this.setOpen} checkedItems={checkedItems} filterLayers={this.filterLayersMulti} id={index} key={index}/>
         });
-        if (scope.props.target.scrollWidth > scope.props.target.clientWidth) {
+        if (scope.props.target.scrollWidth < scope.props.target.clientWidth) {
           return (
               <div className={"c4g-feature-filter"} ref={this.wrapperRef}>
                 <ul className={"c4g-feature-filter-list"} onMouseUp={(evt) => this.handleClickInside(evt)} ref={this.ulRef}>

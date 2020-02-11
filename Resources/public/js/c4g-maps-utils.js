@@ -398,7 +398,7 @@ export var utils = {
     if (opt_opacity && typeof opt_opacity !== 'number') {
       if (typeof opt_opacity === 'object' && opt_opacity.value) {
         opt_opacity = opt_opacity.value;
-      } else {
+      } else if (!opt_opacity) {
         opt_opacity = 100;
       }
     }

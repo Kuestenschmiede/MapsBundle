@@ -708,38 +708,11 @@ ul.c4g-overlays li a{
 /*
  * Permalink
  */
-div.c4g-permalink-popup {
-  margin: 0 0 0 auto;
-  border-radius: 3px;
-}
-div.c4g-permalink-popup.c4g-open {
-  height: 42px;
-  margin-top: 5px;
-}
-div.c4g-permalink-popup.c4g-close {
-  height: 0;
-}
-div.c4g-permalink-popup input[type='text'] {
-  outline-style: none;
-  height: 1.45em;
-  margin: 3px;
-  vertical-align: bottom;
-  padding: 1px 5px;
-  border: none;
-  border-radius: 3px 0 0 3px;
-}
-div.c4g-permalink-popup button {
-  display: inline-block;
-  margin: 3px;
-}
-div.c4g-permalink-popup button.c4g-refresh {
+button.c4g-refresh.c4g-icon, button.c4g-copy.c4g-icon {
   border-radius: 0%;
   border-radius: var(--button-radius-percent);
+  float: right
 }
-div.c4g-permalink-popup button.c4g-copy {
-  margin: 3px 0;
-}
-
 
 /*
  *  Popups
@@ -923,12 +896,14 @@ div.c4g-tooltip-popup:before {
   cursor: pointer;
   font-family: "Font Awesome 5 Free";
   font-weight: bold;
-  font-size: 1.75em;
+  font-size: 30px;
   z-index: 1;
 }
 
 .c4g-feature-filter button.c4g-btn-nav-previous:active:before, .c4g-feature-filter button.c4g-btn-nav-next:active:before {
-  font-size: 30px;
+  font-size: 20px;
+  vertical-align: middle;
+  transition: .1s;
 }
 
 button.c4g-btn-nav-previous {
@@ -958,7 +933,7 @@ button.c4g-baselayer-close:before{
   max-width: calc(100% - var(--button-size-pixel) - 1.6em);
   left: calc(var(--button-size-pixel) + .8em);
   position: absolute;
-  bottom: .2em;
+  bottom: 1.2em;
 }
 
 .c4g-control-container-bottom-left > a {

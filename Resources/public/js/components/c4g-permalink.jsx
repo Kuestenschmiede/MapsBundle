@@ -68,7 +68,7 @@ export class Permalink extends Component {
                   header={"Permalink"} closeBtnClass={"c4g-permalink-close"} closeBtnCb={this.close}>
         </Titlebar>
         <div className={"c4g-permalink-content"}>
-          <input type="text" id={"permalink-text"} value={this.state.link} readOnly={true}/>
+          <textarea cols="50" rows="2" id={"permalink-text"} value={this.state.link} readOnly={true}/>
           <button className={cssConstants.COPY + ' ' + cssConstants.ICON} title={this.langConstants.COPY_TO_CLIPBOARD}
                   data-clipboard-target={"#permalink-text"} />
           <button className={cssConstants.REFRESH + ' ' + cssConstants.ICON} title={this.langConstants.REFRESH}
