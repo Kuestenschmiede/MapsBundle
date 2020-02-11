@@ -33,7 +33,7 @@ export class BetterLayerController {
     const scope = this;
     this.proxy = proxy;
     this.loaders = [];
-    this.controllers = [];
+    this.controllers = {};
     this.arrLocstyles = [];
     this.mapController = proxy.options.mapController;
     this.vectorCollection = new Collection();
@@ -45,6 +45,7 @@ export class BetterLayerController {
             if (!requestData.params && !requestData.url) {
               let responseFunc = function (data) {
                 let features = [];
+                let layer = scope.objLayers.find(element => element.id == requestData.layerId) || {};
                 for(let i = 0; i < data.length; i++){
                   let contentData = data[i];
                   let feature = scope.parseOwnData(contentData, layer);
@@ -52,7 +53,16 @@ export class BetterLayerController {
                 }
                 scope.addFeatures(features, requestData.chain);
                 scope.mapController.setObjLayers(scope.arrLayers);
-              }
+              };
+              scope.performOwnData({
+                    "layerId": requestData.layerId,
+                    "locstyleId": requestData.locstyleId
+                  }, {
+                    "extent": extent,
+                    "resolution": resolution,
+                    "projection": projection
+                  },
+                  responseFunc)
             }
             else {
               let responseFunc = function (response) {
