@@ -11,10 +11,8 @@
  */
 import {cssConstants} from "./c4g-maps-constant";
 import {getLanguage} from "./c4g-maps-i18n";
-import {OSM} from "ol/source";
-import {Tile} from "ol/layer";
+import {View} from "ol";
 import {OverviewMap as OvMap} from "ol/control";
-import TileLayer from "ol/layer/Tile";
 
 'use strict';
 export class OverviewMap {
@@ -33,15 +31,14 @@ export class OverviewMap {
 
     var element,
         trigger,
-        triggerIcon,
-        ovm;
+        triggerIcon;
 
     let langConstants = getLanguage(options.mapController.data);
     // default options
     this.options = jQuery.extend({
-      collapsed: true,
+      collapsed: false,
       tipLabel: langConstants.CTRL_OVERVIEWMAP,
-      layers: [new TileLayer({source: options.source})]
+      layers: [Object.create(options.layers[0])]
     }, options);
     this.mapController = options.mapController;
 
@@ -70,18 +67,17 @@ export class OverviewMap {
         jQuery(element).addClass(cssConstants.CLOSE).removeClass(cssConstants.OPEN);
         jQuery(options.ovmTarget).addClass(cssConstants.CLOSE).removeClass(cssConstants.OPEN);
       }
-      try {
-        this.blur();
-      } catch (ignore) {
-      }
     });
 
-    let ovmTarget = options.ovmTarget;
     this.ovm = new OvMap({
-      target: ovmTarget,
-      layers: options.layers,
-      collapsed: options.collapsed || true
+      collapsed: options.collapsed || true,
+      collapsible: false,
+      rotateWithView: true,
+      className: 'ol-overviewmap ol-custom-overviewmap',
+      target: options.ovmTarget,
+      layers: options.layers
     });
+
     this.element = element;
   }
 

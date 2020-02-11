@@ -228,11 +228,10 @@ button.c4g-geosearch-start:before {
 }
 .ol-overviewmap-map {
   opacity: 1;
-  width: 150px;
-  height: 100px;
+  width: 220px;
+  height: 143px;
   margin: auto;
   margin-top: 19px;
-
 }
 .c4g-overviewmap.c4g-close .ol-overviewmap-map {
   opacity: 0;
