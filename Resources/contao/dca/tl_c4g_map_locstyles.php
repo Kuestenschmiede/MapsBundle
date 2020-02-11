@@ -143,7 +143,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
                                          '{popup_legend},tooltip,popup_info;'.
                                          '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;'.
                                          '{editor_legend:hide},editor_icon,editor_icon_size,editor_sort,editor_vars,editor_collect;',
-        'cust_icon_svg'               => 'name, styletype, svgSrc,svg_add_attributes, icon_scale, icon_size,icon_resize_zoom, strokewidth, strokecolor, fillcolor, icon_offset;'.
+        'cust_icon_svg'               => 'name, styletype, svgSrc,icon_size,icon_scale,icon_resize_zoom,icon_offset,svg_add_attributes;'.
                                          '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,label_outl_box,font_style,font_weight;'.
                                          '{popup_legend},tooltip,popup_info;'.
                                          '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;'.

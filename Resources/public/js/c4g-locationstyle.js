@@ -317,37 +317,18 @@ export class C4gLocationStyle {
           height = (styleData.icon_size[1]*styleData.icon_scale);
           let anchorX = 1 / (parseInt(width) / (parseInt(styleData.icon_offset[0]) * -1));
           let anchorY = 1 / (parseInt(height) / (parseInt(styleData.icon_offset[1]) * -1));
-          let strokewidth = 0;
-          if (styleData.strokewidth && styleData.strokewidth.value) {
-            strokewidth = styleData.strokewidth.value;
-          }
-          canvas.width  = width+(2*strokewidth);
-          canvas.height = height+(2*strokewidth);
+          canvas.width  = width;
+          canvas.height = height;
           ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-          if (styleData.fillcolor) {
-            ctx.fillStyle = utils.getRgbaFromHexAndOpacity(styleData.fillcolor, styleData.fillopacity.value);
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-          }
-
-          if (strokewidth && styleData.strokecolor) {
-            ctx.strokeStyle = utils.getRgbaFromHexAndOpacity(styleData.strokecolor, styleData.strokeopacity.value);
-            ctx.lineWidth = styleData.strokewidth.value;
-            ctx.strokeRect(0, 0, canvas.width, canvas.height);
-            ctx.translate(0.5, 0.5);
-          }
 
           let img = new Image();
           img.src = styleData.svgSrc;
-          img.zIndex = 100; //Test
-
           img.onload = function() {
-            ctx.drawImage(img, strokewidth, strokewidth, width, height);
+            ctx.drawImage(img, 0, 0, width, height);
           };
 
           imageStyle = new Icon({
             anchor: [anchorX, anchorY],
-            //opacity: parseFloat(styleData.icon_opacity.value) / 100,
             img: canvas,
             imgSize: [canvas.width, canvas.height]
           });
