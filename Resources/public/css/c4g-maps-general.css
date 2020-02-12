@@ -224,7 +224,7 @@ button.c4g-geosearch-start:before {
   right: -100%;
 }
 
-.c4g-control-container-top-left {
+.c4g-control-container-top-left, .c4g-control-container-bottom-left {
   z-index: 90;
 }
 
