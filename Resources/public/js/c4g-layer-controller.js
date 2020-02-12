@@ -103,6 +103,9 @@ export class BetterLayerController {
             }
 
           }
+          else {
+            requestData.arrExtents.push(extent)
+          }
         }
       }
     };
@@ -337,6 +340,8 @@ export class BetterLayerController {
       this.loaders.push({
         chain: idChain,
         url: url,
+        preventLoading: hide,
+        arrExtents: [],
         locstyleId: locstyleId,
         params: params,
         layerId: layerId
@@ -550,7 +555,7 @@ export class BetterLayerController {
           source: vectorSource,
           style: customStyleFunc || this.clusterStyleFunction
       });
-      if (!layer.hide) {
+      if (!hide) {
         this.mapController.map.addLayer(vectorLayer);
       }
       features = false;
