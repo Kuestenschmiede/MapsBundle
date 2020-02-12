@@ -16,7 +16,6 @@ import {Spinner} from "../c4g-maps-misc-spinner";
 import {MapHover} from "../c4g-maps-misc-maphover";
 import {utils} from "../c4g-maps-utils";
 import {GeoSearch} from "./c4g-geosearch.jsx";
-// import {Permalink} from "../c4g-maps-control-permalink";
 import {MapsControls} from "../c4g-maps-controls";
 import {getLanguage} from "../c4g-maps-i18n";
 import {View} from "ol";
@@ -786,12 +785,7 @@ export class MapController extends Component {
         domMapDiv.style.setProperty('--button-fontsize-pixel', mapData.themeData['fontsize'] + 'px');
       }
     }
-    if (window.c4gMapsHooks !== undefined && Array.isArray(window.c4gMapsHooks.mapController_addControls)) {
-      utils.callHookFunctions(window.c4gMapsHooks.mapController_addControls, {
-        mapController: this,
-        Container: this.mapsControls.controlContainerTopLeft
-      });
-    }
+
     const scope = this;
     this.map.on("change:size", function() {
       scope.setState({});
@@ -873,6 +867,7 @@ export class MapController extends Component {
       {name: "rotate", sort: mapData.rotate},
       {name: "graticule", sort: mapData.graticule},
       {name: "overview", sort: mapData.overviewmap},
+      {name: "router", sort: mapData.router_enable}
     ];
     let sbPortal = "";
     if (mapData.layerswitcher.enable) {
@@ -1024,6 +1019,16 @@ export class MapController extends Component {
         case 'overview':
           if (mapData.overviewmap) {
             result.push(overviewPortal);
+          }
+          break;
+        case 'router':
+          if (window.c4gMapsHooks !== undefined && Array.isArray(window.c4gMapsHooks.mapController_addControls)) {
+            utils.callHookFunctions(window.c4gMapsHooks.mapController_addControls, {
+              mapController: this,
+              Container: this.mapsControls.controlContainerTopLeft,
+              component: "router",
+              arrComps: result
+            });
           }
           break;
       }

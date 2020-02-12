@@ -25,7 +25,6 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.c4g-portside-container button:before,
 .c4g-starboard-container button:before {
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
@@ -222,14 +221,8 @@ button.ol-zoom-position:before {
   font-size: inherit;
 }
 
-/* Portside & Starboard */
-button.c4g-portside-hide:before{
-  content: "\f060";
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
-  font-size: inherit;
-}
-button.c4g-portside-close:before,
+/*  Starboard */
+
 button.c4g-starboard-close:before{
   content: "\f00d";
   font-family: 'Font Awesome 5 Free';
@@ -462,18 +455,7 @@ button.c4g-popup-close:before {
   font-weight: 900;
   font-size: inherit;
 }
-.c4g-portside-container .c4g_brick_dialog #send-dialog::before {
-  content: "\f0c7";
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
-  font-size: inherit;
-}
-.c4g-portside-container .c4g_brick_dialog #cancel-dialog::before {
-  content: "\f05e";
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
-  font-size: inherit;
-}
+
 .c4g-geojson-button:after {
   content: "\f59f";
   font-family: 'Font Awesome 5 Free';
