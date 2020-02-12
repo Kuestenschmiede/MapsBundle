@@ -28,7 +28,7 @@ export class Titlebar extends Component {
     }
     let closeButton = "";
     if (this.props.closeBtnClass && this.props.closeBtnCb) {
-      closeButton = <button className={this.props.closeBtnClass} onMouseUp={this.props.closeBtnCb}></button>;
+      closeButton = <button className={this.props.closeBtnClass} onMouseUp={this.props.closeBtnCb} title={"Schließen"}></button>;
     }
     return (
       <div className={this.props.wrapperClass}>

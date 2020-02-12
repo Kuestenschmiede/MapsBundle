@@ -38,7 +38,6 @@ export class Grid extends Component {
       label: '#',
       disableLabel: '[]',
       showLabels: true,
-      map: props.mapController.map,
       visible: false
     };
     const scope = this;
@@ -48,18 +47,12 @@ export class Grid extends Component {
     var enable = function () {
       objGrid.setVisible(true);
       jQuery(element).addClass(cssConstants.ENABLED);
-      // if (options.caching) {
-      //     c4g.maps.utils.storeValue('grid', '1');
-      // }
     };
 
     // function to disable the grid
     var disable = function () {
       objGrid.setVisible(false);
       jQuery(element).removeClass(cssConstants.ENABLED);
-      // if (options.caching) {
-      //     c4g.maps.utils.storeValue('grid', '0');
-      // }
     };
 
     // function to toggle the grid
@@ -94,6 +87,7 @@ export class Grid extends Component {
     props.mapController.map.addLayer(objGrid);
     mapController.mapsControls.controls.graticule = control;
     mapController.map.addControl(control);
+
   }
 
   render() {

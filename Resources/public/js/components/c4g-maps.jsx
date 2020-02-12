@@ -16,7 +16,6 @@ import {Spinner} from "../c4g-maps-misc-spinner";
 import {MapHover} from "../c4g-maps-misc-maphover";
 import {utils} from "../c4g-maps-utils";
 import {GeoSearch} from "./c4g-geosearch.jsx";
-// import {Permalink} from "../c4g-maps-control-permalink";
 import {MapsControls} from "../c4g-maps-controls";
 import {getLanguage} from "../c4g-maps-i18n";
 import {View} from "ol";
@@ -945,7 +944,8 @@ export class MapController extends Component {
         target: target,
         layers: layers,
         ovmTarget: this.overviewContainer,
-        collapsed: true
+        collapsed: true,
+        key: 23
       });
       this.proxy.hook_baselayer_visibility = this.proxy.hook_baselayer_visibility || [];
       this.proxy.hook_baselayer_visibility.push(function(baselayerConfig) {
@@ -982,42 +982,42 @@ export class MapController extends Component {
           break;
         case 'zoom':
           if (mapData.zoom) {
-            result.push(React.createElement(Zoom, {mapController: this}));
+            result.push(React.createElement(Zoom, {mapController: this, key: i}));
           }
           break;
         case 'zoomExtent':
           if (mapData.zoomExtent) {
-            result.push(React.createElement(ZoomExtent, {mapController: this}));
+            result.push(React.createElement(ZoomExtent, {mapController: this, key: i}));
           }
           break;
         case 'zoomHome':
           if (mapData.zoomHome) {
-            result.push(React.createElement(ZoomHome, {mapController: this}));
+            result.push(React.createElement(ZoomHome, {mapController: this, key: i}));
           }
           break;
         case 'zoomPosition':
           if (mapData.zoomPosition) {
-            result.push(React.createElement(ZoomPosition, {mapController: this}));
+            result.push(React.createElement(ZoomPosition, {mapController: this, key: i}));
           }
           break;
         case 'fullscreen':
           if (mapData.fullscreen) {
-            result.push(React.createElement(Fullscreen, {mapController: this}));
+            result.push(React.createElement(Fullscreen, {mapController: this, key: i}));
           }
           break;
         case 'print':
           if (mapData.print) {
-            result.push(React.createElement(Print, {mapController: this}));
+            result.push(React.createElement(Print, {mapController: this, key: i}));
           }
           break;
         case 'rotate':
           if (mapData.rotate) {
-            result.push(React.createElement(Rotate, {mapController: this}));
+            result.push(React.createElement(Rotate, {mapController: this, key: i}));
           }
           break;
         case 'graticule':
           if (mapData.graticule) {
-            result.push(React.createElement(Grid, {mapController: this}));
+            result.push(React.createElement(Grid, {mapController: this, key: i}));
           }
           break;
         case 'overview':

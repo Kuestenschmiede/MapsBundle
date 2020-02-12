@@ -143,6 +143,8 @@ class BaseLayerService
         $arrOverlayData['name'] = \Contao\Controller::replaceInsertTags($stringClass::decodeEntities($objOverlay->name));
 
         $arrOverlayData['provider'] = $objOverlay->provider;
+        $arrOverlayData['opacity'] = $objOverlay->opacity;
+        $arrOverlayData['attribution'] = $objOverlay->attribution;
 
         switch ($objOverlay->provider) {
             case 'custom':
@@ -179,6 +181,13 @@ class BaseLayerService
                 $arrOverlayData['api_key'] = $objOverlay->api_key;
 
                 break;
+            case 'sea':
+                $arrOverlayData['urls'][] = 'http://t1.openseamap.org/seamark/{z}/{x}/{y}.png';
+                if (!$arrOverlayData['attribution']) {
+                    $arrOverlayData['attribution'] = 'Seamarks by <a href="https://www.openseamap.org/">OpenSeaMap</a>';
+                }
+
+                break;
             case 'geoimage':
                 $objFile = \FilesModel::findByUuid($objOverlay->image_src);
                 if ($objFile && $objFile->path) {
@@ -189,8 +198,6 @@ class BaseLayerService
                     $arrOverlayData['geoimage_json'] = $jsonGeoRef;
                 }
         }
-        $arrOverlayData['opacity'] = $objOverlay->opacity;
-        $arrOverlayData['attribution'] = $objOverlay->attribution;
 
         return $arrOverlayData;
     }

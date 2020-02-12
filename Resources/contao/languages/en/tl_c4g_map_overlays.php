@@ -26,13 +26,15 @@ $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['api_key']    	= array('API Key, AppI
 $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['app_id']     	= array('Key', 'Please insert key for your application.');
 $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['api_port']      = array('Port', 'Please insert the api port.');
 $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['published']      = array('Published', 'Check this if you want to publish the overlay map.');
-$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider_custom'] = 'Custom';
-$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider_wms']    = 'WMS';
-$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider_owm']    = 'OpenWeatherMap';
-$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider_geoimage']    = 'Geolocated Picture';
 
-$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['image_src']   			= ['Choose picture', 'Please choose the picture to be displayed as a baselayer.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['geoimage_json']           = ['JSON to georeference. Please enter a <a href="https://www.json.org/" rel="noopener" target="_blank">JSON</a> to locate the picture. You may use <a href="http://viglino.github.io/Map-georeferencer/" target="_blank" rel="noopener" >this tool</a> or you set the parameters "imageCenter", "imageRotate" und "imageScale" on your own.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider_custom']   = 'Custom';
+$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider_wms']      = 'WMS';
+$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider_owm']      = 'OpenWeatherMap';
+$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider_sea']      = 'OpenSeaMap (Seamarks)';
+$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider_geoimage'] = 'Geolocated Picture';
+
+$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['image_src']   		= ['Choose picture', 'Please choose the picture to be displayed as a baselayer.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['geoimage_json']     = ['JSON to georeference. Please enter a <a href="https://www.json.org/" rel="noopener" target="_blank">JSON</a> to locate the picture. You may use <a href="http://viglino.github.io/Map-georeferencer/" target="_blank" rel="noopener" >this tool</a> or you set the parameters "imageCenter", "imageRotate" und "imageScale" on your own.'];
 /**
  * Reference
  */

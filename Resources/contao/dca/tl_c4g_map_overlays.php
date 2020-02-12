@@ -118,15 +118,13 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
     [
         '__selector__'                => ['provider'],
         'default'                     => 'name,provider,opacity,attribution,published',
-//        'custom'                      => 'name,provider,url1,url2,url3,url4,opacity,attribution',
-//        'wms'                         => 'name,provider,wms_url,wms_params_layers,wms_params_version,wms_params_format,wms_params_transparent,wms_params_srs,wms_gutter,opacity,attribution',
-//        'owm'                         => 'name,provider,api_key,app_id,api_port,opacity,attribution',
     ],
     
     'subpalettes' => [
         'provider_custom' => 'url1,url2,url3,url4',
         'provider_wms' => 'wms_url,wms_params_layers,wms_params_version,wms_params_format,wms_params_transparent,wms_params_srs,wms_gutter',
         'provider_owm' => 'api_key,app_id,api_port',
+        'provider_sea' => '',
         'provider_geoimage' => 'image_src,geoimage_json'
     ],
     
@@ -166,13 +164,14 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider'],
             'filter'                  => true,
-            'inputType'               => 'select',
+            'inputType'               => 'radio',
             'default'                 => 'custom',
             'options'                 =>
             [
                 'custom'    => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider_custom'],
                 'wms'       => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider_wms'],
                 'owm'       => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider_owm'],
+                'sea'       => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider_sea'],
                 'geoimage'  => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider_geoimage']
             ],
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['references'],
