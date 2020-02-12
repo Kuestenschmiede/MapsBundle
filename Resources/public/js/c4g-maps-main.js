@@ -17,25 +17,20 @@ import {Search} from "./components/c4g-search";
 import {cssConstants} from "./c4g-maps-constant";
 
 window.initMap = function(mapData) {
-  let $overlaycontainer_stopevent = jQuery("#c4g_map_" + mapData.mapId)[0];
-  // let $overlaycontainer_stopevent = jQuery(".ol-overlaycontainer-stopevent")[0];
+  let mapDiv = jQuery("#c4g_map_" + mapData.mapId)[0];
   ReactDOM.render(React.createElement(MapController, {
     mapData: mapData,
-  }), $overlaycontainer_stopevent);
+  }), mapDiv);
 };
 
 window.initMaps = function(mapData) {
   for (let key in mapData) {
     if (mapData.hasOwnProperty(key)) {
-      // let mapController = new MapController();
-      //  let $overlaycontainer_stopevent = jQuery('#' + mapData[key].mapDiv + ' .' + cssConstants.OL_OVERLAYCONTAINER_SE)[0];
-       // let $overlaycontainer_stopevent = jQuery(".ol-overlaycontainer-stopevent")[0];
-      let $overlaycontainer_stopevent = jQuery("#c4g_map_" + mapData[key].mapId)[0];
-
+      let mapDiv = jQuery("#c4g_map_" + mapData[key].mapId)[0];
 
       ReactDOM.render(React.createElement(MapController, {
         mapData: mapData[key],
-      }), $overlaycontainer_stopevent);
+      }), mapDiv);
     }
   }
 };

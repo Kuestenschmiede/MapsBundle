@@ -80,22 +80,14 @@ export class MapsControls {
         this.rightSlideElements.push(controlContainerBottomRight);
 
         let buttons = [
-            {name:'zoom', sort: mapData.zoom},
-            {name:'zoomPosition', sort: mapData.zoomPosition},
-            {name:'zoomHome', sort: mapData.zoomHome},
-            {name:'zoomExtent', sort: mapData.zoomExtent},
-            {name:'fullscreen', sort: mapData.fullscreen},
-            {name:'print', sort: mapData.print},
-            {name:'rotate', sort: mapData.rotate},
-            {name:'graticule', sort: mapData.graticule},
             {name:'layerswitcher', sort: mapData.layerswitcher.enable},
             {name:'baselayerswitcher', sort: mapData.baselayerswitcher.enable},
             {name:'geosearch', sort: mapData.geosearch.enable},
             {name:'legend', sort: mapData.legend.enable},
             {name:'measure', sort: mapData.measuretools.enable},
-            {name:'overview', sort: mapData.overviewmap},
+
             {name:'permalink', sort: mapData.permalink.enable},
-            ];
+        ];
 
         const sortBy = (key) => {
             return (a, b) => (a[key] > b[key]) ? 1 : ((b[key] > a[key]) ? -1 : 0);
@@ -108,127 +100,43 @@ export class MapsControls {
                 continue;
             }
             switch (button.name) {
-                case 'zoom':
-                    // zoom-controls
-                    this.controls.zoom = new Zoom({
-                        zoomInLabel: ' ',
-                        zoomOutLabel: ' ',
-                        zoomInTipLabel: langConstants.CTRL_ZOOM_IN,
-                        zoomOutTipLabel: langConstants.CTRL_ZOOM_OUT,
-                        target: controlContainerTopLeft
-                    });
-                    map.addControl(this.controls.zoom);
-                    break;
-                case 'zoomExtent':
-                    if (mapData.zoomExtent) {
-                        this.controls.zoomExtent = new ZoomToExtent({
-                            label: ' ',
-                            tipLabel: langConstants.CTRL_ZOOM_EXT,
-                            target: controlContainerTopLeft
-                        });
-                        map.addControl(this.controls.zoomExtent);
-                    }
-                    break;
-                case 'zoomHome':
-                    if (mapData.zoomHome) {
-                        this.controls.zoomHome = new Home({
-                            label: ' ',
-                            disableLabel: ' ',
-                            tipLabel: langConstants.CTRL_ZOOM_HOME,
-                            target: controlContainerTopLeft,
-                            mapController: this.mapController,
-                        });
-                        map.addControl(this.controls.zoomHome);
-                    }
-                    break;
-                case 'zoomPosition':
-                    if (mapData.zoomPosition) {
-                        this.controls.zoomPosition = new Position({
-                            label: ' ',
-                            disableLabel: ' ',
-                            tipLabel: langConstants.CTRL_ZOOM_POS,
-                            target: controlContainerTopLeft,
-                            mapController: this.mapController
-                        });
-                        map.addControl(this.controls.zoomPosition);
-                    }
-                    break;
-                case 'fullscreen':
-                    // fullscreen
-                    this.controls.fullscreen = new FullScreen({
-                        label: ' ',
-                        labelActive: ' ',
-                        tipLabel: langConstants.CTRL_FULLSCREEN,
-                        target: controlContainerTopLeft
-                    });
-                    map.addControl(this.controls.fullscreen);
-                    break;
-                case 'print':
-                    this.controls.print = new Print({
-                        label: ' ',
-                        tipLabel: langConstants.CTRL_PRINT,
-                        target: controlContainerTopLeft,
-                        mapController: this.mapController
-                    });
-                    map.addControl(this.controls.print);
-                    break;
-                case 'rotate':
-                    this.controls.rotate = new Rotate({
-                        label: ' ',
-                        tipLabel: langConstants.CTRL_RESET_ROTATION,
-                        target: controlContainerTopLeft,
-                        autoHide: true
-                    });
-                    map.addControl(this.controls.rotate);
-                    break;
-                case 'graticule':
-                    this.controls.graticule = new Grid({
-                        label: ' ',
-                        disableLabel: ' ',
-                        tipLabel: langConstants.CTRL_GRID,
-                        caching: mapData.caching,
-                        target: controlContainerTopLeft,
-                        mapController: this.mapController
-                    });
-                    map.addControl(this.controls.graticule);
-                    break;
                 case 'overview':
                     var ovmTarget = document.createElement("div");
                     ovmTarget.className = "c4g-sideboard c4g-overviewmap-container c4g-close";
                     this.mapController.$overlaycontainer_stopevent.append(ovmTarget);
 
-                    const scope = this;
-                    const addOverviewMap = function() {
-                        var overviewMapOptions = {
-                            target: controlContainerTopLeft,
-                            mapController: scope.mapController,
-                            ovmTarget: ovmTarget,
-                            layers: [proxy.baselayerController.arrBaselayers[proxy.activeBaselayerId].layer]
-                        };
-
-                        if (scope.overviewMap) {
-                            // we are reloading the overview map, so keep the collapsed-property
-                            overviewMapOptions.collapsed = !scope.overviewMap.isOpen();
-                        }
-
-                        scope.overviewMap = new OverviewMap(overviewMapOptions);
-                        scope.controls.overviewmap = scope.overviewMap.getOverviewMap();
-                        map.addControl(scope.controls.overviewmap);
-                    };
-
-                    if (proxy.baselayers_loaded) {
-                        addOverviewMap();
-                    } else {
-                        proxy.hook_baselayer_loaded.push(addOverviewMap);
-                    }
-
-                    // add hook to synchronize overviewmap with baselayer
-                    window.c4gMapsHooks.baselayer_changed = window.c4gMapsHooks.baselayer_changed || [];
-                    window.c4gMapsHooks.baselayer_changed.push(function(baselayerId) {
-                        map.removeControl(scope.controls.overviewmap);
-                        scope.overviewMap.removeFromMap();
-                        addOverviewMap();
-                    });
+                    // const scope = this;
+                    // const addOverviewMap = function() {
+                    //     var overviewMapOptions = {
+                    //         target: controlContainerTopLeft,
+                    //         mapController: scope.mapController,
+                    //         ovmTarget: ovmTarget,
+                    //         layers: [proxy.baselayerController.arrBaselayers[proxy.activeBaselayerId].layer]
+                    //     };
+                    //
+                    //     if (scope.overviewMap) {
+                    //         // we are reloading the overview map, so keep the collapsed-property
+                    //         overviewMapOptions.collapsed = !scope.overviewMap.isOpen();
+                    //     }
+                    //
+                    //     scope.overviewMap = new OverviewMap(overviewMapOptions);
+                    //     scope.controls.overviewmap = scope.overviewMap.getOverviewMap();
+                    //     map.addControl(scope.controls.overviewmap);
+                    // };
+                    //
+                    // if (proxy.baselayers_loaded) {
+                    //     addOverviewMap();
+                    // } else {
+                    //     proxy.hook_baselayer_loaded.push(addOverviewMap);
+                    // }
+                    //
+                    // // add hook to synchronize overviewmap with baselayer
+                    // window.c4gMapsHooks.baselayer_changed = window.c4gMapsHooks.baselayer_changed || [];
+                    // window.c4gMapsHooks.baselayer_changed.push(function(baselayerId) {
+                    //     map.removeControl(scope.controls.overviewmap);
+                    //     scope.overviewMap.removeFromMap();
+                    //     addOverviewMap();
+                    // });
                     break;
                 default:
             }
