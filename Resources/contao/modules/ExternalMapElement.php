@@ -23,14 +23,15 @@ class ExternalMapElement extends Module
     protected $strTemplate = "c4g_external_map_element";
     
     public static $arrClasses = [
-      'starboard' => "c4g-external-starboard-container",
-      'baselayer' => "c4g-external-baselayer-container",
-      'permalink' => "c4g-external-permalink-container",
-      'search' => "c4g-external-search-container",
-      'measuretools' => "c4g-external-measuretools-container",
-      'legend' => "c4g-external-legend-container",
-      'overviewmap' => "c4g-external-overviewmap-container",
-      'filter' => "c4g-external-filter-container",
+        'starboard' => "c4g-external-starboard-container",
+        'baselayer' => "c4g-external-baselayer-container",
+        'permalink' => "c4g-external-permalink-container",
+        'search' => "c4g-external-search-container",
+        'measuretools' => "c4g-external-measuretools-container",
+        'legend' => "c4g-external-legend-container",
+        'overviewmap' => "c4g-external-overviewmap-container",
+        'filter' => "c4g-external-filter-container",
+        'routing' => "c4g-external-router-container"
     ];
     
     /**
