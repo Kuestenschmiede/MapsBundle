@@ -319,9 +319,9 @@ export var utils = {
       return Number(a - b);
     });
     arrOutput = [];
-    arrOutput[0] = Number(arrInput[0]);
+    arrOutput[0] = arrInput[0];
     for (i = 1; i < arrInput.length; i += 1) {
-      arrOutput[i] = Number(arrInput[i] - arrInput[i - 1]);
+      arrOutput[i] = arrInput[i] - arrInput[i - 1];
     }
 
     return arrOutput;
@@ -350,7 +350,7 @@ export var utils = {
       return [];
     }
     for (i = 1; i < arrInput.length; i += 1) {
-      arrOutput[i] = BigInt(Number(arrInput[i])) + arrOutput[i - 1];
+      arrOutput[i] = BigInt(arrInput[i]) + arrOutput[i - 1];
       if (isNaN(Number(arrOutput[i]))) {
         return [];
       }
