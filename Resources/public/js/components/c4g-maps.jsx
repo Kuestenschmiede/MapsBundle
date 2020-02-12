@@ -954,10 +954,6 @@ export class MapController extends Component {
         let currentSource = currentBaselayer.layer.getSource();
         scope.components.overviewMap.getOverviewMap().getOverviewMap().addLayer(new TileLayer({source: currentSource}));
       });
-      // overviewPortal = React.createElement(
-      //   <OverviewMap ref={(node) => {this.components.overviewMap = node;}} mapController={this} target={target} layers={layers}
-      //              external={this.overviewContainer.className.indexOf("c4g-external") !== -1} ovmTarget={this.overviewContainer}/>
-      // );
     }
 
     let result = [];
@@ -985,25 +981,39 @@ export class MapController extends Component {
           result.push(permaPortal);
           break;
         case 'zoom':
-          result.push(React.createElement(Zoom, {mapController: this}));
+          if (mapData.zoom) {
+            result.push(React.createElement(Zoom, {mapController: this}));
+          }
           break;
         case 'zoomExtent':
-          result.push(React.createElement(ZoomExtent, {mapController: this}));
+          if (mapData.zoomExtent) {
+            result.push(React.createElement(ZoomExtent, {mapController: this}));
+          }
           break;
         case 'zoomHome':
-          result.push(React.createElement(ZoomHome, {mapController: this}));
+          if (mapData.zoomHome) {
+            result.push(React.createElement(ZoomHome, {mapController: this}));
+          }
           break;
         case 'zoomPosition':
-          result.push(React.createElement(ZoomPosition, {mapController: this}));
+          if (mapData.zoomPosition) {
+            result.push(React.createElement(ZoomPosition, {mapController: this}));
+          }
           break;
         case 'fullscreen':
-          result.push(React.createElement(Fullscreen, {mapController: this}));
+          if (mapData.fullscreen) {
+            result.push(React.createElement(Fullscreen, {mapController: this}));
+          }
           break;
         case 'print':
-          result.push(React.createElement(Print, {mapController: this}));
+          if (mapData.print) {
+            result.push(React.createElement(Print, {mapController: this}));
+          }
           break;
         case 'rotate':
-          result.push(React.createElement(Rotate, {mapController: this}));
+          if (mapData.rotate) {
+            result.push(React.createElement(Rotate, {mapController: this}));
+          }
           break;
         case 'graticule':
           if (mapData.graticule) {
@@ -1011,7 +1021,9 @@ export class MapController extends Component {
           }
           break;
         case 'overview':
-          result.push(overviewPortal);
+          if (mapData.overviewmap) {
+            result.push(overviewPortal);
+          }
           break;
       }
     }
