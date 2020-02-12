@@ -94,6 +94,22 @@ export class C4gOverlayController {
           console.warn('unsupported osm-style -> switch to default');
         }
         break;
+      case 'sea':
+        // custom
+          noUrl = true;
+          if (overlayLayerConfig.attribution) {
+            layerOptions.attributions = overlayLayerConfig.attribution + ' ' + OSM_ATTRIBUTION;
+          }
+          if (overlayLayerConfig.urls) {
+            layerOptions.urls = overlayLayerConfig.urls;
+            noUrl = false;
+          }
+          if (!noUrl) {
+            overlayLayer = new Tile({
+              source: new XYZ(layerOptions)
+            });
+          }
+        break;
       case 'wms':
         overlayLayer = new Tile({
           source: new TileWMS({
