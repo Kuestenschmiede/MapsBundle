@@ -270,6 +270,7 @@ export class BetterLayerController {
     }
     return {
       active: !layer.hide,
+      id: layer.id,
       childStates: childStates
     }
   }
@@ -296,6 +297,15 @@ export class BetterLayerController {
     let scope = this;
     let features = [];
     let childs = [];
+    let hide = !!layer.hide;
+    if (scope.mapController.data.layers && scope.mapController.data.layers.length > 0) { //hide or show according to permalink - overwrites layerService
+      if (scope.mapController.data.layers.indexOf(BigInt(layer.id)) > -1) { //in permalink
+        hide = false;
+      }
+      else { //not in permalink
+        hide = true;
+      }
+    }
     let vectorLayer = false;
     let loaderId = -1;
     let possibleLocstyle = layer.locstyle;
@@ -557,8 +567,9 @@ export class BetterLayerController {
         "features"      : features,
         "vectorLayer"   : vectorLayer,
         "loader"        : loaderId,
+        "id"            : layer.id,
         "name"          : layer.name,
-        "hide"          : !!layer.hide,
+        "hide"          : hide,
         "childs"        : childs
       };
     }

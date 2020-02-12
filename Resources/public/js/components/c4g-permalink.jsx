@@ -133,8 +133,7 @@ export class Permalink extends Component {
       link,
       center,
       baseLayerIdx,
-      layerIdx,
-      layers;
+      layerIdx;
 
     options = opt_options || {};
     if (!options.paramCount || !(options.paramCount === 6 || options.paramCount === 2 || options.paramCount === 1)) {
@@ -148,7 +147,7 @@ export class Permalink extends Component {
     center = mapView.getCenter();
     center = transform([center[0], center[1]], 'EPSG:3857', 'EPSG:4326');
 
-    parameters.push(+center[0].toFixed(5));
+    parameters.push(+center[0].toFixed(6));
     parameters.push(+center[1].toFixed(5));
     parameters.push(mapView.getZoom());
     parameters.push(+mapView.getRotation().toFixed(2));
@@ -161,12 +160,14 @@ export class Permalink extends Component {
     }
 
     // find active layers
-    layers = [];
-    for (layerIdx in proxy.activeLayerIds) {
-      if (proxy.activeLayerIds.hasOwnProperty(layerIdx)) {
-        layers.push(parseInt(layerIdx, 10));
+    let layers = [];
+    const arrLayerStates = this.props.mapController.state.arrLayerStates;
+    for (let layerId in arrLayerStates) {
+      if (arrLayerStates.hasOwnProperty(layerId)) {
+        layers = layers.concat(this.getActiveLayerIds(arrLayerStates[layerId]));
       }
     }
+
     // delta-decode if there are more than one layer
     if (layers.length > 1) {
       layers = utils.deltaEncode(layers);
@@ -196,5 +197,16 @@ export class Permalink extends Component {
     // build and return link
     return utils.setUrlParam(parameters.join('/'), this.props.mapController.data.permalink.getParameter);
   } // end of generateLink
-
+  getActiveLayerIds (arrLayerState) {
+    let ids = [];
+    if (arrLayerState.active) {
+      ids.push(BigInt(arrLayerState.id));
+    }
+    for (let childId in arrLayerState.childStates) {
+      if (arrLayerState.childStates.hasOwnProperty(childId)) {
+        ids = ids.concat(this.getActiveLayerIds(arrLayerState.childStates[childId]));
+      }
+    }
+    return ids;
+  }
 }

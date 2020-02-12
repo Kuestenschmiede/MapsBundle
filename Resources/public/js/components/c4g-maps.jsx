@@ -159,11 +159,6 @@ export class MapController extends Component {
     if (window.MooTools && Browser.Document) {
       Document = Browser.Document;
     }
-    this.proxy = new MapProxy({mapController: this});
-    this.components = this.components || {};
-    this.hideOtherComponents = this.hideOtherComponents.bind(this);
-    this.hideOtherBottomComponents = this.hideOtherBottomComponents.bind(this);
-
     // check permalink
     if (mapData.permalink.enable) {
       permalink = utils.getUrlParam(mapData.permalink.get_parameter);
@@ -247,6 +242,10 @@ export class MapController extends Component {
         permalink = false;
       }
     }
+    this.proxy = new MapProxy({mapController: this});
+    this.components = this.components || {};
+    this.hideOtherComponents = this.hideOtherComponents.bind(this);
+    this.hideOtherBottomComponents = this.hideOtherBottomComponents.bind(this);
 
     // add view observer to update permalink on center change, if a permalink exists
     // use other permalink variable to avoid interference with the actual permalink mechanism
@@ -634,7 +633,7 @@ export class MapController extends Component {
           this.baselayerContainer.className = "c4g-sideboard c4g-baselayer-container ol-unselectable";
           this.$overlaycontainer_stopevent.append(this.baselayerContainer);
         } else {
-          this.baselayerContainer.className += " c4g-sideboard c4g-external c4g-baselayer-container ol-unselectable";
+          this.baselayerContainer.className += " c4g-external c4g-baselayer-container ol-unselectable";
         }
       } else {
         this.baselayerContainer = document.createElement('div');

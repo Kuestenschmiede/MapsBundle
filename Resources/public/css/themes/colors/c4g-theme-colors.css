@@ -715,7 +715,7 @@ c4g-infopage-container {
 }
 
 .c4g-sideboard > div[class*=wrapper] {
-  background: var(--main-color);
+  background: none;
 }
 
 .c4g-sideboard > div > div[class*=content] input {
