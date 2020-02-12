@@ -80,6 +80,13 @@ export class Measuretools extends Component {
       jQuery(this.state.control.element).removeClass("c4g-open").addClass("c4g-close");
       jQuery(".c4g-measuretools-container").removeClass("c4g-open").addClass("c4g-close");
     }
+    let arrTooltips = {
+      "select": this.langConstants.MEASURETOOLS_VIEW_TRIGGER_SELECT,
+      "line": this.langConstants.MEASURETOOLS_VIEW_TRIGGER_DRAW_LINESTRING,
+      "polygon": this.langConstants.MEASURETOOLS_VIEW_TRIGGER_DRAW_POLYGON,
+      "circle": this.langConstants.MEASURETOOLS_VIEW_TRIGGER_DRAW_CIRCLE,
+      "freehand": this.langConstants.MEASURETOOLS_VIEW_TRIGGER_DRAW_FREEHAND
+    };
     return (
       <div className={"c4g-measuretools-wrapper"}>
         <Titlebar wrapperClass={"c4g-measuretools-header"} headerClass={"c4g-measuretools-headline"}
@@ -89,7 +96,7 @@ export class Measuretools extends Component {
         <div className={"c4g-measuretools-mode-switcher"}>
           {this.modes.map(function(element, index) {
             return <button key={index} className={"c4g-measure-" + element + " " + (element === scope.state.currentMode ? "c4g-active" : "c4g-inactive")}
-                           onMouseUp={() => scope.setState({currentMode: element})} />;
+                           onMouseUp={() => scope.setState({currentMode: element})} title={arrTooltips[element]}/>;
           })}
         </div>
         <MeasuretoolsView mode={"select"} measureTools={this} active={this.state.currentMode === "select" && this.state.open} featureId={this.state.featureIdCtr}
