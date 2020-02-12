@@ -17,19 +17,10 @@
 .ol-control button:hover,
 .c4g-permalink-popup button:focus,
 .c4g-permalink-popup button:hover,
-.c4g-permalink.c4g-open button,
-.c4g-portside-control.c4g-open button {
+.c4g-permalink.c4g-open button
   background-color: rgba(0,155,222,.5);
   background-color: var(--shadow-color);
 }
-
-.c4g-portside-wrapper {
-  background-color: rgba(24, 61, 93,.8);
-  background-color: var(--main-color);
-  color: rgba(255,255,255,.9);
-  color: var(--font-color);
-}
-
 
 /*
  *  Tooltips
@@ -64,26 +55,15 @@
 
 
 /*
- *  Portside & Starboard
+ *  Starboard
  */
-.c4g-portside-container{
-  background-color: transparent;/*var(--shadow-color);*/
-}
-.c4g-portside-headline {
-  color: rgba(255,255,255,.9);
-  color: var(--font-color);
-  background-color: transparent;/*var(--main-color);*/
-}
-.c4g-starboard-headline-link{
+
+g-starboard-headline-link{
   color: rgba(255,255,255,.9);
   color: var(--font-color);
 }
-.c4g-portside-top-toolbar {
-  border-color: rgba(255,255,255,.9);
-  border-color: var(--font-color);
-}
-.c4g-starboard-content-container .contentHeadline,
-.c4g-portside-content-container .contentHeadline {
+
+.c4g-starboard-content-container .contentHeadline {
   border-color: rgba(24, 61, 93,.8);
   border-color: var(--main-color);
   color: rgba(255,255,255,.9);
@@ -97,26 +77,17 @@
   background-color: rgba(24, 61, 93,.8);
   background-color: var(--main-color);
 }
-.c4g-portside-content-container,
+
 .c4g-starboard-content-container {
   background: transparent;/*var(--font-color);*/
 }
-.c4g-portside-container button{
-  color: rgba(255,255,255,.9);
-  color: var(--font-color);
-  border-color: rgba(0,155,222,.5);
-  border-color: var(--shadow-color);
-  background-color: rgba(24, 61, 93,.8);
-  background-color: var(--main-color);
-}
-.c4g-starboard-buttonbar,
-.c4g-portside-buttonbar {
+
+.c4g-starboard-buttonbar {
   border-color: rgba(255,255,255,.9);
   border-color: var(--font-color);
 }
 
-.c4g-starboard-titlebar .c4g-starboard-buttonbar button,
-.c4g-portside-titlebar .c4g-portside-buttonbar button {
+.c4g-starboard-titlebar .c4g-starboard-buttonbar button {
   color: rgba(24, 61, 93,.8);
   color: var(--main-color);
   border-color: rgba(0,155,222,.5);
@@ -124,33 +95,13 @@
   background-color: rgba(255,255,255,.9);
   background-color: var(--font-color);
 }
-.c4g-portside-container button:focus,
-.c4g-portside-container button:hover{
-  color: rgba(0,155,222,.5);
-  color: var(--shadow-color);
-  background-color: rgba(24, 61, 93,.8);
-  background-color: var(--main-color);
-}
-.c4g-portside-container button[title]:after,
+
 .c4g-starboard-container button[title]:after {
   color: rgba(255,255,255,.9);
   color: var(--font-color);
   border-color: rgba(255,255,255,.9);
   border-color: var(--font-color);
   background-color: transparent;
-}
-.c4g-portside-container .c4g_brick_dialog input {
-  color: rgba(24, 61, 93,.8);
-  color: var(--main-color);
-}
-.c4g-portside-container .c4g_brick_dialog #send-dialog,
-.c4g-portside-container .c4g_brick_dialog #cancel-dialog{
-  color: rgba(24, 61, 93,.8);
-  color: var(--main-color);
-  border-color: rgba(0,155,222,.5);
-  border-color: var(--shadow-color);
-  background-color: rgba(255,255,255,.9);
-  background-color: var(--font-color);
 }
 
 button.c4g-draw-trigger {
@@ -167,7 +118,7 @@ button.c4g-draw-trigger.c4g-active {
   border-color: transparent;
 }
 
-.c4g-portside-content-container .contentHeadline,
+
 .c4g-starboard-content-container .contentHeadline {
   color: rgba(255,255,255,.9);
   color: var(--font-color);
@@ -179,11 +130,7 @@ button.c4g-draw-trigger.c4g-active {
     color: inherit;
     border-color: inherit;
 }
-.c4g-portside-container .contentHeadline button:hover {
-  background-color: rgba(24, 61, 93,.8);
-  background-color: var(--main-color);
-}
-.c4g-portside-content-container p,
+
 .c4g-starboard-content-container p {
   color: rgba(255,255,255,.9);
   color: var(--font-color);
@@ -213,7 +160,6 @@ span.c4g-active ul li.c4g-active{
   background-color: var(--font-color);
 }
 
-.c4g-portside-statusbar,
 .c4g-starboard-statusbar {
   border-color: rgba(0,155,222,.5);
   border-color: var(--shadow-color);
@@ -221,13 +167,11 @@ span.c4g-active ul li.c4g-active{
   color: transparent;
 }
 
-.c4g-starboard-viewtriggerbar,
-.c4g-portside-viewtriggerbar {
+.c4g-starboard-viewtriggerbar {
   border-color: rgba(0,155,222,.5);
   border-color: var(--shadow-color);
 }
-.c4g-starboard-viewtriggerbar button,
-.c4g-portside-viewtriggerbar button {
+.c4g-starboard-viewtriggerbar button {
   color: rgba(255,255,255,.9);
   color: var(--font-color);
   border-color: rgba(0,155,222,.5);
@@ -236,7 +180,6 @@ span.c4g-active ul li.c4g-active{
   background-color: var(--main-color);
 }
 
-.c4g-portside-viewtriggerbar button.c4g-active,
 .c4g-starboard-viewtriggerbar button.c4g-active {
   color: rgba(24, 61, 93,.8);
   color: var(--main-color);
@@ -439,46 +382,21 @@ button.c4g-popup-close:hover {
   background-color: rgba(24, 61, 93,.8);
   background-color: var(--main-color);
 }
-.c4g-portside-wrapper .formbody label {
-  color: rgba(255,255,255,.9);
-  color: var(--font-color);
-}
-
-.c4g-portside-wrapper .formbody input {
-  background-color: rgba(255,255,255,.9);
-  background-color: var(--font-color);
-  border-color: rgba(0,155,222,.5);
-  border-color:  var(--shadow-color);
-  color: rgba(24, 61, 93,.8);
-  color:  var(--main-color);
-}
-
-.c4g-portside-wrapper .formbody .submit {
-  background-color: rgba(24, 61, 93,.8);
-  background-color: var(--main-color);
-  border-color: rgba(0,155,222,.5);
-  border-color:  var(--shadow-color);
-  color: rgba(255,255,255,.9);
-  color:  var(--font-color);
-}
 
 .c4g-control-container-top-left::-webkit-scrollbar-track,
 .c4g-starboard-content-container::-webkit-scrollbar-track,
-.c4g-portside-content-container::-webkit-scrollbar-track,
 .c4g-popup-wrapper .c4g-popup-content::-webkit-scrollbar-track {
   background-color: rgba(255,255,255,.9);
   background-color: var(--font-color);
 }
 .c4g-control-container-top-left::-webkit-scrollbar-thumb,
 .c4g-starboard-content-container::-webkit-scrollbar-thumb,
-.c4g-portside-content-container::-webkit-scrollbar-thumb,
 .c4g-popup-wrapper .c4g-popup-content::-webkit-scrollbar-thumb {
   background-color: rgba(0,155,222,.5);
   background-color: var(--shadow-color);
 }
 .c4g-control-container-top-left::-webkit-scrollbar-thumb:hover,
 .c4g-starboard-content-container::-webkit-scrollbar-thumb:hover,
-.c4g-portside-content-container::-webkit-scrollbar-thumb:hover,
 .c4g-popup-wrapper .c4g-popup-content::-webkit-scrollbar-thumb:hover {
   background-color: rgba(0,155,222,.5);
   background-color: var(--shadow-color);
@@ -549,18 +467,7 @@ button.c4g-popup-close:hover {
   background: rgba(0,155,222,.5);
   background: var(--shadow-color);
 }
-.c4g-portside-content-container p {
-  color: rgba(255,255,255,.9);
-  color: var(--font-color);
-}
-.c4g_maps_portside_measure_paragraph {
-  color: rgba(255,255,255,.9);
-  color: var(--font-color);
-}
-.c4g_maps_portside_measure_paragraph_surfacearea {
-  color: rgba(255,255,255,.9);
-  color: var(--font-color);
-}
+
 
 
 ul.c4g-feature-filter-list {  background: linear-gradient(var(--main-color) 45px, #fff0 0px); }
@@ -723,7 +630,7 @@ c4g-infopage-container {
 }
 
 .c4g-sideboard > div > div[class*=content] textarea {
-  color: var(--main-color);
+  color: var(--font-color);
 }
 
 .c4g-sideboard > div > div[class*=content] input ~ button {
