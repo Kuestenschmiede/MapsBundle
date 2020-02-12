@@ -10,25 +10,25 @@ zoom controls, scalelines and many more. You can also integrate geospatial data 
 __Main features include:__
 * Add a map as content element or frontend module
 * Configure baselayer 
-    - Mapnik (*default*)
-    - CycleMap
-    - German
-    - GermanTransport
-    - LandscapeMap
-    - TransportMap
+    - OSM Mapnik (*default*)
+    - OSM German
     - Stamen (Toner, Terrain & Watercolor)
     - MapBox (Studio & Classic Styles)
     - HERE (6 Styles)
     - Thunderforest (9 Styles)
     - Klokan Technologies (OpenMapTiles & 8 MapTiler Styles)
-    - Custom
     - Bing (3 Styles)
+    - Layergroup (depending on zoom level)
+    - Georeferenced image
+    - Custom
     - other
         - WMS
 - configurate ***Overlays***:
-    - Custom
     - WMS
-    - OWM
+    - OpenWeatherMap
+    - OpenSeaMap
+    - Georeferenced image
+    - Custom
 - configurate ***Interactions***:
     - keyboard-navigation
         - pan (with arrow-keys)
@@ -51,10 +51,9 @@ __Main features include:__
         - switchable filter field
         - switchable select all button
         - optional structure tabs
-    - Portside measuretools (ways, areas, radius, freehand)
-    - Attribution
+    - Measuretools (ways, areas, radius, freehand)
+    - Editable attributions
     - Export map
-    - Simple favorites (localstorage)
     - Fullscreen
     - GeoSearch
         - jumps automatically to first result 
@@ -69,11 +68,8 @@ __Main features include:__
     - ScaleLine
     - Zoom-Panel
     - Zoom-Button for world, browser and initial position
-    - Zoom-Slider
     - Zoom-Level
 - configurate ***Location types***:
-    - con4gis-Forum
-    - con4gis-Tracking
     - GeoJSON
     - GPX
     - KML
@@ -82,13 +78,14 @@ __Main features include:__
     - OSM files
     - OSM requests (Overpass API (XML and QL))
     - build structure from directory
-    
+    - ...
 - configurate ***Layouts***:
     - default layout (sample)
     - BE layout manager (custom CSS styling) 
 
 **Extendable:**
 - [RoutingBundle](https://github.com/Kuestenschmiede/RoutingBundle/releases) (*latest stable release*)
+- [DataBundle](https://github.com/Kuestenschmiede/DataBundle/releases) (*latest stable release*)
 - [EditorBundle](https://github.com/Kuestenschmiede/EditorBundle/releases) (*latest stable release*)
   
 **And with all other con4gis and Contao bundles**  
@@ -97,7 +94,7 @@ elements for your website. So you can build your own individual and limitless we
 
 
 **Contains:**
-- [OpenLayers 5.x] (https://github.com/openlayers/openlayers)
+- [OpenLayers 6.2] (https://github.com/openlayers/openlayers)
 
 ## Installation
 Via composer:
@@ -107,7 +104,7 @@ composer require con4gis/maps
 Alternatively, you can use the Contao Manager to install the con4gis-MapsBundle.
 
 ## Requirements:
-- [Contao](https://github.com/contao/core-bundle) (***4.4.x***)
+- [Contao](https://github.com/contao/core-bundle) (***>=4.4.x***)
 For Contao 3 you can use [con4gis_maps3](https://github.com/Kuestenschmiede/con4gis_maps3/releases) Extension.
 - [CoreBundle](https://github.com/Kuestenschmiede/CoreBundle/releases) (*latest stable release*)
 
