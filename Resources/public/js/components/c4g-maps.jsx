@@ -1006,7 +1006,9 @@ export class MapController extends Component {
           result.push(React.createElement(Rotate, {mapController: this}));
           break;
         case 'graticule':
-          result.push(React.createElement(Grid, {mapController: this}));
+          if (mapData.graticule) {
+            result.push(React.createElement(Grid, {mapController: this}));
+          }
           break;
         case 'overview':
           result.push(overviewPortal);
