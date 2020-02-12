@@ -18,6 +18,8 @@ import {getArea, getDistance} from "ol/sphere";
 import {Extent} from "ol/interaction";
 import {Vector as VectorSource} from "ol/source";
 import {extend} from "ol/extent";
+import JSBI from 'jsbi/dist/jsbi.mjs';
+
 
 let popupFunctions = popupFunctionsDE;
 
@@ -316,12 +318,12 @@ export var utils = {
     }
 
     arrInput.sort(function (a, b) {
-      return Number(a - b);
+      return JSBI.toNumber(JSBI.subtract(JSBI.BigInt(a), JSBI.BigInt(b)));
     });
     arrOutput = [];
-    arrOutput[0] = arrInput[0];
+    arrOutput[0] = arrInput[0].toString();
     for (i = 1; i < arrInput.length; i += 1) {
-      arrOutput[i] = arrInput[i] - arrInput[i - 1];
+      arrOutput[i] = JSBI.subtract(JSBI.BigInt(arrInput[i]), JSBI.BigInt(arrInput[i - 1])).toString();
     }
 
     return arrOutput;
@@ -337,24 +339,24 @@ export var utils = {
    * @return  {array<numbers>}            [description]
    */
   deltaDecode: function (arrInput) {
-    var arrOutput,
-      i;
+    var arrOutput;
 
     if (!arrInput) {
       return [];
     }
 
     arrOutput = [];
-    arrOutput[0] = BigInt(arrInput[0]);
-    if (isNaN(arrInput[0])) {
-      return [];
+    arrOutput[0] = JSBI.BigInt(arrInput[0]);
+    // if (isNaN(arrInput[0])) {
+    //   return [];
+    // }
+    for (let i = 1; i < arrInput.length; i += 1) {
+      arrOutput[i] = JSBI.add(JSBI.BigInt(arrInput[i]), arrOutput[i - 1]);
     }
-    for (i = 1; i < arrInput.length; i += 1) {
-      arrOutput[i] = BigInt(arrInput[i]) + arrOutput[i - 1];
-      if (isNaN(Number(arrOutput[i]))) {
-        return [];
-      }
+    for (let i = 0; i <arrOutput.length; i++) {
+      arrOutput[i] = arrOutput[i].toString();
     }
+
 
     return arrOutput;
 

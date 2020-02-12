@@ -200,7 +200,7 @@ export class Permalink extends Component {
   getActiveLayerIds (arrLayerState) {
     let ids = [];
     if (arrLayerState.active) {
-      ids.push(BigInt(arrLayerState.id));
+      ids.push(arrLayerState.id);
     }
     for (let childId in arrLayerState.childStates) {
       if (arrLayerState.childStates.hasOwnProperty(childId)) {

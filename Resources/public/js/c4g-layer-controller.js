@@ -302,7 +302,7 @@ export class BetterLayerController {
     let childs = [];
     let hide = !!layer.hide;
     if (scope.mapController.data.layers && scope.mapController.data.layers.length > 0) { //hide or show according to permalink - overwrites layerService
-      if (scope.mapController.data.layers.indexOf(BigInt(layer.id)) > -1) { //in permalink
+      if (scope.mapController.data.layers.indexOf(layer.id) > -1) { //in permalink
         hide = false;
       }
       else { //not in permalink
