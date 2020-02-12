@@ -1525,7 +1525,4 @@ div#filter_block input {
 ul.c4g-feature-filter-list::-webkit-scrollbar {
   height: 5px;
 }
-.ol-overlaycontainer {
-  z-index:1!important;
-}
 /*----------------*/

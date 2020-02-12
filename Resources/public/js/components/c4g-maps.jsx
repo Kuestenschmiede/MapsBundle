@@ -16,7 +16,6 @@ import {Spinner} from "../c4g-maps-misc-spinner";
 import {MapHover} from "../c4g-maps-misc-maphover";
 import {utils} from "../c4g-maps-utils";
 import {GeoSearch} from "./c4g-geosearch.jsx";
-// import {Permalink} from "../c4g-maps-control-permalink";
 import {MapsControls} from "../c4g-maps-controls";
 import {getLanguage} from "../c4g-maps-i18n";
 import {View} from "ol";
