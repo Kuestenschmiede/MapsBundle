@@ -1,4 +1,4 @@
-﻿.ol-attribution li.c4g-beach-content ul#resultcontainer, .c4g-beach-content.c4g-popup-content/*
+﻿/*
  *  full-screen fixes
  *  - cannot be grouped
  */
@@ -23,10 +23,6 @@
   margin: 0 !important;
 }
 
-.mod_c4g_maps {
-  min-width: 317px;
-}
-
 .ol-viewport .ol-unselectable {
     -webkit-touch-callout:none;
     -webkit-user-select:none;
@@ -41,12 +37,7 @@
  *  Z-Indexes
  */
 
-.ol-dragbox {
-  border: 1px dashed black;
-}
-.ol-dragzoom {
-  border: 3px solid black;
-}
+
 /*
  *  Controls
  */
@@ -81,19 +72,12 @@ div.c4g-control-container-top-left > div.c4g-external {
 .c4g-control-container-top-left > div:not(:last-child) {
   margin-bottom: .2em;
 }
-/*
-.c4g-control-container-bottom-left {
-  position: absolute;
-  bottom: 2.3em;
-  /* do not change "left"-value! *//*
-  left: 0px;
-  margin-left: .4em;
-}*/
 
 .c4g-control-container-bottom-left-sub div {
   display: block;
   white-space: normal;
 }
+
 .c4g-control-container-top-right {
   position: absolute;
   top: .2em;
@@ -148,21 +132,7 @@ div.c4g-control-container-top-left > div.c4g-external {
 /*
  *  GeoSearch
  */
-/*.c4g-geosearch {*/
-  /*margin-left: 46px;*/
-/*}
 
-
-.c4g-geosearch-wrapper .searchResultButton {
-    overflow: hidden;
-    font:inherit;
-    font-size: smaller;
-    width: 94%;
-    padding-left: 2px;
-    text-align: left;
-    line-height:1;
-}
-*/
 
 .c4g-geosearch.c4g-close .c4g-geosearch-wrapper {
   display: none;
@@ -223,6 +193,7 @@ button.c4g-geosearch-start:before {
 .c4g-overviewmap-container.c4g-close {
   right: -100%;
 }
+/*------------__*/
 
 .c4g-control-container-top-left, .c4g-control-container-bottom-left {
   z-index: 90;
@@ -267,38 +238,6 @@ button.c4g-starboard-view-trigger-layerswitcher:before {
   transition: all 0.5s;
 }
 
-/**
- * Baselayer switcher
- */
-
-.c4g-baselayer-container.c4g-close {
-  right: -100%;
-}
-
-.c4g-baselayer-container .contentHeadline {
-  border-color: rgba(24, 61, 93,.8);
-  border-color: var(--main-color);
-  color: rgba(255,255,255,.9);
-  color: var(--font-color);
-  font-size: 1.25em;
-}
-
-/**
- * Infopage
- */
-
-.c4g-infopage-container.c4g-close {
-  right: -100%;
-}
-
-/**
- * Measuretools
- */
-
-.c4g-measuretools-container.c4g-close {
-  right: -100%;
-}
-
 /*
  * Zoom buttons
  */
@@ -323,17 +262,6 @@ button.ol-zoom-position:before{
   content: "--";
 }
 
-/*
- * Draw stuff
- */
-.c4g-draw-content-point button.c4g-draw-trigger,
-.c4g-draw-content-freehand button.c4g-draw-trigger,
-.c4g-draw-content-line button.c4g-draw-trigger,
-.c4g-draw-content-polygon button.c4g-draw-trigger,
-.c4g-draw-content-circle button.c4g-draw-trigger {
-  width: auto;
-  height: auto;
-}
 
 /*
  * Popups
@@ -403,6 +331,18 @@ button.c4g-editor-view-trigger-draw-polygon:before {
   font-size: inherit;
   padding: 4px;
   width: 100%;
+}
+
+/*
+ * Draw stuff
+ */
+.c4g-draw-content-point button.c4g-draw-trigger,
+.c4g-draw-content-freehand button.c4g-draw-trigger,
+.c4g-draw-content-line button.c4g-draw-trigger,
+.c4g-draw-content-polygon button.c4g-draw-trigger,
+.c4g-draw-content-circle button.c4g-draw-trigger {
+  width: auto;
+  height: auto;
 }
 /*
  *  Measuretools
@@ -568,93 +508,6 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
     display:none}
 }
 
-/*
- * Panel
- */
-.c4g-top-panel-container {
-  position: absolute;
-  width: 100%;
-  height: auto;
-  z-index: 80;
-  transition: 0.5s;
-  max-height: 125px;
-  margin-right: 1em;
-  overflow: hidden;
-  padding-top: 1em;
-}
-
-.c4g-top-panel-container .c4g-close {
-  top: -100px;
-}
-
-.c4g-top-panel-container .c4g-open {
-  top: 0;
-}
-
-.c4g-panel-content-wrapper {
-  border: 2px #0b0b0b;
-  min-height: 80px;
-  max-height: 125px;
-  max-width: 98%;
-  margin: 2px;
-  display: block;
-  padding: 5px 5%;
-  overflow: auto;
-}
-
-.c4g-panel-main-form {
-  display: inline-block;
-  max-height: inherit;
-}
-
-.c4g-panel-button {
-  height: 35px;
-  width: 20%;
-  display: inline-block;
-  position: relative;
-  vertical-align: middle;
-  margin-top: 20px;
-  border: 1px solid;
-  /*color: ghostwhite;*/
-}
-
-button.c4g-panel-button {
-  cursor: pointer;
-}
-
-input.c4g-panel-button {
-  vertical-align: middle;
-}
-
-.c4g-panel-slidebar {
-  height: 5px;
-  margin: 30px 3px 3px;
-}
-
-.c4g-panel-slidebutton {
-  padding: 1px;
-  position: relative;
-  margin: auto;
-  bottom: 10px;
-  cursor: pointer;
-  border: 1px solid skyblue;
-  height: 30px;
-  vertical-align: middle;
-  /*color: ghostwhite;*/
-  transition: none;
-}
-
-.c4g-panel-button-wrapper {
-  width: 30%;
-  max-height: inherit;
-  min-height: inherit;
-  -webkit-border-radius:0.25em;
-  -moz-border-radius:0.25em;
-  border-radius:0.25em;
-  border: 1px;
-  margin: 2px;
-  display: inline-block;
-}
 
 /*default magnific popup size*/
 .mfp-iframe-holder .mfp-content {
@@ -669,145 +522,35 @@ input.c4g-panel-button {
     max-width: 480px;
   }
 }
-@media screen and (max-width: 768px) {
 
-
-  .c4g-geosearch-wrapper.c4g-open.c4g-horizon {
-    text-align: left!important;
-  }
-
-}
-@media screen and (max-width: 460px) {
-  .c4g-attribution-logo {
-    display:none;
-  }
-}
-
-.c4g-baselayertree-content .c4g-overlay-toggle {
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  height: .4em;
-  margin: auto;
-  width: 50%;
-}
-.c4g-baselayertree-content .c4g-overlay-toggle:focus {
-  outline: none;
-}
-.c4g-baselayertree-content .c4g-overlay-toggle::-webkit-slider-runnable-track {
-  width: 100%;
-  height: 11px;
-  cursor: pointer;
-  animate: 0.2s;
-}
-.c4g-baselayertree-content .c4g-overlay-toggle::-webkit-slider-thumb {
-
-  cursor: pointer;
-  -webkit-appearance: none;
-  margin-top: -5px!important;
-}
-.c4g-baselayertree-content .c4g-overlay-toggle::-moz-range-track {
-  width: 100%;
-  height: 11px;
-  cursor: pointer;
-  animate: 0.2s;
-}
-.c4g-baselayertree-content .c4g-overlay-toggle::-moz-range-thumb {
-  cursor: pointer;
-}
-.c4g-baselayertree-content .c4g-overlay-toggle::-ms-track {
-  width: 100%;
-  height: 11px;
-  cursor: pointer;
-  animate: 0.2s;
-}
-input[type=range]::-ms-fill-lower {
-  background: rgba(0,60,136,.7);
-  border: 0px solid rgba(0,60,136,.7);
-  border-radius: 2px;
-  box-shadow: 1px 1px 1px rgba(0,60,136,.7);
-}
-input[type=range]::-ms-fill-upper {
-  background: #103A5D;
-  border: 0px solid rgba(0,60,136,.7);
-  border-radius: 2px;
-  box-shadow: 1px 1px 1px rgba(0,60,136,.7);
-}
-input[type=range]::-ms-thumb {
-  margin-top: 1px;
-  box-shadow: 0px 0px 0px rgba(0,60,136,.7);
-  border: 1px solid rgba(0,60,136,.7);
-  height: 26px;
-  width: 26px;
-  border-radius: 15px;
-  background: rgba(0,60,136,.7);
-  cursor: pointer;
-}
-input[type=range]:focus::-ms-fill-lower {
-  background: rgba(0,60,136,.7);
-}
-input[type=range]:focus::-ms-fill-upper {
-  background: rgba(0,60,136,.7);
-}
-
-.c4g-horizontal-panel-button-top {
-  bottom: 710px;
-  left: 50%;
-  width: 70px;
-  height: 25px;
-}
-.c4g-horizontal-panel-button-top.panel-slided-out {
-  bottom: 660px;
-  left: 50%;
-  width: 70px;
-  height: 25px;
-}
-.c4g-horizontal-panel-button-top.panel-slided-in {
-  bottom: 760px;
-  left: 50%;
-  width: 70px;
-  height: 25px;
-}
-
-.c4g-horizontal-panel-button-bottom {
-  top: 768px;
-  left: 50%;
-  width: 70px;
-  height: 25px;
-}
-.c4g-horizontal-panel-button-bottom.panel-slided-out {
-  top: 668px;
-  left: 50%;
-  width: 70px;
-  height: 25px;
-}
-.c4g-horizontal-panel-button-bottom.panel-slided-in {
-  top: 768px;
-  left: 50%;
-  width: 70px;
-  height: 25px;
-}
-
-.c4g-horizontal-panel-top.c4g-open {
-  width: 100%;
-  background-color: var(--main-color);
-  color: var(--shadow-color);
-  position: absolute;
-  top: 0;
-  height: 100px;
-  transition: all 0.3s;
-}
-
-.c4g-horizontal-panel-bottom.c4g-open {
-  width: 100%;
-  background-color: var(--main-color);
-  color: var(--shadow-color);
-  position: absolute;
-  bottom: 0;
-  height: 100px;
-  transition: all 0.3s;
-}
+/*input[type=range]::-ms-fill-lower {*/
+/*  background: rgba(0,60,136,.7);*/
+/*  border: 0px solid rgba(0,60,136,.7);*/
+/*  border-radius: 2px;*/
+/*  box-shadow: 1px 1px 1px rgba(0,60,136,.7);*/
+/*}*/
+/*input[type=range]::-ms-fill-upper {*/
+/*  background: #103A5D;*/
+/*  border: 0px solid rgba(0,60,136,.7);*/
+/*  border-radius: 2px;*/
+/*  box-shadow: 1px 1px 1px rgba(0,60,136,.7);*/
+/*}*/
+/*input[type=range]::-ms-thumb {*/
+/*  margin-top: 1px;*/
+/*  box-shadow: 0px 0px 0px rgba(0,60,136,.7);*/
+/*  border: 1px solid rgba(0,60,136,.7);*/
+/*  height: 26px;*/
+/*  width: 26px;*/
+/*  border-radius: 15px;*/
+/*  background: rgba(0,60,136,.7);*/
+/*  cursor: pointer;*/
+/*}*/
+/*input[type=range]:focus::-ms-fill-lower {*/
+/*  background: rgba(0,60,136,.7);*/
+/*}*/
+/*input[type=range]:focus::-ms-fill-upper {*/
+/*  background: rgba(0,60,136,.7);*/
+/*}*/
 
 /*---------------------------.c4g-sideboard------------------------*/
 
@@ -1047,7 +790,7 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 .c4g-sideboard > div > div[class*=content] div[class*=filter] input {
-  font-family: 'Font Awesome 5 Free', arial!important;
+  font-family: 'Font Awesome 5 Free', Arial!important;
   font-weight: 900;
 }
 
