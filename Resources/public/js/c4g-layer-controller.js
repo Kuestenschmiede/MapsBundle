@@ -103,6 +103,9 @@ export class BetterLayerController {
             }
 
           }
+          else {
+            requestData.arrExtents.push(extent)
+          }
         }
       }
     };
@@ -338,6 +341,7 @@ export class BetterLayerController {
         chain: idChain,
         url: url,
         preventLoading: hide,
+        arrExtents: [],
         locstyleId: locstyleId,
         params: params,
         layerId: layerId

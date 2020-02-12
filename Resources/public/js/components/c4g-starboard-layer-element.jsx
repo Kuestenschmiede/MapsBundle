@@ -54,6 +54,13 @@ export class C4gStarboardLayerElement extends Component {
     let layerController = scope.props.mapController.proxy.layerController;
     if (scope.props.layer.loader >= 0 && layerController.loaders[scope.props.layer.loader] && layerController.loaders[scope.props.layer.loader].preventLoading) {
       layerController.loaders[scope.props.layer.loader].preventLoading = false;
+      for (let extentId in layerController.loaders[scope.props.layer.loader].arrExtents) {
+        if (layerController.loaders[scope.props.layer.loader].arrExtents.hasOwnProperty(extentId) && layerController.vectorSource) {
+          let extent = layerController.loaders[scope.props.layer.loader].arrExtents[extentId];
+          layerController.vectorSource.removeLoadedExtent(extent);
+        }
+      }
+      layerController.loaders[scope.props.layer.loader].arrExtents = [];
     }
     if (features) {
       layerController.vectorCollection.extend(features);
