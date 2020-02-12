@@ -175,7 +175,6 @@ export class BaselayerSwitcher extends Component {
   open() {
     this.setState({open: true});
     this.props.mapController.setOpenComponent(this);
-
   }
 
   close() {

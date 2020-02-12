@@ -26,7 +26,11 @@ export class OverviewMap extends Component {
     let element,
       trigger,
       triggerIcon;
+    const scope = this;
 
+    this.state = {
+      open: !props.collapsed
+    };
     let langConstants = getLanguage(props.mapController.data);
     this.mapController = props.mapController;
 
@@ -48,12 +52,10 @@ export class OverviewMap extends Component {
     trigger.appendChild(triggerIcon);
 
     jQuery(trigger).click(function () {
-      if (jQuery(element).hasClass(cssConstants.CLOSE)) {
-        jQuery(element).removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN);
-        jQuery(props.ovmTarget).removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN);
+      if (!scope.state.open) {
+        scope.open();
       } else {
-        jQuery(element).addClass(cssConstants.CLOSE).removeClass(cssConstants.OPEN);
-        jQuery(props.ovmTarget).addClass(cssConstants.CLOSE).removeClass(cssConstants.OPEN);
+        scope.close();
       }
     });
 
@@ -95,4 +97,23 @@ export class OverviewMap extends Component {
     }
   }
 
+  open() {
+    this.setState({open: true});
+    this.props.mapController.hideOtherComponents(this);
+  }
+
+  close() {
+    this.setState({open: false});
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (!this.state.open && prevState.open) {
+      jQuery(this.element).addClass(cssConstants.CLOSE).removeClass(cssConstants.OPEN);
+      jQuery(this.props.ovmTarget).addClass(cssConstants.CLOSE).removeClass(cssConstants.OPEN);
+    } else if (this.state.open) {
+      jQuery(this.element).removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN);
+      jQuery(this.props.ovmTarget).removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN);
+
+    }
+  }
 }
