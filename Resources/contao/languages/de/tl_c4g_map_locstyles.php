@@ -21,14 +21,14 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['strokewidth']      = array('Breite 
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['fillcolor']        = array('Farbe der Füllung und Deckkraft','Bitte wählen Sie die Farbe der Füllung und die Deckkraft in %.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['radius']           = array('Radius','Bitte wählen Sie den Radius in Pixeln (gilt für Darstellung als Punkt, Stern, Dreieck, Quadrat, Kreuz).');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['ol_icon']          = array('OpenLayers Icon','Bitte wählen Sie aus den verfügbaren OpenLayers Standardicons aus.');
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['ol_icon_size']     = array('Größe des Icons','Die Größe des Icons auf der Karte. Wird gegebenenfalls skaliert.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['ol_icon_size']     = array('Größe des Icons in Pixeln','Die Größe des Icons auf der Karte. Wird gegebenenfalls skaliert.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['ol_icon_offset']   = array('Positionsversatz des Icons (X/Y) in Pixel','Bei einem Versatz von "0" befindet sich die obere linke Ecke des Icons an der angegebenen Geo-Lokation. X=Positiv => nach rechts. X=negativ => nach links. Y=positiv => nach unten. Y=negativ => nach oben.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['svgSrc']           = array('SVG Quelle','Wählen Sie Ihr SVG-Icon aus. Bitte beachten Sie, dass für die Anzeige im Firefox Höhe und Breite des Icons innerhalb der SVG-Datei gesetzt sein sollten ("height"- und "width"-Attribute). Alternativ aktivieren Sie die folgende Checkbox "SVG-Attribute ergänzen".');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['svg_add_attributes']           = array('SVG-Attribute ergänzen','Ihre SVG-Datei wird beim Speichern so angepasst, dass sie mit Firefox kompatibel ist wenn Sie diese Checkbox aktivieren.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['givenSvgWidth']    = array('Größeneinstellung des SVG','Wählen Sie bitte hier, ob in der SVG-Datei die Größe mit "width" und "height" angegeben ist.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_src']         = array('Icon Quelle','Wählen Sie bitte hier das anzuzeigende Icon aus.');
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_size']        = array('Größe des Icons','Tragen Sie die Originalmaße (Breite und Höhe) des Icons ein. Wenn das Icon zu groß/zu klein ist nutzen Sie bitte die "Icon skalieren"-Option.');
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['svgSize']          = array('Größe des SVG','Geben Sie hier die Größe an, in der Sie das SVG auf der Karte darstellen wollen.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_size']        = array('Größe des Icons in Pixeln','Tragen Sie die Originalmaße (Breite und Höhe) des Icons ein. Wenn das Icon zu groß/zu klein ist nutzen Sie bitte die "Icon skalieren"-Option.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['svgSize']          = array('Größe des SVG in Pixeln','Geben Sie hier die Größe an, in der Sie das SVG auf der Karte darstellen wollen.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_scale']       = array('Icon skalieren','Sie können die Größe skalieren: 1.0 = 100%');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_resize_zoom']       = array('Icon bei Zoom neu skalieren', 'Setzen Sie diese Checkbox, wenn das Icon beim Zoomen auch neu mitskaliert werden soll.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_resize_src_zoom']       = array('Initiale Zoomstufe','Geben Sie die Zoomstufe an, für die das Icon die angegebenen Maße und Skalierung haben soll.');
@@ -48,7 +48,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['line_arrows_minzoom'] = array('Pfei
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label'] 		       = array('Label', 'Geben Sie hier ein Label ein, das auf der Karte bei der Lokation mit angezeigt wird. Überschreibt Einstellung am Kartenstrukturelement!');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_align_hor']  = array('Horizontale Ausrichtung ','Bitte definieren Sie, wie sich das Label relativ zur Lokation horizontal ausrichten soll.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_align_ver']  = array('Vertikale Ausrichtung','Bitte definieren Sie, wie sich das Label relativ zur Lokation vertikal ausrichten soll.');
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_offset']     = array('Positionsversatz des Labels (X/Y)','Verschiebt das Label um die angegebene Anzahl von Pixeln.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_offset']     = array('Positionsversatz des Labels (X/Y) in Pixeln','Verschiebt das Label um die angegebene Anzahl von Pixeln.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['font_family']      = array('Schriftart','Geben Sie die für das Label zu verwendende Schriftart an (Notierung wie in CSS).');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['font_color']       = array('Schriftfarbe und Deckkraft','Wählen Sie die für die Schrift des Labels zu verwendende Farbe und Deckkraft in %.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['font_size']        = array('Schriftgröße','Wählen Sie die für die Schrift des Labels zu verwendende Schriftgröße.');

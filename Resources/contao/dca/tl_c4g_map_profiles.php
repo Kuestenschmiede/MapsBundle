@@ -170,6 +170,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         'initial_open_comp' =>
             [
                 'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp'],
+                'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'select',
                 'default'                 => '',
@@ -232,6 +233,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         'label_color' =>
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['label_color'],
+            'exclude'                 => true,
             'default'                 => '',
             'inputType'               => 'text',
             'eval'                    => ['maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'long wizard'],
@@ -410,13 +412,13 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'sql'                     => "char(1) NOT NULL default '0'"
         ],
         'starboard_locstyles' =>
-            [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_locstyles'],
-                'exclude'                 => true,
-                'default'                 => false,
-                'inputType'               => 'checkbox',
-                'sql'                     => "char(1) NOT NULL default '0'"
-            ],
+        [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_locstyles'],
+            'exclude'                 => true,
+            'default'                 => false,
+            'inputType'               => 'checkbox',
+            'sql'                     => "char(1) NOT NULL default '0'"
+        ],
         'cluster_all' =>
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_all'],
@@ -437,6 +439,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         'cluster_fillcolor' =>
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_fillcolor'],
+            'exclude'                 => true,
             'inputType'               => 'text',
             'default'                 => '4975A8',
             'eval'                    => ['maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard', 'mandatory'=>true],
@@ -445,6 +448,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         'cluster_fontcolor' =>
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_fontcolor'],
+            'exclude'                 => true,
             'default'                 => 'ffffff',
             'inputType'               => 'text',
             'eval'                    => ['maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'],
@@ -533,6 +537,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         'add_attribution' =>
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['add_attribution'],
+            'exclude'                 => true,
             'filter'                  => false,
             'inputType'               => 'text',
             'eval'                    => ['maxlength'=>255, 'tl_class'=>'long', 'allowHtml' => true],
@@ -847,6 +852,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         'overpassEngine' =>
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overpassEngine'],
+            'exclude'                 => true,
             'inputType'               => 'radio',
             'default'                 => '2',
             'options'                 => ['2','3','1'],
@@ -876,6 +882,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         'infopage' =>
         [
             'label'					=> &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['infopage'],
+            'exclude'               => true,
             'search'				=> false,
             'inputType'				=> 'textarea',
             'eval'                  => ['mandatory'=>false, 'rte'=>'tinyMCE', 'helpwizard'=>true],

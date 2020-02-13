@@ -431,6 +431,7 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
 
 .ol-attribution > ul {
   text-align: left;
+  vertical-align: top;
 }
 .ol-attribution {
   text-align: right;
@@ -1021,7 +1022,7 @@ ul.c4g-feature-filter-list {
   overflow-x: auto;
   white-space: nowrap;
   scrollbar-width: none;
-  z-index: 1;
+  z-index: 2;
 }
 
 ul.c4g-feature-filter-list li.c4g-item-checked>strong {
@@ -1107,7 +1108,10 @@ div#filter_block input {
 ul.c4g-feature-filter-list::-webkit-scrollbar {
   height: 0px;
 }
+
+/*------------------------*/
 /**--hotfix-ol62--*/
+
 .ol-overlaycontainer, .ol-overlaycontainer-stopevent {
   z-index: auto!important;
 }
@@ -1117,4 +1121,5 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
 .ol-overlay-container {
   z-index: 2!important;
 }
+
 /*----------------*/
