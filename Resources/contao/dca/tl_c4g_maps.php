@@ -142,7 +142,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
     // Palettes
     'palettes' =>
         [
-        '__selector__'                => ['location_type', 'tab_source', 'show_locations', 'popup_extend', 'protect_element', 'use_specialprofile', 'cluster_locations', 'split_geojson'],
+        '__selector__'                => ['location_type', 'tab_source', 'show_locations', 'enablePopup', 'popup_extend', 'protect_element', 'use_specialprofile', 'cluster_locations', 'split_geojson'],
         'map'                         => '{general_legend},name,location_type;'.
                                          '{map_legend},width,height,margin,show_locations,center_geox,center_geoy,center_rotation,zoom,geolocation,restrict_area;'.
                                          '{profile_legend},profile,profile_mobile,use_specialprofile;',
@@ -152,7 +152,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                                          '{publish_legend:hide},published,publishStart,publishStop;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
         'single'                      => '{general_legend},name,location_type;'.
-                                         '{location_legend},data_layername,initial_opened,exemptFromFilter,filterByBaseLayer,hide_child,data_hidelayer,loc_geox,loc_geoy,locstyle,zIndex,loc_only_in_parent,loc_label,tooltip, tooltip_length,enablePopup,showPopupOnActive,popup_info,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations, hover_location,hide_when_in_tab,hideInStarboard,cssClass;'.
+                                         '{location_legend},data_layername,initial_opened,exemptFromFilter,filterByBaseLayer,hide_child,data_hidelayer,loc_geox,loc_geoy,locstyle,zIndex,loc_only_in_parent,loc_label,tooltip, tooltip_length,enablePopup,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations, hover_location,hide_when_in_tab,hideInStarboard,cssClass;'.
                                          '{protection_legend:hide},protect_element;'.
                                          '{publish_legend:hide},published,publishStart,publishStop;{expert_legend:hide},excludeFromSingleLayer,be_optimize_checkboxes_limit;',
         'table'                       => '{general_legend},name,location_type;'.
@@ -160,27 +160,27 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                                          '{protection_legend:hide},protect_element;'.
                                          '{publish_legend:hide},published,publishStart,publishStop;{expert_legend:hide},excludeFromSingleLayer,be_optimize_checkboxes_limit;',
         'gpx'                         => '{general_legend},name,location_type;'.
-                                         '{location_legend},data_layername,hide_child,initial_opened,exemptFromFilter,filterByBaseLayer,data_hidelayer,data_file,data_url,locstyle,zIndex,loc_label,tooltip, tooltip_length,enablePopup,popup_info,popup_async,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations, hover_location,hide_when_in_tab,hideInStarboard,cssClass;'.
+                                         '{location_legend},data_layername,hide_child,initial_opened,exemptFromFilter,filterByBaseLayer,data_hidelayer,data_file,data_url,locstyle,zIndex,loc_label,tooltip, tooltip_length,enablePopup,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations, hover_location,hide_when_in_tab,hideInStarboard,cssClass;'.
                                          '{protection_legend:hide},protect_element,excludeFromSingleLayer;'.
                                          '{publish_legend:hide},published,publishStart,publishStop;'.
                                          '{expert_legend:hide},be_optimize_checkboxes_limit;',
         'kml'                         => '{general_legend},name,location_type;'.
-                                         '{location_legend},data_layername,hide_child,initial_opened,exemptFromFilter,filterByBaseLayer,data_hidelayer,data_file,data_url,loc_label,tooltip, tooltip_length,enablePopup,popup_info,popup_async,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations, hover_location,hide_when_in_tab,hideInStarboard,cssClass;'.
+                                         '{location_legend},data_layername,hide_child,initial_opened,exemptFromFilter,filterByBaseLayer,data_hidelayer,data_file,data_url,loc_label,tooltip, tooltip_length,enablePopup,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations, hover_location,hide_when_in_tab,hideInStarboard,cssClass;'.
                                          '{protection_legend:hide},protect_element,excludeFromSingleLayer;'.
                                          '{publish_legend:hide},published,publishStart,publishStop;'.
                                          '{expert_legend:hide},be_optimize_checkboxes_limit;',
         'geojson'                     => '{general_legend},name,location_type;'.
-                                         '{location_legend},data_layername,hide_child,initial_opened,exemptFromFilter,filterByBaseLayer,data_hidelayer,data_file,split_geojson,data_content,data_projection,locstyle,zIndex,loc_label,tooltip, tooltip_length,enablePopup,popup_info,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations, hover_location,hide_when_in_tab,hideInStarboard,cssClass;'.
+                                         '{location_legend},data_layername,hide_child,initial_opened,exemptFromFilter,filterByBaseLayer,data_hidelayer,data_file,split_geojson,data_content,data_projection,locstyle,zIndex,loc_label,tooltip, tooltip_length,enablePopup,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations, hover_location,hide_when_in_tab,hideInStarboard,cssClass;'.
                                          '{protection_legend:hide},protect_element,excludeFromSingleLayer;'.
                                          '{publish_legend:hide},published,publishStart,publishStop;{expert_legend:hide},excludeFromSingleLayer,be_optimize_checkboxes_limit;',
         'osm'                         => '{general_legend},name,location_type;'.
-                                         '{location_legend},data_layername,hide_child,initial_opened,exemptFromFilter,filterByBaseLayer,data_hidelayer,data_file,data_url,data_forcenodes,locstyle,zIndex,loc_label,tooltip, tooltip_length,enablePopup,popupType,popup_info,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,cluster_locations,zoom_locations, hover_location,hide_when_in_tab,hideInStarboard,cssClass;'.
+                                         '{location_legend},data_layername,hide_child,initial_opened,exemptFromFilter,filterByBaseLayer,data_hidelayer,data_file,data_url,data_forcenodes,locstyle,zIndex,loc_label,tooltip, tooltip_length,enablePopup,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,cluster_locations,zoom_locations, hover_location,hide_when_in_tab,hideInStarboard,cssClass;'.
                                          '{protection_legend:hide},protect_element;'.
                                          '{backend_legend:hide},be_optimize_checkboxes_limit;',
                                          '{protection_legend:hide},protect_element;'.
                                          '{publish_legend:hide},published,publishStart,publishStop;{expert_legend:hide},excludeFromSingleLayer,be_optimize_checkboxes_limit;',
         'overpass'                    => '{general_legend},name,location_type;'.
-                                         '{location_legend},data_layername,hide_child,initial_opened,exemptFromFilter,filterByBaseLayer,data_hidelayer,ovp_request,ovp_bbox_limited,data_forcenodes,data_additionalgeometries,locstyle,zIndex,loc_label,tooltip, tooltip_length,enablePopup,popupType,popup_info,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,cluster_locations,zoom_locations, hover_location,hide_when_in_tab,hideInStarboard,cssClass;'.
+                                         '{location_legend},data_layername,hide_child,initial_opened,exemptFromFilter,filterByBaseLayer,data_hidelayer,ovp_request,ovp_bbox_limited,data_forcenodes,data_additionalgeometries,locstyle,zIndex,loc_label,tooltip, tooltip_length,enablePopup,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,cluster_locations,zoom_locations, hover_location,hide_when_in_tab,hideInStarboard,cssClass;'.
                                          '{protection_legend:hide},protect_element;'.
                                          '{publish_legend:hide},published,publishStart,publishStop;{expert_legend:hide},excludeFromSingleLayer,be_optimize_checkboxes_limit;',
         'link'                        => '{general_legend},name,location_type;'.
@@ -189,7 +189,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                                          '{publish_legend:hide},published,publishStart,publishStop;'.
                                          '{expert_legend:hide},be_optimize_checkboxes_limit;',
         'c4gForum'                    => '{general_legend},name,location_type;'.
-                                         '{location_legend},data_layername,hide_child,initial_opened,exemptFromFilter,filterByBaseLayer,data_hidelayer,forums,forum_jumpto,forum_reassign_layer,loc_label,tooltip, tooltip_length,enablePopup,popup_info,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,hide_when_in_tab,hideInStarboard,cssClass;'.
+                                         '{location_legend},data_layername,hide_child,initial_opened,exemptFromFilter,filterByBaseLayer,data_hidelayer,forums,forum_jumpto,forum_reassign_layer,loc_label,tooltip, tooltip_length,enablePopup,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,hide_when_in_tab,hideInStarboard,cssClass;'.
                                          '{protection_legend:hide},protect_element;'.
                                          '{publish_legend:hide},published,publishStart,publishStop;{expert_legend:hide},excludeFromSingleLayer,be_optimize_checkboxes_limit;',
         'startab'                     => '{general_legend},name,location_type;' .
@@ -198,7 +198,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                                          '{publish_legend:hide},published,publishStart,publishStop;'.
                                          '{expert_legend:hide},be_optimize_checkboxes_limit;',
         'folder'                      => '{general_legend},name,location_type;'.
-                                         '{location_legend},data_layername,hide_child,initial_opened,data_hidelayer,data_folder,locstyle,zIndex,loc_label,tooltip, tooltip_length,enablePopup,popup_info,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,hide_when_in_tab,hideInStarboard,cssClass;'.
+                                         '{location_legend},data_layername,hide_child,initial_opened,data_hidelayer,data_folder,locstyle,zIndex,loc_label,tooltip, tooltip_length,enablePopup,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,hide_when_in_tab,hideInStarboard,cssClass;'.
                                          '{protection_legend:hide},protect_element;'.
                                          '{publish_legend:hide},published,publishStart,publishStop;'.
                                          '{expert_legend:hide},be_optimize_checkboxes_limit;',
@@ -208,7 +208,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
     'subpalettes' =>
         [
         'use_specialprofile'          => 'specialprofile, specialprofile_mobile, specialprofile_groups',
-        //'enablePopup'                 => 'popup_info',
+        'enablePopup'                 => 'popup_info',
         'protect_element'             => 'permitted_groups',
         'popup_extend'                => 'forums',
         'cluster_locations'           => 'cluster_distance, cluster_fillcolor, cluster_fontcolor, cluster_zoom,cluster_popup',
@@ -605,6 +605,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
         'tooltip_length' =>
             [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['tooltip_length'],
+            'exclude'                 => true,
             'inputType'               => 'c4g_text',
             'default'                 => '30',
             'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
@@ -1092,6 +1093,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
         'cluster_fillcolor' =>
             [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_fillcolor'],
+            'exclude'                 => true,
             'inputType'               => 'text',
             'default'                 => '4975A8',
             'eval'                    => ['maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard', 'mandatory'=>true],
@@ -1100,6 +1102,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
         'cluster_fontcolor' =>
             [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_fontcolor'],
+            'exclude'                 => true,
             'default'                 => 'ffffff',
             'inputType'               => 'text',
             'eval'                    => ['maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'],
@@ -1514,32 +1517,33 @@ class tl_c4g_maps extends Backend
                 $GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['map'] = str_replace(",restrict_area;", ",restrict_area".$restrictAreaFields.';', $GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['map']);
             }
 
-            if ($objMap->popupType == "template")
-            {
-                // we have to use this, because of current table naming with underscores
-                foreach ($GLOBALS['TL_DCA']['tl_c4g_maps']['palettes'] as $paletteKey=>$paletteString)
-                {
-                    if (!is_array($paletteString) && strpos($paletteString, "popup_info")!==false)
-                    {
-                        $GLOBALS['TL_DCA']['tl_c4g_maps']['palettes'][$paletteKey] = str_replace("popup_info", "popupTemplate", $paletteString);
+            //additional popup fields
+            switch ($objMap->location_type) {
+//ToDo where is showPopupOnActivate?
+//                case 'single':
+//                    $GLOBALS['TL_DCA']['tl_c4g_maps']['subpalettes']['enablePopup'] = str_replace("popup_info", "showPopupOnActivate,popup_info", $GLOBALS['TL_DCA']['tl_c4g_maps']['subpalettes']['enablePopup']);
+//                    break;
+                case 'gpx':
+                case 'kml':
+                    $GLOBALS['TL_DCA']['tl_c4g_maps']['subpalettes']['enablePopup'] = str_replace("popup_info", "popup_info,popup_async", $GLOBALS['TL_DCA']['tl_c4g_maps']['subpalettes']['enablePopup']);
+                    break;
+                case 'osm':
+                case 'overpass':
+                    if ($objMap->popupType == "template") {
+                        $GLOBALS['TL_DCA']['tl_c4g_maps']['subpalettes']['enablePopup'] = str_replace("popup_info", "popupType,popupTemplate", $GLOBALS['TL_DCA']['tl_c4g_maps']['subpalettes']['enablePopup']);
+                    } else if ($objMap->popupType == "popup_info") {
+                        $GLOBALS['TL_DCA']['tl_c4g_maps']['subpalettes']['enablePopup'] = str_replace("popup_info", "popupType", $GLOBALS['TL_DCA']['tl_c4g_maps']['subpalettes']['enablePopup']);
+                    } else {
+                        $GLOBALS['TL_DCA']['tl_c4g_maps']['subpalettes']['enablePopup'] = str_replace("popup_info", "popupType,popup_info", $GLOBALS['TL_DCA']['tl_c4g_maps']['subpalettes']['enablePopup']);
                     }
-                }
-            }
-            if ($objMap->popupType == "popup_info")
-            {
-                // we have to use this, because of current table naming with underscores
-                foreach ($GLOBALS['TL_DCA']['tl_c4g_maps']['palettes'] as $paletteKey=>$paletteString)
-                {
-                    if (!is_array($paletteString) && strpos($paletteString, "popup_info")!==false)
-                    {
-                        $GLOBALS['TL_DCA']['tl_c4g_maps']['palettes'][$paletteKey] = str_replace("popup_info", "", $paletteString);
-                    }
-                }
-            }
 
-            if (C4GVersionProvider::isInstalled('con4gis/forum')) {
-                $GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['overpass'] = str_replace('popup_info', 'popup_info,popup_extend', $GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['overpass']);
-                $GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['osm'] = str_replace('popup_info', 'popup_info,popup_extend', $GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['osm']);
+                    if (C4GVersionProvider::isInstalled('con4gis/forum')) {
+                        $GLOBALS['TL_DCA']['tl_c4g_maps']['subpalettes']['enablePopup'] = str_replace('popup_info', 'popup_info,popup_extend', $GLOBALS['TL_DCA']['tl_c4g_maps']['subpalettes']['enablePopup']);
+                    }
+
+                    break;
+                default:
+                    break;
             }
 
             // convert checkboxes to chosenfields, if there are to many locationstyles

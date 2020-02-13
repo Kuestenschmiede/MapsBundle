@@ -15,7 +15,7 @@ import OSMXML from "ol/format/OSMXML";
 import {bbox} from "ol/loadingstrategy";
 import {Vector, Group} from "ol/layer";
 import {Cluster} from "ol/source";
-import * as olFormat from "ol/format";
+import * as olFormats from "ol/format";
 import proj4 from 'proj4';
 import {register} from 'ol/proj/proj4';
 import Projection from 'ol/proj/Projection';
@@ -26,6 +26,10 @@ import {Style, Text, Fill} from 'ol/style';
 import {Point} from "ol/geom";
 import Feature from 'ol/Feature';
 const osmtogeojson = require('osmtogeojson');
+
+let olFormat = jQuery.extend({
+  OSMXML: OSMXML
+}, olFormats);
 
 export class BetterLayerController {
 
@@ -667,6 +671,7 @@ export class BetterLayerController {
       this.controllers[requestData.layerId].abort();
       delete this.controllers[requestData.layerId];
     }
+    const scope = this;
     this.controllers[requestData.layerId] = new AbortController();
     const signal = this.controllers[requestData.layerId].signal;
     let boundingArray = transformExtent(mapConf.extent, mapConf.projection, 'EPSG:4326');
@@ -675,7 +680,7 @@ export class BetterLayerController {
     let params = decodeURIComponent(requestData.params);
     if (url) {
       if (url.indexOf('{key}') > -1) {
-        url = url.replace('{key}', self.ovpKey);
+        url = url.replace('{key}', scope.ovpKey);
       }
 
       const bboxTag = params.indexOf('(bbox)') >= 0 ? /\(bbox\)/g : /\{{bbox\}}/g;
