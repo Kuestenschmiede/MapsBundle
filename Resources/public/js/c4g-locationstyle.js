@@ -297,8 +297,13 @@ export class C4gLocationStyle {
       case 'ol_icon': // fallthrough
       case 'cust_icon':
         if (styleData.icon_src) {
-          let anchorX = 1 / (parseInt(styleData.icon_size[0]) / (parseInt(styleData.icon_offset[0]) * -1));
-          let anchorY = 1 / (parseInt(styleData.icon_size[1]) / (parseInt(styleData.icon_offset[1]) * -1));
+          let width, height, offsetX, offsetY;
+          width = (styleData.icon_size[0]*styleData.icon_scale);
+          height = (styleData.icon_size[1]*styleData.icon_scale);
+          offsetX = (styleData.icon_offset[0]*styleData.icon_scale);
+          offsetY = (styleData.icon_offset[1]*styleData.icon_scale);
+          let anchorX = 1 / (parseInt(width) / (parseInt(offsetX) * -1));
+          let anchorY = 1 / (parseInt(height) / (parseInt(offsetY) * -1));
           imageStyle = new Icon({
             anchor: [anchorX, anchorY],
             opacity: parseFloat(styleData.icon_opacity.value) / 100,
@@ -312,11 +317,13 @@ export class C4gLocationStyle {
         if(styleData.svgSrc && styleData.icon_scale && styleData.icon_size) {
           let canvas = document.createElement('canvas');
           let ctx = canvas.getContext("2d");
-          let width, height;
+          let width, height, offsetX, offsetY;
           width = (styleData.icon_size[0]*styleData.icon_scale);
           height = (styleData.icon_size[1]*styleData.icon_scale);
-          let anchorX = 1 / (parseInt(width) / (parseInt(styleData.icon_offset[0]) * -1));
-          let anchorY = 1 / (parseInt(height) / (parseInt(styleData.icon_offset[1]) * -1));
+          offsetX = (styleData.icon_offset[0]*styleData.icon_scale);
+          offsetY = (styleData.icon_offset[1]*styleData.icon_scale);
+          let anchorX = 1 / (parseInt(width) / (parseInt(offsetX) * -1));
+          let anchorY = 1 / (parseInt(height) / (parseInt(offsetY) * -1));
           canvas.width  = width;
           canvas.height = height;
           ctx.clearRect(0, 0, canvas.width, canvas.height);

@@ -34,6 +34,7 @@
     "babel-preset-react": "^6.24.1",
     "dom-to-image-more": "^2.8.0",
     "file-saver": "^2.0.2",
+    "jsbi": "^3.1.1",
     "ol": "^6.2.0",
     "ol-cesium": "^2.10.0",
     "ol-ext": "^3.1.9",

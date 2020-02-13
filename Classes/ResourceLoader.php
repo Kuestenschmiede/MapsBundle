@@ -230,7 +230,7 @@ class ResourceLoader extends coreResourceLoader
             if ($popupMaincolor[0]) {
                 $themeData['popupMaincolor'] = $popupMaincolor[0];
                 $themeData['popupMainopacity'] = $popupMaincolor[1];
-            } elseif  ($theme->maincolor) {
+            } elseif ($theme->maincolor) {
                 $maincolor = unserialize($theme->maincolor);
                 if ($maincolor[0]) {
                     $themeData['popupMaincolor'] = $maincolor[0];
@@ -250,7 +250,7 @@ class ResourceLoader extends coreResourceLoader
             if ($popupFontcolor[0]) {
                 $themeData['popupFontcolor'] = $popupFontcolor[0];
                 $themeData['popupFontopacity'] = $popupFontcolor[1];
-            } elseif  ($theme->fontcolor) {
+            } elseif ($theme->fontcolor) {
                 $fontcolor = unserialize($theme->fontcolor);
                 if ($fontcolor[0]) {
                     $themeData['popupMaincolor'] = $fontcolor[0];
