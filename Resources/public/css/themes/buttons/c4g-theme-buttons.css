@@ -187,51 +187,6 @@ button.ol-zoom-out {
   display: inline-block;
 }
 
-.c4g-starboard-container button {
-  display: inline-block;
-  vertical-align: middle;
-  height: 32px;
-  width: 32px;
-  margin: 2px;
-  padding: 2px;
-  font-size: 0.8em;
-  text-decoration: none;
-  text-align: center;
-  /*line-height: .2em;*/
-  border-radius: 0%;
-  border-radius: var(--button-radius-percent);
-}
-
-.c4g-starboard-container button[title]:hover:after,
-.c4g-starboard-container button[title]:focus:after {
-  z-index: 160;
-  content: attr(title);
-
-  clip: auto;
-  position: absolute;
-  bottom: 8px;
-  left: 0;
-  right: 0;
-
-  /*margin: 0 4px;*/
-  /*padding: 2px 0;*/
-  height: auto;
-  /*max-height: 24px;*/
-
-  /*font-size: .8em;*/
-  /*line-height: 1.2em;*/
-  white-space: nowrap;
-  font: inherit;
-
-  /*border: 1px solid;
-  border-bottom-width: 0;*/
-  /*border-radius: 3px 3px 0 0;*/
-
-  /*-webkit-box-sizing: border-box;*/
-  /*-moz-box-sizing: border-box;*/
-  /*box-sizing: border-box;*/
-}
-
 .c4g-starboard-viewtriggerbar {
   width: 100%;
   vertical-align: bottom;

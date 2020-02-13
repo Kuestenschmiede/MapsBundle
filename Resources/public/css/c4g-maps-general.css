@@ -48,11 +48,13 @@
 .c4g-control-container-top-left {
   position: absolute;
   top: .2em;
-  left: .2em;
+  left: 0;
+  width: var(--button-size-pixel);
+  height: 100%;
+  max-height: calc(var(--map-height) - .4em);
+  padding-right: .4em;
   overflow-y: auto;
   overflow-x: hidden;
-  max-height: calc(var(--map-height) - .4em);
-  height: 100%;
   transform: rotateY(180deg);
 }
 
@@ -199,32 +201,9 @@ button.c4g-geosearch-start:before {
   z-index: 90;
 }
 
-.c4g-starboard-wrapper {
-  position: relative;
-  height: 100%;
-  font-size: 16px;
-  text-align: left;
-}
-
 
 li.c4g-close ul {
   display: none;
-}
-
-.c4g-starboard-control.c4g-open button:before {
-  content: ">";
-}
-.c4g-starboard-control.c4g-close button:before {
-  content: "<";
-}
-button.c4g-starboard-close:before {
-  content: "X";
-}
-button.c4g-starboard-view-trigger-baselayerswitcher:before {
-  content: "B";
-}
-button.c4g-starboard-view-trigger-layerswitcher:before {
-  content: "L";
 }
 
 
@@ -561,12 +540,15 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
   max-height: calc(var(--map-height) - .4em);
   height: 100%;
   min-width: 240px;
-  max-width: 240px;
   z-index: 60;
   transition: .5s;
 }
 .c4g-sideboard:not(.c4g-measuretools-container)  {
   max-width: 42%;
+}
+
+.c4g-sideboard.c4g-measuretools-container  {
+  max-width: 240px;
 }
 
 .c4g-sideboard.c4g-close {
@@ -747,6 +729,12 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
   cursor: pointer;
 }
 
+.c4g-sideboard button::-moz-focus-inner {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
 .c4g-sideboard > div > div[class*=content] input ~ button {
   margin-left: .2em;
 }
@@ -787,11 +775,6 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
 
 .c4g-sideboard > div > div[class*=content] div[class*=filter] input {
   max-width: calc(100% - .4em - 35px);
-}
-
-.c4g-sideboard > div > div[class*=content] div[class*=filter] input {
-  font-family: 'Font Awesome 5 Free', Arial!important;
-  font-weight: 900;
 }
 
 .c4g-sideboard > div > div[class*=content] div[class*=filter].without-button:after {

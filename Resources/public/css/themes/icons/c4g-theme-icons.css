@@ -25,12 +25,6 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.c4g-starboard-container button:before {
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
-  font-size: inherit;
-}
-
 /* General icons */
 .c4g-spinner span.c4g-icon:before {
   content: "\f01e";
