@@ -15,7 +15,7 @@ import OSMXML from "ol/format/OSMXML";
 import {bbox} from "ol/loadingstrategy";
 import {Vector, Group} from "ol/layer";
 import {Cluster} from "ol/source";
-import * as olFormat from "ol/format";
+import * as olFormats from "ol/format";
 import proj4 from 'proj4';
 import {register} from 'ol/proj/proj4';
 import Projection from 'ol/proj/Projection';
@@ -26,6 +26,10 @@ import {Style, Text, Fill} from 'ol/style';
 import {Point} from "ol/geom";
 import Feature from 'ol/Feature';
 const osmtogeojson = require('osmtogeojson');
+
+let olFormat = jQuery.extend({
+  OSMXML: OSMXML
+}, olFormats);
 
 export class BetterLayerController {
 

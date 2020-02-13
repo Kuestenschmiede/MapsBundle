@@ -354,6 +354,9 @@ class LayerService
         $arrLayerData['name'] = Utils::replaceInsertTags($stringClass::decodeEntities($objLayer->name), $lang);
         $arrLayerData['zoom_locations'] = $objLayer->zoom_locations;
         $arrLayerData['async_content'] = $objLayer->async_content;
+        if ($objLayer->location_type === "overpass") {
+            $arrLayerData['async_content'] = "1";
+        }
         $arrLayerData['noFilter'] = $objLayer->exemptFromFilter;
         $arrLayerData['locstyle'] = $objLayer->locstyle;
         $arrLayerData['initial_opened'] = $objLayer->initial_opened;
