@@ -669,7 +669,7 @@ button.c4g-baselayer-close:before{
 }
 
 .c4g-control-container-bottom-left {
-  max-width: calc(100% - var(--button-size-pixel) - 1.6em);
+  max-width: calc(100% - var(--button-size-pixel) - .6em);
   left: calc(var(--button-size-pixel) + .8em);
   position: absolute;
   bottom: 1.2em;

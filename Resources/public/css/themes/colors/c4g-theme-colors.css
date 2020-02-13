@@ -383,7 +383,7 @@ button.c4g-popup-close:hover {
   background-color: var(--main-color);
 }
 
-.c4g-control-container-top-left > div > button:hover {
+.ol-control button:hover{
   background: var(--shadow-color);
 }
 

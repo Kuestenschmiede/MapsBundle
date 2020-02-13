@@ -451,7 +451,7 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
   margin: 0;
   padding: 0 .4em;
   min-height: var(--button-size-pixel);
-  max-width: calc(100% - var(--button-size-pixel) - .8em - .2em);
+  max-width: calc(100% - var(--button-size-pixel) - .8em);
 }
 
 .ol-attribution:not(.ol-collapsed) button {
@@ -475,7 +475,6 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
   display: block;
   list-style: none;
   line-height: inherit;
-  white-space: nowrap;
 }
 .ol-attribution li a {
 }
@@ -1015,14 +1014,22 @@ button.c4g-geosearch-start {
 
 ul.c4g-feature-filter-list {
   position: absolute;
-  width: calc(100% - 90px);
   line-height: 45px;
-  margin: 0 0 0 45px;
   padding: 0;
   overflow-x: auto;
   white-space: nowrap;
   scrollbar-width: none;
   z-index: 2;
+}
+
+ul.c4g-feature-filter-list.c4g-overflowed {
+  width: calc(100% - 90px);
+  margin: 0 0 0 45px;
+}
+
+ul.c4g-feature-filter-list.c4g-not-overflowed {
+  width: 100%;
+  margin: 0;
 }
 
 ul.c4g-feature-filter-list li.c4g-item-checked>strong {

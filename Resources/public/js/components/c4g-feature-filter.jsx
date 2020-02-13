@@ -50,10 +50,19 @@ export class FeatureFilter extends Component {
           let openedList = scope.state.openedList === index;
           return <FeatureFilterMultiCheckbox feature={feature} open={openedList} setOpen={this.setOpen} checkedItems={checkedItems} filterLayers={this.filterLayersMulti} id={index} key={index}/>
         });
-        if (scope.props.target.scrollWidth < scope.props.target.clientWidth) {
+
+        let showButtons = false;
+        let listDiv = document.querySelector(".c4g-feature-filter-list");
+        if (listDiv) {
+          showButtons = !(listDiv.scrollWidth <= listDiv.clientWidth);
+        } else {
+          showButtons = !(scope.props.target.scrollWidth < scope.props.target.clientWidth);
+        }
+
+        if (!showButtons) {
           return (
               <div className={"c4g-feature-filter"} ref={this.wrapperRef}>
-                <ul className={"c4g-feature-filter-list"} onMouseUp={(evt) => this.handleClickInside(evt)} ref={this.ulRef}>
+                <ul className={"c4g-feature-filter-list c4g-not-overflowed"} onMouseUp={(evt) => this.handleClickInside(evt)} ref={this.ulRef}>
                   {div}
                 </ul>
               </div>
@@ -65,7 +74,7 @@ export class FeatureFilter extends Component {
               <div className={"c4g-feature-filter"} ref={this.wrapperRef}>
                 <button className={"c4g-btn-nav-previous"} onMouseUp={(evt) => this.ulRef.current.scrollLeft -=100}/>
                 <button className={"c4g-btn-nav-next"} onMouseUp={(evt) => this.ulRef.current.scrollLeft +=100}/>
-                <ul className={"c4g-feature-filter-list"} onMouseUp={(evt) => this.handleClickInside(evt)} ref={this.ulRef}>
+                <ul className={"c4g-feature-filter-list c4g-overflowed"} onMouseUp={(evt) => this.handleClickInside(evt)} ref={this.ulRef}>
                   {div}
                 </ul>
               </div>
