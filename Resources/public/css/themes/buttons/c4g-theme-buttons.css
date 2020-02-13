@@ -29,9 +29,16 @@
   height: var(--button-size-pixel);
   width: var(--button-size-pixel);
   border: none;
-  border-radius: var(--button-radius-percent);
+  outline: none;
   cursor: pointer;
 }
+
+.ol-control:not(.ol-attribution) button,
+.c4g-control button {
+  border-radius: var(--button-radius-percent);
+}
+
+
 
 .ol-control button::-moz-focus-inner {
   border: none;
@@ -447,11 +454,6 @@ ul.c4g-overlays li a{
 /*
  * Permalink
  */
-button.c4g-refresh.c4g-icon, button.c4g-copy.c4g-icon {
-  border-radius: 0%;
-  border-radius: var(--button-radius-percent);
-  float: right
-}
 
 /*
  *  Popups
