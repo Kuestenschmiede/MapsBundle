@@ -124,3 +124,7 @@ $GLOBALS['TL_PURGE']['folders']['con4gis_locationstyle'] =
     'callback' => ['\con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator', 'purgeLocationstyleApiCache'],
     'affected' => ['var/cache/prod/con4gis_locationstyleService']
     ];
+
+if(TL_MODE == "BE") {
+    $GLOBALS['TL_CSS'][] = '/bundles/con4gismaps/css/c4g-backend.css';
+}
