@@ -163,6 +163,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
         'provider' =>
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider'],
+            'exclude'                 => true,
             'filter'                  => true,
             'inputType'               => 'radio',
             'default'                 => 'custom',
@@ -182,6 +183,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
         'url1' =>
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['url1'],
+            'exclude'                 => true,
             'filter'                  => false,
             'inputType'               => 'text',
             'eval'                    => ['decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'long'],
@@ -191,6 +193,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
         'url2' =>
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['url2'],
+            'exclude'                 => true,
             'filter'                  => false,
             'inputType'               => 'text',
             'eval'                    => ['decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'long'],
@@ -200,6 +203,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
         'url3' =>
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['url3'],
+            'exclude'                 => true,
             'filter'                  => false,
             'inputType'               => 'text',
             'eval'                    => ['decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'long'],
@@ -209,6 +213,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
         'url4' =>
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['url4'],
+            'exclude'                 => true,
             'filter'                  => false,
             'inputType'               => 'text',
             'eval'                    => ['decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'long'],
@@ -218,6 +223,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
         'attribution' =>
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['attribution'],
+            'exclude'                 => true,
             'filter'                  => false,
             'inputType'               => 'text',
             'eval'                    => ['maxlength'=>255, 'tl_class'=>'long clr', 'allowHtml' => true],
@@ -227,6 +233,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
         'wms_url' =>
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['wms_url'],
+            'exclude'                 => true,
             'filter'                  => false,
             'inputType'               => 'text',
             'eval'                    => ['maxlength'=>255, 'tl_class'=>'long', 'allowHtml' => true],
@@ -235,6 +242,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
         'wms_params_layers' =>
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['wms_params_layers'],
+            'exclude'                 => true,
             'filter'                  => false,
             'inputType'               => 'text',
             'eval'                    => ['maxlength'=>255, 'tl_class'=>'w50', 'allowHtml' => true],
@@ -243,6 +251,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
         'wms_params_version' =>
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['wms_params_version'],
+            'exclude'                 => true,
             'filter'                  => false,
             'inputType'               => 'text',
             'eval'                    => ['maxlength'=>255, 'tl_class'=>'w50', 'allowHtml' => true],
@@ -251,6 +260,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
         'wms_params_format' =>
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['wms_params_format'],
+            'exclude'                 => true,
             'filter'                  => false,
             'inputType'               => 'text',
             'eval'                    => ['maxlength'=>255, 'tl_class'=>'w50', 'allowHtml' => true],
@@ -268,6 +278,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
         'wms_params_srs' =>
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['wms_params_srs'],
+            'exclude'                 => true,
             'filter'                  => false,
             'inputType'               => 'text',
             'eval'                    => ['maxlength'=>255, 'tl_class'=>'w50', 'allowHtml' => true],
@@ -276,6 +287,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
         'wms_gutter' =>
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['wms_gutter'],
+            'exclude'                 => true,
             'filter'                  => false,
             'inputType'               => 'text',
             'eval'                    => ['maxlength'=>255, 'tl_class'=>'w50', 'allowHtml' => true],
@@ -285,6 +297,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
         'api_key' =>
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['api_key'],
+            'exclude'                 => true,
             'filter'                  => false,
             'inputType'               => 'text',
             'eval'                    => ['decodeEntities'=>true, 'maxlength'=>100, 'tl_class'=>'long', 'mandatory'=>'true'],
@@ -294,6 +307,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
         'app_id' =>
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['app_id'],
+            'exclude'                 => true,
             'filter'                  => false,
             'inputType'               => 'text',
             'eval'                    => ['decodeEntities'=>true, 'maxlength'=>100, 'tl_class'=>'long', 'mandatory'=>'true'],
@@ -312,6 +326,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
         'api_port' =>
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['api_port'],
+            'exclude'                 => true,
             'filter'                  => false,
             'default'                 => '8099',
             'inputType'               => 'text',
