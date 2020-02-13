@@ -667,6 +667,7 @@ export class BetterLayerController {
       this.controllers[requestData.layerId].abort();
       delete this.controllers[requestData.layerId];
     }
+    const scope = this;
     this.controllers[requestData.layerId] = new AbortController();
     const signal = this.controllers[requestData.layerId].signal;
     let boundingArray = transformExtent(mapConf.extent, mapConf.projection, 'EPSG:4326');
@@ -675,7 +676,7 @@ export class BetterLayerController {
     let params = decodeURIComponent(requestData.params);
     if (url) {
       if (url.indexOf('{key}') > -1) {
-        url = url.replace('{key}', self.ovpKey);
+        url = url.replace('{key}', scope.ovpKey);
       }
 
       const bboxTag = params.indexOf('(bbox)') >= 0 ? /\(bbox\)/g : /\{{bbox\}}/g;
