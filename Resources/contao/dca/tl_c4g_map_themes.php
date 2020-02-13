@@ -121,19 +121,20 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
             ],
         'name' =>
             [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['name'],
-            'exclude'                 => true,
-            'search'                  => true,
-            'sorting'                 => true,
-            'filter'                  => true,
-            'flag'                    => 1,
-            'inputType'               => 'text',
-            'eval'                    => ['mandatory'=>true, 'maxlength'=>75],
-            'sql'                     => "varchar(100) NOT NULL default ''"
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['name'],
+                'exclude'                 => true,
+                'search'                  => true,
+                'sorting'                 => true,
+                'filter'                  => true,
+                'flag'                    => 1,
+                'inputType'               => 'text',
+                'eval'                    => ['mandatory'=>true, 'maxlength'=>75],
+                'sql'                     => "varchar(100) NOT NULL default ''"
             ],
         'maincolor' =>
             [
                 'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['maincolor'],
+                'exclude'                 => true,
                 'inputType'               => 'text',
                 'eval'                    => array('maxlength'=>6, 'multiple'=>true, 'size'=>2, 'colorpicker'=>true, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'),
                 'sql'                     => "varchar(64) NOT NULL default ''"
@@ -141,6 +142,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
         'fontcolor' =>
             [
                 'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['fontcolor'],
+                'exclude'                 => true,
                 'inputType'               => 'text',
                 'eval'                    => array('maxlength'=>6, 'multiple'=>true, 'size'=>2, 'colorpicker'=>true, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'),
                 'sql'                     => "varchar(64) NOT NULL default ''"
@@ -148,6 +150,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
         'shadowcolor' =>
             [
                 'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['shadowcolor'],
+                'exclude'                 => true,
                 'inputType'               => 'text',
                 'eval'                    => array('maxlength'=>6, 'multiple'=>true, 'size'=>2, 'colorpicker'=>true, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'),
                 'sql'                     => "varchar(64) NOT NULL default ''"
@@ -155,6 +158,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
         'popupMaincolor' =>
             [
                 'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['popupMaincolor'],
+                'exclude'                 => true,
                 'inputType'               => 'text',
                 'eval'                    => array('maxlength'=>6, 'multiple'=>true, 'size'=>2, 'colorpicker'=>true, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'),
                 'sql'                     => "varchar(64) NOT NULL default ''"
@@ -162,36 +166,40 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
         'popupFontcolor' =>
             [
                 'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['popupFontcolor'],
+                'exclude'                 => true,
                 'inputType'               => 'text',
                 'eval'                    => array('maxlength'=>6, 'multiple'=>true, 'size'=>2, 'colorpicker'=>true, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'),
                 'sql'                     => "varchar(64) NOT NULL default ''"
             ],
         'buttonradius' =>
             [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['buttonradius'],
-            'inputType'               => 'inputUnit',
-            'default'                 => '0',
-            'options'                 => ['%'],
-            'eval'                    => ['rgxp'=>'prcnt', 'tl_class'=>'long', 'mandatory'=>true],
-            'sql'                     => "varchar(100) NOT NULL default ''"
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['buttonradius'],
+                'exclude'                 => true,
+                'inputType'               => 'inputUnit',
+                'default'                 => '0',
+                'options'                 => ['%'],
+                'eval'                    => ['rgxp'=>'prcnt', 'tl_class'=>'long', 'mandatory'=>true],
+                'sql'                     => "varchar(100) NOT NULL default ''"
             ],
         'buttonsize' =>
             [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['buttonsize'],
-            'inputType'               => 'inputUnit',
-            'default'                 => '36',
-            'options'                 => ['px'],
-            'eval'                    => ['tl_class'=>'long', 'mandatory'=>true],
-            'sql'                     => "varchar(100) NOT NULL default 'a:2:{s:4:\"unit\";s:2:\"px\";s:5:\"value\";s:2:\"36\";}'"
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['buttonsize'],
+                'exclude'                 => true,
+                'inputType'               => 'inputUnit',
+                'default'                 => '36',
+                'options'                 => ['px'],
+                'eval'                    => ['tl_class'=>'long', 'mandatory'=>true],
+                'sql'                     => "varchar(100) NOT NULL default 'a:2:{s:4:\"unit\";s:2:\"px\";s:5:\"value\";s:2:\"36\";}'"
             ],
         'button_fontsize' =>
             [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['button_fontsize'],
-            'inputType'               => 'inputUnit',
-            'default'                 => '18',
-            'options'                 => ['px'],
-            'eval'                    => ['tl_class'=>'long', 'mandatory'=>true],
-            'sql'                     => "varchar(100) NOT NULL default 'a:2:{s:4:\"unit\";s:2:\"px\";s:5:\"value\";s:2:\"18\";}'"
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['button_fontsize'],
+                'exclude'                 => true,
+                'inputType'               => 'inputUnit',
+                'default'                 => '18',
+                'options'                 => ['px'],
+                'eval'                    => ['tl_class'=>'long', 'mandatory'=>true],
+                'sql'                     => "varchar(100) NOT NULL default 'a:2:{s:4:\"unit\";s:2:\"px\";s:5:\"value\";s:2:\"18\";}'"
             ],
         'useglobal' =>
             [

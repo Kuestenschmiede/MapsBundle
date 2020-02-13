@@ -605,6 +605,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
         'tooltip_length' =>
             [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['tooltip_length'],
+            'exclude'                 => true,
             'inputType'               => 'c4g_text',
             'default'                 => '30',
             'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
@@ -1092,6 +1093,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
         'cluster_fillcolor' =>
             [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_fillcolor'],
+            'exclude'                 => true,
             'inputType'               => 'text',
             'default'                 => '4975A8',
             'eval'                    => ['maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard', 'mandatory'=>true],
@@ -1100,6 +1102,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
         'cluster_fontcolor' =>
             [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['cluster_fontcolor'],
+            'exclude'                 => true,
             'default'                 => 'ffffff',
             'inputType'               => 'text',
             'eval'                    => ['maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'],
