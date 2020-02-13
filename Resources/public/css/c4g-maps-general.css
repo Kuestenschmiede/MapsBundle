@@ -284,6 +284,10 @@ div.c4g-active.c4g-popup-wrapper *:last-child {
   font-size: 1.2em;
 }
 
+.c4g-popup-content li {
+  list-style-type: none;
+}
+
 /*
  * Editor
  */
