@@ -1019,7 +1019,7 @@ ul.c4g-feature-filter-list {
   overflow-x: auto;
   white-space: nowrap;
   scrollbar-width: none;
-  z-index: 2;
+  z-index: 92;
 }
 
 ul.c4g-feature-filter-list.c4g-overflowed {

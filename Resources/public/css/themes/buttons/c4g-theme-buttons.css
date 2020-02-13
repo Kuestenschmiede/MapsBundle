@@ -673,10 +673,15 @@ button.c4g-baselayer-close:before{
   left: calc(var(--button-size-pixel) + .8em);
   position: absolute;
   bottom: 1.2em;
+  pointer-events: none;
 }
 
 .c4g-control-container-bottom-left > a {
-  display: block;
+  display: table-row;
+}
+
+.c4g-control-container-bottom-left a, .c4g-control-container-bottom-left button {
+  pointer-events: all;
 }
 
 
