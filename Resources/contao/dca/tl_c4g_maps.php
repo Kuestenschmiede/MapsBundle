@@ -172,7 +172,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
         'geojson'                     => '{general_legend},name,location_type;'.
                                          '{location_legend},data_layername,hide_child,initial_opened,exemptFromFilter,filterByBaseLayer,data_hidelayer,data_file,split_geojson,data_content,data_projection,locstyle,zIndex,loc_label,tooltip, tooltip_length,enablePopup,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations, hover_location,hide_when_in_tab,hideInStarboard,cssClass;'.
                                          '{protection_legend:hide},protect_element,excludeFromSingleLayer;'.
-                                         '{publish_legend:hide},published,publishStart,publishStop;{expert_legend:hide},excludeFromSingleLayer,be_optimize_checkboxes_limit;',
+                                         '{publish_legend:hide},published,publishStart,publishStop;{expert_legend:hide},be_optimize_checkboxes_limit;',
         'osm'                         => '{general_legend},name,location_type;'.
                                          '{location_legend},data_layername,hide_child,initial_opened,exemptFromFilter,filterByBaseLayer,data_hidelayer,data_file,data_url,data_forcenodes,locstyle,zIndex,loc_label,tooltip, tooltip_length,enablePopup,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,cluster_locations,zoom_locations, hover_location,hide_when_in_tab,hideInStarboard,cssClass;'.
                                          '{protection_legend:hide},protect_element;'.
