@@ -370,9 +370,16 @@ button.c4g-geosearch-start {
 }
 
 
-.c4g-geosearch-results-content .searchResultButton {
+.c4g-geosearch-results-content li:nth-child(2n) button.searchResultButton {
   color: var(--main-color);
-  background: var(--font-color);
+  background-color: var(--font-color);
+}
+
+
+
+.c4g-geosearch-results-content li:nth-child(2n + 1) button.searchResultButton {
+  color: var(--font-color);
+  background-color: var(--main-color);
 }
 /*------------------------------------*/
 /*------------Pop Up-------------------*/
