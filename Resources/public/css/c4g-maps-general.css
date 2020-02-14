@@ -796,6 +796,8 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
   cursor: pointer;
 }
 
+
+
 .c4g-baselayertree-content li.with-image > a.c4g-active{
   cursor: not-allowed;
 }
@@ -815,6 +817,11 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
   text-overflow: ellipsis;
   overflow: hidden;
   padding: 5px calc(.6em + 16px);
+}
+
+ul.c4g-overlays input {
+  float: right;
+  margin-right: .4em;
 }
 
 .c4g-baselayertree-content li:not(:last-child){
@@ -1064,6 +1071,15 @@ button.c4g-geosearch-start {
   vertical-align: top;
   margin-left: .2em;
 }
+/*----------------*/
+
+/*-----------baselayertree------------*/
+
+.c4g-external  .c4g-baselayertree-content > ul > li {
+  max-width: 300px;
+  display: inline-block;
+}
+
 /*----------------*/
 /*----------------*/
 
