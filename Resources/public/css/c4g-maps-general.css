@@ -547,12 +547,16 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
   z-index: 60;
   transition: .5s;
 }
-.c4g-sideboard:not(.c4g-measuretools-container)  {
+.c4g-sideboard:not(.c4g-measuretools-container):not(.c4g-popup-container)  {
   max-width: 42%;
 }
 
 .c4g-sideboard.c4g-measuretools-container  {
   max-width: 240px;
+}
+
+.c4g-sideboard.c4g-popup-container {
+  max-width: var(--popup-max-width);
 }
 
 .c4g-sideboard.c4g-close {
@@ -881,13 +885,6 @@ button.c4g-geosearch-start {
 
 /* Results*/
 
-.c4g-geosearch-results-content.c4g-beach.external {
-  bottom: unset;
-  top: 0;
-  position: relative;
-  left: unset;
-  right: unset;
-}
 
 .c4g-geosearch-results-content .searchResultButton {
   overflow: hidden;
@@ -960,20 +957,22 @@ button.c4g-geosearch-start {
 
 /*------external-permalink-----*/
 
-.c4g-external-permalink-container.c4g-external {
-  width: max-content;
+
+.c4g-external .c4g-permalink-header {
+  height: 30px;
+  line-height: 30px;
+  padding: .2em 0;
 }
 
 .c4g-external .c4g-permalink-wrapper {
   padding: .2em;
 }
 
-.c4g-external .c4g-permalink-header {
-  margin-right: .4em;
-}
-
-.c4g-external .c4g-permalink-header, .c4g-external .c4g-permalink-content {
-  display: inline-block;
+.c4g-external-permalink-container textarea {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: none;
 }
 
 .c4g-external .c4g-permalink-content input {
@@ -1003,6 +1002,7 @@ ul.c4g-feature-filter-list {
   position: absolute;
   line-height: 45px;
   padding: 0;
+  text-align: center;
   overflow-x: auto;
   white-space: nowrap;
   scrollbar-width: none;
