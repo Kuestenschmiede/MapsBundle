@@ -157,7 +157,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'eval'                    => ['mandatory'=>true, 'tl_class'=>'long'],
             'sql'                     => "varchar(255) NOT NULL default ''"
         ],
-        'mapFunctions' => [
+        'mapFunctions' =>
+        [
             'exclude'                 => true,
             'inputType'               => 'checkboxWizard',
             'default'                 => ['zoom'],
@@ -168,17 +169,17 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         ],
 
         'initial_open_comp' =>
-            [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp'],
-                'exclude'                 => true,
-                'filter'                  => false,
-                'inputType'               => 'select',
-                'default'                 => '',
-                'options'                 => ['', 'starboard', 'search', 'baselayers', 'measuretools', 'legend'],
-                'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp']['refs'],
-                'eval'                    => ['tl_class'=>'clr'],
-                'sql'                     => "varchar(30) NOT NULL default ''"
-            ],
+        [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp'],
+            'exclude'                 => true,
+            'filter'                  => false,
+            'inputType'               => 'select',
+            'default'                 => '',
+            'options'                 => ['', 'starboard', 'search', 'baselayers', 'measuretools', 'legend'],
+            'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp']['refs'],
+            'eval'                    => ['tl_class'=>'clr'],
+            'sql'                     => "varchar(30) NOT NULL default ''"
+        ],
     
         'external_elements' =>
         [

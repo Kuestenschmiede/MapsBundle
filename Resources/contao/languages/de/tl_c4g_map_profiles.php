@@ -220,9 +220,9 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['starboard'] = "
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['baselayer'] = "Baselayerswitcher";
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['permalink'] = "Permalink";
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['search'] = "Suche";
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['measuretools'] = "Messwerkzeuge";
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['legend'] = "Legende";
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['overviewmap'] = "Übersichtskarte";
+//$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['measuretools'] = "Messwerkzeuge";
+//$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['legend'] = "Legende";
+//$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['overviewmap'] = "Übersichtskarte";
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['filter'] = "Kartenfilter";
 
 /**
