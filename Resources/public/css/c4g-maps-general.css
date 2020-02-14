@@ -23,16 +23,6 @@
   margin: 0 !important;
 }
 
-.ol-viewport .ol-unselectable {
-    -webkit-touch-callout:none;
-    -webkit-user-select:none;
-    -khtml-user-select:none;
-    -moz-user-select:none;
-    -ms-user-select:none;
-    user-select:none;
-    -webkit-tap-highlight-color:transparent
-}
-
 /*
  *  Z-Indexes
  */
@@ -72,7 +62,7 @@ div.c4g-control-container-top-left > div.c4g-external {
 }
 
 .c4g-control-container-top-left > div:not(:last-child) {
-  margin-bottom: .2em;
+  margin-bottom: 4px;
 }
 
 .c4g-control-container-bottom-left-sub div {
@@ -138,12 +128,6 @@ div.c4g-control-container-top-left > div.c4g-external {
 
 .c4g-geosearch.c4g-close .c4g-geosearch-wrapper {
   display: none;
-}
-button.c4g-geosearch-trigger:before {
-  content: "S";
-}
-button.c4g-geosearch-start:before {
-  content: "Go!";
 }
 
 .c4g-geosearch #resultcontainer {
@@ -695,9 +679,6 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
 
 .c4g-sideboard > div > div[class*=content] .contentHeadline {
   font-size: 20px;
-}
-
-.c4g-sideboard > div > div[class*=content] .contentHeadline {
   padding: .4em 0;
 }
 
@@ -880,7 +861,6 @@ button.c4g-geosearch-start {
   border: 0;
   outline: none;
   vertical-align: top;
-  cursor: pointer;
 }
 
 /* Results*/
@@ -940,6 +920,20 @@ button.c4g-geosearch-start {
 .c4g-external > div > div[class*=header] button[class*=close] {
   display: none;
 }
+.c4g-external > div > div[class*=header] {
+  line-height: 2.4em;
+  height: 2.4em;
+  margin: 0;
+}
+
+.c4g-external > div > div[class*=header] span {
+  display: block;
+  font-size: 1.3em;
+  padding: 0 .4em;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
 
 .c4g-external:not(.c4g-popup-container):not(.c4g-starboard-container) ul {
   margin: 0;
@@ -955,14 +949,94 @@ button.c4g-geosearch-start {
   cursor: pointer;
 }
 
-/*------external-permalink-----*/
-
-
-.c4g-external .c4g-permalink-header {
-  height: 30px;
-  line-height: 30px;
-  padding: .2em 0;
+.c4g-external > div > div[class*=content] input[type=text] {
+  font-family: 'Font Awesome 5 Free', arial!important;
+  font-weight: 900;
 }
+
+.c4g-external > div > div[class*=content]{
+  padding: 0 .4em .4em;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.c4g-external > div > div[class*=content] .contentHeadline {
+  font-size: 1.3em;
+}
+/*----------------external-filter in header--------------_*/
+
+.c4g-external > div > div[class*=filter] {
+  line-height: calc(32px + .4em);
+  height: calc(32px + .4em);
+  padding: 0 .4em;
+  margin: 0;
+}
+
+.c4g-external > div > div[class*=filter] input {
+  max-width: calc(100% - .2em - 35px);
+  line-height: 32px;
+  height: 32px;
+  padding: 0 0 0 .2em;
+  vertical-align: top;
+  border: none;
+  outline: none;
+}
+
+
+
+.c4g-external > div > div[class*=filter].without-button:after {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 600;
+  position: absolute;
+  width: 35px;
+  height: 32px;
+  text-align: center;
+}
+
+.c4g-external > div > div[class*=filter] input::placeholder{
+  padding-left: .2em;
+}
+
+.c4g-external > div > div[class*=filter] input:focus::placeholder{
+  color: transparent;
+}
+
+/*-------------------*/
+
+/*--------------------external-content------------------*/
+
+/*------filter in content-------*/
+
+.c4g-external > div > div[class*=content] div[class*=filter] {
+  position: relative;
+  height: 28px;
+  line-height: 28px;
+}
+
+.c4g-external > div > div[class*=content] div[class*=filter] input {
+  max-width: calc(100% - .4em - 35px);
+}
+
+.c4g-external > div > div[class*=content] div[class*=filter].without-button:after {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 600;
+  position: absolute;
+  width: 35px;
+  height: 28px;
+  text-align: center;
+}
+
+.c4g-sideboard > div > div[class*=content] div[class*=filter] input::placeholder{
+  padding-left: .2em;
+}
+
+.c4g-sideboard > div > div[class*=content] div[class*=filter] input:focus::placeholder{
+  color: transparent;
+}
+
+/*-------------------*/
+
+/*------external-permalink-----*/
 
 .c4g-external .c4g-permalink-wrapper {
   padding: .2em;

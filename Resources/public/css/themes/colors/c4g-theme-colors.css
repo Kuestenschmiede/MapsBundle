@@ -368,17 +368,10 @@ button.c4g-geosearch-start {
 }
 
 
-#main .c4g-beach-content ul li:nth-child(2n) button {
-  background: var(--pu-main-color);
-  color: var(--pu-font-color);
-}
-
 .c4g-geosearch-results-content .searchResultButton {
   color: var(--pu-main-color);
   background: var(--pu-font-color);
 }
-
-.c4g-geosearch-results-header.c4g-beach-header button:nth-child(2n + 1) { border-right: 1px solid var(--pu-font-color); }
 /*------------------------------------*/
 /*------------Pop Up-------------------*/
 
@@ -393,14 +386,6 @@ button.c4g-geosearch-start {
 .c4g-sideboard > div > div[class*=content]::-webkit-scrollbar-thumb:hover {
   background: var(--shadow-color);
 }
-
-.c4g-popup-container.c4g-beach {
-background: var(--pu-main-color);
-  color: var(--pu-font-color);
-}
-
-.c4g-popup-container.c4g-beach .c4g-beach-header.c4g-beach-header button:nth-child(2n + 1):not(:first-child)
-{ border-right: 1px solid var(--pu-font-color); }
 
 .c4g-popup-route-wrapper button:first-child {
   border-right: 1px solid var(--pu-font-color);
@@ -545,6 +530,10 @@ c4g-infopage-container {
 
 .c4g-external input {
   color: var(--main-color);
+}
+
+.c4g-external > div > div[class*=content] *:not(button):not(input):not(textarea):not(select):not(output):not(option) {
+  color: var(--font-color);
 }
 
 /*-----external-permalink--------*/

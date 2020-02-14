@@ -608,7 +608,7 @@ export class MapController extends Component {
           this.reactContainer.className = "c4g-sideboard c4g-starboard-container ol-unselectable";
           this.$overlaycontainer_stopevent.append(this.reactContainer);
         } else {
-          this.reactContainer.className += " c4g-external c4g-sideboard c4g-starboard-container ol-unselectable";
+          this.reactContainer.className += " c4g-external c4g-starboard-container ol-unselectable";
         }
       } else {
         this.reactContainer = document.createElement('div');
@@ -668,7 +668,7 @@ export class MapController extends Component {
           this.infoPageContainer.className = "c4g-sideboard c4g-infopage-container ol-unselectable c4g-close";
           this.$overlaycontainer_stopevent.append(this.infoPageContainer);
         } else {
-          this.infoPageContainer.className += " c4g-sideboard c4g-external c4g-infopage-container ol-unselectable c4g-close";
+          this.infoPageContainer.className += " c4g-external c4g-infopage-container ol-unselectable";
         }
       } else {
         this.infoPageContainer = document.createElement('div');
@@ -686,7 +686,7 @@ export class MapController extends Component {
           this.measuretoolsContainer.className = "c4g-sideboard c4g-measuretools-container ol-unselectable c4g-close";
           this.$overlaycontainer_stopevent.append(this.measuretoolsContainer);
         } else {
-          this.measuretoolsContainer.className += " c4g-external c4g-sideboard c4g-measuretools-container ol-unselectable c4g-close";
+          this.measuretoolsContainer.className += " c4g-external c4g-measuretools-container ol-unselectable";
         }
       } else {
         this.measuretoolsContainer = document.createElement('div');
