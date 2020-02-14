@@ -856,6 +856,7 @@ ul.c4g-overlays span {
 
 button.c4g-geosearch-start {
   height: 32px;
+  line-height: 32px;
   width: 35px;
   font-size: 20px;
   border: 0;
