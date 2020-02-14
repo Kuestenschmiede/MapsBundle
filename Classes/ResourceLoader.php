@@ -273,6 +273,13 @@ class ResourceLoader extends coreResourceLoader
             }
         }
 
+        if ($theme->popupMaxWidth) {
+            $popupMaxWidth = unserialize($theme->popupMaxWidth);
+            if ($popupMaxWidth['value']) {
+                $themeData['popupMaxWidth'] = $popupMaxWidth['value'];
+            }
+        }
+
         $themeData['useglobal'] = $theme->useglobal;
 
         return $themeData;
