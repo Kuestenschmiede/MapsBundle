@@ -31,9 +31,9 @@ $GLOBALS['TL_LANG']['tl_module']['element_type_refs']['starboard'] = "Starboard"
 $GLOBALS['TL_LANG']['tl_module']['element_type_refs']['baselayer'] = "Baselayer switcher";
 $GLOBALS['TL_LANG']['tl_module']['element_type_refs']['permalink'] = "Permalink";
 $GLOBALS['TL_LANG']['tl_module']['element_type_refs']['search'] = "Search";
-$GLOBALS['TL_LANG']['tl_module']['element_type_refs']['measuretools'] = "Measuretools";
-$GLOBALS['TL_LANG']['tl_module']['element_type_refs']['legend'] = "Legend";
-$GLOBALS['TL_LANG']['tl_module']['element_type_refs']['overviewmap'] = "Overview map";
+//$GLOBALS['TL_LANG']['tl_module']['element_type_refs']['measuretools'] = "Measuretools";
+//$GLOBALS['TL_LANG']['tl_module']['element_type_refs']['legend'] = "Legend";
+//$GLOBALS['TL_LANG']['tl_module']['element_type_refs']['overviewmap'] = "Overview map";
 $GLOBALS['TL_LANG']['tl_module']['element_type_refs']['filter'] = "Map filter";
 
 /**
