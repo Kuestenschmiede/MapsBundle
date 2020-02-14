@@ -33,6 +33,7 @@
   },
   "suggest": {
     "con4gis/routing": "Extends the map functions to include routing and radius search.",
+    "con4gis/data": "With Data you can maintain your own individual data and display it in maps and lists.",
     "con4gis/editor": "Adds a map editor to the map functions. Usable in the Contao backend and for map projects in the frontend.",
     "con4gis/import": "Useful to import map content."
   },
