@@ -236,8 +236,7 @@ ul.c4g-overlays li a{
   display: block;
 }
 
-.c4g-layertree a,
-.c4g-baselayertree-content li.without-image a {
+.c4g-layertree a, .c4g-baselayertree-content > ul> li.without-image > a{
   display: block;
   text-decoration: none;
   padding: 10px 1.75em 10px .2em;

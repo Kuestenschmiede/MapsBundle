@@ -155,7 +155,7 @@ span.c4g-active ul li.c4g-active{
   cursor: not-allowed;
 }
 .c4g-layertree a:hover,
-.c4g-baselayertree-content ul li.without-image a:hover {
+.c4g-baselayertree-content > ul > li.without-image > a:hover {
   background-color: var(--font-color);
   color: var(--main-color)!important;
 }
@@ -309,8 +309,10 @@ button.c4g-popup-close {
   background: var(--font-color)!important;
   border: 0px solid var(--shadow-color);
 }
-.c4g-baselayertree-content .c4g-overlay-toggle::-webkit-slider-thumb {
-  box-shadow: 0px 0px 7px 2px var(--font-color);
+
+ul.c4g-overlays input[type=range]::-webkit-slider-thumb {
+  background: var(--font-color);
+  border: 1px solid var(--shadow-color);
 }
 
 .c4g-baselayertree-content .c4g-overlay-toggle::-moz-range-thumb {
