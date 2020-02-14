@@ -858,7 +858,7 @@ export class MapController extends Component {
     let components = [
       {name: "layerswitcher", sort: mapData.layerswitcher.enable},
       {name: "geosearch", sort: mapData.geosearch.enable},
-      {name: "legend", sort: mapData.legend},
+      {name: "legend", sort: mapData.legend.enable},
       {name: "baselayerswitcher", sort: mapData.baselayerswitcher.enable},
       {name: "measuretools", sort: mapData.measuretools.enable},
       {name: "permalink", sort: mapData.permalink.enable},
