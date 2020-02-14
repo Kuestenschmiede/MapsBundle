@@ -101,7 +101,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
     //Palettes
     'palettes' =>
         [
-        'default' => '{theme_legend}, name; {colors_legend}, maincolor, fontcolor, shadowcolor, popupMaincolor, popupFontcolor; {buttons_legend}, buttonradius, buttonsize, button_fontsize; {expert_legend}, useglobal;',
+        'default' => '{theme_legend}, name; {colors_legend}, maincolor, fontcolor, shadowcolor, popupMaincolor, popupFontcolor; {buttons_legend}, buttonradius, buttonsize, button_fontsize; {expert_legend}, popupMaxWidth, useglobal;',
         ],
 
     //Fields
@@ -170,6 +170,16 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
                 'inputType'               => 'text',
                 'eval'                    => array('maxlength'=>6, 'multiple'=>true, 'size'=>2, 'colorpicker'=>true, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'),
                 'sql'                     => "varchar(64) NOT NULL default ''"
+            ],
+        'popupMaxWidth' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['popupMaxWidth'],
+                'exclude'                 => true,
+                'inputType'               => 'inputUnit',
+                'default'                 => '42',
+                'options'                 => ['%'],
+                'eval'                    => ['tl_class'=>'long', 'mandatory'=>false],
+                'sql'                     => "varchar(100) NOT NULL default 'a:2:{s:4:\"unit\";s:1:\"%\";s:5:\"value\";s:2:\"42\";}'"
             ],
         'buttonradius' =>
             [

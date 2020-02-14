@@ -784,6 +784,10 @@ export class MapController extends Component {
       if (domMapDiv && mapData.themeData['fontsize']) {
         domMapDiv.style.setProperty('--button-fontsize-pixel', mapData.themeData['fontsize'] + 'px');
       }
+
+      if (domMapDiv && mapData.themeData['popupMaxWidth']) {
+        domMapDiv.style.setProperty('--popup-max-width', mapData.themeData['popupMaxWidth'] + '%');
+      }
     }
 
     const scope = this;

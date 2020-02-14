@@ -45,7 +45,7 @@ class ProfileService
                 return $settings->defaultprofile;
             }
         }
-        
+
         return $event->getProfileId();
     }
 }

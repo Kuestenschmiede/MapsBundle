@@ -33,6 +33,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_themes']['fontcolor']  = array('Schriftfarbe und
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['popupMaincolor']  = array('Popup Hintergrundfarbe und Deckkraft', 'Die Deckkraft in % angeben. Überschreibt die voreingestellten con4gis CSS-Einstellungen. Wenn dieser Wert leer bleibt, wird automatisch die Hauptfarbe auch für das Popup gesetzt.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['popupFontcolor']  = array('Popup Schriftfarbe und Deckkraft', 'Die Deckkraft in % angeben. Überschreibt die voreingestellten con4gis CSS-Einstellungen. Wenn dieser Wert leer bleibt, wird automatisch die Schriftfarbe auch für das Popup gesetzt.');
 
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['popupMaxWidth'] = array('Maximale Popup-Breite', 'Die maximale Breite des Popups (wenn als "Sideboard" am rechten Rand dargestellt). Standard: 42%.');
+
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['shadowcolor']  = array('Zweitfarbe und Deckkraft', 'Zum Beispiel für Hover-Effekte, Rahmen oder Formularelemente. Die Deckkraft in % angeben. Überschreibt die voreingestellten con4gis CSS-Einstellungen.');
 
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['icons']   = array('Icons-CSS', 'Wählen Sie einen Stil für die Icons aus.');
