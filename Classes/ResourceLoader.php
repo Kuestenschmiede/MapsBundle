@@ -89,6 +89,7 @@ class ResourceLoader extends coreResourceLoader
         if ($resources['cesium']) {
             parent::loadJavaScriptResource(self::VENDOR_PATH . '/cesium/Cesium.js', self::BODY, 'cesium');
         }
+        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'c4g-maps-ol.css'); //copy of original ol.css / check source with new versions
         parent::loadCssResource(self::BUNDLE_CSS_PATH . 'c4g-maps-general.css');
 
         // load plugins

@@ -1102,18 +1102,3 @@ div#filter_block input {
 ul.c4g-feature-filter-list::-webkit-scrollbar {
   height: 0px;
 }
-
-/*------------------------*/
-/**--hotfix-ol62--*/
-
-.ol-overlaycontainer, .ol-overlaycontainer-stopevent {
-  z-index: auto!important;
-}
-.ol-viewport .ol-layers {
-  z-index: 1!important;
-}
-.ol-overlay-container {
-  z-index: 2!important;
-}
-
-/*----------------*/
