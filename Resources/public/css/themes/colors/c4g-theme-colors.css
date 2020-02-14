@@ -371,8 +371,8 @@ button.c4g-geosearch-start {
 
 
 .c4g-geosearch-results-content .searchResultButton {
-  color: var(--pu-main-color);
-  background: var(--pu-font-color);
+  color: var(--main-color);
+  background: var(--font-color);
 }
 /*------------------------------------*/
 /*------------Pop Up-------------------*/
@@ -390,8 +390,8 @@ button.c4g-geosearch-start {
 }
 
 .c4g-popup-route-wrapper button:first-child {
-  border-right: 1px solid var(--pu-font-color);
-  border-left: 1px solid var(--pu-font-color);
+  border-right: 1px solid var(--font-color);
+  border-left: 1px solid var(--font-color);
 }
 /*-------------*/
 
