@@ -1144,16 +1144,15 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 'sql'                     => "varchar(10) NOT NULL default ''"
             ],
         'excludeFromSingleLayer' =>
-                [
-                    'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['excludeFromSingleLayer'],
-                    'exclude'                 => true,
-                    'inputType'               => 'radio',
-                    'options'                 => ['2','1','0'],
-                    'eval'                    => ['mandatory'=>true, 'submitOnChange' => true],
-                    'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['excludeFromSingleLayer'],
-                    'default'                 => '2',
-                    'sql'                     => "char(1) NOT NULL default '2'"
-                ]
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['excludeFromSingleLayer'],
+                'exclude'                 => true,
+                'inputType'               => 'radio',
+                'options'                 => ['2','1','0'],
+                'eval'                    => ['mandatory'=>true, 'submitOnChange' => true],
+                'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['excludeFromSingleLayer'],
+                'default'                 => '2',
+                'sql'                     => "char(1) NOT NULL default '2'"
             ],
         'be_optimize_checkboxes_limit' =>
             [
@@ -1203,6 +1202,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
 //            'inputType'               => 'checkbox',
 //            'sql'                     => "char(1) NOT NULL default ''"
 //            ],
+        ]
 
     ];
 
