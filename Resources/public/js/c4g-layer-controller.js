@@ -34,6 +34,7 @@ let olFormat = jQuery.extend({
 export class BetterLayerController {
 
   constructor(proxy) {
+    this.handleZoom = this.handleZoom.bind(this);
     const scope = this;
     this.proxy = proxy;
     this.loaders = [];
@@ -199,8 +200,64 @@ export class BetterLayerController {
     });
     this.layerRequests = {};
     this.ovpKey = this.mapController.data.ovp_key;
+    window.c4gMapsHooks.hook_map_zoom = window.c4gMapsHooks.hook_map_zoom || [];
+    window.c4gMapsHooks.hook_map_zoom.push(this.handleZoom);
   }
-
+  hide (id, hideElement) {
+    let features,
+        vectorLayer;
+    if (Array.isArray(hideElement)) {
+      features = hideElement;
+    }
+    else {
+      vectorLayer = hideElement
+    }
+    if (features) {
+      if (id >= 0) {
+        let loader = this.loaders[id];
+        this.loaders[id].preventLoading = true;
+        if (loader.request) {
+          loader.request.abort();
+        }
+      }
+      if (features.length > 0) {
+        for (let featureId in features) {
+          if (features.hasOwnProperty(featureId)) {
+            this.vectorCollection.remove(features[featureId]);
+          }
+        }
+      }
+    }
+    else if (vectorLayer) {
+      this.mapController.map.removeLayer(vectorLayer);
+    }
+  }
+  show (id, hideElement) {
+    let features,
+        vectorLayer;
+    if (Array.isArray(hideElement)) {
+      features = hideElement;
+    }
+    else {
+      vectorLayer = hideElement
+    }
+    if (id >= 0 && this.loaders[id] && this.loaders[id].preventLoading) {
+      this.loaders[id].preventLoading = false;
+      for (let extentId in this.loaders[id].arrExtents) {
+        if (this.loaders[id].arrExtents.hasOwnProperty(extentId) && this.vectorSource) {
+          let extent = this.loaders[id].arrExtents[extentId];
+          this.vectorSource.removeLoadedExtent(extent);
+        }
+      }
+      this.loaders[id].arrExtents = [];
+    }
+    if (features) {
+      this.vectorCollection.extend(features);
+    }
+    else if (vectorLayer) {
+      this.mapController.map.addLayer(vectorLayer);
+    }
+  }
 
 
   loadLayers () {
@@ -275,15 +332,22 @@ export class BetterLayerController {
         }
       }
     }
+    let zoom = this.mapController.map.getView().getZoom();
     return {
       active: !layer.hide,
+      greyed: layer.zoom && (parseInt(layer.zoom.min, 10) > zoom || parseInt(layer.zoom.max, 10) < zoom),
       id: layer.id,
       childStates: childStates
     }
   }
   getFeaturesFromStruct(structure) {
     let features = [];
-    if (!structure.hide) {
+    let greyed = false;
+    let zoom = this.mapController.map.getView().getZoom();
+    if (structure.zoom && (parseInt(structure.zoom.min, 10) > zoom || parseInt(structure.zoom.max, 10) < zoom)) {
+      greyed = true
+    }
+    if (!structure.hide && !greyed) {
       if (structure.childs && structure.childs.length > 0) {
         for (let structId in structure.childs) {
           if (structure.childs.hasOwnProperty(structId)) {
@@ -559,7 +623,8 @@ export class BetterLayerController {
           source: vectorSource,
           style: customStyleFunc || this.clusterStyleFunction
       });
-      if (!hide) {
+      let zoom = this.mapController.map.getView().getZoom();
+      if (!hide && layer.zoom && (parseInt(layer.zoom.min, 10) < zoom || parseInt(layer.zoom.max, 10) > zoom)) {
         this.mapController.map.addLayer(vectorLayer);
       }
       features = false;
@@ -576,6 +641,7 @@ export class BetterLayerController {
         "features"      : features,
         "vectorLayer"   : vectorLayer,
         "loader"        : loaderId,
+        "zoom"          : layer.zoom,
         "id"            : layer.id,
         "name"          : layer.name,
         "hide"          : hide,
@@ -786,5 +852,37 @@ export class BetterLayerController {
       let source = layer.vectorLayer.getSource().getSource();
       source.addFeatures(features);
     }
+  }
+  handleZoom(proxy) {
+    const mapController = proxy.options.mapController;
+    const childStates = mapController.state.arrLayerStates;
+    const objLayers = mapController.state.objLayers;
+    const zoom = mapController.map.getView().getZoom();
+    for (let id in childStates) {
+      if (childStates.hasOwnProperty(id)) {
+        childStates[id] = this.handleZoomChilds(zoom, childStates[id], objLayers[id]);
+      }
+    }
+    this.mapController.setLayersInitial(false, childStates);
+  }
+  handleZoomChilds (zoom, childState, child) {
+    for (let id in childState.childStates) {
+      if (childState.childStates.hasOwnProperty(id)) {
+        childState.childStates[id] = this.handleZoomChilds(zoom, childState.childStates[id], child.childs[id]);
+      }
+    }
+    let greyed = child.zoom && (parseInt(child.zoom.min, 10) > zoom || parseInt(child.zoom.max, 10) < zoom);
+    if (childState['greyed'] !== greyed) {
+      if (greyed) {
+        this.hide(child.loader, child.features || child.vectorLayer);
+      }
+      else {
+        this.show(child.loader, child.features || child.vectorLayer);
+      }
+    }
+    childState['greyed'] = greyed;
+
+    return childState;
+
   }
 }
