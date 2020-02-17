@@ -335,18 +335,15 @@ export class BetterLayerController {
     let zoom = this.mapController.map.getView().getZoom();
     return {
       active: !layer.hide,
-      greyed: layer.zoom && (parseInt(layer.zoom.min, 10) > zoom || parseInt(layer.zoom.max, 10) < zoom),
+      greyed: layer.zoom && !this.compareZoom(layer.zoom),
       id: layer.id,
       childStates: childStates
     }
   }
   getFeaturesFromStruct(structure) {
     let features = [];
-    let greyed = false;
     let zoom = this.mapController.map.getView().getZoom();
-    if (structure.zoom && (parseInt(structure.zoom.min, 10) > zoom || parseInt(structure.zoom.max, 10) < zoom)) {
-      greyed = true
-    }
+    let greyed = structure.zoom && !this.compareZoom(structure.zoom);
     if (!structure.hide && !greyed) {
       if (structure.childs && structure.childs.length > 0) {
         for (let structId in structure.childs) {
@@ -623,8 +620,8 @@ export class BetterLayerController {
           source: vectorSource,
           style: customStyleFunc || this.clusterStyleFunction
       });
-      let zoom = this.mapController.map.getView().getZoom();
-      if (!hide && layer.zoom && (parseInt(layer.zoom.min, 10) < zoom || parseInt(layer.zoom.max, 10) > zoom)) {
+      let greyed = layer.zoom && !this.compareZoom(layer.zoom);
+      if (!hide && !greyed) {
         this.mapController.map.addLayer(vectorLayer);
       }
       features = false;
@@ -871,7 +868,7 @@ export class BetterLayerController {
         childState.childStates[id] = this.handleZoomChilds(zoom, childState.childStates[id], child.childs[id]);
       }
     }
-    let greyed = child.zoom && (parseInt(child.zoom.min, 10) > zoom || parseInt(child.zoom.max, 10) < zoom);
+    let greyed = child.zoom && !this.compareZoom(child.zoom);
     if (childState['greyed'] !== greyed) {
       if (greyed) {
         this.hide(child.loader, child.features || child.vectorLayer);
@@ -884,5 +881,9 @@ export class BetterLayerController {
 
     return childState;
 
+  }
+  compareZoom(layerZoom) {
+    let zoom = this.mapController.map.getView().getZoom();
+    return (parseInt(layerZoom.min, 10) < zoom && parseInt(layerZoom.max, 10) > zoom);
   }
 }
