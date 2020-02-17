@@ -83,7 +83,13 @@ export class C4gLocationStyle {
     styleFunction = function (feature, projection, getId) {
       var stylesArray,
         label;
-
+      let mapZoom = self.controller.mapController.map.getView().getZoom();
+      if (parseInt(self.locStyleArr.maxzoom, 10) && parseInt(self.locStyleArr.maxzoom, 10) < mapZoom) {
+        return null;
+      }
+      if (parseInt(self.locStyleArr.minzoom, 10) && parseInt(self.locStyleArr.minzoom, 10) > mapZoom) {
+        return null;
+      }
       if (getId) {
         return styleData.id;
       }
