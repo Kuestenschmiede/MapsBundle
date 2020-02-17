@@ -159,7 +159,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
             'eval'                    => ['mandatory'=>true, 'maxlength'=>50],
             'sql'                     => "varchar(100) NOT NULL default ''"
         ],
-        
         'provider' =>
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider'],
@@ -179,7 +178,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
             'eval'                    => ['submitOnChange' => true],
             'sql'                     => "varchar(100) NOT NULL default ''"
         ],
-        
         'url1' =>
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['url1'],
@@ -189,7 +187,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
             'eval'                    => ['decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'long'],
             'sql'                     => "varchar(255) NOT NULL default ''"
         ],
-        
         'url2' =>
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['url2'],
@@ -199,7 +196,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
             'eval'                    => ['decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'long'],
             'sql'                     => "varchar(255) NOT NULL default ''"
         ],
-        
         'url3' =>
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['url3'],
@@ -209,7 +205,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
             'eval'                    => ['decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'long'],
             'sql'                     => "varchar(255) NOT NULL default ''"
         ],
-        
         'url4' =>
         [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['url4'],
@@ -219,120 +214,69 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
             'eval'                    => ['decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'long'],
             'sql'                     => "varchar(255) NOT NULL default ''"
         ],
-        
-        'attribution' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['attribution'],
-            'exclude'                 => true,
-            'filter'                  => false,
-            'inputType'               => 'text',
-            'eval'                    => ['maxlength'=>255, 'tl_class'=>'long clr', 'allowHtml' => true],
-            'sql'                     => "varchar(255) NOT NULL default ''"
-        ],
-        
         'wms_url' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['wms_url'],
-            'exclude'                 => true,
-            'filter'                  => false,
-            'inputType'               => 'text',
-            'eval'                    => ['maxlength'=>255, 'tl_class'=>'long', 'allowHtml' => true],
-            'sql'                     => "varchar(255) NOT NULL default ''"
-        ],
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['wms_url'],
+                'exclude'                 => true,
+                'filter'                  => false,
+                'inputType'               => 'text',
+                'eval'                    => ['maxlength'=>255, 'tl_class'=>'long', 'allowHtml' => true],
+                'sql'                     => "varchar(255) NOT NULL default ''"
+            ],
         'wms_params_layers' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['wms_params_layers'],
-            'exclude'                 => true,
-            'filter'                  => false,
-            'inputType'               => 'text',
-            'eval'                    => ['maxlength'=>255, 'tl_class'=>'w50', 'allowHtml' => true],
-            'sql'                     => "varchar(255) NOT NULL default ''"
-        ],
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['wms_params_layers'],
+                'exclude'                 => true,
+                'filter'                  => false,
+                'inputType'               => 'text',
+                'eval'                    => ['maxlength'=>255, 'tl_class'=>'w50', 'allowHtml' => true],
+                'sql'                     => "varchar(255) NOT NULL default ''"
+            ],
         'wms_params_version' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['wms_params_version'],
-            'exclude'                 => true,
-            'filter'                  => false,
-            'inputType'               => 'text',
-            'eval'                    => ['maxlength'=>255, 'tl_class'=>'w50', 'allowHtml' => true],
-            'sql'                     => "varchar(255) NOT NULL default ''"
-        ],
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['wms_params_version'],
+                'exclude'                 => true,
+                'filter'                  => false,
+                'inputType'               => 'text',
+                'eval'                    => ['maxlength'=>255, 'tl_class'=>'w50', 'allowHtml' => true],
+                'sql'                     => "varchar(255) NOT NULL default ''"
+            ],
         'wms_params_format' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['wms_params_format'],
-            'exclude'                 => true,
-            'filter'                  => false,
-            'inputType'               => 'text',
-            'eval'                    => ['maxlength'=>255, 'tl_class'=>'w50', 'allowHtml' => true],
-            'sql'                     => "varchar(255) NOT NULL default ''"
-        ],
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['wms_params_format'],
+                'exclude'                 => true,
+                'filter'                  => false,
+                'inputType'               => 'text',
+                'eval'                    => ['maxlength'=>255, 'tl_class'=>'w50', 'allowHtml' => true],
+                'sql'                     => "varchar(255) NOT NULL default ''"
+            ],
         'wms_params_transparent' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['wms_params_transparent'],
-            'exclude'                 => true,
-            'default'                 => false,
-            'inputType'               => 'checkbox',
-            'eval'                    => ['submitOnChange' => false, 'tl_class'=>'w50 m12'],
-            'sql'                     => "char(1) NOT NULL default ''"
-        ],
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['wms_params_transparent'],
+                'exclude'                 => true,
+                'default'                 => false,
+                'inputType'               => 'checkbox',
+                'eval'                    => ['submitOnChange' => false, 'tl_class'=>'w50 m12'],
+                'sql'                     => "char(1) NOT NULL default ''"
+            ],
         'wms_params_srs' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['wms_params_srs'],
-            'exclude'                 => true,
-            'filter'                  => false,
-            'inputType'               => 'text',
-            'eval'                    => ['maxlength'=>255, 'tl_class'=>'w50', 'allowHtml' => true],
-            'sql'                     => "varchar(255) NOT NULL default ''"
-        ],
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['wms_params_srs'],
+                'exclude'                 => true,
+                'filter'                  => false,
+                'inputType'               => 'text',
+                'eval'                    => ['maxlength'=>255, 'tl_class'=>'w50', 'allowHtml' => true],
+                'sql'                     => "varchar(255) NOT NULL default ''"
+            ],
         'wms_gutter' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['wms_gutter'],
-            'exclude'                 => true,
-            'filter'                  => false,
-            'inputType'               => 'text',
-            'eval'                    => ['maxlength'=>255, 'tl_class'=>'w50', 'allowHtml' => true],
-            'sql'                     => "varchar(255) NOT NULL default ''"
-        ],
-        
-        'api_key' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['api_key'],
-            'exclude'                 => true,
-            'filter'                  => false,
-            'inputType'               => 'text',
-            'eval'                    => ['decodeEntities'=>true, 'maxlength'=>100, 'tl_class'=>'long', 'mandatory'=>'true'],
-            'sql'                     => "varchar(100) NOT NULL default ''"
-        ],
-        
-        'app_id' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['app_id'],
-            'exclude'                 => true,
-            'filter'                  => false,
-            'inputType'               => 'text',
-            'eval'                    => ['decodeEntities'=>true, 'maxlength'=>100, 'tl_class'=>'long', 'mandatory'=>'true'],
-            'sql'                     => "varchar(100) NOT NULL default ''"
-        ],
-        'opacity' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['opacity'],
-            'exclude'                 => true,
-            'inputType'               => 'text',
-            'default'                 => '100',
-            'eval'                    => ['tl_class'=>'clr','rgxp'=>'prcnt'],
-            'sql'                     => "int(20) NOT NULL default '100'"
-        ],
-        
-        'api_port' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['api_port'],
-            'exclude'                 => true,
-            'filter'                  => false,
-            'default'                 => '8099',
-            'inputType'               => 'text',
-            'eval'                    => ['decodeEntities'=>true, 'maxlength'=>4, 'tl_class'=>'long', 'mandatory'=>'true'],
-            'sql'                     => "varchar(4) NOT NULL default '8099'"
-        ],
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['wms_gutter'],
+                'exclude'                 => true,
+                'filter'                  => false,
+                'inputType'               => 'text',
+                'eval'                    => ['maxlength'=>255, 'tl_class'=>'w50', 'allowHtml' => true],
+                'sql'                     => "varchar(255) NOT NULL default ''"
+            ],
         'image_src' =>
             [
                 'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['image_src'],
@@ -349,6 +293,52 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
                 'eval'                    => ['style'=>'height:120px;', 'preserveTags'=>true],
                 'sql'                     => "text NULL"
             ],
+        'api_key' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['api_key'],
+                'exclude'                 => true,
+                'filter'                  => false,
+                'inputType'               => 'text',
+                'eval'                    => ['decodeEntities'=>true, 'maxlength'=>100, 'tl_class'=>'long', 'mandatory'=>'true'],
+                'sql'                     => "varchar(100) NOT NULL default ''"
+            ],
+        'app_id' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['app_id'],
+                'exclude'                 => true,
+                'filter'                  => false,
+                'inputType'               => 'text',
+                'eval'                    => ['decodeEntities'=>true, 'maxlength'=>100, 'tl_class'=>'long', 'mandatory'=>'true'],
+                'sql'                     => "varchar(100) NOT NULL default ''"
+            ],
+        'api_port' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['api_port'],
+                'exclude'                 => true,
+                'filter'                  => false,
+                'default'                 => '8099',
+                'inputType'               => 'text',
+                'eval'                    => ['decodeEntities'=>true, 'maxlength'=>4, 'tl_class'=>'long', 'mandatory'=>'true'],
+                'sql'                     => "varchar(4) NOT NULL default '8099'"
+            ],
+        'opacity' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['opacity'],
+                'exclude'                 => true,
+                'inputType'               => 'text',
+                'default'                 => '100',
+                'eval'                    => ['tl_class'=>'clr','rgxp'=>'prcnt'],
+                'sql'                     => "int(20) NOT NULL default '100'"
+            ],
+        'attribution' =>
+        [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['attribution'],
+            'exclude'                 => true,
+            'filter'                  => false,
+            'inputType'               => 'text',
+            'eval'                    => ['maxlength'=>255, 'tl_class'=>'long clr', 'allowHtml' => true],
+            'sql'                     => "varchar(255) NOT NULL default ''"
+        ],
         'published' =>
             [
                 'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['published'],

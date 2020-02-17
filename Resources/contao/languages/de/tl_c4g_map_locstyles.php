@@ -41,7 +41,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['iconcolor']        = array('Farbe d
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['photoKind']        = array('Art des Fotostils','Bitte wählen Sie den Fotostil für den Lokationsstil ein.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['onhover_locstyle'] = array('Lokationsstil bei Maus-Hover','Wählen Sie einen Lokationsstil aus, der eingestellt wird, während sich der Maus-Cursor über der Lokation befindet.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['style_function_js']   = array('Code für StyleFunction','Geben Sie hier Code für eine eigene StyleFunciton ein (Nur den Körper der Funktion. Rückgabe eines Ol-Styles)');
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['line_arrows']      = array('Richtungspfeile aktivieren','Stellen Sie ein, ob bei der Darstellung von Strecken Richtungspfeile angezeigt werden sollen.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['line_arrows']      = array('Richtungspfeile aktivieren','Stellen Sie ein, ob bei der Darstellung von Strecken Richtungspfeile angezeigt werden sollen. Nur sinnvoll für Linien (Strecken).');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['line_arrows_back'] = array('Pfeile in beide Richtungen','Setzen Sie diese Checkbox, um Pfeile in beide Richtungen zeichnen zu lassen.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['line_arrows_radius']= array('Radius des Pfeilkopfs in Pixeln','Der Pfeilkopf wird mit einem Dreieck-Symbol, ">", dargestellt. Geben Sie hier den Radius in Pixeln ein.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['line_arrows_minzoom'] = array('Pfeilköpfe zeigen ab Zoomlevel','Mindest-Zoomlevel, ab dem die Pfeilköpfe angezeigt werden sollen. Wenn dieser Wert kleiner als null ist, dann werden die Pfeilköpfe nur angezeigt, wenn sie kleiner als die Pfeillinie sind. (0=immer zeigen, -1=automatisch)');
@@ -131,7 +131,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['arrow_legend'] 	= 'Richtungspfeile'
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_legend'] 	= 'Einstellungen für Label';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['popup_legend'] 	= 'Einstellungen für Popups';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['zoom_legend']  	= 'Zoomstufen';
-
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['expert_legend']  	= 'Experteneinstellungen';
 
 /**
  * Globals

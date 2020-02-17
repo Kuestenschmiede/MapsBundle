@@ -23,6 +23,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['external_elements'] = ['Elemente au�
 
 /** Basiskarten */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayers'] = ['Basiskarten', 'Legen Sie die Basiskarten fest, die über den Button "Basiskartenauswahl" in der Karte individuell ausgewählt werden können.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayer_filter'] = ['Basiskartenfilter aktivieren', 'Blendet einen Suchfilter für die Basiskarten oberhalb des Baumes ein.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['default_baselayer'] = ['Standard-Basiskarte', 'Wählen Sie die Basiskarte, die beim Laden der Karte vorausgewählt sein soll.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayerswitcher_label'] = ['Überschrift der Basiskartenauswahl', 'Standard: "Basiskarten"'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayerswitcher_filter'] = ['Basiskartenfilter aktivieren', 'Blendet einen Suchfilter für die Starboardeinträge (Basiskarten) oberhalb des Baumes ein.'];
@@ -47,10 +48,9 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['keyboard_nav'] = ['Navigation mit de
 
 /** Kartenstruktur */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['layerswitcher_label'] = ['Überschrift der Ebenen im Starboard ', 'Standard: "Kartenelemente"'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['layer_filter'] = ['Kartenelementfilter aktivieren', 'Blendet einen Suchfilter für die Starboardeinträge (Kartenelemente) oberhalb des Baumes ein.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_filter'] = ['Kartenelementfilter aktivieren', 'Blendet einen Suchfilter für die Starboardeinträge (Kartenelemente) oberhalb des Baumes ein.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_open'] = ['Starboard automatisch öffnen', 'Wenn Sie diese Checkbox auswählen, dann wird das Starboard initial geöffnet angezeigt.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_label'] = ['Starboard Überschrift', 'Die Überschrift erscheint ganz oben im Starboard, gilt für alle Tabreiter und sollte nicht allzu lang sein.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_filter'] = ['Starboardfilter aktivieren', 'Blendet einen Suchfilter für die Starboardeinträge oberhalb des Baumes ein.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['filters'] = ['Filter', 'Wählen Sie die seperat erstellten Filter aus'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['filterHandling'] = ['Filter als Mehrfachauswahl', 'Stellt die Filter auf Mehrfachauswahl um (Logisches Oder statt Und).'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_button'] = ['Auswahl-Button aktivieren','Erstellt einen Button, mit dem alle Elemente des Starboards zeitgleich ein- und ausgeblendet werden. Achtung! Abhängig von der Struktur kann das zu langen Ladezeiten führen.'];
