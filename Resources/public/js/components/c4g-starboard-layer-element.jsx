@@ -111,6 +111,9 @@ export class C4gStarboardLayerElement extends Component {
   layerClick(e) {
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
+    if (this.props.layerStates.greyed) {
+      return false;
+    }
     if (!this.props.layerStates.active) {
       this.showLayer();
     }
