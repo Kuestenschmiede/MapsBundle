@@ -357,7 +357,7 @@ class MapDataConfigurator
                 // Layerswitcher
                 //$mapData['layerswitcher']['enable'] = $profile->layerswitcher;
                 $mapData['layerswitcher']['label'] = \Contao\Controller::replaceInsertTags($profile->layerswitcher_label);
-                $mapData['layerswitcher']['filter'] = $profile->layer_filter;
+                $mapData['layerswitcher']['filter'] = $profile->starboard_filter;
             }
 
             if (array_key_exists('baselayerswitcher', $buttons)) {
