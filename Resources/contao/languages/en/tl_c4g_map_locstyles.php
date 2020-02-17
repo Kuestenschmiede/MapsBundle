@@ -41,7 +41,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['iconcolor']        = array('Icon co
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['photoKind']        = array('Kind of photo','Please choose the photo-style for your location.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['onhover_locstyle'] = array('Location style for mouse hover','Select the location style to be used when the mouse rests over a location.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['style_function_js']   = array('Code for StyleFunction','Enter code for your custom OpenLayers StyleFunction (Enter only the function\'s body. Your function should change the feature\'s style or return an instance of ol.style)');
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['line_arrows']      = array('Activate line direction arrows','Arrows for lines');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['line_arrows']      = array('Activate line direction arrows','Arrows for lines (routes).');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['line_arrows_back'] = array('Show back arrows','To display arrows in both directions.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['line_arrows_radius']= array('Radius of arrowheads (pixel)','Arrowheads are displayed as triangle symbols (">"). Enter the radius in pixel.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['line_arrows_minzoom'] = array('Min. zoomlevel','Shows arrowheads only when the zoomlevel is at least the entered value. If this value is below zero, the arrowheads will only be visible, when they are not greater than their arrowline. (0=show always, -1=auto)');
@@ -128,7 +128,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['arrow_legend'] 	= 'Line direction a
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_legend'] 	= 'Label settings';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['popup_legend'] 	= 'Popup settings';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['zoom_legend']  	= 'Zoom settings';
-
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['expert_legend']  	= 'Expert settings';
 
 /**
  * Globals

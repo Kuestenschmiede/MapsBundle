@@ -132,7 +132,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_filters'] =
                         'eval'                    => ['mandatory'=>true, 'maxlength'=>30, 'tl_class'=>'clr'],
                         'sql'                     => "varchar(255) NOT NULL default ''"
                     ],
-
                 'filters' =>
                     [
                         'label'     => &$GLOBALS['TL_LANG']['tl_c4g_map_filters']['filters'],
@@ -144,19 +143,16 @@ $GLOBALS['TL_DCA']['tl_c4g_map_filters'] =
                                     'label'     => &$GLOBALS['TL_LANG']['tl_c4g_map_filters']['translation'],
                                     'exclude'   => true,
                                     'inputType' => 'text',
-//                                    'eval'      => ['style' => 'width:250px'],
                                 ],
                                 'identifier' => [
                                     'label'     => &$GLOBALS['TL_LANG']['tl_c4g_map_filters']['identifier'],
                                     'exclude'   => true,
                                     'inputType' => 'text',
-//                                    'eval'      => [ 'style' => 'width:180px' ],
                                 ],
                                 'value' => [
                                     'label'     => &$GLOBALS['TL_LANG']['tl_c4g_map_filters']['value'],
                                     'exclude'   => true,
                                     'inputType' => 'text',
-//                                    'eval'      => [ 'style' => 'width:180px' ],
                                 ],
 
                             ],

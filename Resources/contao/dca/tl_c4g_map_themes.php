@@ -171,16 +171,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
                 'eval'                    => array('maxlength'=>6, 'multiple'=>true, 'size'=>2, 'colorpicker'=>true, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'),
                 'sql'                     => "varchar(64) NOT NULL default ''"
             ],
-        'popupMaxWidth' =>
-            [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['popupMaxWidth'],
-                'exclude'                 => true,
-                'inputType'               => 'inputUnit',
-                'default'                 => '42',
-                'options'                 => ['%'],
-                'eval'                    => ['tl_class'=>'long', 'mandatory'=>false],
-                'sql'                     => "varchar(100) NOT NULL default 'a:2:{s:4:\"unit\";s:1:\"%\";s:5:\"value\";s:2:\"42\";}'"
-            ],
         'buttonradius' =>
             [
                 'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['buttonradius'],
@@ -210,6 +200,16 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
                 'options'                 => ['px'],
                 'eval'                    => ['tl_class'=>'long', 'mandatory'=>true],
                 'sql'                     => "varchar(100) NOT NULL default 'a:2:{s:4:\"unit\";s:2:\"px\";s:5:\"value\";s:2:\"18\";}'"
+            ],
+        'popupMaxWidth' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['popupMaxWidth'],
+                'exclude'                 => true,
+                'inputType'               => 'inputUnit',
+                'default'                 => '42',
+                'options'                 => ['%'],
+                'eval'                    => ['tl_class'=>'long', 'mandatory'=>false],
+                'sql'                     => "varchar(100) NOT NULL default 'a:2:{s:4:\"unit\";s:1:\"%\";s:5:\"value\";s:2:\"42\";}'"
             ],
         'useglobal' =>
             [

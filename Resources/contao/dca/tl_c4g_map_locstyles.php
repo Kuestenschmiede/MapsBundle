@@ -124,17 +124,15 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
         [
         '__selector__'                => ['styletype','line_arrows', 'icon_resize_zoom'],
         'default'                     => 'name,styletype,strokewidth,strokecolor,fillcolor,radius;'.
-                                         '{arrow_legend},line_arrows;'.
                                          '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,label_outl_box,font_style,font_weight;'.
                                          '{popup_legend},tooltip,popup_info;'.
-                                         '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;',
+                                         '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;'.
+                                         '{expert_legend:hide},line_arrows;',
         'x'                           => 'name,styletype,strokewidth,strokecolor,radius;'.
-                                        '{arrow_legend},line_arrows;'.
                                         '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,label_outl_box,font_style,font_weight;'.
                                         '{popup_legend},tooltip,popup_info;'.
                                         '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;',
         'cross'                       => 'name,styletype,strokewidth,strokecolor,radius;'.
-                                        '{arrow_legend},line_arrows;'.
                                         '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,label_outl_box,font_style,font_weight;'.
                                         '{popup_legend},tooltip,popup_info;'.
                                         '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;',
@@ -154,8 +152,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
                                          '{popup_legend},tooltip,popup_info;'.
                                          '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;'.
                                          '{editor_legend:hide},editor_icon,editor_icon_size,editor_sort,editor_vars,editor_collect;'
-
-
         ],
 
     // Subpalettes
@@ -205,6 +201,135 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
             'eval'                    => ['submitOnChange'=>'true'],
             'sql'                     => "varchar(15) NOT NULL default ''"
             ],
+        'icon_src' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_src'],
+                'exclude'                 => true,
+                'inputType'               => 'fileTree',
+                'eval'                    => ['fieldType'=>'radio', 'files'=>true, 'extensions'=>'gif,jpg,jpeg,png', 'tl_class'=>'clr', 'mandatory'=>true,'submitOnChange' => true],
+                'sql'                     => "binary(16) NULL"
+            ],
+        'icon_size' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_size'],
+                'exclude'                 => true,
+                'inputType'               => 'imageSize',
+                'options'                  => $imageSizes,
+                'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'long', 'mandatory'=>true],
+//            'load_callback'           => array(array('tl_c4g_map_locstyles','setSizes')),
+                'sql'                     => "varchar(100) NOT NULL default ''"
+            ],
+        'svgSrc' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['svgSrc'],
+                'exclude'                 => true,
+                'inputType'               => 'fileTree',
+                'eval'                    => ['fieldType'=>'radio', 'files'=>true, 'extensions'=>'svg', 'tl_class'=>'clr', 'mandatory'=>true,'submitOnChange' => true],
+                //'save_callback'           => array(array('tl_c4g_map_locstyles','setSizes')),
+                'sql'                     => "binary(16) NULL"
+            ],
+        'svg_add_attributes' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['svg_add_attributes'],
+                'exclude'                 => true,
+                'default'                 => '',
+                'inputType'               => 'checkbox',
+                'sql'                     => "char(1) NOT NULL default ''"
+            ],
+        'icon_scale' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_scale'],
+                'default'                 => '1.00',
+                'exclude'                 => true,
+                'flag'                    => 1,
+                'inputType'               => 'text',
+                'eval'                    => ['tl_class'=>'long', 'rgxp'=>'digit', 'mandatory'=>true],
+                'sql'                     => "double(3,3) NOT NULL default '1.000'"
+            ],
+        'icon_resize_zoom' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_resize_zoom'],
+                'exclude'                 => true,
+                'default'                 => '',
+                'inputType'               => 'checkbox',
+                'eval'                    => ['submitOnChange' => true],
+                'sql'                     => "char(1) NOT NULL default ''"
+            ],
+        'icon_resize_src_zoom' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_resize_src_zoom'],
+                'exclude'                 => true,
+                'inputType'               => 'text',
+                'default'                 => 0,
+                'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
+                'sql'                     => "int(10) NOT NULL default '0'"
+            ],
+        'icon_resize_scale_factor' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_resize_scale_factor'],
+                'exclude'                 => true,
+                'inputType'               => 'text',
+                'default'                 => 0,
+                'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
+                'sql'                     => "double(3,3) NOT NULL default '1.000'"
+            ],
+        'icon_resize_min_scale' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_resize_min_scale'],
+                'exclude'                 => true,
+                'inputType'               => 'text',
+                'default'                 => '0.1',
+                'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
+                'sql'                     => "double(3,3) NOT NULL default '0.100'"
+            ],
+        'icon_resize_max_scale' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_resize_max_scale'],
+                'exclude'                 => true,
+                'inputType'               => 'text',
+                'default'                 => '1.0',
+                'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
+                'sql'                     => "double(3,3) NOT NULL default '1.000'"
+            ],
+        'icon_offset' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_offset'],
+                'exclude'                 => true,
+                'default'                 => ['0','0'],
+                'inputType'               => 'imageSize',
+                'options'                  => $imageSizes,
+                'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'long'],
+                'sql'                     => "varchar(100) NOT NULL default ''"
+            ],
+        'icon_opacity' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_opacity'],
+                'exclude'                 => true,
+                'inputType'               => 'inputUnit',
+                'default'                 => '100',
+                'options'                 => ['%'],
+                'eval'                    => ['rgxp'=>'prcnt', 'tl_class'=>'clr', 'mandatory'=>true],
+                'sql'                     => "varchar(100) NOT NULL default ''"
+            ],
+        'photoKind' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['photoKind'],
+                'exclude'                 => true,
+                'default'                 => 'popup_default',
+                'inputType'               => 'select',
+                'options'                 => ['default','square','round','anchored','folio'],
+                'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references'],
+                'eval'                    => ['mandatore'=>true],
+                'sql'                     => "varchar(64) NOT NULL default ''"
+            ],
+        'style_function_js' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['style_function_js'],
+                'exclude'                 => true,
+                'inputType'               => 'textarea',
+                'eval'                    => ['style'=>'height:120px;', 'preserveTags'=>true],
+                'sql'                     => "text NULL"
+            ],
         'strokewidth' =>
             [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['strokewidth'],
@@ -243,366 +368,222 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
             'eval'                    => ['rgxp'=>'digit', 'mandatory'=>true],
             'sql'                     => "varchar(100) NOT NULL default ''"
             ],
-        'icon_src' =>
-            [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_src'],
-            'exclude'                 => true,
-            'inputType'               => 'fileTree',
-            'eval'                    => ['fieldType'=>'radio', 'files'=>true, 'extensions'=>'gif,jpg,jpeg,png', 'tl_class'=>'clr', 'mandatory'=>true,'submitOnChange' => true],
-            'sql'                     => "binary(16) NULL"
-            ],
-        'icon_size' =>
-            [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_size'],
-            'exclude'                 => true,
-            'inputType'               => 'imageSize',
-            'options'                  => $imageSizes,
-            'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'long', 'mandatory'=>true],
-//            'load_callback'           => array(array('tl_c4g_map_locstyles','setSizes')),
-            'sql'                     => "varchar(100) NOT NULL default ''"
-            ],
-        'svgSrc' =>
-            [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['svgSrc'],
-            'exclude'                 => true,
-            'inputType'               => 'fileTree',
-            'eval'                    => ['fieldType'=>'radio', 'files'=>true, 'extensions'=>'svg', 'tl_class'=>'clr', 'mandatory'=>true,'submitOnChange' => true],
-            //'save_callback'           => array(array('tl_c4g_map_locstyles','setSizes')),
-            'sql'                     => "binary(16) NULL"
-            ],
-        'svg_add_attributes' =>
-            [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['svg_add_attributes'],
-            'exclude'                 => true,
-            'default'                 => '',
-            'inputType'               => 'checkbox',
-            'sql'                     => "char(1) NOT NULL default ''"
-            ],
-        'icon_scale' =>
-            [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_scale'],
-            'default'                 => '1.00',
-            'exclude'                 => true,
-            'flag'                    => 1,
-            'inputType'               => 'text',
-            'eval'                    => ['tl_class'=>'long', 'rgxp'=>'digit', 'mandatory'=>true],
-            'sql'                     => "double(3,3) NOT NULL default '1.000'"
-            ],
-        'icon_resize_zoom' =>
-            [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_resize_zoom'],
-            'exclude'                 => true,
-            'default'                 => '',
-            'inputType'               => 'checkbox',
-            'eval'                    => ['submitOnChange' => true],
-            'sql'                     => "char(1) NOT NULL default ''"
-            ],
-        'icon_resize_src_zoom' =>
-            [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_resize_src_zoom'],
-            'exclude'                 => true,
-            'inputType'               => 'text',
-            'default'                 => 0,
-            'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
-            'sql'                     => "int(10) NOT NULL default '0'"
-            ],
-        'icon_resize_scale_factor' =>
-            [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_resize_scale_factor'],
-            'exclude'                 => true,
-            'inputType'               => 'text',
-            'default'                 => 0,
-            'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
-            'sql'                     => "double(3,3) NOT NULL default '1.000'"
-            ],
-        'icon_resize_min_scale' =>
-            [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_resize_min_scale'],
-            'exclude'                 => true,
-            'inputType'               => 'text',
-            'default'                 => '0.1',
-            'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
-            'sql'                     => "double(3,3) NOT NULL default '0.100'"
-            ],
-        'icon_resize_max_scale' =>
-            [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_resize_max_scale'],
-            'exclude'                 => true,
-            'inputType'               => 'text',
-            'default'                 => '1.0',
-            'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
-            'sql'                     => "double(3,3) NOT NULL default '1.000'"
-            ],
-        'icon_offset' =>
-            [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_offset'],
-            'exclude'                 => true,
-            'default'                 => ['0','0'],
-            'inputType'               => 'imageSize',
-            'options'                  => $imageSizes,
-            'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'long'],
-            'sql'                     => "varchar(100) NOT NULL default ''"
-            ],
-        'icon_opacity' =>
-            [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_opacity'],
-            'exclude'                 => true,
-            'inputType'               => 'inputUnit',
-            'default'                 => '100',
-            'options'                 => ['%'],
-            'eval'                    => ['rgxp'=>'prcnt', 'tl_class'=>'clr', 'mandatory'=>true],
-            'sql'                     => "varchar(100) NOT NULL default ''"
-            ],
-        'photoKind' =>
-            [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['photoKind'],
-            'exclude'                 => true,
-            'default'                 => 'popup_default',
-            'inputType'               => 'select',
-            'options'                 => ['default','square','round','anchored','folio'],
-            'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references'],
-            'eval'                    => ['mandatore'=>true],
-            'sql'                     => "varchar(64) NOT NULL default ''"
-            ],
-        'onhover_locstyle' =>
-            [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['onhover_locstyle'],
-            'exclude'                 => true,
-            'inputType'               => 'select',
-            'options_callback'        => ['\con4gis\MapsBundle\Classes\Contao\Callbacks\TlC4gMapLocstyles','getLocStyles', 'includeBlankOption' => true],
-            'sql'                     => "int(10) unsigned NOT NULL default '0'",
-            'xlabel' => array
-            (
-                array('tl_c4g_map_locstyles', 'locstylesLink')
-            )
-            ],
-        'style_function_js' =>
-            [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['style_function_js'],
-            'exclude'                 => true,
-            'inputType'               => 'textarea',
-            'eval'                    => ['style'=>'height:120px;', 'preserveTags'=>true],
-            'sql'                     => "text NULL"
-            ],
-        'line_arrows' =>
-            [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['line_arrows'],
-            'exclude'                 => true,
-            'default'                 => '',
-            'inputType'               => 'checkbox',
-            'eval'                    => ['submitOnChange' => true],
-            'sql'                     => "char(1) NOT NULL default ''"
-            ],
-        'line_arrows_back' =>
-            [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['line_arrows_back'],
-            'exclude'                 => true,
-            'default'                 => '',
-            'inputType'               => 'checkbox',
-            'sql'                     => "char(1) NOT NULL default ''"
-            ],
-        'line_arrows_radius' =>
-            [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['line_arrows_radius'],
-            'exclude'                 => true,
-            'inputType'               => 'inputUnit',
-            'default'                 => '4',
-            'options'                 => ['px'],
-            'eval'                    => ['rgxp'=>'digit', 'mandatory'=>true],
-            'sql'                     => "varchar(100) NOT NULL default ''"
-            ],
-        'line_arrows_minzoom' =>
-            [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['line_arrows_minzoom'],
-            'exclude'                 => true,
-            'inputType'               => 'text',
-            'default'                 => '-1',
-            'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
-            'sql'                     => "int(10) NOT NULL default '0'"
-            ],
         'label' =>
             [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label'],
-            'exclude'                 => true,
-            'inputType'               => 'text',
-            'sql'                     => "varchar(100) NOT NULL default ''"
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label'],
+                'exclude'                 => true,
+                'inputType'               => 'text',
+                'sql'                     => "varchar(100) NOT NULL default ''"
             ],
         'label_align_hor' =>
             [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_align_hor'],
-            'exclude'                 => true,
-            'inputType'               => 'radio',
-            'options'                 => ['left','center','right'],
-            'default'                 => 'center',
-            'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references'],
-            'sql'                     => "varchar(10) NOT NULL default ''"
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_align_hor'],
+                'exclude'                 => true,
+                'inputType'               => 'radio',
+                'options'                 => ['left','center','right'],
+                'default'                 => 'center',
+                'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references'],
+                'sql'                     => "varchar(10) NOT NULL default ''"
             ],
         'label_align_ver' =>
             [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_align_ver'],
-            'exclude'                 => true,
-            'inputType'               => 'radio',
-            'options'                 => ['top','middle','bottom'],
-            'default'                 => 'top',
-            'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references'],
-            'sql'                     => "varchar(10) NOT NULL default ''"
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_align_ver'],
+                'exclude'                 => true,
+                'inputType'               => 'radio',
+                'options'                 => ['top','middle','bottom'],
+                'default'                 => 'top',
+                'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references'],
+                'sql'                     => "varchar(10) NOT NULL default ''"
             ],
         'label_offset' =>
             [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_offset'],
-            'exclude'                 => true,
-            'default'                 => ['0','0'],
-            'inputType'               => 'imageSize',
-            'options'                  => $imageSizes,
-            'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
-            'sql'                     => "varchar(100) NOT NULL default ''"
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_offset'],
+                'exclude'                 => true,
+                'default'                 => ['0','0'],
+                'inputType'               => 'imageSize',
+                'options'                  => $imageSizes,
+                'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
+                'sql'                     => "varchar(100) NOT NULL default ''"
             ],
         'font_family' =>
             [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['font_family'],
-            'exclude'                 => true,
-            'inputType'               => 'text',
-            'sql'                     => "varchar(100) NOT NULL default ''"
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['font_family'],
+                'exclude'                 => true,
+                'inputType'               => 'text',
+                'sql'                     => "varchar(100) NOT NULL default ''"
             ],
         'font_color' =>
             [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['font_color'],
-            'exclude'                 => true,
-            'inputType'               => 'text',
-            'eval'                    => array('maxlength'=>6, 'multiple'=>true, 'size'=>2, 'colorpicker'=>true, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'),
-            'sql'                     => "varchar(64) NOT NULL default ''"
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['font_color'],
+                'exclude'                 => true,
+                'inputType'               => 'text',
+                'eval'                    => array('maxlength'=>6, 'multiple'=>true, 'size'=>2, 'colorpicker'=>true, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'),
+                'sql'                     => "varchar(64) NOT NULL default ''"
             ],
         'font_size' =>
             [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['font_size'],
-            'exclude'                 => true,
-            'inputType'               => 'inputUnit',
-            'default'                 => '',
-            'options'                 => ['px'],
-            'eval'                    => ['rgxp'=>'digit', 'tl_class' => 'w50'],
-            'sql'                     => "varchar(100) NOT NULL default ''"
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['font_size'],
+                'exclude'                 => true,
+                'inputType'               => 'inputUnit',
+                'default'                 => '',
+                'options'                 => ['px'],
+                'eval'                    => ['rgxp'=>'digit', 'tl_class' => 'w50'],
+                'sql'                     => "varchar(100) NOT NULL default ''"
             ],
         'label_outl_color' =>
             [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_outl_color'],
-            'exclude'                 => true,
-            'default'                 => 'ee0016',
-            'inputType'               => 'text',
-            'eval'                    => ['maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'],
-            'sql'                     => "varchar(6) NOT NULL default 'ee0016'"
-            ],
-        'label_outl_box' =>
-            [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_outl_box'],
-            'exclude'                 => true,
-            'default'                 => '',
-            'inputType'               => 'checkbox',
-            'eval'                    => ['tl_class'=>'long clr'],
-            'sql'                     => "char(1) NOT NULL default ''"
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_outl_color'],
+                'exclude'                 => true,
+                'default'                 => 'ee0016',
+                'inputType'               => 'text',
+                'eval'                    => ['maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'],
+                'sql'                     => "varchar(6) NOT NULL default 'ee0016'"
             ],
         'label_outl_width' =>
             [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_outl_width'],
-            'exclude'                 => true,
-            'inputType'               => 'inputUnit',
-            'default'                 => '',
-            'options'                 => ['px'],
-            'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'w50'],
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_outl_width'],
+                'exclude'                 => true,
+                'inputType'               => 'inputUnit',
+                'default'                 => '',
+                'options'                 => ['px'],
+                'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'w50'],
             'sql'                     => "varchar(100) NOT NULL default ''"
+        ],
+        'label_outl_box' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_outl_box'],
+                'exclude'                 => true,
+                'default'                 => '',
+                'inputType'               => 'checkbox',
+                'eval'                    => ['tl_class'=>'long clr'],
+                'sql'                     => "char(1) NOT NULL default ''"
             ],
         'font_style' =>
             [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['font_style'],
-            'exclude'                 => true,
-            'inputType'               => 'text',
-            'sql'                     => "varchar(100) NOT NULL default ''"
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['font_style'],
+                'exclude'                 => true,
+                'inputType'               => 'text',
+                'sql'                     => "varchar(100) NOT NULL default ''"
             ],
         'font_weight' =>
             [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['font_weight'],
-            'exclude'                 => true,
-            'inputType'               => 'text',
-            'sql'                     => "varchar(100) NOT NULL default ''"
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['font_weight'],
+                'exclude'                 => true,
+                'inputType'               => 'text',
+                'sql'                     => "varchar(100) NOT NULL default ''"
             ],
         'tooltip' =>
             [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['tooltip'],
-            'exclude'                 => true,
-            'inputType'               => 'text',
-            'eval'                    => ['tl_class'=>'long'],
-            'sql'                     => "varchar(100) NOT NULL default ''"
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['tooltip'],
+                'exclude'                 => true,
+                'inputType'               => 'text',
+                'eval'                    => ['tl_class'=>'long'],
+                'sql'                     => "varchar(100) NOT NULL default ''"
             ],
         'popup_info' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['popup_info'],
-            'exclude'                 => true,
-            'inputType'               => 'textarea',
-            'eval'                    => ['rte'=>'tinyMCE'],
-            'sql'                     => "text NULL"
-        ],
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['popup_info'],
+                'exclude'                 => true,
+                'inputType'               => 'textarea',
+                'eval'                    => ['rte'=>'tinyMCE'],
+                'sql'                     => "text NULL"
+            ],
         'popup_kind' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['popup_kind'],
-            'default'                 => 'cloud',
-            'exclude'                 => true,
-            'inputType'               => 'radio',
-            'options'                 => ['bubble','cloud'],
-            'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references'],
-            'eval'                    => ['mandatory'=>true],
-            'sql'                     => "varchar(30) NOT NULL default 'cloud'"
-        ],
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['popup_kind'],
+                'default'                 => 'cloud',
+                'exclude'                 => true,
+                'inputType'               => 'radio',
+                'options'                 => ['bubble','cloud'],
+                'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references'],
+                'eval'                    => ['mandatory'=>true],
+                'sql'                     => "varchar(30) NOT NULL default 'cloud'"
+            ],
         'popup_size' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['popup_size'],
-            'default'                 => ['200','200'],
-            'exclude'                 => true,
-            'inputType'               => 'imageSize',
-//            'options'                 => array('px'),
-            'options'                  => $imageSizes,
-            'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'w50', 'mandatory'=>true],
-            'sql'                     => "varchar(100) NOT NULL default ''"
-        ],
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['popup_size'],
+                'default'                 => ['200','200'],
+                'exclude'                 => true,
+                'inputType'               => 'imageSize',
+    //            'options'                 => array('px'),
+                'options'                  => $imageSizes,
+                'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'w50', 'mandatory'=>true],
+                'sql'                     => "varchar(100) NOT NULL default ''"
+            ],
         'popup_offset' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['popup_offset'],
-            'exclude'                 => true,
-            'default'                 => ['0','0'],
-            'inputType'               => 'imageSize',
-//            'options'                 => array('px'),
-            'options'                  => $imageSizes,
-            'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'w50'],
-            'sql'                     => "varchar(100) NOT NULL default ''"
-        ],
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['popup_offset'],
+                'exclude'                 => true,
+                'default'                 => ['0','0'],
+                'inputType'               => 'imageSize',
+    //            'options'                 => array('px'),
+                'options'                  => $imageSizes,
+                'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'w50'],
+                'sql'                     => "varchar(100) NOT NULL default ''"
+            ],
         'onclick_zoomto' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['onclick_zoomto'],
-            'exclude'                 => true,
-            'inputType'               => 'text',
-            'default'                 => '0',
-            'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
-            'sql'                     => "int(10) unsigned NOT NULL default '0'"
-        ],
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['onclick_zoomto'],
+                'exclude'                 => true,
+                'inputType'               => 'text',
+                'default'                 => '0',
+                'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
+                'sql'                     => "int(10) unsigned NOT NULL default '0'"
+            ],
         'minzoom' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['minzoom'],
-            'exclude'                 => true,
-            'inputType'               => 'text',
-            'default'                 => '0',
-            'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
-            'sql'                     => "int(10) unsigned NOT NULL default '0'"
-        ],
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['minzoom'],
+                'exclude'                 => true,
+                'inputType'               => 'text',
+                'default'                 => '0',
+                'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
+                'sql'                     => "int(10) unsigned NOT NULL default '0'"
+            ],
         'maxzoom' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['maxzoom'],
-            'exclude'                 => true,
-            'inputType'               => 'text',
-            'default'                 => '0',
-            'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
-            'sql'                     => "int(10) unsigned NOT NULL default '0'"
-        ],
-        
-
-
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['maxzoom'],
+                'exclude'                 => true,
+                'inputType'               => 'text',
+                'default'                 => '0',
+                'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
+                'sql'                     => "int(10) unsigned NOT NULL default '0'"
+            ],
+        'line_arrows' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['line_arrows'],
+                'exclude'                 => true,
+                'default'                 => '',
+                'inputType'               => 'checkbox',
+                'eval'                    => ['submitOnChange' => true],
+                'sql'                     => "char(1) NOT NULL default ''"
+            ],
+        'line_arrows_back' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['line_arrows_back'],
+                'exclude'                 => true,
+                'default'                 => '',
+                'inputType'               => 'checkbox',
+                'sql'                     => "char(1) NOT NULL default ''"
+            ],
+        'line_arrows_radius' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['line_arrows_radius'],
+                'exclude'                 => true,
+                'inputType'               => 'inputUnit',
+                'default'                 => '4',
+                'options'                 => ['px'],
+                'eval'                    => ['rgxp'=>'digit', 'mandatory'=>true],
+                'sql'                     => "varchar(100) NOT NULL default ''"
+            ],
+        'line_arrows_minzoom' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['line_arrows_minzoom'],
+                'exclude'                 => true,
+                'inputType'               => 'text',
+                'default'                 => '-1',
+                'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
+                'sql'                     => "int(10) NOT NULL default '0'"
+            ],
     ]
 ];
 
@@ -667,13 +648,6 @@ class tl_c4g_map_locstyles extends Backend
 
         return $varValue;
     }
-
-
-    public function locstylesLink(Contao\DataContainer $dc)
-    {
-        return ' <a href="contao/main.php?do=c4g_map_locstyles&amp;table=tl_c4g_map_locstyles&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . REQUEST_TOKEN . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['editLocstyles']) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['editLocstyles'])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
-    }
-
 
     /**
      * Add an image to each record
