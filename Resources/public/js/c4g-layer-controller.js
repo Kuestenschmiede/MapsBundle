@@ -89,6 +89,12 @@ export class BetterLayerController {
                 }
                 for (let featureId in features) {
                   if (features.hasOwnProperty(featureId)) {
+                    if (requestData.forceNodes && features[featureId].getGeometry().getType() === "Polygon") {
+                      features[featureId].setGeometry(features[featureId].getGeometry().getInteriorPoint());
+                    }
+                    else if (requestData.forceNodes && features[featureId].getGeometry().getType() === "MultiPolygon") {
+                      features[featureId].setGeometry(features[featureId].getGeometry()[0].getInteriorPoint());
+                    }
                     features[featureId].set('locstyle', requestData.locstyleId);
                   }
                 }
@@ -390,12 +396,16 @@ export class BetterLayerController {
       let url = "";
       let locstyleId = 0;
       let params = "";
+      let forceNodes = false;
       let layerId = layer.id;
       if (layer.content && layer.content[0] && layer.content[0].data) {
         let data = layer.content[0].data;
         url = data.url;
         params = data.params;
         locstyleId = layer.locstyle;
+      }
+      if (layer.content && layer.content[0] && layer.content[0].settings) {
+        forceNodes = layer.content[0].settings.forceNodes;
       }
       checkLocstyle = this.arrLocstyles.findIndex((element) => element === locstyleId);
       if (checkLocstyle === -1 && locstyleId) {
@@ -406,6 +416,7 @@ export class BetterLayerController {
         chain: idChain,
         url: url,
         preventLoading: hide,
+        forceNodes: forceNodes,
         arrExtents: [],
         locstyleId: locstyleId,
         params: params,
@@ -458,8 +469,15 @@ export class BetterLayerController {
               else {
                 return false;
               }
+              let requestData = layer.content[0].settings ? layer.content[0].settings: {};
               for (let featureId in features) {
                 if (features.hasOwnProperty(featureId)) {
+                  if (requestData.forceNodes && features[featureId].getGeometry().getType() === "Polygon") {
+                    features[featureId].setGeometry(features[featureId].getGeometry().getInteriorPoint());
+                  }
+                  else if (requestData.forceNodes && features[featureId].getGeometry().getType() === "MultiPolygon") {
+                    features[featureId].setGeometry(features[featureId].getGeometry()[0].getInteriorPoint());
+                  }
                   features[featureId].set('locstyle', layer.locstyle)
                 }
               }
