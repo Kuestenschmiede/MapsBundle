@@ -138,7 +138,7 @@ export class BetterLayerController {
           }
         }
       }
-      if (size > 1) {
+      if (size > 1 && returnStyle) {
         let iconOffset = [0, 0];
         if (returnStyle[0]) {
           if (returnStyle[0].getImage() && returnStyle[0].getImage().getRadius && typeof returnStyle[0].getImage().getRadius === "function") {
@@ -479,7 +479,7 @@ export class BetterLayerController {
               }
             }
           }
-          if (size > 1) {
+          if (size > 1 && returnStyle) {
             let iconOffset = [0, 0];
             if (returnStyle[0]) {
               if (returnStyle[0].getImage() && returnStyle[0].getImage().getRadius && typeof returnStyle[0].getImage().getRadius === "function") {
