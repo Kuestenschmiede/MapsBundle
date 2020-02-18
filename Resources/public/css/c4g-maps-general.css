@@ -522,7 +522,7 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
   max-height: calc(var(--map-height) - .4em);
   height: 100%;
   min-width: 240px;
-  z-index: 60;
+  z-index: 91;
   transition: .5s;
 }
 .c4g-sideboard:not(.c4g-measuretools-container):not(.c4g-popup-container)  {
@@ -593,7 +593,7 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
   margin: 0;
 }
 
-.c4g-sideboard > div > div[class*=switcher] > div {
+.c4g-sideboard > div > div[class*=switcher] > div:first-child {
   float: right;
 }
 
@@ -609,7 +609,7 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
 }
 
 .c4g-sideboard > div > div[class*=switcher] button:not(:last-child){
-  margin: 0 .2em 0 0;
+  margin: 0 4px 0 0;
 }
 
 .c4g-sideboard > div > div[class*=switcher] button:last-child {
