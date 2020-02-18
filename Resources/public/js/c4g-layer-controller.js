@@ -254,6 +254,7 @@ export class BetterLayerController {
       self.arrLayers = structure;
       self.proxy.locationStyleController.loadLocationStyles(self.arrLocstyles);
       self.vectorCollection.extend(features);
+      self.vectorLayer.set('zIndex', 1);
       self.mapController.map.addLayer(self.vectorLayer);
       self.mapController.setLayersInitial(self.arrLayers, arrStates);
       self.mapController.setTabLayers(tabStructures, tabStates);
@@ -560,6 +561,7 @@ export class BetterLayerController {
           style: customStyleFunc || this.clusterStyleFunction
       });
       if (!hide) {
+        vectorLayer.set('zIndex', 1);
         this.mapController.map.addLayer(vectorLayer);
       }
       features = false;
