@@ -124,7 +124,6 @@ export class MeasuretoolsView extends Component {
         source = scope.props.measureTools.measureLineLayer.getSource();
       }
 
-
       features = new Collection();
       if (scope.props.mode.toLowerCase() === "select") {
         return;
@@ -186,13 +185,14 @@ export class MeasuretoolsView extends Component {
           measureRadius = true;
           measureLine = false;
         } else {
-          //freehand ist LineString too
+          //freehand is LineString too
           strLabel = scope.props.lang.LENGTH;
           strType = scope.props.lang.FREEHAND;
           measureArea = false;
           measureRadius = false;
           measureLine = true;
         }
+
         // feature.set('listElementValueName', inputElement);
         featureIdCount = scope.featureIdCtr;
         feature.set('featureId', featureIdCount);
@@ -245,7 +245,8 @@ export class MeasuretoolsView extends Component {
         newFeature.id = featureId;
         newFeature.measuredValues = {};
         newFeature.olFeature = feature;
-        if (length) {
+        if (length && feature.get('geometryType') !== 'circle'
+          && feature.get('geometryType') !== 'polygon') {
           newFeature.measuredValues.line = {};
           newFeature.measuredValues['line'].description = "Länge: ";
           newFeature.measuredValues['line'].value = length.rawValue;
@@ -259,8 +260,10 @@ export class MeasuretoolsView extends Component {
           };
           newFeature.measuredValues['radius'].value = radius.rawValue;
           featureTooltip.setContent("<strong>" + name + "</strong>" + "<br>" + radius.htmlValue);
-        } else if (feature.get('geometryType') === 'polygon') {
-          area = utils.measureGeometry(feature.getGeometry());
+        }
+        if (feature.get('geometryType') === 'polygon'
+          || feature.get('geometryType') === 'circle') {
+          area = utils.measureGeometry(feature.getGeometry(), false, true);
           newFeature.measuredValues['area'] = {
             description: "Flächeninhalt: ",
             value: 0
