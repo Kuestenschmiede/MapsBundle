@@ -52,22 +52,7 @@ export class C4gStarboardLayerElement extends Component {
     }
     features = features || scope.props.layer.features;
     let layerController = scope.props.mapController.proxy.layerController;
-    if (scope.props.layer.loader >= 0 && layerController.loaders[scope.props.layer.loader] && layerController.loaders[scope.props.layer.loader].preventLoading) {
-      layerController.loaders[scope.props.layer.loader].preventLoading = false;
-      for (let extentId in layerController.loaders[scope.props.layer.loader].arrExtents) {
-        if (layerController.loaders[scope.props.layer.loader].arrExtents.hasOwnProperty(extentId) && layerController.vectorSource) {
-          let extent = layerController.loaders[scope.props.layer.loader].arrExtents[extentId];
-          layerController.vectorSource.removeLoadedExtent(extent);
-        }
-      }
-      layerController.loaders[scope.props.layer.loader].arrExtents = [];
-    }
-    if (features) {
-      layerController.vectorCollection.extend(features);
-    }
-    else if (vectorLayer) {
-      layerController.mapController.map.addLayer(scope.props.layer.vectorLayer);
-    }
+    layerController.show(scope.props.layer.loader, features || vectorLayer);
   }
 
   hideLayer(hideElements = null) {
@@ -87,26 +72,7 @@ export class C4gStarboardLayerElement extends Component {
       vectorLayer = vectorLayer || scope.props.layer.vectorLayer;
     }
     let layerController = scope.props.mapController.proxy.layerController;
-
-    if (features) {
-      if (scope.props.layer.loader >= 0) {
-        let loader = layerController.loaders[scope.props.layer.loader];
-        layerController.loaders[scope.props.layer.loader].preventLoading = true;
-        if (loader.request) {
-          loader.request.abort();
-        }
-      }
-      if (features.length > 0) {
-        for (let featureId in features) {
-          if (features.hasOwnProperty(featureId)) {
-            layerController.vectorCollection.remove(features[featureId]);
-          }
-        }
-      }
-    }
-    else if (vectorLayer) {
-      layerController.mapController.map.removeLayer(vectorLayer);
-    }
+    layerController.hide(scope.props.layer.loader,features || vectorLayer);
   }
   changeChildState (child, childState, active) {
     if (active) {
@@ -145,6 +111,9 @@ export class C4gStarboardLayerElement extends Component {
   layerClick(e) {
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
+    if (this.props.layerStates.greyed) {
+      return false;
+    }
     if (!this.props.layerStates.active) {
       this.showLayer();
     }
@@ -180,6 +149,9 @@ export class C4gStarboardLayerElement extends Component {
       span = <span className={cssConstants.ICON} onMouseUp={(event) => this.spanClick(event)}/>;
     }
     let cssClass = this.props.layerStates.active ? cssConstants.ACTIVE : cssConstants.INACTIVE;
+    if (this.props.layerStates.greyed) {
+      cssClass += " " + cssConstants.DISABLED;
+    }
     let openClose = this.state.collapsed ? cssConstants.CLOSE : cssConstants.OPEN;
     let objChilds = this.props.layer.childs;
 

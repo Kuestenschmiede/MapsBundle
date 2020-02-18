@@ -324,6 +324,15 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 'load_callback'           => [['tl_c4g_maps','getOldValue']],
                 'sql'                     => "char(1) NOT NULL default '2'"
             ],
+        'min_gap' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['min_gap'],
+                'exclude'                 => true,
+                'inputType'               => 'c4g_text',
+                'default'                 => '0',
+                'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
+                'sql'                     => "int(10) unsigned NOT NULL default '0'"
+            ],
         'center_geox' =>
             [
                 'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['center_geox'],
@@ -1135,16 +1144,15 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 'sql'                     => "varchar(10) NOT NULL default ''"
             ],
         'excludeFromSingleLayer' =>
-                [
-                    'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['excludeFromSingleLayer'],
-                    'exclude'                 => true,
-                    'inputType'               => 'radio',
-                    'options'                 => ['2','1','0'],
-                    'eval'                    => ['mandatory'=>true, 'submitOnChange' => true],
-                    'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['excludeFromSingleLayer'],
-                    'default'                 => '2',
-                    'sql'                     => "char(1) NOT NULL default '2'"
-                ]
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['excludeFromSingleLayer'],
+                'exclude'                 => true,
+                'inputType'               => 'radio',
+                'options'                 => ['2','1','0'],
+                'eval'                    => ['mandatory'=>true, 'submitOnChange' => true],
+                'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['excludeFromSingleLayer'],
+                'default'                 => '2',
+                'sql'                     => "char(1) NOT NULL default '2'"
             ],
         'be_optimize_checkboxes_limit' =>
             [
@@ -1163,26 +1171,17 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 'sql'                     => "char(1) NOT NULL default ''"
             ],
 
-        //ToDo check usecase
-        'calc_extent' =>
-            [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['calc_extent'],
-            'exclude'                 => true,
-            'inputType'               => 'select',
-            'options'                 => ['LOCATIONS','CENTERZOOM'],
-            'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['references'],
-            'load_callback'           => [['tl_c4g_maps','setOldValue']],
-            'sql'                     => "varchar(10) NOT NULL default ''"
-            ],
-        'min_gap' =>
-            [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['min_gap'],
-            'exclude'                 => true,
-            'inputType'               => 'c4g_text',
-            'default'                 => '0',
-            'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
-            'sql'                     => "int(10) unsigned NOT NULL default '0'"
-            ],
+//ToDo check usecase
+'calc_extent' =>
+    [
+    'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['calc_extent'],
+    'exclude'                 => true,
+    'inputType'               => 'select',
+    'options'                 => ['LOCATIONS','CENTERZOOM'],
+    'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['references'],
+    'load_callback'           => [['tl_c4g_maps','setOldValue']],
+    'sql'                     => "varchar(10) NOT NULL default ''"
+    ],
 
 //ToDo check fields
 
@@ -1203,6 +1202,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
 //            'inputType'               => 'checkbox',
 //            'sql'                     => "char(1) NOT NULL default ''"
 //            ],
+        ]
 
     ];
 

@@ -34,6 +34,7 @@ let olFormat = jQuery.extend({
 export class BetterLayerController {
 
   constructor(proxy) {
+    this.handleZoom = this.handleZoom.bind(this);
     const scope = this;
     this.proxy = proxy;
     this.loaders = [];
@@ -88,6 +89,12 @@ export class BetterLayerController {
                 }
                 for (let featureId in features) {
                   if (features.hasOwnProperty(featureId)) {
+                    if (requestData.forceNodes && features[featureId].getGeometry().getType() === "Polygon") {
+                      features[featureId].setGeometry(features[featureId].getGeometry().getInteriorPoint());
+                    }
+                    else if (requestData.forceNodes && features[featureId].getGeometry().getType() === "MultiPolygon") {
+                      features[featureId].setGeometry(features[featureId].getGeometry()[0].getInteriorPoint());
+                    }
                     features[featureId].set('locstyle', requestData.locstyleId);
                   }
                 }
@@ -199,8 +206,64 @@ export class BetterLayerController {
     });
     this.layerRequests = {};
     this.ovpKey = this.mapController.data.ovp_key;
+    window.c4gMapsHooks.hook_map_zoom = window.c4gMapsHooks.hook_map_zoom || [];
+    window.c4gMapsHooks.hook_map_zoom.push(this.handleZoom);
   }
-
+  hide (id, hideElement) {
+    let features,
+        vectorLayer;
+    if (Array.isArray(hideElement)) {
+      features = hideElement;
+    }
+    else {
+      vectorLayer = hideElement
+    }
+    if (features) {
+      if (id >= 0) {
+        let loader = this.loaders[id];
+        this.loaders[id].preventLoading = true;
+        if (loader.request) {
+          loader.request.abort();
+        }
+      }
+      if (features.length > 0) {
+        for (let featureId in features) {
+          if (features.hasOwnProperty(featureId)) {
+            this.vectorCollection.remove(features[featureId]);
+          }
+        }
+      }
+    }
+    else if (vectorLayer) {
+      this.mapController.map.removeLayer(vectorLayer);
+    }
+  }
+  show (id, hideElement) {
+    let features,
+        vectorLayer;
+    if (Array.isArray(hideElement)) {
+      features = hideElement;
+    }
+    else {
+      vectorLayer = hideElement
+    }
+    if (id >= 0 && this.loaders[id] && this.loaders[id].preventLoading) {
+      this.loaders[id].preventLoading = false;
+      for (let extentId in this.loaders[id].arrExtents) {
+        if (this.loaders[id].arrExtents.hasOwnProperty(extentId) && this.vectorSource) {
+          let extent = this.loaders[id].arrExtents[extentId];
+          this.vectorSource.removeLoadedExtent(extent);
+        }
+      }
+      this.loaders[id].arrExtents = [];
+    }
+    if (features) {
+      this.vectorCollection.extend(features);
+    }
+    else if (vectorLayer) {
+      this.mapController.map.addLayer(vectorLayer);
+    }
+  }
 
 
   loadLayers () {
@@ -276,15 +339,19 @@ export class BetterLayerController {
         }
       }
     }
+    let zoom = this.mapController.map.getView().getZoom();
     return {
       active: !layer.hide,
+      greyed: layer.zoom && !this.compareZoom(layer.zoom),
       id: layer.id,
       childStates: childStates
     }
   }
   getFeaturesFromStruct(structure) {
     let features = [];
-    if (!structure.hide) {
+    let zoom = this.mapController.map.getView().getZoom();
+    let greyed = structure.zoom && !this.compareZoom(structure.zoom);
+    if (!structure.hide && !greyed) {
       if (structure.childs && structure.childs.length > 0) {
         for (let structId in structure.childs) {
           if (structure.childs.hasOwnProperty(structId)) {
@@ -330,12 +397,16 @@ export class BetterLayerController {
       let url = "";
       let locstyleId = 0;
       let params = "";
+      let forceNodes = false;
       let layerId = layer.id;
       if (layer.content && layer.content[0] && layer.content[0].data) {
         let data = layer.content[0].data;
         url = data.url;
         params = data.params;
         locstyleId = layer.locstyle;
+      }
+      if (layer.content && layer.content[0] && layer.content[0].settings) {
+        forceNodes = layer.content[0].settings.forceNodes;
       }
       checkLocstyle = this.arrLocstyles.findIndex((element) => element === locstyleId);
       if (checkLocstyle === -1 && locstyleId) {
@@ -346,6 +417,7 @@ export class BetterLayerController {
         chain: idChain,
         url: url,
         preventLoading: hide,
+        forceNodes: forceNodes,
         arrExtents: [],
         locstyleId: locstyleId,
         params: params,
@@ -398,8 +470,15 @@ export class BetterLayerController {
               else {
                 return false;
               }
+              let requestData = layer.content[0].settings ? layer.content[0].settings: {};
               for (let featureId in features) {
                 if (features.hasOwnProperty(featureId)) {
+                  if (requestData.forceNodes && features[featureId].getGeometry().getType() === "Polygon") {
+                    features[featureId].setGeometry(features[featureId].getGeometry().getInteriorPoint());
+                  }
+                  else if (requestData.forceNodes && features[featureId].getGeometry().getType() === "MultiPolygon") {
+                    features[featureId].setGeometry(features[featureId].getGeometry()[0].getInteriorPoint());
+                  }
                   features[featureId].set('locstyle', layer.locstyle)
                 }
               }
@@ -560,7 +639,8 @@ export class BetterLayerController {
           source: vectorSource,
           style: customStyleFunc || this.clusterStyleFunction
       });
-      if (!hide) {
+      let greyed = layer.zoom && !this.compareZoom(layer.zoom);
+      if (!hide && !greyed) {
         vectorLayer.set('zIndex', 1);
         this.mapController.map.addLayer(vectorLayer);
       }
@@ -578,6 +658,7 @@ export class BetterLayerController {
         "features"      : features,
         "vectorLayer"   : vectorLayer,
         "loader"        : loaderId,
+        "zoom"          : layer.zoom,
         "id"            : layer.id,
         "name"          : layer.name,
         "hide"          : hide,
@@ -788,5 +869,41 @@ export class BetterLayerController {
       let source = layer.vectorLayer.getSource().getSource();
       source.addFeatures(features);
     }
+  }
+  handleZoom(proxy) {
+    const mapController = proxy.options.mapController;
+    const childStates = mapController.state.arrLayerStates;
+    const objLayers = mapController.state.objLayers;
+    const zoom = mapController.map.getView().getZoom();
+    for (let id in childStates) {
+      if (childStates.hasOwnProperty(id)) {
+        childStates[id] = this.handleZoomChilds(zoom, childStates[id], objLayers[id]);
+      }
+    }
+    this.mapController.setLayersInitial(false, childStates);
+  }
+  handleZoomChilds (zoom, childState, child) {
+    for (let id in childState.childStates) {
+      if (childState.childStates.hasOwnProperty(id)) {
+        childState.childStates[id] = this.handleZoomChilds(zoom, childState.childStates[id], child.childs[id]);
+      }
+    }
+    let greyed = child.zoom && !this.compareZoom(child.zoom);
+    if (childState['greyed'] !== greyed) {
+      if (greyed) {
+        this.hide(child.loader, child.features || child.vectorLayer);
+      }
+      else {
+        this.show(child.loader, child.features || child.vectorLayer);
+      }
+    }
+    childState['greyed'] = greyed;
+
+    return childState;
+
+  }
+  compareZoom(layerZoom) {
+    let zoom = this.mapController.map.getView().getZoom();
+    return (parseInt(layerZoom.min, 10) < zoom && parseInt(layerZoom.max, 10) > zoom);
   }
 }
