@@ -94,6 +94,10 @@ export class MeasuretoolsView extends Component {
       if (prevProps.active && !this.props.active) {
         this.updateFunctions.deactivateFunction();
       }
+      this.props.mapController.mapHover.deactivate();
+    }
+    if (this.props.mode === "select" || !this.props.measureTools.state.open) {
+      this.props.mapController.mapHover.activate();
     }
     this.featureIdCtr = this.props.featureId;
   }
@@ -347,19 +351,11 @@ export class MeasuretoolsView extends Component {
       return true;
     },
       activateFunction: function () {
-
-        // disable mapHover
-        scope.props.mapController.mapHover.deactivate();
-
         features.clear();
-
         // Enable interaction
         scope.props.mapController.map.addInteraction(interaction);
       },
       deactivateFunction: function () {
-
-        // reactivate mapHover
-        scope.props.mapController.mapHover.activate();
         if (scope.props.mode.toLowerCase() !== 'point') {
           try {
             interaction.finishDrawing();
@@ -367,7 +363,6 @@ export class MeasuretoolsView extends Component {
             // 0_o
           }
         }
-
         // Remove from map
         scope.props.mapController.map.removeInteraction(interaction);
       }
