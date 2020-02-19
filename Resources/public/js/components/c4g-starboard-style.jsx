@@ -13,6 +13,8 @@
 import React, { Component } from "react";
 import Feature from 'ol/Feature';
 import {Point} from "ol/geom";
+import {cssConstants} from "./../c4g-maps-constant.js";
+
 
 export class C4gStarboardStyle extends Component {
     constructor(props) {
@@ -24,9 +26,7 @@ export class C4gStarboardStyle extends Component {
         // Create label for interaction-trigger
         let styleTriggerLabel = null;
         // @TODO use css-class for dimensions
-        let cssProps = {};
 
-        cssProps.margin = '2px';
         let locstyle = this.props.styleData.arrLocStyles[this.props.styleId];
         let styleData = locstyle.locStyleArr;
         let stylor = locstyle.style && locstyle.style(new Feature({geometry: new Point(0,0)}), "EPSG:4326") ? locstyle.style(new Feature({geometry: new Point(0,0)}), "EPSG:4326"): null;
@@ -50,15 +50,39 @@ export class C4gStarboardStyle extends Component {
             } else if (styleImage.getSrc()) {
                 styleIcon = <img src={styleImage.getSrc()} style={{height: 16, width: 16}} />
             }
-            styleTriggerLabel =  <span>{styleIcon}</span>;
+            styleTriggerLabel =  <span className={cssConstants.STARBOARD_LOCSTYLE}>{styleIcon}</span>;
         } else {
-            styleTriggerLabel = <span style={{
-                display : 'block',
-                width : '32px',
-                height : '32px',
-                background : styl0r.getFill().getColor(),
-                border : '1px solid ' + styl0r.getStroke().getColor()
-            }}/>;
+            let cssClass;
+            switch (styleType) { // 'point', 'square', 'star', 'x', 'cross', 'triangle'
+                case "point":
+                    cssClass = cssConstants.STARBOARD_LOCSTYLE_POINT;
+                    break;
+                case "square":
+                    cssClass = cssConstants.STARBOARD_LOCSTYLE_SQUARE;
+                    break;
+                case "star":
+                    cssClass = cssConstants.STARBOARD_LOCSTYLE_STAR;
+                    break;
+                case "x":
+                    cssClass = cssConstants.STARBOARD_LOCSTYLE_X;
+                    break;
+                case "cross":
+                    cssClass = cssConstants.STARBOARD_LOCSTYLE_CROSS;
+                    break;
+                case "triangle":
+                    cssClass = cssConstants.STARBOARD_LOCSTYLE_TRIANGLE;
+                    break;
+                default:
+                    cssClass= cssConstants.STARBOARD_LOCSTYLE;
+                    break;
+            }
+            let styleElements = {
+                width : '16px',
+                height : '16px',
+                "--var-color" : styl0r.getFill().getColor(),
+                "--var-bordercolor" : '1px solid ' + styl0r.getStroke().getColor()
+            };
+            styleTriggerLabel = <span className={cssClass} style={styleElements}/>;
 
         }
         return styleTriggerLabel;
