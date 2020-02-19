@@ -39,7 +39,7 @@ export class C4gStarboardStyle extends Component {
         ) {
             let styleIcon = null;
             let iconSrc;
-            if (styleData.icon_src && ((styleData.icon_src.indexOf('.') !== -1) || (styleData.iconSrc.indexOf('.') !== -1))) {
+            if ((styleData.icon_src && styleData.icon_src.indexOf('.') !== -1) || (styleData.svgSrc && styleData.svgSrc.indexOf('.') !== -1)) {
                 if (styleType === "cust_icon") {
                     iconSrc = styleData.icon_src;
                 }
