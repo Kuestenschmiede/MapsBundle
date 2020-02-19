@@ -798,17 +798,10 @@ export class MapController extends Component {
   }
 
   setLayersInitial(objLayers, arrLayers) {
-    if (objLayers) {
-      this.setState({
-        objLayers: objLayers,
-        arrLayerStates: arrLayers
-      });
-    }
-    else {
-      this.setState({
-        arrLayerStates: arrLayers
-      });
-    }
+    this.setState({
+      objLayers: objLayers,
+      arrLayerStates: arrLayers
+    });
   }
 
   setObjLayers(objLayers) {

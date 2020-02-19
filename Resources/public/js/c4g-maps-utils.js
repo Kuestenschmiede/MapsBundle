@@ -492,7 +492,7 @@ export var utils = {
         6378137
       );
 
-      value = Math.PI * Math.sqrt(value);
+      value = Math.PI * Math.pow(value, 2);
 
       result.rawValue = (Math.round(value * 100) / 100).toFixed(2);
       if (value > 10000) {

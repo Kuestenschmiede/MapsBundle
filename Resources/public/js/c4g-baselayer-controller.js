@@ -246,15 +246,14 @@ export class C4gBaselayerController {
               ))
             });
           }
-        }else if(baseLayerConfig.hide_in_be){
+        } else if (baseLayerConfig.hide_in_be) {
           layerOptions.url = "con4gis/baseLayerTileService/" + baseLayerConfig.id + "/{z}/{x}/{y}";
           newBaselayer = new TileLayer({
             source: new XYZ(jQuery.extend(
               sourceConfigs.mapbox[baseLayerConfig.mapbox_type],
               layerOptions))
           });
-        }
-        else {
+        } else {
           console.warn('wrong mapbox configuration!');
         }
         break;
