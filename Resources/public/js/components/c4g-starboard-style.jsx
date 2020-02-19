@@ -45,7 +45,7 @@ export class C4gStarboardStyle extends Component {
                     iconSrc = styleData.svgSrc;
                 }
                 styleIcon = <img src={iconSrc} style={{height: 16, width: 16}} />;
-            } else if (styleImage.getSrc()) {
+            } else if (styleImage && styleImage.getSrc()) {
                 styleIcon = <img src={styleImage.getSrc()} style={{height: 16, width: 16}} />
             }
             styleTriggerLabel =  <span className={cssConstants.STARBOARD_LOCSTYLE}>{styleIcon}</span>;
