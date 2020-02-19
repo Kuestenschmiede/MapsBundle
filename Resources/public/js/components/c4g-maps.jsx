@@ -742,7 +742,6 @@ export class MapController extends Component {
       if (mapData.themeData['useglobal']) {
         domMapDiv = document.getElementById('wrapper');
       }
-      ;
 
       let mapWidth = "100%";
       let mapHeight = "100%";
