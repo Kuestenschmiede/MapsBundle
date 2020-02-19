@@ -46,9 +46,7 @@ export class FeatureFilter extends Component {
     let listDiv = document.querySelector(".c4g-feature-filter-list");
     if (listDiv) {
       showButtons = !(listDiv.scrollWidth <= listDiv.clientWidth);
-      console.log(`[IF] scrollWidth: ${listDiv.scrollWidth} <= clientWidth: ${listDiv.clientWidth}`);
     } else {
-      console.log(`[ELSE] scrollWidth: ${scope.props.target.scrollWidth} <= clientWidth: ${scope.props.target.clientWidth}`);
       showButtons = !(scope.props.target.scrollWidth <= scope.props.target.clientWidth);
     }
 
