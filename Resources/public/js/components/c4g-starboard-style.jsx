@@ -38,7 +38,7 @@ export class C4gStarboardStyle extends Component {
             let styleIcon = null;
             let iconSrc;
             if ((styleData.icon_src && styleData.icon_src.indexOf('.') !== -1) || (styleData.svgSrc && styleData.svgSrc.indexOf('.') !== -1)) {
-                if (styleType === "cust_icon") {
+                if (styleType === "cust_icon" || styleType === "photo") {
                     iconSrc = styleData.icon_src;
                 }
                 else {
