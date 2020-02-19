@@ -1,0 +1,67 @@
+/*
+ * This file is part of con4gis,
+ * the gis-kit for Contao CMS.
+ *
+ * @package   	con4gis
+ * @version        6
+ * @author  	    con4gis contributors (see "authors.txt")
+ * @license 	    LGPL-3.0-or-later
+ * @copyright 	Küstenschmiede GmbH Software & Design
+ * @link              https://www.con4gis.org
+ *
+ */
+import React, { Component } from "react";
+import Feature from 'ol/Feature';
+import {Point} from "ol/geom";
+
+export class C4gStarboardStyle extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+
+        // Create label for interaction-trigger
+        let styleTriggerLabel = null;
+        // @TODO use css-class for dimensions
+        let cssProps = {};
+
+        cssProps.margin = '2px';
+        let locstyle = this.props.styleData.arrLocStyles[this.props.styleId];
+        let styleData = locstyle.locStyleArr;
+        let stylor = locstyle.style && locstyle.style(new Feature({geometry: new Point(0,0)}), "EPSG:4326") ? locstyle.style(new Feature({geometry: new Point(0,0)}), "EPSG:4326"): null;
+        let styl0r = Array.isArray(stylor) ? stylor[0]: stylor;
+        let styleImage = styl0r.getImage && typeof styl0r.getImage === "function" && styl0r.getImage() ? styl0r.getImage(): null;
+        // let styleImage = locstyle.style && locstyle.style(new Feature({geometry: new Point(0,0)}), "EPSG:4326") ? locstyle.style(new Feature({geometry: new Point(0,0)}), "EPSG:4326").getImage(): null;
+        let styleType = styleData ? styleData.styletype : "default";
+        if (styleData && (styleType === "cust_icon" || styleType === "cust_icon_svg")
+            && (styleData.icon_src || (styleImage))
+        ) {
+            let styleIcon = null;
+            let iconSrc;
+            if (styleData.icon_src && ((styleData.icon_src.indexOf('.') !== -1) || (styleData.iconSrc.indexOf('.') !== -1))) {
+                if (styleType === "cust_icon") {
+                    iconSrc = styleData.icon_src;
+                }
+                else {
+                    iconSrc = styleData.svgSrc;
+                }
+                styleIcon = <img src={iconSrc} style={{height: 16, width: 16}} />;
+            } else if (styleImage.getSrc()) {
+                styleIcon = <img src={styleImage.getSrc()} style={{height: 16, width: 16}} />
+            }
+            styleTriggerLabel =  <span>{styleIcon}</span>;
+        } else {
+            styleTriggerLabel = <span style={{
+                display : 'block',
+                width : '32px',
+                height : '32px',
+                background : styl0r.getFill().getColor(),
+                border : '1px solid ' + styl0r.getStroke().getColor()
+            }}/>;
+
+        }
+        return styleTriggerLabel;
+    }
+
+}

@@ -76,7 +76,7 @@ export class C4gLocationStyleController {
           }
         }
         if (options.done && typeof options.done === "function" && (index ? successful : true)) {
-          options.done();
+          options.done(self);
           // call hooks
           utils.callHookFunctions(self.proxy.hook_locstyles_loaded, {locstyleController: self})
         }

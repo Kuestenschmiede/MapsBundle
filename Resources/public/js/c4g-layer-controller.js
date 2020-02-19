@@ -315,7 +315,7 @@ export class BetterLayerController {
         }
       }
       self.arrLayers = structure;
-      self.proxy.locationStyleController.loadLocationStyles(self.arrLocstyles);
+      self.proxy.locationStyleController.loadLocationStyles(self.arrLocstyles, {"done": (styleData) => {self.mapController.setLocStyles(styleData)}});
       self.vectorCollection.extend(features);
       self.vectorLayer.set('zIndex', 1);
       self.mapController.map.addLayer(self.vectorLayer);
@@ -438,6 +438,17 @@ export class BetterLayerController {
             childs.push(newChild);
           }
         }
+      }
+    }
+    if (childs && childs.length && childs.length > 0) {
+      let singleLocStyle = childs[0].locstyle;
+      if (!childs.find( (element) => element.locstyle !== singleLocStyle)) {
+        for (let childId in childs) {
+          if(childs.hasOwnProperty(childId)) {
+            delete childs[childId].locstyle;
+          }
+        }
+        possibleLocstyle = singleLocStyle;
       }
     }
     if (layer.excludeFromSingleLayer) {
@@ -659,6 +670,7 @@ export class BetterLayerController {
         "vectorLayer"   : vectorLayer,
         "loader"        : loaderId,
         "zoom"          : layer.zoom,
+        "locstyle"      : possibleLocstyle,
         "id"            : layer.id,
         "name"          : layer.name,
         "hide"          : hide,

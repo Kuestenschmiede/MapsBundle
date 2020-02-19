@@ -117,7 +117,7 @@ export class StarboardPanel extends Component {
         {buttonSwitcher}
         <div className={cssConstants.STARBOARD_CONTENT_CONTAINER}>
           <StarboardLayerswitcher key={this.props.tabLayers.length} mapController ={this.props.mapController}
-                                objLayers={this.props.objLayers} parentCallback={this.props.parentCallback}
+                                objLayers={this.props.objLayers} styleData={this.props.styleData} parentCallback={this.props.parentCallback}
                                 layerStates={this.props.layerStates} openfunc={this.open} headline={mapData.layerswitcher.label || "Kartenelemente"}
                                 open={this.state.open} active={scope.state.activeTab === 0}/>
           {tabs}
