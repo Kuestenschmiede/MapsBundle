@@ -880,7 +880,7 @@ export class BetterLayerController {
         childStates[id] = this.handleZoomChilds(zoom, childStates[id], objLayers[id]);
       }
     }
-    this.mapController.setLayersInitial(false, childStates);
+    this.mapController.setLayerStates(childStates);
   }
   handleZoomChilds (zoom, childState, child) {
     for (let id in childState.childStates) {
