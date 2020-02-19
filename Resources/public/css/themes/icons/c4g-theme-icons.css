@@ -416,7 +416,7 @@ button.c4g-starboard-view-trigger-layerswitcher:before {
 .c4g-baselayertree-content input[type=range]:focus::-webkit-slider-runnable-track {
   background: #ccc;
 }
-.c4g-layertree .c4g-open > span,
+.c4g-layertree .c4g-open > span.c4g-icon,
 .c4g-baselayertree-content .c4g-open > span{
   transform: rotate(90deg);
 }
@@ -479,4 +479,7 @@ button.c4g-beach-options:before {
 
 .c4g-sideboard > div div[class*=filter].without-button:after {
   content: "\f0b0";
+}
+.c4g-starboard-locstyle > img {
+  vertical-align: middle;
 }

@@ -78,11 +78,13 @@ export class MapController extends Component {
       arrLayerStates: [],
       openComponent: null,
       objTabLayers: [],
+      styleData: {},
       arrTabLayerStates: []
     };
     this.setObjLayers = this.setObjLayers.bind(this);
     this.setLayerStates = this.setLayerStates.bind(this);
     this.setTabStates = this.setTabStates.bind(this);
+    this.setLocStyles = this.setLocStyles.bind(this);
     this.map = null;
 
     langConstants = getLanguage(mapData);
@@ -740,7 +742,6 @@ export class MapController extends Component {
       if (mapData.themeData['useglobal']) {
         domMapDiv = document.getElementById('wrapper');
       }
-      ;
 
       let mapWidth = "100%";
       let mapHeight = "100%";
@@ -809,7 +810,11 @@ export class MapController extends Component {
       objLayers: objLayers
     });
   }
-
+  setLocStyles(styleData) {
+    this.setState({
+      styleData: styleData
+    });
+  }
   setLayerStates(arrLayerStates) {
     this.setState({
       arrLayerStates: arrLayerStates
@@ -879,7 +884,7 @@ export class MapController extends Component {
           <StarboardPanel ref={(node) => {
             this.components.starboard = node;
           }} target={target}
-                          mapController={this} objLayers={this.state.objLayers} tabLayers={this.state.objTabLayers} tabStates={this.state.arrTabLayerStates}
+                          mapController={this} objLayers={this.state.objLayers} styleData={this.state.styleData} tabLayers={this.state.objTabLayers} tabStates={this.state.arrTabLayerStates}
                           layerStates={this.state.arrLayerStates} parentCallback={this.setLayerStates} tabCallback={this.setTabStates}
                           direction={"right"} open={(this.props.mapData.initial_open_comp === "starboard")} external={this.reactContainer.className.indexOf("c4g-external") !== -1}
           />,

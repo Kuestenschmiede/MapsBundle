@@ -84,6 +84,7 @@ export class StarboardLayerswitcher extends Component {
                 return <C4gStarboardLayerElement key={id} id={id} mapController={this.props.mapController}
                                                  parentCallback={this.callbackFunction}
                                                  layer={item}
+                                                 styleData={this.props.styleData}
                                                  layerStates={states[id]}
                                                  byPassChilds={this.filterFunc(this.state.layerFilter, item, false)}
                                                  strFilter={this.state.layerFilter}

@@ -13,11 +13,8 @@
 
 import React, { Component } from "react";
 import {cssConstants} from "./../c4g-maps-constant.js";
-import Collection from "ol/Collection";
-import {Vector as VectorSource} from "ol/source";
+import {C4gStarboardStyle} from "./c4g-starboard-style";
 import {Vector} from "ol/layer";
-import {Cluster as ClusterSource} from "ol/source";
-import {Cluster} from "ol/layer";
 
 export class C4gStarboardLayerElement extends Component {
 
@@ -148,6 +145,10 @@ export class C4gStarboardLayerElement extends Component {
     if (this.props.layer.childs && this.props.layer.childs.length > 0) {
       span = <span className={cssConstants.ICON} onMouseUp={(event) => this.spanClick(event)}/>;
     }
+    let stylePicture = null;
+    if (this.props.mapController.data.starboard.showLocstyles === "1" && this.props.layer.locstyle &&this.props.styleData.arrLocStyles && this.props.styleData.arrLocStyles[this.props.layer.locstyle]) {
+      stylePicture = <C4gStarboardStyle styleData={this.props.styleData} styleId={this.props.layer.locstyle}/>
+    }
     let cssClass = this.props.layerStates.active ? cssConstants.ACTIVE : cssConstants.INACTIVE;
     if (this.props.layerStates.greyed) {
       cssClass += " " + cssConstants.DISABLED;
@@ -159,6 +160,7 @@ export class C4gStarboardLayerElement extends Component {
       return (
         <li className={openClose}>
           {span}
+          {stylePicture}
           <a className={cssClass} onMouseUp={(event) => this.layerClick(event)}>{this.props.layer.name}</a>
           <ul>
             {objChilds.map((item, id) => {
@@ -170,6 +172,7 @@ export class C4gStarboardLayerElement extends Component {
                                           byPassChilds={this.props.byPassChilds || this.props.filterFunc(this.props.strFilter, item, false)}
                                           layerStates={this.props.layerStates.childStates[id]}
                                           layer={item}
+                                          styleData={this.props.styleData}
                                           fnResize={this.props.fnResize}/>
               }
 
@@ -182,6 +185,7 @@ export class C4gStarboardLayerElement extends Component {
       return (
         <li className={openClose}>
           {span}
+          {stylePicture}
           <a className={cssClass} onMouseUp={(event) => this.layerClick(event)}>{this.props.layer.name}</a>
         </li>
       )
