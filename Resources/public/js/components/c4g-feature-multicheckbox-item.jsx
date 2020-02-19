@@ -12,6 +12,7 @@
  */
 
 import React, { Component } from "react";
+import {utils} from "../c4g-maps-utils"
 
 export class FeatureFilterMultiCheckboxItem extends Component {
     constructor(props) {
@@ -28,7 +29,7 @@ export class FeatureFilterMultiCheckboxItem extends Component {
                         onClick={(evt) => {this.props.filterLayers(this.props.feature.identifier, this.props.parentId, this.props.feature.value);}}
                         value={this.props.feature.identifier}
                     />
-                    {this.props.feature.translation}
+                    {utils.decodeHTML(this.props.feature.translation)}
                 </label>
             </div>
         );
