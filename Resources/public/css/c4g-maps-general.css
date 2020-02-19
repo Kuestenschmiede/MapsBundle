@@ -681,6 +681,28 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
   padding: 0;
 }
 
+span.c4g-starboard-locstyle-star:after {
+  content: "\f005";
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: 15.5px;
+  position: absolute;
+  bottom: 4.45px;
+  right: 2px;
+  color: var(--var-color);
+}
+
+span.c4g-starboard-locstyle-star:before {
+
+  content: "\f005";
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 100;
+  font-size: 18px;
+  color: var(--var-bordercolor);
+}
+
+
+
 .c4g-sideboard:not(.c4g-popup-container) ul li {
   list-style-type: none;
 }
