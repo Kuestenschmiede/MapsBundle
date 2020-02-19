@@ -34,9 +34,7 @@ export class C4gStarboardStyle extends Component {
         let styleImage = styl0r.getImage && typeof styl0r.getImage === "function" && styl0r.getImage() ? styl0r.getImage(): null;
         // let styleImage = locstyle.style && locstyle.style(new Feature({geometry: new Point(0,0)}), "EPSG:4326") ? locstyle.style(new Feature({geometry: new Point(0,0)}), "EPSG:4326").getImage(): null;
         let styleType = styleData ? styleData.styletype : "default";
-        if (styleData && (styleType === "cust_icon" || styleType === "cust_icon_svg")
-            && (styleData.icon_src || (styleImage))
-        ) {
+        if (styleData && (styleType === "cust_icon" || styleType === "cust_icon_svg" || styleType === "photo")) {
             let styleIcon = null;
             let iconSrc;
             if ((styleData.icon_src && styleData.icon_src.indexOf('.') !== -1) || (styleData.svgSrc && styleData.svgSrc.indexOf('.') !== -1)) {
