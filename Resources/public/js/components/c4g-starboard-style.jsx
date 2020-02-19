@@ -77,7 +77,7 @@ export class C4gStarboardStyle extends Component {
                 width : '16px',
                 height : '16px',
                 "--var-color" : styl0r.getFill().getColor(),
-                "--var-bordercolor" : '1px solid ' + styl0r.getStroke().getColor()
+                "--var-bordercolor" : styl0r.getStroke().getColor()
             };
             styleTriggerLabel = <span className={cssClass} style={styleElements}/>;
 
