@@ -57,6 +57,7 @@ export class Sideboard extends Control {
     this.initialized = false;
     this.options.tipLabel = this.options.tipLabel || this.options.headline || this.langConstants.CTRL_SIDEBOARD;
     this.container = document.createElement('div');
+    this.container.className = "c4g-sideboard";
     this.element = document.createElement('div');
     this.button = undefined;
     this.spinner = undefined;
@@ -142,17 +143,6 @@ export class Sideboard extends Control {
     }
 
     jQuery(this.element).addClass('c4g-' + this.options.name + ' ' + 'c4g-' + this.cssname + '-control' + ' ' + cssConstants.OL_UNSELECTABLE + ' ' + cssConstants.OL_CONTROL + initClass);
-
-    // Set initial dimensions
-    if (this.options.direction === 'right') {
-      //this.container.style.minWidth = '250px';
-      //this.container.style[this.options.direction] = '-1920px';
-      this.container.style[this.options.direction] = '-100%';
-    } else {
-      //this.container.style.minWidth = '250px';
-      //this.container.style[this.options.direction] = '-1920px';
-      this.container.style[this.options.direction] = '-100%';
-    }
 
     // Place container
     if (this.options.extDiv) {
@@ -383,7 +373,6 @@ export class Sideboard extends Control {
         this.initialized = true;
       }
     }
-
     // call preOpenFunctions
     if (typeof this.preOpenFunction === 'function') {
       this.preOpenFunction();
@@ -408,11 +397,11 @@ export class Sideboard extends Control {
         });
       }
 
-      jQuery(this.container).removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN).css(this.options.direction, 0);
+      jQuery(this.container).removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN);
       if (this.options.direction === 'left') {
         jQuery(this.element).removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN);
       } else {
-        jQuery(this.element).removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN).css(this.options.direction, containerOffsetWidth);
+        jQuery(this.element).removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN);
       }
 
       // set this as active Sideboard

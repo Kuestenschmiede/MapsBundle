@@ -876,7 +876,8 @@ export class MapController extends Component {
       {name: "rotate", sort: mapData.rotate},
       {name: "graticule", sort: mapData.graticule},
       {name: "overview", sort: mapData.overviewmap},
-      {name: "router", sort: mapData.router_enable}
+      {name: "router", sort: mapData.router_enable},
+      {name: "editor", sort: mapData.editor.enable}
     ];
     let sbPortal = "";
     if (mapData.layerswitcher.enable) {
@@ -1036,6 +1037,16 @@ export class MapController extends Component {
               mapController: this,
               Container: this.mapsControls.controlContainerTopLeft,
               component: "router",
+              arrComps: result
+            });
+          }
+          break;
+        case 'editor':
+          if (window.c4gMapsHooks !== undefined && Array.isArray(window.c4gMapsHooks.mapController_addControls)) {
+            utils.callHookFunctions(window.c4gMapsHooks.mapController_addControls, {
+              mapController: this,
+              Container: this.mapsControls.controlContainerTopLeft,
+              component: "editor",
               arrComps: result
             });
           }

@@ -46,15 +46,6 @@ class MapDataConfigurator
         $mapData = [];
         $mapData['mapId'] = $objThis->id;
 
-        // import user, if not already done
-        /*if (!isset($objThis->User)) {
-            if ($options['backend']) {
-                $objThis->import('BackendUser', 'User');
-            } else {
-                $objThis->import('FrontendUser', 'User');
-            }
-        }*/
-
         //TODO: currently when in backend mode, not the correct things are loaded
         //TODO: no profile is found
         // get map
@@ -82,9 +73,9 @@ class MapDataConfigurator
         //check if we are in backend mode
         if ($options['geoeditor']) {
             // select selected backend profile
-//            $result = $database->prepare("SELECT id FROM `tl_c4g_map_profiles` WHERE `is_backend_editor_default` = '1'")->limit(1)->execute();
-//            $profileId = $result->row();
-//            $profileId = $profileId['id'];
+            $result = C4gSettingsModel::findSettings();
+            $profileId = $result->row();
+            $profileId = $profileId['editorprofile'];
             $mapData['editor'] = [];
             $mapData['editor']['enable'] = true;
             $mapData['editor']['type'] = 'backend';
