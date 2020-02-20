@@ -179,6 +179,10 @@ div.c4g-control-container-top-left > div.c4g-external {
 .c4g-overviewmap-container.c4g-close {
   right: -100%;
 }
+.ol-overviewmap-box {
+  cursor: pointer;
+  border: 1px solid;
+}
 /*------------__*/
 
 .c4g-control-container-top-left, .c4g-control-container-bottom-left {
