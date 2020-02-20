@@ -101,7 +101,6 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_collapsed'] = ['Suchfeld i
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_placeholder'] = ["Platzhalter für Suchfeld", "Geben Sie einen Platzhaltertext für das Eingabefeld an."];
 
 /** Geopicker (Koordinaten per Klick auf die Karte bestimmen) */
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['is_backend_geopicker_default'] = ['Dieses Profil als Backend-Geopicker verwenden', 'Den Geopicker benötigen Sie zum Eintrag der POIs um die Koordinaten per Klick zu ermitteln.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker'] = ['Frontend-Geopicker anzeigen', 'Zeigt einen Geopicker mit dem Sie die Koordinaten per Klick in die Karte ermitteln können im Frontend an. Nützlich z.B. in einem Formular.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_fieldx'] = ['Formularfeld für die x-Koordinate', 'Ein INPUT Feld, in das die gewählte X-Koordinate geschrieben wird.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_fieldy'] = ['Formularfeld für die y-Koordinate', 'Ein INPUT Feld, in das die gewählte Y-Koordinate geschrieben wird.'];
@@ -204,9 +203,6 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_legend'] = 'Starboard (Kar
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['attribution_legend'] = 'Copyright Informationen (Attributionen)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['information_legend'] = 'Zusätzliche Karteninformationen';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_legend'] = 'Kartensuche';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_legend'] = 'Karteneditor';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_legend'] = 'Geopicker (Position bestimmen)';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overpassLegend'] = 'Overpass-API';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium_legend'] = 'Cesium (Globusdarstellung)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['click_legend'] = 'Einstellungen zum Klick-Verhalten';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['expert_legend'] = 'Experteneinstellungen';

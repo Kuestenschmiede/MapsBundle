@@ -388,8 +388,8 @@ class LayerService
 
         if ($objLayer->loc_minzoom > 0 || $objLayer->loc_maxzoom > 0) {
             $arrLayerData['zoom'] = [
-                'min' => $objLayer->loc_minzoom > 0 ? $objLayer->loc_minzoom: "0",
-                'max' => $objLayer->loc_maxzoom > 0 ? $objLayer->loc_maxzoom: "40",
+                'min' => $objLayer->loc_minzoom > 0 ? $objLayer->loc_minzoom: '0',
+                'max' => $objLayer->loc_maxzoom > 0 ? $objLayer->loc_maxzoom: '40',
                 'onclick_to' => $objLayer->loc_onclick_zoomto,
             ];
         }
@@ -493,8 +493,8 @@ class LayerService
         // set zooms of links
         if ($linkedLayer->loc_minzoom > 0 || $linkedLayer->loc_maxzoom > 0) {
             $arrLayerData['zoom'] = [
-                'min' => $linkedLayer->loc_minzoom > 0 ? $linkedLayer->loc_minzoom: "0",
-                'max' => $linkedLayer->loc_maxzoom > 0 ? $linkedLayer->loc_maxzoom: "40",
+                'min' => $linkedLayer->loc_minzoom > 0 ? $linkedLayer->loc_minzoom: '0',
+                'max' => $linkedLayer->loc_maxzoom > 0 ? $linkedLayer->loc_maxzoom: '40',
                 'onclick_to' => $linkedLayer->loc_onclick_zoomto,
             ];
         }

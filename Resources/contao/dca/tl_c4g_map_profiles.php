@@ -45,13 +45,13 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'mode'                    => 2,
             'fields'                  => ['name'],
             'panelLayout'             => 'filter,search',
-            'headerFields'            => ['name','theme','is_backend_geopicker_default'],
+            'headerFields'            => ['name','theme'],
             'icon'                    => 'bundles/con4giscore/images/be-icons/con4gis_blue.svg',
             ],
         'label' =>
             [
             'flag'                    => 1,
-            'fields'                  => ['name','theme:tl_c4g_map_themes.name','is_backend_geopicker_default'],
+            'fields'                  => ['name','theme:tl_c4g_map_themes.name'],
             'showColumns'             => true
             ],
         'global_operations' =>
@@ -103,7 +103,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
     // Palettes
     'palettes' =>
         [
-        '__selector__'                => ['resize_locstyles_zoom', 'mouse_nav','cluster_all','attribution','hover_popups','geopicker','overpassEngine', 'cesium', 'popupHandling'],
+        '__selector__'                => ['resize_locstyles_zoom', 'mouse_nav','cluster_all','attribution','hover_popups','overpassEngine', 'cesium', 'popupHandling'],
         'default'                     => '{general_legend},name,theme,mapFunctions,initial_open_comp;'.
                                          '{navigation_legend:hide},mouse_nav,touch_nav,keyboard_nav;'.
                                          '{click_legend:hide},link_newwindow,link_open_on,hover_popups, popupHandling;'.
@@ -112,9 +112,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                                          '{geosearch_legend:hide},geosearch_headline,geosearch_engine,geosearchParams,geosearch_result_locstyle,geosearch_placeholder,geosearch_results,geosearch_zoomto,geosearch_zoombounds,geosearch_animate,geosearch_markresult,geosearch_popup,geosearch_attribution,geosearch_collapsed;'.
                                          '{attribution_legend:hide},attribution;'.
                                          '{information_legend:hide},scaleline,mouseposition,permalink_get_param,zoomlevel,infopage;'.
-                                         '{geopicker_legend:hide},is_backend_geopicker_default,geopicker;'.
                                          '{locstyle_legend:hide},label_color,resize_locstyles_zoom;'.
-                                         '{expert_legend:hide},overpassEngine,caching,cesium,external_elements,filters,filterHandling,be_optimize_checkboxes_limit,custom_div;'
+                                         '{expert_legend:hide},overpassEngine,caching,cesium,external_elements,filters,filterHandling,be_optimize_checkboxes_limit,custom_div,geopicker;'
         ],
 
 
@@ -680,15 +679,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'eval'                  => ['mandatory'=>false, 'rte'=>'tinyMCE', 'helpwizard'=>true],
                 'explanation'           => 'insertTags',
                 'sql'                   => "text NULL"
-            ],
-        'is_backend_geopicker_default' =>
-            [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['is_backend_geopicker_default'],
-                'exclude'                 => true,
-                'default'                 => false,
-                'inputType'               => 'checkbox',
-                'eval'                    => ['tl_class'=>'long'],
-                'sql'                     => "char(1) NULL"
             ],
         'geopicker' =>
             [

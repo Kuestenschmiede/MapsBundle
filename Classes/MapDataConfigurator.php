@@ -93,9 +93,8 @@ class MapDataConfigurator
         //check if we are in backend mode
         if ($options['type'] == 'geopicker') {
             // select selected backend profile
-            $result = $database->prepare("SELECT id FROM `tl_c4g_map_profiles` WHERE `is_backend_geopicker_default` = '1'")->limit(1)->execute();
-            $profileId = $result->row();
-            $profileId = $profileId['id'];
+            $settings = C4gSettingsModel::findAll();
+            $profileId = $settings[0]->beGeopickerProfile ? $settings[0]->beGeopickerProfile : $settings[0]->defaultprofile;
         }
 
         if (!$profileId) {
@@ -132,16 +131,13 @@ class MapDataConfigurator
         // use default if the profile was not found
         if (!$profile) {
             if (!$options['type'] == 'geopicker') {
-                $profile = C4gMapProfilesModel::findBy('is_backend_geopicker_default', 1);
-                if (!$profile) {
-                    $settings = C4gSettingsModel::findAll();
-                    $profileId = $settings[0]->defaultprofile;
-                    if (!$profileId) {
-                        $profiles = C4gMapProfilesModel::findAll();
-                        if ($profiles && (count($profiles) > 0)) {
-                            $length = count($profiles);
-                            $profile = $profiles[$length - 1];
-                        }
+                $settings = $settings ? $settings : C4gSettingsModel::findAll();
+                $profileId = $settings[0]->defaultprofile;
+                if (!$profileId) {
+                    $profiles = C4gMapProfilesModel::findAll();
+                    if ($profiles && (count($profiles) > 0)) {
+                        $length = count($profiles);
+                        $profile = $profiles[$length - 1];
                     }
                 }
             }
