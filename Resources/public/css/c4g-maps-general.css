@@ -721,10 +721,26 @@ span.c4g-starboard-locstyle-point:before {
   border: 2px solid var(--var-bordercolor);
   background-color: var(--var-color);
   border-radius: 50%;
+  top: 0;
+  bottom: 0;
+  margin: auto;
 }
+span.c4g-starboard-locstyle-square:before {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--var-bordercolor);
+  background-color: var(--var-color);
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+
 
 span.c4g-starboard-locstyle-cross {
   transform: rotate(45deg);
+  text-align:center;
 }
 
 span.c4g-starboard-locstyle-cross:before {
@@ -741,6 +757,9 @@ span.c4g-starboard-locstyle-triangle:before {
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
   border-bottom: 20px solid var(var-color);
+  top: 0;
+  bottom: 0;
+  margin: auto;
 }
 
 /*-------------------------*/
