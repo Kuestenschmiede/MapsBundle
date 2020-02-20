@@ -17,6 +17,7 @@ import {Control, OverviewMap as OvMap} from "ol/control";
 import {cssConstants} from "./../c4g-maps-constant";
 import {utils} from "../c4g-maps-utils";
 import {getLanguage} from "../c4g-maps-i18n";
+import LayerGroup from "ol/layer/Group";
 
 export class OverviewMap extends Component {
 
@@ -29,7 +30,8 @@ export class OverviewMap extends Component {
     const scope = this;
 
     this.state = {
-      open: !props.collapsed
+      open: !props.collapsed,
+      layers: this.props.layers
     };
     let langConstants = getLanguage(props.mapController.data);
     this.mapController = props.mapController;
@@ -59,26 +61,35 @@ export class OverviewMap extends Component {
       }
     });
 
-    this.ovm = new OvMap({
-      collapsed: props.collapsed || true,
-      collapsible: false,
-      rotateWithView: true,
-      className: 'ol-overviewmap ol-custom-overviewmap',
-      target: props.ovmTarget,
-      layers: props.layers
-    });
-
     this.element = element;
     let control = new Control({
       element: element,
       target: props.target
     });
+    this.baseLayerIds = [];
     this.mapController.mapsControls.controls.overviewMap = control;
     this.mapController.map.addControl(control);
   }
 
   render() {
-    return <div></div>;
+    return <div id={"overview-map-target"}>
+    </div>;
+  }
+
+  componentDidMount() {
+  }
+
+  createOverviewMap() {
+    let ovmTarget = document.querySelector("#overview-map-target");
+    this.ovm = new OvMap({
+      collapsed: this.props.collapsed || true,
+      collapsible: false,
+      rotateWithView: true,
+      className: 'ol-overviewmap ol-custom-overviewmap',
+      target: ovmTarget,
+      layers: this.state.layers
+    });
+    this.ovm.setMap(this.props.mapController.map);
   }
 
   removeFromMap() {
@@ -113,7 +124,24 @@ export class OverviewMap extends Component {
     } else if (this.state.open) {
       jQuery(this.element).removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN);
       jQuery(this.props.ovmTarget).removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN);
+    }
+    if (prevState.layers.length !== this.state.layers.length) {
+      if (!this.ovm) {
+        this.createOverviewMap();
+      } else {
+        let layerGroup = new LayerGroup({layers: this.state.layers});
+        this.ovm.getOverviewMap().setLayerGroup(layerGroup);
+      }
 
+    }
+  }
+
+  addLayer(layer, id) {
+    if (!this.baseLayerIds.includes(id)) {
+      this.baseLayerIds.push(id);
+      let arrLayers = [...this.state.layers];
+      arrLayers.push(layer);
+      this.setState({layers: arrLayers})
     }
   }
 }
