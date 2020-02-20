@@ -26,7 +26,7 @@ export var langConstantsGerman = {
   FREEHAND: 'Freihand',
   LINE: 'Linie',
   POLYGON: 'Fläche',
-  CIRCLE: 'Radius',
+  CIRCLE: 'Kreis',
   PERIMETER: 'Umfang',
   LENGTH: 'Länge',
   SURFACEAREA: 'Flächeninhalt',

@@ -263,7 +263,8 @@ export class MeasuretoolsView extends Component {
             value: 0
           };
           newFeature.measuredValues['radius'].value = radius.rawValue;
-          featureTooltip.setContent("<strong>" + name + "</strong>" + "<br>" + radius.htmlValue);
+          featureTooltip.setContent("<strong>" + name + "</strong>" + "<br>"
+            + newFeature.measuredValues['radius'].description + radius.htmlValue);
         }
         if (feature.get('geometryType') === 'polygon'
           || feature.get('geometryType') === 'circle') {
@@ -273,7 +274,8 @@ export class MeasuretoolsView extends Component {
             value: 0
           };
           newFeature.measuredValues['area'].value = area.rawValue;
-          featureTooltip.setContent("<strong>" + name + "</strong>" + "<br>" + area.htmlValue);
+          featureTooltip.setContent("<strong>" + name + "</strong>" + "<br>"
+            + newFeature.measuredValues['area'].description + area.htmlValue);
         }
         feature.set('tooltip', featureTooltip);
         scope.props.modifyFeature(newFeature, newFeature.id);
