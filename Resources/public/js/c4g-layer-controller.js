@@ -473,14 +473,19 @@ export class BetterLayerController {
                 } catch (e) {
                   console.warn('Can not read feature.');
                 }
-              }
-              else if (typeof response === "object"){
+              } else if (typeof response === "object"){
                 let geojson = osmtogeojson(response);
                 features = new olFormat.GeoJSON().readFeatures(geojson, {featureProjection: "EPSG:3857"});
-              }
-              else {
+              } else {
                 return false;
               }
+              // set popups for features
+              if (data.popup.content === "${FNfnStandardInfoPopup}") {
+                for (let i = 0; i < features.length; i++) {
+                  features[i].set('popup', data.popup.content);
+                }
+              }
+
               let requestData = layer.content[0].settings ? layer.content[0].settings: {};
               for (let featureId in features) {
                 if (features.hasOwnProperty(featureId)) {
