@@ -254,7 +254,7 @@ ul.c4g-overlays li a{
 }
 
 .c4g-content-layertree span[class*=locstyle] {
-  margin-right: .4em;
+  width: 25px;
 }
 
 .c4g-layertree a.c4g-disabled,
