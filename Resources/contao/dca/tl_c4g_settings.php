@@ -11,28 +11,15 @@
  * @link       https://www.con4gis.org
  */
 
-$GLOBALS['TL_DCA']['tl_c4g_settings']['palettes']['default'] .= '{c4g_maps_legend:hide},disabledC4gMapObjects,defaultprofile,caching;';
+Contao\CoreBundle\DataContainer\PaletteManipulator::create()
+    ->addLegend('c4g_maps_legend', 'con4gisIoLegend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_AFTER, true)
+    ->addField(['defaultprofile','beGeopickerProfile','caching','disabledC4gMapObjects'], 'c4g_maps_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_APPEND)
+    ->applyToPalette('default', 'tl_c4g_settings');
+
 
 /**
  * Add fields
  */
-$GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['disabledC4gMapObjects'] =
-    [
-    'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_settings']['disabledC4gMapObjects'],
-    'inputType'               => 'checkbox',
-    'options_callback'        => ['tl_settings_c4g_maps', 'getMapTables'],
-    'eval'                    => ['multiple'=>true],
-    'sql'                     => "blob NULL"
-    ];
-$GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['caching'] =
-    [
-    'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_settings']['caching'],
-    'inputType'               => 'checkbox',
-    'options'                 => $GLOBALS['con4gis']['api-caching'],
-    'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_settings']['references']['caching'],
-    'eval'                    => ['multiple'=>true],
-    'sql'                     => "blob NULL"
-    ];
 $GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['defaultprofile'] =
     [
     'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_settings']['defaultprofile'],
@@ -40,7 +27,7 @@ $GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['defaultprofile'] =
     'inputType'               => 'select',
     'foreignKey'              => 'tl_c4g_map_profiles.name',
     'eval'                    => ['tl_class'=>'clr',
-        'includeBlankOption'=>true, 'blankOptionLabel'=>&$GLOBALS['TL_LANG']['tl_c4g_maps']['default_profile'],
+        'includeBlankOption'=>true,  'chosen'=>true, 'blankOptionLabel'=>&$GLOBALS['TL_LANG']['tl_c4g_maps']['default_profile'],
         'submitOnChange' => true, 'alwaysSave' => true],
     'relation'                => ['type'=>'belongsTo', 'load'=>'eager'],
     'sql'                     => "int(10) unsigned NOT NULL default '0'",
@@ -50,16 +37,40 @@ $GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['defaultprofile'] =
     )
 
     ];
-//$GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['defaultData'] = [
-//    'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_settings']['defaultData'],
-//    'inputType'               => 'checkbox',
-//    'options'                 => &$GLOBALS['TL_LANG']['tl_c4g_settings']['references']['defaultData'],
-//    'eval'                    => array('mandatory'=>false, 'multiple'=>true, 'includeBlankOption'=>true),
-//    'sql'                     => [
-//        'type'      => 'string',
-//        'default'   => 'a:1:{i:0;s:6:"tables";}'
-//    ]
-//];
+$GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['beGeopickerProfile'] =
+    [
+        'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_settings']['beGeopickerProfile'],
+        'exclude'                 => true,
+        'inputType'               => 'select',
+        'foreignKey'              => 'tl_c4g_map_profiles.name',
+        'eval'                    => ['tl_class'=>'clr',
+            'includeBlankOption'=>true, 'chosen'=>true,'blankOptionLabel'=>&$GLOBALS['TL_LANG']['tl_c4g_maps']['default_profile'],
+            'submitOnChange' => true, 'alwaysSave' => true],
+        'relation'                => ['type'=>'belongsTo', 'load'=>'eager'],
+        'sql'                     => "int(10) unsigned NOT NULL default '0'",
+        'xlabel' => array
+        (
+            array('tl_settings_c4g_maps', 'profilesLink')
+        )
+
+    ];
+$GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['caching'] =
+    [
+        'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_settings']['caching'],
+        'inputType'               => 'checkbox',
+        'options'                 => $GLOBALS['con4gis']['api-caching'],
+        'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_settings']['references']['caching'],
+        'eval'                    => ['multiple'=>true],
+        'sql'                     => "blob NULL"
+    ];
+$GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['disabledC4gMapObjects'] =
+    [
+        'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_settings']['disabledC4gMapObjects'],
+        'inputType'               => 'checkbox',
+        'options_callback'        => ['tl_settings_c4g_maps', 'getMapTables'],
+        'eval'                    => ['multiple'=>true],
+        'sql'                     => "blob NULL"
+    ];
 
 /**
  * Class tl_settings_c4g_maps

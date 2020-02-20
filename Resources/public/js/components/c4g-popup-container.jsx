@@ -61,7 +61,7 @@ export class PopupContainer extends Component {
                     closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close} detailBtnClass={""} detailBtnCb={""}>
             <div dangerouslySetInnerHTML={{__html: this.routeButtons.outerHTML}} />
           </Titlebar>
-          <div className={"c4g-popup-content c4g-popup-content"} dangerouslySetInnerHTML={{__html: this.state.content}}>
+          <div className={"c4g-popup-content"} dangerouslySetInnerHTML={{__html: this.state.content}}>
           </div>
         </div>
       </div>
@@ -87,5 +87,4 @@ export class PopupContainer extends Component {
   toggleDetails() {
     this.setState({detailsOpen: !this.state.detailsOpen});
   }
-
 }

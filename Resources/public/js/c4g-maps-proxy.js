@@ -335,11 +335,18 @@ export class MapProxy {
       if (feature && feature.get('popup')) {
         // single POI
         popupInfos = feature.get('popup');
+        if (popupInfos === "${FNfnStandardInfoPopup}") {
+          let popupContent = utils.replaceFunctionPlaceholders(popupInfos, feature, layer, self.options.mapController.data.lang);
+          popupInfos = {};
+          popupInfos.content = popupContent;
+          popupInfos.async = false;
+        }
       } else if (layer && layer.popup) {
         popupInfos = layer.popup;
       } else {
         feature = false;
       }
+
       if (feature && feature.get('loc_linkurl')) {
         if (self.options.mapController.data.link_newwindow === '1') {
           window.open(feature.get('loc_linkurl'));

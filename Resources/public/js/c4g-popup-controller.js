@@ -188,7 +188,7 @@ export class C4gPopupController {
       } else if (layer.get('popup')) {
         routeButtons = parseInt(layer.get('popup').routing_link, 10);
       }
-      this.currentPopup.setState({content: popupContent, showRouteButtons: routeButtons});
+      this.currentPopup.setState({content: popupContent, showRouteButtons: routeButtons, open: true});
     }
 
 

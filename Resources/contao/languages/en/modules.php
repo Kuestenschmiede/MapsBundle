@@ -27,3 +27,5 @@ $GLOBALS['TL_LANG']['MOD']['c4g_map_filters']       = ['Map filters', 'Maintain 
  */
 $GLOBALS['TL_LANG']['FMD']['c4g_maps'] 				= ['(maps) Map', 'Integrate an OpenLayers map with con4gis-Maps.'];
 $GLOBALS['TL_LANG']['FMD']['c4g_search'] 			= ['(maps) External map search', 'Integrate a search with con4gis-Maps that redirects to the map.'];
+$GLOBALS['TL_LANG']['FMD']['c4g_external_map_element']  = ['(maps) External map element', 'This module adds an external div displaying a map element.'];
+

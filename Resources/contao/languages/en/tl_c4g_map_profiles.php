@@ -23,7 +23,6 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['external_elements'] = ['External ele
 /** Basiskarten */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayers'] = ['Base layers', 'Check the baselayers you wish to see in the Starboard. Default: all. The sorting can be adjusted via the baselayer module (list).'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['default_baselayer'] = ['Default Base Layer', 'Select the base layer to be pre-selected when the map is loaded.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayerswitcher'] = ['Show Base Maps', 'If checked, the base maps can be selected in the Starboard.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayerswitcher_label'] = ['Header Base Maps', 'Default: "Base Maps"'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayerswitcher_filter'] = ['Enables baselayer filter', 'Shows a filter field above the baselayerswitcher.'];
 
@@ -37,23 +36,16 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['resize_min_scale'] = ['Minimum scali
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['resize_max_scale'] = ['Maximum scaling', 'Specify a scaling that should not be exceeded (locations are not scaled larger than this value).'];
 
 /** Navigation */
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['zoom_panel'] = ['Zoom Panel', 'Creates buttons to zoom in and out of the map.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['zoom_panel_button'] = ['Additional Button in Zoom Panel', 'Display an additional button in the zoom panel. Clicking the button centers the map to the selected position.'];
-//$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['zoom_panel_slider'] = ['Zoom Panel Slider', 'Creates a slider instead of buttons to zoom in and out.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouse_nav'] = ['Navigation with Mouse', 'Activates the ability to zoom in and out and move the map with your mouse.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouse_nav_wheel'] = ['Mousewheel Zoom', 'If checked, the user can zoom in and out using the mouse wheel.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouse_nav_doubleclick_zoom'] = ['Zoom with Double Click', 'If checked, the user can zoom in with a double click.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouse_nav_zoombox'] = ['Zoombox with [Shift + Click]', 'Activates the ability to zoom in by selecting a rectangle by clicking the map while holding the shift key.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouse_nav_dragmode'] = ['Rotate Map with [Ctrl + Shift + Click]', 'Activates the ability to rotate the map by clicking it while holding the shift and ctrl keys. The button is only displayed if the map has been rotated (return).'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouse_nav_kinetic'] = ['Kinetic Mouse Scrolling','If checked, scrolling with the mouse continues for a short period after the mouse button was let go (as opposed to stopping instantly.).'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['touch_nav'] = ['Touch Navigation', 'Enables touch screen navigation (requires touch screen device).'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['keyboard_nav'] = ['Keyboadr Navigation', 'Enables moving the map with the arrow keys and zooming in and out with the + and - keys, respectively.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['fullscreen'] = ['Full Screen Mode', 'Shows a button to switch to full screen mode.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['print'] = ['Map Export', 'Shows a button to export the map as an image file.'];
 
 /** Kartenstruktur */
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard'] = ['Enable Starboard','Enables the Starboard.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['layerswitcher'] = ['Show Map Elements', 'If checked the map elements are shown in the starboard.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['layerswitcher_label'] = ['Starboard Header Map Elements', 'Default: "Map Elements"'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['layer_filter'] = ['Enables layer filter', 'Shows a filter field above the layerswitcher.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_open'] = ['Open Starboard Automatically', 'If checked, the starboard is open by default.'];
@@ -75,8 +67,6 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['collapsed_attribution'] = ['Show ini
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['add_attribution'] = ['Additional copyright text', 'is added to the copyright text of the map service used.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cfg_logo_attribution']  = ['Show con4gis-logo', 'Shows the con4gis-logo on the map. You can turn it off, but we would appreciate it if you\'d mention "con4gis" at a different location on your page.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['div_attribution'] = ['DIV attribution', 'Enter the ID of an existing DIV element if you want to put the attributon outside the map.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overviewmap'] = ['Overview map', 'Adds a button in the lower right corner of the map, which when pressed shows an overwiew map.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['graticule'] = ['Graticule', 'Shows a button, which activates a graticule that visualizes the latitude and longitude on the map.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['scaleline'] = ['Scale line', 'Shows a line which demonstrates the scale of the map.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouseposition'] = ['Mouse coordinates', 'Shows the GEO coordinates of the current mouse position.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['zoomlevel'] = ['Show zoomlevel', 'Displays the current zoomlevel.'];
@@ -84,8 +74,6 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['infopage'] = ['Info page (legend)', 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp'] = ['Initially opened map control', 'Here you can select whether an element should be displayed initially open and if so, which one.'];
 
 /** Kartenwerkzeuge */
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['measuretool'] = ['Measure tools', 'Shows a button which activates tools for measuring distances/areas.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['permalink'] = ['Permalink', 'Displays a link representing the current map state, which may be bookmarked or sent via E-Mail for example.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['permalink_get_param'] = ['Use GET-parameter for permalink-values', 'If you want to use a GET-parameter for the permalink instead of the URL-hash you can name it here.'];
 
 /** Suchwerkzeuge */
@@ -111,7 +99,6 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_collapsed'] = ['Collapsed 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_placeholder'] = ["Placeholder for input field", "Specify a placeholder that is displayed until an input is made."];
 
 /** Geopicker (Position bestimmen) */
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['is_backend_geopicker_default'] = ['Standard Profile Backend Geopicker', 'If checked, this profile is used as backedn geopicker (structure elements, events, ...).'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker'] = ['Show Geopicker (Frontend)', 'Adds a geopicker in the frontend, similar to the backend wizard to pick coordinates which can be used in forms.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_fieldx'] = ['Form field (Latitude)', 'The ID of an input field, where the latitude of the chosen location is stored.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_fieldy'] = ['Form field (Longitude)', 'The ID of an input field, where the longitude of the chosen location is stored.'];
@@ -146,8 +133,6 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['zoom'] 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['zoomPosition'] = ['Zoom to position','Zooms to the current device position on safe sides.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['zoomHome'] = ['Zoom back (house)','Zooms back to the preset position on the map.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['zoomExtent'] = ['Zoom out (world)','Zooms back to the smallest possible zoom level.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['fullscreen'] = ['Full screen mode','Shows a button to switch to the full screen mode of the browser.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['print'] = ['Map export','Shows a button that allows the map to be exported as PNG. Please pay attention to the copyright information of the map provider.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['graticule'] = ['Geographical network','Fades in a switch that displays a geographic grid that visualizes longitude and latitude using horizontal and vertical lines.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['layerswitcher'] = ['Map structure element selection (Starboard)','If you select this checkbox, the selection list of map structural elements is displayed in a separate tab on the Starboard.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['baselayerswitcher'] = ['Base map selection','If you select this checkbox, the selection list of base maps is displayed in a separate tab on the starboard.'];
@@ -162,14 +147,6 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['CLICK']   = 'Single mo
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['DBLCL']   = 'Double mouseclick';
 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['default_theme']   = 'con4gis Default-Layout';
-
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_mouse_nav_dragmode']['0'] = 'Off';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_mouse_nav_dragmode']['1'] = 'Rotate map';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_mouse_nav_dragmode']['2'] = 'Rotate and zoom map';
-
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_zoom_panel_button']['1'] = 'with World-Icon (to 0 coordinate and min zoom)';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_zoom_panel_button']['2'] = 'with Home-Icon (to configured map zoom)';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_zoom_panel_button']['3'] = 'with Position-Icon (to browser/device position)';
 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine']['1'] = 'Nominatim by Openstreetmap (<a href="https://operations.osmfoundation.org/policies/nominatim/" rel="noopener" target="_blank">usage policy</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine']['2'] = 'Nominatim by MapQuest (<a href="http://developer.mapquest.com/web/products/open/nominatim" rel="noopener" target="_blank">usage policy</a>)';
@@ -223,9 +200,6 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_legend'] = 'Starboard (map
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['attribution_legend'] = 'Copyright informations (attributions)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['information_legend'] = 'Additional map informations';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_legend'] = 'Geosearch';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_legend'] = 'Map editor';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overpassLegend'] = 'Overpass-API';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_legend'] = 'Geopicker';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium_legend'] = 'Cesium (globe view)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['click_legend'] = 'Click settings';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['expert_legend'] = 'Expert settings';
