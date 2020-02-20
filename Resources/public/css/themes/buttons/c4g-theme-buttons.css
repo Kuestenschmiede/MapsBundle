@@ -257,6 +257,10 @@ ul.c4g-overlays li a{
   width: 25px;
 }
 
+.c4g-content-layertree span[class*=locstyle]:not(.c4g-starboard-locstyle-triangle):not(.c4g-starboard-locstyle-square):not(.c4g-starboard-locstyle-point) {
+  text-align:center;
+}
+
 .c4g-layertree a.c4g-disabled,
 .c4g-baselayertree-content a.c4g-disabled {
   opacity: .5;

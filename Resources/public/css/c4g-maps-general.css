@@ -691,9 +691,9 @@ span.c4g-starboard-locstyle-star:after {
   content: "\f005";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
-  font-size: 15.5px;
+  font-size: 13px;
   position: absolute;
-  left: 6.5px;
+  left: 10px;
   color: var(--var-color);
 }
 
@@ -707,10 +707,9 @@ span.c4g-starboard-locstyle-star:before {
 
 span.c4g-starboard-locstyle-x:before {
   content: "X";
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 100;
+  font-family: 'Arial';
   font-size: 18px;
-  color: var(--var-color);
+  color: var(--var-bordercolor);
 }
 
 span.c4g-starboard-locstyle-point:before {
@@ -724,6 +723,7 @@ span.c4g-starboard-locstyle-point:before {
   top: 0;
   bottom: 0;
   margin: auto;
+  margin-left: 1.5px;
 }
 span.c4g-starboard-locstyle-square:before {
   content: "";
@@ -735,6 +735,7 @@ span.c4g-starboard-locstyle-square:before {
   top: 0;
   bottom: 0;
   margin: auto;
+  margin-left: 1.5px;
 }
 
 
@@ -748,18 +749,21 @@ span.c4g-starboard-locstyle-cross:before {
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;
+  color: var(--var-bordercolor);
 }
 
 span.c4g-starboard-locstyle-triangle:before {
   content: "";
   position: absolute;
-  border-top: 10px solid transparent;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 20px solid var(var-color);
+  height: 0;
+  border-top: 0px solid transparent;
+  border-left: 9.5px solid transparent;
+  border-right: 9.5px solid transparent;
+  border-bottom: 20px solid var(--var-color);
   top: 0;
   bottom: 0;
   margin: auto;
+  margin-left: 1.5px;
 }
 
 /*-------------------------*/
