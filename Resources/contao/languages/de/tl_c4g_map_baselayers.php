@@ -33,7 +33,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['klokan_type']   			= array('Klokan
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['here_type']   			= array('HERE', 'Bitte wählen Sie den Kartenstil aus.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['thunderforest_type']      = array('Thunderforest', 'Bitte wählen Sie den Kartenstil aus.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['bing_style']     			= array('Bing Maps Kartenstil', 'Bitte wählen Sie den Kartenstil von Bing Maps aus.');
-$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['bing_key']       			= array('Bing Applikationsschlüssel (Key)', 'Bitte geben Sie hier ihren Bing Applikationsschlüssel (Key) ein. Falls Sie noch keinen besitzen, dann generieren Sie ihn sich auf http://bingmapsportal.com/.');
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['bing_key']       			= array('Bing Applikationsschlüssel (Key)', 'Bitte geben Sie hier Ihren Bing Applikationsschlüssel (Key) ein. Falls Sie noch keinen besitzen, dann generieren Sie ihn sich auf http://bingmapsportal.com/.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['google_style']   			= array('Google Maps Kartenstil', 'Bitte wählen Sie den Kartenstil von Google Maps aus.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['image_src']   			= ['Bild auswählen', 'Bitte wählen Sie das Bild aus, was Sie als Basiskarte anzeigen wollen.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['geoimage_json']           = ['JSON zur Georeferenzierung', 'Bitte geben Sie hier ein <a href="https://www.json.org/" target="_blank" rel="noopener">JSON</a> zur Georeferenzierung ein. Sie können dieses durch <a href="http://viglino.github.io/Map-georeferencer/" target="_blank" rel="noopener">dieses Tool</a> generieren lassen oder manuell die Paramater "imageCenter", "imageRotate" und "imageScale" eintragen.'];
@@ -156,7 +156,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['cesium_legend']       = 'Cesium Ei
  * Info text
  */
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['infotext'] = 'Die Basiskarte ist die unterste Kartenschicht (das Kartenbild). '.
-    'Über verschiedene Kartenanbieter oder über eigene Kartenserver könnt Ihr Raster- oder Vektorkarten laden. Gleiches gilt für Overlays. '.
+    'Über verschiedene Kartenanbieter oder über eigene Kartenserver können Sie Raster- oder Vektorkarten laden. Gleiches gilt für Overlays. '.
     'Overlays sind Kartenstücke, teiltransparente Karten oder feste Karteninformationen, die als aufliegende Schicht fester Bestandteil der Karte ist. '.
     'Overlays lassen sich über den linken Button in der Basiskartenauflistung für jede Karte hinzubringen. '.
     'Mehr auf <a href="https://docs.con4gis.org/basiskarten_con4gis-Maps" title="con4gis Docs Basiskarten" target="_blank" rel="noopener"><b>docs.con4gis.org</b></a>';
