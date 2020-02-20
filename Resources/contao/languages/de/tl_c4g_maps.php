@@ -197,6 +197,6 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['editalias'] = array('Quellelement bearbeiten
 /**
  * Info text
  */
-$GLOBALS['TL_LANG']['tl_c4g_maps']['infotext'] = 'Die Kartenstruktur beschreibt die Karte und alle Karteninhalte. Hier könnt Ihr mächtige, über das Starboard schaltbare Strukturen aufbauen. '.
+$GLOBALS['TL_LANG']['tl_c4g_maps']['infotext'] = 'Die Kartenstruktur beschreibt die Karte und alle Karteninhalte. Hier können Sie mächtige, über das Starboard schaltbare Strukturen aufbauen. '.
     'Die Karte ist das Elternelement. Punkte, Strecken und Flächen könnt Ihr selbst in die Karte bringen oder über die zahlreichen Lokationstypen anbinden. '.
     'Mehr auf <a href="https://docs.con4gis.org/kartenstrukturen_con4gis_maps" title="con4gis Docs Kartenstruktur" target="_blank" rel="noopener"><b>docs.con4gis.org</b></a>';
