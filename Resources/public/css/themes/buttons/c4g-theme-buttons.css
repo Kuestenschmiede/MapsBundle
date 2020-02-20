@@ -400,7 +400,7 @@ ul.c4g-overlays li a{
   margin-bottom: 10px;
   border-radius: 15px;
   border: 1px solid;
-  padding: .4em;
+  padding: 20px .4em .4em;
 }
 
 .ol-selectable div.c4g-active.c4g-popup-wrapper img {
@@ -430,18 +430,15 @@ ul.c4g-overlays li a{
 }
 
 div.c4g-tooltip-popup {
-  margin-bottom: 7px;
-  padding: 5px 10px;
+  pointer-events: none;
+  padding: 15px .2em .2em;
   border-radius: 5px;
   border: 1px solid;
 }
 div.c4g-horizontal.c4g-tooltip-popup {
-  margin-bottom: -12px;
   margin-left: 10px;
 }
-div.c4g-horizontal.c4g-closeable.c4g-tooltip-popup {
-  padding-right: 30px;
-}
+
 div.c4g-tooltip-popup:before {
   pointer-events: none;
   content: " ";
@@ -456,9 +453,12 @@ div.c4g-tooltip-popup:before {
   /*bottom: -5px;*/
   /*left: -4px;*/
 /*}*/
-.c4g-tooltip-popup button.c4g-popup-close {
-  top: 5px;
-  right: 5px;
+
+.c4g-tooltip-popup.c4g-horizontal.c4g-closeable button.c4g-popup-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  pointer-events: all;
 }
 
 .c4g_brick_popup_button {

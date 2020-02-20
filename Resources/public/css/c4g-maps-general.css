@@ -533,6 +533,10 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
   max-width: 240px;
 }
 
+.c4g-measuretools-content input {
+  max-width: calc(100% - .4em);
+}
+
 .c4g-sideboard.c4g-popup-container {
   max-width: var(--popup-max-width);
 }
@@ -681,6 +685,8 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
   padding: 0;
 }
 
+/*----lokationsstyles in starboard----*/
+
 span.c4g-starboard-locstyle-star:after {
   content: "\f005";
   font-family: 'Font Awesome 5 Free';
@@ -692,13 +698,52 @@ span.c4g-starboard-locstyle-star:after {
 }
 
 span.c4g-starboard-locstyle-star:before {
-
   content: "\f005";
   font-family: 'Font Awesome 5 Free';
   font-weight: 100;
   font-size: 18px;
   color: var(--var-bordercolor);
 }
+
+span.c4g-starboard-locstyle-x:before {
+  content: "X";
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 100;
+  font-size: 18px;
+  color: var(--var-color);
+}
+
+span.c4g-starboard-locstyle-point:before {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--var-bordercolor);
+  background-color: var(--var-color);
+  border-radius: 50%;
+}
+
+span.c4g-starboard-locstyle-cross {
+  transform: rotate(45deg);
+}
+
+span.c4g-starboard-locstyle-cross:before {
+  content: "\f067";
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: inherit;
+}
+
+span.c4g-starboard-locstyle-triangle:before {
+  content: "";
+  position: absolute;
+  border-top: 10px solid transparent;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 20px solid var(var-color);
+}
+
+/*-------------------------*/
 
 
 

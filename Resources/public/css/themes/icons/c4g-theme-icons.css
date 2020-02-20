@@ -483,12 +483,3 @@ button.c4g-beach-options:before {
 .c4g-starboard-locstyle > img {
   vertical-align: middle;
 }
-.c4g-starboard-locstyle-point{
-   background-color: var(--var-color);
-   border: var(--var-bordercolor);
-   border-radius: 100%;
-}
-.c4g-starboard-locstyle-square{
-   background-color: var(--var-color);
-   border: var(--var-bordercolor);
-}
