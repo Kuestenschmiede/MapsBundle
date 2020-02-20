@@ -12,6 +12,7 @@
  */
 
 import React, { Component } from "react";
+import {utils} from "../c4g-maps-utils"
 
 export class FeatureFilterItem extends Component {
     constructor(props) {
@@ -28,7 +29,7 @@ export class FeatureFilterItem extends Component {
                         checked={scope.props.checked.identifier === scope.props.feature.identifier}
                         value={this.props.feature.identifier}
                     />
-                    {this.props.feature.translation}
+                    {utils.decodeHTML(this.props.feature.translation)}
                 </label>
             </div>
         );

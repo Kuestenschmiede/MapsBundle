@@ -480,3 +480,15 @@ button.c4g-beach-options:before {
 .c4g-sideboard > div div[class*=filter].without-button:after {
   content: "\f0b0";
 }
+.c4g-starboard-locstyle > img {
+  vertical-align: middle;
+}
+.c4g-starboard-locstyle-point{
+   background-color: var(--var-color);
+   border: var(--var-bordercolor);
+   border-radius: 100%;
+}
+.c4g-starboard-locstyle-square{
+   background-color: var(--var-color);
+   border: var(--var-bordercolor);
+}

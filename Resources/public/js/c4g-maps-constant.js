@@ -99,6 +99,13 @@ export var cssConstants = {
   STARBOARD_BASELAYERTREE: 'c4g-baselayertree',
   STARBOARD_LAYERTREE: 'c4g-layertree',
   STARBOARD_CONTENT_LAYERSWITCHER: 'c4g-content-layerswitcher',
+  STARBOARD_LOCSTYLE: 'c4g-starboard-locstyle',
+  STARBOARD_LOCSTYLE_POINT: 'c4g-starboard-locstyle-point',
+  STARBOARD_LOCSTYLE_SQUARE: 'c4g-starboard-locstyle-square',
+  STARBOARD_LOCSTYLE_STAR: 'c4g-starboard-locstyle-star',
+  STARBOARD_LOCSTYLE_X: 'c4g-starboard-locstyle-x',
+  STARBOARD_LOCSTYLE_CROSS: 'c4g-starboard-locstyle-cross',
+  STARBOARD_LOCSTYLE_TRIANGLE: 'c4g-starboard-locstyle-triangle',
   TOOLTIP_POPUP: 'c4g-tooltip-popup',
   ZOOM_LEVEL: 'c4g-zoom-level',
 
