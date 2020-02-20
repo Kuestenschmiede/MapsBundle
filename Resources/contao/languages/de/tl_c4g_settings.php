@@ -14,7 +14,10 @@
 $GLOBALS['TL_LANG']['tl_c4g_settings']['disabledC4gMapObjects'] = ["Deaktivierte Quellen", "Wählen Sie die Quellen aus, die Sie im Backend deaktivieren möchten."];
 $GLOBALS['TL_LANG']['tl_c4g_settings']['c4g_maps_legend'] = "Karteneinstellungen";
 $GLOBALS['TL_LANG']['tl_c4g_settings']['caching'] = ["Caching aktivieren", "Caching für con4gis-Dienste aktivieren. Die Sinnhaftigkeit des Cachings ist von Fall zu Fall unterschiedlich und bedarf eigener Tests."];
+
 $GLOBALS['TL_LANG']['tl_c4g_settings']['defaultprofile'] = ["Standardprofil", "Wählen Sie ein Kartenprofil aus, welches als Standardprofil genutzt werden soll. Das Profil wird dann geladen, wenn kein anderes Profil gesetzt wurde. Zum Beispiel für den Geopicker."];
+$GLOBALS['TL_LANG']['tl_c4g_settings']['beGeopickerProfile'] = ['Backend-Geopicker Profil', 'Den Geopicker benötigen Sie zum Eintrag der POIs um die Koordinaten per Klick zu ermitteln.'];
+
 $GLOBALS['TL_LANG']['tl_c4g_settings']['defaultData'] = ["Beispieldatensätze generieren", "Wählen Sie, ob Beispieldatensätze generiert werden sollen."];
 
 $GLOBALS['TL_LANG']['tl_c4g_settings']['editProfiles'] = ['Kartenprofile bearbeiten'];

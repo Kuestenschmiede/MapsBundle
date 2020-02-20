@@ -32,10 +32,20 @@
   cursor: pointer;
 }
 
-.ol-control:not(.ol-attribution) button,
+.ol-control:not(.ol-attribution) button:not(.ol-zoom-in):not(.ol-zoom-out),
 .c4g-control button {
   border-radius: var(--button-radius-percent);
 }
+
+.ol-control button.ol-zoom-in {
+  border-top-left-radius: var(--button-radius-percent);
+  border-top-right-radius: var(--button-radius-percent);
+}
+.ol-control button.ol-zoom-out {
+  border-bottom-left-radius: var(--button-radius-percent);
+  border-bottom-right-radius: var(--button-radius-percent);
+}
+
 
 
 
@@ -77,15 +87,6 @@
   display: inline-block;
   margin-left: .2em;
   vertical-align: bottom;
-}
-
-button.ol-zoom-in {
-  border-radius: 0%;
-  border-radius: var(--button-radius-percent);
-}
-button.ol-zoom-out {
-  border-radius: 0%;
-  border-radius: var(--button-radius-percent);
 }
 
 .ol-rotate {
@@ -236,18 +237,31 @@ ul.c4g-overlays li a{
   display: block;
 }
 
-.c4g-layertree a, .c4g-baselayertree-content > ul> li.without-image > a{
+.c4g-baselayertree-content > ul> li.without-image > a{
   display: block;
   text-decoration: none;
   padding: 10px 1.75em 10px .2em;
   cursor: pointer;
   position: relative;
 }
+
+.c4g-layertree a {
+  display: block;
+  text-decoration: none;
+  padding: 0 1.75em 0 .2em;
+  cursor: pointer;
+  position: relative;
+}
+
+.c4g-content-layertree span[class*=locstyle] {
+  margin-right: .4em;
+}
+
 .c4g-layertree a.c4g-disabled,
 .c4g-baselayertree-content a.c4g-disabled {
   opacity: .5;
 }
-.c4g-layertree a:after,
+
 .c4g-baselayertree-content a:after {
   display: inline-block;
   float: right;
@@ -257,6 +271,17 @@ ul.c4g-overlays li a{
   top: 15px;
   margin-top: -6px;
 }
+
+.c4g-layertree a:after {
+  display: inline-block;
+  float: right;
+  margin-right: 5px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin-top: -6px;
+}
+
 .c4g-layertree .c4g-closeable > a {
   padding-left: 10px;
 }
@@ -265,6 +290,14 @@ ul.c4g-overlays li a{
   padding: 8px 5px;
   position: relative;
   z-index: 1;
+}
+
+.c4g-layertree li, .c4g-layertree span {
+  height: 43px;
+  line-height: 43px;
+  padding-top: 0;
+  padding-bottom: 0;
+  display: block;
 }
 
 .c4g-baselayertree-content span {

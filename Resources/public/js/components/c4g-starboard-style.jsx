@@ -74,8 +74,6 @@ export class C4gStarboardStyle extends Component {
                     break;
             }
             let styleElements = {
-                width : '16px',
-                height : '16px',
                 "--var-color" : styl0r.getFill().getColor(),
                 "--var-bordercolor" : styl0r.getStroke().getColor()
             };

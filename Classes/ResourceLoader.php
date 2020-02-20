@@ -292,20 +292,15 @@ class ResourceLoader extends coreResourceLoader
      */
     public static function loadGeopickerResources($additionalResources = [])
     {
-        //load geopicker profile
-        $profile = C4gMapProfilesModel::findBy('is_backend_geopicker_default', 1);
-        // use default if the profile was not found
-        if (!$profile) {
-            $settings = C4gSettingsModel::findAll();
-            $profileId = $settings[0]->defaultprofile;
-            if (!$profileId) {
-                $profiles = C4gMapProfilesModel::findAll();
-                if ($profiles && (!empty($profiles))) {
-                    $length = count($profiles);
-                    $profile = $profiles[$length - 1];
-                } else {
-                    return;
-                }
+        $settings = C4gSettingsModel::findAll();
+        $profileId = $settings[0]->beGeopickerProfile ? $settings[0]->beGeopickerProfile : $settings[0]->defaultprofile;
+        if (!$profileId) {
+            $profiles = C4gMapProfilesModel::findAll();
+            if ($profiles && (!empty($profiles))) {
+                $length = count($profiles);
+                $profile = $profiles[$length - 1];
+            } else {
+                return;
             }
         }
         if ($profile && !$profileId) {
