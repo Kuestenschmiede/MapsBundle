@@ -687,8 +687,7 @@ span.c4g-starboard-locstyle-star:after {
   font-weight: 900;
   font-size: 15.5px;
   position: absolute;
-  bottom: 4.45px;
-  right: 2px;
+  left: 6.5px;
   color: var(--var-color);
 }
 
