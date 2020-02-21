@@ -973,7 +973,6 @@ export class MapController extends Component {
         let currentBaselayer = scope.proxy.baselayerController.arrBaselayers[id];
         let currentSource = currentBaselayer.layer.getSource();
         scope.components.overviewMap.addLayer(new TileLayer({source: currentSource}), id);
-        // scope.components.overviewMap.getOverviewMap().getOverviewMap().addLayer(new TileLayer({source: currentSource}));
       });
     }
 

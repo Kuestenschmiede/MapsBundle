@@ -85,10 +85,11 @@ export class StarboardPanel extends Component {
     } else {
       jQuery(this.state.control.element).removeClass("c4g-open").addClass("c4g-close");
     }
+    let langConstants = getLanguage(props.mapController.data);
     let buttonSwitcher = "";
     let buttons = [];
     if (this.props.tabLayers.length > 0) {
-      let regularButton = <button key={this.props.tabLayers.length} title={"Kartenelemente"} onMouseUp={() => {scope.setActiveTab(0)}}/>;
+      let regularButton = <button key={this.props.tabLayers.length} title={langConstants.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER} onMouseUp={() => {scope.setActiveTab(0)}}/>;
       buttons.push(regularButton);
       buttons.push(this.props.tabLayers.map(function(element, index) {
           return <button key={index} title={element[0].name} onMouseUp={() => {scope.setActiveTab(index + 1)}}/>;
@@ -112,13 +113,13 @@ export class StarboardPanel extends Component {
     return (
       <div className={cssConstants.STARBOARD_WRAPPER}>
         <Titlebar wrapperClass={"c4g-starboard-header"} headerClass={cssConstants.STARBOARD_HEADLINE}
-                  header={mapData.starboard.label || "Starboard"} closeBtnClass={cssConstants.STARBOARD_CLOSE} closeBtnCb={this.close}>
+                  header={mapData.starboard.label || langConstants.STARBOARD} closeBtnClass={cssConstants.STARBOARD_CLOSE} closeBtnCb={this.close}>
         </Titlebar>
         {buttonSwitcher}
         <div className={cssConstants.STARBOARD_CONTENT_CONTAINER}>
           <StarboardLayerswitcher key={this.props.tabLayers.length} mapController ={this.props.mapController}
                                 objLayers={this.props.objLayers} styleData={this.props.styleData} parentCallback={this.props.parentCallback}
-                                layerStates={this.props.layerStates} openfunc={this.open} headline={mapData.layerswitcher.label || "Kartenelemente"}
+                                layerStates={this.props.layerStates} openfunc={this.open} headline={mapData.layerswitcher.label || langConstants.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER}
                                 open={this.state.open} active={scope.state.activeTab === 0}/>
           {tabs}
         </div>
