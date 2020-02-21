@@ -27,7 +27,7 @@ export class Infopage extends Component {
     let element = document.createElement('div');
     let button = document.createElement('button');
     let langConstants = getLanguage(props.mapController.data);
-    button.title = "Infobereich öffnen/schließen"; // TODO i18n
+    button.title = langConstants.CTRL_INFOAREA;
     element.className = "c4g-infopage-control ol-unselectable ol-control ";
     if (props.open) {
       element.className += "c4g-open";
@@ -65,10 +65,11 @@ export class Infopage extends Component {
       jQuery(this.state.control.element).removeClass("c4g-open").addClass("c4g-close");
       jQuery(".c4g-infopage-container").removeClass("c4g-open").addClass("c4g-close");
     }
+    let langConstants = getLanguage(this.mapController.data);
     return (
       <div className={"c4g-infopage-wrapper"}>
         <Titlebar wrapperClass={"c4g-infopage-header"} headerClass={"c4g-infopage-headline"}
-                  header={"Informationen"} closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close}>
+                  header={langConstants.INFOPAGE} closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close}>
 
         </Titlebar>
         <div className={"c4g-infopage-content"} dangerouslySetInnerHTML={{__html: this.props.infoContent}}>

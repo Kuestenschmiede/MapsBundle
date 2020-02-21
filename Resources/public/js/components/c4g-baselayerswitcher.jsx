@@ -30,7 +30,7 @@ export class BaselayerSwitcher extends Component {
     let element = document.createElement('div');
     let button = document.createElement('button');
     let langConstants = getLanguage(props.mapController.data);
-    button.title = "Basiskartenwechsler ein-/ausschalten"; // TODO i18n
+    button.title = langConstants.CTRL_BASELAYER;
     element.className = "c4g-baselayer-control ol-unselectable ol-control ";
     if (props.open) {
       element.className += "c4g-open";

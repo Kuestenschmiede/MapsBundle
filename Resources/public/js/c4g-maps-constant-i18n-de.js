@@ -59,6 +59,8 @@ export var langConstantsGerman = {
   CTRL_PERMALINK: 'Permalink generieren',
   CTRL_FULLSCREEN: 'Vollbildmodus ein-/ausschalten',
   CTRL_PRINT: 'Karte exportieren',
+  CTRL_BASELAYER: 'Basiskartenwechsler ein-/ausschalten',
+  CTRL_INFOAREA: 'Infobereich öffnen/schließen',
 
   STARBOARD: 'Starboard',
   STARBOARD_BASELAYER: 'Basiskarten',

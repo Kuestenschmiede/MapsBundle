@@ -31,7 +31,7 @@ export class Measuretools extends Component {
     let element = document.createElement('div');
     let button = document.createElement('button');
     this.langConstants = getLanguage(props.mapController.data);
-    button.title = "Messwerkzeuge öffnen/schließen"; // TODO i18n
+    button.title = langConstants.CTRL_MEASURETOOLS;
     element.className = "c4g-measuretools-control ol-unselectable ol-control ";
     if (props.open) {
       element.className += "c4g-open";
@@ -87,10 +87,11 @@ export class Measuretools extends Component {
       "circle": this.langConstants.MEASURETOOLS_VIEW_TRIGGER_DRAW_CIRCLE,
       "freehand": this.langConstants.MEASURETOOLS_VIEW_TRIGGER_DRAW_FREEHAND
     };
+    let langConstants = getLanguage(this.mapController.data);
     return (
       <div className={"c4g-measuretools-wrapper"}>
         <Titlebar wrapperClass={"c4g-measuretools-header"} headerClass={"c4g-measuretools-headline"}
-                  header={"Messwerkzeuge"} closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close}>
+                  header={langConstants.MEASURETOOLS} closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close}>
 
         </Titlebar>
         <div className={"c4g-measuretools-mode-switcher"}>

@@ -23,12 +23,14 @@ export class MeasuretoolsView extends Component {
   constructor(props) {
     super(props);
 
+    let langConstants = getLanguage(this.props.mapController.data);
+
     this.headlines = {
-      "select": "Auswahlmodus",
-      "line": "Strecken messen",
-      "polygon": "Flächen messen",
-      "circle": "Kreise messen",
-      "freehand": "Freihand messen"
+      "select": langConstants.MEASURETOOLS_VIEW_TRIGGER_SELECT,
+      "line": langConstants.MEASURETOOLS_VIEW_TRIGGER_DRAW_LINESTRING,
+      "polygon": langConstants.MEASURETOOLS_VIEW_TRIGGER_DRAW_POLYGON,
+      "circle": langConstants.MEASURETOOLS_VIEW_TRIGGER_DRAW_CIRCLE,
+      "freehand": langConstants.MEASURETOOLS_VIEW_TRIGGER_DRAW_FREEHAND,
     };
     this.featureIdCtr = this.props.featureId;
     this.updateFunctions = this.createMeasureFunctions();
