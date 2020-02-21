@@ -14,7 +14,7 @@
 /**
  * Fields
  */
-$GLOBALS['TL_LANG']['tl_content']['c4g_map_id'] = array('Kartenstruktur', 'Wählen Sie die anzuzeigende Kartenstruktur aus.');
+$GLOBALS['TL_LANG']['tl_content']['c4g_map_id'] = array('Karte', 'Wählen Sie die anzuzeigende Karte aus.');
 // $GLOBALS['TL_LANG']['tl_content']['c4g_map_mapsize'] = array('Größe der Karte', 'Geben Sie hier die Größe der Karte im Frontend ein, wenn Sie eine vom definierten Standardwert abweichende Größe definieren möchten.');
 $GLOBALS['TL_LANG']['tl_content']['c4g_map_width'] = array('Breite der Karte', 'Geben Sie hier die Breite der Karte im Frontend ein, wenn Sie eine vom definierten Standardwert abweichende Größe definieren möchten.');
 $GLOBALS['TL_LANG']['tl_content']['c4g_map_height'] = array('Höhe der Karte', 'Geben Sie hier die Höhe der Karte im Frontend ein, wenn Sie eine vom definierten Standardwert abweichende Größe definieren möchten.');

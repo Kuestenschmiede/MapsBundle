@@ -14,7 +14,7 @@
 /**
  * Fields
  */
-$GLOBALS['TL_LANG']['tl_content']['c4g_map_id'] = array('Mapstructure', 'Choose a mapstructure to be displayed from available maps.');
+$GLOBALS['TL_LANG']['tl_content']['c4g_map_id'] = array('Map', 'Select the map to be displayed.');
 // $GLOBALS['TL_LANG']['tl_content']['c4g_map_mapsize'] = array('Map size', 'Custom map size, overrides map size defined on map level.');
 $GLOBALS['TL_LANG']['tl_content']['c4g_map_width'] = array('Map width', 'Custom map width, overrides map size defined on map level.');
 $GLOBALS['TL_LANG']['tl_content']['c4g_map_height'] = array('Map height', 'Custom map height, overrides map size defined on map level.');
