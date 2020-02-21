@@ -296,7 +296,7 @@ ul.c4g-overlays li a{
   z-index: 1;
 }
 
-.c4g-layertree li, .c4g-layertree span {
+.c4g-layertree li, .c4g-layertree span, .c4g-layertree a {
   height: 43px;
   line-height: 43px;
   padding-top: 0;
