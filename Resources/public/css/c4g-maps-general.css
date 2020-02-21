@@ -791,7 +791,7 @@ span.c4g-starboard-locstyle-triangle:before {
 .c4g-permalink-content textarea {
   display: inline-block;
   max-width: calc(100% - .8em - (32px * 2));
-  min-height: calc(var(--map-height) - .8em - 32px - .4em - .4em);
+  min-height: calc(var(--map-height) - .8em - 32px - .4em - .4em - .4em);
   outline: none;
   background: none;
   border: none;
