@@ -88,6 +88,8 @@ export var langConstantsEnglish = {
   MEASURETOOLS_VIEW_TRIGGER_DRAW_CIRCLE: 'Measure radius',
   MEASURETOOLS_VIEW_TRIGGER_DRAW_FREEHAND: 'Measure freehand',
 
+  OVERVIEWMAP: 'Overview map',
+
   INFOPAGE: 'Infopage',
   INFOPAGE_VIEW_TRIGGER: 'Show informations',
 

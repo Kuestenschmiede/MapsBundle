@@ -73,9 +73,10 @@ export class OverviewMap extends Component {
   }
 
   render() {
+    let langConstants = getLanguage(this.mapController.data);
     return <div className={"overview-map-wrapper"}>
       <Titlebar wrapperClass={"c4g-overwiev-header"} headerClass={"c4g-overview-headline"}
-                header={"Overview Map"} closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close}>
+                header={langConstants.OVERVIEWMAP} closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close}>
       </Titlebar>
       <div id={"overview-map-target"} className={"c4g-overview-content"}>
 
