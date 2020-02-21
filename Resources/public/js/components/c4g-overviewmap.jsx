@@ -18,6 +18,7 @@ import {cssConstants} from "./../c4g-maps-constant";
 import {utils} from "../c4g-maps-utils";
 import {getLanguage} from "../c4g-maps-i18n";
 import LayerGroup from "ol/layer/Group";
+import {Titlebar} from "./c4g-titlebar";
 
 export class OverviewMap extends Component {
 
@@ -72,7 +73,13 @@ export class OverviewMap extends Component {
   }
 
   render() {
-    return <div id={"overview-map-target"}>
+    return <div className={"overview-map-wrapper"}>
+      <Titlebar wrapperClass={"c4g-overwiev-header"} headerClass={"c4g-overview-headline"}
+                header={"Overview Map"} closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close}>
+      </Titlebar>
+      <div id={"overview-map-target"} className={"c4g-overview-content"}>
+
+      </div>
     </div>;
   }
 

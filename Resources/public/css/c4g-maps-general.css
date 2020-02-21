@@ -144,6 +144,12 @@ div.c4g-control-container-top-left > div.c4g-external {
 /*
  *  Overview-map
  */
+
+.ol-overviewmap-map canvas {
+  right: 0;
+  margin: auto;
+}
+
 .ol-uncollapsible > button {
   display: none !important;
 }
@@ -164,11 +170,7 @@ div.c4g-control-container-top-left > div.c4g-external {
   height: 0;
 }
 .ol-overviewmap-map {
-  opacity: 1;
-  width: 220px;
   height: 143px;
-  margin: auto;
-  margin-top: 19px;
 }
 .c4g-overviewmap.c4g-close .ol-overviewmap-map {
   opacity: 0;

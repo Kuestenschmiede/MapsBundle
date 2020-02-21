@@ -215,14 +215,10 @@ span.c4g-active ul li.c4g-active{
  *  Overview-map
  */
 
-.c4g-overviewmap .ol-overviewmap-box {
-  border-color: var(--main-color);
+.ol-overviewmap-box {
+  color: var(--main-color);
 }
 
-.ol-overviewmap-map .ol-viewport {
-  box-shadow: 0px 0px 8px 2px var(--main-color);
-  border: 1px solid var(--main-color);
-}
 
 div.c4g-tooltip-popup,
 div.c4g-active.c4g-popup-wrapper {
@@ -465,7 +461,7 @@ c4g-infopage-container {
   color: var(--font-color);
 }
 
-.c4g-sideboard > div > div[class*=content] *:not(button):not(input):not(textarea):not(select):not(output):not(option) {
+.c4g-sideboard > div > div[class*=content] *:not(button):not(input):not(textarea):not(select):not(output):not(option):not(.ol-overviewmap-box) {
   color: var(--font-color);
 }
 
