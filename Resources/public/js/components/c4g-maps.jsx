@@ -953,12 +953,14 @@ export class MapController extends Component {
         collapsed: true,
         key: 23
       });
+      overviewPortal = ReactDOM.createPortal(overviewPortal, this.overviewContainer);
       this.proxy.hook_baselayer_visibility = this.proxy.hook_baselayer_visibility || [];
       this.proxy.hook_baselayer_visibility.push(function(baselayerConfig) {
         let id = baselayerConfig.id;
         let currentBaselayer = scope.proxy.baselayerController.arrBaselayers[id];
         let currentSource = currentBaselayer.layer.getSource();
-        scope.components.overviewMap.getOverviewMap().getOverviewMap().addLayer(new TileLayer({source: currentSource}));
+        scope.components.overviewMap.addLayer(new TileLayer({source: currentSource}), id);
+        // scope.components.overviewMap.getOverviewMap().getOverviewMap().addLayer(new TileLayer({source: currentSource}));
       });
     }
 

@@ -103,7 +103,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
     // Palettes
     'palettes' =>
         [
-        '__selector__'                => ['resize_locstyles_zoom', 'mouse_nav','cluster_all','attribution','hover_popups','overpassEngine', 'cesium', 'popupHandling'],
+        '__selector__'                => ['resize_locstyles_zoom', 'mouse_nav','cluster_all','attribution','hover_popups','overpassEngine', 'cesium', 'popupHandling','geopicker'],
         'default'                     => '{general_legend},name,theme,mapFunctions,initial_open_comp;'.
                                          '{navigation_legend:hide},mouse_nav,touch_nav,keyboard_nav;'.
                                          '{click_legend:hide},link_newwindow,link_open_on,hover_popups, popupHandling;'.
@@ -113,7 +113,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                                          '{attribution_legend:hide},attribution;'.
                                          '{information_legend:hide},scaleline,mouseposition,permalink_get_param,zoomlevel,infopage;'.
                                          '{locstyle_legend:hide},label_color,resize_locstyles_zoom;'.
-                                         '{expert_legend:hide},overpassEngine,caching,cesium,external_elements,filters,filterHandling,be_optimize_checkboxes_limit,custom_div,geopicker;'
+                                         '{expert_legend:hide},overpassEngine,caching,cesium,external_elements,filters,filterHandling,geopicker,custom_div,be_optimize_checkboxes_limit;'
         ],
 
 
@@ -124,12 +124,12 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         'cluster_all'                 => 'cluster_distance,cluster_fillcolor,cluster_fontcolor,cluster_zoom, cluster_dist_spider',
         'attribution'                 => 'always_show_attribution,collapsed_attribution,add_attribution,cfg_logo_attribution,div_attribution',
         'hover_popups'                => 'hover_popups_stay',
-        'geopicker'                   => 'geopicker_fieldx,geopicker_fieldy,geopicker_searchdiv,geopicker_attribution,geopicker_disabled,geopicker_anonymous',
         'cesium'                      => 'cesium_always',
         'overpassEngine_1'            => 'overpass_url',
         'overpassEngine_2'            => '',
         'overpassEngine_3'            => '',
-        'resize_locstyles_zoom'       => 'resize_src_zoom,resize_scale_factor,resize_min_scale,resize_max_scale'
+        'resize_locstyles_zoom'       => 'resize_src_zoom,resize_scale_factor,resize_min_scale,resize_max_scale',
+        'geopicker'                   => 'geopicker_fieldx,geopicker_fieldy,geopicker_searchdiv,geopicker_attribution,geopicker_disabled,geopicker_anonymous'
     ],
 
     // Fields
@@ -680,68 +680,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'explanation'           => 'insertTags',
                 'sql'                   => "text NULL"
             ],
-        'geopicker' =>
-            [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker'],
-                'exclude'                 => true,
-                'default'                 => '',
-                'inputType'               => 'checkbox',
-                'eval'                    => ['submitOnChange' => true],
-                'sql'                     => "char(1) NOT NULL default ''"
-            ],
-        'geopicker_fieldx' =>
-            [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_fieldx'],
-                'default'                 => 'c4g_brick_geopicker_geox',
-                'exclude'                 => true,
-                'inputType'               => 'text',
-                'eval'                    => ['maxlength'=>30, 'mandatory'=>false],
-                'sql'                     => "varchar(30) NOT NULL default 'c4g_brick_geopicker_geoy'"
-            ],
-        'geopicker_fieldy' =>
-            [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_fieldy'],
-                'default'                 => 'c4g_brick_geopicker_geoy',
-                'exclude'                 => true,
-                'inputType'               => 'text',
-                'eval'                    => ['maxlength'=>30, 'mandatory'=>false],
-                'sql'                     => "varchar(30) NOT NULL default 'c4g_brick_geopicker_geoy'"
-            ],
-        'geopicker_searchdiv' =>
-            [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_searchdiv'],
-                'default'                 => 'c4g_brick_geopicker',
-                'exclude'                 => true,
-                'inputType'               => 'text',
-                'eval'                    => ['maxlength'=>30, 'mandatory'=>false],
-                'sql'                     => "varchar(30) NOT NULL default 'c4g_brick_geopicker'"
-            ],
-        'geopicker_attribution' =>
-            [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_attribution'],
-                'exclude'                 => true,
-                'default'                 => true,
-                'inputType'               => 'checkbox',
-                'sql'                     => "char(1) NOT NULL default '1'"
-            ],
-        'geopicker_disabled' =>
-            [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_disabled'],
-                'exclude'                 => true,
-                'default'                 => '',
-                'inputType'               => 'checkbox',
-                'eval'                    => ['submitOnChange' => false],
-                'sql'                     => "char(1) NOT NULL default ''"
-            ],
-        'geopicker_anonymous' =>
-            [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_anonymous'],
-                'exclude'                 => true,
-                'default'                 => '',
-                'inputType'               => 'checkbox',
-                'eval'                    => ['submitOnChange' => false],
-                'sql'                     => "char(1) NOT NULL default ''"
-            ],
         'label_color' =>
             [
                 'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['label_color'],
@@ -867,14 +805,67 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'inputType'               => 'checkbox',
                 'sql'                     => "char(1) NOT NULL default '0'"
             ],
-        'be_optimize_checkboxes_limit' =>
+        'geopicker' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['be_optimize_checkboxes_limit'],
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker'],
+                'exclude'                 => true,
+                'default'                 => '',
+                'inputType'               => 'checkbox',
+                'eval'                    => ['submitOnChange' => true],
+                'sql'                     => "char(1) NOT NULL default ''"
+            ],
+        'geopicker_fieldx' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_fieldx'],
+                'default'                 => 'c4g_brick_geopicker_geox',
                 'exclude'                 => true,
                 'inputType'               => 'text',
-                'default'                 => '10',
-                'eval'                    => ['rgxp'=>'digit', 'submitOnChange' => true, "tl_class" => "clr m12"],
-                'sql'                     => "int(10) unsigned NOT NULL default '10'"
+                'eval'                    => ['maxlength'=>30, 'mandatory'=>false],
+                'sql'                     => "varchar(30) NOT NULL default 'c4g_brick_geopicker_geoy'"
+            ],
+        'geopicker_fieldy' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_fieldy'],
+                'default'                 => 'c4g_brick_geopicker_geoy',
+                'exclude'                 => true,
+                'inputType'               => 'text',
+                'eval'                    => ['maxlength'=>30, 'mandatory'=>false],
+                'sql'                     => "varchar(30) NOT NULL default 'c4g_brick_geopicker_geoy'"
+            ],
+        'geopicker_searchdiv' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_searchdiv'],
+                'default'                 => 'c4g_brick_geopicker',
+                'exclude'                 => true,
+                'inputType'               => 'text',
+                'eval'                    => ['maxlength'=>30, 'mandatory'=>false],
+                'sql'                     => "varchar(30) NOT NULL default 'c4g_brick_geopicker'"
+            ],
+        'geopicker_attribution' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_attribution'],
+                'exclude'                 => true,
+                'default'                 => true,
+                'inputType'               => 'checkbox',
+                'sql'                     => "char(1) NOT NULL default '1'"
+            ],
+        'geopicker_disabled' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_disabled'],
+                'exclude'                 => true,
+                'default'                 => '',
+                'inputType'               => 'checkbox',
+                'eval'                    => ['submitOnChange' => false],
+                'sql'                     => "char(1) NOT NULL default ''"
+            ],
+        'geopicker_anonymous' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_anonymous'],
+                'exclude'                 => true,
+                'default'                 => '',
+                'inputType'               => 'checkbox',
+                'eval'                    => ['submitOnChange' => false],
+                'sql'                     => "char(1) NOT NULL default ''"
             ],
         'custom_div' =>
             [
@@ -884,6 +875,15 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'inputType'               => 'text',
                 'eval'                    => ['maxlength'=>30],
                 'sql'                     => "varchar(30) NOT NULL default 'c4g_brick_map'"
+            ],
+        'be_optimize_checkboxes_limit' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['be_optimize_checkboxes_limit'],
+                'exclude'                 => true,
+                'inputType'               => 'text',
+                'default'                 => '10',
+                'eval'                    => ['rgxp'=>'digit', 'submitOnChange' => true, "tl_class" => "clr m12"],
+                'sql'                     => "int(10) unsigned NOT NULL default '10'"
             ]
     ]
 ];
