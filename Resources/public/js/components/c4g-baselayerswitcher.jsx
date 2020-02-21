@@ -110,6 +110,13 @@ export class BaselayerSwitcher extends Component {
   render() {
     let arrBaselayers = this.props.baselayerController.arrBaselayers;
     let baseLayerIds = this.getFilteredBaselayerIds();
+    let filter = '';
+    if (this.props.mapController.data.baselayerswitcher.filter) {
+      filter = <div className={"c4g-baselayer-filter without-button"}>
+        <input className={"c4g-baselayer-filter-field"} type="text" placeholder={"\uf002"}
+               onInput={() => {this.filterBaselayers(this.value)}}/>
+      </div>
+    }
     if (this.state.open) {
       jQuery(this.state.control.element).addClass("c4g-open").removeClass("c4g-close");
       jQuery(".c4g-baselayer-container").addClass("c4g-open").removeClass("c4g-close");
@@ -123,10 +130,7 @@ export class BaselayerSwitcher extends Component {
       <div className={"c4g-baselayer-wrapper"}>
         <Titlebar wrapperClass={"c4g-baselayer-header"} headerClass={"c4g-baselayer-headline"}
           header={headline} closeBtnClass={"c4g-baselayer-close"} closeBtnCb={this.close}/>
-        <div className={"c4g-baselayer-filter without-button"}>
-          <input className={"c4g-baselayer-filter-field"} type="text" placeholder={"\uf002"}
-                 onInput={() => {this.filterBaselayers(this.value)}}/>
-        </div>
+        {filter}
         <div className={"c4g-baselayertree-content"}>
           <ul>
             {baseLayerIds.map(function(element, index) {

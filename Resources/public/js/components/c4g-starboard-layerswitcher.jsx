@@ -56,8 +56,7 @@ export class StarboardLayerswitcher extends Component {
   }
 
   render() {
-    const mapData = this.props.mapController.data;
-    let layers, states;
+    let layers, states, filter;
 
     // deep clone arrays before passing them as arguments
     // otherwise we would modify the objects inside the props
@@ -68,18 +67,22 @@ export class StarboardLayerswitcher extends Component {
     if (!this.props.active) {
       return null;
     }
+
+    filter = '';
+    if (this.props.mapController.data.layerswitcher.filter) {
+      filter = <div className={"c4g-starboard-layertree-filter without-button"}>
+               <input className={"c4g-starboard-layertree-filter-field"} type="text" onInput={this.setLayerFilter} placeholder={"\uf002"}/>
+               </div>
+    }
+
     return (
     <React.Fragment>
       <div className="contentHeadline">{this.props.headline}</div>
-      <div className={"c4g-starboard-layertree-filter without-button"}>
-        <input className={"c4g-starboard-layertree-filter-field"} type="text" onInput={this.setLayerFilter} placeholder={"\uf002"}/>
-      </div>
+      {filter}
       <div className={"c4g-content-layertree"}>
         <div className={cssConstants.STARBOARD_LAYERTREE}>
           <ul>
             {layers.map((item, id) => {
-
-              // if (item.pid === this.props.mapController.data.id) //skip childs of layers
               if (this.filterFunc(this.state.layerFilter, item)) {
                 return <C4gStarboardLayerElement key={id} id={id} mapController={this.props.mapController}
                                                  parentCallback={this.callbackFunction}
