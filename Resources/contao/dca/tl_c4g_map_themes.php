@@ -297,13 +297,19 @@ class tl_c4g_map_themes extends Backend
         $args[0] = '<div class="list_icon_new" style="background-image:url('.$image.')" data-icon="'.$image.'">&nbsp;</div>';
 
         $maincolor = '#'.substr($args[2],0,strpos($args[2],','));
-        $args[2] = '<div style="color:'.$maincolor.';text-shadow: 1px 1px #000000;">'.$maincolor.'</div>';
+        $mainopacity = substr($args[2],strpos($args[2],',')+1);
+        $mainopacity = trim($mainopacity) ? ' / '.trim($mainopacity).'%' : ' / 100%';
+        $args[2] = '<div style="color:'.$maincolor.';text-shadow: 1px 1px #000000;">'.$maincolor.$mainopacity.'</div>';
 
         $shadowcolor = '#'.substr($args[3],0,strpos($args[3],','));
-        $args[3] = '<div style="color:'.$shadowcolor.';text-shadow: 1px 1px #000000;">'.$shadowcolor.'</div>';
+        $shadowopacity = substr($args[3],strpos($args[3],',')+1);
+        $shadowopacity = trim($shadowopacity) ? ' / '.trim($shadowopacity).'%' : ' / 100%';
+        $args[3] = '<div style="color:'.$shadowcolor.';text-shadow: 1px 1px #000000;">'.$shadowcolor.$shadowopacity.'</div>';
 
         $fontcolor = '#'.substr($args[4],0,strpos($args[4],','));
-        $args[4] = '<div style="color:'.$fontcolor.';text-shadow: 1px 1px #000000;">'.$fontcolor.'</div>';
+        $fontopacity = substr($args[4],strpos($args[4],',')+1);
+        $fontopacity = trim($fontopacity) ? ' / '.trim($fontopacity).'%' : ' / 100%';
+        $args[4] = '<div style="color:'.$fontcolor.';text-shadow: 1px 1px #000000;">'.$fontcolor.$fontopacity.'</div>';
 
         return $args;
     }
