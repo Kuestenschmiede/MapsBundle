@@ -517,6 +517,12 @@ export class MapController extends Component {
       }
       if (mapData.height) {
         domMapDiv.style.height = mapData.height;
+      } else {
+        if (domMapDiv.parentElement && domMapDiv.parentElement.parentElement && !domMapDiv.parentElement.parentElement.offsetHeight) {
+          domMapDiv.style.height = '100vh';
+        } else if (domMapDiv.parentElement && domMapDiv.parentElement.parentElement) {
+          domMapDiv.style.height = domMapDiv.parentElement.parentElement.offsetHeight+'px';
+        }
       }
       if (mapData.margin) {
         domMapDiv.style.margin = mapData.margin;
@@ -751,6 +757,13 @@ export class MapController extends Component {
       }
       if (mapData.height) {
         mapHeight = mapData.height;
+      } else {
+        let divHeight = domMapDiv.offsetHeight;
+        if (!divHeight) {
+          mapHeight = "100vh";
+        } else {
+          mapHeight = '100%';
+        }
       }
       if (domMapDiv && domMapDiv.style) {
         domMapDiv.style.setProperty('--map-height', mapHeight);

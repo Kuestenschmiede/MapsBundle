@@ -167,8 +167,6 @@ class MapDataConfigurator
             $mapData['id'] = 0;
         }
 
-        $mapData['height'] = '100vh';
-
         if ($map->id != 0) {
             // map-center
             if (!empty($map->center_geox)) {
