@@ -11,7 +11,7 @@
  *
  */
 
-import React, { Component } from "react";
+import React, {Component} from "react";
 import {utils} from "../c4g-maps-utils"
 import {FeatureFilterMultiCheckboxItem} from "./c4g-feature-multicheckbox-item.jsx";
 

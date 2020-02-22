@@ -11,13 +11,10 @@
  *
  */
 
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
+import React, {Component} from "react";
 import {Control} from "ol/control";
 import {cssConstants} from "./../c4g-maps-constant";
-import {utils} from "../c4g-maps-utils";
 import {getLanguage} from "../c4g-maps-i18n";
-import {Zoom as OlZoom} from "ol/control";
 import {transform} from "ol/proj";
 import {Geolocation} from "ol";
 

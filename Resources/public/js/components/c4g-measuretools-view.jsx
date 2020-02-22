@@ -10,7 +10,7 @@
  * @link              https://www.con4gis.org
  *
  */
-import React, { Component } from "react";
+import React, {Component} from "react";
 import {getLanguage} from "../c4g-maps-i18n";
 import {Collection} from "ol";
 import {Draw} from "ol/interaction";

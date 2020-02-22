@@ -11,11 +11,9 @@
  *
  */
 
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
-import {Control, FullScreen} from "ol/control";
+import React, {Component} from "react";
+import {Control} from "ol/control";
 import {cssConstants} from "./../c4g-maps-constant";
-import {utils} from "../c4g-maps-utils";
 import {getLanguage} from "../c4g-maps-i18n";
 import {Graticule} from "ol";
 

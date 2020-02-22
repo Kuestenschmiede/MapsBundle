@@ -10,7 +10,7 @@
  * @link              https://www.con4gis.org
  *
  */
-import React, { Component } from "react";
+import React, {Component} from "react";
 import Feature from 'ol/Feature';
 import {Point} from "ol/geom";
 import {cssConstants} from "./../c4g-maps-constant.js";

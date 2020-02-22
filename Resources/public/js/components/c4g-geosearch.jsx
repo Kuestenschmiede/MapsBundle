@@ -11,7 +11,7 @@
  *
  */
 
-import React, { Component } from "react";
+import React, {Component} from "react";
 import {Control} from "ol/control";
 import {getLanguage} from "./../c4g-maps-i18n";
 import {cssConstants} from "./../c4g-maps-constant";

@@ -3,7 +3,7 @@
  * the gis-kit for Contao CMS.
  *
  * @package    con4gis
- * @version    6
+ * @version    7
  * @author     con4gis contributors (see "authors.txt")
  * @license    LGPL-3.0-or-later
  * @copyright  Küstenschmiede GmbH Software & Design
@@ -12,14 +12,10 @@
 import {Interaction} from "ol/interaction";
 import {Feature} from "ol";
 import {Point} from "ol/geom";
-import {Style} from "ol/style";
-import {Stroke} from "ol/style";
-import {Fill} from "ol/style";
-import {Circle} from "ol/style";
+import {Circle, Fill, Stroke, Style} from "ol/style";
 import {Vector} from "ol/layer";
 import {Vector as VectorSource} from "ol/source";
-import {fromLonLat} from "ol/proj";
-import {toLonLat} from "ol/proj";
+import {fromLonLat, toLonLat} from "ol/proj";
 
 'use strict';
 

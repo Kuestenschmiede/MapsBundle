@@ -3,7 +3,7 @@
  * the gis-kit for Contao CMS.
  *
  * @package    con4gis
- * @version    6
+ * @version    7
  * @author     con4gis contributors (see "authors.txt")
  * @license    LGPL-3.0-or-later
  * @copyright  Küstenschmiede GmbH Software & Design
@@ -13,7 +13,6 @@
 import {ATTRIBUTION} from "ol/source/OSM";
 import {MVT} from "ol/format";
 import {createXYZ} from "ol/tilegrid";
-import {XYZ} from "ol/source";
 
 'use strict';
 export var config = {

@@ -3,28 +3,27 @@
  * the gis-kit for Contao CMS.
  *
  * @package    con4gis
- * @version    6
+ * @version    7
  * @author     con4gis contributors (see "authors.txt")
  * @license    LGPL-3.0-or-later
  * @copyright  Küstenschmiede GmbH Software & Design
  * @link       https://www.con4gis.org
  */
-import {Vector as VectorSource} from "ol/source";
-import {transformExtent} from "ol/proj";
+import {Cluster, Vector as VectorSource} from "ol/source";
+import {transform, transformExtent} from "ol/proj";
 import OSMXML from "ol/format/OSMXML";
 import {bbox} from "ol/loadingstrategy";
-import {Vector, Group} from "ol/layer";
-import {Cluster} from "ol/source";
+import {Vector} from "ol/layer";
 import * as olFormats from "ol/format";
 import proj4 from 'proj4';
 import {register} from 'ol/proj/proj4';
 import Projection from 'ol/proj/Projection';
-import {transform} from "ol/proj";
 import Collection from 'ol/Collection';
 import {utils} from './c4g-maps-utils';
-import {Style, Text, Fill} from 'ol/style';
+import {Fill, Style, Text} from 'ol/style';
 import {Point} from "ol/geom";
 import Feature from 'ol/Feature';
+
 const osmtogeojson = require('osmtogeojson');
 
 let olFormat = jQuery.extend({

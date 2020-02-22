@@ -11,11 +11,9 @@
  *
  */
 
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
+import React, {Component} from "react";
 import {Control} from "ol/control";
 import {cssConstants} from "./../c4g-maps-constant";
-import {utils} from "../c4g-maps-utils";
 import {getLanguage} from "../c4g-maps-i18n";
 import {toBlob} from "dom-to-image-more";
 import {saveAs} from "file-saver";

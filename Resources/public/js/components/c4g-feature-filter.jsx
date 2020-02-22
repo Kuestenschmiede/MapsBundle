@@ -11,8 +11,7 @@
  *
  */
 
-import React, { Component } from "react";
-import {HorizontalPanel} from "./c4g-horizontal-panel.jsx";
+import React, {Component} from "react";
 import {FeatureFilterList} from "./c4g-feature-filter-list.jsx";
 import {FeatureFilterMultiCheckbox} from "./c4g-feature-filter-multicheckbox.jsx";
 import {Fill, Stroke, Style} from "ol/style";

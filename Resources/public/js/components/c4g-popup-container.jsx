@@ -11,11 +11,9 @@
  *
  */
 
-import React, { Component } from "react";
+import React, {Component} from "react";
 import {getLanguage} from "./../c4g-maps-i18n";
-import {cssConstants} from "./../c4g-maps-constant";
 import {Titlebar} from "./c4g-titlebar.jsx";
-import {utils} from "../c4g-maps-utils";
 
 export class PopupContainer extends Component {
 

@@ -3,23 +3,16 @@
  * the gis-kit for Contao CMS.
  *
  * @package    con4gis
- * @version    6
+ * @version    7
  * @author     con4gis contributors (see "authors.txt")
  * @license    LGPL-3.0-or-later
  * @copyright  Küstenschmiede GmbH Software & Design
  * @link       https://www.con4gis.org
  */
 import {utils} from "./c4g-maps-utils";
-import {Stroke} from "ol/style";
-import {Fill} from "ol/style";
-import {Style} from "ol/style";
-import {RegularShape} from "ol/style";
-import {Icon} from "ol/style";
-import {Feature} from "ol";
-import {Point} from "ol/geom";
-import {Circle} from "ol/geom";
+import {Fill, Icon, RegularShape, Stroke, Style, Text} from "ol/style";
+import {Circle, Point} from "ol/geom";
 import CircleStyle from 'ol/style/Circle';
-import {Text} from "ol/style";
 import ol_style_Photo from "ol-ext/style/Photo";
 
 

@@ -11,11 +11,7 @@
  *
  */
 
-import React, { Component } from "react";
-import {Control} from "ol/control";
-import {getLanguage} from "./../c4g-maps-i18n";
-import {cssConstants} from "./../c4g-maps-constant";
-import {Titlebar} from "./c4g-titlebar.jsx";
+import React, {Component} from "react";
 import ReactDOM from "react-dom";
 
 export class GeoSearchResults extends Component {

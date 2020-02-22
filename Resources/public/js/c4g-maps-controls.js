@@ -3,7 +3,7 @@
  * the gis-kit for Contao CMS.
  *
  * @package    con4gis
- * @version    6
+ * @version    7
  * @author     con4gis contributors (see "authors.txt")
  * @license    LGPL-3.0-or-later
  * @copyright  Küstenschmiede GmbH Software & Design
@@ -11,23 +11,11 @@
  */
 
 import {cssConstants} from "./c4g-maps-constant";
-import {Print} from "./c4g-maps-control-print";
-import {Grid} from "./c4g-maps-control-grid";
 import {Zoomlevel} from "./c4g-maps-control-zoomlevel";
-import {OverviewMap} from "./c4g-maps-control-overviewmap";
 import {GeoPicker} from "./c4g-maps-interaction-geopicker";
-import {Home} from "./c4g-maps-control-home";
-import {Position} from "./c4g-maps-control-position";
-import {transform} from "ol/proj";
-import {Zoom} from "ol/control";
-import {ZoomToExtent} from "ol/control";
-import {FullScreen} from "ol/control";
-import {Rotate} from "ol/control";
-import {ScaleLine} from "ol/control";
-import {MousePosition} from "ol/control";
-import {Attribution} from "ol/control";
+import {get, transform} from "ol/proj";
+import {Attribution, MousePosition, ScaleLine} from "ol/control";
 import {toStringHDMS} from "ol/coordinate";
-import {get} from "ol/proj";
 import {getLanguage} from "./c4g-maps-i18n";
 
 let langConstants = {};

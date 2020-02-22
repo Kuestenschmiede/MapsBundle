@@ -11,8 +11,8 @@
  *
  */
 
-import React, { Component } from "react";
-import {utils} from "../c4g-maps-utils"
+import React, {Component} from "react";
+import {utils} from "../c4g-maps-utils";
 
 export class FeatureFilterMultiCheckboxItem extends Component {
     constructor(props) {

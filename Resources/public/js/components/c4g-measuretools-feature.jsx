@@ -10,10 +10,7 @@
  * @link              https://www.con4gis.org
  *
  */
-import React, { Component } from "react";
-import {getLanguage} from "../c4g-maps-i18n";
-import {utils} from "../c4g-maps-utils";
-import {TooltipPopUp} from "./../c4g-maps-misc-tooltippopup";
+import React, {Component} from "react";
 
 export class MeasuredFeature extends Component {
 

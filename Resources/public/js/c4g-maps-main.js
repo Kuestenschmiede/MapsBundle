@@ -3,7 +3,7 @@
  * the gis-kit for Contao CMS.
  *
  * @package    con4gis
- * @version    6
+ * @version    7
  * @author     con4gis contributors (see "authors.txt")
  * @license    LGPL-3.0-or-later
  * @copyright  Küstenschmiede GmbH Software & Design
@@ -13,8 +13,6 @@
 import {MapController} from "components/c4g-maps.jsx";
 import ReactDOM from "react-dom";
 import React from "react";
-import {Search} from "./components/c4g-search";
-import {cssConstants} from "./c4g-maps-constant";
 
 window.initMap = function(mapData) {
   let mapDiv = jQuery("#c4g_map_" + mapData.mapId)[0];

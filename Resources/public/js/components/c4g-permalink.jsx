@@ -11,7 +11,7 @@
  *
  */
 
-import React, { Component } from "react";
+import React, {Component} from "react";
 import {cssConstants} from "./../c4g-maps-constant.js";
 import {Titlebar} from "./c4g-titlebar.jsx";
 import {transform} from "ol/proj";

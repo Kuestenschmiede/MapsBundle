@@ -3,7 +3,7 @@
  * the gis-kit for Contao CMS.
  *
  * @package    con4gis
- * @version    6
+ * @version    7
  * @author     con4gis contributors (see "authors.txt")
  * @license    LGPL-3.0-or-later
  * @copyright  Küstenschmiede GmbH Software & Design
@@ -12,8 +12,6 @@
 
 import {TooltipPopUp} from "./c4g-maps-misc-tooltippopup";
 import {utils} from "./c4g-maps-utils";
-import {LineString} from "ol/geom";
-import {Observable} from "ol";
 import {unByKey} from "ol/Observable";
 import {cssConstants} from "./c4g-maps-constant";
 

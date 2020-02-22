@@ -3,7 +3,7 @@
  * the gis-kit for Contao CMS.
  *
  * @package    con4gis
- * @version    6
+ * @version    7
  * @author     con4gis contributors (see "authors.txt")
  * @license    LGPL-3.0-or-later
  * @copyright  Küstenschmiede GmbH Software & Design
@@ -18,27 +18,25 @@ import {utils} from "../c4g-maps-utils";
 import {GeoSearch} from "./c4g-geosearch.jsx";
 import {MapsControls} from "../c4g-maps-controls";
 import {getLanguage} from "../c4g-maps-i18n";
-import {View} from "ol";
+import {Geolocation, Kinetic, Map, View} from "ol";
 import {transform, transformExtent} from "ol/proj";
-import {Geolocation} from "ol";
-import {defaults as interactionDefaults} from "ol/interaction";
+import {
+  defaults as interactionDefaults,
+  DoubleClickZoom,
+  DragPan,
+  DragRotateAndZoom,
+  DragZoom,
+  KeyboardPan,
+  KeyboardZoom,
+  MouseWheelZoom,
+  PinchRotate,
+  PinchZoom
+} from "ol/interaction";
 import {defaults as controlDefaults} from "ol/control";
-import {Map} from "ol";
 import {Group} from "ol/layer";
 import {Point} from "ol/geom";
-import {getTopRight, getTopLeft, getBottomLeft, getBottomRight, boundingExtent} from "ol/extent";
-import {Kinetic} from "ol";
-import {DragRotate} from "ol/interaction";
-import {DragPan} from "ol/interaction";
-import {DragRotateAndZoom} from "ol/interaction";
-import {DragZoom} from "ol/interaction";
-import {MouseWheelZoom} from "ol/interaction";
-import {DoubleClickZoom} from "ol/interaction";
+import {boundingExtent, getBottomLeft, getBottomRight, getTopLeft, getTopRight} from "ol/extent";
 import {shiftKeyOnly} from "ol/events/condition";
-import {PinchRotate} from "ol/interaction";
-import {PinchZoom} from "ol/interaction";
-import {KeyboardZoom} from "ol/interaction";
-import {KeyboardPan} from "ol/interaction";
 import {StarboardPanel} from "./c4g-starboard-panel.jsx";
 import ReactDOM from "react-dom";
 import React, {Component} from "react";

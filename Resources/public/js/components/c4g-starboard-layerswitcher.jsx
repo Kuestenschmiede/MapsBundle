@@ -11,7 +11,7 @@
  *
  */
 
-import React, { Component } from "react";
+import React, {Component} from "react";
 import {cssConstants} from "./../c4g-maps-constant.js";
 import {C4gStarboardLayerElement} from "./c4g-starboard-layer-element";
 

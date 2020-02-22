@@ -3,21 +3,17 @@
  * the gis-kit for Contao CMS.
  *
  * @package    con4gis
- * @version    6
+ * @version    7
  * @author     con4gis contributors (see "authors.txt")
  * @license    LGPL-3.0-or-later
  * @copyright  Küstenschmiede GmbH Software & Design
  * @link       https://www.con4gis.org
  */
 
-import {C4gOverlay} from "./c4g-overlay"
 import {config} from "./c4g-maps-config";
-import {OSM} from "ol/source";
+import {OSM, Stamen, TileWMS, XYZ} from "ol/source";
 import {ATTRIBUTION as OSM_ATTRIBUTION} from "ol/source/OSM";
-import {Tile} from "ol/layer";
-import {Stamen} from "ol/source";
-import {XYZ, TileWMS} from "ol/source";
-import {Image} from "ol/layer";
+import {Image, Tile} from "ol/layer";
 import ol_source_GeoImage from "ol-ext/source/GeoImage";
 
 export class C4gOverlayController {

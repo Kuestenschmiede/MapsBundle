@@ -11,11 +11,9 @@
  *
  */
 
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
+import React, {Component} from "react";
 import {Control, OverviewMap as OvMap} from "ol/control";
 import {cssConstants} from "./../c4g-maps-constant";
-import {utils} from "../c4g-maps-utils";
 import {getLanguage} from "../c4g-maps-i18n";
 import LayerGroup from "ol/layer/Group";
 import {Titlebar} from "./c4g-titlebar";

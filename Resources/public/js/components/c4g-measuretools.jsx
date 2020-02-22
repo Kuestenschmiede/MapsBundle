@@ -11,7 +11,7 @@
  *
  */
 
-import React, { Component } from "react";
+import React, {Component} from "react";
 import {Titlebar} from "./c4g-titlebar.jsx";
 import {getLanguage} from "../c4g-maps-i18n";
 import {Control} from "ol/control";

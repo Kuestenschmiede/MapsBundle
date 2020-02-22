@@ -3,7 +3,7 @@
  * the gis-kit for Contao CMS.
  *
  * @package    con4gis
- * @version    6
+ * @version    7
  * @author     con4gis contributors (see "authors.txt")
  * @license    LGPL-3.0-or-later
  * @copyright  Küstenschmiede GmbH Software & Design
@@ -14,24 +14,17 @@ import {C4gBaselayer} from "./c4g-baselayer";
 import {C4gOverlay} from "./c4g-overlay";
 import {config} from "./c4g-maps-config";
 import {utils} from "./c4g-maps-utils";
-import {cssConstants} from "./c4g-maps-constant";
 import TileLayer from "ol/layer/Tile";
 import TileJSON from "ol/source/TileJSON";
-import {XYZ} from "ol/source";
-import {OSM} from "ol/source";
+import {BingMaps, ImageStatic, OSM, Stamen, TileWMS, XYZ} from "ol/source";
 import {ATTRIBUTION as OSM_ATTRIBUTION} from "ol/source/OSM";
-import {Stamen} from "ol/source";
-import VectorTile from "ol/VectorTile";
 import {default as VectorTileSource} from "ol/source/VectorTile";
-import {BingMaps} from "ol/source";
-import {TileWMS} from "ol/source";
 import {Group as LayerGroup, Image} from "ol/layer";
 import OLCesium from 'ol-cesium/src/olcs/OLCesium.js';
 import {applyStyle} from 'ol-mapbox-style';
 import VectorTileLayer from 'ol/layer/VectorTile';
 import ol_source_GeoImage from "ol-ext/source/GeoImage";
 import Projection from "ol/proj/Projection";
-import {ImageStatic} from "ol/source";
 
 export class C4gBaselayerController {
   constructor(proxy) {

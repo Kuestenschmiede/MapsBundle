@@ -11,13 +11,10 @@
  *
  */
 
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
-import {Control, FullScreen} from "ol/control";
+import React, {Component} from "react";
+import {FullScreen} from "ol/control";
 import {cssConstants} from "./../c4g-maps-constant";
-import {utils} from "../c4g-maps-utils";
 import {getLanguage} from "../c4g-maps-i18n";
-import {Zoom as OlZoom} from "ol/control";
 
 export class Fullscreen extends Component {
   constructor(props) {

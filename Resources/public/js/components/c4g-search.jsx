@@ -11,9 +11,8 @@
  *
  */
 
-import React, { Component } from "react";
-import {Suggestions} from "./c4g-autocomplete-suggestions.jsx"
-import {cssConstants} from "./../c4g-maps-constant";
+import React, {Component} from "react";
+import {Suggestions} from "./c4g-autocomplete-suggestions.jsx";
 
 export class Search extends Component {
 

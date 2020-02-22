@@ -11,11 +11,8 @@
  *
  */
 
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
+import React, {Component} from "react";
 import {Control} from "ol/control";
-import {cssConstants} from "./../c4g-maps-constant";
-import {StarboardLayerswitcher} from "./c4g-starboard-layerswitcher";
 import {Titlebar} from "./c4g-titlebar.jsx";
 import {getLanguage} from "./../c4g-maps-i18n";
 import {OverlayControls} from "./c4g-overlay-controls.jsx";

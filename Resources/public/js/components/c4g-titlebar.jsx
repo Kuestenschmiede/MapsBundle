@@ -11,9 +11,7 @@
  *
  */
 
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
-import {getLanguage} from "../c4g-maps-i18n";
+import React, {Component} from "react";
 
 export class Titlebar extends Component {
 
