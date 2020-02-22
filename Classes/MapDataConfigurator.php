@@ -396,12 +396,14 @@ class MapDataConfigurator
                 $mapData['caching'] = 1;
             }
             $objSettings = C4gMapSettingsModel::findOnly();
+
             // geosearch
             //
-            if ($profile->geosearch) {
-                $mapData['geosearch']['headline'] = $profile->geosearch_headline;
+            if (array_key_exists('geosearch', $buttons)) {
+
+                $mapData['geosearch']['headline'] = $profile->geosearch_headline ? $profile->geosearch_headline : '';
                 $mapData['geosearch']['geosearch_engine'] = $profile->geosearch_engine;
-                //$mapData['geosearch']['enable'] = ($profile->geosearch && $profile->geosearch_show);
+
                 if ($profile->geosearch_customengine_attribution) {
                     $mapData['geosearch']['custom_attribution'] = \Contao\Controller::replaceInsertTags($profile->geosearch_customengine_attribution);
                 }
@@ -410,7 +412,6 @@ class MapDataConfigurator
                 $mapData['geosearch']['results_headline'] = $profile->geosearch_results_headline;
                 $mapData['geosearch']['result_locstyle'] = $profile->geosearch_result_locstyle;
                 $mapData['geosearch']['div'] = (in_array('search', $externalElements)) ? $externalClasses['search'] : '';
-                ;
                 $mapData['geosearch']['div_results'] = $profile->geosearch_results_div;
                 $mapData['geosearch']['placeholder'] = $profile->geosearch_placeholder;
                 $mapData['geosearch']['searchzoom'] = $profile->geosearch_zoomto;

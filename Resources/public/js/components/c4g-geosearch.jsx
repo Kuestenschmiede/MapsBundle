@@ -134,10 +134,15 @@ export class GeoSearch extends Component {
       closeBtnCb = this.close;
     }
 
+    let headline = this.props.headline;
+    if (!headline) {
+      headline = this.langConstants.GEOSEARCH;
+    }
+
     return (
       <React.Fragment>
         <div className={cssConstants.GEOSEARCH_WRAPPER + " " + modeClass + " c4g-horizon"}>
-          <Titlebar wrapperClass={"c4g-geosearch-header"} header={this.props.headline} headerClass={"c4g-geosearch-headline"}
+          <Titlebar wrapperClass={"c4g-geosearch-header"} header={headline} headerClass={"c4g-geosearch-headline"}
                                 detailBtnClass={""} detailBtnCb={""} closeBtnClass={closeBtnClass} closeBtnCb={closeBtnCb} closeBtnTitle={this.langConstants.CLOSE}>
           </Titlebar>
           <div className={"c4g-geosearch-filter"}>

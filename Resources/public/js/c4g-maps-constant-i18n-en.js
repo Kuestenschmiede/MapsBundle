@@ -75,11 +75,11 @@ export var langConstantsEnglish = {
   EDITOR_VIEW_TRIGGER_DRAW_POLYGON: 'Add areas',
   EDITOR_VIEW_TRIGGER_DRAW_CIRCLE: 'Add circles',
 
-  STARBOARD: 'Starboard',
+  STARBOARD: 'Layerswitcher',
   STARBOARD_BASELAYER: 'Baselayer',
   STARBOARD_LAYER: 'Layer',
   STARBOARD_VIEW_TRIGGER_BASELAYERSWITCHER: 'Baselayerswitcher',
-  STARBOARD_VIEW_TRIGGER_LAYERSWITCHER: 'Layerswitcher',
+  STARBOARD_VIEW_TRIGGER_LAYERSWITCHER: '',
 
   MEASURETOOLS: 'Measuretools',
   MEASURETOOLS_INFO: 'Select a measuretype and start measuring by clicking on the map.',
@@ -90,6 +90,7 @@ export var langConstantsEnglish = {
   MEASURETOOLS_VIEW_TRIGGER_DRAW_CIRCLE: 'Measure radius',
   MEASURETOOLS_VIEW_TRIGGER_DRAW_FREEHAND: 'Measure freehand',
 
+  GEOSEARCH: 'Search',
   OVERVIEWMAP: 'Overview map',
 
   INFOPAGE: 'Infopage',

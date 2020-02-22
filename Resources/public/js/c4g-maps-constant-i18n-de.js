@@ -62,14 +62,15 @@ export var langConstantsGerman = {
   CTRL_BASELAYER: 'Basiskartenwechsler ein-/ausschalten',
   CTRL_INFOAREA: 'Infobereich öffnen/schließen',
 
-  STARBOARD: 'Starboard',
+  STARBOARD: 'Kartenelemente',
   STARBOARD_BASELAYER: 'Basiskarten',
   STARBOARD_LAYER: 'Ebenen',
   STARBOARD_VIEW_TRIGGER_BASELAYERSWITCHER: 'Basiskarten',
-  STARBOARD_VIEW_TRIGGER_LAYERSWITCHER: 'Kartenelemente',
+  STARBOARD_VIEW_TRIGGER_LAYERSWITCHER: '',
 
   SIDEBOARD: 'Sideboard',
 
+  GEOSEARCH: 'Suche',
   OVERVIEWMAP: 'Übersichtskarte',
 
   MEASURETOOLS: 'Messwerkzeuge',
