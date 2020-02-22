@@ -40,6 +40,7 @@ export class PopupContainer extends Component {
     let detailBtnClass = "";
     let detailBtnCb = "";
     let className = "c4g-sideboard c4g-popup-container ";
+
     if (this.state.open) {
       className += "c4g-open ";
     } else {
@@ -58,7 +59,8 @@ export class PopupContainer extends Component {
       <div className={className}>
         <div className={"c4g-popup-wrapper"}>
           <Titlebar wrapperClass={"c4g-popup-header"} headerClass={"c4g-popup-header-headline"} header={""}
-                    closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close} detailBtnClass={""} detailBtnCb={""}>
+                    closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close} closeBtnTitle={this.language.CLOSE}
+                    detailBtnClass={""} detailBtnCb={""}>
             <div dangerouslySetInnerHTML={{__html: this.routeButtons.outerHTML}} />
           </Titlebar>
           <div className={"c4g-popup-content"} dangerouslySetInnerHTML={{__html: this.state.content}}>

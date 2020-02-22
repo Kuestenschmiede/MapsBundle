@@ -138,7 +138,7 @@ export class GeoSearch extends Component {
       <React.Fragment>
         <div className={cssConstants.GEOSEARCH_WRAPPER + " " + modeClass + " c4g-horizon"}>
           <Titlebar wrapperClass={"c4g-geosearch-header"} header={this.props.headline} headerClass={"c4g-geosearch-headline"}
-                                detailBtnClass={""} detailBtnCb={""} closeBtnClass={closeBtnClass} closeBtnCb={closeBtnCb}>
+                                detailBtnClass={""} detailBtnCb={""} closeBtnClass={closeBtnClass} closeBtnCb={closeBtnCb} closeBtnTitle={this.langConstants.CLOSE}>
           </Titlebar>
           <div className={"c4g-geosearch-filter"}>
             <input type="text" onKeyDown={this.inputCallback} id={"c4g-geosearch-input"} placeholder={this.config.placeholder} aria-label={this.config.placeholder}/>

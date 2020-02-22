@@ -29,8 +29,8 @@ export class BaselayerSwitcher extends Component {
     // create control to toggle the panel
     let element = document.createElement('div');
     let button = document.createElement('button');
-    let langConstants = getLanguage(props.mapController.data);
-    button.title = langConstants.CTRL_BASELAYER;
+    this.langConstants = getLanguage(props.mapController.data);
+    button.title = this.langConstants.CTRL_BASELAYER;
     element.className = "c4g-baselayer-control ol-unselectable ol-control ";
     if (props.open) {
       element.className += "c4g-open";
@@ -129,7 +129,7 @@ export class BaselayerSwitcher extends Component {
     return (
       <div className={"c4g-baselayer-wrapper"}>
         <Titlebar wrapperClass={"c4g-baselayer-header"} headerClass={"c4g-baselayer-headline"}
-          header={headline} closeBtnClass={"c4g-baselayer-close"} closeBtnCb={this.close}/>
+          header={headline} closeBtnClass={"c4g-baselayer-close"} closeBtnCb={this.close} closeBtnTitle={this.langConstants.CLOSE}/>
         {filter}
         <div className={"c4g-baselayertree-content"}>
           <ul>

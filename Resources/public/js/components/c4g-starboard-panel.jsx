@@ -28,8 +28,8 @@ export class StarboardPanel extends Component {
     // create control to toggle the panel
     let element = document.createElement('div');
     let button = document.createElement('button');
-    let langConstants = getLanguage(props.mapController.data);
-    button.title = langConstants.CTRL_STARBOARD;
+    this.langConstants = getLanguage(props.mapController.data);
+    button.title = this.langConstants.CTRL_STARBOARD;
     element.className = "c4g-starboard-control ol-unselectable ol-control ";
     if (props.open) {
       element.className += "c4g-open";
@@ -85,11 +85,10 @@ export class StarboardPanel extends Component {
     } else {
       jQuery(this.state.control.element).removeClass("c4g-open").addClass("c4g-close");
     }
-    let langConstants = getLanguage(props.mapController.data);
     let buttonSwitcher = "";
     let buttons = [];
     if (this.props.tabLayers.length > 0) {
-      let regularButton = <button key={this.props.tabLayers.length} title={langConstants.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER} onMouseUp={() => {scope.setActiveTab(0)}}/>;
+      let regularButton = <button key={this.props.tabLayers.length} title={this.langConstants.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER} onMouseUp={() => {scope.setActiveTab(0)}}/>;
       buttons.push(regularButton);
       buttons.push(this.props.tabLayers.map(function(element, index) {
           return <button key={index} title={element[0].name} onMouseUp={() => {scope.setActiveTab(index + 1)}}/>;
@@ -113,13 +112,14 @@ export class StarboardPanel extends Component {
     return (
       <div className={cssConstants.STARBOARD_WRAPPER}>
         <Titlebar wrapperClass={"c4g-starboard-header"} headerClass={cssConstants.STARBOARD_HEADLINE}
-                  header={mapData.starboard.label || langConstants.STARBOARD} closeBtnClass={cssConstants.STARBOARD_CLOSE} closeBtnCb={this.close}>
+                  header={mapData.starboard.label || this.langConstants.STARBOARD} closeBtnClass={cssConstants.STARBOARD_CLOSE} closeBtnCb={this.close}
+                  closeBtnTitle={this.langConstants.CLOSE}>
         </Titlebar>
         {buttonSwitcher}
         <div className={cssConstants.STARBOARD_CONTENT_CONTAINER}>
           <StarboardLayerswitcher key={this.props.tabLayers.length} mapController ={this.props.mapController}
                                 objLayers={this.props.objLayers} styleData={this.props.styleData} parentCallback={this.props.parentCallback}
-                                layerStates={this.props.layerStates} openfunc={this.open} headline={mapData.layerswitcher.label || langConstants.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER}
+                                layerStates={this.props.layerStates} openfunc={this.open} headline={mapData.layerswitcher.label || this.langConstants.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER}
                                 open={this.state.open} active={scope.state.activeTab === 0}/>
           {tabs}
         </div>

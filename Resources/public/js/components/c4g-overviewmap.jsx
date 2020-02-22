@@ -34,7 +34,7 @@ export class OverviewMap extends Component {
       open: !props.collapsed,
       layers: this.props.layers
     };
-    let langConstants = getLanguage(props.mapController.data);
+    this.langConstants = getLanguage(props.mapController.data);
     this.mapController = props.mapController;
 
     element = document.createElement('div');
@@ -47,7 +47,7 @@ export class OverviewMap extends Component {
     // props.target.appendChild(element);
 
     trigger = document.createElement('button');
-    trigger.title = langConstants.CTRL_OVERVIEWMAP;
+    trigger.title = this.langConstants.CTRL_OVERVIEWMAP;
     element.appendChild(trigger);
 
     triggerIcon = document.createElement('span');
@@ -73,10 +73,9 @@ export class OverviewMap extends Component {
   }
 
   render() {
-    let langConstants = getLanguage(this.mapController.data);
     return <div className={"overview-map-wrapper"}>
       <Titlebar wrapperClass={"c4g-overwiev-header"} headerClass={"c4g-overview-headline"}
-                header={langConstants.OVERVIEWMAP} closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close}>
+                header={this.langConstants.OVERVIEWMAP} closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close} closeBtnTitle={this.langConstants.CLOSE}>
       </Titlebar>
       <div id={"overview-map-target"} className={"c4g-overview-content"}>
 

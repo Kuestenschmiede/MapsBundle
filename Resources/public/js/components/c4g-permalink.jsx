@@ -65,7 +65,7 @@ export class Permalink extends Component {
     return (
       <div className={"c4g-permalink-wrapper"}>
         <Titlebar wrapperClass={"c4g-permalink-header"} headerClass={"c4g-permalink-header-headline"}
-                  header={"Permalink"} closeBtnClass={"c4g-permalink-close"} closeBtnCb={this.close}>
+                  header={"Permalink"} closeBtnClass={"c4g-permalink-close"} closeBtnCb={this.close} closeBtnTitle={this.langConstants.CLOSE}>
         </Titlebar>
         <div className={"c4g-permalink-content"}>
           <textarea cols="50" rows="2" id={"permalink-text"} value={this.state.link} readOnly={true}/>
