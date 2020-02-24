@@ -53,6 +53,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_layer_content'] = array
         'importId' => array
         (
             'sql'                     => "bigint(20) unsigned NOT NULL default '0'",
+            'eval'                    => ['doNotCopy' => true],
             'default'                 => ''
         ),
         'type' => array

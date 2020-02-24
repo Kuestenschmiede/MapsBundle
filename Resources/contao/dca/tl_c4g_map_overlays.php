@@ -137,7 +137,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
         ],
         'importId' =>
         [
-            'sql'                     => "bigint(20) unsigned NOT NULL default '0'"
+            'sql'                     => "bigint(20) unsigned NOT NULL default '0'",
+            'eval'                    => ['doNotCopy' => true]
         ],
         'pid' =>
         [
