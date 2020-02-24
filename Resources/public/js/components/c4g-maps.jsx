@@ -511,7 +511,35 @@ export class MapController extends Component {
 
     if (domMapDiv && domMapDiv.style) {
       if (mapData.width) {
-        domMapDiv.style.width = mapData.width;
+        if (mapData.margin) {
+          let arrMargins = mapData.margin.split(" ");
+          let rightMargin = 0;
+          let leftMargin = 0;
+          switch (arrMargins.length) {
+            case 4:
+              rightMargin = arrMargins[1];
+              leftMargin = arrMargins[3];
+              break;
+            case 2:
+              rightMargin = arrMargins[1];
+              leftMargin = arrMargins[1];
+              break;
+            case 1:
+              rightMargin = arrMargins[0];
+              leftMargin = arrMargins[0];
+              break;
+          }
+          // "==" is correct here since we want to check number and string
+          if (leftMargin == 0) {
+            leftMargin += "px";
+          }
+          if (rightMargin == 0) {
+            rightMargin += "px";
+          }
+          domMapDiv.style.width = "calc(" + mapData.width +  " - " + leftMargin + " - " + rightMargin + ")";
+        } else {
+          domMapDiv.style.width = mapData.width;
+        }
       }
       if (mapData.height) {
         domMapDiv.style.height = mapData.height;
@@ -523,7 +551,7 @@ export class MapController extends Component {
         }
       }
       if (mapData.margin) {
-        domMapDiv.style.margin = mapData.margin;
+        domMapDiv.style.padding = mapData.margin;
       }
     } else {
       console.warn('can not get element by id mapData.mapDiv');
