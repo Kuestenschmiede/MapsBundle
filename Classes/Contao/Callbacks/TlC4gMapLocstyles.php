@@ -21,7 +21,7 @@ class TlC4gMapLocstyles extends Backend
 {
     public function editSvgIcon(DataContainer $dc)
     {
-        if ($dc->activeRecord->svg_add_attributes === '1') {
+        if (($dc->activeRecord->styletype == 'cust_icon_svg') && ($dc->activeRecord->svg_add_attributes === '1')) {
             $svgSrc = $dc->activeRecord->svgSrc;
             $svgFile = FilesModel::findByUuid($svgSrc);
             if (!$svgFile) {
