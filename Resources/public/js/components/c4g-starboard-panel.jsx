@@ -121,9 +121,9 @@ export class StarboardPanel extends Component {
         </Titlebar>
         {buttonSwitcher}
         <div className={cssConstants.STARBOARD_CONTENT_CONTAINER}>
-          <StarboardLayerswitcher key={this.props.tabLayers.length} mapController ={this.props.mapController}
+          <StarboardLayerswitcher key={this.props.tabLayers.length} mapController ={this.props.mapController} lang={this.langConstants}
                                 objLayers={this.props.objLayers} styleData={this.props.styleData} parentCallback={this.props.parentCallback}
-                                layerStates={this.props.layerStates} openfunc={this.open} headline={mapData.layerswitcher.label || this.langConstants.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER}
+                                layerStates={this.props.layerStates} openfunc={this.open} headline={mapData.layerswitcher.label}
                                 open={this.state.open} active={scope.state.activeTab === 0}/>
           {tabs}
         </div>

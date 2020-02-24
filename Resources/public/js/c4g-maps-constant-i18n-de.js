@@ -68,6 +68,8 @@ export var langConstantsGerman = {
   STARBOARD_VIEW_TRIGGER_BASELAYERSWITCHER: 'Basiskarten',
   STARBOARD_VIEW_TRIGGER_LAYERSWITCHER: 'Kartenelemente',
 
+  LAYERSWITCHER_TOGGLE_ALL: "Alle Elemente",
+
   SIDEBOARD: 'Sideboard',
 
   GEOSEARCH: 'Suche',

@@ -113,7 +113,7 @@ export class StarboardLayerswitcher extends Component {
 
     let headline = "";
     if (this.props.mapController.data.starboard.button) {
-      headline = <a className={"c4g-starboard-headline-link " + (this.buttonEnabled ? "c4g-active" : "c4g-inactive")} onMouseUp={this.toggleAllLayers}>{this.props.headline}</a>;
+      headline = <a className={"c4g-starboard-headline-link " + (this.buttonEnabled ? "c4g-active" : "c4g-inactive")} onMouseUp={this.toggleAllLayers}>{this.props.headline || this.props.lang.LAYERSWITCHER_TOGGLE_ALL}</a>;
     } else {
       headline = <div className="contentHeadline">{this.props.headline}</div>;
     }
