@@ -286,6 +286,7 @@ export class BetterLayerController {
         if (data.layer.hasOwnProperty(layerId)) {
           if (data.layer[layerId].type === "startab") {
             let newTab = [self.getStructureFromLayer(data.layer[layerId], tabStructures.length)];
+            newTab.awesomeIcon = data.layer[layerId].awesomeicon;
             tabStructures.push(newTab);
           } else {
             let newChild = self.getStructureFromLayer(data.layer[layerId], structure.length);
