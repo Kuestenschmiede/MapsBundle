@@ -91,6 +91,9 @@ export class Permalink extends Component {
         utils.storeValue('panel', "");
       }
     }
+    if (this.state.open) {
+      jQuery(".c4g-permalink-container").addClass(cssConstants.OPEN).removeClass(cssConstants.CLOSE);
+    }
   }
 
   componentDidMount() {

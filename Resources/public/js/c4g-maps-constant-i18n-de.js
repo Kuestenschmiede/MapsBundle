@@ -66,7 +66,7 @@ export var langConstantsGerman = {
   STARBOARD_BASELAYER: 'Basiskarten',
   STARBOARD_LAYER: 'Ebenen',
   STARBOARD_VIEW_TRIGGER_BASELAYERSWITCHER: 'Basiskarten',
-  STARBOARD_VIEW_TRIGGER_LAYERSWITCHER: '',
+  STARBOARD_VIEW_TRIGGER_LAYERSWITCHER: 'Kartenelemente',
 
   SIDEBOARD: 'Sideboard',
 

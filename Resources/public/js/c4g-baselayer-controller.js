@@ -778,10 +778,17 @@ export class C4gBaselayerController {
                   timeElt.style.display = 'none';
               }
           };*/
+
+          if (!jQuery(".c4g-control-container-top-left").hasClass("c4g-cesium-enabled")) {
+            jQuery(".c4g-control-container-top-left").addClass("c4g-cesium-enabled");
+          }
+
         } else {
           if (this.ol3d && this.ol3d.getEnabled()) {
             this.ol3d.setEnabled(false);
-            utils.redrawMapView(this.mapController);
+          }
+          if (jQuery(".c4g-control-container-top-left").hasClass("c4g-cesium-enabled")) {
+            jQuery(".c4g-control-container-top-left").removeClass("c4g-cesium-enabled");
           }
         }
       }

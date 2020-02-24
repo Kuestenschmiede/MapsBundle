@@ -87,13 +87,13 @@ export class StarboardPanel extends Component {
     let buttonSwitcher = "";
     let buttons = [];
     if (this.props.tabLayers.length > 0) {
-      let regularButton = <button key={this.props.tabLayers.length} title={this.langConstants.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER} onMouseUp={() => {scope.setActiveTab(0)}}/>;
+      let regularButton = <button key={this.props.tabLayers.length} title={this.langConstants.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER} className={"c4g-starboard-view-trigger-layerswitcher"} onMouseUp={() => {scope.setActiveTab(0)}}/>;
       buttons.push(regularButton);
       buttons.push(this.props.tabLayers.map(function(element, index) {
           return <button key={index} title={element[0].name} onMouseUp={() => {scope.setActiveTab(index + 1)}}/>;
         })
       );
-      buttonSwitcher = <div className={cssConstants.CONTROL + " c4g-starboard-switcher"}>
+      buttonSwitcher = <div className={"c4g-starboard-switcher"}>
         {buttons}
       </div>
     }
