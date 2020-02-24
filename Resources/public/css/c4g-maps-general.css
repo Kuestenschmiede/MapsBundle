@@ -641,7 +641,7 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
 }
 
 .c4g-geosearch-form input, .c4g-sideboard > div > div[class*=filter] input {
-  max-width: calc(100% - .2em - 35px);
+  width: calc(100% - .2em - 35px);
   line-height: 32px;
   height: 32px;
   padding: 0 0 0 .2em;
