@@ -54,6 +54,7 @@ export class StarboardPanel extends Component {
     this.slideOutCollidingElements = this.slideOutCollidingElements.bind(this);
     this.resizeFunction = this.resizeFunction.bind(this);
     this.close = this.close.bind(this);
+    this.createStylingForIcon = this.createStylingForIcon.bind(this);
     // state variables (every property that has influence on this component)
     this.state = {
       // either "top" or "bottom"
@@ -87,13 +88,17 @@ export class StarboardPanel extends Component {
     let buttonSwitcher = "";
     let buttons = [];
     if (this.props.tabLayers.length > 0) {
-      let regularButton = <button key={this.props.tabLayers.length} title={this.langConstants.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER} onMouseUp={() => {scope.setActiveTab(0)}}/>;
+      let regularButton = <button key={this.props.tabLayers.length} title={this.langConstants.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER} className={"c4g-starboard-view-trigger-layerswitcher"} onMouseUp={() => {scope.setActiveTab(0)}}/>;
       buttons.push(regularButton);
       buttons.push(this.props.tabLayers.map(function(element, index) {
-          return <button key={index} title={element[0].name} onMouseUp={() => {scope.setActiveTab(index + 1)}}/>;
+          let iconCode = element.awesomeIcon;
+          scope.createStylingForIcon(iconCode, index);
+          return <button key={index} title={element[0].name}
+                         className={"c4g-starboard-view-trigger-tab-" + index}
+                         onMouseUp={() => {scope.setActiveTab(index + 1)}}/>;
         })
       );
-      buttonSwitcher = <div className={cssConstants.CONTROL + " c4g-starboard-switcher"}>
+      buttonSwitcher = <div className={"c4g-starboard-switcher"}>
         {buttons}
       </div>
     }
@@ -116,14 +121,29 @@ export class StarboardPanel extends Component {
         </Titlebar>
         {buttonSwitcher}
         <div className={cssConstants.STARBOARD_CONTENT_CONTAINER}>
-          <StarboardLayerswitcher key={this.props.tabLayers.length} mapController ={this.props.mapController}
+          <StarboardLayerswitcher key={this.props.tabLayers.length} mapController ={this.props.mapController} lang={this.langConstants}
                                 objLayers={this.props.objLayers} styleData={this.props.styleData} parentCallback={this.props.parentCallback}
-                                layerStates={this.props.layerStates} openfunc={this.open} headline={mapData.layerswitcher.label || this.langConstants.STARBOARD_VIEW_TRIGGER_LAYERSWITCHER}
+                                layerStates={this.props.layerStates} openfunc={this.open} headline={mapData.layerswitcher.label}
                                 open={this.state.open} active={scope.state.activeTab === 0}/>
           {tabs}
         </div>
       </div>
     )
+  }
+
+  createStylingForIcon(iconCode, index) {
+    let style = document.createElement("style");
+    // webkit hack:
+    style.appendChild(document.createTextNode(""));
+    document.head.appendChild(style);
+
+    let styleSheet = style.sheet;
+    styleSheet.insertRule("button.c4g-starboard-view-trigger-tab-" + index + ":before {\n" +
+      "  content: \"\\" + iconCode + "\";\n" +
+      "  font-family: 'Font Awesome 5 Free';\n" +
+      "  font-weight: 900;\n" +
+      "  font-size: inherit;\n" +
+      "}")
   }
 
   open() {

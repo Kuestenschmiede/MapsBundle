@@ -79,7 +79,9 @@ export var langConstantsEnglish = {
   STARBOARD_BASELAYER: 'Baselayer',
   STARBOARD_LAYER: 'Layer',
   STARBOARD_VIEW_TRIGGER_BASELAYERSWITCHER: 'Baselayerswitcher',
-  STARBOARD_VIEW_TRIGGER_LAYERSWITCHER: '',
+  STARBOARD_VIEW_TRIGGER_LAYERSWITCHER: 'Map elements',
+
+  LAYERSWITCHER_TOGGLE_ALL: "All elements",
 
   MEASURETOOLS: 'Measuretools',
   MEASURETOOLS_INFO: 'Select a measuretype and start measuring by clicking on the map.',

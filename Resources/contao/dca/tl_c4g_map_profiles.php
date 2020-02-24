@@ -106,7 +106,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         '__selector__'                => ['resize_locstyles_zoom', 'mouse_nav','cluster_all','attribution','hover_popups','overpassEngine', 'cesium', 'popupHandling','geopicker'],
         'default'                     => '{general_legend},name,theme,mapFunctions,initial_open_comp;'.
                                          '{navigation_legend:hide},mouse_nav,touch_nav,keyboard_nav;'.
-                                         '{click_legend:hide},link_newwindow,link_open_on,hover_popups, popupHandling;'.
+                                         '{click_legend:hide},link_newwindow,link_open_on,hover_popups,popupHandling;'.
                                          '{baselayer_legend:hide},baselayers, default_baselayer,baselayerswitcher_label,baselayer_filter;'.
                                          '{starboard_legend:hide},layerswitcher_label,starboard_filter,starboard_label,starboard_button,starboard_locstyles,cluster_all;'.
                                          '{geosearch_legend:hide},geosearch_headline,geosearch_engine,geosearchParams,geosearch_result_locstyle,geosearch_placeholder,geosearch_results,geosearch_zoomto,geosearch_zoombounds,geosearch_animate,geosearch_markresult,geosearch_popup,geosearch_attribution,geosearch_collapsed;'.
@@ -129,7 +129,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         'overpassEngine_2'            => '',
         'overpassEngine_3'            => '',
         'resize_locstyles_zoom'       => 'resize_src_zoom,resize_scale_factor,resize_min_scale,resize_max_scale',
-        'geopicker'                   => 'geopicker_fieldx,geopicker_fieldy,geopicker_searchdiv,geopicker_attribution,geopicker_disabled,geopicker_anonymous'
+        'geopicker'                   => 'geopicker_fieldx,geopicker_fieldy,geopicker_searchdiv,geopicker_attribution,geopicker_disabled,geopicker_anonymous',
+        'popupHandling_3'             => 'popupHeadline',
     ],
 
     // Fields
@@ -145,7 +146,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         ],
         'importId' =>
         [
-            'sql'                     => "bigint(20) unsigned NOT NULL default '0'"
+            'sql'                     => "bigint(20) unsigned NOT NULL default '0'",
+            'eval'                    => ['doNotCopy' => true]
         ],
         'name' =>
             [
@@ -294,6 +296,15 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'eval'                    => ['submitOnChange' => true,'includeBlankOption' => false],
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandlingReferences'],
             'sql'                     => "char(1) NOT NULL default '0'"
+        ],
+        'popupHeadline' =>
+        [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHeadline'],
+            'exclude'                 => true,
+            'inputType'               => 'text',
+            'default'                 => 'Details',
+            'eval'                    => ['maxlength'=>254],
+            'sql'                     => "varchar(254) NOT NULL default 'Details'"
         ],
         'baselayers' =>
             [

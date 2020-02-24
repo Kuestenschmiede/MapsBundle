@@ -400,7 +400,6 @@ class MapDataConfigurator
             // geosearch
             //
             if (array_key_exists('geosearch', $buttons)) {
-
                 $mapData['geosearch']['headline'] = $profile->geosearch_headline ? $profile->geosearch_headline : '';
                 $mapData['geosearch']['geosearch_engine'] = $profile->geosearch_engine;
 
@@ -518,6 +517,7 @@ class MapDataConfigurator
             $mapData['hover_popups'] = $profile->hover_popups;
             $mapData['hover_popups_stay'] = $profile->hover_popups_stay;
             $mapData['popupHandling'] = $profile->popupHandling;
+            $mapData['popupHeadline'] = $profile->popupHeadline;
         }
 
         // mapservice
