@@ -440,17 +440,17 @@ export class BetterLayerController {
         }
       }
     }
-    if (childs && childs.length && childs.length > 0) {
-      let singleLocStyle = childs[0].locstyle;
-      if (!childs.find( (element) => element.locstyle !== singleLocStyle)) {
-        for (let childId in childs) {
-          if(childs.hasOwnProperty(childId)) {
-            delete childs[childId].locstyle;
-          }
-        }
-        possibleLocstyle = singleLocStyle;
-      }
-    }
+    // if (childs && childs.length && childs.length > 0) {
+    //   let singleLocStyle = childs[0].locstyle;
+    //   if (!childs.find( (element) => element.locstyle !== singleLocStyle)) {
+    //     for (let childId in childs) {
+    //       if(childs.hasOwnProperty(childId)) {
+    //         delete childs[childId].locstyle;
+    //       }
+    //     }
+    //     possibleLocstyle = singleLocStyle;
+    //   }
+    // }
     if (layer.excludeFromSingleLayer) {
       let customStyleFunc = false;
       let vectorSource = new VectorSource();
@@ -683,6 +683,7 @@ export class BetterLayerController {
       };
     }
   }
+
   getFeaturesForLayer(layer) {
     let features = [];
     const featureProjection = "EPSG:3857";
