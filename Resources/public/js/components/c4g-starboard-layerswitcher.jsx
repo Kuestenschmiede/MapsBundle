@@ -22,10 +22,12 @@ export class StarboardLayerswitcher extends Component {
     const scope = this;
 
     this.setLayerFilter = this.setLayerFilter.bind(this);
+    this.toggleAllLayers = this.toggleAllLayers.bind(this);
     this.state = {
       initialized: false,
       layerFilter: ""
     };
+    this.buttonEnabled = false;
   }
 
   callbackFunction = (key, newState) => {
@@ -54,13 +56,48 @@ export class StarboardLayerswitcher extends Component {
     return show;
   }
 
+  toggleAllLayers() {
+    const scope = this;
+    let states = this.props.layerStates;
+    let layers = this.props.objLayers;
+    function activateLayers(layers, states) {
+      for (let i = 0; i < states.length; i++) {
+        if (!states[i].active) {
+          scope.props.mapController.proxy.layerController.show(layers[i].loader, layers[i].features || layers[i].vectorLayer);
+        }
+        states[i].active = true;
+        if (states[i].childStates && states[i].childStates.length > 0) {
+          states[i].childStates = activateLayers(layers[i].childs, states[i].childStates);
+        }
+      }
+      scope.buttonEnabled = true;
+      return states;
+    }
+    function deactivateLayers(layers, states) {
+      for (let i = 0; i < states.length; i++) {
+        if (states[i].active) {
+          scope.props.mapController.proxy.layerController.hide(layers[i].loader, layers[i].features || layers[i].vectorLayer);
+        }
+        states[i].active = false;
+        if (states[i].childStates && states[i].childStates.length > 0) {
+          states[i].childStates = deactivateLayers(layers[i].childs, states[i].childStates);
+        }
+      }
+      scope.buttonEnabled = false;
+      return states;
+    }
+
+    if (!scope.buttonEnabled) {
+      states = activateLayers(layers, states);
+    } else {
+      states = deactivateLayers(layers, states);
+    }
+
+    this.props.parentCallback(states);
+  }
+
   render() {
     let layers, states, filter;
-
-    // deep clone arrays before passing them as arguments
-    // otherwise we would modify the objects inside the props
-    // [layers, states] = this.filterLayers(JSON.parse(JSON.stringify(this.props.objLayers)),
-    //   JSON.parse(JSON.stringify(this.props.layerStates)));
     layers = this.props.objLayers;
     states = this.props.layerStates;
     if (!this.props.active) {
@@ -74,9 +111,16 @@ export class StarboardLayerswitcher extends Component {
                </div>
     }
 
+    let headline = "";
+    if (this.props.mapController.data.starboard.button) {
+      headline = <a className={"c4g-starboard-headline-link " + (this.buttonEnabled ? "c4g-active" : "c4g-inactive")} onMouseUp={this.toggleAllLayers}>{this.props.headline}</a>;
+    } else {
+      headline = <div className="contentHeadline">{this.props.headline}</div>;
+    }
+
     return (
     <React.Fragment>
-      <div className="contentHeadline">{this.props.headline}</div>
+      {headline}
       {filter}
       <div className={"c4g-content-layertree"}>
         <div className={cssConstants.STARBOARD_LAYERTREE}>
