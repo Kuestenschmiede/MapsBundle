@@ -34,6 +34,8 @@ export class OverviewMap extends Component {
     };
     this.langConstants = getLanguage(props.mapController.data);
     this.mapController = props.mapController;
+    this.open = this.open.bind(this);
+    this.close = this.close.bind(this);
 
     element = document.createElement('div');
     element.className = cssConstants.OVERVIEWMAP + ' ' + cssConstants.OL_UNSELECTABLE + ' ' + cssConstants.OL_CONTROL;
