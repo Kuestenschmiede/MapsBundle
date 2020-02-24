@@ -400,7 +400,6 @@ class MapDataConfigurator
             // geosearch
             //
             if (array_key_exists('geosearch', $buttons)) {
-
                 $mapData['geosearch']['headline'] = $profile->geosearch_headline ? $profile->geosearch_headline : '';
                 $mapData['geosearch']['geosearch_engine'] = $profile->geosearch_engine;
 
