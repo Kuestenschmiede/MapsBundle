@@ -115,7 +115,7 @@ export class OverviewMap extends Component {
 
   open() {
     this.setState({open: true});
-    this.props.mapController.hideOtherComponents(this);
+    this.props.mapController.setOpenComponent(this);
   }
 
   close() {
