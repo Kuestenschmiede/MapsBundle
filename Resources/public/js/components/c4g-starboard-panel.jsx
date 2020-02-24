@@ -93,7 +93,7 @@ export class StarboardPanel extends Component {
           return <button key={index} title={element[0].name} onMouseUp={() => {scope.setActiveTab(index + 1)}}/>;
         })
       );
-      buttonSwitcher = <div className={cssConstants.CONTROL + " c4g-starboard-switcher"}>
+      buttonSwitcher = <div className={"c4g-starboard-switcher"}>
         {buttons}
       </div>
     }
