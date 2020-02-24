@@ -141,7 +141,7 @@ class LayerContentService
     {
         $arrGeoJsonData = $this->createGeoJsonResult($objLayer, 'tl_c4g_maps');
         if ($arrGeoJsonData) {
-            $strGeoJsonData = Utils::replaceInsertTags(\GuzzleHttp\json_encode($arrGeoJsonData) ?: "", $lang);
+            $strGeoJsonData = Utils::replaceInsertTags(\GuzzleHttp\json_encode($arrGeoJsonData) ?: '', $lang);
         }
         if ($strGeoJsonData) {
             $arrGeoJsonData = \GuzzleHttp\json_decode($strGeoJsonData, true);
@@ -154,7 +154,7 @@ class LayerContentService
             'origType' => 'geojson',
             'locationStyle' => $objLayer->locstyle,
             'data' => $arrGeoJsonData,
-            'loc_linkurl' => Utils::replaceInsertTags($objLayer->loc_linkurl ?: "", $lang),
+            'loc_linkurl' => Utils::replaceInsertTags($objLayer->loc_linkurl ?: '', $lang),
             'hover_location' => $objLayer->hover_location,
             'hover_style' => $objLayer->hover_style,
         ];
@@ -169,7 +169,7 @@ class LayerContentService
             'origType' => 'single',
             'locationStyle' => $objLayer->locstyle,
             'data' => $this->createGeoJsonResult($objLayer, 'tl_c4g_maps', $lang),
-            'loc_linkurl' => Utils::replaceInsertTags($objLayer->loc_linkurl ?: "", $lang),
+            'loc_linkurl' => Utils::replaceInsertTags($objLayer->loc_linkurl ?: '', $lang),
             'hover_location' => $objLayer->hover_location,
             'hover_style' => $objLayer->hover_style,
         ];
@@ -210,7 +210,7 @@ class LayerContentService
             'cluster_fontcolor' => $objLayer->cluster_fontcolor,
             'cluster_zoom' => $objLayer->cluster_zoom,
             'cluster_popup' => $objLayer->cluster_popup,
-            'loc_linkurl' => Utils::replaceInsertTags($objLayer->loc_linkurl ?: "", $lang),
+            'loc_linkurl' => Utils::replaceInsertTags($objLayer->loc_linkurl ?: '', $lang),
             'hover_location' => $objLayer->hover_location,
             'hover_style' => $objLayer->hover_style,
             'data' => [
@@ -247,7 +247,7 @@ class LayerContentService
             'cluster_fillcolor' => $objLayer->cluster_fillcolor,
             'cluster_fontcolor' => $objLayer->cluster_fontcolor,
             'cluster_zoom' => $objLayer->cluster_zoom,
-            'loc_linkurl' => Utils::replaceInsertTags($objLayer->loc_linkurl ?: "", $lang),
+            'loc_linkurl' => Utils::replaceInsertTags($objLayer->loc_linkurl ?: '', $lang),
             'hover_location' => $objLayer->hover_location,
             'hover_style' => $objLayer->hover_style,
             'data' => [
@@ -292,7 +292,7 @@ class LayerContentService
             'cluster_fillcolor' => $objLayer->cluster_fillcolor,
             'cluster_fontcolor' => $objLayer->cluster_fontcolor,
             'cluster_zoom' => $objLayer->cluster_zoom,
-            'loc_linkurl' => Utils::replaceInsertTags($objLayer->loc_linkurl ?: "", $lang),
+            'loc_linkurl' => Utils::replaceInsertTags($objLayer->loc_linkurl ?: '', $lang),
             'hover_location' => $objLayer->hover_location,
             'hover_style' => $objLayer->hover_style,
             'data' => [
@@ -337,7 +337,7 @@ class LayerContentService
             'cluster_fillcolor' => $objLayer->cluster_fillcolor,
             'cluster_fontcolor' => $objLayer->cluster_fontcolor,
             'cluster_zoom' => $objLayer->cluster_zoom,
-            'loc_linkurl' => Utils::replaceInsertTags($objLayer->loc_linkurl ?: "", $lang),
+            'loc_linkurl' => Utils::replaceInsertTags($objLayer->loc_linkurl ?: '', $lang),
             'hover_location' => $objLayer->hover_location,
             'hover_style' => $objLayer->hover_style,
             'data' => [
@@ -570,7 +570,7 @@ class LayerContentService
                         }
                         $link = preg_replace(['/\[[a-z]+\]/'], $matches, $link);
                     }
-                    $link = Utils::replaceInsertTags($link ?: "", $lang);
+                    $link = Utils::replaceInsertTags($link ?: '', $lang);
                     if (substr($link, 0, 1) == '(' && substr($link, -1, 1) == ')') {
                         $link = substr($link, 1);
                         $link = substr($link, 0, -1);
@@ -594,9 +594,9 @@ class LayerContentService
                             $arrReturnData[$i]['data']['properties']['popup']['content'] .= $popupContent . '</li></ul>';
 
                             if ($arrReturnData[$i]['data']['properties']['tooltip']) {
-                                $arrReturnData[$i]['data']['properties']['tooltip'] .= ', ' . Utils::replaceInsertTags($arrResult[$tooltipField] ?: "", $lang);
+                                $arrReturnData[$i]['data']['properties']['tooltip'] .= ', ' . Utils::replaceInsertTags($arrResult[$tooltipField] ?: '', $lang);
                             } else {
-                                $arrReturnData[$i]['data']['properties']['tooltip'] .= Utils::replaceInsertTags($arrResult[$tooltipField] ?: "", $lang);
+                                $arrReturnData[$i]['data']['properties']['tooltip'] .= Utils::replaceInsertTags($arrResult[$tooltipField] ?: '', $lang);
                             }
                             $event = true;
                         }
@@ -625,7 +625,7 @@ class LayerContentService
 
                 if (!$event) {
                     if ($sourceTable == 'tl_content') {
-                        $popupContent = Controller::getContentElement($arrResult['id']) ? Utils::replaceInsertTags(Controller::getContentElement($arrResult['id']) ?: "", $lang) : $popupContent;
+                        $popupContent = Controller::getContentElement($arrResult['id']) ? Utils::replaceInsertTags(Controller::getContentElement($arrResult['id']) ?: '', $lang) : $popupContent;
                         $popupContent = str_replace('TL_FILES_URL', '', $popupContent);
                     }
 
@@ -649,7 +649,7 @@ class LayerContentService
                         'cluster_fontcolor' => $objLayer->cluster_fontcolor,
                         'cluster_zoom' => $objLayer->cluster_zoom,
                         'cluster_popup' => $objLayer->cluster_popup,
-                        'loc_linkurl' => Utils::replaceInsertTags($link ?: "", $lang),
+                        'loc_linkurl' => Utils::replaceInsertTags($link ?: '', $lang),
                         'hover_location' => $objLayer->hover_location,
                         'hover_style' => $objLayer->hover_style,
                         'data' => $arrGeoJson = [
@@ -663,7 +663,7 @@ class LayerContentService
                                     'content' => $popupContent,
                                     'routing_link' => $objLayer->routing_to,
                                 ],
-                                'tooltip' => Utils::replaceInsertTags($tooltip ?: "", $lang),
+                                'tooltip' => Utils::replaceInsertTags($tooltip ?: '', $lang),
                                 'tooltip_length' => $objLayer->tooltip_length,
                                 'label' => Utils::replaceInsertTags($arrResult[$labelField] ?: '', $lang),
                                 'zoom_onclick' => $objLayer->loc_onclick_zoomto,
@@ -823,7 +823,7 @@ class LayerContentService
         if (($objLayer->popupType == 'text') && !$objLayer->popup_info && $objLayer->locstyle) {
             $locstyle = C4gMapLocstylesModel::findByPk($objLayer->locstyle);
             if ($locstyle->popup_info) {
-                $popup_content = Utils::replaceInsertTags($locstyle->popup_info ?: "", $lang);
+                $popup_content = Utils::replaceInsertTags($locstyle->popup_info ?: '', $lang);
                 $popup_async = false;
             } else {
                 $popup_content = '';
@@ -831,7 +831,7 @@ class LayerContentService
             }
         } elseif (!$objLayer->popup_async && $objLayer->popup_info) {
             $popup_async = false;
-            $popup_content = Utils::replaceInsertTags($objLayer->popup_info ?: "", $lang);
+            $popup_content = Utils::replaceInsertTags($objLayer->popup_info ?: '', $lang);
         }
 
         switch ($objLayer->location_type) {
@@ -854,11 +854,11 @@ class LayerContentService
                             'routing_link' => $objLayer->routing_to,
                             'showPopupOnActive' => $objLayer->showPopupOnActive,
                         ],
-                        'tooltip' => Utils::replaceInsertTags($objLayer->tooltip ?: "", $lang),
+                        'tooltip' => Utils::replaceInsertTags($objLayer->tooltip ?: '', $lang),
                         'tooltip_length' => $objLayer->tooltip_length,
-                        'label' => Utils::replaceInsertTags($objLayer->loc_label ?: "", $lang),
+                        'label' => Utils::replaceInsertTags($objLayer->loc_label ?: '', $lang),
                         'zoom_onclick' => $objLayer -> loc_onclick_zoomto,
-                        'loc_linkurl' => Utils::replaceInsertTags($objLayer->loc_linkurl ?: "", $lang),
+                        'loc_linkurl' => Utils::replaceInsertTags($objLayer->loc_linkurl ?: '', $lang),
                         'hover_location' => $objLayer->hover_location,
                         'hover_style' => $objLayer->hover_style,
                     ],
@@ -913,9 +913,9 @@ class LayerContentService
                         ],
                         'projection' => $projection,
                         'zoom_onclick' => $objLayer -> loc_onclick_zoomto,
-                        'tooltip' => Utils::replaceInsertTags($objLayer->tooltip ?: "", $lang),
+                        'tooltip' => Utils::replaceInsertTags($objLayer->tooltip ?: '', $lang),
                         'tooltip_length' => $objLayer->tooltip_length,
-                        'label' => Utils::replaceInsertTags($objLayer->loc_label ?: "", $lang),
+                        'label' => Utils::replaceInsertTags($objLayer->loc_label ?: '', $lang),
                     ];
                 } elseif ($data) {
                     // OL3 needs a feature or feature-collection
@@ -932,7 +932,7 @@ class LayerContentService
                             'tooltip' => $objLayer->tooltip,
                             'label' => $objLayer->loc_label,
                             'zoom_onclick' => $objLayer -> loc_onclick_zoomto,
-                            'loc_linkurl' => Utils::replaceInsertTags($objLayer->loc_linkurl ?: "", $lang),
+                            'loc_linkurl' => Utils::replaceInsertTags($objLayer->loc_linkurl ?: '', $lang),
                             'hover_location' => $objLayer->hover_location,
                             'hover_style' => $objLayer->hover_style,
                         ],
@@ -1079,7 +1079,7 @@ class LayerContentService
                     'cluster_fontcolor' => $objLayer->cluster_fontcolor,
                     'cluster_zoom' => $objLayer->cluster_zoom,
                     'cluster_popup' => $objLayer->cluster_popup,
-                    'loc_linkurl' => Utils::replaceInsertTags($objLayer->loc_linkurl ?: "", $lang),
+                    'loc_linkurl' => Utils::replaceInsertTags($objLayer->loc_linkurl ?: '', $lang),
                     'hover_location' => $objLayer->hover_location,
                     'hover_style' => $objLayer->hover_style,
                     'data' => [
