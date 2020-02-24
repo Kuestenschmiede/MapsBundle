@@ -24,6 +24,10 @@ class TlC4gMapLocstyles extends Backend
         if ($dc->activeRecord->svg_add_attributes === '1') {
             $svgSrc = $dc->activeRecord->svgSrc;
             $svgFile = FilesModel::findByUuid($svgSrc);
+            if (!$svgFile) {
+                return;
+            }
+
             $imagine = new Imagine();
             $image = $imagine->open($svgFile->path);
             $svg = $image->getDomDocument()->documentElement;
