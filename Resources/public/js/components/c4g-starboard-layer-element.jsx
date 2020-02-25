@@ -146,7 +146,7 @@ export class C4gStarboardLayerElement extends Component {
       span = <span className={cssConstants.ICON} onMouseUp={(event) => this.spanClick(event)}/>;
     }
     let stylePicture = null;
-    if (this.props.mapController.data.starboard.showLocstyles === "1" && this.props.layer.locstyle &&this.props.styleData.arrLocStyles && this.props.styleData.arrLocStyles[this.props.layer.locstyle]) {
+    if (this.props.mapController.data.starboard.showLocstyles === "1" && this.props.layer.locstyle && this.props.styleData && this.props.styleData.arrLocStyles && this.props.styleData.arrLocStyles[this.props.layer.locstyle]) {
       stylePicture = <C4gStarboardStyle styleData={this.props.styleData} styleId={this.props.layer.locstyle}/>
     }
     let cssClass = this.props.layerStates.active ? cssConstants.ACTIVE : cssConstants.INACTIVE;
