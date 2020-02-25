@@ -179,7 +179,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'default'                 => '',
             'options_callback'        => ['tl_c4g_map_tables','getSourceTableFields'],
             'save_callback'           => ['tl_c4g_map_tables', 'serializeResult'],
-            'eval'                    => ['mandatory'=>false, 'includeBlankOption' => true],
+            'eval'                    => ['mandatory'=>false, 'chosen' => true, 'includeBlankOption' => true],
             'sql'                     => "text NULL default ''"
         ],
         'ptableCompareField' =>
@@ -268,7 +268,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
                 'inputType'               => 'select',
                 'default'                 => '',
                 'options_callback'        => ['tl_c4g_map_tables','getSourceTableFields'],
-                'eval'                    => ['mandatory'=>false, 'multiple'=>false, 'includeBlankOption' => true],
+                'eval'                    => ['mandatory'=>false, 'multiple'=>false, 'chosen' => true, 'includeBlankOption' => true],
                 'sql'                     => "text NULL default ''"
             ],
         'tooltip' =>
