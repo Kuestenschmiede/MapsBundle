@@ -690,6 +690,31 @@ export class C4gBaselayerController {
       this.arrBaselayers[baseLayerUid].layer = newBaselayer;
     }
 
+    // // deactivate old overlays
+    if (this.proxy.activeBaselayerId && (this.proxy.activeBaselayerId !== baseLayerUid)) {
+      let oldBaselayer = this.arrBaselayers[this.proxy.activeBaselayerId];
+      if (oldBaselayer.overlayController && oldBaselayer.overlayController.arrOverlays
+        && oldBaselayer.overlayController.arrOverlays.length > 0) {
+        for (let key in oldBaselayer.overlayController.arrOverlays) {
+          if (oldBaselayer.overlayController.arrOverlays.hasOwnProperty(key) && key !== "length") {
+            let overlay = oldBaselayer.overlayController.arrOverlays[key];
+            overlay.changeOpacity(0);
+          }
+        }
+      }
+    }
+    // activate current overlays
+    baselayer = this.arrBaselayers[baseLayerUid];
+    if (baselayer.overlayController && baselayer.overlayController.arrOverlays
+    && baselayer.overlayController.arrOverlays.length > 0) {
+      for (let key in baselayer.overlayController.arrOverlays) {
+        if (baselayer.overlayController.arrOverlays.hasOwnProperty(key) && key !== "length") {
+          let overlay = baselayer.overlayController.arrOverlays[key];
+          overlay.changeOpacity(overlay.opacity);
+        }
+      }
+    }
+
     layers = this.mapController.map.getLayers();
 
     // secure

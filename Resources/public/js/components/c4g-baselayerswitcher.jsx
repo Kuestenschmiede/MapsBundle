@@ -138,7 +138,7 @@ export class BaselayerSwitcher extends Component {
                 preview = <img className={"c4g-baselayer-preview"} src={baselayer.preview_image} alt=""/>
               }
               let overlays = "";
-              if (baselayer.overlayController.arrOverlays.length > 0) {
+              if (baselayer.overlayController.arrOverlays.length > 0 && scope.state.currentBaselayer === element) {
                 overlays = <OverlayControls overlayController={baselayer.overlayController}/>;
               }
               let nameNode = baselayer.name;
