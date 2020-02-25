@@ -42,5 +42,6 @@ $GLOBALS['TL_LANG'][$strName]['show']       = array('Show filter', 'Show details
 /**
  * Info text
  */
-$GLOBALS['TL_LANG']['tl_c4g_map_filters']['infotext'] = 'WRITE ME TEXT '.
-    'More on <a href="https://docs.con4gis.org/kartenfilter_con4gis-Maps" title="con4gis Docs map filter" target="_blank" rel="noopener"><b>docs.con4gis.org</b></a>';
+$GLOBALS['TL_LANG']['tl_c4g_map_filters']['infotext'] = 'With the map filters you can offer additional filters outside the map with the help of the filter component (see expert settings in the map profile) - i.e. filter data that have a certain key/value pair. '.
+    'This can be done for example with queries from OpenStreetMap or map structural elements in GeoJson format. Furthermore the con4gis module Data uses this function. '.
+    'More on <a href="https://docs.con4gis.org/mapfilter-con4gis-maps" title="con4gis Docs map filter" target="_blank" rel="noopener"><b>docs.con4gis.org</b></a>';

@@ -198,4 +198,4 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['editalias'] = array('Edit source element', '
  */
 $GLOBALS['TL_LANG']['tl_c4g_maps']['infotext'] = 'The map structure describes the map and all map contents. Here you can build powerful structures that can be switched via the starboard. '.
     'The map is the parent element. You can add points, routes and areas to the map yourself or connect them via the numerous location types. '.
-    'Mehr auf <a href="https://docs.con4gis.org/kartenstrukturen_con4gis_maps" title="con4gis Docs map structure" target="_blank" rel="noopener"><b>docs.con4gis.org</b></a>';
+    'Mehr auf <a href="https://docs.con4gis.org/mapstructure-con4gis-maps" title="con4gis Docs map structure" target="_blank" rel="noopener"><b>docs.con4gis.org</b></a>';
