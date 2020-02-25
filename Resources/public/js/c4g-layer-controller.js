@@ -908,7 +908,7 @@ export class BetterLayerController {
     }
     let greyed = child.zoom && !this.compareZoom(child.zoom);
     if (childState['greyed'] !== greyed) {
-      if (greyed) {
+      if (greyed || !!child.hide) {
         this.hide(child.loader, child.features || child.vectorLayer);
       }
       else {

@@ -9,7 +9,6 @@
  * @copyright  Küstenschmiede GmbH Software & Design
  * @link       https://www.con4gis.org
  */
-// 'namespace'
 'use strict';
 
 import {C4gBaselayerController} from "./c4g-baselayer-controller";
