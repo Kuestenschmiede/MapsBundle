@@ -305,6 +305,14 @@ ul.c4g-overlays li a{
   display: block;
 }
 
+.c4g-layertree span, .c4g-layertree a {
+  height: 43px;
+}
+
+.c4g-layertree li {
+  min-height:43px;
+}
+
 .c4g-baselayertree-content span {
   z-index: 1;
 }
