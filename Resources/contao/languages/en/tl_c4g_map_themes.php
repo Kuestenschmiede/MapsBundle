@@ -51,4 +51,4 @@ $GLOBALS['TL_LANG']['tl_c4g_map_themes']['expert_legend']  = 'Expert settings';
  * Info text
  */
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['infotext'] = 'The map layout gives you the possibility to easily override the colors of the map and shapes of the controls. '.
-    'Mehr auf <a href="https://docs.con4gis.org/kartenlayouts_con4gis_maps" title="con4gis Docs map layout" target="_blank" rel="noopener"><b>docs.con4gis.org</b></a>';
+    'Mehr auf <a href="https://docs.con4gis.org/maplayout-con4gis-maps" title="con4gis Docs map layout" target="_blank" rel="noopener"><b>docs.con4gis.org</b></a>';

@@ -159,4 +159,4 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['infotext'] = 'Die Basiskarte ist d
     'Über verschiedene Kartenanbieter oder über eigene Kartenserver können Sie Raster- oder Vektorkarten laden. Gleiches gilt für Overlays. '.
     'Overlays sind Kartenstücke, teiltransparente Karten oder feste Karteninformationen, die als aufliegende Schicht fester Bestandteil der Karte ist. '.
     'Overlays lassen sich über den linken Button in der Basiskartenauflistung für jede Karte hinzubringen. '.
-    'Mehr auf <a href="https://docs.con4gis.org/basiskarten_con4gis-Maps" title="con4gis Docs Basiskarten" target="_blank" rel="noopener"><b>docs.con4gis.org</b></a>';
+    'Mehr auf <a href="https://docs.con4gis.org/basiskarten-con4gis-maps" title="con4gis Docs Basiskarten" target="_blank" rel="noopener"><b>docs.con4gis.org</b></a>';

@@ -69,4 +69,4 @@ $GLOBALS['TL_LANG']['tl_c4g_map_tables']['tableInformation']	= 'Zuordnung der Ta
  * Info text
  */
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['infotext'] = 'An dieser Stelle können Sie Contao-Tabellen oder eigene Tabellen mit der Karte verknüpfen. '.
-    'Mehr auf <a href="https://docs.con4gis.org/kartenstrukturen-quelltabellen" title="con4gis Docs Quelltabellen" target="_blank" rel="noopener"><b>docs.con4gis.org</b></a>';
+    'Mehr auf <a href="https://docs.con4gis.org/quelltabellen-con4gis-maps" title="con4gis Docs Quelltabellen" target="_blank" rel="noopener"><b>docs.con4gis.org</b></a>';

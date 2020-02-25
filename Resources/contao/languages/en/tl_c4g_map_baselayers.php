@@ -163,4 +163,4 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['infotext'] = 'The base map is the 
     'You can load raster or vector maps via different map providers or via your own map servers. The same applies to overlays. '.
     'Overlays are pieces of map, partially transparent maps or fixed map information that is an integral part of the map as an overlying layer. '.
     'Overlays can be added for each map using the left button in the base map list. '.
-    'More on <a href="https://docs.con4gis.org/basiskarten_con4gis-Maps" title="con4gis docs base maps" target="_blank" rel="noopener"><b>docs.con4gis.org</b></a>';
+    'More on <a href="https://docs.con4gis.org/baselayers-con4gis-maps" title="con4gis docs base maps" target="_blank" rel="noopener"><b>docs.con4gis.org</b></a>';
