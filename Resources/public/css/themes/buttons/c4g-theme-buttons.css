@@ -255,7 +255,7 @@ ul.c4g-overlays li a{
 
 .c4g-content-layertree span[class*=locstyle] {
   width: 25px;
-  height: 43px;
+  line-height: 43px;
 }
 
 .c4g-content-layertree span[class*=locstyle]:not(.c4g-starboard-locstyle-triangle):not(.c4g-starboard-locstyle-square):not(.c4g-starboard-locstyle-point) {
