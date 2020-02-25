@@ -612,6 +612,7 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
   height: 32px;
   border: none;
   outline: none;
+  vertical-align: top;
 }
 
 .c4g-sideboard > div > div[class*=switcher] button:not(.c4g-active){

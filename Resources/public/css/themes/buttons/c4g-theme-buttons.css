@@ -269,7 +269,7 @@ ul.c4g-overlays li a{
 
 .c4g-baselayertree-content a:after {
   display: inline-block;
-  float: right;
+  float: right;x
   margin-right: 5px;
   position: absolute;
   right: 0;
@@ -298,6 +298,7 @@ ul.c4g-overlays li a{
 }
 
 .c4g-layertree li, .c4g-layertree span, .c4g-layertree a {
+  min-height: 43px;
   line-height: 43px;
   padding-top: 0;
   padding-bottom: 0;
