@@ -40,6 +40,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_tables']['projCode']                = ['Projecti
 
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['popupSwitch_default'] = 'Field selection';
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['popupSwitch_expert'] = 'Expert configuration (more flexible)';
+$GLOBALS['TL_LANG']['tl_c4g_map_tables']['popupSwitch_off'] = 'No popup';
 
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['dataTypeCoords'] = 'Coordinate pair';
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['dataTypeWKT'] = 'Well-Kown-Text (WKT)';

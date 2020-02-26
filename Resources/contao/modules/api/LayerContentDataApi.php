@@ -94,6 +94,9 @@ class LayerContentDataApi extends \Frontend
     public function getPopup($config, $arrElement)
     {
         // check which field has to be used
+        if ($config->popupSwitch === "off") {
+            return false;
+        }
         $popupString = $config->popupSwitch === 'expert' ? $config->popup : $config->popupSelection;
         if (!$popupString) {
             return false;

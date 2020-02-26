@@ -638,6 +638,16 @@ class LayerContentService
                             $tooltip = $arrResult[$tooltipField];
                         }
                     }
+                    if ($objConfig->popupSwitch !== "off") {
+                        $popup = [
+                            'async' => false,
+                            'content' => $popupContent,
+                            'routing_link' => $objLayer->routing_to,
+                        ];
+                    }
+                    else {
+                        $popup = false;
+                    }
 
                     $arrReturnDataSet = [
                         'id' => $arrResult['id'],
@@ -657,11 +667,7 @@ class LayerContentService
                             'properties' => [
                                 'projection' => $customProj ?: 'EPSG:4326',
                                 'projCode' => $projCode ?: '',
-                                'popup' => [
-                                    'async' => false,
-                                    'content' => $popupContent,
-                                    'routing_link' => $objLayer->routing_to,
-                                ],
+                                'popup' => $popup,
                                 'tooltip' => Utils::replaceInsertTags($tooltip ?: '', $lang),
                                 'tooltip_length' => $objLayer->tooltip_length,
                                 'label' => Utils::replaceInsertTags($arrResult[$labelField] ?: '', $lang),

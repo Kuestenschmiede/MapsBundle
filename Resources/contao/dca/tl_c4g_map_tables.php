@@ -290,6 +290,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'options'                 => [
                 'default' => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['popupSwitch_default'],
                 'expert' => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['popupSwitch_expert'],
+                'off' => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['popupSwitch_off'],
             ],
             'eval'                    => ['submitOnChange'=>true, 'tl_class'=>'clr'],
             'sql'                     => "varchar(10) NOT NULL default 'default'"
