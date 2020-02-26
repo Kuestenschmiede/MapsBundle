@@ -395,6 +395,7 @@ button.c4g-starboard-view-trigger-layerswitcher:before {
   right: 0;
   margin: auto;
   height: 5px;
+  width: 100px;
  }
 
 .c4g-baselayertree-content input[type=range]::-webkit-slider-runnable-track {
@@ -405,7 +406,7 @@ button.c4g-starboard-view-trigger-layerswitcher:before {
   border-radius: 3px;
 }
 
-.c4g-baselayertree-content input[type=range]::-webkit-slider-thumb {
+.c4g-baselayertree-content input[type=range]::-webkit-slider-thumb{
   -webkit-appearance: none;
   border: none;
   height: 16px;

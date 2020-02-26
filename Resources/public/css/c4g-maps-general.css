@@ -947,10 +947,10 @@ ul.c4g-overlays input {
 
 ul.c4g-overlays span {
   display: inline-block;
-  max-width: calc(50% - .2em);
+  max-width: calc(100% - .2em - 15px - (100px - 1.75em));
   text-overflow: ellipsis;
   overflow-x: hidden;
-  padding-left: 30px;
+  padding-left: 15px;
 }
 
 ul.c4g-overlays input[type=range]::-webkit-slider-thumb {
