@@ -546,7 +546,7 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
 }
 
 .c4g-sideboard.c4g-popup-container {
-  max-width: var(--popup-max-width);
+  max-width: 100%;
 }
 
 .c4g-sideboard.c4g-close {
