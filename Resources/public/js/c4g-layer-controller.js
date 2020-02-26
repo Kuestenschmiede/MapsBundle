@@ -12,7 +12,7 @@
 import {Cluster, Vector as VectorSource} from "ol/source";
 import {transform, transformExtent} from "ol/proj";
 import OSMXML from "ol/format/OSMXML";
-import {bbox} from "ol/loadingstrategy";
+import {bbox, all} from "ol/loadingstrategy";
 import {Vector} from "ol/layer";
 import * as olFormats from "ol/format";
 import proj4 from 'proj4';
@@ -482,11 +482,12 @@ export class BetterLayerController {
       let customStyleFunc = false;
       let vectorSource = new VectorSource();
       if (layer.async_content && layer.async_content !== "0") {
-        vectorSource = new VectorSource({"strategy": bbox});
+        let strategy = layer.content[0].settings.boundingBox ? bbox : all;
+        vectorSource = new VectorSource({"strategy": strategy});
         const scope = this;
 
         let loaderFunc = function(extent, resolution, projection) {
-          if (extent[0] === Infinity || extent[0] === -Infinity) {
+          if (layer.content[0].settings.boundingBox && (extent[0] === Infinity || extent[0] === -Infinity)) {
             vectorSource.removeLoadedExtent();
           }
           else if (layer.content && layer.content[0] && layer.content[0].data) {
