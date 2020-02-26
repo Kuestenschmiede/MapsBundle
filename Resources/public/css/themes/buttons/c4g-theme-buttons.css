@@ -219,8 +219,12 @@
   transition:.3s;
 }
 
-.c4g-layertree li ul {
-  margin-left: 1em;
+.c4g-layertree li > span.c4g-icon + span[class*=locstyle] + a + ul {
+  margin-left: 35px;
+}
+
+.c4g-layertree li > span.c4g-icon + a + ul {
+  margin-left: 21px;
 }
 
 .c4g-layertree li ul li,
