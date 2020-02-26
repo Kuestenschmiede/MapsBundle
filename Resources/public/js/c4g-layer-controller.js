@@ -676,6 +676,7 @@ export class BetterLayerController {
         "loader"        : loaderId,
         "zoom"          : layer.zoom,
         "locstyle"      : possibleLocstyle,
+        "activateWithBl": layer.activeForBaselayers,
         "id"            : layer.id,
         "name"          : layer.name,
         "hide"          : hide,
