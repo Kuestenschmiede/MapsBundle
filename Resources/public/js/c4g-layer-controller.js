@@ -39,6 +39,12 @@ export class BetterLayerController {
     this.loaders = [];
     this.controllers = {};
     this.arrLocstyles = [];
+    this.extent = {
+      maxX: -Infinity,
+      maxY: -Infinity,
+      minX: Infinity,
+      minY: Infinity
+    };
     this.mapController = proxy.options.mapController;
     this.vectorCollection = new Collection();
     this.loaderFunction = function(extent, resolution, projection) {
@@ -311,7 +317,6 @@ export class BetterLayerController {
       for (let structId in tabStructures) {
         if (tabStructures.hasOwnProperty(structId)) {
           tabStates.push(self.getInitialStates(tabStructures[structId][0]));
-          // features = features.concat(self.getFeaturesFromStruct(tabStructures[structId]));
         }
       }
       self.arrLayers = structure;
@@ -321,7 +326,26 @@ export class BetterLayerController {
       self.mapController.map.addLayer(self.vectorLayer);
       self.mapController.setLayersInitial(self.arrLayers, arrStates);
       self.mapController.setTabLayers(tabStructures, tabStates);
-
+      if (self.mapController.props.mapData.calc_extent === "LOCATIONS") {
+        if (self.extent && !(self.extent.maxX === Infinity || self.extent.maxX === -Infinity)) {
+          let view = self.mapController.map.getView();
+          let padding = [
+              parseInt(self.mapController.props.mapData.min_gap, 10),
+              parseInt(self.mapController.props.mapData.min_gap, 10),
+              parseInt(self.mapController.props.mapData.min_gap, 10),
+              parseInt(self.mapController.props.mapData.min_gap, 10)
+          ];
+          let extent = [
+              self.extent.minX,
+              self.extent.minY,
+              self.extent.maxX,
+              self.extent.maxY
+          ];
+          view.fit(extent, {
+            padding: padding
+          });
+        }
+      }
       return true;
     }).fail(function () {
       console.warn('An error occured while trying to load the layers...');
@@ -763,6 +787,26 @@ export class BetterLayerController {
               });
             });
           }
+        }
+      }
+    }
+    if (this.mapController.props.mapData.calc_extent === "LOCATIONS") {
+      for (let i in features) {
+        if (features.hasOwnProperty(i)) {
+          let coordinate = utils.getSingleCoordinateForGeom(features[i].getGeometry());
+          if (this.extent.maxX < coordinate[0]) {
+            this.extent.maxX = coordinate[0];
+          }
+          if (this.extent.maxY < coordinate[1]) {
+            this.extent.maxY = coordinate[1];
+          }
+          if (this.extent.minX > coordinate[0]) {
+            this.extent.minX = coordinate[0];
+          }
+          if (this.extent.minY > coordinate[1]) {
+            this.extent.minY = coordinate[1];
+          }
+
         }
       }
     }
