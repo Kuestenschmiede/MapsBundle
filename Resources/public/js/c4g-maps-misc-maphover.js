@@ -258,12 +258,11 @@ export class MapHover {
         }
         // @TODO: Check & fix
       } else if (hovered.feature && typeof hovered.feature.getStyleFunction &&
-        typeof hovered.feature.getStyleFunction === 'function' &&
-        typeof hovered.feature.getStyleFunction() === 'function' &&
+        hovered.feature.get('locstyle') &&
         proxy.locationStyleController.arrLocStyles &&
-        proxy.locationStyleController.arrLocStyles[hovered.feature.getStyleFunction()(resolution)] &&
-        proxy.locationStyleController.arrLocStyles[hovered.feature.getStyleFunction()(resolution)].tooltip) {
-        tooltipContent = proxy.locationStyleController.arrLocStyles[hovered.feature.getStyleFunction()(resolution)].tooltip;
+        proxy.locationStyleController.arrLocStyles[hovered.feature.get('locstyle')] &&
+        proxy.locationStyleController.arrLocStyles[hovered.feature.get('locstyle')].tooltip) {
+        tooltipContent = proxy.locationStyleController.arrLocStyles[hovered.feature.get('locstyle')].tooltip;
         // @TODO: Check
       } else if (hovered.layer && typeof hovered.layer.getStyleFunction &&
         typeof hovered.layer.getStyleFunction === 'function' &&
