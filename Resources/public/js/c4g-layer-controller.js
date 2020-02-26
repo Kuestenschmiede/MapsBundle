@@ -658,6 +658,9 @@ export class BetterLayerController {
           source: vectorSource,
           style: customStyleFunc || this.clusterStyleFunction
       });
+      scope.proxy.hook_locstyles_loaded.push(function(lostyleController) {
+        vectorLayer.changed();
+      });
       let greyed = layer.zoom && !this.compareZoom(layer.zoom);
       if (!hide && !greyed) {
         vectorLayer.set('zIndex', 1);
@@ -722,7 +725,11 @@ export class BetterLayerController {
             });
           }
 
-          let locstyle = layer.locstyle || content.locationStyle;
+          let locstyle = content.locationStyle || layer.locstyle;
+          let checkLocstyle = this.arrLocstyles.findIndex((element) => element === locstyle);
+          if (checkLocstyle === -1 && locstyle) {
+            this.arrLocstyles.push(locstyle);
+          }
           if (layer.content[contentId].type === "GeoJSON") {
             if (contentData.type === "FeatureCollection") {
               for (let i in contentData.features) {

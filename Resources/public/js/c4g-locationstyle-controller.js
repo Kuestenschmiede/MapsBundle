@@ -79,6 +79,7 @@ export class C4gLocationStyleController {
           // call hooks
           utils.callHookFunctions(self.proxy.hook_locstyles_loaded, {locstyleController: self})
         }
+        self.proxy.layerController.vectorLayer.changed();
       }).always(function (jXhr, strStatus) {
         var completed = true;
 
