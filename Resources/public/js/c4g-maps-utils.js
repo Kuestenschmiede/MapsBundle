@@ -416,6 +416,38 @@ export var utils = {
     return "rgba(" + r + "," + g + "," + b + "," + a + ")";
   },
 
+  getSingleCoordinateForGeom (geometry) {
+    let coordinate,
+    x,
+    y;
+    let type = geometry.getType();
+    switch (type) {
+      case "Point":
+        coordinate = geometry.getCoordinates();
+        break;
+      case "LineString":
+      case "LinearRing":
+        x = (geometry.getFirstCoordinate()[0] + geometry.getLastCoordinate()[0]) / 2;
+        y = (geometry.getFirstCoordinate()[1] + geometry.getLastCoordinate()[1]) / 2;
+        coordinate = [x, y];
+        break;
+      case "Polygon":
+      case "MultiPoint":
+        let coordinates = geometry.getCoordinates();
+        let i;
+        for (i = 0; i < coordinates.length; i++) {
+          x += coordinates[i][0];
+          y += coordinates[i][1];
+        }
+        coordinate = [x/i, y/i];
+        break;
+      default:
+        coordinate = [0,0];
+        break;
+    }
+    return coordinate;
+  },
+
   /**
    * Measure the dimensions of the given geometry.
    *

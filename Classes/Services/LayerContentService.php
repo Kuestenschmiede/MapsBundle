@@ -678,39 +678,7 @@ class LayerContentService
                         ],
                     ];
 
-                    if ($objLayer->async_content) {
-                        if (!$arrReturnDataSet['data'] || !$arrReturnDataSet['data']['geometry'] || !$arrReturnDataSet['data']['geometry']['coordinates'] || count($arrReturnDataSet['data']['geometry']['coordinates']) != 2) {
-                            continue;
-                        }
-                        $set['pid'] = $objLayer->id;
-                        $set['type'] = $arrReturnDataSet['type'];
-                        $set['format'] = $arrReturnDataSet['format'];
-                        $set['origType'] = $arrReturnDataSet['origType'];
-                        $set['locStyle'] = $arrReturnDataSet['locationStyle'];
-                        $set['datatype'] = $arrReturnDataSet['data']['type'];
-                        $set['geotype'] = $arrReturnDataSet['data']['geometry']['type'];
-                        $set['geox'] = $arrReturnDataSet['data']['geometry']['coordinates'][0];
-                        $set['geoy'] = $arrReturnDataSet['data']['geometry']['coordinates'][1];
-                        $set['projection'] = $arrReturnDataSet['data']['properties']['projection'];
-                        $set['popup_content'] = $arrReturnDataSet['data']['properties']['popup']['content'];
-                        $set['popup_routing_link'] = $arrReturnDataSet['data']['properties']['popup']['routing_link'];
-                        $set['popup_async'] = $arrReturnDataSet['data']['properties']['popup']['async'];
-                        $set['tooltip'] = $arrReturnDataSet['data']['properties']['tooltip'];
-                        $set['tooltip_length'] = $arrReturnDataSet['data']['properties']['tooltip_length'];
-                        $set['label'] = $arrReturnDataSet['data']['properties']['label'];
-                        $set['loc_linkurl'] = $arrReturnDataSet['data']['properties']['loc_linkurl'];
-                        $set['hover_location'] = $arrReturnDataSet['data']['properties']['hover_location'];
-                        $set['hover_style'] = $arrReturnDataSet['data']['properties']['hover_style'];
-                        $set['cluster_fillcolor'] = $arrReturnDataSet['cluster_fillcolor'];
-                        $set['cluster_distance'] = $arrReturnDataSet['cluster_distance'];
-                        $set['cluster_fontcolor'] = $arrReturnDataSet['cluster_fontcolor'];
-                        $set['cluster_zoom'] = $arrReturnDataSet['cluster_zoom'];
-                        $set['cluster_popup'] = $arrReturnDataSet['cluster_popup'];
-
-                        Database::getInstance()->prepare('INSERT INTO tl_c4g_map_layer_content %s')->set($set)->execute();
-                    } else {
-                        $arrReturnData[] = $arrReturnDataSet;
-                    }
+                    $arrReturnData[] = $arrReturnDataSet;
                 }
             }
         }
