@@ -381,6 +381,9 @@ export class BetterLayerController {
         hide = true;
       }
     }
+    if (layer.activeForBaselayers !== "all") { //initial handling for activate with baselayer
+      hide = !layer.activeForBaselayers.find((element) => element === scope.mapController.proxy.activeBaselayerId);
+    }
     let vectorLayer = false;
     let loaderId = -1;
     let possibleLocstyle = layer.locstyle;
