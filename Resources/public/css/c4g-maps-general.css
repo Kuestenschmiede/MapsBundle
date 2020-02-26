@@ -950,6 +950,7 @@ ul.c4g-overlays span {
   max-width: calc(50% - .2em);
   text-overflow: ellipsis;
   overflow-x: hidden;
+  padding-left: 30px;
 }
 
 ul.c4g-overlays input[type=range]::-webkit-slider-thumb {
