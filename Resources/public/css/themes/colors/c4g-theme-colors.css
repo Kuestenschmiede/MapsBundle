@@ -154,13 +154,9 @@ span.c4g-active ul li.c4g-active{
   background-color: var(--shadow-color);
   cursor: not-allowed;
 }
-.c4g-layertree li:hover,
+.c4g-layertree li a:hover,
 .c4g-baselayertree-content > ul > li.without-image > a:hover {
   background-color: var(--font-color);
-  color: var(--main-color)!important;
-}
-
-.c4g-layertree li:hover a {
   color: var(--main-color)!important;
 }
 

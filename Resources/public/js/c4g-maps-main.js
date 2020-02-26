@@ -15,7 +15,12 @@ import ReactDOM from "react-dom";
 import React from "react";
 
 window.initMap = function(mapData) {
-  let mapDiv = jQuery("#c4g_map_" + mapData.mapId)[0];
+  let mapDiv = null;
+  if (mapData.mapDiv) {
+    mapDiv = document.querySelector("#" + mapData.mapDiv);
+  } else {
+    mapDiv = jQuery("#c4g_map_" + mapData.mapId)[0];
+  }
   ReactDOM.render(React.createElement(MapController, {
     mapData: mapData,
   }), mapDiv);
