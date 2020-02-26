@@ -38,18 +38,20 @@ export class C4gStarboardLayerElement extends Component {
     if (showElements) {
       if (Array.isArray(showElements)) {
         features = showElements;
-      }
-      else if (showElements instanceof Vector) {
+      } else if (showElements instanceof Vector) {
         vectorLayer = showElements;
       }
-    }
-    else {
+    } else {
       features = features || scope.props.layer.features;
       vectorLayer = vectorLayer || scope.props.layer.vectorLayer;
     }
     features = features || scope.props.layer.features;
     let layerController = scope.props.mapController.proxy.layerController;
-    layerController.show(scope.props.layer.loader, features || vectorLayer);
+    if (features && features.length > 0) {
+      layerController.show(scope.props.layer.loader, features);
+    } else {
+      layerController.show(scope.props.layer.loader, vectorLayer);
+    }
   }
 
   hideLayer(hideElements = null) {
@@ -59,17 +61,20 @@ export class C4gStarboardLayerElement extends Component {
     if (hideElements) {
       if (Array.isArray(hideElements)) {
         features = hideElements;
-      }
-      else if (hideElements instanceof Vector) {
+      } else if (hideElements instanceof Vector) {
         vectorLayer = hideElements;
       }
-    }
-    else {
+    } else {
       features = features || scope.props.layer.features;
       vectorLayer = vectorLayer || scope.props.layer.vectorLayer;
     }
     let layerController = scope.props.mapController.proxy.layerController;
-    layerController.hide(scope.props.layer.loader,features || vectorLayer);
+    if (features && features.length > 0) {
+      layerController.hide(scope.props.layer.loader, features);
+    } else {
+      layerController.hide(scope.props.layer.loader, vectorLayer);
+    }
+
   }
   changeChildState (child, childState, active) {
     if (active) {
