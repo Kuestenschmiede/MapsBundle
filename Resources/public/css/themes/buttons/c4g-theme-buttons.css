@@ -252,7 +252,6 @@ ul.c4g-overlays li a{
   padding: 0 1.75em 0 .2em;
   cursor: pointer;
   position: relative;
-  text-overflow: elipsis;
 }
 
 span.c4g-icon + a {

@@ -926,8 +926,10 @@ ul.c4g-overlays input {
 }
 
 .c4g-sideboard .c4g-baselayertree-content li.with-image > a img {
-  max-width: 360px;
-  width: 100%;
+  /*max-width: 360px;
+  width: 100%;*/
+  width: 30px;
+  min-width: 100%;
 }
 
 .c4g-baselayertree-content li.with-image > a:not(.c4g-active) img{
