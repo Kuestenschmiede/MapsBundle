@@ -61,7 +61,11 @@ class MapDataConfigurator
         // ------------------------------------------------------------------------
         // get profile for map
         // ------------------------------------------------------------------------
-        $profileId = $map->profile;
+        if ($options['profile']) {
+            $profileId = $options['profile'];
+        } else {
+            $profileId = $map->profile;
+        }
         // check for mobile-profile
         $isMobile = false;
         $mobileDetection = new Mobile_Detection();

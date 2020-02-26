@@ -377,7 +377,7 @@ class LayerContentService
         $ptableBlobArr = unserialize($objConfig->ptableBlob);
 
         //check parent values
-        if ($ptableArr && $ptableFieldArr && $ptableCompareFieldArr && $ptableBlobArr) {
+        if ($ptableArr && $ptableFieldArr && $ptableCompareFieldArr) {
             foreach ($ptableArr as $key => $ptable) {
                 $qWhere .= ' WHERE ';
                 if ($key == 0) {
@@ -399,7 +399,7 @@ class LayerContentService
 
                 if ($sourcePid || $sourcePid == 0) {
                     if ($objConfig->ptableField) {
-                        if ($ptableBlobArr[$key] == 1) {
+                        if ($ptableBlobArr && $ptableBlobArr[$key] == 1) {
                             //ToDo filter after select
                         } else {
                             $pidOption .= $and . "$ptablefield = $sourcePid ";
@@ -493,7 +493,7 @@ class LayerContentService
             if ($objConfig->ptable) {
                 foreach ($ptableArr as $key => $ptable) {
                     $ptableBlobArr = unserialize($objConfig->ptable_blob);
-                    if ($ptableBlobArr[$key] == 1) {
+                    if ($ptableBlobArr && $ptableBlobArr[$key] == 1) {
                         if ($key == 0) {
                             $sourcePid = intval($objLayer->tab_pid);
                         } else {
@@ -649,7 +649,6 @@ class LayerContentService
                         'cluster_fontcolor' => $objLayer->cluster_fontcolor,
                         'cluster_zoom' => $objLayer->cluster_zoom,
                         'cluster_popup' => $objLayer->cluster_popup,
-                        'loc_linkurl' => Utils::replaceInsertTags($link ?: '', $lang),
                         'hover_location' => $objLayer->hover_location,
                         'hover_style' => $objLayer->hover_style,
                         'data' => $arrGeoJson = [
@@ -666,6 +665,7 @@ class LayerContentService
                                 'tooltip' => Utils::replaceInsertTags($tooltip ?: '', $lang),
                                 'tooltip_length' => $objLayer->tooltip_length,
                                 'label' => Utils::replaceInsertTags($arrResult[$labelField] ?: '', $lang),
+                                'loc_linkurl' => Utils::replaceInsertTags($link ?: '', $lang),
                                 'zoom_onclick' => $objLayer->loc_onclick_zoomto,
                             ],
                         ],
