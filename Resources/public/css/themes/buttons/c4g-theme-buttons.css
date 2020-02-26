@@ -263,7 +263,7 @@ span.c4g-icon + a {
   width: calc(100% - 35px - 1.75em - .2em);
 }
 
-span.c4g-icon + .c4g-content-layertree span[class*=locstyle] + a {
+span.c4g-icon + span[class*=locstyle] + a {
   width: calc(100% - 35px - 21px - 1.75em - .2em);
 }
 
