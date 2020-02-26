@@ -81,6 +81,7 @@ export class MapController extends Component {
     };
     this.setObjLayers = this.setObjLayers.bind(this);
     this.setLayerStates = this.setLayerStates.bind(this);
+    this.changeActiveLayers = this.changeActiveLayers.bind(this);
     this.setTabStates = this.setTabStates.bind(this);
     this.setLocStyles = this.setLocStyles.bind(this);
     this.map = null;
@@ -863,6 +864,53 @@ export class MapController extends Component {
       arrLayerStates: arrLayerStates
     });
   }
+  changeActiveLayers (baseLayerId) {
+    let newLayerState = this.state.arrLayerStates;
+    for (let stateId in newLayerState) {
+      if (newLayerState.hasOwnProperty(stateId)) {
+        if (this.state.objLayers[stateId].activateWithBl !== "all") {
+          let oldState = newLayerState[stateId].active;
+          newLayerState[stateId].active = !!this.state.objLayers[stateId].activateWithBl.find((element) => element === baseLayerId);
+          if (oldState !== newLayerState[stateId].active) {
+            if (newLayerState[stateId].active) {
+              this.proxy.layerController.show(this.state.objLayers[stateId].id, this.state.objLayers[stateId].features || this.state.objLayers[stateId].vectorLayer)
+            }
+            else {
+              this.proxy.layerController.hide(this.state.objLayers[stateId].id, this.state.objLayers[stateId].features || this.state.objLayers[stateId].vectorLayer)
+            }
+          }
+        }
+        for (let childId in newLayerState[stateId].childStates) {
+          if (newLayerState[stateId].childStates.hasOwnProperty(childId)) {
+            newLayerState[stateId].childStates[childId] = this.changeActiveLayerChilds(newLayerState[stateId].childStates[childId], this.state.objLayers[stateId].childs[childId], baseLayerId);
+          }
+        }
+      }
+    }
+    this.setState({
+      arrLayerStates: newLayerState
+    });
+  }
+  changeActiveLayerChilds (childState, child, baseLayerId) {
+    if (child.activateWithBl !== "all") {
+      let oldState = childState.active;
+      childState.active = !!child.activateWithBl.find((element) => element === baseLayerId);
+      if (oldState !== childState.active) {
+        if (childState.active) {
+          this.proxy.layerController.show(child.id, child.features || child.vectorLayer)
+        }
+        else {
+          this.proxy.layerController.hide(child.id, child.features || child.vectorLayer)
+        }
+      }
+    }
+    for (let stateId in childState.childStates) {
+      if (childState.childStates.hasOwnProperty(stateId)) {
+        childState.childStates[stateId] = this.changeActiveLayerChilds(childState.childStates[stateId], child.childs[stateId], baseLayerId);
+      }
+    }
+    return childState;
+  }
 
   setTabLayers(layers, states) {
     this.setState({
@@ -960,7 +1008,7 @@ export class MapController extends Component {
       blsPortal = ReactDOM.createPortal(
           <BaselayerSwitcher ref={(node) => {
             this.components.baselayerSwitcher = node;
-          }} target={target} open={mapData.initial_open_comp === "baselayers"} external={this.baselayerContainer.className.indexOf("c4g-external") !== -1}
+          }} target={target} open={mapData.initial_open_comp === "baselayers"} changeActiveLayers={this.changeActiveLayers} external={this.baselayerContainer.className.indexOf("c4g-external") !== -1}
                              mapController={this} baselayerController={this.proxy.baselayerController}/>,
           this.baselayerContainer
       );

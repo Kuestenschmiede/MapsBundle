@@ -170,6 +170,7 @@ export class BaselayerSwitcher extends Component {
 
   entryClick(id) {
     this.props.baselayerController.showBaseLayer(id);
+    this.props.changeActiveLayers(id);
     this.setState({currentBaselayer: id});
   }
 
