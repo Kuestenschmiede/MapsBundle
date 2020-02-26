@@ -230,14 +230,13 @@
 
 ul.c4g-overlays li {
   position: relative;
-  padding: .4em 0;
 }
 
 ul.c4g-overlays li a{
   display: block;
 }
 
-.c4g-baselayertree-content > ul> li.without-image > a{
+.c4g-baselayertree-content > ul> li.without-image > a, .c4g-baselayertree-content ul.c4g-overlays > li > a{
   display: block;
   text-decoration: none;
   padding: 10px 1.75em 10px .2em;
@@ -246,12 +245,27 @@ ul.c4g-overlays li a{
 }
 
 .c4g-layertree a {
-  display: block;
+  display: inline-block!important;
+  width: calc(100% - 1.75em - .2em);
   text-decoration: none;
   padding: 0 1.75em 0 .2em;
   cursor: pointer;
   position: relative;
 }
+
+span.c4g-icon + a {
+  width: calc(100% - 21px - 1.75em - .2em);
+}
+
+.c4g-content-layertree span[class*=locstyle] + a {
+  width: calc(100% - 35px - 1.75em - .2em);
+}
+
+span.c4g-icon + span[class*=locstyle] + a {
+  width: calc(100% - 35px - 21px - 1.75em - .2em);
+}
+
+
 
 .c4g-content-layertree span[class*=locstyle] {
   width: 25px;
@@ -285,6 +299,22 @@ ul.c4g-overlays li a{
   right: 0;
   bottom: 0;
   margin-top: -6px;
+}
+
+.c4g-starboard-headline-link:after {
+  margin-right: 5px;
+}
+
+.c4g-starboard-headline-link {
+  line-height: calc(32px + .4em);
+  height: calc(32px + .4em);
+  margin: 0;
+  display: block;
+  cursor: pointer;
+}
+
+.c4g-starboard-headline-link{
+  font-size: 20px;
 }
 
 .c4g-layertree .c4g-closeable > a {

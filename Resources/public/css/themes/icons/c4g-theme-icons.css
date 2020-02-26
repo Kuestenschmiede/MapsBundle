@@ -388,24 +388,31 @@ button.c4g-starboard-view-trigger-layerswitcher:before {
 }
 
 .c4g-baselayertree-content input[type=range]{
-   -webkit-appearance: none;
+  -webkit-appearance: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  height: 5px;
+  width: 100px;
  }
 
 .c4g-baselayertree-content input[type=range]::-webkit-slider-runnable-track {
   width: 300px;
   height: 5px;
-  background: #ddd;
+/*  background: #ddd;*/
   border: none;
   border-radius: 3px;
 }
 
-.c4g-baselayertree-content input[type=range]::-webkit-slider-thumb {
+.c4g-baselayertree-content input[type=range]::-webkit-slider-thumb{
   -webkit-appearance: none;
   border: none;
   height: 16px;
   width: 16px;
   border-radius: 50%;
-  background: rgba(0,60,136,.7);
+/*background: rgba(0,60,136,.7);*/
   margin-top: -4px;
 }
 
@@ -414,7 +421,7 @@ button.c4g-starboard-view-trigger-layerswitcher:before {
 }
 
 .c4g-baselayertree-content input[type=range]:focus::-webkit-slider-runnable-track {
-  background: #ccc;
+/*  background: #ccc;*/
 }
 .c4g-layertree .c4g-open > span.c4g-icon,
 .c4g-baselayertree-content .c4g-open > span{
