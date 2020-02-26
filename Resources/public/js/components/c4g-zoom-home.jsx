@@ -61,7 +61,7 @@ export class ZoomHome extends Component {
 
     // wrapper div
     element = document.createElement('div');
-    element.className = cssConstants.OL_ZOOM_HOME+' '+cssConstants.OL_CONTROL + ' ' + cssConstants.OL_UNSELECTABLE + ' button';
+    element.className = cssConstants.OL_ZOOM_HOME+' '+cssConstants.OL_CONTROL + ' ' + cssConstants.OL_UNSELECTABLE;
     // button
     button = document.createElement('button');
     button.title = langConstants.CTRL_ZOOM_HOME;
