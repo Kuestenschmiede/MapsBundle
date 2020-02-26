@@ -364,7 +364,7 @@ class LayerService
 
         if ($objLayer->cluster_locations) {
             $arrLayerData['cluster'] = [
-                'distance' => $objLayer->cluster_distance,
+                'distance' => $objLayer->cluster_distance ?: 20,
                 'fillcolor' => $objLayer->cluster_fillcolor,
                 'fontcolor' => $objLayer->cluster_fontcolor,
                 'zoom' => $objLayer->cluster_zoom,
