@@ -855,7 +855,7 @@ span.c4g-starboard-locstyle-triangle:before {
 }
 
 .c4g-sideboard > div > div[class*=content] div[class*=filter] input {
-  max-width: calc(100% - .4em - 35px);
+  width: calc(100% - .4em - 35px);
 }
 
 .c4g-sideboard > div > div[class*=content] div[class*=filter].without-button:after {
