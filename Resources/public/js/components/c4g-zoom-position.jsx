@@ -54,7 +54,7 @@ export class ZoomPosition extends Component {
 
     // wrapper div
     element = document.createElement('div');
-    element.className = cssConstants.OL_ZOOM_POS + ' ' + cssConstants.OL_CONTROL + ' ' + cssConstants.OL_UNSELECTABLE + ' button';
+    element.className = cssConstants.OL_ZOOM_POS + ' ' + cssConstants.OL_CONTROL + ' ' + cssConstants.OL_UNSELECTABLE;
 
     // button
     button = document.createElement('button');
