@@ -22,7 +22,6 @@ use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapTablesModel;
 use con4gis\MapsBundle\Resources\contao\modules\api\InfoWindowApi;
 use Contao\Controller;
-use Contao\Database;
 
 class LayerContentService
 {

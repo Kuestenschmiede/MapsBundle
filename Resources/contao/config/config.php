@@ -96,7 +96,6 @@ $GLOBALS['con4gis']['dafaultData'] = ['Table'=>'Table'];
  */
 // @TODO maybe move to core
 $GLOBALS['BE_FFL']['c4g_text'] = '\TextField';
-$GLOBALS['BE_FFL']['c4g_imageSize'] = 'con4gis\MapsBundle\Classes\ImageSize';
 
 $GLOBALS['TL_MODELS']['tl_c4g_maps'] = 'con4gis\MapsBundle\Resources\contao\models\C4gMapsModel';
 $GLOBALS['TL_MODELS']['tl_c4g_map_profiles'] = 'con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel';
