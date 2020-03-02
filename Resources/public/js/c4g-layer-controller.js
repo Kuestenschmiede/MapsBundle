@@ -406,7 +406,9 @@ export class BetterLayerController {
       }
     }
     if (layer.activeForBaselayers !== "all") { //initial handling for activate with baselayer
-      hide = !layer.activeForBaselayers.find((element) => element === scope.mapController.proxy.activeBaselayerId);
+      // let found = layer.activeForBaselayers.find((element) => element === scope.mapController.proxy.activeBaselayerId || scope.mapController.data.default_baselayer);
+      let found = layer.activeForBaselayers.includes(scope.mapController.proxy.activeBaselayerId || scope.mapController.data.default_baselayer);
+      hide = !found;
     }
     let vectorLayer = false;
     let loaderId = -1;
