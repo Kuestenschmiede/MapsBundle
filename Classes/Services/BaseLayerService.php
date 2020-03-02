@@ -144,7 +144,7 @@ class BaseLayerService
 
         $arrOverlayData['provider'] = $objOverlay->provider;
         $arrOverlayData['opacity'] = $objOverlay->opacity;
-        $arrOverlayData['attribution'] = $objOverlay->attribution;
+        $arrOverlayData['attribution'] = \Contao\Controller::replaceInsertTags($stringClass::decodeEntities($objOverlay->attribution));
 
         switch ($objOverlay->provider) {
             case 'custom':
@@ -387,7 +387,7 @@ class BaseLayerService
         }
 
         if (!empty($objBaseLayer->attribution)) {
-            $arrBaseLayer['attribution'] = $objBaseLayer->attribution;
+            $arrBaseLayer['attribution'] = \Contao\Controller::replaceInsertTags($stringClass::decodeEntities($objBaseLayer->attribution));
         }
         if (!empty($objBaseLayer->minzoomlevel)) {
             $arrBaseLayer['minZoom'] = $objBaseLayer->minzoomlevel;
