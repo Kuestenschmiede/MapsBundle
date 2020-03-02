@@ -519,12 +519,22 @@ export class BetterLayerController {
               let requestData = layer.content[0].settings ? layer.content[0].settings: {};
               for (let featureId in features) {
                 if (features.hasOwnProperty(featureId)) {
-                  if (requestData.forceNodes && features[featureId].getGeometry().getType() === "Polygon") {
-                    features[featureId].setGeometry(features[featureId].getGeometry().getInteriorPoint());
+                  if (features[featureId].getGeometry().getType() === "Polygon") {
+                    if (requestData.forceNodes) {
+                      features[featureId].setGeometry(features[featureId].getGeometry().getInteriorPoint());
+                    }
+                    features[featureId].set('osm_type', 'way');
                   }
-                  else if (requestData.forceNodes && features[featureId].getGeometry().getType() === "MultiPolygon") {
-                    features[featureId].setGeometry(features[featureId].getGeometry()[0].getInteriorPoint());
+                  else if (features[featureId].getGeometry().getType() === "MultiPolygon") {
+                    if (requestData.forceNodes) {
+                      features[featureId].setGeometry(features[featureId].getGeometry()[0].getInteriorPoint());
+                    }
+                    features[featureId].set('osm_type', 'relation');
                   }
+                  else if (features[featureId].getGeometry().getType() === "Point") {
+                    features[featureId].set('osm_type', 'node');
+                  }
+
                   features[featureId].set('locstyle', layer.locstyle)
                 }
               }
