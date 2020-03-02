@@ -28,9 +28,18 @@ export class Titlebar extends Component {
     if (this.props.closeBtnClass && this.props.closeBtnCb) {
       closeButton = <button className={this.props.closeBtnClass} onMouseUp={this.props.closeBtnCb} title={this.props.closeBtnTitle}></button>;
     }
+    let minimizeButton = "";
+    if (this.props.hideContainer) {
+      let minimize = () => {
+        jQuery(this.props.hideContainer).removeClass("c4g-open").addClass("c4g-close");
+        jQuery(".c4g-router-container-right").removeClass("c4g-open").addClass("c4g-close")
+      };
+      minimizeButton = <button className={'c4g-sideboard-hide'} onMouseUp={()=> minimize()}>-</button>
+    }
     return (
       <div className={this.props.wrapperClass}>
         <span className={this.props.headerClass}>{this.props.header}</span>
+        {minimizeButton}
         {closeButton}
         {detailButton}
         {this.props.children}
