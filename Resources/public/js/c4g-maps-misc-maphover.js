@@ -200,7 +200,8 @@ export class MapHover {
               hovered.feature.setStyle(Function("feature", "data", "map", proxy.locationStyleController.arrLocStyles[hovered.feature.get("hover_style")].fnStyleFunction)(hovered.feature));
             }
             else {
-              hovered.feature.setStyle(proxy.locationStyleController.arrLocStyles[hovered.feature.get("hover_style")].style(hovered.feature));
+              let style = proxy.locationStyleController.arrLocStyles[hovered.feature.get("hover_style")].style(hovered.feature);
+              hovered.feature.setStyle(style);
             }
           }
 
@@ -231,7 +232,8 @@ export class MapHover {
               hovered.feature.setStyle(Function("feature", "data", "map", proxy.locationStyleController.arrLocStyles[hovered.feature.get("hover_style")].fnStyleFunction)(hovered.feature));
             }
             else {
-              hovered.feature.setStyle(proxy.locationStyleController.arrLocStyles[hovered.feature.get("hover_style")].style(hovered.feature));
+              let style = proxy.locationStyleController.arrLocStyles[hovered.feature.get("hover_style")].style(hovered.feature);
+              hovered.feature.setStyle(style);
             }
           }
 

@@ -66,7 +66,9 @@ export class BetterLayerController {
               };
               scope.performOwnData({
                     "layerId": requestData.layerId,
-                    "locstyleId": requestData.locstyleId
+                    "locstyleId": requestData.locstyleId,
+                    "hover_location": requestData.hover_location,
+                    "hover_style": requestData.hover_style
                   }, {
                     "extent": extent,
                     "resolution": resolution,
@@ -138,7 +140,10 @@ export class BetterLayerController {
         size = features.length;
         feature = features[0];
       }
-      if (feature && feature.get && feature.get('locstyle')) {
+      if (feature && feature.getStyle()) {
+        returnStyle = feature.getStyle();
+      }
+      else if (feature && feature.get && feature.get('locstyle')) {
         let locstyle = feature.get('locstyle');
         if (scope.proxy.locationStyleController.arrLocStyles && scope.proxy.locationStyleController.arrLocStyles[locstyle] && scope.proxy.locationStyleController.arrLocStyles[locstyle].style) {
           let style = scope.proxy.locationStyleController.arrLocStyles[locstyle].style;
@@ -406,7 +411,9 @@ export class BetterLayerController {
       }
     }
     if (layer.activeForBaselayers !== "all") { //initial handling for activate with baselayer
-      hide = !layer.activeForBaselayers.find((element) => element === scope.mapController.proxy.activeBaselayerId);
+      // let found = layer.activeForBaselayers.find((element) => element === scope.mapController.proxy.activeBaselayerId || scope.mapController.data.default_baselayer);
+      let found = layer.activeForBaselayers.includes(scope.mapController.proxy.activeBaselayerId || scope.mapController.data.default_baselayer);
+      hide = !found;
     }
     let vectorLayer = false;
     let loaderId = -1;
@@ -424,11 +431,15 @@ export class BetterLayerController {
       let url = "";
       let locstyleId = 0;
       let params = "";
+      let hoverLocation;
+      let hoverStyle;
       let forceNodes = false;
       let layerId = layer.id;
       if (layer.content && layer.content[0] && layer.content[0].data) {
         let data = layer.content[0].data;
         url = data.url;
+        hoverLocation = data.hover_location;
+        hoverStyle = data.hover_style;
         params = data.params;
         locstyleId = layer.locstyle;
       }
@@ -447,6 +458,8 @@ export class BetterLayerController {
         forceNodes: forceNodes,
         arrExtents: [],
         locstyleId: locstyleId,
+        hover_location: hoverLocation,
+        hover_style: hoverStyle,
         params: params,
         layerId: layerId
       });
@@ -491,8 +504,10 @@ export class BetterLayerController {
             vectorSource.removeLoadedExtent();
           }
           else if (layer.content && layer.content[0] && layer.content[0].data) {
-            let data = layer.content[0].data;
+            let content = layer.content[0];
+            let data = content.data;
             let responseFunc = function (response) {
+              let data = layer.content[0].data;
               let features;
               if (typeof response === "string") {
                 let format = new OSMXML();
@@ -517,13 +532,27 @@ export class BetterLayerController {
               let requestData = layer.content[0].settings ? layer.content[0].settings: {};
               for (let featureId in features) {
                 if (features.hasOwnProperty(featureId)) {
-                  if (requestData.forceNodes && features[featureId].getGeometry().getType() === "Polygon") {
-                    features[featureId].setGeometry(features[featureId].getGeometry().getInteriorPoint());
+                  if (features[featureId].getGeometry().getType() === "Polygon") {
+                    if (requestData.forceNodes) {
+                      features[featureId].setGeometry(features[featureId].getGeometry().getInteriorPoint());
+                    }
+                    features[featureId].set('osm_type', 'way');
                   }
-                  else if (requestData.forceNodes && features[featureId].getGeometry().getType() === "MultiPolygon") {
-                    features[featureId].setGeometry(features[featureId].getGeometry()[0].getInteriorPoint());
+                  else if (features[featureId].getGeometry().getType() === "MultiPolygon") {
+                    if (requestData.forceNodes) {
+                      features[featureId].setGeometry(features[featureId].getGeometry()[0].getInteriorPoint());
+                    }
+                    features[featureId].set('osm_type', 'relation');
                   }
-                  features[featureId].set('locstyle', layer.locstyle)
+                  else if (features[featureId].getGeometry().getType() === "Point") {
+                    features[featureId].set('osm_type', 'node');
+                  }
+
+                  features[featureId].set('locstyle', layer.locstyle);
+                  if (content.hover_location) {
+                    features[featureId].set('hover_style', content.hover_style);
+                    features[featureId].set('hover_location', content.hover_location);
+                  }
                 }
               }
               if (vectorSource instanceof Cluster) {
@@ -761,6 +790,10 @@ export class BetterLayerController {
                 if (contentData.features.hasOwnProperty(i)) {
                   let singleFeature = format.readFeature(contentData.features[i]);
                   singleFeature.set('locstyle', locstyle);
+                  if (content.hover_location) {
+                    singleFeature.set('hover_style', content.hover_style);
+                    singleFeature.set('hover_location', content.hover_location);
+                  }
                   features.push(singleFeature);
                 }
               }
@@ -768,7 +801,10 @@ export class BetterLayerController {
             else {
               let feature = format.readFeature(contentData);
               feature.set('locstyle', locstyle);
-
+              if (content.hover_location) {
+                feature.set('hover_style', content.hover_style);
+                feature.set('hover_location', content.hover_location);
+              }
               features.push(feature);
             }
           }
@@ -782,6 +818,10 @@ export class BetterLayerController {
                   if (tempFeatures.hasOwnProperty(featId)) {
                     let feature = tempFeatures[featId];
                     feature.set('locstyle', locstyle);
+                    if (contentData.hover_location) {
+                      feature.set('hover_style', contentData.hover_style);
+                      feature.set('hover_location', contentData.hover_location);
+                    }
                     features.push(feature);
                   }
                 }
