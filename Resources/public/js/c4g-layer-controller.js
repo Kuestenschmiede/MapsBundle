@@ -681,24 +681,27 @@ export class BetterLayerController {
           return returnStyle
         };
 
-        if (content.data && content.data.properties && content.data.properties.projection && content.data.properties.projCode) {
-          // if (!proj4(contentData.data.properties.projection)) {
-          proj4.defs(content.data.properties.projection, content.data.properties.projCode);
-          register(proj4);
-          // }
-          dataProjection = new Projection({
-            code: content.data.properties.projection
+        if (content) {
+          if (content.data && content.data.properties && content.data.properties.projection && content.data.properties.projCode) {
+            // if (!proj4(contentData.data.properties.projection)) {
+            proj4.defs(content.data.properties.projection, content.data.properties.projCode);
+            register(proj4);
+            // }
+            dataProjection = new Projection({
+              code: content.data.properties.projection
+            });
+          }
+          let format = new olFormat[content['format']]({
+            featureProjection: featureProjection,
+            dataProjection: dataProjection
+          });
+
+          vectorSource = new VectorSource({
+            format: format,
+            url: content.data.url
           });
         }
-        let format = new olFormat[content['format']]({
-          featureProjection: featureProjection,
-          dataProjection: dataProjection
-        });
-
-        vectorSource = new VectorSource({
-          format: format,
-          url: content.data.url
-        });
+        
       }
 
       if (layer.cluster) {
