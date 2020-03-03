@@ -424,6 +424,12 @@ export class MapController extends Component {
 
     // set map-size and -margin
     domMapDiv = document.getElementById(mapData.mapDiv);
+    if (!domMapDiv) {
+      domMapDiv = document.getElementById("#" + mapData.mapDiv);
+      if (!domMapDiv) {
+        domMapDiv = document.getElementById("." + mapData.mapDiv);
+      }
+    }
 
     if (domMapDiv && domMapDiv.style) {
       if (mapData.width) {
