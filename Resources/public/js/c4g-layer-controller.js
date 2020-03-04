@@ -495,12 +495,12 @@ export class BetterLayerController {
       let customStyleFunc = false;
       let vectorSource = new VectorSource();
       if (layer.async_content && layer.async_content !== "0") {
-        let strategy = layer.content[0].settings.boundingBox ? bbox : all;
+        let strategy = (layer.content && layer.content[0].settings.boundingBox) ? bbox : all;
         vectorSource = new VectorSource({"strategy": strategy});
         const scope = this;
 
         let loaderFunc = function(extent, resolution, projection) {
-          if (layer.content[0].settings.boundingBox && (extent[0] === Infinity || extent[0] === -Infinity)) {
+          if (layer.content && layer.content[0].settings.boundingBox && (extent[0] === Infinity || extent[0] === -Infinity)) {
             vectorSource.removeLoadedExtent();
           }
           else if (layer.content && layer.content[0] && layer.content[0].data) {
@@ -529,7 +529,7 @@ export class BetterLayerController {
                 }
               }
 
-              let requestData = layer.content[0].settings ? layer.content[0].settings: {};
+              let requestData = (layer.content && layer.content[0].settings) ? layer.content[0].settings: {};
               for (let featureId in features) {
                 if (features.hasOwnProperty(featureId)) {
                   if (features[featureId].getGeometry().getType() === "Polygon") {
