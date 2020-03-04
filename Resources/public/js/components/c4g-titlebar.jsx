@@ -31,8 +31,8 @@ export class Titlebar extends Component {
     let minimizeButton = "";
     if (this.props.hideContainer) {
       let minimize = () => {
+        // this.props.removeComponent();
         jQuery(this.props.hideContainer).removeClass("c4g-open").addClass("c4g-close");
-        jQuery(".c4g-router-container-right").removeClass("c4g-open").addClass("c4g-close")
       };
       minimizeButton = <button className={'c4g-sideboard-hide'} onMouseUp={()=> minimize()}></button>
     }
