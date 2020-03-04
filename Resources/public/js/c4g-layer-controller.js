@@ -871,6 +871,12 @@ export class BetterLayerController {
       this.controllers[requestData.layerId].abort();
       delete this.controllers[requestData.layerId];
     }
+    if (mapConf.extent[0] === Infinity || mapConf.extent[0] === -Infinity ||
+        mapConf.extent[1] === Infinity || mapConf.extent[1] === -Infinity ||
+        mapConf.extent[2] === Infinity || mapConf.extent[2] === -Infinity ||
+        mapConf.extent[3] === Infinity || mapConf.extent[3] === -Infinity) {
+      return false
+    }
     const scope = this;
     this.controllers[requestData.layerId] = new AbortController();
     const signal = this.controllers[requestData.layerId].signal;
@@ -915,6 +921,12 @@ export class BetterLayerController {
     if (this.controllers[requestData.layerId]) {    //abort request, if new exists
       this.controllers[requestData.layerId].abort();
       delete this.controllers[requestData.layerId];
+    }
+    if (mapConf.extent[0] === Infinity || mapConf.extent[0] === -Infinity ||
+        mapConf.extent[1] === Infinity || mapConf.extent[1] === -Infinity ||
+        mapConf.extent[2] === Infinity || mapConf.extent[2] === -Infinity ||
+        mapConf.extent[3] === Infinity || mapConf.extent[3] === -Infinity) {
+      return false
     }
     // @Todelü implement handling for other projections
     let boundingArray = transformExtent(mapConf.extent, mapConf.projection, 'EPSG:4326');
