@@ -278,7 +278,8 @@ export class BetterLayerController {
 
   loadLayers () {
     let self = this;
-    if (this.mapId === 0) {
+    if (this.proxy.mapId === 0) {
+      window.setTimeout(()=>{self.mapController.setLayersInitial([], [])},50);
       return false;
     }
 
@@ -287,7 +288,6 @@ export class BetterLayerController {
 
     }).done(function (data) {
       self.objLayers = data.layer;
-      // self.mapController.setObjLayers(self.objLayers);
       let structure = [];
       let features = [];
 
