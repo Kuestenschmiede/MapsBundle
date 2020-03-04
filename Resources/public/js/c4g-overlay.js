@@ -37,6 +37,7 @@ export class C4gOverlay {
     if (layer) {
       this.mapController.map.removeLayer(layer);
       layer.setOpacity(value/100);
+      console.log(value/100);
       this.mapController.map.addLayer(layer);
     }
   }
