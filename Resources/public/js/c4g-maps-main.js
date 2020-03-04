@@ -21,7 +21,7 @@ window.initMap = function(mapData) {
   } else {
     mapDiv = jQuery("#c4g_map_" + mapData.mapId)[0];
   }
-  ReactDOM.render(React.createElement(MapController, {
+  return ReactDOM.render(React.createElement(MapController, {
     mapData: mapData,
   }), mapDiv);
 };
