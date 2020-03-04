@@ -495,7 +495,7 @@ export class BetterLayerController {
       let customStyleFunc = false;
       let vectorSource = new VectorSource();
       if (layer.async_content && layer.async_content !== "0") {
-        let strategy = (layer.content && layer.content[0].settings.boundingBox) ? bbox : all;
+        let strategy = layer.type === "table" || (layer.content && layer.content[0].settings.boundingBox) ? bbox : all;
         vectorSource = new VectorSource({"strategy": strategy});
         const scope = this;
 
