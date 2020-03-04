@@ -228,7 +228,7 @@ class LayerContentService
                 'refresh' => false,
                 'crossOrigine' => false,
                 'cluster' => $objLayer->cluster_locations ? ($objLayer->cluster_distance ? $objLayer->cluster_distance : 20) : false,
-                'boundingBox' => $objLayer->ovp_bbox_limited ? "(bbox)": false,
+                'boundingBox' => $objLayer->ovp_bbox_limited ? '(bbox)': false,
                 'forceNodes' => $objLayer->data_forcenodes ? true : false,
                 'showAdditionalGeometries' => $objLayer->data_additionalgeometries,
             ],
@@ -637,14 +637,13 @@ class LayerContentService
                             $tooltip = $arrResult[$tooltipField];
                         }
                     }
-                    if ($objConfig->popupSwitch !== "off") {
+                    if ($objConfig->popupSwitch !== 'off') {
                         $popup = [
                             'async' => false,
                             'content' => $popupContent,
                             'routing_link' => $objLayer->routing_to,
                         ];
-                    }
-                    else {
+                    } else {
                         $popup = false;
                     }
 
