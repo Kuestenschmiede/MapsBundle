@@ -46,7 +46,7 @@ export class FeatureFilter extends Component {
     if (listDiv) {
       showButtons = !(listDiv.scrollWidth <= listDiv.clientWidth);
     } else {
-      showButtons = !(scope.props.target.scrollWidth <= scope.props.target.clientWidth);
+      showButtons = scope.props.target && (!(scope.props.target.scrollWidth <= scope.props.target.clientWidth));
     }
 
     if (!!parseFloat(this.props.mapController.data.filterHandling)) {
