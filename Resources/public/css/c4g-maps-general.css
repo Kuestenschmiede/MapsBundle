@@ -1228,7 +1228,7 @@ ul.c4g-feature-filter-list li span.sum {
 ul.c4g-feature-filter-list li > strong > span{
   position: relative;
   width: 45px;
-  height: 45px;
+  height: 40px;
   text-align: center;
   float: left;
   transition: 0.3s;
