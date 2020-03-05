@@ -495,12 +495,12 @@ export class BetterLayerController {
       let customStyleFunc = false;
       let vectorSource = new VectorSource();
       if (layer.async_content && layer.async_content !== "0") {
-        let strategy = layer.content[0].settings.boundingBox ? bbox : all;
+        let strategy = layer.type === "table" || (layer.content && layer.content[0].settings.boundingBox) ? bbox : all;
         vectorSource = new VectorSource({"strategy": strategy});
         const scope = this;
 
         let loaderFunc = function(extent, resolution, projection) {
-          if (layer.content[0].settings.boundingBox && (extent[0] === Infinity || extent[0] === -Infinity)) {
+          if (layer.content && layer.content[0].settings.boundingBox && (extent[0] === Infinity || extent[0] === -Infinity)) {
             vectorSource.removeLoadedExtent();
           }
           else if (layer.content && layer.content[0] && layer.content[0].data) {
@@ -529,7 +529,7 @@ export class BetterLayerController {
                 }
               }
 
-              let requestData = layer.content[0].settings ? layer.content[0].settings: {};
+              let requestData = (layer.content && layer.content[0].settings) ? layer.content[0].settings: {};
               for (let featureId in features) {
                 if (features.hasOwnProperty(featureId)) {
                   if (features[featureId].getGeometry().getType() === "Polygon") {
@@ -871,6 +871,12 @@ export class BetterLayerController {
       this.controllers[requestData.layerId].abort();
       delete this.controllers[requestData.layerId];
     }
+    if (mapConf.extent[0] === Infinity || mapConf.extent[0] === -Infinity ||
+        mapConf.extent[1] === Infinity || mapConf.extent[1] === -Infinity ||
+        mapConf.extent[2] === Infinity || mapConf.extent[2] === -Infinity ||
+        mapConf.extent[3] === Infinity || mapConf.extent[3] === -Infinity) {
+      return false
+    }
     const scope = this;
     this.controllers[requestData.layerId] = new AbortController();
     const signal = this.controllers[requestData.layerId].signal;
@@ -915,6 +921,12 @@ export class BetterLayerController {
     if (this.controllers[requestData.layerId]) {    //abort request, if new exists
       this.controllers[requestData.layerId].abort();
       delete this.controllers[requestData.layerId];
+    }
+    if (mapConf.extent[0] === Infinity || mapConf.extent[0] === -Infinity ||
+        mapConf.extent[1] === Infinity || mapConf.extent[1] === -Infinity ||
+        mapConf.extent[2] === Infinity || mapConf.extent[2] === -Infinity ||
+        mapConf.extent[3] === Infinity || mapConf.extent[3] === -Infinity) {
+      return false
     }
     // @Todelü implement handling for other projections
     let boundingArray = transformExtent(mapConf.extent, mapConf.projection, 'EPSG:4326');

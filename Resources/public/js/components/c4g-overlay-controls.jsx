@@ -24,7 +24,7 @@ export class OverlayControls extends Component {
     const scope = this;
     const overlays = this.props.overlayController.arrOverlays;
     const callback = function(idx) {
-      let value = jQuery(".c4g-overlay-toggle").val();
+      let value = jQuery("#c4g-overlay-toggle_" + idx).val();
       scope.props.overlayController.arrOverlays[idx].changeOpacity(value);
     };
     return (
@@ -33,7 +33,7 @@ export class OverlayControls extends Component {
           let entry = <li key={index}>
             <a>
               <span>{element.name}</span>
-              <input className={"c4g-overlay-toggle"} type="range" onInput={() => callback(index)}
+              <input id ={"c4g-overlay-toggle_"+ index} className={"c4g-overlay-toggle"} type="range" onInput={() => callback(index)}
                      min={0} max={100} step={10} defaultValue={element.opacity}/>
             </a>
           </li>;
