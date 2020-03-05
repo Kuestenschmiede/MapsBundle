@@ -665,19 +665,23 @@ class tl_c4g_map_locstyles extends Backend
         //$image = 'bundles/con4gismaps/images/be-icons/locationstyles.svg';
 
         if ($row) {
-            $svg_src = $row['svgSrc'];
-            if (\Validator::isUuid($svg_src)) {
-                $iconSrc = \FilesModel::findByUuid($svg_src);
-                if ($iconSrc) {
-                    $image = $iconSrc->path;
+            if ($row['styletype'] == 'cust_icon_svg') {
+                $svg_src = $row['svgSrc'];
+                if (\Validator::isUuid($svg_src)) {
+                    $iconSrc = \FilesModel::findByUuid($svg_src);
+                    if ($iconSrc) {
+                        $image = $iconSrc->path;
+                    }
                 }
             }
 
-            $icon_src = $row['icon_src'];
-            if (\Validator::isUuid($icon_src)) {
-                $iconSrc = \FilesModel::findByUuid($icon_src);
-                if ($iconSrc) {
-                    $image = $iconSrc->path;
+            if ($row['styletype'] == 'cust_icon') {
+                $icon_src = $row['icon_src'];
+                if (\Validator::isUuid($icon_src)) {
+                    $iconSrc = \FilesModel::findByUuid($icon_src);
+                    if ($iconSrc) {
+                        $image = $iconSrc->path;
+                    }
                 }
             }
         }
