@@ -301,11 +301,10 @@ export class BetterLayerController {
             tabStructures.push(newTab);
           } else {
             let newChild = self.getStructureFromLayer(data.layer[layerId], structure.length);
-            if (newChild.hide_in_starboardDromedarCase) {
-              structure = structure.concat(newChild.childs);
-              features = features.concat(newChild.features);
-            }
-            else {
+            if (newChild.hide_in_starboard) {
+              structure = newChild.childs ? structure.concat(newChild.childs) : structure;
+              features = newChild.features ? features.concat(newChild.features) : features;
+            } else {
               structure.push(newChild);
             }
           }
@@ -315,7 +314,9 @@ export class BetterLayerController {
       for (let structId in structure) {
         if (structure.hasOwnProperty(structId)) {
           arrStates.push(self.getInitialStates(structure[structId]));
-          features = features.concat(self.getFeaturesFromStruct(structure[structId]));
+          if (features) {
+            features = features.concat(self.getFeaturesFromStruct(structure[structId]));
+          }
         }
       }
       let tabStates = [];
@@ -470,9 +471,9 @@ export class BetterLayerController {
         if (layer.childs.hasOwnProperty(layerId)) {
           let childChain = idChain + "," + childs.length;
           let newChild = this.getStructureFromLayer(layer.childs[layerId], childChain);
-          if (newChild.hide_in_starboardDromedarCase) {
-            childs = childs.concat(newChild.childs);
-            features = features.concat(newChild.features)
+          if (newChild.hide_in_starboard) {
+            childs = newChild.childs ? childs.concat(newChild.childs) : childs;
+            features = newChild.features ? features.concat(newChild.features) : features;
           }
           else {
             childs.push(newChild);
@@ -729,7 +730,7 @@ export class BetterLayerController {
       return {
         childs: childs,
         features: features,
-        hide_in_starboardDromedarCase: true
+        hide_in_starboard: true
       }
     }
     else {
