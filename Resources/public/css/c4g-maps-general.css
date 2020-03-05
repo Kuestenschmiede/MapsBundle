@@ -243,7 +243,6 @@ button.ol-zoom-position:before{
   position: relative;
   display: none;
   z-index: 30;
-  max-width: 640px;
   line-height: 1.5em;
 }
 
@@ -484,12 +483,6 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
   height: 100%;
   max-width: 95%;
   max-height: 95%;
-}
-
-@media screen and (max-width: 1280px) {
-  .c4g-popup-wrapper {
-    max-width: 480px;
-  }
 }
 
 /*input[type=range]::-ms-fill-lower {*/
