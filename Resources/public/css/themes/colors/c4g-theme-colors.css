@@ -245,10 +245,6 @@ div.c4g-active.c4g-popup-wrapper * {
   color: var(--shadow-color);
 }
 
-.c4g-popup-wrapper a {
-  color: var(--pu-font-color)!important;
-}
-
 .c4g_brick_popup_button a {
   color: var(--pu-main-color);
   background-color: var(--pu-font-color);
