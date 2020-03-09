@@ -99,7 +99,17 @@ export class BetterLayerController {
                       features[featureId].setGeometry(features[featureId].getGeometry()[0].getInteriorPoint());
                     }
                     features[featureId].set('locstyle', requestData.locstyleId);
-                    features[featureId].set('popup', requestData.popup);
+                    if (requestData.popup) {
+                      for (let i = 0; i < features.length; i++) {
+                        let popup = {};
+                        for (let j in requestData.popup) {
+                          if (requestData.popup.hasOwnProperty(j)) {
+                            popup[j] = requestData.popup[j];
+                          }
+                        }
+                        features[featureId].set('popup', popup);
+                      }
+                    }
                   }
                 }
                 scope.addFeatures(features, requestData.chain);
@@ -526,7 +536,13 @@ export class BetterLayerController {
               // set popups for features
               if (data.popup) {
                 for (let i = 0; i < features.length; i++) {
-                  features[i].set('popup', data.popup);
+                  let popup = {};
+                  for (let j in data.popup) {
+                    if (data.popup.hasOwnProperty(j)) {
+                      popup[j] = data.popup[j];
+                    }
+                  }
+                  features[i].set('popup', popup);
                 }
               }
 

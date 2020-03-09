@@ -182,11 +182,12 @@ export class C4gPopupController {
       } else if (layer.get('popup')) {
         routeButtons = parseInt(layer.get('popup').routing_link, 10);
       }
-      this.currentPopup.setState({content: popupContent, showRouteButtons: routeButtons, open: true});
+      this.currentPopup.setState({content: popupContent, open: true});
     }
     if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_appendPopup === 'object') {
       utils.callHookFunctions(window.c4gMapsHooks.proxy_appendPopup, {
         popup: popupConfig,
+        content: popupContent,
         mapController: this.mapController,
         comp: this.popupComponent || null
       });
