@@ -64,12 +64,8 @@ export class BetterLayerController {
                 scope.addFeatures(features, requestData.chain);
                 scope.mapController.setObjLayers(scope.arrLayers);
               };
-              scope.performOwnData({
-                    "layerId": requestData.layerId,
-                    "locstyleId": requestData.locstyleId,
-                    "hover_location": requestData.hover_location,
-                    "hover_style": requestData.hover_style
-                  }, {
+              scope.performOwnData(requestData,
+         {
                     "extent": extent,
                     "resolution": resolution,
                     "projection": projection
@@ -103,6 +99,7 @@ export class BetterLayerController {
                       features[featureId].setGeometry(features[featureId].getGeometry()[0].getInteriorPoint());
                     }
                     features[featureId].set('locstyle', requestData.locstyleId);
+                    features[featureId].set('popup', requestData.popup);
                   }
                 }
                 scope.addFeatures(features, requestData.chain);
@@ -434,11 +431,13 @@ export class BetterLayerController {
       let params = "";
       let hoverLocation;
       let hoverStyle;
+      let popup = false;
       let forceNodes = false;
       let layerId = layer.id;
       if (layer.content && layer.content[0] && layer.content[0].data) {
         let data = layer.content[0].data;
         url = data.url;
+        popup = data.popup;
         hoverLocation = data.hover_location;
         hoverStyle = data.hover_style;
         params = data.params;
@@ -458,6 +457,7 @@ export class BetterLayerController {
         preventLoading: hide,
         forceNodes: forceNodes,
         arrExtents: [],
+        popup: popup,
         locstyleId: locstyleId,
         hover_location: hoverLocation,
         hover_style: hoverStyle,
@@ -524,9 +524,9 @@ export class BetterLayerController {
                 return false;
               }
               // set popups for features
-              if (data.popup.content === "${FNfnStandardInfoPopup}") {
+              if (data.popup) {
                 for (let i = 0; i < features.length; i++) {
-                  features[i].set('popup', data.popup.content);
+                  features[i].set('popup', data.popup);
                 }
               }
 

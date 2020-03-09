@@ -24,7 +24,7 @@ export class PopupContainer extends Component {
       content: "",
       open: props.open,
       detailsOpen: false,
-      showRouteButtons: 0
+      conststr: false
     };
     props.hideOther(this);
     this.routeButtons = "";
@@ -53,23 +53,32 @@ export class PopupContainer extends Component {
         className += " c4g-details-closed";
       }
     }
+    let headerClass = "c4g-popup-header";
+    let addButtons = <div/>;
+    if (this.state.conststr) {
+      headerClass += " c4g-routing";
+      addButtons = <this.state.conststr config={this.state.config}/>;
+    }
     return (
       <div className={className}>
         <div className={"c4g-popup-wrapper"}>
-          <Titlebar wrapperClass={"c4g-popup-header"} headerClass={"c4g-popup-header-headline"} header={this.props.mapData.popupHeadline || ""}
+          <Titlebar wrapperClass={headerClass} headerClass={"c4g-popup-header-headline"} header={this.props.mapData.popupHeadline || ""}
                     closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close} closeBtnTitle={this.language.CLOSE}
                     detailBtnClass={""} detailBtnCb={""}>
-            <div dangerouslySetInnerHTML={{__html: this.routeButtons.outerHTML}} />
+            {addButtons}
           </Titlebar>
-          <div className={"c4g-popup-content"} dangerouslySetInnerHTML={{__html: this.state.content}}>
-          </div>
+          <div className={"c4g-popup-content"} dangerouslySetInnerHTML={{__html: this.state.content}}/>
+
         </div>
       </div>
     );
   }
 
-  setRouteButtons(buttons) {
-    this.routeButtons = buttons;
+  setAddButtons(conststr, config) {
+    this.setState({
+      config: config,
+      conststr: conststr
+    });
   }
 
   setContent(content) {
