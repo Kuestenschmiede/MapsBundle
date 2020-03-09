@@ -720,7 +720,7 @@ export var utils = {
    *
    * @return  {string}                    [description]
    */
-  replaceFunctionPlaceholders: function (strInput, feature, layer, language) {
+  replaceFunctionPlaceholders: function (strInput, feature, layer, language, proxy = false) {
     var strOutput;
 
     if (!strInput || !feature || !layer) {
@@ -731,19 +731,17 @@ export var utils = {
     strOutput = strInput.replace(
       /\$\{FN([^\}]*)\}/g,
       function (match, functionName, offset, originString) {
-        var style;
 
         // check if function exists
         if (typeof popupFunctions[functionName] === 'function') {
+
           // search style
-          if (typeof feature.getStyle === 'function' && feature.getStyle() && typeof feature.getStyle() === 'function') {
-            style = feature.getStyle();
-          } else if (typeof layer.getStyle === 'function' && layer.getStyle()) {
-            style = layer.getStyle();
-          } else {
-            return '';
+          let styleSrc = "";
+          if (proxy && feature.get('locstyle')) {
+            let locstyleArr = proxy.locationStyleController.arrLocStyles[feature.get('locstyle')].locStyleArr;
+            styleSrc = locstyleArr.icon_src ? locstyleArr.icon_src : locstyleArr.svgSrc ? locstyleArr.svgSrc : "";
           }
-          return popupFunctions[functionName](feature, style);
+          return popupFunctions[functionName](feature, styleSrc);
         }
         return '';
       }

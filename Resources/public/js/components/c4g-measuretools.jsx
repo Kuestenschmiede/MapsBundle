@@ -43,8 +43,14 @@ export class Measuretools extends Component {
     }
     element.appendChild(button);
     jQuery(element).on('click', function (event) {
+      let hidden = scope.props.mapController.measuretoolsContainer.className.includes('c4g-close');
       if (scope.state.open) {
-        scope.close();
+        if (!hidden) {
+          scope.close();
+        }
+        else {
+          jQuery(scope.props.mapController.measuretoolsContainer).removeClass('c4g-close').addClass('c4g-open');
+        }
       } else {
         scope.open();
       }
@@ -73,13 +79,6 @@ export class Measuretools extends Component {
 
   render() {
     const scope = this;
-    if (this.state.open) {
-      jQuery(this.state.control.element).addClass("c4g-open").removeClass("c4g-close");
-      jQuery(".c4g-measuretools-container").addClass("c4g-open").removeClass("c4g-close");
-    } else {
-      jQuery(this.state.control.element).removeClass("c4g-open").addClass("c4g-close");
-      jQuery(".c4g-measuretools-container").removeClass("c4g-open").addClass("c4g-close");
-    }
     let arrTooltips = {
       "select": this.langConstants.MEASURETOOLS_VIEW_TRIGGER_SELECT,
       "line": this.langConstants.MEASURETOOLS_VIEW_TRIGGER_DRAW_LINESTRING,
@@ -90,7 +89,7 @@ export class Measuretools extends Component {
     
     return (
       <div className={"c4g-measuretools-wrapper"}>
-        <Titlebar wrapperClass={"c4g-measuretools-header"} headerClass={"c4g-measuretools-headline"}
+        <Titlebar wrapperClass={"c4g-measuretools-header"} headerClass={"c4g-measuretools-headline"} hideContainer={".c4g-measuretools-container"}
                   header={this.langConstants.MEASURETOOLS} closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close} closeBtnTitle={this.langConstants.CLOSE}>
         </Titlebar>
         <div className={"c4g-measuretools-mode-switcher"}>
@@ -197,10 +196,14 @@ export class Measuretools extends Component {
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevState.open && !this.state.open) {
       // measuretools were closed
+      jQuery(this.state.control.element).removeClass("c4g-open").addClass("c4g-close");
+      jQuery(".c4g-measuretools-container").removeClass("c4g-open").addClass("c4g-close");
       this.props.mapController.map.removeLayer(this.measureLayerGroup);
       this.removeTooltips();
       this.removedOnce = true;
     } else if (!prevState.open && this.state.open) {
+      jQuery(this.state.control.element).addClass("c4g-open").removeClass("c4g-close");
+      jQuery(".c4g-measuretools-container").addClass("c4g-open").removeClass("c4g-close");
       if (this.removedOnce) {
         try {
           this.props.mapController.map.addLayer(this.measureLayerGroup);

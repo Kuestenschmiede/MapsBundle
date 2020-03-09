@@ -652,8 +652,30 @@ button.c4g-baselayer-close:before{
   pointer-events: all;
 }
 
-
 .c4g-control-container-bottom-left.ol-unselectable div {
   width: max-content;
   margin: .2em 0 0;
+}
+
+button.c4g-sideboard-hide {
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  right: calc(32px + .2em);
+  top: .2em;
+  margin: 0;
+  border: none;
+  background: none;
+  outline: none;
+  cursor: pointer;
+}
+
+button.c4g-sideboard-hide:after {
+  content: "\f068";
+  font-family: "Font Awesome 5 Free";
+  font-weight: bold;
+  vertical-align: text-bottom;
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
 }

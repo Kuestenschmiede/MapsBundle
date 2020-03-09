@@ -64,12 +64,8 @@ export class BetterLayerController {
                 scope.addFeatures(features, requestData.chain);
                 scope.mapController.setObjLayers(scope.arrLayers);
               };
-              scope.performOwnData({
-                    "layerId": requestData.layerId,
-                    "locstyleId": requestData.locstyleId,
-                    "hover_location": requestData.hover_location,
-                    "hover_style": requestData.hover_style
-                  }, {
+              scope.performOwnData(requestData,
+         {
                     "extent": extent,
                     "resolution": resolution,
                     "projection": projection
@@ -103,6 +99,17 @@ export class BetterLayerController {
                       features[featureId].setGeometry(features[featureId].getGeometry()[0].getInteriorPoint());
                     }
                     features[featureId].set('locstyle', requestData.locstyleId);
+                    if (requestData.popup) {
+                      for (let i = 0; i < features.length; i++) {
+                        let popup = {};
+                        for (let j in requestData.popup) {
+                          if (requestData.popup.hasOwnProperty(j)) {
+                            popup[j] = requestData.popup[j];
+                          }
+                        }
+                        features[featureId].set('popup', popup);
+                      }
+                    }
                   }
                 }
                 scope.addFeatures(features, requestData.chain);
@@ -301,11 +308,10 @@ export class BetterLayerController {
             tabStructures.push(newTab);
           } else {
             let newChild = self.getStructureFromLayer(data.layer[layerId], structure.length);
-            if (newChild.hide_in_starboardDromedarCase) {
-              structure = structure.concat(newChild.childs);
-              features = features.concat(newChild.features);
-            }
-            else {
+            if (newChild.hide_in_starboard) {
+              structure = newChild.childs ? structure.concat(newChild.childs) : structure;
+              features = newChild.features ? features.concat(newChild.features) : features;
+            } else {
               structure.push(newChild);
             }
           }
@@ -315,7 +321,9 @@ export class BetterLayerController {
       for (let structId in structure) {
         if (structure.hasOwnProperty(structId)) {
           arrStates.push(self.getInitialStates(structure[structId]));
-          features = features.concat(self.getFeaturesFromStruct(structure[structId]));
+          if (features) {
+            features = features.concat(self.getFeaturesFromStruct(structure[structId]));
+          }
         }
       }
       let tabStates = [];
@@ -433,11 +441,13 @@ export class BetterLayerController {
       let params = "";
       let hoverLocation;
       let hoverStyle;
+      let popup = false;
       let forceNodes = false;
       let layerId = layer.id;
       if (layer.content && layer.content[0] && layer.content[0].data) {
         let data = layer.content[0].data;
         url = data.url;
+        popup = data.popup;
         hoverLocation = data.hover_location;
         hoverStyle = data.hover_style;
         params = data.params;
@@ -457,6 +467,7 @@ export class BetterLayerController {
         preventLoading: hide,
         forceNodes: forceNodes,
         arrExtents: [],
+        popup: popup,
         locstyleId: locstyleId,
         hover_location: hoverLocation,
         hover_style: hoverStyle,
@@ -470,9 +481,9 @@ export class BetterLayerController {
         if (layer.childs.hasOwnProperty(layerId)) {
           let childChain = idChain + "," + childs.length;
           let newChild = this.getStructureFromLayer(layer.childs[layerId], childChain);
-          if (newChild.hide_in_starboardDromedarCase) {
-            childs = childs.concat(newChild.childs);
-            features = features.concat(newChild.features)
+          if (newChild.hide_in_starboard) {
+            childs = newChild.childs ? childs.concat(newChild.childs) : childs;
+            features = newChild.features ? features.concat(newChild.features) : features;
           }
           else {
             childs.push(newChild);
@@ -495,12 +506,12 @@ export class BetterLayerController {
       let customStyleFunc = false;
       let vectorSource = new VectorSource();
       if (layer.async_content && layer.async_content !== "0") {
-        let strategy = layer.content[0].settings.boundingBox ? bbox : all;
+        let strategy = layer.type === "table" || (layer.content && layer.content[0].settings.boundingBox) ? bbox : all;
         vectorSource = new VectorSource({"strategy": strategy});
         const scope = this;
 
         let loaderFunc = function(extent, resolution, projection) {
-          if (layer.content[0].settings.boundingBox && (extent[0] === Infinity || extent[0] === -Infinity)) {
+          if (layer.content && layer.content[0].settings.boundingBox && (extent[0] === Infinity || extent[0] === -Infinity)) {
             vectorSource.removeLoadedExtent();
           }
           else if (layer.content && layer.content[0] && layer.content[0].data) {
@@ -523,13 +534,19 @@ export class BetterLayerController {
                 return false;
               }
               // set popups for features
-              if (data.popup.content === "${FNfnStandardInfoPopup}") {
+              if (data.popup) {
                 for (let i = 0; i < features.length; i++) {
-                  features[i].set('popup', data.popup.content);
+                  let popup = {};
+                  for (let j in data.popup) {
+                    if (data.popup.hasOwnProperty(j)) {
+                      popup[j] = data.popup[j];
+                    }
+                  }
+                  features[i].set('popup', popup);
                 }
               }
 
-              let requestData = layer.content[0].settings ? layer.content[0].settings: {};
+              let requestData = (layer.content && layer.content[0].settings) ? layer.content[0].settings: {};
               for (let featureId in features) {
                 if (features.hasOwnProperty(featureId)) {
                   if (features[featureId].getGeometry().getType() === "Polygon") {
@@ -729,7 +746,7 @@ export class BetterLayerController {
       return {
         childs: childs,
         features: features,
-        hide_in_starboardDromedarCase: true
+        hide_in_starboard: true
       }
     }
     else {
@@ -775,7 +792,7 @@ export class BetterLayerController {
               return false;
             }
           }
-          else {
+          else if (contentData.properties){
             format = new olFormat[layer.content[contentId].type]({
               featureProjection: featureProjection,
               dataProjection: contentData.properties.projection
@@ -801,7 +818,7 @@ export class BetterLayerController {
                 }
               }
             }
-            else {
+            else if (contentData && contentData.type) {
               let feature = format.readFeature(contentData);
               feature.set('locstyle', locstyle);
               if (content.hover_location) {
@@ -837,18 +854,18 @@ export class BetterLayerController {
     if (this.mapController.props.mapData.calc_extent === "LOCATIONS") {
       for (let i in features) {
         if (features.hasOwnProperty(i)) {
-          let coordinate = utils.getSingleCoordinateForGeom(features[i].getGeometry());
-          if (this.extent.maxX < coordinate[0]) {
-            this.extent.maxX = coordinate[0];
+          let extent = features[i].getGeometry().getExtent();
+          if (this.extent.maxX < extent[2]) {
+            this.extent.maxX = extent[2];
           }
-          if (this.extent.maxY < coordinate[1]) {
-            this.extent.maxY = coordinate[1];
+          if (this.extent.maxY < extent[3]) {
+            this.extent.maxY = extent[3];
           }
-          if (this.extent.minX > coordinate[0]) {
-            this.extent.minX = coordinate[0];
+          if (this.extent.minX > extent[0]) {
+            this.extent.minX = extent[0];
           }
-          if (this.extent.minY > coordinate[1]) {
-            this.extent.minY = coordinate[1];
+          if (this.extent.minY > extent[1]) {
+            this.extent.minY = extent[1];
           }
 
         }
@@ -870,6 +887,12 @@ export class BetterLayerController {
     if (this.controllers[requestData.layerId]) {    //abort request, if new exists
       this.controllers[requestData.layerId].abort();
       delete this.controllers[requestData.layerId];
+    }
+    if (mapConf.extent[0] === Infinity || mapConf.extent[0] === -Infinity ||
+        mapConf.extent[1] === Infinity || mapConf.extent[1] === -Infinity ||
+        mapConf.extent[2] === Infinity || mapConf.extent[2] === -Infinity ||
+        mapConf.extent[3] === Infinity || mapConf.extent[3] === -Infinity) {
+      return false
     }
     const scope = this;
     this.controllers[requestData.layerId] = new AbortController();
@@ -915,6 +938,12 @@ export class BetterLayerController {
     if (this.controllers[requestData.layerId]) {    //abort request, if new exists
       this.controllers[requestData.layerId].abort();
       delete this.controllers[requestData.layerId];
+    }
+    if (mapConf.extent[0] === Infinity || mapConf.extent[0] === -Infinity ||
+        mapConf.extent[1] === Infinity || mapConf.extent[1] === -Infinity ||
+        mapConf.extent[2] === Infinity || mapConf.extent[2] === -Infinity ||
+        mapConf.extent[3] === Infinity || mapConf.extent[3] === -Infinity) {
+      return false
     }
     // @Todelü implement handling for other projections
     let boundingArray = transformExtent(mapConf.extent, mapConf.projection, 'EPSG:4326');
