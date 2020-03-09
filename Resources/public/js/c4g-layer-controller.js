@@ -792,7 +792,7 @@ export class BetterLayerController {
               return false;
             }
           }
-          else {
+          else if (contentData.properties){
             format = new olFormat[layer.content[contentId].type]({
               featureProjection: featureProjection,
               dataProjection: contentData.properties.projection
