@@ -854,18 +854,18 @@ export class BetterLayerController {
     if (this.mapController.props.mapData.calc_extent === "LOCATIONS") {
       for (let i in features) {
         if (features.hasOwnProperty(i)) {
-          let coordinate = utils.getSingleCoordinateForGeom(features[i].getGeometry());
-          if (this.extent.maxX < coordinate[0]) {
-            this.extent.maxX = coordinate[0];
+          let extent = features[i].getGeometry().getExtent();
+          if (this.extent.maxX < extent[2]) {
+            this.extent.maxX = extent[2];
           }
-          if (this.extent.maxY < coordinate[1]) {
-            this.extent.maxY = coordinate[1];
+          if (this.extent.maxY < extent[3]) {
+            this.extent.maxY = extent[3];
           }
-          if (this.extent.minX > coordinate[0]) {
-            this.extent.minX = coordinate[0];
+          if (this.extent.minX > extent[0]) {
+            this.extent.minX = extent[0];
           }
-          if (this.extent.minY > coordinate[1]) {
-            this.extent.minY = coordinate[1];
+          if (this.extent.minY > extent[1]) {
+            this.extent.minY = extent[1];
           }
 
         }
