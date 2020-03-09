@@ -335,7 +335,7 @@ export class MapProxy {
         popupInfos = feature.get('popup');
         if (popupInfos && popupInfos.content === "${FNfnStandardInfoPopup}") {
           let popupContent = "${FNfnStandardInfoPopup}";
-          popupContent = utils.replaceFunctionPlaceholders(popupContent, feature, layer, self.options.mapController.data.lang);
+          popupContent = utils.replaceFunctionPlaceholders(popupContent, feature, layer, self.options.mapController.data.lang, self);
           popupInfos = popupInfos || {};
           popupInfos.content = popupContent;
           popupInfos.async = false;
