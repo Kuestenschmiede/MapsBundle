@@ -211,7 +211,8 @@ export class FeatureFilter extends Component {
       }
       if (show) {
         if (feature.get('oldStyle')) {
-          feature.setStyle(feature.get('oldStyle'));
+          feature.setStyle(false);
+          feature.set('oldStyle',  false)
         }
       }
       else {
@@ -235,7 +236,7 @@ export class FeatureFilter extends Component {
   hideFeatureMulti(layer, feature) {
     if (feature.get('features')){
       let features = feature.get('features');
-      features.forEach((feature) => this.hideFeature(layer, feature));
+      features.forEach((feature) => this.hideFeatureMulti(layer, feature));
     }
     else {
       let show = false;
@@ -260,7 +261,8 @@ export class FeatureFilter extends Component {
       }
       if (show || !filterActive) {
         if (feature.get('oldStyle')) {
-          feature.setStyle(feature.get('oldStyle'));
+          feature.setStyle(false);
+          feature.set('oldStyle',  false)
         }
       }
       else if (!show && filterActive){

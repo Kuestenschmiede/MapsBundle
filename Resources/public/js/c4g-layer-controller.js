@@ -792,7 +792,7 @@ export class BetterLayerController {
               return false;
             }
           }
-          else {
+          else if (contentData.properties){
             format = new olFormat[layer.content[contentId].type]({
               featureProjection: featureProjection,
               dataProjection: contentData.properties.projection
@@ -818,7 +818,7 @@ export class BetterLayerController {
                 }
               }
             }
-            else {
+            else if (contentData && contentData.type) {
               let feature = format.readFeature(contentData);
               feature.set('locstyle', locstyle);
               if (content.hover_location) {
