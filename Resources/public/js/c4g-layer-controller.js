@@ -818,7 +818,7 @@ export class BetterLayerController {
                 }
               }
             }
-            else {
+            else if (contentData && contentData.type) {
               let feature = format.readFeature(contentData);
               feature.set('locstyle', locstyle);
               if (content.hover_location) {
