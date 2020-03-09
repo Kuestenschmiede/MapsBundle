@@ -561,7 +561,7 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
   margin: 0;
 }
 
-.c4g-sideboard > div > div[class*=header] span {
+.c4g-sideboard > div > div[class*=header] > span {
   display: block;
   width: calc(100% - 1.2em - 32px);
   padding: 0 .4em;
