@@ -130,9 +130,9 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['toggle'] = array('Publish/unpublish map stru
 $GLOBALS['TL_LANG']['tl_c4g_maps']['show']   = array('Details', 'Show details of map structure item ID %s');
 
 //xlabel buttons
-$GLOBALS['TL_LANG']['tl_c4g_maps']['editBaselayers'] = ['Edit baselayers'];
-$GLOBALS['TL_LANG']['tl_c4g_maps']['editLocstyles'] = ['Edit locstyles'];
-$GLOBALS['TL_LANG']['tl_c4g_maps']['editProfiles'] = ['Edit profiles'];
+$GLOBALS['TL_LANG']['tl_c4g_maps']['editBaselayers'] = 'Edit baselayers';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['editLocstyles'] = 'Edit locstyles';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['editProfiles'] = 'Edit profiles';
 
 /**
  * Misc

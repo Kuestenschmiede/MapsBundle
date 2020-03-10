@@ -130,9 +130,9 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['toggle'] = array('Kartenstrukturelement ver√
 $GLOBALS['TL_LANG']['tl_c4g_maps']['show']   = array('Details', 'Die Details des Kartenstrukturelements ID %s anzeigen');
 
 //xlabel buttons
-$GLOBALS['TL_LANG']['tl_c4g_maps']['editBaselayers'] = ['Basiskarten bearbeiten'];
-$GLOBALS['TL_LANG']['tl_c4g_maps']['editLocstyles'] = ['Lokationsstile bearbeiten'];
-$GLOBALS['TL_LANG']['tl_c4g_maps']['editProfiles'] = ['Kartenprofile bearbeiten'];
+$GLOBALS['TL_LANG']['tl_c4g_maps']['editBaselayers'] = 'Basiskarten bearbeiten';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['editLocstyles'] = 'Lokationsstile bearbeiten';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['editProfiles'] = 'Kartenprofile bearbeiten';
 
 /**
  * Misc
