@@ -470,14 +470,21 @@ export class MapController extends Component {
       if (mapData.height) {
         domMapDiv.style.height = mapData.height;
       } else {
-        if (domMapDiv.parentElement && domMapDiv.parentElement.parentElement && !domMapDiv.parentElement.parentElement.offsetHeight) {
-          domMapDiv.style.height = '100vh';
-        } else if (domMapDiv.parentElement && domMapDiv.parentElement.parentElement) {
-          let height = domMapDiv.parentElement.parentElement.offsetHeight;
-          if (height < 320) {
-            height = 320; //minimal default value if not set in map configuration
+        if (mapData.geopicker && mapData.geopicker.type === "backend") {
+          let fieldsetHeight = domMapDiv.parentElement.parentElement.offsetHeight;
+          domMapDiv.style.height = 'calc(100vh - '+fieldsetHeight+'px)';
+          domMapDiv.style.minHeight = '480px';
+          domMapDiv.style.maxWidth = '100vw';
+        } else {
+          if (domMapDiv.parentElement && domMapDiv.parentElement.parentElement && !domMapDiv.parentElement.parentElement.offsetHeight) {
+            domMapDiv.style.height = '100vh';
+          } else if (domMapDiv.parentElement && domMapDiv.parentElement.parentElement) {
+            let height = domMapDiv.parentElement.parentElement.offsetHeight;
+            if (height < 320) {
+              height = 320; //minimal default value if not set in map configuration
+            }
+            domMapDiv.style.height = height+'px';
           }
-          domMapDiv.style.height = height+'px';
         }
       }
       if (mapData.margin) {
