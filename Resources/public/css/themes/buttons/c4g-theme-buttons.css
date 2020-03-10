@@ -478,7 +478,7 @@ span.c4g-icon + span[class*=locstyle] + a {
 
 div.c4g-tooltip-popup {
   pointer-events: none;
-  padding: 15px .2em .2em;
+  padding:.2em;
   border-radius: 5px;
   border: 1px solid;
 }
