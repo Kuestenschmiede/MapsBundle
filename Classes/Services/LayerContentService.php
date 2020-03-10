@@ -21,6 +21,7 @@ use con4gis\MapsBundle\Resources\contao\models\C4gMapSettingsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapTablesModel;
 use con4gis\MapsBundle\Resources\contao\modules\api\InfoWindowApi;
+use con4gis\MapsBundle\Resources\contao\modules\api\LayerContentDataApi;
 use Contao\Controller;
 
 class LayerContentService
@@ -601,7 +602,7 @@ class LayerContentService
                         }
                     }
                 }
-
+                
                 //set event or content (tl_news) directlink
                 if ($objLayer->tab_directlink && !$objLayer->loc_linkurl) {
                     $protocol = $_SERVER['PROTOCOL'] = isset($_SERVER['HTTPS']) && !empty($_SERVER['HTTPS']) ? 'https' : 'http';
@@ -637,7 +638,11 @@ class LayerContentService
                             $tooltip = $arrResult[$tooltipField];
                         }
                     }
-                    if ($objConfig->popupSwitch !== 'off') {
+                    if ($objConfig->popupSwitch === "expert") {
+                        // process expert popup
+                        $lcdApi = new LayerContentDataApi();
+                        $popup = $lcdApi->getPopup($objConfig, $arrResult);
+                    } else if ($objConfig->popupSwitch !== 'off') {
                         $popup = [
                             'async' => false,
                             'content' => $popupContent,
@@ -646,6 +651,7 @@ class LayerContentService
                     } else {
                         $popup = false;
                     }
+                    
 
                     $arrReturnDataSet = [
                         'id' => $arrResult['id'],
