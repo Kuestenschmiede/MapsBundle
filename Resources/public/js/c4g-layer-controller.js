@@ -238,9 +238,11 @@ export class BetterLayerController {
     if (features) {
       if (id >= 0) {
         let loader = this.loaders[id];
-        this.loaders[id].preventLoading = true;
-        if (loader.request) {
-          loader.request.abort();
+        if (loader) {
+          this.loaders[id].preventLoading = true;
+          if (loader.request) {
+            loader.request.abort();
+          }
         }
       }
       if (features.length > 0) {
