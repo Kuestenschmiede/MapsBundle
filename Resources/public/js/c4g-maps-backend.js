@@ -61,16 +61,17 @@ this.c4g.maps.backend = this.c4g.maps.backend || {};
       options = opt_options || {};
 
       options.url = href;
-      options.width = '360';
+
+      //options.width = '601px'; //doesn't work on smaller displays
 
       max = (window.getSize().y - 180).toInt();
       if (!options.height || options.height > max) {
         options.height = max;
       }
       modalWindow = new SimpleModal({
-        'width': options.width,
+        //'width': options.width,
         'btn_ok': Contao.lang.close,
-        'draggable': false,
+        'draggable': true,
         'overlayOpacity': 0.5,
         'onShow': function () {
           document.body.setStyle('overflow', 'hidden');
