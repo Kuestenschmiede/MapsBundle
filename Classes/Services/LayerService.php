@@ -359,6 +359,7 @@ class LayerService
         }
         $arrLayerData['noFilter'] = $objLayer->exemptFromFilter;
         $arrLayerData['noRealFilter'] = $objLayer->exemptFromRealFilter === "1";
+        $arrLayerData['routing_link'] = $objLayer->routing_to;
         $arrLayerData['locstyle'] = $objLayer->locstyle;
         $arrLayerData['initial_opened'] = $objLayer->initial_opened;
         $arrLayerData['zIndex'] = $objLayer->zIndex;

@@ -335,7 +335,9 @@ export class BetterLayerController {
         }
       }
       self.arrLayers = structure;
-      self.proxy.locationStyleController.loadLocationStyles(self.arrLocstyles, {"done": (styleData) => {self.mapController.setLocStyles(styleData)}});
+      self.proxy.locationStyleController.loadLocationStyles(self.arrLocstyles, {"done": (styleData) => {
+        self.mapController.setLocStyles(styleData);
+        }});
       self.vectorCollection.extend(features);
       self.vectorLayer.set('zIndex', 1);
       self.mapController.map.addLayer(self.vectorLayer);
