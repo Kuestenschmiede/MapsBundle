@@ -721,7 +721,7 @@ export class MapController extends Component {
       if (mapData.height) {
         mapHeight = mapData.height;
       } else {
-        let divHeight = domMapDiv.offsetHeight;
+        let divHeight = domMapDiv && domMapDiv.offsetHeight ? domMapDiv.offsetHeight : false;
         if (!divHeight) {
           mapHeight = "100vh";
         } else {
