@@ -545,6 +545,7 @@ export class BetterLayerController {
                     }
                   }
                   features[i].set('popup', popup);
+                  features[i].set('noFilter', layer.noRealFilter);
                 }
               }
 
@@ -823,6 +824,7 @@ export class BetterLayerController {
             else if (contentData && contentData.type) {
               let feature = format.readFeature(contentData);
               feature.set('locstyle', locstyle);
+              feature.set('noFilter', layer.noRealFilter);
               if (content.hover_location) {
                 feature.set('hover_style', content.hover_style);
                 feature.set('hover_location', content.hover_location);
@@ -969,7 +971,7 @@ export class BetterLayerController {
     var point = new Point(resultCoordinate);
     let contentFeature = new Feature(point);
     contentFeature.setId(contentData.id);
-
+    contentFeature.set('noFilter', layer.noRealFilter);
     contentFeature.set('hover_location', layer.hover_location);
     contentFeature.set('hover_style', layer.hover_style);
     let popup = contentData['popup'] ? contentData['popup'] : jQuery.extend({},layer.popup);
