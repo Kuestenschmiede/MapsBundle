@@ -432,7 +432,7 @@ export class BetterLayerController {
         hide = true;
       }
     }
-    if (layer.activeForBaselayers !== "all") { //initial handling for activate with baselayer
+    if (layer.activeForBaselayers && layer.activeForBaselayers !== "all") { //initial handling for activate with baselayer
       // let found = layer.activeForBaselayers.find((element) => element === scope.mapController.proxy.activeBaselayerId || scope.mapController.data.default_baselayer);
       let found = layer.activeForBaselayers.includes(scope.mapController.proxy.activeBaselayerId || scope.mapController.data.default_baselayer);
       hide = !found;
