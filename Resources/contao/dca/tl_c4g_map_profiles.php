@@ -290,12 +290,12 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         'popupHandling' => [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandling'],
             'exclude'                 => true,
-            'default'                 => '0',
+            'default'                 => '3',
             'inputType'               => 'radio',
-            'options'                 => ['0','1','2','3'],
+            'options'                 => ['3','0','1','2'],
             'eval'                    => ['submitOnChange' => true,'includeBlankOption' => false],
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandlingReferences'],
-            'sql'                     => "char(1) NOT NULL default '0'"
+            'sql'                     => "char(1) NOT NULL default '3'"
         ],
         'popupHeadline' =>
         [
