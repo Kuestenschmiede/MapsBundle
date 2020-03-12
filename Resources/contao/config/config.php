@@ -87,6 +87,7 @@ $GLOBALS['con4gis']['maps']['api']['geosearch'] = $apiBaseUrl . '/searchService'
 $GLOBALS['con4gis']['maps']['api']['geosearch_reverse'] = $apiBaseUrl . '/reverseSearchService';
 $GLOBALS['con4gis']['maps']['api']['routing'] = $apiBaseUrl . '/routingService';
 $GLOBALS['con4gis']['maps']['api']['geopicker'] = $apiBaseUrl . '/geopickerService/';
+$GLOBALS['con4gis']['maps']['api']['filter'] = $apiBaseUrl . '/filterService/';
 
 $GLOBALS['con4gis']['api-caching'] = ['baseLayerService','layerService','layerContentService','locationStyleService'];
 $GLOBALS['con4gis']['dafaultData'] = ['Table'=>'Table'];

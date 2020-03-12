@@ -545,6 +545,7 @@ class MapDataConfigurator
         $mapData['api']['geosearch'] = $GLOBALS['con4gis']['maps']['api']['geosearch'];
         $mapData['api']['geosearch_reverse'] = $GLOBALS['con4gis']['maps']['api']['geosearch_reverse'];
         $mapData['api']['routing'] = $GLOBALS['con4gis']['maps']['api']['routing'];
+        $mapData['api']['filter'] = $GLOBALS['con4gis']['maps']['api']['filter'];
 
         // check for initializing get parameters
         if (Input::get('mapsParams')) {

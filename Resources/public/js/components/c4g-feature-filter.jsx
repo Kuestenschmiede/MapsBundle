@@ -290,7 +290,7 @@ export class FeatureFilter extends Component {
   }
   loadFilters() {
     const scope = this;
-    let url = "con4gis/filterService/" + this.props.mapController.data.id + "/" + this.props.mapController.data.lang;
+    let url = this.props.mapController.data.api.filter + this.props.mapController.data.id + "/" + this.props.mapController.data.lang;
     fetch(url).then(function (response) {
       return response.json().then(function(jsonData) {
         let arrChecked = [];
