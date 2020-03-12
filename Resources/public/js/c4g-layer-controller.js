@@ -337,6 +337,16 @@ export class BetterLayerController {
       self.arrLayers = structure;
       self.proxy.locationStyleController.loadLocationStyles(self.arrLocstyles, {"done": (styleData) => {
         self.mapController.setLocStyles(styleData);
+        window.setTimeout(()=> {
+          let getZoom = self.mapController.map.getView().getZoom();
+          self.mapController.map.getView().setZoom(getZoom + 0.265);
+          // self.mapController.map.getView().setZoom(getZoom);
+
+          }, 200);
+        window.setTimeout(()=> {
+          let getZoom = self.mapController.map.getView().getZoom();
+          self.mapController.map.getView().setZoom(getZoom - 0.265);
+          }, 201);
         }});
       self.vectorCollection.extend(features);
       self.vectorLayer.set('zIndex', 1);
