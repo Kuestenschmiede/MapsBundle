@@ -21,6 +21,7 @@ use con4gis\MapsBundle\Resources\contao\models\C4gMapSettingsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapTablesModel;
 use con4gis\MapsBundle\Resources\contao\modules\api\InfoWindowApi;
+use con4gis\MapsBundle\Resources\contao\modules\api\LayerContentDataApi;
 use Contao\Controller;
 
 class LayerContentService
@@ -637,7 +638,11 @@ class LayerContentService
                             $tooltip = $arrResult[$tooltipField];
                         }
                     }
-                    if ($objConfig->popupSwitch !== 'off') {
+                    if ($objConfig->popupSwitch === 'expert') {
+                        // process expert popup
+                        $lcdApi = new LayerContentDataApi();
+                        $popup = $lcdApi->getPopup($objConfig, $arrResult);
+                    } elseif ($objConfig->popupSwitch !== 'off') {
                         $popup = [
                             'async' => false,
                             'content' => $popupContent,

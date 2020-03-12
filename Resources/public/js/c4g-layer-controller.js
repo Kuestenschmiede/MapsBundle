@@ -238,9 +238,11 @@ export class BetterLayerController {
     if (features) {
       if (id >= 0) {
         let loader = this.loaders[id];
-        this.loaders[id].preventLoading = true;
-        if (loader.request) {
-          loader.request.abort();
+        if (loader) {
+          this.loaders[id].preventLoading = true;
+          if (loader.request) {
+            loader.request.abort();
+          }
         }
       }
       if (features.length > 0) {
@@ -333,7 +335,19 @@ export class BetterLayerController {
         }
       }
       self.arrLayers = structure;
-      self.proxy.locationStyleController.loadLocationStyles(self.arrLocstyles, {"done": (styleData) => {self.mapController.setLocStyles(styleData)}});
+      self.proxy.locationStyleController.loadLocationStyles(self.arrLocstyles, {"done": (styleData) => {
+        self.mapController.setLocStyles(styleData);
+        window.setTimeout(()=> {
+          let getZoom = self.mapController.map.getView().getZoom();
+          self.mapController.map.getView().setZoom(getZoom + 0.265);
+          // self.mapController.map.getView().setZoom(getZoom);
+
+          }, 200);
+        window.setTimeout(()=> {
+          let getZoom = self.mapController.map.getView().getZoom();
+          self.mapController.map.getView().setZoom(getZoom - 0.265);
+          }, 201);
+        }});
       self.vectorCollection.extend(features);
       self.vectorLayer.set('zIndex', 1);
       self.mapController.map.addLayer(self.vectorLayer);
@@ -543,6 +557,7 @@ export class BetterLayerController {
                     }
                   }
                   features[i].set('popup', popup);
+                  features[i].set('noFilter', layer.noRealFilter);
                 }
               }
 
@@ -821,6 +836,7 @@ export class BetterLayerController {
             else if (contentData && contentData.type) {
               let feature = format.readFeature(contentData);
               feature.set('locstyle', locstyle);
+              feature.set('noFilter', layer.noRealFilter);
               if (content.hover_location) {
                 feature.set('hover_style', content.hover_style);
                 feature.set('hover_location', content.hover_location);
@@ -967,7 +983,7 @@ export class BetterLayerController {
     var point = new Point(resultCoordinate);
     let contentFeature = new Feature(point);
     contentFeature.setId(contentData.id);
-
+    contentFeature.set('noFilter', layer.noRealFilter);
     contentFeature.set('hover_location', layer.hover_location);
     contentFeature.set('hover_style', layer.hover_style);
     let popup = contentData['popup'] ? contentData['popup'] : jQuery.extend({},layer.popup);

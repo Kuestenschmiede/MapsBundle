@@ -39,6 +39,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['locstyle'] = array('Location style', 'The lo
 $GLOBALS['TL_LANG']['tl_c4g_maps']['zIndex'] = array('Z-Index', 'Here you can set a z index for the map structure element. Note: This is not the CSS-Z index, but a Z index that only applies to the map structure elements.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_only_in_parent'] = array('Display location only as child of a parent map', 'If you do NOT select this option, the location is displayed also if this item is displayed as a map.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['exemptFromFilter'] = ['Exempt location from filter in starboard','If checked, this location will be ignored by the filter in starboard.'];
+$GLOBALS['TL_LANG']['tl_c4g_maps']['exemptFromRealFilter'] = ['Exempt location from filter','If checked, this location will be ignored by the filter.'];
 $GLOBALS['TL_LANG']['tl_c4g_maps']['filterByBaseLayer'] = ['Activate layer with baselayers','Select the base maps for which this location should be switched on. The location is activated with the corresponding base maps and deactivated with each other.'];
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_label'] = array('Label', 'Label to be displayed on map together with the location marker.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['tooltip'] = array('Tooltip', 'Tooltip to be displayed when mouse hovers the location.');
@@ -130,9 +131,9 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['toggle'] = array('Publish/unpublish map stru
 $GLOBALS['TL_LANG']['tl_c4g_maps']['show']   = array('Details', 'Show details of map structure item ID %s');
 
 //xlabel buttons
-$GLOBALS['TL_LANG']['tl_c4g_maps']['editBaselayers'] = ['Edit baselayers'];
-$GLOBALS['TL_LANG']['tl_c4g_maps']['editLocstyles'] = ['Edit locstyles'];
-$GLOBALS['TL_LANG']['tl_c4g_maps']['editProfiles'] = ['Edit profiles'];
+$GLOBALS['TL_LANG']['tl_c4g_maps']['editBaselayers'] = 'Edit baselayers';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['editLocstyles'] = 'Edit locstyles';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['editProfiles'] = 'Edit profiles';
 
 /**
  * Misc

@@ -199,6 +199,9 @@ export class FeatureFilter extends Component {
       features.forEach((feature) => this.hideFeature(layer, feature));
     }
     else {
+      if (feature.get('noFilter')) {
+        return;
+      }
       let show = true;
       for (let key in this.state.arrChecked) {
         if (this.state.arrChecked.hasOwnProperty(key)) {
@@ -239,6 +242,9 @@ export class FeatureFilter extends Component {
       features.forEach((feature) => this.hideFeatureMulti(layer, feature));
     }
     else {
+      if (feature.get('noFilter')) {
+        return;
+      }
       let show = false;
       let filterActive = false;
       for (let key in this.state.arrChecked) {

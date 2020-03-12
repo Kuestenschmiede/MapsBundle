@@ -124,31 +124,31 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
         [
         '__selector__'                => ['styletype','line_arrows', 'icon_resize_zoom'],
         'default'                     => 'name,styletype,strokewidth,strokecolor,fillcolor,radius;'.
-                                         '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,label_outl_box,font_style,font_weight;'.
+                                         '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,label_outl_box,font_style,font_weight,label_minzoom,label_maxzoom;'.
                                          '{popup_legend},tooltip,popup_info;'.
                                          '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;'.
                                          '{expert_legend:hide},line_arrows;',
         'x'                           => 'name,styletype,strokewidth,strokecolor,radius;'.
-                                        '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,label_outl_box,font_style,font_weight;'.
+                                        '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,label_outl_box,font_style,font_weight,label_minzoom,label_maxzoom;'.
                                         '{popup_legend},tooltip,popup_info;'.
                                         '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;',
         'cross'                       => 'name,styletype,strokewidth,strokecolor,radius;'.
-                                        '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,label_outl_box,font_style,font_weight;'.
+                                        '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,label_outl_box,font_style,font_weight,label_minzoom,label_maxzoom;'.
                                         '{popup_legend},tooltip,popup_info;'.
                                         '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;',
         'cust_icon'                   => 'name,styletype,icon_src, icon_scale, icon_size,icon_resize_zoom,icon_opacity,icon_offset;'.
-                                         '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,label_outl_box,font_style,font_weight;'.
+                                         '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,label_outl_box,font_style,font_weight,label_minzoom,label_maxzoom;'.
                                          '{popup_legend},tooltip,popup_info;'.
                                          '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;'.
                                          '{editor_legend:hide},editor_icon,editor_icon_size,editor_sort,editor_vars,editor_collect;',
         'cust_icon_svg'               => 'name, styletype, svgSrc,icon_size,icon_scale,icon_resize_zoom,icon_offset,svg_add_attributes;'.
-                                         '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,label_outl_box,font_style,font_weight;'.
+                                         '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,label_outl_box,font_style,font_weight,label_minzoom,label_maxzoom;'.
                                          '{popup_legend},tooltip,popup_info;'.
                                          '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;'.
                                          '{editor_legend:hide},editor_icon,editor_icon_size,editor_sort,editor_vars,editor_collect;',
         'style_function'              => 'name,styletype,style_function_js;',
         'photo'                       => 'name,styletype,radius,photoKind,icon_src,strokewidth,strokecolor,icon_opacity;'.
-                                         '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,label_outl_box,font_style,font_weight;'.
+                                         '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,label_outl_box,font_style,font_weight,label_minzoom,label_maxzoom;'.
                                          '{popup_legend},tooltip,popup_info;'.
                                          '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;'.
                                          '{editor_legend:hide},editor_icon,editor_icon_size,editor_sort,editor_vars,editor_collect;'
@@ -472,6 +472,24 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
                 'exclude'                 => true,
                 'inputType'               => 'text',
                 'sql'                     => "varchar(100) NOT NULL default ''"
+            ],
+        'label_minzoom' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_minzoom'],
+                'exclude'                 => true,
+                'inputType'               => 'text',
+                'default'                 => '0',
+                'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
+                'sql'                     => "int(10) unsigned NOT NULL default '0'"
+            ],
+        'label_maxzoom' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_maxzoom'],
+                'exclude'                 => true,
+                'inputType'               => 'text',
+                'default'                 => '0',
+                'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
+                'sql'                     => "int(10) unsigned NOT NULL default '0'"
             ],
         'tooltip' =>
             [

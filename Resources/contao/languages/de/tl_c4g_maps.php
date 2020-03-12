@@ -39,6 +39,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['locstyle'] = array('Lokationsstil', 'Über d
 $GLOBALS['TL_LANG']['tl_c4g_maps']['zIndex'] = array('Z-Index', 'Hier können Sie einen z-Index für das Kartenstrukturelement setzen. Hinweis: hierbei handelt es sich nicht um den CSS-Z-Index, sondern um einen Z-Index, der nur für die Kartenstrukturelemente gilt.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_only_in_parent'] = array('Lokation nur in übergeordneten Karten anzeigen', 'Wenn Sie diese Checkbox NICHT setzen, dann wird diese Lokation auch angezeigt, sobald Sie dieses Element als Karte darstellen lassen.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['exemptFromFilter'] = ['Lokation von Starboard-Filter ausnehmen','Bei gesetzter Checkbox, wird diese Lokation vom Starboard-Filter ignoriert.'];
+$GLOBALS['TL_LANG']['tl_c4g_maps']['exemptFromRealFilter'] = ['Lokation von Filter ausnehmen','Bei gesetzter Checkbox, wird diese Lokation vom Filter ignoriert.'];
 $GLOBALS['TL_LANG']['tl_c4g_maps']['filterByBaseLayer'] = ['Lokation mit Basiskarten schalten','Wählen Sie die Basiskarten, für die diese Lokation eingeschaltet werden soll. Die Lokation wird mit den entsprechenden Basiskarten aktiviert und mit jeder anderen deaktiviert.'];
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_label'] = array('Label', 'Geben Sie hier ein Label ein, das auf der Karte bei der Lokation mit angezeigt wird. Überschreibt die Einstellungen am Lokationsstil.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['tooltip'] = array('Tooltip', 'Kurze Information, die angezeigt wird, wenn sich der Mauszeiger über der Lokation befindet. Überschreibt die Einstellungen am Lokationsstil. Überschreibt die Einstellungen am Lokationsstil.');
@@ -130,9 +131,9 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['toggle'] = array('Kartenstrukturelement ver�
 $GLOBALS['TL_LANG']['tl_c4g_maps']['show']   = array('Details', 'Die Details des Kartenstrukturelements ID %s anzeigen');
 
 //xlabel buttons
-$GLOBALS['TL_LANG']['tl_c4g_maps']['editBaselayers'] = ['Basiskarten bearbeiten'];
-$GLOBALS['TL_LANG']['tl_c4g_maps']['editLocstyles'] = ['Lokationsstile bearbeiten'];
-$GLOBALS['TL_LANG']['tl_c4g_maps']['editProfiles'] = ['Kartenprofile bearbeiten'];
+$GLOBALS['TL_LANG']['tl_c4g_maps']['editBaselayers'] = 'Basiskarten bearbeiten';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['editLocstyles'] = 'Lokationsstile bearbeiten';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['editProfiles'] = 'Kartenprofile bearbeiten';
 
 /**
  * Misc

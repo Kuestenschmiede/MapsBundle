@@ -35,10 +35,6 @@
 
   <div id="container">
     <div id="main">
-
-        <!--<h1><?php echo $this->headline; ?></h1>-->
-
-
         <fieldset id="pal_general_legend" class="tl_tbox">
 
             <div class="w50" style="margin-left:16px" >

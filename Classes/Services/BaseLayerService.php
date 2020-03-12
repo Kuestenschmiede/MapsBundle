@@ -175,14 +175,14 @@ class BaseLayerService
 
                 break;
             case 'owm':
-                $arrOverlayData['url'] = 'http://maps.owm.io:' . $objOverlay->api_port . '/'; //ToDo Port kann sich ändern
+                $arrOverlayData['url'] = 'https://maps.owm.io:' . $objOverlay->api_port . '/'; //ToDo Port kann sich ändern
 
                 $arrOverlayData['app_id'] = $objOverlay->app_id;
                 $arrOverlayData['api_key'] = $objOverlay->api_key;
 
                 break;
             case 'sea':
-                $arrOverlayData['urls'][] = 'http://t1.openseamap.org/seamark/{z}/{x}/{y}.png';
+                $arrOverlayData['urls'][] = 'https://t1.openseamap.org/seamark/{z}/{x}/{y}.png';
                 if (!$arrOverlayData['attribution']) {
                     $arrOverlayData['attribution'] = 'Seamarks by <a href="https://www.openseamap.org/">OpenSeaMap</a>';
                 }

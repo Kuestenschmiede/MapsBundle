@@ -151,9 +151,16 @@ export class C4gLocationStyle {
       if (imageStyle && newScale !== 0.0 && imageStyle.setScale) {
         imageStyle.setScale(newScale);
       }
+      // check if label should be displayed
+      let showLabelForZoom = false;
+      let labelMinZoom = parseInt(self.locStyleArr.label_minzoom, 10);
+      let labelMaxZoom = parseInt(self.locStyleArr.label_maxzoom, 10);
+      if (mapZoom >= labelMinZoom && ((labelMaxZoom >= mapZoom) || labelMaxZoom === 0)) {
+        showLabelForZoom = true;
+      }
 
       // create style-object
-      if (label) {
+      if (label && showLabelForZoom) {
         let zIndex;
         if(feature && feature.get && typeof feature.get === "function" && feature.get('zIndex')){
           zIndex = feature.get('zIndex');
