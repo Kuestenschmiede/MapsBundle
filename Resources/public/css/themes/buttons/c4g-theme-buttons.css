@@ -248,13 +248,23 @@ ul.c4g-overlays li a{
   position: relative;
 }
 
-.c4g-layertree a {
+.c4g-layertree span + a, .c4g-layertree a {
   display: inline-block!important;
   width: calc(100% - 1.75em - .2em);
   text-decoration: none;
   padding: 0 1.75em 0 .2em;
   cursor: pointer;
   position: relative;
+}
+
+.c4g-layertree li > a:first-child {
+  display: inline-block!important;
+  width: calc(100% - 1.75em - .2em - 24px);
+  text-decoration: none;
+  padding: 0 1.75em 0 .2em;
+  cursor: pointer;
+  position: relative;
+  margin-left: 24px;
 }
 
 span.c4g-icon + a {
@@ -333,7 +343,6 @@ span.c4g-icon + span[class*=locstyle] + a {
 
 .c4g-layertree li, .c4g-layertree span, .c4g-layertree a {
   min-height: 43px;
-  line-height: 43px;
   padding-top: 0;
   padding-bottom: 0;
   display: block;
@@ -341,10 +350,14 @@ span.c4g-icon + span[class*=locstyle] + a {
 
 .c4g-layertree span, .c4g-layertree a {
   height: 43px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  line-height: 43px;
 }
 
 .c4g-layertree li {
-  min-height:43px;
+  line-height: 0;
 }
 
 .c4g-baselayertree-content span {
@@ -448,6 +461,8 @@ span.c4g-icon + span[class*=locstyle] + a {
   border-radius: 15px;
   border: 1px solid;
   padding: 20px .4em .4em;
+  z-index: 92;
+  margin-right: 20px;
 }
 
 .ol-selectable div.c4g-active.c4g-popup-wrapper img {
