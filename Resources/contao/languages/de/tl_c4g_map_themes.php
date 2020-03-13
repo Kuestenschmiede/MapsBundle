@@ -30,10 +30,10 @@ $GLOBALS['TL_LANG']['tl_c4g_map_themes']['button_fontsize'] = array('Größe der
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['maincolor']  = array('Hauptfarbe und Deckkraft', 'Zum Beispiel für Button und Dialoge. Die Deckkraft in % angeben. Überschreibt die voreingestellte con4gis CSS-Farbeinstellung.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['fontcolor']  = array('Schriftfarbe und Deckkraft', 'Die Deckkraft in % angeben. Überschreibt die voreingestellten con4gis CSS-Einstellungen.');
 
-$GLOBALS['TL_LANG']['tl_c4g_map_themes']['popupMaincolor']  = array('Popup Hintergrundfarbe und Deckkraft', 'Die Deckkraft in % angeben. Überschreibt die voreingestellten con4gis CSS-Einstellungen. Wenn dieser Wert leer bleibt, wird automatisch die Hauptfarbe auch für das Popup gesetzt.');
-$GLOBALS['TL_LANG']['tl_c4g_map_themes']['popupFontcolor']  = array('Popup Schriftfarbe und Deckkraft', 'Die Deckkraft in % angeben. Überschreibt die voreingestellten con4gis CSS-Einstellungen. Wenn dieser Wert leer bleibt, wird automatisch die Schriftfarbe auch für das Popup gesetzt.');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['popupMaincolor']  = array('Popup Hintergrundfarbe und Deckkraft', 'Gilt nur für klassisches Popup. Die Deckkraft in % angeben. Überschreibt die voreingestellten con4gis CSS-Einstellungen. Wenn dieser Wert leer bleibt, wird automatisch die Hauptfarbe auch für das Popup gesetzt.');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['popupFontcolor']  = array('Popup Schriftfarbe und Deckkraft', 'Gilt nur für klassisches Popup. Die Deckkraft in % angeben. Überschreibt die voreingestellten con4gis CSS-Einstellungen. Wenn dieser Wert leer bleibt, wird automatisch die Schriftfarbe auch für das Popup gesetzt.');
 
-$GLOBALS['TL_LANG']['tl_c4g_map_themes']['popupMaxWidth'] = array('Maximale Popup-Breite', 'Die maximale Breite des Popups (wenn als "Sideboard" am rechten Rand dargestellt). Standard: 42%.');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['popupMaxWidth'] = array('Maximale Popup-Breite', 'Gilt nur für Standard-Popup. Die maximale Breite des Popups (wenn als "Sideboard" am rechten Rand dargestellt). Standard: 42%.');
 
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['shadowcolor']  = array('Zweitfarbe und Deckkraft', 'Zum Beispiel für Hover-Effekte, Rahmen oder Formularelemente. Die Deckkraft in % angeben. Überschreibt die voreingestellten con4gis CSS-Einstellungen.');
 

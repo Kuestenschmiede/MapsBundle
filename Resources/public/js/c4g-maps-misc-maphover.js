@@ -350,13 +350,13 @@ export class MapHover {
           popupInfos = hovered.feature.get('popup');
         }
         else if (hovered.feature.get('loc_linkurl')) {
-          return
+          return;
         }
         else if (hovered.layer && hovered.layer.popup) {
           popupInfos = hovered.layer.popup;
         }
         else {
-          return
+          return;
         }
         var coord = hovered.feature.getGeometry().getCoordinates();
         if (!coord || (coord && coord[0] && coord[0].length)) {
@@ -372,6 +372,8 @@ export class MapHover {
           window.c4gMapsPopup.$popup.addClass(cssConstants.ACTIVE).addClass(cssConstants.LOADING);
           window.c4gMapsPopup.spinner.show();
 
+          let popupProxy = self.options.mapController.proxy.popupController;
+
           if (popupInfos.async === false) {
             var objPopup = {};
             objPopup.popup = popupInfos;
@@ -381,11 +383,11 @@ export class MapHover {
             if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_fillPopup === 'object') {
               utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, objPopup);
             }
-            proxy.setPopup(objPopup, proxy);
+            popupProxy.setPopup(objPopup);
           } else {
             jQuery.ajax({
               dataType: "json",
-              url: proxy.api_infowindow_url + '/' + popupInfos.content,
+              url: popupProxy.api_infowindow_url + '/' + popupInfos.content,
               done: function (data) {
                 var popupInfo = {
                   async: popupInfos.async,
@@ -404,7 +406,7 @@ export class MapHover {
                   utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, objPopup);
                 }
 
-                proxy.setPopup(objPopup, proxy);
+                popupProxy.setPopup(objPopup);
               }
             });
           }
