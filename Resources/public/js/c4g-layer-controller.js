@@ -796,16 +796,17 @@ export class BetterLayerController {
     }
     else {
       return {
-        "features"      : features,
-        "vectorLayer"   : vectorLayer,
-        "loader"        : loaderId,
-        "zoom"          : layer.zoom,
-        "locstyle"      : possibleLocstyle,
-        "activateWithBl": layer.activeForBaselayers,
-        "id"            : layer.id,
-        "name"          : layer.name,
-        "hide"          : hide,
-        "childs"        : childs
+        "features"        : features,
+        "vectorLayer"     : vectorLayer,
+        "loader"          : loaderId,
+        "zoom"            : layer.zoom,
+        "initial_opened" : layer.initial_opened,
+        "locstyle"        : possibleLocstyle,
+        "activateWithBl"  : layer.activeForBaselayers,
+        "id"              : layer.id,
+        "name"            : layer.name,
+        "hide"            : hide,
+        "childs"          : childs
       };
     }
   }
