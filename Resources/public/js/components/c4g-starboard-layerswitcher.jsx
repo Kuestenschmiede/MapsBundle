@@ -23,6 +23,7 @@ export class StarboardLayerswitcher extends Component {
 
     this.setLayerFilter = this.setLayerFilter.bind(this);
     this.toggleAllLayers = this.toggleAllLayers.bind(this);
+    this.changeCollapseState = this.changeCollapseState.bind(this);
     this.state = {
       initialized: false,
       layerFilter: ""
@@ -41,15 +42,21 @@ export class StarboardLayerswitcher extends Component {
     this.setState({layerFilter: filterValue});
   }
 
-  filterFunc(strFilter, layer, digDeeper = true) {
+  filterFunc(strFilter, layer, state = {}, digDeeper = true) {
     let show = false;
     if (layer.name.toLowerCase().indexOf(strFilter) !== -1
         || layer.name.toUpperCase().indexOf(strFilter.toUpperCase()) !== -1) {
       show = true;
+      if (strFilter && state) {
+        state.collapsed = false;
+      }
     } else if (digDeeper) {
       for (let childId in layer.childs) {
         if (layer.childs.hasOwnProperty(childId) && !show) {
-          show = this.filterFunc(strFilter, layer.childs[childId]);
+          show = this.filterFunc(strFilter, layer.childs[childId], state.childStates[childId]);
+          if (strFilter && show && state) {
+            state.collapsed = false;
+          }
         }
       }
     }
@@ -95,7 +102,9 @@ export class StarboardLayerswitcher extends Component {
 
     this.props.parentCallback(states);
   }
+  changeCollapseState(id, state) {
 
+  }
   render() {
     let layers, states, filter;
     layers = this.props.objLayers;
@@ -126,13 +135,14 @@ export class StarboardLayerswitcher extends Component {
         <div className={cssConstants.STARBOARD_LAYERTREE}>
           <ul>
             {layers.map((item, id) => {
-              if (this.filterFunc(this.state.layerFilter, item)) {
+              if (this.filterFunc(this.state.layerFilter, item, states[id])) {
                 return <C4gStarboardLayerElement key={id} id={id} mapController={this.props.mapController}
                                                  parentCallback={this.callbackFunction}
                                                  layer={item}
                                                  styleData={this.props.styleData}
+                                                 changeCollapseState={this.props.changeCollapseState}
                                                  layerStates={states[id]}
-                                                 byPassChilds={this.filterFunc(this.state.layerFilter, item, false)}
+                                                 byPassChilds={this.filterFunc(this.state.layerFilter, item,false, false)}
                                                  strFilter={this.state.layerFilter}
                                                  filterFunc={this.filterFunc}
                                                  fnResize={this.props.fnResize}/>;

@@ -84,6 +84,7 @@ export class MapController extends Component {
     this.changeActiveLayers = this.changeActiveLayers.bind(this);
     this.setTabStates = this.setTabStates.bind(this);
     this.setLocStyles = this.setLocStyles.bind(this);
+    this.changeCollapseState = this.changeCollapseState.bind(this);
     this.map = null;
 
     langConstants = getLanguage(mapData);
@@ -871,6 +872,13 @@ export class MapController extends Component {
       }
     }
   }
+  changeCollapseState(id, state){
+    let newState = this.state.arrLayerStates;
+    newState[id] = state;
+    this.setState({
+      arrLayerStates: newState
+    });
+  }
 
   hideOtherBottomComponents(objComponent) {
     let components = this.components;
@@ -914,7 +922,7 @@ export class MapController extends Component {
           }} target={target}
                           mapController={this} objLayers={this.state.objLayers} styleData={this.state.styleData} tabLayers={this.state.objTabLayers} tabStates={this.state.arrTabLayerStates}
                           layerStates={this.state.arrLayerStates} parentCallback={this.setLayerStates} tabCallback={this.setTabStates}
-                          direction={"right"} open={(this.props.mapData.initial_open_comp === "starboard")} external={this.reactContainer.className.indexOf("c4g-external") !== -1}
+                          direction={"right"} open={(this.props.mapData.initial_open_comp === "starboard")} changeCollapseState={this.changeCollapseState} external={this.reactContainer.className.indexOf("c4g-external") !== -1}
           />,
           this.reactContainer
       );

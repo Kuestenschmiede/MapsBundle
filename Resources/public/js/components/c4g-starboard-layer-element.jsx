@@ -22,11 +22,9 @@ export class C4gStarboardLayerElement extends Component {
     super(props);
     const scope = this;
 
-    this.state = {
-      collapsed: true
-    };
     this.layerClick = this.layerClick.bind(this);
     this.spanClick = this.spanClick.bind(this);
+    this.changeCollapseState = this.changeCollapseState.bind(this);
     this.parentCallback = this.parentCallback.bind(this);
   }
 
@@ -137,12 +135,15 @@ export class C4gStarboardLayerElement extends Component {
     }
     this.props.parentCallback(this.props.id, newState)
   }
+  changeCollapseState(id, state) {
+    this.props.layerStates.childStates[id] = state;
+    this.props.changeCollapseState(this.props.id, this.props.layerStates);
+  }
   spanClick(e) {
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
-    this.setState({
-      collapsed : !this.state.collapsed
-    });
+    this.props.layerStates.collapsed = !this.props.layerStates.collapsed;
+    this.props.changeCollapseState(this.props.id, this.props.layerStates)
   }
   render() {
     const scope = this;
@@ -158,7 +159,7 @@ export class C4gStarboardLayerElement extends Component {
     if (this.props.layerStates.greyed) {
       cssClass += " " + cssConstants.DISABLED;
     }
-    let openClose = this.state.collapsed ? cssConstants.CLOSE : cssConstants.OPEN;
+    let openClose = this.props.layerStates.collapsed ? cssConstants.CLOSE : cssConstants.OPEN;
     let objChilds = this.props.layer.childs;
 
     if (objChilds) {
@@ -169,12 +170,13 @@ export class C4gStarboardLayerElement extends Component {
           <a className={cssClass} onMouseUp={(event) => this.layerClick(event)}>{this.props.layer.name}</a>
           <ul>
             {objChilds.map((item, id) => {
-              if (this.props.byPassChilds || this.props.filterFunc(this.props.strFilter, item)) {
+              if (this.props.byPassChilds || this.props.filterFunc(this.props.strFilter, item, this.props.layerStates.childStates[id])) {
                 return <C4gStarboardLayerElement key={id} id={id} mapController={this.props.mapController}
                                           parentCallback={this.parentCallback}
                                           strFilter={this.props.strFilter}
                                           filterFunc={this.props.filterFunc}
-                                          byPassChilds={this.props.byPassChilds || this.props.filterFunc(this.props.strFilter, item, false)}
+                                          changeCollapseState={this.changeCollapseState}
+                                          byPassChilds={this.props.byPassChilds || this.props.filterFunc(this.props.strFilter, item, false, false)}
                                           layerStates={this.props.layerStates.childStates[id]}
                                           layer={item}
                                           styleData={this.props.styleData}

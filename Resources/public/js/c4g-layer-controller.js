@@ -415,6 +415,7 @@ export class BetterLayerController {
     let zoom = this.mapController.map.getView().getZoom();
     return {
       active: !layer.hide,
+      collapsed: !parseFloat(layer.initial_opened),
       greyed: layer.zoom && !this.compareZoom(layer.zoom),
       id: layer.id,
       childStates: childStates
