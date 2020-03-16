@@ -27,7 +27,10 @@ export class FeatureFilter extends Component {
     this.ulRef = React.createRef();
     this.handleClickOutside = this.handleClickOutside.bind(this);
     this.handleClickInside = this.handleClickInside.bind(this);
+    this.filterLayer = this.filterLayer.bind(this);
+    this.filterLayerMulti = this.filterLayerMulti.bind(this);
     this.hideFeature = this.hideFeature.bind(this);
+    this.hideFeatureMulti = this.hideFeatureMulti.bind(this);
     this.loadFilters();
     this.state = {
       filters: [],
@@ -177,9 +180,9 @@ export class FeatureFilter extends Component {
       arrLayers.map((feature, index) => {
         this.filterLayer(feature);
       });
-    } else if (layer.getStyle && typeof layer.getStyle === "function") {
+    } else if (layer.getStyle && typeof layer.getSource === "function") {
       let source = layer.getSource();
-      source.forEachFeature((feature) => this.hideFeature(layer, feature));
+      source.forEachFeature((feature) => this.hideFeature(feature));
     }
   }
   filterLayerMulti (layer) {
@@ -188,15 +191,15 @@ export class FeatureFilter extends Component {
       arrLayers.map((feature, index) => {
         this.filterLayerMulti(feature);
       });
-    } else if (layer.getStyle && typeof layer.getStyle === "function") {
+    } else if (layer.getStyle && typeof layer.getSource === "function") {
       let source = layer.getSource();
-      source.forEachFeature((feature) => this.hideFeatureMulti(layer, feature));
+      source.forEachFeature((feature) => this.hideFeatureMulti(feature));
     }
   }
-  hideFeature(layer, feature) {
+  hideFeature(feature) {
     if (feature.get('features')){
       let features = feature.get('features');
-      features.forEach((feature) => this.hideFeature(layer, feature));
+      features.forEach((feature) => this.hideFeature(feature));
     }
     else {
       if (feature.get('noFilter')) {
@@ -220,8 +223,7 @@ export class FeatureFilter extends Component {
       }
       else {
         if (!feature.get('oldStyle')) {
-          let oldStyle = feature.getStyle() || layer.getStyle();
-          feature.set('oldStyle',  oldStyle);
+          feature.set('oldStyle', true);
         }
         feature.setStyle(new Style({
           stroke: new Stroke({
@@ -236,10 +238,10 @@ export class FeatureFilter extends Component {
     }
 
   }
-  hideFeatureMulti(layer, feature) {
+  hideFeatureMulti(feature) {
     if (feature.get('features')){
       let features = feature.get('features');
-      features.forEach((feature) => this.hideFeatureMulti(layer, feature));
+      features.forEach((feature) => this.hideFeatureMulti(feature));
     }
     else {
       if (feature.get('noFilter')) {
@@ -273,8 +275,7 @@ export class FeatureFilter extends Component {
       }
       else if (!show && filterActive){
         if (!feature.get('oldStyle')) {
-          let oldStyle = feature.getStyle() || layer.getStyle();
-          feature.set('oldStyle',  oldStyle);
+          feature.set('oldStyle',  true);
         }
         feature.setStyle(new Style({
           stroke: new Stroke({

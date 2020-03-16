@@ -98,6 +98,12 @@ export class BetterLayerController {
                     else if (requestData.forceNodes && features[featureId].getGeometry().getType() === "MultiPolygon") {
                       features[featureId].setGeometry(features[featureId].getGeometry()[0].getInteriorPoint());
                     }
+                    if (!!parseFloat(scope.mapController.data.filterHandling)) {
+                      scope.mapController.filter.hideFeatureMulti(features[featureId]);
+                    }
+                    else {
+                      scope.mapController.filter.hideFeature(features[featureId]);
+                    }
                     features[featureId].set('locstyle', requestData.locstyleId);
                     if (requestData.popup) {
                       for (let i = 0; i < features.length; i++) {
@@ -162,7 +168,7 @@ export class BetterLayerController {
           }
         }
       }
-      if (size > 1 && returnStyle) {
+      if (size > 1 && returnStyle && Array.isArray(returnStyle)) {
         let iconOffset = [0, 0];
         if (returnStyle[0]) {
           if (returnStyle[0].getImage() && returnStyle[0].getImage().getRadius && typeof returnStyle[0].getImage().getRadius === "function") {
@@ -262,9 +268,25 @@ export class BetterLayerController {
         vectorLayer;
     if (Array.isArray(hideElement)) {
       features = hideElement;
+      for (let i in features) {
+        if (features.hasOwnProperty(i)) {
+          if (!!parseFloat(this.mapController.data.filterHandling)) {
+            this.mapController.filter.hideFeatureMulti(features[i]);
+          }
+          else {
+            this.mapController.filter.hideFeature(features[i]);
+          }
+        }
+      }
     }
     else {
-      vectorLayer = hideElement
+      vectorLayer = hideElement;
+      if (!!parseFloat(this.mapController.data.filterHandling)) {
+        this.mapController.filter.filterLayerMulti(vectorLayer);
+      }
+      else {
+        this.mapController.filter.filterLayer(vectorLayer);
+      }
     }
     if (id >= 0 && this.loaders[id] && this.loaders[id].preventLoading) {
       this.loaders[id].preventLoading = false;
@@ -580,6 +602,13 @@ export class BetterLayerController {
                     features[featureId].set('osm_type', 'node');
                   }
 
+                  if (!!parseFloat(scope.mapController.data.filterHandling)) {
+                    scope.mapController.filter.hideFeatureMulti(features[featureId]);
+                  }
+                  else {
+                    scope.mapController.filter.hideFeature(features[featureId]);
+                  }
+
                   features[featureId].set('locstyle', layer.locstyle);
                   if (content.hover_location) {
                     features[featureId].set('hover_style', content.hover_style);
@@ -664,7 +693,7 @@ export class BetterLayerController {
               }
             }
           }
-          if (size > 1 && returnStyle) {
+          if (size > 1 && returnStyle && Array.isArray(returnStyle)) {
             let iconOffset = [0, 0];
             if (returnStyle[0]) {
               if (returnStyle[0].getImage() && returnStyle[0].getImage().getRadius && typeof returnStyle[0].getImage().getRadius === "function") {
@@ -1001,6 +1030,12 @@ export class BetterLayerController {
     contentFeature.set('tid', contentData['id']);
     let locstyle = contentData['locstyle'] || layer.locstyle;
     contentFeature.set('locstyle', locstyle);
+    if (!!parseFloat(this.mapController.data.filterHandling)) {
+      this.mapController.filter.hideFeatureMulti(contentFeature);
+    }
+    else {
+      this.mapController.filter.hideFeature(contentFeature);
+    }
     return contentFeature;
   }
   addFeatures (features, chain) {
