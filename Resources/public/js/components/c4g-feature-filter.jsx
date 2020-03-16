@@ -132,7 +132,7 @@ export class FeatureFilter extends Component {
     let newState = this.state.arrChecked;
     let changedEntry = newState[listId];
 
-    let found = changedEntry.find((element) => element.identifier === property);
+    let found = changedEntry.find((element) => element.identifier === property && element.value === value);
     if (!found) {
       if (property === "all") {
         changedEntry = JSON.parse(JSON.stringify(this.state.filters[listId].filters));
