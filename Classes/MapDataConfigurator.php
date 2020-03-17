@@ -440,11 +440,11 @@ class MapDataConfigurator
 
                 switch ($profile->geosearch_engine) {
                     case '1':
-                        $mapData['attribution']['geosearch'] = 'Nominatim Search Courtesy of <a href="https://operations.osmfoundation.org/policies/nominatim/" target="_blank">OpenStreetMap</a>';
+                        $mapData['attribution']['geosearch'] = 'Nominatim Search Courtesy of <a href="https://operations.osmfoundation.org/policies/nominatim/" target="_blank" rel="noopener">OpenStreetMap</a>';
 
                         break;
                     case '2':
-                        $mapData['attribution']['geosearch'] = 'Nominatim Search Courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png" alt="" />';
+                        $mapData['attribution']['geosearch'] = 'Nominatim Search Courtesy of <a href="http://www.mapquest.com/" target="_blank" rel="noopener">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png" alt="" />';
 
                         break;
                     case '3':
@@ -458,7 +458,7 @@ class MapDataConfigurator
 
                         break;
                     default:
-                        $mapData['attribution']['geosearch'] = 'Nominatim Search Courtesy of <a href="https://operations.osmfoundation.org/policies/nominatim/" target="_blank">OpenStreetMap</a>';
+                        $mapData['attribution']['geosearch'] = 'Nominatim Search Courtesy of <a href="https://operations.osmfoundation.org/policies/nominatim/" target="_blank" rel="noopener">OpenStreetMap</a>';
 
                         break;
                 }

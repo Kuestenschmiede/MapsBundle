@@ -17,7 +17,6 @@ import {utils} from "./c4g-maps-utils";
 import TileLayer from "ol/layer/Tile";
 import TileJSON from "ol/source/TileJSON";
 import {BingMaps, ImageStatic, OSM, Stamen, TileWMS, XYZ} from "ol/source";
-import {ATTRIBUTION as OSM_ATTRIBUTION} from "ol/source/OSM";
 import {default as VectorTileSource} from "ol/source/VectorTile";
 import {Group as LayerGroup, Image} from "ol/layer";
 import OLCesium from 'ol-cesium/src/olcs/OLCesium.js';
@@ -25,6 +24,11 @@ import {applyStyle} from 'ol-mapbox-style';
 import VectorTileLayer from 'ol/layer/VectorTile';
 import ol_source_GeoImage from "ol-ext/source/GeoImage";
 import Projection from "ol/proj/Projection";
+
+//copy link to add noopener
+export const OSM_REL_ATTRIBUTION = '&#169; ' +
+    '<a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> ' +
+    'contributors.';
 
 export class C4gBaselayerController {
   constructor(proxy) {
@@ -393,7 +397,7 @@ export class C4gBaselayerController {
                 TRANSPARENT: baseLayerConfig.params.transparent
               },
               gutter: baseLayerConfig.gutter,
-              attributions: baseLayerConfig.attribution + ' ' + OSM_ATTRIBUTION,
+              attributions: baseLayerConfig.attribution + ' ' + OSM_REL_ATTRIBUTION,
               crossOrigin: 'anonymous'
             }),
             //extent: ol.proj.transformExtent([5.59334, 50.0578, 9.74158, 52.7998], 'EPSG:4326', 'EPSG:3857')
@@ -410,7 +414,7 @@ export class C4gBaselayerController {
                 TRANSPARENT: baseLayerConfig.params.transparent
               },
               gutter: baseLayerConfig.gutter,
-              attributions: baseLayerConfig.attribution + ' ' + OSM_ATTRIBUTION
+              attributions: baseLayerConfig.attribution + ' ' + OSM_REL_ATTRIBUTION
             }),
             //extent: ol.proj.transformExtent([5.59334, 50.0578, 9.74158, 52.7998], 'EPSG:4326', 'EPSG:3857')
           });
@@ -450,7 +454,7 @@ export class C4gBaselayerController {
         newBaselayer = new TileLayer({
           source: new XYZ({
             url: baseLayerConfig.url + baseLayerConfig.app_id + '/{z}/{x}/{y}?hash=' + baseLayerConfig.api_key,
-            attributions: baseLayerConfig.attribution + ' ' + OSM_ATTRIBUTION
+            attributions: baseLayerConfig.attribution + ' ' + OSM_REL_ATTRIBUTION
           }),
           //extent: ol.proj.transformExtent([5.59334, 50.0578, 9.74158, 52.7998], 'EPSG:4326', 'EPSG:3857')
         });
@@ -562,7 +566,7 @@ export class C4gBaselayerController {
         if (layerOptions.attributions) {
           layerOptions.attributions = layerOptions.attributions + ' ' + baseLayerConfig.attribution;
         } else {
-          layerOptions.attributions = OSM_ATTRIBUTION + ' ' + baseLayerConfig.attribution;
+          layerOptions.attributions = OSM_REL_ATTRIBUTION + ' ' + baseLayerConfig.attribution;
         }
       } else if (!layerOptions.attributions) {
         switch (baseLayerConfig.provider) {
@@ -570,7 +574,7 @@ export class C4gBaselayerController {
             if (sourceConfigs.osm[baseLayerConfig.style]) {
               layerOptions.attributions = sourceConfigs.osm[baseLayerConfig.style].attributions;
             } else {
-              layerOptions.attributions = OSM_ATTRIBUTION;
+              layerOptions.attributions = OSM_REL_ATTRIBUTION;
             }
             break;
           case 'stamen':
@@ -589,10 +593,10 @@ export class C4gBaselayerController {
             layerOptions.attributions = sourceConfigs.thunderforest[baseLayerConfig.thunderforest_type].attributions;
             break;
           case 'con4gisIo':
-            layerOptions.attributions = 'Mapservices via <a href="https://con4gis.io" target="_blank" rel="noopener">con4gis.io</a>. '+OSM_ATTRIBUTION;
+            layerOptions.attributions = 'Mapservices via <a href="https://con4gis.io" target="_blank" rel="noopener">con4gis.io</a>. '+OSM_REL_ATTRIBUTION;
             break;
           default:
-            layerOptions.attributions = OSM_ATTRIBUTION;
+            layerOptions.attributions = OSM_REL_ATTRIBUTION;
             break;
         }
       }

@@ -12,9 +12,13 @@
 
 import {config} from "./c4g-maps-config";
 import {OSM, Stamen, TileWMS, XYZ} from "ol/source";
-import {ATTRIBUTION as OSM_ATTRIBUTION} from "ol/source/OSM";
 import {Image, Tile} from "ol/layer";
 import ol_source_GeoImage from "ol-ext/source/GeoImage";
+
+//copy link to add noopener
+export const OSM_REL_ATTRIBUTION = '&#169; ' +
+    '<a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> ' +
+    'contributors.';
 
 export class C4gOverlayController {
 
@@ -69,7 +73,7 @@ export class C4gOverlayController {
           // custom
           noUrl = true;
           if (overlayLayerConfig.attribution) {
-            layerOptions.attributions = overlayLayerConfig.attribution + ' ' + OSM_ATTRIBUTION;
+            layerOptions.attributions = overlayLayerConfig.attribution + ' ' + OSM_REL_ATTRIBUTION;
           }
 
           if (overlayLayerConfig.url) {
@@ -94,7 +98,7 @@ export class C4gOverlayController {
         // custom
           noUrl = true;
           if (overlayLayerConfig.attribution) {
-            layerOptions.attributions = overlayLayerConfig.attribution + ' ' + OSM_ATTRIBUTION;
+            layerOptions.attributions = overlayLayerConfig.attribution + ' ' + OSM_REL_ATTRIBUTION;
           }
           if (overlayLayerConfig.urls) {
             layerOptions.urls = overlayLayerConfig.urls;
@@ -117,7 +121,7 @@ export class C4gOverlayController {
               TRANSPARENT: overlayLayerConfig.params.transparent
             },
             gutter: overlayLayerConfig.gutter,
-            attributions: overlayLayerConfig.attribution + ' ' + OSM_ATTRIBUTION
+            attributions: overlayLayerConfig.attribution + ' ' + OSM_REL_ATTRIBUTION
           }),
           //extent: ol.proj.transformExtent([5.59334, 50.0578, 9.74158, 52.7998], 'EPSG:4326', 'EPSG:3857')
         });
@@ -126,7 +130,7 @@ export class C4gOverlayController {
         overlayLayer = new Tile({
           source: new XYZ({
             url: overlayLayerConfig.url + overlayLayerConfig.app_id + '/{z}/{x}/{y}?hash=' + overlayLayerConfig.api_key,
-            attributions: overlayLayerConfig.attribution + ' ' + OSM_ATTRIBUTION
+            attributions: overlayLayerConfig.attribution + ' ' + OSM_REL_ATTRIBUTION
           }),
           //extent: ol.proj.transformExtent([5.59334, 50.0578, 9.74158, 52.7998], 'EPSG:4326', 'EPSG:3857')
         });

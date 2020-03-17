@@ -10,17 +10,20 @@
  * @link       https://www.con4gis.org
  */
 
-import {ATTRIBUTION} from "ol/source/OSM";
 import {MVT} from "ol/format";
 import {createXYZ} from "ol/tilegrid";
 
-'use strict';
+//copy link to add noopener
+export const OSM_REL_ATTRIBUTION = '&#169; ' +
+    '<a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> ' +
+    'contributors.';
+
 export var config = {
   osm: {
 
     CycleMap: {
       attributions: 'Style by <a target="_blank" rel="noopener" href="http://www.opencyclemap.org/">OpenCycleMap</a>' + ' ' +
-        ATTRIBUTION,
+          OSM_REL_ATTRIBUTION,
       crossOrigin: 'anonymous',
       minZoom: 0,
       maxZoom: 19,
@@ -29,7 +32,7 @@ export var config = {
 
     German: {
       attributions: 'Style by <a target="_blank" rel="noopener" href="http://www.openstreetmap.de/germanstyle.html">openstreetmap.de</a>' + ' ' +
-        ATTRIBUTION,
+          OSM_REL_ATTRIBUTION,
       crossOrigin: null,
       minZoom: 0,
       maxZoom: 19,
@@ -38,7 +41,7 @@ export var config = {
 
     LandscapeMap: {
       attributions: 'Style by <a target="_blank" rel="noopener" href="http://www.opencyclemap.org/">OpenCycleMap</a>' + ' ' +
-        ATTRIBUTION,
+          OSM_REL_ATTRIBUTION,
       crossOrigin: 'anonymous',
       minZoom: 0,
       maxZoom: 19,
@@ -46,7 +49,7 @@ export var config = {
     },
 
     Mapnik: {
-      attributions: ATTRIBUTION,
+      attributions: OSM_REL_ATTRIBUTION,
       crossOrigin: 'anonymous',
     },
 
@@ -55,7 +58,7 @@ export var config = {
 
   stamen: {
     Toner: {
-      attributions: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.',
+      attributions: 'Map tiles by <a target="_blank" rel="noopener" href="http://stamen.com">Stamen Design</a>, under <a  target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a  target="_blank" rel="noopener" href="http://openstreetmap.org">OpenStreetMap</a>, under <a  target="_blank" rel="noopener" href="http://www.openstreetmap.org/copyright">ODbL</a>.',
       layer: 'toner',
       minZoom: 0,
       maxZoom: 18,
@@ -63,7 +66,7 @@ export var config = {
     },
 
     TonerLabels: {
-      attributions: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.',
+      attributions: 'Map tiles by <a target="_blank" rel="noopener" href="http://stamen.com">Stamen Design</a>, under <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a target="_blank" rel="noopener" href="http://openstreetmap.org">OpenStreetMap</a>, under <a target="_blank" rel="noopener" href="http://www.openstreetmap.org/copyright">ODbL</a>.',
       layer: 'toner-labels',
       minZoom: 0,
       maxZoom: 18,
@@ -71,7 +74,7 @@ export var config = {
     },
 
     TonerLines: {
-      attributions: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.',
+      attributions: 'Map tiles by <a target="_blank" rel="noopener" href="http://stamen.com">Stamen Design</a>, under <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a target="_blank" rel="noopener" href="http://openstreetmap.org">OpenStreetMap</a>, under <a target="_blank" rel="noopener" href="http://www.openstreetmap.org/copyright">ODbL</a>.',
       layer: 'toner-lines',
       minZoom: 0,
       maxZoom: 18,
@@ -79,7 +82,7 @@ export var config = {
     },
 
     Terrain: {
-      attributions: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.',
+      attributions: 'Map tiles by <a target="_blank" rel="noopener" href="http://stamen.com">Stamen Design</a>, under <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a target="_blank" rel="noopener" href="http://openstreetmap.org">OpenStreetMap</a>, under <a target="_blank" rel="noopener" href="http://www.openstreetmap.org/copyright">ODbL</a>.',
       layer: 'terrain',
       minZoom: 0,
       maxZoom: 18,
@@ -87,7 +90,7 @@ export var config = {
     },
 
     Watercolor: {
-      attributions: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.',
+      attributions: 'Map tiles by <a target="_blank" rel="noopener" href="http://stamen.com">Stamen Design</a>, under <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a target="_blank" rel="noopener" href="http://openstreetmap.org">OpenStreetMap</a>, under <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.',
       layer: 'watercolor',
       minZoom: 0,
       maxZoom: 18,
@@ -119,7 +122,7 @@ export var config = {
     Mapbox: {
       tileSize: [512, 512],
       attributions: '© <a target="_blank" rel="noopener" href="https://www.mapbox.com/about/maps/">Mapbox</a>' + ' ' +
-        ATTRIBUTION,
+          OSM_REL_ATTRIBUTION,
       minZoom: 0,
       maxZoom: 22,
       crossOrigin: 'anonymous',
@@ -127,7 +130,7 @@ export var config = {
 
     MapboxClassic: {
       attributions: '© <a target="_blank" rel="noopener" href="https://www.mapbox.com/about/maps/">Mapbox</a>' + ' ' +
-        ATTRIBUTION,
+          OSM_REL_ATTRIBUTION,
       minZoom: 0,
       maxZoom: 22,
       crossOrigin: 'anonymous',
@@ -141,7 +144,7 @@ export var config = {
       tileGrid:  createXYZ({tileSize: 512, maxZoom: 22}), //ToDo maxZoom from configuration
       tilePixelRatio: 8,
       attributions: '© <a target="_blank" rel="noopener" href="https://openmaptiles.org/">OpenMapTiles</a>' + ' ' +
-        ATTRIBUTION,
+          OSM_REL_ATTRIBUTION,
       minZoom: 0,
       maxZoom: 22,
       crossOrigin: 'anonymous'
@@ -152,7 +155,7 @@ export var config = {
       tileGrid:  createXYZ({tileSize: 512, maxZoom: 22}), //ToDo maxZoom from configuration
       tilePixelRatio: 8,
       attributions: '© <a target="_blank" rel="noopener" href="https://tilehosting.com/">TileHosting</a>' + ' ' +
-        ATTRIBUTION,
+          OSM_REL_ATTRIBUTION,
       minZoom: 0,
       maxZoom: 22,
       crossOrigin: 'anonymous',
@@ -164,8 +167,8 @@ export var config = {
     HERE: {
       tileSize: [512, 512],
       attributions: 'Map Tiles &copy; ' + new Date().getFullYear() + ' ' +
-          '<a href="http://developer.here.com">HERE</a>' + ' ' +
-          ATTRIBUTION,
+          '<a target="_blank" rel="noopener" href="http://developer.here.com">HERE</a>' + ' ' +
+          OSM_REL_ATTRIBUTION,
       minZoom: 0,
       maxZoom: 22,
       crossOrigin: 'anonymous',
@@ -177,7 +180,7 @@ export var config = {
     Thunderforest: {
       tileSize: [512, 512],
       attributions: 'Map Tiles © <a target="_blank" rel="noopener" href="https://www.thunderforest.com/">Thunderforest</a>' + ' ' +
-        ATTRIBUTION,
+          OSM_REL_ATTRIBUTION,
       minZoom: 0,
       maxZoom: 19,
       crossOrigin: 'anonymous',
