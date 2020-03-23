@@ -112,7 +112,7 @@ export class C4gLocationStyleController {
         makeAjax(arrIds.splice(0, n), count);
         count++;
       }
-    } else {
+    } else if (arrIds.length > 0) {
       makeAjax(arrIds);
     }
     //});

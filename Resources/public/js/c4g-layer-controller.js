@@ -98,11 +98,14 @@ export class BetterLayerController {
                     else if (requestData.forceNodes && features[featureId].getGeometry().getType() === "MultiPolygon") {
                       features[featureId].setGeometry(features[featureId].getGeometry()[0].getInteriorPoint());
                     }
-                    if (!!parseFloat(scope.mapController.data.filterHandling)) {
-                      scope.mapController.filter.hideFeatureMulti(features[featureId]);
-                    }
-                    else {
-                      scope.mapController.filter.hideFeature(features[featureId]);
+
+                    if (scope.mapController.filter) {
+                      if (!!parseFloat(scope.mapController.data.filterHandling)) {
+                        scope.mapController.filter.hideFeatureMulti(features[featureId]);
+                      }
+                      else {
+                        scope.mapController.filter.hideFeature(features[featureId]);
+                      }
                     }
                     features[featureId].set('locstyle', requestData.locstyleId);
                     if (requestData.popup) {
@@ -270,22 +273,26 @@ export class BetterLayerController {
       features = hideElement;
       for (let i in features) {
         if (features.hasOwnProperty(i)) {
-          if (!!parseFloat(this.mapController.data.filterHandling)) {
-            this.mapController.filter.hideFeatureMulti(features[i]);
-          }
-          else {
-            this.mapController.filter.hideFeature(features[i]);
+          if (this.mapController.filter) {
+            if (!!parseFloat(this.mapController.data.filterHandling)) {
+              this.mapController.filter.hideFeatureMulti(features[i]);
+            }
+            else {
+              this.mapController.filter.hideFeature(features[i]);
+            }
           }
         }
       }
     }
     else {
       vectorLayer = hideElement;
-      if (!!parseFloat(this.mapController.data.filterHandling)) {
-        this.mapController.filter.filterLayerMulti(vectorLayer);
-      }
-      else {
-        this.mapController.filter.filterLayer(vectorLayer);
+      if (this.mapController.filter) {
+        if (!!parseFloat(this.mapController.data.filterHandling)) {
+          this.mapController.filter.filterLayerMulti(vectorLayer);
+        }
+        else {
+          this.mapController.filter.filterLayer(vectorLayer);
+        }
       }
     }
     if (id >= 0 && this.loaders[id] && this.loaders[id].preventLoading) {
@@ -520,6 +527,15 @@ export class BetterLayerController {
           if (newChild.hide_in_starboard) {
             childs = newChild.childs ? childs.concat(newChild.childs) : childs;
             features = newChild.features ? features.concat(newChild.features) : features;
+
+            if (this.mapController.filter) {
+              if (!!parseFloat(this.mapController.data.filterHandling)) {
+                this.mapController.filter.filterLayerMulti(vectorLayer);
+              }
+              else {
+                this.mapController.filter.filterLayer(vectorLayer);
+              }
+            }
           }
           else {
             childs.push(newChild);
@@ -602,11 +618,13 @@ export class BetterLayerController {
                     features[featureId].set('osm_type', 'node');
                   }
 
-                  if (!!parseFloat(scope.mapController.data.filterHandling)) {
-                    scope.mapController.filter.hideFeatureMulti(features[featureId]);
-                  }
-                  else {
-                    scope.mapController.filter.hideFeature(features[featureId]);
+                  if (scope.mapController.filter) {
+                    if (!!parseFloat(scope.mapController.data.filterHandling)) {
+                      scope.mapController.filter.hideFeatureMulti(features[featureId]);
+                    }
+                    else {
+                      scope.mapController.filter.hideFeature(features[featureId]);
+                    }
                   }
 
                   features[featureId].set('locstyle', layer.locstyle);
@@ -1031,11 +1049,14 @@ export class BetterLayerController {
     contentFeature.set('tid', contentData['id']);
     let locstyle = contentData['locstyle'] || layer.locstyle;
     contentFeature.set('locstyle', locstyle);
-    if (!!parseFloat(this.mapController.data.filterHandling)) {
-      this.mapController.filter.hideFeatureMulti(contentFeature);
-    }
-    else {
-      this.mapController.filter.hideFeature(contentFeature);
+
+    if (this.mapController.filter) {
+      if (!!parseFloat(this.mapController.data.filterHandling)) {
+        this.mapController.filter.hideFeatureMulti(contentFeature);
+      }
+      else {
+        this.mapController.filter.hideFeature(contentFeature);
+      }
     }
     return contentFeature;
   }

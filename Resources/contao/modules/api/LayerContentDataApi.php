@@ -183,9 +183,9 @@ class LayerContentDataApi extends \Frontend
                                     }
                                 }
                                 if ($config->openLinksInTab) {
-                                    $strTarget = ' target="_blank"';
+                                    $strTarget = ' rel="noopener" target="_blank" ';
                                 } else {
-                                    $strTarget = '';
+                                    $strTarget = ' rel="noopener" ';
                                 }
                                 
                                 $popupContent .= '<a  id="' . $columnClass .'" class="' . $columnClass .'"' . $strTarget . 'href="' . $link . '">' . $additionalParam1 . '</a>';
@@ -206,7 +206,7 @@ class LayerContentDataApi extends \Frontend
                                     }
                                 }
                     
-                                $popupContent .= '<a id="' . $columnClass . '" class="' . $columnClass . '" href="' . $link . '" target="_blank">' . $additionalParam1 . '</a>';
+                                $popupContent .= '<a id="' . $columnClass . '" class="' . $columnClass . '" href="' . $link . '" target="_blank" rel="noopener">' . $additionalParam1 . '</a>';
                                 break;
                             case 'pagelink3':
                                 if (!$additionalParam1) {
@@ -216,7 +216,7 @@ class LayerContentDataApi extends \Frontend
                                 if(!(substr($linkPopup,0,4) === "http")){
                                     $linkPopup = 'https://' . $linkPopup;
                                 }
-                                $popupContent .= '<a id="' . $columnClass . '" class="' . $columnClass . '" href="' . $linkPopup . '" target="_blank">' . $additionalParam1 . '</a>';
+                                $popupContent .= '<a id="' . $columnClass . '" class="' . $columnClass . '" href="' . $linkPopup . '" target="_blank" rel="noopener">' . $additionalParam1 . '</a>';
                                 break;
                             case 'responsiveImage':
                                 $responsiveImage = false;
