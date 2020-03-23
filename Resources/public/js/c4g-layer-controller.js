@@ -318,12 +318,12 @@ export class BetterLayerController {
       dataType: this.mapController.data.jsonp ? "jsonp" : "json"
 
     }).done(function (data) {
+      utils.callHookFunctions(window.c4gMapsHooks.hook_layer, data);
       self.objLayers = data.layer;
       let structure = [];
       let features = [];
 
       let tabStructures = [];
-
       for (let layerId in data.layer) {
         if (data.layer.hasOwnProperty(layerId)) {
           if (data.layer[layerId].type === "startab") {
@@ -456,7 +456,6 @@ export class BetterLayerController {
       }
     }
     if (layer.activeForBaselayers && layer.activeForBaselayers !== "all") { //initial handling for activate with baselayer
-      // let found = layer.activeForBaselayers.find((element) => element === scope.mapController.proxy.activeBaselayerId || scope.mapController.data.default_baselayer);
       let found = layer.activeForBaselayers.includes(scope.mapController.proxy.activeBaselayerId || scope.mapController.data.default_baselayer);
       hide = !found;
     }
