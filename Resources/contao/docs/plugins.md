@@ -4,15 +4,6 @@ Plugins
 *con4gis-Maps* provides a possibility to implement plugins from external modules. This document describes how to achieve the creation of such a plugin and how to add new "hooks" to *con4gis-Maps*.
 
 
-
-General process
----------------
-The server will use a Contao-hook called `C4gMapsLoadPlugins` to call a function of an external module that loads the external JS-plugin-files.
-These plugins will be loaded before `c4g-maps.js` is executed, giving them the chance to register themself to a specific hook.
-When the main code reaches one of this hooks it will call every function that is registered to it. The parameters passed to that function can vary from hook to hook.
-
-
-
 Adding a new hook to *con4gis-Maps*
 -----------------------------------
 To add a new hook to the software the function `utils.callHookFunctions()` from `c4g-maps-utils.js` needs to be called at the point where the plugin should be triggered:
