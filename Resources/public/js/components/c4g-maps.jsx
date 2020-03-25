@@ -368,7 +368,9 @@ export class MapController extends Component {
     if (mapData.geopicker && mapData.geopicker.type === "backend") {
       if (mapData.default_baselayer) {
         this.proxy.hook_baselayer_loaded.push(function (baselayerIds) {
-          self.proxy.baselayerController.showBaseLayer(mapData.default_baselayer);
+          if (self.proxy.baselayerController.arrBaselayers.hasOwnProperty(mapData.default_baselayer)) {
+            self.proxy.baselayerController.showBaseLayer(mapData.default_baselayer);
+          }
         });
       } // end inner if
       this.map = new Map({
