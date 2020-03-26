@@ -1146,13 +1146,13 @@ export class MapController extends Component {
           if (!this.searchContainer) {
             this.searchContainer = document.createElement('div');
             this.searchContainer.className = "c4g-sideboard c4g-geosearch-container-right ";
-            this.searchContainer.className += mapData.geosearch.collapsed ? "c4g-close" : "c4g-open";
+            this.searchContainer.className += "c4g-close";
             this.$overlaycontainer_stopevent.append(this.searchContainer);
           }
         } else {
           this.searchContainer = document.createElement('div');
           this.searchContainer.className = "c4g-sideboard c4g-geosearch-container-right ";
-          this.searchContainer.className += mapData.geosearch.collapsed ? "c4g-close" : "c4g-open";
+          this.searchContainer.className += "c4g-close";
         }
         if (!mapData.geosearch.div) {
           this.$overlaycontainer_stopevent.append(this.searchContainer);
