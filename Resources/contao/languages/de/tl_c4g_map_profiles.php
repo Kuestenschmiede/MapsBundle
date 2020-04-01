@@ -96,7 +96,6 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_animate'] = ['Suche animie
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_markresult'] = ['Suchergebnis hervorheben', 'Markiert nach der Suche den gefundenen Ort für eine kurze Zeit.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_popup'] = ['Popup öffnen', 'Öffnet nach dem Suchen das Popup einer am Suchziel liegenden Lokation.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_attribution'] = ['Copyright für die Suche anzeigen', 'Fügt einen Copyright-Hinweis des verwendeten Suchservices (z.B. Nominatim) hinzu. Deaktivierung nicht empfohlen!'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_collapsed'] = ['Suchfeld initial einklappen', 'Das Eingabefeld für die Sucheingabe wird erst nach Klick auf die Lupe geöffnet.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_placeholder'] = ["Platzhalter für Suchfeld", "Geben Sie einen Platzhaltertext für das Eingabefeld an."];
 
 /** Geopicker (Koordinaten per Klick auf die Karte bestimmen) */

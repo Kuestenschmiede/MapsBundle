@@ -95,7 +95,6 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_animate'] = ['Enable anima
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_markresult'] = ['Mark found location', 'Highlights the found location for a short time.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_popup'] = ['Open popup', 'Opens the popup for a feature at the location of the search (Works best with polygons).'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_attribution'] = ['Show attribution of search service', 'Adds an attribution of the search service (Nominatim). Deactivate only when you are sure it is allowed.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_collapsed'] = ['Collapsed searchfield', 'Collapsed the searchfield by default.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_placeholder'] = ["Placeholder for input field", "Specify a placeholder that is displayed until an input is made."];
 
 /** Geopicker (Position bestimmen) */

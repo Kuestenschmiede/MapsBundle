@@ -423,7 +423,6 @@ class MapDataConfigurator
                 $mapData['geosearch']['markresult'] = $profile->geosearch_markresult;
                 $mapData['geosearch']['popup'] = \Contao\Controller::replaceInsertTags($profile->geosearch_popup);
                 $mapData['geosearch']['attribution'] = \Contao\Controller::replaceInsertTags($profile->geosearch_attribution);
-                $mapData['geosearch']['collapsed'] = $profile->geosearch_collapsed;
                 $keyForward = null;
                 if ($profile->geosearch_engine == '4') {
                     $keyForward = (array) C4GUtils::getKey($objSettings, '2', '', false);

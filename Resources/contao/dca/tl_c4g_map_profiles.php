@@ -109,7 +109,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                                          '{click_legend:hide},link_newwindow,link_open_on,hover_popups,popupHandling;'.
                                          '{baselayer_legend:hide},baselayers, default_baselayer,baselayerswitcher_label,baselayer_filter;'.
                                          '{starboard_legend:hide},layerswitcher_label,starboard_filter,starboard_label,starboard_button,starboard_locstyles,cluster_all;'.
-                                         '{geosearch_legend:hide},geosearch_headline,geosearch_engine,geosearchParams,geosearch_result_locstyle,geosearch_placeholder,geosearch_results,geosearch_zoomto,geosearch_zoombounds,geosearch_animate,geosearch_markresult,geosearch_popup,geosearch_attribution,geosearch_collapsed;'.
+                                         '{geosearch_legend:hide},geosearch_headline,geosearch_engine,geosearchParams,geosearch_result_locstyle,geosearch_placeholder,geosearch_results,geosearch_zoomto,geosearch_zoombounds,geosearch_animate,geosearch_markresult,geosearch_popup,geosearch_attribution;'.
                                          '{attribution_legend:hide},attribution;'.
                                          '{information_legend:hide},scaleline,mouseposition,permalink_get_param,zoomlevel,infopage;'.
                                          '{locstyle_legend:hide},label_color,resize_locstyles_zoom;'.
@@ -590,15 +590,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'inputType'               => 'checkbox',
                 'sql'                     => "char(1) NOT NULL default '1'"
             ],
-
-        'geosearch_collapsed' =>
-            [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_collapsed'],
-                'exclude'                 => true,
-                'default'                 => true,
-                'inputType'               => 'checkbox',
-                'sql'                     => "char(1) NOT NULL default '1'"
-            ],
+        
         'attribution' =>
             [
                 'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['attribution'],
