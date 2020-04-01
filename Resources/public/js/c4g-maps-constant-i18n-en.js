@@ -83,6 +83,8 @@ export var langConstantsEnglish = {
 
   LAYERSWITCHER_TOGGLE_ALL: "All elements",
 
+  RESET_FILTER: 'Reset filter',
+
   MEASURETOOLS: 'Measuretools',
   MEASURETOOLS_INFO: 'Select a measuretype and start measuring by clicking on the map.',
   MEASURETOOLS_INFO_ADDITIONAL: '(To stop a measurement, double-click on the map.)',

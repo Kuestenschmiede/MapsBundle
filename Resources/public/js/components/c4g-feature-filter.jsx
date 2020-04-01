@@ -15,6 +15,7 @@ import React, {Component} from "react";
 import {FeatureFilterList} from "./c4g-feature-filter-list.jsx";
 import {FeatureFilterMultiCheckbox} from "./c4g-feature-filter-multicheckbox.jsx";
 import {Fill, Stroke, Style} from "ol/style";
+import {getLanguage} from "../c4g-maps-i18n";
 
 export class FeatureFilter extends Component {
 
@@ -38,6 +39,7 @@ export class FeatureFilter extends Component {
       arrChecked: [],
       openedList: -1
     };
+    this.langConstants = getLanguage(props.mapController.data);
     this.props.mapController.filter = this;
   }
 
@@ -55,7 +57,7 @@ export class FeatureFilter extends Component {
     if (!!parseFloat(this.props.mapController.data.filterHandling)) {
       if (filters && filters.length > 0) {
         let div = filters.map((feature, index) => {
-          let checkedItems = scope.state.arrChecked[index];
+          let checkedItems = scope.state.arrChecked[index] || [];
           let openedList = scope.state.openedList === index;
           return <FeatureFilterMultiCheckbox feature={feature} open={openedList} setOpen={this.setOpen} checkedItems={checkedItems} filterLayers={this.filterLayersMulti} id={index} key={index}/>
         });
@@ -66,6 +68,7 @@ export class FeatureFilter extends Component {
               <ul className={"c4g-feature-filter-list c4g-not-overflowed"} onMouseUp={(evt) => this.handleClickInside(evt)} ref={this.ulRef}>
                 {div}
               </ul>
+              <button className={"c4g-feature-filter-reset"} onMouseUp={(evt) => this.resetFilter()}>{this.langConstants.RESET_FILTER}</button>
             </div>
 
           );
@@ -77,6 +80,7 @@ export class FeatureFilter extends Component {
               <ul className={"c4g-feature-filter-list c4g-overflowed"} onMouseUp={(evt) => this.handleClickInside(evt)} ref={this.ulRef}>
                 {div}
               </ul>
+              <button className={"c4g-feature-filter-reset"} onMouseUp={(evt) => this.resetFilter()}>{this.langConstants.RESET_FILTER}</button>
             </div>
           );
         }
@@ -94,6 +98,7 @@ export class FeatureFilter extends Component {
               <ul className={"c4g-feature-filter-list c4g-not-overflowed"} onMouseUp={(evt) => this.handleClickInside(evt)} ref={this.ulRef}>
                 {div}
               </ul>
+              <button className={"c4g-feature-filter-reset"} onMouseUp={(evt) => this.resetFilter()}>{this.langConstants.RESET_FILTER}</button>
             </div>
 
           );
@@ -105,6 +110,7 @@ export class FeatureFilter extends Component {
               <ul className={"c4g-feature-filter-list c4g-overflowed"} onMouseUp={(evt) => this.handleClickInside(evt)} ref={this.ulRef}>
                 {div}
               </ul>
+              <button className={"c4g-feature-filter-reset"} onMouseUp={(evt) => this.resetFilter()}>{this.langConstants.RESET_FILTER}</button>
             </div>
           );
         }
@@ -173,7 +179,15 @@ export class FeatureFilter extends Component {
       this.setState({openedList: openId});
     }
   }
-
+  resetFilter () {
+    let filter = [];
+    for (let i in this.state.arrChecked) {
+      if (this.state.arrChecked.hasOwnProperty(i)) {
+        filter.push([]);
+      }
+    }
+    this.setState({arrChecked: filter});
+  }
   filterLayer (layer) {
     if (layer.getLayers && typeof layer.getLayers === "function") {
       let arrLayers = layer.getLayers().getArray();

@@ -72,6 +72,8 @@ export var langConstantsGerman = {
 
   SIDEBOARD: 'Sideboard',
 
+  RESET_FILTER: 'Filter zurücksetzen',
+
   GEOSEARCH: 'Suche',
   OVERVIEWMAP: 'Übersichtskarte',
 

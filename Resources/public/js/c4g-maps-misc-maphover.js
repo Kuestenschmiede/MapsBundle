@@ -416,50 +416,6 @@ export class MapHover {
             self.options.mapController.proxy.popupController.close();
           }
         }
-          /*  window.c4gMapsPopup.$content.html('');
-          window.c4gMapsPopup.$popup.addClass(cssConstants.ACTIVE).addClass(cssConstants.LOADING);
-          window.c4gMapsPopup.spinner.show();
-
-          let popupProxy = self.options.mapController.proxy.popupController;
-
-          if (popupInfos.async === false) {
-            var objPopup = {};
-            objPopup.popup = popupInfos;
-            objPopup.feature = hovered.feature;
-            objPopup.layer = hovered.layer;
-            // Call the popup hook for plugin specific popup content
-            if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_fillPopup === 'object') {
-              utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, objPopup);
-            }
-            popupProxy.setPopup(objPopup);
-          } else {
-            jQuery.ajax({
-              dataType: "json",
-              url: popupProxy.api_infowindow_url + '/' + popupInfos.content,
-              done: function (data) {
-                var popupInfo = {
-                  async: popupInfos.async,
-                  content: data.content,
-                  popup: popupInfos.popup,
-                  routing_link: popupInfos.routing_link
-                };
-
-                var objPopup = {};
-                objPopup.popup = popupInfo;
-                objPopup.feature = hovered.feature;
-                objPopup.layer = hovered.layer;
-
-                // Call the popup hook for plugin specific popup content
-                if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_fillPopup === 'object') {
-                  utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, objPopup);
-                }
-
-                popupProxy.setPopup(objPopup);
-              }
-            });
-          }
-        } else {
-          window.c4gMapsPopup.$popup.removeClass(cssConstants.ACTIVE);*/
       }
 
 
