@@ -15,6 +15,7 @@
  * Fields
  */
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['name']           			= ['Name', 'Bitte geben Sie den Namen der Datenanbindung an.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_tables']['customDB']           		= ['Abweichende Datenbank', 'Bitte die abweichende Datenbank angeben. Bei normaler Datenbank (Contao) leer lassen.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['tableSource']    			= ['Quelltabelle', 'Bitte geben Sie die Quelltabelle an, aus der die Daten geladen werden sollen.'];
 
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['ptable']    			    = ['Elterntabellen', 'Bitte geben Sie die Elterntabellen an, anhand derer die geladenen Daten eingeschränkt werden sollen.'];

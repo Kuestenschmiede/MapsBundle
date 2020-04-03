@@ -15,6 +15,7 @@
  * Fields
  */
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['name']           			= ['Name', 'Please enter the name of the data connection.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_tables']['customDB']           		= ['Custom database', 'Enter a custom database. Leave empty for usual DB (contao).'];
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['tableSource']    			= ['Source table', 'Please enter the source table, which includes the data you want to display.'];
 
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['ptable']    			    = ['Parent tables', 'Please enter the parent tables to limit the data from the source table'];
