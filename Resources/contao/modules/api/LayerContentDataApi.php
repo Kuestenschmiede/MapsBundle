@@ -74,7 +74,10 @@ class LayerContentDataApi extends \Frontend
             $whereParent = " AND " . $objConfig->ptableField . " = " . $objLayer->tab_pid;
         }
         $strQuery = "SELECT ".$objConfig->tableSource.".id,". $sqlSelect ." FROM ".$objConfig->tableSource . $onClause . $sqlLoc . $andbewhereclause . $whereParent;
-        $result = \Database::getInstance()->prepare($strQuery)->execute()->fetchAllAssoc();
+        $connectionParams = $objConfig->customDB ?[
+            'dbDatabase' => $objConfig->customDB
+        ] : [];
+        $result = \Database::getInstance($connectionParams)->prepare($strQuery)->execute()->fetchAllAssoc();
         foreach ($result as $key => $arrResult) {
             $arrResult['popup'] = $this->getPopup($objConfig, $arrResult);
             $arrCoords = explode(",", $arrResult['geolocation']);
