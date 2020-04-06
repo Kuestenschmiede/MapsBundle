@@ -439,20 +439,17 @@ export class BetterLayerController {
     let features = [];
     let zoom = this.mapController.map.getView().getZoom();
     let greyed = structure.zoom && !this.compareZoom(structure.zoom);
-    if (!structure.hide && !greyed) {
-      if (structure.childs && structure.childs.length > 0) {
-        for (let structId in structure.childs) {
-          if (structure.childs.hasOwnProperty(structId)) {
-            if (!structure.childs[structId].hide) {
-              features = features.concat(this.getFeaturesFromStruct(structure.childs[structId]));
-            }
+    if (structure.childs && structure.childs.length > 0) {
+      for (let structId in structure.childs) {
+        if (structure.childs.hasOwnProperty(structId)) {
+            features = features.concat(this.getFeaturesFromStruct(structure.childs[structId]));
           }
-        }
-      }
-      if (structure.features) {
-        features = features.concat(structure.features);
       }
     }
+    if (structure.features && !greyed && !structure.hide) {
+      features = features.concat(structure.features);
+    }
+
     return features;
   }
 
