@@ -39,6 +39,7 @@ export class BetterLayerController {
     this.loaders = [];
     this.controllers = {};
     this.arrLocstyles = [];
+    this.currentZoomLevel = 0;
     this.extent = {
       maxX: -Infinity,
       maxY: -Infinity,
@@ -172,6 +173,7 @@ export class BetterLayerController {
         }
       }
       if (size > 1 && returnStyle && Array.isArray(returnStyle)) {
+        returnStyle[0].setZIndex(feature.get('zindex'));
         let iconOffset = [0, 0];
         if (returnStyle[0]) {
           if (returnStyle[0].getImage() && returnStyle[0].getImage().getRadius && typeof returnStyle[0].getImage().getRadius === "function") {
@@ -216,6 +218,9 @@ export class BetterLayerController {
               })
             })
         );
+      }
+      else if (returnStyle && Array.isArray(returnStyle)) {
+        returnStyle[0].setZIndex(feature.get('zindex'));
       }
       return returnStyle
     };
@@ -271,9 +276,11 @@ export class BetterLayerController {
         vectorLayer;
     if (Array.isArray(hideElement)) {
       features = hideElement;
+      this.currentZoomLevel++;
       for (let i in features) {
         if (features.hasOwnProperty(i)) {
           if (this.mapController.filter) {
+            features[i].set('zindex', this.currentZoomLevel);
             if (!!parseFloat(this.mapController.data.filterHandling)) {
               this.mapController.filter.hideFeatureMulti(features[i]);
             }
