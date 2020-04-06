@@ -173,7 +173,7 @@ export class BetterLayerController {
         }
       }
       if (size > 1 && returnStyle && Array.isArray(returnStyle)) {
-        if (returnStyle[0].setZIndex && feature.get('zindex')) {
+        if (returnStyle[0] &&returnStyle[0].setZIndex && feature.get('zindex')) {
           returnStyle[0].setZIndex(feature.get('zindex'));
         }
         let iconOffset = [0, 0];
@@ -222,7 +222,7 @@ export class BetterLayerController {
         );
       }
       else if (returnStyle && Array.isArray(returnStyle)) {
-        if (returnStyle[0].setZIndex && feature.get('zindex')) {
+        if (returnStyle[0] && returnStyle[0].setZIndex && feature.get('zindex')) {
           returnStyle[0].setZIndex(feature.get('zindex'));
         }
       }
