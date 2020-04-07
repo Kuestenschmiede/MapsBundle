@@ -447,14 +447,16 @@ class LayerContentService
                 }
             }
         }
-
+        $connectionParams = $objConfig->customDB ?[
+            'dbDatabase' => $objConfig->customDB,
+        ] : [];
         if ($sourceTable) {
             $queryCount = "SELECT COUNT(*) AS count FROM `$sourceTable`" . $qWhere . $pidOption . $and . $whereClause . $addBeWhereClause . $stmt;
-            $resultCount = \Database::getInstance()->prepare($queryCount)->execute()->fetchAssoc()['count'];
+            $resultCount = \Database::getInstance($connectionParams)->prepare($queryCount)->execute()->fetchAssoc()['count'];
 
             if ($resultCount < 45000) {
                 $query = "SELECT * FROM `$sourceTable`" . $qWhere . $pidOption . $and . $whereClause . $addBeWhereClause . $stmt;
-                $result = \Database::getInstance()->prepare($query)->execute();
+                $result = \Database::getInstance($connectionParams)->prepare($query)->execute();
             }
             //ToDo ???
         }
@@ -726,7 +728,6 @@ class LayerContentService
         while ($layers->next()) {
             $layerNames[] = $layers->name;
         }
-
         $arrBoards = deserialize($objLayer->forums, true);
         $objBoardPosts = \Database::getInstance()->prepare(
             'SELECT tl_c4g_forum_post.*,
