@@ -581,9 +581,28 @@ export class BetterLayerController {
               let data = layer.content[0].data;
               let features;
               if (typeof response === "string") {
+                let text = response;
+                if (!!!content.settings.showAdditionalGeometries) {
+                  let parser = new DOMParser();
+                  let xmlDoc = parser.parseFromString(response, "text/xml");
+                  let featuresDoc = xmlDoc.getElementsByTagName('way');
+                  for (let i = 0; i < featuresDoc.length; i++) {
+                    let singleFeature = featuresDoc[i];
+                    for (let j = 0; j < singleFeature.children.length; j++) {
+                      let nodeId = singleFeature.children[j].getAttribute('ref');
+                      let nodeElement = xmlDoc.getElementById(nodeId);
+                      while (nodeElement && nodeElement.children.length > 0) {
+                        nodeElement.removeChild(nodeElement.children[0]);
+                      }
+                    }
+                  }
+                  let serializer = new XMLSerializer();
+                  text = serializer.serializeToString(xmlDoc);
+                }
+
                 let format = new OSMXML();
                 try {
-                  features = format.readFeatures(response, {featureProjection: "EPSG:3857"});
+                  features = format.readFeatures(text, {featureProjection: "EPSG:3857"});
                 } catch (e) {
                   console.warn('Can not read feature.');
                 }
