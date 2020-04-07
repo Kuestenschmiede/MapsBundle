@@ -74,76 +74,6 @@ export class BetterLayerController {
                   responseFunc)
             }
             else {
-              let responseFunc = function (response) {
-                let features;
-                  if (typeof response === "string") {
-                    let text = response;
-                    if (!requestData.showAddGeoms) {
-                      let parser = new DOMParser();
-                      let xmlDoc = parser.parseFromString(response, "text/xml");
-                      let featuresDoc = xmlDoc.getElementsByTagName('way');
-                      for (let i = 0; i < featuresDoc.length; i++) {
-                        let singleFeature = featuresDoc[i];
-                        for (let j = 0; j < singleFeature.children.length; j++) {
-                          let nodeId = singleFeature.children[j].getAttribute('ref');
-                          let nodeElement = xmlDoc.getElementById(nodeId);
-                          while (nodeElement && nodeElement.children.length > 0) {
-                            nodeElement.removeChild(nodeElement.children[0]);
-                          }
-                        }
-                      }
-                      let serializer = new XMLSerializer();
-                      text = serializer.serializeToString(xmlDoc);
-                    }
-
-                    let format = new OSMXML();
-                    try {
-                      features = format.readFeatures(text, {featureProjection: "EPSG:3857"});
-                    } catch (e) {
-                      console.warn('Can not read feature.');
-                    }
-                }
-                else if (typeof response === "object"){
-                  let geojson = osmtogeojson(response);
-                  features = new olFormat.GeoJSON().readFeatures(geojson, {featureProjection: projection});
-                }
-                else {
-                  return false;
-                }
-                for (let featureId in features) {
-                  if (features.hasOwnProperty(featureId)) {
-                    if (requestData.forceNodes && features[featureId].getGeometry().getType() === "Polygon") {
-                      features[featureId].setGeometry(features[featureId].getGeometry().getInteriorPoint());
-                    }
-                    else if (requestData.forceNodes && features[featureId].getGeometry().getType() === "MultiPolygon") {
-                      features[featureId].setGeometry(features[featureId].getGeometry()[0].getInteriorPoint());
-                    }
-
-                    if (scope.mapController.filter) {
-                      if (!!parseFloat(scope.mapController.data.filterHandling)) {
-                        scope.mapController.filter.hideFeatureMulti(features[featureId]);
-                      }
-                      else {
-                        scope.mapController.filter.hideFeature(features[featureId]);
-                      }
-                    }
-                    features[featureId].set('locstyle', requestData.locstyleId);
-                    if (requestData.popup) {
-                      for (let i = 0; i < features.length; i++) {
-                        let popup = {};
-                        for (let j in requestData.popup) {
-                          if (requestData.popup.hasOwnProperty(j)) {
-                            popup[j] = requestData.popup[j];
-                          }
-                        }
-                        features[featureId].set('popup', popup);
-                      }
-                    }
-                  }
-                }
-                scope.addFeatures(features, requestData.chain);
-                scope.mapController.setObjLayers(scope.arrLayers);
-              };
               let layer = scope.objLayers.find(element => element.id == requestData.layerId) || {};
               scope.performOvp({
                     "url": requestData.url,
@@ -601,9 +531,7 @@ export class BetterLayerController {
           else if (layer.content && layer.content[0] && layer.content[0].data) {
             let content = layer.content[0];
             let data = content.data;
-            let responseFunc = function (response) {
 
-            };
             scope.performOvp({
                   "url": data.url,
                   "layerId": layer.id,
