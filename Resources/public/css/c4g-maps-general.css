@@ -1185,6 +1185,7 @@ button.c4g-geosearch-start {
 .c4g-feature-filter {
   height: 45px;
   margin-top: 35px;
+  position: relative;
 }
 
 .c4g-feature-filter button.c4g-feature-filter-reset {
