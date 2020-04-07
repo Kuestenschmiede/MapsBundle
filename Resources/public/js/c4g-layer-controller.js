@@ -144,16 +144,18 @@ export class BetterLayerController {
                 scope.addFeatures(features, requestData.chain);
                 scope.mapController.setObjLayers(scope.arrLayers);
               };
+              let layer = scope.objLayers.find(element => element.id == requestData.layerId) || {};
               scope.performOvp({
                     "url": requestData.url,
                     "params": requestData.params,
-                    "locstyleId": requestData.locstyle
+                    "locstyleId": requestData.locstyle,
+                    "chain": requestData.chain,
+                    "layer": layer
                   }, {
                     "extent": extent,
                     "resolution": resolution,
                     "projection": projection
-                  },
-                  responseFunc);
+                  });
             }
 
           }
@@ -600,99 +602,13 @@ export class BetterLayerController {
             let content = layer.content[0];
             let data = content.data;
             let responseFunc = function (response) {
-              let data = layer.content[0].data;
-              let features;
-              if (typeof response === "string") {
-                let text = response;
-                if (!!!content.settings.showAdditionalGeometries) {
-                  let parser = new DOMParser();
-                  let xmlDoc = parser.parseFromString(response, "text/xml");
-                  let featuresDoc = xmlDoc.getElementsByTagName('way');
-                  for (let i = 0; i < featuresDoc.length; i++) {
-                    let singleFeature = featuresDoc[i];
-                    for (let j = 0; j < singleFeature.children.length; j++) {
-                      let nodeId = singleFeature.children[j].getAttribute('ref');
-                      let nodeElement = xmlDoc.getElementById(nodeId);
-                      while (nodeElement && nodeElement.children.length > 0) {
-                        nodeElement.removeChild(nodeElement.children[0]);
-                      }
-                    }
-                  }
-                  let serializer = new XMLSerializer();
-                  text = serializer.serializeToString(xmlDoc);
-                }
 
-                let format = new OSMXML();
-                try {
-                  features = format.readFeatures(text, {featureProjection: "EPSG:3857"});
-                } catch (e) {
-                  console.warn('Can not read feature.');
-                }
-              } else if (typeof response === "object"){
-                let geojson = osmtogeojson(response);
-                features = new olFormat.GeoJSON().readFeatures(geojson, {featureProjection: "EPSG:3857"});
-              } else {
-                return false;
-              }
-              // set popups for features
-              if (data.popup) {
-                for (let i = 0; i < features.length; i++) {
-                  let popup = {};
-                  for (let j in data.popup) {
-                    if (data.popup.hasOwnProperty(j)) {
-                      popup[j] = data.popup[j];
-                    }
-                  }
-                  features[i].set('popup', popup);
-                  features[i].set('noFilter', layer.noRealFilter);
-                }
-              }
-
-              let requestData = (layer.content && layer.content[0].settings) ? layer.content[0].settings: {};
-              for (let featureId in features) {
-                if (features.hasOwnProperty(featureId)) {
-                  if (features[featureId].getGeometry().getType() === "Polygon") {
-                    if (requestData.forceNodes) {
-                      features[featureId].setGeometry(features[featureId].getGeometry().getInteriorPoint());
-                    }
-                    features[featureId].set('osm_type', 'way');
-                  }
-                  else if (features[featureId].getGeometry().getType() === "MultiPolygon") {
-                    if (requestData.forceNodes) {
-                      features[featureId].setGeometry(features[featureId].getGeometry()[0].getInteriorPoint());
-                    }
-                    features[featureId].set('osm_type', 'relation');
-                  }
-                  else if (features[featureId].getGeometry().getType() === "Point") {
-                    features[featureId].set('osm_type', 'node');
-                  }
-
-                  if (scope.mapController.filter) {
-                    if (!!parseFloat(scope.mapController.data.filterHandling)) {
-                      scope.mapController.filter.hideFeatureMulti(features[featureId]);
-                    }
-                    else {
-                      scope.mapController.filter.hideFeature(features[featureId]);
-                    }
-                  }
-
-                  features[featureId].set('locstyle', layer.locstyle);
-                  if (content.hover_location) {
-                    features[featureId].set('hover_style', content.hover_style);
-                    features[featureId].set('hover_location', content.hover_location);
-                  }
-                }
-              }
-              if (vectorSource instanceof Cluster) {
-                vectorSource.getSource().addFeatures(features);
-              }
-              else {
-                vectorSource.addFeatures(features);
-              }
             };
             scope.performOvp({
                   "url": data.url,
                   "layerId": layer.id,
+                  "layer": layer,
+                  "vectorSource": vectorSource,
                   "params": data.params,
                   "locstyleId": layer.locstyle
                 },
@@ -700,8 +616,7 @@ export class BetterLayerController {
                   "extent": extent,
                   "resolution": resolution,
                   "projection": projection
-                },
-                responseFunc)
+                })
           }
           else if (layer.type === "table") {
             let responseFunc = function (data) {
@@ -996,7 +911,7 @@ export class BetterLayerController {
     }
   }
 
-  performOvp(requestData, mapConf, responseFunc) {
+  performOvp(requestData, mapConf) {
     if (this.controllers[requestData.layerId]) {    //abort request, if new exists
       this.controllers[requestData.layerId].abort();
       delete this.controllers[requestData.layerId];
@@ -1025,7 +940,7 @@ export class BetterLayerController {
         strBoundingBox = '<bbox-query s="' + boundingArray[1] + '" n="' + boundingArray[3] + '" w="' + boundingArray[0] + '" e="' + boundingArray[2] + '"/>';
         url += 'data=' + encodeURIComponent(params.replace(bboxTag, strBoundingBox));
         fetch(url, {signal}).then((response) => {
-          response.text().then(responseFunc).catch((error) => {console.log(error.message)});
+          response.text().then((resp) => {scope.parseOvpData(resp, requestData)}).catch((error) => {console.log(error.message)});
         })
         .catch((error) => {
           if (error.code && error.code !== 20) {
@@ -1036,13 +951,112 @@ export class BetterLayerController {
         strBoundingBox = boundingArray[1] + ',' + boundingArray[0] + ',' + boundingArray[3] + ',' + boundingArray[2];
         url += 'data=' + encodeURIComponent(params.replace(bboxTag, strBoundingBox));
         fetch(url, {signal}).then((response) => {
-          response.json().then(responseFunc).catch((error) => {console.log(error.message)});
+          response.json().then((respo)=> {scope.parseOvpData(respo, requestData)}).catch((error) => {console.log(error.message)});
         })
         .catch((error) => {
           if (error.code && error.code !== 20) {
             console.log('Fetch Error :-S', error.message);
           }
         });
+      }
+    }
+  }
+  parseOvpData (response, requestData) {
+    let layer = requestData.layer;
+    let content = layer.content[0];
+    let data = content.data;
+    let features;
+    if (typeof response === "string") {
+      let text = response;
+      if (!!!content.settings.showAdditionalGeometries) {
+        let parser = new DOMParser();
+        let xmlDoc = parser.parseFromString(response, "text/xml");
+        let featuresDoc = xmlDoc.getElementsByTagName('way');
+        for (let i = 0; i < featuresDoc.length; i++) {
+          let singleFeature = featuresDoc[i];
+          for (let j = 0; j < singleFeature.children.length; j++) {
+            let nodeId = singleFeature.children[j].getAttribute('ref');
+            let nodeElement = xmlDoc.getElementById(nodeId);
+            while (nodeElement && nodeElement.children.length > 0) {
+              nodeElement.removeChild(nodeElement.children[0]);
+            }
+          }
+        }
+        let serializer = new XMLSerializer();
+        text = serializer.serializeToString(xmlDoc);
+      }
+
+      let format = new OSMXML();
+      try {
+        features = format.readFeatures(text, {featureProjection: "EPSG:3857"});
+      } catch (e) {
+        console.warn('Can not read feature.');
+      }
+    } else if (typeof response === "object"){
+      let geojson = osmtogeojson(response);
+      features = new olFormat.GeoJSON().readFeatures(geojson, {featureProjection: "EPSG:3857"});
+    } else {
+      return false;
+    }
+    // set popups for features
+    if (data.popup) {
+      for (let i = 0; i < features.length; i++) {
+        let popup = {};
+        for (let j in data.popup) {
+          if (data.popup.hasOwnProperty(j)) {
+            popup[j] = data.popup[j];
+          }
+        }
+        features[i].set('popup', popup);
+        features[i].set('noFilter', layer.noRealFilter);
+      }
+    }
+
+    let requestDatas = (layer.content && layer.content[0].settings) ? layer.content[0].settings: {};
+    for (let featureId in features) {
+      if (features.hasOwnProperty(featureId)) {
+        if (features[featureId].getGeometry().getType() === "Polygon") {
+          if (requestDatas.forceNodes) {
+            features[featureId].setGeometry(features[featureId].getGeometry().getInteriorPoint());
+          }
+          features[featureId].set('osm_type', 'way');
+        }
+        else if (features[featureId].getGeometry().getType() === "MultiPolygon") {
+          if (requestDatas.forceNodes) {
+            features[featureId].setGeometry(features[featureId].getGeometry()[0].getInteriorPoint());
+          }
+          features[featureId].set('osm_type', 'relation');
+        }
+        else if (features[featureId].getGeometry().getType() === "Point") {
+          features[featureId].set('osm_type', 'node');
+        }
+
+        if (this.mapController.filter) {
+          if (!!parseFloat(this.mapController.data.filterHandling)) {
+            this.mapController.filter.hideFeatureMulti(features[featureId]);
+          }
+          else {
+            this.mapController.filter.hideFeature(features[featureId]);
+          }
+        }
+
+        features[featureId].set('locstyle', layer.locstyle);
+        if (content.hover_location) {
+          features[featureId].set('hover_style', content.hover_style);
+          features[featureId].set('hover_location', content.hover_location);
+        }
+      }
+    }
+    if (requestData.chain || requestData.chain > -1) {
+      this.addFeatures(features, requestData.chain);
+      this.mapController.setObjLayers(this.arrLayers);
+    }
+    else {
+      if (requestData.vectorSource instanceof Cluster) {
+        requestData.vectorSource.getSource().addFeatures(features);
+      }
+      else {
+        requestData.vectorSource.addFeatures(features);
       }
     }
   }
