@@ -490,3 +490,10 @@ button.c4g-beach-options:before {
 .c4g-starboard-locstyle > img {
   vertical-align: middle;
 }
+
+.c4g-feature-filter button.c4g-feature-filter-reset:after{
+  content: "\f1f8";
+  font-family: "Font Awesome 5 Free";
+  font-weight: bold;
+  margin-left: 10px;
+}
