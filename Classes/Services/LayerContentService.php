@@ -448,7 +448,7 @@ class LayerContentService
             }
         }
         $connectionParams = $objConfig->customDB ?[
-            'dbDatabase' => $objConfig->customDB
+            'dbDatabase' => $objConfig->customDB,
         ] : [];
         if ($sourceTable) {
             $queryCount = "SELECT COUNT(*) AS count FROM `$sourceTable`" . $qWhere . $pidOption . $and . $whereClause . $addBeWhereClause . $stmt;
