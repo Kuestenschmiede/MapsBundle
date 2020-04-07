@@ -35,7 +35,7 @@
     "dom-to-image-more": "^2.8.0",
     "file-saver": "^2.0.2",
     "jsbi": "^3.1.1",
-    "ol": "^6.3.0",
+    "ol": "^6.3.1",
     "ol-cesium": "^2.10.0",
     "ol-ext": "^3.1.11",
     "ol-mapbox-style": "^6.1.1",
