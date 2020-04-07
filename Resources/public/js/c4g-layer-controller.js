@@ -66,7 +66,7 @@ export class BetterLayerController {
                 scope.mapController.setObjLayers(scope.arrLayers);
               };
               scope.performOwnData(requestData,
-         {
+                  {
                     "extent": extent,
                     "resolution": resolution,
                     "projection": projection
@@ -76,13 +76,32 @@ export class BetterLayerController {
             else {
               let responseFunc = function (response) {
                 let features;
-                if (typeof response === "string") {
-                  let format = new OSMXML();
-                  try {
-                    features = format.readFeatures(response, {featureProjection: projection});
-                  } catch (e) {
-                    console.warn('Can not read feature.');
-                  }
+                  if (typeof response === "string") {
+                    let text = response;
+                    if (!requestData.showAddGeoms) {
+                      let parser = new DOMParser();
+                      let xmlDoc = parser.parseFromString(response, "text/xml");
+                      let featuresDoc = xmlDoc.getElementsByTagName('way');
+                      for (let i = 0; i < featuresDoc.length; i++) {
+                        let singleFeature = featuresDoc[i];
+                        for (let j = 0; j < singleFeature.children.length; j++) {
+                          let nodeId = singleFeature.children[j].getAttribute('ref');
+                          let nodeElement = xmlDoc.getElementById(nodeId);
+                          while (nodeElement && nodeElement.children.length > 0) {
+                            nodeElement.removeChild(nodeElement.children[0]);
+                          }
+                        }
+                      }
+                      let serializer = new XMLSerializer();
+                      text = serializer.serializeToString(xmlDoc);
+                    }
+
+                    let format = new OSMXML();
+                    try {
+                      features = format.readFeatures(text, {featureProjection: "EPSG:3857"});
+                    } catch (e) {
+                      console.warn('Can not read feature.');
+                    }
                 }
                 else if (typeof response === "object"){
                   let geojson = osmtogeojson(response);
@@ -494,6 +513,7 @@ export class BetterLayerController {
       let hoverStyle;
       let popup = false;
       let forceNodes = false;
+      let showAddGeoms = false;
       let layerId = layer.id;
       if (layer.content && layer.content[0] && layer.content[0].data) {
         let data = layer.content[0].data;
@@ -506,6 +526,7 @@ export class BetterLayerController {
       }
       if (layer.content && layer.content[0] && layer.content[0].settings) {
         forceNodes = layer.content[0].settings.forceNodes;
+        showAddGeoms = !!layer.content[0].settings.showAdditionalGeometries;
       }
       checkLocstyle = this.arrLocstyles.findIndex((element) => element === locstyleId);
       if (checkLocstyle === -1 && locstyleId) {
@@ -519,6 +540,7 @@ export class BetterLayerController {
         forceNodes: forceNodes,
         arrExtents: [],
         popup: popup,
+        showAddGeoms: showAddGeoms,
         locstyleId: locstyleId,
         hover_location: hoverLocation,
         hover_style: hoverStyle,
