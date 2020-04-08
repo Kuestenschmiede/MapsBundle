@@ -53,6 +53,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_open'] = ['Starboard autom
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_label'] = ['Starboard Überschrift', 'Die Überschrift erscheint ganz oben im Starboard, gilt für alle Tabreiter und sollte nicht allzu lang sein. Standard: Kartenelemente.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['filters'] = ['Filter', 'Wählen Sie die seperat erstellten Filter aus'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['filterHandling'] = ['Filter als Mehrfachauswahl', 'Stellt die Filter auf Mehrfachauswahl um (Logisches Oder statt Und).'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['filterResetButton'] = ['Knopf zum Filter zurücksetzen', 'Blendet einen Knopf ein, der das zurücksetzen aller Filter triggert.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_button'] = ['Auswahl-Button aktivieren','Erstellt einen Button, mit dem alle Elemente des Starboards zeitgleich ein- und ausgeblendet werden. Achtung! Abhängig von der Struktur kann das zu langen Ladezeiten führen.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_locstyles'] = ['Lokationsstile im Starboard anzeigen','Wenn möglich, werden die Lokationsstile der Karte am zugehörigen Element im Starboard dargestellt.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_all'] = ['Cluster über alle Layer', 'Erstellt ein Cluster über alle Layer. Überschreibt die Einstellungen im Strukturelement. Achtung! Diese Funktion ist nicht für alle Strukturelemente geeignet.'];

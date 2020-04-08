@@ -53,7 +53,10 @@ export class FeatureFilter extends Component {
     } else {
       showButtons = scope.props.target && (!(scope.props.target.scrollWidth <= scope.props.target.clientWidth));
     }
-
+    let resetButton = null;
+    if (!!parseFloat(this.props.mapController.data.filterResetButton)) {
+      resetButton = <button className={"c4g-feature-filter-reset"} onMouseUp={(evt) => this.resetFilter()}>{this.langConstants.RESET_FILTER}</button>
+    }
     if (!!parseFloat(this.props.mapController.data.filterHandling)) {
       if (filters && filters.length > 0) {
         let div = filters.map((feature, index) => {
@@ -68,7 +71,7 @@ export class FeatureFilter extends Component {
               <ul className={"c4g-feature-filter-list c4g-not-overflowed"} onMouseUp={(evt) => this.handleClickInside(evt)} ref={this.ulRef}>
                 {div}
               </ul>
-              <button className={"c4g-feature-filter-reset"} onMouseUp={(evt) => this.resetFilter()}>{this.langConstants.RESET_FILTER}</button>
+              {resetButton}
             </div>
 
           );
@@ -80,7 +83,7 @@ export class FeatureFilter extends Component {
               <ul className={"c4g-feature-filter-list c4g-overflowed"} onMouseUp={(evt) => this.handleClickInside(evt)} ref={this.ulRef}>
                 {div}
               </ul>
-              <button className={"c4g-feature-filter-reset"} onMouseUp={(evt) => this.resetFilter()}>{this.langConstants.RESET_FILTER}</button>
+              {resetButton}
             </div>
           );
         }
@@ -98,7 +101,7 @@ export class FeatureFilter extends Component {
               <ul className={"c4g-feature-filter-list c4g-not-overflowed"} onMouseUp={(evt) => this.handleClickInside(evt)} ref={this.ulRef}>
                 {div}
               </ul>
-              <button className={"c4g-feature-filter-reset"} onMouseUp={(evt) => this.resetFilter()}>{this.langConstants.RESET_FILTER}</button>
+              {resetButton}
             </div>
 
           );
@@ -110,7 +113,7 @@ export class FeatureFilter extends Component {
               <ul className={"c4g-feature-filter-list c4g-overflowed"} onMouseUp={(evt) => this.handleClickInside(evt)} ref={this.ulRef}>
                 {div}
               </ul>
-              <button className={"c4g-feature-filter-reset"} onMouseUp={(evt) => this.resetFilter()}>{this.langConstants.RESET_FILTER}</button>
+              {resetButton}
             </div>
           );
         }

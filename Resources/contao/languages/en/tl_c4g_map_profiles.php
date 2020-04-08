@@ -126,6 +126,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['caching'] = ['Remember Button States
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['be_optimize_checkboxes_limit'] = ['Convert large checkbox lists to Chosen Fields', 'If at least this many entries are in the list, it are converted to a chosen field. Select 0 to disable. this function.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['filters'] = ['Filters', 'Choose your filters for the map'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['filterHandling'] = ['Filter as multicheckbox', 'Display the filter as a multicheckbox (logical Or instead of And).'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['filterResetButton'] = ['Button to reset filter', 'Shows a button, which resets all filters at once.'];
 /**
  * Reference
  */
