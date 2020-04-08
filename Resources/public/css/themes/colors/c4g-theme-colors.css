@@ -49,6 +49,10 @@
   color: var(--font-color);
 }
 
+.c4g-feature-filter button.c4g-feature-filter-reset {
+  background: var(--main-color);
+  color: var(--font-color);
+}
 
 /*
  *  Starboard

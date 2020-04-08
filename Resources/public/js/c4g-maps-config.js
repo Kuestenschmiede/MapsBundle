@@ -22,7 +22,7 @@ export var config = {
   osm: {
 
     CycleMap: {
-      attributions: 'Style by <a target="_blank" rel="noopener" href="http://www.opencyclemap.org/">OpenCycleMap</a>' + ' ' +
+      attributions: 'Style by <a target="_blank" rel="noopener" href="https://www.opencyclemap.org/">OpenCycleMap</a>' + ' ' +
           OSM_REL_ATTRIBUTION,
       crossOrigin: 'anonymous',
       minZoom: 0,
@@ -31,16 +31,16 @@ export var config = {
     },
 
     German: {
-      attributions: 'Style by <a target="_blank" rel="noopener" href="http://www.openstreetmap.de/germanstyle.html">openstreetmap.de</a>' + ' ' +
+      attributions: 'Style by <a target="_blank" rel="noopener" href="https://www.openstreetmap.de/germanstyle.html">openstreetmap.de</a>' + ' ' +
           OSM_REL_ATTRIBUTION,
-      crossOrigin: null,
+      crossOrigin: 'anonymous',
       minZoom: 0,
       maxZoom: 19,
-      url: 'https://{a-c}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png'
+      url: 'https://{a-c}.tile.openstreetmap.de/{z}/{x}/{y}.png'
     },
 
     LandscapeMap: {
-      attributions: 'Style by <a target="_blank" rel="noopener" href="http://www.opencyclemap.org/">OpenCycleMap</a>' + ' ' +
+      attributions: 'Style by <a target="_blank" rel="noopener" href="https://www.opencyclemap.org/">OpenCycleMap</a>' + ' ' +
           OSM_REL_ATTRIBUTION,
       crossOrigin: 'anonymous',
       minZoom: 0,
@@ -58,7 +58,7 @@ export var config = {
 
   stamen: {
     Toner: {
-      attributions: 'Map tiles by <a target="_blank" rel="noopener" href="http://stamen.com">Stamen Design</a>, under <a  target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a  target="_blank" rel="noopener" href="http://openstreetmap.org">OpenStreetMap</a>, under <a  target="_blank" rel="noopener" href="http://www.openstreetmap.org/copyright">ODbL</a>.',
+      attributions: 'Map tiles by <a target="_blank" rel="noopener" href="https://stamen.com">Stamen Design</a>, under <a  target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a  target="_blank" rel="noopener" href="http://openstreetmap.org">OpenStreetMap</a>, under <a  target="_blank" rel="noopener" href="http://www.openstreetmap.org/copyright">ODbL</a>.',
       layer: 'toner',
       minZoom: 0,
       maxZoom: 18,
@@ -66,7 +66,7 @@ export var config = {
     },
 
     TonerLabels: {
-      attributions: 'Map tiles by <a target="_blank" rel="noopener" href="http://stamen.com">Stamen Design</a>, under <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a target="_blank" rel="noopener" href="http://openstreetmap.org">OpenStreetMap</a>, under <a target="_blank" rel="noopener" href="http://www.openstreetmap.org/copyright">ODbL</a>.',
+      attributions: 'Map tiles by <a target="_blank" rel="noopener" href="https://stamen.com">Stamen Design</a>, under <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a target="_blank" rel="noopener" href="http://openstreetmap.org">OpenStreetMap</a>, under <a target="_blank" rel="noopener" href="http://www.openstreetmap.org/copyright">ODbL</a>.',
       layer: 'toner-labels',
       minZoom: 0,
       maxZoom: 18,
@@ -74,7 +74,7 @@ export var config = {
     },
 
     TonerLines: {
-      attributions: 'Map tiles by <a target="_blank" rel="noopener" href="http://stamen.com">Stamen Design</a>, under <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a target="_blank" rel="noopener" href="http://openstreetmap.org">OpenStreetMap</a>, under <a target="_blank" rel="noopener" href="http://www.openstreetmap.org/copyright">ODbL</a>.',
+      attributions: 'Map tiles by <a target="_blank" rel="noopener" href="https://stamen.com">Stamen Design</a>, under <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a target="_blank" rel="noopener" href="http://openstreetmap.org">OpenStreetMap</a>, under <a target="_blank" rel="noopener" href="http://www.openstreetmap.org/copyright">ODbL</a>.',
       layer: 'toner-lines',
       minZoom: 0,
       maxZoom: 18,
@@ -82,7 +82,7 @@ export var config = {
     },
 
     Terrain: {
-      attributions: 'Map tiles by <a target="_blank" rel="noopener" href="http://stamen.com">Stamen Design</a>, under <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a target="_blank" rel="noopener" href="http://openstreetmap.org">OpenStreetMap</a>, under <a target="_blank" rel="noopener" href="http://www.openstreetmap.org/copyright">ODbL</a>.',
+      attributions: 'Map tiles by <a target="_blank" rel="noopener" href="https://stamen.com">Stamen Design</a>, under <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a target="_blank" rel="noopener" href="http://openstreetmap.org">OpenStreetMap</a>, under <a target="_blank" rel="noopener" href="http://www.openstreetmap.org/copyright">ODbL</a>.',
       layer: 'terrain',
       minZoom: 0,
       maxZoom: 18,
@@ -90,7 +90,7 @@ export var config = {
     },
 
     Watercolor: {
-      attributions: 'Map tiles by <a target="_blank" rel="noopener" href="http://stamen.com">Stamen Design</a>, under <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a target="_blank" rel="noopener" href="http://openstreetmap.org">OpenStreetMap</a>, under <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.',
+      attributions: 'Map tiles by <a target="_blank" rel="noopener" href="https://stamen.com">Stamen Design</a>, under <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a target="_blank" rel="noopener" href="http://openstreetmap.org">OpenStreetMap</a>, under <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.',
       layer: 'watercolor',
       minZoom: 0,
       maxZoom: 18,
@@ -167,7 +167,7 @@ export var config = {
     HERE: {
       tileSize: [512, 512],
       attributions: 'Map Tiles &copy; ' + new Date().getFullYear() + ' ' +
-          '<a target="_blank" rel="noopener" href="http://developer.here.com">HERE</a>' + ' ' +
+          '<a target="_blank" rel="noopener" href="https://developer.here.com">HERE</a>' + ' ' +
           OSM_REL_ATTRIBUTION,
       minZoom: 0,
       maxZoom: 22,

@@ -1184,7 +1184,23 @@ button.c4g-geosearch-start {
 
 .c4g-feature-filter {
   height: 45px;
+  margin-top: 35px;
+  position: relative;
 }
+
+.c4g-feature-filter button.c4g-feature-filter-reset {
+  position: absolute;
+  margin-top: -31px;
+  right: 0;
+  padding: 5px;
+  border: none;
+  white-space: nowrap;
+  cursor: pointer;
+  outline: none;
+  height: 25px;
+  line-height: 15px;
+  font-size: 15px;
+  }
 
 ul.c4g-feature-filter-list {
   position: absolute;
