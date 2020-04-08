@@ -399,7 +399,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_distance'],
                 'exclude'                 => true,
                 'inputType'               => 'text',
-                'eval'                    => ['maxlength'=>100],
+                'eval'                    => ['maxlength'=>100, 'rgxp' => 'digit'],
                 'sql'                     => "varchar(100) NOT NULL default ''"
             ],
         'cluster_fillcolor' =>
