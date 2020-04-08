@@ -1290,7 +1290,7 @@ div#filter_block input {
   background-color: var(--main-color);
   color: var(--font-color);
   z-index: 91;
-  padding-left: .4em;
+  padding: 0 .4em;
 }
 
 .c4g-filter-form-element{
