@@ -1214,20 +1214,17 @@ ul.c4g-feature-filter-list {
 }
 
 ul.c4g-feature-filter-list.c4g-overflowed {
-  width: calc(100% - 150px);
+  width: calc(100% - 90px);
   margin: 0 0 0 45px;
   display: block;
 }
 
 ul.c4g-feature-filter-list.c4g-not-overflowed {
-  width: calc(100% - 60px);
+  width: 100%;
   margin: 0;
   display: block;
 }
-button.c4g-feature-filter-reset {
-  width: 60px;
-  display: inline;
-}
+
 
 ul.c4g-feature-filter-list li.c4g-item-checked>strong {
   margin: 0 60px 0 10px;
