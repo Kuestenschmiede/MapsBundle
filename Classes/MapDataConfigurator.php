@@ -359,6 +359,7 @@ class MapDataConfigurator
 
             $mapData['filterDiv'] = (in_array('filter', $externalElements)) ? $externalClasses['filter'] : '';
             $mapData['filterHandling'] = $profile->filterHandling;
+            $mapData['filterResetButton'] = $profile->filterResetButton;
 
             // map-tools
             //
