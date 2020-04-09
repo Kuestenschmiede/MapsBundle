@@ -125,9 +125,10 @@ export class C4gLocationStyle {
         if (!styleData.label_offset) {
           styleData.label_offset = [0, 0, "px"];
         }
+        let fontSize = styleData.font_size && typeof styleData.font_size === "object" && styleData.font_size !== null ? styleData.font_size.value : styleData.font_size ? styleData.font_size : '13';
         let textOptions = {
           text: label,
-          font: (styleData.font_weight || 'normal') + ' ' + (styleData.font_style || 'normal') + ' ' + (styleData.font_size || '13') + 'px ' + (styleData.font_family || 'sans-serif'),
+          font: (styleData.font_weight || 'normal') + ' ' + (styleData.font_style || 'normal') + ' ' + fontSize + 'px ' + (styleData.font_family || 'sans-serif'),
           // scale: parseInt(styleData.font_size || 0, 10) || undefined,
           offsetX: parseInt(styleData.label_offset[0] || 0, 10),
           offsetY: parseInt(styleData.label_offset[1] || 0, 10),
