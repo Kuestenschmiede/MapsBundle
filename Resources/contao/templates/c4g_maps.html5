@@ -18,18 +18,11 @@
 </script>
 <?php else: ?>
 
-
 <script defer>
     window.mapData = window.mapData || {};
     window.mapData<?php echo '['.$this->mapData['mapId'] . ']' ?> = <?php echo json_encode($this->mapData) ?>;
-
 </script>
 
 <?php endif; ?>
-
-<noscript>
-    <p>NO_JS_WARNING</p>
-</noscript>
-
 </div>
 <!-- indexer::continue -->
