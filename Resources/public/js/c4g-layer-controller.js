@@ -39,6 +39,7 @@ export class BetterLayerController {
     this.loaders = [];
     this.controllers = {};
     this.arrLocstyles = [];
+    this.objIds = {};
     this.currentZoomLevel = 0;
     this.extent = {
       maxX: -Infinity,
@@ -195,14 +196,17 @@ export class BetterLayerController {
     window.c4gMapsHooks.hook_map_zoom = window.c4gMapsHooks.hook_map_zoom || [];
     window.c4gMapsHooks.hook_map_zoom.push(this.handleZoom);
   }
-  hide (id, hideElement) {
+  hide (id, hideElement, layerId) {
     let features,
         vectorLayer;
     if (Array.isArray(hideElement)) {
       features = hideElement;
     }
-    else {
+    else if (hideElement instanceof Vector) {
       vectorLayer = hideElement
+    }
+    else {
+      features = this.objIds[layerId];
     }
     if (features) {
       if (id >= 0) {
@@ -226,7 +230,7 @@ export class BetterLayerController {
       this.mapController.map.removeLayer(vectorLayer);
     }
   }
-  show (id, hideElement) {
+  show (id, hideElement, layerId) {
     let features,
         vectorLayer;
     if (Array.isArray(hideElement)) {
@@ -246,7 +250,7 @@ export class BetterLayerController {
         }
       }
     }
-    else {
+    else if (hideElement instanceof Vector){
       vectorLayer = hideElement;
       if (this.mapController.filter) {
         if (!!parseFloat(this.mapController.data.filterHandling)) {
@@ -256,6 +260,9 @@ export class BetterLayerController {
           this.mapController.filter.filterLayer(vectorLayer);
         }
       }
+    }
+    else {
+      features = this.objIds[layerId];
     }
     if (id >= 0 && this.loaders[id] && this.loaders[id].preventLoading) {
       this.loaders[id].preventLoading = false;
@@ -827,7 +834,13 @@ export class BetterLayerController {
         }
       }
     }
-    return features;
+    if (this.objIds.hasOwnProperty(layer.id)) {
+      return [];
+    }
+    else {
+      this.objIds[layer.id] = features;
+      return features;
+    }
   }
   geometryFunction (feature) {
     let geometry = feature.getGeometry();

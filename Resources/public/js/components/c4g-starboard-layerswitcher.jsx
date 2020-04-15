@@ -136,7 +136,7 @@ export class StarboardLayerswitcher extends Component {
           <ul>
             {layers.map((item, id) => {
               if (this.filterFunc(this.state.layerFilter, item, states[id])) {
-                return <C4gStarboardLayerElement key={id} id={id} mapController={this.props.mapController}
+                return <C4gStarboardLayerElement key={id} keyId={id} id={item.id} mapController={this.props.mapController}
                                                  parentCallback={this.callbackFunction}
                                                  layer={item}
                                                  styleData={this.props.styleData}

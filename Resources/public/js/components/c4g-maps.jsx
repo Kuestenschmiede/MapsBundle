@@ -801,6 +801,28 @@ export class MapController extends Component {
       arrLayerStates: arrLayerStates
     });
   }
+  setLayerStateWithId (id, active) {
+    let arrLayerStates = this.state.arrLayerStates;
+    for (let i in arrLayerStates) {
+      if (arrLayerStates.hasOwnProperty(i)) {
+        arrLayerStates[i] = this.getLayerStateWithId(arrLayerStates[i], id, active);
+      }
+    }
+    this.setState({
+      arrLayerStates: arrLayerStates
+    });
+  }
+  getLayerStateWithId (layerState, id, active) {
+    if (layerState.id === id) {
+      layerState.active = active;
+    }
+    for (let i in layerState.childStates) {
+      if (layerState.childStates.hasOwnProperty(i)) {
+        layerState.childStates[i] = this.getLayerStateWithId(layerState.childStates[i], id, active);
+      }
+    }
+    return layerState;
+  }
 
   changeActiveLayers (baseLayerId) {
     let newLayerState = this.state.arrLayerStates;
