@@ -147,7 +147,6 @@ export class MapsControls {
                         if (locGeox && locGeoy) {
                             var numerized = [parseFloat(locGeox, 10), parseFloat(locGeoy, 10)];
                             var transformed = transform(numerized, get('EPSG:4326'), get('EPSG:3857'));
-                            geoLocation = null;
                             this.mapController.map.getView().setCenter(transformed);
                         }
                     }

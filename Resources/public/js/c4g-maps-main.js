@@ -30,10 +30,11 @@ window.initMaps = function(mapData) {
   for (let key in mapData) {
     if (mapData.hasOwnProperty(key)) {
       let mapDiv = jQuery("#c4g_map_" + mapData[key].mapId)[0];
-
-      ReactDOM.render(React.createElement(MapController, {
-        mapData: mapData[key],
-      }), mapDiv);
+      if (mapDiv) {
+        ReactDOM.render(React.createElement(MapController, {
+          mapData: mapData[key],
+        }), mapDiv);
+      }
     }
   }
 };
