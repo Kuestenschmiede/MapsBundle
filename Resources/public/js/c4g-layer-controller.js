@@ -512,6 +512,26 @@ export class BetterLayerController {
         }
       }
     }
+    else if (layer.split_geojson) {
+      let nameField = layer.geojson_attributes.split(',')[0];
+      for (let featureId in features) {
+        if (features.hasOwnProperty(featureId)) {
+          childs.push({
+            "features"        : [features[featureId]],
+            "vectorLayer"     : false,
+            "zoom"            : layer.zoom,
+            "initial_opened"  : layer.initial_opened,
+            "locstyle"        : possibleLocstyle,
+            "activateWithBl"  : layer.activeForBaselayers,
+            "id"              : features[featureId].ol_uid,
+            "name"            : features[featureId].get(nameField),
+            "hide"            : hide,
+            "childs"          : []
+          })
+        }
+      }
+      features = [];
+    }
     // if (childs && childs.length && childs.length > 0) {
     //   let singleLocStyle = childs[0].locstyle;
     //   if (!childs.find( (element) => element.locstyle !== singleLocStyle)) {
@@ -775,6 +795,7 @@ export class BetterLayerController {
                   if (content.hover_location) {
                     singleFeature.set('hover_style', content.hover_style);
                     singleFeature.set('hover_location', content.hover_location);
+                    singleFeature.set('tooltip', contentData.properties.tooltip);
                   }
                   features.push(singleFeature);
                 }
