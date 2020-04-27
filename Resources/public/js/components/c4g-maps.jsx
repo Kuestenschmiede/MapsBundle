@@ -14,6 +14,7 @@ import {MapProxy} from "../c4g-maps-proxy";
 import {cssConstants} from "../c4g-maps-constant";
 import {Spinner} from "../c4g-maps-misc-spinner";
 import {MapHover} from "../c4g-maps-misc-maphover";
+import {Group as LayerGroup} from 'ol/layer';
 import {utils} from "../c4g-maps-utils";
 import {GeoSearch} from "./c4g-geosearch.jsx";
 import {MapsControls} from "../c4g-maps-controls";
@@ -1017,7 +1018,13 @@ export class MapController extends Component {
       this.proxy.hook_baselayer_visibility.push(function(baselayerConfig) {
         let id = baselayerConfig.id;
         let currentBaselayer = scope.proxy.baselayerController.arrBaselayers[id];
-        let currentSource = currentBaselayer.layer.getSource();
+        let currentSource;
+        if (currentBaselayer.layer instanceof LayerGroup) {
+          currentSource = currentBaselayer.layer.getLayers().getArray()[0].getSource();
+        }
+        else {
+          currentSource = currentBaselayer.layer.getSource();
+        }
         scope.components.overviewMap.addLayer(new TileLayer({source: currentSource}), id);
       });
     }
