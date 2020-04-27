@@ -265,7 +265,7 @@ export class MapProxy {
 
             currentZoom = map.getView().getZoom();
             newCenter = map.getCoordinateFromPixel(clickEvent.pixel);
-            minZoom = self.options.mapController.data.cluster_all ? self.options.mapController.data.cluster_zoom : fFeatures['0'].get('cluster_zoom');
+            minZoom = self.options.mapController.data.cluster_zoom ? self.options.mapController.data.cluster_zoom : fFeatures['0'].get('cluster_zoom');
 
             if (currentZoom >= minZoom) {
               //open the cluster after zooming
