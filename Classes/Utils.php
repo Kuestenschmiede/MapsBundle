@@ -89,9 +89,8 @@ class Utils
         $result = $toReplace;
         global $objPage;
         $pageWasNull = $objPage === null;
-        $id = Database::getInstance()->prepare('SELECT id FROM tl_page LIMIT 1')->execute()->fetchAssoc();
+        $id = Database::getInstance()->prepare('SELECT id FROM tl_page WHERE language = ? LIMIT 1')->execute($lang)->fetchAssoc();
         $objPage = $objPage ?: PageModel::findByPk($id['id']);
-        $objPage->language = $lang;
         $objPage->title = '';
         $result = html_entity_decode(Controller::replaceInsertTags($result));
         if ($pageWasNull) {
