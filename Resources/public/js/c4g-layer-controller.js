@@ -347,7 +347,7 @@ export class BetterLayerController {
           }, 201);
         }});
       self.vectorCollection.extend(features);
-      self.vectorLayer.set('zIndex', 1);
+      self.vectorLayer.setZIndex(1);
       self.mapController.map.addLayer(self.vectorLayer);
       self.mapController.setLayersInitial(self.arrLayers, arrStates);
       self.mapController.setTabLayers(tabStructures, tabStates);
@@ -514,6 +514,7 @@ export class BetterLayerController {
     }
     else if (layer.split_geojson) {
       let nameField = layer.geojson_attributes.split(',')[0];
+      let zoomTo = !!layer.geojson_zoom;
       for (let featureId in features) {
         if (features.hasOwnProperty(featureId)) {
           childs.push({
@@ -522,6 +523,7 @@ export class BetterLayerController {
             "zoom"            : layer.zoom,
             "initial_opened"  : layer.initial_opened,
             "locstyle"        : possibleLocstyle,
+            "zoomTo"          : zoomTo,
             "activateWithBl"  : layer.activeForBaselayers,
             "id"              : features[featureId].ol_uid,
             "name"            : features[featureId].get(nameField),
@@ -711,6 +713,7 @@ export class BetterLayerController {
       }
       vectorLayer = new Vector({
           source: vectorSource,
+          zIndex: 500,
           style: customStyleFunc || this.clusterStyleFunction
       });
       scope.proxy.hook_locstyles_loaded.push(function(lostyleController) {
@@ -718,7 +721,7 @@ export class BetterLayerController {
       });
       let greyed = layer.zoom && !this.compareZoom(layer.zoom);
       if (!hide && !greyed) {
-        vectorLayer.set('zIndex', 1);
+        // vectorLayer.setZIndex(1);
         this.mapController.map.addLayer(vectorLayer);
       }
       features = false;
@@ -855,12 +858,14 @@ export class BetterLayerController {
         }
       }
     }
-    if (this.objIds.hasOwnProperty(layer.id)) {
-      return [];
+    if (!this.objIds.hasOwnProperty(layer.id)) {
+      if (!layer.split_geojson) {
+        this.objIds[layer.id] = features;
+      }
+      return features;
     }
     else {
-      this.objIds[layer.id] = features;
-      return features;
+      return [];
     }
   }
   geometryFunction (feature) {

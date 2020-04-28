@@ -140,7 +140,7 @@ export class C4gStarboardLayerElement extends Component {
         }
       }
     }
-    this.props.parentCallback(this.props.keyId, newState)
+    // this.props.parentCallback(this.props.keyId, newState)
   }
   changeCollapseState(id, state) {
     this.props.layerStates.childStates[id] = state;
@@ -169,7 +169,7 @@ export class C4gStarboardLayerElement extends Component {
     let openClose = this.props.layerStates.collapsed ? cssConstants.CLOSE : cssConstants.OPEN;
     let objChilds = this.props.layer.childs;
 
-    if (objChilds) {
+    if (objChilds && objChilds.length) {
       return (
         <li className={openClose}>
           {span}
@@ -196,12 +196,25 @@ export class C4gStarboardLayerElement extends Component {
       );
     }
     else {
+      let layerClick = this.layerClick;
+      if (this.props.layer.zoomTo) {
+        layerClick = (event) => {
+          let feature = this.props.layer.features[0];
+          let map = this.props.mapController.map;
+          map.getView().fit(feature.getGeometry(), {
+            padding: [50,50,50,50]
+          });
+          console.log(this);
+        }
+        layerClick = layerClick.bind(this);
+        cssClass = "c4g-geojson-button"
+      }
       return (
-        <li className={openClose}>
-          {span}
-          {stylePicture}
-          <a className={cssClass} onMouseUp={(event) => this.layerClick(event)}>{this.props.layer.name}</a>
-        </li>
+          <li className={openClose}>
+            {span}
+            {stylePicture}
+            <a className={cssClass} onMouseUp={(event) => layerClick(event)}>{this.props.layer.name}</a>
+          </li>
       )
     }
   }
