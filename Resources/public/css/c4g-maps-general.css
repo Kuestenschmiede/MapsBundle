@@ -540,6 +540,7 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
 
 .c4g-sideboard.c4g-popup-container {
   max-width: 100%;
+  max-width: var(--popup-max-width);
 }
 
 .c4g-sideboard.c4g-close {
