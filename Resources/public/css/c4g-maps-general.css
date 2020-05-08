@@ -587,6 +587,7 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
 
 .c4g-sideboard > div[class*=wrapper] > div[class*=header] + div[class*=content] {
   max-height: calc((var(--map-height) - .4em) - (32px + .4em) - .4em);
+  height: 100%;
 }
 
 /*---------------------------------*/
@@ -788,7 +789,9 @@ span.c4g-starboard-locstyle-triangle:before {
 .c4g-permalink-content textarea {
   display: inline-block;
   max-width: calc(100% - .8em - (32px * 2));
-  min-height: calc(var(--map-height) - .8em - 32px - .4em - .4em - .4em);
+  min-height: 28px;
+  height: 28px;
+  max-height: 100%;
   outline: none;
   background: none;
   border: none;
