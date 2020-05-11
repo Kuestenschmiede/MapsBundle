@@ -20,14 +20,14 @@ export class Fullscreen extends Component {
   constructor(props) {
     super(props);
 
-    let controlContainerTopLeft = document.querySelector('.' + cssConstants.CONTROL_CONTAINER_TL + '.' + cssConstants.OL_UNSELECTABLE);
+    // let controlContainerTopLeft = document.querySelector('.' + cssConstants.CONTROL_CONTAINER_TL + '.' + cssConstants.OL_UNSELECTABLE);
     let langConstants = getLanguage(props.mapController.data);
 
     let control = new FullScreen({
       label: ' ',
       labelActive: ' ',
       tipLabel: langConstants.CTRL_FULLSCREEN,
-      target: controlContainerTopLeft
+      target: this.props.target
     });
 
     let mapController = props.mapController;

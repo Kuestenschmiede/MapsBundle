@@ -1055,42 +1055,58 @@ export class MapController extends Component {
           break;
         case 'zoom':
           if (mapData.zoom) {
-            result.push(React.createElement(Zoom, {mapController: this, key: i}));
+            result.push(
+                <Zoom mapController={this} target={target} key={i}/>
+            );
           }
           break;
         case 'zoomExtent':
           if (mapData.zoomExtent) {
-            result.push(React.createElement(ZoomExtent, {mapController: this, key: i}));
+            result.push(
+                <ZoomExtent mapController={this} target={target} key={i}/>
+            );
           }
           break;
         case 'zoomHome':
           if (mapData.zoomHome) {
-            result.push(React.createElement(ZoomHome, {mapController: this, key: i}));
+            result.push(
+                <ZoomHome mapController={this} target={target} key={i}/>
+            );
           }
           break;
         case 'zoomPosition':
           if (mapData.zoomPosition) {
-            result.push(React.createElement(ZoomPosition, {mapController: this, key: i}));
+            result.push(
+                <ZoomPosition mapController={this} target={target} key={i}/>
+            );
           }
           break;
         case 'fullscreen':
           if (mapData.fullscreen) {
-            result.push(React.createElement(Fullscreen, {mapController: this, key: i}));
+            result.push(
+                <Fullscreen mapController={this} target={target} key={i}/>
+            );
           }
           break;
         case 'print':
           if (mapData.print) {
-            result.push(React.createElement(Print, {mapController: this, key: i}));
+            result.push(
+                <Print mapController={this} target={target} key={i}/>
+            );
           }
           break;
         case 'rotate':
           if (mapData.rotate) {
-            result.push(React.createElement(Rotate, {mapController: this, key: i}));
+            result.push(
+                <Rotate mapController={this} target={target} key={i}/>
+            );
           }
           break;
         case 'graticule':
           if (mapData.graticule) {
-            result.push(React.createElement(Grid, {mapController: this, key: i}));
+            result.push(
+                <Grid mapController={this} target={target} key={i}/>
+            );
           }
           break;
         case 'overview':

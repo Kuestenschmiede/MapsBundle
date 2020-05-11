@@ -68,11 +68,11 @@ export class Print extends Component {
     button.addEventListener('click', toggle, {useCapture: false, passive: true});
     button.addEventListener('touchstart', toggle, {useCapture: false, passive: true});
 
-    let controlContainerTopLeft = document.querySelector('.' + cssConstants.CONTROL_CONTAINER_TL + '.' + cssConstants.OL_UNSELECTABLE);
+    // let controlContainerTopLeft = document.querySelector('.' + cssConstants.CONTROL_CONTAINER_TL + '.' + cssConstants.OL_UNSELECTABLE);
 
     let control = new Control({
       element: element,
-      target: controlContainerTopLeft
+      target: this.props.target
     });
 
     let mapController = props.mapController;
