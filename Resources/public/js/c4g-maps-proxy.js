@@ -295,7 +295,7 @@ export class MapProxy {
               let stringSource = new VectorSource({features: arrLinestring});
               let stringStyle = new Style({
                 stroke: new Stroke({
-                  width: 0.1,
+                  width: 0.3,
                   color: "#000070"
                 })
               });
