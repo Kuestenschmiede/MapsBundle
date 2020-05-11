@@ -1119,7 +1119,7 @@ export class BetterLayerController {
     const objLayers = mapController.state.objLayers;
     const zoom = mapController.map.getView().getZoom();
     for (let id in childStates) {
-      if (childStates.hasOwnProperty(id)) {
+      if (childStates.hasOwnProperty(id) && objLayers[id]) {
         childStates[id] = this.handleZoomChilds(zoom, childStates[id], objLayers[id]);
       }
     }
