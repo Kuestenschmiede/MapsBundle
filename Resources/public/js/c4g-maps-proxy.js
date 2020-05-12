@@ -244,30 +244,32 @@ export class MapProxy {
               map.getView().setZoom(currentZoom+1);
             }
           } else {
-            feature.setStyle(new Style({
-              image: new Circle({
-                fill: new Fill({
-                  opacity: 0
-                }),
-                radius: 0
-              })
-            }));
-            feature = false;
+            // feature.setStyle(new Style({
+            //   image: new Circle({
+            //     fill: new Fill({
+            //       opacity: 0
+            //     }),
+            //     radius: 0
+            //   })
+            // }));
+            layer.getSource().removeFeature(feature);
 
             // animation
-            map.getView().animate({
-              start: +new Date(),
-              duration: 1000,
-              resolution: map.getView().getResolution(),
-              center: [0, 0]
-              //rotation: Math.PI
-            });
+            // map.getView().animate({
+            //   start: +new Date(),
+            //   duration: 1000,
+            //   resolution: map.getView().getResolution(),
+            //   center: [0, 0]
+            //   //rotation: Math.PI
+            // });
 
             currentZoom = map.getView().getZoom();
             newCenter = map.getCoordinateFromPixel(clickEvent.pixel);
             minZoom = self.options.mapController.data.cluster_zoom ? self.options.mapController.data.cluster_zoom : fFeatures['0'].get('cluster_zoom');
 
             if (currentZoom >= minZoom) {
+              var f = [];
+              var cf = [];
               //open the cluster after zooming
               var pix = map.getView().getResolution();
               var max = fFeatures.length;
@@ -279,19 +281,13 @@ export class MapProxy {
                 if (max == 2 || max == 4) a += Math.PI / 4;
                 var p = [newCenter[0] + r * Math.sin(a), newCenter[1] + r * Math.cos(a)];
                 var coordinate = toLonLat(p);
-                var f = [];
                 let featureLinestring = new Feature(new LineString([newCenter, p]));
                 arrLinestring.push(featureLinestring);
-                f.push(fFeatures[i]);
-                var cf = new Feature({
-                  geometry: new Point(p),
-                  features: f,
-                  style: fFeatures[i].get('style')
-                  });
-                  layer.getSource().addFeature(cf);
-                  layer.getSource().addFeature(featureLinestring);
-                  map.getView().setCenter(newCenter);
+                f.push(fFeatures[i].getGeometry());
+                // layer.getSource().removeFeature(fFeatures[i]);
+                fFeatures[i].setGeometry(new Point(p));
               }
+              layer.getSource().addFeatures(fFeatures);
               let stringSource = new VectorSource({features: arrLinestring});
               let stringStyle = new Style({
                 stroke: new Stroke({
@@ -304,16 +300,21 @@ export class MapProxy {
                 style: stringStyle
               });
               map.getView().on('change:resolution', function(evt) {
+                for (let id in f) {
+                  if (f.hasOwnProperty(id) && fFeatures.hasOwnProperty(id)) {
+                    fFeatures[id].setGeometry(f[id]);
+                  }
+                }
+                cf = [];
+                f = [];
                 map.removeLayer(stringLayer);
               });
               map.addLayer(stringLayer);
             } else {
               currentZoom += 1;
+              map.getView().setCenter(newCenter);
+              map.getView().setZoom(currentZoom);
             }
-
-
-            map.getView().setCenter(newCenter);
-            map.getView().setZoom(currentZoom);
           }
         }
       } else if ((fFeatures && fFeatures.length === 1)) {
