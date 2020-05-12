@@ -244,25 +244,7 @@ export class MapProxy {
               map.getView().setZoom(currentZoom+1);
             }
           } else {
-            // feature.setStyle(new Style({
-            //   image: new Circle({
-            //     fill: new Fill({
-            //       opacity: 0
-            //     }),
-            //     radius: 0
-            //   })
-            // }));
             layer.getSource().removeFeature(feature);
-
-            // animation
-            // map.getView().animate({
-            //   start: +new Date(),
-            //   duration: 1000,
-            //   resolution: map.getView().getResolution(),
-            //   center: [0, 0]
-            //   //rotation: Math.PI
-            // });
-
             currentZoom = map.getView().getZoom();
             newCenter = map.getCoordinateFromPixel(clickEvent.pixel);
             minZoom = self.options.mapController.data.cluster_zoom ? self.options.mapController.data.cluster_zoom : fFeatures['0'].get('cluster_zoom');
@@ -284,7 +266,6 @@ export class MapProxy {
                 let featureLinestring = new Feature(new LineString([newCenter, p]));
                 arrLinestring.push(featureLinestring);
                 f.push(fFeatures[i].getGeometry());
-                // layer.getSource().removeFeature(fFeatures[i]);
                 fFeatures[i].setGeometry(new Point(p));
               }
               layer.getSource().addFeatures(fFeatures);
