@@ -67,6 +67,7 @@ $GLOBALS['FE_MOD']['con4gis']['c4g_maps'] = 'con4gis\MapsBundle\Resources\contao
 $GLOBALS['FE_MOD']['con4gis']['c4g_search'] = 'con4gis\MapsBundle\Resources\contao\modules\ModuleC4gSearch';
 $GLOBALS['FE_MOD']['con4gis']['c4g_external_map_element'] = 'con4gis\MapsBundle\Resources\contao\modules\ExternalMapElement';
 asort($GLOBALS['FE_MOD']['con4gis']);
+
 /**
  * Content elements
  */
