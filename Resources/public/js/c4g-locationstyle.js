@@ -74,6 +74,9 @@ export class C4gLocationStyle {
 
     // build function
     styleFunction = function (feature, projection, getId) {
+      if (self.fnStyleFunction) {
+        return Function("feature","data","map",self.fnStyleFunction)(feature);
+      }
       var stylesArray,
         label;
       let mapZoom = self.controller.mapController.map.getView().getZoom();
