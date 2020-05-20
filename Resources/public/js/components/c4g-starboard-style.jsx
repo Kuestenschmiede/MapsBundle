@@ -78,7 +78,7 @@ export class C4gStarboardStyle extends Component {
                     break;
             }
             let color, bordercolor;
-            if (styl0r) {
+            if (styl0r && styl0r.getFill() && styl0r.getStroke()) {
                 color = styl0r.getFill().getColor();
                 bordercolor = styl0r.getStroke().getColor();
             }
