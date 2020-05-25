@@ -219,7 +219,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['search'] = "Suc
 //$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['measuretools'] = "Messwerkzeuge";
 //$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['legend'] = "Legende";
 //$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['overviewmap'] = "Übersichtskarte";
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['filter'] = "Kartenfilter";
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['filter'] = "Kaffeefilter";
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['popup'] = "Popup";
 
 /**
  * Info text

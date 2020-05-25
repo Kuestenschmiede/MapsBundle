@@ -37,7 +37,7 @@ export class PopupContainer extends Component {
   render() {
     let detailBtnClass = "";
     let detailBtnCb = "";
-    let className = "c4g-sideboard c4g-popup-container ";
+    let className = this.props.external ? "c4g-popup-container " : "c4g-sideboard c4g-popup-container ";
 
     if (this.state.open) {
       className += "c4g-open ";

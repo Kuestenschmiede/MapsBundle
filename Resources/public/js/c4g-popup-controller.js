@@ -24,6 +24,8 @@ export class C4gPopupController {
   constructor(proxy) {
     this.mapController = proxy.options.mapController;
     this.mapData = proxy.options.mapController.data;
+    this.popupHandling = parseInt(this.mapData.popupHandling, 10);
+    this.external = !!this.mapData.popupDiv;
     this.currentPopup = null;
     this.containerOpen = false;
   }
@@ -42,7 +44,6 @@ export class C4gPopupController {
       mapData: this.mapData,
       mapController: this.mapController
     };
-    this.popupHandling = parseInt(this.mapData.popupHandling, 10);
 
     if (window.c4gMapsPopup && window.c4gMapsPopup.popup) {
       this.mapController.map.removeOverlay(window.c4gMapsPopup.popup);
@@ -52,14 +53,22 @@ export class C4gPopupController {
       if (this.popupContainer) {
         ReactDOM.unmountComponentAtNode(this.popupContainer);
         delete this.mapController.components.popup;
-        this.popupContainer.parentNode.removeChild(this.popupContainer);
+        if (!this.external) {
+          this.popupContainer.parentNode.removeChild(this.popupContainer);
+        }
       }
-      this.popupContainer = document.createElement('div');
+      popupOptions.external = this.external;
+      this.popupContainer = this.external ? document.querySelector("." + this.mapData.popupDiv) : document.createElement('div');
+
       this.popupComponent = ReactDOM.render(React.createElement(PopupContainer, popupOptions), this.popupContainer);
-      this.mapController.$overlaycontainer_stopevent.append(this.popupContainer);
+      if (!this.external) {
+         this.mapController.$overlaycontainer_stopevent.append(this.popupContainer);
+      }
       this.currentPopup = this.popupComponent;
       // close open sideboards
-      this.mapController.hideOtherComponents(this.currentPopup);
+      if (!this.external) {
+        this.mapController.hideOtherComponents(this.currentPopup);
+      }
       this.mapController.components.popup = this.popupComponent;
       window.c4gMapsPopup = {};
       window.c4gMapsPopup.popup = this;

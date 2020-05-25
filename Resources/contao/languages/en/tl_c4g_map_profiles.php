@@ -218,6 +218,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['search'] = "Sea
 //$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['legend'] = "Legend";
 //$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['overviewmap'] = "Overview map";
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['filter'] = "Mapfilter";
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['popup'] = "Popup";
 
 
 /**
