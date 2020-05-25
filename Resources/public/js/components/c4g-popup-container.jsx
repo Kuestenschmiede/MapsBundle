@@ -90,7 +90,11 @@ export class PopupContainer extends Component {
   }
 
   close() {
-    this.setState({open: false});
+    let newState = {
+      open: false,
+      content: this.props.external ? "": this.state.content
+    };
+    this.setState(newState);
   }
 
   toggleDetails() {
