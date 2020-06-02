@@ -351,7 +351,7 @@ export class BetterLayerController {
       self.mapController.map.addLayer(self.vectorLayer);
       self.mapController.setLayersInitial(self.arrLayers, arrStates);
       self.mapController.setTabLayers(tabStructures, tabStates);
-      if (self.mapController.props.mapData.calc_extent === "LOCATIONS") {
+      if (self.proxy.mapData.calc_extent === "LOCATIONS") {
         if (self.extent && !(self.extent.maxX === Infinity || self.extent.maxX === -Infinity)) {
           let view = self.mapController.map.getView();
           let padding = [
@@ -827,7 +827,7 @@ export class BetterLayerController {
         }
       }
     }
-    if (this.mapController.props.mapData.calc_extent === "LOCATIONS") {
+    if (this.proxy.mapData.calc_extent === "LOCATIONS") {
       for (let i in features) {
         if (features.hasOwnProperty(i)) {
           let extent = features[i].getGeometry().getExtent();
