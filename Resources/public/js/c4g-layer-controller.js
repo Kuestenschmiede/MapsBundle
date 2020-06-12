@@ -125,8 +125,14 @@ export class BetterLayerController {
         }
       }
       if (size > 1 && returnStyle && Array.isArray(returnStyle)) {
-        if (returnStyle[0] &&returnStyle[0].setZIndex && feature.get('zindex')) {
-          returnStyle[0].setZIndex(feature.get('zindex'));
+        let zIndex = 0;
+        if (returnStyle[0] && returnStyle[0].setZIndex && feature.get('zindex')) {
+          zIndex += feature.get('zindex');
+        }
+        if (returnStyle[0] &&returnStyle[0].setZIndex) {
+          let geometry = feature.getGeometry().clone().transform("EPSG:3857", "EPSG:4326").getCoordinates();
+          zIndex += 100 - geometry[1];
+          returnStyle[0].setZIndex(zIndex);
         }
         let iconOffset = [0, 0];
         if (returnStyle[0]) {
@@ -174,8 +180,14 @@ export class BetterLayerController {
         );
       }
       else if (returnStyle && Array.isArray(returnStyle)) {
+        let zIndex = 0;
         if (returnStyle[0] && returnStyle[0].setZIndex && feature.get('zindex')) {
-          returnStyle[0].setZIndex(feature.get('zindex'));
+          zIndex += feature.get('zindex');
+        }
+        if (returnStyle[0] &&returnStyle[0].setZIndex) {
+          let geometry = feature.getGeometry().clone().transform("EPSG:3857", "EPSG:4326").getCoordinates();
+          zIndex += 100 - geometry[1];
+          returnStyle[0].setZIndex(zIndex);
         }
       }
       return returnStyle
