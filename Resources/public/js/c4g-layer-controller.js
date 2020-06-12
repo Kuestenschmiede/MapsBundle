@@ -152,7 +152,15 @@ export class BetterLayerController {
         });
 
         let fontcolor = '#FFFFFF';
-
+        if (feature.get('cluster_fillcolor')) {
+          fillcolor = utils.getRgbaFromHexAndOpacity(feature.get('cluster_fillcolor'),{
+            unit: '%',
+            value: 70
+          });
+        }
+        if (feature.get('cluster_fontcolor')) {
+          fontcolor = feature.get('cluster_fontcolor');
+        }
         returnStyle.push(
             new Style({
               text: new Text({
@@ -1006,6 +1014,10 @@ export class BetterLayerController {
         if (content.hover_location) {
           features[featureId].set('hover_style', content.hover_style);
           features[featureId].set('hover_location', content.hover_location);
+        }
+        if (content.cluster_fillcolor && content.cluster_fontcolor) {
+          features[featureId].set('cluster_fillcolor', content.cluster_fillcolor);
+          features[featureId].set('cluster_fontcolor', content.cluster_fontcolor);
         }
       }
     }
