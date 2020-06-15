@@ -111,6 +111,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium'] = ['Use Cesium', 'If the op
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium_always']  = ['Always use Cesium', 'If the globe display of all base maps selected here in the map profile is desired, this option must be activated. No further specifications in the base maps are necessary.)'];
 
 /** Einstellungen zum Klick-Verhalten */
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['tooltipOrientation'] = ['Tooltip-position', 'Position of the tooltip relative to the mouse.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['link_newwindow'] = ['Open Links in new Window', 'If checked, links attempt to open in a new window.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['link_open_on'] = ['Open Links on', 'Select on which mouse action a link should be opened, if a link is specified.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['hover_popups'] = ['Popups on Mouse Hover', 'Shows a popup if the mouse pointer rests on a location.'];
@@ -166,6 +167,12 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandlingReferences']['0'] = 'Cl
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandlingReferences']['1'] = 'Mapview changing (map moves to show popup)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandlingReferences']['2'] = 'Centered popup (popup will be centered on map)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandlingReferences']['3'] = 'Popup will be rendered into an own container at the bottom of the map (default)';
+
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['tooltipOrientationReferences']['0'] = 'Bottom left';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['tooltipOrientationReferences']['1'] = 'Top left';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['tooltipOrientationReferences']['2'] = 'Bottom right';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['tooltipOrientationReferences']['3'] = 'Top right';
+
 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp']['refs'][''] = 'none';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp']['refs']['starboard'] = 'Starboard';

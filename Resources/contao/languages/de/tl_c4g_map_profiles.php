@@ -113,6 +113,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium'] = ['Cesium verwenden', 'Sof
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium_always'] = ['Cesium immer verwenden', 'Ist die Globus-Darstellung aller hier im Kartenprofil gewählten Basiskarten gewünscht, ist diese Option zu aktivieren. Keine weiteren Vorgaben in den Basiskarten notwendig.'];
 
 /** Einstellungen zum Klick-Verhalten */
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['tooltipOrientation'] = ['Tooltip-Positionierung', 'Positionierung des Tooltips im Verhältnis zur Maus.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['link_newwindow'] = ['Direktlinks in neuem Tab öffnen', 'Direktlinks werden nicht im selben Tab, sondern in einem neuen Tab geöffnet.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['link_open_on'] = ['Direktlinks öffnen bei', 'Hier können Sie wählen, nach welcher Mausaktion ein Direktlink geöffnet wird, falls er bei der Lokation angegeben ist.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['hover_popups'] = ['Popups über Maus-Hover-Effekt anzeigen', 'Popups werden angezeigt sobald der Mauszeiger über der Lokation verweilt und nicht erst nach einem Mausklick.'];
@@ -165,6 +166,11 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandlingReferences']['0'] = 'Kl
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandlingReferences']['1'] = 'Kartenausschnitt an Popup anpassen (Das Popup verweist auf das geöffnete Feature. Die Karte bewegt sich, sodass dass Popup sichtbar ist.)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandlingReferences']['2'] = 'Zentriertes Popup (Das Popup wird in der Mitte der Karte angezeigt.)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandlingReferences']['3'] = 'Das Popup wird in einer eigenen Leiste am rechten Kartenrand dargestell (Standard).';
+
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['tooltipOrientationReferences']['0'] = 'Unten links';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['tooltipOrientationReferences']['1'] = 'Oben links';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['tooltipOrientationReferences']['2'] = 'Unten rechts';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['tooltipOrientationReferences']['3'] = 'Oben rechts';
 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearchParams']['keys']       = ['Schlüssel','Beispiel:countrycodes'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearchParams']['params']     = ['Parameter', 'Beispiel: de'];

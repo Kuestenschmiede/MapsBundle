@@ -106,7 +106,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         '__selector__'                => ['resize_locstyles_zoom', 'mouse_nav','cluster_all','attribution','hover_popups','overpassEngine', 'cesium', 'popupHandling','geopicker'],
         'default'                     => '{general_legend},name,theme,mapFunctions,initial_open_comp;'.
                                          '{navigation_legend:hide},mouse_nav,touch_nav,keyboard_nav;'.
-                                         '{click_legend:hide},link_newwindow,link_open_on,hover_popups,popupHandling;'.
+                                         '{click_legend:hide},tooltipOrientation,link_newwindow,link_open_on,hover_popups,popupHandling;'.
                                          '{baselayer_legend:hide},baselayers, default_baselayer,baselayerswitcher_label,baselayer_filter;'.
                                          '{starboard_legend:hide},layerswitcher_label,starboard_filter,starboard_label,starboard_button,starboard_locstyles,cluster_all;'.
                                          '{geosearch_legend:hide},geosearch_headline,geosearch_engine,geosearchParams,geosearch_result_locstyle,geosearch_placeholder,geosearch_results,geosearch_zoomto,geosearch_zoombounds,geosearch_animate,geosearch_markresult,geosearch_popup,geosearch_attribution;'.
@@ -269,6 +269,17 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'options'                 => ['CLICK','DBLCL'],
                 'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references'],
                 'sql'                     => "char(5) NOT NULL default 'CLICK'"
+            ],
+        'tooltipOrientation' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['tooltipOrientation'],
+                'exclude'                 => true,
+                'default'                 => '0',
+                'inputType'               => 'radio',
+                'options'                 => ['0','1','2','3'],
+                'eval'                    => ['includeBlankOption' => false],
+                'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['tooltipOrientationReferences'],
+                'sql'                     => "char(1) NOT NULL default '0'"
             ],
         'hover_popups' =>
             [

@@ -518,6 +518,23 @@ class MapDataConfigurator
             $mapData['legend']['div'] = (in_array('legend', $externalElements)) ? $externalClasses['legend'] : '';
             $mapData['initial_open_comp'] = $profile->initial_open_comp;
             $mapData['link_newwindow'] = $profile->link_newwindow;
+            switch ($profile->tooltipOrientation) {
+                case 0:
+                    $mapData['tooltipOrientation'] = 'top-right';
+                    break;
+                case 1:
+                    $mapData['tooltipOrientation'] = 'bottom-right';
+                    break;
+                case 2:
+                    $mapData['tooltipOrientation'] = 'top-left';
+                    break;
+                case 3:
+                    $mapData['tooltipOrientation'] = 'bottom-left';
+                    break;
+                default:
+                    $mapData['tooltipOrientation'] = 'top-right';
+                    break;
+            }
             $mapData['hover_popups'] = $profile->hover_popups;
             $mapData['hover_popups_stay'] = $profile->hover_popups_stay;
             $mapData['popupHandling'] = $profile->popupHandling;

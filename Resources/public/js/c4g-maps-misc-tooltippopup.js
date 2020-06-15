@@ -77,7 +77,7 @@ export class TooltipPopUp {
       element: this.element,
       insertFirst: false,
       offset: this.options.offset,
-      positioning: 'bottom-left'
+      positioning: this.options.orientation
     });
 
     if (this.options.map) {

@@ -46,11 +46,11 @@ export class MapHover {
     this.map = this.options.mapController.map;
     this.lastFeatureStyle = null;
     this.lastHoveredFeature = null;
-
     // create tooltip
     this.hoverTooltip = new TooltipPopUp({
       map: this.map,
       offset: [10, 10],
+      orientation : this.options.mapController.data.tooltipOrientation || "bottom-left",
       horizontal: true,
       closeable: false
     });
