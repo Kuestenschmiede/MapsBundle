@@ -521,18 +521,23 @@ class MapDataConfigurator
             switch ($profile->tooltipOrientation) {
                 case 0:
                     $mapData['tooltipOrientation'] = 'top-right';
+
                     break;
                 case 1:
                     $mapData['tooltipOrientation'] = 'bottom-right';
+
                     break;
                 case 2:
                     $mapData['tooltipOrientation'] = 'top-left';
+
                     break;
                 case 3:
                     $mapData['tooltipOrientation'] = 'bottom-left';
+
                     break;
                 default:
                     $mapData['tooltipOrientation'] = 'top-right';
+
                     break;
             }
             $mapData['hover_popups'] = $profile->hover_popups;
