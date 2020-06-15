@@ -107,6 +107,8 @@ export class C4gLocationStyle {
       }
       let defaultColor = self.controller.mapController.data.default_label_color;
       // label
+      let newScale = self.getScaleFactor(styleData);
+
       if (label) {
         if (styleData.label_outl_color && styleData.label_outl_width.value) {
           textStyleOutline = new Stroke({
@@ -137,6 +139,7 @@ export class C4gLocationStyle {
           offsetY: parseInt(styleData.label_offset[1] || 0, 10),
           textAlign: styleData.label_align_hor,
           textBaseline: styleData.label_align_ver,
+          scale: newScale,
           fill: new Fill({
             color: utils.getRgbaFromHexAndOpacity(styleData.font_color[0] || defaultColor, styleData.font_color[1])
           }),
@@ -149,7 +152,6 @@ export class C4gLocationStyle {
         textStyle = new Text(textOptions);
       }
 
-      let newScale = self.getScaleFactor(styleData);
 
       // check if image has to be resized
       if (imageStyle && newScale !== 0.0 && imageStyle.setScale) {
