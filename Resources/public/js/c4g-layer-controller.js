@@ -814,7 +814,11 @@ export class BetterLayerController {
                   if (content.hover_location) {
                     singleFeature.set('hover_style', content.hover_style);
                     singleFeature.set('hover_location', content.hover_location);
+                  }
+                  if (contentData.properties) {
                     singleFeature.set('tooltip', contentData.properties.tooltip);
+                    singleFeature.set('label', contentData.properties.label);
+                    singleFeature.set('popup', contentData.properties.popup);
                   }
                   features.push(singleFeature);
                 }
