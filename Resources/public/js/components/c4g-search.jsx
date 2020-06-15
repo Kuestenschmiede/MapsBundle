@@ -25,6 +25,7 @@ export class Search extends Component {
         arrPositions: []
       }
     };
+    this.time = 0;
     this.autocompleteAddress = this.autocompleteAddress.bind(this);
     this.handleSuggestionClick = this.handleSuggestionClick.bind(this);
     this.setWrapperRef = this.setWrapperRef.bind(this);
@@ -68,10 +69,14 @@ export class Search extends Component {
   handleInputChange = () => {
     this.setState({
       query: this.search.value
+
     }, () => {
       if (this.state.query && this.state.query.length > 2) {
-        if (this.state.query.length % 2 === 0) {
-          this.autocompleteAddress()
+        let time = new Date().getTime();
+        if (this.time + 110 < time) {
+          this.time = time;
+          let number = !isNaN(this.state.query)
+          this.autocompleteAddress(number);
         }
       }
     })
@@ -83,11 +88,18 @@ export class Search extends Component {
     window.open(url, "_self");
   };
 
-  autocompleteAddress() {
+  autocompleteAddress(number) {
     const scope = this;
     const settings = scope.props.objSettings;
 
-    let url = settings.proxyUrl + "autocomplete.php?format=json&key=" + settings.keyAutocomplete + "&q=" + this.state.query;
+    let url = settings.proxyUrl;
+    if (number) {
+      url += "search.php?format=json&key=" + settings.keyForward;
+    }
+    else {
+      url += "autocomplete.php?format=json&key=" + settings.keyAutocomplete;
+    }
+    url += "&q=" + this.state.query;
     if (settings.geosearchParams) {
       for (let param in settings.geosearchParams) {
         if (settings.geosearchParams.hasOwnProperty(param)) {
