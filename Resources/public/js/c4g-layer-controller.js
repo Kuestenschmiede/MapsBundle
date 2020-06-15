@@ -135,6 +135,7 @@ export class BetterLayerController {
           returnStyle[0].setZIndex(zIndex);
         }
         let iconOffset = [0, 0];
+        let scale = 1;
         if (returnStyle[0]) {
           if (returnStyle[0].getImage() && returnStyle[0].getImage().getRadius && typeof returnStyle[0].getImage().getRadius === "function") {
             let radius = parseInt(returnStyle[0].getImage().getRadius(), 10);
@@ -143,6 +144,10 @@ export class BetterLayerController {
             }
           } else if (returnStyle[0].getImage() && returnStyle[0].getImage().getAnchor && typeof returnStyle[0].getImage().getAnchor === "function") {
             iconOffset = returnStyle[0].getImage().getAnchor() || [0, 0];
+          }
+          if (returnStyle[0].getImage() && returnStyle[0].getImage().getScale() && returnStyle[0].getImage().getScale() !== 1) {
+            scale = returnStyle[0].getImage().getScale();
+            iconOffset = [iconOffset[0] * scale, iconOffset[1] * scale];
           }
         }
 
@@ -168,6 +173,7 @@ export class BetterLayerController {
                 font: "60px sans-serif",
                 offsetX: -1 * iconOffset[0],
                 offsetY: -1 * iconOffset[1],
+                scale: scale,
                 fill: new Fill({
                   color: fillcolor
                 })
@@ -180,6 +186,7 @@ export class BetterLayerController {
                 text: size.toString(),
                 offsetX: -1 * iconOffset[0],
                 offsetY: -1 * iconOffset[1] + 3,
+                scale: scale,
                 fill: new Fill({
                   color: fontcolor
                 })
