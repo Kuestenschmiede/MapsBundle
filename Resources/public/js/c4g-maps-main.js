@@ -29,7 +29,13 @@ window.initMap = function(mapData) {
 window.initMaps = function(mapData) {
   for (let key in mapData) {
     if (mapData.hasOwnProperty(key)) {
-      let mapDiv = jQuery("#c4g_map_" + mapData[key].mapId)[0];
+      let mapDiv;
+      if (mapData[key].mapDiv) {
+        mapDiv = jQuery(mapData[key].mapDiv)[0] || jQuery("#" + mapData[key].mapDiv)[0] || jQuery( "." + mapData[key].mapDiv)[0]
+      }
+      else {
+        mapDiv = jQuery("#c4g_map_" + mapData[key].mapId)[0];
+      }
       if (mapDiv) {
         ReactDOM.render(React.createElement(MapController, {
           mapData: mapData[key],
