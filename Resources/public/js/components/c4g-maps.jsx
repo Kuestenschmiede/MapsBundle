@@ -798,9 +798,11 @@ export class MapController extends Component {
   }
 
   setLayerStates(arrLayerStates) {
-    this.setState({
-      arrLayerStates: arrLayerStates
-    });
+    if (this._isMounted) {
+      this.setState({
+        arrLayerStates: arrLayerStates
+      });
+    }
   }
   setLayerStateWithId (id, active) {
     let arrLayerStates = this.state.arrLayerStates;
@@ -1160,6 +1162,7 @@ export class MapController extends Component {
   }
 
   componentDidMount() {
+    this._isMounted = true;
     if (this.data.caching) {
       let storedPanel = utils.getValue('panel');
       if (storedPanel) {
@@ -1176,6 +1179,9 @@ export class MapController extends Component {
         this.setOpenComponent(storedPanel);
       }
     }
+  }
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   createGeosearchOptions() {
