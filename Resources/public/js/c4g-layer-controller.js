@@ -816,9 +816,15 @@ export class BetterLayerController {
                     singleFeature.set('hover_location', content.hover_location);
                   }
                   if (contentData.properties) {
-                    singleFeature.set('tooltip', contentData.properties.tooltip);
-                    singleFeature.set('label', contentData.properties.label);
-                    singleFeature.set('popup', contentData.properties.popup);
+                    if (!singleFeature.get('tooltip')) {
+                      singleFeature.set('tooltip', contentData.properties.tooltip)
+                    }
+                    if (!singleFeature.get('label')) {
+                      singleFeature.set('label', contentData.properties.label);
+                    }
+                    if (!singleFeature.get('popup')) {
+                      singleFeature.set('popup', contentData.properties.popup);
+                    }
                   }
                   features.push(singleFeature);
                 }
