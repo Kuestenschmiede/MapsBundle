@@ -77,6 +77,8 @@ class LayerContentDataApi extends \Frontend
         $connectionParams = $objConfig->customDB ?[
             'dbDatabase' => $objConfig->customDB
         ] : [];
+        // for non-utf8 charsets
+        $connectionParams['dbCharset'] = "utf8mb4";
         $result = \Database::getInstance($connectionParams)->prepare($strQuery)->execute()->fetchAllAssoc();
         foreach ($result as $key => $arrResult) {
             $arrResult['popup'] = $this->getPopup($objConfig, $arrResult);
