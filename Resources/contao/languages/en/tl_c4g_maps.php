@@ -21,7 +21,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['published'] = array('Published', 'Defines if
 $GLOBALS['TL_LANG']['tl_c4g_maps']['width'] = array('Map width', 'Enter the width of the map in the frontend. Default: 100%.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['height'] = array('Map height', 'Enter the height of the map in the frontend. Default: 100vh or height of parent div.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['margin'] = array('Map margin', 'Enter the margin of the map in the frontend.');
-$GLOBALS['TL_LANG']['tl_c4g_maps']['show_locations'] = array('Show all Locations', 'Adjusts the view of the map to fit all locations. Does not work with locations from asynchronous request (e.g. Overpass).');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['show_locations'] = array('Calculate map view', 'Adjusts the view of the map to fit all locations. Does not work with locations from asynchronous request (e.g. Overpass).');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['min_gap'] = array('Minimum gap in pixel from locations to map border', 'Use this setting when your icons reach beyond the map border after determining the extent.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['center_geox'] = array('GEO latitude', 'Enter the GEO X-coordinate (latitude, WGS-84) of the map center.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['center_geoy'] = array('GEO longitude', 'Enter the GEO Y-coordinate (longitude, WGS-84) of the map center.');
@@ -179,6 +179,10 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['popupType']['popup_info'] = "c
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['excludeFromSingleLayer']['0'] = "Deactivated";
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['excludeFromSingleLayer']['1'] = "Activated";
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['excludeFromSingleLayer']['2'] = "Default (recommended)";
+
+$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['show_locations']['0'] = "Deactivated";
+$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['show_locations']['1'] = "Show all locations";
+$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['show_locations']['2'] = "Center view arround locations";
 
 /**
  * Legends

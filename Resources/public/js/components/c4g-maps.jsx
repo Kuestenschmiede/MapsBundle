@@ -122,7 +122,7 @@ export class MapController extends Component {
       baselayerswitcher: {},
       geosearch: {}
     }, mapData);
-    if (mapData.calc_extent === 'LOCATIONS') {
+    if (mapData.calc_extent === 'LOCATIONS' || mapData.calc_extent === 'CENTERLOCS') {
       mapData = jQuery.extend({
         min_gap: 25
       }, mapData);
@@ -425,10 +425,6 @@ export class MapController extends Component {
 
     mapData.map = this.map;
 
-    // set extent to make all locations visible if wanted
-    if (mapData.calc_extent === "LOCATIONS") {
-
-    }
 
     // set map-size and -margin
     domMapDiv = document.getElementById(mapData.mapDiv);

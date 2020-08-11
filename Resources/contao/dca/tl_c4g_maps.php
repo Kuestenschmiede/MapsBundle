@@ -319,11 +319,13 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             [
                 'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['show_locations'],
                 'exclude'                 => true,
-                'inputType'               => 'checkbox',
+                'inputType'               => 'radio',
+                'options'                 => ['0', '1', '2'],
+                'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['show_locations'],
                 'default'                 => '0',
                 'eval'                    => ['submitOnChange'=>true,'tl_class'=>'clr'],
                 'load_callback'           => [['tl_c4g_maps','getOldValue']],
-                'sql'                     => "char(1) NOT NULL default '2'"
+                'sql'                     => "char(1) NOT NULL default '0'"
             ],
         'min_gap' =>
             [
@@ -1635,6 +1637,10 @@ class tl_c4g_maps extends Backend
         if($dc->activeRecord->show_locations == '1'){
             $varValue = "LOCATIONS";
             $dc->activeRecord->calc_extent = "LOCATIONS";
+        }
+        else if($dc->activeRecord->show_locations == '2'){
+            $varValue = "CENTERLOCS";
+            $dc->activeRecord->calc_extent = "CENTERLOCS";
         }
         else if($dc->activeRecord->show_locations == ''){
             $varValue = "CENTERZOOM";

@@ -232,7 +232,11 @@ class MapDataConfigurator
             // map-extend
             if ($map->show_locations == '1') {
                 $mapData['calc_extent'] = 'LOCATIONS';
-            } else {
+            }
+            else if ($map->show_locations == '2') {
+                $mapData['calc_extent'] = 'CENTERLOCS';
+            }
+            else {
                 $mapData['calc_extent'] = 'CENTERZOOM';
             }
             if ($mapData['calc_extent'] == 'LOCATIONS') {

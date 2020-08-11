@@ -21,7 +21,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['published'] = array('Veröffentlicht', 'Legt
 $GLOBALS['TL_LANG']['tl_c4g_maps']['width'] = array('Breite der Karte', 'Geben Sie hier die Breite der Karte im Frontend ein. Standard: 100% Breite.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['height'] = array('Höhe der Karte', 'Geben Sie hier die Höhe der Karte im Frontend ein. Standard: 100vh Höhe bzw. die Höhe des umliegenden DIVs.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['margin'] = array('Abstand der Karte', 'Geben Sie hier den Abstand der Karte zu umliegenden Elementen ein.');
-$GLOBALS['TL_LANG']['tl_c4g_maps']['show_locations'] = array('Alle Lokationen anzeigen', 'Passt den Kartenausschnitt so an, dass alle Lokationen gezeigt werden. Funktioniert nicht mit Daten, die erst zur Laufzeit geladen werden (z.B. Overpass-Abfragen).');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['show_locations'] = array('Kartenausschnitt ermitteln', 'Funktioniert nicht mit Daten, die erst zur Laufzeit geladen werden (z.B. Overpass-Abfragen).');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['min_gap'] = array('Mindestabstand der Lokationen zum Kartenrand in Pixeln', 'Diese Einstellung ist sinnvoll, wenn nach der automatischen Ermittlung des anzuzeigenden Kartenausschnitts Ihre Icons aufgrund ihrer Größe über den Kartenrand hinausgehen.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['center_geox'] = array('Geo X-Koordinate', 'Geben Sie hier die X-Koordinate (Breitengrad, WGS-84) der Kartenmitte ein.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['center_geoy'] = array('Geo Y-Koordinate', 'Geben Sie hier die Y-Koordinate (Längengrad, WGS-84) der Kartenmitte ein.');
@@ -180,6 +180,10 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['popupType']['popup_info'] = "c
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['excludeFromSingleLayer']['0'] = "Deaktiviert";
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['excludeFromSingleLayer']['1'] = "Aktiviert";
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['excludeFromSingleLayer']['2'] = "Standard (empfohlen)";
+
+$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['show_locations']['0'] = "Deaktiviert";
+$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['show_locations']['1'] = "Alle Lokationen anzeigen";
+$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['show_locations']['2'] = "Kartenausschnitt um Punkte zentrieren";
 
 /**
  * Legends
