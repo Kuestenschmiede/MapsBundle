@@ -324,7 +324,6 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['show_locations'],
                 'default'                 => '0',
                 'eval'                    => ['submitOnChange'=>true,'tl_class'=>'clr'],
-                'load_callback'           => [['tl_c4g_maps','getOldValue']],
                 'sql'                     => "char(1) NOT NULL default '0'"
             ],
         'min_gap' =>
@@ -1181,18 +1180,6 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 'sql'                     => "char(1) NOT NULL default ''"
             ],
 
-//ToDo check usecase
-'calc_extent' =>
-    [
-    'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['calc_extent'],
-    'exclude'                 => true,
-    'inputType'               => 'select',
-    'options'                 => ['LOCATIONS','CENTERZOOM'],
-    'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['references'],
-    'load_callback'           => [['tl_c4g_maps','setOldValue']],
-    'sql'                     => "varchar(10) NOT NULL default ''"
-    ],
-
 //ToDo check fields
 
 //        'include_sublocations' =>
@@ -1620,34 +1607,6 @@ class tl_c4g_maps extends Backend
         }
         return $varValue;
     }
-    public function getOldValue($varValue, DataContainer $dc)
-    {
-        if($varValue == '2'){
-            if ($dc->activeRecord->calc_extent == "LOCATIONS") {
-                $varValue = 1;
-            } else {
-                $varValue = 0;
-            }
-        }
-        return $varValue;
-
-    }
-    public function setOldValue($varValue, DataContainer $dc)
-    {
-        if($dc->activeRecord->show_locations == '1'){
-            $varValue = "LOCATIONS";
-            $dc->activeRecord->calc_extent = "LOCATIONS";
-        }
-        else if($dc->activeRecord->show_locations == '2'){
-            $varValue = "CENTERLOCS";
-            $dc->activeRecord->calc_extent = "CENTERLOCS";
-        }
-        else if($dc->activeRecord->show_locations == ''){
-            $varValue = "CENTERZOOM";
-            $dc->activeRecord->calc_extent = "CENTERZOOM";
-        }
-        return $varValue;
-    }
 
 
     /**
@@ -1655,7 +1614,7 @@ class tl_c4g_maps extends Backend
      */
     public function setCenterLon($varValue, DataContainer $dc)
     {
-        if ($dc->activeRecord->calc_extent == 'CENTERZOOM') {
+        if ($dc->activeRecord->show_locations > 0) {
             if (!\con4gis\MapsBundle\Classes\Utils::validateLon($varValue)) {
                 throw new Exception($GLOBALS['TL_LANG']['c4g_maps']['geox_invalid']);
             }
@@ -1668,7 +1627,7 @@ class tl_c4g_maps extends Backend
      */
     public function setCenterLat($varValue, DataContainer $dc)
     {
-        if ($dc->activeRecord->calc_extent == 'CENTERZOOM') {
+        if ($dc->activeRecord->show_locations > 0) {
             if (!\con4gis\MapsBundle\Classes\Utils::validateLat($varValue)) {
                 throw new Exception($GLOBALS['TL_LANG']['c4g_maps']['geoy_invalid']);
             }
