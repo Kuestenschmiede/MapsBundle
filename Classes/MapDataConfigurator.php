@@ -277,6 +277,9 @@ class MapDataConfigurator
 
             // external elements
             $externalElements = unserialize($profile->external_elements);
+            if ($externalElements === false) {
+                $externalElements = [];
+            }
             $externalClasses = ExternalMapElement::$arrClasses;
 
             // basemaps
