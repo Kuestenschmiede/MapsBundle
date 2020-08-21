@@ -44,8 +44,8 @@ export class StarboardLayerswitcher extends Component {
 
   filterFunc(strFilter, layer, state = {}, digDeeper = true) {
     let show = false;
-    if (layer.name.toLowerCase().indexOf(strFilter) !== -1
-        || layer.name.toUpperCase().indexOf(strFilter.toUpperCase()) !== -1) {
+    if (layer && layer.name && (layer.name.toLowerCase().indexOf(strFilter) !== -1
+        || layer.name.toUpperCase().indexOf(strFilter.toUpperCase()) !== -1)) {
       show = true;
       if (strFilter && state) {
         state.collapsed = false;
