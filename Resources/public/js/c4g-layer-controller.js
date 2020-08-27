@@ -764,11 +764,12 @@ export class BetterLayerController {
         "vectorLayer"     : vectorLayer,
         "loader"          : loaderId,
         "zoom"            : layer.zoom,
-        "initial_opened" : layer.initial_opened,
+        "initial_opened"  : layer.initial_opened,
         "locstyle"        : possibleLocstyle,
         "activateWithBl"  : layer.activeForBaselayers,
         "id"              : layer.id,
         "name"            : layer.name,
+        "tags"            : layer.tags,
         "hide"            : hide,
         "childs"          : childs
       };
