@@ -151,12 +151,12 @@ export class BetterLayerController {
           }
         }
 
-        let fillcolor = utils.getRgbaFromHexAndOpacity('4975A8',{
+        let fillcolor = utils.getRgbaFromHexAndOpacity(scope.proxy.mapData.cluster_fillcolor,{
           unit: '%',
           value: 70
         });
 
-        let fontcolor = '#FFFFFF';
+        let fontcolor = scope.proxy.mapData.cluster_fontcolor;
         if (feature.get('cluster_fillcolor')) {
           fillcolor = utils.getRgbaFromHexAndOpacity(feature.get('cluster_fillcolor'),{
             unit: '%',
