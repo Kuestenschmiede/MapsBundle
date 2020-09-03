@@ -23,25 +23,35 @@ export class FeatureFilterList extends Component {
         const scope = this;
         let form = null;
         let className;
-        if (this.props.open) {
-            className = "c4g-open";
-            form =
-                <form>
-                    {this.props.feature.filters.map((feature, index) => {
-                        return <FeatureFilterItem feature={feature} parentId={this.props.id} checked={this.props.checkedItem} filterLayers={this.props.filterLayers} key={index}/>
-                    })}
-                </form>
+        if (this.props.feature.filters.length > 2) {
+            if (this.props.open) {
+                className = "c4g-open";
+                form =
+                    <form>
+                        {this.props.feature.filters.map((feature, index) => {
+                            return <FeatureFilterItem feature={feature} parentId={this.props.id} checked={this.props.checkedItem} filterLayers={this.props.filterLayers} key={index}/>
+                        })}
+                    </form>
+            }
+            else {
+                className = "c4g-close";
+            }
+            className += " fi_" + utils.removeUmlauts(this.props.feature.name);
+            let liClass = this.props.checkedItem.identifier === "all" ? "" : "c4g-item-checked";
+            return (
+                <li className={liClass}>
+                    <strong className={className} onMouseUp={(evt) => {this.props.setOpen(this.props.id); evt.stopPropagation(); evt.preventDefault();}}><span/>{utils.decodeHTML(this.props.feature.name)}</strong>
+                    {form}
+                </li>
+            );
         }
         else {
-            className = "c4g-close";
-        }
-        className += " fi_" + utils.removeUmlauts(this.props.feature.name);
-        let liClass = this.props.checkedItem.identifier === "all" ? "" : "c4g-item-checked";
-        return (
+            className += " fi_" + utils.removeUmlauts(this.props.feature.name);
+            let liClass = this.props.checkedItem.identifier === "all" ? "" : "c4g-item-checked";
             <li className={liClass}>
-                <strong className={className} onMouseUp={(evt) => {this.props.setOpen(this.props.id); evt.stopPropagation(); evt.preventDefault();}}><span/>{utils.decodeHTML(this.props.feature.name)}</strong>
+                <strong className={className} onMouseUp={(evt) => {this.props.filterLayers(this.props.feature.filters[1].identifier, this.props.id, true); evt.stopPropagation(); evt.preventDefault();}}>{utils.decodeHTML(this.props.feature.name)}</strong>
                 {form}
             </li>
-        );
+        }
     }
 }
