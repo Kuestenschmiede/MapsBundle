@@ -21,6 +21,12 @@ class FeatureFilter implements \JsonSerializable
     private $fieldName = '';
 
     /**
+     * Path to the image.
+     * @var string
+     */
+    private $image = '';
+
+    /**
      * The options for the filter field.
      * ToDo why this new translation way?
      * @var array
@@ -55,6 +61,7 @@ class FeatureFilter implements \JsonSerializable
     {
         return [
             'name' => $this->fieldName,
+            'image' => $this->image,
             'filters' => $this->filters,
         ];
     }
@@ -73,6 +80,22 @@ class FeatureFilter implements \JsonSerializable
     public function setFieldName(string $fieldName): void
     {
         $this->fieldName = $fieldName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImage(): string
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param string $fieldName
+     */
+    public function setImage(string $image): void
+    {
+        $this->image = $image;
     }
 
     /**
