@@ -15,6 +15,7 @@ import React, {Component} from "react";
 import {FeatureFilterList} from "./c4g-feature-filter-list.jsx";
 import {FeatureFilterMultiCheckbox} from "./c4g-feature-filter-multicheckbox.jsx";
 import {Fill, Stroke, Style} from "ol/style";
+import {Cluster} from "ol/source";
 import {getLanguage} from "../c4g-maps-i18n";
 
 export class FeatureFilter extends Component {
@@ -39,6 +40,7 @@ export class FeatureFilter extends Component {
       arrChecked: [],
       openedList: -1
     };
+    this.features = [];
     this.langConstants = getLanguage(props.mapController.data);
     this.props.mapController.filter = this;
   }
@@ -170,7 +172,12 @@ export class FeatureFilter extends Component {
       let arrLayers = this.props.mapController.map.getLayers().getArray();
       arrLayers.map((feature, index) => {
         this.filterLayerMulti(feature);
-      })
+      });
+      for (let i in this.features) {
+        if (this.features.hasOwnProperty(i)) {
+          let added = this.showFeatureMulti(this.features[i], i);
+        }
+      }
     })
   }
 
@@ -209,11 +216,11 @@ export class FeatureFilter extends Component {
         this.filterLayerMulti(feature);
       });
     } else if (layer.getStyle && typeof layer.getSource === "function") {
-      let source = layer.getSource();
-      source.forEachFeature((feature) => this.hideFeatureMulti(feature));
+      let source = layer.getSource() instanceof Cluster ? layer.getSource().getSource() : layer.getSource();
+      source.forEachFeature((feature) => this.hideFeatureMulti(feature, source));
     }
   }
-  hideFeature(feature) {
+  hideFeature(feature, source) {
     if (feature.get('features')){
       let features = feature.get('features');
       features.forEach((feature) => this.hideFeature(feature));
@@ -255,10 +262,10 @@ export class FeatureFilter extends Component {
     }
 
   }
-  hideFeatureMulti(feature) {
+  hideFeatureMulti(feature, source) {
     if (feature.get('features')){
       let features = feature.get('features');
-      features.forEach((feature) => this.hideFeatureMulti(feature));
+       features.forEach((feature) => this.hideFeatureMulti(feature, source));
     }
     else {
       if (feature.get('noFilter')) {
@@ -284,26 +291,43 @@ export class FeatureFilter extends Component {
           }
         }
       }
-      if (show || !filterActive) {
-        if (feature.get('oldStyle')) {
-          feature.setStyle(false);
-          feature.set('oldStyle',  false)
+      if (!show && filterActive){
+        feature.set('source', source);
+        this.features.push(feature);
+        source.removeFeature(feature);
+      }
+    }
+  }
+  showFeatureMulti (feature, index) {
+    let show = false;
+    let filterActive = false;
+    for (let key in this.state.arrChecked) {
+      if (this.state.arrChecked.hasOwnProperty(key)) {
+        let arrChecked = this.state.arrChecked[key];
+        for (let i in arrChecked){
+          if (arrChecked.hasOwnProperty(i)) {
+            filterActive = true;
+            let objChecked = arrChecked[i];
+            let property = objChecked.identifier;
+            if (feature.get(property)) {
+              let featureProperty = feature.get(property);
+              if ((objChecked.value && objChecked.value === featureProperty) || !objChecked.value) {
+                show = true;
+              }
+            }
+          }
         }
       }
-      else if (!show && filterActive){
-        if (!feature.get('oldStyle')) {
-          feature.set('oldStyle',  true);
-        }
-        feature.setStyle(new Style({
-          stroke: new Stroke({
-            color: "rgba(0,0,0,0)",
-            width: 0
-          }),
-          fill: new Fill({
-            color: "rgba(0,0,0,0)"
-          })
-        }))
-      }
+    }
+    if (show || !filterActive) {
+      let source = feature.get('source');
+      feature.set('source', false);
+      source.addFeature(feature);
+      this.features.splice(index, 1);
+      return true
+    }
+    else {
+      return false;
     }
   }
   loadFilters() {
