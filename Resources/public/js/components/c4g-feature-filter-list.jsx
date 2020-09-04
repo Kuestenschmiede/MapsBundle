@@ -48,10 +48,10 @@ export class FeatureFilterList extends Component {
         else {
             className += " fi_" + utils.removeUmlauts(this.props.feature.name);
             let liClass = this.props.checkedItem.identifier === "all" ? "" : "c4g-item-checked";
-            <li className={liClass}>
+            return (<li className={liClass}>
                 <strong className={className} onMouseUp={(evt) => {this.props.filterLayers(this.props.feature.filters[1].identifier, this.props.id, true); evt.stopPropagation(); evt.preventDefault();}}>{utils.decodeHTML(this.props.feature.name)}</strong>
                 {form}
-            </li>
+            </li>);
         }
     }
 }
