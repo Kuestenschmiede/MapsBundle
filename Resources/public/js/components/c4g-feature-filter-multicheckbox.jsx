@@ -56,6 +56,7 @@ export class FeatureFilterMultiCheckbox extends Component {
         else {
             className += " fi_" + utils.removeUmlauts(this.props.feature.name);
             let liClass =  "c4g-item-checked";
+            liClass += this.props.checkedItems.length === 0 ? "" : " clicked"
             return (
                 <li className={liClass}>
                     <img src={this.props.feature.image}/>
