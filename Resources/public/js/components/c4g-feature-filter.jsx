@@ -136,9 +136,12 @@ export class FeatureFilter extends Component {
         arrLayers.map((feature, index) => {
           this.filterLayer(feature);
         });
-      for (let i in this.features) {
+      for (let i = 0; i < this.features.length; i++) {
         if (this.features.hasOwnProperty(i)) {
           let added = this.showFeature(this.features[i], i);
+          if (added) {
+            i--;
+          }
         }
       }
       }
@@ -178,9 +181,12 @@ export class FeatureFilter extends Component {
       arrLayers.map((feature, index) => {
         this.filterLayerMulti(feature);
       });
-      for (let i in this.features) {
+      for (let i = 0; i < this.features.length; i++) {
         if (this.features.hasOwnProperty(i)) {
           let added = this.showFeatureMulti(this.features[i], i);
+          if (added) {
+            i--;
+          }
         }
       }
     })
