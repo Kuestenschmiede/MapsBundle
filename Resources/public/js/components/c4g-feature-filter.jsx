@@ -136,6 +136,11 @@ export class FeatureFilter extends Component {
         arrLayers.map((feature, index) => {
           this.filterLayer(feature);
         });
+      for (let i in this.features) {
+        if (this.features.hasOwnProperty(i)) {
+          let added = this.showFeature(this.features[i], i);
+        }
+      }
       }
     );
   }
@@ -205,8 +210,8 @@ export class FeatureFilter extends Component {
         this.filterLayer(feature);
       });
     } else if (layer.getStyle && typeof layer.getSource === "function") {
-      let source = layer.getSource();
-      source.forEachFeature((feature) => this.hideFeature(feature));
+      let source = layer.getSource() instanceof Cluster ? layer.getSource().getSource() : layer.getSource();
+      source.forEachFeature((feature) => this.hideFeature(feature, source));
     }
   }
   filterLayerMulti (layer) {
@@ -223,7 +228,7 @@ export class FeatureFilter extends Component {
   hideFeature(feature, source) {
     if (feature.get('features')){
       let features = feature.get('features');
-      features.forEach((feature) => this.hideFeature(feature));
+      features.forEach((feature) => this.hideFeature(feature, source));
     }
     else {
       if (feature.get('noFilter')) {
@@ -239,25 +244,10 @@ export class FeatureFilter extends Component {
           }
         }
       }
-      if (show) {
-        if (feature.get('oldStyle')) {
-          feature.setStyle(false);
-          feature.set('oldStyle',  false)
-        }
-      }
-      else {
-        if (!feature.get('oldStyle')) {
-          feature.set('oldStyle', true);
-        }
-        feature.setStyle(new Style({
-          stroke: new Stroke({
-            color: "rgba(0,0,0,0)",
-            width: 0
-          }),
-          fill: new Fill({
-            color: "rgba(0,0,0,0)"
-          })
-        }))
+      if (!show) {
+        feature.set('source', source);
+        this.features.push(feature);
+        source.removeFeature(feature);
       }
     }
 
@@ -298,6 +288,28 @@ export class FeatureFilter extends Component {
       }
     }
   }
+  showFeature (feature, index) {
+    let show = true;
+    for (let key in this.state.arrChecked) {
+      if (this.state.arrChecked.hasOwnProperty(key)) {
+        let objChecked = this.state.arrChecked[key];
+        let property = objChecked.identifier;
+        if (!(property === "all" || (feature.get(property) && !objChecked.value) || ((objChecked.value == feature.get(property)) && objChecked.value))) {
+          show = false;
+        }
+      }
+    }
+    if (show) {
+      let source = feature.get('source');
+      feature.set('source', false);
+      source.addFeature(feature);
+      this.features.splice(index, 1);
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
   showFeatureMulti (feature, index) {
     let show = false;
     let filterActive = false;
@@ -324,7 +336,7 @@ export class FeatureFilter extends Component {
       feature.set('source', false);
       source.addFeature(feature);
       this.features.splice(index, 1);
-      return true
+      return true;
     }
     else {
       return false;
