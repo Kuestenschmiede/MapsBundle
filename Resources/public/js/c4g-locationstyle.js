@@ -218,7 +218,7 @@ export class C4gLocationStyle {
     let newScale = 0.0;
     let initialZoom, scaleFactor, factor, minScale, maxScale;
     let currentZoom = this.controller.mapController.map.getView().getZoom();
-    let initialScale = "cust_icon_svgphoto".contains(styleData.styletype) ? parseFloat(styleData.icon_scale) : 1;
+    let initialScale = "cust_icon_svgphoto".includes(styleData.styletype) ? parseFloat(styleData.icon_scale) : 1;
     // locstyle setting overwrites profile setting
     if (styleData.icon_resize_zoom) {
       initialZoom = parseInt(styleData.icon_resize_src_zoom, 10);
