@@ -34,10 +34,41 @@ export class ZoomHome extends Component {
       event.stopPropagation();
       // loose focus, otherwise it looks messy
       this.blur();
+      if (mapData.calc_extent === "LOCATIONS" || mapData.calc_extent === "CENTERLOCS") {
+        let extent = mapController.proxy.layerController.extent;
+        if (extent && !(extent.maxX === Infinity || extent.maxX === -Infinity)) {
+          let view = mapController.map.getView();
+          let padding = [
+            parseInt(mapData.min_gap, 10),
+            parseInt(mapData.min_gap, 10),
+            parseInt(mapData.min_gap, 10),
+            parseInt(mapData.min_gap, 10)
+          ];
+          let realExtent = [
+            extent.minX,
+            extent.minY,
+            extent.maxX,
+            extent.maxY
+          ];
 
-      view.setCenter(transform([parseFloat(mapData.center.lon), parseFloat(mapData.center.lat)], 'EPSG:4326', 'EPSG:3857'));
-      view.setZoom(parseInt(mapData.center.zoom, 10));
-      view.setRotation(parseFloat(mapData.center.rotation));
+          if (mapData.calc_extent === "CENTERLOCS") {
+            // ssss
+            view.fit(realExtent, {
+              maxZoom:mapData.center.zoom
+            });
+          }
+          else {
+            view.fit(realExtent, {
+              padding: padding
+            });
+          }
+        }
+      }
+      else {
+        view.setCenter(transform([parseFloat(mapData.center.lon), parseFloat(mapData.center.lat)], 'EPSG:4326', 'EPSG:3857'));
+        view.setZoom(parseInt(mapData.center.zoom, 10));
+        view.setRotation(parseFloat(mapData.center.rotation));
+      }
 
       // check userposition
       let geoLocation;
