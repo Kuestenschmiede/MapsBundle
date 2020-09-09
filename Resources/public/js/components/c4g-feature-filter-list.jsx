@@ -22,7 +22,7 @@ export class FeatureFilterList extends Component {
     render() {
         const scope = this;
         let form = null;
-        let className;
+        let className = "";
         if (this.props.feature.filters.length > 2) {
             if (this.props.open) {
                 className = "c4g-open";
@@ -46,12 +46,14 @@ export class FeatureFilterList extends Component {
             );
         }
         else {
-            className += " fi_" + utils.removeUmlauts(this.props.feature.name);
-            let liClass = this.props.checkedItem.identifier === "all" ? "" : "c4g-item-checked";
+            className = " fi_" + utils.removeUmlauts(this.props.feature.name);
+            let liClass = "c4g-item-checked";
+            liClass += this.props.checkedItem.identifier === "all" ? "" : " clicked";
             return (<li className={liClass}>
-                <strong className={className} onMouseUp={(evt) => {this.props.filterLayers(this.props.feature.filters[1].identifier, this.props.id, true); evt.stopPropagation(); evt.preventDefault();}}>{utils.decodeHTML(this.props.feature.name)}</strong>
-                {form}
+                <img src={this.props.feature.image}/>
+                <strong className={className} onMouseUp={(evt) => {this.props.filterLayers(this.props.feature.filters[1].identifier !== this.props.checkedItem.identifier ? this.props.feature.filters[1].identifier : "all", this.props.id, true); evt.stopPropagation(); evt.preventDefault();}}>{utils.decodeHTML(this.props.feature.name)}</strong>
             </li>);
         }
     }
+
 }
