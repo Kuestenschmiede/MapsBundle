@@ -279,6 +279,10 @@ div.c4g-active.c4g-popup-wrapper *:last-child {
   list-style-type: none;
 }
 
+.c4g-popup-content img {
+  max-width: 100%;
+}
+
 /*
  * Editor
  */
