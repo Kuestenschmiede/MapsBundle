@@ -17,6 +17,7 @@ import {FeatureFilterMultiCheckbox} from "./c4g-feature-filter-multicheckbox.jsx
 import {Fill, Stroke, Style} from "ol/style";
 import {Cluster} from "ol/source";
 import {getLanguage} from "../c4g-maps-i18n";
+import opening_hours from "opening_hours";
 
 export class FeatureFilter extends Component {
 
@@ -200,6 +201,7 @@ export class FeatureFilter extends Component {
       this.setState({openedList: openId});
     }
   }
+
   resetFilter () {
     let filter = [];
     for (let i in this.state.arrChecked) {
@@ -209,6 +211,7 @@ export class FeatureFilter extends Component {
     }
     this.setState({arrChecked: filter});
   }
+
   filterLayer (layer) {
     if (layer.getLayers && typeof layer.getLayers === "function") {
       let arrLayers = layer.getLayers().getArray();
@@ -220,6 +223,7 @@ export class FeatureFilter extends Component {
       source.forEachFeature((feature) => this.hideFeature(feature, source));
     }
   }
+
   filterLayerMulti (layer) {
     if (layer.getLayers && typeof layer.getLayers === "function") {
       let arrLayers = layer.getLayers().getArray();
@@ -231,6 +235,27 @@ export class FeatureFilter extends Component {
       source.forEachFeature((feature) => this.hideFeatureMulti(feature, source));
     }
   }
+
+  checkFeature (feature, objChecked) {
+    let property = objChecked.identifier;
+    if (objChecked.value === "opening_hours" && feature.get('opening_hours')) {
+      let featureHours = new opening_hours(feature.get('opening_hours'), {address: {country_code: "de"}});
+      return featureHours.getState();
+    }
+    else {
+      if (!(property === "all" || (feature.get(property) && !objChecked.value) || ((objChecked.value == feature.get(property)) && objChecked.value))) {
+        return false;
+      }
+      else{
+        return true;
+      }
+    }
+  }
+
+  checkFeatureMulti (feature, objChecked) {
+
+  }
+
   hideFeature(feature, source) {
     if (feature.get('features')){
       let features = feature.get('features');
@@ -242,12 +267,8 @@ export class FeatureFilter extends Component {
       }
       let show = true;
       for (let key in this.state.arrChecked) {
-        if (this.state.arrChecked.hasOwnProperty(key)) {
-          let objChecked = this.state.arrChecked[key];
-          let property = objChecked.identifier;
-          if (!(property === "all" || (feature.get(property) && !objChecked.value) || ((objChecked.value == feature.get(property)) && objChecked.value))) {
-            show = false;
-          }
+        if (this.state.arrChecked.hasOwnProperty(key) && show) {
+          show = this.checkFeature(feature, this.state.arrChecked[key]);
         }
       }
       if (!show) {
@@ -297,12 +318,8 @@ export class FeatureFilter extends Component {
   showFeature (feature, index) {
     let show = true;
     for (let key in this.state.arrChecked) {
-      if (this.state.arrChecked.hasOwnProperty(key)) {
-        let objChecked = this.state.arrChecked[key];
-        let property = objChecked.identifier;
-        if (!(property === "all" || (feature.get(property) && !objChecked.value) || ((objChecked.value == feature.get(property)) && objChecked.value))) {
-          show = false;
-        }
+      if (this.state.arrChecked.hasOwnProperty(key) && show) {
+        show = this.checkFeature(feature, this.state.arrChecked[key]);
       }
     }
     if (show) {
