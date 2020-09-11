@@ -13,6 +13,7 @@
 import {cssConstants} from "./c4g-maps-constant";
 import {Zoomlevel} from "./c4g-maps-control-zoomlevel";
 import {GeoPicker} from "./c4g-maps-interaction-geopicker";
+import {GeoPickerGeoJSON} from "./c4g-maps-interaction-geopicker-geojson";
 import {get, transform} from "ol/proj";
 import {Attribution, MousePosition, ScaleLine} from "ol/control";
 import {toStringHDMS} from "ol/coordinate";
@@ -152,6 +153,13 @@ export class MapsControls {
                     }
                 }
             }
+        }
+        else if (mapData.geopicker && mapData.geopicker.type) {
+            this.controls.geopicker = new GeoPickerGeoJSON({
+                mapContainer: this.mapController
+            });
+            this.mapController.map.addInteraction(this.controls.geopicker);
+
         }
 
         //con4gis logo
