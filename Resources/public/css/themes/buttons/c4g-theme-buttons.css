@@ -348,7 +348,7 @@ span.c4g-icon + span[class*=locstyle] + a {
   display: block;
 }
 
-.c4g-layertree span, .c4g-layertree a {
+.c4g-layertree span:not(.c4g-starboard-locstyle), .c4g-layertree a {
   height: 43px;
   white-space: nowrap;
   text-overflow: ellipsis;
