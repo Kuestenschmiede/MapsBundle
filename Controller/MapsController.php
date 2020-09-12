@@ -13,6 +13,7 @@
 namespace con4gis\MapsBundle\Controller;
 
 use con4gis\CoreBundle\Controller\BaseController;
+use con4gis\MapsBundle\Classes\Events\LoadInfoWindowEvent;
 use con4gis\MapsBundle\Classes\GeoPicker;
 use con4gis\MapsBundle\Resources\contao\modules\api\InfoWindowApi;
 use con4gis\MapsBundle\Resources\contao\modules\api\SearchApi;
@@ -41,6 +42,7 @@ class MapsController extends BaseController
 
     public function infoWindowAction(Request $request, $popupString)
     {
+        $this->initialize(false);
         $response = new JsonResponse();
         if (strpos($popupString, ":") === false) {
             $response->setStatusCode(400);
@@ -48,6 +50,12 @@ class MapsController extends BaseController
         } else {
             $infoWindowApi = new InfoWindowApi();
             $returnData = $infoWindowApi->generate($popupString);
+
+            $event = new LoadInfoWindowEvent();
+            $event->setPopupString($popupString);
+            $event->setPopup($returnData);
+            $this->eventDispatcher->dispatch($event, $event::NAME);
+            $returnData = $event->getPopup();
             $response->setData($returnData);
             return $response;
         }
