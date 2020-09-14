@@ -147,7 +147,7 @@ export class GeoSearch extends Component {
           </Titlebar>
           <div className={"c4g-geosearch-filter"}>
             <input type="text" onKeyDown={this.inputCallback} id={"c4g-geosearch-input"} placeholder={this.config.placeholder} aria-label={this.config.placeholder}/>
-            <button className={cssConstants.GEOSEARCH_START} title={this.langConstants.CTRL_START_SEARCH} onMouseUp={this.startSearch}/>
+            <button className={cssConstants.GEOSEARCH_START} type={"button"} title={this.langConstants.CTRL_START_SEARCH} onMouseUp={this.startSearch}/>
           </div>
           {results}
         </div>
@@ -180,7 +180,8 @@ export class GeoSearch extends Component {
     this.setState({open: false});
   }
 
-  startSearch() {
+  startSearch(event) {
+    event.stopPropagation();
     let button = document.querySelector(cssConstants.GEOSEARCH_START);
     try {
       button.blur();
@@ -193,6 +194,7 @@ export class GeoSearch extends Component {
   }
 
   inputCallback(event) {
+    event.stopPropagation();
     if (event.which === 13) {
       let searchInput = jQuery("#c4g-geosearch-input");
       if (searchInput.val()) {
