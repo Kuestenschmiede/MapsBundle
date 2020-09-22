@@ -166,6 +166,7 @@ export class BetterLayerController {
         if (feature.get('cluster_fontcolor')) {
           fontcolor = feature.get('cluster_fontcolor');
         }
+        fontcolor = utils.getRgbaFromHexAndOpacity(fontcolor);
         returnStyle.push(
             new Style({
               text: new Text({
