@@ -178,7 +178,8 @@ export class BetterLayerController {
                 fill: new Fill({
                   color: fillcolor
                 })
-              })
+              }),
+              zIndex: zIndex
             })
         );
         returnStyle.push(
@@ -191,7 +192,8 @@ export class BetterLayerController {
                 fill: new Fill({
                   color: fontcolor
                 })
-              })
+              }),
+              zIndex: zIndex
             })
         );
       }
