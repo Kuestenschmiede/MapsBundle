@@ -142,7 +142,7 @@ export class MapHover {
         }
 
         if (self.lastHoveredFeature && self.lastFeatureStyle) {
-          self.lastHoveredFeature.setStyle(self.lastFeatureStyle);
+          self.lastHoveredFeature.setStyle(false);
           self.lastHoveredFeature = null;
         }
         return false;
