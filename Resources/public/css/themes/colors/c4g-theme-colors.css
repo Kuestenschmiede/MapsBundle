@@ -461,7 +461,7 @@ c4g-infopage-container {
   color: var(--font-color);
 }
 
-.c4g-sideboard > div > div[class*=content] *:not(button):not(input):not(textarea):not(select):not(output):not(option):not(.ol-overviewmap-box) {
+.c4g-sideboard > div > div[class*=content] *:not(button):not(input):not(textarea):not(select):not(output):not(option):not(.ol-overviewmap-box):not(svg):not(path) {
   color: var(--font-color);
 }
 
