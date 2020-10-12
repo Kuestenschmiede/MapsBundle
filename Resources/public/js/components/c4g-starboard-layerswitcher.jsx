@@ -28,7 +28,35 @@ export class StarboardLayerswitcher extends Component {
       initialized: false,
       layerFilter: ""
     };
-    this.buttonEnabled = false;
+    this.buttonEnabled = this.getInitialStates();
+  }
+
+  getInitialStates = () => {
+    this.initialCounterOff = 0;
+    this.initialCounterOn = 0;
+    for (let i in this.props.layerStates) {
+      if (this.props.layerStates.hasOwnProperty(i)) {
+        if (this.props.layerStates[i].active) {
+          this.initialCounterOn++;
+        }
+        else {
+          this.initialCounterOff++;
+        }
+        this.getInitialStateChild(this.props.layerStates.childStates);
+      }
+    }
+    return this.initialCounterOn > this.initialCounterOff;
+  }
+  getInitialStateChild (child) {
+    if (child.active) {
+      this.initialCounterOn++;
+    }
+    else {
+      this.initialCounterOff++;
+    }
+    if (child.childStates) {
+      this.getInitialStateChild(child.childStates);
+    }
   }
 
   callbackFunction = (key, newState) => {
