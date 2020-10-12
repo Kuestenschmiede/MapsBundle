@@ -18,7 +18,7 @@ import {getLanguage} from "../c4g-maps-i18n";
 import {transform} from "ol/proj";
 import {Geolocation} from "ol";
 
-export class ZoomHome extends Component {
+export default class ZoomHome extends Component {
   constructor(props) {
     super(props);
 

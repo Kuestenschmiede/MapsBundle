@@ -19,7 +19,7 @@ import {utils} from "../c4g-maps-utils";
 import {getLanguage} from "./../c4g-maps-i18n";
 import {Control} from "ol/control";
 
-export class Permalink extends Component {
+export default class Permalink extends Component {
 
   constructor(props) {
     super(props);

@@ -17,7 +17,7 @@ import {getLanguage} from "../c4g-maps-i18n";
 import {Control} from "ol/control";
 import {utils} from "../c4g-maps-utils";
 
-export class Infopage extends Component {
+export default class Infopage extends Component {
 
   constructor(props) {
     super(props);

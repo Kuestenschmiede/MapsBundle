@@ -9,7 +9,9 @@ var config = {
   mode: "production",
   output: {
     filename: '[name].js',
-    path: path.resolve('./Resources/public/build/')
+    path: path.resolve('./Resources/public/build/'),
+    chunkFilename: '[name].bundle.js',
+    publicPath: "bundles/con4gismaps/build/"
   },
   resolve: {
     modules: ['node_modules', 'Resources/public/js'],

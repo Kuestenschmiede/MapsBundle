@@ -17,7 +17,7 @@ import {cssConstants} from "./../c4g-maps-constant";
 import {getLanguage} from "../c4g-maps-i18n";
 import {Geolocation} from "ol";
 
-export class ZoomPosition extends Component {
+export default class ZoomPosition extends Component {
 
   constructor(props) {
     super(props);

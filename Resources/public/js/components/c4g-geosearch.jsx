@@ -29,7 +29,7 @@ import {utils} from "../c4g-maps-utils";
 import {containsCoordinate, getHeight, getWidth} from "ol/extent";
 import {Titlebar} from "./c4g-titlebar";
 
-export class GeoSearch extends Component {
+export default class GeoSearch extends Component {
 
   constructor(props) {
     super(props);

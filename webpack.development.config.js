@@ -9,7 +9,9 @@ var config = {
   mode: "development",
   output: {
     filename: '[name].js',
-    path: path.resolve('./Resources/public/build/')
+    path: path.resolve('./Resources/public/build/'),
+    chunkFilename: '[name].bundle.js',
+    publicPath: "bundles/con4gismaps/build/"
   },
   devtool: "inline-source-map",
   resolve: {

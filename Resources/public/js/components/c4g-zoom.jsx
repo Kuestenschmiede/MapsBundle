@@ -15,7 +15,7 @@ import {Zoom as OlZoom} from "ol/control";
 import {cssConstants} from "./../c4g-maps-constant";
 import {getLanguage} from "../c4g-maps-i18n";
 
-export class Zoom extends Component {
+export default class Zoom extends Component {
   constructor(props) {
     super(props);
 

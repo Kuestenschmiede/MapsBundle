@@ -18,7 +18,7 @@ import {getLanguage} from "./../c4g-maps-i18n";
 import {OverlayControls} from "./c4g-overlay-controls.jsx";
 import {utils} from "../c4g-maps-utils";
 
-export class BaselayerSwitcher extends Component {
+export default class BaselayerSwitcher extends Component {
 
   constructor(props) {
     super(props);

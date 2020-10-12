@@ -21,7 +21,7 @@ import {Vector as VectorSource} from "ol/source";
 import {Collection} from "ol";
 import {utils} from "../c4g-maps-utils";
 
-export class Measuretools extends Component {
+export default class Measuretools extends Component {
 
   constructor(props) {
     super(props);

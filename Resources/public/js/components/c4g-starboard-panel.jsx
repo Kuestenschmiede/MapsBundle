@@ -19,7 +19,7 @@ import {getLanguage} from "./../c4g-maps-i18n";
 import {Titlebar} from "./c4g-titlebar";
 import {utils} from "../c4g-maps-utils";
 
-export class StarboardPanel extends Component {
+export default class StarboardPanel extends Component {
 
   constructor(props) {
     super(props);

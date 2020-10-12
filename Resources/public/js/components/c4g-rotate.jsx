@@ -16,7 +16,7 @@ import {Rotate as OlRotate} from "ol/control";
 import {cssConstants} from "./../c4g-maps-constant";
 import {getLanguage} from "../c4g-maps-i18n";
 
-export class Rotate extends Component {
+export default class Rotate extends Component {
 
   constructor(props) {
     super(props);

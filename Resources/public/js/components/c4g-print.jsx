@@ -18,7 +18,7 @@ import {getLanguage} from "../c4g-maps-i18n";
 import {toBlob} from "dom-to-image-more";
 import {saveAs} from "file-saver";
 
-export class Print extends Component {
+export default class Print extends Component {
 
   constructor(props) {
     super(props);

@@ -19,7 +19,7 @@ import {Cluster} from "ol/source";
 import {getLanguage} from "../c4g-maps-i18n";
 import opening_hours from "opening_hours";
 
-export class FeatureFilter extends Component {
+export default class FeatureFilter extends Component {
 
   constructor(props) {
     super(props);

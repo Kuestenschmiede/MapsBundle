@@ -17,7 +17,7 @@ import {cssConstants} from "./../c4g-maps-constant";
 import {getLanguage} from "../c4g-maps-i18n";
 import {Graticule} from "ol";
 
-export class Grid extends Component {
+export default class Grid extends Component {
 
   constructor(props) {
     super(props);

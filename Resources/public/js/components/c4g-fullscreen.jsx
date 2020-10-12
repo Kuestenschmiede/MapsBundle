@@ -16,7 +16,7 @@ import {FullScreen} from "ol/control";
 import {cssConstants} from "./../c4g-maps-constant";
 import {getLanguage} from "../c4g-maps-i18n";
 
-export class Fullscreen extends Component {
+export default class Fullscreen extends Component {
   constructor(props) {
     super(props);
 

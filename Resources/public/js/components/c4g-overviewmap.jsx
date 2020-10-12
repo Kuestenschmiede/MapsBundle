@@ -18,7 +18,7 @@ import {getLanguage} from "../c4g-maps-i18n";
 import LayerGroup from "ol/layer/Group";
 import {Titlebar} from "./c4g-titlebar";
 
-export class OverviewMap extends Component {
+export default class OverviewMap extends Component {
 
   constructor(props) {
     super(props);

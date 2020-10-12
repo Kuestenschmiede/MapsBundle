@@ -16,7 +16,6 @@ import {Spinner} from "../c4g-maps-misc-spinner";
 import {MapHover} from "../c4g-maps-misc-maphover";
 import {Group as LayerGroup} from 'ol/layer';
 import {utils} from "../c4g-maps-utils";
-import {GeoSearch} from "./c4g-geosearch.jsx";
 import {MapsControls} from "../c4g-maps-controls";
 import {getLanguage} from "../c4g-maps-i18n";
 import {Geolocation, Kinetic, Map, View} from "ol";
@@ -38,23 +37,26 @@ import {Group} from "ol/layer";
 import {Point} from "ol/geom";
 import {boundingExtent, getBottomLeft, getBottomRight, getTopLeft, getTopRight} from "ol/extent";
 import {shiftKeyOnly} from "ol/events/condition";
-import {StarboardPanel} from "./c4g-starboard-panel.jsx";
 import ReactDOM from "react-dom";
-import React, {Component} from "react";
-import {FeatureFilter} from "./c4g-feature-filter.jsx";
-import {BaselayerSwitcher} from "./c4g-baselayerswitcher.jsx";
-import {Infopage} from "./c4g-infopage.jsx";
-import {Measuretools} from "./c4g-measuretools.jsx";
-import {Permalink} from "./c4g-permalink.jsx";
-import {Zoom} from "./c4g-zoom.jsx";
-import {ZoomExtent} from "./c4g-zoom-extent.jsx";
-import {ZoomHome} from "./c4g-zoom-home.jsx";
-import {ZoomPosition} from "./c4g-zoom-position.jsx";
-import {Grid} from "./c4g-grid.jsx";
-import {Rotate} from "./c4g-rotate.jsx";
-import {Fullscreen} from "./c4g-fullscreen.jsx";
-import {Print} from "./c4g-print.jsx";
-import {OverviewMap} from "./c4g-overviewmap.jsx";
+import React, {Component, Suspense} from "react";
+import GeoSearch from "./c4g-geosearch.jsx";
+// const GeoSearch = React.lazy(() => import('./c4g-geosearch.jsx'));
+const FeatureFilter = React.lazy(() => import('./c4g-feature-filter.jsx'));
+const BaselayerSwitcher = React.lazy(() => import('./c4g-baselayerswitcher.jsx'));
+const StarboardPanel = React.lazy(() => import('./c4g-starboard-panel.jsx'));
+const Infopage = React.lazy(() => import('./c4g-infopage.jsx'));
+const Measuretools = React.lazy(() => import('./c4g-measuretools.jsx'));
+const Permalink = React.lazy(() => import('./c4g-permalink.jsx'));
+const Zoom = React.lazy(() => import('./c4g-zoom.jsx'));
+const ZoomExtent = React.lazy(() => import('./c4g-zoom-extent.jsx'));
+const ZoomHome = React.lazy(() => import('./c4g-zoom-home.jsx'));
+const ZoomPosition = React.lazy(() => import('./c4g-zoom-position.jsx'));
+const Grid = React.lazy(() => import('./c4g-grid.jsx'));
+const Rotate = React.lazy(() => import('./c4g-rotate.jsx'));
+const Fullscreen = React.lazy(() => import('./c4g-fullscreen.jsx'));
+const Print = React.lazy(() => import('./c4g-print.jsx'));
+const OverviewMap = React.lazy(() => import('./c4g-overviewmap.jsx'));
+
 import TileLayer from "ol/layer/Tile";
 
 let langConstants = {};
@@ -620,13 +622,11 @@ export class MapController extends Component {
     // feature filter
     if (mapData.filterDiv) {
       mapData.filterDiv = mapData.filterDiv[0] === "." || mapData.filterDiv[0] === "#" ? mapData.filterDiv : "." + mapData.filterDiv;
-      this.filterContainer = document.createElement('div');
-      this.components.filter = ReactDOM.render(React.createElement(FeatureFilter, {
-        target: document.querySelector(mapData.filterDiv),// + mapData.mapDiv + ' .' + cssConstants.OL_OVERLAYCONTAINER),
-        mapController: this,
-        direction: "top",
-        className: "c4g-feature-filter"
-      }), this.filterContainer);
+      this.filterContainer = document.createElement("div");
+      ReactDOM.render(
+        <Suspense fallback={<div>"loading..."</div>}>
+          <FeatureFilter target={document.querySelector(mapData.filterDiv)} mapController={this} direction={"top"} className={"c4g-feature-filter"}/>
+        </Suspense>, this.filterContainer);
       $(mapData.filterDiv).append(this.filterContainer);
     }
 
@@ -940,13 +940,15 @@ export class MapController extends Component {
     let sbPortal = "";
     if (mapData.layerswitcher.enable) {
       sbPortal = ReactDOM.createPortal(
-          <StarboardPanel ref={(node) => {
-            this.components.starboard = node;
-          }} target={target}
-                          mapController={this} objLayers={this.state.objLayers} styleData={this.state.styleData} tabLayers={this.state.objTabLayers} tabStates={this.state.arrTabLayerStates}
-                          layerStates={this.state.arrLayerStates} parentCallback={this.setLayerStates} tabCallback={this.setTabStates}
-                          direction={"right"} open={(this.props.mapData.initial_open_comp === "starboard")} changeCollapseState={this.changeCollapseState} external={this.reactContainer.className.indexOf("c4g-external") !== -1}
-          />,
+          <Suspense fallback={<div>"Loool</div>}>
+            <StarboardPanel ref={(node) => {
+              this.components.starboard = node;
+            }} target={target}
+                            mapController={this} objLayers={this.state.objLayers} styleData={this.state.styleData} tabLayers={this.state.objTabLayers} tabStates={this.state.arrTabLayerStates}
+                            layerStates={this.state.arrLayerStates} parentCallback={this.setLayerStates} tabCallback={this.setTabStates}
+                            direction={"right"} open={(this.props.mapData.initial_open_comp === "starboard")} changeCollapseState={this.changeCollapseState} external={this.reactContainer.className.indexOf("c4g-external") !== -1}
+            />
+          </Suspense>,
           this.reactContainer
       );
     }
@@ -957,15 +959,17 @@ export class MapController extends Component {
         this.components.geosearch = node;
       };
       searchPortal = ReactDOM.createPortal(
-        React.createElement(GeoSearch, geoSearchOptions),
+        <GeoSearch {...geoSearchOptions}/>,
         this.searchContainer
       );
     }
     let infoPortal = "";
     if (mapData.legend.enable) {
       infoPortal = ReactDOM.createPortal(
-        <Infopage ref={(node) => {this.components.infopage = node;}} target={target} external={this.infoPageContainer.className.indexOf("c4g-external") !== -1}
-                  infoContent={mapData.infopage} mapController={this} open={mapData.initial_open_comp === "legend"}/>,
+        <Suspense fallback={<div>"LOOOL"</div>}>
+          <Infopage ref={(node) => {this.components.infopage = node;}} target={target} external={this.infoPageContainer.className.indexOf("c4g-external") !== -1}
+                  infoContent={mapData.infopage} mapController={this} open={mapData.initial_open_comp === "legend"}/>
+        </Suspense>,
         this.infoPageContainer
       );
     }
@@ -973,26 +977,32 @@ export class MapController extends Component {
     let blsPortal = "";
     if (mapData.baselayerswitcher.enable) {
       blsPortal = ReactDOM.createPortal(
-          <BaselayerSwitcher ref={(node) => {
-            this.components.baselayerSwitcher = node;
-          }} target={target} open={mapData.initial_open_comp === "baselayers"} changeActiveLayers={this.changeActiveLayers} external={this.baselayerContainer.className.indexOf("c4g-external") !== -1}
-                             mapController={this} baselayerController={this.proxy.baselayerController}/>,
+          <Suspense fallback={<div>"LOOOL"</div>}>
+            <BaselayerSwitcher ref={(node) => {
+              this.components.baselayerSwitcher = node;
+            }} target={target} open={mapData.initial_open_comp === "baselayers"} changeActiveLayers={this.changeActiveLayers} external={this.baselayerContainer.className.indexOf("c4g-external") !== -1}
+                               mapController={this} baselayerController={this.proxy.baselayerController}/>
+          </Suspense>,
           this.baselayerContainer
       );
     }
     let measurePortal = "";
     if (mapData.measuretools.enable) {
       measurePortal = ReactDOM.createPortal(
-        <Measuretools ref={(node) => {this.components.measuretools = node;}} target={target} external={this.measuretoolsContainer.className.indexOf("c4g-external") !== -1}
-          mapController={this} open={mapData.initial_open_comp === "measuretools"}/>,
+        <Suspense fallback={<div>"Lool"</div>}>
+          <Measuretools ref={(node) => {this.components.measuretools = node;}} target={target} external={this.measuretoolsContainer.className.indexOf("c4g-external") !== -1}
+            mapController={this} open={mapData.initial_open_comp === "measuretools"}/>
+        </Suspense>,
         this.measuretoolsContainer
       );
     }
     let permaPortal = "";
     if (mapData.permalink.enable) {
       permaPortal = ReactDOM.createPortal(
-        <Permalink ref={(node) => {this.components.permalink = node;}} mapController={this} target={target}
-                   external={this.permalinkContainer.className.indexOf("c4g-external") !== -1}/>,
+        <Suspense fallback={<div>"loading..."</div>}>
+          <Permalink ref={(node) => {this.components.permalink = node;}} mapController={this} target={target}
+                     external={this.permalinkContainer.className.indexOf("c4g-external") !== -1}/>
+        </Suspense>,
         this.permalinkContainer
       );
     }
@@ -1054,57 +1064,66 @@ export class MapController extends Component {
         case 'zoom':
           if (mapData.zoom) {
             result.push(
-                <Zoom mapController={this} target={target} key={i}/>
+                <Suspense key={i} fallback={<div>"loading...</div>}>
+                  <Zoom mapController={this} target={target} key={i}/>
+                </Suspense>
             );
           }
           break;
         case 'zoomExtent':
           if (mapData.zoomExtent) {
             result.push(
-                <ZoomExtent mapController={this} target={target} key={i}/>
-            );
+                <Suspense key={i} fallback={<div>"loading...</div>}>
+                  <ZoomExtent mapController={this} target={target} key={i}/>
+                </Suspense>            );
           }
           break;
         case 'zoomHome':
           if (mapData.zoomHome) {
             result.push(
-                <ZoomHome mapController={this} target={target} key={i}/>
-            );
+                <Suspense key={i} fallback={<div>"loading...</div>}>
+                  <ZoomHome mapController={this} target={target} key={i}/>
+                </Suspense>            );
           }
           break;
         case 'zoomPosition':
           if (mapData.zoomPosition) {
             result.push(
-                <ZoomPosition mapController={this} target={target} key={i}/>
-            );
+                <Suspense key={i} fallback={<div>"loading...</div>}>
+                  <ZoomPosition mapController={this} target={target} key={i}/>
+                </Suspense>            );
           }
           break;
         case 'fullscreen':
           if (mapData.fullscreen) {
             result.push(
-                <Fullscreen mapController={this} target={target} key={i}/>
-            );
+                <Suspense key={i} fallback={<div>"loading...</div>}>
+                  <Fullscreen mapController={this} target={target} key={i}/>
+                </Suspense>            );
           }
           break;
         case 'print':
           if (mapData.print) {
             result.push(
-                <Print mapController={this} target={target} key={i}/>
-            );
+                <Suspense key={i} fallback={<div>"loading...</div>}>
+                  <Print mapController={this} target={target} key={i}/>
+                </Suspense>            );
           }
           break;
         case 'rotate':
           if (mapData.rotate) {
             result.push(
-                <Rotate mapController={this} target={target} key={i}/>
-            );
+                <Suspense key={i} fallback={<div>"loading...</div>}>
+                  <Rotate mapController={this} target={target} key={i}/>
+                </Suspense>            );
           }
           break;
         case 'graticule':
           if (mapData.graticule) {
             result.push(
-                <Grid mapController={this} target={target} key={i}/>
-            );
+                <Suspense key={i} fallback={<div>"loading...</div>}>
+                  <Grid mapController={this} target={target} key={i}/>
+                </Suspense>            );
           }
           break;
         case 'overview':

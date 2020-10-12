@@ -42,7 +42,9 @@ export class StarboardLayerswitcher extends Component {
         else {
           this.initialCounterOff++;
         }
-        this.getInitialStateChild(this.props.layerStates.childStates);
+        if (this.props.layerStates[i].childStates) {
+          this.getInitialStateChild(this.props.layerStates[i].childStates);
+        }
       }
     }
     return this.initialCounterOn > this.initialCounterOff;
