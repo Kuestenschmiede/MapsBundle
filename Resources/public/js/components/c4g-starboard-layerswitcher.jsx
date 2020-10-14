@@ -28,7 +28,7 @@ export class StarboardLayerswitcher extends Component {
       initialized: false,
       layerFilter: ""
     };
-    this.buttonEnabled = this.getInitialStates();
+    // this.buttonEnabled = this.getInitialStates();
   }
 
   getInitialStates = () => {
@@ -43,7 +43,11 @@ export class StarboardLayerswitcher extends Component {
           this.initialCounterOff++;
         }
         if (this.props.layerStates[i].childStates) {
-          this.getInitialStateChild(this.props.layerStates[i].childStates);
+          for (let j in this.props.layerStates[i].childStates) {
+            if (this.props.layerStates[i].childStates.hasOwnProperty(j)) {
+              this.getInitialStateChild(this.props.layerStates[i].childStates[j])
+            }
+          }
         }
       }
     }
@@ -57,7 +61,11 @@ export class StarboardLayerswitcher extends Component {
       this.initialCounterOff++;
     }
     if (child.childStates) {
-      this.getInitialStateChild(child.childStates);
+      for (let i in child.childStates) {
+        if (child.childStates.hasOwnProperty(i)) {
+          this.getInitialStateChild(child.childStates[i]);
+        }
+      }
     }
   }
 
@@ -141,6 +149,10 @@ export class StarboardLayerswitcher extends Component {
 
   }
   render() {
+    if (this.props.layerStates && this.props.layerStates.length > 0 && !(this.initialCounterOff && this.initialCounterOn)) {
+      this.buttonEnabled = this.getInitialStates();
+    }
+
     let layers, states, filter;
     layers = this.props.objLayers;
     states = this.props.layerStates;
