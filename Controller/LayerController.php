@@ -66,7 +66,7 @@ class LayerController extends BaseController
             $modifiedData = $this->responseData;
             // dispatch event for custom layer content
             foreach ($modifiedData['layer'] as $key => $layer) {
-                $modifiedData['layer'][$key] = $this->addCustomLogic($layer);
+                $modifiedData['layer'][$key] = $this->addCustomLogic($layer, $lang);
             }
             $this->responseData = $modifiedData;
             if (self::$useCache) {
@@ -79,7 +79,7 @@ class LayerController extends BaseController
         return $response;
     }
     
-    private function addCustomLogic($arrLayerData)
+    private function addCustomLogic($arrLayerData, $lang)
     {
         if ($arrLayerData['hasChilds']) {
             foreach ($arrLayerData['childs'] as $childIdx => $child) {
@@ -90,6 +90,7 @@ class LayerController extends BaseController
                 // custom location type
                 $event = new LoadLayersEvent();
                 $event->setLayerData($arrLayerData);
+                $event->setAdditionalData(["language" => $lang]);
                 $this->eventDispatcher->dispatch($event::NAME, $event);
                 $arrLayerData = $event->getLayerData();
             }
