@@ -55,6 +55,7 @@ class FilterController extends BaseController
         $event = new LoadFeatureFiltersEvent();
         $event->setProfileId($profileId);
         $event->setFilters($filters);
+        $event->setAddData(["language" => $lang]);
         $this->eventDispatcher->dispatch($event::NAME, $event);
         $filters = $event->getFilters();
         return new JsonResponse($filters);

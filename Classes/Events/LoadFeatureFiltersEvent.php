@@ -31,6 +31,12 @@ class LoadFeatureFiltersEvent extends Event
     private $filters = [];
 
     /**
+     * @var addData[]
+     */
+    private $addData = [];
+
+
+    /**
      * @return int
      */
     public function getProfileId(): int
@@ -60,5 +66,20 @@ class LoadFeatureFiltersEvent extends Event
     public function setFilters(array $filters): void
     {
         $this->filters = $filters;
+    }
+    /**
+     * @return array
+     */
+    public function getAddData(): array
+    {
+        return $this->addData;
+    }
+
+    /**
+     * @param array $addData
+     */
+    public function setAddData(array $addData): void
+    {
+        $this->addData = $addData;
     }
 }
