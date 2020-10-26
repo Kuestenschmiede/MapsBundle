@@ -91,6 +91,11 @@ class ResourceLoader extends coreResourceLoader
         }
         parent::loadCssResource(self::BUNDLE_CSS_PATH . 'c4g-maps-ol.css'); //copy of original ol.css / check source with new versions
         parent::loadCssResource(self::BUNDLE_CSS_PATH . 'c4g-maps-general.css');
+        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/icons/c4g-theme-icons.css');
+        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/buttons/c4g-theme-buttons.css');
+        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/colors/c4g-theme-colors.css');
+        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/effects/c4g-theme-effects.css');
+
 
         // load plugins
         if ($resources['plugins']) {
@@ -191,11 +196,6 @@ class ResourceLoader extends coreResourceLoader
         if ($themeId != -1) {
             $theme = C4gMapThemesModel::findByPk($themeId);
         }
-
-        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/icons/c4g-theme-icons.css');
-        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/buttons/c4g-theme-buttons.css');
-        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/colors/c4g-theme-colors.css');
-        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/effects/c4g-theme-effects.css');
 
         $themeData = [];
 
