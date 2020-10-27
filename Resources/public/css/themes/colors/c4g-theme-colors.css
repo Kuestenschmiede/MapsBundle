@@ -19,6 +19,7 @@
 .c4g-permalink-popup button:hover,
 .c4g-permalink.c4g-open button {
   background-color: var(--shadow-color);
+  outline: none;
 }
 
 /*
