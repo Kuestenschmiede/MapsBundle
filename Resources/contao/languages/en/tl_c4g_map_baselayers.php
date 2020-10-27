@@ -106,7 +106,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapbox_classic']     = 'M
 
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapz_softcolor_transport']   = 'Softcolor Transport';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapz_multicolor_blind']      = 'Multicolor Blind';
-$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapz_shades_of_gray_blind']  = 'Shades of Gray Blin';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapz_shades_of_gray_blind']  = 'Shades of Gray Blind';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapz_highlander']            = 'Highlander';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapz_multicolor_base']       = 'Multicolor Base';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapz_multicolor_poi']        = 'Multicolor Poi';
