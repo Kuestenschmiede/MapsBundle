@@ -136,7 +136,12 @@ export var config = {
       crossOrigin: 'anonymous',
     }
   },
-
+  mapz: {
+    attributions: '© 2020 <a target=\"_blank\" href=\"http://www.mapz.com\">mapz.com </a>' + ' ' + OSM_REL_ATTRIBUTION,
+    minZoom: 0,
+    maxZoom: 22,
+    tilePixelRatio: 2
+  },
   klokan: {
 
     OpenMapTiles: {

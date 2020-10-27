@@ -138,6 +138,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                                          '{protection_legend:hide},protect_baselayer,published;',
         'mapbox'                      => '{general_legend},name,display_name,provider,mapbox_type,app_id,api_key,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
                                          '{protection_legend:hide},protect_baselayer,published;',
+        'mapz'                        => '{general_legend},name,display_name,provider,mapz_type,api_key,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
+                                         '{protection_legend:hide},protect_baselayer,published;',
         'here'                        => '{general_legend},name,display_name,provider,here_type,app_id,api_key,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
                                          '{protection_legend:hide},protect_baselayer,published;',
         'thunder'                     => '{general_legend},name,display_name,provider,thunderforest_type,api_key,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
@@ -241,6 +243,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                 'here' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_here'],
                 'klokan' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_klokan'],
                 'mapbox' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapbox'],
+                'mapz' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapz'],
                 'stamen' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stamen'],
                 'thunder' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_thunderforest'],
                 'wms' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_wms'],
@@ -331,6 +334,25 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                     'streets'             => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_klokan_tilehosting_streets'],
                     'topo'                => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_klokan_tilehosting_topo'],
                     'hybrid'              => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_klokan_tilehosting_hybrid'],
+                ],
+                'eval'                    => ['submitOnChange' => true],
+                'sql'                     => "varchar(30) NOT NULL default ''"
+            ],
+        'mapz_type' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['mapz_type'],
+                'exclude'                 => true,
+                'filter'                  => false,
+                'inputType'               => 'select',
+                'default'                 => 'OpenMapTiles',
+                'options'                 => [
+                    'mapz_softcolor_transport'        => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapz_softcolor_transport'],
+                    'mapz_multicolor_blind'           => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapz_multicolor_blind'],
+                    'mapz_shades_of_gray_blind'       => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapz_shades_of_gray_blind'],
+                    'mapz_highlander'                 => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapz_highlander'],
+                    'mapz_multicolor_base'            => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapz_multicolor_base'],
+                    'mapz_multicolor_poi'             => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapz_multicolor_poi'],
+                    'mapz_shades_of_gray'             => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapz_shades_of_gray']
                 ],
                 'eval'                    => ['submitOnChange' => true],
                 'sql'                     => "varchar(30) NOT NULL default ''"

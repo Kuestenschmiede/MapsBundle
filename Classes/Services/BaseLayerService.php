@@ -286,6 +286,12 @@ class BaseLayerService
                     }
 
                     break;
+                case 'mapz':
+                    $arrBaseLayer['url'] = 'https://tiles.mapz.com/mapproxy/v1/' . $objBaseLayer->api_key . '/tiles/1.0.0/' . $objBaseLayer->mapz_type . '/EPSG3857/{z}/{x}/{-y}.jpeg';
+                    if ($objBaseLayer->hide_in_be) {
+                        $arrBaseLayer['hide_in_be'] = $objBaseLayer->hide_in_be;
+                    }
+                    break;
                 case 'klokan':
                     $arrBaseLayer['url'] = $objBaseLayer->url;
                     $klokan_type = $objBaseLayer->klokan_type;

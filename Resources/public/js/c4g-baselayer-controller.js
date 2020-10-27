@@ -254,6 +254,12 @@ export class C4gBaselayerController {
           console.warn('wrong mapbox configuration!');
         }
         break;
+      case 'mapz' :
+        newBaselayer = new TileLayer({
+          source: new XYZ(jQuery.extend(
+              sourceConfigs.mapz,
+              layerOptions))
+        });
       case 'klokan':
         if (baseLayerConfig.api_key && baseLayerConfig.klokan_type) {
 
@@ -552,6 +558,7 @@ export class C4gBaselayerController {
       sourceConfigs.stamen = config.stamen;
       //mapQuestSourceConfigs = c4g.maps.config.mapquest;
       sourceConfigs.mapbox = config.mapbox;
+      sourceConfigs.mapz = config.mapz;
       sourceConfigs.klokan = config.klokan;
       sourceConfigs.here = config.here;
       sourceConfigs.thunderforest = config.thunderforest;
@@ -582,6 +589,10 @@ export class C4gBaselayerController {
             break;
           case 'mapbox':
             layerOptions.attributions = sourceConfigs.mapbox[baseLayerConfig.mapbox_type].attributions;
+            break;
+          case 'mapz':
+            layerOptions.url = baseLayerConfig.url;
+            layerOptions.attributions = sourceConfigs.mapz.attributions;
             break;
           case 'klokan':
             layerOptions.attributions = sourceConfigs.klokan[baseLayerConfig.klokan_type].attributions;

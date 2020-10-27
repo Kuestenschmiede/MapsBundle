@@ -32,6 +32,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['extend']              = array('ext
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['osm_style_zoomlevels']  	= array('Zoom steps', 'Please enter the zoom step count (optional).');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['osm_keyname']    		= array('Keyname', 'Please enter the internal Keyname (optional).');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['mapbox_type']   		= array('Mapbox API', 'Please choose the mapbox api type.');
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['mapz_type']   			= array('mapz.com', 'Please choose the mapz-baselayer');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['klokan_type']   		= array('Klokan API', 'Please choose the Klokan api type.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['here_type']   			= array('HERE', 'Bitte wählen Sie den Kartenstil aus.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['thunderforest_type']      = array('Thunderforest', 'Bitte wählen Sie den Kartenstil aus.');
@@ -74,6 +75,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm']    = 'OpenStreetMap
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stamen'] = 'Stamen (<a href="http://maps.stamen.com" rel="noopener" target="_blank">usage policy</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_here']   = 'HERE (<a href="https://developer.here.com" rel="noopener" target="_blank">usage policy</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapbox'] = 'Mapbox (<a href="https://www.mapbox.com" rel="noopener" target="_blank">usage policy</a>)';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapz']   = 'Mapz (<a href="https://www.mapz.com" rel="noopener" target="_blank">usage policy</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_thunderforest'] = 'Thunderforest (<a href="https://www.thunderforest.com/maps" rel="noopener" target="_blank">usage policy</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_google'] = 'Google Maps';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_bing']   = 'Bing Maps (<a href="https://www.bingmapsportal.com" rel="noopener" target="_blank">usage policy</a>)';
@@ -101,6 +103,14 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm_custom'] 			= 'Custom
 
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapbox_studio']             = 'Mapbox Studio Style or style url';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapbox_classic']     = 'Mapbox Studio Classic, Editor or map ID';
+
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapz_softcolor_transport']   = 'Softcolor Transport';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapz_multicolor_blind']      = 'Multicolor Blind';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapz_shades_of_gray_blind']  = 'Shades of Gray Blin';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapz_highlander']            = 'Highlander';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapz_multicolor_base']       = 'Multicolor Base';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapz_multicolor_poi']        = 'Multicolor Poi';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapz_shades_of_gray']        = 'Shades of Gray';
 
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_klokan_openmaptiles'] = 'OpenMapTiles (www.openmaptiles.org)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_klokan_tilehosting_basic']  = 'Basic (www.tilehosting.com)';
