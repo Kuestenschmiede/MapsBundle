@@ -18,7 +18,7 @@
 </script>
 <?php else: ?>
 
-<script defer>
+<script>
     window.mapData = window.mapData || {};
     window.mapData<?php echo '['.$this->mapData['mapId'] . ']' ?> = <?php echo json_encode($this->mapData) ?>;
 </script>
