@@ -41,7 +41,7 @@ class MapDataConfigurator
      * @param  array  $options  [description]
      * @return [type]           [description]
      */
-    public static function prepareMapData($objThis, $database, $options = [])
+    public static function prepareMapData($objThis, $database, $options = [], $preventResourceLoader = false)
     {
         $mapData = [];
         $mapData['mapId'] = $objThis->id;
@@ -590,15 +590,17 @@ class MapDataConfigurator
         // load resources
         //
         // tell the Core to load all resources needed for maps
-        ResourceLoader::loadResourcesForModule('maps');
-        // load internal scripts and themes
-        if ($profileId) {
-            $mapData['themeData'] = ResourceLoader::loadResourcesForProfile($profileId, $options['type'] == 'geopicker', null, $mapData);
-        } else {
-            ResourceLoader::loadResources();
-            $mapData['themeData'] = ResourceLoader::loadTheme();
-        }
+        if (!$preventResourceLoader) {
+            ResourceLoader::loadResourcesForModule('maps');
+            // load internal scripts and themes
+            if ($profileId) {
+                $mapData['themeData'] = ResourceLoader::loadResourcesForProfile($profileId, $options['type'] == 'geopicker', null, $mapData);
+            } else {
+                ResourceLoader::loadResources();
+                $mapData['themeData'] = ResourceLoader::loadTheme();
+            }
 
+        }
         // @TODO: Check
         $mapData['addIdToDiv'] = true;
 
