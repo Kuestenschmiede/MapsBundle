@@ -18,6 +18,7 @@ __Main features include:__
     - Thunderforest (9 Styles)
     - Klokan Technologies (OpenMapTiles & 8 MapTiler Styles)
     - Bing (3 Styles)
+    - Mapz (7 Styles)
     - Layergroup (depending on zoom level)
     - Georeferenced image
     - Custom
