@@ -10,7 +10,7 @@ var config = {
   output: {
     filename: '[name].js',
     path: path.resolve('./Resources/public/build/'),
-    chunkFilename: '[name].bundle.js',
+    chunkFilename: '[name].bundle.[contenthash].js',
     publicPath: "bundles/con4gismaps/build/"
   },
   resolve: {
