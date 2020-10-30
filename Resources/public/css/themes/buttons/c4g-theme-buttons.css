@@ -32,6 +32,10 @@
   cursor: pointer;
 }
 
+.ol-control button {
+  margin-top: inherit;
+}
+
 .ol-control:not(.ol-attribution) button:not(.ol-zoom-in):not(.ol-zoom-out),
 .c4g-control button {
   border-radius: var(--button-radius-percent);
