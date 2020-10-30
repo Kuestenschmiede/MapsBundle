@@ -1,4 +1,5 @@
 const CompressionPlugin = require('compression-webpack-plugin');
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const webpack = require("webpack");
 var path = require('path');
 var config = {
@@ -18,7 +19,7 @@ var config = {
     extensions: ['.jsx', '.js']
   },
   plugins: [
-    new CompressionPlugin()
+    new CleanWebpackPlugin()
   ],
   module: {
     rules: [

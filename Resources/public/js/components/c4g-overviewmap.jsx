@@ -13,7 +13,7 @@
 
 import React, {Component} from "react";
 import {Control, OverviewMap as OvMap} from "ol/control";
-import {cssConstants} from "./../c4g-maps-constant";
+import {cssConstants} from "../c4g-maps-constant";
 import {getLanguage} from "../c4g-maps-i18n";
 import LayerGroup from "ol/layer/Group";
 import {Titlebar} from "./c4g-titlebar";
