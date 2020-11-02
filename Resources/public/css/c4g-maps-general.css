@@ -548,6 +548,7 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
 }
 
 .c4g-sideboard.c4g-close {
+  visibility: hidden;
   right: -100%;
 }
 
