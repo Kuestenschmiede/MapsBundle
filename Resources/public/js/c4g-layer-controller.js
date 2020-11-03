@@ -775,7 +775,8 @@ export class BetterLayerController {
         "name"            : layer.name,
         "tags"            : layer.tags,
         "hide"            : hide,
-        "childs"          : childs
+        "childs"          : childs,
+        "addZoomTo"          : layer.addZoomTo
       };
     }
   }

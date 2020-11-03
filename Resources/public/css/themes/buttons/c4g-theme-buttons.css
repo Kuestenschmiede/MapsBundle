@@ -279,6 +279,10 @@ span.c4g-icon + a {
   width: calc(100% - 35px - 1.75em - .2em);
 }
 
+.c4g-content-layertree span[class*=geojson] + a {
+  width: calc(100% - 70px - 1.75em - .2em);
+}
+
 span.c4g-icon + span[class*=locstyle] + a {
   width: calc(100% - 35px - 21px - 1.75em - .2em);
 }
