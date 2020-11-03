@@ -180,13 +180,13 @@ export default class StarboardPanel extends Component {
    * Moves the buttons that would collide with the panel.
    */
   slideOutCollidingElements() {
-    jQuery(".c4g-starboard-container").css("right","0%");
+    jQuery(".c4g-starboard-container").addClass("c4g-open").removeClass("c4g-close");
   }
 
   /**
    * Undoes the previous button movement.
    */
   slideInCollidingElements() {
-    jQuery(".c4g-starboard-container").css("right","-100%");
+    jQuery(".c4g-starboard-container").addClass("c4g-close").removeClass("c4g-open");
   }
 }

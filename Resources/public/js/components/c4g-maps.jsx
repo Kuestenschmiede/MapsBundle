@@ -589,10 +589,8 @@ export class MapController extends Component {
         this.$overlaycontainer_stopevent.append(this.reactContainer);
       }
       if (mapData.starboard.open) {
-        this.reactContainer.style.right = "0";
         this.reactContainer.className += " c4g-open";
       } else {
-        this.reactContainer.style.right = "-100%";
         this.reactContainer.className += " c4g-close";
       }
     }
