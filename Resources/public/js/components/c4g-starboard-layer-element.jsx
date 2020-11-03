@@ -145,10 +145,13 @@ export class C4gStarboardLayerElement extends Component {
   }
   layerZoomTo(e) {
     let feature = this.props.layer.features[0];
-    let map = this.props.mapController.map;
-    map.getView().fit(feature.getGeometry(), {
-      padding: [50,50,50,50]
-    });
+    if (feature) {
+      let map = this.props.mapController.map;
+      map.getView().fit(feature.getGeometry(), {
+        padding: [50,50,50,50]
+      });
+    }
+    this.props.mapController.proxy.layerController.zoomTo(this.props.id)
   }
   changeCollapseState(id, state) {
     this.props.layerStates.childStates[id] = state;

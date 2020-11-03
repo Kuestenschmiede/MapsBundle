@@ -311,6 +311,12 @@ export class BetterLayerController {
       this.mapController.map.addLayer(vectorLayer);
     }
   }
+  zoomTo(layerId) {
+    let feature = this.objIds[layerId][0];
+    this.mapController.map.getView().fit(feature.getGeometry(), {
+      padding: [50,50,50,50]
+    });
+  }
 
 
   loadLayers () {
