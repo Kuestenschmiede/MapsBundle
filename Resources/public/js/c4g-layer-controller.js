@@ -416,7 +416,7 @@ export class BetterLayerController {
           }
         }
       }
-      utils.callHookFunctions(window.c4gMapsHooks.layer_loaded, this);
+      utils.callHookFunctions(window.c4gMapsHooks.layer_loaded, self);
       return true;
     }).fail(function () {
       console.warn('An error occured while trying to load the layers...');
