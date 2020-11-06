@@ -1,7 +1,7 @@
 :root {
   --font-color: rgba(255,255,255,.9);
-  --main-color: rgba(24, 61, 93,.8);
-  --shadow-color: rgba(0,155,222,.5);
+  --main-color: rgba(24, 61, 93,1);
+  --shadow-color: rgba(0,155,222,1);
   --pu-font-color: rgba(255,255,255,.9);
   --pu-main-color: rgba(24, 61, 93,.8);
 }
