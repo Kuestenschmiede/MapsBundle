@@ -51,7 +51,12 @@ export class C4gStarboardStyle extends Component {
                     return null;
                 }
             }
-            styleTriggerLabel =  <span className={cssConstants.STARBOARD_LOCSTYLE}>{styleIcon}</span>;
+            if (this.props.clickEvent && this.props.tooltip) {
+                styleTriggerLabel =  <span className={cssConstants.STARBOARD_LOCSTYLE} title={this.props.tooltip} onMouseUp={()=> this.props.clickEvent()}>{styleIcon}</span>;
+            }
+            else {
+                styleTriggerLabel =  <span className={cssConstants.STARBOARD_LOCSTYLE}>{styleIcon}</span>;
+            }
         } else {
             let cssClass;
             switch (styleType) { // 'point', 'square', 'star', 'x', 'cross', 'triangle'
@@ -90,7 +95,12 @@ export class C4gStarboardStyle extends Component {
                 "--var-color" : color,
                 "--var-bordercolor" : bordercolor
             };
-            styleTriggerLabel = <span className={cssClass} style={styleElements}/>;
+            if (this.props.clickEvent && this.props.tooltip) {
+                styleTriggerLabel = <span className={cssClass} style={styleElements} title={this.props.tooltip} onMouseUp={()=> this.props.clickEvent()}/>;
+            }
+            else {
+                styleTriggerLabel = <span className={cssClass} style={styleElements}/>;
+            }
         }
         return styleTriggerLabel;
     }

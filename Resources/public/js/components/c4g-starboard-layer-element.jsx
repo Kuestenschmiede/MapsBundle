@@ -163,9 +163,7 @@ export class C4gStarboardLayerElement extends Component {
       span = <span className={cssConstants.ICON} onMouseUp={(event) => this.spanClick(event)}/>;
     }
     let stylePicture = null;
-    if (this.props.mapController.data.starboard.showLocstyles === "1" && this.props.layer.locstyle && this.props.styleData && this.props.styleData.arrLocStyles && this.props.styleData.arrLocStyles[this.props.layer.locstyle]) {
-      stylePicture = <C4gStarboardStyle styleData={this.props.styleData} styleId={this.props.layer.locstyle}/>
-    }
+
     let cssClass = this.props.layerStates.active ? cssConstants.ACTIVE : cssConstants.INACTIVE;
     if (this.props.layerStates.greyed) {
       cssClass += " " + cssConstants.DISABLED;
@@ -174,6 +172,9 @@ export class C4gStarboardLayerElement extends Component {
     let objChilds = this.props.layer.childs;
 
     if (objChilds && objChilds.length) {
+      if (this.props.mapController.data.starboard.showLocstyles === "1" && this.props.layer.locstyle && this.props.styleData && this.props.styleData.arrLocStyles && this.props.styleData.arrLocStyles[this.props.layer.locstyle]) {
+        stylePicture = <C4gStarboardStyle styleData={this.props.styleData} styleId={this.props.layer.locstyle}/>
+      }
       return (
         <li className={openClose}>
           {span}
@@ -201,15 +202,24 @@ export class C4gStarboardLayerElement extends Component {
       );
     }
     else {
-      let layerClick = this.layerClick;
       let spanZoom = null;
-      if (this.props.layer.zoomTo) {
-        layerClick = this.layerZoomTo;
-        cssClass = "c4g-geojson-button";
+      if (this.props.mapController.data.starboard.showLocstyles === "1" && this.props.layer.locstyle && this.props.styleData && this.props.styleData.arrLocStyles && this.props.styleData.arrLocStyles[this.props.layer.locstyle]) {
+        if (this.props.layer.addZoomTo) {
+          stylePicture = <C4gStarboardStyle styleData={this.props.styleData} styleId={this.props.layer.locstyle} tooltip={this.props.lang.STARBOARD_ELEMENT_ZOOM} clickEvent={this.layerZoomTo}/>;
+        }
+        else {
+          stylePicture = <C4gStarboardStyle styleData={this.props.styleData} styleId={this.props.layer.locstyle}/>;
+        }
       }
       else if (this.props.layer.addZoomTo) {
         spanZoom = <span className={"c4g-geojson-button"} title={this.props.lang.STARBOARD_ELEMENT_ZOOM} onMouseUp={(event) => this.layerZoomTo(event)}/>;
       }
+      let layerClick = this.layerClick;
+      if (this.props.layer.zoomTo) {
+        layerClick = this.layerZoomTo;
+        cssClass = "c4g-geojson-button";
+      }
+
       return (
           <li className={openClose}>
             {span}
