@@ -325,6 +325,9 @@ export class BetterLayerController {
         }
       }
     }
+    if (!extent) {
+      return;
+    }
     let width = jQuery(".c4g-starboard-container").css('width');
     if (width) {
       width = width.split(".");
