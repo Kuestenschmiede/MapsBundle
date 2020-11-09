@@ -67,6 +67,7 @@ export var langConstantsGerman = {
   STARBOARD_LAYER: 'Ebenen',
   STARBOARD_VIEW_TRIGGER_BASELAYERSWITCHER: 'Basiskarten',
   STARBOARD_VIEW_TRIGGER_LAYERSWITCHER: 'Kartenelemente',
+  STARBOARD_ELEMENT_ZOOM: 'Auf Element zoomen',
 
   LAYERSWITCHER_TOGGLE_ALL: "Alle Elemente",
 

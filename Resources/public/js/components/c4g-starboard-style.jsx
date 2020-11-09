@@ -41,11 +41,11 @@ export class C4gStarboardStyle extends Component {
                 else {
                     iconSrc = styleData.svgSrc;
                 }
-                styleIcon = <img src={iconSrc} style={{height: 16, width: 16}} />;
+                styleIcon = <img src={iconSrc} style={{height: 25, width: 25}} />;
             } else if (styl0r) {
                 let styleImage = styl0r.getImage && typeof styl0r.getImage === "function" && styl0r.getImage() ? styl0r.getImage(): null;
                 if (styleImage && styleImage.getSrc()) {
-                    styleIcon = <img src={styleImage.getSrc()} style={{height: 16, width: 16}}/>
+                    styleIcon = <img src={styleImage.getSrc()} style={{height: 25, width: 25}}/>
                 }
                 else {
                     return null;

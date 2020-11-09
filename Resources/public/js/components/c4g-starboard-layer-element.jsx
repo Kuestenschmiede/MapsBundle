@@ -187,6 +187,7 @@ export class C4gStarboardLayerElement extends Component {
                                           strFilter={this.props.strFilter}
                                           filterFunc={this.props.filterFunc}
                                           changeCollapseState={this.changeCollapseState}
+                                          lang={this.props.lang}
                                           byPassChilds={this.props.byPassChilds || this.props.filterFunc(this.props.strFilter, item, false, false)}
                                           layerStates={this.props.layerStates.childStates[id]}
                                           layer={item}
@@ -207,7 +208,7 @@ export class C4gStarboardLayerElement extends Component {
         cssClass = "c4g-geojson-button";
       }
       else if (this.props.layer.addZoomTo) {
-        spanZoom = <span className={"c4g-geojson-button"} onMouseUp={(event) => this.layerZoomTo(event)}/>;
+        spanZoom = <span className={"c4g-geojson-button"} title={this.props.lang.STARBOARD_ELEMENT_ZOOM} onMouseUp={(event) => this.layerZoomTo(event)}/>;
       }
       return (
           <li className={openClose}>
