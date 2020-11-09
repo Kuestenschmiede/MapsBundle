@@ -300,6 +300,7 @@ span.c4g-icon + span[class*=locstyle] + a {
 
 
 .c4g-content-layertree span[class*=locstyle] {
+    padding-right: 25px;
     width: 25px;
     line-height: 43px;
 }
