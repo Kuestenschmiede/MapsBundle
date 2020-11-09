@@ -313,7 +313,7 @@ export class BetterLayerController {
     }
   }
   zoomTo(features, layerId) {
-    features = features || this.objIds[layerId];
+    features = features && features.length ? features : this.objIds[layerId];
     let extent;
     for (let i in features) {
       if (features.hasOwnProperty(i)) {
