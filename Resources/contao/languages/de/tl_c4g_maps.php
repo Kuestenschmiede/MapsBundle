@@ -114,6 +114,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['popupTemplate'] = array("Popup Template","Po
 $GLOBALS['TL_LANG']['tl_c4g_maps']['awesomeicon'] = array('Icon für den Reiter', 'Hier können Sie einen Unicode eingeben, der in ein Awesome-Font Icon umgewandelt wird (<a href="https://fontawesome.com/icons/" rel="noopener" target="_blank">fontawesome.com/icons/</a>).');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['hide_when_in_tab'] = array("Ausblenden wenn im Starboard-Reiter", "Wenn Sie diese Checkbox setzen, wird die Ebene im Starboard nicht angezeigt, wenn es in einem eigenen Starboardreiter liegt. Das ist hilfreich, wenn Sie das Elternelement einer bereits vorhandenen Strukturebene im Reiter nicht anzeigen wollen.");
 $GLOBALS['TL_LANG']['tl_c4g_maps']['hideInStarboard'] = array("Im Starboard nicht darstellen", "Wenn Sie diese Checkbox setzen, wird die Ebene im Starboard nicht angezeigt. Darunter liegende Kindelemente werden aber normal dargestellt.");
+$GLOBALS['TL_LANG']['tl_c4g_maps']['addZoom'] = array("Zoombutton im Starboard", "Wenn Sie diese Checkbox setzen, wird ein Zoombutton im Starboard hinzugefügt");
 $GLOBALS['TL_LANG']['tl_c4g_maps']['cssClass'] = array("CSS Klasse", "Die CSS Klasse wird am Listenelement im Starboard gesetzt.");
 
 $GLOBALS['TL_LANG']['tl_c4g_maps']['excludeFromSingleLayer'] = array("Strukturelement separat händeln.", "Dieser Parameter ist bestmöglich vorbelegt. Nur im Einzelfall, insbesondere bei Massendaten, kann es sinnvoll sein die Auswahl zu verändern.");

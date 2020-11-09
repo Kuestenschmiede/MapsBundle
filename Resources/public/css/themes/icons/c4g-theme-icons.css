@@ -460,7 +460,7 @@ button.c4g-popup-close:before {
   cursor: pointer;
 }
 .c4g-geojson-button:after {
-  content: "\f140";
+  content: "\f59f";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;
