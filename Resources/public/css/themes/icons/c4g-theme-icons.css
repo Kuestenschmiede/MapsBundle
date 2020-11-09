@@ -456,9 +456,11 @@ button.c4g-popup-close:before {
   font-weight: 900;
   font-size: inherit;
 }
-
+.c4g-geojson-button{
+  cursor: pointer;
+}
 .c4g-geojson-button:after {
-  content: "\f59f";
+  content: "\f140";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit;

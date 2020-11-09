@@ -313,8 +313,18 @@ export class BetterLayerController {
   }
   zoomTo(layerId) {
     let feature = this.objIds[layerId][0];
+    let width = jQuery(".c4g-starboard-container").css('width');
+    if (width) {
+      width = width.split(".");
+      width = Array.isArray(width) ? width[0] : width;
+      width = parseInt(width);
+    }
+    else {
+      width = 50;
+    }
     this.mapController.map.getView().fit(feature.getGeometry(), {
-      padding: [50,50,50,50]
+      padding: [50,width,50,50],
+      duration: 500
     });
   }
 
