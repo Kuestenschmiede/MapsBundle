@@ -23,6 +23,7 @@ import {utils} from './c4g-maps-utils';
 import {Fill, Style, Text} from 'ol/style';
 import {Point} from "ol/geom";
 import Feature from 'ol/Feature';
+import * as olExtent from 'ol/extent';
 
 const osmtogeojson = require('osmtogeojson');
 
@@ -311,8 +312,19 @@ export class BetterLayerController {
       this.mapController.map.addLayer(vectorLayer);
     }
   }
-  zoomTo(layerId) {
-    let feature = this.objIds[layerId][0];
+  zoomTo(features, layerId) {
+    features = features || this.objIds[layerId];
+    let extent;
+    for (let i in features) {
+      if (features.hasOwnProperty(i)) {
+        if (!extent) {
+          extent = features[i].getGeometry().getExtent();
+        }
+        else {
+          extent = olExtent.extend(extent,features[i].getGeometry().getExtent());
+        }
+      }
+    }
     let width = jQuery(".c4g-starboard-container").css('width');
     if (width) {
       width = width.split(".");
@@ -322,7 +334,7 @@ export class BetterLayerController {
     else {
       width = 50;
     }
-    this.mapController.map.getView().fit(feature.getGeometry(), {
+    this.mapController.map.getView().fit(extent, {
       padding: [50,width,50,50],
       duration: 500
     });

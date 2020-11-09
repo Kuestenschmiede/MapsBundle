@@ -144,24 +144,7 @@ export class C4gStarboardLayerElement extends Component {
     // this.props.parentCallback(this.props.keyId, newState)
   }
   layerZoomTo(e) {
-    let feature = this.props.layer.features[0];
-    if (feature) {
-      let map = this.props.mapController.map;
-      let width =jQuery(".c4g-starboard-container").css('width');
-      if (width) {
-        width = width.split(".");
-        width = Array.isArray(width) ? width[0] : width;
-        width = parseInt(width);
-      }
-      else {
-        width = 50;
-      }
-      map.getView().fit(feature.getGeometry(), {
-        padding: [50,width,50,50],
-        duration: 500
-      });
-    }
-    this.props.mapController.proxy.layerController.zoomTo(this.props.id)
+    this.props.mapController.proxy.layerController.zoomTo(this.props.layer.features, this.props.id)
   }
   changeCollapseState(id, state) {
     this.props.layerStates.childStates[id] = state;
