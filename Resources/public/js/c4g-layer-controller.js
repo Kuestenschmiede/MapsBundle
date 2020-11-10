@@ -317,10 +317,10 @@ export class BetterLayerController {
     for (let i in features) {
       if (features.hasOwnProperty(i)) {
         if (!extent) {
-          extent = features[i].getGeometry().getExtent();
+          extent = features[i].getGeometry().clone().getExtent();
         }
         else {
-          extent = olExtent.extend(extent,features[i].getGeometry().getExtent());
+          extent = olExtent.extend(extent,features[i].getGeometry().clone().getExtent());
         }
       }
     }

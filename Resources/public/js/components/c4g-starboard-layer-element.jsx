@@ -167,10 +167,10 @@ export class C4gStarboardLayerElement extends Component {
       for (let i in child.features) {
         if (child.features.hasOwnProperty(i)) {
           if (!extent) {
-            extent = child.features[i].getGeometry().getExtent();
+            extent = child.features[i].getGeometry().clone().getExtent();
           }
           else {
-            extent = olExtent.extend(extent, child.features[i].getGeometry().getExtent())
+            extent = olExtent.extend(extent, child.features[i].getGeometry().clone().getExtent())
           }
         }
       }
