@@ -145,6 +145,9 @@ export class C4gStarboardLayerElement extends Component {
     // this.props.parentCallback(this.props.keyId, newState)
   }
   layerZoomTo(e) {
+    if (!this.props.layerStates.active) {
+      this.layerClick(e);
+    }
     let extent = null;
     if (this.props.layer.childs && this.props.layer.childs.length) {
       for (let i in this.props.layer.childs) {

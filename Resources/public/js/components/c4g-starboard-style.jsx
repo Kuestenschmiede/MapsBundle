@@ -52,7 +52,7 @@ export class C4gStarboardStyle extends Component {
                 }
             }
             if (this.props.clickEvent && this.props.tooltip) {
-                styleTriggerLabel =  <span className={cssConstants.STARBOARD_LOCSTYLE} title={this.props.tooltip} onMouseUp={()=> this.props.clickEvent()}>{styleIcon}</span>;
+                styleTriggerLabel =  <span className={cssConstants.STARBOARD_LOCSTYLE} title={this.props.tooltip} onMouseUp={(event)=> this.props.clickEvent(event)}>{styleIcon}</span>;
             }
             else {
                 styleTriggerLabel =  <span className={cssConstants.STARBOARD_LOCSTYLE}>{styleIcon}</span>;
@@ -96,7 +96,7 @@ export class C4gStarboardStyle extends Component {
                 "--var-bordercolor" : bordercolor
             };
             if (this.props.clickEvent && this.props.tooltip) {
-                styleTriggerLabel = <span className={cssClass} style={styleElements} title={this.props.tooltip} onMouseUp={()=> this.props.clickEvent()}/>;
+                styleTriggerLabel = <span className={cssClass} style={styleElements} title={this.props.tooltip} onMouseUp={(event)=> this.props.clickEvent(event)}/>;
             }
             else {
                 styleTriggerLabel = <span className={cssClass} style={styleElements}/>;
