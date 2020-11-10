@@ -239,7 +239,7 @@
 }
 
 .c4g-layertree li > span.c4g-icon + a + ul {
-    margin-left: 21px;
+    margin-left: 14px;
 }
 
 .c4g-layertree li ul li,
@@ -263,17 +263,17 @@ ul.c4g-overlays li a {
     position: relative;
 }
 
-.c4g-layertree span + a, .c4g-layertree a {
-    display: inline-block !important;
-    width: calc(100% - 1.75em - .2em);
-    text-decoration: none;
-    padding: 0 1.75em 0 .2em;
-    cursor: pointer;
-    position: relative;
-}
+/*.c4g-layertree span + a, .c4g-layertree a {*/
+/*    display: inline-block;*/
+/*    width: calc(100% - 1.75em - .2em);*/
+/*    text-decoration: none;*/
+/*    padding: 0 1.75em 0 .2em;*/
+/*    cursor: pointer;*/
+/*    position: relative;*/
+/*}*/
 
 .c4g-layertree li > a:first-child {
-    display: inline-block !important;
+    display: inline-block;
     width: calc(100% - 1.75em - .2em - 24px);
     text-decoration: none;
     padding: 0 1.75em 0 .2em;
@@ -282,12 +282,18 @@ ul.c4g-overlays li a {
     margin-left: 24px;
 }
 
-span.c4g-icon + a {
-    width: calc(100% - 21px - 1.75em - .2em);
-}
+/*span.c4g-icon + a {*/
+/*    width: calc(100% - 21px - 1.75em - .2em);*/
+/*}*/
 
-.c4g-content-layertree span[class*=locstyle] + a {
+/*.c4g-content-layertree span[class*=locstyle] + a {*/
+/*    width: calc(100% - 35px - 1.75em - .2em);*/
+/*}*/
+
+.c4g-content-layertree span[class*=locstyle] + .c4g-starboard-text {
     width: calc(100% - 35px - 1.75em - .2em);
+    float: left;
+    cursor: pointer;
 }
 
 .c4g-content-layertree span[class*=geojson] + a {
@@ -300,7 +306,7 @@ span.c4g-icon + span[class*=locstyle] + a {
 
 
 .c4g-content-layertree span[class*=locstyle] {
-    padding-right: 25px;
+    /*padding-right: 25px;*/
     width: 25px;
     line-height: 43px;
 }
@@ -324,15 +330,15 @@ span.c4g-icon + span[class*=locstyle] + a {
     margin-top: -6px;
 }
 
-.c4g-layertree a:after {
-    display: inline-block;
-    float: right;
-    margin-right: 5px;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    margin-top: -6px;
-}
+/*.c4g-layertree a:after {*/
+/*    display: inline-block;*/
+/*    float: right;*/
+/*    margin-right: 5px;*/
+/*    position: absolute;*/
+/*    right: 0;*/
+/*    bottom: 0;*/
+/*    margin-top: -6px;*/
+/*}*/
 
 .c4g-starboard-headline-link:after {
     margin-right: 5px;
@@ -368,12 +374,17 @@ span.c4g-icon + span[class*=locstyle] + a {
     display: block;
 }
 
-.c4g-layertree span:not(.c4g-starboard-locstyle), .c4g-layertree a {
+.c4g-layertree span:not(.c4g-starboard-locstyle), .c4g-layertree a,
+.c4g-layertree span:not(.c4g-starboard-locstyle), .c4g-layertree .c4g-starboard-text {
     height: 43px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
     line-height: 43px;
+}
+
+.c4g-layertree .c4g-starboard-locstyle img {
+    cursor: pointer;
 }
 
 .c4g-layertree li {

@@ -187,12 +187,14 @@ export class C4gStarboardLayerElement extends Component {
     let openClose = this.props.layerStates.collapsed ? cssConstants.CLOSE : cssConstants.OPEN;
     let objChilds = this.props.layer.childs;
     let linkText;
+    let linkSwitch;
     if (this.props.mapController.data.starboard.invertZoomActivate && this.props.layer.addZoomTo) {
       linkText = <React.Fragment>
         <a className={"c4g-starboard-text"} onMouseUp={(event) => this.layerZoomTo(event)}>{this.props.layer.name}</a>
-        <span className={cssClass + " c4g-starboard-checkbox-icon"} onMouseUp={(event) => this.layerClick(event)}/>
       </React.Fragment>
-    }
+
+      linkSwitch = <a className={cssClass + " c4g-starboard-checkbox-icon"} onMouseUp={(event) => this.layerClick(event)}></a>
+      }
     else {
       linkText = <a className={cssClass} onMouseUp={(event) => this.layerClick(event)}>{this.props.layer.name}</a>;
     }
@@ -206,6 +208,7 @@ export class C4gStarboardLayerElement extends Component {
           {stylePicture}
           {spanZoom}
           {linkText}
+          {linkSwitch}
           <ul>
             {objChilds.map((item, id) => {
               if (this.props.byPassChilds || this.props.filterFunc(this.props.strFilter, item, this.props.layerStates.childStates[id])) {
@@ -239,6 +242,7 @@ export class C4gStarboardLayerElement extends Component {
             {stylePicture}
             {spanZoom}
             {linkText}
+            {linkSwitch}
           </li>
       )
     }

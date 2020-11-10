@@ -52,10 +52,10 @@ export class C4gStarboardStyle extends Component {
                 }
             }
             if (this.props.clickEvent && this.props.tooltip) {
-                styleTriggerLabel =  <span className={cssConstants.STARBOARD_LOCSTYLE} title={this.props.tooltip} onMouseUp={(event)=> this.props.clickEvent(event)}>{styleIcon}</span>;
+                styleTriggerLabel = <span className={cssConstants.STARBOARD_LOCSTYLE} title={this.props.tooltip} onMouseUp={(event)=> this.props.clickEvent(event)}>{styleIcon}</span>;
             }
             else {
-                styleTriggerLabel =  <span className={cssConstants.STARBOARD_LOCSTYLE}>{styleIcon}</span>;
+                styleTriggerLabel = <span className={cssConstants.STARBOARD_LOCSTYLE}>{styleIcon}</span>;
             }
         } else {
             let cssClass;
