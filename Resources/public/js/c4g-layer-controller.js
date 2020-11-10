@@ -198,8 +198,9 @@ export class BetterLayerController {
             })
         );
         if (feature && feature.get("markLocstyle")) {
+          let color = "#" + scope.proxy.mapData.starboard.colorZoomMarker;
           let markFill = new Fill({
-            color: '#ACAB'
+            color: color
           });
           let radius;
           if (returnStyle[0].getImage() && returnStyle[0].getImage().getRadius && returnStyle[0].getImage().getRadius()) {
@@ -233,8 +234,9 @@ export class BetterLayerController {
           returnStyle[0].setZIndex(zIndex);
         }
         if (feature && feature.get("markLocstyle")) {
+          let color = "#" + scope.proxy.mapData.starboard.colorZoomMarker;
           let markFill = new Fill({
-            color: '#ACAB'
+            color: color
           });
           let radius;
           if (returnStyle[0].getImage() && returnStyle[0].getImage().getRadius && returnStyle[0].getImage().getRadius()) {
