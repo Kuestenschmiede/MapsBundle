@@ -312,9 +312,8 @@ export class BetterLayerController {
       this.mapController.map.addLayer(vectorLayer);
     }
   }
-  zoomTo(features, layerId) {
+  zoomTo(features, layerId, extent = null) {
     features = features && features.length ? features : this.objIds[layerId];
-    let extent;
     for (let i in features) {
       if (features.hasOwnProperty(i)) {
         if (!extent) {
@@ -332,7 +331,7 @@ export class BetterLayerController {
     if (width) {
       width = width.split(".");
       width = Array.isArray(width) ? width[0] : width;
-      width = parseInt(width);
+      width = parseInt(width) +  50;
     }
     else {
       width = 50;
@@ -342,7 +341,22 @@ export class BetterLayerController {
       duration: 500
     });
   }
-
+  getExtentForLayer(extent, layerId) {
+    let features = this.objIds[layerId];
+    if (features && features.length) {
+      for (let i in features) {
+        if (features.hasOwnProperty(i)) {
+          if (!extent) {
+            extent = features[i].getGeometry().getExtent();
+          }
+          else {
+            extent = olExtent.extend(extent,features[i].getGeometry().getExtent());
+          }
+        }
+      }
+    }
+    return extent;
+  }
 
   loadLayers () {
     let self = this;

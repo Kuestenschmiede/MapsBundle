@@ -12,6 +12,7 @@
  */
 
 import React, {Component} from "react";
+import * as olExtent from "ol/extent";
 import {cssConstants} from "./../c4g-maps-constant.js";
 import {C4gStarboardStyle} from "./c4g-starboard-style";
 import {Vector} from "ol/layer";
@@ -144,7 +145,40 @@ export class C4gStarboardLayerElement extends Component {
     // this.props.parentCallback(this.props.keyId, newState)
   }
   layerZoomTo(e) {
-    this.props.mapController.proxy.layerController.zoomTo(this.props.layer.features, this.props.id)
+    let extent = null;
+    if (this.props.layer.childs && this.props.layer.childs.length) {
+      for (let i in this.props.layer.childs) {
+        if (this.props.layer.childs.hasOwnProperty(i)) {
+          extent = this.getChildsExtent(extent, this.props.layer.childs[i]);
+        }
+      }
+    }
+    this.props.mapController.proxy.layerController.zoomTo(this.props.layer.features, this.props.id, extent)
+  }
+  getChildsExtent(extent, child) {
+    if (child.childs && child.childs.length) {
+      for (let i in child.childs) {
+        if (child.childs.hasOwnProperty(i)) {
+          extent = this.getChildsExtent(extent, child.childs[i]);
+        }
+      }
+    }
+    if (child.features) {
+      for (let i in child.features) {
+        if (child.features.hasOwnProperty(i)) {
+          if (!extent) {
+            extent = child.features[i].getGeometry().getExtent();
+          }
+          else {
+            extent = olExtent.extend(extent, child.features[i].getGeometry().getExtent())
+          }
+        }
+      }
+    }
+    else {
+      extent = this.props.mapController.proxy.layerController.getExtentForLayer(extent, this.props.id);
+    }
+    return extent;
   }
   changeCollapseState(id, state) {
     this.props.layerStates.childStates[id] = state;
@@ -172,13 +206,23 @@ export class C4gStarboardLayerElement extends Component {
     let objChilds = this.props.layer.childs;
 
     if (objChilds && objChilds.length) {
+      let spanZoom = null;
       if (this.props.mapController.data.starboard.showLocstyles === "1" && this.props.layer.locstyle && this.props.styleData && this.props.styleData.arrLocStyles && this.props.styleData.arrLocStyles[this.props.layer.locstyle]) {
-        stylePicture = <C4gStarboardStyle styleData={this.props.styleData} styleId={this.props.layer.locstyle}/>
+        if (this.props.layer.addZoomTo) {
+          stylePicture = <C4gStarboardStyle styleData={this.props.styleData} styleId={this.props.layer.locstyle} tooltip={this.props.lang.STARBOARD_ELEMENT_ZOOM} clickEvent={this.layerZoomTo}/>;
+        }
+        else {
+          stylePicture = <C4gStarboardStyle styleData={this.props.styleData} styleId={this.props.layer.locstyle}/>;
+        }
+      }
+      else if (this.props.layer.addZoomTo) {
+        spanZoom = <span className={"c4g-geojson-button"} title={this.props.lang.STARBOARD_ELEMENT_ZOOM} onMouseUp={(event) => this.layerZoomTo(event)}/>;
       }
       return (
         <li className={openClose}>
           {span}
           {stylePicture}
+          {spanZoom}
           <a className={cssClass} onMouseUp={(event) => this.layerClick(event)}>{this.props.layer.name}</a>
           <ul>
             {objChilds.map((item, id) => {
