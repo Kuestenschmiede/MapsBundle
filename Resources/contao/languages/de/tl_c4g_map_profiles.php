@@ -56,6 +56,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['filterHandling'] = ['Filter als Mehr
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['filterResetButton'] = ['Knopf zum Filter zurücksetzen', 'Blendet einen Knopf ein, der das zurücksetzen aller Filter triggert.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_button'] = ['Auswahl-Button aktivieren','Erstellt einen Button, mit dem alle Elemente des Starboards zeitgleich ein- und ausgeblendet werden. Achtung! Abhängig von der Struktur kann das zu langen Ladezeiten führen.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_locstyles'] = ['Lokationsstile im Starboard anzeigen','Wenn möglich, werden die Lokationsstile der Karte am zugehörigen Element im Starboard dargestellt.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboardInvertZoomActivate'] = ['Elementtext Zoombutton','Statt den Layer ein- und auszuschalten, wird bei Klick auf den Text auf den entsprechenden Layer gezoomt.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_all'] = ['Cluster über alle Layer', 'Erstellt ein Cluster über alle Layer. Überschreibt die Einstellungen im Strukturelement. Achtung! Diese Funktion ist nicht für alle Strukturelemente geeignet.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_distance'] = ['Cluster-Distanz', 'Ab welcher Entfernung in Pixeln soll geclustert werden?'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_fillcolor'] = ['Füllfarbe', 'Wählen Sie die Füllfarbe der Clusterblasen aus.'];
