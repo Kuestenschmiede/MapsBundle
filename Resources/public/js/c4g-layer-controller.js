@@ -412,7 +412,7 @@ export class BetterLayerController {
         }
       }
     }
-    if (child.features) {
+    if (child.features && child.features.length) {
       for (let i in child.features) {
         if (child.features.hasOwnProperty(i)) {
           if (!extent) {
