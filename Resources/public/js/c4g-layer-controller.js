@@ -372,7 +372,7 @@ export class BetterLayerController {
         }
       }
     }
-    if (!layer.features) {
+    if (!layer.features || !layer.features.length) {
       extent = this.getExtentForLayer(extent, layer.id);
     }
     else {
