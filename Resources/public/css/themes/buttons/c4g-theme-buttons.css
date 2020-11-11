@@ -168,14 +168,9 @@
     font-size: 1.1em;
 }
 
-/*.c4g-starboard-viewtriggerbar {*/
-/*text-align: right;*/
-/*}*/
-
 .c4g-editor-draw-options {
     margin-left: 5px;
     margin-right: 5px;
-    /*padding: 10px 5px;*/
     font-size: 1.25em;
 }
 
@@ -263,15 +258,6 @@ ul.c4g-overlays li a {
     position: relative;
 }
 
-/*.c4g-layertree span + a, .c4g-layertree a {*/
-/*    display: inline-block;*/
-/*    width: calc(100% - 1.75em - .2em);*/
-/*    text-decoration: none;*/
-/*    padding: 0 1.75em 0 .2em;*/
-/*    cursor: pointer;*/
-/*    position: relative;*/
-/*}*/
-
 .c4g-layertree li > a:first-child {
     display: inline-block;
     width: calc(100% - 1.75em - .2em - 24px);
@@ -279,21 +265,10 @@ ul.c4g-overlays li a {
     padding: 0 1.75em 0 .2em;
     cursor: pointer;
     position: relative;
-    margin-left: 24px;
 }
-
-/*span.c4g-icon + a {*/
-/*    width: calc(100% - 21px - 1.75em - .2em);*/
-/*}*/
-
-/*.c4g-content-layertree span[class*=locstyle] + a {*/
-/*    width: calc(100% - 35px - 1.75em - .2em);*/
-/*}*/
 
 .c4g-content-layertree span[class*=locstyle] + .c4g-starboard-text {
     width: calc(100% - 35px - 1.75em - .2em);
-    float: left;
-    cursor: pointer;
 }
 
 .c4g-content-layertree span[class*=geojson] + a {
@@ -306,7 +281,6 @@ span.c4g-icon + span[class*=locstyle] + a {
 
 
 .c4g-content-layertree span[class*=locstyle] {
-    /*padding-right: 25px;*/
     width: 25px;
     line-height: 43px;
 }
@@ -330,15 +304,13 @@ span.c4g-icon + span[class*=locstyle] + a {
     margin-top: -6px;
 }
 
-/*.c4g-layertree a:after {*/
-/*    display: inline-block;*/
-/*    float: right;*/
-/*    margin-right: 5px;*/
-/*    position: absolute;*/
-/*    right: 0;*/
-/*    bottom: 0;*/
-/*    margin-top: -6px;*/
-/*}*/
+.c4g-layertree a:after {
+    display: inline-block;
+    float: right;
+    margin-right: 5px;
+    right: 0;
+    bottom: 0;
+}
 
 .c4g-starboard-headline-link:after {
     margin-right: 5px;
@@ -381,6 +353,11 @@ span.c4g-icon + span[class*=locstyle] + a {
     text-overflow: ellipsis;
     overflow: hidden;
     line-height: 43px;
+}
+
+.c4g-starboard-list-element .c4g-starboard-text {
+    float: left;
+    cursor: pointer;
 }
 
 span.c4g-starboard-locstyle {
@@ -554,11 +531,6 @@ div.c4g-tooltip-popup:before {
     width: 0;
     border: 8px solid transparent;
 }
-
-/*div.c4g-horizontal.c4g-tooltip-popup:before {*/
-/*bottom: -5px;*/
-/*left: -4px;*/
-/*}*/
 
 .c4g-tooltip-popup.c4g-horizontal.c4g-closeable button.c4g-popup-close {
     position: absolute;

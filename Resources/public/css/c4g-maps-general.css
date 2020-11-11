@@ -650,8 +650,6 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
     height: 32px;
     border: none;
     outline: none;
-    /*vertical-align: top;*/
-    /*display: -webkit-inline-box;*/
     display: -ms-inline-flexbox;
     display: inline-flex;
     -webkit-box-align: center;
@@ -972,8 +970,6 @@ ul.c4g-overlays input {
 }
 
 .c4g-sideboard .c4g-baselayertree-content li.with-image > a img {
-    /*max-width: 360px;
-    width: 100%;*/
     width: 30px;
     min-width: 100%;
 }

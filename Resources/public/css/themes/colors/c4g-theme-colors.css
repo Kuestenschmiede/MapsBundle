@@ -158,7 +158,6 @@ span.c4g-active ul li.c4g-active{
   background-color: var(--shadow-color);
   cursor: not-allowed;
 }
-/*.c4g-layertree li a:hover,*/
 .c4g-baselayertree-content > ul > li.without-image > a:hover {
   background-color: var(--font-color);
   color: var(--main-color)!important;
@@ -178,9 +177,6 @@ span.c4g-active ul li.c4g-active{
 
   color: var(--shadow-color);
 }
-/*.c4g-starboard-filter-match > a {*/
-  /*color: var(--main-color);*/
-/*}*/
 .c4g-starboard-filter input[type=text]{
   border-color: var(--shadow-color);
   background-color: var(--font-color);
@@ -188,7 +184,6 @@ span.c4g-active ul li.c4g-active{
 
 .c4g-starboard-filter input[type=text]:focus{
   border-color: var(--main-color);
-  /*box-shadow:0 0 8px 0 var(--main-color);*/
 }
 
 .c4g-feature-filter button.c4g-btn-nav-previous, .c4g-feature-filter button.c4g-btn-nav-next {
@@ -237,7 +232,6 @@ div.c4g-active.c4g-popup-wrapper {
 div.c4g-active.c4g-popup-wrapper * {
   color: var(--pu-font-color);
 }
-/*div.c4g-tooltip-popup:before,*/
 .ol-selectable div.c4g-popup-wrapper:before{
   border-top-color: var(--pu-main-color);
 }
@@ -254,11 +248,6 @@ div.c4g-active.c4g-popup-wrapper * {
   background-color: var(--pu-font-color);
   border-color: var(--pu-font-color);
 }
-
-/*div.c4g-horizontal.c4g-tooltip-popup:before {*/
-  /*border-top-color: transparent;*/
-  /*border-right-color: var(--main-color);*/
-/*}*/
 
 button.c4g-popup-close {
   color: var(--pu-font-color);
