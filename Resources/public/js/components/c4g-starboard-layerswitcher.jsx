@@ -189,6 +189,7 @@ export class StarboardLayerswitcher extends Component {
                                                  styleData={this.props.styleData}
                                                  changeCollapseState={this.props.changeCollapseState}
                                                  layerStates={states[id]}
+                                                 lang={this.props.lang}
                                                  byPassChilds={this.filterFunc(this.state.layerFilter, item,false, false)}
                                                  strFilter={this.state.layerFilter}
                                                  filterFunc={this.filterFunc}

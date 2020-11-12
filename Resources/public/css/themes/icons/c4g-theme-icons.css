@@ -1,4 +1,4 @@
-﻿@import url("../../../../../bundles/con4giscore/vendor/fontawesome/css/all.css");
+@import url("../../../../../bundles/con4giscore/vendor/fontawesome/css/all.css");
 @font-face {
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
@@ -456,7 +456,9 @@ button.c4g-popup-close:before {
   font-weight: 900;
   font-size: inherit;
 }
-
+.c4g-geojson-button{
+  cursor: pointer;
+}
 .c4g-geojson-button:after {
   content: "\f59f";
   font-family: 'Font Awesome 5 Free';

@@ -83,7 +83,7 @@ class LayerController extends BaseController
     {
         if ($arrLayerData['hasChilds']) {
             foreach ($arrLayerData['childs'] as $childIdx => $child) {
-                $arrLayerData['childs'][$childIdx] = $this->addCustomLogic($child);
+                $arrLayerData['childs'][$childIdx] = $this->addCustomLogic($child, $lang);
             }
         } else {
             if (!in_array($arrLayerData['type'], Utils::getLocationTypes())) {

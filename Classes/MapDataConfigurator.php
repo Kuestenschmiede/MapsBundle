@@ -341,6 +341,8 @@ class MapDataConfigurator
             $mapData['starboard']['div'] = (in_array('starboard', $externalElements)) ? $externalClasses['starboard'] : '';
             $mapData['starboard']['button'] = $profile->starboard_button;
             $mapData['starboard']['showLocstyles'] = $profile->starboard_locstyles;
+            $mapData['starboard']['invertZoomActivate'] = $profile->starboardInvertZoomActivate;
+            $mapData['starboard']['colorZoomMarker'] = $profile->colorZoomMarker;
             $mapData['cluster_all'] = $profile->cluster_all;
             $mapData['cluster_distance'] = $profile->cluster_distance;
             $mapData['cluster_fillcolor'] = $profile->cluster_fillcolor;

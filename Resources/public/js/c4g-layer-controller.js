@@ -20,9 +20,10 @@ import {register} from 'ol/proj/proj4';
 import Projection from 'ol/proj/Projection';
 import Collection from 'ol/Collection';
 import {utils} from './c4g-maps-utils';
-import {Fill, Style, Text} from 'ol/style';
+import {Fill, Style, Text, Circle} from 'ol/style';
 import {Point} from "ol/geom";
 import Feature from 'ol/Feature';
+import * as olExtent from 'ol/extent';
 
 const osmtogeojson = require('osmtogeojson');
 
@@ -196,6 +197,31 @@ export class BetterLayerController {
               zIndex: zIndex
             })
         );
+        if (feature && feature.get("markLocstyle")) {
+          let color = "#" + scope.proxy.mapData.starboard.colorZoomMarker;
+          let markFill = new Fill({
+            color: color
+          });
+          let radius;
+          if (returnStyle[0].getImage() && returnStyle[0].getImage().getRadius && returnStyle[0].getImage().getRadius()) {
+            radius = parseInt(returnStyle[0].getImage().getRadius());
+          }
+          else if (returnStyle[0].getImage() && returnStyle[0].getImage().getIcon && returnStyle[0].getImage() && returnStyle[0].getImage().getIcon()) {
+            radius = returnStyle[0].getImage().getIcon().getSize();
+            radius = radius[0];
+          }
+          else {
+            radius = 25
+          }
+          let markStyle = new Style({
+            image: new Circle({
+              fill: markFill,
+              radius: radius
+            }),
+            fill: markFill
+          });
+          returnStyle.push(markStyle);
+        }
       }
       else if (returnStyle && Array.isArray(returnStyle)) {
         let zIndex = 0;
@@ -207,7 +233,33 @@ export class BetterLayerController {
           zIndex += 100 - geometry[1];
           returnStyle[0].setZIndex(zIndex);
         }
+        if (feature && feature.get("markLocstyle")) {
+          let color = "#" + scope.proxy.mapData.starboard.colorZoomMarker;
+          let markFill = new Fill({
+            color: color
+          });
+          let radius;
+          if (returnStyle[0].getImage() && returnStyle[0].getImage().getRadius && returnStyle[0].getImage().getRadius()) {
+            radius = parseInt(returnStyle[0].getImage().getRadius());
+          }
+          else if (returnStyle[0].getImage() && returnStyle[0].getImage().getIcon && returnStyle[0].getImage() && returnStyle[0].getImage().getIcon()) {
+            radius = returnStyle[0].getImage().getIcon().getSize();
+            radius = radius[0];
+          }
+          else {
+            radius = 25
+          }
+          let markStyle = new Style({
+            image: new Circle({
+              fill: markFill,
+              radius: radius
+            }),
+            fill: markFill
+          });
+          returnStyle.push(markStyle);
+        }
       }
+
       return returnStyle
     };
     if (this.mapController.data.cluster_all) {
@@ -311,13 +363,104 @@ export class BetterLayerController {
       this.mapController.map.addLayer(vectorLayer);
     }
   }
-  zoomTo(layerId) {
-    let feature = this.objIds[layerId][0];
-    this.mapController.map.getView().fit(feature.getGeometry(), {
-      padding: [50,50,50,50]
+  zoomTo(layer) {
+    let extent;
+    if (layer.childs && layer.childs.length) {
+      for (let i in layer.childs) {
+        if (layer.childs.hasOwnProperty(i)) {
+          extent = this.getChildsExtent(extent, layer.childs[i]);
+        }
+      }
+    }
+    if (!layer.features || !layer.features.length) {
+      extent = this.getExtentForLayer(extent, layer.id);
+    }
+    else {
+      for (let i in layer.features) {
+        if (layer.features.hasOwnProperty(i)) {
+          if (!extent) {
+            extent = layer.features[i].getGeometry().clone().getExtent();
+          }
+          else {
+            extent = olExtent.extend(extent, layer.features[i].getGeometry().clone().getExtent());
+          }
+        }
+      }
+    }
+    if (!extent) {
+      return;
+    }
+    let width = jQuery(".c4g-starboard-container").css('width');
+    if (width) {
+      width = width.split(".");
+      width = Array.isArray(width) ? width[0] : width;
+      width = parseInt(width) +  50;
+    }
+    else {
+      width = 50;
+    }
+    this.mapController.map.getView().fit(extent, {
+      padding: [50,width,50,50],
+      duration: 500
     });
   }
-
+  getChildsExtent(extent, child) {
+    if (child.childs && child.childs.length) {
+      for (let i in child.childs) {
+        if (child.childs.hasOwnProperty(i)) {
+          extent = this.getChildsExtent(extent, child.childs[i]);
+        }
+      }
+    }
+    if (child.features && child.features.length) {
+      for (let i in child.features) {
+        if (child.features.hasOwnProperty(i)) {
+          if (!extent) {
+            extent = child.features[i].getGeometry().clone().getExtent();
+          }
+          else {
+            extent = olExtent.extend(extent, child.features[i].getGeometry().clone().getExtent())
+          }
+        }
+      }
+    }
+    else {
+      extent = this.getExtentForLayer(extent, child.id);
+    }
+    return extent;
+  }
+  getExtentForLayer(extent, layerId) {
+    let features = this.objIds[layerId];
+    if (features && features.length) {
+      for (let i in features) {
+        if (features.hasOwnProperty(i)) {
+          if (!extent) {
+            extent = features[i].getGeometry().getExtent();
+          }
+          else {
+            extent = olExtent.extend(extent,features[i].getGeometry().getExtent());
+          }
+        }
+      }
+    }
+    return extent;
+  }
+  setChildFeatureFlag(child, flag, value) {
+    if (child.childs && child.childs.length) {
+      for (let i in child.childs) {
+        if (child.childs.hasOwnProperty(i)) {
+          this.setChildFeatureFlag(child.childs[i], flag, value);
+        }
+      }
+    }
+    if (child.features && child.features.length) {
+      for (let i in child.features) {
+        if (child.features.hasOwnProperty(i)) {
+          child.features[i].set(flag, value);
+        }
+      }
+    }
+  }
 
   loadLayers () {
     let self = this;

@@ -41,17 +41,22 @@ export class C4gStarboardStyle extends Component {
                 else {
                     iconSrc = styleData.svgSrc;
                 }
-                styleIcon = <img src={iconSrc} style={{height: 16, width: 16}} />;
+                styleIcon = <img src={iconSrc} style={{height: 25, width: 25}} />;
             } else if (styl0r) {
                 let styleImage = styl0r.getImage && typeof styl0r.getImage === "function" && styl0r.getImage() ? styl0r.getImage(): null;
                 if (styleImage && styleImage.getSrc()) {
-                    styleIcon = <img src={styleImage.getSrc()} style={{height: 16, width: 16}}/>
+                    styleIcon = <img src={styleImage.getSrc()} style={{height: 25, width: 25}}/>
                 }
                 else {
                     return null;
                 }
             }
-            styleTriggerLabel =  <span className={cssConstants.STARBOARD_LOCSTYLE}>{styleIcon}</span>;
+            if (this.props.clickEvent && this.props.tooltip) {
+                styleTriggerLabel = <span className={cssConstants.STARBOARD_LOCSTYLE} title={this.props.tooltip} onMouseUp={(event)=> this.props.clickEvent(event)}>{styleIcon}</span>;
+            }
+            else {
+                styleTriggerLabel = <span className={cssConstants.STARBOARD_LOCSTYLE}>{styleIcon}</span>;
+            }
         } else {
             let cssClass;
             switch (styleType) { // 'point', 'square', 'star', 'x', 'cross', 'triangle'
@@ -90,7 +95,12 @@ export class C4gStarboardStyle extends Component {
                 "--var-color" : color,
                 "--var-bordercolor" : bordercolor
             };
-            styleTriggerLabel = <span className={cssClass} style={styleElements}/>;
+            if (this.props.clickEvent && this.props.tooltip) {
+                styleTriggerLabel = <span className={cssClass} style={styleElements} title={this.props.tooltip} onMouseUp={(event)=> this.props.clickEvent(event)}/>;
+            }
+            else {
+                styleTriggerLabel = <span className={cssClass} style={styleElements}/>;
+            }
         }
         return styleTriggerLabel;
     }

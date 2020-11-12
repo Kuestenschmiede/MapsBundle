@@ -409,7 +409,9 @@ class LayerService
             $arrLayerData['geojson_attributes'] = $objLayer->geojson_attributes;
             $arrLayerData['geojson_zoom'] = $objLayer->geojson_zoom;
         }
-
+        if ($objLayer->addZoom) {
+            $arrLayerData['addZoomTo'] = true;
+        }
         // hide when element is rendered in starboard tab
         if ($objLayer->hide_when_in_tab) {
             $arrLayerData['hide_when_in_tab'] = true;
