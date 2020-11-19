@@ -21,9 +21,12 @@ window.initMap = function(mapData) {
   } else {
     mapDiv = jQuery("#c4g_map_" + mapData.mapId)[0];
   }
-  return ReactDOM.render(React.createElement(MapController, {
-    mapData: mapData,
-  }), mapDiv);
+
+  if (mapDiv) {
+    return ReactDOM.render(React.createElement(MapController, {
+      mapData: mapData,
+    }), jQuery("#c4g-map-container-" + mapData.mapId)[0]);
+  }
 };
 
 window.initMaps = function(mapData) {
@@ -36,10 +39,11 @@ window.initMaps = function(mapData) {
       else {
         mapDiv = jQuery("#c4g_map_" + mapData[key].mapId)[0];
       }
+
       if (mapDiv) {
         ReactDOM.render(React.createElement(MapController, {
           mapData: mapData[key],
-        }), mapDiv);
+        }), jQuery("#c4g-map-container-" + mapData[key].mapId)[0]);
       }
     }
   }

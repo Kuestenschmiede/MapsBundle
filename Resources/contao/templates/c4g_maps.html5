@@ -7,7 +7,9 @@
 } ?>
 
 <?php if (!$this->mapData['mapDiv']): ?>
-<div id="<?php echo 'c4g_map_' . $this->mapData['mapId'] ?>" class="c4g_map"></div>
+<div id="<?php echo 'c4g_map_' . $this->mapData['mapId'] ?>" class="c4g_map">
+    <div id="<?php echo 'c4g-map-container-' . $this->mapData['mapId'] ?>"></div>
+</div>
 <?php  endif; ?>
 
 <?php if (\Environment::get('isAjaxRequest')): ?>

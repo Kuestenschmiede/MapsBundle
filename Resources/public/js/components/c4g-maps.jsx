@@ -427,7 +427,6 @@ export class MapController extends Component {
 
     mapData.map = this.map;
 
-
     // set map-size and -margin
     domMapDiv = document.getElementById(mapData.mapDiv);
     if (!domMapDiv) {
@@ -499,7 +498,6 @@ export class MapController extends Component {
 
     // save overlaycontainer
     this.$overlaycontainer_stopevent = jQuery('#' + mapData.mapDiv + ' .' + cssConstants.OL_OVERLAYCONTAINER_SE);
-
     this.map.updateSize();
     this.proxy.initialize();
     // this.proxy.loadBaseLayers();
@@ -1161,6 +1159,7 @@ export class MapController extends Component {
       }
     }
 
+
     return <React.Fragment>
       {result}
     </React.Fragment>;
@@ -1202,6 +1201,7 @@ export class MapController extends Component {
       }
     }
   }
+
   componentWillUnmount() {
     this._isMounted = false;
   }
