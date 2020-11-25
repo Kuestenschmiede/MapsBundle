@@ -726,6 +726,7 @@ export class BetterLayerController {
     if (layer.excludeFromSingleLayer) {
       let customStyleFunc = false;
       let vectorSource = new VectorSource();
+      let popup = false;
       if (layer.async_content && layer.async_content !== "0") {
         let strategy = layer.type === "table" || (layer.content && layer.content[0].settings.boundingBox) ? bbox : all;
         vectorSource = new VectorSource({"strategy": strategy});
@@ -878,6 +879,7 @@ export class BetterLayerController {
             format: format,
             url: content.data.url
           });
+          popup = content.data && content.data.popup ? content.data.popup : false;
         }
         
       }
@@ -894,6 +896,7 @@ export class BetterLayerController {
           zIndex: 500,
           style: customStyleFunc || this.clusterStyleFunction
       });
+      vectorLayer.popup = popup;
       scope.proxy.hook_locstyles_loaded.push(function(lostyleController) {
         vectorLayer.changed();
       });
