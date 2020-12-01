@@ -328,11 +328,22 @@ export class MapProxy {
       }
 
       if (feature && feature.get('loc_linkurl')) {
+        let link = feature.get('loc_linkurl');
+        while (link.lastIndexOf("[") != -1) {
+          let subStr = link.substring(link.lastIndexOf('[') + 1, link.lastIndexOf(']'));
+          let featureElement = "";
+          if (feature.get(subStr)) {
+            featureElement = feature.get(subStr).toLowerCase();
+            featureElement.replace(" ", "-");
+            featureElement = encodeURIComponent(featureElement);
+          }
+          link = link.substring(0, link.lastIndexOf('[')) + featureElement + link.substring(link.lastIndexOf(']') + 1);
+        }
         if (self.options.mapController.data.link_newwindow === '1') {
-          window.open(feature.get('loc_linkurl'));
+          window.open(link);
         }
         else{
-          window.open(feature.get('loc_linkurl'),"_self");
+          window.open(link, "_self");
         }
 
       } else {

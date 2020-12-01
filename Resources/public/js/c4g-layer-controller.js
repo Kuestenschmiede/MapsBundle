@@ -979,6 +979,9 @@ export class BetterLayerController {
                     singleFeature.set('hover_style', content.hover_style);
                     singleFeature.set('hover_location', content.hover_location);
                   }
+                  if (content.loc_linkurl) {
+                    singleFeature.set('loc_linkurl', content.loc_linkurl);
+                  }
                   if (contentData.properties) {
                     if (!singleFeature.get('tooltip')) {
                       singleFeature.set('tooltip', contentData.properties.tooltip)
@@ -1002,6 +1005,10 @@ export class BetterLayerController {
                 feature.set('hover_style', content.hover_style);
                 feature.set('hover_location', content.hover_location);
               }
+              if (contentData.loc_linkurl) {
+                feature.set('loc_linkurl', contentData.loc_linkurl);
+              }
+
               features.push(feature);
             }
           }
@@ -1018,6 +1025,9 @@ export class BetterLayerController {
                     if (contentData.hover_location) {
                       feature.set('hover_style', contentData.hover_style);
                       feature.set('hover_location', contentData.hover_location);
+                    }
+                    if (contentData.loc_linkurl) {
+                      feature.set('loc_linkurl', contentData.loc_linkurl);
                     }
                     features.push(feature);
                   }
@@ -1196,6 +1206,9 @@ export class BetterLayerController {
           features[featureId].set('hover_style', content.hover_style);
           features[featureId].set('hover_location', content.hover_location);
         }
+        if (content.loc_linkurl) {
+          features[featureId].set('loc_linkurl', content.loc_linkurl);
+        }
         if (content.cluster_fillcolor && content.cluster_fontcolor) {
           features[featureId].set('cluster_fillcolor', content.cluster_fillcolor);
           features[featureId].set('cluster_fontcolor', content.cluster_fontcolor);
@@ -1261,6 +1274,9 @@ export class BetterLayerController {
     }
     if(contentData['tooltip']){
       contentFeature.set('tooltip',contentData['tooltip'])
+    }
+    if (contentData.loc_linkurl) {
+      contentFeature.set('loc_linkurl', contentData.loc_linkurl);
     }
     contentFeature.set('popup', popup);
     contentFeature.set('zoom_onclick', layer.zoom_onclick);

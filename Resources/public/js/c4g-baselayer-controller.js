@@ -704,6 +704,9 @@ export class C4gBaselayerController {
 
       this.arrBaselayers[baseLayerUid].layer = newBaselayer;
     }
+    else {
+      return;
+    }
 
     // // deactivate old overlays
     if (this.proxy.activeBaselayerId && (this.proxy.activeBaselayerId !== baseLayerUid)) {
