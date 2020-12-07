@@ -343,6 +343,7 @@ class MapDataConfigurator
             $mapData['starboard']['showLocstyles'] = $profile->starboard_locstyles;
             $mapData['starboard']['invertZoomActivate'] = $profile->starboardInvertZoomActivate;
             $mapData['starboard']['colorZoomMarker'] = $profile->colorZoomMarker;
+            $mapData['starboard']['maxZoom'] = $profile->maxZoomStarboard;
             $mapData['cluster_all'] = $profile->cluster_all;
             $mapData['cluster_distance'] = $profile->cluster_distance;
             $mapData['cluster_fillcolor'] = $profile->cluster_fillcolor;

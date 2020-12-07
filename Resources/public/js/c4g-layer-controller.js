@@ -399,9 +399,11 @@ export class BetterLayerController {
     else {
       width = 50;
     }
+    let maxZoom = parseInt(this.proxy.mapData.starboard.maxZoom) || 22;
     this.mapController.map.getView().fit(extent, {
       padding: [50,width,50,50],
-      duration: 500
+      duration: 500,
+      maxZoom: maxZoom
     });
   }
   getChildsExtent(extent, child) {

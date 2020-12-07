@@ -55,6 +55,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_button'] = ['Activate Butt
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_locstyles'] = ['Show location styles on the Starboard','If possible, the location styles of the map are displayed on the corresponding element in the starboard.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboardInvertZoomActivate'] = ['Layertext zoombutton','Instead of deactivating and activating the layer, the view zooms to it.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['colorZoomMarker'] = ['Zoombutton color','When zooming on the locations, they are marked in the selected color.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['maxZoomStarboard'] = ['Maximum zoom', 'Maximum zoom for zooming on the location (1-22). '];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_all'] = ['Cluster über alle Layer', 'Erstellt ein Cluster über alle Layer. Überschreibt die Einstellungen im Strukturelement. Achtung! Diese Funktion ist nicht für alle Strukturelemente geeignet.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_distance'] = ['Cluster distance', 'Cluster distance (default 20px)'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_fillcolor'] = ['Fill color', 'Select the fill color of the cluster bubble.'];

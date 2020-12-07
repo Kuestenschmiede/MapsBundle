@@ -58,6 +58,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_button'] = ['Auswahl-Butto
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_locstyles'] = ['Lokationsstile im Starboard anzeigen','Wenn möglich, werden die Lokationsstile der Karte am zugehörigen Element im Starboard dargestellt.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboardInvertZoomActivate'] = ['Elementtext Zoombutton','Statt den Layer ein- und auszuschalten, wird bei Klick auf den Text auf den entsprechenden Layer gezoomt.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['colorZoomMarker'] = ['Farbe Zoom-Markierung','Bei einem Zoom auf die Lokationen werden dieser mit der hier eingestellten Farbe markiert.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['maxZoomStarboard'] = ['Maximaler Zoom', 'Bei einem Zoom auf die Lokation wird höchstens auf diese Zoomstufe gezoomt (1-22)'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_all'] = ['Cluster über alle Layer', 'Erstellt ein Cluster über alle Layer. Überschreibt die Einstellungen im Strukturelement. Achtung! Diese Funktion ist nicht für alle Strukturelemente geeignet.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_distance'] = ['Cluster-Distanz', 'Ab welcher Entfernung in Pixeln soll geclustert werden?'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_fillcolor'] = ['Füllfarbe', 'Wählen Sie die Füllfarbe der Clusterblasen aus.'];
