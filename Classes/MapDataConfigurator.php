@@ -20,8 +20,10 @@ use con4gis\MapsBundle\Resources\contao\models\C4gMapSettingsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use con4gis\MapsBundle\Resources\contao\modules\ExternalMapElement;
 use Contao\Controller;
+use Contao\FilesModel;
 use Contao\Input;
 use Contao\Model\Collection;
+use Contao\StringUtil;
 use Contao\System;
 
 /**
@@ -359,6 +361,12 @@ class MapDataConfigurator
             // basemaps
             //
             $mapData['default_baselayer'] = $profile->default_baselayer;
+            if ($profile->dummyBaselayer &&
+                StringUtil::binToUuid($profile->dummyBaselayer) &&
+                FilesModel::findByUuid(StringUtil::binToUuid($profile->dummyBaselayer)) &&
+                FilesModel::findByUuid(StringUtil::binToUuid($profile->dummyBaselayer))-path) {
+                $mapData['dummyBaselayer'] = FilesModel::findByUuid(StringUtil::binToUuid($profile->dummyBaselayer))->path;
+            }
 
             //+1 for older define checks key = button / value = sorting position
             $mapData['zoom'] = array_key_exists('zoom', $buttons) ? $buttons['zoom'] + 1 : 0;

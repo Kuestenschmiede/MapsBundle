@@ -23,6 +23,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['external_elements'] = ['Elemente au�
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayers'] = ['Basiskarten', 'Legen Sie die Basiskarten fest, die über den Button "Basiskartenauswahl" in der Karte individuell ausgewählt werden können.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayer_filter'] = ['Basiskartenfilter aktivieren', 'Blendet einen Suchfilter für die Basiskarten oberhalb des Baumes ein.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['default_baselayer'] = ['Standard-Basiskarte', 'Wählen Sie die Basiskarte, die beim Laden der Karte vorausgewählt sein soll.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['dummyBaselayer'] = ['Dummy-Basiskarte', 'Wählen Sie ein Dummy-Tile, was angezeigt wird, wenn die Zustimmung nicht gegeben wurde.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayerswitcher_label'] = ['Überschrift der Basiskartenauswahl', 'Standard: "Basiskarten"'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayerswitcher_filter'] = ['Basiskartenfilter aktivieren', 'Blendet einen Suchfilter für die Basiskarten oberhalb des Baumes im Frontend ein.'];
 

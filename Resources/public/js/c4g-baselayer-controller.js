@@ -126,8 +126,7 @@ export class C4gBaselayerController {
     var newBaselayer = {};
     layerOptions = layerOptions || {};
 
-    let isSecure = window.isSecureContext;
-    if (isSecure) {
+    if (window.isSecureContext) {
       layerOptions.crossOrigin = 'anonymous';
     }
 
@@ -154,6 +153,13 @@ export class C4gBaselayerController {
       case 'osm':
         if (sourceConfigs.osm[baseLayerConfig.style]) {
           if (HofffConsentManager) {
+            let dummyUrl = this.mapController.data.dummyBaselayer;
+            let dummySource = null;
+            if (dummyUrl) {
+              dummySource = new XYZ({
+                url: dummyUrl
+              });
+            }
             newBaselayer = new TileLayer();
             HofffConsentManager.addEventListener('consent:accepted', function (event) {
               if (event.consentId == "external:open_street_map_osfm") {
@@ -167,7 +173,7 @@ export class C4gBaselayerController {
             });
             HofffConsentManager.addEventListener('consent:revoked', function (event) {
               if (event.consentId == "external:open_street_map_osfm") {
-                newBaselayer.setSource(null);
+                newBaselayer.setSource(dummySource);
               }
             })
             if (!HofffConsentManager.requiresConsent('external:open_street_map_osfm')) {
