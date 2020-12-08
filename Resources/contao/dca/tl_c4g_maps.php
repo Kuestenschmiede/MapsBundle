@@ -684,7 +684,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['data_file'],
                 'exclude'                 => true,
                 'inputType'               => 'fileTree',
-                'eval'                    => ['trailingSlash' => false, 'files' => true, 'fieldType' => 'radio'],
+                'eval'                    => ['trailingSlash' => false, 'extensions' => 'geojson,kml,gpx,osm', 'files' => true, 'fieldType' => 'radio'],
                 'sql'                     => "binary(16) NULL"
             ],
         'data_url' =>
