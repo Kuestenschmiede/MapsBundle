@@ -50,8 +50,10 @@ export default class BaselayerSwitcher extends Component {
     this.close = this.close.bind(this);
     let baselayerLoaded = false;
     if (props.mapController.proxy.baselayerLoaded) {
+      debugger;
       baselayerLoaded = true;
     } else {
+      debugger;
       props.mapController.proxy.hook_baselayer_loaded = props.mapController.proxy.hook_baselayer_loaded || [];
       props.mapController.proxy.hook_baselayer_loaded.push(function() {
         scope.setState({baselayerLoaded: true, currentBaselayer: props.mapController.proxy.activeBaselayerId});
