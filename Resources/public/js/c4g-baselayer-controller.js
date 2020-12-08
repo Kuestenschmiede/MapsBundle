@@ -153,14 +153,43 @@ export class C4gBaselayerController {
         break;
       case 'osm':
         if (sourceConfigs.osm[baseLayerConfig.style]) {
-          newBaselayer = new TileLayer({
-            source: new OSM(
-              jQuery.extend(
-                sourceConfigs.osm[baseLayerConfig.style],
-                layerOptions
+          if (HofffConsentManager) {
+            newBaselayer = new TileLayer();
+            HofffConsentManager.addEventListener('consent:accepted', function (event) {
+              if (event.consentId == "external:open_street_map_osfm") {
+                newBaselayer.setSource(new OSM(
+                    jQuery.extend(
+                        sourceConfigs.osm[baseLayerConfig.style],
+                        layerOptions
+                    )
+                ));
+              }
+            });
+            HofffConsentManager.addEventListener('consent:revoked', function (event) {
+              if (event.consentId == "external:open_street_map_osfm") {
+                newBaselayer.setSource(null);
+              }
+            })
+            if (!HofffConsentManager.requiresConsent('external:open_street_map_osfm')) {
+              newBaselayer.setSource(new OSM(
+                  jQuery.extend(
+                      sourceConfigs.osm[baseLayerConfig.style],
+                      layerOptions
+                  )
+              ));
+            }
+          }
+          else {
+            newBaselayer = new TileLayer({
+              source: new OSM(
+                  jQuery.extend(
+                      sourceConfigs.osm[baseLayerConfig.style],
+                      layerOptions
+                  )
               )
-            )
-          });
+            });
+          }
+
         }
         else if (baseLayerConfig.style === 'osm_custom') {
           // custom
