@@ -258,23 +258,45 @@ export class C4gBaselayerController {
         break;
       case 'mapbox':
         if (baseLayerConfig.api_key && baseLayerConfig.app_id && baseLayerConfig.mapbox_type) {
-
+          let source;
+          newBaselayer = new TileLayer();
           if (baseLayerConfig.mapbox_type === 'Mapbox') {
             layerOptions.url = baseLayerConfig.url + baseLayerConfig.app_id + '/tiles/{z}/{x}/{y}?access_token=' + baseLayerConfig.api_key;
-            newBaselayer = new TileLayer({
-              source: new XYZ(
+              source = new XYZ(
                 jQuery.extend(sourceConfigs.mapbox[baseLayerConfig.mapbox_type], layerOptions)
-              )
-            });
+              );
           } else {
             layerOptions.url = baseLayerConfig.url_classic + baseLayerConfig.app_id + '/{z}/{x}/{y}.png?access_token=' + baseLayerConfig.api_key;
 
-            newBaselayer = new TileLayer({
-              source: new XYZ(jQuery.extend(
+            source = new XYZ(jQuery.extend(
                 sourceConfigs.mapbox[baseLayerConfig.mapbox_type],
                 layerOptions
-              ))
+              ));
+          }
+          if (HofffConsentManager) {
+            let dummyUrl = this.mapController.data.dummyBaselayer;
+            let dummySource = null;
+            if (dummyUrl) {
+              dummySource = new XYZ({
+                url: dummyUrl
+              });
+            }
+            HofffConsentManager.addEventListener('consent:accepted', function (event) {
+              if (event.consentId == "external:mapbox") {
+                newBaselayer.setSource(source);
+              }
             });
+            HofffConsentManager.addEventListener('consent:revoked', function (event) {
+              if (event.consentId == "external:mapbox") {
+                newBaselayer.setSource(dummySource);
+              }
+            })
+            if (!HofffConsentManager.requiresConsent('external:mapbox')) {
+              newBaselayer.setSource(source);
+            }
+          }
+          else {
+            newBaselayer.setSource(source);
           }
         } else if (baseLayerConfig.hide_in_be) {
           layerOptions.url = "con4gis/baseLayerTileService/" + baseLayerConfig.id + "/{z}/{x}/{y}";
