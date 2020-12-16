@@ -45,7 +45,7 @@
     "ol-mapbox-style": "^6.2.1",
     "opening_hours": "^3.5.0",
     "osmtogeojson": "^3.0.0-beta.4",
-    "proj4": "^2.6.2",
+    "proj4": "^2.6.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
   }
