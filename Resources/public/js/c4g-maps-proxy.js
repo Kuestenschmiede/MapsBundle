@@ -372,8 +372,8 @@ export class MapProxy {
           self.popupController.addPopUp(popupInfos.content);
           if (popupInfos.content) {
             if (self.mapData.popupHandling !== '3') {
-              window.c4gMapsPopup.$content.html('');
-              window.c4gMapsPopup.$popup.addClass(cssConstants.ACTIVE).addClass(cssConstants.LOADING);
+              window.c4gMapsPopup.$content ? window.c4gMapsPopup.$content.html('') : false;
+              window.c4gMapsPopup.$popup ? window.c4gMapsPopup.$popup.addClass(cssConstants.ACTIVE).addClass(cssConstants.LOADING) : false;
               window.c4gMapsPopup.spinner.show();
             }
 

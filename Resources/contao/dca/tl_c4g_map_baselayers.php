@@ -27,11 +27,11 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
         'ctable'                      => ['tl_c4g_map_overlays'],
         'enableVersioning'            => true,
         'markAsCopy'                  => 'name',
-        'onsubmit_callback'             => [
+        'onsubmit_callback'           => [
             [\con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator::class, 'purgeBaselayerApiCache']
         ],
         'onload_callback' => [['tl_c4g_map_baselayers', 'showInfoMessage']],
-        'sql'                         =>
+        'sql' =>
             [
             'keys' =>
                 [

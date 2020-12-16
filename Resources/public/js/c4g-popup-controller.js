@@ -87,7 +87,7 @@ export class C4gPopupController {
       popUpElement.appendChild(popUpContent);
       jQuery(popUpCloseElement).click(function (event) {
         event.preventDefault();
-        window.c4gMapsPopup.$popup.removeClass(cssConstants.ACTIVE);
+        window.c4gMapsPopup.$popup ? window.c4gMapsPopup.$popup.removeClass(cssConstants.ACTIVE) : false;
       });
 
       if (this.popupHandling === 1 || this.popupHandling === 0) {
@@ -164,7 +164,7 @@ export class C4gPopupController {
       }
 
       if (popupContent.trim()) {
-        window.c4gMapsPopup.$content.html(popupContent);
+        window.c4gMapsPopup.$content ? window.c4gMapsPopup.$content.html(popupContent) : false;
 
         if (feature.getGeometry() && feature.getGeometry().getType() === 'Point') {
           if (self.mapData.popupHandling && self.mapData.popupHandling !== '2') {
