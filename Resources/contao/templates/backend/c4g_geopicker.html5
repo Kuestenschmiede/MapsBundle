@@ -51,7 +51,9 @@
         </fieldset>
 
       <?php if (!$this->mapData['mapDiv']): ?>
-        <div id="<?php echo 'c4g_map_' . $this->mapData['mapId'] ?>"></div>
+        <div id="<?php echo 'c4g_map_' . $this->mapData['mapId'] ?>">
+            <div id="<?php echo 'c4g-map-container-' . $this->mapData['mapId'] ?>"></div>
+        </div>
       <?php endif; ?>
 
     </div>
