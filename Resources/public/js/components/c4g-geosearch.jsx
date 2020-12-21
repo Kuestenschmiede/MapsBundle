@@ -38,6 +38,7 @@ export default class GeoSearch extends Component {
     // control
     // if (this.props.collapsed) {
     this.clickControl = this.clickControl.bind(this);
+    this.doneFunction = this.doneFunction.bind(this);
     let element = document.createElement('div');
     let button = document.createElement('button');
     button.setAttribute('aria-label', this.langConstants.CTRL_GEOSEARCH);
@@ -269,154 +270,171 @@ export default class GeoSearch extends Component {
           }
         }
       }
-      // AJAX -> @nominatim
-      jQuery.ajax({
-        dataType: "json",
-        url: this.config.url,
-        data: data
-      })
-        .done(function (results) {
-
-          var mapView,
-            currentCoordinate,
-            resultCoordinate,
-            coordDif,
-            difContext,
-            viewExtent,
-            result,
-            osmExtent,
-            resolution,
-            zoomType,
-            flyTo,
-            completeSearch;
-
-          if (results && results.length && results.length > 0){
-            mapView = map.getView();
-
-            if (results[0]) {
-              result = results[0];
-              scope.results = results;
-              currentCoordinate = mapView.getCenter();
-              resultCoordinate = transform([parseFloat(result.lon), parseFloat(result.lat)], 'EPSG:4326', 'EPSG:3857');
-
-              if (animate) {
-                scope.flyTo(map, resultCoordinate, scope.config.zoomlevel, scope.config.zoombounds, result.bounding_box, markResult, animate, map.getView());
-              } else {
-                scope.completeSearch(scope.config.markResult, scope.config.animate, zoomType, animationDuration);
-                mapView.setCenter(resultCoordinate);
-                if (scope.config.zoomlevel >= 0) {
-                  map.getView().setZoom(scope.config.zoomlevel);
-                }
-              }
-
-              var pixel = map.getPixelFromCoordinate(resultCoordinate);
-              var feature = map.forEachFeatureAtPixel(pixel,
-                function (feature, layer) {
-                  return feature;
-                });
-              var layer = map.forEachFeatureAtPixel(pixel,
-                function (feature, layer) {
-                  return layer;
-                });
-              if (scope.config.popup) {
-                var popupInfos = {};
-                if (feature && feature.get('popup')) {
-                  // single POI
-                  popupInfos = feature.get('popup');
-                } else if (layer && layer.popup) {
-                  popupInfos = layer.popup;
-                } else {
-                  feature = false;
-                }
-                if (feature) {
-                  var geometry = feature.getGeometry();
-                  if (geometry instanceof Point) {
-                    var coord = geometry.getCoordinates();
-                  } else {
-                    var coord = resultCoordinate;
-                  }
-
-                  window.c4gMapsPopup.popup.setPosition(coord);
-                  if (popupInfos.content) {
-                    window.c4gMapsPopup.$content.html('');
-                    window.c4gMapsPopup.popup.addClass(cssConstants.ACTIVE).addClass(cssConstants.LOADING);
-                    window.c4gMapsPopup.spinner.show();
-
-                    if (popupInfos.async === false || popupInfos.async == '0') {
-                      var objPopup = {};
-                      objPopup.popup = popupInfos;
-                      objPopup.feature = feature;
-                      objPopup.layer = layer;
-                      // Call the popup hook for plugin specific popup content
-                      if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_fillPopup === 'object') {
-                        utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, objPopup);
-                      }
-                      scope.config.mapController.proxy.setPopup(objPopup);
-                    } else {
-                      jQuery.ajax({
-                        dataType: "json",
-                        url: scope.api_infowindow_url + '/' + popupInfos.content,
-                        done: function (data) {
-                          var popupInfo = {
-                            async: popupInfos.async,
-                            content: data.content,
-                            popup: popupInfos.popup,
-                            routing_link: popupInfos.routing_link
-                          };
-
-                          objPopup = {};
-                          objPopup.popup = popupInfo;
-                          objPopup.feature = feature;
-                          objPopup.layer = layer;
-
-                          // Call the popup hook for plugin specific popup content
-                          if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_fillPopup === 'object') {
-                            utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, objPopup);
-                          }
-
-                          scope.setPopup(objPopup);
-                        }
-                      });
-                    }
-                  } else {
-                    window.c4gMapsPopup.popup.removeClass(cssConstants.ACTIVE);
-                  }
-
-                } else if (window && window.c4gMapsPopup && window.c4gMapsPopup.popup) {
-                  jQuery(window.c4gMapsPopup.popup).removeClass(cssConstants.ACTIVE);
-                }
-              }
-
-
-              if (scope.config.autopick && scope.config.mapController.geopicker && typeof scope.config.mapController.geopicker.pick === 'function') {
-                scope.config.mapController.geopicker.pick(resultCoordinate);
-              }
-
-            } else {
-              let langConstants = getLanguage(scope.options.mapController.data);
-              alert(langConstants.SEARCH_NOT_FOUND);
-            }
-            if (scope.results) {
-              let results = [];
-              for (var i = 0; i < scope.results.length; i++) {
-                results.push(scope.results[i].display_name);
-              }
-              scope.setState({results: results, currentCoordinate: currentCoordinate, openResults: true, currentResult: results[0]});
-            }
+      let arrResults = utils.callHookFunctions(window.c4gMapsHooks.hook_search, [data, this]);
+      if (arrResults && arrResults.length > 0) {
+        this.config.mapController.spinner.hide();
+        for (let i in arrResults) {
+          if (arrResults.hasOwnProperty(i)) {
+            this.doneFunction(arrResults[i]);
           }
-
+        }
+      }
+      else {
+        // AJAX -> @nominatim
+        jQuery.ajax({
+          dataType: "json",
+          url: this.config.url,
+          data: data
         })
+            .done(this.doneFunction)
 
-        .fail(function () {
-          // @TODO
-          // self.resultWrapper.innerHTML = 'ohoh!';
-        })
-        .always(function () {
-          scope.config.mapController.spinner.hide();
-        });
+            .fail(function () {
+              // @TODO
+              // self.resultWrapper.innerHTML = 'ohoh!';
+            })
+            .always(function () {
+              scope.config.mapController.spinner.hide();
+            });
+      }
 
     } else {
       // @TODO
+    }
+
+  }
+  doneFunction (results) {
+
+    var mapView,
+        currentCoordinate,
+        resultCoordinate,
+        coordDif,
+        difContext,
+        viewExtent,
+        result,
+        osmExtent,
+        resolution,
+        zoomType,
+        flyTo,
+        completeSearch,
+        mapController = this.props.mapController,
+        map = mapController.map,
+        animate = this.config.animate,
+        animationDuration = 2000,
+        markResult = this.config.markResult;
+
+    if (results && results.length && results.length > 0){
+      mapView = map.getView();
+
+      if (results[0]) {
+        result = results[0];
+        this.results = results;
+        currentCoordinate = mapView.getCenter();
+        resultCoordinate = transform([parseFloat(result.lon), parseFloat(result.lat)], 'EPSG:4326', 'EPSG:3857');
+
+        if (animate) {
+          this.flyTo(map, resultCoordinate, this.config.zoomlevel, this.config.zoombounds, result.bounding_box, markResult, animate, map.getView());
+        } else {
+          this.completeSearch(this.config.markResult, this.config.animate, zoomType, animationDuration);
+          mapView.setCenter(resultCoordinate);
+          if (this.config.zoomlevel >= 0) {
+            map.getView().setZoom(this.config.zoomlevel);
+          }
+        }
+
+        var pixel = map.getPixelFromCoordinate(resultCoordinate);
+        var feature = map.forEachFeatureAtPixel(pixel,
+            function (feature, layer) {
+              return feature;
+            });
+        var layer = map.forEachFeatureAtPixel(pixel,
+            function (feature, layer) {
+              return layer;
+            });
+        if (this.config.popup) {
+          var popupInfos = {};
+          if (feature && feature.get('popup')) {
+            // single POI
+            popupInfos = feature.get('popup');
+          } else if (layer && layer.popup) {
+            popupInfos = layer.popup;
+          } else {
+            feature = false;
+          }
+          if (feature) {
+            var geometry = feature.getGeometry();
+            if (geometry instanceof Point) {
+              var coord = geometry.getCoordinates();
+            } else {
+              var coord = resultCoordinate;
+            }
+
+            window.c4gMapsPopup.popup.setPosition(coord);
+            if (popupInfos.content) {
+              window.c4gMapsPopup.$content.html('');
+              window.c4gMapsPopup.popup.addClass(cssConstants.ACTIVE).addClass(cssConstants.LOADING);
+              window.c4gMapsPopup.spinner.show();
+
+              if (popupInfos.async === false || popupInfos.async == '0') {
+                var objPopup = {};
+                objPopup.popup = popupInfos;
+                objPopup.feature = feature;
+                objPopup.layer = layer;
+                // Call the popup hook for plugin specific popup content
+                if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_fillPopup === 'object') {
+                  utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, objPopup);
+                }
+                this.config.mapController.proxy.setPopup(objPopup);
+              } else {
+                jQuery.ajax({
+                  dataType: "json",
+                  url: this.api_infowindow_url + '/' + popupInfos.content,
+                  done: function (data) {
+                    var popupInfo = {
+                      async: popupInfos.async,
+                      content: data.content,
+                      popup: popupInfos.popup,
+                      routing_link: popupInfos.routing_link
+                    };
+
+                    objPopup = {};
+                    objPopup.popup = popupInfo;
+                    objPopup.feature = feature;
+                    objPopup.layer = layer;
+
+                    // Call the popup hook for plugin specific popup content
+                    if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_fillPopup === 'object') {
+                      utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, objPopup);
+                    }
+
+                    this.setPopup(objPopup);
+                  }
+                });
+              }
+            } else {
+              window.c4gMapsPopup.popup.removeClass(cssConstants.ACTIVE);
+            }
+
+          } else if (window && window.c4gMapsPopup && window.c4gMapsPopup.popup) {
+            jQuery(window.c4gMapsPopup.popup).removeClass(cssConstants.ACTIVE);
+          }
+        }
+
+
+        if (this.config.autopick && this.config.mapController.geopicker && typeof this.config.mapController.geopicker.pick === 'function') {
+          this.config.mapController.geopicker.pick(resultCoordinate);
+        }
+
+      } else {
+        let langConstants = getLanguage(this.options.mapController.data);
+        alert(langConstants.SEARCH_NOT_FOUND);
+      }
+      if (this.results) {
+        let results = [];
+        for (var i = 0; i < this.results.length; i++) {
+          results.push(this.results[i].display_name);
+        }
+        this.setState({results: results, currentCoordinate: currentCoordinate, openResults: true, currentResult: results[0]});
+      }
     }
 
   }

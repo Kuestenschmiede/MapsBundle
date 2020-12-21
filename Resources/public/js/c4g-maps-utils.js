@@ -369,15 +369,19 @@ export var utils = {
    * @param   {mixed}             parameters        [description]
    */
   callHookFunctions: function (arrHookFunctions, parameters) {
-    var j;
-
+    var j,
+        arrResult = [];
     if (arrHookFunctions && arrHookFunctions.length > 0) {
       for (j = 0; j < arrHookFunctions.length; j += 1) {
         if (typeof arrHookFunctions[j] === 'function') {
-          arrHookFunctions[j](parameters);
+          let tmpResult = arrHookFunctions[j](parameters);
+          if (tmpResult) {
+            arrResult.push(tmpResult);
+          }
         }
       }
     }
+    return arrResult;
   }, // end of "callHookFunctions()"
 
   /**
