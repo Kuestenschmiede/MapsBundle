@@ -1,4 +1,3 @@
-const CompressionPlugin = require('compression-webpack-plugin');
 const webpack = require("webpack");
 var path = require('path');
 var config = {
@@ -18,9 +17,6 @@ var config = {
     modules: ['node_modules', 'Resources/public/js'],
     extensions: ['.jsx', '.js']
   },
-  plugins: [
-    new CompressionPlugin()
-  ],
   module: {
     rules: [
       {
