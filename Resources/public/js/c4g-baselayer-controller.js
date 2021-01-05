@@ -704,7 +704,8 @@ export class C4gBaselayerController {
 
       this.arrBaselayers[baseLayerUid].layer = newBaselayer;
     }
-    else {
+    else  if (typeof baseLayerConfig !== "undefined") {
+      console.log("config " + baseLayerUid + " not found")
       return;
     }
 
