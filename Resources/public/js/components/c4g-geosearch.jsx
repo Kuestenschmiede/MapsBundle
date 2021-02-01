@@ -549,7 +549,8 @@ export default class GeoSearch extends Component {
       }
       markerLayer = new Vector({
         style: style,
-        source: markerSource
+        source: markerSource,
+        zIndex: 99999
       });
       this.props.mapController.map.addLayer(markerLayer);
 
