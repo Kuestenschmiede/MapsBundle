@@ -232,11 +232,9 @@ class MapDataConfigurator
             // map-extend
             if ($map->show_locations == '1') {
                 $mapData['calc_extent'] = 'LOCATIONS';
-            }
-            else if ($map->show_locations == '2') {
+            } elseif ($map->show_locations == '2') {
                 $mapData['calc_extent'] = 'CENTERLOCS';
-            }
-            else {
+            } else {
                 $mapData['calc_extent'] = 'CENTERZOOM';
             }
             if ($mapData['calc_extent'] == 'LOCATIONS') {
@@ -431,7 +429,9 @@ class MapDataConfigurator
                 $mapData['geosearch']['searchzoom'] = $profile->geosearch_zoomto;
                 $mapData['geosearch']['zoombounds'] = $profile->geosearch_zoombounds;
                 $mapData['geosearch']['animate'] = $profile->geosearch_animate;
+                $mapData['geosearch']['animate_duration'] = $profile->geosearch_animate_duration;
                 $mapData['geosearch']['markresult'] = $profile->geosearch_markresult;
+                $mapData['geosearch']['result_duration'] = $profile->geosearch_result_duration;
                 $mapData['geosearch']['popup'] = \Contao\Controller::replaceInsertTags($profile->geosearch_popup);
                 $mapData['geosearch']['attribution'] = \Contao\Controller::replaceInsertTags($profile->geosearch_attribution);
                 $keyForward = null;
@@ -602,7 +602,6 @@ class MapDataConfigurator
                 ResourceLoader::loadResources();
                 $mapData['themeData'] = ResourceLoader::loadTheme();
             }
-
         }
         // @TODO: Check
         $mapData['addIdToDiv'] = true;

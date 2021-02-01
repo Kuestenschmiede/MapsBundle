@@ -99,6 +99,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_markresult'] = ['Mark foun
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_popup'] = ['Open popup', 'Opens the popup for a feature at the location of the search (Works best with polygons).'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_attribution'] = ['Show attribution of search service', 'Adds an attribution of the search service (Nominatim). Deactivate only when you are sure it is allowed.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_placeholder'] = ["Placeholder for input field", "Specify a placeholder that is displayed until an input is made."];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_animate_duration'] = ["Animation Duration", "Specify the time in milliseconds for the animation duration to the search result. Default: 2000"];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_result_duration'] = ["Result Duration", "Specify the time in milliseconds for highlighting the search result. Default: 3000"];
 
 /** Geopicker (Position bestimmen) */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker'] = ['Show Geopicker (Frontend)', 'Adds a geopicker in the frontend, similar to the backend wizard to pick coordinates which can be used in forms.'];

@@ -109,7 +109,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                                          '{click_legend:hide},tooltipOrientation,link_newwindow,link_open_on,hover_popups,popupHandling;'.
                                          '{baselayer_legend:hide},baselayers, default_baselayer,baselayerswitcher_label,baselayer_filter;'.
                                          '{starboard_legend:hide},layerswitcher_label,starboard_filter,starboard_label,starboard_button,starboard_locstyles,starboardInvertZoomActivate,colorZoomMarker,maxZoomStarboard,cluster_all;'.
-                                         '{geosearch_legend:hide},geosearch_headline,geosearch_engine,geosearchParams,geosearch_result_locstyle,geosearch_placeholder,geosearch_results,geosearch_zoomto,geosearch_zoombounds,geosearch_animate,geosearch_markresult,geosearch_popup,geosearch_attribution;'.
+                                         '{geosearch_legend:hide},geosearch_headline,geosearch_engine,geosearchParams,geosearch_result_locstyle,geosearch_placeholder,geosearch_results,geosearch_zoomto,geosearch_zoombounds,geosearch_animate,geosearch_markresult,geosearch_attribution,geosearch_popup,geosearch_animate_duration,geosearch_result_duration;'.
                                          '{attribution_legend:hide},attribution;'.
                                          '{information_legend:hide},scaleline,mouseposition,permalink_get_param,zoomlevel,infopage;'.
                                          '{locstyle_legend:hide},label_color,resize_locstyles_zoom;'.
@@ -590,7 +590,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'exclude'                 => true,
                 'default'                 => true,
                 'inputType'               => 'checkbox',
-                'sql'                     => "char(1) NOT NULL default '1'"
+                'sql'                     => "char(1) NOT NULL default '1'",
+                'eval'                    => array('tl_class'=>'w50 clr'),
             ],
 
         'geosearch_animate' =>
@@ -602,13 +603,32 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'sql'                     => "char(1) NOT NULL default '1'"
             ],
 
+        'geosearch_animate_duration' =>
+            [
+                'label'             => $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_animate_duration'],
+                'inputType'         => 'text',
+                'default'           => '2000',
+                'eval'              => array('rgxp'=>'digit', 'mandatory'=>false, 'tl_class'=>'w50 clr'),
+                'sql'               => "smallint(5) unsigned NOT NULL default 2000"
+            ],
+
+        'geosearch_result_duration' =>
+            [
+                'label'             => $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_result_duration'],
+                'inputType'         => 'text',
+                'default'           => '3000',
+                'eval'              => array('rgxp'=>'digit', 'mandatory'=>false, 'tl_class'=>'w50'),
+                'sql'               => "smallint(5) unsigned NOT NULL default 3000"
+            ],
+
         'geosearch_markresult' =>
             [
                 'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_markresult'],
                 'exclude'                 => true,
                 'default'                 => true,
                 'inputType'               => 'checkbox',
-                'sql'                     => "char(1) NOT NULL default '1'"
+                'sql'                     => "char(1) NOT NULL default '1'",
+                'eval'                    => array('tl_class'=>'w50 clr'),
             ],
         'geosearch_popup' =>
             [

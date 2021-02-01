@@ -74,6 +74,8 @@ export default class GeoSearch extends Component {
     this.config.animate = props.animate;
     // highlight the result location
     this.config.markResult = props.markResult;
+    this.config.animateDuration = props.animateDuration;
+    this.config.resultDuration = props.resultDuration;
     this.config.popup = props.popup;
 
     this.config.autopick = props.autopick;
@@ -240,7 +242,7 @@ export default class GeoSearch extends Component {
     mapController.spinner.show();
 
     animate = this.config.animate;
-    animationDuration = 2000;
+    animationDuration = this.config.animateDuration;
     markResult = this.config.markResult;
 
     if (typeof opt_options === 'object') {
@@ -319,7 +321,7 @@ export default class GeoSearch extends Component {
         mapController = this.props.mapController,
         map = mapController.map,
         animate = this.config.animate,
-        animationDuration = 2000,
+        animationDuration = this.config.animateDuration,
         markResult = this.config.markResult;
 
     if (results && results.length && results.length > 0){
@@ -332,9 +334,11 @@ export default class GeoSearch extends Component {
         resultCoordinate = transform([parseFloat(result.lon), parseFloat(result.lat)], 'EPSG:4326', 'EPSG:3857');
 
         if (animate) {
-          this.flyTo(map, resultCoordinate, this.config.zoomlevel, this.config.zoombounds, result.bounding_box, markResult, animate, map.getView());
+          this.flyTo(
+              map, resultCoordinate, this.config.zoomlevel, this.config.zoombounds, result.bounding_box,
+              markResult, this.config.resultDuration, animate, this.config.animateDuration, map.getView());
         } else {
-          this.completeSearch(this.config.markResult, this.config.animate, zoomType, animationDuration);
+          this.completeSearch(this.config.markResult, this.config.animate, zoomType, this.config.animateDuration, resultCoordinate, this.config.resultDuration);
           mapView.setCenter(resultCoordinate);
           if (this.config.zoomlevel >= 0) {
             map.getView().setZoom(this.config.zoomlevel);
@@ -439,8 +443,8 @@ export default class GeoSearch extends Component {
 
   }
 
-  flyTo(map, location, zoomlevel, zoombounds, boundingbox, markResult, animate, mapView) {
-    let duration = 2000;
+  flyTo(map, location, zoomlevel, zoombounds, boundingbox, markResult, resultDuration, animate, animateDuration, mapView) {
+    let duration = animateDuration;
     let zoom = zoomlevel;
     let parts = 2;
     let called = false;
@@ -483,7 +487,7 @@ export default class GeoSearch extends Component {
           }, duration)
         }
 
-        scope.completeSearch(markResult, animate, "bounce", duration, location);
+        scope.completeSearch(markResult, animate, "bounce", animateDuration, location, resultDuration);
       }
     }
 
@@ -501,7 +505,7 @@ export default class GeoSearch extends Component {
     }, callback);
   }
 
-  completeSearch(markResult, animate, zoomType, animationDuration, resultCoordinate) {
+  completeSearch(markResult, animate, zoomType, animationDuration, resultCoordinate, resultDuration) {
     // result marker & animation
     if (markResult) {
       let addMarker,
@@ -569,7 +573,7 @@ export default class GeoSearch extends Component {
           listenerKey;
 
         start = new Date().getTime();
-        duration = 3000;
+        duration = resultDuration;
 
         animationStep = function (event) {
           let vectorContext,
@@ -668,11 +672,12 @@ export default class GeoSearch extends Component {
         zoomType = 'bounce';
       }
 
-      this.flyTo(map, resultCoordinate, this.config.zoomlevel, this.config.zoombounds, result.bounding_box, this.config.markResult, this.config.animate, mapView);
+      this.flyTo(
+          map, resultCoordinate, this.config.zoomlevel, this.config.zoombounds, result.bounding_box,
+          this.config.markResult, this.config.resultDuration, this.config.animate, this.config.animateDuration, mapView);
     }
     else {
-      let animationDuration = 2000;
-      this.completeSearch(this.config.markResult, this.config.animate, zoomType, animationDuration, resultCoordinate);
+      this.completeSearch(this.config.markResult, this.config.animate, zoomType, this.config.animateDuration, resultCoordinate, this.config.resultDuration);
       map.getView().setCenter(resultCoordinate);
       if (this.config.zoomlevel >= 0) {
         map.getView().setZoom(this.config.zoomlevel);

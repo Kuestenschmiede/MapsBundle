@@ -101,6 +101,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_markresult'] = ['Suchergeb
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_popup'] = ['Popup öffnen', 'Öffnet nach dem Suchen das Popup einer am Suchziel liegenden Lokation.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_attribution'] = ['Copyright für die Suche anzeigen', 'Fügt einen Copyright-Hinweis des verwendeten Suchservices (z.B. Nominatim) hinzu. Deaktivierung nicht empfohlen!'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_placeholder'] = ["Platzhalter für Suchfeld", "Geben Sie einen Platzhaltertext für das Eingabefeld an."];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_animate_duration'] = ["Animationsdauer", "Geben Sie die Zeit in Millisekungen für die Animationsdauer zum Suchergebnis an. Standard: 2000"];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_result_duration'] = ["Ergebnisdauer", "Geben Sie die Zeit in Millisekungen für das Hervorheber des Suchergebnises an. Standard: 3000"];
 
 /** Geopicker (Koordinaten per Klick auf die Karte bestimmen) */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker'] = ['Frontend-Geopicker anzeigen', 'Zeigt einen Geopicker mit dem Sie die Koordinaten per Klick in die Karte ermitteln können im Frontend an. Nützlich z.B. in einem Formular.'];
