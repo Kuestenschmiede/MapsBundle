@@ -136,8 +136,11 @@ export var config = {
       crossOrigin: 'anonymous',
     }
   },
+  otm: {
+    attributions: 'Kartendaten: ' + OSM_REL_ATTRIBUTION + ', SRTN | Kartendarstellung © <a target="_blank" rel="noopener" href="https://opentopomap.org/">OpenTopoMap</a> (<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+  },
   mapz: {
-    attributions: '© 2020 <a target=\"_blank\" href=\"http://www.mapz.com\">mapz.com </a>' + ' ' + OSM_REL_ATTRIBUTION,
+    attributions: '© 2021 <a target=\"_blank\" href=\"http://www.mapz.com\">mapz.com </a>' + ' ' + OSM_REL_ATTRIBUTION,
     minZoom: 0,
     maxZoom: 22,
     tilePixelRatio: 2

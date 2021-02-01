@@ -260,6 +260,13 @@ export class C4gBaselayerController {
               sourceConfigs.mapz,
               layerOptions))
         });
+        break;
+      case 'otm' :
+        newBaselayer = new TileLayer({
+          source: new XYZ(jQuery.extend(sourceConfigs.otm,
+              layerOptions))
+        });
+        break;
       case 'klokan':
         if (baseLayerConfig.api_key && baseLayerConfig.klokan_type) {
 
@@ -556,6 +563,7 @@ export class C4gBaselayerController {
       // create layer
       sourceConfigs.osm = config.osm;
       sourceConfigs.stamen = config.stamen;
+      sourceConfigs.otm = config.otm;
       //mapQuestSourceConfigs = c4g.maps.config.mapquest;
       sourceConfigs.mapbox = config.mapbox;
       sourceConfigs.mapz = config.mapz;
@@ -593,6 +601,10 @@ export class C4gBaselayerController {
           case 'mapz':
             layerOptions.url = baseLayerConfig.url;
             layerOptions.attributions = sourceConfigs.mapz.attributions;
+            break;
+          case 'otm':
+            layerOptions.url = baseLayerConfig.url;
+            layerOptions.attributions = sourceConfigs.otm.attributions;
             break;
           case 'klokan':
             layerOptions.attributions = sourceConfigs.klokan[baseLayerConfig.klokan_type].attributions;

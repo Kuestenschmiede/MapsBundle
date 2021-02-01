@@ -71,7 +71,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['baselayerGroup']['maxZoom']       
  * Reference
  */
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm']    = 'OpenStreetMap (<a href="https://operations.osmfoundation.org/policies/tiles" rel="noopener" target="_blank">usage policy</a>)';
-$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm']    = 'OpenStreetMap (<a href="https://operations.osmfoundation.org/policies/tiles" rel="noopener" target="_blank">usage policy</a>)';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_otm']    = 'OpenTopoMap (<a href="https://https://opentopomap.org/about" rel="noopener" target="_blank">usage policy</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stamen'] = 'Stamen (<a href="http://maps.stamen.com" rel="noopener" target="_blank">usage policy</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_here']   = 'HERE (<a href="https://developer.here.com" rel="noopener" target="_blank">usage policy</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapbox'] = 'Mapbox (<a href="https://www.mapbox.com" rel="noopener" target="_blank">usage policy</a>)';

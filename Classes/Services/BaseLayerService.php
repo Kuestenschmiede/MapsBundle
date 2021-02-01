@@ -292,6 +292,9 @@ class BaseLayerService
                         $arrBaseLayer['hide_in_be'] = $objBaseLayer->hide_in_be;
                     }
                     break;
+                case 'otm':
+                    $arrBaseLayer['url'] = "https://{a-c}.tile.opentopomap.org/{z}/{x}/{y}.png";
+                    break;
                 case 'klokan':
                     $arrBaseLayer['url'] = $objBaseLayer->url;
                     $klokan_type = $objBaseLayer->klokan_type;

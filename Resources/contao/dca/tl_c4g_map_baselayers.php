@@ -132,6 +132,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                                          '{protection_legend:hide},protect_baselayer,published,published;',
         'osm'                         => '{general_legend},name,display_name,provider,osm_style,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
                                          '{protection_legend:hide},protect_baselayer,published;',
+        'opentopomap'                 => '{general_legend},name,display_name,provider,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
+                                         '{protection_legend:hide},protect_baselayer,published;',
         'stamen'                      => '{general_legend},name,display_name,provider,stamen_style,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
                                          '{protection_legend:hide},protect_baselayer,published;',
         'con4gisIo'                   => '{general_legend},name,display_name,provider,con4gisIo,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
@@ -146,10 +148,10 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                                          '{protection_legend:hide},protect_baselayer,published;',
         'bing'                        => '{general_legend},name,display_name,provider,bing_style,bing_key,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
                                          '{protection_legend:hide},protect_baselayer,published;',
-        'klokan'                      => '{general_legend},name,display_name,provider,klokan_type,url,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
-                                         '{protection_legend:hide},protect_baselayer,published;',
+        'klokan'                      => '{general_legn_legend:hide},protect_baselayer,published;',
         'wms'                         => '{general_legend},name,display_name,provider,wms_url,wms_params_layers,wms_params_version,wms_params_format,wms_params_transparent,wms_gutter,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
-                                         '{protection_legend:hide},protect_baselayer,published;',
+                                         '{protection_legend},name,display_name,provider,klokan_type,url,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
+            '{protectioend:hide},protect_baselayer,published;',
         'geoimage'                    => '{general_legend},name,display_name,provider,image_src,geoimage_json,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
                                          '{protection_legend:hide},protect_baselayer,published;',
         'owm'                         => '{general_legend},name,display_name,provider,app_id,api_key,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
@@ -244,12 +246,13 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                 'klokan' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_klokan'],
                 'mapbox' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapbox'],
                 'mapz' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapz'],
+                'otm' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_otm'],
                 'stamen' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stamen'],
                 'thunder' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_thunderforest'],
                 'wms' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_wms'],
                 'geoimage' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_geoimage'],
                 'group' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_group'],
-                'custom' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_custom']
+                'custom' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_custom'],
             ],
             'eval'                    => ['submitOnChange'=>true, 'tl_class'=>'clr'],
             'sql'                     => "varchar(10) NOT NULL default ''"
