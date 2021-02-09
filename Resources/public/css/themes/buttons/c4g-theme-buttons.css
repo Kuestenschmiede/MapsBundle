@@ -705,6 +705,7 @@ button.c4g-baselayer-close:before {
     margin: .2em 0 0;
 }
 
+/* minimize sideboard icon */
 button.c4g-sideboard-hide {
     width: 32px;
     height: 32px;
@@ -718,12 +719,9 @@ button.c4g-sideboard-hide {
     cursor: pointer;
 }
 
-button.c4g-sideboard-hide:after {
+button.c4g-sideboard-hide:before {
     content: "\f068";
     font-family: "Font Awesome 5 Free";
-    font-weight: bold;
-    vertical-align: text-bottom;
-    position: absolute;
-    bottom: 6px;
-    right: 6px;
+    font-weight: 900;
+    font-size: inherit;
 }
