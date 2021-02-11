@@ -1281,16 +1281,11 @@ ul.c4g-feature-filter-list.c4g-not-overflowed {
     display: block;
 }
 
-
-ul.c4g-feature-filter-list li.c4g-item-checked > strong {
-    /*margin: 0 60px 0 10px;*/
-}
-
 ul.c4g-feature-filter-list li span.sum {
     font-size: .5em;
     vertical-align: top;
     font-weight: bold;
-    margin-left: -55px;
+    margin-left: -8px;
     padding: 0 5px;
     border-bottom-right-radius: 50%;
     border-bottom-left-radius: 0;
