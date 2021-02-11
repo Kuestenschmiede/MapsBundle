@@ -1413,7 +1413,7 @@ li.c4g-item-checked {
     background: var(--shadow-color);
 }
 
-.c4g-feature-filter-list > li {
+.c4g-feature-filter-list > ul > li {
     display: -webkit-inline-box;
     display: -webkit-inline-flex;
     display: -ms-inline-flexbox;
