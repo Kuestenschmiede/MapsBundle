@@ -230,6 +230,8 @@ export class BetterLayerController {
         }
         if (returnStyle[0] &&returnStyle[0].setZIndex) {
           let geometry = feature.getGeometry().clone().transform("EPSG:3857", "EPSG:4326").getCoordinates();
+          geometry = typeof geometry[0] == "number" ? geometry : geometry[0];
+          geometry = typeof geometry[0] == "number" ? geometry : geometry[0];
           zIndex += 100 - geometry[1];
           returnStyle[0].setZIndex(zIndex);
         }
@@ -528,7 +530,6 @@ export class BetterLayerController {
           }, 201);
         }});
       self.vectorCollection.extend(features);
-      self.vectorLayer.setZIndex(1);
       self.mapController.map.addLayer(self.vectorLayer);
       self.mapController.setLayersInitial(self.arrLayers, arrStates);
       self.mapController.setTabLayers(tabStructures, tabStates);
@@ -895,7 +896,6 @@ export class BetterLayerController {
       }
       vectorLayer = new Vector({
           source: vectorSource,
-          zIndex: 500,
           style: customStyleFunc || this.clusterStyleFunction
       });
       vectorLayer.popup = popup;
