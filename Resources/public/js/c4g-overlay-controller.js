@@ -79,7 +79,7 @@ export class C4gOverlayController {
           if (overlayLayerConfig.url) {
             layerOptions.url = overlayLayerConfig.url;
             noUrl = false;
-          } else if (overlayLayerConfig.urls) {
+          } else if (overlayLayerConfig.urls && overlayLayerConfig.urls.length > 0) {
             layerOptions.urls = overlayLayerConfig.urls;
             noUrl = false;
           }
