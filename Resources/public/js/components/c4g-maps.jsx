@@ -321,7 +321,7 @@ export class MapController extends Component {
       view = new View({
         extent: extent,
         center: transform([parseFloat(mapData.center.lon), parseFloat(mapData.center.lat)], 'EPSG:4326', 'EPSG:3857'),
-        zoom: parseInt(mapData.center.zoom, 10),
+        zoom: parseFloat(mapData.center.zoom),
         minZoom: parseInt(minZoom, 10),
         maxZoom: parseInt(maxZoom, 10),
         rotation: parseFloat(mapData.center.rotation)
@@ -329,7 +329,7 @@ export class MapController extends Component {
     } else {
       view = new View({
         center: transform([parseFloat(mapData.center.lon), parseFloat(mapData.center.lat)], 'EPSG:4326', 'EPSG:3857'),
-        zoom: parseInt(mapData.center.zoom, 10),
+        zoom: parseFloat(mapData.center.zoom),
         minZoom: parseInt(minZoom, 10),
         maxZoom: parseInt(maxZoom, 10),
         rotation: parseFloat(mapData.center.rotation)

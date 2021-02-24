@@ -38,7 +38,7 @@ export class Zoomlevel extends Control {
 
     element = document.createElement('div');
     element.className = options.className;
-    element.innerHTML = mapView.getZoom();
+    element.innerHTML = parseInt(mapView.getZoom());
 
     updateZoomlevel = function () {
       element.innerHTML = parseInt(mapView.getZoom());
