@@ -40,7 +40,7 @@
     "moment": "^2.29.1",
     "ol": "^6.5.0",
     "ol-cesium": "^2.11.3",
-    "ol-ext": "^3.1.17",
+    "ol-ext": "^3.1.18",
     "ol-mapbox-style": "^6.3.1",
     "opening_hours": "^3.5.0",
     "osmtogeojson": "^3.0.0-beta.4",
