@@ -25,6 +25,7 @@ export class HorizontalPanel extends Component {
     let button = document.createElement('button');
     element.className = (props.className || "c4g-horizontal-panel") + "-button-" + (props.direction || "top") + " ol-control " + "ol-unselectable";
     element.appendChild(button);
+    button.title = props.title;
     this.clickControl = this.clickControl.bind(this);
     jQuery(button).on('click', this.clickControl);
     let mapController = props.mapController;
