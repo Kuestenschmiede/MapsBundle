@@ -28,7 +28,7 @@
     "php": "^7.1",
     "contao/core-bundle": "^4.4",
     "contao/calendar-bundle": "^4.4",
-    "con4gis/core": "^4.0",
+    "con4gis/core": "^4.1",
     "phayes/geophp": "^1.2"
   },
   "suggest": {

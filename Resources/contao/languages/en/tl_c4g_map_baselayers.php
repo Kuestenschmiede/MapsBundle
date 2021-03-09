@@ -77,7 +77,6 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_here']   = 'HERE (<a href
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapbox'] = 'Mapbox (<a href="https://www.mapbox.com" rel="noopener" target="_blank">usage policy</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapz']   = 'Mapz (<a href="https://www.mapz.com" rel="noopener" target="_blank">usage policy</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_thunderforest'] = 'Thunderforest (<a href="https://www.thunderforest.com/maps" rel="noopener" target="_blank">usage policy</a>)';
-$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_google'] = 'Google Maps';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_bing']   = 'Bing Maps (<a href="https://www.bingmapsportal.com" rel="noopener" target="_blank">usage policy</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_klokan'] = 'Klokan Maptiler / OpenMapTiles (<a href="https://www.maptiler.com" rel="noopener" target="_blank">usage policy</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_wms']    = 'WMS';

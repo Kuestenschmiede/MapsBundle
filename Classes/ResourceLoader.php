@@ -96,7 +96,6 @@ class ResourceLoader extends coreResourceLoader
         parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/colors/c4g-theme-colors.css');
         parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/effects/c4g-theme-effects.css');
 
-
         // load plugins
         if ($resources['plugins']) {
             if (isset($GLOBALS['TL_HOOKS']['C4gMapsLoadPlugins']) && is_array($GLOBALS['TL_HOOKS']['C4gMapsLoadPlugins'])) {

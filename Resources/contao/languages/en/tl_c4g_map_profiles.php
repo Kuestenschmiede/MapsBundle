@@ -22,6 +22,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['external_elements'] = ['External ele
 
 /** Basiskarten */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayers'] = ['Base layers', 'Check the baselayers you wish to see in the Starboard. Default: all. The sorting can be adjusted via the baselayer module (list).'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayer_filter'] = ['Enable basemap filter', 'Displays a search filter for the basemaps above the tree.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['default_baselayer'] = ['Default Base Layer', 'Select the base layer to be pre-selected when the map is loaded.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayerswitcher_label'] = ['Header Base Maps', 'Default: "Base Maps"'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayerswitcher_filter'] = ['Enables baselayer filter', 'Shows a filter field above the baselayerswitcher.'];
@@ -43,11 +44,9 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouse_nav_zoombox'] = ['Zoombox with
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouse_nav_kinetic'] = ['Kinetic Mouse Scrolling','If checked, scrolling with the mouse continues for a short period after the mouse button was let go (as opposed to stopping instantly.).'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['touch_nav'] = ['Touch Navigation', 'Enables touch screen navigation (requires touch screen device).'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['keyboard_nav'] = ['Keyboard Navigation', 'Enables moving the map with the arrow keys and zooming in and out with the + and - keys, respectively.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['print'] = ['Map Export', 'Shows a button to export the map as an image file.'];
 
 /** Kartenstruktur */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['layerswitcher_label'] = ['Starboard Header Map Elements', 'Default: "Map Elements"'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['layer_filter'] = ['Enables layer filter', 'Shows a filter field above the layerswitcher.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_open'] = ['Open Starboard Automatically', 'If checked, the starboard is open by default.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_label'] = ['Starboard Header', 'General Starboard Header.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_filter'] = ['Enable Starboard Filter', 'Shows the Starboard Filter.'];
@@ -86,7 +85,6 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_engine'] = ['Searchengine'
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_customengine_url'] = ['Custom searchengine-URL', 'The URL wich leads to the searchengine.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_customengine_attribution'] = ['Custom searchengine-attribution', 'IMPORTANT! The copyrighttext of the searchengines provider.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_key'] = ['Key for search-engine', 'If the selected search engine requires a key for the use of their service you can enter it here.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_show'] = ['Show search area', 'Shows the search button and input field on map.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearchParams'] = ['Parameters for the search', 'Enter keys and parameters in order to limit the search (<a href="https://wiki.openstreetmap.org/wiki/Nominatim" rel="noopener" target="_blank">documentation</a>)'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_results'] = ['Search with a list of results', 'Shows the results as a list'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_result_count'] = ['Result count', 'Specify the maximum result count.'];
@@ -140,6 +138,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['zoom'] 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['zoomPosition'] = ['Zoom to position','Zooms to the current device position on safe sides.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['zoomHome'] = ['Zoom back (house)','Zooms back to the preset position on the map.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['zoomExtent'] = ['Zoom out (world)','Zooms back to the smallest possible zoom level.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['fullscreen'] = ['Fullscreen mode','Displays a button to switch to fullscreen browser mode.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['print'] = ['Map export','Shows a button that allows exporting the map as PNG. Please pay attention to the copyright notes of the map provider.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['graticule'] = ['Geographical network','Fades in a switch that displays a geographic grid that visualizes longitude and latitude using horizontal and vertical lines.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['layerswitcher'] = ['Map structure element selection (Starboard)','If you select this checkbox, the selection list of map structural elements is displayed in a separate tab on the Starboard.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['baselayerswitcher'] = ['Base map selection','If you select this checkbox, the selection list of base maps is displayed in a separate tab on the starboard.'];

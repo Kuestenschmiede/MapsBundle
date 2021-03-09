@@ -35,7 +35,6 @@ class LoadFeatureFiltersEvent extends Event
      */
     private $addData = [];
 
-
     /**
      * @return int
      */
