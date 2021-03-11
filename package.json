@@ -43,6 +43,7 @@
     "ol-ext": "^3.1.18",
     "ol-mapbox-style": "^6.3.2",
     "opening_hours": "^3.5.0",
+    "minimist": "^1.2.5",
     "osmtogeojson": "^3.0.0-beta.4",
     "proj4": "^2.7.2",
     "react": "^17.0.1",
