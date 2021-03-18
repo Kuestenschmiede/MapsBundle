@@ -376,6 +376,12 @@ class LayerContentService
         $ptableCompareFieldArr = unserialize($objConfig->ptableCompareField);
         $ptableBlobArr = unserialize($objConfig->ptableBlob);
 
+        $connectionParams = $objConfig->customDB ?[
+            'dbDatabase' => $objConfig->customDB
+        ] : [];
+        // for non-utf8 charsets
+        $connectionParams['dbCharset'] = "utf8mb4";
+
         //check parent values
         if ($ptableArr && $ptableFieldArr && $ptableCompareFieldArr) {
             foreach ($ptableArr as $key => $ptable) {
@@ -393,7 +399,7 @@ class LayerContentService
                 //if there is a compare Field instead of the id field (parent table) we have change the parent id
                 if ($ptable && $sourcePid && $ptableCompareField && ($ptableCompareField != 'id')) {
                     $query = "SELECT * FROM `$ptable` WHERE id = $sourcePid";
-                    $result = \Database::getInstance()->prepare($query)->limit(1)->execute();
+                    $result = \Database::getInstance($connectionParams)->prepare($query)->limit(1)->execute();
                     $sourcePid = intval($result->$ptableCompareField);
                 }
 
@@ -434,7 +440,7 @@ class LayerContentService
                 }
             } elseif ($alias && ($sourceTable == 'tl_content')) {
                 $query = "SELECT * FROM `$ptableArr[0]` WHERE alias = ?";
-                $result = \Database::getInstance()->prepare($query)->limit(1)->execute(strval($alias));
+                $result = \Database::getInstance($connectionParams)->prepare($query)->limit(1)->execute(strval($alias));
                 $sourcePid = intval($result->id);
 
                 if ($sourcePid) {
@@ -447,9 +453,6 @@ class LayerContentService
                 }
             }
         }
-        $connectionParams = $objConfig->customDB ?[
-            'dbDatabase' => $objConfig->customDB,
-        ] : [];
         if ($sourceTable) {
             $queryCount = "SELECT COUNT(*) AS count FROM `$sourceTable`" . $qWhere . $pidOption . $and . $whereClause . $addBeWhereClause . $stmt;
             $resultCount = \Database::getInstance($connectionParams)->prepare($queryCount)->execute()->fetchAssoc()['count'];
@@ -486,10 +489,12 @@ class LayerContentService
             $blobCount = 0;
 
             //set locstyle
-            $locstyle = $arrResult[$locstyleField];
+            $locstyle = mb_convert_encoding($arrResult[$locstyleField], 'UTF-8', mb_detect_encoding($arrResult[$locstyleField]));
             if (!$locstyle) {
                 $locstyle = $objLayer->locstyle;
             }
+            $tooltip = mb_convert_encoding($arrResult[$tooltipField], 'UTF-8', mb_detect_encoding($arrResult[$tooltipField]));
+            $label = mb_convert_encoding($arrResult[$labelField], 'UTF-8', mb_detect_encoding($arrResult[$labelField]));
 
             //check blob fields
             if ($objConfig->ptable) {
@@ -509,11 +514,11 @@ class LayerContentService
 
                         $ptablefield = $ptableFieldArr[$key];
                         $ptableCompareField = $ptableCompareFieldArr[$key];
-                        $blobfield = $arrResult[$ptablefield];
+                        $blobfield = mb_convert_encoding($arrResult[$ptablefield], 'UTF-8', mb_detect_encoding($arrResult[$ptablefield]));
 
                         if ($blobfield && $sourcePid && $ptableCompareField && ($ptableCompareField != 'id')) {
                             $query2 = "SELECT * FROM `$ptable` WHERE id = $sourcePid";
-                            $result2 = \Database::getInstance()->prepare($query2)->limit(1)->execute();
+                            $result2 = \Database::getInstance($connectionParams)->prepare($query2)->limit(1)->execute();
                             $sourcePid = intval($result2->$ptableCompareField);
                         }
 
@@ -596,9 +601,9 @@ class LayerContentService
                             $arrReturnData[$i]['data']['properties']['popup']['content'] .= $popupContent . '</li></ul>';
 
                             if ($arrReturnData[$i]['data']['properties']['tooltip']) {
-                                $arrReturnData[$i]['data']['properties']['tooltip'] .= ', ' . Utils::replaceInsertTags($arrResult[$tooltipField] ?: '', $lang);
+                                $arrReturnData[$i]['data']['properties']['tooltip'] .= ', ' . Utils::replaceInsertTags($tooltip ?: '', $lang);
                             } else {
-                                $arrReturnData[$i]['data']['properties']['tooltip'] .= Utils::replaceInsertTags($arrResult[$tooltipField] ?: '', $lang);
+                                $arrReturnData[$i]['data']['properties']['tooltip'] .= Utils::replaceInsertTags($tooltip ?: '', $lang);
                             }
                             $event = true;
                         }
@@ -631,13 +636,11 @@ class LayerContentService
                         $popupContent = str_replace('TL_FILES_URL', '', $popupContent);
                     }
 
-                    $tooltip = '';
                     if ($tooltipField) {
-                        $ttfArr = unserialize($arrResult[$tooltipField]);
+
+                        $ttfArr = unserialize($tooltip);
                         if (is_array($ttfArr)) {
                             $tooltip = $ttfArr['value'];
-                        } else {
-                            $tooltip = $arrResult[$tooltipField];
                         }
                     }
                     if ($objConfig->popupSwitch === 'expert') {
@@ -675,7 +678,7 @@ class LayerContentService
                                 'popup' => $popup,
                                 'tooltip' => Utils::replaceInsertTags($tooltip ?: '', $lang),
                                 'tooltip_length' => $objLayer->tooltip_length,
-                                'label' => Utils::replaceInsertTags($arrResult[$labelField] ?: '', $lang),
+                                'label' => Utils::replaceInsertTags($label ?: '', $lang),
                                 'loc_linkurl' => Utils::replaceInsertTags($link ?: '', $lang),
                                 'zoom_onclick' => $objLayer->loc_onclick_zoomto,
                             ],
