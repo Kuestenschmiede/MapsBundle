@@ -103,7 +103,7 @@ class FeatureFilter implements \JsonSerializable
      */
     public function getValues(): array
     {
-        return $this->values;
+        return $this->values ? $this->values : [];
     }
 
     /**
@@ -119,7 +119,7 @@ class FeatureFilter implements \JsonSerializable
      */
     public function getTranslations(): array
     {
-        return $this->translations;
+        return $this->translations ? $this->translations : [];
     }
 
     /**
