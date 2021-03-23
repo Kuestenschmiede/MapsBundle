@@ -25,25 +25,28 @@ window.initMap = function(mapData) {
   }
 
   if (mapDiv) {
-    jQuery(mapDiv).css("height", "20px");
-    let observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.intersectionRatio > 0) {
-          observer.unobserve(entry.target);
-          return ReactDOM.render(
-              <Suspense fallback={<div>Loading...</div>}>
-                <MapController mapData={mapData}/>
-              </Suspense>,
-              jQuery("#c4g-map-container-" + mapData.mapId)[0]
-          );
-        }
+    if (IntersectionObserver) {
+      jQuery(mapDiv).css("height", "20px");
+      let observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.intersectionRatio > 0) {
+            observer.unobserve(entry.target);
+            return ReactDOM.render(
+                <Suspense fallback={<div>Loading...</div>}>
+                  <MapController mapData={mapData}/>
+                </Suspense>,
+                jQuery("#c4g-map-container-" + mapData.mapId)[0]
+            );
+          }
+        });
       });
-    });
-    observer.observe(mapDiv)
-
-    // return ReactDOM.render(React.createElement(MapController, {
-    //   mapData: mapData,
-    // }), jQuery("#c4g-map-container-" + mapData.mapId)[0]);
+      observer.observe(mapDiv)
+    }
+    else {
+      return ReactDOM.render(React.createElement(MapController, {
+        mapData: mapData,
+      }), jQuery("#c4g-map-container-" + mapData.mapId)[0]);
+    }
   }
 };
 
@@ -59,25 +62,28 @@ window.initMaps = function(mapData) {
         mapDiv = jQuery("#c4g_map_" + mapData[key].mapId)[0];
       }
       if (mapDiv) {
-        jQuery(mapDiv).css("height", "20px");
-        let observer = new IntersectionObserver(entries => {
-          entries.forEach(entry => {
-            if (entry.intersectionRatio > 0) {
-              observer.unobserve(entry.target);
-              return ReactDOM.render(
-                  <Suspense fallback={<div>Loading...</div>}>
-                    <MapController mapData={mapData[key]}/>
-                  </Suspense>,
-                  jQuery("#c4g-map-container-" + mapData[key].mapId)[0]
-              );
-            }
+        if (IntersectionObserver) {
+          jQuery(mapDiv).css("height", "20px");
+          let observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+              if (entry.intersectionRatio > 0) {
+                observer.unobserve(entry.target);
+                return ReactDOM.render(
+                    <Suspense fallback={<div>Loading...</div>}>
+                      <MapController mapData={mapData[key]}/>
+                    </Suspense>,
+                    jQuery("#c4g-map-container-" + mapData[key].mapId)[0]
+                );
+              }
+            });
           });
-        });
-        observer.observe(mapDiv);
-
-        // ReactDOM.render(React.createElement(MapController, {
-        //   mapData: mapData[key],
-        // }), jQuery("#c4g-map-container-" + mapData[key].mapId)[0]);
+          observer.observe(mapDiv);
+        }
+        else {
+          ReactDOM.render(React.createElement(MapController, {
+            mapData: mapData[key],
+          }), jQuery("#c4g-map-container-" + mapData[key].mapId)[0]);
+        }
       }
     }
   }
