@@ -15,9 +15,9 @@ import {langConstantsGerman} from "./c4g-maps-constant-i18n-de";
 import {langConstantsEnglish} from "./c4g-maps-constant-i18n-en";
 
 export function getLanguage(mapData) {
-  if (mapData.lang === "de") {
+  if (mapData && mapData.lang === "de") {
     return langConstantsGerman;
-  } else if (mapData.lang === "en") {
+  } else if (mapData && mapData.lang === "en") {
     return langConstantsEnglish;
   } else {
     // fallback
