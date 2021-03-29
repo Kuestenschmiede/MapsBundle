@@ -8,12 +8,12 @@
  * @link https://www.con4gis.org
  */
 
-import React, {Component} from "react";
+import React, {Component, Suspense} from "react";
 import {Control} from "ol/control";
 import {cssConstants} from "./../c4g-maps-constant";
 import {StarboardLayerswitcher} from "./c4g-starboard-layerswitcher";
 import {getLanguage} from "./../c4g-maps-i18n";
-import {Titlebar} from "./c4g-titlebar";
+const Titlebar = React.lazy(() => import("./c4g-titlebar.jsx"));
 import {utils} from "../c4g-maps-utils";
 
 export default class StarboardPanel extends Component {
@@ -112,10 +112,12 @@ export default class StarboardPanel extends Component {
     }
     return (
       <div className={cssConstants.STARBOARD_WRAPPER}>
-        <Titlebar wrapperClass={"c4g-starboard-header"} headerClass={cssConstants.STARBOARD_HEADLINE}
-                  header={mapData.starboard.label || this.langConstants.STARBOARD} closeBtnClass={cssConstants.STARBOARD_CLOSE} closeBtnCb={this.close}
-                  closeBtnTitle={this.langConstants.CLOSE}>
-        </Titlebar>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Titlebar wrapperClass={"c4g-starboard-header"} headerClass={cssConstants.STARBOARD_HEADLINE}
+                    header={mapData.starboard.label || this.langConstants.STARBOARD} closeBtnClass={cssConstants.STARBOARD_CLOSE} closeBtnCb={this.close}
+                    closeBtnTitle={this.langConstants.CLOSE}>
+          </Titlebar>
+        </Suspense>
         {buttonSwitcher}
         <div className={cssConstants.STARBOARD_CONTENT_CONTAINER}>
           <StarboardLayerswitcher key={this.props.tabLayers.length} mapController ={this.props.mapController} lang={this.langConstants}

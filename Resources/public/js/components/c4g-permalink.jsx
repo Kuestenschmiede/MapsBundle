@@ -8,9 +8,9 @@
  * @link https://www.con4gis.org
  */
 
-import React, {Component} from "react";
+import React, {Component, Suspense} from "react";
 import {cssConstants} from "./../c4g-maps-constant.js";
-import {Titlebar} from "./c4g-titlebar.jsx";
+const Titlebar = React.lazy(() => import("./c4g-titlebar.jsx"));
 import {transform} from "ol/proj";
 import {utils} from "../c4g-maps-utils";
 import {getLanguage} from "./../c4g-maps-i18n";
@@ -61,9 +61,11 @@ export default class Permalink extends Component {
   render() {
     return (
       <div className={"c4g-permalink-wrapper"}>
-        <Titlebar wrapperClass={"c4g-permalink-header"} headerClass={"c4g-permalink-header-headline"}
-                  header={"Permalink"} closeBtnClass={"c4g-permalink-close"} closeBtnCb={this.close} closeBtnTitle={this.langConstants.CLOSE}>
-        </Titlebar>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Titlebar wrapperClass={"c4g-permalink-header"} headerClass={"c4g-permalink-header-headline"}
+                    header={"Permalink"} closeBtnClass={"c4g-permalink-close"} closeBtnCb={this.close} closeBtnTitle={this.langConstants.CLOSE}>
+          </Titlebar>
+        </Suspense>
         <div className={"c4g-permalink-content"}>
           <textarea cols="50" rows="2" id={"permalink-text"} value={this.state.link} readOnly={true}/>
           <button className={cssConstants.COPY + ' ' + cssConstants.ICON} title={this.langConstants.COPY_TO_CLIPBOARD}
