@@ -8,8 +8,8 @@
  * @link https://www.con4gis.org
  */
 
-import React, {Component} from "react";
-import {Titlebar} from "./c4g-titlebar.jsx";
+import React, {Component, Suspense} from "react";
+const Titlebar = React.lazy(() => import("./c4g-titlebar.jsx"));
 import {getLanguage} from "../c4g-maps-i18n";
 import {Control} from "ol/control";
 import {MeasuretoolsView} from "./c4g-measuretools-view.jsx";
@@ -86,9 +86,11 @@ export default class Measuretools extends Component {
     
     return (
       <div className={"c4g-measuretools-wrapper"}>
-        <Titlebar wrapperClass={"c4g-measuretools-header"} headerClass={"c4g-measuretools-headline"} hideContainer={".c4g-measuretools-container"}
-                  header={this.langConstants.MEASURETOOLS} closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close} closeBtnTitle={this.langConstants.CLOSE}>
-        </Titlebar>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Titlebar wrapperClass={"c4g-measuretools-header"} headerClass={"c4g-measuretools-headline"} hideContainer={".c4g-measuretools-container"}
+                    header={this.langConstants.MEASURETOOLS} closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close} closeBtnTitle={this.langConstants.CLOSE}>
+          </Titlebar>
+        </Suspense>
         <div className={"c4g-measuretools-mode-switcher"}>
           {this.modes.map(function(element, index) {
             return <button key={index} className={"c4g-measure-" + element + " " + (element === scope.state.currentMode ? "c4g-active" : "c4g-inactive")}

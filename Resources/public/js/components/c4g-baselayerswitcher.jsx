@@ -8,9 +8,9 @@
  * @link https://www.con4gis.org
  */
 
-import React, {Component} from "react";
+import React, {Component, Suspense} from "react";
 import {Control} from "ol/control";
-import {Titlebar} from "./c4g-titlebar.jsx";
+const Titlebar = React.lazy(() => import("./c4g-titlebar.jsx"));
 import {getLanguage} from "./../c4g-maps-i18n";
 import {OverlayControls} from "./c4g-overlay-controls.jsx";
 import {utils} from "../c4g-maps-utils";
@@ -122,8 +122,10 @@ export default class BaselayerSwitcher extends Component {
     let headline = this.props.mapController.data.baselayerswitcher.label ? this.props.mapController.data.baselayerswitcher.label : "Basiskarten";
     return (
       <div className={"c4g-baselayer-wrapper"}>
-        <Titlebar wrapperClass={"c4g-baselayer-header"} headerClass={"c4g-baselayer-headline"}
-          header={headline} closeBtnClass={"c4g-baselayer-close"} closeBtnCb={this.close} closeBtnTitle={this.langConstants.CLOSE}/>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Titlebar wrapperClass={"c4g-baselayer-header"} headerClass={"c4g-baselayer-headline"}
+                    header={headline} closeBtnClass={"c4g-baselayer-close"} closeBtnCb={this.close} closeBtnTitle={this.langConstants.CLOSE}/>
+        </Suspense>
         {filter}
         <div className={"c4g-baselayertree-content"}>
           <ul>

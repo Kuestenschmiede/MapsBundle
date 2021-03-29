@@ -8,12 +8,12 @@
  * @link https://www.con4gis.org
  */
 
-import React, {Component} from "react";
+import React, {Component, Suspense} from "react";
 import {Control, OverviewMap as OvMap} from "ol/control";
 import {cssConstants} from "../c4g-maps-constant";
 import {getLanguage} from "../c4g-maps-i18n";
 import LayerGroup from "ol/layer/Group";
-import {Titlebar} from "./c4g-titlebar";
+const Titlebar = React.lazy(() => import("./c4g-titlebar.jsx"));
 
 export default class OverviewMap extends Component {
 
@@ -71,9 +71,11 @@ export default class OverviewMap extends Component {
 
   render() {
     return <div className={"overview-map-wrapper"}>
-      <Titlebar wrapperClass={"c4g-overwiev-header"} headerClass={"c4g-overview-headline"}
-                header={this.langConstants.OVERVIEWMAP} closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close} closeBtnTitle={this.langConstants.CLOSE}>
-      </Titlebar>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Titlebar wrapperClass={"c4g-overwiev-header"} headerClass={"c4g-overview-headline"}
+                  header={this.langConstants.OVERVIEWMAP} closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close} closeBtnTitle={this.langConstants.CLOSE}>
+        </Titlebar>
+      </Suspense>
       <div id={"overview-map-target"} className={"c4g-overview-content"}>
 
       </div>
