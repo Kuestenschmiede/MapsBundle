@@ -209,7 +209,16 @@ export default class FeatureFilter extends Component {
         filter.push([]);
       }
     }
-    this.setState({arrChecked: filter});
+    this.setState({arrChecked: filter}, () => {
+      for (let i = 0; i < this.features.length; i++) {
+        if (this.features.hasOwnProperty(i)) {
+          let added = this.resetFeature(this.features[i], i);
+          if (added) {
+            i--;
+          }
+        }
+      }
+    });
   }
 
   filterLayer (layer) {
@@ -332,6 +341,13 @@ export default class FeatureFilter extends Component {
     else {
       return false;
     }
+  }
+  resetFeature (feature, index) {
+    let source = feature.get('source');
+    feature.set('source', false);
+    source.addFeature(feature);
+    this.features.splice(index, 1);
+    return true;
   }
   showFeatureMulti (feature, index) {
     let show = false;
