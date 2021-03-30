@@ -61,6 +61,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_fillcolor'] = ['Fill color',
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_fontcolor'] = ['Font color', 'Select the font color of the cluster bubble.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_zoom'] = ['Maximal zoom', 'Select the maximal zoomlevel. The cluster is splitted on click afterwards '];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_dist_spider'] = ['Cluster distance (seperated)','Select the distance between seperated points of a cluster.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cluster_scale'] = ['Scale cluster elements','Choose wether you want to display clusters with more elements bigger.'];
 
 /** Karteninformationen */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['attribution'] = ['Attribution', 'Shows the attribution. Deactivate only when you are sure it is allowed.'];

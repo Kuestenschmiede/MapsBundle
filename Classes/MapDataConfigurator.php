@@ -348,6 +348,7 @@ class MapDataConfigurator
             $mapData['cluster_fontcolor'] = $profile->cluster_fontcolor;
             $mapData['cluster_zoom'] = $profile->cluster_zoom;
             $mapData['cluster_dist_spider'] = $profile->cluster_dist_spider;
+            $mapData['cluster_scale'] = $profile->cluster_scale;
             //}
 
             if (array_key_exists('layerswitcher', $buttons)) {

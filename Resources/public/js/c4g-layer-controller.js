@@ -150,6 +150,11 @@ export class BetterLayerController {
             scale = returnStyle[0].getImage().getScale();
             iconOffset = [iconOffset[0] * scale, iconOffset[1] * scale];
           }
+          if (scope.proxy.mapData.cluster_fillcolor) {
+            let countFeatures = scope.vectorCollection.getLength();
+            let scaleForCount = (size/countFeatures - 1/countFeatures) * 2
+            scale += scaleForCount;
+          }
         }
 
         let fillcolor = utils.getRgbaFromHexAndOpacity(scope.proxy.mapData.cluster_fillcolor,{
