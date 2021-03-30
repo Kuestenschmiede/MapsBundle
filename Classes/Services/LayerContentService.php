@@ -377,10 +377,10 @@ class LayerContentService
         $ptableBlobArr = unserialize($objConfig->ptableBlob);
 
         $connectionParams = $objConfig->customDB ?[
-            'dbDatabase' => $objConfig->customDB
+            'dbDatabase' => $objConfig->customDB,
         ] : [];
         // for non-utf8 charsets
-        $connectionParams['dbCharset'] = "utf8mb4";
+        $connectionParams['dbCharset'] = 'utf8mb4';
 
         //check parent values
         if ($ptableArr && $ptableFieldArr && $ptableCompareFieldArr) {
@@ -637,7 +637,6 @@ class LayerContentService
                     }
 
                     if ($tooltipField) {
-
                         $ttfArr = unserialize($tooltip);
                         if (is_array($ttfArr)) {
                             $tooltip = $ttfArr['value'];
