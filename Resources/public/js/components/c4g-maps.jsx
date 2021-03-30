@@ -62,7 +62,7 @@ import TileLayer from "ol/layer/Tile";
 let langConstants = {};
 
 'use strict';
-export default class MapController extends Component {
+export class MapController extends Component {
 
   /**
    * [MapController description]
