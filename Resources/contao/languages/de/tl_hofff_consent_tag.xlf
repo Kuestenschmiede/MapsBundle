@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.1">
+    <file datatype="php" original="src/Resources/contao/languages/en/tl_hofff_consent_tag.php" source-language="en">
+        <body>
+            <trans-unit id="tl_hofff_consent_tag.types.mapbox.0">
+                <source>Mapbox</source>
+                <target>Mapbox</target>
+            </trans-unit>
+            <trans-unit id="tl_hofff_consent_tag.types.mapbox.1">
+                <source>Mapbox</source>
+                <target>Mapbox</target>
+            </trans-unit>
+            <trans-unit id="hofff_consent.mapbox.title">
+                <source>Mapbox</source>
+                <target>Mapbox</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
