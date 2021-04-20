@@ -153,6 +153,7 @@ export class C4gBaselayerController {
       case 'osm':
         if (sourceConfigs.osm[baseLayerConfig.style]) {
           if (HofffConsentManager) {
+            let consentString = baseLayerConfig.style == "Mapnik" ? "external:open_street_map_osfm" : "external:open_street_map_fossgis"
             let dummyUrl = this.mapController.data.dummyBaselayer;
             let dummySource = null;
             if (dummyUrl) {
@@ -162,7 +163,7 @@ export class C4gBaselayerController {
             }
             newBaselayer = new TileLayer();
             HofffConsentManager.addEventListener('consent:accepted', function (event) {
-              if (event.consentId == "external:open_street_map_osfm") {
+              if (event.consentId == consentString) {
                 newBaselayer.setSource(new OSM(
                     jQuery.extend(
                         sourceConfigs.osm[baseLayerConfig.style],
@@ -172,11 +173,11 @@ export class C4gBaselayerController {
               }
             });
             HofffConsentManager.addEventListener('consent:revoked', function (event) {
-              if (event.consentId == "external:open_street_map_osfm") {
+              if (event.consentId == consentString) {
                 newBaselayer.setSource(dummySource);
               }
             })
-            if (!HofffConsentManager.requiresConsent('external:open_street_map_osfm')) {
+            if (!HofffConsentManager.requiresConsent(consentString)) {
               newBaselayer.setSource(new OSM(
                   jQuery.extend(
                       sourceConfigs.osm[baseLayerConfig.style],
