@@ -14,6 +14,18 @@
                 <source>Mapbox</source>
                 <target>Mapbox</target>
             </trans-unit>
+            <trans-unit id="tl_hofff_consent_tag.types.con4gisio.0">
+                <source>Con4gisIO</source>
+                <target>Con4gisIO</target>
+            </trans-unit>
+            <trans-unit id="tl_hofff_consent_tag.types.con4gisio.1">
+                <source>Con4gisIO</source>
+                <target>Con4gisIO</target>
+            </trans-unit>
+            <trans-unit id="hofff_consent.con4gisio.title">
+                <source>Con4gisIO</source>
+                <target>Con4gisIO</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

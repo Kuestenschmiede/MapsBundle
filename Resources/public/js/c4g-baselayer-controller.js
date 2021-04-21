@@ -253,9 +253,36 @@ export class C4gBaselayerController {
         let config = this.baseKeys[baseLayerConfig.id];
         layerOptions.url = baseLayerConfig.url.replace('{key}', config['key']);
         layerOptions.attributions = config.attribution + ' ' + layerOptions.attributions;
-        newBaselayer = new TileLayer({
-          source: new XYZ(layerOptions)
-        });
+        let source = new XYZ(layerOptions);
+        newBaselayer = new TileLayer();
+        if (HofffConsentManager) {
+            let dummyUrl = this.mapController.data.dummyBaselayer;
+            let dummySource = null;
+            if (dummyUrl) {
+              dummySource = new XYZ({
+                url: dummyUrl
+              });
+            }
+            HofffConsentManager.addEventListener('consent:accepted', function (event) {
+              if (event.consentId == "external:con4gisio") {
+                newBaselayer.setSource(source);
+              }
+            });
+            HofffConsentManager.addEventListener('consent:revoked', function (event) {
+              if (event.consentId == "external:con4gisio") {
+                newBaselayer.setSource(dummySource);
+              }
+            });
+            if (!HofffConsentManager.requiresConsent('external:con4gisio')) {
+              newBaselayer.setSource(source);
+            }
+            else if (dummySource) {
+              newBaselayer.setSource(dummySource);
+            }
+          }
+        else {
+          newBaselayer.setSource(source);
+        }
         break;
       case 'mapbox':
         if (baseLayerConfig.api_key && baseLayerConfig.app_id && baseLayerConfig.mapbox_type) {

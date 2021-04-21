@@ -61,6 +61,7 @@ services:
         arguments:
             - "@con4gis.filter_service"
 
+    con4gis\MapsBundle\Mapbox\DatasetMapBox:
     con4gis.route_service:
         class: con4gis\MapsBundle\Classes\Services\RouteService
         public: true
@@ -100,25 +101,6 @@ services:
         arguments:
             - "@doctrine.orm.default_entity_manager"
             - "@con4gis.layer_service"
-    con4gis\MapsBundle\Mapbox\Dataset:
-        class: Hofff\Contao\Consent\Core\Installer\Defaults\ConsentDataSet
-        public: true
-        arguments:
-            - "mapbox"
-            - "external"
-            - ''
-            - 'true'
-        tags:
-            - { name: hofff_contao_consent.installer_dataset, priority: 80 }
-
-    con4gis\MapsBundle\Classes\Consent\MapboxTagType:
-        class: con4gis\MapsBundle\Classes\Consent\MapboxTagType
-        public: true
-        arguments:
-            - "@translator"
-            - "@event_dispatcher"
-        tags:
-            - { name: hofff_contao_consent.tag_type }
     con4gis\MapsBundle\Mapbox\Dataset:
         class: Hofff\Contao\Consent\Core\Installer\Defaults\ConsentDataSet
         public: true
