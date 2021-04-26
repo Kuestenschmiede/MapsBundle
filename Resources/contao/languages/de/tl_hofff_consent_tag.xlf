@@ -38,6 +38,18 @@
                 <source>Bing Maps</source>
                 <target>Bing Maps</target>
             </trans-unit>
+            <trans-unit id="tl_hofff_consent_tag.types.here.0">
+                <source>Here Maps</source>
+                <target>Here Maps</target>
+            </trans-unit>
+            <trans-unit id="tl_hofff_consent_tag.types.here.1">
+                <source>Here Maps</source>
+                <target>Here Maps</target>
+            </trans-unit>
+            <trans-unit id="hofff_consent.here.title">
+                <source>Here Maps</source>
+                <target>Here Maps</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

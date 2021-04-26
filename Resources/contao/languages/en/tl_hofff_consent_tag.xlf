@@ -29,6 +29,15 @@
             <trans-unit id="hofff_consent.bing.title">
                 <source>Bing Maps</source>
             </trans-unit>
+            <trans-unit id="tl_hofff_consent_tag.types.here.0">
+                <source>Here Maps</source>
+            </trans-unit>
+            <trans-unit id="tl_hofff_consent_tag.types.here.1">
+                <source>Here Maps</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.here.title">
+                <source>Here Maps</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

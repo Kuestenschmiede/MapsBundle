@@ -420,13 +420,37 @@ export class C4gBaselayerController {
             layerOptions.url = 'https://{1-4}.aerial.maps.cit.api.here.com/maptile/2.1/maptile/newest/hybrid.day/{z}/{x}/{y}/256/png' +
               '?app_id='+baseLayerConfig.app_id+'&app_code='+baseLayerConfig.api_key;
           }
-
-          newBaselayer = new TileLayer({
-            preload: Infinity,
-            source: new XYZ(jQuery.extend(
+          let source = new XYZ(jQuery.extend(
               sourceConfigs.here[baseLayerConfig.here_type],
-              layerOptions))
+              layerOptions));
+          newBaselayer = new TileLayer({
+            preload: Infinity
           });
+          if (HofffConsentManager) {
+            let dummyUrl = this.mapController.data.dummyBaselayer;
+            let dummySource = null;
+            if (dummyUrl) {
+              dummySource = new XYZ({
+                url: dummyUrl
+              });
+            }
+            HofffConsentManager.addEventListener('consent:accepted', function (event) {
+              if (event.consentId == "external:here") {
+                newBaselayer.setSource(source);
+              }
+            });
+            HofffConsentManager.addEventListener('consent:revoked', function (event) {
+              if (event.consentId == "external:here") {
+                newBaselayer.setSource(dummySource);
+              }
+            })
+            if (!HofffConsentManager.requiresConsent('external:here')) {
+              newBaselayer.setSource(source);
+            }
+          }
+          else {
+            newBaselayer.setSource(source);
+          }
         }
         else if(baseLayerConfig.hide_in_be){
           layerOptions.url = layerOptions.url = "con4gis/baseLayerTileService/" + baseLayerConfig.id + "/{z}/{x}/{y}";

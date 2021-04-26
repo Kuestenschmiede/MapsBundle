@@ -86,6 +86,33 @@
             <trans-unit id="hofff_consent.bing.thirdCountryTransfer">
                 <source>Placeholder thirdCountryTransfer</source>
             </trans-unit>
+            <trans-unit id="hofff_consent.here.title">
+                <source>Here Maps</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.here.provider">
+                <source>HERE Global B.V Kennedyplein 222 -226 5611 ZT Eindhoven Netherlands</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.here.description">
+                <source><![CDATA[Placeholder description]]></source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.here.explanation">
+                <source>Placeholder explanation</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.here.storageDuration">
+                <source>Placeholder storage duration</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.here.placeholderTitle">
+                <source>Consent for the display of embedded map services (Here Maps)</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.here.placeholderDescription">
+                <source><![CDATA[Placeholder explanation]]></source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.here.placeholderAcceptButton">
+                <source>Accept all Here Maps</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.here.thirdCountryTransfer">
+                <source>Placeholder thirdCountryTransfer</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>
