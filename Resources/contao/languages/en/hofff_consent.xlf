@@ -113,6 +113,33 @@
             <trans-unit id="hofff_consent.here.thirdCountryTransfer">
                 <source>Placeholder thirdCountryTransfer</source>
             </trans-unit>
+            <trans-unit id="hofff_consent.klokan.title">
+                <source>Klokan Maps</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.klokan.provider">
+                <source>Klokan Technologies GmbH Hofnerstrasse 98 6314 Unterageri, Switzerland</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.klokan.description">
+                <source><![CDATA[Placeholder description]]></source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.klokan.explanation">
+                <source>Placeholder explanation</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.klokan.storageDuration">
+                <source>Placeholder storage duration</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.klokan.placeholderTitle">
+                <source>Consent for the display of embedded map services (Klokan Maps)</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.klokan.placeholderDescription">
+                <source><![CDATA[Placeholder explanation]]></source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.klokan.placeholderAcceptButton">
+                <source>Accept all Klokan Maps</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.klokan.thirdCountryTransfer">
+                <source>Placeholder thirdCountryTransfer</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

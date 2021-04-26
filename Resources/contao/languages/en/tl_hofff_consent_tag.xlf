@@ -38,6 +38,15 @@
             <trans-unit id="hofff_consent.here.title">
                 <source>Here Maps</source>
             </trans-unit>
+            <trans-unit id="tl_hofff_consent_tag.types.klokan.0">
+                <source>Klokan Maps</source>
+            </trans-unit>
+            <trans-unit id="tl_hofff_consent_tag.types.klokan.1">
+                <source>Klokan Maps</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.klokan.title">
+                <source>Klokan Maps</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

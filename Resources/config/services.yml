@@ -161,3 +161,23 @@ services:
             - "@event_dispatcher"
         tags:
             - { name: hofff_contao_consent.tag_type }
+
+    con4gis\MapsBundle\Klokan\DatasetKlokan:
+        class: Hofff\Contao\Consent\Core\Installer\Defaults\ConsentDataSet
+        public: true
+        arguments:
+            - "klokan"
+            - "external"
+            - ''
+            - 'true'
+        tags:
+            - { name: hofff_contao_consent.installer_dataset, priority: 80 }
+
+    con4gis\MapsBundle\Classes\Consent\KlokanTagType:
+        class: con4gis\MapsBundle\Classes\Consent\KlokanTagType
+        public: true
+        arguments:
+            - "@translator"
+            - "@event_dispatcher"
+        tags:
+            - { name: hofff_contao_consent.tag_type }

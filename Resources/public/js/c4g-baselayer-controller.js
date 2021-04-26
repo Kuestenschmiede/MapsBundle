@@ -372,11 +372,35 @@ export class C4gBaselayerController {
             });
           } else {
             //layerOptions.url = baseLayerConfig.url + '{z}/{x}/{y}.pbf?key='+baseLayerConfig.api_key;
-             newBaselayer = new TileLayer({
-               source: new TileJSON({
-                  url: baseLayerConfig.url + 'styles/' + baseLayerConfig.style+'.json?key='+baseLayerConfig.api_key
-               })
-            });
+            newBaselayer = new TileLayer();
+            let source = new TileJSON({
+              url: baseLayerConfig.url + 'styles/' + baseLayerConfig.style+'.json?key='+baseLayerConfig.api_key
+            })
+            if (HofffConsentManager) {
+              let dummyUrl = this.mapController.data.dummyBaselayer;
+              let dummySource = null;
+              if (dummyUrl) {
+                dummySource = new XYZ({
+                  url: dummyUrl
+                });
+              }
+              HofffConsentManager.addEventListener('consent:accepted', function (event) {
+                if (event.consentId == "external:klokan") {
+                  newBaselayer.setSource(source);
+                }
+              });
+              HofffConsentManager.addEventListener('consent:revoked', function (event) {
+                if (event.consentId == "external:klokan") {
+                  newBaselayer.setSource(dummySource);
+                }
+              })
+              if (!HofffConsentManager.requiresConsent('external:klokan')) {
+                newBaselayer.setSource(source);
+              }
+            }
+            else {
+              newBaselayer.setSource(source);
+            }
             // newBaselayer = new VectorTileLayer({
             //   source: new VectorTileSource(jQuery.extend(
             //     sourceConfigs.klokan[baseLayerConfig.klokan_type],
