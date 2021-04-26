@@ -59,6 +59,33 @@
             <trans-unit id="hofff_consent.con4gisio.thirdCountryTransfer">
                 <source>Placeholder thirdCountryTransfer</source>
             </trans-unit>
+            <trans-unit id="hofff_consent.bing.title">
+                <source>Bing Maps</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.bing.provider">
+                <source>Microsoft One Microsoft Way, Redmond, WA 98052-6399 US</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.bing.description">
+                <source><![CDATA[Placeholder description]]></source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.bing.explanation">
+                <source>Placeholder explanation</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.bing.storageDuration">
+                <source>Placeholder storage duration</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.bing.placeholderTitle">
+                <source>Consent for the display of embedded map services (Bing Maps)</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.bing.placeholderDescription">
+                <source><![CDATA[Placeholder explanation]]></source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.bing.placeholderAcceptButton">
+                <source>Accept all Bing Maps</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.bing.thirdCountryTransfer">
+                <source>Placeholder thirdCountryTransfer</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

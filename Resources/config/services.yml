@@ -102,6 +102,7 @@ services:
             - "@doctrine.orm.default_entity_manager"
             - "@con4gis.layer_service"
     con4gis\MapsBundle\Mapbox\Dataset:
+    con4gis\MapsBundle\Con4gisIO\DatasetCon4gisIO:
         class: Hofff\Contao\Consent\Core\Installer\Defaults\ConsentDataSet
         public: true
         arguments:
@@ -114,6 +115,26 @@ services:
 
     con4gis\MapsBundle\Classes\Consent\MapboxTagType:
         class: con4gis\MapsBundle\Classes\Consent\MapboxTagType
+        public: true
+        arguments:
+            - "@translator"
+            - "@event_dispatcher"
+        tags:
+            - { name: hofff_contao_consent.tag_type }
+
+    con4gis\MapsBundle\Bing\DatasetBing:
+        class: Hofff\Contao\Consent\Core\Installer\Defaults\ConsentDataSet
+        public: true
+        arguments:
+            - "bing"
+            - "external"
+            - ''
+            - 'true'
+        tags:
+            - { name: hofff_contao_consent.installer_dataset, priority: 80 }
+
+    con4gis\MapsBundle\Classes\Consent\BingTagType:
+        class: con4gis\MapsBundle\Classes\Consent\BingTagType
         public: true
         arguments:
             - "@translator"

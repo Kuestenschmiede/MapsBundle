@@ -26,6 +26,18 @@
                 <source>Con4gisIO</source>
                 <target>Con4gisIO</target>
             </trans-unit>
+            <trans-unit id="tl_hofff_consent_tag.types.bing.0">
+                <source>Bing Maps</source>
+                <target>Bing Maps</target>
+            </trans-unit>
+            <trans-unit id="tl_hofff_consent_tag.types.bing.1">
+                <source>Bing Maps</source>
+                <target>Bing Maps</target>
+            </trans-unit>
+            <trans-unit id="hofff_consent.bing.title">
+                <source>Bing Maps</source>
+                <target>Bing Maps</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

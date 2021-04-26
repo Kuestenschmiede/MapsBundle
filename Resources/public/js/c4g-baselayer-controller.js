@@ -470,13 +470,37 @@ export class C4gBaselayerController {
         break;
       case 'bing':
         if (baseLayerConfig.api_key && baseLayerConfig.style) {
-          newBaselayer = new TileLayer({
-            source: new BingMaps({
-              culture: navigator.languages ? navigator.languages[0] : (navigator.language || navigator.userLanguage),
-              key: baseLayerConfig.api_key,
-              imagerySet: baseLayerConfig.style
+          newBaselayer = new TileLayer();
+          let source = new BingMaps({
+            culture: navigator.languages ? navigator.languages[0] : (navigator.language || navigator.userLanguage),
+            key: baseLayerConfig.api_key,
+            imagerySet: baseLayerConfig.style
+          })
+          if (HofffConsentManager) {
+            let dummyUrl = this.mapController.data.dummyBaselayer;
+            let dummySource = null;
+            if (dummyUrl) {
+              dummySource = new XYZ({
+                url: dummyUrl
+              });
+            }
+            HofffConsentManager.addEventListener('consent:accepted', function (event) {
+              if (event.consentId == "external:bing") {
+                newBaselayer.setSource(source);
+              }
+            });
+            HofffConsentManager.addEventListener('consent:revoked', function (event) {
+              if (event.consentId == "external:bing") {
+                newBaselayer.setSource(dummySource);
+              }
             })
-          });
+            if (!HofffConsentManager.requiresConsent('external:bing')) {
+              newBaselayer.setSource(source);
+            }
+          }
+        else {
+          newBaselayer.setSource(source);
+          }
         } else {
           console.warn('wrong bing-key or invalid imagery-set!');
         }
