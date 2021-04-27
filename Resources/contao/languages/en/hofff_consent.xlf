@@ -167,6 +167,33 @@
             <trans-unit id="hofff_consent.mapz.thirdCountryTransfer">
                 <source>Placeholder thirdCountryTransfer</source>
             </trans-unit>
+            <trans-unit id="hofff_consent.opentopomap.title">
+                <source>OpenTopoMap</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.opentopomap.provider">
+                <source>Placeholder provider</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.opentopomap.description">
+                <source><![CDATA[Placeholder description]]></source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.opentopomap.explanation">
+                <source>Placeholder explanation</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.opentopomap.storageDuration">
+                <source>Placeholder storage duration</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.opentopomap.placeholderTitle">
+                <source>Consent for the display of embedded map services (OpenTopoMap)</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.opentopomap.placeholderDescription">
+                <source><![CDATA[Placeholder explanation]]></source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.opentopomap.placeholderAcceptButton">
+                <source>Accept all OpenTopoMap Maps</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.opentopomap.thirdCountryTransfer">
+                <source>Placeholder thirdCountryTransfer</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

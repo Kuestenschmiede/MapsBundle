@@ -74,6 +74,18 @@
                 <source>Mapz</source>
                 <target>Mapz</target>
             </trans-unit>
+            <trans-unit id="tl_hofff_consent_tag.types.opentopomap.0">
+                <source>OpenTopoMap</source>
+                <target>OpenTopoMap</target>
+            </trans-unit>
+            <trans-unit id="tl_hofff_consent_tag.types.opentopomap.1">
+                <source>OpenTopoMap</source>
+                <target>OpenTopoMap</target>
+            </trans-unit>
+            <trans-unit id="hofff_consent.opentopomap.title">
+                <source>OpenTopoMap</source>
+                <target>OpenTopoMap</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
