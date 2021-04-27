@@ -196,7 +196,6 @@ export class C4gBaselayerController {
               )
             });
           }
-
         }
         else if (baseLayerConfig.style === 'osm_custom') {
           // custom
@@ -222,27 +221,79 @@ export class C4gBaselayerController {
       case 'stamen':
         if (sourceConfigs.stamen[baseLayerConfig.style]) {
           // Stamen
+          let source1,
+              source2;
           if (baseLayerConfig.style === 'Watercolor') {
             newBaselayer = new LayerGroup({
-              layers: [new TileLayer({
-                source: new Stamen({
-                  layer: 'watercolor'
-                })
-              }),
-                new TileLayer({
-                  source: new Stamen({
-                    layer: 'terrain-labels'
-                  })
-                })]
+              layers: [new TileLayer(),
+                new TileLayer()]
+            });
+            source1 = new Stamen({
+              layer: 'watercolor'
+            });
+            source2 = new Stamen({
+              layer: 'terrain-labels'
             });
           } else {
-            newBaselayer = new TileLayer({
-              source: new Stamen(
-                  jQuery.extend(
-                      sourceConfigs.stamen[baseLayerConfig.style]
-                  )
-              )
+            newBaselayer = new TileLayer();
+            source1 = new Stamen(
+                jQuery.extend(
+                    sourceConfigs.stamen[baseLayerConfig.style]
+                )
+            )
+          }
+          if (HofffConsentManager) {
+            let dummyUrl = this.mapController.data.dummyBaselayer;
+            let dummySource = null;
+            if (dummyUrl) {
+              dummySource = new XYZ({
+                url: dummyUrl
+              });
+            }
+            HofffConsentManager.addEventListener('consent:accepted', function (event) {
+              if (event.consentId == "external:stamen") {
+                if (newBaselayer instanceof LayerGroup) {
+                  let array = newBaselayer.getLayers().getArray();
+                  array[0].setSource(source1);
+                  array[1].setSource(source2);
+                }
+                else {
+                  newBaselayer.setSource(source1);
+                }
+              }
             });
+            HofffConsentManager.addEventListener('consent:revoked', function (event) {
+              if (event.consentId == "external:stamen") {
+                if (newBaselayer instanceof LayerGroup) {
+                  let array = newBaselayer.getLayers().getArray();
+                  array[0].setSource(dummySource);
+                  array[1].setSource(dummySource);
+                }
+              else {
+                  newBaselayer.setSource(dummySource);
+                }
+              }
+            })
+            if (!HofffConsentManager.requiresConsent('external:stamen')) {
+              if (newBaselayer instanceof LayerGroup) {
+                let array = newBaselayer.getLayers().getArray();
+                array[0].setSource(source1);
+                array[1].setSource(source2);
+              }
+              else {
+                newBaselayer.setSource(source1);
+              }
+            }
+          }
+          else {
+            if (newBaselayer instanceof LayerGroup) {
+              let array = newBaselayer.getLayers().getArray();
+              array[0].setSource(source1);
+              array[1].setSource(source2);
+            }
+            else {
+              newBaselayer.setSource(source1);
+            }
           }
         }
         else {
@@ -339,7 +390,7 @@ export class C4gBaselayerController {
         break;
       case 'mapz' :
         newBaselayer = new TileLayer();
-        let source = new XYZ(
+        source = new XYZ(
           jQuery.extend(
           sourceConfigs.mapz,
           layerOptions)
@@ -372,7 +423,7 @@ export class C4gBaselayerController {
         break;
       case 'otm' :
         newBaselayer = new TileLayer();
-        let source = new XYZ(
+        source = new XYZ(
           jQuery.extend(sourceConfigs.otm,
           layerOptions)
         );
@@ -385,16 +436,16 @@ export class C4gBaselayerController {
             });
           }
           HofffConsentManager.addEventListener('consent:accepted', function (event) {
-            if (event.consentId == "external:mapz") {
+            if (event.consentId == "external:otm") {
               newBaselayer.setSource(source);
             }
           });
           HofffConsentManager.addEventListener('consent:revoked', function (event) {
-            if (event.consentId == "external:mapz") {
+            if (event.consentId == "external:otm") {
               newBaselayer.setSource(dummySource);
             }
           })
-          if (!HofffConsentManager.requiresConsent('external:mapz')) {
+          if (!HofffConsentManager.requiresConsent('external:otm')) {
             newBaselayer.setSource(source);
           }
         }

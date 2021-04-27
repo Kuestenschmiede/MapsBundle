@@ -254,6 +254,42 @@
                 <source>Placeholder thirdCountryTransfer</source>
                 <target>Platzhalter Drittland</target>
             </trans-unit>
+            <trans-unit id="hofff_consent.stamen.title">
+                <source>Stamen</source>
+                <target>Stamen</target>
+            </trans-unit>
+            <trans-unit id="hofff_consent.stamen.provider">
+                <source>Placeholder provider</source>
+                <target>Platzhalter Anbieter</target>
+            </trans-unit>
+            <trans-unit id="hofff_consent.stamen.description">
+                <source><![CDATA[Placeholder description]]></source>
+                <target><![CDATA[Platzhalter Beschreibung]]></target>
+            </trans-unit>
+            <trans-unit id="hofff_consent.stamen.explanation">
+                <source>Placeholder explanation</source>
+                <target><![CDATA[Platzhalter Erklärung]]></target>
+            </trans-unit>
+            <trans-unit id="hofff_consent.stamen.storageDuration">
+                <source>Placeholder storage duration</source>
+                <target>Platzhalter Speicherdauer</target>
+            </trans-unit>
+            <trans-unit id="hofff_consent.stamen.placeholderTitle">
+                <source>Consent for the display of embedded map services (Stamen)</source>
+                <target>Einwilligung für die Anzeige von eingebetteten Kartendiensten (Stamen)</target>
+            </trans-unit>
+            <trans-unit id="hofff_consent.stamen.placeholderDescription">
+                <source><![CDATA[Placeholder explanation]]></source>
+                <target><![CDATA[Platzhalter Erklärung]]></target>
+            </trans-unit>
+            <trans-unit id="hofff_consent.stamen.placeholderAcceptButton">
+                <source>Accept all Stamen Maps</source>
+                <target>Alle Stamen Karten akzeptieren</target>
+            </trans-unit>
+            <trans-unit id="hofff_consent.stamen.thirdCountryTransfer">
+                <source>Placeholder thirdCountryTransfer</source>
+                <target>Platzhalter Drittland</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -221,3 +221,23 @@ services:
             - "@event_dispatcher"
         tags:
             - { name: hofff_contao_consent.tag_type }
+
+    con4gis\MapsBundle\Stamen\DatasetStamen:
+        class: Hofff\Contao\Consent\Core\Installer\Defaults\ConsentDataSet
+        public: true
+        arguments:
+            - "stamen"
+            - "external"
+            - ''
+            - 'true'
+        tags:
+            - { name: hofff_contao_consent.installer_dataset, priority: 80 }
+
+    con4gis\MapsBundle\Classes\Consent\StamenTagType:
+        class: con4gis\MapsBundle\Classes\Consent\StamenTagType
+        public: true
+        arguments:
+            - "@translator"
+            - "@event_dispatcher"
+        tags:
+            - { name: hofff_contao_consent.tag_type }

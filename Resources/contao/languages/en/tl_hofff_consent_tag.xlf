@@ -65,6 +65,15 @@
             <trans-unit id="hofff_consent.opentopomap.title">
                 <source>OpenTopoMap</source>
             </trans-unit>
+            <trans-unit id="tl_hofff_consent_tag.types.stamen.0">
+                <source>Stamen</source>
+            </trans-unit>
+            <trans-unit id="tl_hofff_consent_tag.types.stamen.1">
+                <source>Stamen</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.stamen.title">
+                <source>Stamen</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

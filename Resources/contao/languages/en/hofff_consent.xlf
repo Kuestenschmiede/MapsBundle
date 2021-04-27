@@ -194,6 +194,33 @@
             <trans-unit id="hofff_consent.opentopomap.thirdCountryTransfer">
                 <source>Placeholder thirdCountryTransfer</source>
             </trans-unit>
+            <trans-unit id="hofff_consent.stamen.title">
+                <source>Stamen</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.stamen.provider">
+                <source>Placeholder provider</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.stamen.description">
+                <source><![CDATA[Placeholder description]]></source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.stamen.explanation">
+                <source>Placeholder explanation</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.stamen.storageDuration">
+                <source>Placeholder storage duration</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.stamen.placeholderTitle">
+                <source>Consent for the display of embedded map services (Stamen)</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.stamen.placeholderDescription">
+                <source><![CDATA[Placeholder explanation]]></source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.stamen.placeholderAcceptButton">
+                <source>Accept all Stamen Maps</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.stamen.thirdCountryTransfer">
+                <source>Placeholder thirdCountryTransfer</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>
