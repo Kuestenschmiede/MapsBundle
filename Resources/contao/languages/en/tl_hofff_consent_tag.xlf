@@ -74,6 +74,15 @@
             <trans-unit id="hofff_consent.stamen.title">
                 <source>Stamen</source>
             </trans-unit>
+            <trans-unit id="tl_hofff_consent_tag.types.thunderforest.0">
+                <source>Thunderforest</source>
+            </trans-unit>
+            <trans-unit id="tl_hofff_consent_tag.types.thunderforest.1">
+                <source>Thunderforest</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.thunderforest.title">
+                <source>Thunderforest</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

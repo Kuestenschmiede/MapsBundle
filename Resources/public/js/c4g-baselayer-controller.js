@@ -598,11 +598,37 @@ export class C4gBaselayerController {
             layerOptions.url = "https://tile.thunderforest.com/"+baseLayerConfig.style+"/{z}/{x}/{y}.png?apikey="+baseLayerConfig.api_key;
           }
 
-          newBaselayer = new TileLayer({
-            source: new XYZ(jQuery.extend(
+          newBaselayer = new TileLayer();
+          source = new XYZ(
+              jQuery.extend(
               sourceConfigs.thunderforest[baseLayerConfig.thunderforest_type],
-              layerOptions))
-          });
+              layerOptions)
+          );
+          if (HofffConsentManager) {
+            let dummyUrl = this.mapController.data.dummyBaselayer;
+            let dummySource = null;
+            if (dummyUrl) {
+              dummySource = new XYZ({
+                url: dummyUrl
+              });
+            }
+            HofffConsentManager.addEventListener('consent:accepted', function (event) {
+              if (event.consentId == "external:thunderforest") {
+                newBaselayer.setSource(source);
+              }
+            });
+            HofffConsentManager.addEventListener('consent:revoked', function (event) {
+              if (event.consentId == "external:thunderforest") {
+                newBaselayer.setSource(dummySource);
+              }
+            })
+            if (!HofffConsentManager.requiresConsent('external:thunderforest')) {
+              newBaselayer.setSource(source);
+            }
+          }
+          else {
+            newBaselayer.setSource(source);
+          }
         }else if(baseLayerConfig.hide_in_be){
           layerOptions.url = "con4gis/baseLayerTileService/" + baseLayerConfig.id + "/{z}/{x}/{y}";
           newBaselayer = new TileLayer({
@@ -649,8 +675,8 @@ export class C4gBaselayerController {
               newBaselayer.setSource(source);
             }
           }
-        else {
-          newBaselayer.setSource(source);
+          else {
+            newBaselayer.setSource(source);
           }
         } else {
           console.warn('wrong bing-key or invalid imagery-set!');

@@ -98,6 +98,18 @@
                 <source>Stamen</source>
                 <target>Stamen</target>
             </trans-unit>
+            <trans-unit id="tl_hofff_consent_tag.types.thunderforest.0">
+                <source>Thunderforest</source>
+                <target>Thunderforest</target>
+            </trans-unit>
+            <trans-unit id="tl_hofff_consent_tag.types.thunderforest.1">
+                <source>Thunderforest</source>
+                <target>Thunderforest</target>
+            </trans-unit>
+            <trans-unit id="hofff_consent.thunderforest.title">
+                <source>Thunderforest</source>
+                <target>Thunderforest</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

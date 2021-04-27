@@ -221,6 +221,33 @@
             <trans-unit id="hofff_consent.stamen.thirdCountryTransfer">
                 <source>Placeholder thirdCountryTransfer</source>
             </trans-unit>
+            <trans-unit id="hofff_consent.thunderforest.title">
+                <source>Thunderforest</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.thunderforest.provider">
+                <source>Gravitystorm Limited 53 Ancaster Crescent New Malden KT3 6BD United Kingdom</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.thunderforest.description">
+                <source><![CDATA[Placeholder description]]></source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.thunderforest.explanation">
+                <source>Placeholder explanation</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.thunderforest.storageDuration">
+                <source>Placeholder storage duration</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.thunderforest.placeholderTitle">
+                <source>Consent for the display of embedded map services (Thunderforest)</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.thunderforest.placeholderDescription">
+                <source><![CDATA[Placeholder explanation]]></source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.thunderforest.placeholderAcceptButton">
+                <source>Accept all Thunderforest Maps</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.thunderforest.thirdCountryTransfer">
+                <source>Placeholder thirdCountryTransfer</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>
