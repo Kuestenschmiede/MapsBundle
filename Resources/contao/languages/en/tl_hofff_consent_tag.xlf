@@ -47,6 +47,15 @@
             <trans-unit id="hofff_consent.klokan.title">
                 <source>Klokan Maps</source>
             </trans-unit>
+            <trans-unit id="tl_hofff_consent_tag.types.mapz.0">
+                <source>Mapz</source>
+            </trans-unit>
+            <trans-unit id="tl_hofff_consent_tag.types.mapz.1">
+                <source>Mapz</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.mapz.title">
+                <source>Mapz</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

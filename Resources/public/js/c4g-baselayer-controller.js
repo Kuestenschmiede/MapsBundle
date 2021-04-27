@@ -338,11 +338,37 @@ export class C4gBaselayerController {
         }
         break;
       case 'mapz' :
-        newBaselayer = new TileLayer({
-          source: new XYZ(jQuery.extend(
-              sourceConfigs.mapz,
-              layerOptions))
-        });
+        newBaselayer = new TileLayer();
+        let source = new XYZ(
+          jQuery.extend(
+          sourceConfigs.mapz,
+          layerOptions)
+        );
+        if (HofffConsentManager) {
+          let dummyUrl = this.mapController.data.dummyBaselayer;
+          let dummySource = null;
+          if (dummyUrl) {
+            dummySource = new XYZ({
+              url: dummyUrl
+            });
+          }
+          HofffConsentManager.addEventListener('consent:accepted', function (event) {
+            if (event.consentId == "external:mapz") {
+              newBaselayer.setSource(source);
+            }
+          });
+          HofffConsentManager.addEventListener('consent:revoked', function (event) {
+            if (event.consentId == "external:mapz") {
+              newBaselayer.setSource(dummySource);
+            }
+          })
+          if (!HofffConsentManager.requiresConsent('external:mapz')) {
+            newBaselayer.setSource(source);
+          }
+        }
+        else {
+          newBaselayer.setSource(source);
+        }
         break;
       case 'otm' :
         newBaselayer = new TileLayer({

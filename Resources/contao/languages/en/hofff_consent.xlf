@@ -140,6 +140,33 @@
             <trans-unit id="hofff_consent.klokan.thirdCountryTransfer">
                 <source>Placeholder thirdCountryTransfer</source>
             </trans-unit>
+            <trans-unit id="hofff_consent.mapz.title">
+                <source>Mapz</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.mapz.provider">
+                <source>Kober-Kümmerly+Frey Media AG Rolandstraße 83 50677 Köln Germany</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.mapz.description">
+                <source><![CDATA[Placeholder description]]></source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.mapz.explanation">
+                <source>Placeholder explanation</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.mapz.storageDuration">
+                <source>Placeholder storage duration</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.mapz.placeholderTitle">
+                <source>Consent for the display of embedded map services (Mapz)</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.mapz.placeholderDescription">
+                <source><![CDATA[Placeholder explanation]]></source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.mapz.placeholderAcceptButton">
+                <source>Accept all Mapz</source>
+            </trans-unit>
+            <trans-unit id="hofff_consent.mapz.thirdCountryTransfer">
+                <source>Placeholder thirdCountryTransfer</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>
