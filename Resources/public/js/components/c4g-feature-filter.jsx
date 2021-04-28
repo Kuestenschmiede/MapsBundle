@@ -16,7 +16,7 @@ import {FeatureFilterList} from "./c4g-feature-filter-list.jsx";
 import {FeatureFilterMultiCheckbox} from "./c4g-feature-filter-multicheckbox.jsx";
 import {Fill, Stroke, Style} from "ol/style";
 import {Cluster} from "ol/source";
-import {getLanguage} from "../c4g-maps-i18n";
+import {getLanguage} from "./../c4g-maps-i18n";
 import opening_hours from "opening_hours";
 
 export default class FeatureFilter extends Component {
