@@ -2,7 +2,8 @@ const webpack = require("webpack");
 var path = require('path');
 var config = {
   entry: {
-    'c4g-maps':'./Resources/public/js/c4g-maps-main.js',
+    'babel-regenerator-runtime':     'babel-regenerator-runtime',
+    'c4g-maps': './Resources/public/js/c4g-maps-main.js',
     'c4g-search': './Resources/public/js/c4g-search.js'
   },
   mode: "development",
@@ -27,6 +28,7 @@ var config = {
         }],
         include: [
           path.resolve('.'),
+          path.resolve('./Resources/public/js/'),
           path.resolve('./Resources/public/js/components'),
         ],
       }

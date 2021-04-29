@@ -58,6 +58,23 @@ const Print = React.lazy(() => import('./c4g-print.jsx'));
 const OverviewMap = React.lazy(() => import('./c4g-overviewmap.jsx'));
 
 import TileLayer from "ol/layer/Tile";
+// import {routingConstantsGerman} from "../../../../../routing/Resources/public/js/routing-constant-i18n-de";
+// import {routingConstantsEnglish} from "../../../../../routing/Resources/public/js/routing-constant-i18n-en";
+// import {RouterView} from "../../../../../routing/Resources/public/js/components/c4g-router-view";
+
+import {routingConstantsEnglish} from "./../routing-constant-i18n-en";
+import {routingConstantsGerman} from "./../routing-constant-i18n-de";
+import {RouterView} from "./c4g-router-view.jsx";
+
+let langRouteConstants = {};
+const containerAddresses = {
+  arrFromPositions: [],
+  arrFromNames: [],
+  arrToPositions: [],
+  arrToNames: [],
+  arrOverPositions: {},
+  arrOverNames: {},
+};
 
 let langConstants = {};
 
@@ -1139,14 +1156,79 @@ export class MapController extends Component {
           }
           break;
         case 'router':
-          if (window.c4gMapsHooks !== undefined && Array.isArray(window.c4gMapsHooks.mapController_addControls)) {
-            utils.callHookFunctions(window.c4gMapsHooks.mapController_addControls, {
+          // if (window.c4gMapsHooks !== undefined && Array.isArray(window.c4gMapsHooks.mapController_addControls)) {
+          //   utils.callHookFunctions(window.c4gMapsHooks.mapController_addControls, {
+          //     mapController: this,
+          //     Container: this.mapsControls.controlContainerTopLeft,
+          //     component: "router",
+          //     arrComps: result
+          //   });
+          // }
+          /**
+           * test
+           */
+          // const params = {
+          //   mapController: this,
+          //   Container: this.mapsControls.controlContainerTopLeft,
+          //   component: "router",
+          //   arrComps: result
+          // };
+          if (this.data.router_enable) {
+            if (typeof this.data !== 'undefined') {
+              if (this.data.lang === "de") {
+                langRouteConstants = routingConstantsGerman;
+              } else if (this.data.lang === "en") {
+                langRouteConstants = routingConstantsEnglish;
+              } else {
+                // fallback
+                langRouteConstants = routingConstantsEnglish;
+              }
+            }
+
+            let routerControlProps = {
+              target: document.querySelector('#' + this.data.mapDiv + ' .c4g-control-container-top-left'),
               mapController: this,
-              Container: this.mapsControls.controlContainerTopLeft,
-              component: "router",
-              arrComps: result
-            });
+              direction: "top",
+              withPosition: false,
+              detourRoute: this.data.detourRoute,
+              detourArea: this.data.detourArea,
+              containerAddresses: containerAddresses,
+              langConstants: langRouteConstants,
+              ref: (node) => {this.components.router = node;},
+              key: 22,
+              open: this.data.initial_open_comp === "routing"
+            };
+            let openRouter = this.data.initial_open_comp === "routing";
+
+            if (!this.routerContainer) {
+              if (this.data.router_div) {
+                this.routerContainer = document.querySelector("." + this.data.router_div);
+                if (!this.routerContainer) {
+                  this.routerContainer = document.createElement('div');
+                  this.routerContainer.className = "c4g-sideboard c4g-router-container-right " + (openRouter ? "c4g-open" : "c4g-close");
+                  jQuery(".ol-overlaycontainer-stopevent").append(this.routerContainer);
+                } else {
+                  this.routerContainer.className += " c4g-external";
+                }
+              } else {
+                this.routerContainer = document.createElement('div');
+                this.routerContainer.className = "c4g-sideboard c4g-router-container-right " + (openRouter ? "c4g-open" : "c4g-close");
+                jQuery(".ol-overlaycontainer-stopevent").append(this.routerContainer);
+              }
+            }
+            if (RouterView && routerControlProps) {
+              let view = React.createElement(RouterView, routerControlProps);
+              if (view && this && this.routerContainer) {
+                let portal = ReactDOM.createPortal(view, this.routerContainer);
+                if (portal) {
+                  result.push(portal);
+                }
+              }
+            }
           }
+          /**
+           * end test
+           */
           break;
         case 'editor':
           if (window.c4gMapsHooks !== undefined && Array.isArray(window.c4gMapsHooks.mapController_addControls)) {

@@ -1,8 +1,8 @@
 {
   "presets": [
-    [
-      "react"
-    ],
+    "babel-preset-react",
+    "es2015",
+    "stage-0",
     [
       "env", {
         "modules": "commonjs"
@@ -13,7 +13,10 @@
     "transform-react-jsx",
     "transform-class-properties",
     "transform-es2015-modules-commonjs",
-    "syntax-dynamic-import"
+    "syntax-dynamic-import",
+    ["transform-runtime", {
+      "regenerator": true
+    }]
   ],
   "ignore": [
     "*/node_modules,*/"
