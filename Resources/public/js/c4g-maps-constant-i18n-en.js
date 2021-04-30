@@ -81,6 +81,8 @@ export var langConstantsEnglish = {
   STARBOARD_VIEW_TRIGGER_BASELAYERSWITCHER: 'Baselayerswitcher',
   STARBOARD_VIEW_TRIGGER_LAYERSWITCHER: 'Map elements',
   STARBOARD_ELEMENT_ZOOM: 'Zoom to element',
+  STARBOARD_ELEMENT_ZOOM_BEFORE: 'Zoom to element ',
+  STARBOARD_ELEMENT_ZOOM_AFTER: '',
 
   LAYERSWITCHER_TOGGLE_ALL: "All elements",
 

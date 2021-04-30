@@ -171,14 +171,14 @@ export class C4gStarboardLayerElement extends Component {
 
     if (this.props.mapController.data.starboard.showLocstyles === "1" && this.props.layer.locstyle && this.props.styleData && this.props.styleData.arrLocStyles && this.props.styleData.arrLocStyles[this.props.layer.locstyle]) {
       if (this.props.layer.addZoomTo) {
-        stylePicture = <C4gStarboardStyle styleData={this.props.styleData} styleId={this.props.layer.locstyle} tooltip={this.props.lang.STARBOARD_ELEMENT_ZOOM} clickEvent={this.layerZoomTo}/>;
+        stylePicture = <C4gStarboardStyle styleData={this.props.styleData} styleId={this.props.layer.locstyle} tooltip={this.props.lang.STARBOARD_ELEMENT_ZOOM_BEFORE+this.props.layer.name+this.props.lang.STARBOARD_ELEMENT_ZOOM_AFTER} clickEvent={this.layerZoomTo}/>;
       }
       else {
-        stylePicture = <C4gStarboardStyle styleData={this.props.styleData} styleId={this.props.layer.locstyle}/>;
+        stylePicture = <C4gStarboardStyle styleData={this.props.styleData} styleId={this.props.layer.locstyle} tooltip={this.props.layer.name}/>;
       }
     }
     else if (this.props.layer.addZoomTo && !this.props.mapController.data.starboard.invertZoomActivate) {
-      spanZoom = <span className={"c4g-geojson-button"} title={this.props.lang.STARBOARD_ELEMENT_ZOOM} onMouseUp={(event) => this.layerZoomTo(event)}/>;
+      spanZoom = <span className={"c4g-geojson-button"} title={this.props.lang.STARBOARD_ELEMENT_ZOOM_BEFORE+this.props.layer.name+this.props.lang.STARBOARD_ELEMENT_ZOOM_AFTER} onMouseUp={(event) => this.layerZoomTo(event)}/>;
     }
     let cssClass = this.props.layerStates.active ? cssConstants.ACTIVE : cssConstants.INACTIVE;
     if (this.props.layerStates.greyed) {
@@ -190,13 +190,13 @@ export class C4gStarboardLayerElement extends Component {
     let linkSwitch;
     if (this.props.mapController.data.starboard.invertZoomActivate && this.props.layer.addZoomTo) {
       linkText = <React.Fragment>
-        <a className={"c4g-starboard-text"} onMouseUp={(event) => this.layerZoomTo(event)}>{this.props.layer.name}</a>
+        <a title={this.props.layer.name} className={"c4g-starboard-text"} onMouseUp={(event) => this.layerZoomTo(event)}>{this.props.layer.name}</a>
       </React.Fragment>
 
       linkSwitch = <a className={cssClass + " c4g-starboard-checkbox-icon"} onMouseUp={(event) => this.layerClick(event)}></a>
       }
     else {
-      linkText = <a className={cssClass} onMouseUp={(event) => this.layerClick(event)}>{this.props.layer.name}</a>;
+      linkText = <a title={this.props.layer.name} className={cssClass} onMouseUp={(event) => this.layerClick(event)}>{this.props.layer.name}</a>;
     }
 
     if (objChilds && objChilds.length) {
