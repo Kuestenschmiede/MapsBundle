@@ -30,9 +30,9 @@ export class RouterInstruction extends Component {
   render() {
     return(
       <div className={"c4g-router-instruction"} onMouseUp={this.fnItemClick} onMouseLeave={this.fnItemOut} onMouseEnter={this.fnItemOver} key={this.props.id}>
-        <div><img src={this.getInstructionIcon(this.props.imgPath)} alt=""/></div>
-        <div>{this.props.instrText}</div>
-        <div className="c4g-router-instruction-distance">{toHumanDistance(this.props.instrDist * 1000)}</div>
+        <div className={"c4g-router-instruction-image"}><img src={this.getInstructionIcon(this.props.imgPath)} alt=""/></div>
+        <div className={"c4g-router-instruction-text"}>{this.props.instrText}</div>
+        <div className={"c4g-router-instruction-distance"}>{toHumanDistance(this.props.instrDist * 1000)}</div>
       </div>
     );
   };
