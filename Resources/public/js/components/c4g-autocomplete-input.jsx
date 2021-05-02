@@ -91,9 +91,11 @@ export class AutocompleteInput extends Component {
     }
 
     let inputField = jQuery('#' + this.props.cssId);
-    inputField.autocomplete({
-      source: arrNames
-    });
+    if (inputField && (typeof(inputField.autocomplete) == 'function')) {
+      inputField.autocomplete({
+        source: arrNames
+      });
+    }
 
     // only register listener once
     if (!this.listenerRegistered) {

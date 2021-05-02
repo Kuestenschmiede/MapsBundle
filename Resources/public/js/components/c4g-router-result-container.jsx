@@ -179,9 +179,9 @@ export class RouterResultContainer extends Component {
     if (controlContainer) {
       controlContainer = controlContainer[0];
     }
-    let mapContainer = document.querySelector(".c4g_map")[0];
+    let mapContainer = document.querySelector(".c4g_map") ? document.querySelector(".c4g_map")[0] : false;
     const scope = this;
-    if (container) {
+    if (mapContainer && container) {
       if (controlContainer) {
         if (container.offsetHeight + controlContainer.offsetHeight + 84 > mapContainer.offsetHeight) {
           container.style.height = mapContainer.offsetHeight - controlContainer.offsetHeight;
