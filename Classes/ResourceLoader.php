@@ -10,6 +10,7 @@
  * @copyright  Küstenschmiede GmbH Software & Design
  * @link       https://www.con4gis.org
  */
+
 namespace con4gis\MapsBundle\Classes;
 
 use con4gis\CoreBundle\Classes\ResourceLoader as coreResourceLoader;
@@ -72,7 +73,7 @@ class ResourceLoader extends coreResourceLoader
             'cesium' => false, //Default
             'olms' => $allByDefault,
         ],
-        $resources);
+            $resources);
 
         // debug-mode active?
         if ($GLOBALS['con4gis']['maps']['debug']) {
@@ -89,12 +90,23 @@ class ResourceLoader extends coreResourceLoader
         if ($resources['cesium']) {
             parent::loadJavaScriptResource(self::VENDOR_PATH . '/cesium/Cesium.js', self::BODY, 'cesium');
         }
-        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'c4g-maps-ol.css'); //copy of original ol.css / check source with new versions
-        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'c4g-maps-general.css');
-        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/icons/c4g-theme-icons.css');
-        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/buttons/c4g-theme-buttons.css');
-        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/colors/c4g-theme-colors.css');
-        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/effects/c4g-theme-effects.css');
+
+        if ($mapData['router_enable']) {
+            ResourceLoader::loadJavaScriptDeferred('c4g-routing', '/bundles/con4gisrouting/build/c4g-routing.js');
+            ResourceLoader::loadJavaScriptDeferred('jquery-ui', '/bundles/con4giscore/vendor/jQuery/jquery-ui-1.12.1.custom/jquery-ui.js');
+
+            ResourceLoader::loadCssResource('jquery-ui-css', '/bundles/con4giscore/vendor/jQuery/jquery-ui-1.12.1.custom/jquery-ui.css');
+            ResourceLoader::loadCssResource('routing-css', '/bundles/con4gismaps/css/c4g-routing.min.js'); // todo check if path is correct
+            ResourceLoader::loadCssResource('c4g-cached-inputfield', '/bundles/con4giscore/css/c4g-cached-inputfield.css');
+        }
+
+//        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'c4g-maps-ol.css'); //copy of original ol.css / check source with new versions
+//        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'c4g-maps-general.css');
+//        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/icons/c4g-theme-icons.css');
+//        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/buttons/c4g-theme-buttons.css');
+//        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/colors/c4g-theme-colors.css');
+//        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/effects/c4g-theme-effects.css');
+        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'dist/maps.min.js');
 
         // load plugins
         if ($resources['plugins']) {
