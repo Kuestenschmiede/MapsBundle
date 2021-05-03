@@ -43,7 +43,7 @@ const minifyCss = function () {
             cascade: false
         }))
         .pipe(cleanCSS())
-        .pipe(rename({extname: '.min.js'}))
+        .pipe(rename({extname: '.min.css'}))
         .pipe(gulp.dest(paths.dist.styles));
 };
 exports.minify_css = minifyCss;
