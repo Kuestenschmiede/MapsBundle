@@ -39,7 +39,9 @@ var config = {
     flagIncludedChunks: true,
     usedExports: true,
     concatenateModules: true,
-    sideEffects: false
+    sideEffects: false,
+    chunkIds: "named",
+    moduleIds: "named"
   }
 };
 
