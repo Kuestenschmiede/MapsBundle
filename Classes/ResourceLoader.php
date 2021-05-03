@@ -96,7 +96,7 @@ class ResourceLoader extends coreResourceLoader
             ResourceLoader::loadJavaScriptDeferred('jquery-ui', '/bundles/con4giscore/vendor/jQuery/jquery-ui-1.12.1.custom/jquery-ui.js');
 
             ResourceLoader::loadCssResource('jquery-ui-css', '/bundles/con4giscore/vendor/jQuery/jquery-ui-1.12.1.custom/jquery-ui.css');
-            ResourceLoader::loadCssResource('routing-css', '/bundles/con4gismaps/css/c4g-routing.min.js'); // todo check if path is correct
+            ResourceLoader::loadCssResource('routing-css', '/bundles/con4gismaps/css/c4g-routing.min.css'); // todo check if path is correct
             ResourceLoader::loadCssResource('c4g-cached-inputfield', '/bundles/con4giscore/css/c4g-cached-inputfield.css');
         }
 
@@ -106,7 +106,7 @@ class ResourceLoader extends coreResourceLoader
 //        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/buttons/c4g-theme-buttons.css');
 //        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/colors/c4g-theme-colors.css');
 //        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/effects/c4g-theme-effects.css');
-        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'dist/maps.min.js');
+        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'dist/maps.min.css');
 
         // load plugins
         if ($resources['plugins']) {
