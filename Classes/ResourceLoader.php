@@ -92,12 +92,11 @@ class ResourceLoader extends coreResourceLoader
         }
 
         if ($mapData['router_enable']) {
-            ResourceLoader::loadJavaScriptDeferred('c4g-routing', '/bundles/con4gisrouting/build/c4g-routing.js');
-            ResourceLoader::loadJavaScriptDeferred('jquery-ui', '/bundles/con4giscore/vendor/jQuery/jquery-ui-1.12.1.custom/jquery-ui.js');
+            parent::loadJavaScriptDeferred('jquery-ui', '/bundles/con4giscore/vendor/jQuery/jquery-ui-1.12.1.custom/jquery-ui.js');
 
-            ResourceLoader::loadCssResource('jquery-ui-css', '/bundles/con4giscore/vendor/jQuery/jquery-ui-1.12.1.custom/jquery-ui.css');
-            ResourceLoader::loadCssResource('routing-css', '/bundles/con4gismaps/css/c4g-routing.min.css'); // TODO: check if path is correct
-            ResourceLoader::loadCssResource('c4g-cached-inputfield', '/bundles/con4giscore/css/c4g-cached-inputfield.css');
+            parent::loadCssResource('/bundles/con4giscore/vendor/jQuery/jquery-ui-1.12.1.custom/jquery-ui.css', 'jquery-ui-css');
+            parent::loadCssResource(self::BUNDLE_CSS_PATH . 'dist/c4g-routing.min.css', 'routing-css'); // TODO: check if path is correct
+            parent::loadCssResource('/bundles/con4giscore/css/c4g-cached-inputfield.css', 'c4g-cached-inputfield');
         }
 
 //        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'c4g-maps-ol.css'); //copy of original ol.css / check source with new versions
