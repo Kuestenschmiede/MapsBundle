@@ -4,6 +4,7 @@ const sass = require('gulp-sass');
 const autoprefixer = require('gulp-autoprefixer');
 const notify = require('gulp-notify');
 const cleanCSS = require('gulp-clean-css');
+const rename = require('gulp-rename');
 
 const customPath = 'Resources/public/';
 
@@ -13,6 +14,7 @@ const paths = {
     },
     dist: {
         styles: customPath + 'css/dist',
+        stylesMin: customPath + 'css/dist',
     },
     watch: {
         styles: customPath + 'scss/**/*.scss',
@@ -27,6 +29,7 @@ const styles = function () {
         .pipe(autoprefixer({
             cascade: false
         }))
+        .pipe(cleanCSS({format: "beautify"}))
         .pipe(gulp.dest(paths.dist.styles));
 };
 exports.styles = styles;
@@ -39,8 +42,8 @@ const minifyCss = function () {
         .pipe(autoprefixer({
             cascade: false
         }))
-        // .pipe(cleanCSS({format: "beautify"}))
         .pipe(cleanCSS())
+        .pipe(rename({extname: '.min.js'}))
         .pipe(gulp.dest(paths.dist.styles));
 };
 exports.minify_css = minifyCss;
@@ -51,4 +54,4 @@ const watch = function (done) {
 };
 
 exports.default = gulp.parallel([watch]);
-exports.deploy = gulp.series([minifyCss]);
+exports.deploy = gulp.series([styles, minifyCss]);
