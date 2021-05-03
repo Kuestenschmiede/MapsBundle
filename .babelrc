@@ -1,22 +1,13 @@
 {
   "presets": [
-    "babel-preset-react",
-    "es2015",
-    "stage-0",
-    [
-      "env", {
-        "modules": "commonjs"
-      }
-    ]
+    "@babel/env",
   ],
   "plugins": [
     "transform-react-jsx",
-    "transform-class-properties",
-    "transform-es2015-modules-commonjs",
-    "syntax-dynamic-import",
-    ["transform-runtime", {
-      "regenerator": true
-    }]
+    "@babel/plugin-proposal-class-properties",
+    "@babel/transform-modules-commonjs",
+    "@babel/syntax-dynamic-import",
+    "@babel/transform-runtime"
   ],
   "ignore": [
     "*/node_modules,*/"

@@ -2,7 +2,6 @@ const webpack = require("webpack");
 var path = require('path');
 var config = {
   entry: {
-    'babel-regenerator-runtime':     'babel-regenerator-runtime',
     'c4g-maps': './Resources/public/js/c4g-maps-main.js',
     'c4g-search': './Resources/public/js/c4g-search.js'
   },
