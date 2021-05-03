@@ -5,7 +5,8 @@
   "main": "webpack.config.js",
   "scripts": {
     "build-dev": "webpack --watch --config webpack.development.config.js",
-    "build-prod": "webpack --config webpack.production.config.js"
+    "build-css": "gulp deploy",
+    "build-prod": "webpack --config webpack.production.config.js && gulp deploy"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,16 @@
     "@babel/preset-env": "^7.14.0",
     "clean-webpack-plugin": "^3.0.0",
     "echo-loader": "0.0.1",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^7.0.1",
+    "gulp-clean-css": "^4.2.0",
+    "gulp-include": "^2.4.1",
+    "gulp-notify": "^3.2.0",
+    "gulp-plumber": "^1.2.1",
+    "gulp-sass": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-uglify": "^3.0.2",
+    "gulp-rename": "^2.0.0"
     "webpack": "^5.36.2",
     "webpack-cli": "^4.6.0"
   },
