@@ -21,7 +21,7 @@ use con4gis\CoreBundle\Entity\BaseEntity;
  *
  * @ORM\Entity
  * @ORM\Table(name="tl_c4g_routing_configuration")
- * @package con4gis\RoutingBundle\Entity
+ * @package con4gis\MapsBundle\Entity
  */
 class RoutingConfiguration extends BaseEntity
 {

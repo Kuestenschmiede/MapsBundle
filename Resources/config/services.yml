@@ -82,13 +82,21 @@ services:
 ## listeners
 
     routing.onLoadRouteFeaturesGetFeatures:
-        class: con4gis\RoutingBundle\Classes\Listener\LoadRouteFeaturesListener
+        class: con4gis\MapsBundle\Classes\Listener\LoadRouteFeaturesListener
         tags:
             - { name: kernel.event_listener, event: load.route.features, method: onLoadRouteFeaturesGetFeatures, priority: 1024 }
 
     routing.onLoadAreaFeaturesGetFeatures:
-        class: con4gis\RoutingBundle\Classes\Listener\LoadAreaFeaturesListener
+        class: con4gis\MapsBundle\Classes\Listener\LoadAreaFeaturesListener
         tags:
             - { name: kernel.event_listener, event: load.area.features, method: onLoadAreaFeaturesGetFeatures, priority: 1024 }
         arguments:
             - "@con4gis.area_service"
+
+    routing.onloadMapDataAddRouterData:
+        class: con4gis\MapsBundle\Classes\Listener\LoadMapDataListener
+        tags:
+            - { name: kernel.event_listener, event: maps.mapdata.load, method: onloadMapDataAddRouterData, priority: 1024}
+        arguments:
+            - "@doctrine.orm.default_entity_manager"
+            - "@con4gis.layer_service"

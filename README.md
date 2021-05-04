@@ -85,7 +85,6 @@ __Main features include:__
     - BE layout manager (custom CSS styling) 
 
 **Extendable:**
-- [RoutingBundle](https://github.com/Kuestenschmiede/RoutingBundle/releases) (*latest stable release*)
 - [DataBundle](https://github.com/Kuestenschmiede/DataBundle/releases) (*latest stable release*)
 - [EditorBundle](https://github.com/Kuestenschmiede/EditorBundle/releases) (*latest stable release*)
   

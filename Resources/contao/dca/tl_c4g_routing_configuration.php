@@ -11,7 +11,7 @@
  * @link       https://www.con4gis.org
  */
 $strName = 'tl_c4g_routing_configuration';
-$callbackClass = \con4gis\RoutingBundle\Classes\Callbacks\TlC4gRoutingConfiguration::class;
+$callbackClass = \con4gis\MapsBundle\Classes\Callbacks\TlC4gRoutingConfiguration::class;
 /**
  * Table tl_c4g_routing_configuration
  */

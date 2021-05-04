@@ -14,8 +14,8 @@
 namespace con4gis\MapsBundle\Classes\Services;
 
 use con4gis\MapsBundle\Resources\contao\models\C4gMapSettingsModel;
-use con4gis\RoutingBundle\Classes\Event\LoadAreaFeaturesEvent;
-use con4gis\RoutingBundle\Entity\RoutingConfiguration;
+use con4gis\MapsBundle\Classes\Events\LoadAreaFeaturesEvent;
+use con4gis\MapsBundle\Entity\RoutingConfiguration;
 use Contao\System;
 
 //include_once(System::getContainer()->getParameter('kernel.project_dir')."/vendor/phayes/geophp/geoPHP.inc");

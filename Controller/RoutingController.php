@@ -15,8 +15,8 @@ namespace con4gis\MapsBundle\Controller;
 
 
 use con4gis\CoreBundle\Controller\BaseController;
-use con4gis\RoutingBundle\Classes\Services\AreaService;
-use con4gis\RoutingBundle\Classes\Services\RouteService;
+use con4gis\MapsBundle\Classes\Services\AreaService;
+use con4gis\MapsBundle\Classes\Services\RouteService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

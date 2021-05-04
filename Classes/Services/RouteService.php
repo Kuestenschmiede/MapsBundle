@@ -16,9 +16,9 @@ namespace con4gis\MapsBundle\Classes\Services;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapSettingsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
-use con4gis\RoutingBundle\Classes\Event\LoadRouteFeaturesEvent;
-use con4gis\RoutingBundle\Classes\Polyline;
-use con4gis\RoutingBundle\Entity\RoutingConfiguration;
+use con4gis\MapsBundle\Classes\Events\LoadRouteFeaturesEvent;
+use con4gis\MapsBundle\Classes\Polyline;
+use con4gis\MapsBundle\Entity\RoutingConfiguration;
 use Contao\System;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 

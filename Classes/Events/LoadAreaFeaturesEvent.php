@@ -11,7 +11,7 @@
  * @link       https://www.con4gis.org
  */
 
-namespace con4gis\MapsBundle\Classes\Event;
+namespace con4gis\MapsBundle\Classes\Events;
 
 use Symfony\Component\EventDispatcher\Event;
 
