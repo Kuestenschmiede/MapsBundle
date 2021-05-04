@@ -6,6 +6,7 @@
   "scripts": {
     "build-dev": "webpack --watch --config webpack.development.config.js",
     "build-css": "gulp deploy",
+    "watch-css": "gulp",
     "build-prod": "webpack --config webpack.production.config.js && gulp deploy"
   },
   "repository": {
