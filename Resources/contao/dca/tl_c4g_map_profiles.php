@@ -110,6 +110,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                                          '{baselayer_legend:hide},baselayers, default_baselayer,baselayerswitcher_label,baselayer_filter;'.
                                          '{starboard_legend:hide},layerswitcher_label,starboard_filter,starboard_label,starboard_button,starboard_locstyles,starboardInvertZoomActivate,colorZoomMarker,maxZoomStarboard,cluster_all;'.
                                          '{geosearch_legend:hide},geosearch_headline,geosearch_engine,geosearchParams,geosearch_result_locstyle,geosearch_placeholder,geosearch_results,geosearch_zoomto,geosearch_zoombounds,geosearch_animate,geosearch_markresult,geosearch_attribution,geosearch_popup,geosearch_animate_duration,geosearch_result_duration;'.
+                                         '{routing_legend::hide},routerConfig;'.
                                          '{attribution_legend:hide},attribution;'.
                                          '{information_legend:hide},scaleline,mouseposition,permalink_get_param,zoomlevel,infopage;'.
                                          '{locstyle_legend:hide},label_color,resize_locstyles_zoom;'.
@@ -178,7 +179,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'exclude'                 => true,
                 'inputType'               => 'checkboxWizard',
                 'default'                 => ['zoom'],
-                'options'                 => ['zoom', 'zoomPosition','zoomHome','zoomExtent','fullscreen','print','rotate','graticule', 'layerswitcher', 'baselayerswitcher', 'geosearch', 'legend', 'measure', 'overview', 'permalink'],
+                'options'                 => ['zoom', 'zoomPosition','zoomHome','zoomExtent','fullscreen','print','rotate','graticule', 'layerswitcher', 'baselayerswitcher', 'geosearch', 'legend', 'measure', 'overview', 'permalink', 'routing'],
                 'eval'                    => ['multiple'=>true, 'helpwizard'=>true],
                 'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference'],
                 'sql'                     => "text NOT NULL default 'a:1:{i:0;s:4:\"zoom\";}'"
@@ -190,7 +191,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'filter'                  => false,
                 'inputType'               => 'select',
                 'default'                 => '',
-                'options'                 => ['', 'starboard', 'search', 'baselayers', 'measuretools', 'legend'],
+                'options'                 => ['', 'starboard', 'search', 'baselayers', 'measuretools', 'legend', 'routing'],
                 'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp']['refs'],
                 'eval'                    => ['tl_class'=>'clr'],
                 'sql'                     => "varchar(30) NOT NULL default ''"
@@ -959,7 +960,20 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'default'                 => '10',
                 'eval'                    => ['rgxp'=>'digit', 'submitOnChange' => true, "tl_class" => "clr m12"],
                 'sql'                     => "int(10) unsigned NOT NULL default '10'"
-            ]
+            ],
+        'router' => [
+            'sql'                     => "char(1) NOT NULL default ''"
+        ],
+    
+        'routerConfig' => [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['routerConfig'],
+            'exclude'                 => true,
+            'inputType'               => 'select',
+            'options_callback'        => [\con4gis\MapsBundle\Classes\Contao\Callbacks\TlC4gRoutingConfiguration::class,'getRouterConfigs'],
+            'eval'                    => ['tl_class'=>'clr','chosen' => true,'includeBlankOption'=>true],
+            'sql'                     => "int(10) NOT NULL default '0'",
+            'xlabel'                  => [[\con4gis\MapsBundle\Classes\Contao\Callbacks\TlC4gRoutingConfiguration::class, 'configurationLink']]
+        ]
     ]
 ];
 

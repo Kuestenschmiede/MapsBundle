@@ -104,3 +104,17 @@ geopicker_service:
 controllers:
     resource: '../../Controller/'
     type:     annotation
+
+routing_area:
+    path: /con4gis/areaService/{profileId}/{layerId}/{distance}/{center}
+    defaults:
+        _scope: frontend
+        _controller: "con4gisMapsBundle:Routing:getArea"
+    methods: [GET]
+
+routing_route:
+    path: /con4gis/routeService/{language}/{profileId}/{layerId}/{detour}/{locations}
+    defaults:
+        _scope: frontend
+        _controller: "con4gisMapsBundle:Routing:getRoute"
+    methods: [GET]
