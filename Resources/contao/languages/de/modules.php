@@ -21,7 +21,7 @@ $GLOBALS['TL_LANG']['MOD']['c4g_map_profiles'] 			= ['Kartenprofile', 'Kartenpro
 $GLOBALS['TL_LANG']['MOD']['c4g_map_themes']            = ['Kartenlayout', 'Das Layout der Karte anpassen.'];
 $GLOBALS['TL_LANG']['MOD']['c4g_map_tables']            = ['Quelltabellen', 'Eigene Datenanbindungen anlegen und für die Kartenstruktur anpassen.'];
 $GLOBALS['TL_LANG']['MOD']['c4g_map_filters']           = ['Kartenfilter', 'Filter für die Karte verwalten.'];
-
+$GLOBALS['TL_LANG']['MOD']['c4g_routing_configuration'] = array( 'Konfiguration', 'Routing konfigurieren.');
 /**
  * Frontend modules
  */

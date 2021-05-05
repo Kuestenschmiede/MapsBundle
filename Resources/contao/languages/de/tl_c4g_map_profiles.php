@@ -246,3 +246,20 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['popup'] = "Popu
  */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['infotext'] = 'Im Kartenprofil werden die Steuerungs- und Auswahlbutton für die Karte festgelegt. Die Funktionen zu/hinter den Button können individuell eingestellt werden. Außerdem Einstellungen zum Popup, zu Copyright-Hinweisen und zur Adresssuche. '.
     'Mehr auf <a href="https://docs.con4gis.org/kartenprofile-con4gis-maps" title="con4gis Docs Kartenprofile" target="_blank" rel="noopener"><b>docs.con4gis.org</b></a>';
+
+/**
+ * Router
+ */
+
+/** Routing und Umkreissuche  */
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['routerConfig'] = ['Routing-Konfiguration',  'Bitte wählen Sie die entsprechende Routing-Konfiguration aus. Diese können Sie im Backend-Bereich "Routing" anlegen.'];
+
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editRoutingConfiguration'] = 'Routing-Konfigurationen bearbeiten';
+
+/** legend */
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['routing_legend'] = 'Routen- und Umkreissuche';
+
+/** references */
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['routing'] = ['Router', 'Fügt einen Button in der Karte hinzu, mit dem der Router geöffnet werden kann.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp']['refs']['routing'] = 'Router';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['routing'] = "Router";

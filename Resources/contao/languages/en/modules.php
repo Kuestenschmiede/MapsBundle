@@ -21,6 +21,7 @@ $GLOBALS['TL_LANG']['MOD']['c4g_map_profiles'] 		= ['Map profiles', 'Maintain co
 $GLOBALS['TL_LANG']['MOD']['c4g_map_themes'] 		= ['Map layouts', 'Maintain con4gis-Maps map layouts.'];
 $GLOBALS['TL_LANG']['MOD']['c4g_map_tables']        = ['Source tables', 'Enable custom data connections for your map structures.'];
 $GLOBALS['TL_LANG']['MOD']['c4g_map_filters']       = ['Map filters', 'Maintain map filters.'];
+$GLOBALS['TL_LANG']['MOD']['c4g_routing_configuration'] = array( '(routing) Configuration', 'Configurate routings.');
 
 /**
  * Frontend modules
