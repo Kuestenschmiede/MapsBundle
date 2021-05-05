@@ -1,3 +1,13 @@
+/*
+ * This file is part of con4gis, the gis-kit for Contao CMS.
+ * @package con4gis
+ * @version 8
+ * @author con4gis contributors (see "authors.txt")
+ * @license LGPL-3.0-or-later
+ * @copyright (c) 2010-2021, by Küstenschmiede GmbH Software & Design
+ * @link https://www.con4gis.org
+ */
+
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const webpack = require("webpack");
 var path = require('path');
@@ -28,7 +38,7 @@ var config = {
         include: [
           path.resolve('.'),
           path.resolve('./Resources/public/js/'),
-          path.resolve('./Resources/public/js/components'),
+          path.resolve('./Resources/public/js/components')
         ],
       }
     ]

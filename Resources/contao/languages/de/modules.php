@@ -1,14 +1,12 @@
 <?php
 /*
- * This file is part of con4gis,
- * the gis-kit for Contao CMS.
- *
- * @package    con4gis
- * @version    7
- * @author     con4gis contributors (see "authors.txt")
- * @license    LGPL-3.0-or-later
- * @copyright  Küstenschmiede GmbH Software & Design
- * @link       https://www.con4gis.org
+ * This file is part of con4gis, the gis-kit for Contao CMS.
+ * @package con4gis
+ * @version 8
+ * @author con4gis contributors (see "authors.txt")
+ * @license LGPL-3.0-or-later
+ * @copyright (c) 2010-2021, by Küstenschmiede GmbH Software & Design
+ * @link https://www.con4gis.org
  */
 
 /**
@@ -21,7 +19,7 @@ $GLOBALS['TL_LANG']['MOD']['c4g_map_profiles'] 			= ['Kartenprofile', 'Kartenpro
 $GLOBALS['TL_LANG']['MOD']['c4g_map_themes']            = ['Kartenlayout', 'Das Layout der Karte anpassen.'];
 $GLOBALS['TL_LANG']['MOD']['c4g_map_tables']            = ['Quelltabellen', 'Eigene Datenanbindungen anlegen und für die Kartenstruktur anpassen.'];
 $GLOBALS['TL_LANG']['MOD']['c4g_map_filters']           = ['Kartenfilter', 'Filter für die Karte verwalten.'];
-$GLOBALS['TL_LANG']['MOD']['c4g_routing_configuration'] = array( 'Konfiguration', 'Routing konfigurieren.');
+$GLOBALS['TL_LANG']['MOD']['c4g_routing_configuration'] = ['Routing', 'Routing konfigurieren.'];
 /**
  * Frontend modules
  */
