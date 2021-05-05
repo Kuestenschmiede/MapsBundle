@@ -36,9 +36,9 @@ import {Point} from "ol/geom";
 import {boundingExtent, getBottomLeft, getBottomRight, getTopLeft, getTopRight} from "ol/extent";
 import {shiftKeyOnly} from "ol/events/condition";
 import ReactDOM from "react-dom";
-import React, {Component, Suspense, lazy} from "react";
-//import GeoSearch from "./c4g-geosearch.jsx";
-const GeoSearch = React.lazy(() => import('./c4g-geosearch.jsx'));
+import React, {Component, Suspense} from "react";
+import GeoSearch from "./c4g-geosearch.jsx";
+//const GeoSearch = React.lazy(() => import('./c4g-geosearch.jsx'));
 const FeatureFilter = React.lazy(() => import('./c4g-feature-filter.jsx'));
 const BaselayerSwitcher = React.lazy(() => import('./c4g-baselayerswitcher.jsx'));
 const StarboardPanel = React.lazy(() => import('./c4g-starboard-panel.jsx'));
@@ -54,10 +54,12 @@ const Rotate = React.lazy(() => import('./c4g-rotate.jsx'));
 const Fullscreen = React.lazy(() => import('./c4g-fullscreen.jsx'));
 const Print = React.lazy(() => import('./c4g-print.jsx'));
 const OverviewMap = React.lazy(() => import('./c4g-overviewmap.jsx'));
-const RouterView = React.lazy(() => import("./c4g-router-view.jsx"));
+//const RouterView = React.lazy(() => import("./c4g-router-view.jsx"));
 import TileLayer from "ol/layer/Tile";
 import {routingConstantsEnglish} from "./../routing-constant-i18n-en";
 import {routingConstantsGerman} from "./../routing-constant-i18n-de";
+
+import {RouterView} from "./c4g-router-view.jsx";
 import {EditorComponent} from "./c4g-editor-component.jsx";
 
 let langRouteConstants = {};
