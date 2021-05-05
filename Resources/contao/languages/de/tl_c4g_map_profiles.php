@@ -114,6 +114,13 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_attribution'] = ['Copyrigh
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_disabled'] = ['Geopicker deaktivieren', 'Wenn Sie nur eine Position anzeigen wollen, können Sie den Geopicker hiermit deaktivieren.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_anonymous'] = ['Geopicker anonymisieren', 'Der Geopicker wird so manipuliert, dass eine genaue Bestimmung der Position nicht mehr möglich ist. Nützlich damit z.B. Einsatzorte nicht auf eine Adresse bezogen werden können.'];
 
+/** BE-Editor (GeoJSON durch Klick auf die Karte bestimmen) */
+
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['beEditorPointLocstyle'] = ['Lokationsstil Punkt BE-Editor', ''];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['beEditorLineStringLocstyle'] = ['Lokationsstil Strecke BE-Editor', ''];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['beEditorPolygonLocstyle'] = ['Lokationsstil Polygon BE-Editor', ''];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['beEditorCircleLocstyle'] = ['Lokationsstil Kreis BE-Editor', ''];
+
 /** Cesium */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium'] = ['Cesium verwenden', 'Sofern in der/den gewählten Basiskarte(n) die Option Cesium (Globusdarstellung) aktiviert wurde, wird/werden diese als Globus dargestellt.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium_always'] = ['Cesium immer verwenden', 'Ist die Globus-Darstellung aller hier im Kartenprofil gewählten Basiskarten gewünscht, ist diese Option zu aktivieren. Keine weiteren Vorgaben in den Basiskarten notwendig.'];

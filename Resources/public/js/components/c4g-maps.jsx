@@ -65,6 +65,7 @@ import TileLayer from "ol/layer/Tile";
 import {routingConstantsEnglish} from "./../routing-constant-i18n-en";
 import {routingConstantsGerman} from "./../routing-constant-i18n-de";
 import {RouterView} from "./c4g-router-view.jsx";
+import {EditorComponent} from "./c4g-editor-component.jsx";
 
 let langRouteConstants = {};
 const containerAddresses = {
@@ -1231,13 +1232,65 @@ export class MapController extends Component {
            */
           break;
         case 'editor':
-          if (window.c4gMapsHooks !== undefined && Array.isArray(window.c4gMapsHooks.mapController_addControls)) {
-            utils.callHookFunctions(window.c4gMapsHooks.mapController_addControls, {
-              mapController: this,
-              Container: this.mapsControls.controlContainerTopLeft,
-              component: "editor",
-              arrComps: result
-            });
+          if (mapData.feEditorProfile && mapData.feEditorProfile !== "0") {
+            if (!this.editorContainer) {
+              if (this.data.editor_div) {
+                this.editorContainer = document.querySelector("." + this.data.editor_div);
+                if (!this.editorContainer) {
+                  this.editorContainer = document.createElement('div');
+                  this.editorContainer.className = "c4g-sideboard c4g-editor-container-right c4g-close";
+                  jQuery(".ol-overlaycontainer-stopevent").append(this.editorContainer);
+                } else {
+                  this.editorContainer.className += " c4g-external";
+                }
+              } else {
+                this.editorContainer = document.createElement('div');
+                this.editorContainer.className = "c4g-sideboard c4g-editor-container-right c4g-close";
+                jQuery(".ol-overlaycontainer-stopevent").append(this.editorContainer);
+              }
+            }
+            let editorProps = {
+              tipLabel: langConstants.CTRL_EDITOR,
+              type: mapData.editor.type || 'frontend',
+              inputField: mapData.editor.inputField || false,
+              target: mapData.editor.target || document.querySelector('#' + this.data.mapDiv + ' .c4g-control-container-top-left'),
+              initOpen: mapData.editor.open || false,
+              config: mapData.editor.config || false,
+              dataField: mapData.editor.data_field || false,
+              caching: mapData.caching,
+              mapController: this
+            };
+            result.push(ReactDOM.createPortal(React.createElement(EditorComponent, editorProps), this.editorContainer));
+          }
+          else if (mapData.editor.type == "backend") {
+            if (!this.editorContainer) {
+              if (this.data.editor_div) {
+                this.editorContainer = document.querySelector("." + this.data.editor_div);
+                if (!this.editorContainer) {
+                  this.editorContainer = document.createElement('div');
+                  this.editorContainer.className = "c4g-sideboard c4g-editor-container-right c4g-close";
+                  jQuery(".ol-overlaycontainer-stopevent").append(this.editorContainer);
+                } else {
+                  this.editorContainer.className += " c4g-external";
+                }
+              } else {
+                this.editorContainer = document.createElement('div');
+                this.editorContainer.className = "c4g-sideboard c4g-editor-container-right c4g-close";
+                jQuery(".ol-overlaycontainer-stopevent").append(this.editorContainer);
+              }
+            }
+            let editorProps = {
+              tipLabel: langConstants.CTRL_EDITOR,
+              type: mapData.editor.type || 'frontend',
+              inputField: mapData.editor.inputField || "#c4gGeoEditorGeoData",
+              target: mapData.editor.target || document.querySelector('#' + this.data.mapDiv + ' .c4g-control-container-top-left'),
+              initOpen: mapData.editor.open || false,
+              config: mapData.editor.config || false,
+              dataField: mapData.editor.data_field || false,
+              caching: mapData.caching,
+              mapController: this
+            };
+            result.push(ReactDOM.createPortal(React.createElement(EditorComponent, editorProps), this.editorContainer));
           }
           break;
       }

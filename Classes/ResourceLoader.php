@@ -98,6 +98,9 @@ class ResourceLoader extends coreResourceLoader
             parent::loadCssResource(self::BUNDLE_CSS_PATH . 'dist/c4g-routing.min.css', 'routing-css'); // TODO: check if path is correct
             parent::loadCssResource('/bundles/con4giscore/css/c4g-cached-inputfield.css', 'c4g-cached-inputfield');
         }
+        if ($mapData['feEditorProfile'] || $mapData['beEditorProfile']) {
+            parent::loadCssResource(self::BUNDLE_CSS_PATH . 'dist/c4g-project-editor.min.css', 'project-editor-css'); // TODO: check if path is correct
+        }
 
 //        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'c4g-maps-ol.css'); //copy of original ol.css / check source with new versions
 //        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'c4g-maps-general.css');

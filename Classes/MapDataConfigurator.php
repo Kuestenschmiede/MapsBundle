@@ -75,17 +75,6 @@ class MapDataConfigurator
         }
 
         //check if we are in backend mode
-        if ($options['geoeditor']) {
-            // select selected backend profile
-            $result = C4gSettingsModel::findSettings();
-            $profileId = $result->row();
-            $profileId = $profileId['editorprofile'];
-            $mapData['editor'] = [];
-            $mapData['editor']['enable'] = true;
-            $mapData['editor']['type'] = 'backend';
-        }
-
-        //check if we are in backend mode
         if ($options['type'] == 'geopicker') {
             // select selected backend profile
             $settings = C4gSettingsModel::findAll();
@@ -123,6 +112,95 @@ class MapDataConfigurator
         }
         // get appropriate profile from database
         $profile = C4gMapProfilesModel::findByPk($profileId);
+
+        //check if we are in backend mode
+        if ($options['geoeditor']) {
+            // select selected backend profile
+            $result = C4gSettingsModel::findSettings();
+            $profileId = $result->row();
+            $profileId = $profileId['editorprofile'];
+            $mapData['editor'] = [];
+            $mapData['editor']['enable'] = true;
+            $mapData['editor']['type'] = 'backend';
+            $mapData['beEditorProfile'] = 1;
+            $mapData['editor']['config']['drawStyles'] = [];
+            if ($profile->beEditorPointLocstyle) {
+                $mapData['editor']['config']['drawStyles']["Point"] = [
+                    "categories" => [
+                        [
+                            "elements" => [
+                                [
+                                    "categoryId"    => 0,
+                                    "id"            => 1,
+                                    "name"          => "Punkt",
+                                    "styleId"       => $profile->beEditorPointLocstyle
+                                ]
+                            ],
+                            "name" => "Punkt",
+                            "id" => 0
+                        ],
+                    ]
+                ];
+            }
+            if ($profile->beEditorLineStringLocstyle) {
+                $mapData['editor']['config']['drawStyles']["LineString"] = [
+                    "categories" => [
+                        [
+                            "elements" => [
+                                [
+                                    "categoryId" => 0,
+                                    "id" => 1,
+                                    "name" => "Strecke",
+                                    "styleId" => $profile->beEditorLineStringLocstyle
+                                ]
+                            ],
+                            "name" => "Punkt",
+                            "id" => 0
+                        ],
+                    ]
+                ];
+            }
+            if ($profile->beEditorPolygonLocstyle) {
+                $mapData['editor']['config']['drawStyles']["Polygon"] = [
+                    "categories" => [
+                        [
+                            "elements" => [
+                                [
+                                    "categoryId" => 0,
+                                    "id" => 1,
+                                    "name" => "Polygon",
+                                    "styleId" => $profile->beEditorPolygonLocstyle
+                                ]
+                            ],
+                            "name" => "Punkt",
+                            "id" => 0
+                        ],
+                    ]
+                ];
+            }
+            if ($profile->beEditorCircleLocstyle) {
+                $mapData['editor']['config']['drawStyles']["Circle"] = [
+                    "categories" => [
+                        [
+                            "elements" => [
+                                [
+                                    "categoryId" => 0,
+                                    "id" => 1,
+                                    "name" => "Kreis",
+                                    "styleId" => $profile->beEditorCircleLocstyle
+                                ]
+                            ],
+                            "name" => "Punkt",
+                            "id" => 0
+                        ],
+                    ]
+                ];
+            }
+
+            $mapFunctions = unserialize($profile->mapFunctions);
+            $buttons = array_flip($mapFunctions);
+            $mapData['editor']['enable'] = array_key_exists('editor', $buttons) ? $buttons['editor'] + 1 : 0;
+        }
         // use default if the profile was not found
         if (!$profile) {
             if (!$options['type'] == 'geopicker') {

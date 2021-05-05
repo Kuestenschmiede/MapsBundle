@@ -110,10 +110,11 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                                          '{baselayer_legend:hide},baselayers, default_baselayer,baselayerswitcher_label,baselayer_filter;'.
                                          '{starboard_legend:hide},layerswitcher_label,starboard_filter,starboard_label,starboard_button,starboard_locstyles,starboardInvertZoomActivate,colorZoomMarker,maxZoomStarboard,cluster_all;'.
                                          '{geosearch_legend:hide},geosearch_headline,geosearch_engine,geosearchParams,geosearch_result_locstyle,geosearch_placeholder,geosearch_results,geosearch_zoomto,geosearch_zoombounds,geosearch_animate,geosearch_markresult,geosearch_attribution,geosearch_popup,geosearch_animate_duration,geosearch_result_duration;'.
+                                         '{editor_legend:hide},beEditorPointLocstyle,beEditorLineStringLocstyle,beEditorPolygonLocstyle,beEditorCircleLocstyle',
                                          '{attribution_legend:hide},attribution;'.
                                          '{information_legend:hide},scaleline,mouseposition,permalink_get_param,zoomlevel,infopage;'.
                                          '{locstyle_legend:hide},label_color,resize_locstyles_zoom;'.
-                                         '{expert_legend:hide},overpassEngine,caching,cesium,external_elements,filters,filterHandling,filterResetButton,geopicker,custom_div,be_optimize_checkboxes_limit;'
+                                         '{expert_legend:hide},overpassEngine,caching,cesium,external_elements,filters,filterHandling,filterResetButton,geopicker,beEditor,custom_div,be_optimize_checkboxes_limit;'
         ],
 
 
@@ -941,6 +942,42 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'inputType'               => 'checkbox',
                 'eval'                    => ['submitOnChange' => false],
                 'sql'                     => "char(1) NOT NULL default ''"
+            ],
+        'beEditorPointLocstyle' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['beEditorPointLocstyle'],
+                'exclude'                 => true,
+                'inputType'               => 'select',
+                'options_callback'        => ['tl_c4g_map_profiles','getAllLocStyles'],
+                'eval'                    => ['mandatory'=>false,'chosen' => true,'includeBlankOption'=>true],
+                'sql'                     => "int(11) NOT NULL default '0'"
+            ],
+        'beEditorLineStringLocstyle' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['beEditorLineStringLocstyle'],
+                'exclude'                 => true,
+                'inputType'               => 'select',
+                'options_callback'        => ['tl_c4g_map_profiles','getAllLocStyles'],
+                'eval'                    => ['mandatory'=>false,'chosen' => true,'includeBlankOption'=>true],
+                'sql'                     => "int(11) NOT NULL default '0'"
+            ],
+        'beEditorPolygonLocstyle' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['beEditorPolygonLocstyle'],
+                'exclude'                 => true,
+                'inputType'               => 'select',
+                'options_callback'        => ['tl_c4g_map_profiles','getAllLocStyles'],
+                'eval'                    => ['mandatory'=>false,'chosen' => true,'includeBlankOption'=>true],
+                'sql'                     => "int(11) NOT NULL default '0'"
+            ],
+        'beEditorCircleLocstyle' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['beEditorCircleLocstyle'],
+                'exclude'                 => true,
+                'inputType'               => 'select',
+                'options_callback'        => ['tl_c4g_map_profiles','getAllLocStyles'],
+                'eval'                    => ['mandatory'=>false,'chosen' => true,'includeBlankOption'=>true],
+                'sql'                     => "int(11) NOT NULL default '0'"
             ],
         'custom_div' =>
             [

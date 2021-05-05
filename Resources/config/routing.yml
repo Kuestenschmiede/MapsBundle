@@ -101,6 +101,15 @@ geopicker_service:
         _controller: "con4gisMapsBundle:Maps:geopicker"
     methods: [GET]
 
+beEditor_service:
+    path: /con4gis/beEditorService/{layerId}
+    defaults:
+        _scope: frontend
+        _controller: "con4gisMapsBundle:Editor:beEditor"
+    methods: [GET]
+    requirements:
+        mapId: \d+
+
 controllers:
     resource: '../../Controller/'
     type:     annotation
