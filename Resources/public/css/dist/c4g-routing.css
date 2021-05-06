@@ -721,7 +721,7 @@ button.c4g-router-switch {
 }
 .c4g-router-instruction {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: 1fr 4fr 1fr;
   grid-template-rows: 1fr;
   gap: 0 0;
   grid-template-areas: "c4g-router-instruction-image c4g-router-instruction-text c4g-router-instruction-distance"

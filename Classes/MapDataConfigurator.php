@@ -123,75 +123,75 @@ class MapDataConfigurator
             $mapData['beEditorProfile'] = 1;
             $mapData['editor']['config']['drawStyles'] = [];
             if ($profile->beEditorPointLocstyle) {
-                $mapData['editor']['config']['drawStyles']["Point"] = [
-                    "categories" => [
+                $mapData['editor']['config']['drawStyles']['Point'] = [
+                    'categories' => [
                         [
-                            "elements" => [
+                            'elements' => [
                                 [
-                                    "categoryId"    => 0,
-                                    "id"            => 1,
-                                    "name"          => "Punkt",
-                                    "styleId"       => $profile->beEditorPointLocstyle
-                                ]
+                                    'categoryId' => 0,
+                                    'id' => 1,
+                                    'name' => 'Punkt',
+                                    'styleId' => $profile->beEditorPointLocstyle,
+                                ],
                             ],
-                            "name" => "Punkt",
-                            "id" => 0
+                            'name' => 'Punkt',
+                            'id' => 0,
                         ],
-                    ]
+                    ],
                 ];
             }
             if ($profile->beEditorLineStringLocstyle) {
-                $mapData['editor']['config']['drawStyles']["LineString"] = [
-                    "categories" => [
+                $mapData['editor']['config']['drawStyles']['LineString'] = [
+                    'categories' => [
                         [
-                            "elements" => [
+                            'elements' => [
                                 [
-                                    "categoryId" => 0,
-                                    "id" => 1,
-                                    "name" => "Strecke",
-                                    "styleId" => $profile->beEditorLineStringLocstyle
-                                ]
+                                    'categoryId' => 0,
+                                    'id' => 1,
+                                    'name' => 'Strecke',
+                                    'styleId' => $profile->beEditorLineStringLocstyle,
+                                ],
                             ],
-                            "name" => "Punkt",
-                            "id" => 0
+                            'name' => 'Punkt',
+                            'id' => 0,
                         ],
-                    ]
+                    ],
                 ];
             }
             if ($profile->beEditorPolygonLocstyle) {
-                $mapData['editor']['config']['drawStyles']["Polygon"] = [
-                    "categories" => [
+                $mapData['editor']['config']['drawStyles']['Polygon'] = [
+                    'categories' => [
                         [
-                            "elements" => [
+                            'elements' => [
                                 [
-                                    "categoryId" => 0,
-                                    "id" => 1,
-                                    "name" => "Polygon",
-                                    "styleId" => $profile->beEditorPolygonLocstyle
-                                ]
+                                    'categoryId' => 0,
+                                    'id' => 1,
+                                    'name' => 'Polygon',
+                                    'styleId' => $profile->beEditorPolygonLocstyle,
+                                ],
                             ],
-                            "name" => "Punkt",
-                            "id" => 0
+                            'name' => 'Punkt',
+                            'id' => 0,
                         ],
-                    ]
+                    ],
                 ];
             }
             if ($profile->beEditorCircleLocstyle) {
-                $mapData['editor']['config']['drawStyles']["Circle"] = [
-                    "categories" => [
+                $mapData['editor']['config']['drawStyles']['Circle'] = [
+                    'categories' => [
                         [
-                            "elements" => [
+                            'elements' => [
                                 [
-                                    "categoryId" => 0,
-                                    "id" => 1,
-                                    "name" => "Kreis",
-                                    "styleId" => $profile->beEditorCircleLocstyle
-                                ]
+                                    'categoryId' => 0,
+                                    'id' => 1,
+                                    'name' => 'Kreis',
+                                    'styleId' => $profile->beEditorCircleLocstyle,
+                                ],
                             ],
-                            "name" => "Punkt",
-                            "id" => 0
+                            'name' => 'Punkt',
+                            'id' => 0,
                         ],
-                    ]
+                    ],
                 ];
             }
 
