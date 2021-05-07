@@ -108,6 +108,12 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_attribution'] = ['Show Geo
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_disabled'] = ['Disable Geopicker', 'If checked, the geopicker is disabled, but the location is still shown on the map.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_anonymous'] = ['Anonymous Geopicker', 'If checked, the exact position can no longer be identified, but is still within the given radius.'];
 
+/** BE-Editor (GeoJSON durch Klick auf die Karte bestimmen) */
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['beEditorPointLocstyle'] = ['Locstyle point BE-Editor', ''];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['beEditorLineStringLocstyle'] = ['Locstyle line BE-Editor', ''];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['beEditorPolygonLocstyle'] = ['Locstyle polygon BE-Editor', ''];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['beEditorCircleLocstyle'] = ['Locstyle circle BE-Editor', ''];
+
 /** Cesium */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium'] = ['Use Cesium', 'If the option Cesium (globe display) has been activated in the selected base map(s), these will be displayed as a globe.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium_always']  = ['Always use Cesium', 'If the globe display of all base maps selected here in the map profile is desired, this option must be activated. No further specifications in the base maps are necessary.)'];
@@ -245,6 +251,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editRoutingConfiguration'] = 'Edit r
 
 /** legend */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['routing_legend'] = 'Routing and Area Search';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_legend'] = 'Editor';
 
 /** references */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['routing'] = ['Routing', ' Adds an additional button to activate routing functionality.'];

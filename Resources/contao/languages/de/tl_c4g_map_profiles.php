@@ -113,7 +113,6 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_disabled'] = ['Geopicker d
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_anonymous'] = ['Geopicker anonymisieren', 'Der Geopicker wird so manipuliert, dass eine genaue Bestimmung der Position nicht mehr möglich ist. Nützlich damit z.B. Einsatzorte nicht auf eine Adresse bezogen werden können.'];
 
 /** BE-Editor (GeoJSON durch Klick auf die Karte bestimmen) */
-
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['beEditorPointLocstyle'] = ['Lokationsstil Punkt BE-Editor', ''];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['beEditorLineStringLocstyle'] = ['Lokationsstil Strecke BE-Editor', ''];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['beEditorPolygonLocstyle'] = ['Lokationsstil Polygon BE-Editor', ''];
@@ -256,6 +255,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editRoutingConfiguration'] = 'Routin
 
 /** legend */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['routing_legend'] = 'Routen- und Umkreissuche';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_legend'] = 'Editor';
 
 /** references */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['routing'] = ['Router', 'Fügt einen Button in der Karte hinzu, mit dem der Router geöffnet werden kann.'];

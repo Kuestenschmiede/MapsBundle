@@ -90,7 +90,7 @@ class ResourceLoader extends coreResourceLoader
         }
 
         if ($mapData['router_enable']) {
-            parent::loadJavaScriptResource('/bundles/con4giscore/vendor/jQuery/jquery-ui-1.12.1.custom/jquery-ui.js|async|static',self::JAVASCRIPT, 'jquery-ui' );
+            parent::loadJavaScriptResource('/bundles/con4giscore/vendor/jQuery/jquery-ui-1.12.1.custom/jquery-ui.js|async|static', self::JAVASCRIPT, 'jquery-ui');
 
             parent::loadCssResource('/bundles/con4giscore/vendor/jQuery/jquery-ui-1.12.1.custom/jquery-ui.css', 'jquery-ui-css');
             parent::loadCssResource(self::BUNDLE_CSS_PATH . 'dist/c4g-routing.min.css', 'routing-css'); // TODO: check if path is correct

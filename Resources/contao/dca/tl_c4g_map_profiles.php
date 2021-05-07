@@ -119,7 +119,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                                          '{baselayer_legend:hide},baselayers, default_baselayer,baselayerswitcher_label,baselayer_filter;'.
                                          '{starboard_legend:hide},layerswitcher_label,starboard_filter,starboard_label,starboard_button,starboard_locstyles,starboardInvertZoomActivate,colorZoomMarker,maxZoomStarboard,cluster_all;'.
                                          '{geosearch_legend:hide},geosearch_headline,geosearch_engine,geosearchParams,geosearch_result_locstyle,geosearch_placeholder,geosearch_results,geosearch_zoomto,geosearch_zoombounds,geosearch_animate,geosearch_markresult,geosearch_attribution,geosearch_popup,geosearch_animate_duration,geosearch_result_duration;'.
-                                         '{editor_legend:hide},beEditorPointLocstyle,beEditorLineStringLocstyle,beEditorPolygonLocstyle,beEditorCircleLocstyle',
+                                         '{editor_legend:hide},beEditorPointLocstyle,beEditorLineStringLocstyle,beEditorPolygonLocstyle,beEditorCircleLocstyle;',
                                          '{routing_legend::hide},routerConfig;'.
                                          '{attribution_legend:hide},attribution;'.
                                          '{information_legend:hide},scaleline,mouseposition,permalink_get_param,zoomlevel,infopage;'.
@@ -959,7 +959,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'exclude'                 => true,
                 'inputType'               => 'select',
                 'options_callback'        => ['tl_c4g_map_profiles','getAllLocStyles'],
-                'eval'                    => ['mandatory'=>false,'chosen' => true,'includeBlankOption'=>true],
+                'eval'                    => ['mandatory'=>false, 'chosen' => true,'includeBlankOption'=>true, 'tl_class'=>'long'],
                 'sql'                     => "int(11) NOT NULL default '0'"
             ],
         'beEditorLineStringLocstyle' =>
@@ -968,7 +968,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'exclude'                 => true,
                 'inputType'               => 'select',
                 'options_callback'        => ['tl_c4g_map_profiles','getAllLocStyles'],
-                'eval'                    => ['mandatory'=>false,'chosen' => true,'includeBlankOption'=>true],
+                'eval'                    => ['mandatory'=>false,'chosen' => true,'includeBlankOption'=>true, 'tl_class'=>'long'],
                 'sql'                     => "int(11) NOT NULL default '0'"
             ],
         'beEditorPolygonLocstyle' =>
@@ -977,7 +977,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'exclude'                 => true,
                 'inputType'               => 'select',
                 'options_callback'        => ['tl_c4g_map_profiles','getAllLocStyles'],
-                'eval'                    => ['mandatory'=>false,'chosen' => true,'includeBlankOption'=>true],
+                'eval'                    => ['mandatory'=>false,'chosen' => true,'includeBlankOption'=>true, 'tl_class'=>'long'],
                 'sql'                     => "int(11) NOT NULL default '0'"
             ],
         'beEditorCircleLocstyle' =>
@@ -986,7 +986,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'exclude'                 => true,
                 'inputType'               => 'select',
                 'options_callback'        => ['tl_c4g_map_profiles','getAllLocStyles'],
-                'eval'                    => ['mandatory'=>false,'chosen' => true,'includeBlankOption'=>true],
+                'eval'                    => ['mandatory'=>false,'chosen' => true,'includeBlankOption'=>true, 'tl_class'=>'long'],
                 'sql'                     => "int(11) NOT NULL default '0'"
             ],
         'custom_div' =>
