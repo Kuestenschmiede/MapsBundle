@@ -1177,44 +1177,8 @@ ul.c4g-feature-filter-list li.c4g-item-checked > strong:hover {
  * @link https://www.con4gis.org
  */
 /*!
- * This file is part of con4gis, the gis-kit for Contao CMS.
- * @package con4gis
- * @version 8
- * @author con4gis contributors (see "authors.txt")
- * @license LGPL-3.0-or-later
- * @copyright (c) 2010-2021, by Küstenschmiede GmbH Software & Design
- * @link https://www.con4gis.org
- */
-/*!
  * Font Awesome Free 5.15.3 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
- */
-/*!
- * This file is part of con4gis, the gis-kit for Contao CMS.
- * @package con4gis
- * @version 8
- * @author con4gis contributors (see "authors.txt")
- * @license LGPL-3.0-or-later
- * @copyright (c) 2010-2021, by Küstenschmiede GmbH Software & Design
- * @link https://www.con4gis.org
- */
-/*!
- * This file is part of con4gis, the gis-kit for Contao CMS.
- * @package con4gis
- * @version 8
- * @author con4gis contributors (see "authors.txt")
- * @license LGPL-3.0-or-later
- * @copyright (c) 2010-2021, by Küstenschmiede GmbH Software & Design
- * @link https://www.con4gis.org
- */
-/*!
- * This file is part of con4gis, the gis-kit for Contao CMS.
- * @package con4gis
- * @version 8
- * @author con4gis contributors (see "authors.txt")
- * @license LGPL-3.0-or-later
- * @copyright (c) 2010-2021, by Küstenschmiede GmbH Software & Design
- * @link https://www.con4gis.org
  */
 .fa,
 .fab,
@@ -1230,15 +1194,6 @@ ul.c4g-feature-filter-list li.c4g-item-checked > strong:hover {
   text-rendering: auto;
   line-height: 1
 }
-/*!
- * This file is part of con4gis, the gis-kit for Contao CMS.
- * @package con4gis
- * @version 8
- * @author con4gis contributors (see "authors.txt")
- * @license LGPL-3.0-or-later
- * @copyright (c) 2010-2021, by Küstenschmiede GmbH Software & Design
- * @link https://www.con4gis.org
- */
 .fa-lg {
   font-size: 1.33333em;
   line-height: .75em;
@@ -1280,28 +1235,10 @@ ul.c4g-feature-filter-list li.c4g-item-checked > strong:hover {
 .fa-10x {
   font-size: 10em
 }
-/*!
- * This file is part of con4gis, the gis-kit for Contao CMS.
- * @package con4gis
- * @version 8
- * @author con4gis contributors (see "authors.txt")
- * @license LGPL-3.0-or-later
- * @copyright (c) 2010-2021, by Küstenschmiede GmbH Software & Design
- * @link https://www.con4gis.org
- */
 .fa-fw {
   text-align: center;
   width: 1.25em
 }
-/*!
- * This file is part of con4gis, the gis-kit for Contao CMS.
- * @package con4gis
- * @version 8
- * @author con4gis contributors (see "authors.txt")
- * @license LGPL-3.0-or-later
- * @copyright (c) 2010-2021, by Küstenschmiede GmbH Software & Design
- * @link https://www.con4gis.org
- */
 .fa-ul {
   list-style-type: none;
   margin-left: 2.5em;
@@ -1317,15 +1254,6 @@ ul.c4g-feature-filter-list li.c4g-item-checked > strong:hover {
   width: 2em;
   line-height: inherit
 }
-/*!
- * This file is part of con4gis, the gis-kit for Contao CMS.
- * @package con4gis
- * @version 8
- * @author con4gis contributors (see "authors.txt")
- * @license LGPL-3.0-or-later
- * @copyright (c) 2010-2021, by Küstenschmiede GmbH Software & Design
- * @link https://www.con4gis.org
- */
 .fa-border {
   border: solid .08em #eee;
   border-radius: .1em;
@@ -1351,15 +1279,6 @@ ul.c4g-feature-filter-list li.c4g-item-checked > strong:hover {
 .fas.fa-pull-right {
   margin-left: .3em
 }
-/*!
- * This file is part of con4gis, the gis-kit for Contao CMS.
- * @package con4gis
- * @version 8
- * @author con4gis contributors (see "authors.txt")
- * @license LGPL-3.0-or-later
- * @copyright (c) 2010-2021, by Küstenschmiede GmbH Software & Design
- * @link https://www.con4gis.org
- */
 .fa-spin {
   -webkit-animation: fa-spin 2s infinite linear;
   animation: fa-spin 2s infinite linear
@@ -1384,15 +1303,6 @@ ul.c4g-feature-filter-list li.c4g-item-checked > strong:hover {
     transform: rotate(360deg)
   }
 }
-/*!
- * This file is part of con4gis, the gis-kit for Contao CMS.
- * @package con4gis
- * @version 8
- * @author con4gis contributors (see "authors.txt")
- * @license LGPL-3.0-or-later
- * @copyright (c) 2010-2021, by Küstenschmiede GmbH Software & Design
- * @link https://www.con4gis.org
- */
 .fa-rotate-90 {
   transform: rotate(90deg)
 }
@@ -1420,15 +1330,6 @@ ul.c4g-feature-filter-list li.c4g-item-checked > strong:hover {
 :root .fa-rotate-90 {
   filter: none
 }
-/*!
- * This file is part of con4gis, the gis-kit for Contao CMS.
- * @package con4gis
- * @version 8
- * @author con4gis contributors (see "authors.txt")
- * @license LGPL-3.0-or-later
- * @copyright (c) 2010-2021, by Küstenschmiede GmbH Software & Design
- * @link https://www.con4gis.org
- */
 .fa-stack {
   display: inline-block;
   height: 2em;
@@ -1453,15 +1354,6 @@ ul.c4g-feature-filter-list li.c4g-item-checked > strong:hover {
 .fa-inverse {
   color: #fff
 }
-/*!
- * This file is part of con4gis, the gis-kit for Contao CMS.
- * @package con4gis
- * @version 8
- * @author con4gis contributors (see "authors.txt")
- * @license LGPL-3.0-or-later
- * @copyright (c) 2010-2021, by Küstenschmiede GmbH Software & Design
- * @link https://www.con4gis.org
- */
 .fa-500px:before {
   content: "\f26e"
 }
@@ -5839,15 +5731,6 @@ ul.c4g-feature-filter-list li.c4g-item-checked > strong:hover {
 .fa-zhihu:before {
   content: "\f63f"
 }
-/*!
- * This file is part of con4gis, the gis-kit for Contao CMS.
- * @package con4gis
- * @version 8
- * @author con4gis contributors (see "authors.txt")
- * @license LGPL-3.0-or-later
- * @copyright (c) 2010-2021, by Küstenschmiede GmbH Software & Design
- * @link https://www.con4gis.org
- */
 .sr-only {
   border: 0;
   clip: rect(0,0,0,0);
@@ -5868,26 +5751,8 @@ ul.c4g-feature-filter-list li.c4g-item-checked > strong:hover {
   width: auto
 }
 /*!
- * This file is part of con4gis, the gis-kit for Contao CMS.
- * @package con4gis
- * @version 8
- * @author con4gis contributors (see "authors.txt")
- * @license LGPL-3.0-or-later
- * @copyright (c) 2010-2021, by Küstenschmiede GmbH Software & Design
- * @link https://www.con4gis.org
- */
-/*!
  * Font Awesome Free 5.15.3 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
- */
-/*!
- * This file is part of con4gis, the gis-kit for Contao CMS.
- * @package con4gis
- * @version 8
- * @author con4gis contributors (see "authors.txt")
- * @license LGPL-3.0-or-later
- * @copyright (c) 2010-2021, by Küstenschmiede GmbH Software & Design
- * @link https://www.con4gis.org
  */
 @font-face {
   font-family: 'Font Awesome 5 Free';
