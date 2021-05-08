@@ -23,8 +23,8 @@ const paths = {
         styles: customPath + 'scss/*.scss',
     },
     dist: {
-        styles: customPath + 'css/dist',
-        stylesMin: customPath + 'css/dist',
+        styles: customPath + 'dist/css',
+        stylesMin: customPath + 'dist/css',
     },
     watch: {
         styles: customPath + 'scss/**/*.scss',

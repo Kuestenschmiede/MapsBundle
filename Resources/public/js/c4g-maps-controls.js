@@ -171,6 +171,8 @@ export class MapsControls {
             let logoGraphic = document.createElement('img');
             logoGraphic.src = 'bundles/con4gismaps/images/logo_con4gis.svg';
             logoGraphic.alt = 'con4gis logo';
+            logoGraphic.height = '24px';
+            logoGraphic.width = '67px';
             logoLink.appendChild(logoGraphic);
             controlContainerBottomLeft.appendChild(logoLink);
         }

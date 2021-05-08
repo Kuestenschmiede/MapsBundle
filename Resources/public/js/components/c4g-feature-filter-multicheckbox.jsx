@@ -56,7 +56,7 @@ export class FeatureFilterMultiCheckbox extends Component {
             liClass += this.props.checkedItems.length === 0 ? "" : " clicked"
             return (
                 <li className={liClass}>
-                    <img src={this.props.feature.image}/>
+                    <img src={this.props.feature.image} title={this.props.feature.name} width={this.props.feature.width} height={this.props.feature.height}/>
                     <strong className={className} onMouseUp={(evt) => {this.props.filterLayers(this.props.feature.filters[1].identifier, this.props.id, true); evt.stopPropagation(); evt.preventDefault();}}>{utils.decodeHTML(this.props.feature.name)}</strong>
                 </li>
             );

@@ -26,7 +26,7 @@ class ResourceLoader extends coreResourceLoader
 {
     private static $DEBUG = false;
 
-    const BUNDLE_CSS_PATH = 'bundles/con4gismaps/css/';
+    const BUNDLE_CSS_PATH = 'bundles/con4gismaps/dist/css/';
     const BUNDLE_JS_PATH = 'bundles/con4gismaps/build/';
     const VENDOR_PATH = 'bundles/con4gismaps/vendor/';
 
@@ -90,23 +90,17 @@ class ResourceLoader extends coreResourceLoader
         }
 
         if ($mapData['router_enable']) {
-            parent::loadJavaScriptResource('/bundles/con4giscore/vendor/jQuery/jquery-ui-1.12.1.custom/jquery-ui.js|async|static', self::JAVASCRIPT, 'jquery-ui');
+            parent::loadJavaScriptResource('/bundles/con4giscore/vendor/jQuery/jquery-ui-1.12.1.custom/jquery-ui.min.js|async|static', self::JAVASCRIPT, 'jquery-ui');
 
-            parent::loadCssResource('/bundles/con4giscore/vendor/jQuery/jquery-ui-1.12.1.custom/jquery-ui.css', 'jquery-ui-css');
-            parent::loadCssResource(self::BUNDLE_CSS_PATH . 'dist/c4g-routing.min.css', 'routing-css'); // TODO: check if path is correct
+            parent::loadCssResource('/bundles/con4giscore/vendor/jQuery/jquery-ui-1.12.1.custom/jquery-ui.min.css', 'jquery-ui-css');
+            parent::loadCssResource(self::BUNDLE_CSS_PATH . 'c4g-routing.min.css', 'routing-css'); // TODO: check if path is correct
             parent::loadCssResource('/bundles/con4giscore/css/c4g-cached-inputfield.css', 'c4g-cached-inputfield');
         }
         if ($mapData['feEditorProfile'] || $mapData['beEditorProfile']) {
-            parent::loadCssResource(self::BUNDLE_CSS_PATH . 'dist/c4g-project-editor.min.css', 'project-editor-css'); // TODO: check if path is correct
+            parent::loadCssResource(self::BUNDLE_CSS_PATH . 'c4g-project-editor.min.css', 'project-editor-css'); // TODO: check if path is correct
         }
 
-//        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'c4g-maps-ol.css'); //copy of original ol.css / check source with new versions
-//        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'c4g-maps-general.css');
-//        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/icons/c4g-theme-icons.css');
-//        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/buttons/c4g-theme-buttons.css');
-//        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/colors/c4g-theme-colors.css');
-//        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'themes/effects/c4g-theme-effects.css');
-        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'dist/maps.min.css');
+        parent::loadCssResource(self::BUNDLE_CSS_PATH . 'maps.min.css');
 
         // TODO: load editor css from another bundle
 

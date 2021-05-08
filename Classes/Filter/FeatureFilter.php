@@ -32,7 +32,7 @@ class FeatureFilter implements \JsonSerializable
     private $filters = [
         [
             'identifier' => 'all',
-            'translation' => 'Alle anzeigen',
+            'translation' => 'Alle anzeigen', //ToDo
         ],
     ];
 
@@ -61,6 +61,9 @@ class FeatureFilter implements \JsonSerializable
             'name' => $this->fieldName,
             'image' => $this->image,
             'filters' => $this->filters,
+            'width' => $this->image && getimagesize($this->image) ? getimagesize($this->image)[0] : '100%',
+            'height' => $this->image && getimagesize($this->image) ? getimagesize($this->image)[1] : '100%'
+
         ];
     }
 

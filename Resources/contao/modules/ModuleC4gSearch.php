@@ -52,7 +52,7 @@ class ModuleC4gSearch extends \Module
         $pageId = $this->mapPage;
         $pageUrl = Controller::replaceInsertTags("{{link_url::" . $pageId . "}}");
         ResourceLoader::loadJavaScriptDeferred('c4g-search', "/bundles/con4gismaps/build/c4g-search.js");
-        ResourceLoader::loadCssResourceDeferred("/bundles/con4gismaps/css/c4g-search-general.css");
+        ResourceLoader::loadCssResourceDeferred("/bundles/con4gismaps/dist/css/c4g-search-general.min.css");
         $template = $this->Template;
         $objSettings = C4gSettingsModel::findSettings();
         $objMapsProfile = C4gMapProfilesModel::findByPk($objSettings->defaultprofile);
