@@ -152,7 +152,7 @@ export class C4gBaselayerController {
         break;
       case 'osm':
         if (sourceConfigs.osm[baseLayerConfig.style]) {
-          if (HofffConsentManager) {
+          if (typeof HofffConsentManager !== "undefined") {
             let consentString = baseLayerConfig.style == "Mapnik" ? "external:open_street_map_osfm" : "external:open_street_map_fossgis"
             let dummyUrl = this.mapController.data.dummyBaselayer;
             let dummySource = null;
@@ -242,7 +242,7 @@ export class C4gBaselayerController {
                 )
             )
           }
-          if (HofffConsentManager) {
+          if (typeof HofffConsentManager !== "undefined") {
             let dummyUrl = this.mapController.data.dummyBaselayer;
             let dummySource = null;
             if (dummyUrl) {
@@ -306,7 +306,7 @@ export class C4gBaselayerController {
         layerOptions.attributions = config.attribution + ' ' + layerOptions.attributions;
         let source = new XYZ(layerOptions);
         newBaselayer = new TileLayer();
-        if (HofffConsentManager) {
+        if (typeof HofffConsentManager !== "undefined") {
             let dummyUrl = this.mapController.data.dummyBaselayer;
             let dummySource = null;
             if (dummyUrl) {
@@ -352,7 +352,7 @@ export class C4gBaselayerController {
                 layerOptions
               ));
           }
-          if (HofffConsentManager) {
+          if (typeof HofffConsentManager !== "undefined") {
             let dummyUrl = this.mapController.data.dummyBaselayer;
             let dummySource = null;
             if (dummyUrl) {
@@ -395,7 +395,7 @@ export class C4gBaselayerController {
           sourceConfigs.mapz,
           layerOptions)
         );
-        if (HofffConsentManager) {
+        if (typeof HofffConsentManager !== "undefined") {
           let dummyUrl = this.mapController.data.dummyBaselayer;
           let dummySource = null;
           if (dummyUrl) {
@@ -427,7 +427,7 @@ export class C4gBaselayerController {
           jQuery.extend(sourceConfigs.otm,
           layerOptions)
         );
-        if (HofffConsentManager) {
+        if (typeof HofffConsentManager !== "undefined") {
           let dummyUrl = this.mapController.data.dummyBaselayer;
           let dummySource = null;
           if (dummyUrl) {
@@ -479,7 +479,7 @@ export class C4gBaselayerController {
             let source = new TileJSON({
               url: baseLayerConfig.url + 'styles/' + baseLayerConfig.style+'.json?key='+baseLayerConfig.api_key
             })
-            if (HofffConsentManager) {
+            if (typeof HofffConsentManager !== "undefined") {
               let dummyUrl = this.mapController.data.dummyBaselayer;
               let dummySource = null;
               if (dummyUrl) {
@@ -553,7 +553,7 @@ export class C4gBaselayerController {
           newBaselayer = new TileLayer({
             preload: Infinity
           });
-          if (HofffConsentManager) {
+          if (typeof HofffConsentManager !== "undefined") {
             let dummyUrl = this.mapController.data.dummyBaselayer;
             let dummySource = null;
             if (dummyUrl) {
@@ -604,7 +604,7 @@ export class C4gBaselayerController {
               sourceConfigs.thunderforest[baseLayerConfig.thunderforest_type],
               layerOptions)
           );
-          if (HofffConsentManager) {
+          if (typeof HofffConsentManager !== "undefined") {
             let dummyUrl = this.mapController.data.dummyBaselayer;
             let dummySource = null;
             if (dummyUrl) {
@@ -653,7 +653,7 @@ export class C4gBaselayerController {
             key: baseLayerConfig.api_key,
             imagerySet: baseLayerConfig.style
           })
-          if (HofffConsentManager) {
+          if (typeof HofffConsentManager !== "undefined") {
             let dummyUrl = this.mapController.data.dummyBaselayer;
             let dummySource = null;
             if (dummyUrl) {
