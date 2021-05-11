@@ -16,8 +16,7 @@ $strName = 'tl_c4g_editor_configuration';
 
 /** FIELDS */
 $GLOBALS['TL_LANG'][$strName]['name'] = array("Name", "Geben Sie einen Namen für die Editorkonfiguration an.");
-$GLOBALS['TL_LANG'][$strName]['type'] = array("Art des Editors", "Wählen Sie aus, ob Sie den Backend- oder den Frontend-Editor konfigurieren wollen.");
-$GLOBALS['TL_LANG'][$strName]['categories'] = array("Kategorien", "Wählen Sie die Kategorien aus, die im Editor zur Verfügung stehen sollen..");
+$GLOBALS['TL_LANG'][$strName]['types'] = array("Elemente", "Wählen Sie die Lokationsstile aus, mit welchen im Editor gezeichnet werden soll.");
 $GLOBALS['TL_LANG'][$strName]['editor_vars'] = ['Zusatzfelder', 'Zusatzfelder stehen für POIs, Strecken und Flächen zur Verfügung und können über ${Schlüssel} im Popup, Label und Tooltip in die Karte eingefügt werden.'];
 $GLOBALS['TL_LANG'][$strName]['editor_show_items'] = ['Alle Karteneinträge im Editor anzeigen', 'Zeigt im Editor nicht nur den zu bearbeitenden Karteneintrag an, sondern auch alle Anderen.'];
 $GLOBALS['TL_LANG'][$strName]['editor_helpurl'] = ['Hilfe-Link', 'Wenn hier eine URL eingetragen wird, so erscheint ein "Hilfe" Link im Editor, der zu der angegebenen URL führt.'];
@@ -42,5 +41,14 @@ $GLOBALS['TL_LANG'][$strName]['references']['backend'] = 'Backend';
 $GLOBALS['TL_LANG'][$strName]['references']['point'] = 'POI';
 $GLOBALS['TL_LANG'][$strName]['references']['linestring'] = 'Strecke';
 $GLOBALS['TL_LANG'][$strName]['references']['polygon'] = 'Fläche';
-$GLOBALS['TL_LANG'][$strName]['references']['freehand'] = 'Freihand zeichnen';
 $GLOBALS['TL_LANG'][$strName]['references']['circle'] = 'Kreis';
+
+/** Types **/
+$GLOBALS['TL_LANG']['tl_c4g_editor_configuration']['types']['type'] = "Lokationstyp";
+$GLOBALS['TL_LANG']['tl_c4g_editor_configuration']['types']['caption'] = "Name";
+$GLOBALS['TL_LANG']['tl_c4g_editor_configuration']['types']['locstyle'] = "Lokationsstil";
+
+/** ADDVARS **/
+
+$GLOBALS['TL_LANG']['tl_c4g_editor_configuration']['types']['name'] = "Name";
+$GLOBALS['TL_LANG']['tl_c4g_editor_configuration']['types']['key'] = "Schlüssel";

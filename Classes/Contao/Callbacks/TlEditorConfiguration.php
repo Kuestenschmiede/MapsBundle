@@ -35,24 +35,6 @@ class TlEditorConfiguration
      */
     public function getTypes($multiColumnWizard)
     {
-        $arrColumnTypes = [
-            'label' => &$GLOBALS['TL_LANG']['tl_c4g_editor_configuration']['types']['type'],
-            'inputType' => 'select',
-            'eval' => ['chosen' => true, 'includeBlankOption' => true],
-            'options' => [
-                "point"         => "Arschkopf",
-                "linestring"    => "Arschkopf",
-                "polygon"       => "Arschkopf",
-                "circle"        => "Arschkopf",
-            ]
-//'options' => [
-//                "point"         => $GLOBALS['TL_LANG'][$strName]['references']['point'],
-//                "linestring"    => $GLOBALS['TL_LANG'][$strName]['references']['linestring'],
-//                "polygon"       => $GLOBALS['TL_LANG'][$strName]['references']['polygon'],
-//                "circle"        => $GLOBALS['TL_LANG'][$strName]['references']['circle'],
-//            ]
-        ];
-
         $arrColumnCaption = [
             'label' => &$GLOBALS['TL_LANG']['tl_c4g_editor_configuration']['types']['caption'],
             'filter' => false,
@@ -71,13 +53,22 @@ class TlEditorConfiguration
             $arrOptions[$arrLoc['id']] = $arrLoc['name'];
         }
         $arrColumnLocs['options'] = $arrOptions;
-        $return = [
+        $arrColumnTypes = [
+            'label' => &$GLOBALS['TL_LANG']['tl_c4g_editor_configuration']['types']['type'],
+            'inputType' => 'select',
+            'eval' => ['chosen' => true,'style' => 'min-width:200px;width:200px;'],
+            'options' => [
+                "point" => &$GLOBALS['TL_LANG']['tl_c4g_editor_configuration']['references']['point'],
+                "linestring" => &$GLOBALS['TL_LANG']['tl_c4g_editor_configuration']['references']['linestring'],
+                "polygon" => &$GLOBALS['TL_LANG']['tl_c4g_editor_configuration']['references']['polygon'],
+                "circle" => &$GLOBALS['TL_LANG']['tl_c4g_editor_configuration']['references']['circle'],
+            ]
+        ];
+        return [
             'type' => $arrColumnTypes,
             'caption' => $arrColumnCaption,
             'locstyle' => $arrColumnLocs
         ];
-
-        return $return;
     }
     public function getEditorProfiles()
     {
