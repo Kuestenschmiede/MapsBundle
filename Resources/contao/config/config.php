@@ -59,6 +59,12 @@ $GLOBALS['BE_MOD']['con4gis'] = array_merge($GLOBALS['BE_MOD']['con4gis'], [
             'brick' => 'maps',
             'tables' => ['tl_c4g_routing_configuration'],
             'icon' => 'bundles/con4gismaps/images/be-icons/routingconfig.svg'
+        ],
+        'c4g_editor_configuration' =>
+        [
+            'brick'     => 'maps',
+            'tables'    => ['tl_c4g_editor_configuration'],
+            'icon'      => 'bundles/con4giscore/images/be-icons/edit.svg'
         ]
     ]
 );

@@ -19,6 +19,7 @@ use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapSettingsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use con4gis\MapsBundle\Resources\contao\modules\ExternalMapElement;
+use con4gis\MapsBundle\Entity\EditorConfiguration;
 use Contao\Controller;
 use Contao\Input;
 use Contao\Model\Collection;
@@ -120,81 +121,49 @@ class MapDataConfigurator
             $mapData['editor'] = [];
             $mapData['editor']['enable'] = true;
             $mapData['editor']['type'] = 'backend';
-            $mapData['beEditorProfile'] = 1;
-            $mapData['editor']['config']['drawStyles'] = [];
-            if ($profile->beEditorPointLocstyle) {
-                $mapData['editor']['config']['drawStyles']['Point'] = [
-                    'categories' => [
-                        [
-                            'elements' => [
-                                [
-                                    'categoryId' => 0,
-                                    'id' => 1,
-                                    'name' => 'Punkt',
-                                    'styleId' => $profile->beEditorPointLocstyle,
-                                ],
-                            ],
-                            'name' => 'Punkt',
-                            'id' => 0,
-                        ],
-                    ],
-                ];
-            }
-            if ($profile->beEditorLineStringLocstyle) {
-                $mapData['editor']['config']['drawStyles']['LineString'] = [
-                    'categories' => [
-                        [
-                            'elements' => [
-                                [
-                                    'categoryId' => 0,
-                                    'id' => 1,
-                                    'name' => 'Strecke',
-                                    'styleId' => $profile->beEditorLineStringLocstyle,
-                                ],
-                            ],
-                            'name' => 'Punkt',
-                            'id' => 0,
-                        ],
-                    ],
-                ];
-            }
-            if ($profile->beEditorPolygonLocstyle) {
-                $mapData['editor']['config']['drawStyles']['Polygon'] = [
-                    'categories' => [
-                        [
-                            'elements' => [
-                                [
-                                    'categoryId' => 0,
-                                    'id' => 1,
-                                    'name' => 'Polygon',
-                                    'styleId' => $profile->beEditorPolygonLocstyle,
-                                ],
-                            ],
-                            'name' => 'Punkt',
-                            'id' => 0,
-                        ],
-                    ],
-                ];
-            }
-            if ($profile->beEditorCircleLocstyle) {
-                $mapData['editor']['config']['drawStyles']['Circle'] = [
-                    'categories' => [
-                        [
-                            'elements' => [
-                                [
-                                    'categoryId' => 0,
-                                    'id' => 1,
-                                    'name' => 'Kreis',
-                                    'styleId' => $profile->beEditorCircleLocstyle,
-                                ],
-                            ],
-                            'name' => 'Punkt',
-                            'id' => 0,
-                        ],
-                    ],
-                ];
-            }
 
+            $em = System::getContainer()->get('doctrine.orm.default_entity_manager');
+            $config = $em->getRepository(EditorConfiguration::class)->findOneById($profile->editorProfile);
+            $mapData['editor']['config']['drawStyles'] = [
+                "Point"         => ['elements' => []],
+                "LineString"    => ['elements' => []],
+                "Polygon"       => ['elements' => []],
+                "Circle"        => ['elements' => []]
+            ];
+            $counter = 1;
+            foreach ($config->getTypes() as $type) {
+                $counter++;
+                switch ($type['type']) {
+                    case "point":
+                        $mapData['editor']['config']['drawStyles']['Point']['elements'][] = [
+                            'id' => $counter,
+                            'name' => $type['caption'],
+                            'styleId'   => $type['locstyle']
+                        ];
+                        break;
+                    case "linestring":
+                        $mapData['editor']['config']['drawStyles']['LineString']['elements'][] = [
+                            'id' => $counter,
+                            'name' => $type['caption'],
+                            'styleId'   => $type['locstyle']
+                        ];
+                        break;
+                    case "polygon":
+                        $mapData['editor']['config']['drawStyles']['Polygon']['elements'][] = [
+                            'id' => $counter,
+                            'name' => $type['caption'],
+                            'styleId'   => $type['locstyle']
+                        ];
+                        break;
+                    case "circle":
+                        $mapData['editor']['config']['drawStyles']['Circle']['elements'][] = [
+                            'id' => $counter,
+                            'name' => $type['caption'],
+                            'styleId'   => $type['locstyle']
+                        ];
+                        break;
+                }
+            }
             $mapFunctions = unserialize($profile->mapFunctions);
             $buttons = array_flip($mapFunctions);
             $mapData['editor']['enable'] = array_key_exists('editor', $buttons) ? $buttons['editor'] + 1 : 0;

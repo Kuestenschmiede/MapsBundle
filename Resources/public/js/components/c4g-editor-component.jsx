@@ -168,22 +168,16 @@ export class EditorComponent extends Component {
             if (json.drawStyles.hasOwnProperty(i)) {
                 this.config[i] = [];
                 let drawStyle = json.drawStyles[i];
-                for (let j in drawStyle.categories) {
-                    if (drawStyle.categories.hasOwnProperty(j)) {
-                        let category = drawStyle.categories[j];
-                        for (let k in category.elements) {
-                            if (category.elements.hasOwnProperty(k)) {
-                                let element = category.elements[k];
-                                this.config[i].push(element);
-                                let checkLocstyle = this.arrLocstyles.findIndex((locstyle) => locstyle === element.styleId);
-                                if (checkLocstyle === -1 && element.styleId) {
-                                    this.arrLocstyles.push(element.styleId);
-                                }
-                            }
+                for (let j in drawStyle.elements) {
+                    if (drawStyle.elements.hasOwnProperty(j)) {
+                        let element = drawStyle.elements[j];
+                        this.config[i].push(element);
+                        let checkLocstyle = this.arrLocstyles.findIndex((locstyle) => locstyle === element.styleId);
+                        if (checkLocstyle === -1 && element.styleId) {
+                            this.arrLocstyles.push(element.styleId);
                         }
                     }
                 }
-
             }
         }
         this.props.mapController.proxy.locationStyleController.loadLocationStyles(this.arrLocstyles, {
