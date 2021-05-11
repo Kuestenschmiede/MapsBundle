@@ -62,7 +62,7 @@ class FeatureFilter implements \JsonSerializable
             'image' => $this->image,
             'filters' => $this->filters,
             'width' => $this->image && getimagesize($this->image) ? getimagesize($this->image)[0] : '100%',
-            'height' => $this->image && getimagesize($this->image) ? getimagesize($this->image)[1] : '100%'
+            'height' => $this->image && getimagesize($this->image) ? getimagesize($this->image)[1] : '100%',
 
         ];
     }

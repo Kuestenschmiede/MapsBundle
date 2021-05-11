@@ -8,8 +8,8 @@
  * @link https://www.con4gis.org
  */
 
-import React, {Component} from "react";
-import {Titlebar} from "./c4g-titlebar.jsx";
+import React, {Component, Suspense} from "react";
+const Titlebar = React.lazy(() => import("./c4g-titlebar.jsx"));
 import {getLanguage} from "../c4g-maps-i18n";
 import {Control} from "ol/control";
 import {utils} from "../c4g-maps-utils";
@@ -65,9 +65,11 @@ export default class Infopage extends Component {
     
     return (
       <div className={"c4g-infopage-wrapper"}>
-        <Titlebar wrapperClass={"c4g-infopage-header"} headerClass={"c4g-infopage-headline"}
-                  header={this.langConstants.INFOPAGE} closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close} closeBtnTitle={this.langConstants.CLOSE}>
-        </Titlebar>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Titlebar wrapperClass={"c4g-infopage-header"} headerClass={"c4g-infopage-headline"}
+                    header={this.langConstants.INFOPAGE} closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close} closeBtnTitle={this.langConstants.CLOSE}>
+          </Titlebar>
+        </Suspense>
         <div className={"c4g-infopage-content"} dangerouslySetInnerHTML={{__html: this.props.infoContent}}>
         </div>
       </div>
