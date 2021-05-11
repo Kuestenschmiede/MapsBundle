@@ -130,6 +130,7 @@ class MapDataConfigurator
                 "Polygon"       => ['elements' => []],
                 "Circle"        => ['elements' => []]
             ];
+            $mapData['editor']['config']['editorVars'] = $config->getEditorVars();
             $counter = 1;
             foreach ($config->getTypes() as $type) {
                 $counter++;

@@ -25,6 +25,7 @@ export class EditorView extends Component {
         const scope = this;
         this.state = {
             freehand: false,
+            selectedFeature: false,
             features: "[]",
             activeElement: props.elements[0] ? props.elements[0].id : 0,
             activeStyle: props.elements[0] ? props.elements[0].styleId : 0,
@@ -139,6 +140,10 @@ export class EditorView extends Component {
                     features: this.interaction[0].getFeatures(),
                     pixelTolerance: 20
                 }));
+                this.interaction[0].on('select', (e) => {
+                    let feature = e.selected[0];
+                    this.setState({selectedFeature: feature});
+                });
                 this.interaction[1].on('modifyend', (e) => {
                     let feature = e.features.getArray()[0];
                     let geojson = new GeoJSON().writeFeatureObject(feature, {
@@ -171,13 +176,35 @@ export class EditorView extends Component {
                 <button title={"Remove"} className={"c4g-editor-feature-delete " + (this.state.selectMode === "remove" ? "c4g-active": "c4g-inactive")} onMouseUp={() => {this.changeSelectMode("remove")}}/>
             </div>)
         }
+        let arrFormEditorVars = [];
+        if (this.state.selectedFeature) {
+            for (let i in this.props.editorVars) {
+                if (this.props.editorVars.hasOwnProperty(i)) {
+                    let editorVar = this.props.editorVars[i];
+                    let value = this.state.selectedFeature.get(editorVar.key) ? this.state.selectedFeature.get(editorVar.key) : "";
+                    arrFormEditorVars.push(
+                        <form className={"c4g-editor-vars-input"}>
+                            <label>
+                                {editorVar.caption}:
+                                <input type="text" value={value} name={editorVar.key} onChange={(event)=>{this.handleVarChange(event)}}/>
+                            </label>
+                        </form>
+                    );
+                }
+            }
+        }
         return (
-            <div>
-                {customButton}
-                <div className={"c4g-editor-element-selection"}>
-                    {elements}
+            <React.Fragment>
+                <div>
+                    {customButton}
+                    <div className={"c4g-editor-element-selection"}>
+                        {elements}
+                    </div>
                 </div>
-            </div>
+                <div className={"c4g-editor-vars"}>
+                    {arrFormEditorVars}
+                </div>
+            </React.Fragment>
         )
 
     }
@@ -202,14 +229,23 @@ export class EditorView extends Component {
         }
     }
 
-    // shouldComponentUpdate(nextProps, nextState, nextContext) {
-    //     console.log("shouldComponentUpdate");
-    // }
     changeSelectMode(string) {
         this.setState({
             selectMode: string
         });
     }
+    handleVarChange(event) {
+        let value = event.target.value;
+        let name = event.target.name;
+        this.state.selectedFeature.set(name, value);
+        let geojson = new GeoJSON().writeFeatureObject(this.state.selectedFeature, {
+            dataProjection: "EPSG:4326",
+            featureProjection: "EPSG:3857"
+        })
+        this.props.modifyFeature(geojson);
+        this.setState({"selectedFeature" : this.state.selectedFeature});
+    }
+
     changeFreehand() {
         this.setState({
             freehand: !this.state.freehand
