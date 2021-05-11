@@ -152,7 +152,6 @@ export class EditorView extends Component {
             }
         }
         let elements = null;
-        debugger;
         if (this.props.elements && this.props.elements.length > 1) {
             elements = this.props.elements.map((element) => {
                 return (<button key={element.id} style={{height: "32px", width: "32px"}}

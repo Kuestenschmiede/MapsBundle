@@ -7,10 +7,9 @@
  * @copyright (c) 2010-2021, by Küstenschmiede GmbH Software & Design
  * @link https://www.con4gis.org
  */
-import React, { Component } from "react";
+import React, { Component,Suspense } from "react";
 import {EditorView} from "./c4g-editor-view.jsx";
 import {getEditorLanguage} from "./../c4g-editor-i18n";
-import {Titlebar} from "./c4g-titlebar.jsx"
 import {Control} from "ol/control";
 import {Group, Vector} from "ol/layer";
 import {GeoJSON} from "ol/format";
@@ -20,6 +19,8 @@ import {Collection} from "ol";
 import {Circle} from "ol/geom";
 import {utils} from "./../c4g-maps-utils";
 import {Fill, Style, Text} from "ol/style";
+const Titlebar = React.lazy(() => import("./c4g-titlebar.jsx"));
+
 
 export class EditorComponent extends Component {
     constructor(props) {
@@ -284,9 +285,11 @@ export class EditorComponent extends Component {
         // }
         return (
             <div className={"c4g-editor-wrapper"}>
-                <Titlebar wrapperClass={"c4g-editor-header"} headerClass={"c4g-editor-headline"} hideContainer={".c4g-editor-container"}
-                          header={this.langConstants.EDITOR} closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close} closeBtnTitle={this.langConstants.CLOSE}>
-                </Titlebar>
+                <Suspense fallback={<div>Loading...</div>}>
+                    <Titlebar wrapperClass={"c4g-editor-header"} headerClass={"c4g-editor-headline"} hideContainer={".c4g-editor-container"}
+                              header={this.langConstants.EDITOR} closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close} closeBtnTitle={this.langConstants.CLOSE}>
+                    </Titlebar>
+                </Suspense>
                 <div className={"c4g-editor-mode-switcher"}>
                     {this.modes.map(function(element, index) {
                         if (element === "select" || (scope.config[element] && scope.config[element].length > 0)) {
