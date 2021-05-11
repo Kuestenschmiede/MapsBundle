@@ -126,8 +126,7 @@ export class C4gBaselayerController {
     var newBaselayer = {};
     layerOptions = layerOptions || {};
 
-    let isSecure = window.isSecureContext;
-    if (isSecure) {
+    if (window.isSecureContext) {
       layerOptions.crossOrigin = 'anonymous';
     }
 
@@ -153,14 +152,50 @@ export class C4gBaselayerController {
         break;
       case 'osm':
         if (sourceConfigs.osm[baseLayerConfig.style]) {
-          newBaselayer = new TileLayer({
-            source: new OSM(
-              jQuery.extend(
-                sourceConfigs.osm[baseLayerConfig.style],
-                layerOptions
+          if (typeof HofffConsentManager !== "undefined") {
+            let consentString = baseLayerConfig.style == "Mapnik" ? "external:open_street_map_osfm" : "external:open_street_map_fossgis"
+            let dummyUrl = this.mapController.data.dummyBaselayer;
+            let dummySource = null;
+            if (dummyUrl) {
+              dummySource = new XYZ({
+                url: dummyUrl
+              });
+            }
+            newBaselayer = new TileLayer();
+            HofffConsentManager.addEventListener('consent:accepted', function (event) {
+              if (event.consentId == consentString) {
+                newBaselayer.setSource(new OSM(
+                    jQuery.extend(
+                        sourceConfigs.osm[baseLayerConfig.style],
+                        layerOptions
+                    )
+                ));
+              }
+            });
+            HofffConsentManager.addEventListener('consent:revoked', function (event) {
+              if (event.consentId == consentString) {
+                newBaselayer.setSource(dummySource);
+              }
+            })
+            if (!HofffConsentManager.requiresConsent(consentString)) {
+              newBaselayer.setSource(new OSM(
+                  jQuery.extend(
+                      sourceConfigs.osm[baseLayerConfig.style],
+                      layerOptions
+                  )
+              ));
+            }
+          }
+          else {
+            newBaselayer = new TileLayer({
+              source: new OSM(
+                  jQuery.extend(
+                      sourceConfigs.osm[baseLayerConfig.style],
+                      layerOptions
+                  )
               )
-            )
-          });
+            });
+          }
         }
         else if (baseLayerConfig.style === 'osm_custom') {
           // custom
@@ -186,27 +221,79 @@ export class C4gBaselayerController {
       case 'stamen':
         if (sourceConfigs.stamen[baseLayerConfig.style]) {
           // Stamen
+          let source1,
+              source2;
           if (baseLayerConfig.style === 'Watercolor') {
             newBaselayer = new LayerGroup({
-              layers: [new TileLayer({
-                source: new Stamen({
-                  layer: 'watercolor'
-                })
-              }),
-                new TileLayer({
-                  source: new Stamen({
-                    layer: 'terrain-labels'
-                  })
-                })]
+              layers: [new TileLayer(),
+                new TileLayer()]
+            });
+            source1 = new Stamen({
+              layer: 'watercolor'
+            });
+            source2 = new Stamen({
+              layer: 'terrain-labels'
             });
           } else {
-            newBaselayer = new TileLayer({
-              source: new Stamen(
-                  jQuery.extend(
-                      sourceConfigs.stamen[baseLayerConfig.style]
-                  )
-              )
+            newBaselayer = new TileLayer();
+            source1 = new Stamen(
+                jQuery.extend(
+                    sourceConfigs.stamen[baseLayerConfig.style]
+                )
+            )
+          }
+          if (typeof HofffConsentManager !== "undefined") {
+            let dummyUrl = this.mapController.data.dummyBaselayer;
+            let dummySource = null;
+            if (dummyUrl) {
+              dummySource = new XYZ({
+                url: dummyUrl
+              });
+            }
+            HofffConsentManager.addEventListener('consent:accepted', function (event) {
+              if (event.consentId == "external:stamen") {
+                if (newBaselayer instanceof LayerGroup) {
+                  let array = newBaselayer.getLayers().getArray();
+                  array[0].setSource(source1);
+                  array[1].setSource(source2);
+                }
+                else {
+                  newBaselayer.setSource(source1);
+                }
+              }
             });
+            HofffConsentManager.addEventListener('consent:revoked', function (event) {
+              if (event.consentId == "external:stamen") {
+                if (newBaselayer instanceof LayerGroup) {
+                  let array = newBaselayer.getLayers().getArray();
+                  array[0].setSource(dummySource);
+                  array[1].setSource(dummySource);
+                }
+              else {
+                  newBaselayer.setSource(dummySource);
+                }
+              }
+            })
+            if (!HofffConsentManager.requiresConsent('external:stamen')) {
+              if (newBaselayer instanceof LayerGroup) {
+                let array = newBaselayer.getLayers().getArray();
+                array[0].setSource(source1);
+                array[1].setSource(source2);
+              }
+              else {
+                newBaselayer.setSource(source1);
+              }
+            }
+          }
+          else {
+            if (newBaselayer instanceof LayerGroup) {
+              let array = newBaselayer.getLayers().getArray();
+              array[0].setSource(source1);
+              array[1].setSource(source2);
+            }
+            else {
+              newBaselayer.setSource(source1);
+            }
           }
         }
         else {
@@ -217,29 +304,78 @@ export class C4gBaselayerController {
         let config = this.baseKeys[baseLayerConfig.id];
         layerOptions.url = baseLayerConfig.url.replace('{key}', config['key']);
         layerOptions.attributions = config.attribution + ' ' + layerOptions.attributions;
-        newBaselayer = new TileLayer({
-          source: new XYZ(layerOptions)
-        });
+        let source = new XYZ(layerOptions);
+        newBaselayer = new TileLayer();
+        if (typeof HofffConsentManager !== "undefined") {
+            let dummyUrl = this.mapController.data.dummyBaselayer;
+            let dummySource = null;
+            if (dummyUrl) {
+              dummySource = new XYZ({
+                url: dummyUrl
+              });
+            }
+            HofffConsentManager.addEventListener('consent:accepted', function (event) {
+              if (event.consentId == "external:con4gisio") {
+                newBaselayer.setSource(source);
+              }
+            });
+            HofffConsentManager.addEventListener('consent:revoked', function (event) {
+              if (event.consentId == "external:con4gisio") {
+                newBaselayer.setSource(dummySource);
+              }
+            });
+            if (!HofffConsentManager.requiresConsent('external:con4gisio')) {
+              newBaselayer.setSource(source);
+            }
+            else if (dummySource) {
+              newBaselayer.setSource(dummySource);
+            }
+          }
+        else {
+          newBaselayer.setSource(source);
+        }
         break;
       case 'mapbox':
         if (baseLayerConfig.api_key && baseLayerConfig.app_id && baseLayerConfig.mapbox_type) {
-
+          let source;
+          newBaselayer = new TileLayer();
           if (baseLayerConfig.mapbox_type === 'Mapbox') {
             layerOptions.url = baseLayerConfig.url + baseLayerConfig.app_id + '/tiles/{z}/{x}/{y}?access_token=' + baseLayerConfig.api_key;
-            newBaselayer = new TileLayer({
-              source: new XYZ(
+              source = new XYZ(
                 jQuery.extend(sourceConfigs.mapbox[baseLayerConfig.mapbox_type], layerOptions)
-              )
-            });
+              );
           } else {
             layerOptions.url = baseLayerConfig.url_classic + baseLayerConfig.app_id + '/{z}/{x}/{y}.png?access_token=' + baseLayerConfig.api_key;
 
-            newBaselayer = new TileLayer({
-              source: new XYZ(jQuery.extend(
+            source = new XYZ(jQuery.extend(
                 sourceConfigs.mapbox[baseLayerConfig.mapbox_type],
                 layerOptions
-              ))
+              ));
+          }
+          if (typeof HofffConsentManager !== "undefined") {
+            let dummyUrl = this.mapController.data.dummyBaselayer;
+            let dummySource = null;
+            if (dummyUrl) {
+              dummySource = new XYZ({
+                url: dummyUrl
+              });
+            }
+            HofffConsentManager.addEventListener('consent:accepted', function (event) {
+              if (event.consentId == "external:mapbox") {
+                newBaselayer.setSource(source);
+              }
             });
+            HofffConsentManager.addEventListener('consent:revoked', function (event) {
+              if (event.consentId == "external:mapbox") {
+                newBaselayer.setSource(dummySource);
+              }
+            })
+            if (!HofffConsentManager.requiresConsent('external:mapbox')) {
+              newBaselayer.setSource(source);
+            }
+          }
+          else {
+            newBaselayer.setSource(source);
           }
         } else if (baseLayerConfig.hide_in_be) {
           layerOptions.url = "con4gis/baseLayerTileService/" + baseLayerConfig.id + "/{z}/{x}/{y}";
@@ -253,17 +389,69 @@ export class C4gBaselayerController {
         }
         break;
       case 'mapz' :
-        newBaselayer = new TileLayer({
-          source: new XYZ(jQuery.extend(
-              sourceConfigs.mapz,
-              layerOptions))
-        });
+        newBaselayer = new TileLayer();
+        source = new XYZ(
+          jQuery.extend(
+          sourceConfigs.mapz,
+          layerOptions)
+        );
+        if (typeof HofffConsentManager !== "undefined") {
+          let dummyUrl = this.mapController.data.dummyBaselayer;
+          let dummySource = null;
+          if (dummyUrl) {
+            dummySource = new XYZ({
+              url: dummyUrl
+            });
+          }
+          HofffConsentManager.addEventListener('consent:accepted', function (event) {
+            if (event.consentId == "external:mapz") {
+              newBaselayer.setSource(source);
+            }
+          });
+          HofffConsentManager.addEventListener('consent:revoked', function (event) {
+            if (event.consentId == "external:mapz") {
+              newBaselayer.setSource(dummySource);
+            }
+          })
+          if (!HofffConsentManager.requiresConsent('external:mapz')) {
+            newBaselayer.setSource(source);
+          }
+        }
+        else {
+          newBaselayer.setSource(source);
+        }
         break;
       case 'otm' :
-        newBaselayer = new TileLayer({
-          source: new XYZ(jQuery.extend(sourceConfigs.otm,
-              layerOptions))
-        });
+        newBaselayer = new TileLayer();
+        source = new XYZ(
+          jQuery.extend(sourceConfigs.otm,
+          layerOptions)
+        );
+        if (typeof HofffConsentManager !== "undefined") {
+          let dummyUrl = this.mapController.data.dummyBaselayer;
+          let dummySource = null;
+          if (dummyUrl) {
+            dummySource = new XYZ({
+              url: dummyUrl
+            });
+          }
+          HofffConsentManager.addEventListener('consent:accepted', function (event) {
+            if (event.consentId == "external:otm") {
+              newBaselayer.setSource(source);
+            }
+          });
+          HofffConsentManager.addEventListener('consent:revoked', function (event) {
+            if (event.consentId == "external:otm") {
+              newBaselayer.setSource(dummySource);
+            }
+          })
+          if (!HofffConsentManager.requiresConsent('external:otm')) {
+            newBaselayer.setSource(source);
+          }
+        }
+        else {
+          newBaselayer.setSource(source);
+        }
         break;
       case 'klokan':
         if (baseLayerConfig.api_key && baseLayerConfig.klokan_type) {
@@ -287,11 +475,35 @@ export class C4gBaselayerController {
             });
           } else {
             //layerOptions.url = baseLayerConfig.url + '{z}/{x}/{y}.pbf?key='+baseLayerConfig.api_key;
-             newBaselayer = new TileLayer({
-               source: new TileJSON({
-                  url: baseLayerConfig.url + 'styles/' + baseLayerConfig.style+'.json?key='+baseLayerConfig.api_key
-               })
-            });
+            newBaselayer = new TileLayer();
+            let source = new TileJSON({
+              url: baseLayerConfig.url + 'styles/' + baseLayerConfig.style+'.json?key='+baseLayerConfig.api_key
+            })
+            if (typeof HofffConsentManager !== "undefined") {
+              let dummyUrl = this.mapController.data.dummyBaselayer;
+              let dummySource = null;
+              if (dummyUrl) {
+                dummySource = new XYZ({
+                  url: dummyUrl
+                });
+              }
+              HofffConsentManager.addEventListener('consent:accepted', function (event) {
+                if (event.consentId == "external:klokan") {
+                  newBaselayer.setSource(source);
+                }
+              });
+              HofffConsentManager.addEventListener('consent:revoked', function (event) {
+                if (event.consentId == "external:klokan") {
+                  newBaselayer.setSource(dummySource);
+                }
+              })
+              if (!HofffConsentManager.requiresConsent('external:klokan')) {
+                newBaselayer.setSource(source);
+              }
+            }
+            else {
+              newBaselayer.setSource(source);
+            }
             // newBaselayer = new VectorTileLayer({
             //   source: new VectorTileSource(jQuery.extend(
             //     sourceConfigs.klokan[baseLayerConfig.klokan_type],
@@ -335,13 +547,37 @@ export class C4gBaselayerController {
             layerOptions.url = 'https://{1-4}.aerial.maps.cit.api.here.com/maptile/2.1/maptile/newest/hybrid.day/{z}/{x}/{y}/256/png' +
               '?app_id='+baseLayerConfig.app_id+'&app_code='+baseLayerConfig.api_key;
           }
-
-          newBaselayer = new TileLayer({
-            preload: Infinity,
-            source: new XYZ(jQuery.extend(
+          let source = new XYZ(jQuery.extend(
               sourceConfigs.here[baseLayerConfig.here_type],
-              layerOptions))
+              layerOptions));
+          newBaselayer = new TileLayer({
+            preload: Infinity
           });
+          if (typeof HofffConsentManager !== "undefined") {
+            let dummyUrl = this.mapController.data.dummyBaselayer;
+            let dummySource = null;
+            if (dummyUrl) {
+              dummySource = new XYZ({
+                url: dummyUrl
+              });
+            }
+            HofffConsentManager.addEventListener('consent:accepted', function (event) {
+              if (event.consentId == "external:here") {
+                newBaselayer.setSource(source);
+              }
+            });
+            HofffConsentManager.addEventListener('consent:revoked', function (event) {
+              if (event.consentId == "external:here") {
+                newBaselayer.setSource(dummySource);
+              }
+            })
+            if (!HofffConsentManager.requiresConsent('external:here')) {
+              newBaselayer.setSource(source);
+            }
+          }
+          else {
+            newBaselayer.setSource(source);
+          }
         }
         else if(baseLayerConfig.hide_in_be){
           layerOptions.url = layerOptions.url = "con4gis/baseLayerTileService/" + baseLayerConfig.id + "/{z}/{x}/{y}";
@@ -362,11 +598,37 @@ export class C4gBaselayerController {
             layerOptions.url = "https://tile.thunderforest.com/"+baseLayerConfig.style+"/{z}/{x}/{y}.png?apikey="+baseLayerConfig.api_key;
           }
 
-          newBaselayer = new TileLayer({
-            source: new XYZ(jQuery.extend(
+          newBaselayer = new TileLayer();
+          source = new XYZ(
+              jQuery.extend(
               sourceConfigs.thunderforest[baseLayerConfig.thunderforest_type],
-              layerOptions))
-          });
+              layerOptions)
+          );
+          if (typeof HofffConsentManager !== "undefined") {
+            let dummyUrl = this.mapController.data.dummyBaselayer;
+            let dummySource = null;
+            if (dummyUrl) {
+              dummySource = new XYZ({
+                url: dummyUrl
+              });
+            }
+            HofffConsentManager.addEventListener('consent:accepted', function (event) {
+              if (event.consentId == "external:thunderforest") {
+                newBaselayer.setSource(source);
+              }
+            });
+            HofffConsentManager.addEventListener('consent:revoked', function (event) {
+              if (event.consentId == "external:thunderforest") {
+                newBaselayer.setSource(dummySource);
+              }
+            })
+            if (!HofffConsentManager.requiresConsent('external:thunderforest')) {
+              newBaselayer.setSource(source);
+            }
+          }
+          else {
+            newBaselayer.setSource(source);
+          }
         }else if(baseLayerConfig.hide_in_be){
           layerOptions.url = "con4gis/baseLayerTileService/" + baseLayerConfig.id + "/{z}/{x}/{y}";
           newBaselayer = new TileLayer({
@@ -385,13 +647,37 @@ export class C4gBaselayerController {
         break;
       case 'bing':
         if (baseLayerConfig.api_key && baseLayerConfig.style) {
-          newBaselayer = new TileLayer({
-            source: new BingMaps({
-              culture: navigator.languages ? navigator.languages[0] : (navigator.language || navigator.userLanguage),
-              key: baseLayerConfig.api_key,
-              imagerySet: baseLayerConfig.style
+          newBaselayer = new TileLayer();
+          let source = new BingMaps({
+            culture: navigator.languages ? navigator.languages[0] : (navigator.language || navigator.userLanguage),
+            key: baseLayerConfig.api_key,
+            imagerySet: baseLayerConfig.style
+          })
+          if (typeof HofffConsentManager !== "undefined") {
+            let dummyUrl = this.mapController.data.dummyBaselayer;
+            let dummySource = null;
+            if (dummyUrl) {
+              dummySource = new XYZ({
+                url: dummyUrl
+              });
+            }
+            HofffConsentManager.addEventListener('consent:accepted', function (event) {
+              if (event.consentId == "external:bing") {
+                newBaselayer.setSource(source);
+              }
+            });
+            HofffConsentManager.addEventListener('consent:revoked', function (event) {
+              if (event.consentId == "external:bing") {
+                newBaselayer.setSource(dummySource);
+              }
             })
-          });
+            if (!HofffConsentManager.requiresConsent('external:bing')) {
+              newBaselayer.setSource(source);
+            }
+          }
+          else {
+            newBaselayer.setSource(source);
+          }
         } else {
           console.warn('wrong bing-key or invalid imagery-set!');
         }
@@ -614,7 +900,7 @@ export class C4gBaselayerController {
             layerOptions.attributions = sourceConfigs.thunderforest[baseLayerConfig.thunderforest_type].attributions;
             break;
           case 'con4gisIo':
-            layerOptions.attributions = 'Mapservices via <a href="https://con4gis.io" target="_blank" rel="noopener">con4gis.io</a>. '+OSM_REL_ATTRIBUTION;
+            layerOptions.attributions = 'Mapservices via <a href="https://con4gis.io" target="_blank" rel="noopener">con4gis.io</a>. '+ OSM_REL_ATTRIBUTION;
             break;
           default:
             layerOptions.attributions = OSM_REL_ATTRIBUTION;

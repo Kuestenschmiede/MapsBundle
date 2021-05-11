@@ -8,7 +8,7 @@
  * @link https://www.con4gis.org
  */
 
-import React, {Component} from "react";
+import React, {Component, Suspense} from "react";
 import {Control} from "ol/control";
 import {getLanguage} from "./../c4g-maps-i18n";
 import {cssConstants} from "./../c4g-maps-constant";
@@ -24,7 +24,7 @@ import {getVectorContext} from "ol/render";
 import {unByKey} from "ol/Observable";
 import {utils} from "../c4g-maps-utils";
 import {containsCoordinate, getHeight, getWidth} from "ol/extent";
-import {Titlebar} from "./c4g-titlebar";
+const Titlebar = React.lazy(() => import("./c4g-titlebar.jsx"));
 
 export default class GeoSearch extends Component {
 
@@ -142,9 +142,11 @@ export default class GeoSearch extends Component {
     return (
       <React.Fragment>
         <div className={cssConstants.GEOSEARCH_WRAPPER + " " + modeClass + " c4g-horizon"}>
-          <Titlebar wrapperClass={"c4g-geosearch-header"} header={headline} headerClass={"c4g-geosearch-headline"}
-                                detailBtnClass={""} detailBtnCb={""} closeBtnClass={closeBtnClass} closeBtnCb={closeBtnCb} closeBtnTitle={this.langConstants.CLOSE}>
-          </Titlebar>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Titlebar wrapperClass={"c4g-geosearch-header"} header={headline} headerClass={"c4g-geosearch-headline"}
+                      detailBtnClass={""} detailBtnCb={""} closeBtnClass={closeBtnClass} closeBtnCb={closeBtnCb} closeBtnTitle={this.langConstants.CLOSE}>
+            </Titlebar>
+          </Suspense>
           <div className={"c4g-geosearch-filter"}>
             <input type="text" onKeyDown={this.inputCallback} id={"c4g-geosearch-input"} placeholder={this.config.placeholder} aria-label={this.config.placeholder}/>
             <button className={cssConstants.GEOSEARCH_START} type={"button"} title={this.langConstants.CTRL_START_SEARCH} onMouseUp={this.startSearch}/>

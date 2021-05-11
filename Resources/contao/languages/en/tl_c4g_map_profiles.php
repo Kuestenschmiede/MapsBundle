@@ -22,6 +22,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['external_elements'] = ['External ele
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayers'] = ['Base layers', 'Check the baselayers you wish to see in the Starboard. Default: all. The sorting can be adjusted via the baselayer module (list).'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayer_filter'] = ['Enable basemap filter', 'Displays a search filter for the basemaps above the tree.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['default_baselayer'] = ['Default Base Layer', 'Select the base layer to be pre-selected when the map is loaded.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['dummyBaselayer'] = ['Dummy Base Layer', 'Choose a dummy-tile to be shown, when consent is not granted.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayerswitcher_label'] = ['Header Base Maps', 'Default: "Base Maps"'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayerswitcher_filter'] = ['Enables baselayer filter', 'Shows a filter field above the baselayerswitcher.'];
 

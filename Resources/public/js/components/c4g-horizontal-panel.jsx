@@ -20,6 +20,9 @@ export class HorizontalPanel extends Component {
     // create control to toggle the panel
     let element = document.createElement('div');
     let button = document.createElement('button');
+    if (props.title) {
+      button.title = props.title;
+    }
     element.className = (props.className || "c4g-horizontal-panel") + "-button-" + (props.direction || "top") + " ol-control " + "ol-unselectable";
     element.appendChild(button);
     button.title = props.title;

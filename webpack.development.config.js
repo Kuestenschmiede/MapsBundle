@@ -24,7 +24,11 @@ var config = {
   },
   devtool: "inline-source-map",
   resolve: {
-    modules: ['node_modules', 'Resources/public/js'],
+    modules: [
+      'node_modules',
+      'Resources/public/js',
+      '../../../../../RoutingBundle/Resources/public/js'
+    ],
     extensions: ['.jsx', '.js']
   },
   module: {
