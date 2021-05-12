@@ -228,9 +228,8 @@ export class RouterView extends Component {
     return (
       <div className={"c4g-router-wrapper"}>
         <Suspense fallback={<div>Loading...</div>}>
-          <Titlebar header={headline} headerClass={"c4g-router-headline"}
-                    detailBtnClass={"c4g-router-extended-options"} hideContainer={".c4g-router-container-right"} detailBtnCb={this.toggleDetails} closeBtnClass={"c4g-router-close"} closeBtnCb={this.close} closeBtnTitle={this.languageConstants.CLOSE}>
-          </Titlebar>
+          <Titlebar wrapperClass={"c4g-router-header"} header={headline} headerClass={"c4g-router-headline"}
+                    detailBtnClass={"c4g-router-extended-options"} hideContainer={".c4g-router-container-right"} detailBtnCb={this.toggleDetails} closeBtnClass={"c4g-router-close"} closeBtnCb={this.close} closeBtnTitle={this.languageConstants.CLOSE}/>
         </Suspense>
         <React.Fragment>
           <div className={"c4g-router-switcher"}>
