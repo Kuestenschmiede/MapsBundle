@@ -26,7 +26,7 @@ import {AlertHandler} from "./../../../../../CoreBundle/Resources/public/vendor/
 import {RoutingPermalink} from "./../c4g-routing-permalink";
 import {getLanguage} from "./../routing-constant-i18n";
 import {cssConstants} from "./../c4g-maps-constant";
-import {Titlebar} from "./c4g-titlebar.jsx"
+const Titlebar = React.lazy(() => import("./c4g-titlebar.jsx"));
 import {utils} from "./../c4g-maps-utils";
 import {RouterPopupButtons} from "./c4g-router-popup-buttons.jsx";
 const RouterControls = React.lazy(() => import('./c4g-router-controls.jsx'));
@@ -225,14 +225,13 @@ export class RouterView extends Component {
       );
     }
 
-    /*
-          <Titlebar header={headline} headerClass={"c4g-router-headline"}
-                       detailBtnClass={"c4g-router-extended-options"} hideContainer={".c4g-router-container-right"} detailBtnCb={this.toggleDetails} closeBtnClass={"c4g-router-close"} closeBtnCb={this.close} closeBtnTitle={this.languageConstants.CLOSE}/>
-
-     */
-
     return (
       <div className={"c4g-router-wrapper"}>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Titlebar header={headline} headerClass={"c4g-router-headline"}
+                    detailBtnClass={"c4g-router-extended-options"} hideContainer={".c4g-router-container-right"} detailBtnCb={this.toggleDetails} closeBtnClass={"c4g-router-close"} closeBtnCb={this.close} closeBtnTitle={this.languageConstants.CLOSE}>
+          </Titlebar>
+        </Suspense>
         <React.Fragment>
           <div className={"c4g-router-switcher"}>
             <div>
