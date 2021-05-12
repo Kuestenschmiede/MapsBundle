@@ -355,7 +355,7 @@ $GLOBALS['TL_DCA'][$strName] = array
         'routeStartButton' => [
             'label'                   => &$GLOBALS['TL_LANG'][$strName]['routeStartButton'],
             'exclude'                 => true,
-            'default'                 => true,
+            'default'                 => false,
             'inputType'               => 'checkbox',
         ],
         'initialPosition' => [
