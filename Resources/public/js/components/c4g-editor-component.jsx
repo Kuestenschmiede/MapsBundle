@@ -7,10 +7,9 @@
  * @copyright (c) 2010-2021, by Küstenschmiede GmbH Software & Design
  * @link https://www.con4gis.org
  */
-import React, { Component } from "react";
+import React, { Component,Suspense } from "react";
 import {EditorView} from "./c4g-editor-view.jsx";
 import {getEditorLanguage} from "./../c4g-editor-i18n";
-import {Titlebar} from "./c4g-titlebar.jsx"
 import {Control} from "ol/control";
 import {Group, Vector} from "ol/layer";
 import {GeoJSON} from "ol/format";
@@ -20,6 +19,8 @@ import {Collection} from "ol";
 import {Circle} from "ol/geom";
 import {utils} from "./../c4g-maps-utils";
 import {Fill, Style, Text} from "ol/style";
+const Titlebar = React.lazy(() => import("./c4g-titlebar.jsx"));
+
 
 export class EditorComponent extends Component {
     constructor(props) {
@@ -168,22 +169,16 @@ export class EditorComponent extends Component {
             if (json.drawStyles.hasOwnProperty(i)) {
                 this.config[i] = [];
                 let drawStyle = json.drawStyles[i];
-                for (let j in drawStyle.categories) {
-                    if (drawStyle.categories.hasOwnProperty(j)) {
-                        let category = drawStyle.categories[j];
-                        for (let k in category.elements) {
-                            if (category.elements.hasOwnProperty(k)) {
-                                let element = category.elements[k];
-                                this.config[i].push(element);
-                                let checkLocstyle = this.arrLocstyles.findIndex((locstyle) => locstyle === element.styleId);
-                                if (checkLocstyle === -1 && element.styleId) {
-                                    this.arrLocstyles.push(element.styleId);
-                                }
-                            }
+                for (let j in drawStyle.elements) {
+                    if (drawStyle.elements.hasOwnProperty(j)) {
+                        let element = drawStyle.elements[j];
+                        this.config[i].push(element);
+                        let checkLocstyle = this.arrLocstyles.findIndex((locstyle) => locstyle === element.styleId);
+                        if (checkLocstyle === -1 && element.styleId) {
+                            this.arrLocstyles.push(element.styleId);
                         }
                     }
                 }
-
             }
         }
         this.props.mapController.proxy.locationStyleController.loadLocationStyles(this.arrLocstyles, {
@@ -290,9 +285,11 @@ export class EditorComponent extends Component {
         // }
         return (
             <div className={"c4g-editor-wrapper"}>
-                <Titlebar wrapperClass={"c4g-editor-header"} headerClass={"c4g-editor-headline"} hideContainer={".c4g-editor-container"}
-                          header={this.langConstants.EDITOR} closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close} closeBtnTitle={this.langConstants.CLOSE}>
-                </Titlebar>
+                <Suspense fallback={<div>Loading...</div>}>
+                    <Titlebar wrapperClass={"c4g-editor-header"} headerClass={"c4g-editor-headline"} hideContainer={".c4g-editor-container"}
+                              header={this.langConstants.EDITOR} closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close} closeBtnTitle={this.langConstants.CLOSE}>
+                    </Titlebar>
+                </Suspense>
                 <div className={"c4g-editor-mode-switcher"}>
                     {this.modes.map(function(element, index) {
                         if (element === "select" || (scope.config[element] && scope.config[element].length > 0)) {
@@ -304,7 +301,7 @@ export class EditorComponent extends Component {
                         }
                     })}
                 </div>
-                <EditorView className={"c4g-editor-view"} styleFunction={this.styleFunction} mode={this.state.currentMode} styleData={this.state.styleData} elements={this.config[this.state.currentMode] ? this.config[this.state.currentMode]: []} active={true} editorLayer={this.state.editorLayer} features={this.features} removeFeature={this.removeFeature} modifyFeature={this.modifyFeature} addFeature={this.addFeature} editorLayer={this.editorLayer} editorId={this.state.editorId} countEditorId={this.countEditorId} updateFeatures={this.updateFeatures} mapController={this.props.mapController} editor={this} lang={this.langConstants}/>
+                <EditorView className={"c4g-editor-view"} styleFunction={this.styleFunction} mode={this.state.currentMode} styleData={this.state.styleData} elements={this.config[this.state.currentMode] ? this.config[this.state.currentMode]: []} active={true} editorLayer={this.state.editorLayer} features={this.features} editorVars={this.props.config.editorVars} removeFeature={this.removeFeature} modifyFeature={this.modifyFeature} addFeature={this.addFeature} editorLayer={this.editorLayer} editorId={this.state.editorId} countEditorId={this.countEditorId} updateFeatures={this.updateFeatures} mapController={this.props.mapController} editor={this} lang={this.langConstants}/>
                 <div className={"c4g-editor-content"} style={{overflow: "none"}}>
                     <pre contentEditable={true} style={{overflowY: "scroll", overflowX: "none", height: "400px"}} suppressContentEditableWarning={true} onInput={this.changeJSON}>{this.state.features}</pre>
                 </div>

@@ -11,7 +11,7 @@
 
 namespace con4gis\MapsBundle\Classes\Events;
 
-use con4gis\EditorBundle\Entity\EditorConfiguration;
+use con4gis\MapsBundle\Entity\EditorConfiguration;
 use Symfony\Component\EventDispatcher\Event;
 
 class EditorConfigurationEvent extends Event

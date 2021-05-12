@@ -20,6 +20,10 @@ $GLOBALS['TL_LANG']['MOD']['c4g_map_themes']            = ['Kartenlayout', 'Das 
 $GLOBALS['TL_LANG']['MOD']['c4g_map_tables']            = ['Quelltabellen', 'Eigene Datenanbindungen anlegen und für die Kartenstruktur anpassen.'];
 $GLOBALS['TL_LANG']['MOD']['c4g_map_filters']           = ['Kartenfilter', 'Filter für die Karte verwalten.'];
 $GLOBALS['TL_LANG']['MOD']['c4g_routing_configuration'] = ['Routing', 'Routing konfigurieren.'];
+$GLOBALS['TL_LANG']['MOD']['c4g_editor_configuration']  = ['Editor', 'Editor konfigurieren.'];
+
+
+
 /**
  * Frontend modules
  */
