@@ -13,7 +13,6 @@
 
 namespace con4gis\MapsBundle\Classes\Contao\Callbacks;
 
-
 use Contao\Database;
 use Contao\System;
 use con4gis\MapsBundle\Entity\EditorConfiguration;
@@ -58,16 +57,17 @@ class TlEditorConfiguration
             'inputType' => 'select',
             'eval' => ['chosen' => true,'style' => 'min-width:200px;width:200px;'],
             'options' => [
-                "point" => &$GLOBALS['TL_LANG']['tl_c4g_editor_configuration']['references']['point'],
-                "linestring" => &$GLOBALS['TL_LANG']['tl_c4g_editor_configuration']['references']['linestring'],
-                "polygon" => &$GLOBALS['TL_LANG']['tl_c4g_editor_configuration']['references']['polygon'],
-                "circle" => &$GLOBALS['TL_LANG']['tl_c4g_editor_configuration']['references']['circle'],
-            ]
+                'point' => &$GLOBALS['TL_LANG']['tl_c4g_editor_configuration']['references']['point'],
+                'linestring' => &$GLOBALS['TL_LANG']['tl_c4g_editor_configuration']['references']['linestring'],
+                'polygon' => &$GLOBALS['TL_LANG']['tl_c4g_editor_configuration']['references']['polygon'],
+                'circle' => &$GLOBALS['TL_LANG']['tl_c4g_editor_configuration']['references']['circle'],
+            ],
         ];
+
         return [
             'type' => $arrColumnTypes,
             'caption' => $arrColumnCaption,
-            'locstyle' => $arrColumnLocs
+            'locstyle' => $arrColumnLocs,
         ];
     }
     public function getEditorProfiles()
@@ -85,7 +85,8 @@ class TlEditorConfiguration
 
         return $return;
     }
-    public function getEditorVars ($multiColumnWizard) {
+    public function getEditorVars($multiColumnWizard)
+    {
         $arrColumnCaption = [
             'label' => &$GLOBALS['TL_LANG']['tl_c4g_editor_configuration']['types']['caption'],
             'filter' => false,
@@ -99,9 +100,10 @@ class TlEditorConfiguration
             'eval' => ['tl_class' => 'w50'],
         ];
         $return = [
-            'caption'   => $arrColumnCaption,
-            'key'       => $arrColumnKey
+            'caption' => $arrColumnCaption,
+            'key' => $arrColumnKey,
         ];
+
         return $return;
     }
 }

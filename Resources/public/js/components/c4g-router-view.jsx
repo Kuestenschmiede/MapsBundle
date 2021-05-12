@@ -22,7 +22,7 @@ import {Collection} from "ol";
 import {LineString} from "ol/geom";
 import {Modify, Select} from "ol/interaction";
 import {GeoJSON} from "ol/format";
-import {AlertHandler} from "./../../../../../CoreBundle/Resources/public/js/AlertHandler";
+import {AlertHandler} from "./../../../../../CoreBundle/Resources/public/vendor/js/AlertHandler";
 import {RoutingPermalink} from "./../c4g-routing-permalink";
 import {getLanguage} from "./../routing-constant-i18n";
 import {cssConstants} from "./../c4g-maps-constant";
@@ -225,11 +225,15 @@ export class RouterView extends Component {
       );
     }
 
+    /*
+          <Titlebar header={headline} headerClass={"c4g-router-headline"}
+                       detailBtnClass={"c4g-router-extended-options"} hideContainer={".c4g-router-container-right"} detailBtnCb={this.toggleDetails} closeBtnClass={"c4g-router-close"} closeBtnCb={this.close} closeBtnTitle={this.languageConstants.CLOSE}/>
+
+     */
+
     return (
       <div className={"c4g-router-wrapper"}>
         <React.Fragment>
-          <Titlebar wrapperClass={"c4g-router-header"} header={headline} headerClass={"c4g-router-headline"}
-                       detailBtnClass={"c4g-router-extended-options"} hideContainer={".c4g-router-container-right"} detailBtnCb={this.toggleDetails} closeBtnClass={"c4g-router-close"} closeBtnCb={this.close} closeBtnTitle={this.languageConstants.CLOSE}/>
           <div className={"c4g-router-switcher"}>
             <div>
               {resultSwitcher}
