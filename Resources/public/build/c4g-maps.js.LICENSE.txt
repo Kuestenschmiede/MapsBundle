@@ -1,0 +1,56 @@
+/*
+ * This file is part of con4gis, the gis-kit for Contao CMS.
+ * @package con4gis
+ * @version 8
+ * @author con4gis contributors (see "authors.txt")
+ * @license LGPL-3.0-or-later
+ * @copyright (c) 2010-2021, by Küstenschmiede GmbH Software & Design
+ * @link https://www.con4gis.org
+ */
+
+/*
+object-assign
+(c) Sindre Sorhus
+@license MIT
+*/
+
+/*! https://mths.be/punycode v1.3.2 by @mathias */
+
+/*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
+
+/**
+ * con4gis - the gis-kit
+ *
+ * @package   con4gis
+ * @author    con4gis contributors (see "authors.txt")
+ * @license   GNU/LGPL http://opensource.org/licenses/lgpl-3.0.html
+ * @copyright Küstenschmiede GmbH Software & Design 2011 - 2018
+ * @link      https://www.kuestenschmiede.de
+ */
+
+/** @license React v0.20.2
+ * scheduler.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/** @license React v17.0.2
+ * react-dom.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/** @license React v17.0.2
+ * react.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
