@@ -11,7 +11,7 @@
 
 Contao\CoreBundle\DataContainer\PaletteManipulator::create()
     ->addLegend('c4g_maps_legend', 'con4gisIoLegend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_AFTER, true)
-    ->addField(['defaultprofile','beGeopickerProfile','caching','disabledC4gMapObjects'], 'c4g_maps_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_APPEND)
+    ->addField(['defaultprofile','beGeopickerProfile','editorprofile','caching','disabledC4gMapObjects'], 'c4g_maps_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_APPEND)
     ->applyToPalette('default', 'tl_c4g_settings');
 
 
@@ -52,6 +52,21 @@ $GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['beGeopickerProfile'] =
         )
 
     ];
+$GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['editorprofile'] = [
+    'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_settings']['editorprofile'],
+    'exclude'                 => true,
+    'inputType'               => 'select',
+    'foreignKey'              => 'tl_c4g_map_profiles.name',
+    'eval'                    => ['tl_class'=>'clr',
+        'includeBlankOption'=>true, 'blankOptionLabel'=>&$GLOBALS['TL_LANG']['tl_c4g_maps']['default_profile'],
+        'submitOnChange' => true, 'alwaysSave' => true],
+    'relation'                => ['type'=>'belongsTo', 'load'=>'eager'],
+    'sql'                     => "int(10) unsigned NOT NULL default '0'",
+    'xlabel' => array
+    (
+        array('tl_settings_c4g_maps', 'profilesLink')
+    )
+];
 $GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['caching'] =
     [
         'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_settings']['caching'],

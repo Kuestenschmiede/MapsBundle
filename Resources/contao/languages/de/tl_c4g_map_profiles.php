@@ -249,9 +249,13 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['infotext'] = 'Im Kartenprofil werden
  */
 
 /** Routing und Umkreissuche  */
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['routerConfig'] = ['Routing-Konfiguration',  'Bitte wählen Sie die entsprechende Routing-Konfiguration aus. Diese können Sie im Backend-Bereich "Routing" anlegen.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['routerConfig'] = ['Routing-Konfiguration',  'Bitte wählen Sie die entsprechende Routing-Konfiguration aus. Diese können Sie im Backend-Modul "Routing" anlegen.'];
 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editRoutingConfiguration'] = 'Routing-Konfigurationen bearbeiten';
+
+/** Editor */
+$GLOBALS['TL_LANG']["tl_c4g_map_profiles"]['editorProfile'] = ['Editor-Konfiguration', 'Bitte wählen Sie die entsprechende Editor-Konfiguration aus. Diese können Sie im Backend-Modul "Editor" anlegen.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editEditorConfiguration'] = 'Editor-Konfigurationen bearbeiten';
 
 /** legend */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['routing_legend'] = 'Routen- und Umkreissuche';

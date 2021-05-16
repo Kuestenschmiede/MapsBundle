@@ -64,7 +64,7 @@ $GLOBALS['BE_MOD']['con4gis'] = array_merge($GLOBALS['BE_MOD']['con4gis'], [
         [
             'brick'     => 'maps',
             'tables'    => ['tl_c4g_editor_configuration'],
-            'icon'      => 'bundles/con4giscore/images/be-icons/edit.svg'
+            'icon'      => 'bundles/con4gismaps/images/be-icons/geojson.svg'
         ]
     ]
 );
@@ -136,5 +136,5 @@ $GLOBALS['TL_PURGE']['folders']['con4gis_locationstyle'] =
     ];
 
 if(TL_MODE == "BE") {
-    $GLOBALS['TL_CSS'][] = '/bundles/con4gismaps/css/c4g-backend.css';
+    $GLOBALS['TL_CSS'][] = '/bundles/con4gismaps/dist/css/c4g-backend.min.css';
 }

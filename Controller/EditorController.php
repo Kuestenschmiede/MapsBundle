@@ -35,6 +35,46 @@ class EditorController extends BaseController
         parent::initialize($withEntityManager);
     }
 
+//    public function configEditorBackendAction(Request $request, $configId)
+//    {
+//        $this->initialize();
+//        $response = new JsonResponse();
+//        // return if cached data exists
+//        if (!self::$outputFromCache) {
+//            $configurationEvent = new EditorConfigurationEvent();
+//            $configurationEvent->setConfigId($configId);
+//            $this->eventDispatcher->dispatch($configurationEvent::NAME, $configurationEvent);
+//            $formattedProjects = [];
+//            $editorConfig = $configurationEvent->getEditorConfig();
+//            $editorConfig['projects'] = $formattedProjects;
+//            //$editorConfig['groups'] = $this->getGroupsForProjects($formattedProjects);
+//            $this->responseData = $editorConfig;
+//            $this->storeDataInCache($request);
+//        } else {
+//            // load from cache
+//            $editorConfig = $this->responseData;
+//            $editorConfig['fromcache'] = true;
+//            $this->responseData = $editorConfig;
+//        }
+//        $response->setData($this->responseData);
+//        return $response;
+//    }
+//
+//    public function getIdAction(Request $request)
+//    {
+//        $this->initialize();
+//        if (!$this->checkFeUser()) {
+//            return new Response("No user logged in!", 403);
+//        }
+//        $data = $request->request->all();
+//        if (!$data['id'] || !$data['key'] || !$data['ident']) {
+//            return new Response("", 400);
+//        } else {
+//            $id = C4GBrickCommon::calcLayerID($data['id'], $data['key'], $data['ident']);
+//            return new JsonResponse(['id' => $id]);
+//        }
+//    }
+
     public function beEditorAction(Request $request, $layerId)
     {
         $geoEditor = new GeoEditor($layerId);
