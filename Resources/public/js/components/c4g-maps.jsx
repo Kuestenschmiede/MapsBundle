@@ -976,7 +976,7 @@ export class MapController extends Component {
       );
     }
     let infoPortal = "";
-    if (mapData.legend.enable) {
+    if (mapData.infopage && mapData.legend.enable) {
       infoPortal = ReactDOM.createPortal(
         <Suspense fallback={<div>"LOOOL"</div>}>
           <Infopage ref={(node) => {this.components.infopage = node;}} target={target} external={this.infoPageContainer.className.indexOf("c4g-external") !== -1}
