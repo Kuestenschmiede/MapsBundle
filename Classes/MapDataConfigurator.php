@@ -354,7 +354,7 @@ class MapDataConfigurator
             $mapData['layerswitcher']['enable'] = array_key_exists('layerswitcher', $buttons) ? $buttons['layerswitcher'] + 1 : 0;
             $mapData['baselayerswitcher']['enable'] = array_key_exists('baselayerswitcher', $buttons) ? $buttons['baselayerswitcher'] + 1 : 0;
             $mapData['geosearch']['enable'] = array_key_exists('geosearch', $buttons) ? $buttons['geosearch'] + 1 : 0;
-            $mapData['legend']['enable'] = array_key_exists('legend', $buttons) ? $buttons['legend'] + 1 : 0;
+            $mapData['legend']['enable'] = array_key_exists('legend', $buttons) && $profile->infopage ? $buttons['legend'] + 1 : 0;
             $mapData['measuretools']['enable'] = array_key_exists('measure', $buttons) ? $buttons['measure'] + 1 : 0;
             $mapData['overviewmap'] = array_key_exists('overview', $buttons) ? $buttons['overview'] + 1 : 0;
             $mapData['permalink']['enable'] = array_key_exists('permalink', $buttons) ? $buttons['permalink'] + 1 : 0;
