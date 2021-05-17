@@ -342,6 +342,10 @@ export var utils = {
     if (!arrInput) {
       return [];
     }
+    if (arrInput[0].indexOf("{") !== -1) {
+      // cannot delta decode uuids
+      return arrInput;
+    }
 
     arrOutput = [];
     arrOutput[0] = JSBI.BigInt(arrInput[0]);
