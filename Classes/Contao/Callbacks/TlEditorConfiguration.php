@@ -38,12 +38,12 @@ class TlEditorConfiguration
             'label' => &$GLOBALS['TL_LANG']['tl_c4g_editor_configuration']['types']['caption'],
             'filter' => false,
             'inputType' => 'text',
-            'eval' => ['tl_class' => 'w50'],
+            'eval' => ['style' => 'min-width:175px;'],
         ];
         $arrColumnLocs = [
             'label' => &$GLOBALS['TL_LANG']['tl_c4g_editor_configuration']['types']['locstyle'],
             'inputType' => 'select',
-            'eval' => ['chosen' => true, 'includeBlankOption' => true, 'style' => 'min-width:200px;width:200px;'],
+            'eval' => ['chosen' => true, 'includeBlankOption' => true, 'style' => 'min-width:175px;width:100%;'],
         ];
         $arrLocs = $this->db->prepare('SELECT * FROM tl_c4g_map_locstyles')
             ->execute()->fetchAllAssoc();
@@ -55,7 +55,7 @@ class TlEditorConfiguration
         $arrColumnTypes = [
             'label' => &$GLOBALS['TL_LANG']['tl_c4g_editor_configuration']['types']['type'],
             'inputType' => 'select',
-            'eval' => ['chosen' => true,'style' => 'min-width:200px;width:200px;'],
+            'eval' => ['chosen' => true,'style' => 'min-width:175px;width:100%;'],
             'options' => [
                 'point' => &$GLOBALS['TL_LANG']['tl_c4g_editor_configuration']['references']['point'],
                 'linestring' => &$GLOBALS['TL_LANG']['tl_c4g_editor_configuration']['references']['linestring'],
