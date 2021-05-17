@@ -21,262 +21,262 @@ import {utils} from "../c4g-maps-utils";
 
 
 export class EditorView extends Component {
-    constructor(props) {
-        super(props);
-        const scope = this;
-        this.state = {
-            freehand: false,
-            selectedFeature: false,
-            features: "[]",
-            activeElement: props.elements[0] ? props.elements[0].id : 0,
-            activeStyle: props.elements[0] ? props.elements[0].styleId : 0,
-            selectMode: "modify"
-        };
-        this.interaction;
-        this.changeJSON = this.changeJSON.bind(this);
-    }
-    render() {
-        if (this.props.mode !== "select" && this.props.active) {
-            if (this.interaction) { //only one drawinteraction at a time
-                if (Array.isArray(this.interaction)) {
-                    this.props.mapController.map.removeInteraction(this.interaction[0]);
-                    this.props.mapController.map.removeInteraction(this.interaction[1]);
-                }
-                else {
-                    this.props.mapController.map.removeInteraction(this.interaction);
-                }
-            }
-            let geometry;
-            switch(this.props.mode) {
-                case "Point":
-                    geometry = new Point(0,0);
-                    break
-                case "LineString":
-                    geometry = new LineString([[0,0], [1,1]]);
-                    break;
-                case "Polygon":
-                    geometry = new Polygon([[0,0], [1,1]])
-            }
-            let feature = new Feature(geometry);
-            feature.set('locstyle', this.state.activeStyle)
-            this.interaction = new Draw({
-                // features: this.props.features,
-                source: this.props.editorLayer.getSource(),
-                type: this.props.mode,
-                stopclick: false,
-                snapTolerance: 0,
-                style: this.props.styleFunction(feature),
-                freehand: this.state.freehand
-            });
-            this.interaction.on('drawend',
-                (event) => {
-                    event.feature.set('editorId', this.props.editorId);
-                    event.feature.set('locstyle', this.state.activeStyle);
-                    event.feature.set('elementId', this.state.activeElement);
-                    let geojson;
-                    if (this.props.mode === "Circle") { //turn Circle into valid GeoJSON
-                        let geometry = event.feature.getGeometry().clone().transform("EPSG:3857", "EPSG:4326");
-                        let center = geometry.getCenter();
-                        let radius = event.feature.getGeometry().getRadius();
-                        geojson = {
-                            type: "Feature",
-                            geometry: {
-                                type: "Point",
-                                coordinates: center
-                            },
-                            properties: {
-                                editorId: this.props.editorId,
-                                elementId: this.state.activeElement,
-                                locstyle: this.state.activeStyle,
-                                radius: radius
-                            }
-                        }
-                    }
-                    else {
-                        geojson = new GeoJSON().writeFeatureObject(event.feature, {
-                            dataProjection: "EPSG:4326",
-                            featureProjection: "EPSG:3857"
-                        });
-                    }
-                    this.props.addFeature(geojson)
-                    this.props.countEditorId();
-                }
-            );
-            this.props.mapController.map.addInteraction(this.interaction);
+  constructor(props) {
+    super(props);
+    const scope = this;
+    this.state = {
+      freehand: false,
+      selectedFeature: false,
+      features: "[]",
+      activeElement: props.elements[0] ? props.elements[0].id : 0,
+      activeStyle: props.elements[0] ? props.elements[0].styleId : 0,
+      selectMode: "modify"
+    };
+    this.interaction = null;
+    this.changeJSON = this.changeJSON.bind(this);
+  }
+  render() {
+    if (this.props.mode !== "select" && this.props.active) {
+      if (this.interaction) { //only one drawinteraction at a time
+        if (Array.isArray(this.interaction)) {
+          this.props.mapController.map.removeInteraction(this.interaction[0]);
+          this.props.mapController.map.removeInteraction(this.interaction[1]);
         }
         else {
-            if (this.interaction) { //only one drawinteraction at a time
-                if (Array.isArray(this.interaction)) {
-                    this.props.mapController.map.removeInteraction(this.interaction[0]);
-                    this.props.mapController.map.removeInteraction(this.interaction[1]);
-                }
-                else {
-                    this.props.mapController.map.removeInteraction(this.interaction);
-                }
-            }
-            if (this.state.selectMode === "remove") {
-                this.interaction = new Select({
-                    layers: [this.props.editorLayer],
-                    hitTolerance: 20
-                });
-                this.interaction.on('select', (e) => {
-                    let feature = e.target.getFeatures().getArray()[0];
-                    let geojson = new GeoJSON().writeFeatureObject(feature, {
-                        dataProjection: "EPSG:4326",
-                        featureProjection: "EPSG:3857"
-                    })
-                    this.props.removeFeature(geojson);
-                    let source = this.props.editorLayer.getSource();
-                    source.removeFeature(feature);
-                });
-                this.props.mapController.map.addInteraction(this.interaction);
-            }
-            else {
-                this.interaction = [];
-                this.interaction.push(new Select({
-                    layers: [this.props.editorLayer],
-                    hitTolerance: 20
-                }));
-                this.interaction.push(new Modify({
-                    features: this.interaction[0].getFeatures(),
-                    pixelTolerance: 20
-                }));
-                this.interaction[0].on('select', (e) => {
-                    let feature = e.selected[0];
-                    this.setState({selectedFeature: feature});
-                });
-                this.interaction[1].on('modifyend', (e) => {
-                    let feature = e.features.getArray()[0];
-                    let geojson = new GeoJSON().writeFeatureObject(feature, {
-                        dataProjection: "EPSG:4326",
-                        featureProjection: "EPSG:3857"
-                    })
-                    this.props.modifyFeature(geojson);
-                });
-                this.props.mapController.map.addInteraction(this.interaction[0]);
-                this.props.mapController.map.addInteraction(this.interaction[1]);
-            }
+          this.props.mapController.map.removeInteraction(this.interaction);
         }
-        let elements = null;
-        if (this.props.elements && this.props.elements.length > 1) {
-            elements = this.props.elements.map((element) => {
-                let color, bordercolor, styleTriggerLabel;
-                let locstyle = this.props.styleData.arrLocStyles[element.styleId];
-                let styleData = locstyle.locStyleArr;
-                let styleType = styleData ? styleData.styletype : "default";
-                if (styleData && (styleType === "cust_icon" || styleType === "cust_icon_svg" || styleType === "photo")) {
-                    styleTriggerLabel = <C4gStarboardStyle styleData={this.props.styleData} styleId={element.styleId}/>
-                } else {
-                    let stylor = locstyle.style && locstyle.style(new Feature({geometry: new Point(0,0)}), "EPSG:4326") ? locstyle.style(new Feature({geometry: new Point(0,0)}), "EPSG:4326"): null;
-                    let featureStyle = Array.isArray(stylor) ? stylor[0]: stylor;
-                    if (featureStyle && featureStyle.getFill() && featureStyle.getStroke()) {
-                        color = featureStyle.getFill().getColor();
-                    } else if (styleData && styleData.fillcolor && styleData.strokecolor) {
-                        color = utils.getRgbaFromHexAndOpacity(styleData.fillcolor[0], styleData.fillcolor[1]);
-                    }
-
-                    styleTriggerLabel = <span className={"c4g-editor-locstyle"} style={{
-                        "background-color" : color
-                    }}/>;
-                }
-
-
-                return (<button key={element.id} style={{height: "32px", width: "32px"}}
-                                onMouseUp={() =>{this.setState({activeElement: element.id, activeStyle: element.styleId})}}>
-                    {styleTriggerLabel}
-                </button>)
+      }
+      let geometry;
+      switch(this.props.mode) {
+        case "Point":
+          geometry = new Point(0,0);
+          break
+        case "LineString":
+          geometry = new LineString([[0,0], [1,1]]);
+          break;
+        case "Polygon":
+          geometry = new Polygon([[0,0], [1,1]])
+      }
+      let feature = new Feature(geometry);
+      feature.set('locstyle', this.state.activeStyle)
+      this.interaction = new Draw({
+        // features: this.props.features,
+        source: this.props.editorLayer.getSource(),
+        type: this.props.mode,
+        stopclick: false,
+        snapTolerance: 0,
+        style: this.props.styleFunction(feature),
+        freehand: this.state.freehand
+      });
+      this.interaction.on('drawend',
+        (event) => {
+          event.feature.set('editorId', this.props.editorId);
+          event.feature.set('locstyle', this.state.activeStyle);
+          event.feature.set('elementId', this.state.activeElement);
+          let geojson;
+          if (this.props.mode === "Circle") { //turn Circle into valid GeoJSON
+            let geometry = event.feature.getGeometry().clone().transform("EPSG:3857", "EPSG:4326");
+            let center = geometry.getCenter();
+            let radius = event.feature.getGeometry().getRadius();
+            geojson = {
+              type: "Feature",
+              geometry: {
+                type: "Point",
+                coordinates: center
+              },
+              properties: {
+                editorId: this.props.editorId,
+                elementId: this.state.activeElement,
+                locstyle: this.state.activeStyle,
+                radius: radius
+              }
+            }
+          }
+          else {
+            geojson = new GeoJSON().writeFeatureObject(event.feature, {
+              dataProjection: "EPSG:4326",
+              featureProjection: "EPSG:3857"
             });
-
-
+          }
+          this.props.addFeature(geojson)
+          this.props.countEditorId();
         }
-        let customButton = null;
-        if ("LineStringPolygon".includes(this.props.mode)) {
-            let freehandClass = "c4g-editor-view ";
-            freehandClass += this.state.freehand ? "c4g-active" : "c4g-inactive";
-            customButton = (<a className={freehandClass} onMouseUp={() => {this.changeFreehand()}}>Freehand</a>);
-        }
-        else if (this.props.mode === "select") {
-            customButton = (<div className={"c4g-editor-mode-switcher"}>
-                <button title={"Modify"} className={"c4g-editor-feature-modify " + (this.state.selectMode === "modify" ? "c4g-active": "c4g-inactive")} onMouseUp={() => {this.changeSelectMode("modify")}}/>
-                <button title={"Remove"} className={"c4g-editor-feature-delete " + (this.state.selectMode === "remove" ? "c4g-active": "c4g-inactive")} onMouseUp={() => {this.changeSelectMode("remove")}}/>
-            </div>)
-        }
-        let arrFormEditorVars = [];
-        if (this.state.selectedFeature) {
-            for (let i in this.props.editorVars) {
-                if (this.props.editorVars.hasOwnProperty(i)) {
-                    let editorVar = this.props.editorVars[i];
-                    let value = this.state.selectedFeature.get(editorVar.key) ? this.state.selectedFeature.get(editorVar.key) : "";
-                    arrFormEditorVars.push(
-                        <form className={"c4g-editor-vars-input"}>
-                            <label>
-                                {editorVar.caption}:
-                                <input type="text" value={value} name={editorVar.key} onChange={(event)=>{this.handleVarChange(event)}}/>
-                            </label>
-                        </form>
-                    );
-                }
-            }
-        }
-        return (
-            <React.Fragment>
-                <div>
-                    {customButton}
-                    <div className={"c4g-editor-element-selection"}>
-                        {elements}
-                    </div>
-                </div>
-                <div className={"c4g-editor-vars"}>
-                    {arrFormEditorVars}
-                </div>
-            </React.Fragment>
-        )
-
+      );
+      this.props.mapController.map.addInteraction(this.interaction);
     }
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.elements[0] && prevProps.mode !== this.props.mode) {
-            if (this.state.activeElement === 0) {
-                this.setState({
-                    activeElement: this.props.elements[0].id,
-                    activeStyle: this.props.elements[0].styleId
-                });
-                //  this.state.activeElement = this.props.elements[0].id
-                //  this.state.activeStyle = this.props.elements[0].styleId
-            }
-            else if (!this.props.elements.find(element => element.id === this.state.activeElement)) {
-                this.setState({
-                    activeElement: this.props.elements[0].id,
-                    activeStyle: this.props.elements[0].styleId
-                });
-                // this.state.activeElement = this.props.elements[0].id
-                // this.state.activeStyle = this.props.elements[0].styleId
-            }
+    else {
+      if (this.interaction) { //only one drawinteraction at a time
+        if (Array.isArray(this.interaction)) {
+          this.props.mapController.map.removeInteraction(this.interaction[0]);
+          this.props.mapController.map.removeInteraction(this.interaction[1]);
         }
-    }
-
-    changeSelectMode(string) {
-        this.setState({
-            selectMode: string
+        else {
+          this.props.mapController.map.removeInteraction(this.interaction);
+        }
+      }
+      if (this.state.selectMode === "remove") {
+        this.interaction = new Select({
+          layers: [this.props.editorLayer],
+          hitTolerance: 20
         });
-    }
-    handleVarChange(event) {
-        let value = event.target.value;
-        let name = event.target.name;
-        this.state.selectedFeature.set(name, value);
-        let geojson = new GeoJSON().writeFeatureObject(this.state.selectedFeature, {
+        this.interaction.on('select', (e) => {
+          let feature = e.target.getFeatures().getArray()[0];
+          let geojson = new GeoJSON().writeFeatureObject(feature, {
             dataProjection: "EPSG:4326",
             featureProjection: "EPSG:3857"
-        })
-        this.props.modifyFeature(geojson);
-        this.setState({"selectedFeature" : this.state.selectedFeature});
+          })
+          this.props.removeFeature(geojson);
+          let source = this.props.editorLayer.getSource();
+          source.removeFeature(feature);
+        });
+        this.props.mapController.map.addInteraction(this.interaction);
+      }
+      else {
+        this.interaction = [];
+        this.interaction.push(new Select({
+          layers: [this.props.editorLayer],
+          hitTolerance: 20
+        }));
+        this.interaction.push(new Modify({
+          features: this.interaction[0].getFeatures(),
+          pixelTolerance: 20
+        }));
+        this.interaction[0].on('select', (e) => {
+          let feature = e.selected[0];
+          this.setState({selectedFeature: feature});
+        });
+        this.interaction[1].on('modifyend', (e) => {
+          let feature = e.features.getArray()[0];
+          let geojson = new GeoJSON().writeFeatureObject(feature, {
+            dataProjection: "EPSG:4326",
+            featureProjection: "EPSG:3857"
+          })
+          this.props.modifyFeature(geojson);
+        });
+        this.props.mapController.map.addInteraction(this.interaction[0]);
+        this.props.mapController.map.addInteraction(this.interaction[1]);
+      }
     }
+    let elements = null;
+    if (this.props.elements && this.props.elements.length > 1) {
+      elements = this.props.elements.map((element) => {
+        let color, bordercolor, styleTriggerLabel;
+        let locstyle = this.props.styleData.arrLocStyles[element.styleId];
+        let styleData = locstyle.locStyleArr;
+        let styleType = styleData ? styleData.styletype : "default";
+        if (styleData && (styleType === "cust_icon" || styleType === "cust_icon_svg" || styleType === "photo")) {
+          styleTriggerLabel = <C4gStarboardStyle styleData={this.props.styleData} styleId={element.styleId}/>
+        } else {
+          let stylor = locstyle.style && locstyle.style(new Feature({geometry: new Point(0,0)}), "EPSG:4326") ? locstyle.style(new Feature({geometry: new Point(0,0)}), "EPSG:4326"): null;
+          let featureStyle = Array.isArray(stylor) ? stylor[0]: stylor;
+          if (featureStyle && featureStyle.getFill() && featureStyle.getStroke()) {
+            color = featureStyle.getFill().getColor();
+          } else if (styleData && styleData.fillcolor && styleData.strokecolor) {
+            color = utils.getRgbaFromHexAndOpacity(styleData.fillcolor[0], styleData.fillcolor[1]);
+          }
 
-    changeFreehand() {
+          styleTriggerLabel = <span className={"c4g-editor-locstyle"} style={{
+            "backgroundColor" : color
+          }}/>;
+        }
+
+
+        return (<button key={element.id} style={{height: "32px", width: "32px"}}
+                        onMouseUp={() =>{this.setState({activeElement: element.id, activeStyle: element.styleId})}}>
+          {styleTriggerLabel}
+        </button>)
+      });
+
+
+    }
+    let customButton = null;
+    if ("LineStringPolygon".includes(this.props.mode)) {
+      let freehandClass = "c4g-editor-view ";
+      freehandClass += this.state.freehand ? "c4g-active" : "c4g-inactive";
+      customButton = (<a className={freehandClass} onMouseUp={() => {this.changeFreehand()}}>Freehand</a>);
+    }
+    else if (this.props.mode === "select") {
+      customButton = (<div className={"c4g-editor-mode-switcher"}>
+        <button title={"Modify"} className={"c4g-editor-feature-modify " + (this.state.selectMode === "modify" ? "c4g-active": "c4g-inactive")} onMouseUp={() => {this.changeSelectMode("modify")}}/>
+        <button title={"Remove"} className={"c4g-editor-feature-delete " + (this.state.selectMode === "remove" ? "c4g-active": "c4g-inactive")} onMouseUp={() => {this.changeSelectMode("remove")}}/>
+      </div>)
+    }
+    let arrFormEditorVars = [];
+    if (this.state.selectedFeature) {
+      for (let i in this.props.editorVars) {
+        if (this.props.editorVars.hasOwnProperty(i)) {
+          let editorVar = this.props.editorVars[i];
+          let value = this.state.selectedFeature.get(editorVar.key) ? this.state.selectedFeature.get(editorVar.key) : "";
+          arrFormEditorVars.push(
+            <form className={"c4g-editor-vars-input"}>
+              <label>
+                {editorVar.caption}:
+                <input type="text" value={value} name={editorVar.key} onChange={(event)=>{this.handleVarChange(event)}}/>
+              </label>
+            </form>
+          );
+        }
+      }
+    }
+    return (
+      <React.Fragment>
+        <div>
+          {customButton}
+          <div className={"c4g-editor-element-selection"}>
+            {elements}
+          </div>
+        </div>
+        <div className={"c4g-editor-vars"}>
+          {arrFormEditorVars}
+        </div>
+      </React.Fragment>
+    )
+
+  }
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.props.elements[0] && prevProps.mode !== this.props.mode) {
+      if (this.state.activeElement === 0) {
         this.setState({
-            freehand: !this.state.freehand
-        })
+          activeElement: this.props.elements[0].id,
+          activeStyle: this.props.elements[0].styleId
+        });
+        //  this.state.activeElement = this.props.elements[0].id
+        //  this.state.activeStyle = this.props.elements[0].styleId
+      }
+      else if (!this.props.elements.find(element => element.id === this.state.activeElement)) {
+        this.setState({
+          activeElement: this.props.elements[0].id,
+          activeStyle: this.props.elements[0].styleId
+        });
+        // this.state.activeElement = this.props.elements[0].id
+        // this.state.activeStyle = this.props.elements[0].styleId
+      }
     }
-    changeJSON(event) {
-        this.setState({features: event.target.value})
-    }
+  }
+
+  changeSelectMode(string) {
+    this.setState({
+      selectMode: string
+    });
+  }
+  handleVarChange(event) {
+    let value = event.target.value;
+    let name = event.target.name;
+    this.state.selectedFeature.set(name, value);
+    let geojson = new GeoJSON().writeFeatureObject(this.state.selectedFeature, {
+      dataProjection: "EPSG:4326",
+      featureProjection: "EPSG:3857"
+    })
+    this.props.modifyFeature(geojson);
+    this.setState({"selectedFeature" : this.state.selectedFeature});
+  }
+
+  changeFreehand() {
+    this.setState({
+      freehand: !this.state.freehand
+    })
+  }
+  changeJSON(event) {
+    this.setState({features: event.target.value})
+  }
 }

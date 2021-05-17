@@ -23,289 +23,289 @@ const Titlebar = React.lazy(() => import("./c4g-titlebar.jsx"));
 
 
 export class EditorComponent extends Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.close = this.close.bind(this);
-        this.open = this.open.bind(this);
-        this.countEditorId = this.countEditorId.bind(this);
-        this.addFeature = this.addFeature.bind(this);
-        this.removeFeature = this.removeFeature.bind(this);
-        this.modifyFeature = this.modifyFeature.bind(this);
-        this.changeJSON = this.changeJSON.bind(this);
+    this.close = this.close.bind(this);
+    this.open = this.open.bind(this);
+    this.countEditorId = this.countEditorId.bind(this);
+    this.addFeature = this.addFeature.bind(this);
+    this.removeFeature = this.removeFeature.bind(this);
+    this.modifyFeature = this.modifyFeature.bind(this);
+    this.changeJSON = this.changeJSON.bind(this);
 
-        const scope = this;
-        let element = document.createElement('div');
-        let button = document.createElement('button');
-        button.title = "Editor";
-        element.className = "c4g-editor-control ol-unselectable ol-control c4g-close";
-        element.appendChild(button);
-        jQuery(element).on('click', (event) => {
-            let hidden = scope.props.mapController.editorContainer.className.includes('c4g-close');
-            if (scope.state.open) {
-                if (!hidden) {
-                    scope.close();
-                }
-                else {
-                    jQuery(scope.props.mapController.editorContainer).removeClass('c4g-close').addClass('c4g-open');
-                }
+    const scope = this;
+    let element = document.createElement('div');
+    let button = document.createElement('button');
+    button.title = "Editor";
+    element.className = "c4g-editor-control ol-unselectable ol-control c4g-close";
+    element.appendChild(button);
+    jQuery(element).on('click', (event) => {
+      let hidden = scope.props.mapController.editorContainer.className.includes('c4g-close');
+      if (scope.state.open) {
+        if (!hidden) {
+          scope.close();
+        }
+        else {
+          jQuery(scope.props.mapController.editorContainer).removeClass('c4g-close').addClass('c4g-open');
+        }
+      }
+      else {
+        scope.open();
+      }
+    });
+    this.config = {};
+    this.arrLocstyles = [];
+    let mapController = props.mapController;
+
+    if (props.config) {
+      this.handleConfig(props.config);
+    }
+    else {
+      this.getConfiguration(mapController.data.feEditorProfile || mapController.data.beEditorProfile, !!mapController.data.feEditorProfile);
+    }
+
+    this.langConstants = getEditorLanguage(mapController.data);
+    let control = new Control({element: element, target: props.target});
+    control.isOpen = () => {
+      return false;
+    }
+    if (!mapController.mapsControls.controls.editor) {
+      mapController.mapsControls.controls.editor = control;
+      mapController.map.addControl(control);
+    }
+    this.modes = ["select", "Point", "LineString", "Polygon", "Circle"];
+    let features;
+    if (this.props.inputField && $(this.props.inputField).val() && $(this.props.inputField).val().length > 50) {
+      features = $(this.props.inputField).val();
+      setTimeout(()=> {
+        this.reRender();
+      }, 200)
+    }
+    else {
+      features = '{"type": "FeatureCollection", "features": []}'
+    }
+    this.state = {
+      open: props.open || false,
+      currentMode: "select",
+      styleData: {},
+      control: control,
+      range: 0,
+      features: features,
+      editorId: 0
+    };
+    this.styleFunction = function(feature, resolution) {
+      let size = false;
+      let returnStyle = [];
+      if (feature && feature.get && feature.get('features')) {
+        let features = feature.get('features');
+        size = features.length;
+        feature = features[0];
+      }
+      if (feature && feature.getStyle()) {
+        returnStyle = feature.getStyle();
+      }
+      else if (feature && feature.get && feature.get('locstyle')) {
+        let locstyle = feature.get('locstyle');
+        if (scope.props.mapController.proxy.locationStyleController.arrLocStyles && scope.props.mapController.proxy.locationStyleController.arrLocStyles[locstyle] && scope.props.mapController.proxy.locationStyleController.arrLocStyles[locstyle].style) {
+          let style = scope.props.mapController.proxy.locationStyleController.arrLocStyles[locstyle].style;
+          if (typeof style === "function") {
+            returnStyle = style(feature, resolution, false);
+          }
+          else {
+            returnStyle = scope.props.mapController.proxy.locationStyleController.arrLocStyles[locstyle].style;
+          }
+        }
+      }
+      return returnStyle
+    };
+    this.features = new Collection();
+    this.editorLayer = new Vector({
+      source: new VectorSource({format: new GeoJSON()}),
+      style: this.styleFunction
+    });
+  }
+
+  open() {
+    jQuery(this.props.mapController.editorContainer).removeClass("c4g-close").addClass("c4g-open");
+    this.props.mapController.map.addLayer(this.editorLayer);
+    this.setState({
+      open: true
+    });
+    this.props.mapController.setOpenComponent(this);
+  }
+  close() {
+    jQuery(this.props.mapController.editorContainer).removeClass("c4g-open").addClass("c4g-close");
+    this.props.mapController.map.removeLayer(this.editorLayer);
+    this.setState({
+      open: false
+    });
+  }
+  countEditorId () {
+    let newCount = this.state.editorId + 1;
+    this.setState({
+      editorId: newCount
+    })
+  }
+  getConfiguration (id, frontend = true) {
+    let url;
+    if (frontend) {
+      url = "con4gis/editorService/" + id;
+    }
+    else {
+      url = "con4gis/editorServiceBackend/" + id;
+    }
+
+    fetch(url).then(
+      (response) => {
+        response.json().then(
+          (json) => {
+            this.handleConfig(json);
+          })
+      })
+  }
+  handleConfig (json) {
+    for (let i in json.drawStyles) {
+      if (json.drawStyles.hasOwnProperty(i)) {
+        this.config[i] = [];
+        let drawStyle = json.drawStyles[i];
+        for (let j in drawStyle.elements) {
+          if (drawStyle.elements.hasOwnProperty(j)) {
+            let element = drawStyle.elements[j];
+            this.config[i].push(element);
+            let checkLocstyle = this.arrLocstyles.findIndex((locstyle) => locstyle === element.styleId);
+            if (checkLocstyle === -1 && element.styleId) {
+              this.arrLocstyles.push(element.styleId);
+            }
+          }
+        }
+      }
+    }
+    this.props.mapController.proxy.locationStyleController.loadLocationStyles(this.arrLocstyles, {
+      "done": (styleData) => {
+        this.setState({
+          styleData: styleData
+        })
+      }
+    })
+  }
+  reRender(){
+    try{
+      if (this.state.features.length > 50) {
+        this.linkInput();
+        let geojson = JSON.parse(this.state.features);
+        let features = new GeoJSON({
+          featureProjection: "EPSG:3857"
+        }).readFeatures(geojson);
+        let source = this.editorLayer.getSource();
+        source.forEachFeature((feature) => {
+          source.removeFeature(feature);
+        });
+        for (let i in features) {
+          if (features.hasOwnProperty(i)) {
+            let jsonFeature = features[i];
+            if (jsonFeature.get('radius')) {
+              jsonFeature.setGeometry(new Circle(jsonFeature.getGeometry().getCoordinates(), jsonFeature.get('radius')));
+            }
+            source.addFeature(jsonFeature);
+          }
+        }
+      }
+    }
+    catch(error) {
+      console.log(error);
+    }
+    if (this.state.range) {
+      let selection = window.getSelection();
+      let range = selection.getRangeAt(0);
+      let startContainer = range.startContainer.childNodes[0] || range.startContainer;
+      range.setStart(startContainer, this.state.range);
+      range.setEnd(startContainer, this.state.range);
+      selection.removeRange(range);
+      selection.addRange(range);
+    }
+  }
+  changeJSON(event) {
+    let range = window.getSelection().getRangeAt(0).startOffset;
+    this.setState({features: event.target.innerText, range: range}, () => {
+      this.reRender();
+    })
+  }
+  addFeature (feature) {
+    let arrFeatures = JSON.parse(this.state.features);
+
+    arrFeatures.features.push(feature);
+    let features = JSON.stringify(arrFeatures, null, 2);
+    this.setState({
+      features: features
+    });
+    this.linkInput();
+  }
+  removeFeature (geojson) {
+    let editorId = geojson.properties.editorId;
+    let arrFeatures = JSON.parse(this.state.features);
+    let featureId = arrFeatures.features.findIndex((element) => {
+      return element.properties.editorId === editorId;
+    });
+    arrFeatures.features.splice(featureId, 1);
+    let features = JSON.stringify(arrFeatures, null, 2);
+    this.setState({
+      features: features
+    });
+    this.linkInput();
+  }
+  modifyFeature (geojson) {
+    let editorId = geojson.properties.editorId;
+    let objGeojson = JSON.parse(this.state.features);
+    let arrFeatures = objGeojson.features;
+    let featureId = arrFeatures.findIndex((element) => {
+      return element.properties.editorId === editorId;
+    });
+    objGeojson.features[featureId] = geojson;
+    let features = JSON.stringify(objGeojson, null, 2);
+    this.setState({
+      features: features
+    });
+    this.linkInput();
+  }
+  linkInput () {
+    if (this.props.inputField && this.state.features.length > 50) {
+      $(this.props.inputField).val(this.state.features); //link to inputField
+    }
+  }
+  render() {
+    const scope = this;
+    // if (this.props.inputField && $(this.props.inputField).length > 0) {
+    //     if (this.state.features < 50) {
+    //         console.log(this.state.features);
+    //     }
+    //     else {
+    //         $(this.props.inputField).val(this.state.features);
+    //     }
+    // }
+    return (
+      <div className={"c4g-editor-wrapper"}>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Titlebar wrapperClass={"c4g-editor-header"} headerClass={"c4g-editor-headline"} hideContainer={".c4g-editor-container"}
+                    header={this.langConstants.EDITOR} closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close} closeBtnTitle={this.langConstants.CLOSE}>
+          </Titlebar>
+        </Suspense>
+        <div className={"c4g-editor-mode-switcher"}>
+          {this.modes.map(function(element, index) {
+            if (element === "select" || (scope.config[element] && scope.config[element].length > 0)) {
+              return <button key={index} className={"c4g-editor-" + element + "  " + (element === scope.state.currentMode ? "c4g-active" : "c4g-inactive")}
+                             onMouseUp={() => scope.setState({currentMode: element})}/>;
             }
             else {
-                scope.open();
+              return null;
             }
-        });
-        this.config = {};
-        this.arrLocstyles = [];
-        let mapController = props.mapController;
-
-        if (props.config) {
-            this.handleConfig(props.config);
-        }
-        else {
-            this.getConfiguration(mapController.data.feEditorProfile || mapController.data.beEditorProfile, !!mapController.data.feEditorProfile);
-        }
-
-        this.langConstants = getEditorLanguage(mapController.data);
-        let control = new Control({element: element, target: props.target});
-        control.isOpen = () => {
-            return false;
-        }
-        if (!mapController.mapsControls.controls.editor) {
-            mapController.mapsControls.controls.editor = control;
-            mapController.map.addControl(control);
-        }
-        this.modes = ["select", "Point", "LineString", "Polygon", "Circle"];
-        let features;
-        if (this.props.inputField && $(this.props.inputField).val() && $(this.props.inputField).val().length > 50) {
-            features = $(this.props.inputField).val();
-            setTimeout(()=> {
-                this.reRender();
-            }, 200)
-        }
-        else {
-            features = '{"type": "FeatureCollection", "features": []}'
-        }
-        this.state = {
-            open: props.open || false,
-            currentMode: "select",
-            styleData: {},
-            control: control,
-            range: 0,
-            features: features,
-            editorId: 0
-        };
-        this.styleFunction = function(feature, resolution) {
-            let size = false;
-            let returnStyle = [];
-            if (feature && feature.get && feature.get('features')) {
-                let features = feature.get('features');
-                size = features.length;
-                feature = features[0];
-            }
-            if (feature && feature.getStyle()) {
-                returnStyle = feature.getStyle();
-            }
-            else if (feature && feature.get && feature.get('locstyle')) {
-                let locstyle = feature.get('locstyle');
-                if (scope.props.mapController.proxy.locationStyleController.arrLocStyles && scope.props.mapController.proxy.locationStyleController.arrLocStyles[locstyle] && scope.props.mapController.proxy.locationStyleController.arrLocStyles[locstyle].style) {
-                    let style = scope.props.mapController.proxy.locationStyleController.arrLocStyles[locstyle].style;
-                    if (typeof style === "function") {
-                        returnStyle = style(feature, resolution, false);
-                    }
-                    else {
-                        returnStyle = scope.props.mapController.proxy.locationStyleController.arrLocStyles[locstyle].style;
-                    }
-                }
-            }
-            return returnStyle
-        };
-        this.features = new Collection();
-        this.editorLayer = new Vector({
-            source: new VectorSource({format: new GeoJSON()}),
-            style: this.styleFunction
-        });
-    }
-
-    open() {
-        jQuery(this.props.mapController.editorContainer).removeClass("c4g-close").addClass("c4g-open");
-        this.props.mapController.map.addLayer(this.editorLayer);
-        this.setState({
-            open: true
-        });
-        this.props.mapController.setOpenComponent(this);
-    }
-    close() {
-        jQuery(this.props.mapController.editorContainer).removeClass("c4g-open").addClass("c4g-close");
-        this.props.mapController.map.removeLayer(this.editorLayer);
-        this.setState({
-            open: false
-        });
-    }
-    countEditorId () {
-        let newCount = this.state.editorId + 1;
-        this.setState({
-            editorId: newCount
-        })
-    }
-    getConfiguration (id, frontend = true) {
-        let url;
-        if (frontend) {
-            url = "con4gis/editorService/" + id;
-        }
-        else {
-            url = "con4gis/editorServiceBackend/" + id;
-        }
-
-        fetch(url).then(
-            (response) => {
-                response.json().then(
-                    (json) => {
-                        this.handleConfig(json);
-                })
-            })
-    }
-    handleConfig (json) {
-        for (let i in json.drawStyles) {
-            if (json.drawStyles.hasOwnProperty(i)) {
-                this.config[i] = [];
-                let drawStyle = json.drawStyles[i];
-                for (let j in drawStyle.elements) {
-                    if (drawStyle.elements.hasOwnProperty(j)) {
-                        let element = drawStyle.elements[j];
-                        this.config[i].push(element);
-                        let checkLocstyle = this.arrLocstyles.findIndex((locstyle) => locstyle === element.styleId);
-                        if (checkLocstyle === -1 && element.styleId) {
-                            this.arrLocstyles.push(element.styleId);
-                        }
-                    }
-                }
-            }
-        }
-        this.props.mapController.proxy.locationStyleController.loadLocationStyles(this.arrLocstyles, {
-            "done": (styleData) => {
-                this.setState({
-                    styleData: styleData
-                })
-            }
-        })
-    }
-    reRender(){
-        try{
-            if (this.state.features.length > 50) {
-                this.linkInput();
-                let geojson = JSON.parse(this.state.features);
-                let features = new GeoJSON({
-                    featureProjection: "EPSG:3857"
-                }).readFeatures(geojson);
-                let source = this.editorLayer.getSource();
-                source.forEachFeature((feature) => {
-                    source.removeFeature(feature);
-                });
-                for (let i in features) {
-                    if (features.hasOwnProperty(i)) {
-                        let jsonFeature = features[i];
-                        if (jsonFeature.get('radius')) {
-                            jsonFeature.setGeometry(new Circle(jsonFeature.getGeometry().getCoordinates(), jsonFeature.get('radius')));
-                        }
-                        source.addFeature(jsonFeature);
-                    }
-                }
-            }
-        }
-        catch(error) {
-            console.log(error);
-        }
-        if (this.state.range) {
-            let selection = window.getSelection();
-            let range = selection.getRangeAt(0);
-            let startContainer = range.startContainer.childNodes[0] || range.startContainer;
-            range.setStart(startContainer, this.state.range);
-            range.setEnd(startContainer, this.state.range);
-            selection.removeRange(range);
-            selection.addRange(range);
-        }
-    }
-    changeJSON(event) {
-        let range = window.getSelection().getRangeAt(0).startOffset;
-        this.setState({features: event.target.innerText, range: range}, () => {
-            this.reRender();
-        })
-    }
-    addFeature (feature) {
-        let arrFeatures = JSON.parse(this.state.features);
-
-        arrFeatures.features.push(feature);
-        let features = JSON.stringify(arrFeatures, null, 2);
-        this.setState({
-            features: features
-        });
-        this.linkInput();
-    }
-    removeFeature (geojson) {
-        let editorId = geojson.properties.editorId;
-        let arrFeatures = JSON.parse(this.state.features);
-        let featureId = arrFeatures.features.findIndex((element) => {
-            return element.properties.editorId === editorId;
-        });
-        arrFeatures.features.splice(featureId, 1);
-        let features = JSON.stringify(arrFeatures, null, 2);
-        this.setState({
-            features: features
-        });
-        this.linkInput();
-    }
-    modifyFeature (geojson) {
-        let editorId = geojson.properties.editorId;
-        let objGeojson = JSON.parse(this.state.features);
-        let arrFeatures = objGeojson.features;
-        let featureId = arrFeatures.findIndex((element) => {
-            return element.properties.editorId === editorId;
-        });
-        objGeojson.features[featureId] = geojson;
-        let features = JSON.stringify(objGeojson, null, 2);
-        this.setState({
-            features: features
-        });
-        this.linkInput();
-    }
-    linkInput () {
-        if (this.props.inputField && this.state.features.length > 50) {
-            $(this.props.inputField).val(this.state.features); //link to inputField
-        }
-    }
-    render() {
-        const scope = this;
-        // if (this.props.inputField && $(this.props.inputField).length > 0) {
-        //     if (this.state.features < 50) {
-        //         console.log(this.state.features);
-        //     }
-        //     else {
-        //         $(this.props.inputField).val(this.state.features);
-        //     }
-        // }
-        return (
-            <div className={"c4g-editor-wrapper"}>
-                <Suspense fallback={<div>Loading...</div>}>
-                    <Titlebar wrapperClass={"c4g-editor-header"} headerClass={"c4g-editor-headline"} hideContainer={".c4g-editor-container"}
-                              header={this.langConstants.EDITOR} closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close} closeBtnTitle={this.langConstants.CLOSE}>
-                    </Titlebar>
-                </Suspense>
-                <div className={"c4g-editor-mode-switcher"}>
-                    {this.modes.map(function(element, index) {
-                        if (element === "select" || (scope.config[element] && scope.config[element].length > 0)) {
-                            return <button key={index} className={"c4g-editor-" + element + "  " + (element === scope.state.currentMode ? "c4g-active" : "c4g-inactive")}
-                                           onMouseUp={() => scope.setState({currentMode: element})}/>;
-                        }
-                        else {
-                            return null;
-                        }
-                    })}
-                </div>
-                <EditorView className={"c4g-editor-view"} styleFunction={this.styleFunction} mode={this.state.currentMode} styleData={this.state.styleData} elements={this.config[this.state.currentMode] ? this.config[this.state.currentMode]: []} active={true} editorLayer={this.state.editorLayer} features={this.features} editorVars={this.props.config.editorVars} removeFeature={this.removeFeature} modifyFeature={this.modifyFeature} addFeature={this.addFeature} editorLayer={this.editorLayer} editorId={this.state.editorId} countEditorId={this.countEditorId} updateFeatures={this.updateFeatures} mapController={this.props.mapController} editor={this} lang={this.langConstants}/>
-                <div className={"c4g-editor-content"} style={{overflow: "none"}}>
-                    <pre contentEditable={true} style={{overflowY: "scroll", overflowX: "none", height: "400px"}} suppressContentEditableWarning={true} onInput={this.changeJSON}>{this.state.features}</pre>
-                </div>
-            </div>
-        )
-    }
+          })}
+        </div>
+        <EditorView className={"c4g-editor-view"} styleFunction={this.styleFunction} mode={this.state.currentMode} styleData={this.state.styleData} elements={this.config[this.state.currentMode] ? this.config[this.state.currentMode]: []} active={true} features={this.features} editorVars={this.props.config.editorVars} removeFeature={this.removeFeature} modifyFeature={this.modifyFeature} addFeature={this.addFeature} editorLayer={this.editorLayer} editorId={this.state.editorId} countEditorId={this.countEditorId} updateFeatures={this.updateFeatures} mapController={this.props.mapController} editor={this} lang={this.langConstants}/>
+        <div className={"c4g-editor-content"} style={{overflow: "none"}}>
+          <pre contentEditable={true} style={{overflowY: "scroll", overflowX: "none", height: "400px"}} suppressContentEditableWarning={true} onInput={this.changeJSON}>{this.state.features}</pre>
+        </div>
+      </div>
+    )
+  }
 }
