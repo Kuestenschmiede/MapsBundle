@@ -86,7 +86,7 @@ class ResourceLoader extends coreResourceLoader
 
         // third-party scripts
         if ($resources['cesium']) {
-            parent::loadJavaScriptResource(self::VENDOR_PATH . '/cesium/Cesium.js', self::BODY, 'cesium');
+            parent::loadJavaScriptResource(self::VENDOR_PATH . '/Cesium/Cesium.js', self::BODY, 'cesium');
         }
 
         if ($mapData['router_enable']) {

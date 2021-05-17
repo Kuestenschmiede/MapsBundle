@@ -338,7 +338,7 @@ class MapDataConfigurator
             if ($profile->dummyBaselayer &&
                 StringUtil::binToUuid($profile->dummyBaselayer) &&
                 FilesModel::findByUuid(StringUtil::binToUuid($profile->dummyBaselayer)) &&
-                FilesModel::findByUuid(StringUtil::binToUuid($profile->dummyBaselayer))-path) {
+                FilesModel::findByUuid(StringUtil::binToUuid($profile->dummyBaselayer)) - path) {
                 $mapData['dummyBaselayer'] = FilesModel::findByUuid(StringUtil::binToUuid($profile->dummyBaselayer))->path;
             }
 
