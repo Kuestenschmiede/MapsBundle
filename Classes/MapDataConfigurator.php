@@ -127,43 +127,47 @@ class MapDataConfigurator
             $em = System::getContainer()->get('doctrine.orm.default_entity_manager');
             $config = $em->getRepository(EditorConfiguration::class)->findOneById($profile->editorProfile);
             $mapData['editor']['config']['drawStyles'] = [
-                "Point"         => ['elements' => []],
-                "LineString"    => ['elements' => []],
-                "Polygon"       => ['elements' => []],
-                "Circle"        => ['elements' => []]
+                'Point' => ['elements' => []],
+                'LineString' => ['elements' => []],
+                'Polygon' => ['elements' => []],
+                'Circle' => ['elements' => []],
             ];
             $mapData['editor']['config']['editorVars'] = $config->getEditorVars();
             $counter = 1;
             foreach ($config->getTypes() as $type) {
                 $counter++;
                 switch ($type['type']) {
-                    case "point":
+                    case 'point':
                         $mapData['editor']['config']['drawStyles']['Point']['elements'][] = [
                             'id' => $counter,
                             'name' => $type['caption'],
-                            'styleId'   => $type['locstyle']
+                            'styleId' => $type['locstyle'],
                         ];
+
                         break;
-                    case "linestring":
+                    case 'linestring':
                         $mapData['editor']['config']['drawStyles']['LineString']['elements'][] = [
                             'id' => $counter,
                             'name' => $type['caption'],
-                            'styleId'   => $type['locstyle']
+                            'styleId' => $type['locstyle'],
                         ];
+
                         break;
-                    case "polygon":
+                    case 'polygon':
                         $mapData['editor']['config']['drawStyles']['Polygon']['elements'][] = [
                             'id' => $counter,
                             'name' => $type['caption'],
-                            'styleId'   => $type['locstyle']
+                            'styleId' => $type['locstyle'],
                         ];
+
                         break;
-                    case "circle":
+                    case 'circle':
                         $mapData['editor']['config']['drawStyles']['Circle']['elements'][] = [
                             'id' => $counter,
                             'name' => $type['caption'],
-                            'styleId'   => $type['locstyle']
+                            'styleId' => $type['locstyle'],
                         ];
+
                         break;
                 }
             }

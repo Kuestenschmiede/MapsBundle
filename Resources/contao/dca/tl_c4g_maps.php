@@ -812,6 +812,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 'inputType'               => 'textarea',
                 'eval'                    => ['tl_class'=>'wizard', 'preserve_tags'=>true],
                 // 'save_callback'           => array(array('tl_c4g_maps','setLocData')),
+                'wizard'                  => array(array('con4gis\MapsBundle\Classes\Contao\GeoEditor', 'getEditorLink')),
                 'sql'                     => "text NULL"
             ],
         'data_projection' =>
@@ -820,9 +821,9 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 'exclude'                 => true,
                 'inputType'               => 'select',
                 'options'                 => ['MERC','WGS84'],
-                'default'                 => 'MERC',
+                'default'                 => 'WGS84',
                 'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['references'],
-                'sql'                     => "char(5) NOT NULL default ''"
+                'sql'                     => "char(5) NOT NULL default 'WGS84'"
             ],
         'data_forcenodes' =>
             [

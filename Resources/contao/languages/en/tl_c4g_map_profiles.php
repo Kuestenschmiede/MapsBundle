@@ -250,6 +250,10 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['routerConfig'] = ['Router-configurat
 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editRoutingConfiguration'] = 'Edit router-configuration';
 
+/** Editor */
+$GLOBALS['TL_LANG']["tl_c4g_map_profiles"]['editorProfile'] = ['Editor-configuration', 'Please choose your editor-configuration.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editEditorConfiguration'] = 'Edit editor configurations';
+
 /** legend */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['routing_legend'] = 'Routing and Area Search';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_legend'] = 'Editor';

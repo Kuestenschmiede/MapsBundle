@@ -15,6 +15,7 @@ $GLOBALS['TL_LANG']['tl_c4g_settings']['caching'] = ["Activate caching", "Activa
 
 $GLOBALS['TL_LANG']['tl_c4g_settings']['defaultprofile'] = ["Default profile", "Select a map profile to be used as the default profile. The profile will be loaded if no other profile has been set. For example for the Geopicker."];
 $GLOBALS['TL_LANG']['tl_c4g_settings']['beGeopickerProfile'] = ['Backend geopicker profile', 'If checked, this profile is used as backend geopicker (structure elements, events, ...). If you often set locations in your application, then you should take some time for the Geopicker profile. For example to integrate the map search and the full screen mode.'];
+$GLOBALS['TL_LANG']['tl_c4g_settings']['editorprofile'] = ['Backend editor profile', 'Select a map profile that is used for the backend editor.'];
 
 $GLOBALS['TL_LANG']['tl_c4g_settings']['defaultData'] = ["Generate default data", "Choose wether you want to generate default data"];
 

@@ -31,7 +31,8 @@
     "con4gis/core": "^4.2",
     "phayes/geophp": "^1.2",
     "menatwork/contao-multicolumnwizard-bundle": "^3.4",
-    "bugbuster/contao-mobiledetection-bundle": "^1.0"
+    "bugbuster/contao-mobiledetection-bundle": "^1.0",
+    "contao-components/jquery": "^3.6.0"
   },
   "suggest": {
     "con4gis/data": "With Data you can maintain your own individual data and display it in maps and lists.",
