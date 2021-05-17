@@ -538,6 +538,7 @@ export class Sideboard extends Control {
       clickAction: undefined
     }, opt_options);
 
+    console.log(options);
     if (options.className) {
       options.className = ' ' + options.className;
     }

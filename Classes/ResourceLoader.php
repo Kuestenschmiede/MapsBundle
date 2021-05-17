@@ -99,6 +99,11 @@ class ResourceLoader extends coreResourceLoader
         if ($mapData['feEditorProfile'] || $mapData['beEditorProfile']) {
             parent::loadCssResource(self::BUNDLE_CSS_PATH . 'c4g-project-editor.min.css', 'project-editor-css');
         }
+        if ($mapData['editor'] && $mapData['editor']['type'] === "backend") {
+            parent::loadJavaScriptResource(self::BUNDLE_JS_PATH . 'c4g-backend-helper.js', \con4gis\CoreBundle\Classes\ResourceLoader::JAVASCRIPT, 'c4g-backend-editor');
+        }
+        
+        
 
         parent::loadCssResource(self::BUNDLE_CSS_PATH . 'maps.min.css');
 

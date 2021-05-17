@@ -17,6 +17,7 @@ import {Draw, Select, Modify} from "ol/interaction";
 import {Feature} from "ol";
 import {C4gStarboardStyle} from "./c4g-starboard-style.jsx";
 import {C4gPopupController} from "./../c4g-popup-controller";
+import {utils} from "../c4g-maps-utils";
 
 
 export class EditorView extends Component {
@@ -159,10 +160,34 @@ export class EditorView extends Component {
         let elements = null;
         if (this.props.elements && this.props.elements.length > 1) {
             elements = this.props.elements.map((element) => {
+                let color, bordercolor, styleTriggerLabel;
+                let locstyle = this.props.styleData.arrLocStyles[element.styleId];
+                let styleData = locstyle.locStyleArr;
+                let styleType = styleData ? styleData.styletype : "default";
+                if (styleData && (styleType === "cust_icon" || styleType === "cust_icon_svg" || styleType === "photo")) {
+                    styleTriggerLabel = <C4gStarboardStyle styleData={this.props.styleData} styleId={element.styleId}/>
+                } else {
+                    let stylor = locstyle.style && locstyle.style(new Feature({geometry: new Point(0,0)}), "EPSG:4326") ? locstyle.style(new Feature({geometry: new Point(0,0)}), "EPSG:4326"): null;
+                    let featureStyle = Array.isArray(stylor) ? stylor[0]: stylor;
+                    if (featureStyle && featureStyle.getFill() && featureStyle.getStroke()) {
+                        color = featureStyle.getFill().getColor();
+                    } else if (styleData && styleData.fillcolor && styleData.strokecolor) {
+                        color = utils.getRgbaFromHexAndOpacity(styleData.fillcolor[0], styleData.fillcolor[1]);
+                    }
+
+                    styleTriggerLabel = <span className={"c4g-editor-locstyle"} style={{
+                        "background-color" : color
+                    }}/>;
+                }
+
+
                 return (<button key={element.id} style={{height: "32px", width: "32px"}}
                                 onMouseUp={() =>{this.setState({activeElement: element.id, activeStyle: element.styleId})}}>
-                    <C4gStarboardStyle styleData={this.props.styleData} styleId={element.styleId}/></button>)
+                    {styleTriggerLabel}
+                </button>)
             });
+
+
         }
         let customButton = null;
         if ("LineStringPolygon".includes(this.props.mode)) {

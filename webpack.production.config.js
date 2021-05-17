@@ -14,6 +14,8 @@ var path = require('path');
 var config = {
   entry: {
     'c4g-maps': './Resources/public/js/c4g-maps-main.js',
+    'c4g-backend-helper': './Resources/public/js/c4g-backend-helper.js',
+    'c4g-backend-editor': './Resources/public/js/c4g-backend-editor.js',
     'c4g-search': './Resources/public/js/c4g-search.js'
   },
   mode: "production",

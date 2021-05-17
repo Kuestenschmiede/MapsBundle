@@ -1056,7 +1056,7 @@ export class BackendEditor extends Sideboard {
       name: 'draw:' + options.type.toLowerCase(),
       triggerConfig: {
         tipLabel: self.langConstants[TRIGGER_DRAW],
-        className: cssConstants[TRIGGER_DRAW],
+        className: cssConstants["DRAW_CONTENT_" + options.type.toUpperCase()],
       },
       sectionElements: [
         {section: self.contentContainer, element: drawContent},
