@@ -21,6 +21,7 @@ import {utils} from "../c4g-maps-utils";
 
 
 export class EditorView extends Component {
+
   constructor(props) {
     super(props);
     const scope = this;
@@ -34,18 +35,12 @@ export class EditorView extends Component {
     };
     this.interaction = null;
     this.changeJSON = this.changeJSON.bind(this);
+    this.resetInteraction = this.resetInteraction.bind(this);
   }
+
   render() {
     if (this.props.mode !== "select" && this.props.active) {
-      if (this.interaction) { //only one drawinteraction at a time
-        if (Array.isArray(this.interaction)) {
-          this.props.mapController.map.removeInteraction(this.interaction[0]);
-          this.props.mapController.map.removeInteraction(this.interaction[1]);
-        }
-        else {
-          this.props.mapController.map.removeInteraction(this.interaction);
-        }
-      }
+      this.resetInteraction();
       let geometry;
       switch(this.props.mode) {
         case "Point":
@@ -103,17 +98,8 @@ export class EditorView extends Component {
         }
       );
       this.props.mapController.map.addInteraction(this.interaction);
-    }
-    else {
-      if (this.interaction) { //only one drawinteraction at a time
-        if (Array.isArray(this.interaction)) {
-          this.props.mapController.map.removeInteraction(this.interaction[0]);
-          this.props.mapController.map.removeInteraction(this.interaction[1]);
-        }
-        else {
-          this.props.mapController.map.removeInteraction(this.interaction);
-        }
-      }
+    } else {
+      this.resetInteraction();
       if (this.state.selectMode === "remove") {
         this.interaction = new Select({
           layers: [this.props.editorLayer],
@@ -160,7 +146,7 @@ export class EditorView extends Component {
     let elements = null;
     if (this.props.elements && this.props.elements.length > 1) {
       elements = this.props.elements.map((element) => {
-        let color, bordercolor, styleTriggerLabel;
+        let color, styleTriggerLabel;
         let locstyle = this.props.styleData.arrLocStyles[element.styleId];
         let styleData = locstyle.locStyleArr;
         let styleType = styleData ? styleData.styletype : "default";
@@ -231,8 +217,20 @@ export class EditorView extends Component {
         </div>
       </React.Fragment>
     )
-
   }
+
+  resetInteraction() {
+    if (this.interaction) { //only one drawinteraction at a time
+      if (Array.isArray(this.interaction)) {
+        this.props.mapController.map.removeInteraction(this.interaction[0]);
+        this.props.mapController.map.removeInteraction(this.interaction[1]);
+      }
+      else {
+        this.props.mapController.map.removeInteraction(this.interaction);
+      }
+    }
+  }
+
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.props.elements[0] && prevProps.mode !== this.props.mode) {
       if (this.state.activeElement === 0) {
@@ -259,6 +257,7 @@ export class EditorView extends Component {
       selectMode: string
     });
   }
+
   handleVarChange(event) {
     let value = event.target.value;
     let name = event.target.name;
@@ -276,6 +275,7 @@ export class EditorView extends Component {
       freehand: !this.state.freehand
     })
   }
+
   changeJSON(event) {
     this.setState({features: event.target.value})
   }
