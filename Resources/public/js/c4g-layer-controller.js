@@ -982,7 +982,15 @@ export class BetterLayerController {
               for (let i in contentData.features) {
                 if (contentData.features.hasOwnProperty(i)) {
                   let singleFeature = format.readFeature(contentData.features[i]);
-                  singleFeature.set('locstyle', locstyle);
+                  if (!singleFeature.get('locstyle')) {
+                    singleFeature.set('locstyle', locstyle);
+                  }
+                  else {
+                    checkLocstyle = this.arrLocstyles.findIndex((element) => element === singleFeature.get('locstyle'));
+                    if (checkLocstyle === -1 && singleFeature.get('locstyle')) {
+                      this.arrLocstyles.push(singleFeature.get('locstyle'));
+                    }
+                  }
                   if (content.hover_location) {
                     singleFeature.set('hover_style', content.hover_style);
                     singleFeature.set('hover_location', content.hover_location);
@@ -1208,7 +1216,6 @@ export class BetterLayerController {
             this.mapController.filter.hideFeature(features[featureId]);
           }
         }
-
         features[featureId].set('locstyle', layer.locstyle);
         if (content.hover_location) {
           features[featureId].set('hover_style', content.hover_style);
