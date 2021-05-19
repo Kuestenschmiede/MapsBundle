@@ -22,8 +22,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_tables']['ptableBlob']    			= ['Blob', 'Lesen S
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['ptableField']    			= ['Verweis auf Elterntabellen', 'Bitte wählen Sie das Feld der Quelltabelle aus, das auf die Elterntabellen verweist (meist pid).'];
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['ptableCompareField']      = ['Verweis auf Quelltabelle', 'Bitte wählen Sie die Felder der Elterntabellen aus, die auf die Quelltabelle verweisen (meist ID).'];
 
-$GLOBALS['TL_LANG']['tl_c4g_map_tables']['geox']                    = ['Geo X-Koordinate', 'Geben Sie hier das Feld ein, das die X-Koordinate (Breitengrad, WGS-84) enthält.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_tables']['geoy']                    = ['Geo Y-Koordinate', 'Geben Sie hier das Feld ein, das die Y-Koordinate (Längengrad, WGS-84) enthält.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_tables']['geox']                    = ['Geo X-Koordinate', 'Geben Sie hier das Feld ein, das die X-Koordinate (Längengrad, WGS-84) enthält.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_tables']['geoy']                    = ['Geo Y-Koordinate', 'Geben Sie hier das Feld ein, das die Y-Koordinate (Breitengrad, WGS-84) enthält.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['geolocation']             = ['Geolokation', 'Geben Sie hier das Feld ein, das das Koordinatenpaar, WKT oder WKB enthält'];
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['label']                   = ['Label', 'Geben Sie hier das Feld ein, das das Label enthält'];
 $GLOBALS['TL_LANG']['tl_c4g_map_tables']['locstyle']                = ['Lokationsstil', 'Geben Sie hier das Feld ein, das die ID des Lokationstils enthält'];
