@@ -369,7 +369,7 @@ class LayerContentService
         $objConfig = C4gMapTablesModel::findByPk($objLayer->tab_source);
         $sourceTable = $objConfig->tableSource;
         $ptableArr = unserialize($objConfig->ptable);
-        $ptableFieldArr = unserialize($objConfig->ptableField);
+        $ptableField = $objConfig->ptableField;
         $ptableCompareFieldArr = unserialize($objConfig->ptableCompareField);
         $ptableBlobArr = unserialize($objConfig->ptableBlob);
 
@@ -380,7 +380,7 @@ class LayerContentService
         $connectionParams['dbCharset'] = 'utf8mb4';
 
         //check parent values
-        if ($ptableArr && $ptableFieldArr && $ptableCompareFieldArr) {
+        if ($ptableArr && $ptableField && $ptableCompareFieldArr) {
             foreach ($ptableArr as $key => $ptable) {
                 $qWhere .= ' WHERE ';
                 if ($key == 0) {
@@ -390,7 +390,6 @@ class LayerContentService
                     $fieldName = 'tab_pid' . intval($key);
                     $sourcePid = intval($objLayer->$fieldName);
                 }
-                $ptablefield = $ptableFieldArr[$key];
                 $ptableCompareField = str_replace($ptable . '.', '', $ptableCompareFieldArr[$key]);
 
                 //if there is a compare Field instead of the id field (parent table) we have change the parent id
@@ -405,7 +404,7 @@ class LayerContentService
                         if ($ptableBlobArr && $ptableBlobArr[$key] == 1) {
                             //ToDo filter after select
                         } else {
-                            $pidOption .= $and . "$ptablefield = $sourcePid ";
+                            $pidOption .= $and . "$ptableField = $sourcePid ";
                         }
                     } else {
                         $pidOption .= "`pid` = '$sourcePid'  ";
@@ -509,9 +508,8 @@ class LayerContentService
                             $blobCount++;
                         }
 
-                        $ptablefield = $ptableFieldArr[$key];
                         $ptableCompareField = $ptableCompareFieldArr[$key];
-                        $blobfield = mb_convert_encoding($arrResult[$ptablefield], 'UTF-8', mb_detect_encoding($arrResult[$ptablefield]));
+                        $blobfield = mb_convert_encoding($arrResult[$ptableField], 'UTF-8', mb_detect_encoding($arrResult[$ptableField]));
 
                         if ($blobfield && $sourcePid && $ptableCompareField && ($ptableCompareField != 'id')) {
                             $query2 = "SELECT * FROM `$ptable` WHERE id = $sourcePid";
