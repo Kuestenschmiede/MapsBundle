@@ -151,7 +151,7 @@ export class EditorView extends Component {
         let styleData = locstyle.locStyleArr;
         let styleType = styleData ? styleData.styletype : "default";
         if (styleData && (styleType === "cust_icon" || styleType === "cust_icon_svg" || styleType === "photo")) {
-          styleTriggerLabel = <C4gStarboardStyle styleData={this.props.styleData} styleId={element.styleId}/>
+          styleTriggerLabel = <C4gStarboardStyle tooltip={element.name} styleData={this.props.styleData} styleId={element.styleId}/>
         } else {
           let stylor = locstyle.style && locstyle.style(new Feature({geometry: new Point(0,0)}), "EPSG:4326") ? locstyle.style(new Feature({geometry: new Point(0,0)}), "EPSG:4326"): null;
           let featureStyle = Array.isArray(stylor) ? stylor[0]: stylor;
@@ -179,12 +179,12 @@ export class EditorView extends Component {
     if ("LineStringPolygon".includes(this.props.mode)) {
       let freehandClass = "c4g-editor-view ";
       freehandClass += this.state.freehand ? "c4g-active" : "c4g-inactive";
-      customButton = (<a className={freehandClass} onMouseUp={() => {this.changeFreehand()}}>Freehand</a>);
+      customButton = (<a className={freehandClass} title={this.props.lang.EDITOR_VIEW_TRIGGER_DRAW_FREEHAND} onMouseUp={() => {this.changeFreehand()}}>{this.props.lang.EDITOR_VIEW_TRIGGER_DRAW_FREEHAND}</a>);
     }
     else if (this.props.mode === "select") {
       customButton = (<div className={"c4g-editor-mode-switcher"}>
-        <button title={"Modify"} className={"c4g-editor-feature-modify " + (this.state.selectMode === "modify" ? "c4g-active": "c4g-inactive")} onMouseUp={() => {this.changeSelectMode("modify")}}/>
-        <button title={"Remove"} className={"c4g-editor-feature-delete " + (this.state.selectMode === "remove" ? "c4g-active": "c4g-inactive")} onMouseUp={() => {this.changeSelectMode("remove")}}/>
+        <button title={this.props.lang.EDITOR_FEATURE_MODIFY} className={"c4g-editor-feature-modify " + (this.state.selectMode === "modify" ? "c4g-active": "c4g-inactive")} onMouseUp={() => {this.changeSelectMode("modify")}}/>
+        <button title={this.props.lang.EDITOR_FEATURE_DELETE} className={"c4g-editor-feature-delete " + (this.state.selectMode === "remove" ? "c4g-active": "c4g-inactive")} onMouseUp={() => {this.changeSelectMode("remove")}}/>
       </div>)
     }
     let arrFormEditorVars = [];

@@ -287,14 +287,15 @@ export class EditorComponent extends Component {
       <div className={"c4g-editor-wrapper"}>
         <Suspense fallback={<div>Loading...</div>}>
           <Titlebar wrapperClass={"c4g-editor-header"} headerClass={"c4g-editor-headline"} hideContainer={".c4g-editor-container"}
-                    header={this.langConstants.EDITOR} closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close} closeBtnTitle={this.langConstants.CLOSE}>
+                    header={this.langConstants.EDITOR} closeBtnTitle={this.langConstants.CTRL_EDITOR} closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close} closeBtnTitle={this.langConstants.CLOSE}>
           </Titlebar>
         </Suspense>
         <div className={"c4g-editor-mode-switcher"}>
           {this.modes.map(function(element, index) {
             if (element === "select" || (scope.config[element] && scope.config[element].length > 0)) {
+              let title = scope.langConstants["EDITOR_VIEW_TRIGGER_DRAW_" + element.toUpperCase()];
               return <button key={index} className={"c4g-editor-" + element + "  " + (element === scope.state.currentMode ? "c4g-active" : "c4g-inactive")}
-                             onMouseUp={() => scope.setState({currentMode: element})}/>;
+                             title={title} onMouseUp={() => scope.setState({currentMode: element})}/>;
             }
             else {
               return null;

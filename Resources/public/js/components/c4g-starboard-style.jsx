@@ -28,6 +28,7 @@ export class C4gStarboardStyle extends Component {
         let stylor = locstyle.style && locstyle.style(new Feature({geometry: new Point(0,0)}), "EPSG:4326") ? locstyle.style(new Feature({geometry: new Point(0,0)}), "EPSG:4326"): null;
         let styl0r = Array.isArray(stylor) ? stylor[0]: stylor;
         let styleType = styleData ? styleData.styletype : "default";
+        let tooltip = this.props.tooltip || "";
         if (styleData && (styleType === "cust_icon" || styleType === "cust_icon_svg" || styleType === "photo")) {
             let styleIcon = null;
             let iconSrc;
@@ -48,11 +49,11 @@ export class C4gStarboardStyle extends Component {
                     return null;
                 }
             }
-            if (this.props.clickEvent && this.props.tooltip) {
-                styleTriggerLabel = <span className={cssConstants.STARBOARD_LOCSTYLE} title={this.props.tooltip} onMouseUp={(event)=> this.props.clickEvent(event)}>{styleIcon}</span>;
+            if (this.props.clickEvent) {
+                styleTriggerLabel = <span className={cssConstants.STARBOARD_LOCSTYLE} title={tooltip} onMouseUp={(event)=> this.props.clickEvent(event)}>{styleIcon}</span>;
             }
             else {
-                styleTriggerLabel = <span className={cssConstants.STARBOARD_LOCSTYLE}>{styleIcon}</span>;
+                styleTriggerLabel = <span className={cssConstants.STARBOARD_LOCSTYLE} title={tooltip}>{styleIcon}</span>;
             }
         } else {
             let cssClass;
@@ -92,11 +93,11 @@ export class C4gStarboardStyle extends Component {
                 "--var-color" : color,
                 "--var-bordercolor" : bordercolor
             };
-            if (this.props.clickEvent && this.props.tooltip) {
-                styleTriggerLabel = <span className={cssClass} style={styleElements} title={this.props.tooltip} onMouseUp={(event)=> this.props.clickEvent(event)}/>;
+            if (this.props.clickEvent) {
+                styleTriggerLabel = <span className={cssClass} style={styleElements} title={tooltip} onMouseUp={(event)=> this.props.clickEvent(event)}/>;
             }
             else {
-                styleTriggerLabel = <span className={cssClass} style={styleElements}/>;
+                styleTriggerLabel = <span className={cssClass} style={styleElements} title={tooltip}/>;
             }
         }
         return styleTriggerLabel;
