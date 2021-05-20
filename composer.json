@@ -25,7 +25,7 @@
     "docs": "https://docs.con4gis.org/con4gis-maps"
   },
   "require": {
-    "php": "^7.1",
+    "php": "^7.1 | ^8.0",
     "contao/core-bundle": "^4.4",
     "contao/calendar-bundle": "^4.4",
     "con4gis/core": "^4.2",
