@@ -90,7 +90,7 @@ class ResourceLoader extends coreResourceLoader
         }
 
         if ($mapData['router_enable']) {
-            parent::loadJavaScriptResource('/bundles/con4giscore/vendor/jQuery/jquery-ui-1.12.1.custom/jquery-ui.min.js|async|static', self::JAVASCRIPT, 'jquery-ui');
+            parent::loadJavaScriptResource('/bundles/con4giscore/vendor/jQuery/jquery-ui-1.12.1.custom/jquery-ui.min.js', self::BODY, 'jquery-ui');
 
             parent::loadCssResource('/bundles/con4giscore/vendor/jQuery/jquery-ui-1.12.1.custom/jquery-ui.min.css', 'jquery-ui-css');
             parent::loadCssResource(self::BUNDLE_CSS_PATH . 'c4g-routing.min.css', 'routing-css');
@@ -99,11 +99,9 @@ class ResourceLoader extends coreResourceLoader
         if ($mapData['feEditorProfile'] || $mapData['beEditorProfile']) {
             parent::loadCssResource(self::BUNDLE_CSS_PATH . 'c4g-project-editor.min.css', 'project-editor-css');
         }
-        if ($mapData['editor'] && $mapData['editor']['type'] === "backend") {
-            parent::loadJavaScriptResource(self::BUNDLE_JS_PATH . 'c4g-backend-helper.js', \con4gis\CoreBundle\Classes\ResourceLoader::JAVASCRIPT, 'c4g-backend-editor');
+        if ($mapData['editor'] && $mapData['editor']['type'] === 'backend') {
+            parent::loadJavaScriptResource(self::BUNDLE_JS_PATH . 'c4g-backend-helper.js', \con4gis\CoreBundle\Classes\ResourceLoader::BODY, 'c4g-backend-editor');
         }
-        
-        
 
         parent::loadCssResource(self::BUNDLE_CSS_PATH . 'maps.min.css');
 

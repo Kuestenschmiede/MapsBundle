@@ -8,7 +8,8 @@
  * @link https://www.con4gis.org
  */
 import React, { Component,Suspense } from "react";
-import {EditorView} from "./c4g-editor-view.jsx";
+//import {EditorView} from "./c4g-editor-view.jsx";
+const EditorView = React.lazy(() => import("./c4g-editor-view.jsx"));
 import {getEditorLanguage} from "./../c4g-editor-i18n";
 import {Control} from "ol/control";
 import {Group, Vector} from "ol/layer";

@@ -8,9 +8,7 @@
  * @link https://www.con4gis.org
  */
 
-$fa-font-path: "../../../../bundles/con4giscore/vendor/fontawesome/webfonts";
-@import "node_modules/@fortawesome/fontawesome-free/scss/fontawesome";
-@import "node_modules/@fortawesome/fontawesome-free/scss/solid";
+@import "fontawesome";
 
 .search_block {
   display: inline-block;
