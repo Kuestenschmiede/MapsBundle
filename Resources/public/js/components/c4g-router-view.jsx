@@ -29,8 +29,8 @@ import {getLanguage} from "./../routing-constant-i18n";
 import {cssConstants} from "./../c4g-maps-constant";
 const Titlebar = React.lazy(() => import("./c4g-titlebar.jsx"));
 import {utils} from "./../c4g-maps-utils";
-//import {RouterPopupButtons} from "./c4g-router-popup-buttons.jsx";
-const RouterPopupButtons = React.lazy(() => import('./c4g-router-popup-buttons.jsx'));
+import {RouterPopupButtons} from "./c4g-router-popup-buttons.jsx";
+//const RouterPopupButtons = React.lazy(() => import('./c4g-router-popup-buttons.jsx'));
 const RouterControls = React.lazy(() => import('./c4g-router-controls.jsx'));
 const RouterProfileSelection = React.lazy(() => import('./c4g-router-profile-selection.jsx'));
 

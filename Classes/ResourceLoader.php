@@ -130,7 +130,7 @@ class ResourceLoader extends coreResourceLoader
         if ($resources['core']) {
             // load map-controller last, since it is the "main" script
             // and needs (nearly) all of the above scripts
-            parent::loadJavaScriptResource(self::BUNDLE_JS_PATH . 'c4g-maps.js|' . time() . '|async|static', \con4gis\CoreBundle\Classes\ResourceLoader::JAVASCRIPT, 'c4g-maps');
+            parent::loadJavaScriptResource(self::BUNDLE_JS_PATH . 'c4g-maps.js', \con4gis\CoreBundle\Classes\ResourceLoader::BODY, 'c4g-maps');
         }
 
         return true;
