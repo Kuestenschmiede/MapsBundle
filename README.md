@@ -86,7 +86,6 @@ __Main features include:__
 
 **Extendable:**
 - [DataBundle](https://github.com/Kuestenschmiede/DataBundle/releases) (*latest stable release*)
-- [EditorBundle](https://github.com/Kuestenschmiede/EditorBundle/releases) (*latest stable release*)
   
 **And with all other con4gis and Contao bundles**  
 con4gis is not a connectable application. It's a collection of content 
@@ -94,7 +93,7 @@ elements for your website. So you can build your own individual and limitless we
 
 
 **Contains:**
-- [OpenLayers 6.2] (https://github.com/openlayers/openlayers)
+- [OpenLayers 6.5] (https://github.com/openlayers/openlayers)
 
 ## Installation
 Via composer:
@@ -104,7 +103,7 @@ composer require con4gis/maps
 Alternatively, you can use the Contao Manager to install the con4gis-MapsBundle.
 
 ## Requirements:
-- [Contao](https://github.com/contao/core-bundle) (***>=4.4.x***)
+- [Contao](https://github.com/contao/core-bundle) (***>=4.9.x***)
 For Contao 3 you can use [con4gis_maps3](https://github.com/Kuestenschmiede/con4gis_maps3/releases) Extension.
 - [CoreBundle](https://github.com/Kuestenschmiede/CoreBundle/releases) (*latest stable release*)
 
