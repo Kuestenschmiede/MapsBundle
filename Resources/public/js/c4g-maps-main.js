@@ -8,8 +8,8 @@
  * @link https://www.con4gis.org
  */
 
-import {MapController} from "components/c4g-maps.jsx";
-//const MapController = React.lazy(() => import("./components/c4g-maps.jsx"));
+// import {MapController} from "components/c4g-maps.jsx";
+const MapController = React.lazy(() => import("./components/c4g-maps.jsx"));
 import ReactDOM from "react-dom";
 import React, {Suspense} from "react";
 

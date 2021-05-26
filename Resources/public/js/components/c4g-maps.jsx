@@ -76,7 +76,7 @@ const containerAddresses = {
 let langConstants = {};
 
 'use strict';
-export class MapController extends Component {
+export default class MapController extends Component {
 
   /**
    * [MapController description]
