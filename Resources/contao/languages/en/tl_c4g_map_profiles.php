@@ -77,6 +77,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp'] = ['Initially op
 
 /** Kartenwerkzeuge */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['permalink_get_param'] = ['Use GET-parameter for permalink-values', 'If you want to use a GET-parameter for the permalink instead of the URL-hash you can name it here.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['permalinkSaveId'] = ['Status of layers in permalink', 'Enables saving the stati of the layers in the permalink.'];
 
 /** Suchwerkzeuge */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch'] = ['Activate search (search field)', 'Activates searchengine for searching places and coordinates.'];

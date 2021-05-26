@@ -1012,7 +1012,7 @@ export class MapController extends Component {
     if (mapData.permalink.enable) {
       permaPortal = ReactDOM.createPortal(
         <Suspense fallback={<div>"loading..."</div>}>
-          <Permalink ref={(node) => {this.components.permalink = node;}} mapController={this} target={target}
+          <Permalink ref={(node) => {this.components.permalink = node;}} saveIds={mapData.permalink.saveIds} mapController={this} target={target}
                      external={this.permalinkContainer.className.indexOf("c4g-external") !== -1}/>
         </Suspense>,
         this.permalinkContainer

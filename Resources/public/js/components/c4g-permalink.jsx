@@ -152,36 +152,39 @@ export default class Permalink extends Component {
     parameters.push(+center[0].toFixed(6));
     parameters.push(+center[1].toFixed(5));
     parameters.push(mapView.getZoom());
-    parameters.push(+mapView.getRotation().toFixed(2));
 
-    // find active baselayer
-    if (proxy.activeBaselayerId) {
-      parameters.push(proxy.activeBaselayerId);
-    } else {
-      parameters.push(0);
-    }
+    if (this.props.saveIds) {
+      parameters.push(+mapView.getRotation().toFixed(2));
 
-    // find active layers
-    let layers = [];
-    const arrLayerStates = this.props.mapController.state.arrLayerStates;
-    for (let layerId in arrLayerStates) {
-      if (arrLayerStates.hasOwnProperty(layerId)) {
-        layers = layers.concat(this.getActiveLayerIds(arrLayerStates[layerId]));
+      // find active baselayer
+      if (proxy.activeBaselayerId) {
+        parameters.push(proxy.activeBaselayerId);
+      } else {
+        parameters.push(0);
       }
-    }
 
-    // delta-decode if there are more than one layer
-    if (layers.length > 1) {
-      // do not delta encode uuids
-      if (layers[0].indexOf("{") === -1) {
-        layers = utils.deltaEncode(layers);
+      // find active layers
+      let layers = [];
+      const arrLayerStates = this.props.mapController.state.arrLayerStates;
+      for (let layerId in arrLayerStates) {
+        if (arrLayerStates.hasOwnProperty(layerId)) {
+          layers = layers.concat(this.getActiveLayerIds(arrLayerStates[layerId]));
+        }
       }
-      layers = layers.join(':');
-    } else {
-      layers = layers[0] || '0';
+
+      // delta-decode if there are more than one layer
+      if (layers.length > 1) {
+        // do not delta encode uuids
+        if (layers[0].indexOf("{") === -1) {
+          layers = utils.deltaEncode(layers);
+        }
+        layers = layers.join(':');
+      } else {
+        layers = layers[0] || '0';
+      }
+      parameters.push(layers);
+      parameters = parameters.join('/');
     }
-    parameters.push(layers);
-    parameters = parameters.join('/');
 
     // build link
     link = utils.setUrlParam(parameters, this.props.mapController.data.permalink.getParameter);
