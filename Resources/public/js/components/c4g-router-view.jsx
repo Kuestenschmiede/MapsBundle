@@ -23,7 +23,6 @@ import {Collection} from "ol";
 import {LineString} from "ol/geom";
 import {Modify, Select} from "ol/interaction";
 import {GeoJSON} from "ol/format";
-import {AlertHandler} from "./../../../../../CoreBundle/Resources/public/vendor/js/AlertHandler";
 import {RoutingPermalink} from "./../c4g-routing-permalink";
 import {getLanguage} from "./../routing-constant-i18n";
 import {cssConstants} from "./../c4g-maps-constant";
@@ -1281,13 +1280,17 @@ export class RouterView extends Component {
         // return [parseFloat(response[0].lon), parseFloat(response[0].lat)];
       } else {
         // show error hint
-        let alertHandler = new AlertHandler();
-        alertHandler.showInfoDialog(scope.props.langConstants.ROUTER_VIEW_ALERT_ERROR, scope.props.langConstants.ROUTER_VIEW_ALERT_ADDRESS);
+        import("./../../../../../CoreBundle/Resources/public/vendor/js/AlertHandler").then(module => {
+          let alertHandler = new module.AlertHandler();
+          alertHandler.showInfoDialog(scope.props.langConstants.ROUTER_VIEW_ALERT_ERROR, scope.props.langConstants.ROUTER_VIEW_ALERT_ADDRESS);
+        });
       }
 
     }).catch(function () {
-      let alertHandler = new AlertHandler();
-      alertHandler.showInfoDialog(scope.props.langConstants.ROUTER_VIEW_ALERT_ERROR, scope.props.langConstants.ROUTER_VIEW_ALERT_ADDRESS);
+      import("./../../../../../CoreBundle/Resources/public/vendor/js/AlertHandler").then(module => {
+        let alertHandler = new module.AlertHandler();
+        alertHandler.showInfoDialog(scope.props.langConstants.ROUTER_VIEW_ALERT_ERROR, scope.props.langConstants.ROUTER_VIEW_ALERT_ADDRESS);
+      });
     });
   }
 
@@ -1375,16 +1378,20 @@ export class RouterView extends Component {
         }
       } else {
         // show error hint
-        let alertHandler = new AlertHandler();
-        alertHandler.showInfoDialog(scope.props.langConstants.ROUTER_VIEW_ALERT_ERROR, scope.props.langConstants.ROUTER_VIEW_ALERT_ADDRESS);
+        import("./../../../../../CoreBundle/Resources/public/vendor/js/AlertHandler").then(module => {
+          let alertHandler = new module.AlertHandler();
+          alertHandler.showInfoDialog(scope.props.langConstants.ROUTER_VIEW_ALERT_ERROR, scope.props.langConstants.ROUTER_VIEW_ALERT_ADDRESS);
+        });
       }
 
       if (opt_callback && typeof opt_callback === "function") {
         opt_callback();
       }
     }).fail(function () {
-      let alertHandler = new AlertHandler();
-      alertHandler.showInfoDialog(scope.props.langConstants.ROUTER_VIEW_ALERT_ERROR, scope.props.langConstants.ROUTER_VIEW_ALERT_ADDRESS);
+      import("./../../../../../CoreBundle/Resources/public/vendor/js/AlertHandler").then(module => {
+        let alertHandler = new module.AlertHandler();
+        alertHandler.showInfoDialog(scope.props.langConstants.ROUTER_VIEW_ALERT_ERROR, scope.props.langConstants.ROUTER_VIEW_ALERT_ADDRESS);
+      });
     });
 
     return "";
@@ -1588,9 +1595,10 @@ export class RouterView extends Component {
           scope.response = response;
           if (response) {
             if (response.error) {
-              // let errorDiv = scope.showRouterError(scope.languageConstants[response.error]);
-              let alertHandler = new AlertHandler();
-              alertHandler.showInfoDialog(scope.props.langConstants[response.error]);
+              import("./../../../../../CoreBundle/Resources/public/vendor/js/AlertHandler").then(module => {
+                let alertHandler = new module.AlertHandler();
+                alertHandler.showInfoDialog(scope.props.langConstants[response.error]);
+              });
             } else {
               scope.showRouteLayer(response);
               scope.showRouteInstructions(response, 0, scope.routerWaySource, scope.routerHintSource);
