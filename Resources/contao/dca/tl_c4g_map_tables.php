@@ -35,10 +35,10 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
 
         'sorting' =>
             [
-            'mode'                    => 2,
-            'panelLayout'             => 'filter;sort,search,limit',
-            'headerFields'            => ['name','tablesource'],
-            'icon'                    => 'tbundles/con4giscore/images/be-icons/con4gis_blue.svg'
+                'mode'                    => 1,
+                'fields'                  => ['name'],
+                'flag'                    => 1,
+                'icon'                    => 'bundles/con4giscore/images/be-icons/con4gis_blue.svg'
             ],
         'label' =>
             [
