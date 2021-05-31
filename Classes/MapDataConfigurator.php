@@ -460,7 +460,7 @@ class MapDataConfigurator
 
             if ($mapData['permalink']['enable']) {
                 $mapData['permalink']['get_parameter'] = $profile->permalink_get_param;
-                $mapData['permalink']['saveIds'] = $profile->permalinkSaveIdc;
+                $mapData['permalink']['saveIds'] = $profile->permalinkSaveId;
                 $mapData['permalink']['div'] = (in_array('permalink', $externalElements)) ? $externalClasses['permalink'] : '';
             }
             $mapData['zoomlevel'] = $profile->zoomlevel;

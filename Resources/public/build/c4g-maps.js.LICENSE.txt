@@ -14,20 +14,6 @@ object-assign
 @license MIT
 */
 
-/*! https://mths.be/punycode v1.3.2 by @mathias */
-
-/*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
-
-/**
- * con4gis - the gis-kit
- *
- * @package   con4gis
- * @author    con4gis contributors (see "authors.txt")
- * @license   GNU/LGPL http://opensource.org/licenses/lgpl-3.0.html
- * @copyright Küstenschmiede GmbH Software & Design 2011 - 2018
- * @link      https://www.kuestenschmiede.de
- */
-
 /** @license React v0.20.2
  * scheduler.production.min.js
  *
