@@ -151,7 +151,7 @@ export default class Permalink extends Component {
 
     parameters.push(+center[0].toFixed(6));
     parameters.push(+center[1].toFixed(5));
-    parameters.push(mapView.getZoom());
+    parameters.push(parseInt(mapView.getZoom()));
 
     if (this.props.saveIds) {
       parameters.push(+mapView.getRotation().toFixed(2));
@@ -183,9 +183,8 @@ export default class Permalink extends Component {
         layers = layers[0] || '0';
       }
       parameters.push(layers);
-      parameters = parameters.join('/');
     }
-
+    parameters = parameters.join('/');
     // build link
     link = utils.setUrlParam(parameters, this.props.mapController.data.permalink.getParameter);
 
