@@ -122,7 +122,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                                          '{editor_legend:hide},editorProfile;'.
                                          '{routing_legend::hide},routerConfig;'.
                                          '{attribution_legend:hide},attribution;'.
-                                         '{information_legend:hide},scaleline,mouseposition,permalink_get_param,permalinkSaveId,zoomlevel,infopage;'.
+                                         '{information_legend:hide},scaleline,mouseposition,permalink_get_param,permalinkSaveId,permalinkWithoutGenerator,zoomlevel,infopage;'.
                                          '{locstyle_legend:hide},label_color,resize_locstyles_zoom;'.
                                          '{expert_legend:hide},overpassEngine,caching,cesium,external_elements,filters,filterHandling,filterResetButton,geopicker,beEditor,custom_div,be_optimize_checkboxes_limit;'
         ],
@@ -756,6 +756,14 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'default'                 => true,
                 'inputType'               => 'checkbox',
                 'sql'                     => "char(1) NOT NULL default '1'"
+            ],
+        'permalinkWithoutGenerator' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['permalinkWithoutGenerator'],
+                'exclude'                 => true,
+                'default'                 => false,
+                'inputType'               => 'checkbox',
+                'sql'                     => "char(1) NOT NULL default ''"
             ],
         'zoomlevel' =>
             [

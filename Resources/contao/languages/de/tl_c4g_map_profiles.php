@@ -82,6 +82,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp'] = ['Initial geö
 /** Kartenwerkzeuge */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['permalink_get_param'] = ['GET-Parameter für Permalink-Werte verwenden', 'Vergeben Sie hier einen Namen für einen GET-Parameter, wenn Sie die Permanlink-Werte nicht im Hash-Teil der URL übergeben wollen (z.B. weil dieser bereits von anderen Erweiterungen verwendet wird).'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['permalinkSaveId'] = ['Status der Layer im Permalink', 'Ermöglicht das Speichern und Wiederherstellen der Stati der Layer über den Permalink.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['permalinkWithoutGenerator'] = ['Permalink automatisch generieren', 'Permalink automatisch ohne Permalinkgenerator generieren.'];
 
 /** Suchwerkzeuge */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch'] = ['Suchwerkzeuge (Voraussetzung für Suche und Router)', 'Aktiviert die Suchengine, über die Orte, Adressen und POIs (Vorwärtssuche), aber auch Koordinaten (Rückwärtssuche) gesucht werden können.'];

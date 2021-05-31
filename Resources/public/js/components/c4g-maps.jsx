@@ -269,8 +269,8 @@ export default class MapController extends Component {
     // use other permalink variable to avoid interference with the actual permalink mechanism
     window.c4gMapsHooks.map_center_changed = window.c4gMapsHooks.map_center_changed || [];
     window.c4gMapsHooks.map_center_changed.push(function (center) {
-      if (mapData.permalink.enable) {
-        let currentPermalink = utils.getUrlParam(mapData.permalink.get_parameter);
+      let currentPermalink = utils.getUrlParam(mapData.permalink.get_parameter);
+      if (currentPermalink) {
         if (currentPermalink) {
           currentPermalink = currentPermalink.split('/');
           if (currentPermalink.length >= 3) {
@@ -285,8 +285,8 @@ export default class MapController extends Component {
 
     window.c4gMapsHooks.hook_map_zoom = window.c4gMapsHooks.hook_map_zoom || [];
     window.c4gMapsHooks.hook_map_zoom.push(function (proxy) {
-      if (mapData.permalink.enable) {
-        let currentPermalink = utils.getUrlParam(mapData.permalink.get_parameter);
+      let currentPermalink = utils.getUrlParam(mapData.permalink.get_parameter);
+      if (currentPermalink) {
         if (currentPermalink) {
           currentPermalink = currentPermalink.split('/');
           if (currentPermalink.length >= 3) {
@@ -296,6 +296,16 @@ export default class MapController extends Component {
         }
       }
     });
+    if (mapData.permalink.withoutGenerator) {
+      let currentPermalink = utils.getUrlParam(mapData.permalink.get_parameter);
+      if (!currentPermalink && mapData.center) {
+        let permalink = [];
+        permalink.push(mapData.center.lon);
+        permalink.push(mapData.center.lat);
+        permalink.push(mapData.center.zoom);
+        utils.setUrlParam(permalink.join('/'), mapData.permalink.get_parameter, true);
+      }
+    }
 
     if (mapData.minZoom && mapData.minZoom > 0) {
       minZoom = mapData.minZoom;
