@@ -20,7 +20,7 @@ import {C4gPopupController} from "./../c4g-popup-controller";
 import {utils} from "../c4g-maps-utils";
 
 
-export class EditorView extends Component {
+export default class EditorView extends Component {
 
   constructor(props) {
     super(props);

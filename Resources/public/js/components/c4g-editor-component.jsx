@@ -23,7 +23,7 @@ import {Fill, Style, Text} from "ol/style";
 const Titlebar = React.lazy(() => import("./c4g-titlebar.jsx"));
 
 
-export class EditorComponent extends Component {
+export default class EditorComponent extends Component {
   constructor(props) {
     super(props);
 

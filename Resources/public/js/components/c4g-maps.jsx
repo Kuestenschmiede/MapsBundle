@@ -55,13 +55,13 @@ const Fullscreen = React.lazy(() => import('./c4g-fullscreen.jsx'));
 const Print = React.lazy(() => import('./c4g-print.jsx'));
 const OverviewMap = React.lazy(() => import('./c4g-overviewmap.jsx'));
 //const RouterView = React.lazy(() => import("./c4g-router-view.jsx"));
-//const EditorComponent = React.lazy(() => import("./c4g-editor-component.jsx"));
+const EditorComponent = React.lazy(() => import("./c4g-editor-component.jsx"));
 import TileLayer from "ol/layer/Tile";
 import {routingConstantsEnglish} from "./../routing-constant-i18n-en";
 import {routingConstantsGerman} from "./../routing-constant-i18n-de";
 
 import {RouterView} from "./c4g-router-view.jsx";
-import {EditorComponent} from "./c4g-editor-component.jsx";
+// import {EditorComponent} from "./c4g-editor-component.jsx";
 
 let langRouteConstants = {};
 const containerAddresses = {
