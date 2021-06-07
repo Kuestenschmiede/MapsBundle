@@ -71,14 +71,23 @@ export class RouterInstruction extends Component {
               })
             }),
         );
-        let currentZoom = this.props.mapController.map.getView().getZoom();
+        // let currentZoom = this.props.mapController.map.getView().getZoom();
         this.props.routerHintSource.addFeature(currentHintFeature);
-        this.props.mapController.map.getView().fit(geom);
-        let afterZoom = this.props.mapController.map.getView().getZoom();
-        let endZoom = Math.round((currentZoom + afterZoom)/2);
-        endZoom = (endZoom > afterZoom) ? afterZoom : endZoom;
-        this.props.mapController.map.getView().setZoom(endZoom);
-
+        let width = jQuery(".c4g-router-container-right").css('width');
+        if (width) {
+          width = width.split(".");
+          width = Array.isArray(width) ? width[0] : width;
+          width = parseInt(width) +  50;
+        }
+        else {
+          width = 50;
+        }
+        let maxZoom = parseInt(this.props.mapController.data.starboard.maxZoom) || 22;
+        this.props.mapController.map.getView().fit(geom, {
+          padding: [50,width,50,50],
+          duration: 500,
+          maxZoom: maxZoom
+        });
       }
     }
   };
