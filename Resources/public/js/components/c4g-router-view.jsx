@@ -94,7 +94,7 @@ export class RouterView extends Component {
         "geosearchParams": mapController.data.geosearch.params
       },
       activeId: null,
-      openResults: true,
+      openResults: false,
       containerAddresses: {
         arrFromPositions: [],
         arrFromNames: [],
@@ -1611,6 +1611,11 @@ export class RouterView extends Component {
                   },
                   "featureSource": scope.routerFeaturesSource,
                   "openResults": true
+                });
+              }
+              else {
+                scope.setState({
+                  "openResults" : true
                 });
               }
             }
