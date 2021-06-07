@@ -51,7 +51,7 @@ export class RouterInstruction extends Component {
         this.props.routerHintSource.addFeature(currentHintFeature);
         this.props.options.mapController.map.getView().setCenter(newCoord);
       }
-      else if (coordinates && this.props.dataStart && this.props.dataEnd) {
+      else if (coordinates && (this.props.dataStart || this.props.dataStart === 0) && this.props.dataEnd) {
         let geom;
         if (this.props.dataStart === this.props.dataEnd) {
           geom = new Point(coordinates[this.props.dataStart])
@@ -107,12 +107,21 @@ export class RouterInstruction extends Component {
             geometry: new Point(newCoord)
           });
           this.props.routerHintSource.addFeature(currentHintFeature);
-        } else if (this.props.dataStart && this.props.dataEnd) {
+        } else if ((this.props.dataStart || this.props.dataStart === 0) && this.props.dataEnd) {
           let coordinates = feature.getGeometry().getCoordinates();
           if (coordinates) {
-            let currentHintFeature = new Feature({
-              geometry: new LineString(coordinates.slice(this.props.dataStart, this.props.dataEnd))
-            });
+            let newCoordinates = coordinates.slice(this.props.dataStart, this.props.dataEnd);
+            let currentHintFeature;
+            if (newCoordinates.length === 1) {
+              currentHintFeature = new Feature({
+                geometry: new Point(newCoordinates)
+              });
+            }
+            else {
+              currentHintFeature = new Feature({
+                geometry: new LineString(newCoordinates)
+              });
+            }
             currentHintFeature.setStyle(
                 new Style({
                   stroke: new Stroke({
