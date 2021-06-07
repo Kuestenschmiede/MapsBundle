@@ -465,7 +465,6 @@ class MapDataConfigurator
             }
             $mapData['permalink']['withoutGenerator'] = $profile->permalinkWithoutGenerator;
 
-
             $mapData['zoomlevel'] = $profile->zoomlevel;
 
             if ($profile->caching) {
