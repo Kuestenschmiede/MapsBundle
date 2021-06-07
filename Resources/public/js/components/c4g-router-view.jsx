@@ -94,7 +94,7 @@ export class RouterView extends Component {
         "geosearchParams": mapController.data.geosearch.params
       },
       activeId: null,
-      openResults: false,
+      openResults: true,
       containerAddresses: {
         arrFromPositions: [],
         arrFromNames: [],
