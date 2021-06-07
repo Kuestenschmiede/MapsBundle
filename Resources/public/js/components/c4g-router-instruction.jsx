@@ -52,7 +52,14 @@ export class RouterInstruction extends Component {
         this.props.options.mapController.map.getView().setCenter(newCoord);
       }
       else if (coordinates && this.props.dataStart && this.props.dataEnd) {
-        let geom = new LineString(coordinates.slice(this.props.dataStart, this.props.dataEnd));
+        let geom;
+        if (this.props.dataStart === this.props.dataEnd) {
+          geom = new Point(coordinates[this.props.dataStart])
+        }
+        else {
+          let newCoordinates = coordinates.slice(this.props.dataStart, this.props.dataEnd);
+          geom = new LineString(newCoordinates);
+        }
         let currentHintFeature = new Feature({
           geometry: geom
         });
