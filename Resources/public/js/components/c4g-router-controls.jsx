@@ -9,10 +9,10 @@
  */
 
 import React, { Component } from "react";
-import {HorizontalPanel} from "./../../../../../MapsBundle/Resources/public/js/components/c4g-horizontal-panel.jsx";
+import {HorizontalPanel} from "./c4g-horizontal-panel.jsx";
 import {RouterAddressInput} from "./c4g-router-address-input.jsx"
 import {RouterProfileSelection} from "./c4g-router-profile-selection.jsx"
-import {Titlebar} from "./../../../../../MapsBundle/Resources/public/js/components/c4g-titlebar.jsx"
+import {Titlebar} from "./c4g-titlebar.jsx"
 import {getLanguage} from "./../routing-constant-i18n";
 
 export default class RouterControls extends HorizontalPanel {
