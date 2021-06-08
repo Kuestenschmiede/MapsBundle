@@ -146,10 +146,10 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                                          '{protection_legend:hide},protect_baselayer,published,consentId;',
         'bing'                        => '{general_legend},name,display_name,provider,bing_style,bing_key,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
                                          '{protection_legend:hide},protect_baselayer,published,consentId;',
-        'klokan'                      => '{general_legn_legend:hide},protect_baselayer,published,consentId;',
+        'klokan'                      => '{general_legend},name,display_name,provider,klokan_type,url,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
+                                         '{protection_legend:hide},protect_baselayer,published,consentId;',
         'wms'                         => '{general_legend},name,display_name,provider,wms_url,wms_params_layers,wms_params_version,wms_params_format,wms_params_transparent,wms_gutter,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
-                                         '{protection_legend},name,display_name,provider,klokan_type,url,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
-            '{protectioend:hide},protect_baselayer,published,consentId;',
+                                         '{protection_legend:hide},protect_baselayer,published,consentId;',
         'geoimage'                    => '{general_legend},name,display_name,provider,image_src,geoimage_json,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
                                          '{protection_legend:hide},protect_baselayer,published,consentId;',
         'owm'                         => '{general_legend},name,display_name,provider,app_id,api_key,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
@@ -284,7 +284,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'select',
-                'default'                 => 'Shaded',
+                'default'                 => 'Road',
                 'options'                 => ['Road' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_bing_road'],
                     'AerialWithLabels' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_bing_hybrid'],
                     'Aerial' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_bing_aerial']
@@ -386,7 +386,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'select',
-                'default'                 => 'Mapnik',
+                'default'                 => 'Toner',
                 'options'                 => [
                     'Toner'           => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm_toner'],
                     'Terrain'         => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm_terrain'],
