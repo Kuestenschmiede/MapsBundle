@@ -17,6 +17,7 @@ import TileJSON from "ol/source/TileJSON";
 import {BingMaps, ImageStatic, OSM, Stamen, TileWMS, XYZ} from "ol/source";
 import {default as VectorTileSource} from "ol/source/VectorTile";
 import {Group as LayerGroup, Image} from "ol/layer";
+import Collection from 'ol/Collection';
 import OLCesium from 'ol-cesium/src/olcs/OLCesium.js';
 import {applyStyle} from 'ol-mapbox-style';
 import VectorTileLayer from 'ol/layer/VectorTile';
@@ -778,8 +779,88 @@ export class C4gBaselayerController {
         console.warn('unsupported provider');
         break;
     }
-    return newBaselayer;
+    if (baseLayerConfig['consentId']) {
+      let dummyUrl = this.mapController.data.dummyBaselayer;
+      let dummySource = null;
+      if (dummyUrl) {
+        dummySource = new XYZ({
+          url: dummyUrl
+        });
+      }
+      if (typeof klaro !== "undefined" && klaro.getManager && klaro.getManager()) {
+        let manager = klaro.getManager();
+        let watcher;
+        if (newBaselayer instanceof TileLayer) {
+          let source = newBaselayer.getSource();
+          if (!manager.getConsent(baseLayerConfig['consentId'])) {
+            newBaselayer.setSource(dummySource);
+          }
+          watcher = {
+            update: (watcher, action, consentStatus) => {
+              if (consentStatus[baseLayerConfig['consentId']]) {
+                newBaselayer.setSource(source);
+              }
+              else {
+                newBaselayer.setSource(dummySource);
+              }
+            }
+          }
+        }
+        else if (newBaselayer instanceof LayerGroup) {
+          let layers = newBaselayer.getLayers();
+          if (!manager.getConsent(baseLayerConfig['consentId'])) {
+            newBaselayer.setLayers(new Collection());
+          }
+          watcher = {
+            update: (watcher, action, consentStatus) => {
+              if (consentStatus[baseLayerConfig['consentId']]) {
+                newBaselayer.setLayers(layers);
+              }
+              else {
+                newBaselayer.setLayers(new Collection());
+              }
+            }
+          }
+        }
+        manager.watch(watcher);
+      }
+      else if (typeof HofffConsentManager !== "undefined") {
+        if (newBaselayer instanceof TileLayer) {
+          let source = newBaselayer.getSource();
+          HofffConsentManager.addEventListener('consent:accepted', function (event) {
+            if (event.consentId == baseLayerConfig['consentId']) {
+              newBaselayer.setSource(source);
+            }
+          });
+          HofffConsentManager.addEventListener('consent:revoked', function (event) {
+            if (event.consentId == baseLayerConfig['consentId']) {
+              newBaselayer.setSource(dummySource);
+            }
+          })
+          if (!HofffConsentManager.requiresConsent(baseLayerConfig['consentId'])) {
+            newBaselayer.setSource(dummySource);
+          }
+        }
+        else if (newBaselayer instanceof LayerGroup) {
+          let layers = newBaselayer.getLayers();
+          HofffConsentManager.addEventListener('consent:accepted', function (event) {
+            if (event.consentId == baseLayerConfig['consentId']) {
+              newBaselayer.setLayers(layers);
+            }
+          });
+          HofffConsentManager.addEventListener('consent:revoked', function (event) {
+            if (event.consentId == baseLayerConfig['consentId']) {
+              newBaselayer.setLayers(new Collection());
+            }
+          })
+          if (!HofffConsentManager.requiresConsent(baseLayerConfig['consentId'])) {
+            newBaselayer.setLayers(new Collection());
+          }
+        }
+      }
+    }
 
+    return newBaselayer;
   }
 
   filterLayersForBaselayer(baselayerId) {

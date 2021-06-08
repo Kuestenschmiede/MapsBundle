@@ -58,6 +58,7 @@ export class C4gBaselayer{
             }
             this.layerGroup = layerGroup;
         }
+        this.consentId = baselayerArr['consentId'] ? baselayerArr['consentId'] : false;
         this.overlayController = new C4gOverlayController(this);
         this.layer = false;
         this.controller = controller

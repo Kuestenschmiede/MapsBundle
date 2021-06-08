@@ -65,6 +65,9 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['wms_gutter'] = array('Gutter', '')
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['baselayerGroup']['baselayers']    = 'Baselayers';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['baselayerGroup']['minZoom']       = 'Minimal zoomlevel';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['baselayerGroup']['maxZoom']       = 'Maximal zoomlevel';
+
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['consentId']               = ['Consent Tool (optional)', 'Please enter the name of your <a href="https://heyklaro.com/" target="_blank" rel="noopener">Klaro</a> service or the consent-id of your <a href="https://www.contao.solutions/de/loesungen/contao-consent.html" target="_blank" rel="noopener">Contao-Consent</a>, to prevent loading without consent.'];
+
 /**
  * Reference
  */

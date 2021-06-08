@@ -127,37 +127,37 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
         [
         '__selector__'                => ['provider','osm_style','protect_baselayer','klokan_type'],
         'default'                     => '{general_legend},name,display_name,provider,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
-                                         '{protection_legend:hide},protect_baselayer,published,published;',
+                                         '{protection_legend:hide},protect_baselayer,published,consentId;',
         'osm'                         => '{general_legend},name,display_name,provider,osm_style,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
-                                         '{protection_legend:hide},protect_baselayer,published;',
+                                         '{protection_legend:hide},protect_baselayer,published,consentId;',
         'opentopomap'                 => '{general_legend},name,display_name,provider,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
-                                         '{protection_legend:hide},protect_baselayer,published;',
+                                         '{protection_legend:hide},protect_baselayer,published,consentId;',
         'stamen'                      => '{general_legend},name,display_name,provider,stamen_style,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
-                                         '{protection_legend:hide},protect_baselayer,published;',
+                                         '{protection_legend:hide},protect_baselayer,published,consentId;',
         'con4gisIo'                   => '{general_legend},name,display_name,provider,con4gisIo,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
-                                         '{protection_legend:hide},protect_baselayer,published;',
+                                         '{protection_legend:hide},protect_baselayer,published,consentId;',
         'mapbox'                      => '{general_legend},name,display_name,provider,mapbox_type,app_id,api_key,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
-                                         '{protection_legend:hide},protect_baselayer,published;',
+                                         '{protection_legend:hide},protect_baselayer,published,consentId;',
         'mapz'                        => '{general_legend},name,display_name,provider,mapz_type,api_key,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
-                                         '{protection_legend:hide},protect_baselayer,published;',
+                                         '{protection_legend:hide},protect_baselayer,published,consentId;',
         'here'                        => '{general_legend},name,display_name,provider,here_type,app_id,api_key,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
-                                         '{protection_legend:hide},protect_baselayer,published;',
+                                         '{protection_legend:hide},protect_baselayer,published,consentId;',
         'thunder'                     => '{general_legend},name,display_name,provider,thunderforest_type,api_key,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
-                                         '{protection_legend:hide},protect_baselayer,published;',
+                                         '{protection_legend:hide},protect_baselayer,published,consentId;',
         'bing'                        => '{general_legend},name,display_name,provider,bing_style,bing_key,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
-                                         '{protection_legend:hide},protect_baselayer,published;',
-        'klokan'                      => '{general_legn_legend:hide},protect_baselayer,published;',
+                                         '{protection_legend:hide},protect_baselayer,published,consentId;',
+        'klokan'                      => '{general_legn_legend:hide},protect_baselayer,published,consentId;',
         'wms'                         => '{general_legend},name,display_name,provider,wms_url,wms_params_layers,wms_params_version,wms_params_format,wms_params_transparent,wms_gutter,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
                                          '{protection_legend},name,display_name,provider,klokan_type,url,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
-            '{protectioend:hide},protect_baselayer,published;',
+            '{protectioend:hide},protect_baselayer,published,consentId;',
         'geoimage'                    => '{general_legend},name,display_name,provider,image_src,geoimage_json,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
-                                         '{protection_legend:hide},protect_baselayer,published;',
+                                         '{protection_legend:hide},protect_baselayer,published,consentId;',
         'owm'                         => '{general_legend},name,display_name,provider,app_id,api_key,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
-                                         '{protection_legend:hide},protect_baselayer,published;',
+                                         '{protection_legend:hide},protect_baselayer,published,consentId;',
         'group'                       => '{general_legend},name,display_name,provider,attribution,layerGroup;'.
-                                         '{protection_legend:hide},protect_baselayer,published;',
+                                         '{protection_legend:hide},protect_baselayer,published,consentId;',
         'custom'                      => '{general_legend},name,display_name,provider,osm_style_url1,osm_style_url2,osm_style_url3,osm_style_url4,extend,osm_keyname,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
-                                         '{protection_legend:hide},protect_baselayer,published;'
+                                         '{protection_legend:hide},protect_baselayer,published,consentId;'
         ],
 
 
@@ -671,7 +671,14 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             'eval'                    => ['tl_class'=>'clr'],
             'sql'                     => "char(1) NOT NULL default '1'"
             ],
-
+        'consentId' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['consentId'],
+                'exclude'                 => true,
+                'filter'                  => false,
+                'inputType'               => 'text',
+                'sql'                     => "varchar(255) NOT NULL default ''"
+            ],
     ]
 ];
 

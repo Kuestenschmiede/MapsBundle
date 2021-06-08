@@ -49,13 +49,15 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['app_id']       			= array('Style I
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['cesium']                  = array('Cesium einschalten', 'Die Darstellung als Globus erfolgt nur dann, wenn Sie im entsprechenden „Kartenprofil“ ebenfalls „Cesium einschalten“ aktivieren.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['layerGroup']              = array('Gruppe von Basiskarten', 'Gruppe von Basiskarten. Die Reihenfolge im Backend entspricht der im Frontend. Die Basiskarten werden nur zwischen den anzugebenden Zoomleveln angezeigt.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['published']               = array('Veröffentlicht','Basiskarte veröffentlichen?');
-$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['wms_url'] = array('URL', 'Geben Sie eine erreichbare URL an.');
-$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['wms_params_layers'] = array('Layer', 'Welche Layer sollen dargestellt werden?');
-$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['wms_params_version'] = array('Version', 'z.B. 1.1.1');
-$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['wms_params_format'] = array('Format', 'z.B. image/png');
-$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['wms_params_transparent'] = array('Transparenz', '');
-$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['wms_params_srs'] = array('', '');
-$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['wms_gutter'] = array('Gutter', '');
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['wms_url']                 = array('URL', 'Geben Sie eine erreichbare URL an.');
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['wms_params_layers']       = array('Layer', 'Welche Layer sollen dargestellt werden?');
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['wms_params_version']      = array('Version', 'z.B. 1.1.1');
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['wms_params_format']       = array('Format', 'z.B. image/png');
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['wms_params_transparent']  = array('Transparenz', '');
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['wms_params_srs']          = array('', '');
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['wms_gutter']              = array('Gutter', '');
+
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['consentId']               = ['Consent Tool (optional)', 'Bitte geben Sie hier den Namen Ihres <a href="https://heyklaro.com/" target="_blank" rel="noopener">Klaro-Services</a> oder die Consent-Id Ihres <a href="https://www.contao.solutions/de/loesungen/contao-consent.html" target="_blank" rel="noopener">Contao-Consent</a> an, um das Laden ohne Consent zu verhindern.'];
 
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['baselayerGroup']['baselayers']    = 'Basiskarten';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['baselayerGroup']['minZoom']       = 'Minimale Zoomstufe';

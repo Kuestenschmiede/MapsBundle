@@ -407,6 +407,9 @@ class BaseLayerService
         if (!empty($objBaseLayer->sorting)) {
             $arrBaseLayer['sort'] = intval($objBaseLayer->sorting);
         }
+        if (!empty($objBaseLayer->consentId)) {
+            $arrBaseLayer['consentId'] = $objBaseLayer->consentId;
+        }
         $arrBaseLayer['cesium'] = $objBaseLayer->cesium;
         $imageFile = FilesModel::findByUuid($objBaseLayer->preview_image);
         if ($imageFile) {
