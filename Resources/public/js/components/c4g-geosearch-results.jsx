@@ -11,7 +11,7 @@
 import React, {Component} from "react";
 import ReactDOM from "react-dom";
 
-export class GeoSearchResults extends Component {
+export default class GeoSearchResults extends Component {
   constructor(props) {
     super(props);
 
