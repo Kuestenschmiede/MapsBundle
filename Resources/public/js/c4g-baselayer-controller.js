@@ -809,7 +809,7 @@ export class C4gBaselayerController {
         else if (newBaselayer instanceof LayerGroup) {
           let layers = newBaselayer.getLayers();
           if (!manager.getConsent(baseLayerConfig['consentId'])) {
-            newBaselayer.setLayers(new Collection());
+            newBaselayer.setLayers(new Collection([new TileLayer({source: dummySource})]));
           }
           watcher = {
             update: (watcher, action, consentStatus) => {
@@ -817,7 +817,7 @@ export class C4gBaselayerController {
                 newBaselayer.setLayers(layers);
               }
               else {
-                newBaselayer.setLayers(new Collection());
+                newBaselayer.setLayers(new Collection([new TileLayer({source: dummySource})]));
               }
             }
           }
