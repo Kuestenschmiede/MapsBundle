@@ -10,6 +10,7 @@
 
 // import {MapController} from "components/c4g-maps.jsx";
 const MapController = React.lazy(() => import("./components/c4g-maps.jsx"));
+const ConsentBanner = React.lazy(() => import("./components/c4g-consent-banner.jsx"));
 import ReactDOM from "react-dom";
 import React, {Suspense} from "react";
 
@@ -22,19 +23,41 @@ window.initMap = function(mapData) {
   }
 
   if (mapDiv) {
+    if (mapData[key]["cookie"]) {
+      let cookie = false;
+      let arrCoookies = document.cookie.split(";");
+      for (let i in arrCoookies) {
+        if (arrCoookies.hasOwnProperty(i)) {
+          if (arrCoookies[i].indexOf(mapData[key]["cookie"]["name"]) > -1) { //the cookies exists
+            if (!mapData[key]["cookie"]["value"] || arrCoookies[i].indexOf(mapData[key]["cookie"]["value"]) > -1) { //no value provided or matching value
+              cookie = true;
+            }
+          }
+        }
+      }
+      if (!cookie) {
+        return ReactDOM.render(
+            <Suspense fallback={<div>Loading...</div>}>
+              <ConsentBanner mapData={mapData[key]}/>
+            </Suspense>,
+            jQuery("#c4g-map-container-" + mapData[key].mapId)[0]
+        );
+      }
+    }
     let observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.intersectionRatio > 0) {
           return ReactDOM.render(
-            <Suspense fallback={<div>Loading...</div>}>
-              <MapController mapData={mapData[key]}/>
-            </Suspense>,
-            jQuery("#c4g-map-container-" + mapData[key].mapId)[0]
+              <Suspense fallback={<div>Loading...</div>}>
+                <MapController mapData={mapData[key]}/>
+              </Suspense>,
+              jQuery("#c4g-map-container-" + mapData[key].mapId)[0]
           );
         }
       });
     });
     observer.observe(mapDiv);
+
   }
 };
 
@@ -49,6 +72,28 @@ window.initMaps = function(mapData) {
         mapDiv = jQuery("#c4g_map_" + mapData[key].mapId)[0];
       }
       if (mapDiv) {
+        if (mapData[key]["cookie"]) {
+          let cookie = false;
+          let arrCoookies = document.cookie.split(";");
+          for (let i in arrCoookies) {
+            if (arrCoookies.hasOwnProperty(i)) {
+              if (arrCoookies[i].indexOf(mapData[key]["cookie"]["name"]) > -1) { //the cookies exists
+                if (!mapData[key]["cookie"]["value"] || arrCoookies[i].indexOf(mapData[key]["cookie"]["value"]) > -1) { //no value provided or matching value
+                  cookie = true;
+                }
+              }
+            }
+          }
+          if (!cookie) {
+            return ReactDOM.render(
+                <Suspense fallback={<div>Loading...</div>}>
+                  <ConsentBanner mapData={mapData[key]}/>
+                </Suspense>,
+                jQuery("#c4g-map-container-" + mapData[key].mapId)[0]
+            );
+          }
+        }
+
         let observer = new IntersectionObserver(entries => {
           entries.forEach(entry => {
             if (entry.intersectionRatio > 0) {

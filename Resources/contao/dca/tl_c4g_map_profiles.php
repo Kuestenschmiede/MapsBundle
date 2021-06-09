@@ -112,7 +112,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
     // Palettes
     'palettes' =>
         [
-        '__selector__'                => ['resize_locstyles_zoom', 'mouse_nav','cluster_all','attribution','hover_popups','overpassEngine', 'cesium', 'popupHandling','geopicker'],
+        '__selector__'                => ['resize_locstyles_zoom', 'mouse_nav','cluster_all','attribution','hover_popups','overpassEngine', 'cesium', 'popupHandling','geopicker','consentBanner'],
         'default'                     => '{general_legend},name,theme,mapFunctions,initial_open_comp;'.
                                          '{navigation_legend:hide},mouse_nav,touch_nav,keyboard_nav;'.
                                          '{click_legend:hide},tooltipOrientation,link_newwindow,link_open_on,hover_popups,popupHandling;'.
@@ -124,7 +124,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                                          '{attribution_legend:hide},attribution;'.
                                          '{information_legend:hide},scaleline,mouseposition,permalink_get_param,permalinkSaveId,permalinkWithoutGenerator,zoomlevel,infopage;'.
                                          '{locstyle_legend:hide},label_color,resize_locstyles_zoom;'.
-                                         '{expert_legend:hide},overpassEngine,caching,cesium,external_elements,filters,filterHandling,filterResetButton,geopicker,beEditor,custom_div,be_optimize_checkboxes_limit;'
+                                         '{expert_legend:hide},overpassEngine,caching,cesium,external_elements,filters,filterHandling,filterResetButton,geopicker,beEditor,custom_div,be_optimize_checkboxes_limit,consentBanner;'
         ],
 
 
@@ -142,6 +142,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         'resize_locstyles_zoom'       => 'resize_src_zoom,resize_scale_factor,resize_min_scale,resize_max_scale',
         'geopicker'                   => 'geopicker_fieldx,geopicker_fieldy,geopicker_searchdiv,geopicker_attribution,geopicker_disabled,geopicker_anonymous',
         'popupHandling_3'             => 'popupHeadline',
+        'consentBanner'               => 'cookieInfo,cookieName,cookieValue'
     ],
 
     // Fields
@@ -997,6 +998,35 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             ],
         'router' => [
             'sql'                     => "char(1) NOT NULL default ''"
+        ],
+        'consentBanner' => [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['consentBanner'],
+            'exclude'                 => true,
+            'default'                 => '',
+            'inputType'               => 'checkbox',
+            'eval'                    => ['submitOnChange' => true],
+            'sql'                     => "char(1) NOT NULL default ''"
+        ],
+        'cookieInfo' => [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['cookieInfo'],
+            'exclude'                 => true,
+            'inputType'               => 'textarea',
+            'eval'                    => ['rte'=>'tinyMCE'],
+            'sql'                     => "text NULL"
+        ],
+        'cookieName' => [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cookieName'],
+            'exclude'                 => true,
+            'default'                 => 'allow_maps',
+            'inputType'               => 'text',
+            'sql'                     => "varchar(255) NOT NULL default 'allow_maps'"
+        ],
+        'cookieValue' => [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cookieValue'],
+            'exclude'                 => true,
+            'default'                 => '',
+            'inputType'               => 'text',
+            'sql'                     => "varchar(255) NOT NULL default ''"
         ],
     
         'routerConfig' => [

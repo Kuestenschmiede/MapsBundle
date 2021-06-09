@@ -141,6 +141,10 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['custom_div'] = ['DIV für den Karten
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['caching'] = ['Kartensituation merken', 'Buttonstatus und Kartensituation werden im Browser zwischengespeichert.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['be_optimize_checkboxes_limit'] = ['Grenzwert für Optimierung großer Checkbox-Listen', 'Definiert wie viele Einträge enthalten sein müssen, bis die Checkbox-Listen in Chosenfields umgewandelt werden. (0 = niemals umwandeln)'];
 
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['consentBanner'] = ['Consent-Banner', 'Wählen Sie, ob sie vor die Karte ein Consent-Banner vorschalten wollen, welches ein direktes Laden der Karte verhindert'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cookieInfo'] = ['Consent-Text', 'Geben Sie an dieser Stelle einen Text ein, der erklärt, womit der User einverstanden sein muss, um die Karte zu nutzen.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cookieName'] = ['Cookie Name', 'Falls Sie einen bestehenden Cookie verwenden wollen, passen Sie diesen Wert auf dessen Namen an.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cookieValue'] = ['Cookie Wert', 'Falls Sie einen bestehenden Cookie verwenden wollen, passen Sie diesen Wert auf einen enthaltenen String an, der im erwarteten Cookie enthalten ist.'];
 /**
  * Reference
  */

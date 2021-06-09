@@ -617,6 +617,14 @@ class MapDataConfigurator
             $mapData['popupHandling'] = $profile->popupHandling;
             $mapData['popupHeadline'] = $profile->popupHeadline;
             $mapData['popupDiv'] = (in_array('popup', $externalElements)) ? $externalClasses['popup'] : '';
+
+            if ($profile->consentBanner) {
+                $mapData['cookie'] = [
+                    "info"  => $profile->cookieInfo,
+                    "name"  => $profile->cookieName,
+                    "value" => $profile->cookieValue
+                ];
+            }
         }
 
         // mapservice
