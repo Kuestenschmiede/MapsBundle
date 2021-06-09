@@ -28,6 +28,7 @@ export var langConstantsEnglish = {
   SURFACEAREA: 'Surface area',
   RADIUS: 'Radius',
   REFRESH: 'Refresh',
+  ACCEPT: 'Accept',
   COPY_TO_CLIPBOARD: 'Copy to clipboard',
 
   CTRL_ZOOM_IN: 'Zoom in',

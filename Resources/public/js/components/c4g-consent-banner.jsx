@@ -9,18 +9,20 @@
  */
 
 import React, { Component } from "react";
+import {getLanguage} from "../c4g-maps-i18n";
 
 export default class ConsentBanner extends Component {
 
     constructor(props) {
         super(props);
+        this.language = getLanguage(props.mapData);
     }
 
     render() {
         let settings = this.props.mapData.cookie;
         return <React.Fragment>
             <div dangerouslySetInnerHTML={{__html: settings.info}}></div>
-            <button className={"btn"}onClick={()=> this.clickEvent(this)}> Akzeptieren</button>
+            <button className={"btn"}onClick={()=> this.clickEvent(this)}> {this.language.ACCEPT}</button>
         </React.Fragment>
     }
     clickEvent (scope) {

@@ -30,6 +30,7 @@ export var langConstantsGerman = {
   SURFACEAREA: 'Flächeninhalt',
   RADIUS: 'Radius',
   REFRESH: 'Aktualisieren',
+  ACCEPT: 'Akzeptieren',
   COPY_TO_CLIPBOARD: 'In Zwischenablage kopieren',
 
   CTRL_ZOOM_IN: 'Vergrößern',
