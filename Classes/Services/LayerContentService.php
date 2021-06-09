@@ -399,11 +399,12 @@ class LayerContentService
                     $sourcePid = intval($result->$ptableCompareField);
                 }
 
-                if ($sourcePid || $sourcePid == 0) {
+                if ($sourcePid) {
                     if ($objConfig->ptableField) {
                         if ($ptableBlobArr && $ptableBlobArr[$key] == 1) {
                             //ToDo filter after select
                         } else {
+                            $arrPtableField = unserialize($ptableField);
                             $pidOption .= $and . "$ptableField = $sourcePid ";
                         }
                     } else {
@@ -424,9 +425,9 @@ class LayerContentService
             $arrUrl = explode('/', $alias);
             $alias = explode('.', $arrUrl[$strC])[0];
             if ($alias && ($sourceTable != 'tl_content')) {
-                if ($qWhere) {
+                if ($qWhere && $pidOption) {
                     $stmt = ' AND';
-                } else {
+                } else if (!$qWhere) {
                     $stmt = ' WHERE';
                 }
                 if (is_numeric($alias)) {
@@ -440,9 +441,9 @@ class LayerContentService
                 $sourcePid = intval($result->id);
 
                 if ($sourcePid) {
-                    if ($qWhere) {
+                    if ($qWhere && $pidOption) {
                         $stmt = ' AND';
-                    } else {
+                    } else if (!$qWhere) {
                         $stmt = ' WHERE';
                     }
                     $stmt .= ' (pid = "' . $sourcePid . '")';
