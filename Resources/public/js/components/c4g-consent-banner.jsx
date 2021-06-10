@@ -21,15 +21,17 @@ export default class ConsentBanner extends Component {
     render() {
         let settings = this.props.mapData.cookie;
         return <React.Fragment>
-            <div dangerouslySetInnerHTML={{__html: settings.info}}></div>
-            <button className={"btn"}onClick={()=> this.clickEvent(this)}> {this.language.ACCEPT}</button>
+            <div className={"c4g-maps-consent-overlay"}>
+                <div className={"c4g-maps-consent-info"} dangerouslySetInnerHTML={{__html: settings.info}}></div>
+                <button className={"c4g-maps-consent-button btn"} onClick={()=> this.clickEvent(this)}> {this.language.ACCEPT}</button>
+            </div>
         </React.Fragment>
     }
     clickEvent (scope) {
         let settings = scope.props.mapData.cookie;
 
         scope.setCookie(settings.name, settings.value);
-        window.initMaps(window.mapData);
+        window.location.reload(); //ToDo reload map
     }
     setCookie (name, value) {
         document.cookie = name + "=" + value + "; Session"

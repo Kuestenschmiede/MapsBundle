@@ -1427,3 +1427,35 @@ ul.c4g-feature-filter-list li.c4g-item-checked > strong {
     transition: ease-in-out 250ms; }
 ul.c4g-feature-filter-list li.c4g-item-checked > strong:hover, ul.c4g-feature-filter-list li.c4g-item-checked > strong:focus, ul.c4g-feature-filter-list li.c4g-item-checked > strong:active, ul.c4g-feature-filter-list li.c4g-item-checked > strong.c4g-open {
     background-color: var(--shadow-color); }
+
+/* consent overlay */
+
+.c4g-maps-consent-overlay {
+    position: absolute;
+    z-index: 99999;
+    background: var(--pu-main-color);
+    color: var(--pu-font-color);
+    border: var(--main-color) solid 2px;
+    border-radius: var(--button-radius-percent);
+    width: max-content;
+    max-width: 90%;
+    max-height: 90%;
+    padding: 1em;
+    top: 50%;
+    left: 50%;
+    margin: 0 auto;
+    -webkit-transform: translate(-50%);
+    -moz-transform: translate(-50%);
+    -ms-transform: translate(-50%);
+    -o-transform: translate(-50%);
+    transform: translate(-50%);
+}
+button.c4g-maps-consent-button.btn {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    border-color: var(--shador-color);
+    color: var(--font-color);
+    background: var(--main-color);
+    cursor: pointer;
+}

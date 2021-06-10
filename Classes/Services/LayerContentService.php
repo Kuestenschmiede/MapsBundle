@@ -427,7 +427,7 @@ class LayerContentService
             if ($alias && ($sourceTable != 'tl_content')) {
                 if ($qWhere && $pidOption) {
                     $stmt = ' AND';
-                } else if (!$qWhere) {
+                } elseif (!$qWhere) {
                     $stmt = ' WHERE';
                 }
                 if (is_numeric($alias)) {
@@ -443,7 +443,7 @@ class LayerContentService
                 if ($sourcePid) {
                     if ($qWhere && $pidOption) {
                         $stmt = ' AND';
-                    } else if (!$qWhere) {
+                    } elseif (!$qWhere) {
                         $stmt = ' WHERE';
                     }
                     $stmt .= ' (pid = "' . $sourcePid . '")';
