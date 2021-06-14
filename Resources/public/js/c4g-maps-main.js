@@ -23,13 +23,13 @@ window.initMap = function(mapData) {
   }
 
   if (mapDiv) {
-    if (mapData[key]["cookie"]) {
+    if (mapData["cookie"]) {
       let cookie = false;
       let arrCoookies = document.cookie.split(";");
       for (let i in arrCoookies) {
         if (arrCoookies.hasOwnProperty(i)) {
-          if (arrCoookies[i].indexOf(mapData[key]["cookie"]["name"]) > -1) { //the cookies exists
-            if (!mapData[key]["cookie"]["value"] || arrCoookies[i].indexOf(mapData[key]["cookie"]["value"]) > -1) { //no value provided or matching value
+          if (arrCoookies[i].indexOf(mapData["cookie"]["name"]) > -1) { //the cookies exists
+            if (!mapData["cookie"]["value"] || arrCoookies[i].indexOf(mapData["cookie"]["value"]) > -1) { //no value provided or matching value
               cookie = true;
             }
           }
@@ -38,9 +38,9 @@ window.initMap = function(mapData) {
       if (!cookie) {
         return ReactDOM.render(
             <Suspense fallback={<div>Loading...</div>}>
-              <ConsentBanner mapData={mapData[key]}/>
+              <ConsentBanner mapData={mapData}/>
             </Suspense>,
-            jQuery("#c4g-map-container-" + mapData[key].mapId)[0]
+            jQuery("#c4g-map-container-" + mapData.mapId)[0]
         );
       }
     }
@@ -49,9 +49,9 @@ window.initMap = function(mapData) {
         if (entry.intersectionRatio > 0) {
           return ReactDOM.render(
               <Suspense fallback={<div>Loading...</div>}>
-                <MapController mapData={mapData[key]}/>
+                <MapController mapData={mapData}/>
               </Suspense>,
-              jQuery("#c4g-map-container-" + mapData[key].mapId)[0]
+              jQuery("#c4g-map-container-" + mapData.mapId)[0]
           );
         }
       });
