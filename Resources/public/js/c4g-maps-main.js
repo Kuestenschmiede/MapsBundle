@@ -172,6 +172,7 @@ window.initMaps = function(mapData) {
             return ReactDOM.render(
                 <Suspense fallback={<div>Loading...</div>}>
                   <ConsentBanner mapData={mapData[key]}/>
+                  <MapController mapData={mapData[key]}/>
                 </Suspense>,
                 jQuery("#c4g-map-container-" + mapData[key].mapId)[0]
             );
