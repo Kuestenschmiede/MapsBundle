@@ -9,10 +9,14 @@
  */
 
 // import {MapController} from "components/c4g-maps.jsx";
+import TileLayer from "ol/layer/Tile";
+
 const MapController = React.lazy(() => import("./components/c4g-maps.jsx"));
 const ConsentBanner = React.lazy(() => import("./components/c4g-consent-banner.jsx"));
 import ReactDOM from "react-dom";
 import React, {Suspense} from "react";
+import {Group as LayerGroup} from "ol/layer";
+import Collection from "ol/Collection";
 
 window.initMap = function(mapData) {
   let mapDiv = null;
@@ -36,6 +40,46 @@ window.initMap = function(mapData) {
         }
       }
       if (!cookie) {
+        if (typeof klaro !== "undefined" && klaro.getManager && klaro.getManager()) {
+          let manager = klaro.getManager();
+          let watcher = {
+            update: (watcher, action, consentStatus) => {
+              let cookie = false;
+              let arrCoookies = document.cookie.split(";");
+              for (let i in arrCoookies) {
+                if (arrCoookies.hasOwnProperty(i)) {
+                  if (arrCoookies[i].indexOf(mapData["cookie"]["name"]) > -1) { //the cookies exists
+                    if (!mapData["cookie"]["value"] || arrCoookies[i].indexOf(mapData["cookie"]["value"]) > -1) { //no value provided or matching value
+                      cookie = true;
+                    }
+                  }
+                }
+              }
+              if (cookie) {
+                window.initMap(mapData);
+              }
+            }
+          }
+          manager.watch(watcher);
+        }
+        else if (typeof HofffConsentManager !== "undefined") {
+          HofffConsentManager.addEventListener('consent:accepted', function (event) {
+            let cookie = false;
+            let arrCoookies = document.cookie.split(";");
+            for (let i in arrCoookies) {
+              if (arrCoookies.hasOwnProperty(i)) {
+                if (arrCoookies[i].indexOf(mapData["cookie"]["name"]) > -1) { //the cookies exists
+                  if (!mapData["cookie"]["value"] || arrCoookies[i].indexOf(mapData["cookie"]["value"]) > -1) { //no value provided or matching value
+                    cookie = true;
+                  }
+                }
+              }
+            }
+            if (cookie) {
+              window.initMap(mapData);
+            }
+          });
+        }
         return ReactDOM.render(
             <Suspense fallback={<div>Loading...</div>}>
               <ConsentBanner mapData={mapData}/>
@@ -85,6 +129,46 @@ window.initMaps = function(mapData) {
             }
           }
           if (!cookie) {
+            if (typeof klaro !== "undefined" && klaro.getManager && klaro.getManager()) {
+              let manager = klaro.getManager();
+              let watcher = {
+                update: (watcher, action, consentStatus) => {
+                  let cookie = false;
+                  let arrCoookies = document.cookie.split(";");
+                  for (let i in arrCoookies) {
+                    if (arrCoookies.hasOwnProperty(i)) {
+                      if (arrCoookies[i].indexOf(mapData[key]["cookie"]["name"]) > -1) { //the cookies exists
+                        if (!mapData[key]["cookie"]["value"] || arrCoookies[i].indexOf(mapData[key]["cookie"]["value"]) > -1) { //no value provided or matching value
+                          cookie = true;
+                        }
+                      }
+                    }
+                  }
+                  if (cookie) {
+                    window.initMap(mapData[key]);
+                  }
+                }
+              }
+              manager.watch(watcher);
+            }
+            else if (typeof HofffConsentManager !== "undefined") {
+              HofffConsentManager.addEventListener('consent:accepted', function (event) {
+                let cookie = false;
+                let arrCoookies = document.cookie.split(";");
+                for (let i in arrCoookies) {
+                  if (arrCoookies.hasOwnProperty(i)) {
+                    if (arrCoookies[i].indexOf(mapData[key]["cookie"]["name"]) > -1) { //the cookies exists
+                      if (!mapData[key]["cookie"]["value"] || arrCoookies[i].indexOf(mapData[key]["cookie"]["value"]) > -1) { //no value provided or matching value
+                        cookie = true;
+                      }
+                    }
+                  }
+                }
+                if (cookie) {
+                  window.initMap(mapData[key]);
+                }
+              });
+            }
             return ReactDOM.render(
                 <Suspense fallback={<div>Loading...</div>}>
                   <ConsentBanner mapData={mapData[key]}/>
