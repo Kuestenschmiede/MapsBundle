@@ -14,6 +14,7 @@ namespace con4gis\MapsBundle\Resources\contao\modules\api;
 use con4gis\CoreBundle\Classes\C4GUtils;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapTablesModel;
+use Contao\Config;
 use Contao\Controller;
 
 if (!defined('TL_ROOT')) die('You cannot access this file directly!');
@@ -180,8 +181,8 @@ class LayerContentDataApi extends \Frontend
                             
                                         $link .= $aliasOrId;
                                         // append html when it's not there
-                                        if (!strpos($link, '.html')) {
-                                            $link .= ".html";
+                                        if (!strpos($link, Config::get('url_suffix'))) {
+                                            $link .= Config::get('url_suffix');
                                         }
                                     }
                                 }
@@ -205,7 +206,7 @@ class LayerContentDataApi extends \Frontend
                                         $link = 'https://' . $aliasOrId . '.' . $additionalParam2;
                                     } else {
                                         $link = 'https://' . $additionalParam2;
-                                        $link = $link . '/' . $aliasOrId . '.html';
+                                        $link = $link . '/' . $aliasOrId . Config::get('url_suffix');
                                     }
                                 }
                     
