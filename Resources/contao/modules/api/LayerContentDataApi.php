@@ -276,6 +276,7 @@ class LayerContentDataApi extends \Frontend
         $popup['content'] = $popupContent;
         $popup['async'] = false;
         $popup['routing_link'] = "";
+        $popup['tmpDirectLink'] = $link;
         return $popup;
     }
     

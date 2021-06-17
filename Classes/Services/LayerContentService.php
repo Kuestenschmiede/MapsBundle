@@ -642,6 +642,10 @@ class LayerContentService
                         // process expert popup
                         $lcdApi = new LayerContentDataApi();
                         $popup = $lcdApi->getPopup($objConfig, $arrResult);
+                        if ($objLayer->tab_directlink && !$objLayer->loc_linkurl && $popup['tmpDirectLink']) {
+                            $link = $popup['tmpDirectLink'];
+                            unset($popup['tmpDirectLink']);
+                        }
                     } elseif ($objConfig->popupSwitch !== 'off') {
                         $popup = [
                             'async' => false,
