@@ -5764,16 +5764,13 @@ ul.c4g-feature-filter-list li.c4g-item-checked > strong:hover {
   color: var(--pu-font-color);
   border: var(--main-color) solid 2px;
   border-radius: var(--button-radius-percent);
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-  max-width: 90%;
-  max-height: 90%;
+  max-height: calc(var(--map-height));
+  width: calc(var(--map-width)/2);
+  margin-left: calc(var(--map-width)/4);
+  margin-top: calc(var(--map-height)/4);
   padding: 1em;
-  top: 50%;
-  left: 50%;
-  margin: 0 auto;
-  transform: translate(-50%)
+  transform: translate(0);
+  box-sizing: border-box
 }
 button.c4g-maps-consent-button.btn {
   display: flex;

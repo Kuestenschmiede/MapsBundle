@@ -31,7 +31,7 @@ export default class ConsentBanner extends Component {
         let settings = scope.props.mapData.cookie;
 
         scope.setCookie(settings.name, settings.value);
-        window.initMap(scope.props.mapData); //ToDo reload map
+        window.location.reload(); //ToDo reload map
     }
     setCookie (name, value) {
         document.cookie = name + "=" + value + "; Session"

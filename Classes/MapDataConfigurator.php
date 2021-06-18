@@ -620,9 +620,9 @@ class MapDataConfigurator
 
             if ($profile->consentBanner) {
                 $mapData['cookie'] = [
-                    "info"  => $profile->cookieInfo,
-                    "name"  => $profile->cookieName,
-                    "value" => $profile->cookieValue
+                    'info' => $profile->cookieInfo,
+                    'name' => $profile->cookieName,
+                    'value' => $profile->cookieValue,
                 ];
             }
         }
