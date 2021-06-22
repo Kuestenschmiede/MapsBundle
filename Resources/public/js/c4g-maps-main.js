@@ -27,6 +27,10 @@ window.initMap = function(mapData) {
   }
 
   if (mapDiv) {
+    if (jQuery(mapDiv).find("div.ol-viewport")){
+      let viewport = jQuery(mapDiv).find("div.ol-viewport");
+      viewport.remove();
+    }
     if (mapData["cookie"]) {
       let cookie = false;
       let arrCoookies = document.cookie.split(";");
