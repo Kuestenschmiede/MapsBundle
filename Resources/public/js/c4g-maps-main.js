@@ -30,6 +30,7 @@ window.initMap = function(mapData) {
     if (jQuery(mapDiv).find("div.ol-viewport")){
       let viewport = jQuery(mapDiv).find("div.ol-viewport");
       viewport.remove();
+      $('*[class^="c4g-external"]').empty();
     }
     if (mapData["cookie"]) {
       let cookie = false;
