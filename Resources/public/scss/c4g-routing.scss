@@ -603,6 +603,12 @@ button.c4g-popup-route-from:before {
     font-weight: 900;
     font-size: inherit;
 }
+button.c4g-popup-route-edit:before {
+    content: "\f4d7";
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    font-size: inherit;
+}
 
 button.c4g-popup-route-to:before {
     content: "\f11e";

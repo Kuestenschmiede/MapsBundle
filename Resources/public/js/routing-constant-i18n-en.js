@@ -30,6 +30,7 @@ export  var routingConstantsEnglish = {
 
   POPUP_ROUTE_FROM: 'Route from here',
   POPUP_ROUTE_TO: 'Route to here',
+  POPUP_ROUTE_EDIT: 'Open line in router',
 
   ROUTER_VIEW_LABEL_ROUTE: 'Route:',
   ROUTER_VIEW_LABEL_DISTANCE: 'Distance:',
@@ -40,6 +41,8 @@ export  var routingConstantsEnglish = {
   ROUTER_VIEW_ALERT_ADDRESS: 'Address not found.',
   ROUTER_VIEW_ALERT_GOCODING: 'No access to geocoding.',
   ROUTER_ERROR_POLYLINE: 'Could not calculate route.',
+  ROUTER_ERROR_LINESTRING: 'Could not open line in router.',
+
 
   ROUTER: 'Router',
   ROUTER_N: 'Head north',

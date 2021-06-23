@@ -437,15 +437,26 @@ export class RouterView extends Component {
     this.setState({toPoint: point}, () => scope.updateRouteLayersAndPoints());
   }
 
-  addOverPoint(longitude, latitude, index) {
+  addOverPoint(longitude, latitude, index, dontSearch = false) {
     const scope = this;
-    this.performReverseSearch("overAddress", [longitude, latitude], index);
+    const overAddresses = this.state.overAddresses;
+    if (!dontSearch) {
+      this.performReverseSearch("overAddress", [longitude, latitude], index);
+    }
+    else { //display coordinates instead of
+      overAddresses.splice(index, 1, longitude + ", " + latitude);
+    }
     let point = new Point([longitude, latitude]);
     const overPoints = this.state.overPoints;
     overPoints.splice(index,1,point);
-
     // overPoints[index] = point;
-    this.setState({overPoints: overPoints}, () => scope.updateRouteLayersAndPoints());
+    this.setState(
+        {
+          overPoints: overPoints,
+          overAddresses: overAddresses
+        },
+        () => scope.updateRouteLayersAndPoints()
+    );
   }
 
   setMode(mode) {

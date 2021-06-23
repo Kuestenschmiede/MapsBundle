@@ -39,9 +39,11 @@ export var routingConstantsGerman = {
   ROUTER_VIEW_ALERT_ADDRESS: 'Adresse nicht gefunden.',
   ROUTER_VIEW_ALERT_GOCODING: 'Zugriff auf Geocoder fehlgeschlagen.',
   ROUTER_ERROR_POLYLINE: 'Route konnte nicht berechnet werden.',
+  ROUTER_ERROR_LINESTRING: 'Strecke lässt sich nicht im Router.',
 
   POPUP_ROUTE_FROM: 'Route von hier',
   POPUP_ROUTE_TO: 'Route hierhin',
+  POPUP_ROUTE_EDIT: 'Strecke im Router öffnen',
 
   ROUTER: 'Router',
   ROUTER_N: 'Norden',

@@ -10,7 +10,7 @@
 
 import React, { Component } from "react";
 import {AutocompleteInput} from "./c4g-autocomplete-input.jsx";
-import {Point} from "ol/geom";
+import {Point, Polygon, LineString} from "ol/geom";
 import {getLanguage} from "./../routing-constant-i18n";
 import {toLonLat} from "ol/proj";
 
@@ -21,23 +21,70 @@ export class RouterPopupButtons extends Component {
     }
 
     render() {
-        let routeFrom = () => {
-            this.props.config.router.openControls(true);
-            this.props.config.router.setMode("route");
-            // from address
-            let fromCoords = toLonLat(this.props.config.feature.getGeometry().getCoordinates(), "EPSG:3857");
-            this.props.config.router.setRouteFrom(fromCoords[0], fromCoords[1]);
-        };
-        let routeTo = () => {
-            this.props.config.router.openControls(true);
-            this.props.config.router.setMode("route");
-            // to address
-            let toCoords = toLonLat(this.props.config.feature.getGeometry().getCoordinates(), "EPSG:3857");
-            this.props.config.router.setRouteTo(toCoords[0], toCoords[1]);
-        };
-        return <div>
-            <button className={"c4g-icon c4g-popup-route-from"} title={this.props.config.router.languageConstants.POPUP_ROUTE_FROM} onMouseUp={()=>{routeFrom()}}/>
-            <button className={"c4g-icon c4g-popup-route-to"} title={this.props.config.router.languageConstants.POPUP_ROUTE_TO} onMouseUp={()=>{routeTo()}}/>
-        </div>
+        const scope = this;
+        let geometry = this.props.config.feature.getGeometry();
+        if (geometry instanceof LineString){
+            let editRoute = () => {
+                let coordinates = geometry.getCoordinates();
+                let i = 1;
+                while (coordinates.length > 15) {
+                    geometry = geometry.simplify(i);
+                    coordinates = geometry.getCoordinates();
+                    i += 2;
+                    if (i > 42) { //prevent endless loop & magic number is magic
+                        import("./../../../../../CoreBundle/Resources/public/vendor/js/AlertHandler").then(module => {
+                            let alertHandler = new module.AlertHandler();
+                            alertHandler.showInfoDialog(scope.props.config.router.languageConstants.ROUTER_VIEW_ALERT_ERROR, scope.props.config.router.languageConstants.ROUTER_ERROR_LINESTRING);
+                        });
+                        return;
+                    }
+                };
+                this.props.config.router.openControls(true);
+                this.props.config.router.setMode("route");
+                let fromCoordinate = toLonLat(coordinates[0], "EPSG:3857");
+                this.props.config.router.setRouteFrom(fromCoordinate[0], fromCoordinate[1]);
+                for (let i = 1; i < coordinates.length; i++) {
+                    let overCoordinate = toLonLat(coordinates[i], "EPSG:3857");
+                    this.props.config.router.addOverPoint(overCoordinate[0], overCoordinate[1], i-1, true);
+                }
+                let toCoordinate = toLonLat(coordinates[coordinates.length - 1], "EPSG:3857");
+                this.props.config.router.setRouteTo(toCoordinate[0], toCoordinate[1]);
+            }
+            return <div>
+                <button className={"c4g-icon c4g-popup-route-edit"} title={this.props.config.router.languageConstants.POPUP_ROUTE_EDIT} onMouseUp={()=>{editRoute()}}/>
+            </div>
+        }
+        else {
+            let coordinates;
+            if (geometry instanceof Polygon) {
+                let extent = geometry.getExtent();
+                coordinates = [
+                    (extent[0] + extent[2]) / 2,
+                    (extent[1] + extent[3]) / 2
+                ];
+            }
+            else {
+                coordinates = geometry.getCoordinates();
+            }
+            let routeFrom = () => {
+                this.props.config.router.openControls(true);
+                this.props.config.router.setMode("route");
+                // from address
+                let fromCoords = toLonLat(coordinates, "EPSG:3857");
+                this.props.config.router.setRouteFrom(fromCoords[0], fromCoords[1]);
+            };
+            let routeTo = () => {
+                this.props.config.router.openControls(true);
+                this.props.config.router.setMode("route");
+                // to address
+                let toCoords = toLonLat(coordinates, "EPSG:3857");
+                this.props.config.router.setRouteTo(toCoords[0], toCoords[1]);
+            };
+
+            return <div>
+                <button className={"c4g-icon c4g-popup-route-from"} title={this.props.config.router.languageConstants.POPUP_ROUTE_FROM} onMouseUp={()=>{routeFrom()}}/>
+                <button className={"c4g-icon c4g-popup-route-to"} title={this.props.config.router.languageConstants.POPUP_ROUTE_TO} onMouseUp={()=>{routeTo()}}/>
+            </div>;
+        }
     }
 }
