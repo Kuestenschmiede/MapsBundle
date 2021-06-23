@@ -43,10 +43,8 @@ export class RouterPopupButtons extends Component {
                 this.props.config.router.setMode("route");
                 let fromCoordinate = toLonLat(coordinates[0], "EPSG:3857");
                 this.props.config.router.setRouteFrom(fromCoordinate[0], fromCoordinate[1]);
-                for (let i = 1; i < coordinates.length; i++) {
-                    let overCoordinate = toLonLat(coordinates[i], "EPSG:3857");
-                    this.props.config.router.addOverPoint(overCoordinate[0], overCoordinate[1], i-1, true);
-                }
+                let overCoordinates = coordinates.slice(1, coordinates.length - 2)
+                this.props.config.router.addOverPoints(overCoordinates);
                 let toCoordinate = toLonLat(coordinates[coordinates.length - 1], "EPSG:3857");
                 this.props.config.router.setRouteTo(toCoordinate[0], toCoordinate[1]);
             }

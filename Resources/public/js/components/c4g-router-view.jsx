@@ -440,6 +440,8 @@ export class RouterView extends Component {
   addOverPoint(longitude, latitude, index, dontSearch = false) {
     const scope = this;
     const overAddresses = this.state.overAddresses;
+    let ctr = this.state.overPtCtr;
+    ctr++;
     if (!dontSearch) {
       this.performReverseSearch("overAddress", [longitude, latitude], index);
     }
@@ -453,7 +455,30 @@ export class RouterView extends Component {
     this.setState(
         {
           overPoints: overPoints,
-          overAddresses: overAddresses
+          overAddresses: overAddresses,
+          overPtCtr: ctr
+        },
+        () => scope.updateRouteLayersAndPoints()
+    );
+  }
+  addOverPoints(arrCoordinates) {
+    const scope = this;
+    const overAddresses = this.state.overAddresses;
+    const overPoints = this.state.overPoints;
+    let ctr = this.state.overPtCtr;
+    for (let i = 0; i < arrCoordinates.length; i++) {
+      let coordinates = toLonLat(arrCoordinates[i], "EPSG:3857")
+      let point = new Point([coordinates[0], coordinates[1]]);
+      overPoints.push(point);
+      overAddresses.push(coordinates[0] + ", " + coordinates[1]);
+      ctr++;
+    }
+    // overPoints[index] = point;
+    this.setState(
+        {
+          overPoints: overPoints,
+          overAddresses: overAddresses,
+          overPtCtr: ctr
         },
         () => scope.updateRouteLayersAndPoints()
     );
