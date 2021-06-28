@@ -1,0 +1,25 @@
+.c4g-popup-wrapper {
+
+  .c4g-tile-content {
+
+    > div {
+      margin-bottom: .5rem;
+    }
+
+    .tags {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+
+      .item {
+        background: #fff;
+        width: 40px;
+        padding: 5px;
+        border: 1.5px solid #333;
+        border-radius: 4px;
+      }
+    }
+  }
+
+}
