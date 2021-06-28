@@ -222,11 +222,12 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
         'icon_size' =>
             [
                 'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_size'],
+                'load_callback'           => [['\con4gis\MapsBundle\Classes\Contao\Callbacks\TlC4gMapLocstyles', 'setSizes']],
                 'exclude'                 => true,
+                'default'                 => ['0','0'],
                 'inputType'               => 'imageSize',
-                'options'                  => $imageSizes,
-                'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'long', 'mandatory'=>true],
-//            'load_callback'           => array(array('tl_c4g_map_locstyles','setSizes')),
+                'options'                 => $imageSizes,
+                'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'long'],
                 'sql'                     => "varchar(100) NOT NULL default ''"
             ],
         'svgSrc' =>
@@ -307,7 +308,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
                 'exclude'                 => true,
                 'default'                 => ['0','0'],
                 'inputType'               => 'imageSize',
-                'options'                  => $imageSizes,
+                'options'                 => $imageSizes,
                 'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'long'],
                 'sql'                     => "varchar(100) NOT NULL default ''"
             ],
@@ -626,56 +627,6 @@ class tl_c4g_map_locstyles extends Backend
         parent::__construct();
     }
 
-
-    public function setSizes($varValue, DataContainer $dc)
-    {
-
-        if ($dc->activeRecord->styletype == 'cust_icon') {
-            $icon_src = $dc->activeRecord->icon_src;
-            $icon_size = $dc->activeRecord->icon_size;
-            if ($icon_src &! $icon_size) {
-                if (\Validator::isUuid($icon_src))
-                {
-                   $iconSrc = \FilesModel::findByUuid($icon_src);
-                    list($width, $height, $type, $attr) = getimagesize($iconSrc->path);
-                    $icon_size = 'a:3:{i:0;s:'.strlen($width).':"'.$width.'";i:1;s:'.strlen($height).':"'.$height.'";i:2;s:2:"px";}';
-
-                    $offsetWidth = '-'.($width / 2);
-                    $offsetHeight = '-'.($height / 2);
-                    $icon_offset = 'a:3:{i:0;s:'.strlen($offsetWidth).':"'.$offsetWidth.'";i:1;s:'.strlen($offsetHeight).':"'.$offsetHeight.'";i:2;s:2:"px";}';
-
-                    $this->Database->prepare("UPDATE tl_c4g_map_locstyles SET icon_size=?, icon_offset=? WHERE id =?")
-                        ->execute($icon_size, $icon_offset, $dc->id);
-                }
-            }
-        }
-
-        if ($dc->activeRecord->styletype == 'cust_icon_svg') {
-            $icon_src = $dc->activeRecord->svgSrc;
-            $icon_size = $dc->activeRecord->icon_size;
-            if ($icon_src &! $icon_size) {
-                if (\Validator::isUuid($icon_src))
-                {
-                    $iconSrc = \FilesModel::findByUuid($icon_src);
-                    //list($width, $height, $type, $attr) = getimagesize($iconSrc->path);
-                    $size = (new Contao\ImagineSvg\Imagine)->open($iconSrc->path)->getSize();
-                    $width = $size->getWidth();
-                    $height = $size->getHeight();
-
-                    $icon_size = 'a:3:{i:0;s:'.strlen($width).':"'.$width.'";i:1;s:'.strlen($height).':"'.$height.'";i:2;s:2:"px";}';
-
-                    $offsetWidth = '-'.($width / 2);
-                    $offsetHeight = '-'.($height / 2);
-                    $icon_offset = 'a:3:{i:0;s:'.strlen($offsetWidth).':"'.$offsetWidth.'";i:1;s:'.strlen($offsetHeight).':"'.$offsetHeight.'";i:2;s:2:"px";}';
-
-                    $this->Database->prepare("UPDATE tl_c4g_map_locstyles SET icon_size=?, icon_offset=? WHERE id =?")
-                        ->execute($icon_size, $icon_offset, $dc->id);
-                }
-            }
-        }
-
-        return $varValue;
-    }
 
     /**
      * Add an image to each record
