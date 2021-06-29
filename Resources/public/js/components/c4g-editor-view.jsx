@@ -161,7 +161,7 @@ export default class EditorView extends Component {
             color = utils.getRgbaFromHexAndOpacity(styleData.fillcolor[0], styleData.fillcolor[1]);
           }
 
-          styleTriggerLabel = <span className={"c4g-editor-locstyle"} style={{
+          styleTriggerLabel = <span title={element.name} className={"c4g-editor-locstyle"} style={{
             "backgroundColor" : color
           }}/>;
         }
