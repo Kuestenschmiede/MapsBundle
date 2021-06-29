@@ -192,15 +192,17 @@ export default class EditorView extends Component {
       for (let i in this.props.editorVars) {
         if (this.props.editorVars.hasOwnProperty(i)) {
           let editorVar = this.props.editorVars[i];
-          let value = this.state.selectedFeature.get(editorVar.key) ? this.state.selectedFeature.get(editorVar.key) : "";
-          arrFormEditorVars.push(
-            <form className={"c4g-editor-vars-input"}>
-              <label>
-                {editorVar.caption}:
-                <input type="text" value={value} name={editorVar.key} onChange={(event)=>{this.handleVarChange(event)}}/>
-              </label>
-            </form>
-          );
+          if (editorVar.caption && editorVar.key) {
+            let value = this.state.selectedFeature.get(editorVar.key) ? this.state.selectedFeature.get(editorVar.key) : "";
+            arrFormEditorVars.push(
+                <form className={"c4g-editor-vars-input"}>
+                  <label>
+                    {editorVar.caption}:
+                    <input type="text" value={value} name={editorVar.key} onChange={(event)=>{this.handleVarChange(event)}}/>
+                  </label>
+                </form>
+            );
+          }
         }
       }
     }
