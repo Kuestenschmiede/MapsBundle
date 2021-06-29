@@ -476,7 +476,6 @@ button.c4g-router-print:before {
     font-weight: 900;
     font-size: inherit;
 }
-
 button.c4g-router-download:before {
     content: "\f019";
     font-family: 'Font Awesome 5 Free';
@@ -612,6 +611,12 @@ button.c4g-popup-route-edit:before {
 
 button.c4g-popup-route-to:before {
     content: "\f11e";
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    font-size: inherit;
+}
+button.c4g-popup-route-download:before {
+    content: "\f019";
     font-family: 'Font Awesome 5 Free';
     font-weight: 900;
     font-size: inherit;
@@ -1014,11 +1019,13 @@ button.c4g-router-download:active {
     cursor: pointer;
 }
 
-button.c4g-icon.c4g-popup-route-to {
+button.c4g-icon.c4g-popup-route-to,
+button.c4g-icon.c4g-popup-route-edit {
     right: .2em;
 }
 
-button.c4g-icon.c4g-popup-route-from {
+button.c4g-icon.c4g-popup-route-from,
+button.c4g-icon.c4g-popup-route-download {
     left: .2em;
 }
 

@@ -13,6 +13,7 @@ import {AutocompleteInput} from "./c4g-autocomplete-input.jsx";
 import {Point, Polygon, LineString} from "ol/geom";
 import {getLanguage} from "./../routing-constant-i18n";
 import {toLonLat} from "ol/proj";
+import GPX from "ol/format/GPX";
 
 export class RouterPopupButtons extends Component {
 
@@ -23,8 +24,8 @@ export class RouterPopupButtons extends Component {
     render() {
         const scope = this;
         let geometry = this.props.config.feature.getGeometry();
-        if (geometry instanceof LineString){
-            let editRoute = () => {
+        if (geometry instanceof LineString) {
+            const editRoute = () => {
                 let coordinates = geometry.getCoordinates();
                 let i = 1;
                 while (coordinates.length > 15) {
@@ -48,7 +49,29 @@ export class RouterPopupButtons extends Component {
                 let toCoordinate = toLonLat(coordinates[coordinates.length - 1], "EPSG:3857");
                 this.props.config.router.setRouteTo(toCoordinate[0], toCoordinate[1]);
             }
+            const exportRoute = () => {
+                let feature = scope.props.config.feature;
+                let format = new GPX();
+                let strExport = format.writeFeatures([feature], {
+                    featureProjection: "EPSG:3857",
+                    dataProjection: "EPSG:4326",
+                    decimals: 3
+                });
+                var element = document.createElement('a');
+                element.setAttribute('href', 'data:text/xml;charset=utf-8,' + encodeURIComponent(strExport));
+                let name = feature.get('name') || "route";
+                element.setAttribute('download', name + ".gpx");
+
+                element.style.display = 'none';
+                document.body.appendChild(element);
+
+                element.click();
+
+                document.body.removeChild(element);
+
+            }
             return <div>
+                <button className={"c4g-icon c4g-popup-route-download"} title={this.props.config.router.languageConstants.ROUTER_DOWNLOAD} onMouseUp={()=>{exportRoute()}}/>
                 <button className={"c4g-icon c4g-popup-route-edit"} title={this.props.config.router.languageConstants.POPUP_ROUTE_EDIT} onMouseUp={()=>{editRoute()}}/>
             </div>
         }
