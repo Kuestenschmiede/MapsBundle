@@ -603,7 +603,7 @@ export default class MapController extends Component {
           this.reactContainer.className = "c4g-sideboard c4g-starboard-container ol-unselectable";
           this.$overlaycontainer_stopevent.append(this.reactContainer);
         } else {
-          this.reactContainer.className += " c4g-external c4g-starboard-container ol-unselectable";
+          this.reactContainer.className += " c4g-external ol-unselectable";
         }
       } else {
         this.reactContainer = document.createElement('div');
