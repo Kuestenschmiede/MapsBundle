@@ -17,6 +17,7 @@ import ReactDOM from "react-dom";
 import React, {Suspense} from "react";
 import {Group as LayerGroup} from "ol/layer";
 import Collection from "ol/Collection";
+import 'elm-pep';
 
 window.initMap = function(mapData) {
   let mapDiv = null;
