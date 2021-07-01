@@ -504,6 +504,12 @@ button.c4g-popup-route-to:before {
   font-weight: 900;
   font-size: inherit
 }
+button.c4g-popup-route-download:before {
+  content: "\f019";
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: inherit
+}
 .route-features-list-element > div {
   padding: 10px 10px 15px
 }
@@ -815,9 +821,11 @@ button.c4g-router-print:active {
   color: var(--main-color)!important;
   cursor: pointer
 }
+button.c4g-icon.c4g-popup-route-edit,
 button.c4g-icon.c4g-popup-route-to {
   right: .2em
 }
+button.c4g-icon.c4g-popup-route-download,
 button.c4g-icon.c4g-popup-route-from {
   left: .2em
 }
