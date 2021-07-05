@@ -9,14 +9,11 @@
  */
 
 // import {MapController} from "components/c4g-maps.jsx";
-import TileLayer from "ol/layer/Tile";
 
 const MapController = React.lazy(() => import("./components/c4g-maps.jsx"));
 const ConsentBanner = React.lazy(() => import("./components/c4g-consent-banner.jsx"));
 import ReactDOM from "react-dom";
 import React, {Suspense} from "react";
-import {Group as LayerGroup} from "ol/layer";
-import Collection from "ol/Collection";
 import 'elm-pep';
 
 window.initMap = function(mapData) {
