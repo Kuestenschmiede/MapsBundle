@@ -29,6 +29,7 @@ export var langConstantsEnglish = {
   RADIUS: 'Radius',
   REFRESH: 'Refresh',
   ACCEPT: 'Accept',
+  CANCEL: 'Cancel',
   COPY_TO_CLIPBOARD: 'Copy to clipboard',
 
   CTRL_ZOOM_IN: 'Zoom in',

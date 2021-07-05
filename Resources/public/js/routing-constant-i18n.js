@@ -10,16 +10,16 @@
 
 import {routingConstantsGerman} from "./routing-constant-i18n-de";
 import {routingConstantsEnglish} from "./routing-constant-i18n-en";
-
+import {langConstantsGerman} from "./c4g-maps-constant-i18n-de";
+import {langConstantsEnglish} from "./c4g-maps-constant-i18n-en";
 export function getLanguage(mapData) {
   if (typeof mapData !== 'undefined') {
     switch (mapData.lang) {
       case "de":
-        return routingConstantsGerman;
+        return jQuery.extend(routingConstantsGerman, langConstantsGerman);
       case "en":
-        return routingConstantsEnglish;
       default:
-        return routingConstantsEnglish;
+        return jQuery.extend(routingConstantsEnglish, langConstantsEnglish);
     }
   }
 }

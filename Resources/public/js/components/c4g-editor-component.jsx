@@ -34,6 +34,7 @@ export default class EditorComponent extends Component {
     this.removeFeature = this.removeFeature.bind(this);
     this.modifyFeature = this.modifyFeature.bind(this);
     this.changeJSON = this.changeJSON.bind(this);
+    this.props.mapController.editor = this;
 
     const scope = this;
     let element = document.createElement('div');

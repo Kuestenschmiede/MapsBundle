@@ -476,6 +476,12 @@ button.c4g-router-print:before {
     font-weight: 900;
     font-size: inherit;
 }
+button.c4g-router-editor:before {
+    content: "\f303";
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    font-size: inherit;
+}
 button.c4g-router-download:before {
     content: "\f019";
     font-family: 'Font Awesome 5 Free';
@@ -960,7 +966,8 @@ div[class*=c4g-router-input] > div > input {
 }
 
 button.c4g-router-print,
-button.c4g-router-download {
+button.c4g-router-download,
+button.c4g-router-editor{
     width: 32px;
     height: 32px;
     border: none;
@@ -973,7 +980,8 @@ button.c4g-router-download {
 }
 
 button.c4g-router-print:active,
-button.c4g-router-download:active {
+button.c4g-router-download:active,
+button.c4g-router-editor:active {
     background-color: var(--font-color);
     color: var(--main-color) !important;
 }

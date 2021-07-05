@@ -31,6 +31,7 @@ export var langConstantsGerman = {
   RADIUS: 'Radius',
   REFRESH: 'Aktualisieren',
   ACCEPT: 'Akzeptieren',
+  CANCEL: 'Abbrechen',
   COPY_TO_CLIPBOARD: 'In Zwischenablage kopieren',
 
   CTRL_ZOOM_IN: 'Vergrößern',

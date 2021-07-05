@@ -29,6 +29,8 @@ export var routingConstantsGerman = {
   ROUTER_OVER:'Zwischenziel hinzufügen',
   ROUTER_PRINT:'Routenbeschreibung drucken',
   ROUTER_DOWNLOAD:'Route als GPX herunterladen',
+  ROUTER_EDITOR:'Route in den Editor exportieren',
+  ROUTER_EDITOR_ELEMENT: 'Element im Editor.',
 
   ROUTER_VIEW_LABEL_ROUTE: 'Route:',
   ROUTER_VIEW_LABEL_DISTANCE: 'Entfernung:',

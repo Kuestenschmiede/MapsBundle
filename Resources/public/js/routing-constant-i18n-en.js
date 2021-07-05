@@ -27,6 +27,8 @@ export  var routingConstantsEnglish = {
   ROUTER_OVER:'Add interim goal',
   ROUTER_PRINT:'Print route description',
   ROUTER_DOWNLOAD:'Download route as GPX',
+  ROUTER_EDITOR:'Export route into the editor',
+  ROUTER_EDITOR_ELEMENT: 'Element in the editor',
 
   POPUP_ROUTE_FROM: 'Route from here',
   POPUP_ROUTE_TO: 'Route to here',

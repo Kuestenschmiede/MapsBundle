@@ -12,9 +12,10 @@ import React, { Component, Suspense } from "react";
 // import {RouterInstructionsContainer} from "./c4g-router-instructions-container.jsx";
 // import {RouterFeatureList} from "./c4g-router-feature-list.jsx";
 import GPX from "ol/format/GPX";
+import GeoJSON from "ol/format/GeoJSON";
 import {toHumanDistance, toHumanTime} from "../c4g-router-time-conversions";
 import {Titlebar} from "./c4g-titlebar.jsx";
-
+// import {AlertHandler} from "../../../../../CoreBundle/Resources/public/vendor/js/AlertHandler";
 const RouterInstructionsContainer = React.lazy(() => import('./c4g-router-instructions-container.jsx'));
 const RouterFeatureList = React.lazy(() => import('./c4g-router-feature-list.jsx'));
 
@@ -110,7 +111,14 @@ export class RouterResultContainer extends Component {
       WinPrint.close();
     };
     if ((time && distance) && this.props.mode === "route") {
-
+      let buttonExportEditor = null;
+      if (this.props.mapController.data.editor && this.props.mapController.data.editor.config &&
+          this.props.mapController.data.editor.config.drawStyles &&
+          this.props.mapController.data.editor.config.drawStyles.LineString &&
+          this.props.mapController.data.editor.config.drawStyles.LineString.elements &&
+          this.props.mapController.data.editor.config.drawStyles.LineString.elements.length > 0) {
+        buttonExportEditor = <button className={"c4g-router-editor"} title={this.props.lang.ROUTER_EDITOR} onMouseUp={()=>{this.exportEditor()}}/>
+      }
       routerHeaderContent = (
         <div className="c4g-router-instructions-header">
           <div className="c4g-router-route-time">
@@ -123,6 +131,7 @@ export class RouterResultContainer extends Component {
           </div>
           <button className={"c4g-router-download"} title={this.props.lang.ROUTER_DOWNLOAD} onMouseUp={()=>{this.exportGpx()}}/>
           <button className={"c4g-router-print"} title={this.props.lang.ROUTER_PRINT} onMouseUp={()=>{printFunction()}}/>
+          {buttonExportEditor}
         </div>
       );
     } else if ((detour && featureCount) && this.props.mode === "area") {
@@ -177,7 +186,6 @@ export class RouterResultContainer extends Component {
       controlContainer = controlContainer[0];
     }
     let mapContainer = document.querySelector(".c4g_map") ? document.querySelector(".c4g_map")[0] : false;
-    const scope = this;
     if (mapContainer && container) {
       if (controlContainer) {
         if (container.offsetHeight + controlContainer.offsetHeight + 84 > mapContainer.offsetHeight) {
@@ -226,6 +234,41 @@ export class RouterResultContainer extends Component {
 
       document.body.removeChild(element);
       console.log(strExport);
+    }
+  }
+  exportEditor() {
+    const scope = this;
+    let source = this.props.router.routerWaySource;
+    let format = new GeoJSON();
+    if (source && source.getFeatures && source.getFeatures()) {
+      let feature = source.getFeatures()[0];
+      let objInput = {};
+      let elements = this.props.mapController.data.editor.config.drawStyles.LineString.elements
+      for (let i in elements) {
+        if (elements.hasOwnProperty(i)) {
+          objInput[i] = elements[i].name;
+        }
+      }
+      import("./../../../../../CoreBundle/Resources/public/vendor/js/AlertHandler").then(module => {
+        let alertHandler = new module.AlertHandler();
+        let promise = alertHandler.showSelectDialog(scope.props.lang.ROUTER_EDITOR_ELEMENT, objInput, scope.props.lang.ACCEPT, scope.props.lang.CANCEL);
+        promise.then((value) => {
+          let locstyle = elements[value].styleId;
+          feature.set('editorId', value);
+          feature.setId();
+          feature.set('locstyle', locstyle);
+          let format = new GeoJSON();
+          let strFeature = format.writeFeatureObject(feature, {
+            featureProjection: "EPSG:3857",
+            dataProjection: "EPSG:4326",
+            decimals: 6
+          });
+          scope.props.router.openControls(false);
+          scope.props.mapController.editor.open()
+          scope.props.mapController.editor.addFeature(strFeature);
+          scope.props.mapController.editor.reRender();
+        })
+      });
     }
   }
 
