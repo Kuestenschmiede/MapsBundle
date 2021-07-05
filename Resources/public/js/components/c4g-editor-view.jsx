@@ -58,7 +58,7 @@ export default class EditorView extends Component {
         // features: this.props.features,
         source: this.props.editorLayer.getSource(),
         type: this.props.mode,
-        stopclick: false,
+        stopClick: false,
         snapTolerance: 0,
         style: this.props.styleFunction(feature),
         freehand: this.state.freehand

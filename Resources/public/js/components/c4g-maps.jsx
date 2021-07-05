@@ -816,10 +816,20 @@ export default class MapController extends Component {
   }
 
   setLayerStates(arrLayerStates) {
-    if (this._isMounted) {
-      this.setState({
-        arrLayerStates: arrLayerStates
-      });
+    if (this._isMounted && arrLayerStates && arrLayerStates.length > 0) {
+      let changed = false;
+      for (let i in arrLayerStates) {
+        if (arrLayerStates.hasOwnProperty(i)) {
+          if (arrLayerStates[i] !== this.state.arrLayerStates) {
+            changed = true
+          }
+        }
+      }
+      if (changed) {
+        this.setState({
+          arrLayerStates: arrLayerStates
+        });
+      }
     }
   }
   setLayerStateWithId (id, active) {
