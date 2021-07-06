@@ -64,7 +64,7 @@ export var langConstantsEnglish = {
   EDITOR_ENABLE_INSTANT_MEASURE: 'Measure while drawing',
   EDITOR_ENABLE_FREEHAND_DRAW: 'Freehand draw',
   EDITOR_FEATURE_APPLY: 'End modification',
-  EDITOR_FEATURE_DELETE: 'Delete feature',
+  EDITOR_FEATURE_DELETE: 'Delete active feature',
   EDITOR_FEATURE_MODIFY: 'Modify feature',
   EDITOR_SELECT_INFO: 'Click an element on the map to select it.',
   EDITOR_SELECT_INFO_ADDITIONAL: '[ctrl] + [click] for multiselect <br>[shift] for boxselect',

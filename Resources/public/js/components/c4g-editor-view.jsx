@@ -100,48 +100,31 @@ export default class EditorView extends Component {
       this.props.mapController.map.addInteraction(this.interaction);
     } else {
       this.resetInteraction();
-      if (this.state.selectMode === "remove") {
-        this.interaction = new Select({
-          layers: [this.props.editorLayer],
-          hitTolerance: 20
-        });
-        this.interaction.on('select', (e) => {
-          let feature = e.target.getFeatures().getArray()[0];
-          let geojson = new GeoJSON().writeFeatureObject(feature, {
-            dataProjection: "EPSG:4326",
-            featureProjection: "EPSG:3857"
-          })
-          this.props.removeFeature(geojson);
-          let source = this.props.editorLayer.getSource();
-          source.removeFeature(feature);
-        });
-        this.props.mapController.map.addInteraction(this.interaction);
-      }
-      else {
-        this.interaction = [];
-        this.interaction.push(new Select({
-          layers: [this.props.editorLayer],
-          hitTolerance: 20
-        }));
-        this.interaction.push(new Modify({
-          features: this.interaction[0].getFeatures(),
-          pixelTolerance: 20
-        }));
-        this.interaction[0].on('select', (e) => {
-          let feature = e.selected[0];
-          this.setState({selectedFeature: feature});
-        });
-        this.interaction[1].on('modifyend', (e) => {
-          let feature = e.features.getArray()[0];
-          let geojson = new GeoJSON().writeFeatureObject(feature, {
-            dataProjection: "EPSG:4326",
-            featureProjection: "EPSG:3857"
-          })
-          this.props.modifyFeature(geojson);
-        });
-        this.props.mapController.map.addInteraction(this.interaction[0]);
-        this.props.mapController.map.addInteraction(this.interaction[1]);
-      }
+      this.interaction = [];
+      this.interaction.push(new Select({
+        layers: [this.props.editorLayer],
+        hitTolerance: 20
+      }));
+      this.interaction.push(new Modify({
+        features: this.state.selectedFeature ? new Collection([this.state.selectedFeature]) : new Collection([new Feature()]),
+        // source: this.props.editorLayer.getSource(),
+        pixelTolerance: 20
+      }));
+      this.interaction[0].on('select', (e) => {
+        let feature = e.selected[0];
+        this.setState({selectedFeature: feature});
+      });
+      this.interaction[1].on('modifyend', (e) => {
+        let feature = e.features.getArray()[0];
+        let geojson = new GeoJSON().writeFeatureObject(feature, {
+          dataProjection: "EPSG:4326",
+          featureProjection: "EPSG:3857"
+        })
+        this.props.modifyFeature(geojson);
+      });
+      this.props.mapController.map.addInteraction(this.interaction[0]);
+      this.props.mapController.map.addInteraction(this.interaction[1]);
+
     }
     let elements = null;
     if (this.props.elements && this.props.elements.length > 1) {
@@ -181,21 +164,18 @@ export default class EditorView extends Component {
       freehandClass += this.state.freehand ? "c4g-active" : "c4g-inactive";
       customButton = (<a className={freehandClass} title={this.props.lang.EDITOR_VIEW_TRIGGER_DRAW_FREEHAND} onMouseUp={() => {this.changeFreehand()}}>{this.props.lang.EDITOR_VIEW_TRIGGER_DRAW_FREEHAND}</a>);
     }
-    else if (this.props.mode === "select") {
-      customButton = (<div className={"c4g-editor-mode-switcher"}>
-        <button title={this.props.lang.EDITOR_FEATURE_MODIFY} className={"c4g-editor-feature-modify " + (this.state.selectMode === "modify" ? "c4g-active": "c4g-inactive")} onMouseUp={() => {this.changeSelectMode("modify")}}/>
-        <button title={this.props.lang.EDITOR_FEATURE_DELETE} className={"c4g-editor-feature-delete " + (this.state.selectMode === "remove" ? "c4g-active": "c4g-inactive")} onMouseUp={() => {this.changeSelectMode("remove")}}/>
-      </div>)
-    }
     let arrFormEditorVars = [];
-    if (this.state.selectedFeature) {
+    if (this.state.selectedFeature && this.props.mode === "select") {
+      customButton = (<div className={"c4g-editor-mode-switcher"}>
+        <button title={this.props.lang.EDITOR_FEATURE_DELETE} className={"c4g-editor-feature-delete " + (this.state.selectMode === "remove" ? "c4g-active": "c4g-inactive")} onMouseUp={() => {this.removeActiveFeature()}}/>
+      </div>);
       for (let i in this.props.editorVars) {
         if (this.props.editorVars.hasOwnProperty(i)) {
           let editorVar = this.props.editorVars[i];
           if (editorVar.caption && editorVar.key) {
             let value = this.state.selectedFeature.get(editorVar.key) ? this.state.selectedFeature.get(editorVar.key) : "";
             arrFormEditorVars.push(
-                <form className={"c4g-editor-vars-input"}>
+                <form className={"c4g-editor-vars-input"} key={i} onSubmit={(event) => {event.preventDefault()}}>
                   <label>
                     {editorVar.caption}:
                     <input type="text" value={value} name={editorVar.key} onChange={(event)=>{this.handleVarChange(event)}}/>
@@ -205,6 +185,7 @@ export default class EditorView extends Component {
           }
         }
       }
+
     }
     return (
       <React.Fragment>
@@ -232,7 +213,15 @@ export default class EditorView extends Component {
       }
     }
   }
-
+  removeActiveFeature () {
+    let geojson = new GeoJSON().writeFeatureObject(this.state.selectedFeature, {
+      dataProjection: "EPSG:4326",
+      featureProjection: "EPSG:3857"
+    })
+    this.props.removeFeature(geojson);
+    let source = this.props.editorLayer.getSource();
+    source.removeFeature(this.state.selectedFeature);
+  }
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.props.elements[0] && prevProps.mode !== this.props.mode) {
       if (this.state.activeElement === 0) {

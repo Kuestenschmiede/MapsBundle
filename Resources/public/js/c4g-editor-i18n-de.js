@@ -34,7 +34,7 @@ export var projectEditorLang = {
   EDITOR_ENABLE_INSTANT_MEASURE: 'Messen während des Zeichnens',
   EDITOR_ENABLE_FREEHAND_DRAW: 'Freihand zeichnen',
   EDITOR_FEATURE_APPLY: 'Editieren beenden',
-  EDITOR_FEATURE_DELETE: 'Elemente löschen',
+  EDITOR_FEATURE_DELETE: 'Aktives Element löschen',
   EDITOR_FEATURE_MODIFY: 'Elemente editieren',
   EDITOR_SELECT_INFO: 'Zur Auswahl ein Element auf der Karte anklicken.',
   EDITOR_SELECT_INFO_ADDITIONAL: '[Strg] + [Klick] für Mehrfachauswahl <br>[Shift] halten für Auswahlbox',
