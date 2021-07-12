@@ -9,13 +9,38 @@
  */
 
 import React, { Component } from "react";
+import {Point} from "ol/geom";
 
 export class AutocompleteInput extends Component {
 
   constructor(props) {
     super(props);
-
     this.listenerRegistered = false;
+    this.state = {
+      arrAddresses : []
+    }
+
+    this.wrapperRef = React.createRef();
+    this.handleClickOutside = this.handleClickOutside.bind(this);
+  }
+
+  componentDidMount() {
+    document.addEventListener('mousedown', this.handleClickOutside);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClickOutside);
+  }
+
+  /**
+   * Alert if clicked on outside of element
+   */
+  handleClickOutside(event) {
+    if (this.wrapperRef && !this.wrapperRef.current.contains(event.target)) {
+      this.setState({
+        arrAddresses: []
+      })
+    }
   }
 
   render() {
@@ -67,44 +92,44 @@ export class AutocompleteInput extends Component {
         }
       }
     };
-
-    return (
-      <input id={this.props.cssId} type="search" defaultValue={this.props.value} onKeyDown={enterListener}
-             autoComplete="off" />
-    );
-  }
-
-  componentDidUpdate() {
-    const scope = this;
-    let arrNames;
-    if (this.props.cssId.indexOf("From") !== -1) {
-      arrNames = this.props.containerAddresses.arrFromNames
-    } else if (this.props.cssId.indexOf("To") !== -1) {
-      arrNames = this.props.containerAddresses.arrToNames;
-    } else if (this.props.cssId.indexOf("Over") !== -1) {
-      arrNames = this.props.containerAddresses.arrOverNames[this.props.index];
-    } else if (this.props.cssId.indexOf("area") !== -1) {
-      arrNames = this.props.containerAddresses.arrAreaNames;
-    }
-
-    let inputField = jQuery('#' + this.props.cssId);
-    if (inputField && (typeof(inputField.autocomplete) == 'function')) {
-      inputField.autocomplete({
-        source: arrNames
-      });
-    }
-
-    // only register listener once
-    if (!this.listenerRegistered) {
-      inputField.on('autocompleteselect', function (event, ui) {
-        if (scope.props.index) {
-          scope.props.objFunctions[scope.props.index].selectListener(event, ui);
-        } else {
-          scope.props.objFunctions.selectListener(event, ui);
+    let listAutocomplete = null;
+    if (this.state.arrAddresses && this.state.arrAddresses.length > 0) {
+      let listAdresses = [];
+      for (let i in this.state.arrAddresses) {
+        if (this.state.arrAddresses.hasOwnProperty(i)) {
+          let elemAddress = this.state.arrAddresses[i];
+          let clickEvent = (self) => {
+            jQuery("#" + self.props.cssId).val(elemAddress.name);
+            let point = new Point([elemAddress.pos[1],elemAddress.pos[0]]);
+            if (self.props.cssId.includes("From")) {
+              self.props.router.setState({fromPoint: point}, () => self.props.router.updateRouteLayersAndPoints());
+            }
+            else if (self.props.cssId.includes("To")) {
+              self.props.router.setState({toPoint: point}, () => self.props.router.updateRouteLayersAndPoints());
+            }
+            else if (self.props.cssId.includes("Over")) {
+              self.props.router.addOverPoint(elemAddress.pos[1], elemAddress.pos[0], self.props.index, true)
+            }
+            else if (self.props.cssId.includes("area")) {
+              self.props.router.setState({areaPoint: point}, () => self.props.router.updateRouteLayersAndPoints());
+            }
+            self.setState({
+              arrAddresses: []
+            })
+          }
+          let listItem = <li key={i} className={"c4g-autocomplete-item"} onMouseUp={(event => {clickEvent(scope)})}>{elemAddress.name}</li>;
+          listAdresses.push(listItem);
         }
-      });
-      this.listenerRegistered = true;
+      }
+      listAutocomplete = <ul className={"c4g-autocomplete"}>{listAdresses}</ul>
     }
+    return (
+      <div ref={this.wrapperRef}>
+        <input id={this.props.cssId} type="search" defaultValue={this.props.value} onKeyDown={enterListener}
+                             autoComplete="off" />
+        {listAutocomplete}
+      </div>
+    );
   }
 
   setCenter (center) {
@@ -150,95 +175,38 @@ export class AutocompleteInput extends Component {
         center = [(parseFloat(settings.bBox[0]) + parseFloat(settings.bBox[2])) / 2, (parseFloat(settings.bBox[1]) + parseFloat(settings.bBox[3])) / 2];
       }
       if (data.length > 0) {
-
-        if (data[0] && data[0].display_name  && center) {
+        let arrAddresses = [];
+        if (settings.bBox && settings.bBox[0] && data[0] && data[0].display_name  && center) {
           // $(cssId).val(data[0].display_name);
-          let arrAddresses = [];
           for (let i in data) {
             if (data.hasOwnProperty(i)) {
-              if (settings.bBox && settings.bBox[0]) {
-                if (scope.isInBoundingBox(data[i].lon, data[i].lat, settings.bBox)) {
-                  let distance = Math.sqrt((center[0] - data[i].lon) * (center[0] - data[i].lon) + (center[1] - data[i].lat) * (center[1] - data[i].lat));
-                  let element = {
-                    'dist' : distance,
-                    'pos'  : [data[i].lat, data[i].lon],
-                    'name' : data[i].display_name
-                  };
-                  arrAddresses.push(element);
-                }
+              if (this.isInBoundingBox(data[i].lon, data[i].lat, settings.bBox)) {
+                let distance = Math.sqrt((center[0] - data[i].lon) * (center[0] - data[i].lon) + (center[1] - data[i].lat) * (center[1] - data[i].lat));
+                let element = {
+                  'dist' : distance,
+                  'pos'  : [data[i].lat, data[i].lon],
+                  'name' : data[i].display_name
+                };
+                arrAddresses.push(element);
               }
             }
           }
           arrAddresses.sort((a,b) => a.dist -b.dist);
-
-          for (let i in arrAddresses) {
-            if (arrAddresses.hasOwnProperty(i)) {
-              if (cssClass.indexOf('from') !== -1) {
-                // do not add twice
-                if (!scope.props.containerAddresses.arrFromNames.includes(arrAddresses[i].name)) {
-                  scope.props.containerAddresses.arrFromNames.push(arrAddresses[i].name);
-                  scope.props.containerAddresses.arrFromPositions.push(arrAddresses[i].pos);
-                }
-              } else if (cssClass.indexOf('to') !== -1){
-                if (!scope.props.containerAddresses.arrToNames.includes(arrAddresses[i].name)) {
-                  scope.props.containerAddresses.arrToNames.push(arrAddresses[i].name);
-                  scope.props.containerAddresses.arrToPositions.push(arrAddresses[i].pos);
-                }
-              } else if (cssClass.indexOf('over') !== -1) {
-                if (!scope.props.containerAddresses.arrOverNames[scope.props.index].includes(arrAddresses[i].name)) {
-                  scope.props.containerAddresses.arrOverNames[scope.props.index].push(arrAddresses[i].name);
-                  scope.props.containerAddresses.arrOverPositions[scope.props.index].push(arrAddresses[i].pos);
-                }
-              } else if (cssClass.indexOf('area') !== -1) {
-                if (!scope.props.containerAddresses.arrAreaNames.includes(arrAddresses[i].name)) {
-                  scope.props.containerAddresses.arrAreaNames.push(arrAddresses[i].name);
-                  scope.props.containerAddresses.arrAreaPositions.push(arrAddresses[i].pos);
-                }
-              } else {
-                console.log("This is weird ¯\\_(ツ)_/¯");
-              }
-
-            }
-          }
-          // trigger keydown event to show autocomplete options
-          let event = jQuery.Event("keydown", {keyCode: 8});
-          $(cssClass).trigger(event);
         }
-        for (let i in data) {
-          if (data.hasOwnProperty(i)) {
-            if (cssClass.indexOf('From') !== -1) {
-              // do not add twice
-              if (!scope.props.containerAddresses.arrFromNames.includes(data[i].display_name)) {
-                scope.props.containerAddresses.arrFromNames.push(data[i].display_name);
-                scope.props.containerAddresses.arrFromPositions.push([data[i].lat, data[i].lon]);
-              }
-            } else if (cssClass.indexOf('To') !== -1){
-              if (!scope.props.containerAddresses.arrToNames.includes(data[i].display_name)) {
-                scope.props.containerAddresses.arrToNames.push(data[i].display_name);
-                scope.props.containerAddresses.arrToPositions.push([data[i].lat, data[i].lon]);
-              }
-            } else if (cssClass.indexOf('Over') !== -1) {
-              if (!scope.props.containerAddresses.arrOverNames[scope.props.index].includes(data[i].display_name)) {
-                scope.props.containerAddresses.arrOverNames[scope.props.index].push(data[i].display_name);
-                scope.props.containerAddresses.arrOverPositions[scope.props.index].push([data[i].lat, data[i].lon]);
-              }
-            } else if (cssClass.indexOf('area') !== -1){
-              if (!scope.props.containerAddresses.arrAreaNames.includes(data[i].display_name)) {
-                scope.props.containerAddresses.arrAreaNames.push(data[i].display_name);
-                scope.props.containerAddresses.arrAreaPositions.push([data[i].lat, data[i].lon]);
-              }
-            } else {
-              console.log("This is weird ¯\\_(ツ)_/¯");
+        else if (data[0] && data[0].display_name) {
+          for (let i in data) {
+            if (data.hasOwnProperty(i)) {
+              let element = {
+                'pos'  : [data[i].lat, data[i].lon],
+                'name' : data[i].display_name
+              };
+              arrAddresses.push(element);
             }
           }
         }
-        scope.props.router.setState({
-          containerAddresses: scope.props.containerAddresses
+        scope.setState({
+          arrAddresses: arrAddresses
         });
-
-        // trigger keydown event to show autocomplete options
-        let event = jQuery.Event("keydown", {keyCode: 8});
-        $(cssClass).trigger(event);
       }
     });
   }

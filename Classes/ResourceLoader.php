@@ -90,11 +90,7 @@ class ResourceLoader extends coreResourceLoader
         }
 
         if ($mapData['router_enable']) {
-            parent::loadJavaScriptResource('/bundles/con4giscore/vendor/jQuery/jquery-ui-1.12.1.custom/jquery-ui.min.js', self::BODY, 'jquery-ui');
-
-            parent::loadCssResource('/bundles/con4giscore/vendor/jQuery/jquery-ui-1.12.1.custom/jquery-ui.min.css', 'jquery-ui-css');
             parent::loadCssResource(self::BUNDLE_CSS_PATH . 'c4g-routing.min.css', 'routing-css');
-            parent::loadCssResource('/bundles/con4giscore/dist/css/c4g-cached-inputfield.min.css', 'c4g-cached-inputfield');
         }
         if ($mapData['feEditorProfile'] || $mapData['beEditorProfile']) {
             parent::loadCssResource(self::BUNDLE_CSS_PATH . 'c4g-project-editor.min.css', 'project-editor-css');
