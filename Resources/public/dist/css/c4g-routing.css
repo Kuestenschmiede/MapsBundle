@@ -384,6 +384,12 @@ button.c4g-router-print:before {
   font-weight: 900;
   font-size: inherit
 }
+button.c4g-router-editor:before {
+  content: "\f303";
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: inherit
+}
 button.c4g-router-download:before {
   content: "\f019";
   font-family: 'Font Awesome 5 Free';
@@ -771,6 +777,7 @@ div[class*=c4g-router-input] > div > input {
   position: relative
 }
 button.c4g-router-download,
+button.c4g-router-editor,
 button.c4g-router-print {
   width: 32px;
   height: 32px;
@@ -782,6 +789,7 @@ button.c4g-router-print {
   cursor: pointer
 }
 button.c4g-router-download:active,
+button.c4g-router-editor:active,
 button.c4g-router-print:active {
   background-color: var(--font-color);
   color: var(--main-color)!important
