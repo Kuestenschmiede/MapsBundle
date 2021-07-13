@@ -5131,6 +5131,10 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
 .c4g-sideboard > div > div[class*=switcher] button:not(.c4g-active) {
   cursor: pointer
 }
+.c4g-router-input-clear,
+.c4g-router-position {
+  cursor: pointer
+}
 .c4g-sideboard > div > div[class*=switcher] button:not(:last-child) {
   margin: 0 4px 0 0
 }
