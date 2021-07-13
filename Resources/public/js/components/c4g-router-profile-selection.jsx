@@ -76,7 +76,7 @@ export default class RouterProfileSelection extends Component {
             <button className={"c4g-titlebar-close"} onMouseUp={() => this.setState({showPopup: false})}/>
             {this.props.profiles.map((item) => {
               return <button onMouseUp={() => this.setProfile(item)}
-                             className={"c4g-router-profile-" + this.profileTranslation[item.id] + (parseInt(item.id, 10) === this.props.currentProfile ? " c4g-active" : " c4g-inactive")}
+                             className={"c4g-router-profile-" + this.profileTranslation[item.id] + (parseInt(item.id, 10) === parseInt(this.props.currentProfile, 10) ? " c4g-active" : " c4g-inactive")}
                              key={item.id} title={this.profileLang[this.profileTranslation[item.id]]}/>
             })}
           </div>
