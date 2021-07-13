@@ -102,16 +102,16 @@ export class AutocompleteInput extends Component {
             jQuery("#" + self.props.cssId).val(elemAddress.name);
             let point = new Point([elemAddress.pos[1],elemAddress.pos[0]]);
             if (self.props.cssId.includes("From")) {
-              self.props.router.setState({fromPoint: point}, () => self.props.router.updateRouteLayersAndPoints());
+              self.props.router.setRouteFrom(elemAddress.pos[1], elemAddress.pos[0], true);
             }
             else if (self.props.cssId.includes("To")) {
-              self.props.router.setState({toPoint: point}, () => self.props.router.updateRouteLayersAndPoints());
+              self.props.router.setRouteTo(elemAddress.pos[1], elemAddress.pos[0], true);
             }
             else if (self.props.cssId.includes("Over")) {
               self.props.router.addOverPoint(elemAddress.pos[1], elemAddress.pos[0], self.props.index, true)
             }
             else if (self.props.cssId.includes("area")) {
-              self.props.router.setState({areaPoint: point}, () => self.props.router.updateRouteLayersAndPoints());
+              self.props.router.AreaPoint(elemAddress.pos[1], elemAddress.pos[0], true);
             }
             self.setState({
               arrAddresses: []

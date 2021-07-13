@@ -416,23 +416,29 @@ export class RouterView extends Component {
     this.setState({"openResults": bool});
   };
 
-  setAreaPoint(longitude, latitude) {
+  setAreaPoint(longitude, latitude, dontSearch = false) {
     const scope = this;
-    this.performReverseSearch("areaAddress", [longitude, latitude]);
+    if (!dontSearch) {
+      this.performReverseSearch("areaAddress", [longitude, latitude]);
+    }
     let point = new Point([longitude, latitude]);
     this.setState({areaPoint: point}, () => scope.updateRouteLayersAndPoints());
   }
 
-  setRouteFrom(longitude, latitude) {
+  setRouteFrom(longitude, latitude, dontSearch = false) {
     const scope = this;
-    this.performReverseSearch("fromAddress", [longitude, latitude]);
+    if (!dontSearch) {
+      this.performReverseSearch("fromAddress", [longitude, latitude]);
+    }
     let point = new Point([longitude, latitude]);
     this.setState({fromPoint: point}, () => {scope.updateRouteLayersAndPoints();});
   }
 
-  setRouteTo(longitude, latitude) {
+  setRouteTo(longitude, latitude, dontSearch = false) {
     const scope = this;
-    this.performReverseSearch("toAddress", [longitude, latitude]);
+    if (dontSearch) {
+      this.performReverseSearch("toAddress", [longitude, latitude]);
+    }
     let point = new Point([longitude, latitude]);
     this.setState({toPoint: point}, () => scope.updateRouteLayersAndPoints());
   }
