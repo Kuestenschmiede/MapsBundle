@@ -240,8 +240,7 @@ export default class EditorComponent extends Component {
     let features = JSON.stringify(arrFeatures, null, 2);
     this.setState({
       features: features
-    });
-    this.linkInput();
+    }, () => {this.linkInput()});
   }
   removeFeature (geojson) {
     let editorId = geojson.properties.editorId;
@@ -253,8 +252,7 @@ export default class EditorComponent extends Component {
     let features = JSON.stringify(arrFeatures, null, 2);
     this.setState({
       features: features
-    });
-    this.linkInput();
+    }, () => {this.linkInput()});
   }
   modifyFeature (geojson) {
     let editorId = geojson.properties.editorId;
@@ -267,8 +265,7 @@ export default class EditorComponent extends Component {
     let features = JSON.stringify(objGeojson, null, 2);
     this.setState({
       features: features
-    });
-    this.linkInput();
+    }, () => {this.linkInput()});
   }
   linkInput () {
     if (this.props.inputField && this.state.features.length > 50) {
