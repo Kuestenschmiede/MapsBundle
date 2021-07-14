@@ -304,7 +304,7 @@ export default class EditorComponent extends Component {
             }
           })}
         </div>
-        <EditorView className={"c4g-editor-view"} styleFunction={this.styleFunction} mode={this.state.currentMode} styleData={this.state.styleData} elements={this.config[this.state.currentMode] ? this.config[this.state.currentMode]: []} active={true} features={this.features} editorVars={this.props.config.editorVars} removeFeature={this.removeFeature} modifyFeature={this.modifyFeature} addFeature={this.addFeature} editorLayer={this.editorLayer} editorId={this.state.editorId} countEditorId={this.countEditorId} updateFeatures={this.updateFeatures} mapController={this.props.mapController} editor={this} lang={this.langConstants}/>
+        <EditorView className={"c4g-editor-view"} styleFunction={this.styleFunction} mode={this.state.currentMode} styleData={this.state.styleData} elements={this.config[this.state.currentMode] ? this.config[this.state.currentMode]: []} active={this.state.open} features={this.features} editorVars={this.props.config.editorVars} removeFeature={this.removeFeature} modifyFeature={this.modifyFeature} addFeature={this.addFeature} editorLayer={this.editorLayer} editorId={this.state.editorId} countEditorId={this.countEditorId} updateFeatures={this.updateFeatures} mapController={this.props.mapController} editor={this} lang={this.langConstants}/>
         <div className={"c4g-editor-content"} style={{overflow: "none"}}>
           <pre contentEditable={true} style={{overflowY: "scroll", overflowX: "none", height: "400px"}} suppressContentEditableWarning={true} onInput={this.changeJSON}>{this.state.features}</pre>
         </div>

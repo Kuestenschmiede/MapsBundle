@@ -98,7 +98,7 @@ export default class EditorView extends Component {
         }
       );
       this.props.mapController.map.addInteraction(this.interaction);
-    } else {
+    } else if (this.props.mode === "select" && this.props.active) {
       this.resetInteraction();
       this.interaction = [];
       this.interaction.push(new Select({
@@ -125,6 +125,9 @@ export default class EditorView extends Component {
       this.props.mapController.map.addInteraction(this.interaction[0]);
       this.props.mapController.map.addInteraction(this.interaction[1]);
 
+    }
+    else {
+      this.resetInteraction();
     }
     let elements = null;
     if (this.props.elements && this.props.elements.length > 1) {
@@ -221,6 +224,9 @@ export default class EditorView extends Component {
     this.props.removeFeature(geojson);
     let source = this.props.editorLayer.getSource();
     source.removeFeature(this.state.selectedFeature);
+    this.setState({
+      selectedFeature: false
+    })
   }
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.props.elements[0] && prevProps.mode !== this.props.mode) {
