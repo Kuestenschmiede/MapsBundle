@@ -147,6 +147,8 @@ export class C4gOverlayController {
         console.warn('unsupported provider');
         break;
     }
+    overlayLayer.setZIndex(-1)
+    
     this.arrOverlays[overlayId].layer = overlayLayer;
     // this.arrOverlays[overlayId].changeOpacity(parseInt(overlayLayerConfig.opacity)/100);
     this.arrOverlays[overlayId].changeOpacity(overlayLayerConfig.opacity);
