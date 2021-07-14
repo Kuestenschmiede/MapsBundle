@@ -854,3 +854,16 @@ button.c4g-icon.c4g-popup-route-from {
 .c4g-popup-route-wrapper button[class*=route]:hover {
   border: 1px solid var(--shadow-color)
 }
+ul.c4g-autocomplete {
+  background-color: var(--font-color);
+  position: absolute;
+  max-width: calc(100% - ((32px + .2em) * 2));
+  z-index: 1;
+  box-sizing: border-box
+}
+ul.c4g-autocomplete > li.c4g-autocomplete-item {
+  border-style: solid;
+  border-color: var(--shadow-color);
+  color: var(--main-color)!important;
+  cursor: pointer
+}
