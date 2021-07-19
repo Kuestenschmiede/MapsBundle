@@ -436,7 +436,7 @@ export class RouterView extends Component {
 
   setRouteTo(longitude, latitude, dontSearch = false) {
     const scope = this;
-    if (dontSearch) {
+    if (!dontSearch) {
       this.performReverseSearch("toAddress", [longitude, latitude]);
     }
     let point = new Point([longitude, latitude]);
