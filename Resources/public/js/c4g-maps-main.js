@@ -12,6 +12,7 @@
 
 const MapController = React.lazy(() => import("./components/c4g-maps.jsx"));
 const ConsentBanner = React.lazy(() => import("./components/c4g-consent-banner.jsx"));
+import {getLanguage} from "./c4g-maps-i18n";
 import ReactDOM from "react-dom";
 import React, {Suspense} from "react";
 import 'elm-pep';
@@ -171,6 +172,22 @@ window.initMaps = function(mapData) {
                   window.initMap(mapData[key]);
                 }
               });
+            }
+            else if (typeof cookiebar !== "undefined") {
+              const language = getLanguage(mapData[key]);
+              cookiebar.addModule(parseInt(mapData[key]["cookie"]["value"]), () => {
+                mapData[key]['cookie'] = false;
+                window.initMap(mapData[key])
+              }, {
+                selector: "#c4g-map-container-" + mapData[key].mapId,
+                message: mapData[key]['cookie']['info'],
+                button: {
+                  show: true,                 // Extends the output by a confirmation button,
+                  text: language.ACCEPT, // Button text
+                  type: 'button',             // Button type
+                }
+              });
+              return null;
             }
             return ReactDOM.render(
                 <Suspense fallback={<div>Loading...</div>}>
