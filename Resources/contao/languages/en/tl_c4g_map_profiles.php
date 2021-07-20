@@ -144,7 +144,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['filterResetButton'] = ['Button to re
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['consentBanner'] = ['Consent-Banner', 'Choose wether you want to display a consent banner, to prevent loading the map.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cookieInfo'] = ['Consent text', 'Enter your text to display inside the consent banner.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cookieName'] = ['Cookie name', 'If you want to use a existing cookie, enter its name here.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cookieValue'] = ['Cookie value', 'If you want to use a existing cookie, enter its expected value here.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cookieValue'] = ['Cookie value', 'If you want to use a existing cookie, enter its expected value here.  If you use the <a href="https://www.oveleon.de/cookiebar.html">Oveleon Cookiebar</a> enter the ID of the desired cookie.'];
 /**
 /**
  * Reference

@@ -144,7 +144,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['be_optimize_checkboxes_limit'] = ['G
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['consentBanner'] = ['Consent-Banner', 'Wählen Sie, ob sie vor die Karte ein Consent-Banner vorschalten wollen, welches ein direktes Laden der Karte verhindert'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cookieInfo'] = ['Consent-Text', 'Geben Sie an dieser Stelle einen Text ein, der erklärt, womit der User einverstanden sein muss, um die Karte zu nutzen.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cookieName'] = ['Cookie Name', 'Falls Sie einen bestehenden Cookie verwenden wollen, passen Sie diesen Wert auf dessen Namen an.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cookieValue'] = ['Cookie Wert', 'Falls Sie einen bestehenden Cookie verwenden wollen, passen Sie diesen Wert auf einen enthaltenen String an, der im erwarteten Cookie enthalten ist.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cookieValue'] = ['Cookie Wert', 'Falls Sie einen bestehenden Cookie verwenden wollen, passen Sie diesen Wert auf einen enthaltenen String an, der im erwarteten Cookie enthalten ist. Nutzen Sie die <a href="https://www.oveleon.de/cookiebar.html">Oveleon Cookiebar</a> tragen Sie hier die ID ihres Cookies (Benutzerdefiniert Skript) ein.'];
 /**
  * Reference
  */
