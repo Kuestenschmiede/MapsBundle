@@ -18,7 +18,11 @@ export class C4gStarboardStyle extends Component {
     constructor(props) {
         super(props);
     }
-
+    enterEvent (e) {
+        if (e.which === 13) {
+            this.props.clickEvent(e);
+        }
+    }
     render() {
 
         // Create label for interaction-trigger
@@ -50,7 +54,7 @@ export class C4gStarboardStyle extends Component {
                 }
             }
             if (this.props.clickEvent) {
-                styleTriggerLabel = <span className={cssConstants.STARBOARD_LOCSTYLE} title={tooltip} onMouseUp={(event)=> this.props.clickEvent(event)}>{styleIcon}</span>;
+                styleTriggerLabel = <span tabIndex={1} className={cssConstants.STARBOARD_LOCSTYLE} title={tooltip} onKeyPress={(event) => this.enterEvent(event)} onMouseUp={(event)=> this.props.clickEvent(event)}>{styleIcon}</span>;
             }
             else {
                 styleTriggerLabel = <span className={cssConstants.STARBOARD_LOCSTYLE} title={tooltip}>{styleIcon}</span>;

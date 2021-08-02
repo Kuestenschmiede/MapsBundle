@@ -115,6 +115,11 @@ export class C4gStarboardLayerElement extends Component {
     }
     this.props.parentCallback(this.props.keyId, newState)
   }
+  layerEnter(e) {
+    if (e.which === 13) {
+      this.layerClick(e);
+    }
+  }
   layerClick(e) {
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
@@ -150,6 +155,11 @@ export class C4gStarboardLayerElement extends Component {
     window.setTimeout(() => {
       this.props.mapController.proxy.layerController.setChildFeatureFlag(this.props.layer, "markLocstyle", false);
     }, 3000);
+  }
+  layerZoomToEnter(e) {
+    if (e.which === 13) {
+      this.layerZoomTo(e);
+    }
   }
   changeCollapseState(id, state) {
     this.props.layerStates.childStates[id] = state;
@@ -187,17 +197,17 @@ export class C4gStarboardLayerElement extends Component {
     let linkSwitch;
     if (this.props.mapController.data.starboard.invertZoomActivate && this.props.layer.addZoomTo) {
       linkText = <React.Fragment>
-        <a title={this.props.layer.name} className={"c4g-starboard-text"} onMouseUp={(event) => this.layerZoomTo(event)}>{this.props.layer.name}</a>
+        <a tabIndex={1} title={this.props.layer.name} alt={this.props.lang.STARBOARD_ELEMENT_TRIGGER} className={"c4g-starboard-text"} onKeyPress={(event) => this.layerEnter(event)} onMouseUp={(event) => this.layerZoomTo(event)} onKeyPress={(event) => this.layerZoomToEnter(event)}>{this.props.layer.name}</a>
       </React.Fragment>
 
       linkSwitch = <a className={cssClass + " c4g-starboard-checkbox-icon"} onMouseUp={(event) => this.layerClick(event)}></a>
       }
     else {
-      linkText = <a title={this.props.layer.name} className={cssClass} onMouseUp={(event) => this.layerClick(event)}>{this.props.layer.name}</a>;
+      linkText = <a tabIndex={1} title={this.props.layer.name} alt={this.props.lang.STARBOARD_ELEMENT_TRIGGER} className={cssClass} onKeyPress={(event) => this.layerEnter(event)} onMouseUp={(event) => this.layerClick(event)}>{this.props.layer.name}</a>;
     }
 
     if (objChilds && objChilds.length) {
-      let span = <span className={cssConstants.ICON} onMouseUp={(event) => this.spanClick(event)}/>;
+      let span = <span alt={this.props.lang.STARBOARD_ELEMENT_CHILDS} className={cssConstants.ICON} onMouseUp={(event) => this.spanClick(event)}/>;
 
       return (
         <li className={openClose + " c4g-starboard-list-element"}>
@@ -235,7 +245,7 @@ export class C4gStarboardLayerElement extends Component {
         cssClass = "c4g-geojson-button";
       }
       return (
-          <li className={openClose + " c4g-starboard-list-element"}>
+          <li tabIndex={1} className={openClose + " c4g-starboard-list-element"}>
             {stylePicture}
             {spanZoom}
             {linkText}
