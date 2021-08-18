@@ -197,13 +197,13 @@ export class C4gStarboardLayerElement extends Component {
     let linkSwitch;
     if (this.props.mapController.data.starboard.invertZoomActivate && this.props.layer.addZoomTo) {
       linkText = <React.Fragment>
-        <a tabIndex={1} title={this.props.layer.name} alt={this.props.lang.STARBOARD_ELEMENT_TRIGGER} className={"c4g-starboard-text"} onKeyPress={(event) => this.layerEnter(event)} onMouseUp={(event) => this.layerZoomTo(event)} onKeyPress={(event) => this.layerZoomToEnter(event)}>{this.props.layer.name}</a>
+        <a tabIndex={1} title={this.props.layer.name} alt={this.props.lang.STARBOARD_ELEMENT_TRIGGER_1+this.props.layer.name+this.props.lang.STARBOARD_ELEMENT_TRIGGER_2} className={"c4g-starboard-text"} onKeyPress={(event) => this.layerEnter(event)} onMouseUp={(event) => this.layerZoomTo(event)} onKeyPress={(event) => this.layerZoomToEnter(event)}>{this.props.layer.name}</a>
       </React.Fragment>
 
       linkSwitch = <a className={cssClass + " c4g-starboard-checkbox-icon"} onMouseUp={(event) => this.layerClick(event)}></a>
       }
     else {
-      linkText = <a tabIndex={1} title={this.props.layer.name} alt={this.props.lang.STARBOARD_ELEMENT_TRIGGER} className={cssClass} onKeyPress={(event) => this.layerEnter(event)} onMouseUp={(event) => this.layerClick(event)}>{this.props.layer.name}</a>;
+      linkText = <a tabIndex={1} title={this.props.layer.name} alt={this.props.lang.STARBOARD_ELEMENT_TRIGGER_1+this.props.layer.name+this.props.lang.STARBOARD_ELEMENT_TRIGGER_2} className={cssClass} onKeyPress={(event) => this.layerEnter(event)} onMouseUp={(event) => this.layerClick(event)}>{this.props.layer.name}</a>;
     }
 
     if (objChilds && objChilds.length) {
