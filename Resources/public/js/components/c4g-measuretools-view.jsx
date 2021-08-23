@@ -320,7 +320,9 @@ export class MeasuretoolsView extends Component {
               var leng = getLengthOfMeasure();
               if (val !== leng && val > leng) {
                 removeMeasureFeature(event.feature);
-                source.removeFeature(event.feature);
+                if (source.hasFeature (event.feature)) {
+                  source.removeFeature(event.feature);
+                }
               }
               else {
                 removeMeasureFeature(event.feature);
