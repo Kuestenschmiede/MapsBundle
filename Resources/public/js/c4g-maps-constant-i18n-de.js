@@ -69,6 +69,8 @@ export var langConstantsGerman = {
   STARBOARD_VIEW_TRIGGER_LAYERSWITCHER: 'Kartenelemente',
   STARBOARD_ELEMENT_ZOOM: 'Auf Element zoomen',
   STARBOARD_ELEMENT_TRIGGER: 'Element in Karte schalten',
+  STARBOARD_ELEMENT_TRIGGER_1: 'Element ',
+  STARBOARD_ELEMENT_TRIGGER_2: ' in Karte schalten',
   STARBOARD_ELEMENT_CHILDS: 'Kindelemente anzeigen',
   STARBOARD_ELEMENT_ZOOM_BEFORE: 'Zu ',
   STARBOARD_ELEMENT_ZOOM_AFTER: ' zoomen',
