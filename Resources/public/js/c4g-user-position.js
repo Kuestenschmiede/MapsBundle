@@ -43,7 +43,6 @@ export class UserPosition {
         this.geolocation.on('change', function(evt) {
             let point = new Point(this.getPosition());
             scope.feature.setGeometry(point);
-            window.console.log(this.getPosition());
         });
     }
 
