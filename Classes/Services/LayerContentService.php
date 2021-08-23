@@ -627,10 +627,6 @@ class LayerContentService
                 }
 
                 if (!$event) {
-                    if ($sourceTable == 'tl_content') {
-                        $popupContent = Controller::getContentElement($arrResult['id']) ? Utils::replaceInsertTags(Controller::getContentElement($arrResult['id']) ?: '', $lang) : $popupContent;
-                        $popupContent = str_replace('TL_FILES_URL', '', $popupContent);
-                    }
 
                     if ($tooltipField) {
                         $ttfArr = unserialize($tooltip);
@@ -638,7 +634,7 @@ class LayerContentService
                             $tooltip = $ttfArr['value'];
                         }
                     }
-                    if ($objConfig->popupSwitch === 'expert') {
+                    if ($objConfig->popupSwitch !== 'off') {
                         // process expert popup
                         $lcdApi = new LayerContentDataApi();
                         $popup = $lcdApi->getPopup($objConfig, $arrResult);
@@ -646,12 +642,6 @@ class LayerContentService
                             $link = $popup['tmpDirectLink'];
                             unset($popup['tmpDirectLink']);
                         }
-                    } elseif ($objConfig->popupSwitch !== 'off') {
-                        $popup = [
-                            'async' => false,
-                            'content' => $popupContent,
-                            'routing_link' => $objLayer->routing_to,
-                        ];
                     } else {
                         $popup = false;
                     }

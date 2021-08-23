@@ -102,7 +102,7 @@ class LayerContentDataApi extends \Frontend
             return false;
         }
         $popupString = $config->popupSwitch === 'expert' ? $config->popup : $config->popupSelection;
-        if (!$popupString) {
+        if (!$popupString && $config->tableSource !== 'tl_content') {
             return false;
         }
         $popupContent = '';
@@ -110,6 +110,7 @@ class LayerContentDataApi extends \Frontend
         $maxLength = intval($config->cutTextAtLength);
         if ($config->tableSource === 'tl_content') {
             $popupContent = Controller::getContentElement($arrElement['id']) ? Controller::replaceInsertTags(Controller::getContentElement($arrElement['id'])) : $popupContent;
+            $popupContent = str_replace('TL_FILES_URL', '', $popupContent);
         } else {
             if ($config->popupSwitch === 'expert') {
                 $lastClass = '';
