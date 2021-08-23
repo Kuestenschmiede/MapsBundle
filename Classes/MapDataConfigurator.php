@@ -407,6 +407,9 @@ class MapDataConfigurator
             $mapData['cluster_zoom'] = $profile->cluster_zoom;
             $mapData['cluster_dist_spider'] = $profile->cluster_dist_spider;
             $mapData['cluster_scale'] = $profile->cluster_scale;
+
+            $mapData['userLocation'] = $profile->userLocation;
+            $mapData['userLocationStyle'] = $profile->userLocationStyle;
             //}
 
             if (array_key_exists('layerswitcher', $buttons)) {

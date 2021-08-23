@@ -59,6 +59,7 @@ const EditorComponent = React.lazy(() => import("./c4g-editor-component.jsx"));
 import TileLayer from "ol/layer/Tile";
 import {routingConstantsEnglish} from "./../routing-constant-i18n-en";
 import {routingConstantsGerman} from "./../routing-constant-i18n-de";
+import {UserPosition} from "./../c4g-user-position";
 
 import {RouterView} from "./c4g-router-view.jsx";
 // import {EditorComponent} from "./c4g-editor-component.jsx";
@@ -794,6 +795,9 @@ export default class MapController extends Component {
         domMapDiv.style.setProperty('--map-height', scope.map.getSize()[1] + "px");
       }
     });
+    if (mapData.userLocation) {
+      let geolocation = new UserPosition(this);
+    }
   }
 
   setLayersInitial(objLayers, arrLayers) {

@@ -263,9 +263,14 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editRoutingConfiguration'] = 'Edit r
 $GLOBALS['TL_LANG']["tl_c4g_map_profiles"]['editorProfile'] = ['Editor-configuration', 'Please choose your editor-configuration.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editEditorConfiguration'] = 'Edit editor configurations';
 
+/** Position Nutzer */
+$GLOBALS['TL_LANG']["tl_c4g_map_profiles"]['userLocation'] = ['User position', 'Display the position of the user.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['userLocationStyle'] = ['Locationstyle position', 'Choose the locationstyle of the users position.'];
+
 /** legend */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['routing_legend'] = 'Routing and Area Search';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_legend'] = 'Editor';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['location_legend'] = 'User position';
 
 /** references */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['routing'] = ['Routing', ' Adds an additional button to activate routing functionality.'];

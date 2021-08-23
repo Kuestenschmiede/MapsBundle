@@ -264,9 +264,14 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editRoutingConfiguration'] = 'Routin
 $GLOBALS['TL_LANG']["tl_c4g_map_profiles"]['editorProfile'] = ['Editor-Konfiguration', 'Bitte wählen Sie die entsprechende Editor-Konfiguration aus. Diese können Sie im Backend-Modul "Editor" anlegen.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editEditorConfiguration'] = 'Editor-Konfigurationen bearbeiten';
 
+/** Position Nutzer */
+$GLOBALS['TL_LANG']["tl_c4g_map_profiles"]['userLocation'] = ['Position Nutzer', 'Darstellen der Position des Nutzers in der Karte.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['userLocationStyle'] = ['Lokationsstil Position', 'Wählen Sie den Lokationsstil für die Position des Nutzers aus.'];
+
 /** legend */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['routing_legend'] = 'Routen- und Umkreissuche';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_legend'] = 'Editor';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['location_legend'] = 'Position Nutzer';
 
 /** references */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['routing'] = ['Router', 'Fügt einen Button in der Karte hinzu, mit dem der Router geöffnet werden kann.'];
