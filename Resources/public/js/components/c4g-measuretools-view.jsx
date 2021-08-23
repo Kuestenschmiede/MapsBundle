@@ -311,6 +311,7 @@ export class MeasuretoolsView extends Component {
           activeTooltip = new TooltipPopUp({
             map: scope.props.mapController.map,
             position: event.coordinate,
+            offset: [2, -2],
             horizontal: true,
             closeable: true,
             closeFunction: function () {
