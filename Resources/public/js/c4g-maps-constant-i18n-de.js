@@ -83,6 +83,7 @@ export var langConstantsGerman = {
 
   GEOSEARCH: 'Suche',
   OVERVIEWMAP: 'Übersichtskarte',
+  TOOLTIP_POSITION: 'Eigener Standort',
 
   MEASURETOOLS: 'Messwerkzeuge',
   MEASURETOOLS_INFO: 'Wählen Sie einen Messtyp overviewaus und starten Sie die Messung durch das Klicken in die Karte.',

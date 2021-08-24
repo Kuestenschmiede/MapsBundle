@@ -10,22 +10,22 @@
 import Geolocation from 'ol/Geolocation';
 import {Vector as VectorSource} from "ol/source";
 import {Vector} from "ol/layer";
-import {utils} from './c4g-maps-utils';
-import {Fill, Style, Text, Circle} from 'ol/style';
 import {Point} from "ol/geom";
 import Feature from 'ol/Feature';
-import * as olExtent from 'ol/extent';
+import {getLanguage} from "./c4g-maps-i18n";
 
 export class UserPosition {
 
     constructor(mapController) {
         const scope = this;
         this.mapController = mapController;
+        const lang = getLanguage(mapController.data);
         this.geolocation = new Geolocation({
             tracking: true,
             projection: "EPSG:3857"
         });
         this.feature = new Feature();
+        this.feature.set('tooltip', lang.TOOLTIP_POSITION)
         let layer = new Vector({
             source: new VectorSource({
                 features: [this.feature]

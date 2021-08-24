@@ -103,6 +103,7 @@ export var langConstantsEnglish = {
 
   GEOSEARCH: 'Search',
   OVERVIEWMAP: 'Overview map',
+  TOOLTIP_POSITION: 'own position',
 
   INFOPAGE: 'Infopage',
   INFOPAGE_VIEW_TRIGGER: 'Show informations',
