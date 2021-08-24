@@ -25,7 +25,8 @@ export class UserPosition {
             projection: "EPSG:3857"
         });
         this.feature = new Feature();
-        this.feature.set('tooltip', lang.TOOLTIP_POSITION)
+        this.feature.set('tooltip', lang.TOOLTIP_POSITION);
+        this.feature.set('noCursor', true);
         let layer = new Vector({
             source: new VectorSource({
                 features: [this.feature]

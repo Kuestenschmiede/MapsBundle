@@ -148,8 +148,9 @@ export class MapHover {
 
 
       canvas = document.querySelector(".ol-viewport");
-      jQuery(canvas).css('cursor', 'pointer');
-
+      if (!hovered.feature.get('noCursor')) {
+        jQuery(canvas).css('cursor', 'pointer');
+      }
       if (hovered.feature && typeof hovered.feature.get === 'function' && hovered.feature.get('features')) {
         if (hovered.feature.get('features')[1]) {
           clustered = true;
