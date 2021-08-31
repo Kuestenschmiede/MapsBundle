@@ -19,7 +19,6 @@ use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapTablesModel;
 use con4gis\MapsBundle\Resources\contao\modules\api\InfoWindowApi;
 use con4gis\MapsBundle\Resources\contao\modules\api\LayerContentDataApi;
-use Contao\Controller;
 
 class LayerContentService
 {
@@ -627,7 +626,6 @@ class LayerContentService
                 }
 
                 if (!$event) {
-
                     if ($tooltipField) {
                         $ttfArr = unserialize($tooltip);
                         if (is_array($ttfArr)) {

@@ -590,15 +590,19 @@ class MapDataConfigurator
                         case 2:
                             $mapData['geosearch']['searchKey'] = $keyValue['key'];
                             $mapData['attribution']['geosearch'] = $keyValue['attribution'];
+
                             break;
                         case 3:
                             $mapData['geosearch']['reverseKey'] = $keyValue['key'];
+
                             break;
                         case 4:
                             $blKeys[$keyParams[$key][2]] = $keyValue;
+
                             break;
                         case 5:
                             $mapData['ovp_key'] = $keyValue['key'];
+
                             break;
 
                     }
