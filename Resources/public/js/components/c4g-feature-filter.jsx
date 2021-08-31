@@ -245,8 +245,15 @@ export default class FeatureFilter extends Component {
   checkFeature (feature, objChecked) {
     let property = objChecked.identifier;
     if (objChecked.value === "opening_hours" && feature.get('opening_hours')) {
-      let featureHours = new opening_hours(feature.get('opening_hours'), {address: {country_code: "de"}});
-      return featureHours.getState();
+      try {
+        let featureHours = new opening_hours(feature.get('opening_hours'), {address: {country_code: "de"}});
+        return featureHours.getState();
+      }
+      catch (error) {
+        console.warn(error);
+        return false;
+      }
+
     }
     else {
       if (!(property === "all" || (feature.get(property) && !objChecked.value) || ((objChecked.value == feature.get(property)) && objChecked.value))) {
