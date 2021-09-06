@@ -94,6 +94,7 @@ export var langConstantsGerman = {
   MEASURETOOLS_VIEW_TRIGGER_DRAW_CIRCLE: 'Radius messen',
   MEASURETOOLS_VIEW_TRIGGER_DRAW_FREEHAND: 'Freihand messen',
 
+  ELEMENTS_SCOPE : 'Elemente im Kartenausschnitt',
   INFOPAGE: 'Informationen',
   ADDITIONALPANEL: 'Panel',
   ADDITIONALPANEL_VIEW_TRIGGER: 'Panel anzeigen',

@@ -354,6 +354,7 @@ class MapDataConfigurator
             $mapData['graticule'] = array_key_exists('graticule', $buttons) ? $buttons['graticule'] + 1 : 0;
             $mapData['layerswitcher']['enable'] = array_key_exists('layerswitcher', $buttons) ? $buttons['layerswitcher'] + 1 : 0;
             $mapData['baselayerswitcher']['enable'] = array_key_exists('baselayerswitcher', $buttons) ? $buttons['baselayerswitcher'] + 1 : 0;
+            $mapData['starboardscope']['enable'] = array_key_exists('starboardscope', $buttons) ? $buttons['starboardscope'] + 1 : 0;
             $mapData['geosearch']['enable'] = array_key_exists('geosearch', $buttons) ? $buttons['geosearch'] + 1 : 0;
             $mapData['legend']['enable'] = array_key_exists('legend', $buttons) && $profile->infopage ? $buttons['legend'] + 1 : 0;
             $mapData['measuretools']['enable'] = array_key_exists('measure', $buttons) ? $buttons['measure'] + 1 : 0;
@@ -419,7 +420,6 @@ class MapDataConfigurator
                 $mapData['layerswitcher']['label'] = \Contao\Controller::replaceInsertTags($profile->layerswitcher_label);
                 $mapData['layerswitcher']['filter'] = $profile->starboard_filter;
             }
-
             if (array_key_exists('baselayerswitcher', $buttons)) {
                 // Baselayerswitcher
                 //$mapData['baselayerswitcher']['enable'] = $profile->baselayerswitcher;
@@ -528,7 +528,6 @@ class MapDataConfigurator
 
                         break;
                     case '4':
-//                        $mapData['attribution']['geosearch'] = $keyForward['attribution'];
 
                         break;
                     default:

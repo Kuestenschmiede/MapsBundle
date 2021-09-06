@@ -105,6 +105,8 @@ export var langConstantsEnglish = {
   OVERVIEWMAP: 'Overview map',
   TOOLTIP_POSITION: 'own position',
 
+  ELEMENTS_SCOPE: 'Elements in current scope',
+
   INFOPAGE: 'Infopage',
   INFOPAGE_VIEW_TRIGGER: 'Show informations',
 
