@@ -157,6 +157,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['print']
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['graticule'] = ['Geographisches Netz','Blendet einen Schalter ein, der ein geografisches Netz anzeigt, das mit Hilfe von horizontalen und vertikalen Linien die Längen- und Breitengrade visualisiert.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['layerswitcher'] = ['Kartenelementeauswahl (Starboard)','Wenn Sie diese Checkbox auswählen, wird im Starboard die Auswahlliste der Kartenstrukturelemente in einem eigenen Tab angezeigt.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['baselayerswitcher'] = ['Basiskartenauswahl','Wenn Sie diese Checkbox auswählen, wird im Starboard die Auswahlliste der Basiskarten in einem eigenen Tab angezeigt.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['starboardscope'] = ['Elemente im Kartenausschnitt','Die Elemente im momentanen Kartenausschnitt darstellen.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['geosearch'] = ['Kartensuche','Stellt Button und Suchfeld in der Karte dar.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['legend'] = ['Legende','Hier können Sie eigene Informationen (z.B. als Legende) hinterlegen.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['rotate'] = ['Karte rotieren mit [Ctrl + Shift + Klick]','Aktiviert die Möglichkeit, mit Hilfe der Tasten Strg+Shift und der linken Maustaste die Karte zu drehen (und zu zoomen). Funktioniert auch per 2-Finger-Touch'];
@@ -264,9 +265,14 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editRoutingConfiguration'] = 'Routin
 $GLOBALS['TL_LANG']["tl_c4g_map_profiles"]['editorProfile'] = ['Editor-Konfiguration', 'Bitte wählen Sie die entsprechende Editor-Konfiguration aus. Diese können Sie im Backend-Modul "Editor" anlegen.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editEditorConfiguration'] = 'Editor-Konfigurationen bearbeiten';
 
+/** Position Nutzer */
+$GLOBALS['TL_LANG']["tl_c4g_map_profiles"]['userLocation'] = ['Position Nutzer', 'Darstellen der Position des Nutzers in der Karte.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['userLocationStyle'] = ['Lokationsstil Position', 'Wählen Sie den Lokationsstil für die Position des Nutzers aus.'];
+
 /** legend */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['routing_legend'] = 'Routen- und Umkreissuche';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_legend'] = 'Editor';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['location_legend'] = 'Position Nutzer';
 
 /** references */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['routing'] = ['Router', 'Fügt einen Button in der Karte hinzu, mit dem der Router geöffnet werden kann.'];

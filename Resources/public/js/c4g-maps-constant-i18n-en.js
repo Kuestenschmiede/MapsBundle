@@ -82,6 +82,8 @@ export var langConstantsEnglish = {
   STARBOARD_VIEW_TRIGGER_LAYERSWITCHER: 'Map elements',
   STARBOARD_ELEMENT_ZOOM: 'Zoom to element',
   STARBOARD_ELEMENT_TRIGGER: 'Trigger element in map',
+  STARBOARD_ELEMENT_TRIGGER_1: 'Trigger ',
+  STARBOARD_ELEMENT_TRIGGER_2: ' in map',
   STARBOARD_ELEMENT_CHILDS: 'Show child elements',
   STARBOARD_ELEMENT_ZOOM_BEFORE: 'Zoom to element ',
   STARBOARD_ELEMENT_ZOOM_AFTER: '',
@@ -101,6 +103,9 @@ export var langConstantsEnglish = {
 
   GEOSEARCH: 'Search',
   OVERVIEWMAP: 'Overview map',
+  TOOLTIP_POSITION: 'own position',
+
+  ELEMENTS_SCOPE: 'Elements in current scope',
 
   INFOPAGE: 'Infopage',
   INFOPAGE_VIEW_TRIGGER: 'Show informations',

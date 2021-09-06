@@ -157,6 +157,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['fullscr
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['print'] = ['Map export','Shows a button that allows exporting the map as PNG. Please pay attention to the copyright notes of the map provider.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['graticule'] = ['Geographical network','Fades in a switch that displays a geographic grid that visualizes longitude and latitude using horizontal and vertical lines.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['layerswitcher'] = ['Map structure element selection (Starboard)','If you select this checkbox, the selection list of map structural elements is displayed in a separate tab on the Starboard.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['starboardscope'] = ['Elements in the maps scope','Display the elements of the current scope.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['baselayerswitcher'] = ['Base map selection','If you select this checkbox, the selection list of base maps is displayed in a separate tab on the starboard.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['geosearch'] = ['Map search','Represents button and search field in the map.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['legend'] = ['Legend','Here you can store your own information (e.g. as legend).'];
@@ -263,9 +264,14 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editRoutingConfiguration'] = 'Edit r
 $GLOBALS['TL_LANG']["tl_c4g_map_profiles"]['editorProfile'] = ['Editor-configuration', 'Please choose your editor-configuration.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editEditorConfiguration'] = 'Edit editor configurations';
 
+/** Position Nutzer */
+$GLOBALS['TL_LANG']["tl_c4g_map_profiles"]['userLocation'] = ['User position', 'Display the position of the user.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['userLocationStyle'] = ['Locationstyle position', 'Choose the locationstyle of the users position.'];
+
 /** legend */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['routing_legend'] = 'Routing and Area Search';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editor_legend'] = 'Editor';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['location_legend'] = 'User position';
 
 /** references */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['routing'] = ['Routing', ' Adds an additional button to activate routing functionality.'];

@@ -47,6 +47,7 @@ class MapDataConfigurator
         $mapData = [];
         $mapData['mapId'] = $objThis->id;
 
+        $keyParams = [];
         //TODO: currently when in backend mode, not the correct things are loaded
         //TODO: no profile is found
         // get map
@@ -353,6 +354,7 @@ class MapDataConfigurator
             $mapData['graticule'] = array_key_exists('graticule', $buttons) ? $buttons['graticule'] + 1 : 0;
             $mapData['layerswitcher']['enable'] = array_key_exists('layerswitcher', $buttons) ? $buttons['layerswitcher'] + 1 : 0;
             $mapData['baselayerswitcher']['enable'] = array_key_exists('baselayerswitcher', $buttons) ? $buttons['baselayerswitcher'] + 1 : 0;
+            $mapData['starboardscope']['enable'] = array_key_exists('starboardscope', $buttons) ? $buttons['starboardscope'] + 1 : 0;
             $mapData['geosearch']['enable'] = array_key_exists('geosearch', $buttons) ? $buttons['geosearch'] + 1 : 0;
             $mapData['legend']['enable'] = array_key_exists('legend', $buttons) && $profile->infopage ? $buttons['legend'] + 1 : 0;
             $mapData['measuretools']['enable'] = array_key_exists('measure', $buttons) ? $buttons['measure'] + 1 : 0;
@@ -407,6 +409,9 @@ class MapDataConfigurator
             $mapData['cluster_zoom'] = $profile->cluster_zoom;
             $mapData['cluster_dist_spider'] = $profile->cluster_dist_spider;
             $mapData['cluster_scale'] = $profile->cluster_scale;
+
+            $mapData['userLocation'] = $profile->userLocation;
+            $mapData['userLocationStyle'] = $profile->userLocationStyle;
             //}
 
             if (array_key_exists('layerswitcher', $buttons)) {
@@ -415,7 +420,6 @@ class MapDataConfigurator
                 $mapData['layerswitcher']['label'] = \Contao\Controller::replaceInsertTags($profile->layerswitcher_label);
                 $mapData['layerswitcher']['filter'] = $profile->starboard_filter;
             }
-
             if (array_key_exists('baselayerswitcher', $buttons)) {
                 // Baselayerswitcher
                 //$mapData['baselayerswitcher']['enable'] = $profile->baselayerswitcher;
@@ -496,11 +500,9 @@ class MapDataConfigurator
                 $mapData['geosearch']['result_duration'] = $profile->geosearch_result_duration;
                 $mapData['geosearch']['popup'] = \Contao\Controller::replaceInsertTags($profile->geosearch_popup);
                 $mapData['geosearch']['attribution'] = \Contao\Controller::replaceInsertTags($profile->geosearch_attribution);
-                $keyForward = null;
                 if ($profile->geosearch_engine == '4') {
-                    $keyForward = (array) C4GUtils::getKey($objSettings, '2', '', false);
-                    $mapData['geosearch']['searchKey'] = $keyForward['key'];
-                    $mapData['geosearch']['reverseKey'] = ((array) C4GUtils::getKey($objSettings, '3', '', false))['key'];
+                    $keyParams[] = ['2', ''];
+                    $keyParams[] = ['3', ''];
                     $mapData['geosearch']['url'] = rtrim($objSettings->con4gisIoUrl, '/') . '/';
                     $mapData['geosearch']['params'] = [];
                     if ($profile->geosearchParams) {
@@ -526,7 +528,6 @@ class MapDataConfigurator
 
                         break;
                     case '4':
-                        $mapData['attribution']['geosearch'] = $keyForward['attribution'];
 
                         break;
                     default:
@@ -574,16 +575,41 @@ class MapDataConfigurator
             // overpass handling
             //
             if ($profile->overpassEngine === '2') {
-                $key = C4GUtils::getKey($objSettings, '5');
-                $mapData['ovp_key'] = $key;
+                $keyParams[] = ['5', ''];
             }
 
             // check baselayers if a key is needed
-            $blKeys = static::checkBaselayers($profile, $objSettings);
-            if (count($blKeys) > 0) {
-                $mapData['base_keys'] = $blKeys;
-            }
+            $keyParams = static::checkBaselayers($profile, $objSettings, $keyParams);
+            if ($keyParams && count($keyParams) > 0) {
+                $arrKeys = C4GUtils::getKeys($objSettings, $keyParams);
+                $blKeys = [];
+                foreach ($arrKeys as $key => $keyValue) {
+                    $service = $keyParams[$key][0];
+                    switch ($service) {
+                        case 2:
+                            $mapData['geosearch']['searchKey'] = $keyValue['key'];
+                            $mapData['attribution']['geosearch'] = $keyValue['attribution'];
 
+                            break;
+                        case 3:
+                            $mapData['geosearch']['reverseKey'] = $keyValue['key'];
+
+                            break;
+                        case 4:
+                            $blKeys[$keyParams[$key][2]] = $keyValue;
+
+                            break;
+                        case 5:
+                            $mapData['ovp_key'] = $keyValue['key'];
+
+                            break;
+
+                    }
+                }
+                if (count($blKeys) > 0) {
+                    $mapData['base_keys'] = $blKeys;
+                }
+            }
             // miscellaneous
             //
             $mapData['infopage'] = \Contao\Controller::replaceInsertTags($profile->infopage);
@@ -679,9 +705,8 @@ class MapDataConfigurator
         return $mapData;
     }
 
-    private static function checkBaselayers($profile, $objSettings)
+    private static function checkBaselayers($profile, $objSettings, $arrKeyParams)
     {
-        $arrKeys = [];
         if ($profile->baselayers !== null) {
             $baselayerIds = unserialize($profile->baselayers);
             $blResult = C4gMapBaselayersModel::findMultipleByIds($baselayerIds);
@@ -695,11 +720,10 @@ class MapDataConfigurator
 
         foreach ($baseLayers as $baseLayer) {
             if ($baseLayer['provider'] == 'con4gisIo') {
-                $catribution = C4GUtils::getKey($objSettings, '4', 'id=' . $baseLayer['con4gisIo'], false); // this is a bad pun with key and attribution. But i wanted a cat instead of a kat
-                $arrKeys[$baseLayer['id']] = $catribution;
+                $arrKeyParams[] = ['4', $baseLayer['con4gisIo'], $baseLayer['id']];
             }
         }
 
-        return $arrKeys;
+        return $arrKeyParams;
     }
 }

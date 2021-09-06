@@ -112,7 +112,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
     // Palettes
     'palettes' =>
         [
-        '__selector__'                => ['resize_locstyles_zoom', 'mouse_nav','cluster_all','attribution','hover_popups','overpassEngine', 'cesium', 'popupHandling','geopicker','consentBanner'],
+        '__selector__'                => ['resize_locstyles_zoom', 'mouse_nav','cluster_all','attribution','hover_popups','overpassEngine', 'cesium', 'popupHandling','geopicker','consentBanner', 'userLocation'],
         'default'                     => '{general_legend},name,theme,mapFunctions,initial_open_comp;'.
                                          '{navigation_legend:hide},mouse_nav,touch_nav,keyboard_nav;'.
                                          '{click_legend:hide},tooltipOrientation,link_newwindow,link_open_on,hover_popups,popupHandling;'.
@@ -121,6 +121,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                                          '{geosearch_legend:hide},geosearch_headline,geosearch_engine,geosearchParams,geosearch_result_locstyle,geosearch_placeholder,geosearch_results,geosearch_zoomto,geosearch_zoombounds,geosearch_animate,geosearch_markresult,geosearch_attribution,geosearch_popup,geosearch_animate_duration,geosearch_result_duration;'.
                                          '{editor_legend:hide},editorProfile;'.
                                          '{routing_legend::hide},routerConfig;'.
+                                         '{location_legend::hide},userLocation;'.
                                          '{attribution_legend:hide},attribution;'.
                                          '{information_legend:hide},scaleline,mouseposition,permalink_get_param,permalinkSaveId,permalinkWithoutGenerator,zoomlevel,infopage;'.
                                          '{locstyle_legend:hide},label_color,resize_locstyles_zoom;'.
@@ -142,7 +143,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         'resize_locstyles_zoom'       => 'resize_src_zoom,resize_scale_factor,resize_min_scale,resize_max_scale',
         'geopicker'                   => 'geopicker_fieldx,geopicker_fieldy,geopicker_searchdiv,geopicker_attribution,geopicker_disabled,geopicker_anonymous',
         'popupHandling_3'             => 'popupHeadline',
-        'consentBanner'               => 'cookieInfo,cookieName,cookieValue'
+        'consentBanner'               => 'cookieInfo,cookieName,cookieValue',
+        'userLocation'                => 'userLocationStyle'
     ],
 
     // Fields
@@ -190,7 +192,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'exclude'                 => true,
                 'inputType'               => 'checkboxWizard',
                 'default'                 => ['zoom'],
-                'options'                 => ['zoom', 'zoomPosition','zoomHome','zoomExtent','fullscreen','print','rotate','graticule', 'layerswitcher', 'baselayerswitcher', 'geosearch', 'legend', 'measure', 'overview', 'permalink', 'routing'],
+                'options'                 => ['zoom', 'zoomPosition','zoomHome','zoomExtent','fullscreen','print','rotate','graticule', 'layerswitcher', 'starboardscope', 'baselayerswitcher', 'geosearch', 'legend', 'measure', 'overview', 'permalink', 'routing'],
                 'eval'                    => ['multiple'=>true, 'helpwizard'=>true],
                 'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference'],
                 'sql'                     => "text NOT NULL default 'a:1:{i:0;s:4:\"zoom\";}'"
@@ -1038,6 +1040,41 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'sql'                     => "int(10) NOT NULL default '0'",
             'xlabel'                  => [[\con4gis\MapsBundle\Classes\Contao\Callbacks\TlC4gRoutingConfiguration::class, 'configurationLink']]
         ],
+        'userLocation' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['userLocation'],
+                'exclude'                 => true,
+                'default'                 => '',
+                'inputType'               => 'checkbox',
+                'eval'                    => ['submitOnChange' => true],
+                'sql'                     => "char(1) NOT NULL default ''"
+            ],
+        'userLocationStyle' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['userLocationStyle'],
+                'exclude'                 => true,
+                'inputType'               => 'select',
+                'options_callback'        => ['tl_c4g_map_profiles','getAllLocStyles'],
+                'eval'                    => ['tl_class'=>'clr', 'chosen' => true],
+                'wizard' =>
+                    [
+                        ['tl_c4g_map_profiles', 'editLocationStyle']
+                    ],
+                'sql'                     => "int(10) unsigned NOT NULL default '0'",
+                'xlabel' => array
+                (
+                    array('tl_c4g_map_profiles', 'locstylesLink')
+                )
+            ],
+        'geopicker_anonymous' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_anonymous'],
+                'exclude'                 => true,
+                'default'                 => '',
+                'inputType'               => 'checkbox',
+                'eval'                    => ['submitOnChange' => false],
+                'sql'                     => "char(1) NOT NULL default ''"
+            ],
         'editorProfile' => [
             'label'                   => &$GLOBALS['TL_LANG']["tl_c4g_map_profiles"]['editorProfile'],
             'exclude'                 => true,

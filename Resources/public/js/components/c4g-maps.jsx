@@ -42,6 +42,7 @@ import GeoSearch from "./c4g-geosearch.jsx";
 const FeatureFilter = React.lazy(() => import('./c4g-feature-filter.jsx'));
 const BaselayerSwitcher = React.lazy(() => import('./c4g-baselayerswitcher.jsx'));
 const StarboardPanel = React.lazy(() => import('./c4g-starboard-panel.jsx'));
+const StarboardScope = React.lazy(() => import('./c4g-starboard-scope.jsx'));
 const Infopage = React.lazy(() => import('./c4g-infopage.jsx'));
 const Measuretools = React.lazy(() => import('./c4g-measuretools.jsx'));
 const Permalink = React.lazy(() => import('./c4g-permalink.jsx'));
@@ -59,6 +60,7 @@ const EditorComponent = React.lazy(() => import("./c4g-editor-component.jsx"));
 import TileLayer from "ol/layer/Tile";
 import {routingConstantsEnglish} from "./../routing-constant-i18n-en";
 import {routingConstantsGerman} from "./../routing-constant-i18n-de";
+import {UserPosition} from "./../c4g-user-position";
 
 import {RouterView} from "./c4g-router-view.jsx";
 // import {EditorComponent} from "./c4g-editor-component.jsx";
@@ -638,6 +640,16 @@ export default class MapController extends Component {
         this.baselayerContainer.className += " c4g-close";
       }
     }
+    if (true || mapData.starboardscope.enable) {
+      this.starboardscopeContainer = document.createElement('div');
+      this.starboardscopeContainer.className = "c4g-sideboard c4g-starboardscope-container ol-unselectable";
+      this.$overlaycontainer_stopevent.append(this.starboardscopeContainer);
+      if (false && mapData.starboardscope.open) {
+        this.starboardscopeContainer.className += " c4g-open";
+      } else {
+        this.starboardscopeContainer.className += " c4g-close";
+      }
+    }
 
     // feature filter
     if (mapData.filterDiv) {
@@ -794,6 +806,9 @@ export default class MapController extends Component {
         domMapDiv.style.setProperty('--map-height', scope.map.getSize()[1] + "px");
       }
     });
+    if (mapData.userLocation) {
+      let geolocation = new UserPosition(this);
+    }
   }
 
   setLayersInitial(objLayers, arrLayers) {
@@ -955,6 +970,7 @@ export default class MapController extends Component {
       {name: "geosearch", sort: mapData.geosearch.enable},
       {name: "legend", sort: mapData.legend.enable},
       {name: "baselayerswitcher", sort: mapData.baselayerswitcher.enable},
+      {name: "starboardscope", sort: mapData.starboardscope.enable},
       {name: "measuretools", sort: mapData.measuretools.enable},
       {name: "permalink", sort: mapData.permalink.enable},
       {name: "zoom", sort: mapData.zoom},
@@ -998,7 +1014,7 @@ export default class MapController extends Component {
     let infoPortal = "";
     if (mapData.infopage && mapData.legend.enable) {
       infoPortal = ReactDOM.createPortal(
-        <Suspense fallback={<div>"LOOOL"</div>}>
+        <Suspense fallback={<div>"Loading..."</div>}>
           <Infopage ref={(node) => {this.components.infopage = node;}} target={target} external={this.infoPageContainer.className.indexOf("c4g-external") !== -1}
                   infoContent={mapData.infopage} mapController={this} open={mapData.initial_open_comp === "legend"}/>
         </Suspense>,
@@ -1009,7 +1025,7 @@ export default class MapController extends Component {
     let blsPortal = "";
     if (mapData.baselayerswitcher.enable) {
       blsPortal = ReactDOM.createPortal(
-          <Suspense fallback={<div>"LOOOL"</div>}>
+          <Suspense fallback={<div>"Loading..."</div>}>
             <BaselayerSwitcher ref={(node) => {
               this.components.baselayerSwitcher = node;
             }} target={target} open={mapData.initial_open_comp === "baselayers"} changeActiveLayers={this.changeActiveLayers} external={this.baselayerContainer.className.indexOf("c4g-external") !== -1}
@@ -1018,10 +1034,30 @@ export default class MapController extends Component {
           this.baselayerContainer
       );
     }
+    let scpPortal = "";
+    if (mapData.starboardscope.enable) {
+      scpPortal = ReactDOM.createPortal(
+          <Suspense fallback={<div>"Loading..."</div>}>
+            <StarboardScope ref={(node) => {
+              this.components.starboardScope = node;
+            }} target={target} open={mapData.initial_open_comp === "starboardscope"} mapController={this} />
+          </Suspense>,
+          this.starboardscopeContainer
+      );
+      // scpPortal = ReactDOM.createPortal(
+      //     <Suspense fallback={<div>"Loading..."</div>}>
+      //       <StarboardScope ref={(node) => {
+      //         this.components.starboardScope = node;
+      //       }} target={target} open={mapData.initial_open_comp === "starboardscope"} external={this.starboardScopeContainer.className.indexOf("c4g-external") !== -1}
+      //                          mapController={this} />
+      //     </Suspense>,
+      //     this.baselayerContainer
+      // );
+    }
     let measurePortal = "";
     if (mapData.measuretools.enable) {
       measurePortal = ReactDOM.createPortal(
-        <Suspense fallback={<div>"Lool"</div>}>
+        <Suspense fallback={<div>"Loading..."</div>}>
           <Measuretools ref={(node) => {this.components.measuretools = node;}} target={target} external={this.measuretoolsContainer.className.indexOf("c4g-external") !== -1}
             mapController={this} open={mapData.initial_open_comp === "measuretools"}/>
         </Suspense>,
@@ -1095,6 +1131,9 @@ export default class MapController extends Component {
           break;
         case "layerswitcher":
           result.push(sbPortal);
+          break;
+        case "starboardscope":
+          result.push(scpPortal);
           break;
         case "legend":
           result.push(infoPortal);
