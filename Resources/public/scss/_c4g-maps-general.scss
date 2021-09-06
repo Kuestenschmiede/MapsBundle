@@ -1438,7 +1438,7 @@ ul.c4g-feature-filter-list li.c4g-item-checked > strong:hover, ul.c4g-feature-fi
 
 .c4g-maps-consent-overlay {
     position: absolute;
-    z-index: 99999;
+    z-index: 6;
     background: var(--pu-main-color);
     color: var(--pu-font-color);
     border: var(--main-color) solid 2px;
