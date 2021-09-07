@@ -23,7 +23,7 @@ export default class StarboardScope extends Component {
   constructor(props) {
     super(props);
     const scope = this;
-
+    this.lastTime = -Infinity;
     //specific code for the control
     let element = document.createElement('div');
     let button = document.createElement('button');
@@ -66,10 +66,12 @@ export default class StarboardScope extends Component {
   }
 
   getFeaturesInScope (evt) {
+    let timestamp = Date.now(); //get timestamp to trigger event only every fourth of a second
     const mapController = this.props.mapController;
     const layerController = mapController.proxy.layerController;
 
-    if (this.state.open && this._isMounted) {
+    if (this.state.open && this._isMounted && timestamp > this.lastTime + 250) {
+      this.lastTime = timestamp;
       let source = layerController.vectorSource instanceof Cluster ? layerController.vectorSource.getSource(): layerController.vectorSource;
       let extent = evt.target.calculateExtent();
       let features = source.getFeaturesInExtent(extent);
