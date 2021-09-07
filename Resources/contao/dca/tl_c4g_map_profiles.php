@@ -204,7 +204,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'filter'                  => false,
                 'inputType'               => 'select',
                 'default'                 => '',
-                'options'                 => ['', 'starboard', 'search', 'baselayers', 'measuretools', 'legend', 'routing'],
+                'options'                 => ['', 'starboard', 'search', 'baselayers','starboardscope', 'measuretools', 'legend', 'routing'],
                 'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp']['refs'],
                 'eval'                    => ['tl_class'=>'clr'],
                 'sql'                     => "varchar(30) NOT NULL default ''"

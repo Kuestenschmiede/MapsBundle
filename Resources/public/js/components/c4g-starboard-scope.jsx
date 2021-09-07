@@ -54,8 +54,14 @@ export default class StarboardScope extends Component {
     this.getFeaturesInScope = this.getFeaturesInScope.bind(this)
     this.setSingleFeature = this.setSingleFeature.bind(this)
     this.view = props.mapController.map.getView();
+    let layerController = props.mapController.proxy.layerController;
+    this.vectorSource = layerController.vectorSource instanceof Cluster ? layerController.vectorSource.getSource(): layerController.vectorSource;
     this.view.on('change', (evt) => {
-      this.getFeaturesInScope(evt)
+      this.getFeaturesInScope()
+    });
+    window.c4gMapsHooks.layer_loaded = window.c4gMapsHooks.layer_loaded || [];
+    window.c4gMapsHooks.layer_loaded.push((lol)=> {
+      this.getFeaturesInScope();
     })
     this.state = {
       open: props.open || false,
@@ -65,16 +71,15 @@ export default class StarboardScope extends Component {
     };
   }
 
-  getFeaturesInScope (evt) {
+  getFeaturesInScope () {
     let timestamp = Date.now(); //get timestamp to trigger event only every fourth of a second
     const mapController = this.props.mapController;
     const layerController = mapController.proxy.layerController;
 
     if (this.state.open && this._isMounted && timestamp > this.lastTime + 250) {
       this.lastTime = timestamp;
-      let source = layerController.vectorSource instanceof Cluster ? layerController.vectorSource.getSource(): layerController.vectorSource;
-      let extent = evt.target.calculateExtent();
-      let features = source.getFeaturesInExtent(extent);
+      let extent = this.view.calculateExtent();
+      let features = this.vectorSource.getFeaturesInExtent(extent);
       this.setState({
         features: features
       });
@@ -117,7 +122,7 @@ export default class StarboardScope extends Component {
     this.setState({open: true}, () => {
       let evt = {};
       evt.target = this.view;
-      this.getFeaturesInScope(evt);
+      this.getFeaturesInScope();
     });
     this.props.mapController.setOpenComponent(this);
   }
