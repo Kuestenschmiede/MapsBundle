@@ -271,7 +271,7 @@ export class BetterLayerController {
       this.vectorSource = new Cluster({
         source: this.vectorSource,
         geometryFunction: this.geometryFunction,
-        distance: this.mapController.data.cluster_distance
+        distance: this.mapController.data.cluster_distance || 20
       });
     }
     this.vectorLayer = new Vector({
