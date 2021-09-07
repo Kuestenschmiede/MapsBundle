@@ -11,7 +11,6 @@
 import React, {Component, Suspense} from "react";
 import {cssConstants} from "./../c4g-maps-constant.js";
 import {Cluster} from "ol/source";
-import { InView } from 'react-intersection-observer';
 
 export class StarboardScopeItem extends Component {
 
@@ -45,9 +44,7 @@ export class StarboardScopeItem extends Component {
         })
     }
     return (
-        <InView>
-          <li onMouseUp={this.highlightFeature} className={"c4g-popup-wrapper"}dangerouslySetInnerHTML={{__html: this.props.feature.get('popup').content}}/>
-        </InView>
+        <li onMouseUp={this.highlightFeature} className={"c4g-popup-wrapper"}dangerouslySetInnerHTML={{__html: this.props.feature.get('popup').content}}/>
     );
   }
 }

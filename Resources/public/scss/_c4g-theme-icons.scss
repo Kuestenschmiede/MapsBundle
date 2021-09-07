@@ -187,7 +187,18 @@ span.c4g-active ul li.c4g-active:before{
   font-weight: 900;
   font-size: inherit;
 }
-
+.c4g-starboardscope-control.c4g-open button:before {
+  content: "\f277";
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 100;
+  font-size: inherit;
+}
+.c4g-starboardscope-control.c4g-close button:before {
+  content: "\f277";
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: inherit;
+}
 button.ol-zoom-in:before {
   content: "\f067";
   font-family: 'Font Awesome 5 Free';

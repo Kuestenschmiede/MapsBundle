@@ -28,14 +28,13 @@ export default class StarboardScope extends Component {
     let element = document.createElement('div');
     let button = document.createElement('button');
     this.langConstants = getLanguage(props.mapController.data);
-    button.title = this.langConstants.CTRL_STARBOARDSCOPE;
+    button.title = this.langConstants.ELEMENTS_SCOPE;
     element.className = "c4g-starboardscope-control ol-unselectable ol-control ";
     if (props.open) {
       element.className += "c4g-open";
     } else {
       element.className += "c4g-close";
     }
-    button.innerText = "*";
     element.appendChild(button);
     jQuery(element).on('click', function (event) {
       if (scope.state.open) {
