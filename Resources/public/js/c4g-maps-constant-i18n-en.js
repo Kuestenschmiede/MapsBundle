@@ -118,5 +118,6 @@ export var langConstantsEnglish = {
 
   SEARCH_NOT_FOUND: 'Location not found. Sorry... :(',
 
+  DIST: 'Distance',
   NONE: '' // last line
 };

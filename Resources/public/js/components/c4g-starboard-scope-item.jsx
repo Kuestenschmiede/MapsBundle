@@ -54,7 +54,7 @@ export class StarboardScopeItem extends Component {
       ];
       let lineString = new LineString(coordinates);
       distance = <div className={"c4g-element-distance"}>
-          Entfernung: {toHumanDistance(lineString.getLength())}
+          {this.props.langConstants.DIST}: {toHumanDistance(lineString.getLength())}
       </div>
     }
 

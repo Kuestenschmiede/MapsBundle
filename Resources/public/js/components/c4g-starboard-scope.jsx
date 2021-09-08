@@ -114,7 +114,7 @@ export default class StarboardScope extends Component {
           <ul>
             {this.state.features.map((feature, index) => {
               if (index < 20) {
-                return <StarboardScopeItem mapController={this.props.mapController} setSingleFeature={this.setSingleFeature} index={index} key={index} feature={feature} userPosition={position}/>
+                return <StarboardScopeItem mapController={this.props.mapController} langConstants={this.langConstants} setSingleFeature={this.setSingleFeature} index={index} key={index} feature={feature} userPosition={position}/>
               }
             })}
           </ul>

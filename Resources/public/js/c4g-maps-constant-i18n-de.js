@@ -103,5 +103,6 @@ export var langConstantsGerman = {
 
   SEARCH_NOT_FOUND: 'Die Lokation konnte nicht gefunden werden. Bitte versuchen Sie eine andere Eingabe.',
 
+  DIST: 'Entfernung',
   NONE: '' // last line
 };
