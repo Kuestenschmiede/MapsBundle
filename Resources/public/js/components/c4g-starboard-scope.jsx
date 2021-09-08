@@ -16,6 +16,7 @@ import {StarboardScopeItem} from "./c4g-starboard-scope-item.jsx";
 import {getLanguage} from "./../c4g-maps-i18n";
 const Titlebar = React.lazy(() => import("./c4g-titlebar.jsx"));
 import {utils} from "../c4g-maps-utils";
+import {Geolocation} from "ol";
 
 
 export default class StarboardScope extends Component {
@@ -99,6 +100,10 @@ export default class StarboardScope extends Component {
       jQuery(this.state.control.element).removeClass("c4g-open").addClass("c4g-close");
       jQuery(".c4g-starboardscope-container").removeClass("c4g-open").addClass("c4g-close");
     }
+    let position = false;
+    if (this.geolocation) {
+      position = this.geolocation.getPosition();
+    }
     return (
       <div className={cssConstants.STARBOARD_WRAPPER}>
         <Suspense fallback={<div>Loading...</div>}>
@@ -109,7 +114,7 @@ export default class StarboardScope extends Component {
           <ul>
             {this.state.features.map((feature, index) => {
               if (index < 20) {
-                return <StarboardScopeItem mapController={this.props.mapController} setSingleFeature={this.setSingleFeature} index={index} key={index} feature={feature}/>
+                return <StarboardScopeItem mapController={this.props.mapController} setSingleFeature={this.setSingleFeature} index={index} key={index} feature={feature} userPosition={position}/>
               }
             })}
           </ul>
@@ -132,6 +137,10 @@ export default class StarboardScope extends Component {
   }
   componentDidMount() {
     this._isMounted = true;
+    this.geolocation = new Geolocation({
+      projection: this.view.getProjection(),
+      tracking: true
+    });
   }
   componentWillUnmount() {
     this._isMounted = false;

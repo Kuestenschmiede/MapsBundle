@@ -11,6 +11,8 @@
 import React, {Component, Suspense} from "react";
 import {cssConstants} from "./../c4g-maps-constant.js";
 import {Cluster} from "ol/source";
+import {LineString} from 'ol/geom';
+import {toHumanDistance} from "./../c4g-router-time-conversions";
 
 export class StarboardScopeItem extends Component {
 
@@ -43,8 +45,24 @@ export class StarboardScopeItem extends Component {
           this.props.setSingleFeature(this.props.feature, this.props.index);
         })
     }
+    let distance = null;
+    let featureGeometry = this.props.feature.getGeometry();
+    if (this.props.userPosition && featureGeometry.getType() === "Point") {
+      let coordinates = [
+          this.props.userPosition,
+          featureGeometry.getCoordinates()
+      ];
+      let lineString = new LineString(coordinates);
+      distance = <div className={"c4g-element-distance"}>
+          Entfernung: {toHumanDistance(lineString.getLength())}
+      </div>
+    }
+
     return (
-        <li onMouseUp={this.highlightFeature} className={"c4g-popup-wrapper"}dangerouslySetInnerHTML={{__html: this.props.feature.get('popup').content}}/>
+        <li onMouseUp={this.highlightFeature}>
+          <div className={"c4g-popup-wrapper"}dangerouslySetInnerHTML={{__html: this.props.feature.get('popup').content}}/>
+            {distance}
+        </li>
     );
   }
 }
