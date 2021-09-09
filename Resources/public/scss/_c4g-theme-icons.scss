@@ -187,11 +187,18 @@ span.c4g-active ul li.c4g-active:before{
   font-weight: 900;
   font-size: inherit;
 }
-.c4g-starboardscope-control.c4g-open button:before {
-  content: "\f277";
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 100;
-  font-size: inherit;
+.c4g-starboardscope-control.c4g-open button {
+  @extend %fa-icon;
+  @extend .fas;
+
+  &:before {
+    //content: "\f277";
+    //font-family: 'Font Awesome 5 Free';
+    //font-weight: 100;
+    //font-size: inherit;
+    //@include fa-icon($fa-var-map-signs);
+    content: fa-content($fa-var-map-signs);
+  }
 }
 .c4g-starboardscope-control.c4g-close button:before {
   content: "\f277";

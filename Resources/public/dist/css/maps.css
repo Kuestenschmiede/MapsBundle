@@ -12,6 +12,7 @@
  * Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
  */
+.c4g-starboardscope-control.c4g-open button,
 .fa,
 .fab,
 .fad,
@@ -24,6 +25,15 @@
   font-style: normal;
   font-variant: normal;
   text-rendering: auto;
+  line-height: 1
+}
+.c4g-starboardscope-control.c4g-open button {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 400;
   line-height: 1
 }
 .fa-lg {
@@ -97,6 +107,7 @@
 .fa-pull-right {
   float: right
 }
+.c4g-starboardscope-control.c4g-open button.fa-pull-left,
 .fa.fa-pull-left,
 .fab.fa-pull-left,
 .fal.fa-pull-left,
@@ -104,6 +115,7 @@
 .fas.fa-pull-left {
   margin-right: .3em
 }
+.c4g-starboardscope-control.c4g-open button.fa-pull-right,
 .fa.fa-pull-right,
 .fab.fa-pull-right,
 .fal.fa-pull-right,
@@ -4591,6 +4603,7 @@
   src: url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-solid-900.eot);
   src: url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-solid-900.eot?#iefix) format("embedded-opentype"),url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-solid-900.woff2) format("woff2"),url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-solid-900.woff) format("woff"),url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-solid-900.ttf) format("truetype"),url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-solid-900.svg#fontawesome) format("svg")
 }
+.c4g-starboardscope-control.c4g-open button,
 .fa,
 .fas {
   font-family: 'Font Awesome 5 Free';
@@ -5760,7 +5773,7 @@ ul.c4g-feature-filter-list li.c4g-item-checked > strong:hover {
 }
 .c4g-maps-consent-overlay {
   position: absolute;
-  z-index: 99999;
+  z-index: 6;
   background: var(--pu-main-color);
   color: var(--pu-font-color);
   border: var(--main-color) solid 2px;
@@ -5781,6 +5794,10 @@ button.c4g-maps-consent-button.btn {
   color: var(--font-color);
   background: var(--main-color);
   cursor: pointer
+}
+img {
+  width: 100%;
+  height: auto
 }
 /*!
  * This file is part of con4gis, the gis-kit for Contao CMS.
@@ -5955,6 +5972,15 @@ span.c4g-active ul li.c4g-active:before {
 }
 .c4g-starboard-control.c4g-close button:before {
   content: "\f005";
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: inherit
+}
+.c4g-starboardscope-control.c4g-open button:before {
+  content: "\f277"
+}
+.c4g-starboardscope-control.c4g-close button:before {
+  content: "\f277";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   font-size: inherit
@@ -6774,7 +6800,8 @@ button.c4g-btn-nav-next {
 button.c4g-btn-nav-next:before {
   content: "\f35a"
 }
-button.c4g-baselayer-close:before {
+button.c4g-baselayer-close:before,
+button.c4g-starboardscope-close:before {
   content: "\f00d";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
@@ -7130,7 +7157,8 @@ button.c4g-geosearch-start {
   color: var(--main-color)!important
 }
 button.c4g-baselayer-close:before,
-button.c4g-starboard-close:before {
+button.c4g-starboard-close:before,
+button.c4g-starboardscope-close:before {
   color: var(--font-color)
 }
 .ol-zoomslider button {
@@ -7304,7 +7332,27 @@ c4g-infopage-container {
 .c4g-popup-wrapper .c4g-tile-content .tags .item {
   background: #fff;
   width: 40px;
+  height: 40px;
   padding: 5px;
   border: 1.5px solid #333;
   border-radius: 4px
+}
+.c4g-starboardscope-content-container .c4g-popup-wrapper {
+  padding-top: 2rem;
+  padding-bottom: 2rem
+}
+.btn {
+  display: inline-block;
+  color: var(--font-color);
+  background-color: var(--main-color);
+  border: 1px solid var(--font-color);
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  padding: 5px;
+  cursor: pointer
 }
