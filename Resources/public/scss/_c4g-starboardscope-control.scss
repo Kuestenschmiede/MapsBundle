@@ -1,44 +1,14 @@
 .c4g-starboardscope-content-container {
 
-  .c4g-popup-wrapper {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-    //border-bottom: 1px solid var(--font-color);
+  > ul {
+    > li {
+      padding-top: 20px;
+      padding-bottom: 30px;
+
+      > div {
+        margin-bottom: 10px;
+      }
+    }
   }
-
-  //.c4g-tile {
-  //  display: flex;
-  //  grid-gap: 1rem;
-  //  flex-wrap: wrap;
-  //  justify-content: flex-start;
-  //}
-  //
-  //.c4g-tile-header {
-  //  flex: 0 0 25%;
-  //}
-  //
-  //.c4g-tile-content {
-  //  flex: 0 0 calc(75% - 1rem);
-  //
-  //  h4 {
-  //    margin-top: 0;
-  //  }
-  //}
-  //
-  //.c4g-tile-footer {
-    //flex-basis: 100%;
-  //}
 }
 
-.btn {
-  display: inline-block;
-  color: var(--font-color);
-  background-color: var(--main-color);
-  border: 1px solid var(--font-color);
-  text-align: center;
-  text-decoration: none;
-  vertical-align: middle;
-  user-select: none;
-  padding: 5px;
-  cursor: pointer;
-}

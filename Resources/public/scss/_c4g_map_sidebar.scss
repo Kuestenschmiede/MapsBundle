@@ -19,6 +19,12 @@
         padding: 5px;
         border: 1.5px solid #333;
         border-radius: 4px;
+        text-align: center;
+
+        > img {
+          max-height: 100%;
+          width: auto;
+        }
       }
     }
   }
