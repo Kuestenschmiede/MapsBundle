@@ -5799,6 +5799,21 @@ img {
   width: 100%;
   height: auto
 }
+.btn {
+  display: inline-block;
+  color: var(--font-color);
+  background-color: var(--main-color);
+  border: 1px solid var(--font-color);
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  padding: 5px;
+  cursor: pointer
+}
 /*!
  * This file is part of con4gis, the gis-kit for Contao CMS.
  * @package con4gis
@@ -7335,24 +7350,17 @@ c4g-infopage-container {
   height: 40px;
   padding: 5px;
   border: 1.5px solid #333;
-  border-radius: 4px
+  border-radius: 4px;
+  text-align: center
 }
-.c4g-starboardscope-content-container .c4g-popup-wrapper {
-  padding-top: 2rem;
-  padding-bottom: 2rem
+.c4g-popup-wrapper .c4g-tile-content .tags .item > img {
+  max-height: 100%;
+  width: auto
 }
-.btn {
-  display: inline-block;
-  color: var(--font-color);
-  background-color: var(--main-color);
-  border: 1px solid var(--font-color);
-  text-align: center;
-  text-decoration: none;
-  vertical-align: middle;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  padding: 5px;
-  cursor: pointer
+.c4g-starboardscope-content-container > ul > li {
+  padding-top: 20px;
+  padding-bottom: 30px
+}
+.c4g-starboardscope-content-container > ul > li > div {
+  margin-bottom: 10px
 }
