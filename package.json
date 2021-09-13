@@ -9,6 +9,12 @@
     "watch-css": "gulp",
     "build-prod": "webpack --config webpack.production.config.js && gulp deploy"
   },
+  "browser": {
+    "fs": false,
+    "http": false,
+    "https": false,
+    "url": false
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Kuestenschmiede/MapsBundle.git"
@@ -41,7 +47,7 @@
     "gulp-sass": "^4.1.1",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-uglify": "^3.0.2",
-    "webpack": "^5.52.0",
+    "webpack": "^5.52.1",
     "webpack-cli": "^4.7.2"
   },
   "dependencies": {
@@ -56,7 +62,7 @@
     "jsbi": "^3.2.3",
     "minimist": "^1.2.5",
     "moment": "^2.29.1",
-    "ol": "6.6.1",
+    "ol": "6.7.0",
     "ol-cesium": "^2.12.1",
     "ol-ext": "^3.2.6",
     "ol-mapbox-style": "^6.4.2",
