@@ -17,6 +17,7 @@ import {getLanguage} from "./../c4g-maps-i18n";
 const Titlebar = React.lazy(() => import("./c4g-titlebar.jsx"));
 import {utils} from "../c4g-maps-utils";
 import {Geolocation} from "ol";
+import {LineString} from "ol/geom";
 
 
 export default class StarboardScope extends Component {
@@ -81,6 +82,40 @@ export default class StarboardScope extends Component {
       this.lastTime = timestamp;
       let extent = this.view.calculateExtent();
       let features = this.vectorSource.getFeaturesInExtent(extent);
+      if (this.geolocation) {
+        let position = this.geolocation.getPosition();
+        features.sort((a, b) => {
+              let distanceA = 0;
+              let distanceB = 0;
+              if (a.get('distance')) {
+                distanceA = a.get('distance');
+              } else {
+                let featureGeometry = a.getGeometry();
+                let coordinates = [
+                  position,
+                  featureGeometry.getCoordinates()
+                ];
+                let lineString = new LineString(coordinates);
+                distanceA = lineString.getLength()
+                a.set('distance', distanceA)
+              }
+              if (b.get('distance')) {
+                distanceB = b.get('distance');
+              } else {
+                let featureGeometry = b.getGeometry();
+                let coordinates = [
+                  position,
+                  featureGeometry.getCoordinates()
+                ];
+                let lineString = new LineString(coordinates);
+                distanceB = lineString.getLength()
+                b.set('distance', distanceB)
+              }
+              return distanceA - distanceB;
+            }
+          )
+      }
+
       this.setState({
         features: features
       });
@@ -114,7 +149,9 @@ export default class StarboardScope extends Component {
           <ul>
             {this.state.features.map((feature, index) => {
               if (index < 20) {
-                return <StarboardScopeItem mapController={this.props.mapController} langConstants={this.langConstants} setSingleFeature={this.setSingleFeature} index={index} key={index} feature={feature} userPosition={position}/>
+                return <StarboardScopeItem mapController={this.props.mapController} langConstants={this.langConstants}
+                                           setSingleFeature={this.setSingleFeature} index={index} key={index} feature={feature}
+                                           userPosition={position}/>
               }
             })}
           </ul>

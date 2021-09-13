@@ -46,15 +46,20 @@ export class StarboardScopeItem extends Component {
         })
     }
     let distance = null;
-    let featureGeometry = this.props.feature.getGeometry();
-    if (this.props.userPosition && featureGeometry.getType() === "Point") {
-      let coordinates = [
-          this.props.userPosition,
-          featureGeometry.getCoordinates()
-      ];
-      let lineString = new LineString(coordinates);
+    // let featureGeometry = this.props.feature.getGeometry();
+    // if (this.props.userPosition && featureGeometry.getType() === "Point") {
+    //   let coordinates = [
+    //       this.props.userPosition,
+    //       featureGeometry.getCoordinates()
+    //   ];
+    //   let lineString = new LineString(coordinates);
+    //   distance = <div className={"c4g-element-distance"}>
+    //       {this.props.langConstants.DIST}: {toHumanDistance(lineString.getLength())}
+    //   </div>
+    // }
+    if (this.props.feature.get('distance')) {
       distance = <div className={"c4g-element-distance"}>
-          {this.props.langConstants.DIST}: {toHumanDistance(lineString.getLength())}
+          {this.props.langConstants.DIST}: {toHumanDistance(this.props.feature.get('distance'))}
       </div>
     }
 
