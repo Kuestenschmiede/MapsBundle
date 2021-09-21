@@ -18,14 +18,17 @@ const Titlebar = React.lazy(() => import("./c4g-titlebar.jsx"));
 import {utils} from "../c4g-maps-utils";
 import {Geolocation} from "ol";
 import {LineString} from "ol/geom";
+import {toLonLat} from 'ol/proj';
 
 
 export default class StarboardScope extends Component {
 
   constructor(props) {
+    window.globalCounter = {};
     super(props);
     const scope = this;
     this.lastTime = -Infinity;
+    this.preventAddReqs = false;
     //specific code for the control
     let element = document.createElement('div');
     let button = document.createElement('button');
@@ -53,8 +56,7 @@ export default class StarboardScope extends Component {
     this.close = this.close.bind(this);
 
 
-    this.getFeaturesInScope = this.getFeaturesInScope.bind(this)
-    this.setSingleFeature = this.setSingleFeature.bind(this)
+    this.getFeaturesInScope = this.getFeaturesInScope.bind(this);
     this.view = props.mapController.map.getView();
     let layerController = props.mapController.proxy.layerController;
     this.vectorSource = layerController.vectorSource instanceof Cluster ? layerController.vectorSource.getSource(): layerController.vectorSource;
@@ -82,49 +84,101 @@ export default class StarboardScope extends Component {
       this.lastTime = timestamp;
       let extent = this.view.calculateExtent();
       let features = this.vectorSource.getFeaturesInExtent(extent);
-      if (this.geolocation) {
-        let position = this.geolocation.getPosition();
-        features.sort((a, b) => {
-              let distanceA = 0;
-              let distanceB = 0;
-              if (a.get('distance')) {
-                distanceA = a.get('distance');
-              } else {
-                let featureGeometry = a.getGeometry();
-                let coordinates = [
-                  position,
-                  featureGeometry.getCoordinates()
-                ];
-                let lineString = new LineString(coordinates);
-                distanceA = lineString.getLength()
-                a.set('distance', distanceA)
-              }
-              if (b.get('distance')) {
-                distanceB = b.get('distance');
-              } else {
-                let featureGeometry = b.getGeometry();
-                let coordinates = [
-                  position,
-                  featureGeometry.getCoordinates()
-                ];
-                let lineString = new LineString(coordinates);
-                distanceB = lineString.getLength()
-                b.set('distance', distanceB)
-              }
-              return distanceA - distanceB;
-            }
-          )
+      let featuresSorted = this.sortFeatures(features);
+      if (!featuresSorted) {
+        this.lastTime = -Infinity;
+        window.setTimeout(()=>{this.getFeaturesInScope()}, 200);
       }
-
       this.setState({
         features: features
       });
     }
   }
-  setSingleFeature (feature, id) {
-    let features = this.state.features;
-    features[id] = feature;
-    this.setState({features: features});
+  getDistance (point1, point2)
+  {
+    const R = 6371; // km
+    let dLat = this.toRad(point2[0]-point1[0]);
+    let dLon = this.toRad(point2[1]-point1[1]);
+    let lat1 = this.toRad(point1[0]);
+    let lat2 = this.toRad(point2[0]);
+    let a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2);
+    let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    let d = R * c;
+    return d * 1000;
+  }
+
+  toRad (value)
+  {
+    return value * Math.PI / 180;
+  }
+  sortFeatures (features) {
+    if (this.geolocation) {
+      if (this.props.mapController.data.matrixKey) {
+        let objMissDist = {};
+        let arrLocations = [];
+        let position = this.geolocation.getPosition();
+        if (!position) {
+          return false;
+        }
+        arrLocations.push(toLonLat(position));
+        for (let i in features) {
+          if (features.hasOwnProperty(i) && !features[i].get('distanceMatrix')) {
+            objMissDist[i] = features[i];
+            arrLocations.push(toLonLat(features[i].getGeometry().getCoordinates()));
+          }
+        }
+        if (arrLocations.length > 2 && !this.preventAddReqs) {
+          let url = this.props.mapController.data.proxyUrl + 'matrix.php?language=de&profile=auto&key=' + this.props.mapController.data.matrixKey;
+          let body = JSON.stringify({locations: arrLocations});
+          const scope = this;
+          scope.preventAddReqs = true;
+          fetch(url, {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+              'Content-Type': 'text/plain'
+            },
+            body: body
+          }).then(function (response) {
+            scope.preventAddReqs = false;
+            return response.json().then(function(jsonData) {
+              let distances = jsonData.sources_to_targets[0];
+              for(let i in distances) {
+                if (distances.hasOwnProperty(i) && objMissDist.hasOwnProperty(i)) {
+                  objMissDist[i].set('distanceMatrix', distances[i].distance * 1000);
+                }
+              }
+              scope.sortFeatures(scope.state.features);
+              scope.forceUpdate();
+            });
+          });
+        }
+      }
+      let position = this.geolocation.getPosition();
+      features.sort((a, b) => {
+            let distanceA = 0;
+            let distanceB = 0;
+            if (a.get('distanceMatrix') || a.get('distance')) {
+              distanceA = a.get('distanceMatrix')|| a.get('distance');
+            } else {
+              let featureGeometry = a.getGeometry();
+              distanceA = this.getDistance(toLonLat(position), toLonLat(featureGeometry.getCoordinates()));
+              a.set('distance', distanceA);
+            }
+            if (b.get('distanceMatrix') || b.get('distance')) {
+              distanceB = b.get('distanceMatrix') || b.get('distance');
+            } else {
+              let featureGeometry = b.getGeometry();
+              distanceB = this.getDistance(toLonLat(position), toLonLat(featureGeometry.getCoordinates()));
+              b.set('distance', distanceB);
+            }
+            return distanceA - distanceB;
+          }
+        );
+
+    }
+    return features;
   }
 
   render() {
@@ -135,10 +189,7 @@ export default class StarboardScope extends Component {
       jQuery(this.state.control.element).removeClass("c4g-open").addClass("c4g-close");
       jQuery(".c4g-starboardscope-container").removeClass("c4g-open").addClass("c4g-close");
     }
-    let position = false;
-    if (this.geolocation) {
-      position = this.geolocation.getPosition();
-    }
+
     return (
       <div className={cssConstants.STARBOARD_WRAPPER}>
         <Suspense fallback={<div>Loading...</div>}>
@@ -150,8 +201,7 @@ export default class StarboardScope extends Component {
             {this.state.features.map((feature, index) => {
               if (index < 20) {
                 return <StarboardScopeItem mapController={this.props.mapController} langConstants={this.langConstants}
-                                           setSingleFeature={this.setSingleFeature} index={index} key={index} feature={feature}
-                                           userPosition={position}/>
+                                            index={index} key={index} feature={feature}/>
               }
             })}
           </ul>

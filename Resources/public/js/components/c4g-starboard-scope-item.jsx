@@ -10,8 +10,6 @@
 
 import React, {Component, Suspense} from "react";
 import {cssConstants} from "./../c4g-maps-constant.js";
-import {Cluster} from "ol/source";
-import {LineString} from 'ol/geom';
 import {toHumanDistance} from "./../c4g-router-time-conversions";
 
 export class StarboardScopeItem extends Component {
@@ -33,17 +31,15 @@ export class StarboardScopeItem extends Component {
   render() {
     let popup = this.props.feature.get('popup');
     if (popup.async) {
+      window.globalCounter[popup.content] = window.globalCounter[popup.content] ? window.globalCounter[popup.content] + 1 : 1;
+      console.log(window.globalCounter);
+      popup.async = false;
       fetch(this.props.mapController.proxy.api_infowindow_url + '/' + popup.content)
         .then(response => response.json())
         .then(data => {
-          let popupInfo = {
-            async: false,
-            content: data.content,
-            routing_link: popup.routing_link
-          };
-          this.props.feature.set('popup', popupInfo);
-          this.props.setSingleFeature(this.props.feature, this.props.index);
-        })
+          this.props.feature.set('popup', data);
+          // this.props.setSingleFeature(this.props.feature, this.props.index);
+        });
     }
     let distance = null;
     // let featureGeometry = this.props.feature.getGeometry();
@@ -59,13 +55,13 @@ export class StarboardScopeItem extends Component {
     // }
     if (this.props.feature.get('distance')) {
       distance = <div className={"c4g-element-distance"}>
-          {this.props.langConstants.DIST}: {toHumanDistance(this.props.feature.get('distance'))}
+          {this.props.langConstants.DIST}: {toHumanDistance(this.props.feature.get('distanceMatrix') || this.props.feature.get('distance'))}
       </div>
     }
 
     return (
         <li onMouseUp={this.highlightFeature}>
-          <div className={"c4g-popup-wrapper"}dangerouslySetInnerHTML={{__html: this.props.feature.get('popup').content}}/>
+          <div className={"c4g-popup-wrapper"} dangerouslySetInnerHTML={{__html: this.props.feature.get('popup').content}}/>
             {distance}
         </li>
     );

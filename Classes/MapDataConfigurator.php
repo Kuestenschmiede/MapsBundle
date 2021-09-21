@@ -536,6 +536,12 @@ class MapDataConfigurator
                         break;
                 }
             }
+            if (array_key_exists('starboardscope', $buttons)) {
+                if ($key2 = C4GUtils::getKey($objSettings, 6)) {
+                    $mapData['proxyUrl'] = $objSettings->con4gisIoUrl;
+                    $mapData['matrixKey'] = $key2;
+                }
+            }
 
             // geopicker
             //
