@@ -12,7 +12,7 @@ namespace con4gis\MapsBundle\Classes\Services;
 
 use con4gis\CoreBundle\Resources\contao\models\C4gSettingsModel;
 use con4gis\MapsBundle\Classes\Events\LoadProfileEvent;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class ProfileService
 {
@@ -34,7 +34,7 @@ class ProfileService
     {
         $event = new LoadProfileEvent();
         $event->setProfileId(intval($profileId));
-        $this->eventDispatcher->dispatch($event::NAME, $event);
+        $this->eventDispatcher->dispatch($event, $event::NAME);
 
         $profileId = $event->getProfileId();
         if (!$profileId) {

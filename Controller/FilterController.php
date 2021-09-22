@@ -53,7 +53,7 @@ class FilterController extends BaseController
         $event->setProfileId($profileId);
         $event->setFilters($filters);
         $event->setAddData(["language" => $lang]);
-        $this->eventDispatcher->dispatch($event::NAME, $event);
+        $this->eventDispatcher->dispatch($event, $event::NAME);
         $filters = $event->getFilters();
         return new JsonResponse($filters);
     }
