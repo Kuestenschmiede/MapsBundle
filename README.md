@@ -110,3 +110,11 @@ For Contao 3 you can use [con4gis_maps3](https://github.com/Kuestenschmiede/con4
 ## Documentation
 Visit [docs.con4gis.org](https://docs.con4gis.org) for a user documentation. You can also contact us via the support forum there.
 
+## Third Party License
+
+### Font Awesome
+Wir nutzen zur Darstellung der Icons das Font-Set von [Font Awesome](https://fontawesome.com) die Lizensierung ist unter [License](https://fontawesome.com/license/free) (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) einzusehen.
+
+__Bitte klären Sie, mit Ihrem Rechtsbeistand, ob und wie eine Nennung in der Datenschutzerklärung notwendig ist!__
+
+Die Daten werden lokal vom Server ausgeliefert und nicht über einen CDN geladen, daher werden keine Daten an Dritte weitergegeben.
