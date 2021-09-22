@@ -31,8 +31,6 @@ export class StarboardScopeItem extends Component {
   render() {
     let popup = this.props.feature.get('popup');
     if (popup.async) {
-      window.globalCounter[popup.content] = window.globalCounter[popup.content] ? window.globalCounter[popup.content] + 1 : 1;
-      console.log(window.globalCounter);
       popup.async = false;
       fetch(this.props.mapController.proxy.api_infowindow_url + '/' + popup.content)
         .then(response => response.json())

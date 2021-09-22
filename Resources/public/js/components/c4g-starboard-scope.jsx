@@ -24,7 +24,6 @@ import {toLonLat} from 'ol/proj';
 export default class StarboardScope extends Component {
 
   constructor(props) {
-    window.globalCounter = {};
     super(props);
     const scope = this;
     this.lastTime = -Infinity;
