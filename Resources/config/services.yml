@@ -57,7 +57,7 @@ services:
         public: true
         arguments:
             - "@service_container"
-            - "@event_dispatcher"
+            - "@contao.framework"
 
     con4gis\MapsBundle\Controller\FilterController:
         class: con4gis\MapsBundle\Controller\FilterController

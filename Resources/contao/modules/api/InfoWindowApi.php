@@ -11,12 +11,13 @@
 namespace con4gis\MapsBundle\Resources\contao\modules\api;
 use con4gis\CoreBundle\Classes\HttpResultHelper;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
+use Contao\Frontend;
 
 /**
  * Class InfoWindowApi
  * @package con4gis\MapsBundle\Resources\contao\modules\api
  */
-class InfoWindowApi extends \Frontend
+class InfoWindowApi extends Frontend
 {
     /**
      * Determines the request method and selects the appropriate data result.
