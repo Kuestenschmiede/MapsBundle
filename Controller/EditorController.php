@@ -43,7 +43,7 @@ class EditorController extends BaseController
 //        if (!self::$outputFromCache) {
 //            $configurationEvent = new EditorConfigurationEvent();
 //            $configurationEvent->setConfigId($configId);
-//            $this->eventDispatcher->dispatch($configurationEvent::NAME, $configurationEvent);
+//            $this->eventDispatcher->dispatch($configurationEvent, $configurationEvent::NAME);
 //            $formattedProjects = [];
 //            $editorConfig = $configurationEvent->getEditorConfig();
 //            $editorConfig['projects'] = $formattedProjects;

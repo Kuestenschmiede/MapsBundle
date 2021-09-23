@@ -89,7 +89,7 @@ class LayerController extends BaseController
                 $event = new LoadLayersEvent();
                 $event->setLayerData($arrLayerData);
                 $event->setAdditionalData(["language" => $lang]);
-                $this->eventDispatcher->dispatch($event::NAME, $event);
+                $this->eventDispatcher->dispatch($event, $event::NAME);
                 $arrLayerData = $event->getLayerData();
             }
         }

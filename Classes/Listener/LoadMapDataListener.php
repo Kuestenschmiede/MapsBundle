@@ -21,7 +21,7 @@ use con4gis\MapsBundle\Resources\contao\modules\ExternalMapElement;
 use con4gis\MapsBundle\Entity\RoutingConfiguration;
 use Contao\System;
 use Doctrine\ORM\EntityManager;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class LoadMapDataListener
 {

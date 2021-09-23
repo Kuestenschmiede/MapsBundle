@@ -32,24 +32,28 @@ services:
 
     con4gis\MapsBundle\Controller\LayerController:
         class: con4gis\MapsBundle\Controller\LayerController
+        autowire: true
         public: true
         arguments:
             - "@service_container"
 
     con4gis\MapsBundle\Controller\BaselayerController:
         class: con4gis\MapsBundle\Controller\BaselayerController
+        autowire: true
         public: true
         arguments:
             - "@service_container"
 
     con4gis\MapsBundle\Controller\LocationstyleController:
         class: con4gis\MapsBundle\Controller\LocationstyleController
+        autowire: true
         public: true
         arguments:
             - "@service_container"
 
     con4gis\MapsBundle\Controller\MapsController:
         class: con4gis\MapsBundle\Controller\MapsController
+        autowire: true
         public: true
         arguments:
             - "@service_container"
@@ -57,6 +61,7 @@ services:
 
     con4gis\MapsBundle\Controller\FilterController:
         class: con4gis\MapsBundle\Controller\FilterController
+        autowire: true
         public: true
         arguments:
             - "@con4gis.filter_service"
@@ -76,6 +81,7 @@ services:
 
     con4gis\MapsBundle\Controller\RoutingController:
         class: con4gis\MapsBundle\Controller\RoutingController
+        autowire: true
         public: true
         arguments:
             - "@service_container"
@@ -106,6 +112,7 @@ services:
 
     con4gis\MapsBundle\Controller\EditorController:
         class: con4gis\MapsBundle\Controller\EditorController
+        autowire: true
         public: true
         arguments:
             - "@service_container"
