@@ -17,10 +17,11 @@ use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use con4gis\MapsBundle\Classes\Events\LoadRouteFeaturesEvent;
 use con4gis\MapsBundle\Classes\Polyline;
 use con4gis\MapsBundle\Entity\RoutingConfiguration;
+use Contao\Frontend;
 use Contao\System;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-class RouteService extends \Frontend
+class RouteService extends Frontend
 {
     private $eventDispatcher;
 

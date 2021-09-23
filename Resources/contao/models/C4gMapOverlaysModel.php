@@ -12,12 +12,13 @@
 namespace con4gis\MapsBundle\Resources\contao\models;
 
 use con4gis\CoreBundle\Classes\C4GUtils;
+use Contao\Model;
 
 /**
  * Class C4gMapOverlaysModel
  * @package con4gis\MapsBundle\Resources\contao\models
  */
-class C4gMapOverlaysModel extends \Model
+class C4gMapOverlaysModel extends Model
 {
     // Table name
     protected static $strTable = 'tl_c4g_map_overlays';

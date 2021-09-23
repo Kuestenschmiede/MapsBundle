@@ -13,6 +13,7 @@ namespace con4gis\MapsBundle\Controller;
 
 
 use con4gis\CoreBundle\Controller\BaseController;
+use Contao\CoreBundle\Framework\ContaoFramework;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,9 +23,12 @@ class RoutingController extends BaseController
     /**
      * MapsController constructor.
      */
-    public function __construct(ContainerInterface $container)
-    {
+    public function __construct(
+        ContainerInterface $container,
+        ContaoFramework $framework
+    ) {
         parent::__construct($container);
+        $framework->initialize(true);
     }
     
     public function getAreaAction(Request $request, $profileId, $layerId, $distance, $center)

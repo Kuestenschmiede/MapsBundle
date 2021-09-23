@@ -10,11 +10,13 @@
  */
 namespace con4gis\MapsBundle\Resources\contao\models;
 
+use Contao\Model;
+
 /**
  * Class C4gMapThemesModel
  * @package con4gis\MapsBundle\Resources\contao\models
  */
-class C4gMapThemesModel extends \Model
+class C4gMapThemesModel extends Model
 {
     // Table name
     protected static $strTable = 'tl_c4g_map_themes';
