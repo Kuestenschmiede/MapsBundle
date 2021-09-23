@@ -810,6 +810,8 @@ class tl_c4g_map_baselayers extends Backend
                 $responses = [];
             }
             $arrReturn= [];
+            global $objPage;
+            $objPage->language = \Contao\BackendUser::getInstance()->language;
             foreach ($responses as $response){
                 $arrReturn[$response->id] = \InsertTags::replaceInsertTags($response->name);
             }
