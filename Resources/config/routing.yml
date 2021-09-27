@@ -6,9 +6,7 @@ baselayer_service:
 
 baselayer_tile_service:
     path: /con4gis/baseLayerTileService/{baseLayerId}/{z}/{x}/{y}
-    defaults:
-        _scope: frontend
-        _controller: "con4gisMapsBundle:Baselayer:baseLayerTile"
+    controller: con4gis\MapsBundle\Controller\BaselayerController::baseLayerTileAction
     methods: [GET]
     requirements:
         baseLayerId: \d+
@@ -25,70 +23,54 @@ filter_service:
 
 layer_content_service:
     path: /con4gis/layerContentService/{layerId}
-    defaults:
-        _scope: frontend
-        _controller: "con4gisMapsBundle:Layer:layerContent"
+    controller: con4gis\MapsBundle\Controller\LayerController::layerContentAction
     methods: [GET]
     requirements:
         layerId: \d+
 
 layer_content_data_service:
     path: /con4gis/layerContentDataService/{layerId}/{extent}
-    defaults:
-        _scope: frontend
-        _controller: "con4gisMapsBundle:Layer:layerContentData"
+    controller: con4gis\MapsBundle\Controller\LayerController::layerContentDataAction
     methods: [GET]
     requirements:
         layerId: \d+
 
 infowindow_service:
     path: /con4gis/infoWindowService/{popupString}
-    defaults:
-        _scope: frontend
-        _controller: "con4gisMapsBundle:Maps:infoWindow"
     methods: [GET]
     requirements:
         popupString: .*
+    controller: con4gis\MapsBundle\Controller\MapsController::infoWindowAction
 
 locationstyle_service:
     path: /con4gis/locationStyleService/
-    defaults:
-        _scope: frontend
-        _controller: "con4gisMapsBundle:Locationstyle:locationStyle"
+    controller: con4gis\MapsBundle\Controller\LocationstyleController::locationStyleAction
     methods: [GET]
 
 search_service:
     path: /con4gis/searchService/{profileId}
-    defaults:
-        _scope: frontend
-        _controller: "con4gisMapsBundle:Maps:search"
+    controller: con4gis\MapsBundle\Controller\MapsController::searchAction
     methods: [GET]
     requirements:
         profileId: \d+
 
 reverse_search_service:
     path: /con4gis/reverseSearchService/{profileId}
-    defaults:
-        _scope: frontend
-        _controller: "con4gisMapsBundle:Maps:reverseSearch"
+    controller: con4gis\MapsBundle\Controller\MapsController::reverseSearchAction
     methods: [GET]
     requirements:
         profileId: \d+
 
 old_routing_service:
     path: /con4gis/routingService/{profileId}
-    defaults:
-        _scope: frontend
-        _controller: "con4gisMapsBundle:Maps:oldRouting"
+    controller: con4gis\MapsBundle\Controller\MapsController::oldRoutingAction
     methods: [GET]
     requirements:
         profileId: \d+
 
 routing_service:
     path: /con4gis/routingService/{profileId}/{locations}
-    defaults:
-        _scope: frontend
-        _controller: "con4gisMapsBundle:Maps:routing"
+    controller: con4gis\MapsBundle\Controller\MapsController::routingAction
     methods: [GET]
     requirements:
         profileId: \d+
@@ -96,16 +78,12 @@ routing_service:
 
 geopicker_service:
     path: /con4gis/geopickerService/
-    defaults:
-        _scope: frontend
-        _controller: "con4gisMapsBundle:Maps:geopicker"
+    controller: con4gis\MapsBundle\Controller\MapsController::geopickerAction
     methods: [GET]
 
 beEditor_service:
     path: /con4gis/beEditorService/{layerId}
-    defaults:
-        _scope: frontend
-        _controller: "con4gisMapsBundle:Editor:beEditor"
+    controller: con4gis\MapsBundle\Controller\EditorController::beEditorAction
     methods: [GET]
     requirements:
         mapId: \d+
@@ -116,14 +94,10 @@ controllers:
 
 routing_area:
     path: /con4gis/areaService/{profileId}/{layerId}/{distance}/{center}
-    defaults:
-        _scope: frontend
-        _controller: "con4gisMapsBundle:Routing:getArea"
+    controller: con4gis\MapsBundle\Controller\RoutingController::getAreaAction
     methods: [GET]
 
 routing_route:
     path: /con4gis/routeService/{language}/{profileId}/{layerId}/{detour}/{locations}
-    defaults:
-        _scope: frontend
-        _controller: "con4gisMapsBundle:Routing:getRoute"
+    controller: con4gis\MapsBundle\Controller\RoutingController::getRouteAction
     methods: [GET]

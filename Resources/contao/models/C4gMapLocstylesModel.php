@@ -11,11 +11,13 @@
 
 namespace con4gis\MapsBundle\Resources\contao\models;
 
+use Contao\Model;
+
 /**
  * Class C4gMapLocstylesModel
  * @package con4gis\MapsBundle\Resources\contao\models
  */
-class C4gMapLocstylesModel extends \Model
+class C4gMapLocstylesModel extends Model
 {
     // Table name
     protected static $strTable = 'tl_c4g_map_locstyles';

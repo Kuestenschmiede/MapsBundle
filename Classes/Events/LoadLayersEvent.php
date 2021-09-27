@@ -10,7 +10,7 @@
  */
 namespace con4gis\MapsBundle\Classes\Events;
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class LoadLayersEvent extends Event
 {

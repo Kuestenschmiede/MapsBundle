@@ -17,10 +17,11 @@ use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use con4gis\MapsBundle\Classes\Events\LoadRouteFeaturesEvent;
 use con4gis\MapsBundle\Classes\Polyline;
 use con4gis\MapsBundle\Entity\RoutingConfiguration;
+use Contao\Frontend;
 use Contao\System;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-class RouteService extends \Frontend
+class RouteService extends Frontend
 {
     private $eventDispatcher;
 
@@ -92,7 +93,7 @@ class RouteService extends \Frontend
                 $event->setProfileId($profileId);
                 $event->setPoints($points);
                 $event->setDetour($detour);
-                $this->eventDispatcher->dispatch($event::NAME, $event);
+                $this->eventDispatcher->dispatch($event, $event::NAME);
                 $routeData['features'] = $event->getFeatures();
                 $routeData['bbox'] = $event->getBbox();
                 $routeData['type'] = $objLayer->location_type === 'overpass' ? 'overpass' : 'notOverpass';

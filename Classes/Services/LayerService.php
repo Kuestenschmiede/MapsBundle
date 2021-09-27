@@ -17,7 +17,7 @@ use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
 use con4gis\MapsBundle\Classes\Utils;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use Contao\FrontendUser;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class LayerService
 {

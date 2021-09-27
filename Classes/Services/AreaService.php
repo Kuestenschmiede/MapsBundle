@@ -39,7 +39,7 @@ class AreaService
         $event->setDistance($distance);
         $event->setLocation($location);
         $event->setProfile($profile);
-        $this->eventDispatcher->dispatch($event::NAME, $event);
+        $this->eventDispatcher->dispatch($event, $event::NAME);
         $eventResponse = $event->getReturnData();
         $matrixResponse = $eventResponse[0];
         if ($matrixResponse !== '[') {

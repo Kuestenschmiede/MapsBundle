@@ -120,7 +120,7 @@ class ResourceLoader extends coreResourceLoader
         $eventDispatcher = System::getContainer()->get('event_dispatcher');
         $event = new LoadMapResourcesEvent();
         $event->setMapData($mapData);
-        $eventDispatcher->dispatch($event::NAME, $event);
+        $eventDispatcher->dispatch($event, $event::NAME);
 
         // core scripts (2|2)
         if ($resources['core']) {

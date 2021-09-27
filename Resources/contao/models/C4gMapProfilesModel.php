@@ -11,11 +11,13 @@
 
 namespace con4gis\MapsBundle\Resources\contao\models;
 
+use Contao\Model;
+
 /**
  * Class C4gMapProfilesModel
  * @package con4gis\MapsBundle\Resources\contao\models
  */
-class C4gMapProfilesModel extends \Model
+class C4gMapProfilesModel extends Model
 {
     // Table name
     protected static $strTable = 'tl_c4g_map_profiles';

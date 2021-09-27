@@ -689,7 +689,7 @@ class MapDataConfigurator
         $eventDispatcher = System::getContainer()->get('event_dispatcher');
         $event = new LoadMapdataEvent();
         $event->setMapData($mapData);
-        $eventDispatcher->dispatch($event::NAME, $event);
+        $eventDispatcher->dispatch($event, $event::NAME);
         $mapData = $event->getMapData();
 
         // load resources

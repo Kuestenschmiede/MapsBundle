@@ -18,7 +18,7 @@ use con4gis\MapsBundle\Classes\Events\LoadAreaFeaturesEvent;
 use con4gis\MapsBundle\Classes\LatLng;
 use con4gis\MapsBundle\Classes\Services\AreaService;
 use con4gis\MapsBundle\Entity\RoutingConfiguration;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class LoadAreaFeaturesListener
 {
