@@ -293,8 +293,11 @@ export class MapProxy {
               map.addLayer(stringLayer);
             } else {
               currentZoom += 1;
-              map.getView().setCenter(newCenter);
-              map.getView().setZoom(currentZoom);
+              map.getView().animate({
+                center: newCenter,
+                zoom: currentZoom,
+                duration: 500
+              })
             }
           }
         }
