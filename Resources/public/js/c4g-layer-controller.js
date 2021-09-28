@@ -899,7 +899,8 @@ export class BetterLayerController {
       }
       vectorLayer = new Vector({
           source: vectorSource,
-          style: customStyleFunc || this.clusterStyleFunction
+          style: customStyleFunc || this.clusterStyleFunction,
+          zIndex: parseInt(layer.zIndex || "0")
       });
       vectorLayer.popup = popup;
       scope.proxy.hook_locstyles_loaded.push(function(lostyleController) {
