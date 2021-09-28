@@ -245,47 +245,49 @@ export class MapProxy {
             layer.getSource().removeFeature(feature);
             currentZoom = map.getView().getZoom();
             newCenter = map.getCoordinateFromPixel(clickEvent.pixel);
-            minZoom = self.options.mapController.data.cluster_zoom ? self.options.mapController.data.cluster_zoom : fFeatures['0'].get('cluster_zoom');
+            minZoom = fFeatures['0'].get('cluster_zoom') || self.options.mapController.data.cluster_zoom ;
 
             if (currentZoom >= minZoom) {
-              var f = [];
-              var cf = [];
               //open the cluster after zooming
               var pix = map.getView().getResolution();
               var max = fFeatures.length;
               let clustDistance = self.options.mapController.data.cluster_dist_spider ? self.options.mapController.data.cluster_dist_spider : 20;
               let arrLinestring = [];
               var r = pix * clustDistance * (0.5 + max / 4);
+              let stringSource = new VectorSource();
               for (var i = 0; i < max; i++) {
                 var a = 2 * Math.PI * i / max;
                 if (max == 2 || max == 4) a += Math.PI / 4;
                 var p = [newCenter[0] + r * Math.sin(a), newCenter[1] + r * Math.cos(a)];
                 var coordinate = toLonLat(p);
                 let featureLinestring = new Feature(new LineString([newCenter, p]));
-                arrLinestring.push(featureLinestring);
-                f.push(fFeatures[i].getGeometry());
-                fFeatures[i].setGeometry(new Point(p));
+                stringSource.addFeature(featureLinestring);
+                let tempFeature = fFeatures[i].clone();
+                tempFeature.setGeometry(new Point(p));
+                layer.getSource().getSource().removeFeature(fFeatures[i]);
+                stringSource.addFeature(tempFeature);
               }
-              layer.getSource().addFeatures(fFeatures);
-              let stringSource = new VectorSource({features: arrLinestring});
-              let stringStyle = new Style({
-                stroke: new Stroke({
-                  width: 0.3,
-                  color: "#000070"
-                })
-              });
+              let layerStyleFunction = layer.getStyle();
+              let styleFunction = (feature, resolution) => {
+                if (feature && feature.getGeometry().getType() === "LineString") {
+                  return new Style({
+                    stroke: new Stroke({
+                      width: 0.3,
+                      color: "#000070"
+                    })
+                  });
+                }
+                else {
+                  return layerStyleFunction(feature, resolution);
+                }
+              }
+
               let stringLayer = new Vector({
                 source: stringSource,
-                style: stringStyle
+                style: styleFunction
               });
               map.getView().on('change:resolution', function(evt) {
-                for (let id in f) {
-                  if (f.hasOwnProperty(id) && fFeatures.hasOwnProperty(id)) {
-                    fFeatures[id].setGeometry(f[id]);
-                  }
-                }
-                cf = [];
-                f = [];
+                layer.getSource().getSource().addFeatures(fFeatures);
                 map.removeLayer(stringLayer);
               });
               map.addLayer(stringLayer);
