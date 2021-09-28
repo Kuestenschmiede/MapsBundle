@@ -114,7 +114,7 @@ export default class StarboardScope extends Component {
   sortFeatures (features) {
     if (this.geolocation) {
       if (this.props.mapController.data.matrixKey) {
-        let objMissDist = {};
+        let objMissDist = [];
         let arrLocations = [];
         let position = this.geolocation.getPosition();
         if (!position) {
@@ -123,7 +123,7 @@ export default class StarboardScope extends Component {
         arrLocations.push(toLonLat(position));
         for (let i in features) {
           if (features.hasOwnProperty(i) && !features[i].get('distanceMatrix')) {
-            objMissDist[i] = features[i];
+            objMissDist.push(features[i]);
             arrLocations.push(toLonLat(features[i].getGeometry().getCoordinates()));
           }
         }
