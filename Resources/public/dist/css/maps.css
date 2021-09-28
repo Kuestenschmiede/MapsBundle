@@ -5789,10 +5789,9 @@ ul.c4g-feature-filter-list li.c4g-item-checked > strong:hover {
 .c4g-maps-consent-overlay {
   position: absolute;
   z-index: 6;
-  background: var(--pu-main-color);
-  color: var(--pu-font-color);
-  border: var(--main-color) solid 2px;
-  border-radius: var(--button-radius-percent);
+  color: var(--font-color);
+  background: var(--main-color);
+  border: var(--shadow-color) solid 2px;
   max-height: calc(var(--map-height));
   width: calc(var(--map-width)/ 2);
   margin-left: calc(var(--map-width)/ 4);
@@ -5805,7 +5804,7 @@ button.c4g-maps-consent-button.btn {
   display: flex;
   justify-content: center;
   width: 100%;
-  border-color: var(--shador-color);
+  border-color: var(--shadow-color);
   color: var(--font-color);
   background: var(--main-color);
   cursor: pointer
