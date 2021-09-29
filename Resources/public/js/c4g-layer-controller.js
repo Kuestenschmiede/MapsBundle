@@ -100,6 +100,7 @@ export class BetterLayerController {
       loader: this.loaderFunction,
       strategy: bbox
     });
+    this.vectorSources = [];
     this.clusterStyleFunction = function(feature, resolution) {
       let size = false;
       let returnStyle = [];
@@ -889,7 +890,7 @@ export class BetterLayerController {
         }
         
       }
-
+      this.vectorSources.push(vectorSource);
       if (layer.cluster) {
         vectorSource = new Cluster({
           source: vectorSource,

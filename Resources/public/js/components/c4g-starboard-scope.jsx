@@ -83,6 +83,13 @@ export default class StarboardScope extends Component {
       this.lastTime = timestamp;
       let extent = this.view.calculateExtent();
       let features = this.vectorSource.getFeaturesInExtent(extent);
+      for (let i in layerController.vectorSources) {
+        if (layerController.vectorSources.hasOwnProperty(i)) {
+          let singleSource = layerController.vectorSources[i] instanceof Cluster ? layerController.vectorSources[i].getSource() : layerController.vectorSources[i];
+          let singleFeatures = singleSource.getFeaturesInExtent(extent);
+          features = features.concat(singleFeatures);
+        }
+      }
       let featuresSorted = this.sortFeatures(features);
       if (!featuresSorted) {
         this.lastTime = -Infinity;
