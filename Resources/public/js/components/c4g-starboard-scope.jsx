@@ -119,11 +119,11 @@ export default class StarboardScope extends Component {
     return value * Math.PI / 180;
   }
   sortFeatures (features) {
-    if (this.geolocation) {
+    if (this.props.mapController.geolocation) {
       if (this.props.mapController.data.matrixKey) {
         let objMissDist = [];
         let arrLocations = [];
-        let position = this.geolocation.getPosition();
+        let position = this.props.mapController.geolocation.getPosition();
         if (!position) {
           return false;
         }
@@ -161,7 +161,7 @@ export default class StarboardScope extends Component {
           });
         }
       }
-      let position = this.geolocation.getPosition();
+      let position = this.props.mapController.geolocation.getPosition();
       features.sort((a, b) => {
             let distanceA = 0;
             let distanceB = 0;
@@ -230,10 +230,9 @@ export default class StarboardScope extends Component {
   }
   componentDidMount() {
     this._isMounted = true;
-    this.geolocation = new Geolocation({
-      projection: this.view.getProjection(),
-      tracking: true
-    });
+    if (!this.props.mapController.geolocation.getTracking()) {
+      this.props.mapController.geolocation.setTracking(true);
+    }
   }
   componentWillUnmount() {
     this._isMounted = false;

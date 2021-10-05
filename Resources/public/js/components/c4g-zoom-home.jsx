@@ -70,18 +70,19 @@ export default class ZoomHome extends Component {
       // check userposition
       let geoLocation;
       if (mapData.geolocation) {
-        geoLocation = new Geolocation({
-          tracking: true,
-          projection: view.getProjection()
-        });
-
-        geoLocation.on('change', function (evt) {
-          view.setCenter(geoLocation.getPosition());
+        let funcLocation = function (evt) {
+          view.setCenter(scope.props.mapController.geolocation.getPosition());
           if (mapData.geolocation_zoom) {
             view.setZoom(parseInt(mapData.geolocation_zoom, 10));
           }
-          geoLocation.setTracking(false);
-        });
+        }
+        scope.props.mapController.geolocation.once('change', funcLocation);
+        if (this.props.mapController.geolocation.getTracking()) {
+          this.props.mapController.geolocation.dispatchEvent('change');
+        }
+        else {
+          this.props.mapController.geolocation.setTracking(true);
+        }
       }
 
       mapController.map.setView(view);
