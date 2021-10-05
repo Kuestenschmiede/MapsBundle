@@ -286,7 +286,7 @@ export class MapProxy {
                 source: stringSource,
                 style: styleFunction
               });
-              map.getView().on('change:resolution', function(evt) {
+              map.getView().once('change:resolution', function(evt) {
                 layer.getSource().getSource().addFeatures(fFeatures);
                 map.removeLayer(stringLayer);
               });
