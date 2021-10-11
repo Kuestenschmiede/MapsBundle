@@ -47,7 +47,7 @@
     "gulp-sass": "^4.1.1",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-uglify": "^3.0.2",
-    "webpack": "^5.54.0",
+    "webpack": "^5.57.0",
     "webpack-cli": "^4.7.2"
   },
   "dependencies": {
@@ -59,12 +59,12 @@
     "elm-pep": "^1.0.6",
     "file-saver": "^2.0.5",
     "i18next-client": "^1.11.4",
-    "jsbi": "^3.2.4",
+    "jsbi": "^3.2.5",
     "minimist": "^1.2.5",
     "moment": "^2.29.1",
     "ol": "6.8.1",
     "ol-cesium": "^2.12.1",
-    "ol-ext": "^3.2.6",
+    "ol-ext": "^3.2.8",
     "ol-mapbox-style": "^6.5.1",
     "opening_hours": "^3.5.0",
     "osmtogeojson": "^3.0.0-beta.4",
