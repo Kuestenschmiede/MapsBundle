@@ -18,7 +18,7 @@ export default class ZoomPosition extends Component {
 
   constructor(props) {
     super(props);
-
+    const scope = this;
     let element,
       button;
 
@@ -32,21 +32,21 @@ export default class ZoomPosition extends Component {
       // loose focus, otherwise it looks messy
       this.blur();
 
-      let geoLocation = new Geolocation({
-        tracking: true,
-        projection: view.getProjection()
-      });
-
-      geoLocation.on('change', function (evt) {
-        view.setCenter(geoLocation.getPosition());
-        // if (mapData.geolocation_zoom) {
-        //    view.setZoom(mapData.geolocation_zoom);
-        // } else {
-        view.setZoom(18);
-        //}
-        geoLocation.setTracking(false);
-        mapController.map.setView(view);
-      });
+      let funcLocation = function (evt) {
+        let pos = scope.props.mapController.geolocation.getPosition()
+        if (pos) {
+          view.setCenter(pos);
+          view.setZoom(18);
+          mapController.map.setView(view);
+        }
+      }
+      scope.props.mapController.geolocation.once('change', funcLocation);
+      if (scope.props.mapController.geolocation.getTracking()) {
+        scope.props.mapController.geolocation.dispatchEvent('change');
+      }
+      else {
+        scope.props.mapController.geolocation.setTracking(true);
+      }
     };
 
     // wrapper div

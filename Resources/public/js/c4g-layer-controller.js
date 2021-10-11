@@ -100,6 +100,7 @@ export class BetterLayerController {
       loader: this.loaderFunction,
       strategy: bbox
     });
+    this.vectorSources = [];
     this.clusterStyleFunction = function(feature, resolution) {
       let size = false;
       let returnStyle = [];
@@ -889,7 +890,7 @@ export class BetterLayerController {
         }
         
       }
-
+      this.vectorSources.push(vectorSource);
       if (layer.cluster) {
         vectorSource = new Cluster({
           source: vectorSource,
@@ -899,7 +900,8 @@ export class BetterLayerController {
       }
       vectorLayer = new Vector({
           source: vectorSource,
-          style: customStyleFunc || this.clusterStyleFunction
+          style: customStyleFunc || this.clusterStyleFunction,
+          zIndex: parseInt(layer.zIndex || "0")
       });
       vectorLayer.popup = popup;
       scope.proxy.hook_locstyles_loaded.push(function(lostyleController) {

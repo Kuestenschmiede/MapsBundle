@@ -24,7 +24,6 @@ import {toLonLat} from 'ol/proj';
 export default class StarboardScope extends Component {
 
   constructor(props) {
-    window.globalCounter = {};
     super(props);
     const scope = this;
     this.lastTime = -Infinity;
@@ -84,6 +83,13 @@ export default class StarboardScope extends Component {
       this.lastTime = timestamp;
       let extent = this.view.calculateExtent();
       let features = this.vectorSource.getFeaturesInExtent(extent);
+      for (let i in layerController.vectorSources) {
+        if (layerController.vectorSources.hasOwnProperty(i)) {
+          let singleSource = layerController.vectorSources[i] instanceof Cluster ? layerController.vectorSources[i].getSource() : layerController.vectorSources[i];
+          let singleFeatures = singleSource.getFeaturesInExtent(extent);
+          features = features.concat(singleFeatures);
+        }
+      }
       let featuresSorted = this.sortFeatures(features);
       if (!featuresSorted) {
         this.lastTime = -Infinity;
@@ -113,18 +119,18 @@ export default class StarboardScope extends Component {
     return value * Math.PI / 180;
   }
   sortFeatures (features) {
-    if (this.geolocation) {
+    if (this.props.mapController.geolocation) {
       if (this.props.mapController.data.matrixKey) {
-        let objMissDist = {};
+        let objMissDist = [];
         let arrLocations = [];
-        let position = this.geolocation.getPosition();
+        let position = this.props.mapController.geolocation.getPosition();
         if (!position) {
           return false;
         }
         arrLocations.push(toLonLat(position));
         for (let i in features) {
           if (features.hasOwnProperty(i) && !features[i].get('distanceMatrix')) {
-            objMissDist[i] = features[i];
+            objMissDist.push(features[i]);
             arrLocations.push(toLonLat(features[i].getGeometry().getCoordinates()));
           }
         }
@@ -155,7 +161,7 @@ export default class StarboardScope extends Component {
           });
         }
       }
-      let position = this.geolocation.getPosition();
+      let position = this.props.mapController.geolocation.getPosition();
       features.sort((a, b) => {
             let distanceA = 0;
             let distanceB = 0;
@@ -224,10 +230,9 @@ export default class StarboardScope extends Component {
   }
   componentDidMount() {
     this._isMounted = true;
-    this.geolocation = new Geolocation({
-      projection: this.view.getProjection(),
-      tracking: true
-    });
+    if (!this.props.mapController.geolocation.getTracking()) {
+      this.props.mapController.geolocation.setTracking(true);
+    }
   }
   componentWillUnmount() {
     this._isMounted = false;

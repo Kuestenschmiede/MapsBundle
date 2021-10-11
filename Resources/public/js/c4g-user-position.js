@@ -20,10 +20,7 @@ export class UserPosition {
         const scope = this;
         this.mapController = mapController;
         const lang = getLanguage(mapController.data);
-        this.geolocation = new Geolocation({
-            tracking: true,
-            projection: "EPSG:3857"
-        });
+
         this.feature = new Feature();
         this.feature.set('tooltip', lang.TOOLTIP_POSITION);
         this.feature.set('noCursor', true);
@@ -41,13 +38,24 @@ export class UserPosition {
                 }
             });
         }
-        this.geolocation.on('change', function(evt) {
-            let point = new Point(this.getPosition());
+        let funcLocation = function(evt) {
+            let coords = scope.mapController.geolocation.getPosition();
+            if (!coords) {
+                window.setTimeout(() => {
+                    scope.mapController.geolocation.dispatchEvent('change');
+                }, 200);
+                return;
+            }
+            let point = new Point(coords);
             scope.feature.setGeometry(point);
-        });
+        }
+        this.mapController.geolocation.on('change', funcLocation);
+        if (this.mapController.geolocation.getTracking()) {
+            this.mapController.geolocation.dispatchEvent('change');
+        }
+        else {
+            this.mapController.geolocation.setTracking(true)
+        }
     }
 
-    locateUser () {
-
-    }
 }

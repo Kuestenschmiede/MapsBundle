@@ -361,29 +361,38 @@ export default class MapController extends Component {
         rotation: parseFloat(mapData.center.rotation)
       });
     }
-
+    this.geolocation = new Geolocation({
+        tracking: false,
+        projection: view.getProjection()
+    });
+    this.geolocation.on('change', (evt) => {
+      for (let i in this.geolocation.arrFuncs) {
+        if (this.geolocation.arrFuncs.hasOwnProperty(i)) {
+          this.geolocation.arrFuncs[i](evt, i);
+        }
+      }
+    });
     // check userposition
     if (mapData.geolocation && !permalink) {
-      geoLocation = new Geolocation({
-        //tracking: !mapData.geopicker,
-        tracking: true,
-        projection: view.getProjection()
-      });
-      geoLocation.on('change', function (evt) {
-        if (geoLocation) {
-          view.setCenter(geoLocation.getPosition());
-          if (mapData.geolocation_zoom) {
-            view.setZoom(parseInt(mapData.geolocation_zoom, 10));
-          }
-          geoLocation.setTracking(false);
-          if (self.map) {
-            self.map.setView(view);
-            if (self.$overlaycontainer_stopevent) {
-              // utils.redrawMapView(self);
-            }
+      let funcLocation = function (evt) {
+        view.setCenter(this.geolocation.getPosition());
+        if (mapData.geolocation_zoom) {
+          view.setZoom(parseInt(mapData.geolocation_zoom, 10));
+        }
+        if (self.map) {
+          self.map.setView(view);
+          if (self.$overlaycontainer_stopevent) {
+            // utils.redrawMapView(self);
           }
         }
-      });
+      };
+      this.geolocation.once('change', funcLocation);
+      if (this.geolocation.getTracking()) {
+        this.geolocation.dispatchEvent('change');
+      }
+      else {
+        this.geolocation.setTracking(true);
+      }
     }
 
     // enable default Controls/Interactions if there is no profile

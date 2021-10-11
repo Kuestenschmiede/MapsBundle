@@ -75,7 +75,7 @@ class TlC4gMapLocstyles extends Backend
         if ($dc->activeRecord->styletype == 'cust_icon_svg') {
             $icon_src = $dc->activeRecord->svgSrc;
             $icon_size = $dc->activeRecord->icon_size;
-            if ($icon_src & ! $icon_size) {
+            if ($icon_src && ! $icon_size) {
                 if (\Validator::isUuid($icon_src)) {
                     $iconSrc = \FilesModel::findByUuid($icon_src);
                     //list($width, $height, $type, $attr) = getimagesize($iconSrc->path);
