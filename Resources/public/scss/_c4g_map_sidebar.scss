@@ -27,6 +27,21 @@
         }
       }
     }
+
+    .contacts {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+
+      .entry-content {
+        padding: 7px;
+
+        i:before{
+          font-size: 24px;
+        }
+      }
+    }
   }
 
 }
