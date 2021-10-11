@@ -26,7 +26,6 @@
   },
   "require": {
     "contao/core-bundle": "^4.4",
-    "contao/calendar-bundle": "^4.4",
     "con4gis/core": "^5.0.12",
     "phayes/geophp": "^1.2",
     "menatwork/contao-multicolumnwizard-bundle": "^3.5.2",
