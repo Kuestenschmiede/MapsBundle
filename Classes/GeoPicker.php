@@ -113,7 +113,14 @@ class GeoPicker extends \Backend
 
         $c4gSettings = C4gSettingsModel::findSettings();
         $objMap = ContentModel::findByPk($c4gSettings->position_map);
-        $objMap->User = BackendUser::getInstance();
+        if (!$objMap) {
+            $objMap = (object) [
+                'User' => BackendUser::getInstance()
+            ];
+        }
+        else {
+            $objMap->User = BackendUser::getInstance();
+        }
         $objMapData = MapDataConfigurator::prepareMapData($objMap, $this->Database, ['backend' => true, 'type' => 'geopicker']);
 
         $objMapData['geopicker'] = [
