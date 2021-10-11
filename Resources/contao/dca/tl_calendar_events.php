@@ -12,7 +12,7 @@ use \con4gis\MapsBundle\Classes\GeoPicker;
 use con4gis\MapsBundle\Classes\Utils;
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
 
-if (@class_exists("tl_calendar_events")) {
+if (@class_exists("Contao\CalendarBundle\ContaoCalendarBundle")) {
 
     /**
      * Change palettes
@@ -79,67 +79,66 @@ if (@class_exists("tl_calendar_events")) {
             )
             ];
     }
-}
-
-/**
- * Class tl_calendar_events_c4g_maps
- */
-class tl_calendar_events_c4g_maps extends \Backend
-{
+    
+    
     /**
-     * Return all Location Styles as array
-     * @param object
-     * @return array
+     * Class tl_calendar_events_c4g_maps
      */
-    public function getLocStyles(\DataContainer $dc)
+    class tl_calendar_events_c4g_maps extends \Backend
     {
-        $locStyles = $this->Database->prepare("SELECT id,name FROM tl_c4g_map_locstyles ORDER BY name")
-                                    ->execute();
-        $return[''] = '-';
-        while ($locStyles->next())
+        /**
+         * Return all Location Styles as array
+         * @param object
+         * @return array
+         */
+        public function getLocStyles(\DataContainer $dc)
         {
-            $return[$locStyles->id] = $locStyles->name;
-        }
-        return $return;
-    }
-
-    /**
-     * Validate Longitude
-     */
-    public function setLocLon($varValue, \DataContainer $dc)
-    {
-        if ($varValue != 0)
-        {
-            if (!Utils::validateLon($varValue))
+            $locStyles = $this->Database->prepare("SELECT id,name FROM tl_c4g_map_locstyles ORDER BY name")
+                ->execute();
+            $return[''] = '-';
+            while ($locStyles->next())
             {
-                throw new \Exception($GLOBALS['TL_LANG']['c4g_maps']['geox_invalid']);
+                $return[$locStyles->id] = $locStyles->name;
             }
+            return $return;
         }
-        return $varValue;
-    }
-
-    /**
-     * Validate Latitude
-     */
-    public function setLocLat($varValue, \DataContainer $dc)
-    {
-        if ($varValue != 0)
+        
+        /**
+         * Validate Longitude
+         */
+        public function setLocLon($varValue, \DataContainer $dc)
         {
-            if (!Utils::validateLat($varValue))
+            if ($varValue != 0)
             {
-                throw new \Exception($GLOBALS['TL_LANG']['c4g_maps']['geoy_invalid']);
+                if (!Utils::validateLon($varValue))
+                {
+                    throw new \Exception($GLOBALS['TL_LANG']['c4g_maps']['geox_invalid']);
+                }
             }
+            return $varValue;
         }
-        return $varValue;
+        
+        /**
+         * Validate Latitude
+         */
+        public function setLocLat($varValue, \DataContainer $dc)
+        {
+            if ($varValue != 0)
+            {
+                if (!Utils::validateLat($varValue))
+                {
+                    throw new \Exception($GLOBALS['TL_LANG']['c4g_maps']['geoy_invalid']);
+                }
+            }
+            return $varValue;
+        }
+        
+        
+        public function locstylesLink(Contao\DataContainer $dc)
+        {
+            return ' <a href="contao/main.php?do=c4g_map_locstyles&amp;table=tl_c4g_map_locstyles&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . REQUEST_TOKEN . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_calendar_events']['editLocstyles']) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_calendar_events']['editLocstyles'])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
+        }
+        
+        
     }
-
-
-    public function locstylesLink(Contao\DataContainer $dc)
-    {
-        return ' <a href="contao/main.php?do=c4g_map_locstyles&amp;table=tl_c4g_map_locstyles&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . REQUEST_TOKEN . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_calendar_events']['editLocstyles']) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_calendar_events']['editLocstyles'])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
-    }
-
-
 }
-
-?>
