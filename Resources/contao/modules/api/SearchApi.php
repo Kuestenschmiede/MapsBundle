@@ -188,10 +188,49 @@ class SearchApi extends \Frontend
                 ];
                 $arrNominatim[] = $elementNominatim;
             }
-            $response = \GuzzleHttp\json_encode($arrNominatim);
+            $response = $arrNominatim;
         }
 
         return $response;
     }
+    public static function searchDatabase($strSearch, $arrColumns, $strTable, $database, $whereClause = "") {
+        $strSearch = searchAPi::updateSearchStringForNonExactSearch($strSearch);
+        $sql = "SELECT *, ";
+        if ($whereClause) {
+            $whereClause .= " AND (";
+        }
+        else {
+            $whereClause = "(";
+        }
+        foreach($arrColumns as $column) {
+            $name = $column['name'];
+            $weight = $column['weight'];
+            $sql .= "IF (`$name` LIKE ?, $weight, 0) +";
+            $whereClause .= "`$name` LIKE ? OR ";
+        }
+        $sql = rtrim($sql, "+");
+        $whereClause = rtrim($whereClause, "OR ");
+        $whereClause .= ")";
+        $sql .= "AS weight FROM $strTable ";
+        $sql .= "WHERE " . $whereClause;
+        $sql .= "ORDER BY weight DESC";
+        $request = $database->prepare($sql);
+        $countQuestion = substr_count($sql, "?");
+        $arrValues = [];
+        for ($i = 0; $i < $countQuestion; $i++) {
+            $arrValues[] = $strSearch;
+        }
+        $response = $request->execute($arrValues)->fetchAllAssoc();
+        return $response;
+    }
+    private static function updateSearchStringForNonExactSearch($searchString)
+    {
+        $arrTerms = explode(' ', $searchString);
+        $result = '%';
+        foreach ($arrTerms as $term) {
+            $result .= $term . '%';
+        }
 
+        return $result;
+    }
 }

@@ -12,6 +12,7 @@ namespace con4gis\MapsBundle\Controller;
 
 use con4gis\CoreBundle\Controller\BaseController;
 use con4gis\MapsBundle\Classes\Events\LoadInfoWindowEvent;
+use con4gis\MapsBundle\Classes\Events\PerformSearchEvent;
 use con4gis\MapsBundle\Classes\GeoPicker;
 use con4gis\MapsBundle\Resources\contao\modules\api\InfoWindowApi;
 use con4gis\MapsBundle\Resources\contao\modules\api\SearchApi;
@@ -65,10 +66,20 @@ class MapsController extends BaseController
 
     public function searchAction(Request $request, $profileId)
     {
+        $this->initialize(false);
         $response = new Response();
         $getParams = $request->query->all();
+        $event = new PerformSearchEvent();
+        $event->setProfileId($profileId);
+        $event->setArrParams($getParams);
         $searchApi = new SearchApi();
         $returnData = $searchApi->generate($profileId, $getParams);
+        if (getType($returnData) === "string") {
+            $returnData = json_decode($returnData);
+        }
+        $event->setResponse($returnData);
+        $this->eventDispatcher->dispatch($event, $event::NAME);
+        $returnData = json_encode($event->getResponse());
         $response->setContent($returnData);
         $response->headers->set('Content-Type', 'application/json');
         return $response;
