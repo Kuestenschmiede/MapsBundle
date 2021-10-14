@@ -39,7 +39,9 @@
 /*
  *  Z-Indexes
  */
-
+.ol-viewport .ol-overlaycontainer-stopevent {
+  z-index: auto!important;
+}
 
 /*
  *  Controls
