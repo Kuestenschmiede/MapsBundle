@@ -4748,6 +4748,9 @@
   height: 100%!important;
   margin: 0!important
 }
+.ol-viewport .ol-overlaycontainer-stopevent {
+  z-index: auto!important
+}
 .c4g-control-container-top-left {
   position: absolute;
   top: .2em;
