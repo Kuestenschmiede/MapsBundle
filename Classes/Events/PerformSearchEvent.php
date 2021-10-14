@@ -11,7 +11,6 @@
 
 namespace con4gis\MapsBundle\Classes\Events;
 
-
 class PerformSearchEvent
 {
     const NAME = 'maps.search.perform';

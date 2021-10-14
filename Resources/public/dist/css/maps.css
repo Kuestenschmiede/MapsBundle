@@ -4610,6 +4610,22 @@
   font-weight: 900
 }
 /*!
+ * Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com
+ * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
+ */
+@font-face {
+  font-family: 'Font Awesome 5 Brands';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-brands-400.eot);
+  src: url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-brands-400.eot?#iefix) format("embedded-opentype"),url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-brands-400.woff2) format("woff2"),url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-brands-400.woff) format("woff"),url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-brands-400.ttf) format("truetype"),url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-brands-400.svg#fontawesome) format("svg")
+}
+.fab {
+  font-family: 'Font Awesome 5 Brands';
+  font-weight: 400
+}
+/*!
  * This file is part of con4gis, the gis-kit for Contao CMS.
  * @package con4gis
  * @version 8
@@ -7351,6 +7367,18 @@ c4g-infopage-container {
 .c4g-popup-wrapper .c4g-tile-content .tags .item > img {
   max-height: 100%;
   width: auto
+}
+.c4g-popup-wrapper .c4g-tile-content .contacts {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap
+}
+.c4g-popup-wrapper .c4g-tile-content .contacts .entry-content {
+  padding: 7px
+}
+.c4g-popup-wrapper .c4g-tile-content .contacts .entry-content i:before {
+  font-size: 24px
 }
 .c4g-starboardscope-content-container > ul > li {
   padding-top: 20px;
