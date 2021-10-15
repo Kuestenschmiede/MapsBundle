@@ -17,6 +17,7 @@ use con4gis\MapsBundle\Classes\Services\LayerContentService;
 use con4gis\MapsBundle\Classes\Services\LayerService;
 use con4gis\MapsBundle\Classes\Utils;
 use con4gis\MapsBundle\Resources\contao\modules\api\LayerContentDataApi;
+use Contao\CoreBundle\Framework\ContaoFramework;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,10 +33,10 @@ class LayerController extends BaseController
     /**
      * LayerController constructor.
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(ContainerInterface $container, ContaoFramework $framework)
     {
-        
         $this->cacheInstance = C4GLayerApiCache::getInstance($container);
+        $framework->initialize();
     }
     
     /**
