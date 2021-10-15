@@ -46,7 +46,7 @@ class Plugin implements RoutingPluginInterface, BundlePluginInterface
     {
         return [
             BundleConfig::create(con4gisMapsBundle::class)
-                ->setLoadAfter([ContaoCalendarBundle::class, con4gisCoreBundle::class])
+                ->setLoadAfter([ContaoCoreBundle::class,ContaoCalendarBundle::class,con4gisCoreBundle::class])
         ];
     }
 }
