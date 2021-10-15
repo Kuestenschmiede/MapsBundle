@@ -10,7 +10,6 @@
  */
 namespace con4gis\MapsBundle\ContaoManager;
 
-use con4gis\ApiBundle\Con4gisApiBundle;
 use con4gis\CoreBundle\con4gisCoreBundle;
 use con4gis\MapsBundle\con4gisMapsBundle;
 use Contao\CalendarBundle\ContaoCalendarBundle;
