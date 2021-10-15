@@ -16,13 +16,13 @@ use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapTablesModel;
 use Contao\Config;
 use Contao\Controller;
-
+use Contao\Frontend;
 
 /**
  * Class LayerContentDataApi
  * @package con4gis\MapsBundle\Resources\contao\modules\api
  */
-class LayerContentDataApi extends \Frontend
+class LayerContentDataApi extends Frontend
 {
     /**
      * Fetches the content data with a certain bounding box.
