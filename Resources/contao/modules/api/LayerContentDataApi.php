@@ -17,7 +17,6 @@ use con4gis\MapsBundle\Resources\contao\models\C4gMapTablesModel;
 use Contao\Config;
 use Contao\Controller;
 
-if (!defined('TL_ROOT')) die('You cannot access this file directly!');
 
 /**
  * Class LayerContentDataApi
