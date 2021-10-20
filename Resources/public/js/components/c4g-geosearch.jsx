@@ -47,9 +47,27 @@ export default class GeoSearch extends Component {
     }
     element.appendChild(button);
     jQuery(button).on('click', this.clickControl);
+
+    let input = document.createElement('input');
+    input.setAttribute('id', "c4g-geosearch-input");
+    if (!props.collapsed) {
+      jQuery(input).addClass('c4g-open');
+    }
+    else {
+      jQuery(input).addClass('c4g-close');
+    }
+
+    input.addEventListener('keydown',(event) => {this.inputCallback(event)});
+    // input.onkeydown = (event) => {this.inputCallback(event)};
+    element.appendChild(input);
+    this.input = input;
+
+
+    this.controlElement = element;
+
     let control = new Control({element: element, target: props.target});
     props.mapController.map.addControl(control);
-    // }
+
     // end control
 
     // prepare search-configuration
@@ -117,7 +135,7 @@ export default class GeoSearch extends Component {
   }
 
   render() {
-    let modeClass = this.state.open ? "c4g-open" : "c4g-close";
+    let modeClass = this.state.open && this.state.openResults ? "c4g-open" : "c4g-close";
     if (this.props.extDiv) {
       modeClass += " external ";
     }
@@ -139,23 +157,23 @@ export default class GeoSearch extends Component {
     if (!headline) {
       headline = this.langConstants.GEOSEARCH;
     }
-
-    return (
-      <React.Fragment>
-        <div className={cssConstants.GEOSEARCH_WRAPPER + " " + modeClass + " c4g-horizon"}>
-          <Suspense fallback={<div>Loading...</div>}>
-            <Titlebar wrapperClass={"c4g-geosearch-header"} header={headline} headerClass={"c4g-geosearch-headline"}
-                      detailBtnClass={""} detailBtnCb={""} closeBtnClass={closeBtnClass} closeBtnCb={closeBtnCb} closeBtnTitle={this.langConstants.CLOSE}>
-            </Titlebar>
-          </Suspense>
-          <div className={"c4g-geosearch-filter"}>
-            <input type="text" onKeyDown={this.inputCallback} id={"c4g-geosearch-input"} placeholder={this.config.placeholder} aria-label={this.config.placeholder}/>
-            <button className={cssConstants.GEOSEARCH_START} type={"button"} title={this.langConstants.CTRL_START_SEARCH} onMouseUp={this.startSearch}/>
-          </div>
-          {results}
-        </div>
-      </React.Fragment>
-    );
+    if (this.state.open && this.state.openResults) {
+      return (
+          <React.Fragment>
+            <div className={cssConstants.GEOSEARCH_WRAPPER + " " + modeClass + " c4g-horizon"}>
+              <Suspense fallback={<div>Loading...</div>}>
+                <Titlebar wrapperClass={"c4g-geosearch-header"} header={headline} headerClass={"c4g-geosearch-headline"}
+                          detailBtnClass={""} detailBtnCb={""} closeBtnClass={closeBtnClass} closeBtnCb={closeBtnCb} closeBtnTitle={this.langConstants.CLOSE}>
+                </Titlebar>
+              </Suspense>
+              {results}
+            </div>
+          </React.Fragment>
+      );
+    }
+    else {
+      return null;
+    }
   }
 
   closeResultsCompletely() {
@@ -167,7 +185,10 @@ export default class GeoSearch extends Component {
       if (prevState.open !== this.state.open) {
         this.props.mapController.setOpenComponent(this);
       }
-      jQuery(".c4g-geosearch-container-right").addClass("c4g-open").removeClass("c4g-close");
+      if (this.state.openResults) {
+        jQuery(".c4g-geosearch-container-right").addClass("c4g-open").removeClass("c4g-close");
+
+      }
     } else {
       jQuery(".c4g-geosearch-container-right").addClass("c4g-close").removeClass("c4g-open");
     }
@@ -208,14 +229,17 @@ export default class GeoSearch extends Component {
   }
 
   clickControl() {
+    this.input.focus();
     if (this.state.open) {
       this.setState({open: false});
-      jQuery(this.props.mapController.searchContainer).removeClass("c4g-open").addClass("c4g-close");
+      jQuery(this.input).addClass('c4g-close').removeClass('c4g-open');
+      // jQuery(this.props.mapController.searchContainer).removeClass("c4g-open").addClass("c4g-close");
     } else {
       // this.props.mapController.hideOtherComponents(this);
       this.setState({open: true});
-      jQuery(this.props.mapController.searchContainer).removeClass("c4g-close").addClass("c4g-open");
-      this.props.mapController.setOpenComponent(this);
+      jQuery(this.input).removeClass('c4g-close').addClass('c4g-open');
+      // jQuery(this.props.mapController.searchContainer).removeClass("c4g-close").addClass("c4g-open");
+      // this.props.mapController.setOpenComponent(this);
     }
   }
 
@@ -437,7 +461,9 @@ export default class GeoSearch extends Component {
         for (var i = 0; i < this.results.length; i++) {
           results.push(this.results[i].display_name);
         }
-        this.setState({results: results, currentCoordinate: currentCoordinate, openResults: true, currentResult: results[0]});
+        this.props.mapController.hideOtherComponents(this);
+        this.setState({results: results, open: true, currentCoordinate: currentCoordinate, openResults: true, currentResult: results[0]});
+        this.props.mapController.setOpenComponent(this);
       }
     }
 

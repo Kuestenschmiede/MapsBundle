@@ -426,7 +426,14 @@ span.c4g-starboard-locstyle {
 .c4g-geosearch.c4g-open, .c4g-geosearch.c4g-open:hover {
     background: none;
 }
-
+.c4g-geosearch > input.c4g-open
+.c4g-geosearch > button{
+    float: left;
+    display: inline-block;
+}
+.c4g-geosearch > input.c4g-close {
+    display: none;
+}
 .c4g-geosearch.c4g-open button.c4g-geosearch-trigger {
     border-radius: 0%;
     border-radius: var(--button-radius-percent);
