@@ -20,24 +20,26 @@ class TlC4gMapSettings extends \Backend
         $strTables = $this->Database->prepare($strSelectTables)->execute()->fetchAssoc();
         if (!$strTables) {
             // set default-data for tl_calendar_events
-            $this->translateArrToDB('tl_calendar_events', [
-                'name' => '{{ifnlng::de}}Events{{ifnlng}}{{iflng::de}}Events{{iflng}}',
-                'ptable' => 'tl_calendar',
-                'ptable_option' => 'tl_calendar.title',
-                'ptable_compare_field' => 'id',
-                'ptable_field' => 'pid',
-                'geox' => 'c4g_loc_geox',
-                'geoy' => 'c4g_loc_geoy',
-                'label' => 'c4g_loc_label',
-                'locstyle' => 'c4g_locstyle',
-                'tooltip' => 'title',
-                'popup' => '{{event::[id]}},[startDate:date]',
-                'linkurl' => '{{event_url::[id]}}',
-                'sqlwhere' => 'published = 1',
-                'alias_getparam' => 'events',
-                'title' => 'title',
-            ]);
+            if (@class_exists("Contao\CalendarBundle\ContaoCalendarBundle")) {
 
+                $this->translateArrToDB('tl_calendar_events', [
+                    'name' => '{{ifnlng::de}}Events{{ifnlng}}{{iflng::de}}Events{{iflng}}',
+                    'ptable' => 'tl_calendar',
+                    'ptable_option' => 'tl_calendar.title',
+                    'ptable_compare_field' => 'id',
+                    'ptable_field' => 'pid',
+                    'geox' => 'c4g_loc_geox',
+                    'geoy' => 'c4g_loc_geoy',
+                    'label' => 'c4g_loc_label',
+                    'locstyle' => 'c4g_locstyle',
+                    'tooltip' => 'title',
+                    'popup' => '{{event::[id]}},[startDate:date]',
+                    'linkurl' => '{{event_url::[id]}}',
+                    'sqlwhere' => 'published = 1',
+                    'alias_getparam' => 'events',
+                    'title' => 'title',
+                ]);
+            }
             // set default data for tl_content
             $this->translateArrToDB('tl_content', [
                 'name' => '{{ifnlng::de}}Inhaltselemente{{ifnlng}}{{iflng::de}}Content elements{{iflng}}',
