@@ -34,7 +34,7 @@
     "@babel/plugin-transform-runtime": "^7.15.8",
     "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.15.8",
-    "babel-loader": "^8.2.2",
+    "babel-loader": "^8.2.3",
     "clean-webpack-plugin": "^3.0.0",
     "echo-loader": "0.0.1",
     "gulp": "^4.0.2",
@@ -47,8 +47,8 @@
     "gulp-sass": "^4.1.1",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-uglify": "^3.0.2",
-    "webpack": "^5.58.2",
-    "webpack-cli": "^4.9.0"
+    "webpack": "^5.60.0",
+    "webpack-cli": "^4.9.1"
   },
   "dependencies": {
     "@babel/plugin-syntax-jsx": "^7.14.5",
@@ -64,7 +64,7 @@
     "moment": "^2.29.1",
     "ol": "6.9.0",
     "ol-cesium": "^2.13.0",
-    "ol-ext": "^3.2.10",
+    "ol-ext": "^3.2.13",
     "ol-mapbox-style": "^6.5.1",
     "opening_hours": "^3.7.0",
     "osmtogeojson": "^3.0.0-beta.4",
