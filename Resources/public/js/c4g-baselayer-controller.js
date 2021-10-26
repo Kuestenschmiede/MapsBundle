@@ -246,12 +246,14 @@ export class C4gBaselayerController {
           }
           break;
         case 'con4gisIo':
-          let config = this.baseKeys[baseLayerConfig.id];
-          layerOptions.url = baseLayerConfig.url.replace('{key}', config['key']);
-          layerOptions.attributions = config.attribution + ' ' + layerOptions.attributions;
-          let source = new XYZ(layerOptions);
-          newBaselayer = new TileLayer();
-          newBaselayer.setSource(source);
+          if (this.baseKeys[baseLayerConfig.id]) {
+            let config = this.baseKeys[baseLayerConfig.id];
+            layerOptions.url = baseLayerConfig.url.replace('{key}', config['key']);
+            layerOptions.attributions = config.attribution + ' ' + layerOptions.attributions;
+            let source = new XYZ(layerOptions);
+            newBaselayer = new TileLayer();
+            newBaselayer.setSource(source);
+          }
 
           break;
         case 'mapbox':
