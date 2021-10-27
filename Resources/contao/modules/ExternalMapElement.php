@@ -29,7 +29,8 @@ class ExternalMapElement extends Module
         'overviewmap' => "c4g-external-overviewmap-container",
         'filter' => "c4g-external-filter-container",
         'routing' => "c4g-external-router-container",
-        'popup' => "c4g-external-popup-container"
+        'popup' => "c4g-external-popup-container",
+        'results' => "c4g-external-results-container"
     ];
     
     /**

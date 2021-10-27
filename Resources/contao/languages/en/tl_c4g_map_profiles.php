@@ -243,6 +243,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['starboard'] = "
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['baselayer'] = "Baselayer switcher";
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['permalink'] = "Permalink";
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['search'] = "Search";
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['results'] = "Search results";
 //$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['measuretools'] = "Measuretools";
 //$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['legend'] = "Legend";
 //$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['overviewmap'] = "Overview map";

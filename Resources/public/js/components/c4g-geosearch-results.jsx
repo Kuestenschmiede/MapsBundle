@@ -36,7 +36,8 @@ export default class GeoSearchResults extends Component {
       })}
     </ul>;
 
-    if (this.props.resultsDiv) {
+    if (this.props.extDiv && document.querySelector("." + this.props.extDiv)) {
+      let extDiv = document.querySelector("." + this.props.extDiv);
       return ReactDOM.createPortal(
         (
           <div className={"c4g-geosearch-results-content c4g-external " + this.props.className + " c4g-beach"}>
@@ -47,7 +48,7 @@ export default class GeoSearchResults extends Component {
             </div>
           </div>
         ),
-        this.props.resultsDiv
+        extDiv
       );
     } else {
       return (

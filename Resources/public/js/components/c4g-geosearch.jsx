@@ -145,7 +145,7 @@ export default class GeoSearch extends Component {
     }
     let results = "";
     if (this.state.openResults && this.config.results) {
-      results = <GeoSearchResults className={modeClass} results={this.state.results} zoomFunc={(idx) => {this.setState({currentResult: this.state.results[idx]}); this.zoomTo(idx);}}
+      results = <GeoSearchResults className={modeClass} results={this.state.results} extDiv={this.props.extResultsDiv} zoomFunc={(idx) => {this.setState({currentResult: this.state.results[idx]}); this.zoomTo(idx);}}
                                   closeResults={this.closeResults} headline={this.props.resultsHeadline} currentResult={this.state.currentResult} resultsDiv={this.props.resultsDiv}
                                   open={this.state.results.length >0} openResults={this.openResults} closeCb={this.closeResultsCompletely}
       />;
@@ -197,7 +197,7 @@ export default class GeoSearch extends Component {
       if (prevState.open !== this.state.open) {
         this.props.mapController.setOpenComponent(this);
       }
-      if (this.state.openResults) {
+      if (this.state.openResults && !this.props.extResultsDiv) {
         jQuery(".c4g-geosearch-container-right").addClass("c4g-open").removeClass("c4g-close");
 
       }
