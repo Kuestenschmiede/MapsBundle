@@ -154,7 +154,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                                          '{protection_legend:hide},protect_baselayer,published,consentId;',
         'owm'                         => '{general_legend},name,display_name,provider,app_id,api_key,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
                                          '{protection_legend:hide},protect_baselayer,published,consentId;',
-        'group'                       => '{general_legend},name,display_name,provider,attribution,layerGroup;'.
+        'group'                       => '{general_legend},name,display_name,provider,attribution,layerGroup,preview_image;'.
                                          '{protection_legend:hide},protect_baselayer,published,consentId;',
         'custom'                      => '{general_legend},name,display_name,provider,osm_style_url1,osm_style_url2,osm_style_url3,osm_style_url4,extend,osm_keyname,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
                                          '{protection_legend:hide},protect_baselayer,published,consentId;'
