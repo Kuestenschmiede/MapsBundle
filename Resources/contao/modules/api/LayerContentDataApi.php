@@ -86,7 +86,10 @@ class LayerContentDataApi extends Frontend
                 $arrResult['geoy'] = mb_convert_encoding($arrCoords[1], 'UTF-8', mb_detect_encoding($arrCoords[1]));
             }
             foreach ($arrResult as $idx => $value) {
-                $arrResult[$idx] = mb_convert_encoding($value, 'UTF-8', mb_detect_encoding($value));
+                // hotfix
+                if (!is_array($value)) {
+                    $arrResult[$idx] = mb_convert_encoding($value, 'UTF-8', mb_detect_encoding($value));
+                }
             }
             $result[$key] = $arrResult;
         }
