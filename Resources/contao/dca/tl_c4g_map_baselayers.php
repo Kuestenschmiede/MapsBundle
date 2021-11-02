@@ -193,7 +193,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             ],
         'name' =>
             [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['name'],
             'exclude'                 => true,
             'search'                  => true,
             'sorting'                 => true,
@@ -203,10 +202,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             'eval'                    => ['mandatory'=>true, 'maxlength'=>254, 'tl_class'=>'w50'],
             'sql'                     => "varchar(254) NOT NULL default ''"
             ],
-
         'display_name' =>
             [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['display_name'],
             'exclude'                 => true,
             'search'                  => true,
             'inputType'               => 'text',
@@ -216,7 +213,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
 
         'provider' =>
             [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider'],
             'exclude'                 => true,
             'filter'                  => true,
             'inputType'               => 'radio',
@@ -242,7 +238,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             ],
         'con4gisIo' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['con4gisIo'],
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'select',
@@ -251,7 +246,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             ],
         'osm_style' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['osm_style'],
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'select',
@@ -265,7 +259,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             ],
         'bing_style' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['bing_style'],
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'select',
@@ -278,7 +271,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             ],
         'bing_key' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['bing_key'],
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',
@@ -287,7 +279,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             ],
         'here_type' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['here_type'],
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'select',
@@ -305,7 +296,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             ],
         'klokan_type' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['klokan_type'],
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'select',
@@ -326,7 +316,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             ],
         'mapz_type' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['mapz_type'],
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'select',
@@ -345,7 +334,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             ],
         'style_url' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['style_url'],
                 'exclude'                 => true,
                 'inputType'               => 'text',
                 'default'                 => 'dark-matter',
@@ -353,7 +341,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             ],
         'mapbox_type' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['mapbox_type'],
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'select',
@@ -367,7 +354,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             ],
         'stamen_style' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['stamen_style'],
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'select',
@@ -382,7 +368,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             ],
         'thunderforest_type' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['thunderforest_type'],
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'select',
@@ -403,7 +388,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             ],
         'wms_url' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['wms_url'],
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',
@@ -412,7 +396,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             ],
         'wms_params_layers' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['wms_params_layers'],
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',
@@ -421,7 +404,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             ],
         'wms_params_version' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['wms_params_version'],
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',
@@ -430,7 +412,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             ],
         'wms_params_format' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['wms_params_format'],
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',
@@ -439,7 +420,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             ],
         'wms_params_transparent' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['wms_params_transparent'],
                 'exclude'                 => true,
                 'default'                 => false,
                 'inputType'               => 'checkbox',
@@ -448,7 +428,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             ],
         'wms_params_srs' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['wms_params_srs'],
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',
@@ -457,7 +436,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             ],
         'wms_gutter' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['wms_gutter'],
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',
@@ -466,7 +444,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             ],
         'image_src' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['image_src'],
                 'exclude'                 => true,
                 'inputType'               => 'fileTree',
                 'eval'                    => ['fieldType'=>'radio', 'files'=>true, 'extensions'=>'gif,jpg,jpeg,png', 'tl_class'=>'clr', 'mandatory'=>true,'submitOnChange' => true],
@@ -474,7 +451,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             ],
         'geoimage_json' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['geoimage_json'],
                 'exclude'                 => true,
                 'inputType'               => 'textarea',
                 'eval'                    => ['style'=>'height:120px;', 'preserveTags'=>true],
@@ -482,7 +458,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             ],
         'layerGroup' =>
             [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['layerGroup'],
             'exclude'                 => true,
             'inputType'               => 'multiColumnWizard',
             'eval'                    => [
@@ -493,7 +468,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             ],
         'osm_style_url1' =>
             [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['osm_style_url1'],
             'exclude'                 => true,
             'filter'                  => false,
             'inputType'               => 'text',
@@ -502,7 +476,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             ],
         'osm_style_url2' =>
             [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['osm_style_url2'],
             'exclude'                 => true,
             'filter'                  => false,
             'inputType'               => 'text',
@@ -511,7 +484,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             ],
         'osm_style_url3' =>
             [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['osm_style_url3'],
             'exclude'                 => true,
             'filter'                  => false,
             'inputType'               => 'text',
@@ -520,7 +492,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             ],
         'osm_style_url4' =>
             [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['osm_style_url4'],
             'exclude'                 => true,
             'filter'                  => false,
             'inputType'               => 'text',
@@ -529,7 +500,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             ],
         'extend' =>
             [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['extend'],
             'exclude'                 => true,
             'filter'                  => false,
             'inputType'               => 'text',
@@ -538,7 +508,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             ],
         'osm_keyname' =>
             [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['osm_keyname'],
             'exclude'                 => true,
             'filter'                  => false,
             'inputType'               => 'text',
@@ -547,7 +516,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             ],
         'url' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['url'],
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',
@@ -556,7 +524,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             ],
         'api_key' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['api_key'],
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',
@@ -566,7 +533,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
 
         'app_id' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['app_id'],
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',
@@ -575,7 +541,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             ],
         'attribution' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['attribution'],
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',
@@ -584,7 +549,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             ],
         'minzoomlevel' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['minzoomlevel'],
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',
@@ -594,7 +558,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             ],
         'maxzoomlevel' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['maxzoomlevel'],
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',
@@ -604,7 +567,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             ],
         'preview_image' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['preview_image'],
                 'exclude'                 => true,
                 'inputType'               => 'fileTree',
                 'eval'                    => ['fieldType'=>'radio', 'files'=>true, 'extensions'=>'gif,jpg,jpeg,png', 'tl_class'=>'clr', 'mandatory'=>false,'submitOnChange' => true],
@@ -612,7 +574,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             ],
         'cesium' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['cesium'],
                 'exclude'                 => true,
                 'default'                 => '',
                 'inputType'               => 'checkbox',
@@ -621,7 +582,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             ],
         'protect_baselayer' =>
             [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['protect_baselayer'],
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',
@@ -630,7 +590,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             ],
         'permitted_groups' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['permitted_groups'],
                 'exclude'                 => true,
                 'inputType'               => 'checkbox',
                 'foreignKey'              => 'tl_member_group.name',
@@ -639,7 +598,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             ],
         'published' =>
             [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['published'],
             'exclude'                 => true,
             'default'                 => true,
             'inputType'               => 'checkbox',
@@ -648,7 +606,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             ],
         'consentId' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['consentId'],
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',

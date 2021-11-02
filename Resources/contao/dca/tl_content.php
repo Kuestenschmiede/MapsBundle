@@ -17,7 +17,6 @@ $GLOBALS['TL_DCA']['tl_content']['palettes']['c4g_maps'] = '{type_legend},type,h
     '{expert_legend:hide},guests,cssID,space';
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['c4g_map_id'] = [
-    'label'                   => &$GLOBALS['TL_LANG']['tl_content']['c4g_map_id'],
     'exclude'                 => true,
     'inputType'               => 'select',
     'options_callback'        => ['tl_content_c4g_maps', 'get_maps'],
@@ -41,7 +40,6 @@ if (@class_exists("tl_content")) {
     }
 
     $GLOBALS['TL_DCA']['tl_content']['fields']['c4g_loc_geox'] = [
-        'label' => &$GLOBALS['TL_LANG']['tl_content']['c4g_loc_geox'],
         'exclude' => true,
         'inputType' => 'c4g_text',
         'eval' => ['mandatory' => false, 'maxlength' => 20, 'tl_class' => 'w50 wizard'],
@@ -51,7 +49,6 @@ if (@class_exists("tl_content")) {
     ];
 
     $GLOBALS['TL_DCA']['tl_content']['fields']['c4g_loc_geoy'] = [
-        'label' => &$GLOBALS['TL_LANG']['tl_content']['c4g_loc_geoy'],
         'exclude' => true,
         'inputType' => 'c4g_text',
         'eval' => ['mandatory' => false, 'maxlength' => 20, 'tl_class' => 'w50 wizard'],
@@ -61,7 +58,6 @@ if (@class_exists("tl_content")) {
     ];
 
     $GLOBALS['TL_DCA']['tl_content']['fields']['c4g_loc_tooltip'] = [
-        'label' => &$GLOBALS['TL_LANG']['tl_content']['c4g_loc_tooltip'],
         'exclude' => true,
         'inputType' => 'text',
         'eval' => ['tl_class' => 'clr'],
@@ -69,7 +65,6 @@ if (@class_exists("tl_content")) {
     ];
 
     $GLOBALS['TL_DCA']['tl_content']['fields']['c4g_loc_label'] = [
-        'label' => &$GLOBALS['TL_LANG']['tl_content']['c4g_loc_label'],
         'exclude' => true,
         'inputType' => 'text',
         'eval' => ['tl_class' => 'clr'],
@@ -77,7 +72,6 @@ if (@class_exists("tl_content")) {
     ];
 
     $GLOBALS['TL_DCA']['tl_content']['fields']['c4g_locstyle'] = [
-        'label' => &$GLOBALS['TL_LANG']['tl_content']['c4g_locstyle'],
         'exclude' => true,
         'inputType' => 'select',
         'options_callback' => ['tl_content_c4g_maps', 'getLocStyles'],

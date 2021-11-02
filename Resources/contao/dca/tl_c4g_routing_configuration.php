@@ -101,7 +101,6 @@ $GLOBALS['TL_DCA'][$strName] = array
     'fields' => array
     (
         'name' => [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['name'],
             'default'                 => '',
             'inputType'               => 'text',
             'eval'                    => ['decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'long'],
@@ -116,7 +115,6 @@ $GLOBALS['TL_DCA'][$strName] = array
         ],
         
         'router_viaroute_url' => [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['router_viaroute_url'],
             'exclude'                 => true,
             'default'                 => '',
             'inputType'               => 'text',
@@ -124,14 +122,12 @@ $GLOBALS['TL_DCA'][$strName] = array
         ],
     
         'router_attribution' => [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['router_attribution'],
             'filter'                  => false,
             'inputType'               => 'text',
             'default'                 => '',
             'eval'                    => ['maxlength'=>255, 'tl_class'=>'long', 'allowHtml' => true],
         ],
         'router_api_selection' => [
-            'label'                   => $GLOBALS['TL_LANG'][$strName]['router_api_selection'],
             'exclude'                 => true,
             'inputType'               => 'radio',
             'default'                 => '5',
@@ -140,21 +136,18 @@ $GLOBALS['TL_DCA'][$strName] = array
             'eval'                    => ['tl_class'=>'clr long','submitOnChange' => true],
         ],
         'router_alternative'=> [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['router_alternative'],
             'exclude'                 => true,
             'default'                 => '',
             'inputType'               => 'checkbox',
             'eval'                    => ['tl_class'=>'clr','submitOnChange' => true],
         ],
         'router_api_key' => [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['router_api_key'],
             'exclude'                 => true,
             'default'                 => '',
             'inputType'               => 'text',
             'eval'                    => ['rgxp'=>'url', 'decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'long'],
         ],
         'router_from_locstyle' => [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['router_from_locstyle'],
             'exclude'                 => true,
             'inputType'               => 'select',
             'default'                 => 0,
@@ -163,7 +156,6 @@ $GLOBALS['TL_DCA'][$strName] = array
             'xlabel'                  => [['tl_c4g_routing_configuration', 'locstylesLink']]
         ],
         'router_to_locstyle' => [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['router_to_locstyle'],
             'exclude'                 => true,
             'default'                 => 0,
             'inputType'               => 'select',
@@ -172,7 +164,6 @@ $GLOBALS['TL_DCA'][$strName] = array
             'xlabel'                  => [['tl_c4g_routing_configuration', 'locstylesLink']]
         ],
         'router_point_locstyle' => [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['router_point_locstyle'],
             'exclude'                 => true,
             'default'                 => 0,
             'inputType'               => 'select',
@@ -181,7 +172,6 @@ $GLOBALS['TL_DCA'][$strName] = array
             'xlabel'                  => [['tl_c4g_routing_configuration', 'locstylesLink']]
         ],
         'router_interim_locstyle' => [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['router_interim_locstyle'],
             'exclude'                 => true,
             'default'                 => 0,
             'inputType'               => 'select',
@@ -190,7 +180,6 @@ $GLOBALS['TL_DCA'][$strName] = array
             'xlabel'                  => [['tl_c4g_routing_configuration', 'locstylesLink']]
         ],
         'router_profiles' => [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['router_profiles'],
             'exclude'                 => true,
             'default'                 => 'a:0:{}',
             'inputType'               => 'select',
@@ -199,41 +188,34 @@ $GLOBALS['TL_DCA'][$strName] = array
             'eval'                    => ['mandatory'=>false, 'multiple'=>true,'chosen'=>true, 'tl_class' => 'clr m12'],
         ],
         'router_profiles_initial' => [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['router_profiles_initial'],
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',
         ],
         'pirate' => [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['pirate'],
             'exclude'                 => true,
             'default'                 => '',
             'inputType'               => 'checkbox',
         ],
         'minDetourArea' => [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['minDetourArea'],
             'filter'                  => false,
             'inputType'               => 'text',
             'default'                 => '0.5',
             'eval'                    => [ 'tl_class'=>'w50', 'rgxp'=>'digit', "minval" => 0],
         ],
         'maxDetourArea' => [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['maxDetourArea'],
             'filter'                  => false,
             'inputType'               => 'text',
             'default'                 => '20',
             'eval'                    => [ 'tl_class'=>'w50', 'rgxp'=>'digit', "minval" => 1, "maxval" => 30],
         ],
         'initialDetourArea' => [
-        
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['initialDetourArea'],
             'filter'                  => false,
             'inputType'               => 'text',
             'default'                 => '10',
             'eval'                    => [ 'tl_class'=>'w50', 'rgxp'=>'digit', "minval" => 1, "maxval" => 30],
         ],
         'routerLayers' => [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['routerLayers'],
             'exclude'                 => true,
             'default'                 => 'a:0:{}',
             'inputType'               => 'multiColumnWizard',
@@ -243,7 +225,6 @@ $GLOBALS['TL_DCA'][$strName] = array
             'xlabel' => [['tl_c4g_routing_configuration', 'mapsLink']]
         ],
         'customProfiles' => [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['customProfiles'],
             'default'                 => 'a:0:{}',
             'exclude'                 => true,
             'inputType'               => 'multiColumnWizard',
@@ -252,36 +233,29 @@ $GLOBALS['TL_DCA'][$strName] = array
             ]
         ],
         'hideFeaturesWithoutLabel' => [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['hideFeaturesWithoutLabel'],
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',
         ],
         'minDetourRoute' => [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['minDetourRoute'],
             'filter'                  => false,
             'inputType'               => 'text',
             'default'                 => '0.5',
             'eval'                    => [ 'tl_class'=>'w50', 'rgxp'=>'digit', "minval" => 0],
         ],
         'maxDetourRoute' => [
-        
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['maxDetourRoute'],
             'filter'                  => false,
             'inputType'               => 'text',
             'default'                 => '5',
             'eval'                    => [ 'tl_class'=>'w50', 'rgxp'=>'digit', "minval" => 1, "maxval" => 10],
         ],
         'initialDetourRoute' => [
-        
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['initialDetourRoute'],
             'filter'                  => false,
             'inputType'               => 'text',
             'default'                 => '2.5',
             'eval'                    => [ 'tl_class'=>'w50', 'rgxp'=>'digit', "minval" => 1, "maxval" => 10],
         ],
         'clickLocstyle' => [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['clickLocstyle'],
             'exclude'                 => true,
             'default'                 => 0,
             'inputType'               => 'select',
@@ -290,7 +264,6 @@ $GLOBALS['TL_DCA'][$strName] = array
             'xlabel'                  => [['tl_c4g_routing_configuration', 'locstylesLink']]
         ],
         'areaCenterLocstyle' => [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['areaCenterLocstyle'],
             'exclude'                 => true,
             'inputType'               => 'select',
             'default'                 => 0,
@@ -299,33 +272,28 @@ $GLOBALS['TL_DCA'][$strName] = array
             'xlabel'                  => [['tl_c4g_routing_configuration', 'locstylesLink']]
         ],
         'enableOverPoints' => [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['enableOverPoints'],
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',
         ],
         'enableTargetSwitch' => [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['enableTargetSwitch'],
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',
         ],
         'routerHeadline' => [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['routerHeadline'],
             'filter'                  => false,
             'inputType'               => 'text',
             'default'                 => 'Router',
             'eval'                    => [ 'tl_class'=>'clr', "maxlength" => 100],
         ],
         'priorityFeatures' => [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['priorityFeatures'],
             'filter'                  => false,
             'inputType'               => 'text',
             'default'                 => '0',
             'eval'                    => [ 'tl_class'=>'w50', 'rgxp'=>'digit'],
         ],
         'priorityLocstyle' => [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['priorityLocstyle'],
             'exclude'                 => true,
             'inputType'               => 'select',
             'default'                 => 0,
@@ -334,50 +302,42 @@ $GLOBALS['TL_DCA'][$strName] = array
             'xlabel'                  => [['tl_c4g_routing_configuration', 'locstylesLink']]
         ],
         'closeAfterSearch' => [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['closeAfterSearch'],
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',
         ],
         'routeStartButton' => [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['routeStartButton'],
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',
         ],
         'initialPosition' => [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['initialPosition'],
             'exclude'                 => true,
             'default'                 => true,
             'inputType'               => 'checkbox',
         ],
         'initialDestination' => [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['initialDestination'],
             'exclude'                 => true,
             'default'                 => true,
             'inputType'               => 'checkbox',
         ],
         'showFeatures' => [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['showFeatures'],
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',
         ],
         'areaSearch' => [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['areaSearch'],
             'exclude'                 => true,
             'default'                 => false,
             'eval'                    => ['submitOnChange' => true],
             'inputType'               => 'checkbox',
         ],
         'areaSearchOnly' => [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['areaSearchOnly'],
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',
         ],
         'areaHeadline' => [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['areaHeadline'],
             'filter'                  => false,
             'inputType'               => 'text',
             'default'                 => $GLOBALS['TL_LANG'][$strName]['areaHeadlineDefault'],
@@ -385,27 +345,23 @@ $GLOBALS['TL_DCA'][$strName] = array
         ],
         
         'featureLabel' => [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['featureLabel'],
             'filter'                  => false,
             'inputType'               => 'text',
             'default'                 => 'In der Nähe',
             'eval'                    => [ 'tl_class'=>'clr', "maxlength" => 100],
         ],
         'showInstructions' => [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['showInstructions'],
             'exclude'                 => true,
             'default'                 => true,
             'inputType'               => 'checkbox',
         ],
         'instructionLabel' => [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['instructionLabel'],
             'filter'                  => false,
             'inputType'               => 'text',
             'default'                 => 'Routenhinweise',
             'eval'                    => [ 'tl_class'=>'clr', "maxlength" => 100],
         ],
         'initialMode' => [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['initialMode'],
             'exclude'                 => true,
             'default'                 => "route",
             'inputType'               => "select",
@@ -413,7 +369,6 @@ $GLOBALS['TL_DCA'][$strName] = array
             'reference'               => &$GLOBALS['TL_LANG'][$strName]['references_router_modes'],
         ],
         'initialResultMode' => [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['initialResultMode'],
             'exclude'                 => true,
             'default'                 => "route",
             'inputType'               => "select",
@@ -421,7 +376,6 @@ $GLOBALS['TL_DCA'][$strName] = array
             'reference'               => &$GLOBALS['TL_LANG'][$strName]['references_router_result_modes'],
         ],
         'usePermalink' => [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['usePermalink'],
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',

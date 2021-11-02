@@ -111,7 +111,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_filters'] =
                     ],
                 'name' =>
                     [
-                        'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_filters']['name'],
                         'exclude'                 => true,
                         'inputType'               => 'text',
                         'eval'                    => ['mandatory'=>true, 'maxlength'=>30, 'tl_class'=>'clr'],

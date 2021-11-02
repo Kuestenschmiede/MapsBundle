@@ -136,7 +136,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
         ],
         'name' =>
         [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['name'],
             'exclude'                 => true,
             'search'                  => true,
             'sorting'                 => true,
@@ -148,7 +147,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
         ],
         'provider' =>
         [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider'],
             'exclude'                 => true,
             'filter'                  => true,
             'inputType'               => 'radio',
@@ -167,7 +165,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
         ],
         'url1' =>
         [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['url1'],
             'exclude'                 => true,
             'filter'                  => false,
             'inputType'               => 'text',
@@ -176,7 +173,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
         ],
         'url2' =>
         [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['url2'],
             'exclude'                 => true,
             'filter'                  => false,
             'inputType'               => 'text',
@@ -185,7 +181,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
         ],
         'url3' =>
         [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['url3'],
             'exclude'                 => true,
             'filter'                  => false,
             'inputType'               => 'text',
@@ -194,7 +189,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
         ],
         'url4' =>
         [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['url4'],
             'exclude'                 => true,
             'filter'                  => false,
             'inputType'               => 'text',
@@ -203,7 +197,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
         ],
         'wms_url' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['wms_url'],
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',
@@ -212,7 +205,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
             ],
         'wms_params_layers' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['wms_params_layers'],
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',
@@ -221,7 +213,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
             ],
         'wms_params_version' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['wms_params_version'],
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',
@@ -230,7 +221,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
             ],
         'wms_params_format' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['wms_params_format'],
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',
@@ -239,7 +229,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
             ],
         'wms_params_transparent' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['wms_params_transparent'],
                 'exclude'                 => true,
                 'default'                 => false,
                 'inputType'               => 'checkbox',
@@ -248,7 +237,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
             ],
         'wms_params_srs' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['wms_params_srs'],
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',
@@ -257,7 +245,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
             ],
         'wms_gutter' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['wms_gutter'],
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',
@@ -266,7 +253,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
             ],
         'image_src' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['image_src'],
                 'exclude'                 => true,
                 'inputType'               => 'fileTree',
                 'eval'                    => ['fieldType'=>'radio', 'files'=>true, 'extensions'=>'gif,jpg,jpeg,png', 'tl_class'=>'clr', 'mandatory'=>true,'submitOnChange' => true],
@@ -274,7 +260,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
             ],
         'geoimage_json' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['geoimage_json'],
                 'exclude'                 => true,
                 'inputType'               => 'textarea',
                 'eval'                    => ['style'=>'height:120px;', 'preserveTags'=>true],
@@ -282,7 +267,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
             ],
         'api_key' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['api_key'],
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',
@@ -291,7 +275,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
             ],
         'app_id' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['app_id'],
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',
@@ -300,7 +283,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
             ],
         'api_port' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['api_port'],
                 'exclude'                 => true,
                 'filter'                  => false,
                 'default'                 => '8099',
@@ -310,7 +292,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
             ],
         'opacity' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['opacity'],
                 'exclude'                 => true,
                 'inputType'               => 'text',
                 'default'                 => '100',
@@ -319,7 +300,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
             ],
         'attribution' =>
         [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['attribution'],
             'exclude'                 => true,
             'filter'                  => false,
             'inputType'               => 'text',
@@ -328,7 +308,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
         ],
         'published' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['published'],
                 'exclude'                 => true,
                 'default'                 => true,
                 'inputType'               => 'checkbox',

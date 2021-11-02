@@ -37,7 +37,6 @@ if (C4GVersionProvider::isInstalled('con4gis/forum'))
     );
 
     $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_enable_maps'] = [
-        'label' => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_enable_maps'],
         'exclude' => true,
         'default' => '',
         'inputType' => 'checkbox',
@@ -46,7 +45,6 @@ if (C4GVersionProvider::isInstalled('con4gis/forum'))
 }
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_map_id'] = [
-    'label'                   => &$GLOBALS['TL_LANG']['tl_module']['c4g_map_id'],
     'exclude'                 => true,
     'inputType'               => 'select',
     'options_callback'        => ['tl_module_c4g_maps', 'get_maps'],
@@ -56,7 +54,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_map_id'] = [
 ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_map_site_id'] = [
-    'label'                   => &$GLOBALS['TL_LANG']['tl_module']['c4g_map_site_id'],
     'exclude'                 => true,
     'inputType'               => 'pageTree',
     'eval'                    => ['fieldType'=>'radio'],
@@ -64,7 +61,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_map_site_id'] = [
 ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_map_zoomlevel'] = [
-        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['c4g_map_zoomlevel'],
         'exclude'                 => true,
         'inputType'               => 'c4g_text',
         'default'                 => '10',
@@ -73,7 +69,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_map_zoomlevel'] = [
 ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_map_placeholder'] = [
-        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['c4g_map_placeholder'],
         'exclude'                 => true,
         'inputType'               => 'c4g_text',
         'default'                 => 'Suche',
@@ -82,7 +77,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_map_placeholder'] = [
 ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_element_type'] = [
-    'label'                   => &$GLOBALS['TL_LANG']['tl_module']['c4g_element_type'],
     'exclude'                 => true,
     'inputType'               => 'select',
     'options'                 => $GLOBALS['TL_LANG']['tl_module']['element_type_refs'],

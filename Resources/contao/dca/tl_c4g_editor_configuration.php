@@ -91,7 +91,6 @@ $GLOBALS['TL_DCA'][$strName] = array
     (
         'name' => array
         (
-            'label'             => $GLOBALS['TL_LANG'][$strName]['name'],
             'flag'              => 1,
             'sorting'           => true,
             'default'           => '',
@@ -99,14 +98,11 @@ $GLOBALS['TL_DCA'][$strName] = array
             'inputType'         => 'text',
             'eval'              => array('mandatory' => true, 'tl_class' => 'long')
         ),
-
         'importId' =>
         [
             'eval'                    => array('doNotCopy' => true)
         ],
-
         'types' => [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['types'],
             'exclude'                 => true,
             'default'                 => 'a:0:{}',
             'inputType'               => 'multiColumnWizard',
@@ -114,18 +110,14 @@ $GLOBALS['TL_DCA'][$strName] = array
                 'columnsCallback'     => [$cbClass,'getTypes']
             ]
         ],
-        
         'editor_helpurl' => array
         (
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['editor_helpurl'],
             'exclude'                 => true,
             'default'                 => '',
             'inputType'               => 'text',
             'eval'                    => array('rgxp'=>'url', 'decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'wizard'),
         ),
-        
         'editor_vars' => [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['editor_vars'],
             'exclude'                 => true,
             'default'                 => 'a:0:{}',
             'inputType'               => 'multiColumnWizard',
@@ -134,7 +126,6 @@ $GLOBALS['TL_DCA'][$strName] = array
             ]
         ],
         'editor_project_group' => [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['editor_project_group'],
             'exclude'                 => true,
             'default'                 => 0,
             'inputType'               => 'select',

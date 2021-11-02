@@ -23,7 +23,6 @@ if (@class_exists("tl_member")) {
             ->applyToPalette('default', 'tl_member');
 
         $GLOBALS['TL_DCA']['tl_member']['fields']['c4g_loc_geox'] = [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_member']['c4g_loc_geox'],
             'exclude'                 => true,
             'inputType'               => 'c4g_text',
             'eval'                    => ['mandatory'=>false, 'maxlength'=>20, 'tl_class'=>'w50 wizard'],
@@ -33,7 +32,6 @@ if (@class_exists("tl_member")) {
         ];
 
         $GLOBALS['TL_DCA']['tl_member']['fields']['c4g_loc_geoy'] = [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_member']['c4g_loc_geoy'],
             'exclude'                 => true,
             'inputType'               => 'c4g_text',
             'eval'                    => ['mandatory'=>false, 'maxlength'=>20, 'tl_class'=>'w50 wizard'],
@@ -43,7 +41,6 @@ if (@class_exists("tl_member")) {
         ];
 
         $GLOBALS['TL_DCA']['tl_member']['fields']['c4g_loc_label'] = [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_member']['c4g_loc_label'],
             'exclude'                 => true,
             'inputType'               => 'text',
             'eval'                    => ['tl_class'=>'clr'],
@@ -51,7 +48,6 @@ if (@class_exists("tl_member")) {
         ];
 
         $GLOBALS['TL_DCA']['tl_member']['fields']['c4g_locstyle'] = [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_member']['c4g_locstyle'],
             'exclude'                 => true,
             'inputType'               => 'select',
             'options_callback'        => ['tl_member_c4g_maps','getLocStyles'],

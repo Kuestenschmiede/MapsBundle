@@ -30,7 +30,6 @@ if (@class_exists("Contao\CalendarBundle\ContaoCalendarBundle")) {
 
         $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['c4g_loc_geox'] =
             [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_calendar_events']['c4g_loc_geox'],
             'exclude'                 => true,
             'inputType'               => 'c4g_text',
             'eval'                    => ['mandatory'=>false, 'maxlength'=>20, 'tl_class'=>'w50 wizard'],
@@ -41,7 +40,6 @@ if (@class_exists("Contao\CalendarBundle\ContaoCalendarBundle")) {
 
         $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['c4g_loc_geoy'] =
             [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_calendar_events']['c4g_loc_geoy'],
             'exclude'                 => true,
             'inputType'               => 'c4g_text',
             'eval'                    => ['mandatory'=>false, 'maxlength'=>20, 'tl_class'=>'w50 wizard'],
@@ -52,7 +50,6 @@ if (@class_exists("Contao\CalendarBundle\ContaoCalendarBundle")) {
 
         $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['c4g_loc_label'] =
             [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_calendar_events']['c4g_loc_label'],
             'exclude'                 => true,
             'inputType'               => 'text',
             'eval'                    => ['tl_class'=>'clr'],
@@ -61,7 +58,6 @@ if (@class_exists("Contao\CalendarBundle\ContaoCalendarBundle")) {
 
         $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['c4g_locstyle'] =
             [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_calendar_events']['c4g_locstyle'],
             'exclude'                 => true,
             'inputType'               => 'select',
             'options_callback'        => ['tl_calendar_events_c4g_maps','getLocStyles'],
