@@ -1,4 +1,4 @@
-<?php if (!defined('TL_ROOT')) die('You can not access this file directly!');
+<?php
 /*
  * This file is part of con4gis, the gis-kit for Contao CMS.
  * @package con4gis
@@ -121,12 +121,10 @@ if (@class_exists("tl_content")) {
  */
 class tl_content_c4g_maps extends Backend
 {
-
     protected $firstMapId = null;
 
     /**
-     * Return all defined maps
-     * @param object
+     * @param DataContainer $dc
      * @return array
      */
     public function get_maps(DataContainer $dc)

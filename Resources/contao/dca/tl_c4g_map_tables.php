@@ -9,13 +9,8 @@
  * @link https://www.con4gis.org
  */
 
-/**
- * Table tl_c4g_map_tables
- */
 $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
 [
-
-    // Config
     'config' =>
     [
         'dataContainer'               => 'Table',
@@ -96,7 +91,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
         '__selector__' => ['popupSwitch', 'dataType'],
         'default' => '{defaultLegend},name,customDB,tableSource;{parentLegend},ptable,ptableOptions,ptableBackendField,ptableField,ptableCompareField;{geoLegend},dataType;{projLegend:hide},projName,projCode;{tableInformation},label,locstyle,tooltip,popupSwitch,cutTextAtLength;',
     ],
-    
     'subpalettes' =>
     [
         'popupSwitch_default'   => 'popupSelection',
@@ -107,8 +101,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
         'dataType_4'            => 'geolocation',
 
     ],
-
-    // Fields
     'fields' =>
     [
         'id' =>

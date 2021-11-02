@@ -1,4 +1,4 @@
-<?php use Contao\Image;
+<?php
 /*
  * This file is part of con4gis, the gis-kit for Contao CMS.
  * @package con4gis
@@ -9,15 +9,10 @@
  * @link https://www.con4gis.org
  */
 
-if (!defined('TL_ROOT')) die('You cannot access this file directly!');
+use Contao\Image;
 
-/**
- * Table tl_c4g_map_baselayers
- */
 $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
     [
-
-    // Config
     'config' =>
         [
         'label'                       => $GLOBALS['TL_LANG']['MOD']['c4g_map_baselayers'][0],
@@ -38,7 +33,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                 ]
             ],
         ],
-    // List
     'list' =>
         [
         'sorting' =>
@@ -120,9 +114,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                 ],
             ]
         ],
-
-
-    // Palettes
     'palettes' =>
         [
         '__selector__'                => ['provider','osm_style','protect_baselayer','klokan_type'],
@@ -159,11 +150,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
         'custom'                      => '{general_legend},name,display_name,provider,osm_style_url1,osm_style_url2,osm_style_url3,osm_style_url4,extend,osm_keyname,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
                                          '{protection_legend:hide},protect_baselayer,published,consentId;'
         ],
-
-
-
-
-    // Subpalettes
     'subpalettes' =>
         [
         'protect_baselayer' => 'permitted_groups',
@@ -182,7 +168,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
         'klokan_type_topo'      => 'api_key',
         'klokan_type_hybrid'      => 'api_key',
         ],
-    // Fields
     'fields' =>
         [
         'id' =>
@@ -652,16 +637,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                 'eval'                    => ['mandatory'=>false, 'multiple'=>true],
                 'sql'                     => "blob NULL"
             ],
-//ToDo rework server loading
-//        'hide_in_be' =>
-//            [
-//            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['hide_in_be'],
-//            'exclude'                 => true,
-//            'default'                 => false,
-//            'inputType'               => 'checkbox',
-//            'eval'                    => ['submitOnChange' => true],
-//            'sql'                     => "char(1) NOT NULL default ''"
-//            ],
         'published' =>
             [
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['published'],

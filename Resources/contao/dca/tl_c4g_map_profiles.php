@@ -1,4 +1,4 @@
-<?php use Contao\Image;
+<?php
 /*
  * This file is part of con4gis, the gis-kit for Contao CMS.
  * @package con4gis
@@ -9,25 +9,10 @@
  * @link https://www.con4gis.org
  */
 
-if (!defined('TL_ROOT')) die('You cannot access this file directly!');
-/*
- * This file is part of con4gis,
- * the gis-kit for Contao CMS.
- *
- * @package    con4gis
- * @version    7
- * @author     con4gis contributors (see "authors.txt")
- * @license    LGPL-3.0-or-later
- * @copyright  Küstenschmiede GmbH Software & Design
- * @link       https://www.con4gis.org
- */
+use Contao\Image;
 
-/**
- * Table tl_c4g_stuffprofiles
- */
 $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
     [
-    // Config
     'config' =>
         [
         'dataContainer'               => 'Table',
@@ -45,8 +30,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 ]
             ]
         ],
-
-    // List
     'list' =>
         [
         'sorting' =>
@@ -108,8 +91,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 ]
             ]
         ],
-
-    // Palettes
     'palettes' =>
         [
         '__selector__'                => ['resize_locstyles_zoom', 'mouse_nav','cluster_all','attribution','hover_popups','overpassEngine', 'cesium', 'popupHandling','geopicker','consentBanner', 'userLocation'],
@@ -127,9 +108,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                                          '{locstyle_legend:hide},label_color,resize_locstyles_zoom;'.
                                          '{expert_legend:hide},overpassEngine,caching,cesium,external_elements,filters,filterHandling,filterResetButton,geopicker,beEditor,custom_div,be_optimize_checkboxes_limit,consentBanner;'
         ],
-
-
-    // Subpalettes
     'subpalettes' =>
     [
         'mouse_nav'                   => 'mouse_nav_wheel,mouse_nav_doubleclick_zoom,mouse_nav_zoombox,mouse_nav_kinetic',
@@ -146,8 +124,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         'consentBanner'               => 'cookieInfo,cookieName,cookieValue',
         'userLocation'                => 'userLocationStyle'
     ],
-
-    // Fields
     'fields' =>
     [
         'id' =>
@@ -1066,20 +1042,10 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                     array('tl_c4g_map_profiles', 'locstylesLink')
                 )
             ],
-        'geopicker_anonymous' =>
-            [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geopicker_anonymous'],
-                'exclude'                 => true,
-                'default'                 => '',
-                'inputType'               => 'checkbox',
-                'eval'                    => ['submitOnChange' => false],
-                'sql'                     => "char(1) NOT NULL default ''"
-            ],
         'editorProfile' => [
             'label'                   => &$GLOBALS['TL_LANG']["tl_c4g_map_profiles"]['editorProfile'],
             'exclude'                 => true,
             'inputType'               => 'select',
-            //'foreignKey'              => 'tl_c4g_map_profiles.name',
             'options_callback'        => array('\con4gis\MapsBundle\Classes\Contao\Callbacks\TlEditorConfiguration', 'getEditorProfiles'),
             'eval'                    => array('tl_class'=>'clr', 'chosen' => true, 'includeBlankOption' => true),
             'sql'                     => "int(10) unsigned NOT NULL default '0'"

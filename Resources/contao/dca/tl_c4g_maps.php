@@ -16,27 +16,8 @@ use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapTablesModel;
 use Contao\Image;
 
-if (!defined('TL_ROOT')) die('You cannot access this file directly!');
-
-/*
- * This file is part of con4gis,
- * the gis-kit for Contao CMS.
- *
- * @package    con4gis
- * @version    7
- * @author     con4gis contributors (see "authors.txt")
- * @license    LGPL-3.0-or-later
- * @copyright  Küstenschmiede GmbH Software & Design
- * @link       https://www.con4gis.org
- */
-
-/**
- * Table tl_c4g_maps
- */
 $GLOBALS['TL_DCA']['tl_c4g_maps'] =
     [
-
-    // Config
     'config' =>
         [
         'label'                       => $GLOBALS['TL_LANG']['MOD']['c4g_maps'][0],
@@ -56,8 +37,6 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 ]
             ]
         ],
-
-    // List
     'list' =>
         [
         'sorting' =>
@@ -146,9 +125,6 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 ]
             ]
         ],
-
-
-    // Palettes
     'palettes' =>
         [
         '__selector__'                => ['location_type', 'tab_source', 'show_locations', 'enablePopup', 'popup_extend', 'protect_element', 'use_specialprofile', 'cluster_locations', 'split_geojson'],
@@ -229,8 +205,6 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                                          '{publish_legend:hide},published,publishStart,publishStop;'.
                                          '{expert_legend:hide},be_optimize_checkboxes_limit;',
         ],
-
-    // Subpalettes
     'subpalettes' =>
         [
         'use_specialprofile'          => 'specialprofile, specialprofile_mobile, specialprofile_groups',
@@ -240,8 +214,6 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
         'cluster_locations'           => 'cluster_distance, cluster_fillcolor, cluster_fontcolor, cluster_zoom,cluster_popup',
         'split_geojson'               => 'geojson_attributes, geojson_zoom'
         ],
-
-    // Fields
     'fields' =>
         [
         'id' =>
@@ -661,7 +633,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['tab_whereclause'],
                 'exclude'                 => true,
                 'inputType'               => 'textarea',
-                'eval'                    => ['decodeEntities'=>true], // -> hier werden die HTML Entities deaktiviert
+                'eval'                    => ['decodeEntities'=>true],
                 'sql'                     => "text NULL"
             ],
         'tabJoinclause' =>
@@ -669,7 +641,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['tabJoinclause'],
                 'exclude'                 => true,
                 'inputType'               => 'textarea',
-                'eval'                    => ['decodeEntities'=>true], // -> hier werden die HTML Entities deaktiviert
+                'eval'                    => ['decodeEntities'=>true],
                 'sql'                     => "text NULL"
             ],
         'tab_orderby' =>
@@ -811,7 +783,6 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 'exclude'                 => true,
                 'inputType'               => 'textarea',
                 'eval'                    => ['tl_class'=>'wizard', 'preserve_tags'=>true, 'style'=>'width: calc(100% - 50px); max-height: 480px'],
-                // 'save_callback'           => array(array('tl_c4g_maps','setLocData')),
                 'wizard'                  => array(array('con4gis\MapsBundle\Classes\Contao\GeoEditor', 'getEditorLink')),
                 'sql'                     => "text NULL"
             ],
@@ -1026,11 +997,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             ],
         'popup_async' =>
             [
-                //@Todo Asynchrone Abfrage (GPX,KML) reparieren und einblenden
-                #'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['popup_async'],
-                #'exclude'                 => true,
                 'default'                 => false,
-                #'inputType'               => 'checkbox',
                 'sql'                     => "char(1) NOT NULL default ''"
             ],
         'popup_extend' =>
@@ -1190,8 +1157,6 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 'eval'                    => ['rgxp'=>'digit', 'submitOnChange' => true],
                 'sql'                     => "int(10) unsigned NOT NULL default '10'"
             ],
-
-
         //Backwards compatibility
         'is_map' =>
             [
@@ -1204,28 +1169,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 'inputType'               => 'checkbox',
                 'sql'                     => "char(1) NOT NULL default ''"
             ]
-
-//ToDo check fields
-
-//        'include_sublocations' =>
-//            [
-//            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['include_sublocations'],
-//            'exclude'                 => true,
-//            'default'                 => true,
-//            'inputType'               => 'checkbox',
-//            'sql'                     => "char(1) NOT NULL default '1'"
-//            ],
-
-//        'showPopupOnActive' =>
-//            [
-//            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['showPopupOnActive'],
-//            'exclude'                 => true,
-//            'default'                 => false,
-//            'inputType'               => 'checkbox',
-//            'sql'                     => "char(1) NOT NULL default ''"
-//            ],
         ]
-
     ];
 
 /**

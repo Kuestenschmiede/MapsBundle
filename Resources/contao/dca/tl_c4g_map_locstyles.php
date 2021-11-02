@@ -1,4 +1,4 @@
-<?php use Contao\Image;
+<?php
 /*
  * This file is part of con4gis, the gis-kit for Contao CMS.
  * @package con4gis
@@ -7,19 +7,6 @@
  * @license LGPL-3.0-or-later
  * @copyright (c) 2010-2021, by Küstenschmiede GmbH Software & Design
  * @link https://www.con4gis.org
- */
-
-if (!defined('TL_ROOT')) die('You cannot access this file directly!');
-/*
- * This file is part of con4gis,
- * the gis-kit for Contao CMS.
- *
- * @package    con4gis
- * @version    7
- * @author     con4gis contributors (see "authors.txt")
- * @license    LGPL-3.0-or-later
- * @copyright  Küstenschmiede GmbH Software & Design
- * @link       https://www.con4gis.org
  */
 
 if (method_exists('\System', 'getContainer')) {
@@ -36,13 +23,8 @@ if (method_exists('\System', 'getContainer')) {
     $imageSizes = $filteredSizes;
 }
 
-/**
- * Table tl_c4g_map_locstyles
- */
 $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
     [
-
-    // Config
     'config' =>
         [
         'label'                       => $GLOBALS['TL_LANG']['MOD']['c4g_map_locstyles'][0],
@@ -62,8 +44,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
                 ]
             ]
         ],
-
-    // List
     'list' =>
         [
         'sorting' =>
@@ -126,9 +106,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
                 ]
             ]
         ],
-
-
-    // Palettes
     'palettes' =>
         [
         '__selector__'                => ['styletype','line_arrows', 'icon_resize_zoom'],
@@ -162,16 +139,11 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
                                          '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;'.
                                          '{editor_legend:hide},editor_icon,editor_icon_size,editor_sort,editor_vars,editor_collect;'
         ],
-
-    // Subpalettes
     'subpalettes' =>
         [
         'line_arrows'                 => 'line_arrows_back,line_arrows_radius,line_arrows_minzoom',
         'icon_resize_zoom'            => 'icon_resize_src_zoom,icon_resize_scale_factor,icon_resize_min_scale,icon_resize_max_scale'
         ],
-
-
-    // Fields
     'fields' =>
         [
         'id' =>
@@ -236,7 +208,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
                 'exclude'                 => true,
                 'inputType'               => 'fileTree',
                 'eval'                    => ['fieldType'=>'radio', 'files'=>true, 'extensions'=>'svg', 'tl_class'=>'clr', 'mandatory'=>true,'submitOnChange' => true],
-                //'save_callback'           => array(array('tl_c4g_map_locstyles','setSizes')),
                 'sql'                     => "binary(16) NULL"
             ],
         'svg_add_attributes' =>
@@ -534,7 +505,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
                 'default'                 => ['200','200'],
                 'exclude'                 => true,
                 'inputType'               => 'imageSize',
-    //            'options'                 => array('px'),
                 'options'                  => $imageSizes,
                 'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'w50', 'mandatory'=>true],
                 'sql'                     => "varchar(100) NOT NULL default ''"
@@ -545,7 +515,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
                 'exclude'                 => true,
                 'default'                 => ['0','0'],
                 'inputType'               => 'imageSize',
-    //            'options'                 => array('px'),
                 'options'                  => $imageSizes,
                 'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'w50'],
                 'sql'                     => "varchar(100) NOT NULL default ''"
@@ -640,8 +609,6 @@ class tl_c4g_map_locstyles extends Backend
      */
     public function addIcon($row, $label, Contao\DataContainer $dc, $args)
     {
-        //$image = 'bundles/con4gismaps/images/be-icons/locationstyles.svg';
-
         if ($row) {
             if ($row['styletype'] == 'cust_icon_svg') {
                 $svg_src = $row['svgSrc'];
@@ -663,7 +630,6 @@ class tl_c4g_map_locstyles extends Backend
                 }
             }
         }
-        //background-image:url('.$image.')
         $args[0] = '<img src="'.$image.'" width="16" alt="">';
         return $args;
     }

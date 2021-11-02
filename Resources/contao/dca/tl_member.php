@@ -11,19 +11,6 @@
 
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
 
-if (!defined('TL_ROOT')) die('You can not access this file directly!');
-/*
- * This file is part of con4gis,
- * the gis-kit for Contao CMS.
- *
- * @package    con4gis
- * @version    7
- * @author     con4gis contributors (see "authors.txt")
- * @license    LGPL-3.0-or-later
- * @copyright  Küstenschmiede GmbH Software & Design
- * @link       https://www.con4gis.org
- */
-
 if (@class_exists("tl_member")) {
 
     /**
@@ -91,8 +78,7 @@ if (@class_exists("tl_member")) {
 class tl_member_c4g_maps extends \Backend
 {
     /**
-     * Return all Location Styles as array
-     * @param object
+     * @param DataContainer $dc
      * @return array
      */
     public function getLocStyles(\DataContainer $dc)

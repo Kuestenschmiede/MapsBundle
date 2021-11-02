@@ -1,4 +1,4 @@
-<?php if (!defined('TL_ROOT')) die('You cannot access this file directly!');
+<?php
 /*
  * This file is part of con4gis, the gis-kit for Contao CMS.
  * @package con4gis
@@ -8,15 +8,12 @@
  * @copyright (c) 2010-2021, by Küstenschmiede GmbH Software & Design
  * @link https://www.con4gis.org
  */
+
 $strName = 'tl_c4g_routing_configuration';
 $callbackClass = \con4gis\MapsBundle\Classes\Contao\Callbacks\TlC4gRoutingConfiguration::class;
-/**
- * Table tl_c4g_routing_configuration
- */
+
 $GLOBALS['TL_DCA'][$strName] = array
 (
-    
-    // Config
     'config' => array
     (
         'dataContainer'               => 'Table',
@@ -25,8 +22,6 @@ $GLOBALS['TL_DCA'][$strName] = array
             array('\con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator', 'purgeLocationstyleApiCache')
         )
     ),
-    
-    // List
     'list' => array
     (
         'sorting' => array
@@ -40,7 +35,6 @@ $GLOBALS['TL_DCA'][$strName] = array
         'label' => array
         (
             'fields'                  => array('name','router_api_selection'),
-            //'format'                  => '%s',
             'showColumns'             => true
         ),
         'global_operations' => array
@@ -88,8 +82,6 @@ $GLOBALS['TL_DCA'][$strName] = array
             )
         )
     ),
-    
-    // Palettes
     'palettes' => array
     (
         '__selector__'                => array('router_api_selection', 'areaSearch'),
@@ -97,9 +89,6 @@ $GLOBALS['TL_DCA'][$strName] = array
                                         .'{extended_legend:hide},routerHeadline,router_attribution,router_interim_locstyle,router_alternative,enableOverPoints,enableTargetSwitch,routeStartButton,closeAfterSearch,showInstructions,instructionLabel;'
                                         .'{search_legend:hide},areaSearch,showFeatures,featureLabel,initialMode,initialResultMode,initialPosition,initialDestination,routerLayers,hideFeaturesWithoutLabel,minDetourArea,maxDetourArea,initialDetourArea,minDetourRoute,maxDetourRoute,initialDetourRoute,clickLocstyle,areaCenterLocstyle,priorityFeatures,priorityLocstyle,usePermalink;'
     ),
-    
-    
-    // Subpalettes
     'subpalettes' => array
     (
         'router_api_selection_1' => 'customProfiles',
@@ -109,8 +98,6 @@ $GLOBALS['TL_DCA'][$strName] = array
         'router_api_selection_5' => 'router_profiles,router_profiles_initial',
         'areaSearch'             => 'areaHeadline,areaSearchOnly'
     ),
-    
-    // Fields
     'fields' => array
     (
         'name' => [

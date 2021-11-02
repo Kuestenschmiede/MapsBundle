@@ -1,4 +1,4 @@
-<?php use con4gis\CoreBundle\Classes\C4GVersionProvider;
+<?php
 /*
  * This file is part of con4gis, the gis-kit for Contao CMS.
  * @package con4gis
@@ -9,18 +9,7 @@
  * @link https://www.con4gis.org
  */
 
-if (!defined('TL_ROOT')) die('You can not access this file directly!');
-/*
- * This file is part of con4gis,
- * the gis-kit for Contao CMS.
- *
- * @package    con4gis
- * @version    7
- * @author     con4gis contributors (see "authors.txt")
- * @license    LGPL-3.0-or-later
- * @copyright  Küstenschmiede GmbH Software & Design
- * @link       https://www.con4gis.org
- */
+use con4gis\CoreBundle\Classes\C4GVersionProvider;
 
 /***
  * Palettes
@@ -113,8 +102,7 @@ class tl_module_c4g_maps extends Backend
     protected $firstMapId = null;
 
     /**
-     * Return all defined maps
-     * @param object
+     * @param DataContainer $dc
      * @return array
      */
     public function get_maps(DataContainer $dc)
@@ -137,5 +125,4 @@ class tl_module_c4g_maps extends Backend
     {
         return ' <a href="contao/main.php?do=c4g_maps&amp;table=tl_c4g_maps&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . REQUEST_TOKEN . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_modules']['editMaps']) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_modules']['editMaps'])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
     }
-
 }

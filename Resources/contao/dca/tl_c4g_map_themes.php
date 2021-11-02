@@ -1,4 +1,4 @@
-<?php if (!defined('TL_ROOT')) die('You cannot access this file directly!');
+<?php
 /*
  * This file is part of con4gis, the gis-kit for Contao CMS.
  * @package con4gis
@@ -9,13 +9,8 @@
  * @link https://www.con4gis.org
  */
 
-/**
- * Table tl_c4g_map_themes
- */
 $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
     [
-
-    // Config
     'config' =>
         [
         'dataContainer'               => 'Table',
@@ -30,8 +25,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
                 ]
             ]
         ],
-
-    // List
     'list' =>
         [
 
@@ -95,14 +88,10 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
                 ]
             ]
         ],
-
-    //Palettes
     'palettes' =>
         [
         'default' => '{theme_legend}, name; {colors_legend}, maincolor, fontcolor, shadowcolor, popupMaincolor, popupFontcolor; {buttons_legend}, buttonradius, buttonsize, button_fontsize; {expert_legend}, popupMaxWidth, useglobal;',
         ],
-
-    //Fields
     'fields' =>
         [
         'id' =>
@@ -248,8 +237,6 @@ class tl_c4g_map_themes extends Backend
                     {
                         continue;
                     }
-
-                    $fileobj = new \File($file[$x], true); //needed for $file[$x] too!
                     $result[] = $file[$x];
                 }
                 $x++;

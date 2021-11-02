@@ -11,27 +11,16 @@
   * @link       https://www.con4gis.org
   */
 
-
-/**
- * Table tl_c4g_editor_element_type
- */
 $strName = 'tl_c4g_editor_configuration';
 $cbClass = \con4gis\MapsBundle\Classes\Contao\Callbacks\TlEditorConfiguration::class;
 
 $GLOBALS['TL_DCA'][$strName] = array
 (
-    //config
     'config' => array
     (
         'dataContainer'     => 'Table',
         'enableVersioning'  => 'true',
-//        'onsubmit_callback'             => array(
-//            array('\con4gis\EditorBundle\Classes\Cache\C4GEditorAutomator', 'purgeEditorConfigCache')
-//        ),
     ),
-
-
-    //List
     'list' => array
     (
         'sorting' => array
@@ -48,7 +37,6 @@ $GLOBALS['TL_DCA'][$strName] = array
             'fields'            => array('name', 'type'),
             'showColumns'       => true,
         ),
-
         'global_operations' => array
         (
             'all' => [
@@ -65,7 +53,6 @@ $GLOBALS['TL_DCA'][$strName] = array
                 'label'               => &$GLOBALS['TL_LANG']['MSC']['backBT'],
             ],
         ),
-
         'operations' => array
         (
             'edit' => array
@@ -95,16 +82,11 @@ $GLOBALS['TL_DCA'][$strName] = array
             )
         )
     ),
-
-    //Palettes
     'palettes' => array
     (
         '__selector__' => ['type'],
         'default'   =>  '{data_legend},name,types,editor_helpurl,editor_vars;',
     ),
-
-
-    //Fields
     'fields' => array
     (
         'name' => array

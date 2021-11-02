@@ -1,4 +1,4 @@
-<?php use Contao\Image;
+<?php
 /*
  * This file is part of con4gis, the gis-kit for Contao CMS.
  * @package con4gis
@@ -9,26 +9,10 @@
  * @link https://www.con4gis.org
  */
 
-if (!defined('TL_ROOT')) die('You cannot access this file directly!');
-/*
- * This file is part of con4gis,
- * the gis-kit for Contao CMS.
- *
- * @package    con4gis
- * @version    7
- * @author     con4gis contributors (see "authors.txt")
- * @license    LGPL-3.0-or-later
- * @copyright  Küstenschmiede GmbH Software & Design
- * @link       https://www.con4gis.org
- */
+use Contao\Image;
 
-/**
- * Table tl_c4g_map_overlays
- */
 $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
 [
-    
-    // Config
     'config' =>
     [
         'dataContainer'               => 'Table',
@@ -46,8 +30,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
                     ]
             ]
     ],
-    
-    // List
     'list' =>
     [
         
@@ -120,9 +102,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
             ]
         ]
     ],
-    
-    
-    // Palettes
     'palettes' =>
     [
         '__selector__'                => ['provider'],
@@ -136,8 +115,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
         'provider_sea' => '',
         'provider_geoimage' => 'image_src,geoimage_json'
     ],
-    
-    // Fields
     'fields' =>
     [
         'id' =>
@@ -366,15 +343,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
  */
 class tl_c4g_map_overlays extends Backend
 {
-    
-    /**
-     *
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-    
     /**
      * List a Location Style
      * @param array

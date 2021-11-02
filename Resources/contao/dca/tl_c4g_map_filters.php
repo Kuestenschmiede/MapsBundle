@@ -1,4 +1,4 @@
-<?php if (!defined('TL_ROOT')) die('You cannot access this file directly!');
+<?php
 /*
  * This file is part of con4gis, the gis-kit for Contao CMS.
  * @package con4gis
@@ -9,12 +9,8 @@
  * @link https://www.con4gis.org
  */
 
-/**
- * Table tl_c4g_stufffilters
- */
 $GLOBALS['TL_DCA']['tl_c4g_map_filters'] =
     [
-        // Config
         'config' =>
             [
                 'dataContainer'               => 'Table',
@@ -29,8 +25,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_filters'] =
                             ]
                     ]
             ],
-
-        // List
         'list' =>
             [
                 'sorting' =>
@@ -91,22 +85,15 @@ $GLOBALS['TL_DCA']['tl_c4g_map_filters'] =
                             ]
                     ]
             ],
-
-        // Palettes
         'palettes' =>
             [
                 '__selector__'                => [],
                 'default'                     => '{general_legend},name,filters;'
             ],
-
-
-        // Subpalettes
         'subpalettes' =>
             [
 
             ],
-
-        // Fields
         'fields' =>
             [
                 'id' =>
