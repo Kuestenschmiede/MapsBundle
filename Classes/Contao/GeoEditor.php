@@ -35,10 +35,9 @@ class GeoEditor extends \Contao\Backend
      */
     public function __construct($layerId = 0)
     {
-        $this->import('BackendUser', 'User');
         parent::__construct();
+        $this->import('BackendUser', 'User');
         $this->layerId = $layerId;
-        $this->User->authenticate();
         $this->loadLanguageFile('default');
     }
 

@@ -48,7 +48,7 @@ export class FeatureFilterList extends Component {
             liClass += this.props.checkedItem.identifier === "all" ? "" : " clicked";
             return (<li className={liClass}>
                 <img src={this.props.feature.image} title={this.props.feature.name} width={this.props.feature.width} height={this.props.feature.height}/>
-                <strong className={className} onMouseUp={(evt) => {this.props.filterLayers(this.props.feature.filters[1].identifier !== this.props.checkedItem.identifier ? this.props.feature.filters[1].identifier : "all", this.props.id, this.props.feature.filters[1].identifier !== this.props.checkedItem.identifier ? this.props.feature.filters[1].value :undefined); evt.stopPropagation(); evt.preventDefault();}}>{utils.decodeHTML(this.props.feature.name)}</strong>
+                <strong className={className} onMouseUp={(evt) => {this.props.filterLayers(this.props.feature.filters[1].identifier !== this.props.checkedItem.identifier ? this.props.feature.filters[1].identifier : "all", this.props.id, this.props.feature.filters[1].identifier !== this.props.checkedItem.identifier ? this.props.feature.filters[1].value :undefined, this.props.feature.filters[1].identifier !== this.props.checkedItem.identifier ? this.props.feature.filters[1].field : undefined); evt.stopPropagation(); evt.preventDefault();}}>{utils.decodeHTML(this.props.feature.name)}</strong>
             </li>);
         }
     }

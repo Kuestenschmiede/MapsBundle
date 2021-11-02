@@ -194,7 +194,7 @@ class SearchApi extends \Frontend
         return $response;
     }
     public static function searchDatabase($strSearch, $arrColumns, $strTable, $database, $whereClause = "") {
-        $strSearch = searchAPi::updateSearchStringForNonExactSearch($strSearch);
+        $strSearch = searchApi::updateSearchStringForNonExactSearch($strSearch);
         $sql = "SELECT *, ";
         if ($whereClause) {
             $whereClause .= " AND (";

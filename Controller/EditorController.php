@@ -27,6 +27,7 @@ class EditorController extends BaseController
     public function __construct(ContainerInterface $container)
     {
         parent::__construct($container);
+        $container->get('contao.framework')->initialize();
     }
 
     protected function initialize($withEntityManager = true)
