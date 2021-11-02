@@ -18,7 +18,7 @@ if (@class_exists("Contao\CalendarBundle\ContaoCalendarBundle")) {
     /**
      * Change palettes
      */
-    $disabledObjects = deserialize($GLOBALS['TL_CONFIG']['disabledC4gMapObjects'], true);
+    $disabledObjects = StringUtil::deserialize($GLOBALS['TL_CONFIG']['disabledC4gMapObjects'], true);
 
     if (!in_array('tl_calendar_events', $disabledObjects)) {
         try {

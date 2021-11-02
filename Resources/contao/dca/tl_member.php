@@ -13,10 +13,7 @@ use Contao\CoreBundle\DataContainer\PaletteManipulator;
 
 if (@class_exists("tl_member")) {
 
-    /**
-     * Change palettes
-     */
-    $disabledObjects = deserialize($GLOBALS['TL_CONFIG']['disabledC4gMapObjects'], true);
+    $disabledObjects = StringUtil::deserialize($GLOBALS['TL_CONFIG']['disabledC4gMapObjects'], true);
 
     if (!in_array('tl_member', $disabledObjects)) {
 
