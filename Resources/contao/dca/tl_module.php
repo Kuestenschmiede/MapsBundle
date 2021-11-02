@@ -11,29 +11,32 @@
 
 use con4gis\CoreBundle\Classes\C4GVersionProvider;
 
-/***
- * Palettes
- */
-$GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_maps']         =   '{title_legend},name,headline,type;'.
-                                                                    '{c4g_map_legend},c4g_map_id;'.
-                                                                    '{protected_legend:hide},protected;'.
-                                                                    '{expert_legend:hide},guests,cssID,space';
-$GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_search']       =   '{title_legend},name,headline,type;'.
-                                                                    '{c4g_search_legend},c4g_map_site_id,c4g_map_zoomlevel,c4g_map_placeholder;'.
-                                                                    '{protected_legend:hide},protected;'.
-                                                                    '{expert_legend:hide},guests,cssID,space';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_maps'] = '{title_legend},name,headline,type;'.
+    '{c4g_map_legend},c4g_map_id;'.
+    '{protected_legend:hide},protected;'.
+    '{expert_legend:hide},guests,cssID,space';
+
+$GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_search'] = '{title_legend},name,headline,type;'.
+    '{c4g_search_legend},c4g_map_site_id,c4g_map_zoomlevel,c4g_map_placeholder;'.
+    '{protected_legend:hide},protected;'.
+    '{expert_legend:hide},guests,cssID,space';
+
 $GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_external_map_element'] = '{title_legend},name,headline,type;'.
-                                                                          '{c4g_external_legend},c4g_element_type;'.
-                                                                          '{protected_legend:hide},protected;'.
-                                                                          '{expert_legend:hide},guests,cssID,space';
+    '{c4g_external_legend},c4g_element_type;'.
+    '{protected_legend:hide},protected;'.
+    '{expert_legend:hide},guests,cssID,space';
 
 if (C4GVersionProvider::isInstalled('con4gis/forum'))
 {
     $insert = '{c4g_forum_maps_legend},c4g_forum_enable_maps;{expert_legend:hide}';
-    //insert c4g-maps support when forum is installed
-    $GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_forum'] = str_replace('{expert_legend:hide}', $insert, $GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_forum']);
-    $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_enable_maps'] =
-    [
+
+    $GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_forum'] = str_replace(
+        '{expert_legend:hide}',
+        $insert,
+        $GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_forum']
+    );
+
+    $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_enable_maps'] = [
         'label' => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_enable_maps'],
         'exclude' => true,
         'default' => '',
@@ -41,33 +44,26 @@ if (C4GVersionProvider::isInstalled('con4gis/forum'))
         'sql' => "char(1) NOT NULL default ''"
     ];
 }
-/***
- * Fields
- */
-$GLOBALS['TL_DCA']['tl_module']['fields']['c4g_map_id'] =
-[
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['c4g_map_id'] = [
     'label'                   => &$GLOBALS['TL_LANG']['tl_module']['c4g_map_id'],
     'exclude'                 => true,
     'inputType'               => 'select',
     'options_callback'        => ['tl_module_c4g_maps', 'get_maps'],
     'eval'                    => ['submitOnChange'=>true],
     'sql'                     => "int(10) unsigned NOT NULL default '0'",
-    'xlabel' => array
-    (
-        array('tl_module_c4g_maps', 'mapsLink')
-    )
+    'xlabel'                  => [['tl_module_c4g_maps', 'mapsLink']]
 ];
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['c4g_map_site_id'] =
-[
+$GLOBALS['TL_DCA']['tl_module']['fields']['c4g_map_site_id'] = [
     'label'                   => &$GLOBALS['TL_LANG']['tl_module']['c4g_map_site_id'],
     'exclude'                 => true,
     'inputType'               => 'pageTree',
     'eval'                    => ['fieldType'=>'radio'],
     'sql'                     => "int(10) unsigned NOT NULL default '0'"
 ];
-$GLOBALS['TL_DCA']['tl_module']['fields']['c4g_map_zoomlevel'] =
-[
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['c4g_map_zoomlevel'] = [
         'label'                   => &$GLOBALS['TL_LANG']['tl_module']['c4g_map_zoomlevel'],
         'exclude'                 => true,
         'inputType'               => 'c4g_text',
@@ -75,8 +71,8 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_map_zoomlevel'] =
         'eval'                    => ['tl_class'=>'clr'],
         'sql'                     => "varchar(20) NOT NULL default '10'"
 ];
-$GLOBALS['TL_DCA']['tl_module']['fields']['c4g_map_placeholder'] =
-[
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['c4g_map_placeholder'] = [
         'label'                   => &$GLOBALS['TL_LANG']['tl_module']['c4g_map_placeholder'],
         'exclude'                 => true,
         'inputType'               => 'c4g_text',
@@ -84,8 +80,8 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_map_placeholder'] =
         'eval'                    => ['tl_class'=>'clr'],
         'sql'                     => "varchar(20) NOT NULL default '10'"
 ];
-$GLOBALS['TL_DCA']['tl_module']['fields']['c4g_element_type'] =
-[
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['c4g_element_type'] = [
     'label'                   => &$GLOBALS['TL_LANG']['tl_module']['c4g_element_type'],
     'exclude'                 => true,
     'inputType'               => 'select',

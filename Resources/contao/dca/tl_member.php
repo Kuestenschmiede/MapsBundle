@@ -1,4 +1,4 @@
-<?php use con4gis\MapsBundle\Classes\Utils;
+<?php
 /*
  * This file is part of con4gis, the gis-kit for Contao CMS.
  * @package con4gis
@@ -9,6 +9,7 @@
  * @link https://www.con4gis.org
  */
 
+use con4gis\MapsBundle\Classes\Utils;
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
 
 if (@class_exists("tl_member")) {
@@ -16,14 +17,12 @@ if (@class_exists("tl_member")) {
     $disabledObjects = StringUtil::deserialize($GLOBALS['TL_CONFIG']['disabledC4gMapObjects'], true);
 
     if (!in_array('tl_member', $disabledObjects)) {
-
         PaletteManipulator::create()
             ->addLegend('c4g_maps_legend', 'homedir_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_BEFORE)
             ->addField(array('c4g_loc_geox', 'c4g_loc_geoy', 'c4g_loc_label', 'c4g_locstyle'), 'c4g_maps_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_APPEND)
             ->applyToPalette('default', 'tl_member');
 
-        $GLOBALS['TL_DCA']['tl_member']['fields']['c4g_loc_geox'] =
-            [
+        $GLOBALS['TL_DCA']['tl_member']['fields']['c4g_loc_geox'] = [
             'label'                   => &$GLOBALS['TL_LANG']['tl_member']['c4g_loc_geox'],
             'exclude'                 => true,
             'inputType'               => 'c4g_text',
@@ -31,10 +30,9 @@ if (@class_exists("tl_member")) {
             'save_callback'           => [['tl_member_c4g_maps','setLocLon']],
             'wizard'                  => [['\con4gis\MapsBundle\Classes\GeoPicker', 'getPickerLink']],
             'sql'                     => "varchar(20) NOT NULL default ''"
-            ];
+        ];
 
-        $GLOBALS['TL_DCA']['tl_member']['fields']['c4g_loc_geoy'] =
-            [
+        $GLOBALS['TL_DCA']['tl_member']['fields']['c4g_loc_geoy'] = [
             'label'                   => &$GLOBALS['TL_LANG']['tl_member']['c4g_loc_geoy'],
             'exclude'                 => true,
             'inputType'               => 'c4g_text',
@@ -42,30 +40,25 @@ if (@class_exists("tl_member")) {
             'save_callback'           => [['tl_member_c4g_maps','setLocLat']],
             'wizard'                  => [['\con4gis\MapsBundle\Classes\GeoPicker', 'getPickerLink']],
             'sql'                     => "varchar(20) NOT NULL default ''"
-            ];
+        ];
 
-        $GLOBALS['TL_DCA']['tl_member']['fields']['c4g_loc_label'] =
-            [
+        $GLOBALS['TL_DCA']['tl_member']['fields']['c4g_loc_label'] = [
             'label'                   => &$GLOBALS['TL_LANG']['tl_member']['c4g_loc_label'],
             'exclude'                 => true,
             'inputType'               => 'text',
             'eval'                    => ['tl_class'=>'clr'],
             'sql'                     => "varchar(100) NOT NULL default ''"
-            ];
+        ];
 
-        $GLOBALS['TL_DCA']['tl_member']['fields']['c4g_locstyle'] =
-            [
+        $GLOBALS['TL_DCA']['tl_member']['fields']['c4g_locstyle'] = [
             'label'                   => &$GLOBALS['TL_LANG']['tl_member']['c4g_locstyle'],
             'exclude'                 => true,
             'inputType'               => 'select',
             'options_callback'        => ['tl_member_c4g_maps','getLocStyles'],
-            'eval'                    => array('chosen' => true, 'includeBlankOption'=>true),
+            'eval'                    => ['chosen' => true, 'includeBlankOption'=>true],
             'sql'                     => "int(10) unsigned NOT NULL default '0'",
-            'xlabel' => array
-            (
-                array('tl_member_c4g_maps', 'locstylesLink')
-            )
-            ];
+            'xlabel'                  => [['tl_member_c4g_maps', 'locstylesLink']]
+        ];
     }
 }
 
