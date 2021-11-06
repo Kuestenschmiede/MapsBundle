@@ -125,6 +125,7 @@ export class C4gBaselayerController {
 
   createBaseLayer(layerOptions, baseLayerConfig, sourceConfigs){
     var newBaselayer = {};
+    let source;
     layerOptions = layerOptions || {};
 
     if (window.isSecureContext) {
@@ -250,7 +251,7 @@ export class C4gBaselayerController {
             let config = this.baseKeys[baseLayerConfig.id];
             layerOptions.url = baseLayerConfig.url.replace('{key}', config['key']);
             layerOptions.attributions = config.attribution + ' ' + layerOptions.attributions;
-            let source = new XYZ(layerOptions);
+            source = new XYZ(layerOptions);
             newBaselayer = new TileLayer();
             newBaselayer.setSource(source);
           }
@@ -258,7 +259,6 @@ export class C4gBaselayerController {
           break;
         case 'mapbox':
           if (baseLayerConfig.api_key && baseLayerConfig.app_id && baseLayerConfig.mapbox_type) {
-            let source;
             newBaselayer = new TileLayer();
             if (baseLayerConfig.mapbox_type === 'Mapbox') {
               layerOptions.url = baseLayerConfig.url + baseLayerConfig.app_id + '/tiles/{z}/{x}/{y}?access_token=' + baseLayerConfig.api_key;
@@ -286,7 +286,7 @@ export class C4gBaselayerController {
             console.warn('wrong mapbox configuration!');
           }
           break;
-        case 'mapz' :
+        case 'mapz':
           newBaselayer = new TileLayer();
           source = new XYZ(
               jQuery.extend(
@@ -296,7 +296,7 @@ export class C4gBaselayerController {
           newBaselayer.setSource(source);
 
           break;
-        case 'otm' :
+        case 'otm':
           newBaselayer = new TileLayer();
           source = new XYZ(
               jQuery.extend(sourceConfigs.otm,
@@ -328,7 +328,7 @@ export class C4gBaselayerController {
             } else {
               //layerOptions.url = baseLayerConfig.url + '{z}/{x}/{y}.pbf?key='+baseLayerConfig.api_key;
               newBaselayer = new TileLayer();
-              let source = new TileJSON({
+              source = new TileJSON({
                 url: baseLayerConfig.url + 'styles/' + baseLayerConfig.style + '.json?key=' + baseLayerConfig.api_key
               })
 
@@ -372,7 +372,7 @@ export class C4gBaselayerController {
               layerOptions.url = 'https://{1-4}.aerial.maps.cit.api.here.com/maptile/2.1/maptile/newest/hybrid.day/{z}/{x}/{y}/256/png' +
                   '?app_id=' + baseLayerConfig.app_id + '&app_code=' + baseLayerConfig.api_key;
             }
-            let source = new XYZ(jQuery.extend(
+            source = new XYZ(jQuery.extend(
                 sourceConfigs.here[baseLayerConfig.here_type],
                 layerOptions));
             newBaselayer = new TileLayer({
@@ -424,7 +424,7 @@ export class C4gBaselayerController {
         case 'bing':
           if (baseLayerConfig.api_key && baseLayerConfig.style) {
             newBaselayer = new TileLayer();
-            let source = new BingMaps({
+            source = new BingMaps({
               culture: navigator.languages ? navigator.languages[0] : (navigator.language || navigator.userLanguage),
               key: baseLayerConfig.api_key,
               imagerySet: baseLayerConfig.style
@@ -539,7 +539,7 @@ export class C4gBaselayerController {
         let manager = klaro.getManager();
         let watcher;
         if (newBaselayer instanceof TileLayer) {
-          let source = newBaselayer.getSource();
+          source = newBaselayer.getSource();
           if (!manager.getConsent(baseLayerConfig['consentId'])) {
             newBaselayer.setSource(dummySource);
           }
@@ -574,7 +574,7 @@ export class C4gBaselayerController {
       }
       else if (typeof HofffConsentManager !== "undefined") {
         if (newBaselayer instanceof TileLayer) {
-          let source = newBaselayer.getSource();
+          source = newBaselayer.getSource();
           HofffConsentManager.addEventListener('consent:accepted', function (event) {
             if (event.consentId == baseLayerConfig['consentId']) {
               newBaselayer.setSource(source);
