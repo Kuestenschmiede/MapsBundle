@@ -244,6 +244,7 @@ export default class GeoSearch extends Component {
     if (this.state.open) {
       this.setState({open: false});
       if (!this.props.external) {
+        jQuery(this.controlElement).removeClass('c4g-geosearch--active');
         jQuery(this.input).addClass('c4g-close').removeClass('c4g-open');
       }
       // jQuery(this.props.mapController.searchContainer).removeClass("c4g-open").addClass("c4g-close");
@@ -251,6 +252,7 @@ export default class GeoSearch extends Component {
       // this.props.mapController.hideOtherComponents(this);
       this.setState({open: true});
       if (!this.props.external) {
+        jQuery(this.controlElement).addClass('c4g-geosearch--active');
         jQuery(this.input).removeClass('c4g-close').addClass('c4g-open');
         this.input.focus();
       }
