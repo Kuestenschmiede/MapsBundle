@@ -75,10 +75,19 @@
       > input {
         text-align: left;
       }
+      > span {
+        position: absolute;
+        right: 20px;
+        cursor: pointer;
+        color: var(--main-color);
+      }
     }
   }
-}
 
+}
+.c4g-close ~ .searchSpan {
+  display: none;
+}
 div.c4g-control-container-top-left > div {
   width: var(--button-size-pixel);
   margin-right: .2em;
@@ -157,7 +166,8 @@ div.c4g-control-container-top-left > div.c4g-external {
  */
 
 
-.c4g-geosearch.c4g-close .c4g-geosearch-wrapper {
+.c4g-geosearch.c4g-close,
+.c4g-geosearch-wrapper {
   display: none;
 }
 

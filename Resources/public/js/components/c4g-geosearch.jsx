@@ -61,6 +61,14 @@ export default class GeoSearch extends Component {
       input.addEventListener('keydown',(event) => {this.inputCallback(event)});
       element.appendChild(input);
       this.input = input;
+
+      let span = document.createElement('span');
+      span.addEventListener('click', this.clickControl);
+      jQuery(span).addClass('searchSpan');
+      let i = document.createElement('i');
+      i.innerHTML = "<i class=\"far fa-times-circle\"></i>";
+      span.appendChild(i);
+      element.appendChild(span);
     }
 
     // input.onkeydown = (event) => {this.inputCallback(event)};
