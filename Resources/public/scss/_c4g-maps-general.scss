@@ -40,7 +40,7 @@
  *  Z-Indexes
  */
 .ol-viewport .ol-overlaycontainer-stopevent {
-  z-index: auto!important;
+  z-index: auto !important;
 }
 
 /*
@@ -61,6 +61,22 @@
   overflow-y: auto;
   overflow-x: hidden;
   transform: rotateY(180deg);
+
+  &.c4g-geosearch--active {
+    width: auto;
+    transform: none;
+
+    > .c4g-geosearch {
+      width: 400px;
+      max-width: 100%;
+      display: flex;
+      align-items: center;
+
+      > input {
+        text-align: left;
+      }
+    }
+  }
 }
 
 div.c4g-control-container-top-left > div {
@@ -1480,5 +1496,10 @@ button.c4g-maps-consent-button.btn {
   color: var(--font-color);
   background: var(--main-color);
   cursor: pointer;
+}
+
+.c4g-control-container-top-left {
+
+
 }
 
