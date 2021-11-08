@@ -254,7 +254,7 @@ export class C4gBaselayerController {
             let config = this.baseKeys[baseLayerConfig.id];
             layerOptions.url = baseLayerConfig.url.replace('{key}', config['key']);
             layerOptions.attributions = config.attribution + ' ' + layerOptions.attributions;
-            source = new XYZ(layerOptions);
+            let source = new XYZ(layerOptions);
             newBaselayer = new TileLayer();
             newBaselayer.setSource(source);
           }

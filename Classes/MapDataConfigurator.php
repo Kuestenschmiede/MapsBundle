@@ -490,7 +490,7 @@ class MapDataConfigurator
                 $mapData['geosearch']['results_headline'] = $profile->geosearch_results_headline;
                 $mapData['geosearch']['result_locstyle'] = $profile->geosearch_result_locstyle;
                 $mapData['geosearch']['div'] = (in_array('search', $externalElements)) ? $externalClasses['search'] : '';
-                $mapData['geosearch']['div_results'] = $profile->geosearch_results_div;
+                $mapData['geosearch']['div_results'] = (in_array('results', $externalElements)) ? $externalClasses['results'] : '';
                 $mapData['geosearch']['placeholder'] = $profile->geosearch_placeholder;
                 $mapData['geosearch']['searchzoom'] = $profile->geosearch_zoomto;
                 $mapData['geosearch']['zoombounds'] = $profile->geosearch_zoombounds;

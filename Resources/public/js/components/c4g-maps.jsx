@@ -1436,6 +1436,7 @@ export default class MapController extends Component {
         mapController: this,
         target: document.querySelector('#' + mapData.mapDiv + ' .c4g-control-container-top-left'),
         extDiv: mapData.geosearch.div || false,
+        extResultsDiv: mapData.geosearch.div_results || false,
         collapsible: true,
         collapsed: mapData.initial_open_comp !== "search",
         label: ' ',
