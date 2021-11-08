@@ -169,6 +169,9 @@ export class C4gBaselayerController {
             layerOptions.urls = baseLayerConfig.urls;
             noUrl = false;
           }
+          if (baseLayerConfig.attribution) {
+            layerOptions.attributions = baseLayerConfig.attribution
+          }
           if (!noUrl) {
             newBaselayer = new TileLayer({
               source: new XYZ(layerOptions),
