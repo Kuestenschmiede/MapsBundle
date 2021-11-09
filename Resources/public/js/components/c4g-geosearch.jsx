@@ -161,9 +161,9 @@ export default class GeoSearch extends Component {
     }
     let closeBtnClass = "";
     let closeBtnCb = "";
-    if (this.config.collapsed) {
+    if (!this.props.external) {
       closeBtnClass = "c4g-titlebar-close";
-      closeBtnCb = this.close;
+      closeBtnCb = this.clickControl;
     }
 
     let headline = this.props.headline;
