@@ -55,7 +55,7 @@
     "@babel/preset-react": "^7.16.0",
     "@babel/runtime": "^7.16.0",
     "@fortawesome/fontawesome-free": "^5.15.3",
-    "dom-to-image-more": "^2.8.0",
+    "dom-to-image-more": "2.8.0",
     "elm-pep": "^1.0.6",
     "file-saver": "^2.0.5",
     "i18next-client": "^1.11.4",
