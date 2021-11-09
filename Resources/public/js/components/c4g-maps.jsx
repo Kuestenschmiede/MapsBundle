@@ -37,8 +37,8 @@ import {boundingExtent, getBottomLeft, getBottomRight, getTopLeft, getTopRight} 
 import {shiftKeyOnly} from "ol/events/condition";
 import ReactDOM from "react-dom";
 import React, {Component, Suspense} from "react";
-//const GeoSearch = React.lazy(() => import('./c4g-geosearch.jsx'));
-import GeoSearch from "./c4g-geosearch.jsx";
+const GeoSearch = React.lazy(() => import('./c4g-geosearch.jsx'));
+// import GeoSearch from "./c4g-geosearch.jsx";
 const FeatureFilter = React.lazy(() => import('./c4g-feature-filter.jsx'));
 const BaselayerSwitcher = React.lazy(() => import('./c4g-baselayerswitcher.jsx'));
 const StarboardPanel = React.lazy(() => import('./c4g-starboard-panel.jsx'));
@@ -1016,7 +1016,9 @@ export default class MapController extends Component {
         this.components.geosearch = node;
       };
       searchPortal = ReactDOM.createPortal(
-        <GeoSearch {...geoSearchOptions}/>,
+          <Suspense fallback={<div>"Loading........................................</div>}>
+            <GeoSearch {...geoSearchOptions}/>
+          </Suspense>,
         this.searchContainer
       );
     }
