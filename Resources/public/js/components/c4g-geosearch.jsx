@@ -53,6 +53,7 @@ export default class GeoSearch extends Component {
       input.setAttribute('id', "c4g-geosearch-input");
       if (!props.collapsed) {
         jQuery(input).addClass('c4g-open');
+        jQuery(props.target).addClass('c4g-geosearch--active')
       }
       else {
         jQuery(input).addClass('c4g-close');
