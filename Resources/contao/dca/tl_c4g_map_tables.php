@@ -9,13 +9,8 @@
  * @link https://www.con4gis.org
  */
 
-/**
- * Table tl_c4g_map_tables
- */
 $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
 [
-
-    // Config
     'config' =>
     [
         'dataContainer'               => 'Table',
@@ -96,7 +91,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
         '__selector__' => ['popupSwitch', 'dataType'],
         'default' => '{defaultLegend},name,customDB,tableSource;{parentLegend},ptable,ptableOptions,ptableBackendField,ptableField,ptableCompareField;{geoLegend},dataType;{projLegend:hide},projName,projCode;{tableInformation},label,locstyle,tooltip,popupSwitch,cutTextAtLength;',
     ],
-    
     'subpalettes' =>
     [
         'popupSwitch_default'   => 'popupSelection',
@@ -107,8 +101,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
         'dataType_4'            => 'geolocation',
 
     ],
-
-    // Fields
     'fields' =>
     [
         'id' =>
@@ -126,7 +118,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
         ],
         'name' =>
         [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['name'],
             'exclude'                 => true,
             'inputType'               => 'text',
             'default'                 => '',
@@ -143,7 +134,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
         ],
         'tableSource' =>
         [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['tableSource'],
             'exclude'                 => true,
             'inputType'               => 'select',
             'default'                 => '',
@@ -153,7 +143,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
         ],
         'ptable' =>
         [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['ptable'],
             'exclude'                 => true,
             'inputType'               => 'select',
             'default'                 => '',
@@ -164,7 +153,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
         ],
         'ptableOptions' =>
         [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['ptableOptions'],
             'exclude'                 => true,
             'inputType'               => 'select',
             'default'                 => '',
@@ -179,7 +167,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'sql'                     => "text NULL"
         ],
         'ptableField' => [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['ptableField'],
             'exclude'                 => true,
             'inputType'               => 'select',
             'default'                 => '',
@@ -189,7 +176,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'sql'                     => "text NULL default ''"
         ],
         'ptableCompareField' => [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['ptableCompareField'],
             'exclude'                 => true,
             'inputType'               => 'select',
             'default'                 => '',
@@ -199,7 +185,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'sql'                     => "text NULL default ''"
         ],
         'dataType' => [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['dataType'],
             'exclude'                 => true,
             'default'                 => '1',
             'inputType'               => 'radio',
@@ -209,7 +194,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'sql'                     => "varchar(1) default 1"
         ],
         'geox' => [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['geox'],
             'exclude'                 => true,
             'inputType'               => 'select',
             'default'                 => '',
@@ -218,7 +202,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'sql'                     => "text NULL default ''"
         ],
         'geoy' => [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['geoy'],
             'exclude'                 => true,
             'inputType'               => 'select',
             'default'                 => '',
@@ -227,7 +210,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'sql'                     => "text NULL default ''"
         ],
         'geolocation' => [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['geolocation'],
             'exclude'                 => true,
             'default'                 => '',
             'inputType'               => 'select',
@@ -236,7 +218,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'sql'                     => "text NULL default ''"
         ],
         'projName' => [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['projName'],
             'exclude'                 => true,
             'inputType'               => 'text',
             'default'                 => '',
@@ -244,7 +225,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'sql'                     => "varchar(10) NULL default ''"
         ],
         'projCode' => [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['projCode'],
             'exclude'                 => true,
             'inputType'               => 'text',
             'default'                 => '',
@@ -252,7 +232,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'sql'                     => "text NULL default ''"
         ],
         'label' => [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['label'],
             'exclude'                 => true,
             'default'                 => '',
             'inputType'               => 'select',
@@ -261,7 +240,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'sql'                     => "text NULL default ''"
         ],
         'locstyle' => [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['locstyle'],
             'exclude'                 => true,
             'inputType'               => 'select',
             'default'                 => '',
@@ -270,7 +248,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'sql'                     => "text NULL default ''"
         ],
         'tooltip' => [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['tooltip'],
             'exclude'                 => true,
             'inputType'               => 'select',
             'default'                 => '',
@@ -279,7 +256,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'sql'                     => "text NULL default ''"
         ],
         'popupSwitch' => [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['popupSwitch'],
             'exclude'                 => true,
             'inputType'               => 'radio',
             'default'                 => 'default',
@@ -292,7 +268,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'sql'                     => "varchar(10) NOT NULL default 'default'"
         ],
         'popupSelection' => [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['popupSelection'],
             'exclude'                 => true,
             'inputType'               => 'select',
             'default'                 => [],
@@ -303,7 +278,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'sql'                     => "text NULL default ''"
         ],
         'popup' => [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['popup'],
             'exclude'                 => true,
             'inputType'               => 'text',
             'default'                 => '',
@@ -311,7 +285,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'sql'                     => "text NULL default ''"
         ],
         'openLinksInTab' => [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['openLinksInTab'],
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',
@@ -319,7 +292,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'sql'                     => "char(1) NOT NULL default '0'"
         ],
         'cutTextAtLength' => [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['cutTextAtLength'],
             'exclude'                 => true,
             'default'                 => '0',
             'inputType'               => 'text',

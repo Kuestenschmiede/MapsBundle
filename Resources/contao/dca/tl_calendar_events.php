@@ -1,4 +1,4 @@
-<?php if (!defined('TL_ROOT')) die('You can not access this file directly!');
+<?php
 /*
  * This file is part of con4gis, the gis-kit for Contao CMS.
  * @package con4gis
@@ -8,6 +8,7 @@
  * @copyright (c) 2010-2021, by Küstenschmiede GmbH Software & Design
  * @link https://www.con4gis.org
  */
+
 use \con4gis\MapsBundle\Classes\GeoPicker;
 use con4gis\MapsBundle\Classes\Utils;
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
@@ -17,26 +18,18 @@ if (@class_exists("Contao\CalendarBundle\ContaoCalendarBundle")) {
     /**
      * Change palettes
      */
-    $disabledObjects = deserialize($GLOBALS['TL_CONFIG']['disabledC4gMapObjects'], true);
-
+    $disabledObjects = StringUtil::deserialize($GLOBALS['TL_CONFIG']['disabledC4gMapObjects'], true);
 
     if (!in_array('tl_calendar_events', $disabledObjects)) {
-
-        // Palettes
         try {
             PaletteManipulator::create()
                 ->addLegend('c4g_maps_legend', 'expert_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_BEFORE)
                 ->addField(array('c4g_loc_geox', 'c4g_loc_geoy', 'c4g_loc_label', 'c4g_locstyle'), 'c4g_maps_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_APPEND)
                 ->applyToPalette('default', 'tl_calendar_events');
-        } catch (\Exception $e) {
-            //test after error report
-            //error >= Contao 4.4.14
-            //do nothing
-        }
+        } catch (\Exception $e) {}
 
         $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['c4g_loc_geox'] =
             [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_calendar_events']['c4g_loc_geox'],
             'exclude'                 => true,
             'inputType'               => 'c4g_text',
             'eval'                    => ['mandatory'=>false, 'maxlength'=>20, 'tl_class'=>'w50 wizard'],
@@ -47,7 +40,6 @@ if (@class_exists("Contao\CalendarBundle\ContaoCalendarBundle")) {
 
         $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['c4g_loc_geoy'] =
             [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_calendar_events']['c4g_loc_geoy'],
             'exclude'                 => true,
             'inputType'               => 'c4g_text',
             'eval'                    => ['mandatory'=>false, 'maxlength'=>20, 'tl_class'=>'w50 wizard'],
@@ -58,7 +50,6 @@ if (@class_exists("Contao\CalendarBundle\ContaoCalendarBundle")) {
 
         $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['c4g_loc_label'] =
             [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_calendar_events']['c4g_loc_label'],
             'exclude'                 => true,
             'inputType'               => 'text',
             'eval'                    => ['tl_class'=>'clr'],
@@ -67,7 +58,6 @@ if (@class_exists("Contao\CalendarBundle\ContaoCalendarBundle")) {
 
         $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['c4g_locstyle'] =
             [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_calendar_events']['c4g_locstyle'],
             'exclude'                 => true,
             'inputType'               => 'select',
             'options_callback'        => ['tl_calendar_events_c4g_maps','getLocStyles'],
@@ -79,16 +69,14 @@ if (@class_exists("Contao\CalendarBundle\ContaoCalendarBundle")) {
             )
             ];
     }
-    
-    
+
     /**
      * Class tl_calendar_events_c4g_maps
      */
     class tl_calendar_events_c4g_maps extends \Backend
     {
         /**
-         * Return all Location Styles as array
-         * @param object
+         * @param DataContainer $dc
          * @return array
          */
         public function getLocStyles(\DataContainer $dc)
@@ -132,13 +120,10 @@ if (@class_exists("Contao\CalendarBundle\ContaoCalendarBundle")) {
             }
             return $varValue;
         }
-        
-        
+
         public function locstylesLink(Contao\DataContainer $dc)
         {
             return ' <a href="contao/main.php?do=c4g_map_locstyles&amp;table=tl_c4g_map_locstyles&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . REQUEST_TOKEN . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_calendar_events']['editLocstyles']) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_calendar_events']['editLocstyles'])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
         }
-        
-        
     }
 }

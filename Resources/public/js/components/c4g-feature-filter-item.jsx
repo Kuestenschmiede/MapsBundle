@@ -22,7 +22,7 @@ export class FeatureFilterItem extends Component {
                 <label>
                     <input
                         type="radio"
-                        onChange={(evt) => {this.props.filterLayers(scope.props.feature.identifier, scope.props.parentId, scope.props.feature.value);}}
+                        onChange={(evt) => {this.props.filterLayers(scope.props.feature.identifier, scope.props.parentId, scope.props.feature.value, scope.props.value.field);}}
                         checked={scope.props.checked.identifier === scope.props.feature.identifier}
                         value={this.props.feature.identifier}
                     />

@@ -53,6 +53,7 @@ export default class GeoSearch extends Component {
       input.setAttribute('id', "c4g-geosearch-input");
       if (!props.collapsed) {
         jQuery(input).addClass('c4g-open');
+        jQuery(props.target).addClass('c4g-geosearch--active')
       }
       else {
         jQuery(input).addClass('c4g-close');
@@ -160,9 +161,9 @@ export default class GeoSearch extends Component {
     }
     let closeBtnClass = "";
     let closeBtnCb = "";
-    if (this.config.collapsed) {
+    if (!this.props.external) {
       closeBtnClass = "c4g-titlebar-close";
-      closeBtnCb = this.close;
+      closeBtnCb = this.clickControl;
     }
 
     let headline = this.props.headline;

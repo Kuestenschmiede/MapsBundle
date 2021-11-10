@@ -123,11 +123,12 @@ export default class FeatureFilter extends Component {
     return (<div/>);
   }
 
-  filterLayers (property, listId, value) {
+  filterLayers (property, listId, value, field = "") {
     let newState = this.state.arrChecked;
     newState[listId] = {
       identifier: property,
-      value: value
+      value: value,
+      field: field
     };
     this.setState({arrChecked: newState}, () => {
         let arrLayers = this.props.mapController.map.getLayers().getArray();
@@ -244,16 +245,15 @@ export default class FeatureFilter extends Component {
 
   checkFeature (feature, objChecked) {
     let property = objChecked.identifier;
-    if (objChecked.value === "opening_hours" && feature.get('opening_hours')) {
+    if (objChecked.value === "opening_hours" && feature.get(objChecked.field || "opening_hours")) {
       try {
-        let featureHours = new opening_hours(feature.get('opening_hours'), {address: {country_code: "de"}});
+        let featureHours = new opening_hours(feature.get(objChecked.field || "opening_hours"), {address: {country_code: "de"}});
         return featureHours.getState();
       }
       catch (error) {
         console.warn(error);
         return false;
       }
-
     }
     else {
       if (!(property === "all" || (feature.get(property) && !objChecked.value) || ((objChecked.value == feature.get(property)) && objChecked.value))) {

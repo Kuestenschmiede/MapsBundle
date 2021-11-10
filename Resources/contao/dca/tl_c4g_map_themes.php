@@ -1,4 +1,4 @@
-<?php if (!defined('TL_ROOT')) die('You cannot access this file directly!');
+<?php
 /*
  * This file is part of con4gis, the gis-kit for Contao CMS.
  * @package con4gis
@@ -9,13 +9,8 @@
  * @link https://www.con4gis.org
  */
 
-/**
- * Table tl_c4g_map_themes
- */
 $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
     [
-
-    // Config
     'config' =>
         [
         'dataContainer'               => 'Table',
@@ -30,8 +25,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
                 ]
             ]
         ],
-
-    // List
     'list' =>
         [
 
@@ -95,14 +88,10 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
                 ]
             ]
         ],
-
-    //Palettes
     'palettes' =>
         [
         'default' => '{theme_legend}, name; {colors_legend}, maincolor, fontcolor, shadowcolor, popupMaincolor, popupFontcolor; {buttons_legend}, buttonradius, buttonsize, button_fontsize; {expert_legend}, popupMaxWidth, useglobal;',
         ],
-
-    //Fields
     'fields' =>
         [
         'id' =>
@@ -120,7 +109,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
             ],
         'name' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['name'],
                 'exclude'                 => true,
                 'search'                  => true,
                 'sorting'                 => true,
@@ -132,7 +120,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
             ],
         'maincolor' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['maincolor'],
                 'exclude'                 => true,
                 'inputType'               => 'text',
                 'eval'                    => array('maxlength'=>6, 'multiple'=>true, 'size'=>2, 'colorpicker'=>true, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'),
@@ -140,7 +127,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
             ],
         'fontcolor' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['fontcolor'],
                 'exclude'                 => true,
                 'inputType'               => 'text',
                 'eval'                    => array('maxlength'=>6, 'multiple'=>true, 'size'=>2, 'colorpicker'=>true, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'),
@@ -148,7 +134,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
             ],
         'shadowcolor' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['shadowcolor'],
                 'exclude'                 => true,
                 'inputType'               => 'text',
                 'eval'                    => array('maxlength'=>6, 'multiple'=>true, 'size'=>2, 'colorpicker'=>true, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'),
@@ -156,7 +141,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
             ],
         'popupMaincolor' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['popupMaincolor'],
                 'exclude'                 => true,
                 'inputType'               => 'text',
                 'eval'                    => array('maxlength'=>6, 'multiple'=>true, 'size'=>2, 'colorpicker'=>true, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'),
@@ -164,7 +148,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
             ],
         'popupFontcolor' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['popupFontcolor'],
                 'exclude'                 => true,
                 'inputType'               => 'text',
                 'eval'                    => array('maxlength'=>6, 'multiple'=>true, 'size'=>2, 'colorpicker'=>true, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'),
@@ -172,7 +155,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
             ],
         'buttonradius' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['buttonradius'],
                 'exclude'                 => true,
                 'inputType'               => 'inputUnit',
                 'default'                 => '0',
@@ -182,7 +164,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
             ],
         'buttonsize' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['buttonsize'],
                 'exclude'                 => true,
                 'inputType'               => 'inputUnit',
                 'default'                 => '36',
@@ -192,7 +173,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
             ],
         'button_fontsize' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['button_fontsize'],
                 'exclude'                 => true,
                 'inputType'               => 'inputUnit',
                 'default'                 => '18',
@@ -202,7 +182,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
             ],
         'popupMaxWidth' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['popupMaxWidth'],
                 'exclude'                 => true,
                 'inputType'               => 'inputUnit',
                 'default'                 => '42',
@@ -212,7 +191,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
             ],
         'useglobal' =>
             [
-                'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['useglobal'],
                 'exclude'                 => true,
                 'default'                 => false,
                 'inputType'               => 'checkbox',
@@ -248,8 +226,6 @@ class tl_c4g_map_themes extends Backend
                     {
                         continue;
                     }
-
-                    $fileobj = new \File($file[$x], true); //needed for $file[$x] too!
                     $result[] = $file[$x];
                 }
                 $x++;

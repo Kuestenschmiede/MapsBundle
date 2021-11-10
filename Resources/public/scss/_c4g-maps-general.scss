@@ -60,7 +60,7 @@
   padding-right: .4em;
   overflow-y: auto;
   overflow-x: hidden;
-  transform: rotateY(180deg);
+  //transform: rotateY(180deg);
 
   &.c4g-geosearch--active {
     width: auto;
@@ -166,8 +166,7 @@ div.c4g-control-container-top-left > div.c4g-external {
  */
 
 
-.c4g-geosearch.c4g-close,
-.c4g-geosearch-wrapper {
+.c4g-geosearch.c4g-close .c4g-geosearch-wrapper {
   display: none;
 }
 

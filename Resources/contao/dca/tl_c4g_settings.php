@@ -20,7 +20,6 @@ Contao\CoreBundle\DataContainer\PaletteManipulator::create()
  */
 $GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['defaultprofile'] =
     [
-    'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_settings']['defaultprofile'],
     'exclude'                 => true,
     'inputType'               => 'select',
     'foreignKey'              => 'tl_c4g_map_profiles.name',
@@ -37,7 +36,6 @@ $GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['defaultprofile'] =
     ];
 $GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['beGeopickerProfile'] =
     [
-        'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_settings']['beGeopickerProfile'],
         'exclude'                 => true,
         'inputType'               => 'select',
         'foreignKey'              => 'tl_c4g_map_profiles.name',
@@ -53,7 +51,6 @@ $GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['beGeopickerProfile'] =
 
     ];
 $GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['editorprofile'] = [
-    'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_settings']['editorprofile'],
     'exclude'                 => true,
     'inputType'               => 'select',
     'foreignKey'              => 'tl_c4g_map_profiles.name',
@@ -69,7 +66,6 @@ $GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['editorprofile'] = [
 ];
 $GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['caching'] =
     [
-        'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_settings']['caching'],
         'inputType'               => 'checkbox',
         'options'                 => $GLOBALS['con4gis']['api-caching'],
         'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_settings']['references']['caching'],
@@ -78,7 +74,6 @@ $GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['caching'] =
     ];
 $GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['disabledC4gMapObjects'] =
     [
-        'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_settings']['disabledC4gMapObjects'],
         'inputType'               => 'checkbox',
         'options_callback'        => ['tl_settings_c4g_maps', 'getMapTables'],
         'eval'                    => ['multiple'=>true],
