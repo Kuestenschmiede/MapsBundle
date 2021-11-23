@@ -47,13 +47,13 @@
     "gulp-sass": "^4.1.1",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-uglify": "^3.0.2",
-    "webpack": "^5.61.0",
+    "webpack": "^5.63.0",
     "webpack-cli": "^4.9.1"
   },
   "dependencies": {
     "@babel/plugin-syntax-jsx": "^7.16.0",
     "@babel/preset-react": "^7.16.0",
-    "@babel/runtime": "^7.16.0",
+    "@babel/runtime": "^7.16.3",
     "@fortawesome/fontawesome-free": "^5.15.3",
     "dom-to-image-more": "2.8.0",
     "elm-pep": "^1.0.6",
