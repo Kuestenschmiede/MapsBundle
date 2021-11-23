@@ -743,7 +743,7 @@ export class BetterLayerController {
           if (layer.content && layer.content[0].settings.boundingBox && (extent[0] === Infinity || extent[0] === -Infinity)) {
             vectorSource.removeLoadedExtent();
           }
-          else if (layer.content && layer.content[0] && layer.content[0].data) {
+          else if (layer.type === "overpass") {
             let content = layer.content[0];
             let data = content.data;
 
@@ -787,6 +787,31 @@ export class BetterLayerController {
               "projection": projection
             },
             responseFunc)
+          }
+          else {
+            if (layer.content && layer.content['0'] && layer.content['0'].data) {
+              let content = layer.content['0'];
+              let responseFunc = (response) => {
+                response.json().then((json) => {
+                  if (olFormat[content.format]) {
+                    let format = new olFormat[content.format]({
+                      dataProjection: "EPSG:4326",
+                      featureProjection: "EPSG:3857",
+                    });
+                    let features = format.readFeatures(json);
+                    for (let i in features) {
+                      if (features.hasOwnProperty(i)) {
+                        features[i].set('locstyle', layer.locationStyle || content.locationStyle);
+                      }
+                    }
+                    vectorSource.addFeatures(features);
+                  }
+
+                })
+              };
+              scope.performOtherData(content, responseFunc);
+            }
+
           }
         };
         vectorSource.setLoader(loaderFunc);
@@ -935,7 +960,7 @@ export class BetterLayerController {
         "tags"            : layer.tags,
         "hide"            : hide,
         "childs"          : childs,
-        "addZoomTo"          : layer.addZoomTo
+        "addZoomTo"       : layer.addZoomTo
       };
     }
   }
@@ -1273,6 +1298,15 @@ export class BetterLayerController {
         console.log('Fetch Error :-S', error.message);
       }
     });
+  }
+  performOtherData (content, responseFunc) {
+    let data = content.data;
+    let settings = content.settings;
+    fetch(data.url).then((response) => {
+      responseFunc(response);
+    }).catch(() => {
+      console.log("Tell me why");
+    })
   }
   parseOwnData (contentData, layer) {
     var resultCoordinate = transform([parseFloat(contentData['geox']), parseFloat(contentData['geoy'])], 'EPSG:4326', 'EPSG:3857')
