@@ -801,7 +801,9 @@ export class BetterLayerController {
                     let features = format.readFeatures(json);
                     for (let i in features) {
                       if (features.hasOwnProperty(i)) {
-                        features[i].set('locstyle', layer.locationStyle || content.locationStyle);
+                        if (!features[i].get('locstyle')) {
+                          features[i].set('locstyle', layer.locationStyle || content.locationStyle);
+                        }
                       }
                     }
                     vectorSource.addFeatures(features);
@@ -815,6 +817,12 @@ export class BetterLayerController {
           }
         };
         vectorSource.setLoader(loaderFunc);
+        if (layer.content && layer.content[0] && layer.content[0].settings && layer.content[0].settings.refresh) {
+          let interval = layer.content[0].settings.interval || 10000;
+          window.setInterval(() => {
+            vectorSource.refresh();
+          },interval);
+        }
       }
       else if (features && features.length){
         vectorSource.addFeatures(features);
