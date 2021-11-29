@@ -793,12 +793,14 @@ export class BetterLayerController {
               let content = layer.content['0'];
               let responseFunc = (response) => {
                 response.json().then((json) => {
+                  vectorSource.clear();
                   if (olFormat[content.format]) {
                     let format = new olFormat[content.format]({
                       dataProjection: "EPSG:4326",
                       featureProjection: "EPSG:3857",
                     });
                     let features = format.readFeatures(json);
+
                     for (let i in features) {
                       if (features.hasOwnProperty(i)) {
                         if (!features[i].get('locstyle')) {
@@ -808,8 +810,7 @@ export class BetterLayerController {
                     }
                     vectorSource.addFeatures(features);
                   }
-
-                })
+                });
               };
               scope.performOtherData(content, responseFunc);
             }
@@ -820,7 +821,7 @@ export class BetterLayerController {
         if (layer.content && layer.content[0] && layer.content[0].settings && layer.content[0].settings.refresh) {
           let interval = layer.content[0].settings.interval || 10000;
           window.setInterval(() => {
-            vectorSource.refresh();
+            loaderFunc();
           },interval);
         }
       }
