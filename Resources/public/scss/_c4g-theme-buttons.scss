@@ -275,6 +275,7 @@ ul.c4g-overlays li a {
     padding: 0 1.75em 0 .2em;
     cursor: pointer;
     position: relative;
+    min-width: fit-content;
 }
 
 .c4g-content-layertree span[class*=locstyle] + .c4g-starboard-text {
@@ -320,6 +321,7 @@ span.c4g-icon + span[class*=locstyle] + a {
     margin-right: 5px;
     right: 0;
     bottom: 0;
+    padding-left: 5px;
 }
 
 .c4g-starboard-headline-link:after {

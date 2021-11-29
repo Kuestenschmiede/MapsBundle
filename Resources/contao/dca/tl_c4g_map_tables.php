@@ -398,8 +398,6 @@ class tl_c4g_map_tables extends Backend
     {
         $image = 'bundles/con4gismaps/images/be-icons/sourcetables.svg';
         $args[0] = '<div class="list_icon_new" style="background-image:url('.$image.')" data-icon="'.$image.'">&nbsp;</div>';
-
-        $args[1] = \Contao\Controller::replaceInsertTags($args[1]);
         return $args;
     }
 
