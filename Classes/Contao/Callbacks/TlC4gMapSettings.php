@@ -21,9 +21,8 @@ class TlC4gMapSettings extends \Backend
         if (!$strTables) {
             // set default-data for tl_calendar_events
             if (@class_exists("Contao\CalendarBundle\ContaoCalendarBundle")) {
-
                 $this->translateArrToDB('tl_calendar_events', [
-                    'name' => '{{ifnlng::de}}Events{{ifnlng}}{{iflng::de}}Events{{iflng}}',
+                    'name' => 'Events',
                     'ptable' => 'tl_calendar',
                     'ptable_option' => 'tl_calendar.title',
                     'ptable_compare_field' => 'id',
@@ -42,7 +41,7 @@ class TlC4gMapSettings extends \Backend
             }
             // set default data for tl_content
             $this->translateArrToDB('tl_content', [
-                'name' => '{{ifnlng::de}}Inhaltselemente{{ifnlng}}{{iflng::de}}Content elements{{iflng}}',
+                'name' => 'Content elements',
                 'geox' => 'c4g_loc_geox',
                 'geoy' => 'c4g_loc_geoy',
                 'label' => 'c4g_loc_label',
@@ -53,7 +52,7 @@ class TlC4gMapSettings extends \Backend
 
             // set default data for tl_member
             $this->translateArrToDB('tl_member', [
-                'name' => '{{ifnlng::de}}Mitgliederdaten{{ifnlng}}{{iflng::de}}Members{{iflng}}',
+                'name' => 'Members',
                 'geox' => 'c4g_loc_geox',
                 'geoy' => 'c4g_loc_geoy',
                 'label' => 'c4g_loc_label',
@@ -110,6 +109,7 @@ class TlC4gMapSettings extends \Backend
         $geoy = $arrConfig['geoy'] ? $arrConfig['geoy'] : '';
         $geolocation = $arrConfig['geolocation'] ? $arrConfig['geolocation'] : '';
         $dbName = $arrConfig['name'];
+
         $time = time();
         $strInsert = "INSERT INTO tl_c4g_map_tables (name, tableSource, label, locstyle, popup, tooltip, tstamp, ptableCompareField, ptableField, ptableBlob, ptableOptions, ptable, geoy, geox, geolocation, popupSwitch) VALUES ('$dbName', '$tableSource', '$label', '$locstyle', '$popup', '$tooltip', $time , '$ptableCompareField', '$ptableField', '$ptableBlob', '$ptableOptions', '$ptable', '$geoy', '$geox','$geolocation','$popupSwitch');";
         $result = $this->Database->prepare($strInsert)->execute();
