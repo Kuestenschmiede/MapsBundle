@@ -177,14 +177,14 @@ export class C4gStarboardLayerElement extends Component {
     let spanZoom = null;
 
     if (this.props.mapController.data.starboard.showLocstyles === "1" && this.props.layer.locstyle && this.props.styleData && this.props.styleData.arrLocStyles && this.props.styleData.arrLocStyles[this.props.layer.locstyle]) {
-      if (this.props.layer.addZoomTo) {
+      if (this.props.layer.zoomTo) {
         stylePicture = <C4gStarboardStyle styleData={this.props.styleData} styleId={this.props.layer.locstyle} tooltip={this.props.lang.STARBOARD_ELEMENT_ZOOM_BEFORE+this.props.layer.name+this.props.lang.STARBOARD_ELEMENT_ZOOM_AFTER} clickEvent={this.layerZoomTo}/>;
       }
       else {
         stylePicture = <C4gStarboardStyle styleData={this.props.styleData} styleId={this.props.layer.locstyle} tooltip={this.props.layer.name}/>;
       }
     }
-    else if (this.props.layer.addZoomTo && !this.props.mapController.data.starboard.invertZoomActivate) {
+    else if (this.props.layer.zoomTo && !this.props.mapController.data.starboard.invertZoomActivate) {
       spanZoom = <span className={"c4g-geojson-button"} title={this.props.lang.STARBOARD_ELEMENT_ZOOM_BEFORE+this.props.layer.name+this.props.lang.STARBOARD_ELEMENT_ZOOM_AFTER} onMouseUp={(event) => this.layerZoomTo(event)}/>;
     }
     let cssClass = this.props.layerStates.active ? cssConstants.ACTIVE : cssConstants.INACTIVE;
@@ -195,7 +195,7 @@ export class C4gStarboardLayerElement extends Component {
     let objChilds = this.props.layer.childs;
     let linkText;
     let linkSwitch;
-    if (this.props.mapController.data.starboard.invertZoomActivate && this.props.layer.addZoomTo) {
+    if (this.props.mapController.data.starboard.invertZoomActivate && this.props.layer.zoomTo) {
       linkText = <React.Fragment>
         <a tabIndex={1} title={this.props.layer.name} alt={this.props.lang.STARBOARD_ELEMENT_TRIGGER_1+this.props.layer.name+this.props.lang.STARBOARD_ELEMENT_TRIGGER_2} className={"c4g-starboard-text"} onKeyPress={(event) => this.layerEnter(event)} onMouseUp={(event) => this.layerZoomTo(event)} onKeyPress={(event) => this.layerZoomToEnter(event)}>{this.props.layer.name}</a>
       </React.Fragment>
@@ -238,11 +238,11 @@ export class C4gStarboardLayerElement extends Component {
       );
     }
     else {
-      let spanZoom = null;
       let layerClick = this.layerClick;
       if (this.props.layer.zoomTo) {
         layerClick = this.layerZoomTo;
         cssClass = "c4g-geojson-button";
+        linkSwitch = null;
       }
       return (
           <li tabIndex={1} className={openClose + " c4g-starboard-list-element"}>

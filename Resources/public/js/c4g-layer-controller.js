@@ -800,11 +800,51 @@ export class BetterLayerController {
                       featureProjection: "EPSG:3857",
                     });
                     let features = format.readFeatures(json);
-
-                    for (let i in features) {
-                      if (features.hasOwnProperty(i)) {
-                        if (!features[i].get('locstyle')) {
-                          features[i].set('locstyle', layer.locationStyle || content.locationStyle);
+                    if (layer.split_geojson) {
+                      let nameField = layer.geojson_attributes.split(',')[0];
+                      layer.childs = [];
+                      let searchFunction = (element) => {
+                        return element.id === layer.id;
+                      };
+                      let arrLayers = scope.arrLayers;
+                      let arrLayerStates = scope.mapController.state.arrLayerStates;
+                      let index = arrLayers.findIndex(searchFunction);
+                      arrLayerStates[index].childStates = [];
+                      for (let featureId in features) {
+                        if (features.hasOwnProperty(featureId)) {
+                          if (!features[featureId].get('locstyle')) {
+                            features[featureId].set('locstyle', layer.locationStyle || content.locationStyle);
+                          }
+                          layer.childs.push({
+                            "features"        : [features[featureId]],
+                            "vectorLayer"     : false,
+                            "zoom"            : layer.zoom,
+                            "initial_opened"  : layer.initial_opened,
+                            "locstyle"        : possibleLocstyle,
+                            "zoomTo"          : true,
+                            "activateWithBl"  : false,
+                            "id"              : features[featureId].get("positionId"),
+                            "name"            : features[featureId].get(nameField),
+                            "childs"          : []
+                          });
+                          arrLayerStates[index].childStates.push({
+                            "active": true,
+                            "childStates": [],
+                            "collapsed": false,
+                            "greyed": undefined,
+                            "id": features[featureId].get("positionId")
+                          });
+                        }
+                      }
+                      arrLayers[index] = layer;
+                      scope.mapController.setLayersInitial(arrLayers, arrLayerStates);
+                    }
+                    else {
+                      for (let i in features) {
+                        if (features.hasOwnProperty(i)) {
+                          if (!features[i].get('locstyle')) {
+                            features[i].set('locstyle', layer.locationStyle || content.locationStyle);
+                          }
                         }
                       }
                     }
