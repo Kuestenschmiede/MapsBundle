@@ -815,7 +815,7 @@ export class BetterLayerController {
                           if (!features[featureId].get('locstyle')) {
                             features[featureId].set('locstyle', layer.locationStyle || content.locationStyle);
                           }
-                          layer.childs.push({
+                          arrLayers[index].childs.push({
                             "features"        : [features[featureId]],
                             "vectorLayer"     : false,
                             "zoom"            : layer.zoom,
@@ -827,6 +827,7 @@ export class BetterLayerController {
                             "name"            : features[featureId].get(nameField),
                             "childs"          : []
                           });
+                          arrLayers[index].ignoreChilds = true;
                           arrLayerStates[index].childStates.push({
                             "active": true,
                             "childStates": [],
@@ -836,7 +837,6 @@ export class BetterLayerController {
                           });
                         }
                       }
-                      arrLayers[index] = layer;
                       scope.mapController.setLayersInitial(arrLayers, arrLayerStates);
                     }
                     else {
@@ -848,13 +848,17 @@ export class BetterLayerController {
                         }
                       }
                     }
-                    vectorSource.addFeatures(features);
+                    if (vectorSource instanceof Cluster) {
+                      vectorSource.getSource().addFeatures(features);
+                    }
+                    else {
+                      vectorSource.addFeatures(features);
+                    }
                   }
                 });
               };
               scope.performOtherData(content, responseFunc);
             }
-
           }
         };
         vectorSource.setLoader(loaderFunc);

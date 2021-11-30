@@ -133,7 +133,7 @@ export class C4gStarboardLayerElement extends Component {
       this.hideLayer();
     }
     let newState = this.props.layerStates;
-    if (this.props.layer.childs && this.props.layer.childs.length > 0) {
+    if (this.props.layer.childs && this.props.layer.childs.length > 0 && !this.props.layer.ignoreChilds) {
       let layerChilds = this.props.layer.childs;
       for (let childId in layerChilds) {
         if (layerChilds.hasOwnProperty(childId)) {
