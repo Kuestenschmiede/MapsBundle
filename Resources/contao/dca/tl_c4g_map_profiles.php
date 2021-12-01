@@ -106,7 +106,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                                          '{attribution_legend:hide},attribution;'.
                                          '{information_legend:hide},scaleline,mouseposition,permalink_get_param,permalinkSaveId,permalinkWithoutGenerator,zoomlevel,infopage;'.
                                          '{locstyle_legend:hide},label_color,resize_locstyles_zoom;'.
-                                         '{expert_legend:hide},overpassEngine,caching,cesium,external_elements,filters,filterHandling,filterResetButton,geopicker,beEditor,custom_div,be_optimize_checkboxes_limit,consentBanner;'
+                                         '{expert_legend:hide},overpassEngine,caching,cesium,magnific_popup,external_elements,filters,filterHandling,filterResetButton,geopicker,beEditor,custom_div,be_optimize_checkboxes_limit,consentBanner;'
         ],
     'subpalettes' =>
     [
@@ -780,6 +780,15 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'default'                 => '',
                 'inputType'               => 'checkbox',
                 'eval'                    => [],
+                'sql'                     => "char(1) NOT NULL default ''"
+            ],
+
+        'magnific_popup' =>
+            [
+                'exclude'                 => true,
+                'default'                 => '',
+                'inputType'               => 'checkbox',
+                'eval'                    => ['tl_class' => 'clr m12'],
                 'sql'                     => "char(1) NOT NULL default ''"
             ],
         'external_elements' =>

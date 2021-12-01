@@ -64,11 +64,23 @@ class ResourceLoader extends coreResourceLoader
             'customtab' => $allByDefault,
             'cesium' => false,
             'olms' => $allByDefault,
+            'magnific-popup' => $allByDefault,
         ],
             $resources);
 
         if ($resources['cesium']) {
             parent::loadJavaScriptResource(self::VENDOR_PATH . '/Cesium/Cesium.js', self::BODY, 'cesium');
+        }
+
+        if ($resources['magnific-popup']) {
+            parent::loadJavaScriptResource(
+                'bundles/con4gisprojects/dist/js/vendor-magnific-popup.js',
+                self::HEAD
+            );
+            parent::loadCssResource(
+                'bundles/con4gisprojects/dist/css/vendor-magnific-popup.min.css',
+                self::HEAD
+            );
         }
 
         if ($mapData['router_enable']) {
@@ -171,6 +183,7 @@ class ResourceLoader extends coreResourceLoader
             'customtab' => true,
             'cesium' => $profile->cesium,
             'olms' => true, //ToDo basemap check
+            'magnific-popup' => $profile->magnific_popup
         ];
 
         // load theme
