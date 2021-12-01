@@ -810,10 +810,15 @@ export class BetterLayerController {
                       let arrLayerStates = scope.mapController.state.arrLayerStates;
                       let index = arrLayers.findIndex(searchFunction);
                       arrLayerStates[index].childStates = [];
+                      arrLayers[index].childs = [];
                       for (let featureId in features) {
                         if (features.hasOwnProperty(featureId)) {
+                          let possibleLocstyle = layer.locationStyle || content.locationStyle;
                           if (!features[featureId].get('locstyle')) {
                             features[featureId].set('locstyle', layer.locationStyle || content.locationStyle);
+                          }
+                          else {
+                            possibleLocstyle = features[featureId].get('locstyle');
                           }
                           arrLayers[index].childs.push({
                             "features"        : [features[featureId]],
