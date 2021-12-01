@@ -24,23 +24,17 @@ use Contao\System;
  */
 class ResourceLoader extends coreResourceLoader
 {
-    private static $DEBUG = false;
-
-    const BUNDLE_CSS_PATH = 'bundles/con4gismaps/dist/css/';
-    const BUNDLE_JS_PATH = 'bundles/con4gismaps/build/';
-    const VENDOR_PATH = 'bundles/con4gismaps/vendor/';
+    private const BUNDLE_CSS_PATH = 'bundles/con4gismaps/dist/css/';
+    private const BUNDLE_JS_PATH = 'bundles/con4gismaps/build/';
+    private const VENDOR_PATH = 'bundles/con4gismaps/vendor/';
 
     /**
-     * @TODO: doku
+     * @param array $resources
+     * @param array $mapData
+     * @return bool
      */
     public static function loadResources($resources = [], $mapData = [])
     {
-        global $objPage;
-
-        // $objPage->hasJQuery;
-        // $objPage->hasMooTools
-        // $objPage->isMobile
-
         if (!is_array($resources) || empty($resources)) {
             $allByDefault = true;
             $resources = [];
@@ -68,23 +62,11 @@ class ResourceLoader extends coreResourceLoader
             'infopage' => $allByDefault,
             'plugins' => $allByDefault,
             'customtab' => $allByDefault,
-            'cesium' => false, //Default
+            'cesium' => false,
             'olms' => $allByDefault,
         ],
             $resources);
 
-        // debug-mode active?
-        if ($GLOBALS['con4gis']['maps']['debug']) {
-            $staticOption = '';
-            $suffixOl = '-debug';
-            $suffixCesium = '';
-        } else {
-            $staticOption = '';
-            $suffixOl = '';
-            $suffixCesium = '';
-        }
-
-        // third-party scripts
         if ($resources['cesium']) {
             parent::loadJavaScriptResource(self::VENDOR_PATH . '/Cesium/Cesium.js', self::BODY, 'cesium');
         }
@@ -107,7 +89,6 @@ class ResourceLoader extends coreResourceLoader
         if ($resources['plugins']) {
             if (isset($GLOBALS['TL_HOOKS']['C4gMapsLoadPlugins']) && is_array($GLOBALS['TL_HOOKS']['C4gMapsLoadPlugins'])) {
                 foreach ($GLOBALS['TL_HOOKS']['C4gMapsLoadPlugins'] as $callback) {
-                    // \System::import($callback[0]);
                     $hookClass = new $callback[0];
                     $str_function = $callback[1];
                     if ($str_function) {
@@ -133,7 +114,11 @@ class ResourceLoader extends coreResourceLoader
     }
 
     /**
-     * @TODO: doku
+     * @param $profileId
+     * @param false $geopicker
+     * @param null $profile
+     * @param $mapData
+     * @return array|void
      */
     public static function loadResourcesForProfile($profileId, $geopicker = false, $profile = null, $mapData)
     {
@@ -195,7 +180,8 @@ class ResourceLoader extends coreResourceLoader
     }
 
     /**
-     * @TODO: doku
+     * @param int $themeId
+     * @return array
      */
     public static function loadTheme($themeId = -1)
     {
