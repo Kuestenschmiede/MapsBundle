@@ -183,7 +183,7 @@ class ResourceLoader extends coreResourceLoader
             'customtab' => true,
             'cesium' => $profile->cesium,
             'olms' => true, //ToDo basemap check
-            'magnific-popup' => $profile->magnific_popup
+            'magnific-popup' => $profile->magnific_popup,
         ];
 
         // load theme

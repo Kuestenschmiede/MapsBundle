@@ -4614,6 +4614,22 @@
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
  */
 @font-face {
+  font-family: 'Font Awesome 5 Free';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-regular-400.eot);
+  src: url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-regular-400.eot?#iefix) format("embedded-opentype"),url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-regular-400.woff2) format("woff2"),url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-regular-400.woff) format("woff"),url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-regular-400.ttf) format("truetype"),url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-regular-400.svg#fontawesome) format("svg")
+}
+.far {
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 400
+}
+/*!
+ * Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com
+ * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
+ */
+@font-face {
   font-family: 'Font Awesome 5 Brands';
   font-style: normal;
   font-weight: 400;
@@ -4759,9 +4775,29 @@
   height: 100%;
   max-height: calc(var(--map-height) - .4em);
   padding-right: .4em;
-  overflow-y: auto;
-  overflow-x: hidden;
-  transform: rotateY(180deg)
+  overflow: hidden
+}
+.c4g-control-container-top-left.c4g-geosearch--active {
+  width: auto;
+  transform: none
+}
+.c4g-control-container-top-left.c4g-geosearch--active > .c4g-geosearch {
+  width: 200px;
+  max-width: 100%;
+  display: flex;
+  align-items: center
+}
+.c4g-control-container-top-left.c4g-geosearch--active > .c4g-geosearch > input {
+  text-align: left
+}
+.c4g-control-container-top-left.c4g-geosearch--active > .c4g-geosearch > span {
+  position: absolute;
+  right: 20px;
+  cursor: pointer;
+  color: var(--main-color)
+}
+.c4g-close ~ .searchSpan {
+  display: none
 }
 div.c4g-control-container-top-left > div {
   width: var(--button-size-pixel);
@@ -6504,7 +6540,10 @@ ul.c4g-overlays li a {
   text-decoration: none;
   padding: 0 1.75em 0 .2em;
   cursor: pointer;
-  position: relative
+  position: relative;
+  min-width: -webkit-fit-content;
+  min-width: -moz-fit-content;
+  min-width: fit-content
 }
 .c4g-content-layertree span[class*=locstyle] + .c4g-starboard-text {
   width: calc(100% - 35px - 1.75em - .2em)
@@ -6540,7 +6579,8 @@ span.c4g-icon + span[class*=locstyle] + a {
   float: right;
   margin-right: 5px;
   right: 0;
-  bottom: 0
+  bottom: 0;
+  padding-left: 5px
 }
 .c4g-starboard-headline-link:after {
   margin-right: 5px
@@ -6630,6 +6670,13 @@ span.c4g-starboard-locstyle {
 .c4g-geosearch.c4g-open,
 .c4g-geosearch.c4g-open:hover {
   background: 0 0
+}
+.c4g-geosearch > input.c4g-open .c4g-geosearch > button {
+  float: left;
+  display: inline-block
+}
+.c4g-geosearch > input.c4g-close {
+  display: none
 }
 .c4g-geosearch.c4g-open button.c4g-geosearch-trigger {
   border-radius: 0;
