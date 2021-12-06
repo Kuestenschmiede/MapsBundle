@@ -249,7 +249,7 @@ export default class GeoSearch extends Component {
   }
 
   clickControl(disregardState) {
-    let open = disregardState !== null ? disregardState : this.state.open
+    let open = /*disregardState !== null ? disregardState : */this.state.open;
     if (open) {
       this.setState({open: false});
       if (!this.props.external) {

@@ -4767,6 +4767,9 @@
 .ol-viewport .ol-overlaycontainer-stopevent {
   z-index: auto!important
 }
+.c4g-control-container-top-left::-webkit-scrollbar {
+  display: none
+}
 .c4g-control-container-top-left {
   position: absolute;
   top: .2em;
@@ -4775,26 +4778,35 @@
   height: 100%;
   max-height: calc(var(--map-height) - .4em);
   padding-right: .4em;
-  overflow: hidden
+  -ms-overflow-style: none;
+  scrollbar-width: none
 }
-.c4g-control-container-top-left.c4g-geosearch--active {
+.c4g-control-container-top-left ::-webkit-scrollbar {
+  display: none
+}
+.c4g-control-container-top-left {
   width: auto;
   transform: none
 }
-.c4g-control-container-top-left.c4g-geosearch--active > .c4g-geosearch {
-  width: 200px;
-  max-width: 100%;
+.c4g-control-container-top-left > .c4g-geosearch {
+  position: absolute;
+  width: 300px;
   display: flex;
-  align-items: center
+  align-items: center;
+  grid-gap: 4px
 }
-.c4g-control-container-top-left.c4g-geosearch--active > .c4g-geosearch > input {
-  text-align: left
+.c4g-control-container-top-left > .c4g-geosearch > input {
+  text-align: left;
+  width: 80%
 }
-.c4g-control-container-top-left.c4g-geosearch--active > .c4g-geosearch > span {
+.c4g-control-container-top-left > .c4g-geosearch > span {
   position: absolute;
   right: 20px;
   cursor: pointer;
   color: var(--main-color)
+}
+.c4g-control-container-top-left > .c4g-geosearch + div {
+  margin-top: calc(var(--button-size-pixel) + 8px)
 }
 .c4g-close ~ .searchSpan {
   display: none
