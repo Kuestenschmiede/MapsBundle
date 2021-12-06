@@ -63,7 +63,7 @@ export default class GeoSearch extends Component {
       this.input = input;
 
       let span = document.createElement('span');
-      span.addEventListener('click', this.clickControl);
+      span.addEventListener('click', () => {this.clickControl(true)});
       jQuery(span).addClass('searchSpan');
       let i = document.createElement('i');
       i.innerHTML = "<i class=\"far fa-times-circle\"></i>";
@@ -248,8 +248,9 @@ export default class GeoSearch extends Component {
     }
   }
 
-  clickControl() {
-    if (this.state.open) {
+  clickControl(disregardState) {
+    let open = disregardState !== null ? disregardState : this.state.open
+    if (open) {
       this.setState({open: false});
       if (!this.props.external) {
         jQuery(this.input).addClass('c4g-close').removeClass('c4g-open');
