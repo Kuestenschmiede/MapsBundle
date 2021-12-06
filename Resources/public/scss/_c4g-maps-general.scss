@@ -50,6 +50,9 @@
 /*
  *  Control-container
  */
+.c4g-control-container-top-left::-webkit-scrollbar {
+  display: none;
+}
 .c4g-control-container-top-left {
   position: absolute;
   top: .2em;
@@ -58,27 +61,35 @@
   height: 100%;
   max-height: calc(var(--map-height) - .4em);
   padding-right: .4em;
-  overflow: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
   //transform: rotateY(180deg);
-
-  &.c4g-geosearch--active {
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  & {
     width: auto;
     transform: none;
 
     > .c4g-geosearch {
-      width: 200px;
-      max-width: 100%;
+
+      position: absolute;
+      width: 300px;
       display: flex;
       align-items: center;
-
+      grid-gap: 4px;
       > input {
         text-align: left;
+        width: 80%
       }
       > span {
         position: absolute;
         right: 20px;
         cursor: pointer;
         color: var(--main-color);
+      }
+      + div {
+        margin-top: calc(var(--button-size-pixel) + 8px);
       }
     }
   }
