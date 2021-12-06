@@ -202,7 +202,7 @@ export default class GeoSearch extends Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.state.open) {
-      if (prevState.open !== this.state.open) {
+      if (prevState.open !== this.state.open && this.state.results && this.state.results.length) {
         this.props.mapController.setOpenComponent(this);
       }
       if (this.state.openResults && !this.props.extResultsDiv) {
