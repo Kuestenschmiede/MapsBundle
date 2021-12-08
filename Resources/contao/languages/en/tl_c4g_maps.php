@@ -114,6 +114,10 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['hideInStarboard'] = array("Hide in starboard
 $GLOBALS['TL_LANG']['tl_c4g_maps']['addZoom'] = array("Zoombutton in starboard", "If set, a zoombutton is added to the starboard element.");
 $GLOBALS['TL_LANG']['tl_c4g_maps']['cssClass'] = array("CSS class", "css class for starboard listelements");
 
+$GLOBALS['TL_LANG']['tl_c4g_maps']['c4gioType'] = array("Type of area", "Art, Type of areas to be displayed");
+$GLOBALS['TL_LANG']['tl_c4g_maps']['c4gioString'] = array("Area selection", "Select the area to be displayed (seperated by comma).");
+$GLOBALS['TL_LANG']['tl_c4g_maps']['c4gioDropdown'] = array("Area selection", "Select the area to be displayed.");
+
 $GLOBALS['TL_LANG']['tl_c4g_maps']['excludeFromSingleLayer'] = array("Handle structure element separately.", "This parameter has the best possible default settings. Only in individual cases, especially with mass data, can it be useful to change the selection.");
 
 
@@ -194,6 +198,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['protection_legend']	    = 'Access protection
 $GLOBALS['TL_LANG']['tl_c4g_maps']['expert_legend']         = 'Expert settings';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['backend_legend']        = 'Backend settings';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['publish_legend']        = 'Publish settings';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['con4gisio_legend']      = 'Con4gis-IO settings';
 
 $GLOBALS['TL_LANG']['tl_c4g_maps']['editalias'] = array('Edit source element', 'Edit the source element ID %s');
 

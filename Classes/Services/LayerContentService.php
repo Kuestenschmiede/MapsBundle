@@ -11,6 +11,7 @@
 
 namespace con4gis\MapsBundle\Classes\Services;
 
+use con4gis\CoreBundle\Classes\C4GUtils;
 use con4gis\MapsBundle\Classes\Utils;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapLocstylesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
@@ -112,6 +113,10 @@ class LayerContentService
                 $linkContent = $this->createLayerFromLink($objLayer);
 
                 return $linkContent ? $linkContent : [];
+
+                break;
+            case 'con4gisio':
+                return $this->getCon4gisIoLayerContent($objLayer);
 
                 break;
             default:
@@ -356,7 +361,64 @@ class LayerContentService
             ],
         ];
     }
+    private function getCon4gisIoLayerContent($objLayer) {
+        $c4gioType = $objLayer->c4gioType;
+        switch ($c4gioType) {
+            case "0":
+                $areas = explode(',', $objLayer->c4gioString);
+                $strOvp = "[out:xml][timeout:30];(";
+                foreach ($areas as $area) {
+                    $strOvp .= "relation[postal_code=$area][boundary=postal_code];";
+                }
+                $strOvp .= ");out body;>;out skel qt;";
+                break;
+            case "1":
+                $areas = unserialize($objLayer->c4gioDropdown);
+                $strOvp = "[out:xml][timeout:30];(";
+                foreach ($areas as $area) {
+                    $strOvp .= "relation[ref=$area][admin_level=4];";
+                }
+                $strOvp .= ");out body;>;out skel qt;";
+                break;
+            default:
+                break;
 
+        }
+        $settings = C4gMapSettingsModel::findOnly();
+        $key = C4GUtils::getKey($settings, 5);
+        $url = $settings->con4gisIoUrl;
+//        $strOvp = '[out:xml][timeout:120];(area[admin_level=2][int_name=Germany]->.a;relation(area.a)["admin_level"="4"]->._;);out body;>;out skel qt;';
+//        $strOvp = '[out:xml][timeout:30];(relation[ref=NDS][admin_level=4];relation[ref=SH][admin_level=4];relation[ref=MV][admin_level=4];relation[ref=BB][admin_level=4];);out body;>;out skel qt;';
+        $url .= "osm.php?key=" . $key . "&data=" . rawurlencode($strOvp);
+        return [[
+            'id' => $objLayer->id,
+            'type' => 'urlData',
+            'format' => 'OSMXML',
+            'origType' => 'osm',
+            'locationStyle' => $objLayer->locstyle,
+            'cluster_fillcolor' => $objLayer->cluster_fillcolor,
+            'cluster_fontcolor' => $objLayer->cluster_fontcolor,
+            'cluster_zoom' => $objLayer->cluster_zoom,
+            'hover_location' => $objLayer->hover_location,
+            'hover_style' => $objLayer->hover_style,
+            'data' => [
+                'url' => $url,
+                'popup' => false,
+                'tooltip' => $objLayer->tooltip,
+                'tooltip_length' => $objLayer->tooltip_length,
+                'label' => $objLayer->loc_label,
+                'zoom_onclick' => $objLayer->loc_onclick_zoomto,
+            ],
+            'settings' => [
+                'loadAsync' => true,
+                'refresh' => false,
+                'crossOrigine' => false,
+                'boundingBox' => false,
+                'cluster' => $objLayer->cluster_locations ? ($objLayer->cluster_distance ? $objLayer->cluster_distance : 20) : false,
+
+            ],
+        ]];
+    }
     private function getTableLayerContent($objLayer, $lang)
     {
         $arrReturnData = [];

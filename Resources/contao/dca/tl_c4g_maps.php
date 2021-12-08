@@ -127,7 +127,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
         ],
     'palettes' =>
         [
-        '__selector__'                => ['location_type', 'tab_source', 'show_locations', 'enablePopup', 'popup_extend', 'protect_element', 'use_specialprofile', 'cluster_locations', 'split_geojson'],
+        '__selector__'                => ['location_type', 'tab_source', 'show_locations', 'enablePopup', 'popup_extend', 'protect_element', 'use_specialprofile', 'cluster_locations', 'split_geojson', 'c4gioType'],
 
         'map'                         => '{general_legend},name,location_type;'.
                                          '{map_legend},width,height,margin,show_locations,center_geox,center_geoy,center_rotation,zoom,geolocation,restrict_area;'.
@@ -180,7 +180,12 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                                          '{protection_legend:hide},protect_element;'.
                                          '{publish_legend:hide},published,publishStart,publishStop;'.
                                          '{expert_legend:hide},excludeFromSingleLayer,be_optimize_checkboxes_limit;',
-
+        'con4gisio'                   => '{general_legend},name,location_type;'.
+                                         '{con4gisio_legend},c4gioType;'.
+                                         '{location_legend},data_layername,hide_child,initial_opened,exemptFromRealFilter,exemptFromFilter,filterByBaseLayer,data_hidelayer,hideInStarboard,addZoom,locstyle,zIndex,loc_label,tooltip,tooltip_length,enablePopup,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,cluster_locations,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
+                                         '{protection_legend:hide},protect_element;'.
+                                         '{publish_legend:hide},published,publishStart,publishStop;'.
+                                         '{expert_legend:hide},excludeFromSingleLayer,be_optimize_checkboxes_limit;',
         'link'                        => '{general_legend},name,location_type;'.
                                          '{location_legend},data_layername,data_hidelayer,hideInStarboard,addZoom,initial_opened,link_id;'.
                                          '{protection_legend:hide},protect_element;'.
@@ -212,7 +217,9 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
         'protect_element'             => 'permitted_groups',
         'popup_extend'                => 'forums',
         'cluster_locations'           => 'cluster_distance, cluster_fillcolor, cluster_fontcolor, cluster_zoom,cluster_popup',
-        'split_geojson'               => 'geojson_attributes, geojson_zoom'
+        'split_geojson'               => 'geojson_attributes, geojson_zoom',
+        'c4gioType_0'                 => 'c4gioString',
+        'c4gioType_1'                 => 'c4gioDropdown'
         ],
     'fields' =>
         [
@@ -1052,6 +1059,31 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 'default'                 => '2',
                 'sql'                     => "char(1) NOT NULL default '2'"
             ],
+        'c4gioType' =>
+            [
+                'exclude'                 => true,
+                'inputType'               => 'radio',
+                'options'                 => ['0','1'],
+                'eval'                    => ['mandatory'=>true, 'submitOnChange' => true],
+                'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['c4gioType'],
+                'default'                 => '0',
+                'sql'                     => "char(1) NOT NULL default '0'"
+            ],
+        'c4gioString' =>
+            [
+                'exclude'                 => true,
+                'inputType'               => 'text',
+                'eval'                    => ['maxlength'=>100],
+                'sql'                     => "varchar(100) NOT NULL default ''"
+            ],
+        'c4gioDropdown' =>
+            [
+                'exclude'                 => true,
+                'inputType'               => 'select',
+                'options_callback'        => ['tl_c4g_maps','getC4gIoDropdown'],
+                'eval'                    => ['tl_class'=>'clr',  'chosen' => true, 'multiple' => true],
+                'sql'                     => "blob NULL"
+            ],
         'be_optimize_checkboxes_limit' =>
             [
                 'exclude'                 => true,
@@ -1165,6 +1197,31 @@ class tl_c4g_maps extends Backend
             $return = array_merge($return, $GLOBALS['c4g_locationtypes']);
         }
         return $return;
+    }
+    public function getC4gIoDropdown(DataContainer $dc) {
+        $currentType = $dc->activeRecord->c4gioType;
+        $response = [];
+        if ($currentType == 1) {
+            $response = [
+                "NDS"   => "Niedersachsen",
+                "SH"    => "Schleswig-Holstein",
+                "MV"    => "Mecklenburg-Vorpommern",
+                "BB"    => "Brandenburg",
+                "SN"    => "Sachsen",
+                "ST"    => "Sachsen-Anhalt",
+                "TH"    => "Thüringen",
+                "BY"    => "Bayern",
+                "BW"    => "Baden-Württemberg",
+                "SL"    => "Saarland",
+                "RLP"   => "Rheinland-Pfalz",
+                "H"     => "Hessen",
+                "NRW"   => "Nordrhein-Westfalen",
+                "HB"    => "Bremen",
+                "HH"    => "Hamburg",
+                "B"     => "Berlin"
+            ];
+        }
+        return $response;
     }
 
 

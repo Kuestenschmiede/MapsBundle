@@ -115,6 +115,10 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['hideInStarboard'] = array("Im Starboard nich
 $GLOBALS['TL_LANG']['tl_c4g_maps']['addZoom'] = array("Zoombutton im Starboard", "Wenn Sie diese Checkbox setzen, wird ein Zoombutton im Starboard hinzugefügt");
 $GLOBALS['TL_LANG']['tl_c4g_maps']['cssClass'] = array("CSS Klasse", "Die CSS Klasse wird am Listenelement im Starboard gesetzt.");
 
+$GLOBALS['TL_LANG']['tl_c4g_maps']['c4gioType'] = array("Art des Gebiets", "Art, welches Gebiet dargestellt werden soll.");
+$GLOBALS['TL_LANG']['tl_c4g_maps']['c4gioString'] = array("Gebietsauswahl", "Auswahl der darzustellenden Gebiete (kommagetrennt).");
+$GLOBALS['TL_LANG']['tl_c4g_maps']['c4gioDropdown'] = array("Gebietsauswahl", "Auswahl der darzustellenden Gebiete.");
+
 $GLOBALS['TL_LANG']['tl_c4g_maps']['excludeFromSingleLayer'] = array("Strukturelement separat händeln.", "Dieser Parameter ist bestmöglich vorbelegt. Nur im Einzelfall, insbesondere bei Massendaten, kann es sinnvoll sein die Auswahl zu verändern.");
 /**
  * Buttons
@@ -144,6 +148,9 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['default_profile'] = 'Internes Standardprofil
  */
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['CENTERZOOM'] = 'Angabe von Center und Zoom-Level';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['LOCATIONS'] = 'Alle Lokationen sollen sichtbar sein';
+
+$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['c4gioType'][0] = 'Postleitzahlen';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['c4gioType'][1] = 'Bundesländer';
 
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['map']       = 'Karte (keine Lokation)';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['none']      = 'Strukturebene (keine Lokation)';
@@ -195,6 +202,8 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['protection_legend']	    = 'Zugriffsschutz';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['expert_legend']	    	= 'Experteneinstellungen';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['backend_legend']        = 'Backendeinstellungen';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['publish_legend']        = 'Veröffentlichung';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['con4gisio_legend']      = 'Con4gis-IO Einstellungen';
+
 
 $GLOBALS['TL_LANG']['tl_c4g_maps']['editalias'] = array('Quellelement bearbeiten', 'Das Quellelement ID %s bearbeiten');
 
