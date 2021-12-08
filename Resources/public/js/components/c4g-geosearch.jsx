@@ -43,7 +43,7 @@ export default class GeoSearch extends Component {
     button.setAttribute('title', this.langConstants.CTRL_GEOSEARCH);
     element.className = "c4g-geosearch" + " ol-control " + "ol-unselectable";
     element.appendChild(button);
-    jQuery(button).on('click', this.clickControl);
+    jQuery(button).on('click', ()=> {this.clickControl()});
 
     if (props.external) {
       element.className += " c4g-external";
@@ -249,7 +249,7 @@ export default class GeoSearch extends Component {
   }
 
   clickControl(disregardState) {
-    let open = disregardState !== null ? disregardState : this.state.open
+    let open = disregardState !== undefined ? disregardState : this.state.open
     if (open) {
       this.setState({open: false});
       if (!this.props.external) {

@@ -71,7 +71,7 @@
     width: auto;
     transform: none;
 
-    > .c4g-geosearch {
+    > .c4g-geosearch:not(.c4g-external) {
 
       position: absolute;
       width: 300px;
