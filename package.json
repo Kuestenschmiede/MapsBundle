@@ -47,7 +47,7 @@
     "gulp-sass": "^4.1.1",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-uglify": "^3.0.2",
-    "webpack": "^5.64.4",
+    "webpack": "^5.65.0",
     "webpack-cli": "^4.9.1"
   },
   "dependencies": {
@@ -65,7 +65,7 @@
     "ol": "6.9.0",
     "ol-cesium": "^2.13.0",
     "ol-ext": "^3.2.16",
-    "ol-mapbox-style": "^6.5.3",
+    "ol-mapbox-style": "^6.7.0",
     "opening_hours": "^3.7.0",
     "osmtogeojson": "^3.0.0-beta.4",
     "proj4": "^2.7.4",
