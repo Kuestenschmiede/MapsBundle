@@ -46,8 +46,12 @@ export class FeatureFilterList extends Component {
             className = " fi_" + utils.removeUmlauts(this.props.feature.name);
             let liClass = "c4g-item-checked";
             liClass += this.props.checkedItem.identifier === "all" ? "" : " clicked";
+            let img = null;
+            if (this.props.feature.image) {
+                img = <img src={this.props.feature.image} title={this.props.feature.name} width={this.props.feature.width} height={this.props.feature.height}/>;
+            }
             return (<li className={liClass}>
-                <img src={this.props.feature.image} title={this.props.feature.name} width={this.props.feature.width} height={this.props.feature.height}/>
+                {img}
                 <strong className={className} onMouseUp={(evt) => {this.props.filterLayers(this.props.feature.filters[1].identifier !== this.props.checkedItem.identifier ? this.props.feature.filters[1].identifier : "all", this.props.id, this.props.feature.filters[1].identifier !== this.props.checkedItem.identifier ? this.props.feature.filters[1].value :undefined, this.props.feature.filters[1].identifier !== this.props.checkedItem.identifier ? this.props.feature.filters[1].field : undefined); evt.stopPropagation(); evt.preventDefault();}}>{utils.decodeHTML(this.props.feature.name)}</strong>
             </li>);
         }

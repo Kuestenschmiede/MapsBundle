@@ -53,10 +53,14 @@ export class FeatureFilterMultiCheckbox extends Component {
         else {
             className += " fi_" + utils.removeUmlauts(this.props.feature.name);
             let liClass =  "c4g-item-checked";
-            liClass += this.props.checkedItems.length === 0 ? "" : " clicked"
+            liClass += this.props.checkedItems.length === 0 ? "" : " clicked";
+            let img = null;
+            if (this.props.feature.image) {
+                img = <img src={this.props.feature.image} title={this.props.feature.name} width={this.props.feature.width} height={this.props.feature.height}/>
+            }
             return (
                 <li className={liClass}>
-                    <img src={this.props.feature.image} title={this.props.feature.name} width={this.props.feature.width} height={this.props.feature.height}/>
+                    {img}
                     <strong className={className} onMouseUp={(evt) => {this.props.filterLayers(this.props.feature.filters[1].identifier, this.props.id, true); evt.stopPropagation(); evt.preventDefault();}}>{utils.decodeHTML(this.props.feature.name)}</strong>
                 </li>
             );
