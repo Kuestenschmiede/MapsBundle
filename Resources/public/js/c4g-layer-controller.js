@@ -277,7 +277,8 @@ export class BetterLayerController {
     }
     this.vectorLayer = new Vector({
       source: this.vectorSource,
-      style: this.clusterStyleFunction
+      style: this.clusterStyleFunction,
+      zIndex: 10
     });
     this.layerRequests = {};
     this.ovpKey = this.mapController.data.ovp_key;
