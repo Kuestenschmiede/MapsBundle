@@ -379,7 +379,7 @@ export class BetterLayerController {
         }
       }
     }
-    if (!layer.features || !layer.features.length) {
+    if (!layer.features || layer.features.length === 0) {
       extent = this.getExtentForLayer(extent, layer.id);
     }
     else {
@@ -1019,7 +1019,7 @@ export class BetterLayerController {
         "tags"            : layer.tags,
         "hide"            : hide,
         "childs"          : childs,
-        "addZoomTo"       : layer.addZoomTo
+        "zoomTo"       : layer.zoomTo
       };
     }
   }
