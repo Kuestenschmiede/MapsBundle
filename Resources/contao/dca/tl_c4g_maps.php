@@ -182,7 +182,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                                          '{expert_legend:hide},excludeFromSingleLayer,be_optimize_checkboxes_limit;',
         'con4gisio'                   => '{general_legend},name,location_type;'.
                                          '{con4gisio_legend},c4gioType;'.
-                                         '{location_legend},data_layername,hide_child,initial_opened,exemptFromRealFilter,exemptFromFilter,filterByBaseLayer,data_hidelayer,hideInStarboard,addZoom,locstyle,zIndex,loc_label,tooltip,tooltip_length,enablePopup,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,cluster_locations,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
+                                         '{location_legend},data_layername,hide_child,initial_opened,exemptFromRealFilter,exemptFromFilter,filterByBaseLayer,data_hidelayer,hideInStarboard,addZoom,locstyle,zIndex,loc_label,tooltip,tooltip_length,enablePopup,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
                                          '{protection_legend:hide},protect_element;'.
                                          '{publish_legend:hide},published,publishStart,publishStop;'.
                                          '{expert_legend:hide},excludeFromSingleLayer,be_optimize_checkboxes_limit;',
@@ -218,8 +218,8 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
         'popup_extend'                => 'forums',
         'cluster_locations'           => 'cluster_distance, cluster_fillcolor, cluster_fontcolor, cluster_zoom,cluster_popup',
         'split_geojson'               => 'geojson_attributes, geojson_zoom',
-        'c4gioType_0'                 => 'c4gioString',
-        'c4gioType_1'                 => 'c4gioDropdown'
+        'c4gioType_1'                 => 'c4gioString',
+        'c4gioType_2'                 => 'c4gioDropdown'
         ],
     'fields' =>
         [
@@ -1063,17 +1063,17 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             [
                 'exclude'                 => true,
                 'inputType'               => 'radio',
-                'options'                 => ['0','1'],
+                'options'                 => ['1','2'],
                 'eval'                    => ['mandatory'=>true, 'submitOnChange' => true],
                 'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['c4gioType'],
-                'default'                 => '0',
-                'sql'                     => "char(1) NOT NULL default '0'"
+                'default'                 => '1',
+                'sql'                     => "char(1) NOT NULL default '1'"
             ],
         'c4gioString' =>
             [
                 'exclude'                 => true,
                 'inputType'               => 'text',
-                'eval'                    => ['maxlength'=>100],
+                'eval'                    => ['maxlength'=>100, "regxp" => "^[0-9]{5}(,[0-9]{5})*$"],
                 'sql'                     => "varchar(100) NOT NULL default ''"
             ],
         'c4gioDropdown' =>
@@ -1081,7 +1081,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 'exclude'                 => true,
                 'inputType'               => 'select',
                 'options_callback'        => ['tl_c4g_maps','getC4gIoDropdown'],
-                'eval'                    => ['tl_class'=>'clr',  'chosen' => true, 'multiple' => true],
+                'eval'                    => ['tl_class'=>'clr', 'chosen' => true, 'multiple' => true],
                 'sql'                     => "blob NULL"
             ],
         'be_optimize_checkboxes_limit' =>
@@ -1201,7 +1201,7 @@ class tl_c4g_maps extends Backend
     public function getC4gIoDropdown(DataContainer $dc) {
         $currentType = $dc->activeRecord->c4gioType;
         $response = [];
-        if ($currentType == 1) {
+        if ($currentType == 2) {
             $response = [
                 "NDS"   => "Niedersachsen",
                 "SH"    => "Schleswig-Holstein",

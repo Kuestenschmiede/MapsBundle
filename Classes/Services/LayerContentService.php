@@ -364,15 +364,17 @@ class LayerContentService
     private function getCon4gisIoLayerContent($objLayer) {
         $c4gioType = $objLayer->c4gioType;
         switch ($c4gioType) {
-            case "0":
+            case "1":
                 $areas = explode(',', $objLayer->c4gioString);
                 $strOvp = "[out:xml][timeout:30];(";
                 foreach ($areas as $area) {
-                    $strOvp .= "relation[postal_code=$area][boundary=postal_code];";
+                    if (preg_match("/^[0-9]{5}$/", $area))  {
+                        $strOvp .= "relation[postal_code=$area][boundary=postal_code];";
+                    }
                 }
                 $strOvp .= ");out body;>;out skel qt;";
                 break;
-            case "1":
+            case "2":
                 $areas = unserialize($objLayer->c4gioDropdown);
                 $strOvp = "[out:xml][timeout:30];(";
                 foreach ($areas as $area) {
@@ -394,7 +396,7 @@ class LayerContentService
             'id' => $objLayer->id,
             'type' => 'urlData',
             'format' => 'OSMXML',
-            'origType' => 'osm',
+            'origType' => 'con4gisio',
             'locationStyle' => $objLayer->locstyle,
             'cluster_fillcolor' => $objLayer->cluster_fillcolor,
             'cluster_fontcolor' => $objLayer->cluster_fontcolor,

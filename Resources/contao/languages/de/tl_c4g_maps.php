@@ -149,8 +149,8 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['default_profile'] = 'Internes Standardprofil
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['CENTERZOOM'] = 'Angabe von Center und Zoom-Level';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['LOCATIONS'] = 'Alle Lokationen sollen sichtbar sein';
 
-$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['c4gioType'][0] = 'Postleitzahlen';
-$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['c4gioType'][1] = 'Bundesländer';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['c4gioType']['1'] = 'Postleitzahlen';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['c4gioType']['2'] = 'Bundesländer';
 
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['map']       = 'Karte (keine Lokation)';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['none']      = 'Strukturebene (keine Lokation)';
