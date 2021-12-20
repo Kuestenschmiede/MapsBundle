@@ -308,4 +308,9 @@ export default class EditorComponent extends Component {
       </div>
     )
   }
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if ((prevProps.open && !this.props.open) || (prevState.open && !this.state.open)) {
+      jQuery(this.props.mapController.editorContainer).removeClass("c4g-open").addClass("c4g-close");
+    }
+  }
 }
