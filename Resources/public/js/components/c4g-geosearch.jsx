@@ -201,21 +201,23 @@ export default class GeoSearch extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (this.state.open) {
-      if (prevState.open !== this.state.open && this.state.results && this.state.results.length) {
-        this.props.mapController.setOpenComponent(this);
-      }
-      if (this.state.openResults && !this.props.extResultsDiv) {
-        jQuery(".c4g-geosearch-container-right").addClass("c4g-open").removeClass("c4g-close");
+    if (this.props.mapController && this.props.mapController.data && this.props.mapController.data.geosearch && this.props.mapController.data.geosearch.results) {
+      if (this.state.open) {
+        if (prevState.open !== this.state.open && this.state.results && this.state.results.length) {
+          this.props.mapController.setOpenComponent(this);
+        }
+        if (this.state.openResults && !this.props.extResultsDiv) {
+          jQuery(".c4g-geosearch-container-right").addClass("c4g-open").removeClass("c4g-close");
 
+        }
+      } else {
+        jQuery(".c4g-geosearch-container-right").addClass("c4g-close").removeClass("c4g-open");
       }
-    } else {
-      jQuery(".c4g-geosearch-container-right").addClass("c4g-close").removeClass("c4g-open");
-    }
-    if (this.props.mapController.data.caching && !this.state.open) {
-      let panelVal = utils.getValue('panel');
-      if (panelVal === this.constructor.name) {
-        utils.storeValue('panel', "");
+      if (this.props.mapController.data.caching && !this.state.open) {
+        let panelVal = utils.getValue('panel');
+        if (panelVal === this.constructor.name) {
+          utils.storeValue('panel', "");
+        }
       }
     }
   }
