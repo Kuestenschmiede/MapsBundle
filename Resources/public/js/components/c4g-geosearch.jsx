@@ -405,7 +405,7 @@ export default class GeoSearch extends Component {
             function (feature, layer) {
               return layer;
             });
-        feature = feature.get('features') && feature.get('features').length > 0 ? feature.get('features')[0] : feature;
+        feature = feature && feature.get('features') && feature.get('features').length > 0 ? feature.get('features')[0] : feature;
         if (this.config.popup) {
           var popupInfos = {};
           if (feature && feature.get('popup')) {
@@ -447,6 +447,9 @@ export default class GeoSearch extends Component {
                     mapController: this.props.mapController
                   });
                 }
+                if (!this.props.mapController.proxy.popupController.currentPopup) {
+                  this.props.mapController.proxy.popupController.addPopUp(false);
+                }
                 this.props.mapController.proxy.popupController.setPopup(objPopup);
               } else {
                 jQuery.ajax({
@@ -471,6 +474,9 @@ export default class GeoSearch extends Component {
                       popup: objPopup,
                       mapController: scope.props.mapController
                     });
+                  }
+                  if (!scope.props.mapController.proxy.popupController.currentPopup) {
+                    scope.props.mapController.proxy.popupController.addPopUp(false);
                   }
                   scope.props.mapController.proxy.popupController.setPopup(objPopup);
                 });
