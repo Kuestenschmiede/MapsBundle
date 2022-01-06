@@ -4788,24 +4788,24 @@
   width: auto;
   transform: none
 }
-.c4g-control-container-top-left > .c4g-geosearch {
+.c4g-control-container-top-left > .c4g-geosearch:not(.c4g-external) {
   position: absolute;
   width: 300px;
   display: flex;
   align-items: center;
   grid-gap: 4px
 }
-.c4g-control-container-top-left > .c4g-geosearch > input {
+.c4g-control-container-top-left > .c4g-geosearch:not(.c4g-external) > input {
   text-align: left;
   width: 80%
 }
-.c4g-control-container-top-left > .c4g-geosearch > span {
+.c4g-control-container-top-left > .c4g-geosearch:not(.c4g-external) > span {
   position: absolute;
   right: 20px;
   cursor: pointer;
   color: var(--main-color)
 }
-.c4g-control-container-top-left > .c4g-geosearch + div {
+.c4g-control-container-top-left > .c4g-geosearch:not(.c4g-external) + div {
   margin-top: calc(var(--button-size-pixel) + 8px)
 }
 .c4g-close ~ .searchSpan {
