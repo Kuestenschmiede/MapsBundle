@@ -361,26 +361,29 @@ class LayerContentService
             ],
         ];
     }
-    private function getCon4gisIoLayerContent($objLayer) {
+    private function getCon4gisIoLayerContent($objLayer)
+    {
         $c4gioType = $objLayer->c4gioType;
         switch ($c4gioType) {
-            case "1":
+            case '1':
                 $areas = explode(',', $objLayer->c4gioString);
-                $strOvp = "[out:xml][timeout:30];(";
+                $strOvp = '[out:xml][timeout:30];(';
                 foreach ($areas as $area) {
-                    if (preg_match("/^[0-9]{5}$/", $area))  {
+                    if (preg_match('/^[0-9]{5}$/', $area)) {
                         $strOvp .= "relation[postal_code=$area][boundary=postal_code];";
                     }
                 }
-                $strOvp .= ");out body;>;out skel qt;";
+                $strOvp .= ');out body;>;out skel qt;';
+
                 break;
-            case "2":
+            case '2':
                 $areas = unserialize($objLayer->c4gioDropdown);
-                $strOvp = "[out:xml][timeout:30];(";
+                $strOvp = '[out:xml][timeout:30];(';
                 foreach ($areas as $area) {
                     $strOvp .= "relation[ref=$area][admin_level=4];";
                 }
-                $strOvp .= ");out body;>;out skel qt;";
+                $strOvp .= ');out body;>;out skel qt;';
+
                 break;
             default:
                 break;
@@ -391,7 +394,8 @@ class LayerContentService
         $url = $settings->con4gisIoUrl;
 //        $strOvp = '[out:xml][timeout:120];(area[admin_level=2][int_name=Germany]->.a;relation(area.a)["admin_level"="4"]->._;);out body;>;out skel qt;';
 //        $strOvp = '[out:xml][timeout:30];(relation[ref=NDS][admin_level=4];relation[ref=SH][admin_level=4];relation[ref=MV][admin_level=4];relation[ref=BB][admin_level=4];);out body;>;out skel qt;';
-        $url .= "osm.php?key=" . $key . "&data=" . rawurlencode($strOvp);
+        $url .= 'osm.php?key=' . $key . '&data=' . rawurlencode($strOvp);
+
         return [[
             'id' => $objLayer->id,
             'type' => 'urlData',

@@ -33,7 +33,7 @@ export class RouterPopupButtons extends Component {
                     coordinates = geometry.getCoordinates();
                     i += 2;
                     if (i > 42) { //prevent endless loop & magic number is magic
-                        import("./../../../../../CoreBundle/Resources/public/vendor/js/AlertHandler").then(module => {
+                        import("./../../../../../CoreBundle/src/Resources/public/vendor/js/AlertHandler").then(module => {
                             let alertHandler = new module.AlertHandler();
                             alertHandler.showInfoDialog(scope.props.config.router.languageConstants.ROUTER_VIEW_ALERT_ERROR, scope.props.config.router.languageConstants.ROUTER_ERROR_LINESTRING);
                         });

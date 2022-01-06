@@ -1322,14 +1322,14 @@ export class RouterView extends Component {
         // return [parseFloat(response[0].lon), parseFloat(response[0].lat)];
       } else {
         // show error hint
-        import("./../../../../../CoreBundle/Resources/public/vendor/js/AlertHandler").then(module => {
+        import("./../../../../../CoreBundle/src/Resources/public/vendor/js/AlertHandler").then(module => {
           let alertHandler = new module.AlertHandler();
           alertHandler.showInfoDialog(scope.props.langConstants.ROUTER_VIEW_ALERT_ERROR, scope.props.langConstants.ROUTER_VIEW_ALERT_ADDRESS);
         });
       }
 
     }).catch(function () {
-      import("./../../../../../CoreBundle/Resources/public/vendor/js/AlertHandler").then(module => {
+      import("./../../../../../CoreBundle/src/Resources/public/vendor/js/AlertHandler").then(module => {
         let alertHandler = new module.AlertHandler();
         alertHandler.showInfoDialog(scope.props.langConstants.ROUTER_VIEW_ALERT_ERROR, scope.props.langConstants.ROUTER_VIEW_ALERT_ADDRESS);
       });
@@ -1420,7 +1420,7 @@ export class RouterView extends Component {
         }
       } else {
         // show error hint
-        import("./../../../../../CoreBundle/Resources/public/vendor/js/AlertHandler").then(module => {
+        import("./../../../../../CoreBundle/src/Resources/public/vendor/js/AlertHandler").then(module => {
           let alertHandler = new module.AlertHandler();
           alertHandler.showInfoDialog(scope.props.langConstants.ROUTER_VIEW_ALERT_ERROR, scope.props.langConstants.ROUTER_VIEW_ALERT_ADDRESS);
         });
@@ -1430,7 +1430,7 @@ export class RouterView extends Component {
         opt_callback();
       }
     }).fail(function () {
-      import("./../../../../../CoreBundle/Resources/public/vendor/js/AlertHandler").then(module => {
+      import("./../../../../../CoreBundle/src/Resources/public/vendor/js/AlertHandler").then(module => {
         let alertHandler = new module.AlertHandler();
         alertHandler.showInfoDialog(scope.props.langConstants.ROUTER_VIEW_ALERT_ERROR, scope.props.langConstants.ROUTER_VIEW_ALERT_ADDRESS);
       });
@@ -1637,7 +1637,7 @@ export class RouterView extends Component {
           scope.response = response;
           if (response) {
             if (response.error) {
-              import("./../../../../../CoreBundle/Resources/public/vendor/js/AlertHandler").then(module => {
+              import("./../../../../../CoreBundle/src/Resources/public/vendor/js/AlertHandler").then(module => {
                 let alertHandler = new module.AlertHandler();
                 alertHandler.showInfoDialog(scope.props.langConstants[response.error]);
               });

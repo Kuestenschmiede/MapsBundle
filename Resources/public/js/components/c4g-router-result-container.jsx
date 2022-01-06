@@ -246,7 +246,7 @@ export class RouterResultContainer extends Component {
           objInput[i] = elements[i].name;
         }
       }
-      import("./../../../../../CoreBundle/Resources/public/vendor/js/AlertHandler").then(module => {
+      import("./../../../../../CoreBundle/src/Resources/public/vendor/js/AlertHandler").then(module => {
         let alertHandler = new module.AlertHandler();
         let promise = alertHandler.showSelectDialog(scope.props.lang.ROUTER_EDITOR_ELEMENT, objInput, scope.props.lang.ACCEPT, scope.props.lang.CANCEL);
         promise.then((value) => {

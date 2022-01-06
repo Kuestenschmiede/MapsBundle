@@ -50,6 +50,7 @@ $GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['beGeopickerProfile'] =
         )
 
     ];
+
 $GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['editorprofile'] = [
     'exclude'                 => true,
     'inputType'               => 'select',
