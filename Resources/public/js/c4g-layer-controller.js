@@ -708,6 +708,12 @@ export class BetterLayerController {
           }
         }
       }
+      childs.filter((elem, index) => {
+        let index2 = childs.findIndex((elem2) => {
+          return elem['id'] === elem2['id'];
+        });
+        return index === index2;
+      });
     }
     else if (layer.split_geojson) {
       let nameField = layer.geojson_attributes.split(',')[0];
