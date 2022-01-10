@@ -13,20 +13,20 @@ const webpack = require("webpack");
 var path = require('path');
 var config = {
   entry: {
-    'c4g-maps': './Resources/public/js/c4g-maps-main.js',
-    'c4g-backend-helper': './Resources/public/js/c4g-backend-helper.js',
-    'c4g-backend-editor': './Resources/public/js/c4g-backend-editor.js',
-    'c4g-search': './Resources/public/js/c4g-search.js'
+    'c4g-maps': './src/Resources/public/js/c4g-maps-main.js',
+    'c4g-backend-helper': './src/Resources/public/js/c4g-backend-helper.js',
+    'c4g-backend-editor': './src/Resources/public/js/c4g-backend-editor.js',
+    'c4g-search': './src/Resources/public/js/c4g-search.js'
   },
   mode: "production",
   output: {
     filename: '[name].js',
-    path: path.resolve('./Resources/public/build/'),
+    path: path.resolve('./src/Resources/public/build/'),
     chunkFilename: '[name].bundle.[contenthash].js',
     publicPath: "bundles/con4gismaps/build/"
   },
   resolve: {
-    modules: ['node_modules', 'Resources/public/js'],
+    modules: ['node_modules', 'src/Resources/public/js'],
     extensions: ['.jsx', '.js'],
     fallback: {
       "http": false,
@@ -46,8 +46,8 @@ var config = {
         }],
         include: [
           path.resolve('.'),
-          path.resolve('./Resources/public/js/'),
-          path.resolve('./Resources/public/js/components')
+          path.resolve('./src/Resources/public/js/'),
+          path.resolve('./src/Resources/public/js/components')
         ],
       }
     ]
