@@ -400,11 +400,11 @@ export default class GeoSearch extends Component {
         var feature = map.forEachFeatureAtPixel(pixel,
             function (feature, layer) {
               return feature;
-            });
+            }, {hitTolerance: 4});
         var layer = map.forEachFeatureAtPixel(pixel,
             function (feature, layer) {
               return layer;
-            });
+            }, {hitTolerance: 4});
         feature = feature && feature.get('features') && feature.get('features').length > 0 ? feature.get('features')[0] : feature;
         if (this.config.popup) {
           var popupInfos = {};

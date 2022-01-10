@@ -1324,6 +1324,7 @@ export default class MapController extends Component {
               config: mapData.editor.config || false,
               dataField: mapData.editor.data_field || false,
               caching: mapData.caching,
+              ref: (node) => {this.components.editor = node;},
               mapController: this
             };
             result.push(ReactDOM.createPortal(React.createElement(EditorComponent, editorProps), this.editorContainer));
