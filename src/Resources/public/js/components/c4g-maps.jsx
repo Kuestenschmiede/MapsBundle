@@ -1302,16 +1302,18 @@ export default class MapController extends Component {
             if (!this.editorContainer) {
               if (this.data.editor_div) {
                 this.editorContainer = document.querySelector("." + this.data.editor_div);
+                let openEditor = this.data.initial_open_comp === "editor";
                 if (!this.editorContainer) {
                   this.editorContainer = document.createElement('div');
-                  this.editorContainer.className = "c4g-sideboard c4g-editor-container-right c4g-close";
+                  this.editorContainer.className = "c4g-sideboard c4g-editor-container-right " + (openEditor ? "c4g-open": "c4g-close");
                   jQuery(".ol-overlaycontainer-stopevent").append(this.editorContainer);
                 } else {
                   this.editorContainer.className += " c4g-external";
                 }
               } else {
+                let openEditor = this.data.initial_open_comp === "editor";
                 this.editorContainer = document.createElement('div');
-                this.editorContainer.className = "c4g-sideboard c4g-editor-container-right c4g-close";
+                this.editorContainer.className = "c4g-sideboard c4g-editor-container-right " + (openEditor ? "c4g-open": "c4g-close");
                 jQuery(".ol-overlaycontainer-stopevent").append(this.editorContainer);
               }
             }
@@ -1325,7 +1327,8 @@ export default class MapController extends Component {
               dataField: mapData.editor.data_field || false,
               caching: mapData.caching,
               ref: (node) => {this.components.editor = node;},
-              mapController: this
+              mapController: this,
+              open: this.data.initial_open_comp === "editor"
             };
             result.push(ReactDOM.createPortal(React.createElement(EditorComponent, editorProps), this.editorContainer));
           }
@@ -1342,7 +1345,7 @@ export default class MapController extends Component {
                 }
               } else {
                 this.editorContainer = document.createElement('div');
-                this.editorContainer.className = "c4g-sideboard c4g-editor-container-right c4g-close";
+                this.editorContainer.className = "c4g-sideboard c4g-editor-container-right c4g-open";
                 jQuery(".ol-overlaycontainer-stopevent").append(this.editorContainer);
               }
             }
@@ -1355,7 +1358,8 @@ export default class MapController extends Component {
               config: mapData.editor.config || false,
               dataField: mapData.editor.data_field || false,
               caching: mapData.caching,
-              mapController: this
+              mapController: this,
+              open: true
             };
             result.push(ReactDOM.createPortal(React.createElement(EditorComponent, editorProps), this.editorContainer));
           }
