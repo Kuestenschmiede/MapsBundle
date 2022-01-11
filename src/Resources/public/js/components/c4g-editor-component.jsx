@@ -126,6 +126,9 @@ export default class EditorComponent extends Component {
       source: new VectorSource({format: new GeoJSON()}),
       style: this.styleFunction
     });
+    if (this.props.open) {
+      this.props.mapController.map.addLayer(this.editorLayer);
+    }
   }
 
   open() {
