@@ -80,7 +80,7 @@ class MapDataConfigurator
         if ($options['type'] == 'geopicker') {
             // select selected backend profile
             $settings = C4gSettingsModel::findAll();
-            $profileId = $settings[0]->beGeopickerProfile ? $settings[0]->beGeopickerProfile : $settings[0]->defaultprofile;
+            $profileId = $options && $options['profile'] ? $options['profile'] : ($settings[0]->beGeopickerProfile ? $settings[0]->beGeopickerProfile : $settings[0]->defaultprofile);
         }
 
         if (!$profileId) {
