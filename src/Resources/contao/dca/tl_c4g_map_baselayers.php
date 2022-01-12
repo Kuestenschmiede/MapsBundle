@@ -15,7 +15,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
     [
     'config' =>
         [
-        'label'                       => $GLOBALS['TL_LANG']['MOD']['c4g_map_baselayers'][0],
+        'label'                       => &$GLOBALS['TL_LANG']['MOD']['c4g_map_baselayers'][0],
         'dataContainer'               => 'Table',
         'ctable'                      => ['tl_c4g_map_overlays'],
         'enableVersioning'            => true,
@@ -373,15 +373,15 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                 'inputType'               => 'select',
                 'default'                 => 'cycle',
                 'options'                 => [
-                    'cycle'               => $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_thunderforest_opencyclemap'],
-                    'transport'           => $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_thunderforest_transport'],
-                    'landscape'           => $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_thunderforest_landscape'],
-                    'outdoors'            => $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_thunderforest_outdoors'],
-                    'transport-dark'      => $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_thunderforest_transport_dark'],
-                    'spinal-map'          => $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_thunderforest_spinal_map'],
-                    'pioneer'             => $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_thunderforest_pioneer'],
-                    'mobile-atlas'        => $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_thunderforest_mobile_atlas'],
-                    'neighbourhood'       => $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_thunderforest_neighbourhood'],
+                    'cycle'               => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_thunderforest_opencyclemap'],
+                    'transport'           => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_thunderforest_transport'],
+                    'landscape'           => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_thunderforest_landscape'],
+                    'outdoors'            => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_thunderforest_outdoors'],
+                    'transport-dark'      => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_thunderforest_transport_dark'],
+                    'spinal-map'          => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_thunderforest_spinal_map'],
+                    'pioneer'             => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_thunderforest_pioneer'],
+                    'mobile-atlas'        => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_thunderforest_mobile_atlas'],
+                    'neighbourhood'       => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_thunderforest_neighbourhood'],
                 ],
                 'eval'                    => ['submitOnChange' => false],
                 'sql'                     => "varchar(30) NOT NULL default ''"

@@ -13,7 +13,11 @@ use \con4gis\MapsBundle\Classes\GeoPicker;
 use con4gis\MapsBundle\Classes\Utils;
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
 
-if (@class_exists("Contao\CalendarBundle\ContaoCalendarBundle")) {
+if (
+    @class_exists("Contao\CalendarBundle\ContaoCalendarBundle") &&
+    is_array($GLOBALS['TL_CONFIG']) &&
+    array_key_exists('disabledC4gMapObjects', $GLOBALS['TL_CONFIG'])
+) {
 
     /**
      * Change palettes

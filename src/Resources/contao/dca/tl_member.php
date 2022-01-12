@@ -12,7 +12,11 @@
 use con4gis\MapsBundle\Classes\Utils;
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
 
-if (@class_exists("tl_member")) {
+if (
+    @class_exists("tl_member") &&
+    is_array($GLOBALS['TL_CONFIG']) &&
+    array_key_exists('disabledC4gMapObjects', $GLOBALS['TL_CONFIG'])
+) {
 
     $disabledObjects = StringUtil::deserialize($GLOBALS['TL_CONFIG']['disabledC4gMapObjects'], true);
 

@@ -16,11 +16,13 @@ use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapTablesModel;
 use Contao\Image;
 
+\Contao\System::loadLanguageFile('tl_c4g_maps');
+
 $GLOBALS['TL_DCA']['tl_c4g_maps'] =
     [
     'config' =>
         [
-        'label'                       => $GLOBALS['TL_LANG']['MOD']['c4g_maps'][0],
+        'label'                       => &$GLOBALS['TL_LANG']['MOD']['c4g_maps'][0],
         'dataContainer'               => 'Table',
         'enableVersioning'            => true,
         'markAsCopy'                  => 'name',

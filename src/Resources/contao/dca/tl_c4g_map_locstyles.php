@@ -27,7 +27,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
     [
     'config' =>
         [
-        'label'                       => $GLOBALS['TL_LANG']['MOD']['c4g_map_locstyles'][0],
+        'label'                       => &$GLOBALS['TL_LANG']['MOD']['c4g_map_locstyles'][0],
         'dataContainer'               => 'Table',
         'enableVersioning'            => true,
         'markAsCopy'                  => 'name',

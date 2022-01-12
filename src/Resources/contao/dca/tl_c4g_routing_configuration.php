@@ -340,7 +340,7 @@ $GLOBALS['TL_DCA'][$strName] = array
         'areaHeadline' => [
             'filter'                  => false,
             'inputType'               => 'text',
-            'default'                 => $GLOBALS['TL_LANG'][$strName]['areaHeadlineDefault'],
+            'default'                 => &$GLOBALS['TL_LANG'][$strName]['areaHeadlineDefault'],
             'eval'                    => [ 'tl_class'=>'clr', "maxlength" => 100],
         ],
         

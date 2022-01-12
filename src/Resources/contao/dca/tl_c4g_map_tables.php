@@ -189,7 +189,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'default'                 => '1',
             'inputType'               => 'radio',
             'options'                 => [1,2,3,4],
-            'reference'               => $GLOBALS['TL_LANG']['tl_c4g_map_tables']['references']['dataType'],
+            'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['references']['dataType'],
             'eval'                    => ['mandatory'=>true, 'multiple'=>false, 'submitOnChange'=>true],
             'sql'                     => "varchar(1) default 1"
         ],
