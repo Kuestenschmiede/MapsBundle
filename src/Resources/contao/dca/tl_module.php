@@ -30,11 +30,13 @@ if (C4GVersionProvider::isInstalled('con4gis/forum'))
 {
     $insert = '{c4g_forum_maps_legend},c4g_forum_enable_maps;{expert_legend:hide}';
 
-    $GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_forum'] = str_replace(
-        '{expert_legend:hide}',
-        $insert,
-        $GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_forum']
-    );
+    if (array_key_exists('c4g_forum',$GLOBALS['TL_DCA']['tl_module']['palettes'])) {
+        $GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_forum'] = str_replace(
+            '{expert_legend:hide}',
+            $insert,
+            $GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_forum']
+        );
+    }
 
     $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_enable_maps'] = [
         'exclude' => true,
