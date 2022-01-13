@@ -40,7 +40,7 @@ $GLOBALS['TL_DCA'][$strName] = array
         'global_operations' => array
         (
             'all' => [
-                'label'         => $GLOBALS['TL_LANG']['MSC']['all'],
+                'label'         => &$GLOBALS['TL_LANG']['MSC']['all'],
                 'href'          => 'act=select',
                 'class'         => 'header_edit_all',
                 'attributes'    => 'onclick="Backend.getScrollOffSet()" accesskey="e"'
