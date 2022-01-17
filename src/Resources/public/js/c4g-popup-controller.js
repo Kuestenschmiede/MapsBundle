@@ -8,14 +8,7 @@
  * @link https://www.con4gis.org
  */
 
-import {cssConstants} from "./c4g-maps-constant";
 import {C4gPopup} from './c4g-popup';
-import {Overlay} from "ol";
-import {Spinner} from "./c4g-maps-misc-spinner";
-import {utils} from "./c4g-maps-utils";
-import ReactDOM from "react-dom";
-import React from "react";
-import {PopupContainer} from "./components/c4g-popup-container.jsx";
 
 export class C4gPopupController {
 
