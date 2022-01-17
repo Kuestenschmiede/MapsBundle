@@ -5,7 +5,7 @@
  * @version 8
  * @author con4gis contributors (see "authors.txt")
  * @license LGPL-3.0-or-later
- * @copyright (c) 2010-2021, by Küstenschmiede GmbH Software & Design
+ * @copyright (c) 2010-2022, by Küstenschmiede GmbH Software & Design
  * @link https://www.con4gis.org
  */
 
@@ -13,7 +13,11 @@ use \con4gis\MapsBundle\Classes\GeoPicker;
 use con4gis\MapsBundle\Classes\Utils;
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
 
-if (@class_exists("Contao\CalendarBundle\ContaoCalendarBundle")) {
+if (
+    @class_exists("Contao\CalendarBundle\ContaoCalendarBundle") &&
+    is_array($GLOBALS['TL_CONFIG']) &&
+    array_key_exists('disabledC4gMapObjects', $GLOBALS['TL_CONFIG'])
+) {
 
     /**
      * Change palettes

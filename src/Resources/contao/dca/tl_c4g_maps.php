@@ -5,7 +5,7 @@
  * @version 8
  * @author con4gis contributors (see "authors.txt")
  * @license LGPL-3.0-or-later
- * @copyright (c) 2010-2021, by Küstenschmiede GmbH Software & Design
+ * @copyright (c) 2010-2022, by Küstenschmiede GmbH Software & Design
  * @link https://www.con4gis.org
  */
 
@@ -16,11 +16,13 @@ use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapTablesModel;
 use Contao\Image;
 
+\Contao\System::loadLanguageFile('tl_c4g_maps');
+
 $GLOBALS['TL_DCA']['tl_c4g_maps'] =
     [
     'config' =>
         [
-        'label'                       => $GLOBALS['TL_LANG']['MOD']['c4g_maps'][0],
+        'label'                       => &$GLOBALS['TL_LANG']['MOD']['c4g_maps'][0],
         'dataContainer'               => 'Table',
         'enableVersioning'            => true,
         'markAsCopy'                  => 'name',

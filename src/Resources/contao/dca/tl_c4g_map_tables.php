@@ -5,7 +5,7 @@
  * @version 8
  * @author con4gis contributors (see "authors.txt")
  * @license LGPL-3.0-or-later
- * @copyright (c) 2010-2021, by Küstenschmiede GmbH Software & Design
+ * @copyright (c) 2010-2022, by Küstenschmiede GmbH Software & Design
  * @link https://www.con4gis.org
  */
 
@@ -189,7 +189,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'default'                 => '1',
             'inputType'               => 'radio',
             'options'                 => [1,2,3,4],
-            'reference'               => $GLOBALS['TL_LANG']['tl_c4g_map_tables']['references']['dataType'],
+            'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['references']['dataType'],
             'eval'                    => ['mandatory'=>true, 'multiple'=>false, 'submitOnChange'=>true],
             'sql'                     => "varchar(1) default 1"
         ],

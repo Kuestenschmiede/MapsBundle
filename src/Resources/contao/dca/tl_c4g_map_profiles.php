@@ -5,7 +5,7 @@
  * @version 8
  * @author con4gis contributors (see "authors.txt")
  * @license LGPL-3.0-or-later
- * @copyright (c) 2010-2021, by Küstenschmiede GmbH Software & Design
+ * @copyright (c) 2010-2022, by Küstenschmiede GmbH Software & Design
  * @link https://www.con4gis.org
  */
 
@@ -153,7 +153,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'exclude'                 => true,
                 'inputType'               => 'select',
                 'options_callback'        => ['tl_c4g_map_profiles', 'getAllThemes'],
-                'eval'                    => ['tl_class'=>'clr', 'includeBlankOption' => true, 'blankOptionLabel' => $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['default_theme']],
+                'eval'                    => ['tl_class'=>'clr', 'includeBlankOption' => true, 'blankOptionLabel' => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['default_theme']],
                 'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references'],
                 'sql'                     => "char(10) NOT NULL default ''",
                 'xlabel' => array
@@ -795,7 +795,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             [
                 'exclude'                 => true,
                 'inputType'               => 'checkbox',
-                'options'                 => $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs'],
+                'options'                 => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs'],
                 'eval'                    => ['mandatory'=>false, 'multiple'=>true],
                 'sql'                     => "blob NULL"
             ],

@@ -5,7 +5,7 @@
  * @version 8
  * @author con4gis contributors (see "authors.txt")
  * @license LGPL-3.0-or-later
- * @copyright (c) 2010-2021, by Küstenschmiede GmbH Software & Design
+ * @copyright (c) 2010-2022, by Küstenschmiede GmbH Software & Design
  * @link https://www.con4gis.org
  */
 
@@ -30,11 +30,13 @@ if (C4GVersionProvider::isInstalled('con4gis/forum'))
 {
     $insert = '{c4g_forum_maps_legend},c4g_forum_enable_maps;{expert_legend:hide}';
 
-    $GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_forum'] = str_replace(
-        '{expert_legend:hide}',
-        $insert,
-        $GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_forum']
-    );
+    if (array_key_exists('c4g_forum',$GLOBALS['TL_DCA']['tl_module']['palettes'])) {
+        $GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_forum'] = str_replace(
+            '{expert_legend:hide}',
+            $insert,
+            $GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_forum']
+        );
+    }
 
     $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_enable_maps'] = [
         'exclude' => true,
@@ -79,7 +81,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_map_placeholder'] = [
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_element_type'] = [
     'exclude'                 => true,
     'inputType'               => 'select',
-    'options'                 => $GLOBALS['TL_LANG']['tl_module']['element_type_refs'],
+    'options'                 => &$GLOBALS['TL_LANG']['tl_module']['element_type_refs'],
     'eval'                    => ['tl_class'=>'clr'],
     'sql'                     => "varchar(25) NOT NULL default ''"
 ];
