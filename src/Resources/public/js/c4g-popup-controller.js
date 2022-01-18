@@ -20,7 +20,7 @@ export class C4gPopupController {
     this.popups = [];
   }
 
-  addPopUp(popupConfig = null) {
+  addPopup(popupConfig = null) {
     this.popups.push(new C4gPopup(this));
     if (popupConfig) {
       this.popups[this.popups.length -1].setContent(popupConfig);
@@ -32,4 +32,9 @@ export class C4gPopupController {
     }
     this.popups[0].setContent(popupConfig);
   } // end of "setPopup()"
+  removePopup() {
+    if (this.popups[0] && this.popups[0].popup && this.popups[0].popup.getMap()) {
+      this.mapData.map.removeOverlay(this.popups[0].popup);
+    }
+  }
 }

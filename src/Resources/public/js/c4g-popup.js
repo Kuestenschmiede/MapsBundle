@@ -94,7 +94,7 @@ export class C4gPopup {
         }
         divPopup = document.createElement('div');
         if (this.popupController.popupHandling < 3) {
-            if (!this.popup.getMap()) {
+            if (!this.popup.getMap()) { //popup not already in the map
                 this.popupController.mapController.map.addOverlay(this.popup);
             }
             divPopup.innerHTML = popupContent;
