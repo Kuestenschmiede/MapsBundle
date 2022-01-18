@@ -648,7 +648,7 @@ class MapDataConfigurator
             $mapData['hover_popups_stay'] = $profile->hover_popups_stay;
             $mapData['popupHandling'] = $profile->popupHandling;
             $mapData['popupHeadline'] = $profile->popupHeadline;
-            $mapData['popupMultiple'] = $profile->popupMultiple;
+            $mapData['popupMultiple'] = $profile->popupMultiple && $profile->popupHandling < 2;
             $mapData['popupDiv'] = (in_array('popup', $externalElements)) ? $externalClasses['popup'] : '';
 
             if ($profile->consentBanner) {

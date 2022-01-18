@@ -40,7 +40,9 @@ export class C4gPopup {
             popupController.mapController.map.addOverlay(this.popup);
         } else if (popupController.popupHandling === 2) {
             $(popUpElement).addClass('c4g-popup-wrapper-nonose');
+            let center = popupController.mapController.map.getView().getCenter();
             this.popup = new Overlay({
+                position: center,
                 element: popUpElement,
                 positioning: 'center-center',
                 offset: [-50, 0],
