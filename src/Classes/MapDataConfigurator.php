@@ -646,9 +646,9 @@ class MapDataConfigurator
             }
             $mapData['hover_popups'] = $profile->hover_popups;
             $mapData['hover_popups_stay'] = $profile->hover_popups_stay;
-            $mapData['popupHandling'] = $profile->popupHandling;
+            $mapData['popupHandling'] = $profile->popupHandling == 4 ? 0 : $profile->popupHandling;
             $mapData['popupHeadline'] = $profile->popupHeadline;
-            $mapData['popupMultiple'] = $profile->popupMultiple && $profile->popupHandling < 2;
+            $mapData['popupMultiple'] = $profile->popupMultiple && ($profile->popupHandling < 2 || $profile->popupHandling == 4);
             $mapData['popupDiv'] = (in_array('popup', $externalElements)) ? $externalClasses['popup'] : '';
 
             if ($profile->consentBanner) {

@@ -183,7 +183,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['referencesOverpassEngine']['1'] = 'B
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['referencesOverpassEngine']['2'] = 'con4gis.io Kartendienste (<a href="https://con4gis.io" rel="noopener" target="_blank">Nutzungsbestimmungen</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['referencesOverpassEngine']['3'] = 'Öffentlicher Overpass-Server (<a href="https://overpass-api.de/" rel="noopener" target="_blank">Nutzungsbestimmungen</a>)';
 
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandlingReferences']['0'] = 'Klassisches Handling (Das Popup verweist auf das geöffnete Feature. Die Karte bewegt sich nicht.)';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandlingReferences']['4'] = 'Klassisches Handling (Das Popup verweist auf das geöffnete Feature. Die Karte bewegt sich nicht.)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandlingReferences']['1'] = 'Kartenausschnitt an Popup anpassen (Das Popup verweist auf das geöffnete Feature. Die Karte bewegt sich, sodass dass Popup sichtbar ist.)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandlingReferences']['2'] = 'Zentriertes Popup (Das Popup wird in der Mitte der Karte angezeigt.)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandlingReferences']['3'] = 'Das Popup wird in einer eigenen Leiste am rechten Kartenrand dargestellt (Standard).';

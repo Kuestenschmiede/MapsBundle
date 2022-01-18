@@ -120,9 +120,9 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         'overpassEngine_3'            => '',
         'resize_locstyles_zoom'       => 'resize_src_zoom,resize_scale_factor,resize_min_scale,resize_max_scale',
         'geopicker'                   => 'geopicker_fieldx,geopicker_fieldy,geopicker_searchdiv,geopicker_attribution,geopicker_disabled,geopicker_anonymous',
-        'popupHandling_3'             => 'popupHeadline',
-        'popupHandling_0'             => 'popupMultiple',
+        'popupHandling_4'             => 'popupMultiple',
         'popupHandling_1'             => 'popupMultiple',
+        'popupHandling_3'             => 'popupHeadline',
         'consentBanner'               => 'cookieInfo,cookieName,cookieValue',
         'userLocation'                => 'userLocationStyle'
     ],
@@ -279,7 +279,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'exclude'                 => true,
             'default'                 => '3',
             'inputType'               => 'radio',
-            'options'                 => ['3','0','1','2'],
+            'options'                 => ['3','4','1','2'],
             'eval'                    => ['submitOnChange' => true,'includeBlankOption' => false],
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandlingReferences'],
             'sql'                     => "char(1) NOT NULL default '3'"
