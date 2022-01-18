@@ -121,6 +121,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         'resize_locstyles_zoom'       => 'resize_src_zoom,resize_scale_factor,resize_min_scale,resize_max_scale',
         'geopicker'                   => 'geopicker_fieldx,geopicker_fieldy,geopicker_searchdiv,geopicker_attribution,geopicker_disabled,geopicker_anonymous',
         'popupHandling_3'             => 'popupHeadline',
+        'popupHandling_0'             => 'popupMultiple',
+        'popupHandling_1'             => 'popupMultiple',
         'consentBanner'               => 'cookieInfo,cookieName,cookieValue',
         'userLocation'                => 'userLocationStyle'
     ],
@@ -289,6 +291,13 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'default'                 => 'Details',
             'eval'                    => ['maxlength'=>254],
             'sql'                     => "varchar(254) NOT NULL default 'Details'"
+        ],
+        'popupMultiple' =>
+        [
+            'exclude'                 => true,
+            'default'                 => false,
+            'inputType'               => 'checkbox',
+            'sql'                     => "char(1) NOT NULL default ''"
         ],
         'baselayers' =>
             [

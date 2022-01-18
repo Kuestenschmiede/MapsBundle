@@ -131,6 +131,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['hover_popups'] = ['Popups on Mouse H
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['hover_popups_stay'] = ['Mouse Hover Popups stay open', 'Popups that have been opened on mouse hover are not closed when the mouse pointer leaves the location.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHandling'] = ['Popup handling', 'popup- or map position handling.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupHeadline'] = ['Popup headline', 'Set a headline for the popup.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupMultiple'] = ['Multiple Popups', 'Allow multiple popups simultaneously.'];
 
 /** Experteneinstellungen */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overpassEngine'] = ['Overpass Server Technology', 'Choose your preferred Overpass Server Technology'];

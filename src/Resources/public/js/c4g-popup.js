@@ -81,7 +81,7 @@ export class C4gPopup {
         let feature = popupConfig.feature;
         let layer = popupConfig.layer;
         let popupContent;
-        let divPopup
+        let divPopup;
         if (feature.get('features')) {
             let features = feature.get('features');
             for (let i = 0; i < features.length; i++) {
@@ -92,7 +92,11 @@ export class C4gPopup {
         }
         divPopup = document.createElement('div');
         if (this.popupController.popupHandling < 3) {
+            if (!this.popup.getMap()) {
+                this.popupController.mapController.map.addOverlay(this.popup);
+            }
             divPopup.innerHTML = popupContent;
+            this.popupContent.innerHTML = '';
             this.popupContent.appendChild(divPopup);
             if (this.popupController.popupHandling < 2) {
                 this.setPosition(feature.getGeometry());

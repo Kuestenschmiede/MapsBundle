@@ -366,7 +366,7 @@ export class MapProxy {
             if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_fillPopup === 'object') {
               utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, {popup: objPopup, mapController: self.options.mapController});
             }
-            if (true) {
+            if (self.mapData.popupMultiple) {
               self.popupController.addPopUp(objPopup);
             }
             else {
@@ -392,7 +392,7 @@ export class MapProxy {
               if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_fillPopup === 'object') {
                 utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, {popup: objPopup, mapController: self.options.mapController});
               }
-              if (true) {
+              if (self.mapData.popupMultiple) {
                 self.popupController.addPopUp(objPopup);
               }
               else {

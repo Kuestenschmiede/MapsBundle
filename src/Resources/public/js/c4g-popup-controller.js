@@ -30,6 +30,6 @@ export class C4gPopupController {
     if (!this.popups[0]) {
       this.popups.push(new C4gPopup(this));
     }
-    this.popup[0].setContent(popupConfig);
+    this.popups[0].setContent(popupConfig);
   } // end of "setPopup()"
 }
