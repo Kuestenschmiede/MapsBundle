@@ -114,6 +114,7 @@ span.ol-compass:before {
   font-weight: 900;
   font-size: inherit;
 }
+.ol-full-screen > button:before,
 button.ol-full-screen-false:before {
   content: "\f31e";
   font-family: 'Font Awesome 5 Free';

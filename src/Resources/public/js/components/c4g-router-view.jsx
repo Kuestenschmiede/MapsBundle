@@ -897,7 +897,7 @@ export class RouterView extends Component {
       ) {
         if (parseInt(mapController.data.popupHandling, 10) !== 3) {
           let routeButtonWrapper = createPopupWrapper(objPopup);
-          window.c4gMapsPopup.$content.append(routeButtonWrapper);
+          $(params.div).append(routeButtonWrapper);
         } else {
           let config = {
             feature: objPopup.feature,
