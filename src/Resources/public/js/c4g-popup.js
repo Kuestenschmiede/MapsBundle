@@ -106,6 +106,7 @@ export class C4gPopup {
         }
         else {
             if (this.popupComponent) {
+                this.popupComponent.open();
                 this.popupComponent.setContent(popupContent);
             }
         }
