@@ -153,7 +153,7 @@ class ResourceLoader extends coreResourceLoader
             }
         }
 
-        $mapFunctions = unserialize($profile->mapFunctions);
+        $mapFunctions = \Contao\StringUtil::deserialize($profile->mapFunctions);
         $buttons = array_flip($mapFunctions);
 
         // check which resources are needed
@@ -217,14 +217,14 @@ class ResourceLoader extends coreResourceLoader
         }
 
         if ($theme->maincolor) {
-            $maincolor = unserialize($theme->maincolor);
+            $maincolor = \Contao\StringUtil::deserialize($theme->maincolor);
             if ($maincolor[0]) {
                 $themeData['maincolor'] = $maincolor[0];
                 $themeData['mainopacity'] = $maincolor[1];
             }
         }
         if ($theme->fontcolor) {
-            $fontcolor = unserialize($theme->fontcolor);
+            $fontcolor = \Contao\StringUtil::deserialize($theme->fontcolor);
             if ($fontcolor[0]) {
                 $themeData['fontcolor'] = $fontcolor[0];
                 $themeData['fontopacity'] = $fontcolor[1];
@@ -232,19 +232,19 @@ class ResourceLoader extends coreResourceLoader
         }
 
         if ($theme->popupMaincolor) {
-            $popupMaincolor = unserialize($theme->popupMaincolor);
+            $popupMaincolor = \Contao\StringUtil::deserialize($theme->popupMaincolor);
             if ($popupMaincolor[0]) {
                 $themeData['popupMaincolor'] = $popupMaincolor[0];
                 $themeData['popupMainopacity'] = $popupMaincolor[1];
             } elseif ($theme->maincolor) {
-                $maincolor = unserialize($theme->maincolor);
+                $maincolor = \Contao\StringUtil::deserialize($theme->maincolor);
                 if ($maincolor[0]) {
                     $themeData['popupMaincolor'] = $maincolor[0];
                     $themeData['popupMainopacity'] = $maincolor[1];
                 }
             }
         } elseif ($theme->maincolor) {
-            $maincolor = unserialize($theme->maincolor);
+            $maincolor = \Contao\StringUtil::deserialize($theme->maincolor);
             if ($maincolor[0]) {
                 $themeData['popupMaincolor'] = $maincolor[0];
                 $themeData['popupMainopacity'] = $maincolor[1];
@@ -252,19 +252,19 @@ class ResourceLoader extends coreResourceLoader
         }
 
         if ($theme->popupFontcolor) {
-            $popupFontcolor = unserialize($theme->popupFontcolor);
+            $popupFontcolor = \Contao\StringUtil::deserialize($theme->popupFontcolor);
             if ($popupFontcolor[0]) {
                 $themeData['popupFontcolor'] = $popupFontcolor[0];
                 $themeData['popupFontopacity'] = $popupFontcolor[1];
             } elseif ($theme->fontcolor) {
-                $fontcolor = unserialize($theme->fontcolor);
+                $fontcolor = \Contao\StringUtil::deserialize($theme->fontcolor);
                 if ($fontcolor[0]) {
                     $themeData['popupMaincolor'] = $fontcolor[0];
                     $themeData['popupMainopacity'] = $fontcolor[1];
                 }
             }
         } elseif ($theme->fontcolor) {
-            $fontcolor = unserialize($theme->fontcolor);
+            $fontcolor = \Contao\StringUtil::deserialize($theme->fontcolor);
             if ($fontcolor[0]) {
                 $themeData['popupMaincolor'] = $fontcolor[0];
                 $themeData['popupMainopacity'] = $fontcolor[1];
@@ -272,7 +272,7 @@ class ResourceLoader extends coreResourceLoader
         }
 
         if ($theme->shadowcolor) {
-            $shadowcolor = unserialize($theme->shadowcolor);
+            $shadowcolor = \Contao\StringUtil::deserialize($theme->shadowcolor);
             if ($shadowcolor[0]) {
                 $themeData['shadowcolor'] = $shadowcolor[0];
                 $themeData['shadowopacity'] = $shadowcolor[1];
@@ -280,7 +280,7 @@ class ResourceLoader extends coreResourceLoader
         }
 
         if ($theme->popupMaxWidth) {
-            $popupMaxWidth = unserialize($theme->popupMaxWidth);
+            $popupMaxWidth = \Contao\StringUtil::deserialize($theme->popupMaxWidth);
             if ($popupMaxWidth['value']) {
                 $themeData['popupMaxWidth'] = $popupMaxWidth['value'];
             }

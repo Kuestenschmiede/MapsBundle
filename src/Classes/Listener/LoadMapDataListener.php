@@ -52,10 +52,10 @@ class LoadMapDataListener
         $mapData = $event->getMapData();
         System::loadLanguageFile('tl_c4g_routing_configuration');
         $profile = C4gMapProfilesModel::findById($mapData['profile']);
-        $mapFunctions = unserialize($profile->mapFunctions);
+        $mapFunctions = \Contao\StringUtil::deserialize($profile->mapFunctions);
         $buttons = array_flip($mapFunctions);
         $enabled = array_key_exists('routing', $buttons) ? $buttons['routing'] + 1 : 0;
-        $externalComponents = unserialize($profile->external_elements);
+        $externalComponents = \Contao\StringUtil::deserialize($profile->external_elements);
         $externalClasses = ExternalMapElement::$arrClasses;
         if ($externalComponents && in_array('routing', $externalComponents)) {
             $mapData['router_div'] = $externalClasses['routing'];

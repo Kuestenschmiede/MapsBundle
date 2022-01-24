@@ -172,7 +172,7 @@ class MapDataConfigurator
                         break;
                 }
             }
-            $mapFunctions = unserialize($profile->mapFunctions);
+            $mapFunctions = \Contao\StringUtil::deserialize($profile->mapFunctions);
             $buttons = array_flip($mapFunctions);
             $mapData['editor']['enable'] = array_key_exists('editor', $buttons) ? $buttons['editor'] + 1 : 0;
         }
@@ -323,11 +323,11 @@ class MapDataConfigurator
         if ($profile) {
             // general
             //
-            $mapFunctions = unserialize($profile->mapFunctions);
+            $mapFunctions = \Contao\StringUtil::deserialize($profile->mapFunctions);
             $buttons = array_flip($mapFunctions);
 
             // external elements
-            $externalElements = unserialize($profile->external_elements);
+            $externalElements = \Contao\StringUtil::deserialize($profile->external_elements);
             if ($externalElements === false) {
                 $externalElements = [];
             }
@@ -396,7 +396,7 @@ class MapDataConfigurator
             $mapData['starboard']['enable'] = 1; //ToDo
             $mapData['starboard']['open'] = $profile->starboard_open;
             $mapData['starboard']['label'] = \Contao\Controller::replaceInsertTags($profile->starboard_label);
-            $mapData['starboard']['div'] = (in_array('starboard', $externalElements)) ? $externalClasses['starboard'] : '';
+            $mapData['starboard']['div'] = (is_array($externalElements) && in_array('starboard', $externalElements)) ? $externalClasses['starboard'] : '';
             $mapData['starboard']['button'] = $profile->starboard_button;
             $mapData['starboard']['showLocstyles'] = $profile->starboard_locstyles;
             $mapData['starboard']['invertZoomActivate'] = $profile->starboardInvertZoomActivate;
@@ -428,7 +428,7 @@ class MapDataConfigurator
                 $mapData['baselayerswitcher']['div'] = (in_array('baselayer', $externalElements)) ? $externalClasses['baselayer'] : '';
             }
 
-            $mapData['filterDiv'] = (in_array('filter', $externalElements)) ? $externalClasses['filter'] : '';
+            $mapData['filterDiv'] = (is_array($externalElements) && in_array('filter', $externalElements)) ? $externalClasses['filter'] : '';
             $mapData['filterHandling'] = $profile->filterHandling;
             $mapData['filterResetButton'] = $profile->filterResetButton;
 
@@ -506,7 +506,7 @@ class MapDataConfigurator
                     $mapData['geosearch']['url'] = rtrim($objSettings->con4gisIoUrl, '/') . '/';
                     $mapData['geosearch']['params'] = [];
                     if ($profile->geosearchParams) {
-                        foreach (unserialize($profile->geosearchParams) as $geosearchParam) {
+                        foreach (\Contao\StringUtil::deserialize($profile->geosearchParams) as $geosearchParam) {
                             $mapData['geosearch']['params'] = array_merge($mapData['geosearch']['params'], [$geosearchParam['keys'] => $geosearchParam['params']]);
                         }
                     }
@@ -619,7 +619,7 @@ class MapDataConfigurator
             // miscellaneous
             //
             $mapData['infopage'] = \Contao\Controller::replaceInsertTags($profile->infopage);
-            $mapData['legend']['div'] = (in_array('legend', $externalElements)) ? $externalClasses['legend'] : '';
+            $mapData['legend']['div'] = (is_array($externalElements) && in_array('legend', $externalElements)) ? $externalClasses['legend'] : '';
             $mapData['initial_open_comp'] = $profile->initial_open_comp;
             $mapData['link_newwindow'] = $profile->link_newwindow;
             switch ($profile->tooltipOrientation) {
@@ -649,7 +649,7 @@ class MapDataConfigurator
             $mapData['popupHandling'] = $profile->popupHandling == 4 ? 0 : $profile->popupHandling;
             $mapData['popupHeadline'] = $profile->popupHeadline;
             $mapData['popupMultiple'] = $profile->popupMultiple && ($profile->popupHandling < 2 || $profile->popupHandling == 4);
-            $mapData['popupDiv'] = (in_array('popup', $externalElements)) ? $externalClasses['popup'] : '';
+            $mapData['popupDiv'] = (is_array($externalElements) && in_array('popup', $externalElements)) ? $externalClasses['popup'] : '';
 
             if ($profile->consentBanner) {
                 $mapData['cookie'] = [
@@ -715,7 +715,7 @@ class MapDataConfigurator
     private static function checkBaselayers($profile, $objSettings, $arrKeyParams)
     {
         if ($profile->baselayers !== null) {
-            $baselayerIds = unserialize($profile->baselayers);
+            $baselayerIds = \Contao\StringUtil::deserialize($profile->baselayers);
             $blResult = C4gMapBaselayersModel::findMultipleByIds($baselayerIds);
         } else {
             $blResult = C4gMapBaselayersModel::findAll();

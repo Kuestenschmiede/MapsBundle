@@ -1257,9 +1257,9 @@ class tl_c4g_maps extends Backend
             $objTables = C4gMapTablesModel::findAll();
             $tabsource = $objTables[0];
         }
-        $ptable = unserialize($tabsource->ptable)[0];
-        $ptableOptions = str_replace($ptable . '.','', unserialize($tabsource->ptableOptions)[0]);
-        $ptableCompareField = str_replace($ptable . '.','', unserialize($tabsource->ptableCompareField)[0]);
+        $ptable = \Contao\StringUtil::deserialize($tabsource->ptable)[0];
+        $ptableOptions = str_replace($ptable . '.','', \Contao\StringUtil::deserialize($tabsource->ptableOptions)[0]);
+        $ptableCompareField = str_replace($ptable . '.','', \Contao\StringUtil::deserialize($tabsource->ptableCompareField)[0]);
         if($ptable && $ptableOptions && $ptableCompareField) {
             $strSelect = "SELECT $ptableCompareField, $ptableOptions FROM $ptable";
             $objResult = $this->Database->prepare($strSelect)->execute();
@@ -1285,9 +1285,9 @@ class tl_c4g_maps extends Backend
             $objTables = C4gMapTablesModel::findAll();
             $tabsource = $objTables[0];
         }
-        $ptable = unserialize($tabsource->ptable)[1];
-        $ptableOptions = str_replace($ptable . '.','', unserialize($tabsource->ptableOptions)[1]);
-        $ptableCompareField = str_replace($ptable . '.','', unserialize($tabsource->ptableCompareField)[1]);
+        $ptable = \Contao\StringUtil::deserialize($tabsource->ptable)[1];
+        $ptableOptions = str_replace($ptable . '.','', \Contao\StringUtil::deserialize($tabsource->ptableOptions)[1]);
+        $ptableCompareField = str_replace($ptable . '.','', \Contao\StringUtil::deserialize($tabsource->ptableCompareField)[1]);
         if($ptable && $ptableOptions && $ptableCompareField){
             $strSelect = "SELECT $ptableCompareField, $ptableOptions FROM $ptable";
             $objResult = $this->Database->prepare($strSelect)->execute();

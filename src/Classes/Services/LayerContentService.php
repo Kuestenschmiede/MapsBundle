@@ -377,7 +377,7 @@ class LayerContentService
 
                 break;
             case '2':
-                $areas = unserialize($objLayer->c4gioDropdown);
+                $areas = \Contao\StringUtil::deserialize($objLayer->c4gioDropdown);
                 $strOvp = '[out:xml][timeout:30];(';
                 foreach ($areas as $area) {
                     $strOvp .= "relation[ref=$area][admin_level=4];";
@@ -435,10 +435,10 @@ class LayerContentService
         $and = '';
         $objConfig = C4gMapTablesModel::findByPk($objLayer->tab_source);
         $sourceTable = $objConfig->tableSource;
-        $ptableArr = unserialize($objConfig->ptable);
+        $ptableArr = \Contao\StringUtil::deserialize($objConfig->ptable);
         $ptableField = $objConfig->ptableField;
-        $ptableCompareFieldArr = unserialize($objConfig->ptableCompareField);
-        $ptableBlobArr = unserialize($objConfig->ptableBlob);
+        $ptableCompareFieldArr = \Contao\StringUtil::deserialize($objConfig->ptableCompareField);
+        $ptableBlobArr = \Contao\StringUtil::deserialize($objConfig->ptableBlob);
 
         $connectionParams = $objConfig->customDB ?[
             'dbDatabase' => $objConfig->customDB,
@@ -471,7 +471,7 @@ class LayerContentService
                         if ($ptableBlobArr && $ptableBlobArr[$key] == 1) {
                             //ToDo filter after select
                         } else {
-                            $arrPtableField = unserialize($ptableField);
+                            $arrPtableField = \Contao\StringUtil::deserialize($ptableField);
                             $pidOption .= $and . "$ptableField = $sourcePid ";
                         }
                     } else {
@@ -563,7 +563,7 @@ class LayerContentService
             //check blob fields
             if ($objConfig->ptable) {
                 foreach ($ptableArr as $key => $ptable) {
-                    $ptableBlobArr = unserialize($objConfig->ptable_blob);
+                    $ptableBlobArr = \Contao\StringUtil::deserialize($objConfig->ptable_blob);
                     if ($ptableBlobArr && $ptableBlobArr[$key] == 1) {
                         if ($key == 0) {
                             $sourcePid = intval($objLayer->tab_pid);
@@ -586,7 +586,7 @@ class LayerContentService
                         }
 
                         if ($sourcePid && $blobfield) {
-                            $blobArr = unserialize($blobfield);
+                            $blobArr = \Contao\StringUtil::deserialize($blobfield);
                             if (in_array($sourcePid, $blobArr)) {
                                 $show++;
                             }
@@ -695,7 +695,7 @@ class LayerContentService
 
                 if (!$event) {
                     if ($tooltipField) {
-                        $ttfArr = unserialize($tooltip);
+                        $ttfArr = \Contao\StringUtil::deserialize($tooltip);
                         if (is_array($ttfArr)) {
                             $tooltip = $ttfArr['value'];
                         }

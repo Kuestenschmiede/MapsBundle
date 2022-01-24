@@ -345,7 +345,7 @@ class tl_c4g_map_tables extends Backend
     }
     
     public function getParentTablesFields(DataContainer $dc) {
-        $tableNames = unserialize($dc->activeRecord->ptable);
+        $tableNames = \Contao\StringUtil::deserialize($dc->activeRecord->ptable);
         $options = [];
         if ($dc->activeRecord->customDB) {
             foreach ($tableNames as $tableName) {
@@ -375,7 +375,7 @@ class tl_c4g_map_tables extends Backend
     
     public function concatResult($varValue)
     {
-        $varValue = implode(",", unserialize($varValue));
+        $varValue = implode(",", \Contao\StringUtil::deserialize($varValue));
         return $varValue;
     }
     

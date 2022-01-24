@@ -360,7 +360,7 @@ class BaseLayerService
 
                     break;
                 case 'group':
-                    $layerGroup = unserialize($objBaseLayer->layerGroup);
+                    $layerGroup = \Contao\StringUtil::deserialize($objBaseLayer->layerGroup);
                     foreach ($layerGroup as $key => $layer) {
                         $objChildLayer = $this->Database->prepare('SELECT * FROM tl_c4g_map_baselayers WHERE id=?')->execute($layer['baselayers']);
                         $layer['entry'] = $this->parseBaseLayer($objChildLayer, $lang);

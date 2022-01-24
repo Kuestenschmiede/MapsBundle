@@ -54,7 +54,7 @@ class TlC4gMapLocstyles extends Backend
     {
         if ($dc->activeRecord->styletype == 'cust_icon') {
             $icon_src = $dc->activeRecord->icon_src;
-            $icon_size = unserialize($dc->activeRecord->icon_size);
+            $icon_size = \Contao\StringUtil::deserialize($dc->activeRecord->icon_size);
             $id = $dc->id;
             if ($icon_src && !($icon_size && $icon_size[0])) {
                 if (\Validator::isUuid($icon_src)) {
