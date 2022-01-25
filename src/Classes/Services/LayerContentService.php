@@ -974,6 +974,18 @@ class LayerContentService
                         ],
                     ];
                 }
+                if ($objLayer->locstyleGeoJson && ($arrGeoJson['type'] === "FeatureCollection")) {
+                    $arrLocstyles = \Contao\StringUtil::deserialize($objLayer->locstyleGeoJson);
+                    if ($arrLocstyles) {
+                        foreach ($arrLocstyles as $locstyle) {
+                            foreach ($arrGeoJson['features'] as $key => $feature) {
+                                if (($locstyle['props'] === '*' && $feature['properties'][$locstyle['keys']]) || ($feature['properties'][$locstyle['keys']] === $locstyle['props'])) {
+                                    $arrGeoJson['features'][$key]['properties']['locstyle'] = $locstyle['locstyle'];
+                                }
+                            }
+                        }
+                    }
+                }
 
                 break;
         }

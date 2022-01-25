@@ -166,7 +166,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                                          '{expert_legend:hide},excludeFromSingleLayer,be_optimize_checkboxes_limit;',
 
         'geojson'                     => '{general_legend},name,location_type;'.
-                                         '{location_legend},data_layername,hide_child,initial_opened,exemptFromRealFilter,exemptFromFilter,filterByBaseLayer,data_hidelayer,hideInStarboard,addZoom,data_file,split_geojson,data_content,data_projection,locstyle,zIndex,loc_label,tooltip, tooltip_length,enablePopup,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
+                                         '{location_legend},data_layername,hide_child,initial_opened,exemptFromRealFilter,exemptFromFilter,filterByBaseLayer,data_hidelayer,hideInStarboard,addZoom,data_file,split_geojson,data_content,data_projection,locstyleGeoJson,locstyle,zIndex,loc_label,tooltip, tooltip_length,enablePopup,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
                                          '{protection_legend:hide},protect_element;'.
                                          '{publish_legend:hide},published,publishStart,publishStop;'.
                                          '{expert_legend:hide},excludeFromSingleLayer,be_optimize_checkboxes_limit;',
@@ -777,6 +777,15 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                     array('tl_c4g_maps', 'locstylesLink')
                 )
             ],
+        'locstyleGeoJson' => [
+                'exclude'                 => true,
+                'default'                 => 'a:0:{}',
+                'inputType'               => 'multiColumnWizard',
+                'eval'                    => [
+                    'columnsCallback'     => ['tl_c4g_maps', 'locstyleGeoJson']
+                ],
+                'sql'                     => 'blob'
+           ],
         'zIndex' =>
             [
                 'exclude'                 => true,
@@ -1165,6 +1174,65 @@ class tl_c4g_maps extends Backend
         while ($locStyles->next()) {
             $return[$locStyles->id] = $locStyles->name;
         }
+        return $return;
+    }
+    public function locstyleGeoJson($multiColumnWizard) {
+        $activeRecord = $multiColumnWizard->__get('activeRecord');
+        $dataFile = $activeRecord->data_file;
+        $dataContent = $activeRecord->data_content;
+        $arrLocstyles = $this->Database->prepare('SELECT * FROM tl_c4g_map_locstyles')
+            ->execute()->fetchAllAssoc();
+        $arrOptions = [];
+        foreach ($arrLocstyles as $arrLocstyle) {
+            $arrOptions[$arrLocstyle['id']] = $arrLocstyle['name'];
+        }
+        $arrColumnLocstyles =  [
+            'label'     => &$GLOBALS['TL_LANG']['tl_c4g_maps']['locstyle'],
+            'inputType' => 'select',
+            'eval'      => ['chosen' => true, 'includeBlankOption' => true, 'style' => 'min-width:200px;width:200px;'],
+            'options'   => $arrOptions
+        ];
+        if ($dataContent) {
+            $arrGeojson = json_decode($dataContent, true) ;
+        }
+        else {
+            $objFile = \FilesModel::findByUuid($dataFile);
+            $dataFile = $objFile ? (TL_ROOT . '/' . $objFile->path) : false;
+            $data = file_exists($dataFile) ? file_get_contents($dataFile) : false;
+            $arrGeojson = json_decode($data, true);
+        }
+        if ($arrGeojson['type'] === "FeatureCollection") {
+            $arrOptionKeys = [];
+            $arrOptionProps = ['*'];
+            foreach ($arrGeojson['features'] as $feature){
+                foreach ($feature['properties'] as $key => $property) {
+                    if (array_search($key, $arrOptionKeys) === false) {
+                        $arrOptionKeys[] = $key;
+                    }
+                    if (array_search($property, $arrOptionProps) === false) {
+                        $arrOptionProps[] = $property;
+                    }
+                }
+            }
+        }
+        $arrColumnKeys = [
+            'label'     => &$GLOBALS['TL_LANG']['tl_c4g_maps']['locstyleGeoJson']['keys'],
+            'inputType' => 'select',
+            'eval'      => ['chosen' => true, 'includeBlankOption' => true, 'style' => 'min-width:200px;width:200px;'],
+            'options'   => $arrOptionKeys
+        ];
+        $arrColumnProps = [
+            'label'     => &$GLOBALS['TL_LANG']['tl_c4g_maps']['locstyleGeoJson']['props'],
+            'inputType' => 'select',
+            'eval'      => ['chosen' => true, 'includeBlankOption' => true, 'style' => 'min-width:200px;width:200px;'],
+            'options'   => $arrOptionProps
+        ];
+
+        $return = [
+            'keys'      => $arrColumnKeys,
+            'props'     => $arrColumnProps,
+            'locstyle'  => $arrColumnLocstyles
+        ];
         return $return;
     }
 
