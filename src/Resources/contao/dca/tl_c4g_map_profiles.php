@@ -9,6 +9,7 @@
  * @link https://www.con4gis.org
  */
 
+use con4gis\CoreBundle\Classes\C4GVersionProvider;
 use Contao\Image;
 
 $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
@@ -106,7 +107,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                                          '{attribution_legend:hide},attribution;'.
                                          '{information_legend:hide},scaleline,mouseposition,permalink_get_param,permalinkSaveId,permalinkWithoutGenerator,zoomlevel,infopage;'.
                                          '{locstyle_legend:hide},label_color,resize_locstyles_zoom;'.
-                                         '{expert_legend:hide},overpassEngine,caching,cesium,magnific_popup,external_elements,filters,filterHandling,filterResetButton,geopicker,beEditor,custom_div,be_optimize_checkboxes_limit,consentBanner;'
+                                         '{expert_legend:hide},overpassEngine,caching,cesium,external_elements,filters,filterHandling,filterResetButton,geopicker,beEditor,custom_div,be_optimize_checkboxes_limit,consentBanner;'
         ],
     'subpalettes' =>
     [
@@ -1076,6 +1077,13 @@ class tl_c4g_map_profiles extends Backend
                         $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['fields']['locstyles']['eval']['chosen'] = true;
                     }
                 }
+            }
+
+            if (C4GVersionProvider::isInstalled('con4gis/projects')) {
+                $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['palettes']['default'] =
+                    str_replace(',external_elements', ', magnific_popup,external_elements',
+                        $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['palettes']['default']);
+
             }
         }
 
