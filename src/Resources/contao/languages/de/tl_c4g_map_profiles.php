@@ -125,7 +125,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['beEditorCircleLocstyle'] = ['Lokatio
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium'] = ['Cesium verwenden', 'Sofern in der/den gewählten Basiskarte(n) die Option Cesium (Globusdarstellung) aktiviert wurde, wird/werden diese als Globus dargestellt.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium_always'] = ['Cesium immer verwenden', 'Ist die Globus-Darstellung aller hier im Kartenprofil gewählten Basiskarten gewünscht, ist diese Option zu aktivieren. Keine weiteren Vorgaben in den Basiskarten notwendig.'];
 
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['magnific_popup'] = ['Magnific Popup verwenden', 'Lädt das jQuery Plugin Magnific Popup.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['magnific_popup'] = ['Magnific Popup verwenden', 'Lädt in Verbindung mit con4gis/projects das jQuery Plugin Magnific Popup.'];
 
 /** Einstellungen zum Klick-Verhalten */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['tooltipOrientation'] = ['Tooltip-Positionierung', 'Positionierung des Tooltips im Verhältnis zur Maus.'];
