@@ -162,19 +162,19 @@ class ResourceLoader extends coreResourceLoader
             // @TODO: check BE-Switch
             'openlayers' => true,
             'geopicker' => ($profile->geopicker || $geopicker),
-            'grid' => array_key_exists('graticule', $buttons),
-            'home' => array_key_exists('zoomHome', $buttons),
-            'position' => array_key_exists('zoomPosition', $buttons),
+            'grid' => is_array($buttons) && array_key_exists('graticule', $buttons),
+            'home' => is_array($buttons) && array_key_exists('zoomHome', $buttons),
+            'position' => is_array($buttons) && array_key_exists('zoomPosition', $buttons),
             'permalink' => ($profile->permalink),
             'zoomlevel' => ($profile->zoomlevel),
             'geosearch' => ($profile->geosearch && $profile->geosearch_show),
-            'overviewmap' => array_key_exists('overview', $buttons),
+            'overviewmap' => is_array($buttons) && array_key_exists('overview', $buttons),
             'baselayerswitcher' => ($profile->baselayerswitcher),
-            'layerswitcher' => array_key_exists('layerswitcher', $buttons), //ToDo
+            'layerswitcher' => is_array($buttons) && array_key_exists('layerswitcher', $buttons), //ToDo
             'starboard' => 1, //ToDo
             'router' => ($profile->geosearch && $profile->router),
             'editor' => ($profile->editor),
-            'measuretools' => array_key_exists('measure', $buttons),
+            'measuretools' => is_array($buttons) && is_array($buttons) && array_key_exists('measure', $buttons),
             'infopage' => ($profile->infopage), //ToDo
             'legend' => ($profile->legend),
             'account' => ($profile->account),
