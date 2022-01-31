@@ -372,8 +372,8 @@ class LayerService
             ];
         }
 
-        if ($objLayer->filterByBaseLayer && unserialize($objLayer->filterByBaseLayer)) {
-            $arrLayerData['activeForBaselayers'] = unserialize($objLayer->filterByBaseLayer);
+        if ($objLayer->filterByBaseLayer && \Contao\StringUtil::deserialize($objLayer->filterByBaseLayer)) {
+            $arrLayerData['activeForBaselayers'] = \Contao\StringUtil::deserialize($objLayer->filterByBaseLayer);
         } else {
             $arrLayerData['activeForBaselayers'] = 'all';
         }
@@ -434,13 +434,13 @@ class LayerService
 
         if ($arrLayerData['activeForBaselayers'] === 'all' && $parentLayer) {
             if ($parentLayer->filterByBaseLayer) {
-                $arrLayerData['activeForBaselayers'] = unserialize($parentLayer->filterByBaseLayer);
+                $arrLayerData['activeForBaselayers'] = \Contao\StringUtil::deserialize($parentLayer->filterByBaseLayer);
             } else {
                 // check parents if they have a baselayer filter
                 $layer = C4gMapsModel::findByPk($parentLayer->id);
                 while ($layer->pid != 0) {
                     if ($layer->filterByBaseLayer) {
-                        $arrLayerData['activeForBaselayers'] = unserialize($layer->filterByBaseLayer);
+                        $arrLayerData['activeForBaselayers'] = \Contao\StringUtil::deserialize($layer->filterByBaseLayer);
 
                         break;
                     }
@@ -489,7 +489,7 @@ class LayerService
 
         // set baselayer filter
         if ($linkedLayer->filterByBaseLayer) {
-            $arrLayerData['activeForBaselayers'] = unserialize($linkedLayer->filterByBaseLayer);
+            $arrLayerData['activeForBaselayers'] = \Contao\StringUtil::deserialize($linkedLayer->filterByBaseLayer);
         }
 
         // set zooms of links

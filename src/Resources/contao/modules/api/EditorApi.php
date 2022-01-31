@@ -46,11 +46,11 @@ class EditorApi extends \Frontend
         }
 
         // Get editor config from profile
-        $arrEditorConfig['styles_point'] = unserialize($objProfile->editor_styles_point);
-        $arrEditorConfig['styles_line'] = unserialize($objProfile->editor_styles_line);
-        $arrEditorConfig['styles_polygon'] = unserialize($objProfile->editor_styles_polygon);
-        $arrEditorConfig['styles_circle'] = unserialize($objProfile->editor_styles_circle);
-        $arrEditorConfig['styles_freehand'] = unserialize($objProfile->editor_styles_freehand);
+        $arrEditorConfig['styles_point'] = \Contao\StringUtil::deserialize($objProfile->editor_styles_point);
+        $arrEditorConfig['styles_line'] = \Contao\StringUtil::deserialize($objProfile->editor_styles_line);
+        $arrEditorConfig['styles_polygon'] = \Contao\StringUtil::deserialize($objProfile->editor_styles_polygon);
+        $arrEditorConfig['styles_circle'] = \Contao\StringUtil::deserialize($objProfile->editor_styles_circle);
+        $arrEditorConfig['styles_freehand'] = \Contao\StringUtil::deserialize($objProfile->editor_styles_freehand);
         $arrEditorConfig['vars'] = $objProfile->editor_vars;
         $arrEditorConfig['show_items'] = $objProfile->editor_show_items;
         $arrEditorConfig['helpurl'] = $objProfile->editor_helpurl;

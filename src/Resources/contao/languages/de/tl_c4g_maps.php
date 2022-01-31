@@ -34,6 +34,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['location_type'] = array('Elementtyp', 'Wähl
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_geox'] = array('Geo X-Koordinate', 'Geben Sie hier die X-Koordinate (Breitengrad, WGS-84) der Lokation ein.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_geoy'] = array('Geo Y-Koordinate', 'Geben Sie hier die Y-Koordinate (Längengrad, WGS-84) der Lokation ein.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['locstyle'] = array('Lokationsstil', 'Über den Lokationsstil, der beim Kartenprofil definiert wird, legen Sie das Aussehen der Lokation fest. Ist kein Lokationsstil definiert, dann wird standardmäßig ein roter Punkt gezeichnet. ');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['locstyleGeoJson'] = ['Lokationsstile für GeoJson', 'Ermöglicht das Spezifizieren von Lokationsstile für Features mit bestimmten Schlüssel-Parameter-Paaren, ist nichts angegeben, wird der normale Lokationsstil genutzt.'];
 $GLOBALS['TL_LANG']['tl_c4g_maps']['zIndex'] = array('Z-Index', 'Hier können Sie einen z-Index für das Kartenstrukturelement setzen. Hinweis: hierbei handelt es sich nicht um den CSS-Z-Index, sondern um einen Z-Index, der nur für die Kartenstrukturelemente gilt.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_only_in_parent'] = array('Lokation nur in übergeordneten Karten anzeigen', 'Wenn Sie diese Checkbox NICHT setzen, dann wird diese Lokation auch angezeigt, sobald Sie dieses Element als Karte darstellen lassen.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['exemptFromFilter'] = ['Lokation von Starboard-Filter ausnehmen','Bei gesetzter Checkbox, wird diese Lokation vom Starboard-Filter ignoriert.'];
@@ -155,7 +156,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['c4gioType']['2'] = 'Bundeslän
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['map']       = 'Karte (keine Lokation)';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['none']      = 'Strukturebene (keine Lokation)';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['single']    = 'Einzelne Geo-Koordinate';
-$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['table']     = 'Aus anderer Tabelle';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['table']     = 'Quelltabelle anbinden';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['gpx']       = 'Daten im GPX-Format';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['kml']       = 'Daten im KML-Format';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['geojson']   = 'Daten im GeoJSON-Format';
@@ -165,6 +166,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['overpass']  = 'Anfrage an Over
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['link']      = 'Verknüpfung zu anderem Kartenstrukturelement';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['c4gForum']  = 'Forenbereiche aus con4gis-Forum';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['startab']   = 'Eigener Starboardreiter';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['con4gisio'] = 'con4gis.io Daten';
 
 
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['OFF']       = 'Nicht anzeigen';
@@ -204,6 +206,11 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['backend_legend']        = 'Backendeinstellun
 $GLOBALS['TL_LANG']['tl_c4g_maps']['publish_legend']        = 'Veröffentlichung';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['con4gisio_legend']      = 'Con4gis-IO Einstellungen';
 
+/**
+ * Multicolumnwizard
+ */
+$GLOBALS['TL_LANG']['tl_c4g_maps']['locstyleGeoJson']['keys']   = ['Schlüssel', 'Schlüssel des Features'];
+$GLOBALS['TL_LANG']['tl_c4g_maps']['locstyleGeoJson']['props']  = ['Wert', 'Wert für den zugeordneten Schlüssel'];
 
 $GLOBALS['TL_LANG']['tl_c4g_maps']['editalias'] = array('Quellelement bearbeiten', 'Das Quellelement ID %s bearbeiten');
 

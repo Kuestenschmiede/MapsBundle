@@ -31,6 +31,7 @@ export class C4gPopup {
                 element: popUpElement,
                 positioning: 'bottom-left',
                 offset: [-50, 0],
+                insertFirst: false,
                 autoPan: autoPan,
                 autoPanAnimation: {
                     duration: 250
@@ -70,7 +71,7 @@ export class C4gPopup {
             this.popupContainer = popupController.external ? document.querySelector("." + popupController.mapData.popupDiv) : document.createElement('div');
 
             this.popupComponent = ReactDOM.render(React.createElement(PopupContainer, popupOptions), this.popupContainer);
-            if (!this.external) {
+            if (!popupOptions.external) {
                 popupController.mapController.$overlaycontainer_stopevent.append(this.popupContainer);
                 popupController.mapController.hideOtherComponents(this.currentPopup);
             }
@@ -94,7 +95,7 @@ export class C4gPopup {
         }
         divPopup = document.createElement('div');
         if (this.popupController.popupHandling < 3) {
-            if (!this.popup.getMap()) {
+            if (!this.popup.getMap()) { //popup not already in the map
                 this.popupController.mapController.map.addOverlay(this.popup);
             }
             divPopup.innerHTML = popupContent;
@@ -106,6 +107,7 @@ export class C4gPopup {
         }
         else {
             if (this.popupComponent) {
+                this.popupComponent.open();
                 this.popupComponent.setContent(popupContent);
             }
         }

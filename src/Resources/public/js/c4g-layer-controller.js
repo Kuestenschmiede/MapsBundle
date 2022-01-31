@@ -1209,7 +1209,12 @@ export class BetterLayerController {
         strBoundingBox = '<bbox-query s="' + boundingArray[1] + '" n="' + boundingArray[3] + '" w="' + boundingArray[0] + '" e="' + boundingArray[2] + '"/>';
         url += 'data=' + encodeURIComponent(params.replace(bboxTag, strBoundingBox));
         fetch(url, {signal}).then((response) => {
-          response.text().then((resp) => {scope.parseOvpData(resp, requestData)}).catch((error) => {console.log(error.message)});
+          if (params.includes('output=json')) {
+            response.json().then((respo)=> {scope.parseOvpData(respo, requestData)}).catch((error) => {console.log(error.message)});
+          }
+          else {
+            response.text().then((resp) => {scope.parseOvpData(resp, requestData)}).catch((error) => {console.log(error.message)});
+          }
         })
         .catch((error) => {
           if (error.code && error.code !== 20) {
@@ -1220,7 +1225,12 @@ export class BetterLayerController {
         strBoundingBox = boundingArray[1] + ',' + boundingArray[0] + ',' + boundingArray[3] + ',' + boundingArray[2];
         url += 'data=' + encodeURIComponent(params.replace(bboxTag, strBoundingBox));
         fetch(url, {signal}).then((response) => {
-          response.json().then((respo)=> {scope.parseOvpData(respo, requestData)}).catch((error) => {console.log(error.message)});
+          if (params.includes('out:json')) {
+            response.json().then((respo)=> {scope.parseOvpData(respo, requestData)}).catch((error) => {console.log(error.message)});
+          }
+          else {
+            response.text().then((resp) => {scope.parseOvpData(resp, requestData)}).catch((error) => {console.log(error.message)});
+          }
         })
         .catch((error) => {
           if (error.code && error.code !== 20) {
@@ -1288,16 +1298,22 @@ export class BetterLayerController {
           if (requestDatas.forceNodes) {
             features[featureId].setGeometry(features[featureId].getGeometry().getInteriorPoint());
           }
-          features[featureId].set('osm_type', 'way');
+          if (!features[featureId].getId().includes('way')) {
+            features[featureId].set('osm_type', 'way');
+          }
         }
         else if (features[featureId].getGeometry().getType() === "MultiPolygon") {
           if (requestDatas.forceNodes) {
             features[featureId].setGeometry(features[featureId].getGeometry()[0].getInteriorPoint());
           }
-          features[featureId].set('osm_type', 'relation');
+          if (!features[featureId].getId().includes('relation')) {
+            features[featureId].set('osm_type', 'relation');
+          }
         }
         else if (features[featureId].getGeometry().getType() === "Point") {
-          features[featureId].set('osm_type', 'node');
+          if (!features[featureId].getId().includes('node')) {
+            features[featureId].set('osm_type', 'node');
+          }
         }
 
         if (this.mapController.filter) {

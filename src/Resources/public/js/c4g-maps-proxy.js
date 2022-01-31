@@ -367,7 +367,7 @@ export class MapProxy {
               utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, {popup: objPopup, mapController: self.options.mapController});
             }
             if (self.mapData.popupMultiple) {
-              self.popupController.addPopUp(objPopup);
+              self.popupController.addPopup(objPopup);
             }
             else {
               self.popupController.setPopup(objPopup);
@@ -393,12 +393,17 @@ export class MapProxy {
                 utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, {popup: objPopup, mapController: self.options.mapController});
               }
               if (self.mapData.popupMultiple) {
-                self.popupController.addPopUp(objPopup);
+                self.popupController.addPopup(objPopup);
               }
               else {
                 self.popupController.setPopup(objPopup);
               }
             });
+          }
+        }
+        else {
+          if (!self.mapData.popupMultiple) {
+            self.popupController.removePopup();
           }
         }
 

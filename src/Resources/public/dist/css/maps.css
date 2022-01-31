@@ -4764,9 +4764,6 @@
   height: 100%!important;
   margin: 0!important
 }
-.ol-viewport .ol-overlaycontainer-stopevent {
-  z-index: auto!important
-}
 .c4g-control-container-top-left::-webkit-scrollbar {
   display: none
 }
@@ -5981,6 +5978,7 @@ span.ol-compass:before {
   font-weight: 900;
   font-size: inherit
 }
+.ol-full-screen > button:before,
 button.ol-full-screen-false:before {
   content: "\f31e";
   font-family: 'Font Awesome 5 Free';

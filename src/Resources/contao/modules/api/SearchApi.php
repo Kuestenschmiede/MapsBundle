@@ -104,7 +104,7 @@ class SearchApi extends \Frontend
                 break;
         }
         if($objMapsProfile->geosearchParams){
-            foreach(unserialize($objMapsProfile->geosearchParams) as $geosearchParam){
+            foreach(\Contao\StringUtil::deserialize($objMapsProfile->geosearchParams) as $geosearchParam){
                 $arrParams = array_merge($arrParams, [$geosearchParam['keys'] => $geosearchParam['params']]);
             }
         }

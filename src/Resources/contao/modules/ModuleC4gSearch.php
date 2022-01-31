@@ -60,7 +60,7 @@ class ModuleC4gSearch extends \Module
         $arrSettings = [];
         if($objMapsProfile->geosearchParams){
             $arrSettings['geosearchParams'] = [];
-            foreach(unserialize($objMapsProfile->geosearchParams) as $geosearchParam){
+            foreach(\Contao\StringUtil::deserialize($objMapsProfile->geosearchParams) as $geosearchParam){
                 $arrSettings['geosearchParams'] = array_merge($arrSettings['geosearchParams'], [$geosearchParam['keys'] => $geosearchParam['params']]);
             }
         }

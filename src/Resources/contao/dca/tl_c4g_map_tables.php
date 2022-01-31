@@ -345,23 +345,27 @@ class tl_c4g_map_tables extends Backend
     }
     
     public function getParentTablesFields(DataContainer $dc) {
-        $tableNames = unserialize($dc->activeRecord->ptable);
+        $tableNames = \Contao\StringUtil::deserialize($dc->activeRecord->ptable);
         $options = [];
         if ($dc->activeRecord->customDB) {
             foreach ($tableNames as $tableName) {
-                $result = \Database::getInstance([dbDatabase => $dc->activeRecord->customDB])->prepare("SHOW COLUMNS FROM " . $tableName)->execute();
-                $arrResult = $result->fetchAllAssoc();
-                foreach ($arrResult as $element) {
-                    $options[$tableName . '.' . $element['Field']] = $tableName . '.' . $element['Field'];
+                if ($tableName) {
+                    $result = \Database::getInstance([dbDatabase => $dc->activeRecord->customDB])->prepare("SHOW COLUMNS FROM " . $tableName)->execute();
+                    $arrResult = $result->fetchAllAssoc();
+                    foreach ($arrResult as $element) {
+                        $options[$tableName . '.' . $element['Field']] = $tableName . '.' . $element['Field'];
+                    }
                 }
             }
 
         }
         else {
             foreach ($tableNames as $tableName){
-                $tableOptions = $this->Database->getFieldNames($tableName);
-                foreach ($tableOptions as $tableOption){
-                    $options[$tableName.'.'.$tableOption] = $tableName.'.'.$tableOption;
+                if ($tableName) {
+                    $tableOptions = $this->Database->getFieldNames($tableName);
+                    foreach ($tableOptions as $tableOption){
+                        $options[$tableName.'.'.$tableOption] = $tableName.'.'.$tableOption;
+                    }
                 }
             }
         }
@@ -375,7 +379,7 @@ class tl_c4g_map_tables extends Backend
     
     public function concatResult($varValue)
     {
-        $varValue = implode(",", unserialize($varValue));
+        $varValue = implode(",", \Contao\StringUtil::deserialize($varValue));
         return $varValue;
     }
     
