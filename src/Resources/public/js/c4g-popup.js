@@ -70,7 +70,7 @@ export class C4gPopup {
             this.popupContainer = popupController.external ? document.querySelector("." + popupController.mapData.popupDiv) : document.createElement('div');
 
             this.popupComponent = ReactDOM.render(React.createElement(PopupContainer, popupOptions), this.popupContainer);
-            if (!this.external) {
+            if (!popupOptions.external) {
                 popupController.mapController.$overlaycontainer_stopevent.append(this.popupContainer);
                 popupController.mapController.hideOtherComponents(this.currentPopup);
             }
