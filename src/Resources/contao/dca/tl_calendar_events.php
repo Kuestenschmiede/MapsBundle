@@ -14,65 +14,60 @@ use con4gis\MapsBundle\Classes\Utils;
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
 
 if (
-    @class_exists("Contao\CalendarBundle\ContaoCalendarBundle") &&
-    is_array($GLOBALS['TL_CONFIG']) &&
-    array_key_exists('disabledC4gMapObjects', $GLOBALS['TL_CONFIG'])
+    @class_exists("Contao\CalendarBundle\ContaoCalendarBundle")
 ) {
 
     /**
      * Change palettes
      */
-    $disabledObjects = StringUtil::deserialize($GLOBALS['TL_CONFIG']['disabledC4gMapObjects'], true);
 
-    if (!in_array('tl_calendar_events', $disabledObjects)) {
-        try {
-            PaletteManipulator::create()
-                ->addLegend('c4g_maps_legend', 'expert_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_BEFORE)
-                ->addField(array('c4g_loc_geox', 'c4g_loc_geoy', 'c4g_loc_label', 'c4g_locstyle'), 'c4g_maps_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_APPEND)
-                ->applyToPalette('default', 'tl_calendar_events');
-        } catch (\Exception $e) {}
+    try {
+        PaletteManipulator::create()
+            ->addLegend('c4g_maps_legend', 'expert_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_BEFORE)
+            ->addField(array('c4g_loc_geox', 'c4g_loc_geoy', 'c4g_loc_label', 'c4g_locstyle'), 'c4g_maps_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_APPEND)
+            ->applyToPalette('default', 'tl_calendar_events');
+    } catch (\Exception $e) {}
 
-        $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['c4g_loc_geox'] =
-            [
-            'exclude'                 => true,
-            'inputType'               => 'c4g_text',
-            'eval'                    => ['mandatory'=>false, 'maxlength'=>20, 'tl_class'=>'w50 wizard'],
-            'save_callback'           => [['tl_calendar_events_c4g_maps','setLocLon']],
-            'wizard'                  => [['\con4gis\MapsBundle\Classes\GeoPicker', 'getPickerLink']],
-            'sql'                     => "varchar(20) NOT NULL default ''"
-            ];
+    $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['c4g_loc_geox'] =
+        [
+        'exclude'                 => true,
+        'inputType'               => 'c4g_text',
+        'eval'                    => ['mandatory'=>false, 'maxlength'=>20, 'tl_class'=>'w50 wizard'],
+        'save_callback'           => [['tl_calendar_events_c4g_maps','setLocLon']],
+        'wizard'                  => [['\con4gis\MapsBundle\Classes\GeoPicker', 'getPickerLink']],
+        'sql'                     => "varchar(20) NOT NULL default ''"
+        ];
 
-        $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['c4g_loc_geoy'] =
-            [
-            'exclude'                 => true,
-            'inputType'               => 'c4g_text',
-            'eval'                    => ['mandatory'=>false, 'maxlength'=>20, 'tl_class'=>'w50 wizard'],
-            'save_callback'           => [['tl_calendar_events_c4g_maps','setLocLat']],
-            'wizard'                  => [['\con4gis\MapsBundle\Classes\GeoPicker', 'getPickerLink']],
-            'sql'                     => "varchar(20) NOT NULL default ''"
-            ];
+    $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['c4g_loc_geoy'] =
+        [
+        'exclude'                 => true,
+        'inputType'               => 'c4g_text',
+        'eval'                    => ['mandatory'=>false, 'maxlength'=>20, 'tl_class'=>'w50 wizard'],
+        'save_callback'           => [['tl_calendar_events_c4g_maps','setLocLat']],
+        'wizard'                  => [['\con4gis\MapsBundle\Classes\GeoPicker', 'getPickerLink']],
+        'sql'                     => "varchar(20) NOT NULL default ''"
+        ];
 
-        $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['c4g_loc_label'] =
-            [
-            'exclude'                 => true,
-            'inputType'               => 'text',
-            'eval'                    => ['tl_class'=>'clr'],
-            'sql'                     => "varchar(100) NOT NULL default ''"
-            ];
+    $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['c4g_loc_label'] =
+        [
+        'exclude'                 => true,
+        'inputType'               => 'text',
+        'eval'                    => ['tl_class'=>'clr'],
+        'sql'                     => "varchar(100) NOT NULL default ''"
+        ];
 
-        $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['c4g_locstyle'] =
-            [
-            'exclude'                 => true,
-            'inputType'               => 'select',
-            'options_callback'        => ['tl_calendar_events_c4g_maps','getLocStyles'],
-            'eval'                    => array('chosen' => true, 'includeBlankOption'=>true),
-            'sql'                     => "int(10) unsigned NOT NULL default '0'",
-            'xlabel' => array
-            (
-                array('tl_calendar_events_c4g_maps', 'locstylesLink')
-            )
-            ];
-    }
+    $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['c4g_locstyle'] =
+        [
+        'exclude'                 => true,
+        'inputType'               => 'select',
+        'options_callback'        => ['tl_calendar_events_c4g_maps','getLocStyles'],
+        'eval'                    => array('chosen' => true, 'includeBlankOption'=>true),
+        'sql'                     => "int(10) unsigned NOT NULL default '0'",
+        'xlabel' => array
+        (
+            array('tl_calendar_events_c4g_maps', 'locstylesLink')
+        )
+        ];
 
     /**
      * Class tl_calendar_events_c4g_maps
