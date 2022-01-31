@@ -121,7 +121,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['beEditorCircleLocstyle'] = ['Locstyl
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium'] = ['Use Cesium', 'If the option Cesium (globe display) has been activated in the selected base map(s), these will be displayed as a globe.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium_always']  = ['Always use Cesium', 'If the globe display of all base maps selected here in the map profile is desired, this option must be activated. No further specifications in the base maps are necessary.)'];
 
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['magnific_popup'] = ['Use Magnific Popup', 'Loads the jQuery plugin magnific popup.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['magnific_popup'] = ['Loads the jQuery plugin Magnific Popup in conjunction with con4gis/projects.'];
 
 /** Einstellungen zum Klick-Verhalten */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['tooltipOrientation'] = ['Tooltip-position', 'Position of the tooltip relative to the mouse.'];

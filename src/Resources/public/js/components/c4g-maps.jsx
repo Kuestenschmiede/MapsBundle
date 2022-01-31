@@ -1069,8 +1069,9 @@ export default class MapController extends Component {
     if (mapData.measuretools.enable) {
       measurePortal = ReactDOM.createPortal(
         <Suspense fallback={<div>"Loading..."</div>}>
-          <Measuretools ref={(node) => {this.components.measuretools = node;}} target={target} external={this.measuretoolsContainer.className.indexOf("c4g-external") !== -1}
-            mapController={this} open={mapData.initial_open_comp === "measuretools"}/>
+          <Measuretools ref={(node) => {
+            this.components.measuretools = node;
+          }} target={target} open={mapData.initial_open_comp === "measuretools"} mapController={this} />
         </Suspense>,
         this.measuretoolsContainer
       );
