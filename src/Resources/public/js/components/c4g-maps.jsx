@@ -691,18 +691,19 @@ export default class MapController extends Component {
 
     // measuretools container
     if (mapData.measuretools.enable) {
+      let open = mapData.initial_open_comp === "measuretools" ? "c4g-open" : "c4g-close";
       if (mapData.measuretools.div) {
         this.measuretoolsContainer = document.querySelector("." + mapData.measuretools.div);
         if (!this.measuretoolsContainer) {
           this.measuretoolsContainer = document.createElement('div');
-          this.measuretoolsContainer.className = "c4g-sideboard c4g-measuretools-container ol-unselectable c4g-close";
+          this.measuretoolsContainer.className = "c4g-sideboard c4g-measuretools-container ol-unselectable " + open;
           this.$overlaycontainer_stopevent.append(this.measuretoolsContainer);
         } else {
           this.measuretoolsContainer.className += " c4g-external c4g-measuretools-container ol-unselectable";
         }
       } else {
         this.measuretoolsContainer = document.createElement('div');
-        this.measuretoolsContainer.className = "c4g-sideboard c4g-measuretools-container ol-unselectable c4g-close";
+        this.measuretoolsContainer.className = "c4g-sideboard c4g-measuretools-container ol-unselectable " + open;
         this.$overlaycontainer_stopevent.append(this.measuretoolsContainer);
       }
     }
