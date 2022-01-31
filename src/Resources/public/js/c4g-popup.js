@@ -31,6 +31,7 @@ export class C4gPopup {
                 element: popUpElement,
                 positioning: 'bottom-left',
                 offset: [-50, 0],
+                insertFirst: false,
                 autoPan: autoPan,
                 autoPanAnimation: {
                     duration: 250
