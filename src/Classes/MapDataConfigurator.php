@@ -646,11 +646,10 @@ class MapDataConfigurator
             }
             $mapData['hover_popups'] = $profile->hover_popups;
             $mapData['hover_popups_stay'] = $profile->hover_popups_stay;
-            $mapData['popupHandling'] = $profile->popupHandling == 4 ? 0 : $profile->popupHandling;
+            $mapData['popupDiv'] = (is_array($externalElements) && in_array('popup', $externalElements)) ? $externalClasses['popup'] : '';
+            $mapData['popupHandling'] = $mapData['popupDiv'] ? 3 : ($profile->popupHandling == 4 ? 0 : $profile->popupHandling);
             $mapData['popupHeadline'] = $profile->popupHeadline;
             $mapData['popupMultiple'] = $profile->popupMultiple && ($profile->popupHandling < 2 || $profile->popupHandling == 4);
-            $mapData['popupDiv'] = (is_array($externalElements) && in_array('popup', $externalElements)) ? $externalClasses['popup'] : '';
-
             if ($profile->consentBanner) {
                 $mapData['cookie'] = [
                     'info' => $profile->cookieInfo,
