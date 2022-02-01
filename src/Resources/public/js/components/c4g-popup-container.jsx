@@ -56,21 +56,26 @@ export class PopupContainer extends Component {
       headerClass += " c4g-routing";
       addButtons = <this.state.conststr config={this.state.config}/>;
     }
-    return (
-      <div className={className}>
-        <div className={"c4g-popup-wrapper"}>
-          <Suspense fallback={<div>Loading...</div>}>
-            <Titlebar wrapperClass={headerClass} headerClass={"c4g-popup-header-headline"} header={this.props.mapData.popupHeadline || ""}
-                      closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close} closeBtnTitle={this.language.CLOSE}
-                      detailBtnClass={""} detailBtnCb={""}>
-              {addButtons}
-            </Titlebar>
-          </Suspense>
-          <div className={"c4g-popup-content"} dangerouslySetInnerHTML={{__html: this.state.content}}/>
+    if (this.state.content) {
+      return (
+          <div className={className}>
+            <div className={"c4g-popup-wrapper"}>
+              <Suspense fallback={<div>Loading...</div>}>
+                <Titlebar wrapperClass={headerClass} headerClass={"c4g-popup-header-headline"} header={this.props.mapData.popupHeadline || ""}
+                          closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close} closeBtnTitle={this.language.CLOSE}
+                          detailBtnClass={""} detailBtnCb={""}>
+                  {addButtons}
+                </Titlebar>
+              </Suspense>
+              <div className={"c4g-popup-content"} dangerouslySetInnerHTML={{__html: this.state.content}}/>
 
-        </div>
-      </div>
-    );
+            </div>
+          </div>
+      );
+    }
+    else {
+      return null;
+    }
   }
 
   setAddButtons(conststr, config) {

@@ -9,7 +9,6 @@
  * @link https://www.con4gis.org
  */
 
-$GLOBALS['TL_LANG']['tl_c4g_settings']['disabledC4gMapObjects'] = ["Deaktivierte Quellen", "Wählen Sie die Quellen aus, die Sie im Backend deaktivieren möchten."];
 $GLOBALS['TL_LANG']['tl_c4g_settings']['c4g_maps_legend'] = "Karteneinstellungen (con4gis/maps)";
 $GLOBALS['TL_LANG']['tl_c4g_settings']['caching'] = ["Caching aktivieren", "Caching für con4gis-Dienste aktivieren. Die Sinnhaftigkeit des Cachings ist von Fall zu Fall unterschiedlich und bedarf eigener Tests."];
 
