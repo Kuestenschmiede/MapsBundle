@@ -25,6 +25,7 @@
     "docs": "https://docs.con4gis.org/con4gis-maps"
   },
   "require": {
+    "php": "^7.4 || ^8.0",
     "contao/core-bundle": "^4.9",
     "con4gis/core": "^6.0.0",
     "phayes/geophp": "^1.2",
