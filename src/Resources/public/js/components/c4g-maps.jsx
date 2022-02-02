@@ -1096,42 +1096,18 @@ export default class MapController extends Component {
     }
     let overviewPortal = "";
     if (mapData.overviewmap) {
-      let layers = [];
+      let source;
       if (this.proxy.baselayers_loaded) {
-        layers = [this.proxy.baselayerController.arrBaselayers[this.proxy.activeBaselayerId].layer];
+        let layer = this.proxy.baselayerController.arrBaselayers[this.state.activeBaselayerId].layer;
+        source = layer instanceof LayerGroup ? layer.getArray()[0].getSource() : layer.getSource();
       }
       overviewPortal = ReactDOM.createPortal(
-        <Suspense fallback={<div>Loading...</div>}>
-          <OverviewMap ref={(node) => {this.components.overviewMap = node;}} mapController={this} target={target}
-                        layers={layers} ovmTarget={this.overviewContainer} collapsed={true} key={23}/>
-        </Suspense>,
-        this.overviewContainer
+          <Suspense fallback={<div>Loading...</div>}>
+            <OverviewMap ref={(node) => {this.components.overviewMap = node;}} mapController={this} target={target}
+                         source={source} ovmTarget={this.overviewContainer} collapsed={true} key={23}/>
+          </Suspense>,
+          this.overviewContainer
       )
-      // overviewPortal = ReactDOM.createPortal(overviewPortal, this.overviewContainer);
-      this.proxy.hook_baselayer_visibility = this.proxy.hook_baselayer_visibility || [];
-      this.proxy.hook_baselayer_visibility.push(function(baselayerConfig) {
-        let id = baselayerConfig.id;
-        let currentBaselayer = scope.proxy.baselayerController.arrBaselayers[id];
-        let currentSource;
-        if (currentBaselayer.layer instanceof LayerGroup) {
-          currentSource = currentBaselayer.layer.getLayers().getArray()[0].getSource();
-        }
-        else {
-          currentSource = currentBaselayer.layer.getSource();
-        }
-        if (scope.components.overviewMap) {
-          scope.components.overviewMap.addLayer(new TileLayer({source: currentSource}), id);
-        } else {
-          // TODO better solution to wait for overviewmap to be rendered?
-          let intervalId = window.setInterval(() => {
-            if (scope.components.overviewMap) {
-              scope.components.overviewMap.addLayer(new TileLayer({source: currentSource}), id);
-              window.clearInterval(intervalId);
-            }
-          }, 1000);
-        }
-
-      });
     }
 
     let result = [];

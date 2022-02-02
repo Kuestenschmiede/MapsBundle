@@ -13,6 +13,7 @@ import {Control, OverviewMap as OvMap} from "ol/control";
 import {cssConstants} from "../c4g-maps-constant";
 import {getLanguage} from "../c4g-maps-i18n";
 import LayerGroup from "ol/layer/Group";
+import TileLayer from "ol/layer/Tile";
 const Titlebar = React.lazy(() => import("./c4g-titlebar.jsx"));
 
 export default class OverviewMap extends Component {
@@ -27,13 +28,12 @@ export default class OverviewMap extends Component {
 
     this.state = {
       open: !props.collapsed,
-      layers: this.props.layers
     };
     this.langConstants = getLanguage(props.mapController.data);
     this.mapController = props.mapController;
     this.open = this.open.bind(this);
     this.close = this.close.bind(this);
-
+    this.layer = new TileLayer();
     element = document.createElement('div');
     element.className = cssConstants.OVERVIEWMAP + ' ' + cssConstants.OL_UNSELECTABLE + ' ' + cssConstants.OL_CONTROL;
     if (props.collapsed) {
@@ -83,6 +83,7 @@ export default class OverviewMap extends Component {
   }
 
   componentDidMount() {
+    this.createOverviewMap();
   }
 
   createOverviewMap() {
@@ -93,7 +94,7 @@ export default class OverviewMap extends Component {
       rotateWithView: true,
       className: 'ol-overviewmap ol-custom-overviewmap',
       target: ovmTarget,
-      layers: this.state.layers
+      layers: [this.layer]
     });
     this.ovm.setMap(this.props.mapController.map);
   }
@@ -123,6 +124,7 @@ export default class OverviewMap extends Component {
     this.setState({open: false});
   }
 
+
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (!this.state.open && prevState.open) {
       jQuery(this.element).addClass(cssConstants.CLOSE).removeClass(cssConstants.OPEN);
@@ -131,23 +133,8 @@ export default class OverviewMap extends Component {
       jQuery(this.element).removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN);
       jQuery(this.props.ovmTarget).removeClass(cssConstants.CLOSE).addClass(cssConstants.OPEN);
     }
-    if (prevState.layers.length !== this.state.layers.length) {
-      if (!this.ovm) {
-        this.createOverviewMap();
-      } else {
-        let layerGroup = new LayerGroup({layers: this.state.layers});
-        this.ovm.getOverviewMap().setLayerGroup(layerGroup);
-      }
-
-    }
-  }
-
-  addLayer(layer, id) {
-    if (!this.baseLayerIds.includes(id)) {
-      this.baseLayerIds.push(id);
-      let arrLayers = [...this.state.layers];
-      arrLayers.push(layer);
-      this.setState({layers: arrLayers})
+    if (prevProps.source !== this.props.source) {
+      this.layer.setSource(this.props.source);
     }
   }
 }
