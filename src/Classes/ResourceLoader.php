@@ -153,7 +153,7 @@ class ResourceLoader extends coreResourceLoader
             }
         }
 
-        $mapFunctions = \Contao\StringUtil::deserialize($profile->mapFunctions);
+        $mapFunctions = \Contao\StringUtil::deserialize($profile->mapFunctions, true);
         $buttons = array_flip($mapFunctions);
 
         // check which resources are needed

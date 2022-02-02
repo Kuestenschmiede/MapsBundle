@@ -323,7 +323,7 @@ class MapDataConfigurator
         if ($profile) {
             // general
             //
-            $mapFunctions = \Contao\StringUtil::deserialize($profile->mapFunctions);
+            $mapFunctions = \Contao\StringUtil::deserialize($profile->mapFunctions, true);
             $buttons = array_flip($mapFunctions);
 
             // external elements
