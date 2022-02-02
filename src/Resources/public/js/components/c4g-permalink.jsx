@@ -157,8 +157,8 @@ export default class Permalink extends Component {
       parameters.push(+mapView.getRotation().toFixed(2));
 
       // find active baselayer
-      if (proxy.activeBaselayerId) {
-        parameters.push(proxy.activeBaselayerId);
+      if (this.props.mapController.state.activeBaselayerId) {
+        parameters.push(this.props.mapController.state.activeBaselayerId);
       } else {
         parameters.push(0);
       }

@@ -97,7 +97,7 @@ export class C4gBaselayerController {
       }
     }
 
-    if (!this.proxy.activeBaselayerId) {
+    if (!this.mapController.state.activeBaselayerId) {
       // no baselayer was activated
       if (baselayers.length > 0 && baselayers[0].id) {
         // take first baselayer if possible
@@ -840,8 +840,8 @@ export class C4gBaselayerController {
     }
 
     // // deactivate old overlays
-    if (this.proxy.activeBaselayerId && (this.proxy.activeBaselayerId !== baseLayerUid)) {
-      let oldBaselayer = this.arrBaselayers[this.proxy.activeBaselayerId];
+    if (this.mapController.state.activeBaselayerId && (this.mapController.state.activeBaselayerId !== baseLayerUid)) {
+      let oldBaselayer = this.arrBaselayers[this.mapController.state.activeBaselayerId];
       if (oldBaselayer.overlayController && oldBaselayer.overlayController.arrOverlays
         && oldBaselayer.overlayController.arrOverlays.length > 0) {
         for (let key in oldBaselayer.overlayController.arrOverlays) {
@@ -913,7 +913,7 @@ export class C4gBaselayerController {
     }
 
     if (typeof baseLayerConfig !== "undefined") {
-      this.proxy.activeBaselayerId = baseLayerConfig.id;
+      this.mapController.setBaselayerId(baseLayerConfig.id);
 
       utils.callHookFunctions(this.proxy.hook_baselayer_visibility, baseLayerConfig);
 

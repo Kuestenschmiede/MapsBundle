@@ -55,7 +55,6 @@ export class MapProxy {
     window.c4gMapsHooks.proxy_baselayer_loaded = window.c4gMapsHooks.proxy_baselayer_loaded || [];
 
     this.baselayerIds = [];
-    this.activeBaselayerId = undefined;
     this.layerIds = [];
     this.activeLayerIds = {};
 

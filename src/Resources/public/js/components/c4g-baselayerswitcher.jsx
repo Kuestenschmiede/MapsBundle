@@ -54,7 +54,7 @@ export default class BaselayerSwitcher extends Component {
     } else {
       props.mapController.proxy.hook_baselayer_loaded = props.mapController.proxy.hook_baselayer_loaded || [];
       props.mapController.proxy.hook_baselayer_loaded.push(function() {
-        scope.setState({baselayerLoaded: true, currentBaselayer: props.mapController.proxy.activeBaselayerId});
+        scope.setState({baselayerLoaded: true, currentBaselayer: props.mapController.state.activeBaselayerId});
       });
     }
     // state variables (every property that has influence on this component)

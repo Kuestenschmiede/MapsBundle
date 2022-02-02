@@ -96,9 +96,11 @@ export default class MapController extends Component {
       openComponent: null,
       objTabLayers: [],
       styleData: {},
-      arrTabLayerStates: []
+      arrTabLayerStates: [],
+      activeBaselayerId: null
     };
     this.setObjLayers = this.setObjLayers.bind(this);
+    this.setBaselayerId = this.setBaselayerId.bind(this);
     this.setLayerStates = this.setLayerStates.bind(this);
     this.changeActiveLayers = this.changeActiveLayers.bind(this);
     this.setTabStates = this.setTabStates.bind(this);
@@ -825,6 +827,11 @@ export default class MapController extends Component {
     this.setState({
       objLayers: objLayers,
       arrLayerStates: arrLayers
+    });
+  }
+  setBaselayerId(id) {
+    this.setState({
+      activeBaselayerId: id
     });
   }
 
