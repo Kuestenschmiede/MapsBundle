@@ -733,7 +733,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'inputType'               => 'text',
                 'default'                 => '0.1',
                 'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
-                'sql'                     => "double(3,3) NOT NULL default '0.100'"
+                'sql'                     => "double NOT NULL default 0.1"
             ],
         'resize_min_scale' =>
             [
@@ -741,7 +741,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'inputType'               => 'text',
                 'default'                 => '0.1',
                 'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
-                'sql'                     => "double(3,3) NOT NULL default '0.100'"
+                'sql'                     => "double NOT NULL default 0.1"
             ],
         'resize_max_scale' =>
             [
@@ -749,7 +749,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'inputType'               => 'text',
                 'default'                 => '1.0',
                 'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
-                'sql'                     => "double(3,3) NOT NULL default '1.000'"
+                'sql'                     => "double NOT NULL default 1.0"
             ],
         'overpassEngine' =>
             [
