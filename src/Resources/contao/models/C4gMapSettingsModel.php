@@ -20,6 +20,8 @@ class C4gMapSettingsModel extends \Contao\Model
     protected static $strTable = 'tl_c4g_settings';
     public static function findOnly() {
         $collSettings = static::findAll();
+        if ($collSettings == null)
+            return null;
         foreach ($collSettings as $objSettings) {
             return $objSettings;
         }

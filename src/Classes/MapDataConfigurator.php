@@ -63,7 +63,7 @@ class MapDataConfigurator
         // ------------------------------------------------------------------------
         // get profile for map
         // ------------------------------------------------------------------------
-        if ($options['profile']) {
+        if (isset($options['profile']) && $options['profile']) {
             $profileId = $options['profile'];
         } else {
             $profileId = $map->profile;
@@ -77,7 +77,7 @@ class MapDataConfigurator
         }
 
         //check if we are in backend mode
-        if ($options['type'] == 'geopicker') {
+        if (isset($options['type']) && $options['type'] == 'geopicker') {
             // select selected backend profile
             $settings = C4gSettingsModel::findAll();
             $profileId = $options && $options['profile'] ? $options['profile'] : ($settings[0]->beGeopickerProfile ? $settings[0]->beGeopickerProfile : $settings[0]->defaultprofile);
@@ -116,7 +116,7 @@ class MapDataConfigurator
         $profile = C4gMapProfilesModel::findByPk($profileId);
 
         //check if we are in backend mode
-        if ($options['geoeditor']) {
+        if (isset($options['geoeditor']) && $options['geoeditor']) {
             // select selected backend profile
             $result = C4gSettingsModel::findSettings();
             $profileId = $result->row();
@@ -443,7 +443,7 @@ class MapDataConfigurator
             $mapData['attribution']['enable'] = $profile->attribution;
             if ($profile->attribution) {
                 $settings = C4gMapSettingsModel::findOnly();
-                if ($settings->con4gisIoUrl && $settings->con4gisIoKey) {
+                if (isset($settings->con4gisIoUrl) && isset($settings->con4gisIoKey) && $settings->con4gisIoUrl && $settings->con4gisIoKey) {
                     $mapData['attribution']['con4gisIO'] = 1;
                 }
                 $mapData['attribution']['always_show'] = $profile->always_show_attribution;
@@ -589,7 +589,7 @@ class MapDataConfigurator
             if ($keyParams && count($keyParams) > 0) {
                 $arrKeys = C4GUtils::getKeys($objSettings, $keyParams);
                 $blKeys = [];
-                foreach ($arrKeys as $key => $keyValue) {
+                if (is_array($arrKeys)) foreach ($arrKeys as $key => $keyValue) {
                     $service = $keyParams[$key][0];
                     switch ($service) {
                         case 2:
@@ -699,7 +699,7 @@ class MapDataConfigurator
             ResourceLoader::loadResourcesForModule('maps');
             // load internal scripts and themes
             if ($profileId) {
-                $mapData['themeData'] = ResourceLoader::loadResourcesForProfile($profileId, $options['type'] == 'geopicker', null, $mapData);
+                $mapData['themeData'] = ResourceLoader::loadResourcesForProfile($profileId, isset($options['type']) && $options['type'] == 'geopicker', null, $mapData);
             } else {
                 ResourceLoader::loadResources();
                 $mapData['themeData'] = ResourceLoader::loadTheme();

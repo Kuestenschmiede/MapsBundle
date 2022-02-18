@@ -80,7 +80,7 @@ class LayerController extends BaseController
     
     private function addCustomLogic($arrLayerData, $lang)
     {
-        if ($arrLayerData['hasChilds']) {
+        if (isset($arrLayerData['hasChilds']) && $arrLayerData['hasChilds'] && isset($arrLayerData['childs'])) {
             foreach ($arrLayerData['childs'] as $childIdx => $child) {
                 $arrLayerData['childs'][$childIdx] = $this->addCustomLogic($child, $lang);
             }
