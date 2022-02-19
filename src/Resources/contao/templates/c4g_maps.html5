@@ -6,7 +6,7 @@
     echo '<' . $this->hl . '>' . $this->headline . '</' . $this->hl . '>';
 } ?>
 
-<?php if (!$this->mapData['mapDiv']): ?>
+<?php if (!isset($this->mapData['mapDiv']) || !$this->mapData['mapDiv']): ?>
 <div id="<?php echo 'c4g_map_' . $this->mapData['mapId'] ?>" class="c4g_map">
     <div id="<?php echo 'c4g-map-container-' . $this->mapData['mapId'] ?>"></div>
 </div>

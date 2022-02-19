@@ -203,7 +203,7 @@ class LayerService
         // Get all layers on the map
         $objLayers = C4gMapsModel::findPublishedByPid($intId);
 
-        if ($objMap) {
+        if (isset($objMap) && is_object($objMap)) {
             // append map itself as structure element
             if ($objMap->location_type != 'map') {
                 $mapLayer = $this->parseLayer($objMap, $lang);
@@ -252,7 +252,7 @@ class LayerService
                             continue;
                         }
                     }
-                    $arrLayerData['childs'] = $this->setChildHide($arrLayerData['childs'], $objLayers);
+                    $arrLayerData['childs'] = $this->setChildHide(isset($arrLayerData['childs']) ? $arrLayerData['childs'] : '', $objLayers);
                     // only add if there is a result
                     if (is_array($arrLayerData) && count($arrLayerData) > 0) {
                         unset($arrLayerData['raw']);

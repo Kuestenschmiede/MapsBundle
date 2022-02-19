@@ -83,13 +83,13 @@ class ResourceLoader extends coreResourceLoader
             );
         }
 
-        if ($mapData['router_enable']) {
+        if (isset($mapData['router_enable']) && $mapData['router_enable']) {
             parent::loadCssResource(self::BUNDLE_CSS_PATH . 'c4g-routing.min.css', 'routing-css');
         }
-        if ($mapData['feEditorProfile'] || $mapData['beEditorProfile']) {
+        if ((isset($mapData['feEditorProfile']) && $mapData['feEditorProfile']) || (isset($mapData['beEditorProfile']) && $mapData['beEditorProfile'])) {
             parent::loadCssResource(self::BUNDLE_CSS_PATH . 'c4g-project-editor.min.css', 'project-editor-css');
         }
-        if ($mapData['editor'] && $mapData['editor']['type'] === 'backend') {
+        if (isset($mapData['editor']['type']) && $mapData['editor'] && $mapData['editor']['type'] === 'backend') {
             parent::loadJavaScriptResource(self::BUNDLE_JS_PATH . 'c4g-backend-helper.js', \con4gis\CoreBundle\Classes\ResourceLoader::BODY, 'c4g-backend-editor');
         }
 
