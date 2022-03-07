@@ -13,6 +13,7 @@ namespace con4gis\MapsBundle\Classes\Listener;
 
 use con4gis\MapsBundle\Classes\Events\LoadRouteFeaturesEvent;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
+use con4gis\MapsBundle\Resources\contao\models\C4gMapSettingsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapTablesModel;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
@@ -60,7 +61,13 @@ class LoadRouteFeaturesListener
             }
             $event->setFeatures($features);
         } elseif ($objLayer->location_type == 'overpass') {
-            $url = $objMapsProfile->overpass_url ? $objMapsProfile->overpass_url : 'http://overpass-api.de/api/interpreter';
+            if ($objMapsProfile->overpassEngine === "2") {
+                $settings = C4gMapSettingsModel::findOnly();
+                $url = $settings->con4gisIoUrl;
+                $url .= "/osm.php?key=" . $settings->con4gisIoKey;
+            } else {
+                $url = $objMapsProfile->overpass_url ? $objMapsProfile->overpass_url : 'http://overpass-api.de/api/interpreter';
+            }
 
             $lineStringWKT = 'LINESTRING (';
             foreach ($points as $point) {
@@ -94,7 +101,8 @@ class LoadRouteFeaturesListener
                 if ($_SERVER['HTTP_USER_AGENT']) {
                     $REQUEST->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
                 }
-                $REQUEST->send($url, $query);
+                $url .= "&data=" . urlencode($query);
+                $REQUEST->send($url);
                 if ($REQUEST->response) {
                     try {
                         $requestData = \GuzzleHttp\json_decode($REQUEST->response, true);
