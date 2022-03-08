@@ -101,8 +101,7 @@ class LoadRouteFeaturesListener
                 if ($_SERVER['HTTP_USER_AGENT']) {
                     $REQUEST->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
                 }
-                $url .= "&data=" . urlencode($query);
-                $REQUEST->send($url);
+                $REQUEST->send($url, $query);
                 if ($REQUEST->response) {
                     try {
                         $requestData = \GuzzleHttp\json_decode($REQUEST->response, true);
