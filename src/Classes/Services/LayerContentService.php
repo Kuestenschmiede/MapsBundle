@@ -825,12 +825,13 @@ class LayerContentService
                         break;
                 }
 
+
                 $objAsLayer = (object) [
                     'location_type' => 'single',
-                    'loc_geox' => $objBoardPosts->loc_geox,
-                    'loc_geoy' => $objBoardPosts->loc_geoy,
+                    'loc_geox' => $objBoardPosts->loc_geox ?: '',
+                    'loc_geoy' => $objBoardPosts->loc_geoy ?: '',
                     'id' => $objBoardPosts->id,
-                    'tooltip' => $mapTooltip,
+                    'tooltip' => $mapTooltip ?: '',
                 ];
 
                 $arrReturn[] = [
@@ -870,6 +871,8 @@ class LayerContentService
             $popup_content = Utils::replaceInsertTags($objLayer->popup_info ?: '', $lang);
         }
 
+        $locGeox = Utils::replaceInsertTags($objLayer->loc_geox ?: '', $lang);
+        $locGeoy = Utils::replaceInsertTags($objLayer->loc_geoy ?: '', $lang);
         switch ($objLayer->location_type) {
             case 'single':
 
@@ -878,8 +881,8 @@ class LayerContentService
                     'geometry' => [
                         'type' => 'Point',
                         'coordinates' => [
-                            floatval($objLayer->loc_geox),
-                            floatval($objLayer->loc_geoy),
+                            floatval($locGeox),
+                            floatval($locGeoy),
                         ],
                     ],
                     'properties' => [
