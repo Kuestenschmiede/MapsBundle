@@ -60,7 +60,7 @@
     "file-saver": "^2.0.5",
     "i18next-client": "^1.11.4",
     "jsbi": "^3.2.5",
-    "minimist": "^1.2.5",
+    "minimist": "^1.2.6",
     "moment": "^2.29.1",
     "ol": "6.13.0",
     "ol-cesium": "^2.13.0",
