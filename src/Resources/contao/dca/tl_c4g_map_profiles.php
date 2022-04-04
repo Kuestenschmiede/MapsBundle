@@ -107,7 +107,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                                          '{attribution_legend:hide},attribution;'.
                                          '{information_legend:hide},scaleline,mouseposition,permalink_get_param,permalinkSaveId,permalinkWithoutGenerator,zoomlevel,infopage;'.
                                          '{locstyle_legend:hide},label_color,resize_locstyles_zoom;'.
-                                         '{expert_legend:hide},overpassEngine,caching,cesium,external_elements,filters,filterHandling,filterResetButton,geopicker,beEditor,custom_div,be_optimize_checkboxes_limit,consentBanner;'
+                                         '{expert_legend:hide},overpassEngine,caching,cesium,external_elements,custom_div,geopicker,filters,filterHandling,filterResetButton,be_optimize_checkboxes_limit,consentBanner;'
         ],
     'subpalettes' =>
     [
