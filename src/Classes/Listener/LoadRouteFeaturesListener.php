@@ -93,8 +93,8 @@ class LoadRouteFeaturesListener
                 $query = $objLayer->ovp_request;
                 $strSearch = strrpos($query, '(bbox)') ? '(bbox)' : '{{bbox}}';
                 $query = str_replace($strSearch, $strBBox, $query);
+                $query = str_replace('out:json', 'out:xml', $query);
                 $REQUEST = new \Contao\Request();
-                $REQUEST->setHeader('Content-Type', 'json');
                 if ($_SERVER['HTTP_REFERER']) {
                     $REQUEST->setHeader('Referer', $_SERVER['HTTP_REFERER']);
                 }
@@ -103,12 +103,7 @@ class LoadRouteFeaturesListener
                 }
                 $REQUEST->send($url, $query);
                 if ($REQUEST->response) {
-                    try {
-                        $requestData = \GuzzleHttp\json_decode($REQUEST->response, true);
-                        $features = $requestData;
-                    } catch (\Exception $exception) {
-                        $features = [];
-                    }
+                    $features = $REQUEST->response;
                 }
 
                 if ($jsonPolygon) {

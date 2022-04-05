@@ -23,8 +23,6 @@ import {Point} from "ol/geom";
 import Feature from 'ol/Feature';
 import * as olExtent from 'ol/extent';
 
-const osmtogeojson = require('osmtogeojson');
-
 let olFormat = jQuery.extend({
   OSMXML: OSMXML
 }, olFormats);
@@ -1208,13 +1206,9 @@ export class BetterLayerController {
       if (params && params.substr(0, 1).trim() === "<") {
         strBoundingBox = '<bbox-query s="' + boundingArray[1] + '" n="' + boundingArray[3] + '" w="' + boundingArray[0] + '" e="' + boundingArray[2] + '"/>';
         url += 'data=' + encodeURIComponent(params.replace(bboxTag, strBoundingBox));
+        url = url.replace('output=json', 'output=xml');
         fetch(url, {signal}).then((response) => {
-          if (params.includes('output=json')) {
-            response.json().then((respo)=> {scope.parseOvpData(respo, requestData)}).catch((error) => {console.log(error.message)});
-          }
-          else {
-            response.text().then((resp) => {scope.parseOvpData(resp, requestData)}).catch((error) => {console.log(error.message)});
-          }
+          response.text().then((resp) => {scope.parseOvpData(resp, requestData)}).catch((error) => {console.log(error.message)});
         })
         .catch((error) => {
           if (error.code && error.code !== 20) {
@@ -1223,14 +1217,9 @@ export class BetterLayerController {
         });
       } else {
         strBoundingBox = boundingArray[1] + ',' + boundingArray[0] + ',' + boundingArray[3] + ',' + boundingArray[2];
-        url += 'data=' + encodeURIComponent(params.replace(bboxTag, strBoundingBox));
+        url += 'data=' + encodeURIComponent(params.replace(bboxTag, strBoundingBox).replace('out:json', 'out:xml'));
         fetch(url, {signal}).then((response) => {
-          if (params.includes('out:json')) {
-            response.json().then((respo)=> {scope.parseOvpData(respo, requestData)}).catch((error) => {console.log(error.message)});
-          }
-          else {
-            response.text().then((resp) => {scope.parseOvpData(resp, requestData)}).catch((error) => {console.log(error.message)});
-          }
+          response.text().then((resp) => {scope.parseOvpData(resp, requestData)}).catch((error) => {console.log(error.message)});
         })
         .catch((error) => {
           if (error.code && error.code !== 20) {
@@ -1271,10 +1260,8 @@ export class BetterLayerController {
       } catch (e) {
         console.warn('Can not read feature.');
       }
-    } else if (typeof response === "object"){
-      let geojson = osmtogeojson(response);
-      features = new olFormat.GeoJSON().readFeatures(geojson, {featureProjection: "EPSG:3857"});
-    } else {
+    }
+    else {
       return false;
     }
     // set popups for features

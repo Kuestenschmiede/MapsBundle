@@ -22,7 +22,7 @@ import {Vector as VectorSource} from "ol/source";
 import {Collection} from "ol";
 import {LineString} from "ol/geom";
 import {Modify, Select} from "ol/interaction";
-import {GeoJSON} from "ol/format";
+import OSMXML from 'ol/format/OSMXML';
 import {RoutingPermalink} from "./../c4g-routing-permalink";
 import {getLanguage} from "./../routing-constant-i18n";
 import {cssConstants} from "./../c4g-maps-constant";
@@ -33,7 +33,6 @@ import {RouterPopupButtons} from "./c4g-router-popup-buttons.jsx";
 const RouterControls = React.lazy(() => import('./c4g-router-controls.jsx'));
 const RouterProfileSelection = React.lazy(() => import('./c4g-router-profile-selection.jsx'));
 
-const osmtogeojson = require('osmtogeojson');
 
 /**
  * Main router component. It consists of the RouterControls and RouterResultContainer components, and holds the
@@ -1828,16 +1827,9 @@ export class RouterView extends Component {
           }
         }
     } else {
-      let geojson;
-
-      if (features.elements) {
-        geojson = osmtogeojson(features);
-        this.geoJsonFeatures = geojson;
-      } else {
-        geojson = this.geoJsonFeatures;
-      }
       const mapProj = self.props.mapController.map.getView().getProjection();
-      contentFeatures = new GeoJSON().readFeatures(geojson, {
+      const format = new OSMXML();
+      contentFeatures = format.readFeatures(features, {
         dataProjection: 'EPSG:4326',
         featureProjection: mapProj
       });
