@@ -272,10 +272,10 @@ ul.c4g-overlays li a {
     display: inline-block;
     width: calc(100% - 1.75em - .2em - 24px);
     text-decoration: none;
-    padding: 0 1.75em 0 .2em;
+    padding: 0 0 0 .2em;
     cursor: pointer;
     position: relative;
-    min-width: fit-content;
+    min-width: 100%;
 }
 
 .c4g-content-layertree span[class*=locstyle] + .c4g-starboard-text {
