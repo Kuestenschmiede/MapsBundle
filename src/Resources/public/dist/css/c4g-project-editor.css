@@ -1,0 +1,407 @@
+@charset "UTF-8";
+/*!
+ * This file is part of con4gis, the gis-kit for Contao CMS.
+ * @package con4gis
+ * @version 8
+ * @author con4gis contributors (see "authors.txt")
+ * @license LGPL-3.0-or-later
+ * @copyright (c) 2010-2022, by Küstenschmiede GmbH Software & Design
+ * @link https://www.con4gis.org
+ */
+@font-face {
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-style: normal
+}
+html {
+  --maps-editor-color-default: #333;
+  --maps-editor-color-default-opposite: #fff;
+  --maps-editor-btn-width: 45px;
+  --maps-editor-btn-height: 45px;
+  --maps-editor-line-height: 1.5;
+  --maps-editor-space: 10px
+}
+button.c4g-button-enable-edit:before {
+  content: "\f040"
+}
+button.c4g-button-disable-edit:before {
+  content: "\f00c"
+}
+button.c4g-editor-project-tab:before {
+  content: "\f1c0"
+}
+button.c4g-starboard-view-trigger-starboardplugin:before {
+  content: "\f0f9"
+}
+.c4g-button-enable-edit {
+  font-size: inherit
+}
+.c4g-button-disable-edit {
+  font-size: inherit
+}
+.c4g-project-headline-field {
+  display: flex;
+  background-color: #fbfcfd;
+  border-color: rgba(0,60,136,.3)
+}
+.c4g-project-headline-field h4 {
+  display: inline-block;
+  width: 80%;
+  flex-grow: 4;
+  border: none;
+  box-shadow: none!important;
+  border-bottom: 0!important
+}
+.c4g-category-headline {
+  display: flex
+}
+.c4g-category-headline h4 {
+  display: inline-block;
+  width: 80%;
+  flex-grow: 4;
+  border: none;
+  box-shadow: none!important;
+  border-bottom: 0!important
+}
+.c4g-toggle-category {
+  margin-right: 12px;
+  border: 0!important;
+  border-color: transparent!important;
+  background-color: transparent!important;
+  border-radius: 0!important;
+  margin: 0!important;
+  padding: 0!important
+}
+.c4g-toggle-category-open:before {
+  content: "\f077"
+}
+.c4g-toggle-category-closed:before {
+  content: "\f078"
+}
+button.c4g-btn-edit-data:before {
+  content: "\f1c0"
+}
+button.c4g-btn-deselect-data:before {
+  content: "\f00d"
+}
+button.c4g-btn-rotate-data:before {
+  content: "\f021"
+}
+button.c4g-btn-deselect-all-data:before {
+  content: "\f00d"
+}
+button.toggle-group-collapsed:before {
+  content: "\f0c0"
+}
+button.toggle-group-uncollapsed:before {
+  content: "\f0c0"
+}
+.c4g-draw-content-project {
+  width: 100%
+}
+.c4g-draw-content-project button.c4g-draw-trigger {
+  width: auto;
+  height: auto
+}
+.c4g-editor .c4g-portside-top-toolbar .c4g-projects-bar button,
+.c4g-editor .c4g-portside-top-toolbar .c4g-projects-bar select {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  vertical-align: bottom;
+  bottom: 0
+}
+.c4g-editor .c4g-content-select {
+  color: var(--font-color);
+  border-color: var(--shadow-color);
+  background-color: var(--main-color)
+}
+.c4g-project-headline-field a {
+  text-decoration: none
+}
+.c4g-draw-content-project select {
+  display: block
+}
+.c4g-draw-content-circle div,
+.c4g-draw-content-freehand div,
+.c4g-draw-content-line div,
+.c4g-draw-content-point div,
+.c4g-draw-content-polygon div {
+  justify-content: space-between;
+  margin: 5px
+}
+.c4g-portside-container .c4g_brick_dialog #send-dialog::before {
+  content: "\f0c7"
+}
+.c4g-portside-container .c4g_brick_dialog #cancel-dialog::before {
+  content: "\f060"
+}
+button.c4g-btn-duplicate-data:before {
+  content: "\f24d"
+}
+button.c4g-btn-displace-data:before {
+  content: "\f56e"
+}
+button.c4g-btn-revert-data:before {
+  content: "\f0e2"
+}
+button.c4g-btn-duplicate-displace-data:before {
+  content: "\f0ea"
+}
+button.c4g-project-delete:before {
+  content: "\f2ed"
+}
+button.c4g-project-create:before {
+  content: "\f067"
+}
+button.c4g-project-edit:before {
+  content: "\f305"
+}
+button.c4g-editor-dialog-confirm:before {
+  content: "\f00c"
+}
+button.c4g-editor-dialog-cancel:before {
+  content: "\f05e"
+}
+.c4g-projects-bar > button.c4g-active {
+  color: var(--font-color);
+  background-color: var(--main-color)
+}
+.c4g-editor-draw-options {
+  display: none
+}
+.c4g-popup-content input[type=checkbox],
+.c4g_brick_dialog input[type=checkbox] {
+  display: inline-block!important
+}
+.c4g-edit-data-error-label {
+  --font-color: red
+}
+button.c4g-editor-feature-delete,
+button.c4g-editor-feature-modify {
+  border: none;
+  outline: 0;
+  width: 32px;
+  height: 32px
+}
+button.c4g-editor-feature-modify:before {
+  content: "\f0a4";
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: inherit
+}
+button.c4g-editor-feature-apply:before {
+  content: "\f00c";
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: inherit
+}
+button.c4g-editor-feature-delete:before {
+  content: "\f1f8";
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: inherit
+}
+button.c4g-btn-delete-all-data:before {
+  content: "\f1f8";
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: inherit
+}
+.c4g-editor.c4g-open > button:before {
+  content: "\f044";
+  font-weight: 100;
+  font-family: 'Font Awesome 5 Free';
+  font-size: inherit
+}
+.c4g-sideboard > div > div[class*=switcher] button:last-child,
+.c4g-sideboard > div > div[class*=switcher] button:not(:last-child) {
+  margin: var(--maps-editor-space)
+}
+.c4g-editor.c4g-close > button:before {
+  content: "\f044";
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: inherit
+}
+.c4g-editor-mode-switcher,
+.c4g-sideboard > div > div[class*=switcher] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: calc(var(--maps-editor-space) * -1);
+  height: auto;
+  line-height: var(--maps-editor-line-height);
+  padding: 0 .4em
+}
+.c4g-editor-element-selection button,
+.c4g-sideboard > div > div[class*=switcher] button,
+button.c4g-editor-feature-delete,
+button.c4g-editor-feature-modify {
+  width: var(--maps-editor-btn-width);
+  height: var(--maps-editor-btn-height)
+}
+.c4g-editor-element-selection button {
+  width: var(--maps-editor-btn-width)!important;
+  height: var(--maps-editor-btn-height)!important
+}
+.c4g-editor-wrapper > div {
+  margin-bottom: 20px;
+  padding: 0 .4em
+}
+.c4g-editor-mode-switcher button {
+  margin: var(--maps-editor-space)
+}
+.c4g-editor-mode-switcher > button.c4g-active {
+  background-color: var(--maps-editor-color-default);
+  color: var(--maps-editor-color-default-opposite)
+}
+.c4g-editor-view.c4g-active,
+.c4g-editor-view.c4g-inactive {
+  padding: 10px 0;
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--maps-editor-color-default);
+  position: relative;
+  text-decoration: none;
+  cursor: pointer
+}
+.c4g-editor-view.c4g-active:after,
+.c4g-editor-view.c4g-inactive:after {
+  position: absolute;
+  right: 0
+}
+.c4g-editor-wrapper .c4g-editor-element-selection {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--maps-editor-color-default)
+}
+.c4g-editor-mode-switcher > button.c4g-inactive {
+  color: var(--main-color)
+}
+button.c4g-editor-select:before {
+  content: "\f245";
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: inherit
+}
+button.c4g-editor-Point:before {
+  content: "\f3c5";
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: inherit
+}
+button.c4g-editor-LineString:before {
+  content: "\f4d7";
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: inherit
+}
+button.c4g-editor-Polygon:before {
+  content: "\f5ee";
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: inherit
+}
+button.c4g-editor-Circle:before {
+  content: "\f111";
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: inherit
+}
+button.c4g-editor-view-trigger-draw-freehand:before {
+  content: "\f303";
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: inherit
+}
+button.c4g-btn-displace-all-data:before {
+  content: "\f56e";
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: inherit
+}
+button.c4g-btn-copy-displace-all-data:before {
+  content: "\f0ea"
+}
+#c4g_projects_select {
+  color: var(--font-color);
+  background-color: var(--main-color)
+}
+.editor-member-list {
+  list-style-type: none;
+  padding: 0
+}
+button.editor-invite-member:before {
+  content: "\f067"
+}
+button.editor-invite-member-send:before {
+  content: "\f0e0"
+}
+.editor-invite-member-email {
+  background: var(--font-color)!important
+}
+button.c4g-btn-translate-all-data:before {
+  content: "\f0a4"
+}
+button.c4g-btn-apply-translation:before {
+  content: "\f00c"
+}
+button.c4g-button-apply:before {
+  content: "\f00c"
+}
+.c4g-editor-filter {
+  position: relative
+}
+.c4g-editor-filter input[type=text] {
+  border: 2px solid var(--shadow-color);
+  border-radius: 4px;
+  width: 100%;
+  margin: 8px 0;
+  outline: 0;
+  padding: 8px;
+  box-sizing: border-box;
+  transition: .3s;
+  padding-left: 40px
+}
+.c4g-editor-filter i {
+  position: absolute;
+  left: 0;
+  top: 9px;
+  padding: 9px 8px;
+  transition: .3s;
+  color: var(--shadow-color)
+}
+a.c4g-active.c4g-editor-view:after {
+  color: var(--font-color);
+  font-family: 'Font Awesome 5 Free',sans-serif;
+  content: "\f205";
+  margin-left: 20px;
+  font-weight: 900;
+  font-size: inherit
+}
+a.c4g-editor-view {
+  color: var(--font-color);
+  font-size: inherit
+}
+a.c4g-inactive.c4g-editor-view:after {
+  color: var(--font-color);
+  font-family: 'Font Awesome 5 Free',sans-serif;
+  content: "\f204";
+  margin-left: 20px;
+  font-weight: 900;
+  font-size: inherit
+}
+.c4g-editor-content > pre {
+  background-color: #fff;
+  color: var(--main-color);
+  overflow-y: auto;
+  visibility: hidden
+}
+#geojson {
+  width: 100%
+}
+.c4g-editor-locstyle {
+  width: 30px;
+  height: 30px;
+  display: inline-block
+}

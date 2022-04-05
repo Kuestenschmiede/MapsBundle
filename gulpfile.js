@@ -4,19 +4,19 @@
  * @version 8
  * @author con4gis contributors (see "authors.txt")
  * @license LGPL-3.0-or-later
- * @copyright (c) 2010-2021, by Küstenschmiede GmbH Software & Design
+ * @copyright (c) 2010-2022, by Küstenschmiede GmbH Software & Design
  * @link https://www.con4gis.org
  */
 
 const gulp = require('gulp');
 const plumber = require('gulp-plumber');
-const sass = require('gulp-sass');
+const sass = require('gulp-sass')(require('sass'));
 const autoprefixer = require('gulp-autoprefixer');
 const notify = require('gulp-notify');
 const cleanCSS = require('gulp-clean-css');
 const rename = require('gulp-rename');
 
-const customPath = 'Resources/public/';
+const customPath = 'src/Resources/public/';
 
 const paths = {
     src: {
