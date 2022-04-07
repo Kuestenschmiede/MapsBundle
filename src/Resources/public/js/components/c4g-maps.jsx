@@ -841,17 +841,10 @@ export default class MapController extends Component {
     });
   }
 
-  setLocStyles(styleData, callback = false) {
-    if (callback) {
-      this.setState({
-        styleData: styleData
-      }, callback());
-    }
-    else {
-      this.setState({
-        styleData: styleData
-      });
-    }
+  setLocStyles(styleData) {
+    this.setState({
+      styleData: styleData
+    });
   }
 
   setLayerStates(arrLayerStates) {

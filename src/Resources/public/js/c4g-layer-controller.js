@@ -112,10 +112,7 @@ export class BetterLayerController {
       }
       else if (feature && feature.get && feature.get('locstyle')) {
         let locstyle = feature.get('locstyle');
-        if (scope.proxy.locationStyleController.arrLocStyles && scope.proxy.locationStyleController.arrLocStyles[locstyle]) {
-          if (!scope.proxy.locationStyleController.arrLocStyles[locstyle].style) {
-            scope.proxy.locationStyleController.arrLocStyles[locstyle].style = scope.proxy.locationStyleController.arrLocStyles[locstyle].getStyleFunction();
-          }
+        if (scope.proxy.locationStyleController.arrLocStyles && scope.proxy.locationStyleController.arrLocStyles[locstyle] && scope.proxy.locationStyleController.arrLocStyles[locstyle].style) {
           let style = scope.proxy.locationStyleController.arrLocStyles[locstyle].style;
           if (typeof style === "function") {
             returnStyle = style(feature, resolution, false);
@@ -278,9 +275,9 @@ export class BetterLayerController {
     }
     this.vectorLayer = new Vector({
       source: this.vectorSource,
+      style: this.clusterStyleFunction,
       zIndex: 10
     });
-    this.vectorLayers = [];
     this.layerRequests = {};
     this.ovpKey = this.mapController.data.ovp_key;
     window.c4gMapsHooks.hook_map_zoom = window.c4gMapsHooks.hook_map_zoom || [];
@@ -523,19 +520,18 @@ export class BetterLayerController {
       }
       self.arrLayers = structure;
       self.proxy.locationStyleController.loadLocationStyles(self.arrLocstyles, {"done": (styleData) => {
-        self.mapController.setLocStyles(styleData, ()=> {
-          window.setTimeout(()=> {
-            let getZoom = self.mapController.map.getView().getZoom();
-            self.mapController.map.getView().setZoom(getZoom + 0.265);
-            // self.mapController.map.getView().setZoom(getZoom);
+        self.mapController.setLocStyles(styleData);
+        window.setTimeout(()=> {
+          let getZoom = self.mapController.map.getView().getZoom();
+          self.mapController.map.getView().setZoom(getZoom + 0.265);
+          // self.mapController.map.getView().setZoom(getZoom);
 
           }, 200);
-          window.setTimeout(()=> {
-            let getZoom = self.mapController.map.getView().getZoom();
-            self.mapController.map.getView().setZoom(getZoom - 0.265);
+        window.setTimeout(()=> {
+          let getZoom = self.mapController.map.getView().getZoom();
+          self.mapController.map.getView().setZoom(getZoom - 0.265);
           }, 201);
-        });
-      }});
+        }});
       self.vectorCollection.extend(features);
       self.mapController.map.addLayer(self.vectorLayer);
       self.mapController.setLayersInitial(self.arrLayers, arrStates);
@@ -992,9 +988,9 @@ export class BetterLayerController {
       }
       vectorLayer = new Vector({
           source: vectorSource,
+          style: customStyleFunc || this.clusterStyleFunction,
           zIndex: parseInt(layer.zIndex || "0")
       });
-      this.vectorLayers.push(vectorLayer);
       vectorLayer.popup = popup;
       scope.proxy.hook_locstyles_loaded.push(function(lostyleController) {
         vectorLayer.changed();
