@@ -27,7 +27,7 @@
   line-height: 1
 }
 .fa-lg {
-  font-size: 1.33333em;
+  font-size: 1.3333333333em;
   line-height: .75em;
   vertical-align: -.0667em
 }
@@ -4584,7 +4584,7 @@
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
  */
 @font-face {
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-style: normal;
   font-weight: 900;
   font-display: block;
@@ -4593,7 +4593,7 @@
 }
 .fa,
 .fas {
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900
 }
 /*!
@@ -4601,7 +4601,7 @@
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
  */
 @font-face {
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-style: normal;
   font-weight: 400;
   font-display: block;
@@ -4609,7 +4609,7 @@
   src: url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-regular-400.eot?#iefix) format("embedded-opentype"),url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-regular-400.woff2) format("woff2"),url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-regular-400.woff) format("woff"),url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-regular-400.ttf) format("truetype"),url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-regular-400.svg#fontawesome) format("svg")
 }
 .far {
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 400
 }
 /*!
@@ -4617,7 +4617,7 @@
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
  */
 @font-face {
-  font-family: 'Font Awesome 5 Brands';
+  font-family: "Font Awesome 5 Brands";
   font-style: normal;
   font-weight: 400;
   font-display: block;
@@ -4625,7 +4625,7 @@
   src: url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-brands-400.eot?#iefix) format("embedded-opentype"),url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-brands-400.woff2) format("woff2"),url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-brands-400.woff) format("woff"),url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-brands-400.ttf) format("truetype"),url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-brands-400.svg#fontawesome) format("svg")
 }
 .fab {
-  font-family: 'Font Awesome 5 Brands';
+  font-family: "Font Awesome 5 Brands";
   font-weight: 400
 }
 .search_block {
@@ -4637,7 +4637,7 @@
   content: "\f689"
 }
 .c4g-search-icon {
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: 2em;
   position: absolute;

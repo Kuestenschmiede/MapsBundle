@@ -374,85 +374,85 @@ select.c4g-router-layer-selection + div {
 }
 .c4g-router.c4g-open > button:before {
   content: "\f4d7";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-router-print:before {
   content: "\f02f";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-router-editor:before {
   content: "\f303";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-router-download:before {
   content: "\f019";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-router-profile-car:before {
   content: "\f1b9";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-router-profile-hgv:before {
   content: "\f0d1";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-router-profile-bike:before {
   content: "\f206";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-router-profile-mountainbike:before {
   content: "\f206";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-router-profile-roadbike:before {
   content: "\f206";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-router-profile-foot:before {
   content: "\f554";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-router-profile-wander:before {
   content: "\f554";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-router-profile-wheelchair:before {
   content: "\f193";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-router-profile-scooter:before {
   content: "\f21c";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-router-profile-motorbike:before {
   content: "\f21c";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
@@ -476,43 +476,43 @@ button#c4g-router-button-feature:before {
 }
 button.c4g-router-switch:before {
   content: "\f0dc";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-router-over:before {
   content: "\f067";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 .c4g-router.c4g-close > button:before {
   content: "\f4d7";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-popup-route-from:before {
   content: "\f024";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-popup-route-edit:before {
   content: "\f4d7";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-popup-route-to:before {
   content: "\f11e";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-popup-route-download:before {
   content: "\f019";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
@@ -528,7 +528,7 @@ button.c4g-popup-route-download:before {
 }
 .c4g-router-panel-button-top button:before {
   content: "\f4d7";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
@@ -547,7 +547,7 @@ button.c4g-popup-route-download:before {
 }
 button.c4g-router-input-clear:before,
 button.c4g-router-position:before {
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900
 }
 button.c4g-router-position:before {
@@ -561,7 +561,7 @@ button.c4g-router-input-clear:before {
   font-size: 20px
 }
 .c4g-router-result-container-button-bottom.c4g-open {
-  left: calc(50% - 42px / 2);
+  left: calc(50% - 21px);
   min-height: 36px
 }
 .c4g-router-result-container-button-bottom.c4g-close {
@@ -569,14 +569,14 @@ button.c4g-router-input-clear:before {
 }
 .c4g-router-result-container-button-bottom button:before {
   content: "\f03a";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 .c4g-router-result-container {
   width: 100%;
   transition: all .3s;
-  max-height: calc(var(--map-height) - .4em - ((32px + .4em) * 2));
+  max-height: calc(var(--map-height) - .4em - (32px + .4em) * 2);
   overflow-y: auto
 }
 .c4g-router-content {
@@ -659,7 +659,7 @@ button.c4g-router-input-clear:before {
 }
 button.c4g-router-close:before,
 button.c4g-router-extended-options:before {
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900
 }
 button.c4g-router-close:before {
@@ -696,7 +696,7 @@ button.c4g-router-switch {
   position: absolute;
   background: var(--main-color);
   padding: 4px 0 0 4px;
-  max-width: calc(32px * 5 + 12px)
+  max-width: 172px
 }
 .c4g-router-switcher .c4g-router-profile-wrapper.c4g-popup > button.c4g-active {
   cursor: not-allowed
@@ -767,7 +767,7 @@ div.invisible {
   background: var(--font-color)
 }
 div[class*=c4g-router-input] > div > input {
-  max-width: calc(100% - ((32px + .2em) * 2))
+  max-width: calc(100% - (32px + .2em) * 2)
 }
 .c4g-sideboard > div > div > span.c4g-router-headline {
   width: calc(100% - 1.2em - 32px - 32px)
@@ -802,7 +802,7 @@ button.c4g-router-print:active {
   height: calc((32px + .4em) * 2)
 }
 .c4g-sideboard > div[class*=wrapper] > div[class*=header].c4g-routing + div[class*=content] {
-  max-height: calc((var(--map-height) - .4em) - ((32px + .4em) * 2) - .4em)
+  max-height: calc(var(--map-height) - .4em - (32px + .4em) * 2 - .4em)
 }
 .c4g-sideboard > div > div[class*=header].c4g-routing button[class*=route] {
   width: 32px;
@@ -857,7 +857,7 @@ button.c4g-icon.c4g-popup-route-from {
 ul.c4g-autocomplete {
   background-color: var(--font-color);
   position: absolute;
-  max-width: calc(100% - ((32px + .2em) * 2));
+  max-width: calc(100% - (32px + .2em) * 2);
   z-index: 1;
   box-sizing: border-box
 }

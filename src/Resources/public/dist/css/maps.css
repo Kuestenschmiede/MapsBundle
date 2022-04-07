@@ -37,7 +37,7 @@
   line-height: 1
 }
 .fa-lg {
-  font-size: 1.33333em;
+  font-size: 1.3333333333em;
   line-height: .75em;
   vertical-align: -.0667em
 }
@@ -4596,7 +4596,7 @@
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
  */
 @font-face {
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-style: normal;
   font-weight: 900;
   font-display: block;
@@ -4606,7 +4606,7 @@
 .c4g-starboardscope-control.c4g-open button,
 .fa,
 .fas {
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900
 }
 /*!
@@ -4614,7 +4614,7 @@
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
  */
 @font-face {
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-style: normal;
   font-weight: 400;
   font-display: block;
@@ -4622,7 +4622,7 @@
   src: url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-regular-400.eot?#iefix) format("embedded-opentype"),url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-regular-400.woff2) format("woff2"),url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-regular-400.woff) format("woff"),url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-regular-400.ttf) format("truetype"),url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-regular-400.svg#fontawesome) format("svg")
 }
 .far {
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 400
 }
 /*!
@@ -4630,7 +4630,7 @@
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
  */
 @font-face {
-  font-family: 'Font Awesome 5 Brands';
+  font-family: "Font Awesome 5 Brands";
   font-style: normal;
   font-weight: 400;
   font-display: block;
@@ -4638,7 +4638,7 @@
   src: url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-brands-400.eot?#iefix) format("embedded-opentype"),url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-brands-400.woff2) format("woff2"),url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-brands-400.woff) format("woff"),url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-brands-400.ttf) format("truetype"),url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-brands-400.svg#fontawesome) format("svg")
 }
 .fab {
-  font-family: 'Font Awesome 5 Brands';
+  font-family: "Font Awesome 5 Brands";
   font-weight: 400
 }
 /*!
@@ -5037,10 +5037,10 @@ button.c4g-measuretools-view-trigger-draw-circle:before {
   border-top: none
 }
 .c4g-zoom-level:before {
-  content: ' Zoom: '
+  content: " Zoom: "
 }
 .ol-mouse-position:before {
-  content: ' Lat/Lon: '
+  content: " Lat/Lon: "
 }
 .c4g-attribution-logo img {
   width: 67px;
@@ -5196,7 +5196,7 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
   cursor: pointer
 }
 .c4g-sideboard > div[class*=wrapper] > div[class*=header] + div[class*=content] {
-  max-height: calc((var(--map-height) - .4em) - (32px + .4em) - .4em);
+  max-height: calc(var(--map-height) - .4em - (32px + .4em) - .4em);
   height: 100%
 }
 .c4g-sideboard > div > div[class*=switcher] {
@@ -5231,7 +5231,7 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
   margin-right: .2em
 }
 .c4g-sideboard > div[class*=wrapper] > div[class*=header] + div[class*=switcher] + div[class*=content] {
-  max-height: calc((var(--map-height) - .4em) - ((32px + .4em) * 2) - .4em)
+  max-height: calc(var(--map-height) - .4em - (32px + .4em) * 2 - .4em)
 }
 .c4g-geosearch-form,
 .c4g-sideboard > div > div[class*=filter] {
@@ -5279,7 +5279,7 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
   color: transparent
 }
 .c4g-sideboard:not(.c4g-external) > div[class*=wrapper] > div[class*=header] + div[class*=filter] + div[class*=content] {
-  max-height: calc((var(--map-height) - .4em) - ((32px + .4em) * 2) - .4em)
+  max-height: calc(var(--map-height) - .4em - (32px + .4em) * 2 - .4em)
 }
 .c4g-sideboard > div > div[class*=content] {
   padding: 0 .4em .4em;
@@ -5296,7 +5296,7 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
 }
 span.c4g-starboard-locstyle-star:after {
   content: "\f005";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: 13px;
   position: absolute;
@@ -5305,7 +5305,7 @@ span.c4g-starboard-locstyle-star:after {
 }
 span.c4g-starboard-locstyle-star:before {
   content: "\f005";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 100;
   font-size: 18px;
   color: var(--var-bordercolor)
@@ -5347,7 +5347,7 @@ span.c4g-starboard-locstyle-cross {
 }
 span.c4g-starboard-locstyle-cross:before {
   content: "\f067";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit;
   color: var(--var-bordercolor)
@@ -5377,7 +5377,7 @@ span.c4g-starboard-locstyle-triangle:before {
 }
 .c4g-permalink-content textarea {
   display: inline-block;
-  max-width: calc(100% - .8em - (32px * 2));
+  max-width: calc(100% - .8em - 64px);
   height: 100%;
   max-height: 100%;
   outline: 0;
@@ -5412,14 +5412,14 @@ span.c4g-starboard-locstyle-triangle:before {
   margin-left: .2em
 }
 .c4g-sideboard > div > div[class*=content] input[type=text] {
-  font-family: 'Font Awesome 5 Free',arial!important;
+  font-family: "Font Awesome 5 Free",arial!important;
   font-weight: 900
 }
 .c4g-sideboard > div > div[class*=content]::-webkit-scrollbar {
   width: .2em
 }
 .c4g-sideboard > div[class*=wrapper] > div[class*=header] + div[class*=switcher] + div[class*=filter] + div[class*=content] {
-  max-height: calc((var(--map-height) - .4em) - ((32px + .4em) * 3) - .4em)
+  max-height: calc(var(--map-height) - .4em - (32px + .4em) * 3 - .4em)
 }
 .c4g-sideboard > div > div[class*=content] div[class*=filter] {
   position: relative;
@@ -5558,7 +5558,7 @@ button.c4g-geosearch-start {
   transition: .3s
 }
 .c4g-sideboard.c4g-popup-container img {
-  max-height: calc((var(--map-height) - .4em) - (32px + .4em) - .4em)
+  max-height: calc(var(--map-height) - .4em - (32px + .4em) - .4em)
 }
 .c4g-layertree > ul {
   margin: .4em 0 0 0
@@ -5594,7 +5594,7 @@ button.c4g-geosearch-start {
   cursor: pointer
 }
 .c4g-external > div > div[class*=content] input[type=text] {
-  font-family: 'Font Awesome 5 Free',arial!important;
+  font-family: "Font Awesome 5 Free",arial!important;
   font-weight: 900
 }
 .c4g-external > div > div[class*=content] {
@@ -5767,7 +5767,7 @@ ul.c4g-feature-filter-list li > strong.c4g-open > span {
 }
 ul.c4g-feature-filter-list li > strong > span:after {
   content: "\f054";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900
 }
 .c4g-feature-filter-list > li {
@@ -5883,12 +5883,12 @@ button.c4g-maps-consent-button.btn {
  * @link https://www.con4gis.org
  */
 @font-face {
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-style: normal
 }
 .ol-control button:before {
-  font-family: 'Font Awesome 5 Free'
+  font-family: "Font Awesome 5 Free"
 }
 .c4g-baselayertree a:before,
 .c4g-control button,
@@ -5897,14 +5897,14 @@ button.c4g-maps-consent-button.btn {
 .mod_c4g_maps input[type=checkbox] + label {
   display: inline-block;
   outline: 0;
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   text-rendering: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale
 }
 .c4g-spinner span.c4g-icon:before {
   content: "\f01e";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
@@ -5914,140 +5914,140 @@ button.c4g-maps-consent-button.btn {
 .mod_c4g_maps input[type=checkbox] + label:before {
   content: "\f204";
   margin-right: 5px;
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 .mod_c4g_maps input[type=checkbox]:checked + label:before {
   content: "\f205";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 .c4g-permalink-control button:before {
   content: "\f0c1";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 .c4g-permalink-content button.c4g-copy:before {
   content: "\f0ea";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 .c4g-permalink-content button.c4g-refresh:before {
   content: "\f021";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-permalink-close:before {
   content: "\f00d";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 .c4g-graticule button:before {
   content: "\f84c";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 .c4g-graticule.c4g-enabled button:before {
   content: "\f850";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 .ol-attribution button:before {
   content: "\f1f9";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 100;
   font-size: inherit
 }
 .ol-attribution.ol-collapsed button:before {
   content: "\f1f9";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 span.ol-compass:before {
   content: "\f021";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 .ol-full-screen > button:before,
 button.ol-full-screen-false:before {
   content: "\f31e";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.ol-full-screen-true:before {
   content: "\f78c";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 span.c4g-active ul li:before {
   content: "\f111";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: 14px
 }
 span.c4g-active ul li.c4g-active:before {
   content: "\f192";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: 14px
 }
 .c4g-measuretools-control > button:before {
   content: "\f545";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 .c4g-measuretools-control.c4g-close > button:before {
   content: "\f545";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 .c4g-export.c4g-open > button:before {
   content: "\f02f";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 .c4g-export.c4g-close > button:before {
   content: "\f02f";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 .c4g-infopage-control > button:before {
   content: "\f129";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 .c4g-infopage-control .c4g-open > button:before {
   content: "\f129";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 .c4g-starboard-control.c4g-open button:before {
   content: "\f005";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 100;
   font-size: inherit
 }
 .c4g-starboard-control.c4g-close button:before {
   content: "\f005";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
@@ -6056,125 +6056,125 @@ span.c4g-active ul li.c4g-active:before {
 }
 .c4g-starboardscope-control.c4g-close button:before {
   content: "\f277";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.ol-zoom-in:before {
   content: "\f067";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.ol-zoom-out:before {
   content: "\f068";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 .ol-zoom-extent button:before,
 button.ol-zoom-extent:before {
   content: "\f7a2";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 .ol-zoom-home button:before,
 button.ol-zoom-home:before {
   content: "\f015";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 .ol-zoom-position button:before,
 button.ol-zoom-position:before {
   content: "\f05b";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-starboard-close:before {
   content: "\f00d";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-measure-select:before {
   content: "\f245";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-measure-line:before {
   content: "\f1e0";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-measure-polygon:before {
   content: "\f5ee";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-measure-circle:before {
   content: "\f111";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-measure-freehand:before {
   content: "\f303";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-print:before {
   content: "\f302";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-infopage-view-trigger:before {
   content: "\f129";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-account-view-trigger:before {
   content: "\f007";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-starboard-view-trigger-starboardplugin:before {
   content: "\f0ea";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 .c4g-geosearch button:before,
 button.c4g-geosearch-start:before {
   content: "\f689";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 .c4g-editor-control button:before {
   content: "\f303";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-geosearch-results-close:before {
   content: "\f00d";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 .c4g-overviewmap span.c4g-icon:before {
   content: "\f0ac";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
@@ -6188,26 +6188,26 @@ button.c4g-geosearch-results-close:before {
 }
 button.c4g-starboard-view-trigger-baselayerswitcher:before {
   content: "\f279";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-starboard-view-trigger-layerswitcher:before {
   content: "\f5fd";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 .c4g-baselayertree-content > ul > li.without-image > a.c4g-active:before {
   font-weight: 100;
   content: "\f192";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-size: inherit
 }
 .c4g-baselayertree-content > ul > li.with-image > a.c4g-active span:before {
   font-weight: 100;
   content: "\f058";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-size: inherit;
   position: absolute;
   left: .4em
@@ -6215,13 +6215,13 @@ button.c4g-starboard-view-trigger-layerswitcher:before {
 .c4g-baselayertree-content > ul > li.without-image a.c4g-inactive:before {
   font-weight: 100;
   content: "\f111";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-size: inherit
 }
 .c4g-baselayertree-content > ul > li.with-image > a.c4g-inactive span:before {
   font-weight: 100;
   content: "\f35a";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-size: inherit;
   position: absolute;
   left: .4em;
@@ -6234,7 +6234,7 @@ button.c4g-starboard-view-trigger-layerswitcher:before {
 .c4g-baselayertree-content span.c4g-icon:before,
 .c4g-layertree span.c4g-icon:before {
   content: "\f054";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
@@ -6271,18 +6271,18 @@ button.c4g-starboard-view-trigger-layerswitcher:before {
 }
 input.c4g-baselayer-filter-field,
 input.c4g-starboard-layerswitcher-filter-field {
-  font-family: 'Font Awesome 5 Free',sans-serif;
+  font-family: "Font Awesome 5 Free",sans-serif;
   font-weight: 900
 }
 button.c4g-popup-close:before {
   content: "\f00d";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 .c4g-layertree a.c4g-active:after,
 .c4g-starboard-headline-link.c4g-active:after {
-  font-family: 'Font Awesome 5 Free',sans-serif;
+  font-family: "Font Awesome 5 Free",sans-serif;
   content: "\f205";
   float: right;
   font-weight: 900;
@@ -6290,7 +6290,7 @@ button.c4g-popup-close:before {
 }
 .c4g-layertree a.c4g-inactive:after,
 .c4g-starboard-headline-link.c4g-inactive:after {
-  font-family: 'Font Awesome 5 Free',sans-serif;
+  font-family: "Font Awesome 5 Free",sans-serif;
   content: "\f204";
   float: right;
   font-weight: 900;
@@ -6301,19 +6301,19 @@ button.c4g-popup-close:before {
 }
 .c4g-geojson-button:after {
   content: "\f59f";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-titlebar-close:before {
   content: "\f00d";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-beach-options:before {
   content: "\f03a";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
@@ -6441,11 +6441,11 @@ button.c4g-beach-options:before {
   font-size: 12px
 }
 .c4g-zoom-level:before {
-  content: ' Zoom: ';
+  content: " Zoom: ";
   font-weight: 700
 }
 .ol-mouse-position:before {
-  content: ' Lat/Lon: ';
+  content: " Lat/Lon: ";
   font-weight: 700
 }
 .c4g-starboard-titlebar .c4g-starboard-buttonbar button {
@@ -6548,12 +6548,10 @@ ul.c4g-overlays li a {
   display: inline-block;
   width: calc(100% - 1.75em - .2em - 24px);
   text-decoration: none;
-  padding: 0 1.75em 0 .2em;
+  padding: 0 0 0 .2em;
   cursor: pointer;
   position: relative;
-  min-width: -webkit-fit-content;
-  min-width: -moz-fit-content;
-  min-width: fit-content
+  min-width: 100%
 }
 .c4g-content-layertree span[class*=locstyle] + .c4g-starboard-text {
   width: calc(100% - 35px - 1.75em - .2em)
@@ -6730,7 +6728,7 @@ span.c4g-starboard-locstyle {
   margin-right: 20px
 }
 .ol-selectable div.c4g-active.c4g-popup-wrapper img {
-  max-height: calc((var(--map-height) - .4em) - (32px + .4em) - .4em)
+  max-height: calc(var(--map-height) - .4em - (32px + .4em) - .4em)
 }
 .ol-selectable div.c4g-popup-wrapper:before {
   pointer-events: none;
@@ -6889,7 +6887,7 @@ button.c4g-btn-nav-next:before {
 button.c4g-baselayer-close:before,
 button.c4g-starboardscope-close:before {
   content: "\f00d";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
@@ -7199,7 +7197,7 @@ ul.c4g-overlays input[type=range]::-webkit-slider-thumb {
   background: var(--shadow-color)
 }
 ul.c4g-feature-filter-list {
-  background: linear-gradient(var(--main-color) 45px,#fff0 0)
+  background: linear-gradient(var(--main-color) 45px,rgba(255,255,255,0) 0)
 }
 ul.c4g-feature-filter-list li {
   color: var(--font-color)
@@ -7366,14 +7364,14 @@ c4g-infopage-container {
   border-color: transparent
 }
 /*!
- * This file is part of con4gis, the gis-kit for Contao CMS.
- * @package con4gis
- * @version 8
- * @author con4gis contributors (see "authors.txt")
- * @license LGPL-3.0-or-later
- * @copyright (c) 2010-2022, by Küstenschmiede GmbH Software & Design
- * @link https://www.con4gis.org
- */
+* This file is part of con4gis, the gis-kit for Contao CMS.
+* @package con4gis
+* @version 8
+* @author con4gis contributors (see "authors.txt")
+* @license LGPL-3.0-or-later
+* @copyright (c) 2010-2022, by Küstenschmiede GmbH Software & Design
+* @link https://www.con4gis.org
+*/
 .c4g-animation-spin {
   -webkit-animation: icon-spin 2s infinite linear;
   animation: icon-spin 2s infinite linear

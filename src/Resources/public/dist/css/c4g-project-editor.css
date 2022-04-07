@@ -9,7 +9,7 @@
  * @link https://www.con4gis.org
  */
 @font-face {
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-style: normal
 }
@@ -185,32 +185,32 @@ button.c4g-editor-feature-modify {
 }
 button.c4g-editor-feature-modify:before {
   content: "\f0a4";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-editor-feature-apply:before {
   content: "\f00c";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-editor-feature-delete:before {
   content: "\f1f8";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-btn-delete-all-data:before {
   content: "\f1f8";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 .c4g-editor.c4g-open > button:before {
   content: "\f044";
   font-weight: 100;
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-size: inherit
 }
 .c4g-sideboard > div > div[class*=switcher] button:last-child,
@@ -219,7 +219,7 @@ button.c4g-btn-delete-all-data:before {
 }
 .c4g-editor.c4g-close > button:before {
   content: "\f044";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
@@ -280,43 +280,43 @@ button.c4g-editor-feature-modify {
 }
 button.c4g-editor-select:before {
   content: "\f245";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-editor-Point:before {
   content: "\f3c5";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-editor-LineString:before {
   content: "\f4d7";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-editor-Polygon:before {
   content: "\f5ee";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-editor-Circle:before {
   content: "\f111";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-editor-view-trigger-draw-freehand:before {
   content: "\f303";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
 button.c4g-btn-displace-all-data:before {
   content: "\f56e";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit
 }
@@ -373,7 +373,7 @@ button.c4g-button-apply:before {
 }
 a.c4g-active.c4g-editor-view:after {
   color: var(--font-color);
-  font-family: 'Font Awesome 5 Free',sans-serif;
+  font-family: "Font Awesome 5 Free",sans-serif;
   content: "\f205";
   margin-left: 20px;
   font-weight: 900;
@@ -385,7 +385,7 @@ a.c4g-editor-view {
 }
 a.c4g-inactive.c4g-editor-view:after {
   color: var(--font-color);
-  font-family: 'Font Awesome 5 Free',sans-serif;
+  font-family: "Font Awesome 5 Free",sans-serif;
   content: "\f204";
   margin-left: 20px;
   font-weight: 900;
