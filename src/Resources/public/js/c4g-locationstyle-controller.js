@@ -56,7 +56,6 @@ export class C4gLocationStyleController {
           for (i = 0; i < data.length; i += 1) {
             styleData = data[i];
             let style = new C4gLocationStyle(styleData, self);
-            style.style = style.getStyleFunction(styleData);
             self.arrLocStyles[styleData.id] = style;
           }
           self.proxy.layerController.vectorLayer.setStyle(self.proxy.layerController.clusterStyleFunction);
