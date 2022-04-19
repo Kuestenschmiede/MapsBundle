@@ -14,6 +14,7 @@ use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
 use con4gis\CoreBundle\Resources\contao\models\C4gSettingsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapTablesModel;
+use con4gis\MapsBundle\Classes\Utils;
 use Contao\Image;
 
 \Contao\System::loadLanguageFile('tl_c4g_maps');
@@ -1245,8 +1246,11 @@ class tl_c4g_maps extends Backend
     {
         $return = [];
         $objTables = C4gMapTablesModel::findAll();
+        $language = \Contao\BackendUser::getInstance()->language;
         while ($objTables && $objTables->next()) {
-            $return[$objTables->id] = \Contao\Controller::replaceInsertTags($objTables->name);
+            if ($objTables->id && $objTables->name) {
+                $return[$objTables->id] = Utils::replaceInsertTags($objTables->name, $language);
+            }
         }
         return $return;
     }
