@@ -46,7 +46,7 @@ export class C4gLocationStyle {
     this.locStyleArr = locStyleArr;
   }
 
-  getStyleFunction(styleData) {
+  getStyleFunction(styleData = null) {
     var self,
       styleFunction,
       imageStyle,
@@ -58,7 +58,9 @@ export class C4gLocationStyle {
       backgroundStroke;
 
     self = this;
-
+    if (!styleData) {
+      styleData = this.locStyleArr;
+    }
     // general
     strokeStyle = new Stroke({
       color: utils.getRgbaFromHexAndOpacity(styleData.strokecolor[0], styleData.strokecolor[1]),
@@ -327,8 +329,6 @@ export class C4gLocationStyle {
         break;
       case 'cust_icon_svg':
         if(styleData.svgSrc && styleData.icon_scale && styleData.icon_size) {
-          let canvas = document.createElement('canvas');
-          let ctx = canvas.getContext("2d");
           let width, height, offsetX, offsetY;
           width = (styleData.icon_size[0]*styleData.icon_scale);
           height = (styleData.icon_size[1]*styleData.icon_scale);
@@ -336,20 +336,13 @@ export class C4gLocationStyle {
           offsetY = (styleData.icon_offset[1]*styleData.icon_scale);
           let anchorX = 1 / (parseInt(width) / (parseInt(offsetX) * -1));
           let anchorY = 1 / (parseInt(height) / (parseInt(offsetY) * -1));
-          canvas.width  = width;
-          canvas.height = height;
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-          let img = new Image();
+          let img = new Image(width,height);
           img.src = styleData.svgSrc;
-          img.onload = function() {
-            ctx.drawImage(img, 0, 0, width, height);
-          };
-
           imageStyle = new Icon({
             anchor: [anchorX, anchorY],
-            img: canvas,
-            imgSize: [canvas.width, canvas.height]
+            img: img,
+            imgSize: [width, height]
           });
         }
 
