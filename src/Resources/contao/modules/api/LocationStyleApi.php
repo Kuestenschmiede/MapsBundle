@@ -39,6 +39,7 @@ class LocationStyleApi
 
         $objLocationStyles = C4gMapLocstylesModel::findMultipleByIds($arrIds);
 
+
         if ($objLocationStyles == null) {
             HttpResultHelper::NotFound();
         }
@@ -62,8 +63,11 @@ class LocationStyleApi
                 unset($arrData[$key]);
                 continue;
             }
-
-            if (is_array(deserialize($value))){
+            if (($arrData['styleType'] !== "cust_icon" || $arrData['styleType'] !== "cust_icon_svg") && ($key === "svgSrc" || $key === "icon_src")) {
+                unset($arrData[$key]);
+                continue;
+            }
+           if (is_array(deserialize($value))){
                 $arrData[$key] = deserialize($value);
             }
 
