@@ -63,7 +63,7 @@ class LocationStyleApi
                 unset($arrData[$key]);
                 continue;
             }
-            if (($arrData['styleType'] !== "cust_icon" || $arrData['styleType'] !== "cust_icon_svg") && ($key === "svgSrc" || $key === "icon_src")) {
+            if (($arrData['styletype'] !== "cust_icon" && $arrData['styletype'] !== "cust_icon_svg") && ($key === "svgSrc" || $key === "icon_src")) {
                 unset($arrData[$key]);
                 continue;
             }
