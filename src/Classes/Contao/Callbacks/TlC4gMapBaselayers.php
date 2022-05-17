@@ -140,7 +140,9 @@ class TlC4gMapBaselayers extends Backend
             $arrReturn= [];
             $language = \Contao\BackendUser::getInstance()->language;
             foreach ($responses as $response){
-                $arrReturn[$response->id] = Utils::replaceInsertTags($response->name, $language);
+                if ($response->name && $response->name) {
+                    $arrReturn[$response->id] = Utils::replaceInsertTags($response->name, $language);
+                }
             }
 
             return $arrReturn;
