@@ -461,7 +461,12 @@ export default class MapController extends Component {
         view: view
       });
     }
-
+    if (window.c4gMapsHooks && window.c4gMapsHooks.changeInitialView) {
+      utils.callHookFunctions(window.c4gMapsHooks.changeInitialView, {
+        mapData: mapData,
+        view: view
+      });
+    }
     mapData.map = this.map;
 
     // set map-size and -margin
