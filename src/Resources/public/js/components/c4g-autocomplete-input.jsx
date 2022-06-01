@@ -111,7 +111,7 @@ export class AutocompleteInput extends Component {
               self.props.router.addOverPoint(elemAddress.pos[1], elemAddress.pos[0], self.props.index, true)
             }
             else if (self.props.cssId.includes("area")) {
-              self.props.router.AreaPoint(elemAddress.pos[1], elemAddress.pos[0], true);
+              self.props.router.setAreaPoint(elemAddress.pos[1], elemAddress.pos[0], true);
             }
             self.setState({
               arrAddresses: []
