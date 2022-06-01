@@ -15,6 +15,7 @@ import {routingConstants} from "./../routing-constants";
 import {Feature} from "ol";
 import {Point} from "ol/geom";
 import {Polyline} from "ol/format";
+import {createEmpty, extend, getArea} from "ol/extent";
 import {transform, toLonLat, fromLonLat, transformExtent} from "ol/proj";
 import {Style, Stroke} from "ol/style";
 import {Vector, Group} from "ol/layer";
@@ -1766,6 +1767,7 @@ export class RouterView extends Component {
     if (type === "petrols" && mode !== "area") {
       features = features.elements;
     }
+    let extent = createEmpty();
     if (type !== "overpass") {
       featureLoop:
         for (let i = 0; features && (i < features.length); i++) {
@@ -1836,6 +1838,7 @@ export class RouterView extends Component {
               contentFeature.set(tag, feature.tags[tag]);
             }
           }
+          extent = extend(extent, contentFeature.getGeometry().getExtent());
         }
     } else {
       const mapProj = self.props.mapController.map.getView().getProjection();
@@ -1857,6 +1860,7 @@ export class RouterView extends Component {
           if (self.props.mapController.proxy.locationStyleController.arrLocStyles[layer.locstyle]) {
             contentFeatures[id].setStyle(self.props.mapController.proxy.locationStyleController.arrLocStyles[layer.locstyle].style);
           }
+          extent = extend(extent, contentFeatures[id].getGeometry().getExtent());
         }
       }
     }
@@ -1875,6 +1879,19 @@ export class RouterView extends Component {
     }
     if (contentFeatures && contentFeatures.length > 0) {
       this.routerFeaturesSource.addFeatures(contentFeatures);
+    }
+    if (getArea(extent) > 0) {
+      let width = jQuery(".c4g-starboard").css('width');
+      if (width) {
+        width = width.split(".");
+        width = Array.isArray(width) ? width[0] : width;
+        width = parseInt(width) +  50;
+      }
+      else {
+        width = 50;
+      }
+      let padding = [50, width, 50, 50];
+      this.props.mapController.map.getView().fit(extent, {padding: padding});
     }
     return priceSortedFeatures;
   }
