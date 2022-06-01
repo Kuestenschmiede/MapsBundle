@@ -635,10 +635,16 @@ export class RouterView extends Component {
           geometry: this.state.fromPoint.clone().transform('EPSG:4326', 'EPSG:3857')
         });
         if (this.props.mapController.data.router_from_locstyle && this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_from_locstyle]) {
+          if (!this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_from_locstyle].style) {
+            this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_from_locstyle].style = this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_from_locstyle].getStyleFunction();
+          }
           tmpFeature.setStyle(this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_from_locstyle].style);
         }
         else {
           let doneFunction = () => {
+            if (!this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_from_locstyle].style) {
+              this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_from_locstyle].style = this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_from_locstyle].getStyleFunction();
+            }
             tmpFeature.setStyle(this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_from_locstyle].style);
           }
           this.props.mapController.proxy.locationStyleController.loadLocationStyles([this.props.mapController.data.router_from_locstyle], {
@@ -652,10 +658,16 @@ export class RouterView extends Component {
           geometry: this.state.toPoint.clone().transform('EPSG:4326', 'EPSG:3857')
         });
         if (this.props.mapController.data.router_to_locstyle && this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_to_locstyle]) {
+          if (!this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_to_locstyle].style) {
+            this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_to_locstyle].style = this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_to_locstyle].getStyleFunction();
+          }
           tmpFeature.setStyle(this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_to_locstyle].style);
         }
         else {
           let doneFunction = () => {
+            if (!this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_to_locstyle].style) {
+              this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_to_locstyle].style = this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_to_locstyle].getStyleFunction();
+            }
             tmpFeature.setStyle(this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_to_locstyle].style);
           }
           this.props.mapController.proxy.locationStyleController.loadLocationStyles([this.props.mapController.data.router_to_locstyle], {
@@ -674,6 +686,9 @@ export class RouterView extends Component {
               geometry: this.state.overPoints[key].clone().transform('EPSG:4326', 'EPSG:3857')
             });
             if (this.props.mapController.data.router_interim_locstyle && this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_interim_locstyle]) {
+              if (!this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_interim_locstyle].style) {
+                this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_interim_locstyle].style = this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_interim_locstyle].getStyleFunction();
+              }
               tmpFeature.setStyle(this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_interim_locstyle].style);
             }
             this.locationsSource.addFeature(tmpFeature);
@@ -689,10 +704,16 @@ export class RouterView extends Component {
           geometry: this.state.areaPoint.clone().transform('EPSG:4326', 'EPSG:3857')
         });
         if (this.props.mapController.data.router_point_locstyle && this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_point_locstyle]) {
+          if (!this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_point_locstyle].style) {
+            this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_point_locstyle].style = this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_point_locstyle].getStyleFunction();
+          }
           tmpFeature.setStyle(this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_point_locstyle].style);
         } else {
           this.props.mapController.proxy.locationStyleController.loadLocationStyles([this.props.mapController.data.router_point_locstyle], {done: function() {
-              tmpFeature.setStyle(this.props.mapController.proxy.locationStyleController.arrLocStyles[scope.props.mapController.data.router_point_locstyle].style);
+              if (!this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_point_locstyle].style) {
+                this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_point_locstyle].style = this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_point_locstyle].getStyleFunction();
+              }
+              tmpFeature.setStyle(this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_point_locstyle].style);
             }});
         }
         this.areaSource.addFeature(tmpFeature);
@@ -1813,6 +1834,9 @@ export class RouterView extends Component {
           contentFeature.set('zIndex', i);
           contentFeature.set('label', label);
           if (locstyle && self.props.mapController.proxy.locationStyleController.arrLocStyles[locstyle] && self.props.mapController.proxy.locationStyleController.arrLocStyles[locstyle].style) {
+            if (!self.props.mapController.proxy.locationStyleController.arrLocStyles[locstyle].style) {
+              self.props.mapController.proxy.locationStyleController.arrLocStyles[locstyle].style = self.props.mapController.proxy.locationStyleController.arrLocStyles[locstyle].getStyleFunction();
+            }
             contentFeature.setStyle(self.props.mapController.proxy.locationStyleController.arrLocStyles[locstyle].style);
             if (self.props.mapController.data.hideFeaturesWithoutLabel) {
               if (label && label !== "") {
@@ -1858,6 +1882,9 @@ export class RouterView extends Component {
           contentFeatures[id].set('tid', parseInt(contentFeatures[id].get('id').split('/')[1]));
           contentFeatures[id].set('label', contentFeatures[id].get(labelKey));
           if (self.props.mapController.proxy.locationStyleController.arrLocStyles[layer.locstyle]) {
+            if (!self.props.mapController.proxy.locationStyleController.arrLocStyles[layer.locstyle].style) {
+              self.props.mapController.proxy.locationStyleController.arrLocStyles[layer.locstyle].style = self.props.mapController.proxy.locationStyleController.arrLocStyles[layer.locstyle].getStyleFunction();
+            }
             contentFeatures[id].setStyle(self.props.mapController.proxy.locationStyleController.arrLocStyles[layer.locstyle].style);
           }
           extent = extend(extent, contentFeatures[id].getGeometry().getExtent());
@@ -1870,6 +1897,9 @@ export class RouterView extends Component {
         done: function () {
           for (let i = 0; i < unstyledFeatures.length; i++) {
             var styleId = unstyledFeatures[i].get('styleId');
+            if (!self.props.mapController.proxy.locationStyleController.arrLocStyles[styleId].style) {
+              self.props.mapController.proxy.locationStyleController.arrLocStyles[styleId].style = self.props.mapController.proxy.locationStyleController.arrLocStyles[styleId].getStyleFunction();
+            }
             unstyledFeatures[i].setStyle(self.props.mapController.proxy.locationStyleController.arrLocStyles[styleId].style);
             self.routerFeaturesSource.addFeature(unstyledFeatures[i]);
           }
