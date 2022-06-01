@@ -199,7 +199,13 @@ export class RouterView extends Component {
     } else if (this.state.mode === "area") {
       headline = this.props.mapController.data.areaHeadline || this.languageConstants.ROUTER_DEFAULT_HEADLINE_AREA;
     }
-
+    let modeSwitcher;
+    if (this.props.mapController.data.areaSearch && !this.props.mapController.data.areaSearchOnly) {
+      modeSwitcher = <div className="c4g-router-mode-switcher">
+        <button id="c4g-router-button-route" className={(this.state.mode === "route" ? "c4g-active" : "c4g-inactive")} onMouseUp={()=> {this.setMode("route")}} title={this.languageConstants.ROUTER_FIND_ROUTE}/>
+        <button id="c4g-router-button-area" className={(this.state.mode === "area" ? "c4g-active" : "c4g-inactive")} onMouseUp={()=> {this.setMode("area")}} title={this.languageConstants.AREA_NAME}/>
+      </div>;
+    }
     let instructions = this.state.routerInstructions.instructions;
 
     let resultSwitcher = "";
@@ -218,7 +224,7 @@ export class RouterView extends Component {
       resultSwitcher = (
         <React.Fragment>
           <button className={"c4g-router-hide-form-button " + (this.state.openSettings ? "c4g-active" : "c4g-inactive")} onMouseUp={() => {this.setState({openSettings: !this.state.openSettings})}} title={this.languageConstants.ROUTER_SETTINGS}/>
-          <div className="c4g-router-mode-switch">
+          <div className="c4g-router-mode-switcher">
             {switcherButtons}
           </div>
         </React.Fragment>
@@ -232,6 +238,7 @@ export class RouterView extends Component {
                     detailBtnClass={"c4g-router-extended-options"} hideContainer={".c4g-router-container-right"} detailBtnCb={this.toggleDetails} closeBtnClass={"c4g-router-close"} closeBtnCb={this.close} closeBtnTitle={this.languageConstants.CLOSE}/>
         </Suspense>
         <React.Fragment>
+          {modeSwitcher}
           <div className={"c4g-router-switcher"}>
             <div>
               {resultSwitcher}
@@ -497,7 +504,11 @@ export class RouterView extends Component {
         featureSource: this.state.featureSource,
         locationSource: this.locationsSource
       };
-      this.setState({mode: mode}, () => {
+      this.setState({
+        mode: mode,
+        openResults: false,
+        openSettings: true
+        }, () => {
         for (let key in sources) {
           if (sources.hasOwnProperty(key) && sources[key]) {
             sources[key].clear();
