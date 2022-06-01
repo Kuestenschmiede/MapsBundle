@@ -65,10 +65,7 @@ export default class RouterProfileSelection extends Component {
 
   render() {
     if (this.props.profiles.length === 1) {
-      return (<div className="c4g-router-profile-wrapper">
-        <button className={"c4g-router-profile-" + this.profileTranslation[this.props.currentProfile] + " c4g-active"}
-                      key={this.props.currentProfile} title={this.profileLang[this.profileTranslation[this.props.currentProfile]]}/>
-      </div>);
+      return null;
     } else {
       if (this.state.showPopup) {
         return (
