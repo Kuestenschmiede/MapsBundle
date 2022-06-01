@@ -93,10 +93,11 @@ class RouteService extends Frontend
                 $event->setProfileId($profileId);
                 $event->setPoints($points);
                 $event->setDetour($detour);
+                $event->setType($objLayer->location_type === 'overpass' ? 'overpass' : 'notOverpass');
                 $this->eventDispatcher->dispatch($event, $event::NAME);
                 $routeData['features'] = $event->getFeatures();
                 $routeData['bbox'] = $event->getBbox();
-                $routeData['type'] = $objLayer->location_type === 'overpass' ? 'overpass' : 'notOverpass';
+                $routeData['type'] = $event->getType();
             } catch (\InvalidArgumentException $exception) {
                 // return error to frontend
                 $routeData['error'] = 'ROUTER_ERROR_POLYLINE';

@@ -27,6 +27,8 @@ class LoadRouteFeaturesEvent extends Event
 
     private $features = [];
 
+    private $type = "";
+
     private $bbox = '';
 
     /**
@@ -124,4 +126,21 @@ class LoadRouteFeaturesEvent extends Event
     {
         $this->bbox = $bbox;
     }
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType(string $type): void
+    {
+        $this->type = $type;
+    }
+
 }
