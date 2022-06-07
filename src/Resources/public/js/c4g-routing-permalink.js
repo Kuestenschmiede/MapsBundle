@@ -152,7 +152,7 @@ export class RoutingPermalink {
     }
     if (center && center.length === 2) {
       this.updateLinkFragments("addressArea", center);
-      this.router.setAreaPoint(center);
+      this.router.setAreaPoint(parseFloat(center[0]), parseFloat(center[1]));
     }
     if (searchtype) {
       this.updateLinkFragments("searchType", searchtype);
@@ -193,6 +193,7 @@ export class RoutingPermalink {
       this.router.setRouteFrom(fromAddress[0], fromAddress[1]);
       this.router.setRouteTo(toAddress[0], toAddress[1]);
     }
+    this.router.recalculateRoute();
     // activate router view
     jQuery(".c4g-portside-viewtriggerbar .c4g-route-search").click();
   }
