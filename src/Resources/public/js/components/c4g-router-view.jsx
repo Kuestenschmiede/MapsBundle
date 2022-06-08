@@ -500,9 +500,10 @@ export class RouterView extends Component {
   setMode(mode) {
     if (this.state.mode !== mode) {
       let sources = {
-        waySource: this.state.routerWaySource,
-        hintSource: this.state.routerHintSource,
-        featureSource: this.state.featureSource,
+        waySource:      this.routerWaySource,
+        altWaySource:   this.routingAltWaySource,
+        hintSource:     this.state.routerHintSource,
+        featureSource:  this.state.featureSource,
         locationSource: this.locationsSource
       };
       this.setState({
