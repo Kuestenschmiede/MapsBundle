@@ -111,6 +111,7 @@ $GLOBALS['TL_DCA'][$strName] = array
         ],
 
         'importId' => [
+            'default'                 => 0,
             'eval'                    => ['doNotCopy' => true]
         ],
         
