@@ -137,16 +137,20 @@ export class RoutingPermalink {
   }
 
   handleInitialAreaSearch(objParams) {
-    this.router.setState({mode: "area"});
+    let detour = objParams.d || this.router.props.detourRoute.initial;
+    this.router.setState({
+      mode: "area",
+      detourArea: parseFloat(detour)
+    });
     let center = objParams.a;
     if (center) {
       center = center.split(",");
     }
-    let detour = objParams.d;
+    detour = objParams.d;
     let searchtype = objParams.s;
     let forceStart = objParams.f;
     if (detour || detour > 1) {
-      this.updateLinkFragments("detour", detour);
+      this.updateLinkFragments("detourArea", detour);
       // jQuery(this.toggleDetourArea).val(detour);
       // jQuery(this.toggleDetourArea).trigger('input');
     }
@@ -165,17 +169,21 @@ export class RoutingPermalink {
   }
 
   handleInitialRouteSearch(objParams) {
-    this.router.setState({mode: "route"});
+    let detour = objParams.d || this.router.props.detourRoute.initial;
+    this.router.setState({
+      mode: "route",
+      detourRoute: parseFloat(detour)
+    });
 
     let fromAddress = objParams.af ? objParams.af.split(",").map(elem => parseFloat(elem)) : null;
     let toAddress = objParams.at ? objParams.at.split(",").map(elem => parseFloat(elem)) : null;
-    let detour = objParams.d;
+    detour = objParams.d;
     let searchtype = objParams.s;
     let forceStart = objParams.f;
     if (detour) {
       jQuery(this.router.toggleDetourRoute).val(detour);
       jQuery(this.router.toggleDetourRoute).trigger('input');
-      this.updateLinkFragments("detour", objParams.d);
+      this.updateLinkFragments("detourRoute", objParams.d);
     }
     if (fromAddress) {
       this.updateLinkFragments("fromAddress", fromAddress);
