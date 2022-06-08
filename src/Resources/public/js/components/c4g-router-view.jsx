@@ -1912,7 +1912,7 @@ export class RouterView extends Component {
       this.routerFeaturesSource.addFeatures(contentFeatures);
     }
     if (getArea(extent) > 0) {
-      let width = jQuery(".c4g-starboard").css('width');
+      let width = jQuery(".c4g-sideboard.c4g-open").css('width');
       if (width) {
         width = width.split(".");
         width = Array.isArray(width) ? width[0] : width;
