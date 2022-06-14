@@ -58,7 +58,7 @@ export class RouterFeatureListItem extends Component {
             });
           } else {
             if (!scope.props.mapController.proxy.locationStyleController.arrLocStyles[clickStyleId].style) {
-              scope.props.mapController.proxy.locationStyleController.arrLocStyles[clickStyleId].style = scope.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_from_locstyle].getStyleFunction();
+              scope.props.mapController.proxy.locationStyleController.arrLocStyles[clickStyleId].style = scope.props.mapController.proxy.locationStyleController.arrLocStyles[clickStyleId].getStyleFunction();
             }
             let style = scope.props.mapController.proxy.locationStyleController.arrLocStyles[clickStyleId].style;
             tmpFeature.setStyle(style);
