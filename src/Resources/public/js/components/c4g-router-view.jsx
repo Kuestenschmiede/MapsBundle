@@ -225,9 +225,7 @@ export class RouterView extends Component {
       resultSwitcher = (
         <React.Fragment>
           <button className={"c4g-router-hide-form-button " + (this.state.openSettings ? "c4g-active" : "c4g-inactive")} onMouseUp={() => {this.setState({openSettings: !this.state.openSettings})}} title={this.languageConstants.ROUTER_SETTINGS}/>
-          <div className="c4g-router-mode-switcher">
             {switcherButtons}
-          </div>
         </React.Fragment>
       );
     }
@@ -710,12 +708,13 @@ export class RouterView extends Component {
           }
           tmpFeature.setStyle(this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_point_locstyle].style);
         } else {
-          this.props.mapController.proxy.locationStyleController.loadLocationStyles([this.props.mapController.data.router_point_locstyle], {done: function() {
-              if (!this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_point_locstyle].style) {
-                this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_point_locstyle].style = this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_point_locstyle].getStyleFunction();
-              }
-              tmpFeature.setStyle(this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_point_locstyle].style);
-            }});
+          let doneFunction = () => {
+            if (!this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_to_locstyle].style) {
+              this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_to_locstyle].style = this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_to_locstyle].getStyleFunction();
+            }
+            tmpFeature.setStyle(this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_to_locstyle].style);
+          }
+          this.props.mapController.proxy.locationStyleController.loadLocationStyles([this.props.mapController.data.router_point_locstyle], {done: doneFunction });
         }
         this.areaSource.addFeature(tmpFeature);
       }
