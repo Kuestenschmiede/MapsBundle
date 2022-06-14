@@ -43,6 +43,9 @@ export class RouterFeatureListItem extends Component {
           if (!scope.props.mapController.proxy.locationStyleController.arrLocStyles[clickStyleId]) {
             scope.props.mapController.proxy.locationStyleController.loadLocationStyles([clickStyleId], {
               done: function () {
+                if (!scope.props.mapController.proxy.locationStyleController.arrLocStyles[clickStyleId].style) {
+                  scope.props.mapController.proxy.locationStyleController.arrLocStyles[clickStyleId].style = scope.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_from_locstyle].getStyleFunction();
+                }
                 let style = scope.props.mapController.proxy.locationStyleController.arrLocStyles[clickStyleId].style;
                 // check if feature is still clicked
                 scope.mapSelectInteraction.getFeatures().forEach(function (elem, index, array) {
@@ -54,24 +57,31 @@ export class RouterFeatureListItem extends Component {
               }
             });
           } else {
+            if (!scope.props.mapController.proxy.locationStyleController.arrLocStyles[clickStyleId].style) {
+              scope.props.mapController.proxy.locationStyleController.arrLocStyles[clickStyleId].style = scope.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_from_locstyle].getStyleFunction();
+            }
             let style = scope.props.mapController.proxy.locationStyleController.arrLocStyles[clickStyleId].style;
             tmpFeature.setStyle(style);
-            if (tmpFeature.getGeometry().getType() == "Polygon") {
-              scope.props.mapController.map.getView().fit(tmpFeature.getGeometry().getExtent());
+            let extent = tmpFeature.getGeometry().getExtent();
+            let width = jQuery(".c4g-sideboard.c4g-open").css('width');
+            if (width) {
+              width = width.split(".");
+              width = Array.isArray(width) ? width[0] : width;
+              width = parseInt(width) +  50;
             }
             else {
-              scope.props.mapController.map.getView().setCenter(tmpFeature.getGeometry().getCoordinates());
+              width = 50;
             }
+            let padding = [50, width, 50, 50];
+            scope.props.mapController.map.getView().fit(extent, {
+              padding: padding,
+              maxZoom: 16
+            });
           }
         }
 
       } else {
-        if (false && scope.bestFeatureIds.includes(tmpFeature.get('tid'))) {
-          let locstyle = scope.props.mapController.data.priorityLocstyle;
-          tmpFeature.setStyle(scope.props.mapController.proxy.locationStyleController.arrLocStyles[locstyle].style);
-        } else {
-          tmpFeature.setStyle(scope.props.mapController.proxy.locationStyleController.arrLocStyles[layer.locstyle].style);
-        }
+        tmpFeature.setStyle(scope.props.mapController.proxy.locationStyleController.arrLocStyles[layer.locstyle].style);
       }
     });
     // refresh css classes
