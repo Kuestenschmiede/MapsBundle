@@ -702,19 +702,19 @@ export class RouterView extends Component {
         let tmpFeature = new Feature({
           geometry: this.state.areaPoint.clone().transform('EPSG:4326', 'EPSG:3857')
         });
-        if (this.props.mapController.data.router_point_locstyle && this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_point_locstyle]) {
-          if (!this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_point_locstyle].style) {
-            this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_point_locstyle].style = this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_point_locstyle].getStyleFunction();
+        if (this.props.mapController.data.areaCenterLocstyle && this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.areaCenterLocstyle]) {
+          if (!this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.areaCenterLocstyle].style) {
+            this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.areaCenterLocstyle].style = this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.areaCenterLocstyle].getStyleFunction();
           }
-          tmpFeature.setStyle(this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_point_locstyle].style);
+          tmpFeature.setStyle(this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.areaCenterLocstyle].style);
         } else {
           let doneFunction = () => {
-            if (!this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_point_locstyle].style) {
-              this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_point_locstyle].style = this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_point_locstyle].getStyleFunction();
+            if (!this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.areaCenterLocstyle].style) {
+              this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.areaCenterLocstyle].style = this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.areaCenterLocstyle].getStyleFunction();
             }
-            tmpFeature.setStyle(this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_to_locstyle].style);
+            tmpFeature.setStyle(this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.areaCenterLocstyle].style);
           }
-          this.props.mapController.proxy.locationStyleController.loadLocationStyles([this.props.mapController.data.router_point_locstyle], {done: doneFunction });
+          this.props.mapController.proxy.locationStyleController.loadLocationStyles([this.props.mapController.data.areaCenterLocstyle], {done: doneFunction });
         }
         this.areaSource.addFeature(tmpFeature);
       }
