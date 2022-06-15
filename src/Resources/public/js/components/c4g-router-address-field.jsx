@@ -48,10 +48,10 @@ export class RouterAddressField extends Component {
     return (
       <div className={this.props.className}>
         <label htmlFor={this.props.name}>{this.props.label}</label>
+        {positionButton}
         <AutocompleteInput type="search" className={this.props.class} name={this.props.name}
                            cssId={this.props.cssId} objFunctions={this.props.objFunctions} objSettings={this.props.objSettings} popup={this.props.popup}
                            containerAddresses={this.props.containerAddresses} router={this.props.router} value={this.props.value} index={this.props.index}/>
-        {positionButton}
         <button className={"c4g-router-input-clear"} onMouseUp={this.removeContent} title={this.languageConstants.REMOVE_ADDRESS}/>
       </div>
     );

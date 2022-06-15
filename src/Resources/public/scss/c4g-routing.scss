@@ -920,6 +920,12 @@ button.c4g-router-over, button.c4g-router-switch {
 
 .c4g-router-input-content > div > label {
     display: block;
+    margin-right: 500px;
+}
+
+.c4g-router-input-content > div {
+    display: inline-flex;
+    flex-wrap: wrap;
 }
 
 .c4g-router-layer-value-selection > button.c4g-active {
