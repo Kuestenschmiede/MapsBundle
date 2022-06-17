@@ -55,8 +55,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_outl_box']   = array('Sort of
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_outl_width'] = array('Label outline width','Enter a width for the outline of the label, if desired.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['font_style']       = array('Font style','The font style for the label, to be provided like in CSS.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['font_weight']      = array('Font weight','The font weight for the label, to be provided like in CSS.');
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_minzoom'] 	= array('Min. zoom level (label)', 'Geben Sie die Zoomstufe ein, ab der das Label des Karteneintrags angezeigt wird. 0=keine Einschränkung.');
-$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_maxzoom'] 	= array('Max. zoom level (label)', 'Geben Sie die Zoomstufe ein, bis zu der das Label des Karteneintrags angezeigt wird. 0=keine Einschränkung.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_minzoom'] 	= array('Min. zoom level (label)', 'Enter the zoom level from which the label of the map entry is displayed. 0=no restriction.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['label_maxzoom'] 	= array('Max. zoom level (label)', 'Enter the zoom level up to which the label of the map entry is displayed. 0=no restriction.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['tooltip'] 		    = array('Tooltip for icons', 'Tooltip to be displayed when mouse pointer rests on the location for a while.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['popup_info'] 		= array('Popup information', 'Information to be displayed in a popup after clicking with the mouse on a location or via mouse hover (depending on the map profile settings). Overrides popup defined at map structure items.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['popup_kind']       = array('Popup kind','Please choose which popup kind is to be used.');
