@@ -34,6 +34,32 @@
   -webkit-appearance: none;
   outline: 0
 }
+#c4g-router-button-route.c4g-active {
+  color: var(--font-color);
+  background-color: var(--shadow-color)
+}
+#c4g-router-button-route.c4g-inactive {
+  color: var(--main-color);
+  background-color: var(--font-color)
+}
+#c4g-router-button-route:before {
+  content: "\f4d7";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900
+}
+#c4g-router-button-area.c4g-active {
+  color: var(--font-color);
+  background-color: var(--shadow-color)
+}
+#c4g-router-button-area.c4g-inactive {
+  color: var(--main-color);
+  background-color: var(--font-color)
+}
+#c4g-router-button-area:before {
+  content: "\f5a0";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900
+}
 .c4g-routing-toggle::-webkit-slider-runnable-track {
   position: relative;
   height: 12px;
@@ -727,7 +753,12 @@ button.c4g-router-switch {
   margin-top: 15px
 }
 .c4g-router-input-content > div > label {
-  display: block
+  display: block;
+  margin-right: 500px
+}
+.c4g-router-input-content > div {
+  display: inline-flex;
+  flex-wrap: wrap
 }
 .c4g-router-layer-value-selection > button.c4g-active {
   color: var(--font-color);
