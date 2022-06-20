@@ -330,10 +330,10 @@ export class C4gLocationStyle {
       case 'cust_icon_svg':
         if(styleData.svgSrc && styleData.icon_scale && styleData.icon_size) {
           let width, height, offsetX, offsetY;
-          width = (styleData.icon_size[0]*styleData.icon_scale);
-          height = (styleData.icon_size[1]*styleData.icon_scale);
-          offsetX = (styleData.icon_offset[0]*styleData.icon_scale);
-          offsetY = (styleData.icon_offset[1]*styleData.icon_scale);
+          width = styleData.icon_size[0];
+          height = styleData.icon_size[1];
+          offsetX = parseFloat(styleData.icon_offset[0]);
+          offsetY = parseFloat(styleData.icon_offset[1]);
           let anchorX = 1 / (parseInt(width) / (parseInt(offsetX) * -1));
           let anchorY = 1 / (parseInt(height) / (parseInt(offsetY) * -1));
 
