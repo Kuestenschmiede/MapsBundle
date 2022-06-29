@@ -15,10 +15,9 @@ import {Collection} from "ol";
 import {Point, LineString, Polygon, Circle} from 'ol/geom'
 import {Draw, Select, Modify} from "ol/interaction";
 import {Feature} from "ol";
+import {utils} from "./../c4g-maps-utils";
 import {C4gStarboardStyle} from "./c4g-starboard-style.jsx";
 import {C4gPopupController} from "./../c4g-popup-controller";
-import {utils} from "../c4g-maps-utils";
-
 
 export default class EditorView extends Component {
 
@@ -93,6 +92,13 @@ export default class EditorView extends Component {
               featureProjection: "EPSG:3857"
             });
           }
+          let params = {
+            source: this.props.editorLayer.getSource(),
+            geojson: geojson,
+            event: event,
+            format: new GeoJSON()
+          }
+          utils.callHookFunctions(window.c4gMapsHooks.hook_editor_draw, params);
           this.props.addFeature(geojson)
           this.props.countEditorId();
         }
@@ -119,7 +125,14 @@ export default class EditorView extends Component {
         let geojson = new GeoJSON().writeFeatureObject(feature, {
           dataProjection: "EPSG:4326",
           featureProjection: "EPSG:3857"
-        })
+        });
+        let params = {
+          source: this.props.editorLayer.getSource(),
+          geojson: geojson,
+          event: e,
+          format: new GeoJSON()
+        };
+        utils.callHookFunctions(window.c4gMapsHooks.hook_editor_modify, params);
         this.props.modifyFeature(geojson);
       });
       this.props.mapController.map.addInteraction(this.interaction[0]);

@@ -94,7 +94,8 @@ export default class EditorComponent extends Component {
       control: control,
       range: 0,
       features: features,
-      editorId: 0
+      editorId: 0,
+      addComponents: []
     };
     this.styleFunction = function(feature, resolution) {
       let size = false;
@@ -109,7 +110,10 @@ export default class EditorComponent extends Component {
       }
       else if (feature && feature.get && feature.get('locstyle')) {
         let locstyle = feature.get('locstyle');
-        if (scope.props.mapController.proxy.locationStyleController.arrLocStyles && scope.props.mapController.proxy.locationStyleController.arrLocStyles[locstyle] && scope.props.mapController.proxy.locationStyleController.arrLocStyles[locstyle].style) {
+        if (scope.props.mapController.proxy.locationStyleController.arrLocStyles && scope.props.mapController.proxy.locationStyleController.arrLocStyles[locstyle]) {
+          if (!scope.props.mapController.proxy.locationStyleController.arrLocStyles[locstyle].style) {
+            scope.props.mapController.proxy.locationStyleController.arrLocStyles[locstyle].style = scope.props.mapController.proxy.locationStyleController.arrLocStyles[locstyle].getStyleFunction();
+          }
           let style = scope.props.mapController.proxy.locationStyleController.arrLocStyles[locstyle].style;
           if (typeof style === "function") {
             returnStyle = style(feature, resolution, false);
@@ -118,6 +122,9 @@ export default class EditorComponent extends Component {
             returnStyle = scope.props.mapController.proxy.locationStyleController.arrLocStyles[locstyle].style;
           }
         }
+      }
+      if (feature && feature.get('zIndex')) {
+        returnStyle[0].setZIndex(feature.get('zIndex'));
       }
       return returnStyle
     };
@@ -275,16 +282,18 @@ export default class EditorComponent extends Component {
       $(this.props.inputField).val(this.state.features); //link to inputField
     }
   }
+  setAddComps(conststr, config) {
+    this.setState({
+      config: config,
+      conststr: conststr
+    });
+  }
   render() {
     const scope = this;
-    // if (this.props.inputField && $(this.props.inputField).length > 0) {
-    //     if (this.state.features < 50) {
-    //         console.log(this.state.features);
-    //     }
-    //     else {
-    //         $(this.props.inputField).val(this.state.features);
-    //     }
-    // }
+    let addComps;
+    if (this.state.conststr) {
+      addComps = <this.state.conststr config={this.state.config} source={this.editorLayer.getSource()} format={new GeoJSON()}/>;
+    }
     return (
       <div className={"c4g-editor-wrapper"}>
         <Suspense fallback={<div>Loading...</div>}>
@@ -304,16 +313,26 @@ export default class EditorComponent extends Component {
             }
           })}
         </div>
-        <EditorView className={"c4g-editor-view"} styleFunction={this.styleFunction} mode={this.state.currentMode} styleData={this.state.styleData} elements={this.config[this.state.currentMode] ? this.config[this.state.currentMode]: []} active={this.state.open} features={this.features} editorVars={this.props.config.editorVars} removeFeature={this.removeFeature} modifyFeature={this.modifyFeature} addFeature={this.addFeature} editorLayer={this.editorLayer} editorId={this.state.editorId} countEditorId={this.countEditorId} updateFeatures={this.updateFeatures} mapController={this.props.mapController} editor={this} lang={this.langConstants}/>
-        <div className={"c4g-editor-content"} style={{overflow: "none"}}>
-          <pre contentEditable={true} style={{overflowY: "scroll", overflowX: "none", height: "400px"}} suppressContentEditableWarning={true} onInput={this.changeJSON}>{this.state.features}</pre>
+        <EditorView className={"c4g-editor-view"} styleFunction={this.styleFunction} mode={this.state.currentMode} styleData={this.state.styleData}
+                    elements={this.config[this.state.currentMode] ? this.config[this.state.currentMode]: []} active={this.state.open}
+                    features={this.features} editorVars={this.props.config.editorVars} removeFeature={this.removeFeature} modifyFeature={this.modifyFeature}
+                    addFeature={this.addFeature} editorLayer={this.editorLayer} editorId={this.state.editorId} countEditorId={this.countEditorId}
+                    updateFeatures={this.updateFeatures} mapController={this.props.mapController} editor={this} lang={this.langConstants}/>
+        <div className={"c4g-editor-content"} style={{display: "none"}}>
+          <pre contentEditable={true} style={{overflowY: "scroll", overflowX: "none"}} suppressContentEditableWarning={true} onInput={this.changeJSON}>{this.state.features}</pre>
         </div>
+        {addComps}
       </div>
     )
   }
   componentDidUpdate(prevProps, prevState, snapshot) {
     if ((prevProps.open && !this.props.open) || (prevState.open && !this.state.open)) {
       jQuery(this.props.mapController.editorContainer).removeClass("c4g-open").addClass("c4g-close");
+    }
+  }
+  componentDidMount() {
+    if (window.c4gMapsHooks.hook_editor_components && window.c4gMapsHooks.hook_editor_components.length > 0) {
+      utils.callHookFunctions(window.c4gMapsHooks.hook_editor_components, {comp: this, container: "#c4g-editor-portal"});
     }
   }
 }
