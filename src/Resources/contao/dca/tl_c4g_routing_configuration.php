@@ -104,6 +104,7 @@ $GLOBALS['TL_DCA'][$strName] = array
             'default'                 => '',
             'inputType'               => 'text',
             'eval'                    => ['decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'long'],
+            'sql'                     => null
         ],
     
         'tstamp' => [
@@ -112,7 +113,8 @@ $GLOBALS['TL_DCA'][$strName] = array
 
         'importId' => [
             'default'                 => 0,
-            'eval'                    => ['doNotCopy' => true]
+            'eval'                    => ['doNotCopy' => true],
+            'sql'                     => null
         ],
         
         'router_viaroute_url' => [
@@ -120,6 +122,7 @@ $GLOBALS['TL_DCA'][$strName] = array
             'default'                 => '',
             'inputType'               => 'text',
             'eval'                    => ['rgxp'=>'url', 'decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'long'],
+            'sql'                     => null
         ],
     
         'router_attribution' => [
@@ -127,6 +130,7 @@ $GLOBALS['TL_DCA'][$strName] = array
             'inputType'               => 'text',
             'default'                 => '',
             'eval'                    => ['maxlength'=>255, 'tl_class'=>'long', 'allowHtml' => true],
+            'sql'                     => null
         ],
         'router_api_selection' => [
             'exclude'                 => true,
@@ -135,18 +139,21 @@ $GLOBALS['TL_DCA'][$strName] = array
             'options'                 => ['5','3','2','1','4'],
             'reference'               => &$GLOBALS['TL_LANG'][$strName]['references_router_api_selection'],
             'eval'                    => ['tl_class'=>'clr long','submitOnChange' => true],
+            'sql'                     => null
         ],
         'router_alternative'=> [
             'exclude'                 => true,
             'default'                 => '',
             'inputType'               => 'checkbox',
             'eval'                    => ['tl_class'=>'clr','submitOnChange' => true],
+            'sql'                     => null
         ],
         'router_api_key' => [
             'exclude'                 => true,
             'default'                 => '',
             'inputType'               => 'text',
             'eval'                    => ['rgxp'=>'url', 'decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'long'],
+            'sql'                     => null
         ],
         'router_from_locstyle' => [
             'exclude'                 => true,
@@ -154,7 +161,8 @@ $GLOBALS['TL_DCA'][$strName] = array
             'default'                 => 0,
             'options_callback'        => [$callbackClass,'getLocStyles'],
             'eval'                    => ['tl_class'=>'w50','chosen' => true, 'includeBlankOption'=>true, 'mandatory' => true],
-            'xlabel'                  => [['tl_c4g_routing_configuration', 'locstylesLink']]
+            'xlabel'                  => [['tl_c4g_routing_configuration', 'locstylesLink']],
+            'sql'                     => null
         ],
         'router_to_locstyle' => [
             'exclude'                 => true,
@@ -162,7 +170,8 @@ $GLOBALS['TL_DCA'][$strName] = array
             'inputType'               => 'select',
             'options_callback'        => [$callbackClass,'getLocStyles'],
             'eval'                    => ['tl_class'=>'w50','chosen' => true, 'includeBlankOption'=>true, 'mandatory' => true],
-            'xlabel'                  => [['tl_c4g_routing_configuration', 'locstylesLink']]
+            'xlabel'                  => [['tl_c4g_routing_configuration', 'locstylesLink']],
+            'sql'                     => null
         ],
         'router_point_locstyle' => [
             'exclude'                 => true,
@@ -170,7 +179,8 @@ $GLOBALS['TL_DCA'][$strName] = array
             'inputType'               => 'select',
             'options_callback'        => [$callbackClass,'getLocStyles'],
             'eval'                    => ['tl_class'=>'w50','chosen' => true, 'includeBlankOption'=>true, 'mandatory' => true],
-            'xlabel'                  => [['tl_c4g_routing_configuration', 'locstylesLink']]
+            'xlabel'                  => [['tl_c4g_routing_configuration', 'locstylesLink']],
+            'sql'                     => null
         ],
         'router_interim_locstyle' => [
             'exclude'                 => true,
@@ -178,7 +188,8 @@ $GLOBALS['TL_DCA'][$strName] = array
             'inputType'               => 'select',
             'options_callback'        => [$callbackClass,'getLocStyles'],
             'eval'                    => ['tl_class'=>'w50','chosen' => true, 'includeBlankOption'=>true],
-            'xlabel'                  => [['tl_c4g_routing_configuration', 'locstylesLink']]
+            'xlabel'                  => [['tl_c4g_routing_configuration', 'locstylesLink']],
+            'sql'                     => null
         ],
         'router_profiles' => [
             'exclude'                 => true,
@@ -187,34 +198,40 @@ $GLOBALS['TL_DCA'][$strName] = array
             'options_callback'        => [$callbackClass, 'getRouterProfiles'],
             'reference'               => &$GLOBALS['TL_LANG'][$strName]['references_router_profiles'],
             'eval'                    => ['mandatory'=>false, 'multiple'=>true,'chosen'=>true, 'tl_class' => 'clr m12'],
+            'sql'                     => null
         ],
         'router_profiles_initial' => [
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',
+            'sql'                     => null
         ],
         'pirate' => [
             'exclude'                 => true,
             'default'                 => '',
             'inputType'               => 'checkbox',
+            'sql'                     => null
         ],
         'minDetourArea' => [
             'filter'                  => false,
             'inputType'               => 'text',
             'default'                 => '0.5',
             'eval'                    => [ 'tl_class'=>'w50', 'rgxp'=>'digit', "minval" => 0],
+            'sql'                     => null
         ],
         'maxDetourArea' => [
             'filter'                  => false,
             'inputType'               => 'text',
             'default'                 => '20',
             'eval'                    => [ 'tl_class'=>'w50', 'rgxp'=>'digit', "minval" => 1, "maxval" => 30],
+            'sql'                     => null
         ],
         'initialDetourArea' => [
             'filter'                  => false,
             'inputType'               => 'text',
             'default'                 => '10',
             'eval'                    => [ 'tl_class'=>'w50', 'rgxp'=>'digit', "minval" => 1, "maxval" => 30],
+            'sql'                     => null
         ],
         'routerLayers' => [
             'exclude'                 => true,
@@ -223,7 +240,8 @@ $GLOBALS['TL_DCA'][$strName] = array
             'eval'                    => [
                 'columnsCallback'     => [$callbackClass,'getRouterLayer']
             ],
-            'xlabel' => [['tl_c4g_routing_configuration', 'mapsLink']]
+            'xlabel' => [['tl_c4g_routing_configuration', 'mapsLink']],
+            'sql'                     => null
         ],
         'customProfiles' => [
             'default'                 => 'a:0:{}',
@@ -231,30 +249,35 @@ $GLOBALS['TL_DCA'][$strName] = array
             'inputType'               => 'multiColumnWizard',
             'eval'                    => [
                 'columnsCallback'     => [$callbackClass,'getCustomProfileStructure']
-            ]
+            ],
+            'sql'                     => null
         ],
         'hideFeaturesWithoutLabel' => [
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',
+            'sql'                     => null
         ],
         'minDetourRoute' => [
             'filter'                  => false,
             'inputType'               => 'text',
             'default'                 => '0.5',
             'eval'                    => [ 'tl_class'=>'w50', 'rgxp'=>'digit', "minval" => 0],
+            'sql'                     => null
         ],
         'maxDetourRoute' => [
             'filter'                  => false,
             'inputType'               => 'text',
             'default'                 => '5',
             'eval'                    => [ 'tl_class'=>'w50', 'rgxp'=>'digit', "minval" => 1, "maxval" => 10],
+            'sql'                     => null
         ],
         'initialDetourRoute' => [
             'filter'                  => false,
             'inputType'               => 'text',
             'default'                 => '2.5',
             'eval'                    => [ 'tl_class'=>'w50', 'rgxp'=>'digit', "minval" => 1, "maxval" => 10],
+            'sql'                     => null
         ],
         'clickLocstyle' => [
             'exclude'                 => true,
@@ -262,7 +285,8 @@ $GLOBALS['TL_DCA'][$strName] = array
             'inputType'               => 'select',
             'options_callback'        => [$callbackClass,'getLocStyles'],
             'eval'                    => ['tl_class'=>'clr', 'chosen' => true, 'includeBlankOption'=>true],
-            'xlabel'                  => [['tl_c4g_routing_configuration', 'locstylesLink']]
+            'xlabel'                  => [['tl_c4g_routing_configuration', 'locstylesLink']],
+            'sql'                     => null
         ],
         'areaCenterLocstyle' => [
             'exclude'                 => true,
@@ -270,29 +294,34 @@ $GLOBALS['TL_DCA'][$strName] = array
             'default'                 => 0,
             'options_callback'        => [$callbackClass,'getLocStyles'],
             'eval'                    => ['tl_class'=>'clr', 'chosen' => true, 'includeBlankOption'=>true],
-            'xlabel'                  => [['tl_c4g_routing_configuration', 'locstylesLink']]
+            'xlabel'                  => [['tl_c4g_routing_configuration', 'locstylesLink']],
+            'sql'                     => null
         ],
         'enableOverPoints' => [
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',
+            'sql'                     => null
         ],
         'enableTargetSwitch' => [
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',
+            'sql'                     => null
         ],
         'routerHeadline' => [
             'filter'                  => false,
             'inputType'               => 'text',
             'default'                 => 'Router',
             'eval'                    => [ 'tl_class'=>'clr', "maxlength" => 100],
+            'sql'                     => null
         ],
         'priorityFeatures' => [
             'filter'                  => false,
             'inputType'               => 'text',
             'default'                 => '0',
             'eval'                    => [ 'tl_class'=>'w50', 'rgxp'=>'digit'],
+            'sql'                     => null
         ],
         'priorityLocstyle' => [
             'exclude'                 => true,
@@ -300,49 +329,58 @@ $GLOBALS['TL_DCA'][$strName] = array
             'default'                 => 0,
             'options_callback'        => [$callbackClass,'getLocStyles'],
             'eval'                    => ['tl_class'=>'clr', 'chosen' => true, 'includeBlankOption'=>true],
-            'xlabel'                  => [['tl_c4g_routing_configuration', 'locstylesLink']]
+            'xlabel'                  => [['tl_c4g_routing_configuration', 'locstylesLink']],
+            'sql'                     => null
         ],
         'closeAfterSearch' => [
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',
+            'sql'                     => null
         ],
         'routeStartButton' => [
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',
+            'sql'                     => null
         ],
         'initialPosition' => [
             'exclude'                 => true,
             'default'                 => true,
             'inputType'               => 'checkbox',
+            'sql'                     => null
         ],
         'initialDestination' => [
             'exclude'                 => true,
             'default'                 => true,
             'inputType'               => 'checkbox',
+            'sql'                     => null
         ],
         'showFeatures' => [
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',
+            'sql'                     => null
         ],
         'areaSearch' => [
             'exclude'                 => true,
             'default'                 => false,
             'eval'                    => ['submitOnChange' => true],
             'inputType'               => 'checkbox',
+            'sql'                     => null
         ],
         'areaSearchOnly' => [
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',
+            'sql'                     => null
         ],
         'areaHeadline' => [
             'filter'                  => false,
             'inputType'               => 'text',
             'default'                 => &$GLOBALS['TL_LANG'][$strName]['areaHeadlineDefault'],
             'eval'                    => [ 'tl_class'=>'clr', "maxlength" => 100],
+            'sql'                     => null
         ],
         
         'featureLabel' => [
@@ -350,17 +388,20 @@ $GLOBALS['TL_DCA'][$strName] = array
             'inputType'               => 'text',
             'default'                 => 'In der Nähe',
             'eval'                    => [ 'tl_class'=>'clr', "maxlength" => 100],
+            'sql'                     => null
         ],
         'showInstructions' => [
             'exclude'                 => true,
             'default'                 => true,
             'inputType'               => 'checkbox',
+            'sql'                     => null
         ],
         'instructionLabel' => [
             'filter'                  => false,
             'inputType'               => 'text',
             'default'                 => 'Routenhinweise',
             'eval'                    => [ 'tl_class'=>'clr', "maxlength" => 100],
+            'sql'                     => null
         ],
         'initialMode' => [
             'exclude'                 => true,
@@ -368,6 +409,7 @@ $GLOBALS['TL_DCA'][$strName] = array
             'inputType'               => "select",
             'options'                 => ['area', 'route'],
             'reference'               => &$GLOBALS['TL_LANG'][$strName]['references_router_modes'],
+            'sql'                     => null
         ],
         'initialResultMode' => [
             'exclude'                 => true,
@@ -375,11 +417,13 @@ $GLOBALS['TL_DCA'][$strName] = array
             'inputType'               => "select",
             'options'                 => ['feat', 'instr'],
             'reference'               => &$GLOBALS['TL_LANG'][$strName]['references_router_result_modes'],
+            'sql'                     => null
         ],
         'usePermalink' => [
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',
+            'sql'                     => null
         ]
     )
 );
