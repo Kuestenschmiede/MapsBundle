@@ -72,7 +72,7 @@ $GLOBALS['TL_DCA'][$strName] = array
                 'label'         => &$GLOBALS['TL_LANG'][$strName]['delete'],
                 'href'          => 'act=delete',
                 'icon'          => 'delete.svg',
-                'attributes'    => 'onclick="if(!confirm(\'' . ($GLOBALS['TL_LANG']['MSC']['deleteConfirm'] ?? null) . '\')) return false;Backend.getScrollOffset()"',
+                'attributes'    => 'onclick="if(!confirm(\'' . ((($GLOBALS['TL_LANG']['MSC']['deleteConfirm'] ?? null) ?? null) ?? null) . '\')) return false;Backend.getScrollOffset()"',
             ),
             'show' => array
             (
