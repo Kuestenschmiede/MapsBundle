@@ -123,7 +123,7 @@ export default class EditorComponent extends Component {
           }
         }
       }
-      if (feature && feature.get('zIndex')) {
+      if (returnStyle[0] && feature && feature.get('zIndex')) {
         returnStyle[0].setZIndex(feature.get('zIndex'));
       }
       return returnStyle
@@ -140,7 +140,16 @@ export default class EditorComponent extends Component {
 
   open() {
     jQuery(this.props.mapController.editorContainer).removeClass("c4g-close").addClass("c4g-open");
-    this.props.mapController.map.addLayer(this.editorLayer);
+    let layers = this.props.mapController.map.getLayers();
+    let addLayer = true;
+    layers.forEach((element, index, array) => {
+      if (element === this.editorLayer) {
+        addLayer = false;
+      }
+    })
+    if (addLayer) {
+      this.props.mapController.map.addLayer(this.editorLayer);
+    }
     this.setState({
       open: true
     });
@@ -148,7 +157,7 @@ export default class EditorComponent extends Component {
   }
   close() {
     jQuery(this.props.mapController.editorContainer).removeClass("c4g-open").addClass("c4g-close");
-    this.props.mapController.map.removeLayer(this.editorLayer);
+//    this.props.mapController.map.removeLayer(this.editorLayer);
     this.setState({
       open: false
     });
@@ -263,6 +272,7 @@ export default class EditorComponent extends Component {
     this.setState({
       features: features
     }, () => {this.linkInput()});
+    utils.callHookFunctions(window.c4gMapsHooks.hook_editor_remove, geojson);
   }
   modifyFeature (geojson) {
     let editorId = geojson.properties.editorId;
@@ -297,7 +307,7 @@ export default class EditorComponent extends Component {
     return (
       <div className={"c4g-editor-wrapper"}>
         <Suspense fallback={<div>Loading...</div>}>
-          <Titlebar wrapperClass={"c4g-editor-header"} headerClass={"c4g-editor-headline"} hideContainer={".c4g-editor-container"}
+          <Titlebar wrapperClass={"c4g-editor-header"} headerClass={"c4g-editor-headline"} hideContainer={".c4g-editor-container-right"}
                     header={this.langConstants.EDITOR} closeBtnTitle={this.langConstants.CTRL_EDITOR} closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close} closeBtnTitle={this.langConstants.CLOSE}>
           </Titlebar>
         </Suspense>
@@ -328,7 +338,7 @@ export default class EditorComponent extends Component {
   componentDidUpdate(prevProps, prevState, snapshot) {
     if ((prevProps.open && !this.props.open) || (prevState.open && !this.state.open)) {
       jQuery(this.props.mapController.editorContainer).removeClass("c4g-open").addClass("c4g-close");
-      this.props.mapController.map.removeLayer(this.editorLayer);
+//      this.props.mapController.map.removeLayer(this.editorLayer);
     }
   }
   componentDidMount() {

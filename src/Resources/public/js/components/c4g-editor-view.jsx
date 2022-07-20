@@ -18,6 +18,7 @@ import {Feature} from "ol";
 import {utils} from "./../c4g-maps-utils";
 import {C4gStarboardStyle} from "./c4g-starboard-style.jsx";
 import {C4gPopupController} from "./../c4g-popup-controller";
+import {TooltipPopUp} from "../c4g-maps-misc-tooltippopup";
 
 export default class EditorView extends Component {
 
@@ -38,6 +39,7 @@ export default class EditorView extends Component {
   }
 
   render() {
+    const scope = this;
     if (this.props.mode !== "select" && this.props.active) {
       this.resetInteraction();
       let geometry;
@@ -54,14 +56,15 @@ export default class EditorView extends Component {
       let feature = new Feature(geometry);
       feature.set('locstyle', this.state.activeStyle)
       this.interaction = new Draw({
+
         // features: this.props.features,
         source: this.props.editorLayer.getSource(),
         type: this.props.mode,
-        stopClick: false,
-        snapTolerance: 0,
+        snapTolerance: 1,
         style: this.props.styleFunction(feature),
         freehand: this.state.freehand
       });
+
       this.interaction.on('drawend',
         (event) => {
           event.feature.set('editorId', this.props.editorId);
@@ -122,10 +125,31 @@ export default class EditorView extends Component {
       });
       this.interaction[1].on('modifyend', (e) => {
         let feature = e.features.getArray()[0];
-        let geojson = new GeoJSON().writeFeatureObject(feature, {
-          dataProjection: "EPSG:4326",
-          featureProjection: "EPSG:3857"
-        });
+        let geojson;
+        if (feature.getGeometry() instanceof Circle) { //turn Circle into valid GeoJSON
+          let geometry = feature.getGeometry().clone().transform("EPSG:3857", "EPSG:4326");
+          let center = geometry.getCenter();
+          let radius = feature.getGeometry().getRadius();
+          geojson = {
+            type: "Feature",
+            geometry: {
+              type: "Point",
+              coordinates: center
+            },
+            properties: {
+              editorId: feature.get('editorId'),
+              elementId: feature.get('elementId'),
+              locstyle: feature.get('activeStyle'),
+              radius: radius
+            }
+          }
+        }
+        else {
+          geojson = new GeoJSON().writeFeatureObject(feature, {
+            dataProjection: "EPSG:4326",
+            featureProjection: "EPSG:3857"
+          });
+        }
         let params = {
           source: this.props.editorLayer.getSource(),
           geojson: geojson,
