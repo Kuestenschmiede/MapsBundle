@@ -96,11 +96,13 @@ $GLOBALS['TL_DCA'][$strName] = array
             'default'           => '',
             'search'            => true,
             'inputType'         => 'text',
-            'eval'              => array('mandatory' => true, 'tl_class' => 'long')
+            'eval'              => array('mandatory' => true, 'tl_class' => 'long'),
+            'sql'                     => null
         ),
         'importId' =>
         [
-            'eval'                    => array('doNotCopy' => true)
+            'eval'                    => array('doNotCopy' => true),
+            'sql'                     => null
         ],
         'types' => [
             'exclude'                 => true,
@@ -108,7 +110,8 @@ $GLOBALS['TL_DCA'][$strName] = array
             'inputType'               => 'multiColumnWizard',
             'eval'                    => [
                 'columnsCallback'     => [$cbClass,'getTypes']
-            ]
+            ],
+            'sql'                     => null
         ],
         'editor_helpurl' => array
         (
@@ -116,6 +119,7 @@ $GLOBALS['TL_DCA'][$strName] = array
             'default'                 => '',
             'inputType'               => 'text',
             'eval'                    => array('rgxp'=>'url', 'decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'wizard'),
+            'sql'                     => null
         ),
         'editor_vars' => [
             'exclude'                 => true,
@@ -123,7 +127,8 @@ $GLOBALS['TL_DCA'][$strName] = array
             'inputType'               => 'multiColumnWizard',
             'eval'                    => [
                 'columnsCallback'     => [$cbClass,'getEditorVars']
-            ]
+            ],
+            'sql'                     => null
         ],
         'editor_project_group' => [
             'exclude'                 => true,
@@ -133,6 +138,7 @@ $GLOBALS['TL_DCA'][$strName] = array
             'relation'                => array('type'=>'belongsToMany', 'load'=>'lazy'),
             'eval'                    => array('tl_class'=>'clr'),
             'reference'               => &$GLOBALS['TL_LANG'][$strName]['references'],
+            'sql'                     => null
         ],
 
     )
