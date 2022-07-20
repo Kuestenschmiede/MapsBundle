@@ -321,11 +321,17 @@ export class RouterView extends Component {
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.props.mapController.data.usePermalink) {
       let fragments = this.permalink.linkFragments;
-      if (this.state.fromPoint && fragments.fromAddress !== this.state.fromPoint.getCoordinates()) {
+      if (this.state.fromPoint && fragments.fromAddress && fragments.fromAddress[0] !== this.state.fromPoint.getCoordinates()[0]
+         && fragments.fromAddress[1] !== this.state.fromPoint.getCoordinates()[1]) {
         this.permalink.updateLinkFragments("fromAddress", this.state.fromPoint.getCoordinates());
       }
-      if (this.state.toPoint && fragments.toAddress !== this.state.toPoint.getCoordinates()) {
+      if (this.state.toPoint && fragments.toAddress && fragments.toAddress[0] !== this.state.toPoint.getCoordinates()[0]
+          && fragments.toAddress[1] !== this.state.toPoint.getCoordinates()[1]) {
         this.permalink.updateLinkFragments("toAddress", this.state.toPoint.getCoordinates());
+      }
+      if (this.state.areaPoint && fragments.addressArea && fragments.addressArea[0] !== this.state.areaPoint.getCoordinates()[0]
+          && fragments.addressArea[1] !== this.state.areaPoint.getCoordinates()[1]) {
+        this.permalink.updateLinkFragments("addressArea", this.state.areaPoint.getCoordinates());
       }
       if (fragments.mode !== this.state.mode) {
         this.permalink.updateLinkFragments("mode", this.state.mode);
@@ -1683,7 +1689,7 @@ export class RouterView extends Component {
                       "features":   sortedFeatures,
                       "type": response.type
                   },
-                  "featureSource": scope.routerFeaturesSource,
+                  //"featureSource": scope.routerFeaturesSource,
                   "openResults": true
                 });
               }
@@ -1903,6 +1909,9 @@ export class RouterView extends Component {
             unstyledFeatures[i].setStyle(self.props.mapController.proxy.locationStyleController.arrLocStyles[styleId].style);
             self.routerFeaturesSource.addFeature(unstyledFeatures[i]);
           }
+          self.setState({
+            featureSource: self.routerFeaturesSource
+          });
           missingStyles = undefined;
         }
       });

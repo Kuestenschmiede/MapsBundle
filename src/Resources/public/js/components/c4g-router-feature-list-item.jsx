@@ -95,11 +95,13 @@ export class RouterFeatureListItem extends Component {
   render() {
     const scope = this;
     let currentFeature = null;
-    this.props.featureSource.forEachFeature(function (feature) {
-      if (feature.get('tid') === scope.props.feature.id) {
-        currentFeature = feature;
-      }
-    });
+    if (this.props.featureSource && this.props.featureSource.forEachFeature) {
+      this.props.featureSource.forEachFeature(function (feature) {
+        if (feature.get('tid') === scope.props.feature.id) {
+          currentFeature = feature;
+        }
+      });
+    }
     let featureEntryContent = "";
     let objHook = null;
     if (currentFeature) {
