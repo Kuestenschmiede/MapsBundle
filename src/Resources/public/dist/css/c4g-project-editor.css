@@ -115,6 +115,9 @@ button.toggle-group-uncollapsed:before {
   border-color: var(--shadow-color);
   background-color: var(--main-color)
 }
+.c4g-sideboard.c4g-editor-container-right {
+  height: auto
+}
 .c4g-project-headline-field a {
   text-decoration: none
 }
