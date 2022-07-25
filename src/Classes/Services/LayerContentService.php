@@ -948,6 +948,7 @@ class LayerContentService
 
                 $arrGeoJson = [];
                 if ($data && (strpos($data, 'Feature') !== false)) {
+                    $data = html_entity_decode($data);
                     $arrGeoJson = json_decode($data, true);
                     $arrGeoJson['properties'] = [
                         'popup' => [
