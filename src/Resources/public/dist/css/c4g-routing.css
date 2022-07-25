@@ -797,9 +797,6 @@ div.invisible {
 .c4g-router-result-container::-webkit-scrollbar-thumb {
   background: var(--font-color)
 }
-div[class*=c4g-router-input] > div > input {
-  max-width: calc(100% - (32px + .2em) * 2)
-}
 .c4g-sideboard > div > div > span.c4g-router-headline {
   width: calc(100% - 1.2em - 32px - 32px)
 }
