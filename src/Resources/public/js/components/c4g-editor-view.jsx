@@ -75,6 +75,7 @@ export default class EditorView extends Component {
             let geometry = event.feature.getGeometry().clone().transform("EPSG:3857", "EPSG:4326");
             let center = geometry.getCenter();
             let radius = event.feature.getGeometry().getRadius();
+            let realRadius = utils.measureGeometry(event.feature.getGeometry()).rawValue;
             geojson = {
               type: "Feature",
               geometry: {
@@ -85,7 +86,8 @@ export default class EditorView extends Component {
                 editorId: this.props.editorId,
                 elementId: this.state.activeElement,
                 locstyle: this.state.activeStyle,
-                radius: radius
+                radius: radius,
+                realRadius: realRadius
               }
             }
           }
@@ -130,6 +132,7 @@ export default class EditorView extends Component {
           let geometry = feature.getGeometry().clone().transform("EPSG:3857", "EPSG:4326");
           let center = geometry.getCenter();
           let radius = feature.getGeometry().getRadius();
+          let realRadius = utils.measureGeometry(event.feature.getGeometry()).rawValue;
           geojson = {
             type: "Feature",
             geometry: {
@@ -140,7 +143,8 @@ export default class EditorView extends Component {
               editorId: feature.get('editorId'),
               elementId: feature.get('elementId'),
               locstyle: feature.get('activeStyle'),
-              radius: radius
+              radius: radius,
+              realRadius: realRadius
             }
           }
         }

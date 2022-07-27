@@ -20,6 +20,8 @@ import {Collection} from "ol";
 import {Circle} from "ol/geom";
 import {utils} from "./../c4g-maps-utils";
 import {Fill, Style, Text} from "ol/style";
+import {get, transform} from "ol/proj";
+import {toStringHDMS} from "ol/coordinate";
 const Titlebar = React.lazy(() => import("./c4g-titlebar.jsx"));
 
 
@@ -302,7 +304,7 @@ export default class EditorComponent extends Component {
     const scope = this;
     let addComps;
     if (this.state.conststr) {
-      addComps = <this.state.conststr config={this.state.config} source={this.editorLayer.getSource()} format={new GeoJSON()}/>;
+      addComps = <this.state.conststr config={this.state.config} get={get} transform={transform} toStringHDMS={toStringHDMS} source={this.editorLayer.getSource()} format={new GeoJSON()}/>;
     }
     return (
       <div className={"c4g-editor-wrapper"}>
