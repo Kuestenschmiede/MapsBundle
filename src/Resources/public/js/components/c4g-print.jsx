@@ -12,8 +12,10 @@ import React, {Component} from "react";
 import {Control} from "ol/control";
 import {cssConstants} from "./../c4g-maps-constant";
 import {getLanguage} from "../c4g-maps-i18n";
+import {toPng} from "dom-to-image-more";
 import {toBlob} from "dom-to-image-more";
 import {saveAs} from "file-saver";
+import {utils} from "./../c4g-maps-utils";
 
 export default class Print extends Component {
 
@@ -44,10 +46,22 @@ export default class Print extends Component {
       event.stopPropagation();
       if (map.getTarget()) {
         let target = document.getElementById(map.getTarget());
-        toBlob(target, exportOptions)
-          .then(function(blob) {
-            saveAs(blob, 'map.png');
-          });
+        if (window.c4gMapsHooks.printMap && window.c4gMapsHooks.printMap.length > 0) {
+          exportOptions.quality= 0.2;
+         // exportOptions.height= "400px";
+         // exportOptions.width= "800px";
+          toPng(target, exportOptions)
+              .then(function(blob) {
+                let arrReturn = utils.callHookFunctions(window.c4gMapsHooks.printMap, blob);
+              });
+        }
+        else {
+          toBlob(target, exportOptions)
+              .then(function(blob) {
+                let arrReturn = utils.callHookFunctions(window.c4gMapsHooks.printMap, blob);
+                saveAs(blob, 'map.png');
+              });
+        }
       }
     };
 
