@@ -5132,7 +5132,8 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
   transition: .5s
 }
 .c4g-sideboard:not(.c4g-measuretools-container):not(.c4g-popup-container) {
-  max-width: 42%
+  max-width: 42%;
+  max-width: var(--popup-max-width)
 }
 .c4g-sideboard.c4g-measuretools-container {
   max-width: 240px
