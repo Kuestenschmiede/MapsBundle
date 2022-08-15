@@ -160,7 +160,7 @@ $GLOBALS['TL_DCA'][$strName] = array
             'inputType'               => 'select',
             'default'                 => 0,
             'options_callback'        => [$callbackClass,'getLocStyles'],
-            'eval'                    => ['tl_class'=>'w50','chosen' => true, 'includeBlankOption'=>true, 'mandatory' => true],
+            'eval'                    => ['tl_class'=>'w50','chosen' => true, 'mandatory' => true],
             'xlabel'                  => [['tl_c4g_routing_configuration', 'locstylesLink']],
             'sql'                     => null
         ],
@@ -169,7 +169,7 @@ $GLOBALS['TL_DCA'][$strName] = array
             'default'                 => 0,
             'inputType'               => 'select',
             'options_callback'        => [$callbackClass,'getLocStyles'],
-            'eval'                    => ['tl_class'=>'w50','chosen' => true, 'includeBlankOption'=>true, 'mandatory' => true],
+            'eval'                    => ['tl_class'=>'w50','chosen' => true, 'mandatory' => true],
             'xlabel'                  => [['tl_c4g_routing_configuration', 'locstylesLink']],
             'sql'                     => null
         ],
@@ -178,7 +178,7 @@ $GLOBALS['TL_DCA'][$strName] = array
             'default'                 => 0,
             'inputType'               => 'select',
             'options_callback'        => [$callbackClass,'getLocStyles'],
-            'eval'                    => ['tl_class'=>'w50','chosen' => true, 'includeBlankOption'=>true, 'mandatory' => true],
+            'eval'                    => ['tl_class'=>'w50','chosen' => true, 'mandatory' => true],
             'xlabel'                  => [['tl_c4g_routing_configuration', 'locstylesLink']],
             'sql'                     => null
         ],
@@ -187,7 +187,7 @@ $GLOBALS['TL_DCA'][$strName] = array
             'default'                 => 0,
             'inputType'               => 'select',
             'options_callback'        => [$callbackClass,'getLocStyles'],
-            'eval'                    => ['tl_class'=>'w50','chosen' => true, 'includeBlankOption'=>true],
+            'eval'                    => ['tl_class'=>'w50','chosen' => true],
             'xlabel'                  => [['tl_c4g_routing_configuration', 'locstylesLink']],
             'sql'                     => null
         ],
@@ -284,7 +284,7 @@ $GLOBALS['TL_DCA'][$strName] = array
             'default'                 => 0,
             'inputType'               => 'select',
             'options_callback'        => [$callbackClass,'getLocStyles'],
-            'eval'                    => ['tl_class'=>'clr', 'chosen' => true, 'includeBlankOption'=>true],
+            'eval'                    => ['tl_class'=>'clr', 'chosen' => true],
             'xlabel'                  => [['tl_c4g_routing_configuration', 'locstylesLink']],
             'sql'                     => null
         ],
@@ -293,7 +293,7 @@ $GLOBALS['TL_DCA'][$strName] = array
             'inputType'               => 'select',
             'default'                 => 0,
             'options_callback'        => [$callbackClass,'getLocStyles'],
-            'eval'                    => ['tl_class'=>'clr', 'chosen' => true, 'includeBlankOption'=>true],
+            'eval'                    => ['tl_class'=>'clr', 'chosen' => true],
             'xlabel'                  => [['tl_c4g_routing_configuration', 'locstylesLink']],
             'sql'                     => null
         ],
@@ -328,7 +328,7 @@ $GLOBALS['TL_DCA'][$strName] = array
             'inputType'               => 'select',
             'default'                 => 0,
             'options_callback'        => [$callbackClass,'getLocStyles'],
-            'eval'                    => ['tl_class'=>'clr', 'chosen' => true, 'includeBlankOption'=>true],
+            'eval'                    => ['tl_class'=>'clr', 'chosen' => true],
             'xlabel'                  => [['tl_c4g_routing_configuration', 'locstylesLink']],
             'sql'                     => null
         ],

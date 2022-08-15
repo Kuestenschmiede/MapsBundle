@@ -109,6 +109,7 @@ class TlC4gRoutingConfiguration
                 $return[$locStyles->id] = $locStyles->name;
             }
         }
+        $return[0] = "-";
 
         return $return;
     }
