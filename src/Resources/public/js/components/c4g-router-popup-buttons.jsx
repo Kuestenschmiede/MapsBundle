@@ -9,7 +9,6 @@
  */
 
 import React, { Component } from "react";
-import {AutocompleteInput} from "./c4g-autocomplete-input.jsx";
 import {Point, Polygon, LineString} from "ol/geom";
 import {getLanguage} from "./../routing-constant-i18n";
 import {toLonLat} from "ol/proj";

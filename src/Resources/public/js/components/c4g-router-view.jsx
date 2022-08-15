@@ -91,6 +91,7 @@ export class RouterView extends Component {
           center = transform(center, "EPSG:3857","EPSG:4326");
           return center;
         },
+        "resultCount": mapController.data.geosearch.result_count,
         "geosearchParams": mapController.data.geosearch.params
       },
       activeId: null,
