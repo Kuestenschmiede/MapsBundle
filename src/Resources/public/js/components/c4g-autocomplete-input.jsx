@@ -187,7 +187,10 @@ export class AutocompleteInput extends Component {
                                     'pos': [data[i].lat, data[i].lon],
                                     'name': data[i].display_name
                                 };
-                                arrAddresses.push(element);
+                                let foundIndex = arrAddresses.findIndex((findElement) => findElement.name === element.name);
+                                if (foundIndex === -1){
+                                    arrAddresses.push(element);
+                                }
                             }
                         }
                     }
@@ -199,7 +202,10 @@ export class AutocompleteInput extends Component {
                                 'pos': [data[i].lat, data[i].lon],
                                 'name': data[i].display_name
                             };
-                            arrAddresses.push(element);
+                            let foundIndex = arrAddresses.findIndex((findElement) => findElement.name === element.name);
+                            if (foundIndex === -1){
+                                arrAddresses.push(element);
+                            }
                         }
                     }
                 }
