@@ -33,7 +33,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_themes']['fontcolor']  = array('Font color', 'Ov
 
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['popupMaincolor']  = array('Popup background color', 'Overwrites the CSS settings.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['popupFontcolor']  = array('Popup font color', 'Overwrites the CSS settings.');
-$GLOBALS['TL_LANG']['tl_c4g_map_themes']['popupMaxWidth'] = array('Maximum sideboard width (also popup)', 'Applies to all sideboards (so also the default popup). Default: 42%';
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['popupMaxWidth'] = array('Maximum sideboard width (also popup)', 'Applies to all sideboards (so also the default popup). Default: 42%');
 
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['shadowcolor']  = array('Secondary color', 'Overwrites the CSS settings. For example, for hover effects, frames, or form elements.');
 
