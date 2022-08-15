@@ -1437,8 +1437,12 @@ export class RouterView extends Component {
           let point = new Point(coords);
           if (value === "fromValue") {
             scope.setState({fromPoint: point, fromAddress: $input.val()}, () => scope.updateRouteLayersAndPoints());
-          } else if (value === "toValue") {
+          }
+          else if (value === "toValue") {
             scope.setState({toPoint: point, toAddress: $input.val()}, () => scope.updateRouteLayersAndPoints());
+          }
+          else if (value === "areaValue") {
+            scope.setState({areaPoint: point, areaAddress: $input.val()});
           }
 
           // TODO wieder einbauen
@@ -1738,12 +1742,17 @@ export class RouterView extends Component {
    * Checks the routing properties and triggers a new route search, when the mandatory parameters are set.
    */
   recalculateRoute() {
-    if (this.state.fromPoint && this.state.toPoint) {
-      if (this.state.overPoints && Object.keys(this.state.overPoints).length > 0) {
-        this.performViaRoute(this.state.fromPoint, this.state.toPoint, this.state.overPoints);
-      } else {
-        this.performViaRoute(this.state.fromPoint, this.state.toPoint);
+    if (this.state.mode === "route") {
+      if (this.state.fromPoint && this.state.toPoint) {
+        if (this.state.overPoints && Object.keys(this.state.overPoints).length > 0) {
+          this.performViaRoute(this.state.fromPoint, this.state.toPoint, this.state.overPoints);
+        } else {
+          this.performViaRoute(this.state.fromPoint, this.state.toPoint);
+        }
       }
+    }
+    else {
+     this.performArea();
     }
   }
 

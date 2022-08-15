@@ -49,17 +49,19 @@ export class AutocompleteInput extends Component {
       let field = $("#" + scope.props.cssId);
       field.trigger('change');
       let performSearchCallback;
+      let value;
       if (scope.props.cssId.indexOf("area") !== -1) {
+        value = "areaValue";
         performSearchCallback = function() {
           scope.props.router.performArea();
         };
       } else {
+        value = (scope.props.cssId.indexOf('From') !== -1) ? "fromValue" : "toValue";
         performSearchCallback = function() {
           scope.props.router.performViaRoute();
         };
       }
 
-      let value = (scope.props.cssId.indexOf('From') !== -1) ? "fromValue" : "toValue";
       scope.props.router.performSearch(field, value, performSearchCallback);
     };
 
@@ -79,12 +81,13 @@ export class AutocompleteInput extends Component {
           setTimeout(function() {
             if (scope.counter && scope.counter + 400 < Math.floor(Date.now())) {
               delete scope.counter;
+              let value = (scope.props.cssId.indexOf("area") !== -1) ? "areaValue" : (scope.props.cssId.indexOf('From') !== -1) ? "fromValue" : "toValue";
+              let field = $("#" + scope.props.cssId);
               if (!scope.props.objSettings.proxyUrl || !scope.props.objSettings.keyAutocomplete) {
-                let value = (scope.props.cssId.indexOf('From') !== -1) ? "fromValue" : "toValue";
-                let field = $("#" + scope.props.cssId);
                 scope.props.router.performSearch(field, value);
               }
               else {
+                scope.props.router.performSearch(field, value, false);
                 scope.autocompleteAddress($("#" + scope.props.cssId).val(), "#" + scope.props.cssId);
               }
             }
