@@ -1895,7 +1895,12 @@ export class RouterView extends Component {
           contentFeatures[id].set('hover_location', layer.hover_location);
           contentFeatures[id].set('hover_style', layer.hover_style);
           contentFeatures[id].set('zoom_onclick', layer.zoom_onclick);
-          contentFeatures[id].set('tid', parseInt(contentFeatures[id].get('id').split('/')[1]));
+          if (contentFeatures[id].get('id') && contentFeatures[id].get('id').includes('/')) { //id from out:json is not transformed correctly
+            contentFeatures[id].set('tid', parseInt(contentFeatures[id].get('id').split('/')[1]));
+          }
+          else { 
+            contentFeatures[id].set('tid', contentFeatures[id].getId());
+          }
           contentFeatures[id].set('label', contentFeatures[id].get(labelKey));
           if (self.props.mapController.proxy.locationStyleController.arrLocStyles[layer.locstyle]) {
             if (!self.props.mapController.proxy.locationStyleController.arrLocStyles[layer.locstyle].style) {
