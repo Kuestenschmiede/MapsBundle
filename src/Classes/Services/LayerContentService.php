@@ -73,10 +73,16 @@ class LayerContentService
 
         $objProfile = $objLayer->getRelated('profile');
         $parentLayer = C4gMapsModel::findByPk($objLayer->pid);
-        while (!$objProfile) {
-            $objProfile = $parentLayer->getRelated('profile');
-            $parentLayer = C4gMapsModel::findByPk($parentLayer->pid);
+        if ($parentLayer) {
+            while (!$objProfile) {
+                $objProfile = $parentLayer->getRelated('profile');
+                $parentLayer = C4gMapsModel::findByPk($parentLayer->pid);
+            }
+        } else {
+            //ToDo no profile
+            return [];
         }
+
         $profileId = $this->profileService->getProfileId($objProfile->id);
         $objProfile = C4gMapProfilesModel::findByPk($profileId);
 
