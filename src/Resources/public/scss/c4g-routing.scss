@@ -926,7 +926,16 @@ button.c4g-router-over, button.c4g-router-switch {
 .c4g-router-input-content > div {
     display: inline-flex;
     flex-wrap: wrap;
+
+    &.buttonbar {
+        display: flex;
+    }
 }
+
+.c4g-router-detour-range {
+    width: 100%;
+}
+
 
 .c4g-router-layer-value-selection > button.c4g-active {
     color: var(--font-color);
