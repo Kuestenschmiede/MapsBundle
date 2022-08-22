@@ -607,8 +607,9 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
 }
 
 .c4g-sideboard:not(.c4g-measuretools-container):not(.c4g-popup-container) {
-  max-width: 42%;
-  max-width: var(--popup-max-width);
+  max-width: 80vw;
+  width: var(--popup-max-width);
+  min-width: min-content;
 }
 
 .c4g-sideboard.c4g-measuretools-container {
