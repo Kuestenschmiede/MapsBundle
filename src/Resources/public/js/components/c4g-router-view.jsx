@@ -32,7 +32,6 @@ import {utils} from "./../c4g-maps-utils";
 import {RouterPopupButtons} from "./c4g-router-popup-buttons.jsx";
 //const RouterPopupButtons = React.lazy(() => import('./c4g-router-popup-buttons.jsx'));
 const RouterControls = React.lazy(() => import('./c4g-router-controls.jsx'));
-const RouterProfileSelection = React.lazy(() => import('./c4g-router-profile-selection.jsx'));
 
 
 /**
@@ -243,9 +242,6 @@ export class RouterView extends Component {
             <div>
               {resultSwitcher}
             </div>
-            <Suspense fallback={<div>"loading..."</div>}>
-              <RouterProfileSelection profiles={this.state.profiles} router={this} currentProfile={this.state.currentProfile}/>
-            </Suspense>
           </div>
         </React.Fragment>
         <Suspense fallback={<div>"loading"</div>}>
@@ -1898,7 +1894,7 @@ export class RouterView extends Component {
           if (contentFeatures[id].get('id') && contentFeatures[id].get('id').includes('/')) { //id from out:json is not transformed correctly
             contentFeatures[id].set('tid', parseInt(contentFeatures[id].get('id').split('/')[1]));
           }
-          else { 
+          else {
             contentFeatures[id].set('tid', contentFeatures[id].getId());
           }
           contentFeatures[id].set('label', contentFeatures[id].get(labelKey));

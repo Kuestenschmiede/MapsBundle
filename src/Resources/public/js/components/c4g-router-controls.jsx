@@ -8,12 +8,12 @@
  * @link https://www.con4gis.org
  */
 
-import React, { Component } from "react";
+import React, {Component, Suspense} from "react";
 import {HorizontalPanel} from "./c4g-horizontal-panel.jsx";
 import {RouterAddressInput} from "./c4g-router-address-input.jsx"
-import {RouterProfileSelection} from "./c4g-router-profile-selection.jsx"
 import {Titlebar} from "./c4g-titlebar.jsx"
 import {getLanguage} from "./../routing-constant-i18n";
+const RouterProfileSelection = React.lazy(() => import('./c4g-router-profile-selection.jsx'));
 
 export default class RouterControls extends HorizontalPanel {
 
@@ -58,6 +58,9 @@ export default class RouterControls extends HorizontalPanel {
     if (this.state.showForm) {
       return (
         <div className={className}>
+          <Suspense fallback={<div>"loading..."</div>}>
+            <RouterProfileSelection profiles={this.props.router.state.profiles} router={this.props.router} currentProfile={this.props.router.state.currentProfile}/>
+          </Suspense>
           <RouterAddressInput className="c4g-router-input-content" router={this.props.router} withPosition={true} switchTargets={this.props.switchTargets}
                               objFunctions={this.props.objFunctions} objSettings={this.props.objSettings} currentProfile={this.props.currentProfile} enableOverPoints={this.props.enableOverPoints}
                               containerAddresses={this.props.containerAddresses} mode={this.props.mode} open={open} layers={this.props.layers} resetFunctions={this.props.resetFunctions}
