@@ -52,7 +52,7 @@ export class RouterDetourSlider extends Component {
     const scope = this;
 
     return (
-      <div>
+      <div className={"c4g-router-detour-range"}>
         <p>{routingConstants.ROUTE_DETOUR}</p>
         <input type="range" className={routingConstants.ROUTE_TOGGLE}
                min={this.props.min} max={this.props.max} defaultValue={this.props.value} step={0.5}/>
