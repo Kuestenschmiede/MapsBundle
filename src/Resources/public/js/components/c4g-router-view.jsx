@@ -1690,7 +1690,7 @@ export class RouterView extends Component {
                       "features":   sortedFeatures,
                       "type": response.type
                   },
-                  //"featureSource": scope.routerFeaturesSource,
+                  "featureSource": scope.routerFeaturesSource,
                   "openResults": true
                 });
               }
@@ -1768,6 +1768,7 @@ export class RouterView extends Component {
    */
   showFeatures(features, type = "table", mode = "router", noClear) {
     const self = this;
+    let varReturn;
     if (!noClear) {
       this.routerFeaturesSource.clear();
     }
@@ -1782,6 +1783,7 @@ export class RouterView extends Component {
     const unstyledFeatures = [];
     let contentFeatures = [];
     let missingStyles = [];
+
     const priceSortedFeatures = features.length ? features.slice() : features.elements.slice();
     let bestFeatures = [];
     this.bestFeatureIds = [];
@@ -1797,6 +1799,7 @@ export class RouterView extends Component {
         this.bestFeatureIds.push(priceSortedFeatures[i]['id']);
       }
     }
+    varReturn = priceSortedFeatures;
     if (type === "petrols" && mode !== "area") {
       features = features.elements;
     }
@@ -1884,6 +1887,7 @@ export class RouterView extends Component {
         featureProjection: mapProj
       });
       let labelKey = mapData.routerLayers[layerId][activeLayer]['mapLabel'];
+      const arrOvp = [];
       for (let id in contentFeatures) {
         if (contentFeatures.hasOwnProperty(id)) {
           contentFeatures[id].set('loc_linkurl', layer.loc_linkurl);
@@ -1897,6 +1901,7 @@ export class RouterView extends Component {
           else {
             contentFeatures[id].set('tid', contentFeatures[id].getId());
           }
+          arrOvp.push({id: contentFeatures[id].get('tid')});
           contentFeatures[id].set('label', contentFeatures[id].get(labelKey));
           if (self.props.mapController.proxy.locationStyleController.arrLocStyles[layer.locstyle]) {
             if (!self.props.mapController.proxy.locationStyleController.arrLocStyles[layer.locstyle].style) {
@@ -1907,6 +1912,7 @@ export class RouterView extends Component {
           extent = extend(extent, contentFeatures[id].getGeometry().getExtent());
         }
       }
+      varReturn = arrOvp;
     }
 
     if (missingStyles && missingStyles.length > 0) {
@@ -1943,7 +1949,7 @@ export class RouterView extends Component {
       let padding = [50, width, 50, 50];
       this.props.mapController.map.getView().fit(extent, {padding: padding});
     }
-    return priceSortedFeatures;
+    return varReturn;
   }
 
   /**
