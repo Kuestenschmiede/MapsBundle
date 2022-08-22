@@ -4,8 +4,9 @@
   "description": "con4gis-Maps ============ The interactive maps brick of the Contao GIS-kit **con4gis**.",
   "main": "webpack.config.js",
   "scripts": {
+    "update-browserlist": "npx browserslist@latest --update-db",
     "build-dev": "webpack --watch --config webpack.development.config.js",
-    "build-css": "gulp deploy",
+    "build-css": "npm run update-browserlist && gulp deploy",
     "watch-css": "gulp",
     "build-prod": "webpack --config webpack.production.config.js && gulp deploy"
   },
@@ -47,7 +48,7 @@
     "gulp-sass": "^5.1.0",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-uglify": "^3.0.2",
-    "sass": "^1.54.3",
+    "sass": "^1.54.5",
     "webpack": "^5.74.0",
     "webpack-cli": "^4.10.0"
   },
