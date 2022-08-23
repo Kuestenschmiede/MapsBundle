@@ -19,7 +19,7 @@ import {default as VectorTileSource} from "ol/source/VectorTile";
 import {Group as LayerGroup, Image} from "ol/layer";
 import Collection from 'ol/Collection';
 import OLCesium from 'ol-cesium/src/olcs/OLCesium.js';
-import {applyS6tyle} from 'ol-mapbox-style';
+import {applyStyle} from 'ol-mapbox-style';
 import VectorTileLayer from 'ol/layer/VectorTile';
 import ol_source_GeoImage from "ol-ext/source/GeoImage";
 import Projection from "ol/proj/Projection";
