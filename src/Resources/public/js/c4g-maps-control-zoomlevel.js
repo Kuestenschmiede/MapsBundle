@@ -49,7 +49,7 @@ export class Zoomlevel extends Control {
     this.view = mapView;
 
     // inheritance-stuff
-    Control.call(this, {
+    super({
       element: element,
       target: options.target
     });
