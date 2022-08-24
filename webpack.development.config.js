@@ -31,7 +31,7 @@ var config = {
       'src/Resources/public/js',
       '../../../../../RoutingBundle/Resources/public/js'
     ],
-    extensions: ['.jsx', '.js'],
+    extensions: ['.jsx', '.js', '.ts'],
     fallback: {
       "http": false,
       "https": false,

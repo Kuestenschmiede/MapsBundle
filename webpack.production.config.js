@@ -27,7 +27,7 @@ var config = {
   },
   resolve: {
     modules: ['node_modules', 'src/Resources/public/js'],
-    extensions: ['.jsx', '.js'],
+    extensions: ['.jsx', '.js', '.ts'],
     fallback: {
       "http": false,
       "https": false,
@@ -39,7 +39,7 @@ var config = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(js|jsx|ts)$/,
         exclude: /node_modules(?!\/ol)/,
         use: [{
           loader: "babel-loader",
