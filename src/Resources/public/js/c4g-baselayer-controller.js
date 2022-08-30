@@ -19,8 +19,8 @@ import {default as VectorTileSource} from "ol/source/VectorTile";
 import {Group as LayerGroup, Image} from "ol/layer";
 import Collection from 'ol/Collection';
 import OLCesium from 'ol-cesium/src/olcs/OLCesium.js';
-import {applyStyle} from 'ol-mapbox-style';
-import VectorTileLayer from 'ol/layer/VectorTile';
+// import {applyStyle} from 'ol-mapbox-style';
+// import VectorTileLayer from 'ol/layer/VectorTile.js'
 import ol_source_GeoImage from "ol-ext/source/GeoImage";
 import Projection from "ol/proj/Projection";
 
@@ -308,51 +308,40 @@ export class C4gBaselayerController {
           newBaselayer.setSource(source);
 
           break;
+        //ToDo rework
         case 'klokan':
-          if (baseLayerConfig.api_key && baseLayerConfig.klokan_type) {
-
-            if (baseLayerConfig.url.charAt(baseLayerConfig.url.length - 1) != '/') {
-              baseLayerConfig.url = baseLayerConfig.url + '/';
-            }
-
-            if (baseLayerConfig.klokan_type === 'OpenMapTiles') {
-              layerOptions.url = baseLayerConfig.url + '{z}/{x}/{y}.pbf';
-              newBaselayer = new VectorTileLayer({
-                source: new VectorTileSource(jQuery.extend(
-                    sourceConfigs.klokan[baseLayerConfig.klokan_type],
-                    layerOptions))
-              });
-
-              fetch(baseLayerConfig.url + 'styles/' + baseLayerConfig.style + '.json').then(function (response) {
-                response.json().then(function (glStyle) {
-                  applyStyle(newBaselayer, glStyle, 'openmaptiles');
-                });
-              });
-            } else {
-              //layerOptions.url = baseLayerConfig.url + '{z}/{x}/{y}.pbf?key='+baseLayerConfig.api_key;
-              newBaselayer = new TileLayer();
-              source = new TileJSON({
-                url: baseLayerConfig.url + 'styles/' + baseLayerConfig.style + '.json?key=' + baseLayerConfig.api_key
-              })
-
-              newBaselayer.setSource(source);
-
-              // newBaselayer = new VectorTileLayer({
-              //   source: new VectorTileSource(jQuery.extend(
-              //     sourceConfigs.klokan[baseLayerConfig.klokan_type],
-              //     layerOptions))
-              // });
-              //
-              // fetch(baseLayerConfig.url + baseLayerConfig.style+'/style.json?key='+baseLayerConfig.api_key).then(function(response) {
-              //   response.json().then(function(glStyle) {
-              //     applyStyle(newBaselayer, glStyle, 'openmaptiles');
-              //   });
-              // });
-            }
-          } else {
-            console.warn('wrong klokan configuration!');
-          }
-          break;
+        // if (baseLayerConfig.api_key && baseLayerConfig.klokan_type) {
+        //
+        //     if (baseLayerConfig.url.charAt(baseLayerConfig.url.length - 1) != '/') {
+        //       baseLayerConfig.url = baseLayerConfig.url + '/';
+        //     }
+        //
+        //     if (baseLayerConfig.klokan_type === 'OpenMapTiles') {
+        //       layerOptions.url = baseLayerConfig.url + '{z}/{x}/{y}.pbf';
+        //       newBaselayer = new VectorTileLayer({
+        //         declutter: true, source: new VectorTileSource(jQuery.extend(
+        //             sourceConfigs.klokan[baseLayerConfig.klokan_type],
+        //             layerOptions))
+        //       });
+        //
+        //       fetch(baseLayerConfig.url + 'styles/basic/style.json').then(function (response) {
+        //         response.json().then(function (glStyle) {
+        //           applyStyle(newBaselayer, glStyle, 'openmaptiles');
+        //         });
+        //       });
+        //     } else {
+        //       //layerOptions.url = baseLayerConfig.url + '{z}/{x}/{y}.pbf?key='+baseLayerConfig.api_key;
+        //       newBaselayer = new TileLayer();
+        //       source = new TileJSON({
+        //         url: baseLayerConfig.url + 'maps/' + baseLayerConfig.klokan_type + '/?key=' + baseLayerConfig.api_key
+        //       })
+        //
+        //       newBaselayer.setSource(source);
+        //     }
+        //   } else {
+           console.warn('wrong klokan configuration!');
+        //   }
+           break;
         case 'here':
           if (baseLayerConfig.api_key && baseLayerConfig.app_id && baseLayerConfig.here_type) {
 

@@ -216,10 +216,6 @@ button.c4g-btn-delete-all-data:before {
   font-family: "Font Awesome 5 Free";
   font-size: inherit
 }
-.c4g-sideboard > div > div[class*=switcher] button:last-child,
-.c4g-sideboard > div > div[class*=switcher] button:not(:last-child) {
-  margin: var(--maps-editor-space)
-}
 .c4g-editor.c4g-close > button:before {
   content: "\f044";
   font-family: "Font Awesome 5 Free";
