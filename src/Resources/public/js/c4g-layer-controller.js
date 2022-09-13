@@ -414,7 +414,7 @@ export class BetterLayerController {
       width = 50;
     }
     let maxZoom = parseInt(this.proxy.mapData.starboard.maxZoom) || 22;
-    if (features.length === 1) {
+    if (features && features.length === 1) {
       let fnCallback = (bool) => {
         if (bool) {
           window.setTimeout(() => {
