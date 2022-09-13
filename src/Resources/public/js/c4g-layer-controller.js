@@ -299,6 +299,9 @@ export class BetterLayerController {
       features = this.objIds[layerId];
     }
     if (features) {
+      this.mapController.map.getView().dispatchEvent({
+        type: "change:resolution"
+      });
       if (id >= 0) {
         let loader = this.loaders[id];
         if (loader) {
