@@ -128,6 +128,11 @@ export class C4gStarboardLayerElement extends Component {
     }
     if (!this.props.layerStates.active) {
       this.showLayer();
+      if (this.props.layerStates.collapsed) {
+        let layerState = this.props.layerStates;
+        layerState.collapsed = false;
+        this.props.changeCollapseState(this.props.keyId, layerState);
+      }
     }
     else {
       this.hideLayer();
@@ -210,7 +215,7 @@ export class C4gStarboardLayerElement extends Component {
       let span = <span alt={this.props.lang.STARBOARD_ELEMENT_CHILDS} className={cssConstants.ICON} onMouseUp={(event) => this.spanClick(event)}/>;
 
       return (
-        <li className={openClose + " c4g-starboard-list-element"}>
+        <li data-layer-id={this.props.id} className={openClose + " c4g-starboard-list-element"}>
           {span}
           {stylePicture}
           {spanZoom}
@@ -245,7 +250,7 @@ export class C4gStarboardLayerElement extends Component {
         linkSwitch = null;
       }
       return (
-          <li tabIndex={1} className={openClose + " c4g-starboard-list-element"}>
+          <li data-layer-id={this.props.id} tabIndex={1} className={openClose + " c4g-starboard-list-element"}>
             {stylePicture}
             {spanZoom}
             {linkText}
