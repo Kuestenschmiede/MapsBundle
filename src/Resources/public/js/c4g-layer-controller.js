@@ -373,6 +373,7 @@ export class BetterLayerController {
   }
   zoomTo(layer) {
     let extent;
+    let features;
     if (layer.childs && layer.childs.length) {
       for (let i in layer.childs) {
         if (layer.childs.hasOwnProperty(i)) {
@@ -381,20 +382,22 @@ export class BetterLayerController {
       }
     }
     if (!layer.features || layer.features.length === 0) {
-      extent = this.getExtentForLayer(extent, layer.id);
+      features = this.objIds[layer.id];
     }
     else {
-      for (let i in layer.features) {
-        if (layer.features.hasOwnProperty(i)) {
-          if (!extent) {
-            extent = layer.features[i].getGeometry().clone().getExtent();
-          }
-          else {
-            extent = olExtent.extend(extent, layer.features[i].getGeometry().clone().getExtent());
-          }
+      features = layer.features;
+    }
+    for (let i in features) {
+      if (features.hasOwnProperty(i)) {
+        if (!extent) {
+          extent = features[i].getGeometry().clone().getExtent();
+        }
+        else {
+          extent = olExtent.extend(extent, features[i].getGeometry().clone().getExtent());
         }
       }
     }
+
     if (!extent) {
       return;
     }
@@ -408,11 +411,38 @@ export class BetterLayerController {
       width = 50;
     }
     let maxZoom = parseInt(this.proxy.mapData.starboard.maxZoom) || 22;
-    this.mapController.map.getView().fit(extent, {
-      padding: [50,width,50,50],
-      duration: 500,
-      maxZoom: maxZoom
-    });
+    if (features.length === 1) {
+      let fnCallback = (bool) => {
+        if (bool) {
+          window.setTimeout(() => {
+            let extent = features[0].getGeometry().clone().getExtent();
+            let pixel = this.mapController.map.getPixelFromCoordinate([(extent[0] + extent[2]) / 2, (extent[1] + extent[3]) / 2]);
+            let featuresAtPixel = this.mapController.map.getFeaturesAtPixel(pixel, {hitTolerance: 10});
+            if (featuresAtPixel && featuresAtPixel[0] && featuresAtPixel[0].get('features') && featuresAtPixel[0].get('features').length > 1) {
+              let coords = featuresAtPixel[0].getGeometry().getCoordinates();
+              // pixel = this.mapController.map.getPixelFromCoordinate(coords);
+              this.mapController.map.dispatchEvent({
+                type: "click",
+                pixel: pixel
+              });
+            }
+          }, 100);
+        }
+      }
+      this.mapController.map.getView().fit(extent, {
+        padding: [50,width,50,50],
+        duration: 500,
+        maxZoom: maxZoom,
+        callback: fnCallback
+      });
+    }
+    else {
+      this.mapController.map.getView().fit(extent, {
+        padding: [50,width,50,50],
+        duration: 500,
+        maxZoom: maxZoom
+      });
+    }
   }
   getChildsExtent(extent, child) {
     if (child.childs && child.childs.length) {
@@ -484,6 +514,7 @@ export class BetterLayerController {
 
     }).done(function (data) {
       utils.callHookFunctions(window.c4gMapsHooks.hook_layer, data);
+      utils.callHookFunctions(window.c4gMapsHooks.loaded, self.proxy);
       self.objLayers = data.layer;
       let structure = [];
       let features = [];

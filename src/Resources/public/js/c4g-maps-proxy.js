@@ -196,12 +196,18 @@ export class MapProxy {
       feature = map.forEachFeatureAtPixel(clickEvent.pixel,
         function (feature, layer) {
           return feature;
+        },
+        {
+          hitTolerance: 5
         }
       );
 
       layer = map.forEachFeatureAtPixel(clickEvent.pixel,
         function (feature, layer) {
           return layer;
+        },
+        {
+          hitTolerance: 5
         }
       );
 
