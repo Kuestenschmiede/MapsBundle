@@ -48,6 +48,12 @@ export default class GeoSearch extends Component {
     if (props.external) {
       element.className += " c4g-external";
     }
+    if (props.mapController.data.geosearch.inputCssSelector) {
+      let input = document.querySelector(props.mapController.data.geosearch.inputCssSelector);
+      input.setAttribute('id', "c4g-geosearch-input");
+      input.addEventListener('keydown',(event) => {this.inputCallback(event)});
+      this.input = input;
+    }
     else {
       let input = document.createElement('input');
       input.setAttribute('id', "c4g-geosearch-input");
