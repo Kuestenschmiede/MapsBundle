@@ -172,8 +172,18 @@ class ReverseSearchApi extends \Frontend
             $REQUEST->send($strSearchUrl);
         }
         $response = $REQUEST->response;
-        if ($response && json_decode($response) && json_decode($response)->features) {
-            $arrResponse = json_decode($response)->features;
+        if ($response) {
+            $decoded = json_decode($response);
+            if (is_array($decoded) && array_key_exists('features', $decoded)) {
+                $arrResponse = $decoded['features'] ?? [];
+            } elseif (is_object($decoded) && property_exists($decoded, 'features')) {
+                $arrResponse = $decoded->features ?? [];
+            } else {
+                $arrResponse = [];
+            }
+            if (empty($arrResponse)) {
+                return \GuzzleHttp\json_encode([]);
+            }
             $elementResponse = $arrResponse[0];
             $name = $elementResponse->properties->name;
             if ($elementResponse->properties->county && $elementResponse->properties->county != $name) {

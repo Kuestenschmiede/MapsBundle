@@ -46,6 +46,7 @@
 .c4g-control-container-top-left::-webkit-scrollbar {
   display: none;
 }
+
 .c4g-control-container-top-left {
   position: absolute;
   top: .2em;
@@ -60,6 +61,7 @@
   ::-webkit-scrollbar {
     display: none;
   }
+
   & {
     width: auto;
     transform: none;
@@ -71,16 +73,19 @@
       display: flex;
       align-items: center;
       grid-gap: 4px;
+
       > input {
         text-align: left;
         width: 80%
       }
+
       > span {
         position: absolute;
         right: 20px;
         cursor: pointer;
         color: var(--main-color);
       }
+
       + div {
         margin-top: calc(var(--button-size-pixel) + 8px);
       }
@@ -88,9 +93,11 @@
   }
 
 }
+
 .c4g-close ~ .searchSpan {
   display: none;
 }
+
 div.c4g-control-container-top-left > div {
   width: var(--button-size-pixel);
   margin-right: .2em;
@@ -1481,8 +1488,34 @@ ul.c4g-feature-filter-list li.c4g-item-checked > strong {
   transition: ease-in-out 250ms;
 }
 
-ul.c4g-feature-filter-list li.c4g-item-checked > strong:hover, ul.c4g-feature-filter-list li.c4g-item-checked > strong:focus, ul.c4g-feature-filter-list li.c4g-item-checked > strong:active, ul.c4g-feature-filter-list li.c4g-item-checked > strong.c4g-open {
-  background-color: var(--shadow-color);
+.c4g-feature-filter-list {
+
+  .c4g-item-checked {
+    transition: ease-in-out 250ms;
+
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: var(--shadow-color);
+    }
+
+    &.clicked {
+      //background-color: rgba($primary, .7);
+
+      //&:hover {
+      //  background-color: darken($primary, 10%);
+      //}
+
+      > strong {
+        &:after {
+          @extend %fa-icon;
+          @extend .far;
+          content: fa-content($fa-var-times-circle);
+          margin-left: 8px;
+        }
+      }
+    }
+  }
 }
 
 /* consent overlay */

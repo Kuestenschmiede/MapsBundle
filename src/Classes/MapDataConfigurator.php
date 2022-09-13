@@ -594,7 +594,7 @@ class MapDataConfigurator
                     switch ($service) {
                         case 2:
                             $mapData['geosearch']['searchKey'] = $keyValue['key'];
-                            $mapData['attribution']['geosearch'] = $keyValue['attribution'];
+                            $mapData['attribution']['geosearch'] = $keyValue['attribution'] ?? null;
 
                             break;
                         case 3:

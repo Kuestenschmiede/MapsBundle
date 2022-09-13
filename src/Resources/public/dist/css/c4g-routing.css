@@ -718,19 +718,36 @@ button.c4g-router-switch {
   color: var(--main-color);
   background-color: var(--font-color)
 }
-.c4g-router-switcher .c4g-router-profile-wrapper.c4g-popup {
+.c4g-router-profile-wrapper button {
+  width: 32px;
+  height: 32px;
+  border: none;
+  outline: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center
+}
+.c4g-router-profile-wrapper button.c4g-active {
+  color: var(--font-color);
+  background-color: var(--shadow-color)
+}
+.c4g-router-profile-wrapper.c4g-popup {
   position: absolute;
   background: var(--main-color);
-  padding: 4px 0 0 4px;
-  max-width: 172px
+  max-width: 140px
 }
-.c4g-router-switcher .c4g-router-profile-wrapper.c4g-popup > button.c4g-active {
+.c4g-router-profile-wrapper.c4g-popup > button.c4g-active {
   cursor: not-allowed
 }
-.c4g-router-switcher .c4g-router-profile-wrapper.c4g-popup button:last-child {
+.c4g-router-profile-wrapper.c4g-popup button {
+  margin-right: 3px;
+  margin-bottom: 3px
+}
+.c4g-router-profile-wrapper.c4g-popup button:last-child {
   margin-right: 0
 }
-.c4g-router-switcher .c4g-router-profile-wrapper.c4g-popup > button.c4g-titlebar-close {
+.c4g-router-profile-wrapper.c4g-popup > button.c4g-titlebar-close {
+  cursor: pointer;
   background: 0 0;
   width: 16px;
   height: 16px;
@@ -743,10 +760,13 @@ button.c4g-router-switch {
   font-size: 10px;
   background-color: var(--main-color)
 }
-.c4g-router-switcher .c4g-router-profile-wrapper.c4g-popup > button.c4g-titlebar-close:before {
+.c4g-router-profile-wrapper.c4g-popup > button.c4g-titlebar-close:before {
   position: absolute;
   top: 2px;
   right: 4px
+}
+.c4g-router-profile-wrapper.c4g-popup + .c4g-router-input-content {
+  margin-top: 35px
 }
 .c4g-router-input-area,
 .c4g-router-input-from {
@@ -754,11 +774,17 @@ button.c4g-router-switch {
 }
 .c4g-router-input-content > div > label {
   display: block;
-  margin-right: 500px
+  width: 100%
 }
 .c4g-router-input-content > div {
   display: inline-flex;
   flex-wrap: wrap
+}
+.c4g-router-input-content > div.buttonbar {
+  display: flex
+}
+.c4g-router-detour-range {
+  width: 100%
 }
 .c4g-router-layer-value-selection > button.c4g-active {
   color: var(--font-color);

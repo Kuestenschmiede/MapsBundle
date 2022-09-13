@@ -12,6 +12,7 @@
  * Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
  */
+.c4g-feature-filter-list .c4g-item-checked.clicked > strong:after,
 .c4g-starboardscope-control.c4g-open button,
 .fa,
 .fab,
@@ -27,6 +28,7 @@
   text-rendering: auto;
   line-height: 1
 }
+.c4g-feature-filter-list .c4g-item-checked.clicked > strong:after,
 .c4g-starboardscope-control.c4g-open button {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -107,6 +109,7 @@
 .fa-pull-right {
   float: right
 }
+.c4g-feature-filter-list .c4g-item-checked.clicked > strong.fa-pull-left:after,
 .c4g-starboardscope-control.c4g-open button.fa-pull-left,
 .fa.fa-pull-left,
 .fab.fa-pull-left,
@@ -115,6 +118,7 @@
 .fas.fa-pull-left {
   margin-right: .3em
 }
+.c4g-feature-filter-list .c4g-item-checked.clicked > strong.fa-pull-right:after,
 .c4g-starboardscope-control.c4g-open button.fa-pull-right,
 .fa.fa-pull-right,
 .fab.fa-pull-right,
@@ -4621,6 +4625,7 @@
   src: url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-regular-400.eot);
   src: url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-regular-400.eot?#iefix) format("embedded-opentype"),url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-regular-400.woff2) format("woff2"),url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-regular-400.woff) format("woff"),url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-regular-400.ttf) format("truetype"),url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-regular-400.svg#fontawesome) format("svg")
 }
+.c4g-feature-filter-list .c4g-item-checked.clicked > strong:after,
 .far {
   font-family: "Font Awesome 5 Free";
   font-weight: 400
@@ -5132,8 +5137,11 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
   transition: .5s
 }
 .c4g-sideboard:not(.c4g-measuretools-container):not(.c4g-popup-container) {
-  max-width: 42%;
-  max-width: var(--popup-max-width)
+  max-width: 80vw;
+  width: var(--popup-max-width);
+  min-width: -webkit-min-content;
+  min-width: -moz-min-content;
+  min-width: min-content
 }
 .c4g-sideboard.c4g-measuretools-container {
   max-width: 240px
@@ -5845,11 +5853,17 @@ ul.c4g-feature-filter-list li.c4g-item-checked > strong {
   padding: 0 10px;
   transition: ease-in-out 250ms
 }
-ul.c4g-feature-filter-list li.c4g-item-checked > strong.c4g-open,
-ul.c4g-feature-filter-list li.c4g-item-checked > strong:active,
-ul.c4g-feature-filter-list li.c4g-item-checked > strong:focus,
-ul.c4g-feature-filter-list li.c4g-item-checked > strong:hover {
+.c4g-feature-filter-list .c4g-item-checked {
+  transition: ease-in-out 250ms
+}
+.c4g-feature-filter-list .c4g-item-checked:active,
+.c4g-feature-filter-list .c4g-item-checked:focus,
+.c4g-feature-filter-list .c4g-item-checked:hover {
   background-color: var(--shadow-color)
+}
+.c4g-feature-filter-list .c4g-item-checked.clicked > strong:after {
+  content: "\f057";
+  margin-left: 8px
 }
 .c4g-maps-consent-overlay {
   position: absolute;
