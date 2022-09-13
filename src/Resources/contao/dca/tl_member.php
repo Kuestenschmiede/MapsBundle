@@ -22,8 +22,8 @@ if (
 
     $GLOBALS['TL_DCA']['tl_member']['fields']['c4g_loc_geox'] = [
         'exclude'                 => true,
-        'inputType'               => 'c4g_text',
-        'eval'                    => ['mandatory'=>false, 'maxlength'=>20, 'tl_class'=>'w50 wizard'],
+        'inputType'               => 'text',
+        'eval'                    => ['mandatory'=>false, 'maxlength'=>20, 'tl_class'=>'w50 wizard', 'feEditable' => true],
         'save_callback'           => [['tl_member_c4g_maps','setLocLon']],
         'wizard'                  => [['\con4gis\MapsBundle\Classes\GeoPicker', 'getPickerLink']],
         'sql'                     => "varchar(20) NOT NULL default ''"
@@ -31,8 +31,8 @@ if (
 
     $GLOBALS['TL_DCA']['tl_member']['fields']['c4g_loc_geoy'] = [
         'exclude'                 => true,
-        'inputType'               => 'c4g_text',
-        'eval'                    => ['mandatory'=>false, 'maxlength'=>20, 'tl_class'=>'w50 wizard'],
+        'inputType'               => 'text',
+        'eval'                    => ['mandatory'=>false, 'maxlength'=>20, 'tl_class'=>'w50 wizard', 'feEditable' => true],
         'save_callback'           => [['tl_member_c4g_maps','setLocLat']],
         'wizard'                  => [['\con4gis\MapsBundle\Classes\GeoPicker', 'getPickerLink']],
         'sql'                     => "varchar(20) NOT NULL default ''"
@@ -79,7 +79,7 @@ class tl_member_c4g_maps extends \Backend
     /**
      * Validate Longitude
      */
-    public function setLocLon($varValue, \DataContainer $dc)
+    public function setLocLon($varValue)
     {
         if ($varValue != 0)
         {
@@ -94,7 +94,7 @@ class tl_member_c4g_maps extends \Backend
     /**
      * Validate Latitude
      */
-    public function setLocLat($varValue, \DataContainer $dc)
+    public function setLocLat($varValue)
     {
         if ($varValue != 0)
         {
