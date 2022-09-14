@@ -99,7 +99,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                                          '{navigation_legend:hide},mouse_nav,touch_nav,keyboard_nav;'.
                                          '{click_legend:hide},tooltipOrientation,link_newwindow,link_open_on,hover_popups,popupHandling;'.
                                          '{baselayer_legend:hide},baselayers, default_baselayer,dummyBaselayer,baselayerswitcher_label,baselayer_filter;'.
-                                         '{starboard_legend:hide},layerswitcher_label,starboard_filter,starboard_label,starboard_button,starboard_locstyles,starboardInvertZoomActivate,colorZoomMarker,maxZoomStarboard,cluster_all;'.
+                                         '{starboard_legend:hide},layerswitcher_label,starboard_filter,starboard_label,starboard_button,starboard_locstyles,starboardInvertZoomActivate,colorZoomMarker,maxZoomStarboard,openPopup,cluster_all;'.
                                          '{geosearch_legend:hide},geosearch_headline,geosearch_engine,geosearchParams,geosearch_result_locstyle,geosearch_placeholder,geosearch_results,geosearch_zoomto,geosearch_zoombounds,geosearch_animate,geosearch_markresult,geosearch_attribution,geosearch_popup,geosearch_animate_duration,geosearch_result_duration;'.
                                          '{editor_legend:hide},editorProfile;'.
                                          '{routing_legend::hide},routerConfig;'.
@@ -399,6 +399,13 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'default'                 => 22,
                 'eval'                    => ['maxlength'=>22, 'rgxp' => 'digit'],
                 'sql'                     => "varchar(100) NOT NULL default '22'"
+            ],
+        'openPopup' =>
+            [
+                'exclude'                 => true,
+                'default'                 => false,
+                'inputType'               => 'checkbox',
+                'sql'                     => "char(1) NOT NULL default ''"
             ],
         'cluster_all' =>
             [

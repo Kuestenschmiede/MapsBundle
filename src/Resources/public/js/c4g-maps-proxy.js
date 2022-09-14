@@ -179,15 +179,13 @@ export class MapProxy {
       var feature,
         fFeatures,
         layer,
-        popupInfos,
         currentZoom,
         minZoom,
         newCenter,
         coord,
         setPopup,
         styleFunc,
-        styleCluster,
-        objPopup;
+        styleCluster;
 
       if (!self.clickObserverActive) {
         return false;
@@ -316,22 +314,6 @@ export class MapProxy {
             return false;
         }
       }
-      popupInfos = {};
-      if (feature && feature.get('popup')) {
-        // single POI
-        popupInfos = feature.get('popup');
-        if (popupInfos && popupInfos.content === "${FNfnStandardInfoPopup}") {
-          let popupContent = "${FNfnStandardInfoPopup}";
-          popupContent = utils.replaceFunctionPlaceholders(popupContent, feature, layer, self.options.mapController.data.lang, self);
-          popupInfos = popupInfos || {};
-          popupInfos.content = popupContent;
-          popupInfos.async = false;
-        }
-      } else if (layer && layer.popup) {
-        popupInfos = layer.popup;
-      } else {
-        feature = false;
-      }
 
       if (feature && feature.get('loc_linkurl')) {
         let link = feature.get('loc_linkurl');
@@ -360,57 +342,7 @@ export class MapProxy {
           map.getView().setZoom(layer.zoom_onclick);
           map.getView().setCenter(clickEvent.coordinate);
         }
-
-        if (feature) {
-          if (popupInfos.async === false || popupInfos.async == '0') {
-            objPopup = {};
-            objPopup.popup = popupInfos;
-            objPopup.feature = feature;
-            objPopup.layer = layer;
-            // Call the popup hook for plugin specific popup content
-            if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_fillPopup === 'object') {
-              utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, {popup: objPopup, mapController: self.options.mapController});
-            }
-            if (self.mapData.popupMultiple) {
-              self.popupController.addPopup(objPopup);
-            }
-            else {
-              self.popupController.setPopup(objPopup);
-            }          } else {
-            jQuery.ajax({
-              dataType: "json",
-              url: self.api_infowindow_url + '/' + popupInfos.content
-            }).done(function(data) {
-              var popupInfo = {
-                async: popupInfos.async,
-                content: data.content,
-                popup: popupInfos.popup,
-                routing_link: popupInfos.routing_link
-              };
-
-              objPopup = {};
-              objPopup.popup = popupInfo;
-              objPopup.feature = feature;
-              objPopup.layer = layer;
-
-              // Call the popup hook for plugin specific popup content
-              if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_fillPopup === 'object') {
-                utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, {popup: objPopup, mapController: self.options.mapController});
-              }
-              if (self.mapData.popupMultiple) {
-                self.popupController.addPopup(objPopup);
-              }
-              else {
-                self.popupController.setPopup(objPopup);
-              }
-            });
-          }
-        }
-        else {
-          if (!self.mapData.popupMultiple) {
-            self.popupController.removePopup();
-          }
-        }
+        self.handlePopup(feature, layer);
 
         // hooks
         utils.callHookFunctions(window.c4gMapsHooks.hook_map_click, clickEvent);
@@ -418,21 +350,80 @@ export class MapProxy {
     }); // end of "click-observer"
 
   } // end of "initial"*
+  handlePopup (feature, layer) {
+    let popupInfos = {};
+    const scope = this;
+    if (feature && feature.get('popup')) {
+      // single POI
+      popupInfos = feature.get('popup');
+      if (popupInfos && popupInfos.content === "${FNfnStandardInfoPopup}") {
+        let popupContent = "${FNfnStandardInfoPopup}";
+        popupContent = utils.replaceFunctionPlaceholders(popupContent, feature, layer, this.options.mapController.data.lang, this);
+        popupInfos = popupInfos || {};
+        popupInfos.content = popupContent;
+        popupInfos.async = false;
+      }
+    }
+    else if (layer && layer.popup) {
+      popupInfos = layer.popup;
+    }
+    else {
+      if (!this.mapData.popupMultiple) {
+        this.popupController.removePopup();
+      }
+      return;
+    }
+    if (popupInfos.async === false || popupInfos.async == '0') {
+      let objPopup = {};
+      objPopup.popup = popupInfos;
+      objPopup.feature = feature;
+      objPopup.layer = layer;
+      // Call the popup hook for plugin specific popup content
+      if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_fillPopup === 'object') {
+        utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, {popup: objPopup, mapController: this.options.mapController});
+      }
+      if (this.mapData.popupMultiple) {
+        this.popupController.addPopup(objPopup);
+      }
+      else {
+        this.popupController.setPopup(objPopup);
+      }
+    } else {
+      jQuery.ajax({
+        dataType: "json",
+        url: this.api_infowindow_url + '/' + popupInfos.content
+      }).done(function(data) {
+        var popupInfo = {
+          async: popupInfos.async,
+          content: data.content,
+          popup: popupInfos.popup,
+          routing_link: popupInfos.routing_link
+        };
 
+        let objPopup = {};
+        objPopup.popup = popupInfo;
+        objPopup.feature = feature;
+        objPopup.layer = layer;
+
+        // Call the popup hook for plugin specific popup content
+        if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_fillPopup === 'object') {
+          utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, {popup: objPopup, mapController: scope.options.mapController});
+        }
+        if (scope.mapData.popupMultiple) {
+          scope.popupController.addPopup(objPopup);
+        }
+        else {
+          scope.popupController.setPopup(objPopup);
+        }
+      });
+    }
+  }
   activateClickObserver() {
     this.clickObserverActive = true;
   }
 
   deactivateClickObserver() {
     this.clickObserverActive = false;
-  }
-
-  combine(proxy) {
-    var func = function(event) {
-      proxy.combineLayers(proxy);
-      proxy.options.mapController.map.un('postrender', func);
-    };
-    proxy.options.mapController.map.on('postrender', func)
   }
 
   /**
@@ -500,210 +491,6 @@ export class MapProxy {
       }
     }
   } // end of "checkLocationStyles()"
-
-  combineLayers(proxy){
-
-    var i,
-      j,
-      k,
-      layerId,
-      layers,
-      contentDataLayer,
-      contentData,
-      layer,
-      layerGroups =[],
-      source,
-      style,
-      features=[],
-      styles=[],
-      oneFeature,
-      feature,
-      vectorSource,
-      clusterSource,
-      vectorLayer;
-
-
-    if(proxy.options.mapController.data.cluster_all === '1'){
-      contentData = proxy.options.mapController.data;
-      for( i in proxy.activeLayerIds) {//loop to get all layers
-        layers = c4g.maps.layers[i];
-
-        if(layers.type === "gpx"){
-          continue
-        }
-
-        if(layers && layers.vectorLayer ){
-          if(layers.vectorLayer.getLayers() && layers.vectorLayer.getLayers().getArray()[0] && layers.vectorLayer.getLayers().getArray()[0].getSource() && layers.vectorLayer.getLayers().getArray()[0].getSource().getFeatures().length > 0){
-            proxy.options.mapController.map.removeLayer(layers.vectorLayer);
-          }
-
-          contentDataLayer = layers.content;
-          layers.vectorLayer.getLayers().content = contentDataLayer;
-          layerGroups.push(layers.vectorLayer.getLayers());
-
-
-        }
-      }
-      for(k =0; k<layerGroups.length;k++){//loop to extract features from layers
-        if(layerGroups[k].getArray().length>0){
-          layer = layerGroups[k].getArray();
-          source = layer["0"].getSource();
-          style = layer["0"].getStyle();
-
-          oneFeature = true;
-          feature = source.getFeatures();
-          for(j = 0; j < feature.length; j ++){//loop over all features from a source
-            if(feature[j].get("features")){
-              for(i = 0; i < feature[j].get("features").length; i++){//loop for clustered features
-                if(layerGroups[k].content[j]){
-                  style = this.locationStyleController.arrLocStyles[layerGroups[k].content[j].locationStyle];
-                }
-                else if(layerGroups[k].content[0]){
-                  style = this.locationStyleController.arrLocStyles[layerGroups[k].content[0].locationStyle];
-                }
-
-                feature[j].get("features")[i].setStyle(style.style);
-                if(!feature[j].get("features")[i].get('popup')){
-                  feature[j].get("features")[i].set('popup',layer['0'].popup);
-                }
-
-              }
-              features.push(feature[j].get("features"));
-
-              oneFeature = false;
-            }
-
-          }
-          if (oneFeature) {//single not clustered feature
-            if (feature.length >= 1) {
-              if (!feature['0'].get('popup')) {
-                feature['0'].set('popup',layer.popup)
-              }
-              features.push(feature);
-            }
-          }
-        }
-      }
-
-      vectorSource = new VectorSource({
-        projection: 'EPSG:3857'
-
-      });
-
-      for (i = 0; i < features.length; i ++) {
-        vectorSource.addFeatures(features[i]);
-      }
-
-      clusterSource = new Cluster({
-        distance: 40,
-        //threshold: 2, //minimum element count
-        source: vectorSource
-      });
-      var styleForCluster = function(feature, resolution){
-        if(feature && feature.get('features') && feature.get('features')['0'].getStyle()){
-          style = feature.get('features')['0'].getStyle()(feature);
-          if (feature !== undefined && feature !== null && feature.self !== window) {
-            var fFeatures = feature.get('features');
-            var size = fFeatures.length;
-            if (size > 1) {
-              if (!style) {
-                style = [];
-              }
-
-              // calculate bubble-offset
-              var iconOffset = [0, 0];
-              if (style[0]) {
-                if (typeof style[0].getImage().getRadius === "function") {
-                  var radius = parseInt(style[0].getImage().getRadius(), 10);
-                  if (radius) {
-                    iconOffset = [0, radius];
-                  }
-                } else if (typeof style[0].getImage().getAnchor === "function") {
-                  iconOffset = style[0].getImage().getAnchor() || [0, 0];
-                }
-              }
-
-              var fillcolor = utils.getRgbaFromHexAndOpacity('4975A8',{
-                unit: '%',
-                value: 70
-              });
-
-              if (contentData.cluster_fillcolor) {
-                fillcolor = utils.getRgbaFromHexAndOpacity(contentData.cluster_fillcolor,{
-                  unit: '%',
-                  value: 70
-                });
-              }
-              var fontcolor = contentData.cluster_fontcolor ? '#' + contentData.cluster_fontcolor : '#FFFFFF';
-
-              style.push(
-                new Style({
-                  text: new Text({
-                    text: "●",
-                    font: "60px sans-serif",
-                    offsetX: -1 * iconOffset[0],
-                    offsetY: -1 * iconOffset[1],
-                    fill: new Fill({
-                      color: fillcolor
-                    })
-                  })
-                })
-              );
-              style.push(
-                new Style({
-                  text: new Text({
-                    text: size.toString(),
-                    offsetX: -1 * iconOffset[0],
-                    offsetY: -1 * iconOffset[1] + 3,
-                    fill: new Fill({
-                      color: fontcolor
-                    })
-                  })
-                })
-              );
-            }
-          }
-
-        }
-
-        else{
-          if(feature && feature.get('features') && feature.get('features')['0'].getStyle()){
-            return feature.get('features')['0'].getStyle()(feature);
-          }
-          else{
-            return null;
-          }
-        }
-        return style;
-      };
-
-      //vectorLayer = self.getVectorLayer(clusterSource, styleForCluster);
-
-      vectorLayer = new Vector({
-        name: 'Cluster',
-        source: clusterSource,
-        style: styleForCluster
-
-      });
-
-      var allLayers = proxy.options.mapController.map.getLayers().getArray();
-      var missingLayer = true;
-      for(i = 0; i < allLayers.length; i++){
-
-        if(allLayers[i].clusters) {
-          allLayers[i] = vectorLayer;
-          missingLayer = false
-        }
-      }
-      if(missingLayer){
-        proxy.options.mapController.map.addLayer(vectorLayer);
-      }
-    }
-
-
-
-  }//end of combineLayers
-
 
   checkLayerIsActiveForZoom(layerId, opt_zoom) {
     var layer,
