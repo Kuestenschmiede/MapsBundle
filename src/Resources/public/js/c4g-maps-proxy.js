@@ -208,6 +208,12 @@ export class MapProxy {
           hitTolerance: 5
         }
       );
+      if (feature && feature.get('closeCluster')) {
+        map.getView().dispatchEvent({
+          type: "change:resolution"
+        });
+        return;
+      }
 
       if(layer && layer.getStyle()) {
         styleFunc = layer.getStyle();
@@ -262,6 +268,7 @@ export class MapProxy {
                 var p = [newCenter[0] + r * Math.sin(a), newCenter[1] + r * Math.cos(a)];
                 var coordinate = toLonLat(p);
                 let featureLinestring = new Feature(new LineString([newCenter, p]));
+                featureLinestring.set('closeCluster', true);
                 stringSource.addFeature(featureLinestring);
                 let tempFeature = fFeatures[i].clone();
                 tempFeature.setGeometry(new Point(p));
