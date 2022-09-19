@@ -428,17 +428,17 @@ export class BetterLayerController {
                 type: "click",
                 pixel: pixel
               });
-              if (this.proxy.mapData.starboard.openPopup) {
-                let layer = this.mapController.map.forEachFeatureAtPixel(pixel,
-                    function (feature, layer) {
-                      return layer;
-                    },
-                    {
-                      hitTolerance: 5
-                    }
-                );
-                this.proxy.handlePopup(features[0], layer)
-              }
+            }
+            if (this.proxy.mapData.starboard.openPopup) {
+              let layer = this.mapController.map.forEachFeatureAtPixel(pixel,
+                  function (feature, layer) {
+                    return layer;
+                  },
+                  {
+                    hitTolerance: 5
+                  }
+              );
+              this.proxy.handlePopup(features[0], layer)
             }
           }, 100);
         }
