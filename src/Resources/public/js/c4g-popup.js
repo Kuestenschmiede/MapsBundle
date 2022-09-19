@@ -111,6 +111,9 @@ export class C4gPopup {
         else {
             if (this.popupComponent) {
                 this.popupComponent.open();
+                if (!this.popupController.external) {
+                    this.popupController.mapController.hideOtherComponents(this.popupComponent);
+                }
                 this.popupComponent.setContent(popupContent);
             }
         }
