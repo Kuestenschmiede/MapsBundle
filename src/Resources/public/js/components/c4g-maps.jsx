@@ -90,6 +90,7 @@ export default class MapController extends Component {
     super(props);
     //---
     let mapData = props.mapData;
+
     this.state = {
       objLayers: [],
       arrLayerStates: [],
@@ -125,6 +126,13 @@ export default class MapController extends Component {
         enableStarboard = true;
 
     //--
+
+    window.onbeforeunload = function(){
+      let layers = self.getCurrentLayerStates(self.state.arrLayerStates);
+      utils.storeValue('layers', layers);
+      utils.storeValue('tstampc4g', Date.now());
+    };
+
     mapData = jQuery.extend({
       api: {},
       addIdToDiv: false,
@@ -324,13 +332,17 @@ export default class MapController extends Component {
     }
 
     if (mapData.caching) {
-      if ((utils.getValue('lon')) && (utils.getValue('lat'))) {
-        mapData.center.lon = utils.getValue('lon');
-        mapData.center.lat = utils.getValue('lat');
-      }
-
-      if (utils.getValue('zoom')) {
-        mapData.center.zoom = utils.getValue('zoom');
+      if (utils.getValue('tstampc4g') && utils.getValue('tstampc4g') + 604800 > Date.now()) {
+        if ((utils.getValue('lon')) && (utils.getValue('lat'))) {
+          mapData.center.lon = utils.getValue('lon');
+          mapData.center.lat = utils.getValue('lat');
+        }
+        if (utils.getValue('zoom')) {
+          mapData.center.zoom = utils.getValue('zoom');
+        }
+        if (utils.getValue('layers')) {
+          mapData.layers = utils.getValue('layers');
+        }
       }
     }
 
@@ -875,6 +887,20 @@ export default class MapController extends Component {
         });
       }
     }
+  }
+  getCurrentLayerStates (arrLayerStates) {
+    let ids = [];
+    for (let elemId in arrLayerStates) {
+      if (arrLayerStates.hasOwnProperty(elemId)) {
+        if (arrLayerStates[elemId].active) {
+          ids.push(arrLayerStates[elemId].id);
+        }
+        if (arrLayerStates[elemId].childStates) {
+          ids = ids.concat(this.getCurrentLayerStates(arrLayerStates[elemId].childStates));
+        }
+      }
+    }
+    return ids;
   }
   setLayerStateWithId (id, active) {
     let arrLayerStates = this.state.arrLayerStates;
