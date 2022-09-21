@@ -142,7 +142,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupMultiple'] = ['Mehrere Popups',
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overpassEngine'] = ['Overpass-Servertechnik', 'Auswahl der Overpass-Servertechnik'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overpass_url'] = ['Alternative URL der Overpass-API ', 'Geben Sie hier die URL des Overpass API Servers ein, wenn Sie z.B. einen eigenen Overpass API Server nutzen möchten.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['custom_div'] = ['DIV für den Kartenbereich', 'DIV zur Umpositionierung des Kartenbereichs. Mit Hilfe dieser Einstellung lässt sich die Karte z.B. mitten in ein Formular hinein verschieben. Das DIV muss manuell auf der Seite erzeugt werden, z.B. mit einem HTML Inhaltselement oder HTML Formularfeld.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['caching'] = ['Kartensituation merken', 'Buttonstatus und Kartensituation werden im Browser zwischengespeichert.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['caching'] = ['Kartensituation merken', 'Buttonstatus und Kartensituation (Zentrum, Zoom, Layer, Filter) werden im Browser zwischengespeichert.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['be_optimize_checkboxes_limit'] = ['Grenzwert für Optimierung großer Checkbox-Listen', 'Definiert wie viele Einträge enthalten sein müssen, bis die Checkbox-Listen in Chosenfields umgewandelt werden. (0 = niemals umwandeln)'];
 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['consentBanner'] = ['Consent-Banner', 'Wählen Sie, ob sie vor die Karte ein Consent-Banner vorschalten wollen, welches ein direktes Laden der Karte verhindert'];

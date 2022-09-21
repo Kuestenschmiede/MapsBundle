@@ -65,7 +65,7 @@ export default class StarboardScope extends Component {
     window.c4gMapsHooks.layer_loaded = window.c4gMapsHooks.layer_loaded || [];
     window.c4gMapsHooks.layer_loaded.push((lol)=> {
       this.getFeaturesInScope();
-    })
+    });
     this.state = {
       open: props.open || false,
       className: props.className || "c4g-starboardscope-panel",

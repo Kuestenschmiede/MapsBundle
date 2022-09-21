@@ -15,11 +15,13 @@ import {Fill, Stroke, Style} from "ol/style";
 import {Cluster} from "ol/source";
 import {getLanguage} from "./../c4g-maps-i18n";
 import opening_hours from "opening_hours";
+import {utils} from "../c4g-maps-utils";
 
 export default class FeatureFilter extends Component {
 
   constructor(props) {
     super(props);
+    const scope = this;
     this.filterLayers = this.filterLayers.bind(this);
     this.filterLayersMulti = this.filterLayersMulti.bind(this);
     this.setOpen = this.setOpen.bind(this);
@@ -31,7 +33,16 @@ export default class FeatureFilter extends Component {
     this.filterLayerMulti = this.filterLayerMulti.bind(this);
     this.hideFeature = this.hideFeature.bind(this);
     this.hideFeatureMulti = this.hideFeatureMulti.bind(this);
+    this.callbackFunction = this.callbackFunction.bind(this);
+    this.callbackFunctionMulti = this.callbackFunctionMulti.bind(this);
     this.loadFilters();
+    if (props.mapController.data.caching) {
+      window.onbeforeunload = function(){
+        utils.storeValue('filtersChecked', JSON.stringify(scope.state.arrChecked));
+        utils.storeValue('tstampc4g', Date.now());
+      };
+    }
+
     this.state = {
       filters: [],
       open: true,
@@ -130,21 +141,21 @@ export default class FeatureFilter extends Component {
       value: value,
       field: field
     };
-    this.setState({arrChecked: newState}, () => {
-        let arrLayers = this.props.mapController.map.getLayers().getArray();
-        arrLayers.map((feature, index) => {
-          this.filterLayer(feature);
-        });
-      for (let i = 0; i < this.features.length; i++) {
-        if (this.features.hasOwnProperty(i)) {
-          let added = this.showFeature(this.features[i], i);
-          if (added) {
-            i--;
-          }
+    this.setState({arrChecked: newState}, this.callbackFunction);
+  }
+  callbackFunction () {
+    let arrLayers = this.props.mapController.map.getLayers().getArray();
+    arrLayers.map((feature, index) => {
+      this.filterLayer(feature);
+    });
+    for (let i = 0; i < this.features.length; i++) {
+      if (this.features.hasOwnProperty(i)) {
+        let added = this.showFeature(this.features[i], i);
+        if (added) {
+          i--;
         }
       }
-      }
-    );
+    }
   }
   filterLayersMulti (property, listId, value) {
     let newState = this.state.arrChecked;
@@ -175,22 +186,22 @@ export default class FeatureFilter extends Component {
     }
 
     newState[listId] = changedEntry;
-    this.setState({arrChecked: newState}, () => {
-      let arrLayers = this.props.mapController.map.getLayers().getArray();
-      arrLayers.map((feature, index) => {
-        this.filterLayerMulti(feature);
-      });
-      for (let i = 0; i < this.features.length; i++) {
-        if (this.features.hasOwnProperty(i)) {
-          let added = this.showFeatureMulti(this.features[i], i);
-          if (added) {
-            i--;
-          }
+    this.setState({arrChecked: newState}, this.callbackFunctionMulti);
+  }
+  callbackFunctionMulti () {
+    let arrLayers = this.props.mapController.map.getLayers().getArray();
+    arrLayers.map((feature, index) => {
+      this.filterLayerMulti(feature);
+    });
+    for (let i = 0; i < this.features.length; i++) {
+      if (this.features.hasOwnProperty(i)) {
+        let added = this.showFeatureMulti(this.features[i], i);
+        if (added) {
+          i--;
         }
       }
-    })
+    }
   }
-
   setOpen (openId) {
     if (this.state.openedList === openId) {
       this.setState({openedList: -1});
@@ -390,6 +401,7 @@ export default class FeatureFilter extends Component {
     let url = this.props.mapController.data.api.filter + this.props.mapController.data.id + "/" + this.props.mapController.data.lang;
     fetch(url).then(function (response) {
       return response.json().then(function(jsonData) {
+        let callbackFunc = ()=> {};
         let arrChecked = [];
         for (let i = 0; i < jsonData.length; i++) {
           if(!!parseFloat(scope.props.mapController.data.filterHandling)) {
@@ -401,7 +413,27 @@ export default class FeatureFilter extends Component {
             });
           }
         }
-        scope.setState({filters: jsonData, arrChecked: arrChecked})
+        if (scope.props.mapController.data.caching) {
+          if (utils.getValue('tstampc4g') && utils.getValue('tstampc4g') + 604800 > Date.now()) {
+            if (utils.getValue('filtersChecked')) {
+              let arrTemp = JSON.parse(utils.getValue('filtersChecked'));
+              if (arrTemp.length === jsonData.length) {
+                arrChecked = arrTemp;
+                if (scope.props.mapController.proxy.layers_loaded) {
+                  callbackFunc = !parseFloat(scope.props.mapController.data.filterHandling) ? scope.callbackFunction : scope.callbackFunctionMulti;
+                }
+                else {
+                  let asyncCallback = !parseFloat(scope.props.mapController.data.filterHandling) ? scope.callbackFunction : scope.callbackFunctionMulti;
+                  window.c4gMapsHooks.layer_loaded = window.c4gMapsHooks.layer_loaded || [];
+                  window.c4gMapsHooks.layer_loaded.push((lol)=> {
+                    asyncCallback();
+                  })
+                }
+              }
+            }
+          }
+        }
+        scope.setState({filters: jsonData, arrChecked: arrChecked}, callbackFunc);
       });
     })
   }
