@@ -622,10 +622,10 @@ export class C4gBaselayerController {
           }
           if (showLayer) {
             arrLayers[id].display = true;
-            this.proxy.layerController.showLayer(id);
+            this.proxy.layerController ? this.proxy.layerController.showLayer(id) : '';
           } else {
             arrLayers[id].display = false;
-            this.proxy.layerController.hideLayer(id);
+            this.proxy.layerController ? this.proxy.layerController.hideLayer(id) : '';
           }
         }
       }
