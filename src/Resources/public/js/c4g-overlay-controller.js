@@ -11,7 +11,7 @@
 import {config} from "./c4g-maps-config";
 import {OSM, Stamen, TileWMS, XYZ} from "ol/source";
 import {Image, Tile} from "ol/layer";
-import ol_source_GeoImage from "ol-ext/source/GeoImage";
+import GeoImage from 'ol-ext/source/GeoImage';
 
 //copy link to add noopener
 export const OSM_REL_ATTRIBUTION = '&#169; ' +
@@ -138,9 +138,7 @@ export class C4gOverlayController {
         objSource.url = overlayLayerConfig.imageSrc ? overlayLayerConfig.imageSrc : objSource.url;
         objSource.attributions = overlayLayerConfig.attribution;
         overlayLayer = new Image({
-          source: new ol_source_GeoImage(
-            objSource
-          )
+          source: new GeoImage(objSource)
         });
         break;
       default:

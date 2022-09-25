@@ -20,7 +20,7 @@ import {Group as LayerGroup, Image} from "ol/layer";
 import Collection from 'ol/Collection';
 import OLCesium from 'ol-cesium/src/olcs/OLCesium.js';
 // import {applyStyle} from 'ol-mapbox-style';
-// import VectorTileLayer from 'ol/layer/VectorTile.js'
+import VectorTileLayer from 'ol/layer/VectorTile.js'
 import ol_source_GeoImage from "ol-ext/source/GeoImage";
 import Projection from "ol/proj/Projection";
 
