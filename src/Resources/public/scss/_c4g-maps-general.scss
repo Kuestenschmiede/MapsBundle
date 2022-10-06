@@ -1140,6 +1140,13 @@ button.c4g-geosearch-start {
   padding: 0;
 }
 
+.c4g-starboard-list-element {
+  > a {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
 /*----------------*/
 
 /*------------external-----------*/
@@ -1545,8 +1552,5 @@ button.c4g-maps-consent-button.btn {
   cursor: pointer;
 }
 
-.c4g-control-container-top-left {
 
-
-}
 
