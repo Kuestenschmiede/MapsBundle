@@ -12,7 +12,7 @@ import React, {Component} from "react";
 import {Control} from "ol/control";
 import {cssConstants} from "./../c4g-maps-constant";
 import {getLanguage} from "../c4g-maps-i18n";
-import {toPng} from "dom-to-image-more";
+import {toJpeg} from "dom-to-image-more";
 import {toBlob} from "dom-to-image-more";
 import {saveAs} from "file-saver";
 import {utils} from "./../c4g-maps-utils";
@@ -39,7 +39,7 @@ export default class Print extends Component {
           (element.className.indexOf('c4g-open') === -1) //print no sideboards (right panels)
         ) : true;
       },
-      bgcolor: '#000000'
+      bgcolor: '#ffffff'
     };
 
     let toggle = function (event) {
@@ -48,18 +48,19 @@ export default class Print extends Component {
         let target = document.getElementById(map.getTarget());
         if (window.c4gMapsHooks.printMap && window.c4gMapsHooks.printMap.length > 0) {
           exportOptions.quality= 0.2;
-         // exportOptions.height= "400px";
-         // exportOptions.width= "800px";
-          toPng(target, exportOptions)
+          toJpeg(target, exportOptions)
               .then(function(blob) {
                 let arrReturn = utils.callHookFunctions(window.c4gMapsHooks.printMap, blob);
               });
         }
         else {
+          exportOptions.quality= 0.2;
           toBlob(target, exportOptions)
               .then(function(blob) {
-                let arrReturn = utils.callHookFunctions(window.c4gMapsHooks.printMap, blob);
-                saveAs(blob, 'map.png');
+                if (blob) {
+                  let arrReturn = utils.callHookFunctions(window.c4gMapsHooks.printMap, blob);
+                  saveAs(blob, 'map.png');
+                }
               });
         }
       }
