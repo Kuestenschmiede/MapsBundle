@@ -127,11 +127,7 @@ export default class MapController extends Component {
 
     //--
 
-    window.onbeforeunload = function(){
-      let layers = self.getCurrentLayerStates(self.state.arrLayerStates);
-      utils.storeValue('layers', layers);
-      utils.storeValue('tstampc4g', Date.now());
-    };
+
 
     mapData = jQuery.extend({
       api: {},
@@ -182,6 +178,13 @@ export default class MapController extends Component {
     this.data = mapData;
     if (mapData.addIdToDiv) {
       mapData.mapDiv += '_' + mapData.mapId;
+    }
+    if (mapData.caching) {
+      window.onbeforeunload = function(){
+        let layers = self.getCurrentLayerStates(self.state.arrLayerStates);
+        utils.storeValue('layers', layers);
+        utils.storeValue('tstampc4g', Date.now());
+      };
     }
     // PHPStorm marks this as error, but it is none
     // This is needed for preventing an error with the OSM-Overpass API
