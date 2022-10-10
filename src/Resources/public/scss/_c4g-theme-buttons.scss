@@ -46,6 +46,10 @@
     margin-top: inherit;
 }
 
+.ol-control button.ol-zoom-out {
+    margin-top: 0;
+}
+
 .ol-control:not(.ol-attribution) button:not(.ol-zoom-in):not(.ol-zoom-out),
 .c4g-control button {
     border-radius: var(--button-radius-percent);

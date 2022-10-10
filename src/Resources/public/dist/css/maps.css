@@ -6387,6 +6387,9 @@ button.c4g-beach-options:before {
 .ol-control button {
   margin-top: inherit
 }
+.ol-control button.ol-zoom-out {
+  margin-top: 0
+}
 .c4g-control button,
 .ol-control:not(.ol-attribution) button:not(.ol-zoom-in):not(.ol-zoom-out) {
   border-radius: var(--button-radius-percent)
