@@ -5575,6 +5575,10 @@ button.c4g-geosearch-start {
 .c4g-layertree ul {
   padding: 0
 }
+.c4g-starboard-list-element > a {
+  display: flex;
+  justify-content: space-between
+}
 .c4g-external > div > div[class*=header] button[class*=close] {
   display: none
 }
