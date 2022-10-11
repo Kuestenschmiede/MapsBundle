@@ -215,7 +215,12 @@ export default class FeatureFilter extends Component {
     let filter = [];
     for (let i in this.state.arrChecked) {
       if (this.state.arrChecked.hasOwnProperty(i)) {
-        filter.push([]);
+        if (!parseFloat(this.props.mapController.data.filterHandling)) {
+          filter.push({identifier: 'all'});
+        }
+        else {
+          filter.push([]);
+        }
       }
     }
     this.setState({arrChecked: filter}, () => {
