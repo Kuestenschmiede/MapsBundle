@@ -65,8 +65,22 @@ export default class FeatureFilter extends Component {
       showButtons = scope.props.target && (!(scope.props.target.scrollWidth <= scope.props.target.clientWidth));
     }
     let resetButton = null;
+
     if (!!parseFloat(this.props.mapController.data.filterResetButton)) {
-      resetButton = <button className={"c4g-feature-filter-reset"} onMouseUp={(evt) => this.resetFilter()}>{this.langConstants.RESET_FILTER}</button>
+      let boolFilterReset = false;
+      for (let i in this.state.arrChecked) {
+        if (!boolFilterReset && this.state.arrChecked.hasOwnProperty(i)) {
+          if (!parseFloat(this.props.mapController.data.filterHandling)) {
+            boolFilterReset = this.state.arrChecked[i].identifier != 'all';
+          }
+          else {
+            boolFilterReset = this.state.arrChecked[i] != [];
+          }
+        }
+      }
+      if (boolFilterReset) {
+        resetButton = <button className={"c4g-feature-filter-reset"} onMouseUp={(evt) => this.resetFilter()}>{this.langConstants.RESET_FILTER}</button>
+      }
     }
     if (!!parseFloat(this.props.mapController.data.filterHandling)) {
       if (filters && filters.length > 0) {
