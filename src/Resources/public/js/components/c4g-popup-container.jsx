@@ -21,6 +21,7 @@ export class PopupContainer extends Component {
       content: "",
       open: props.open,
       detailsOpen: false,
+      activeComps: props.activeComps,
       conststr: false
     };
     props.hideOther(this);
@@ -89,11 +90,25 @@ export class PopupContainer extends Component {
     this.setState({content: content});
   }
 
-  open() {
-    this.setState({open: true});
+  open(activeComps) {
+    if (!this.props.external) {
+      this.props.hideOther();
+    }
+    this.setState({
+      open: true,
+      activeComps: activeComps
+    });
   }
 
   close() {
+    if (this.state.activeComps) {
+      for (let i in this.state.activeComps) {
+        if (this.state.activeComps.hasOwnProperty(i)) {
+          let comp = this.state.activeComps[i];
+          comp.setState({open: true});
+        }
+      }
+    }
     let newState = {
       open: false,
       content: this.props.external ? "": this.state.content

@@ -279,6 +279,7 @@ export default class MapController extends Component {
     this.components = this.components || {};
     this.hideOtherComponents = this.hideOtherComponents.bind(this);
     this.hideOtherBottomComponents = this.hideOtherBottomComponents.bind(this);
+    this.getActiveComponents = this.getActiveComponents.bind(this);
 
     // add view observer to update permalink on center change, if a permalink exists
     // use other permalink variable to avoid interference with the actual permalink mechanism
@@ -1017,6 +1018,16 @@ export default class MapController extends Component {
         }
       }
     }
+  }
+  getActiveComponents() {
+    let components = this.components;
+    let activeComps = [];
+    for (let key in components) {
+      if (components.hasOwnProperty(key) && components[key].state.open) {
+        activeComps.push(components[key]);
+      }
+    }
+    return activeComps;
   }
 
   render() {

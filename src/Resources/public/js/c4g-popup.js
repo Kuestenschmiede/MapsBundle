@@ -55,7 +55,8 @@ export class C4gPopup {
             let popupOptions = {
                 open: true,
                 alwaysExtended: false,//this.mapData.openDirectly,
-                hideOther: popupController.mapController.hideOtherBottomComponents,
+                hideOther: popupController.mapController.hideOtherComponents,
+                activeComps: popupController.mapController.getActiveComponents(),
                 mapData: popupController.mapData,
                 mapController: popupController.mapController
             };
@@ -110,10 +111,9 @@ export class C4gPopup {
         }
         else {
             if (this.popupComponent) {
-                this.popupComponent.open();
-                if (!this.popupController.external) {
-                    this.popupController.mapController.hideOtherComponents(this.popupComponent);
-                }
+                let activeComps = this.popupController.mapController.getActiveComponents();
+                this.popupComponent.open(activeComps);
+
                 this.popupComponent.setContent(popupContent);
             }
         }
