@@ -41,7 +41,7 @@ export class FeatureFilterMultiCheckbox extends Component {
             }
 
             className += " fi_" + utils.removeUmlauts(this.props.feature.name);
-            let liClass =  "c4g-item-checked";
+            let liClass =  "c4g-item-checked c4g-item-"+utils.removeUmlauts(this.props.feature.name);
             return (
                 <li className={liClass}>
                     <strong className={className} onMouseUp={(evt) => {this.props.setOpen(this.props.id); evt.stopPropagation(); evt.preventDefault();}}><span/>{utils.decodeHTML(this.props.feature.name)}</strong>
@@ -52,7 +52,7 @@ export class FeatureFilterMultiCheckbox extends Component {
         }
         else {
             className += " fi_" + utils.removeUmlauts(this.props.feature.name);
-            let liClass =  "c4g-item-checked";
+            let liClass =  "c4g-item-checked c4g-item-"+utils.removeUmlauts(this.props.feature.name);
             liClass += this.props.checkedItems.length === 0 ? "" : " clicked";
             let img = null;
             if (this.props.feature.image) {

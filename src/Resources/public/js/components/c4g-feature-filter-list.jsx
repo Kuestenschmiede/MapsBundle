@@ -34,7 +34,7 @@ export class FeatureFilterList extends Component {
                 className = "c4g-close";
             }
             className += " fi_" + utils.removeUmlauts(this.props.feature.name);
-            let liClass = this.props.checkedItem.identifier === "all" ? "" : "c4g-item-checked";
+            let liClass = this.props.checkedItem.identifier === "all c4g-item-"+utils.removeUmlauts(this.props.feature.name) ? "" : "c4g-item-checked c4g-item-"+utils.removeUmlauts(this.props.feature.name);
             return (
                 <li className={liClass}>
                     <strong className={className} onMouseUp={(evt) => {this.props.setOpen(this.props.id); evt.stopPropagation(); evt.preventDefault();}}><span/>{utils.decodeHTML(this.props.feature.name)}</strong>
@@ -44,7 +44,7 @@ export class FeatureFilterList extends Component {
         }
         else {
             className = " fi_" + utils.removeUmlauts(this.props.feature.name);
-            let liClass = "c4g-item-checked";
+            let liClass = "c4g-item-checked c4g-item-"+utils.removeUmlauts(this.props.feature.name);
             liClass += this.props.checkedItem.identifier === "all" ? "" : " clicked";
             let img = null;
             if (this.props.feature.image) {
