@@ -112,7 +112,9 @@ export class C4gPopup {
         else {
             if (this.popupComponent) {
                 let activeComps = this.popupController.mapController.getActiveComponents();
-                this.popupComponent.open(activeComps);
+                if (!this.popupComponent.state.open) {
+                    this.popupComponent.open(activeComps);
+                }
 
                 this.popupComponent.setContent(popupContent);
             }
