@@ -39,6 +39,8 @@ export default class FeatureFilter extends Component {
     if (props.mapController.data.caching) {
       window.onbeforeunload = function(){
         utils.storeValue('filtersChecked', JSON.stringify(scope.state.arrChecked));
+        let layers = scope.props.mapController.getCurrentLayerStates(scope.props.mapController.state.arrLayerStates);
+        utils.storeValue('layers', layers);
         utils.storeValue('tstampc4g', Date.now());
       };
     }
