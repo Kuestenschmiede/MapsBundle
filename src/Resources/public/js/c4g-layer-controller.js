@@ -402,7 +402,7 @@ export class BetterLayerController {
     }
 
     if (!extent) {
-      return;
+      return false;
     }
     let width = jQuery(".c4g-starboard-container").css('width');
     if (width) {
@@ -457,6 +457,7 @@ export class BetterLayerController {
         maxZoom: maxZoom
       });
     }
+    return true
   }
   getChildsExtent(extent, child) {
     if (child.childs && child.childs.length) {
@@ -1076,6 +1077,7 @@ export class BetterLayerController {
         "initial_opened"  : layer.initial_opened,
         "locstyle"        : possibleLocstyle,
         "activateWithBl"  : layer.activeForBaselayers,
+        "popup"           : layer.popup,
         "id"              : layer.id,
         "name"            : layer.name,
         "tags"            : layer.tags,

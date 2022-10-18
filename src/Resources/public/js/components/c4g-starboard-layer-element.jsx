@@ -13,6 +13,7 @@ import * as olExtent from "ol/extent";
 import {cssConstants} from "./../c4g-maps-constant.js";
 import {C4gStarboardStyle} from "./c4g-starboard-style";
 import {Vector} from "ol/layer";
+import Feature from 'ol/Feature';
 
 export class C4gStarboardLayerElement extends Component {
 
@@ -155,11 +156,19 @@ export class C4gStarboardLayerElement extends Component {
     if (!this.props.layerStates.active) {
       this.layerClick(e);
     }
-    this.props.mapController.proxy.layerController.zoomTo(this.props.layer);
-    this.props.mapController.proxy.layerController.setChildFeatureFlag(this.props.layer, "markLocstyle", true);
-    window.setTimeout(() => {
-      this.props.mapController.proxy.layerController.setChildFeatureFlag(this.props.layer, "markLocstyle", false);
-    }, 3000);
+    let boolZoomTo = this.props.mapController.proxy.layerController.zoomTo(this.props.layer);
+    if (boolZoomTo) {
+      this.props.mapController.proxy.layerController.setChildFeatureFlag(this.props.layer, "markLocstyle", true);
+      window.setTimeout(() => {
+        this.props.mapController.proxy.layerController.setChildFeatureFlag(this.props.layer, "markLocstyle", false);
+      }, 3000);
+    }
+    else if (this.props.layer.popup) {
+      let feature = new Feature();
+      let layer = new Vector();
+      feature.set('popup',this.props.layer.popup);
+      this.props.mapController.proxy.handlePopup(feature, layer);
+    }
   }
   layerZoomToEnter(e) {
     if (e.which === 13) {
