@@ -429,17 +429,6 @@ export class BetterLayerController {
                 pixel: pixel
               });
             }
-            if (this.proxy.mapData.starboard.openPopup) {
-              let layer = this.mapController.map.forEachFeatureAtPixel(pixel,
-                  function (feature, layer) {
-                    return layer;
-                  },
-                  {
-                    hitTolerance: 5
-                  }
-              );
-              this.proxy.handlePopup(features[0], layer)
-            }
           }, 100);
         }
       }
@@ -663,6 +652,7 @@ export class BetterLayerController {
 
   getStructureFromLayer(layer, idChain) {
     let scope = this;
+    let popup = false;
     let features = [];
     let childs = [];
     let hide = !!layer.hide;
@@ -700,7 +690,6 @@ export class BetterLayerController {
       let params = "";
       let hoverLocation;
       let hoverStyle;
-      let popup = false;
       let forceNodes = false;
       let showAddGeoms = false;
       let layerId = layer.id;
@@ -793,7 +782,6 @@ export class BetterLayerController {
     if (layer.excludeFromSingleLayer) {
       let customStyleFunc = false;
       let vectorSource = new VectorSource();
-      let popup = false;
       if (layer.async_content && layer.async_content !== "0") {
         let strategy = layer.type === "table" || (layer.content && layer.content[0].settings.boundingBox) ? bbox : all;
         vectorSource = new VectorSource({"strategy": strategy});
@@ -1077,13 +1065,13 @@ export class BetterLayerController {
         "initial_opened"  : layer.initial_opened,
         "locstyle"        : possibleLocstyle,
         "activateWithBl"  : layer.activeForBaselayers,
-        "popup"           : layer.popup,
+        "popup"           : popup || layer.popup,
         "id"              : layer.id,
         "name"            : layer.name,
         "tags"            : layer.tags,
         "hide"            : hide,
         "childs"          : childs,
-        "zoomTo"       : layer.zoomTo
+        "zoomTo"          : layer.zoomTo
       };
     }
   }

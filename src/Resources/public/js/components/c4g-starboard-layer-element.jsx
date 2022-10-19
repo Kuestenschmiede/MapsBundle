@@ -163,7 +163,7 @@ export class C4gStarboardLayerElement extends Component {
         this.props.mapController.proxy.layerController.setChildFeatureFlag(this.props.layer, "markLocstyle", false);
       }, 3000);
     }
-    else if (this.props.layer.popup) {
+    if (this.props.mapController.proxy.mapData.starboard.openPopup && this.props.layer.popup) {
       let feature = new Feature();
       let layer = new Vector();
       feature.set('popup',this.props.layer.popup);
