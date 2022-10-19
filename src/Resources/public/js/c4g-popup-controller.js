@@ -9,6 +9,7 @@
  */
 
 import {C4gPopup} from './c4g-popup';
+import {utils} from './c4g-maps-utils'
 
 export class C4gPopupController {
 
@@ -24,6 +25,9 @@ export class C4gPopupController {
     this.popups.push(new C4gPopup(this));
     if (popupConfig) {
       this.popups[this.popups.length -1].setContent(popupConfig);
+    }
+    if (this.mapData.caching) {
+      utils.storeValue('popupInfos', "");
     }
   } // end of "addPopUp()"
   setPopup(popupConfig) {

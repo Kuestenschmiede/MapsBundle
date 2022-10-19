@@ -33,6 +33,8 @@ import {
 import {defaults as controlDefaults} from "ol/control";
 import {Group} from "ol/layer";
 import {Point} from "ol/geom";
+import Feature from "ol/Feature";
+import {Vector} from "ol/layer";
 import {boundingExtent, getBottomLeft, getBottomRight, getTopLeft, getTopRight} from "ol/extent";
 import {shiftKeyOnly} from "ol/events/condition";
 import ReactDOM from "react-dom";
@@ -281,6 +283,17 @@ export default class MapController extends Component {
     this.hideOtherBottomComponents = this.hideOtherBottomComponents.bind(this);
     this.getActiveComponents = this.getActiveComponents.bind(this);
 
+    if (mapData.caching) {
+      let strPopupInfos = utils.getValue('popupInfos');
+      if (strPopupInfos && parseInt(mapData.popupHandling, 10)) {
+        this.data.initial_open_comp = "";
+        let popupInfos = JSON.parse (strPopupInfos);
+        let feature = new Feature();
+        feature.set('popup', popupInfos);
+        let layer = new Vector();
+        this.proxy.handlePopup(feature, layer);
+      }
+    }
     // add view observer to update permalink on center change, if a permalink exists
     // use other permalink variable to avoid interference with the actual permalink mechanism
     window.c4gMapsHooks.map_center_changed = window.c4gMapsHooks.map_center_changed || [];

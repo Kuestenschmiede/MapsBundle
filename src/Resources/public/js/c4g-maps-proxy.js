@@ -380,6 +380,9 @@ export class MapProxy {
       }
       return;
     }
+    if (this.mapData.caching && parseInt(this.mapData.popupHandling, 10)) {
+      utils.storeValue('popupInfos', JSON.stringify(popupInfos));
+    }
     if (popupInfos.async === false || popupInfos.async == '0') {
       let objPopup = {};
       objPopup.popup = popupInfos;

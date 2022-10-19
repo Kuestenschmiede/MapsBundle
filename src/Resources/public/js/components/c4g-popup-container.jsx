@@ -10,6 +10,7 @@
 
 import React, {Component, Suspense} from "react";
 import {getLanguage} from "./../c4g-maps-i18n";
+import {utils} from './../c4g-maps-utils'
 const Titlebar = React.lazy(() => import("./c4g-titlebar.jsx"));
 
 export class PopupContainer extends Component {
@@ -101,6 +102,9 @@ export class PopupContainer extends Component {
   }
 
   close() {
+    if (this.props.mapData.caching) {
+      utils.storeValue('popupInfos', "");
+    }
     if (this.state.activeComps) {
       for (let i in this.state.activeComps) {
         if (this.state.activeComps.hasOwnProperty(i)) {
