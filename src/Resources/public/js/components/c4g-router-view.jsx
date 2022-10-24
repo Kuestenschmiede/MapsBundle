@@ -933,7 +933,7 @@ export class RouterView extends Component {
         if (parseInt(mapController.data.popupHandling, 10) !== 3) {
           let routeButtonWrapper = createPopupWrapper(objPopup);
           $(params.div).append(routeButtonWrapper);
-        } else {
+        } else if (params.comp) {
           let config = {
             feature: objPopup.feature,
             router: scope
