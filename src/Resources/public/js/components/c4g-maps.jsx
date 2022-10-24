@@ -1069,6 +1069,10 @@ export default class MapController extends Component {
       {name: "editor", sort: mapData.editor.enable}
     ];
     let sbPortal = "";
+    let storedPanel = this.data.caching ? utils.getValue('panel') : "";
+    if (storedPanel) {
+      this.props.mapData.initial_open_comp = "";
+    }
     if (mapData.layerswitcher.enable) {
       sbPortal = ReactDOM.createPortal(
           <Suspense fallback={<div>"Loool</div>}>
@@ -1077,7 +1081,7 @@ export default class MapController extends Component {
             }} target={target}
                             mapController={this} objLayers={this.state.objLayers} styleData={this.state.styleData} tabLayers={this.state.objTabLayers} tabStates={this.state.arrTabLayerStates}
                             layerStates={this.state.arrLayerStates} parentCallback={this.setLayerStates} tabCallback={this.setTabStates}
-                            direction={"right"} open={(this.props.mapData.initial_open_comp === "starboard")} changeCollapseState={this.changeCollapseState} external={this.reactContainer.className.indexOf("c4g-external") !== -1}
+                            direction={"right"} open={((this.props.mapData.initial_open_comp === "starboard") || (storedPanel === "StarboardPanel"))} changeCollapseState={this.changeCollapseState} external={this.reactContainer.className.indexOf("c4g-external") !== -1}
             />
           </Suspense>,
           this.reactContainer
@@ -1101,7 +1105,7 @@ export default class MapController extends Component {
       infoPortal = ReactDOM.createPortal(
         <Suspense fallback={<div>"Loading..."</div>}>
           <Infopage ref={(node) => {this.components.infopage = node;}} target={target} external={this.infoPageContainer.className.indexOf("c4g-external") !== -1}
-                  infoContent={mapData.infopage} mapController={this} open={mapData.initial_open_comp === "legend"}/>
+                  infoContent={mapData.infopage} mapController={this} open={mapData.initial_open_comp === "legend" || storedPanel === "Infopage"}/>
         </Suspense>,
         this.infoPageContainer
       );
@@ -1113,7 +1117,7 @@ export default class MapController extends Component {
           <Suspense fallback={<div>"Loading..."</div>}>
             <BaselayerSwitcher ref={(node) => {
               this.components.baselayerSwitcher = node;
-            }} target={target} open={mapData.initial_open_comp === "baselayers"} changeActiveLayers={this.changeActiveLayers} external={this.baselayerContainer.className.indexOf("c4g-external") !== -1}
+            }} target={target} open={mapData.initial_open_comp === "baselayers" || storedPanel === "BaselayerSwitcher"} changeActiveLayers={this.changeActiveLayers} external={this.baselayerContainer.className.indexOf("c4g-external") !== -1}
                                mapController={this} baselayerController={this.proxy.baselayerController}/>
           </Suspense>,
           this.baselayerContainer
@@ -1125,7 +1129,7 @@ export default class MapController extends Component {
           <Suspense fallback={<div>"Loading..."</div>}>
             <StarboardScope ref={(node) => {
               this.components.starboardScope = node;
-            }} target={target} open={mapData.initial_open_comp === "starboardscope"} mapController={this} />
+            }} target={target} open={mapData.initial_open_comp === "starboardscope" || storedPanel === "StarboardScope"} mapController={this} />
           </Suspense>,
           this.starboardscopeContainer
       );
@@ -1145,7 +1149,7 @@ export default class MapController extends Component {
         <Suspense fallback={<div>"Loading..."</div>}>
           <Measuretools ref={(node) => {
             this.components.measuretools = node;
-          }} target={target} open={mapData.initial_open_comp === "measuretools"} mapController={this} />
+          }} target={target} open={mapData.initial_open_comp === "measuretools" || storedPanel === "MeasureTools"} mapController={this} />
         </Suspense>,
         this.measuretoolsContainer
       );
@@ -1314,9 +1318,9 @@ export default class MapController extends Component {
               langConstants: langRouteConstants,
               ref: (node) => {this.components.router = node;},
               key: 22,
-              open: this.data.initial_open_comp === "routing"
+              open: this.data.initial_open_comp === "routing" || storedPanel === "RouterView"
             };
-            let openRouter = this.data.initial_open_comp === "routing";
+            let openRouter = this.data.initial_open_comp === "routing"  || storedPanel === "RouterView";
 
             if (!this.routerContainer) {
               if (this.data.router_div) {
@@ -1353,7 +1357,7 @@ export default class MapController extends Component {
             if (!this.editorContainer) {
               if (this.data.editor_div) {
                 this.editorContainer = document.querySelector("." + this.data.editor_div);
-                let openEditor = this.data.initial_open_comp === "editor";
+                let openEditor = this.data.initial_open_comp === "editor"  || storedPanel === "EditorView";
                 if (!this.editorContainer) {
                   this.editorContainer = document.createElement('div');
                   this.editorContainer.className = "c4g-sideboard c4g-editor-container-right " + (openEditor ? "c4g-open": "c4g-close");
@@ -1362,7 +1366,7 @@ export default class MapController extends Component {
                   this.editorContainer.className += " c4g-external";
                 }
               } else {
-                let openEditor = this.data.initial_open_comp === "editor";
+                let openEditor = this.data.initial_open_comp === "editor"  || storedPanel === "EditorView";
                 this.editorContainer = document.createElement('div');
                 this.editorContainer.className = "c4g-sideboard c4g-editor-container-right " + (openEditor ? "c4g-open": "c4g-close");
                 jQuery(".ol-overlaycontainer-stopevent").append(this.editorContainer);
@@ -1379,7 +1383,7 @@ export default class MapController extends Component {
               caching: mapData.caching,
               ref: (node) => {this.components.editor = node;},
               mapController: this,
-              open: this.data.initial_open_comp === "editor"
+              open: this.data.initial_open_comp === "editor"  || storedPanel === "EditorView"
             };
             result.push(ReactDOM.createPortal(React.createElement(EditorComponent, editorProps), this.editorContainer));
           }
@@ -1443,22 +1447,6 @@ export default class MapController extends Component {
 
   componentDidMount() {
     this._isMounted = true;
-    if (this.data.caching) {
-      let storedPanel = utils.getValue('panel');
-      if (storedPanel) {
-        for (let key in this.components) {
-          if (this.components.hasOwnProperty(key)) {
-            if (this.components[key] && this.components[key].constructor.name === storedPanel) {
-              this.components[key].setState({
-                open: true
-              });
-              storedPanel = this.components[key];
-            }
-          }
-        }
-        this.setOpenComponent(storedPanel);
-      }
-    }
   }
 
   componentWillUnmount() {
