@@ -123,4 +123,9 @@ export class PopupContainer extends Component {
   toggleDetails() {
     this.setState({detailsOpen: !this.state.detailsOpen});
   }
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevState.open && !this.state.open && this.props.mapData.caching) {
+      utils.storeValue('popupInfos', "");
+    }
+  }
 }
