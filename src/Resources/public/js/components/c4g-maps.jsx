@@ -1071,7 +1071,7 @@ export default class MapController extends Component {
     let sbPortal = "";
     let storedPanel = this.data.caching ? utils.getValue('panel') : "";
     if (storedPanel) {
-      this.props.mapData.initial_open_comp = "";
+      mapData.initial_open_comp = "";
     }
     if (mapData.layerswitcher.enable) {
       sbPortal = ReactDOM.createPortal(
@@ -1081,7 +1081,7 @@ export default class MapController extends Component {
             }} target={target}
                             mapController={this} objLayers={this.state.objLayers} styleData={this.state.styleData} tabLayers={this.state.objTabLayers} tabStates={this.state.arrTabLayerStates}
                             layerStates={this.state.arrLayerStates} parentCallback={this.setLayerStates} tabCallback={this.setTabStates}
-                            direction={"right"} open={((this.props.mapData.initial_open_comp === "starboard") || (storedPanel === "StarboardPanel"))} changeCollapseState={this.changeCollapseState} external={this.reactContainer.className.indexOf("c4g-external") !== -1}
+                            direction={"right"} open={((mapData.initial_open_comp === "starboard") || (storedPanel === "StarboardPanel"))} changeCollapseState={this.changeCollapseState} external={this.reactContainer.className.indexOf("c4g-external") !== -1}
             />
           </Suspense>,
           this.reactContainer
@@ -1318,9 +1318,9 @@ export default class MapController extends Component {
               langConstants: langRouteConstants,
               ref: (node) => {this.components.router = node;},
               key: 22,
-              open: this.data.initial_open_comp === "routing" || storedPanel === "RouterView"
+              open: mapData.initial_open_comp === "routing" || storedPanel === "RouterView"
             };
-            let openRouter = this.data.initial_open_comp === "routing"  || storedPanel === "RouterView";
+            let openRouter = mapData.initial_open_comp === "routing"  || storedPanel === "RouterView";
 
             if (!this.routerContainer) {
               if (this.data.router_div) {
@@ -1357,7 +1357,7 @@ export default class MapController extends Component {
             if (!this.editorContainer) {
               if (this.data.editor_div) {
                 this.editorContainer = document.querySelector("." + this.data.editor_div);
-                let openEditor = this.data.initial_open_comp === "editor"  || storedPanel === "EditorView";
+                let openEditor = mapData.initial_open_comp === "editor"  || storedPanel === "EditorView";
                 if (!this.editorContainer) {
                   this.editorContainer = document.createElement('div');
                   this.editorContainer.className = "c4g-sideboard c4g-editor-container-right " + (openEditor ? "c4g-open": "c4g-close");
@@ -1366,7 +1366,7 @@ export default class MapController extends Component {
                   this.editorContainer.className += " c4g-external";
                 }
               } else {
-                let openEditor = this.data.initial_open_comp === "editor"  || storedPanel === "EditorView";
+                let openEditor = mapData.initial_open_comp === "editor"  || storedPanel === "EditorView";
                 this.editorContainer = document.createElement('div');
                 this.editorContainer.className = "c4g-sideboard c4g-editor-container-right " + (openEditor ? "c4g-open": "c4g-close");
                 jQuery(".ol-overlaycontainer-stopevent").append(this.editorContainer);
@@ -1383,7 +1383,7 @@ export default class MapController extends Component {
               caching: mapData.caching,
               ref: (node) => {this.components.editor = node;},
               mapController: this,
-              open: this.data.initial_open_comp === "editor"  || storedPanel === "EditorView"
+              open: mapData.initial_open_comp === "editor"  || storedPanel === "EditorView"
             };
             result.push(ReactDOM.createPortal(React.createElement(EditorComponent, editorProps), this.editorContainer));
           }
