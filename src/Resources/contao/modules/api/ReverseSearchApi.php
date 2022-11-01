@@ -182,7 +182,7 @@ class ReverseSearchApi extends \Frontend
                 $arrResponse = [];
             }
             if (empty($arrResponse)) {
-                return \GuzzleHttp\json_encode([]);
+                return $response;
             }
             $elementResponse = $arrResponse[0];
             $name = $elementResponse->properties->name;
