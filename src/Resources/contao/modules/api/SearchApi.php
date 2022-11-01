@@ -168,10 +168,7 @@ class SearchApi extends \Frontend
             } elseif (is_object($decoded) && property_exists($decoded, 'features')) {
                 $arrResponse = $decoded->features ?? [];
             } else {
-                $arrResponse = [];
-            }
-            if (empty($arrResponse)) {
-                return \GuzzleHttp\json_encode([]);
+                return $response;
             }
             $arrNominatim = [];
             foreach ($arrResponse as $elementResponse) {
