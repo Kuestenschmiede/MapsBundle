@@ -461,7 +461,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             'exclude'                 => true,
             'inputType'               => 'multiColumnWizard',
             'eval'                    => [
-                'columnsCallback'        => ['tl_c4g_map_baselayers','groupColumns']
+                'columnsCallback'        => [$cbClass,'groupColumns']
             ],
             'sql'                     => 'blob NULL'
 
