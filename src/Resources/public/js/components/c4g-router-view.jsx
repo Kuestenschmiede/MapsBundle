@@ -17,11 +17,11 @@ import {Point} from "ol/geom";
 import {Polyline} from "ol/format";
 import {createEmpty, extend, getArea} from "ol/extent";
 import {transform, toLonLat, fromLonLat, transformExtent} from "ol/proj";
-import {Style, Stroke} from "ol/style";
+import {Style, Stroke, Fill} from "ol/style";
 import {Vector, Group} from "ol/layer";
 import {Vector as VectorSource} from "ol/source";
 import {Collection} from "ol";
-import {LineString} from "ol/geom";
+import {LineString, Circle} from "ol/geom";
 import {Modify, Select} from "ol/interaction";
 import OSMXML from 'ol/format/OSMXML';
 import {RoutingPermalink} from "./../c4g-routing-permalink";
@@ -123,6 +123,7 @@ export class RouterView extends Component {
       overAddresses: [],
       featureSource: undefined,
       routerWaySource: undefined,
+      areaCircleSource: undefined,
       routerHintSource: undefined,
       areaPoint: null,
       fromPoint: null,
@@ -946,6 +947,7 @@ export class RouterView extends Component {
 
   init() {
     const self = this;
+    this.mapData = this.props.mapController.data;
 
     let styles = [
       this.props.mapController.data.router_from_locstyle,
@@ -972,6 +974,26 @@ export class RouterView extends Component {
     // Add router layer(s)
     this.routingAltWaySource = new VectorSource();
     this.routerWaySource = new VectorSource();
+    this.areaCircleSource = new VectorSource();
+    let color = this.mapData.areaCircleColor;
+    let style = new Style({
+      fill: new Fill({
+        color: utils.getRgbaFromHexAndOpacity(color, 50)
+      })
+    });
+    this.areaCircleLayer = new Vector({
+      source: this.areaCircleSource,
+      zIndex: -1,
+      style: [
+        style,
+        new Style({
+          stroke: new Stroke({
+            color: 'rgba(0, 51, 119, 0.9)',
+            width: 4
+          })
+        })
+      ]
+    });
     this.routerWayLayer = new Vector({
       source: this.routerWaySource,
       zIndex: 1,
@@ -1118,7 +1140,6 @@ export class RouterView extends Component {
       }
     });
 
-    this.mapData = this.props.mapController.data;
 
     this.locationsSource = new VectorSource();
     this.locationsLayer = new Vector({
@@ -1140,6 +1161,7 @@ export class RouterView extends Component {
     this.routerLayerGroup = new Group({
       layers: new Collection([
         this.routerWayLayer,
+        this.areaCircleLayer,
         this.routerAltWayLayer,
         this.locationsLayer,
         this.routerHintLayer,
@@ -1567,6 +1589,11 @@ export class RouterView extends Component {
     if (!fromPoint) {
       return;
     }
+    let tmpCoords = transform(fromPoint.getCoordinates(), 'EPSG:4326', 'EPSG:3857');
+    let circle = new Circle(tmpCoords, this.state.detourArea * 1000);
+    let feature = new Feature(circle);
+    this.areaCircleSource.clear();
+    this.areaCircleSource.addFeature(feature);
     let fromCoord = [fromPoint.getCoordinates()[1], fromPoint.getCoordinates()[0]];
     let profileId = this.props.mapController.data.profile;
     let url = 'con4gis/areaService/' + profileId + '/' + this.state.layerArea + '/' + this.state.detourArea + '/' + fromCoord;

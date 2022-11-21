@@ -120,6 +120,7 @@ class LoadMapDataListener
                 $mapData['showFeatures'] = $routerConfig->getShowFeatures();
                 $mapData['areaSearch'] = $routerConfig->getAreaSearch();
                 $mapData['areaSearchOnly'] = $routerConfig->getAreaSearchOnly();
+                $mapData['areaCircleColor'] = $routerConfig->getAreaCircleColor();
                 $mapData['areaHeadline'] = $routerConfig->getAreaHeadline();
                 $mapData['featureLabel'] = $routerConfig->getFeatureLabel();
                 $mapData['showInstructions'] = $routerConfig->getShowInstructions();

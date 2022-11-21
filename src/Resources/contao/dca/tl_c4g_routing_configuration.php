@@ -96,7 +96,7 @@ $GLOBALS['TL_DCA'][$strName] = array
         'router_api_selection_3' => 'router_api_key,router_profiles,router_profiles_initial',
         'router_api_selection_4' => 'router_api_key,router_profiles,router_profiles_initial,pirate',
         'router_api_selection_5' => 'router_profiles,router_profiles_initial',
-        'areaSearch'             => 'areaHeadline,areaSearchOnly'
+        'areaSearch'             => 'areaHeadline,areaSearchOnly,areaCircleColor'
     ),
     'fields' => array
     (
@@ -375,6 +375,15 @@ $GLOBALS['TL_DCA'][$strName] = array
             'inputType'               => 'checkbox',
             'sql'                     => null
         ],
+        'areaCircleColor' =>
+        [
+            'exclude'                 => true,
+            'default'                 => 'ee0016',
+            'inputType'               => 'text',
+            'eval'                    => ['maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'],
+            'sql'                     => null
+        ],
+
         'areaHeadline' => [
             'filter'                  => false,
             'inputType'               => 'text',

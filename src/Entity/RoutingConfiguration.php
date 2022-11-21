@@ -268,6 +268,12 @@ class RoutingConfiguration extends BaseEntity
      * @ORM\Column(type="string", length=1)
      */
     protected $areaSearchOnly = '';
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=6)
+     */
+    protected $areaCircleColor = '';
     
     /**
      * @var string
@@ -1018,6 +1024,22 @@ class RoutingConfiguration extends BaseEntity
     public function setAreaSearchOnly(string $areaSearchOnly): void
     {
         $this->areaSearchOnly = $areaSearchOnly;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAreaCircleColor(): string
+    {
+        return $this->areaCircleColor;
+    }
+
+    /**
+     * @param string $areaCircleColor
+     */
+    public function setAreaCircleColor(string $areaCircleColor): void
+    {
+        $this->areaCircleColor = $areaCircleColor;
     }
 
     /**
