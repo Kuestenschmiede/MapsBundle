@@ -96,7 +96,7 @@ $GLOBALS['TL_DCA'][$strName] = array
         'router_api_selection_3' => 'router_api_key,router_profiles,router_profiles_initial',
         'router_api_selection_4' => 'router_api_key,router_profiles,router_profiles_initial,pirate',
         'router_api_selection_5' => 'router_profiles,router_profiles_initial',
-        'areaSearch'             => 'areaHeadline,areaSearchOnly,areaCircleColor'
+        'areaSearch'             => 'areaHeadline,areaSearchOnly,drawCircle,areaCircleColor'
     ),
     'fields' => array
     (
@@ -370,6 +370,12 @@ $GLOBALS['TL_DCA'][$strName] = array
             'sql'                     => null
         ],
         'areaSearchOnly' => [
+            'exclude'                 => true,
+            'default'                 => false,
+            'inputType'               => 'checkbox',
+            'sql'                     => null
+        ],
+        'drawCircle' => [
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',

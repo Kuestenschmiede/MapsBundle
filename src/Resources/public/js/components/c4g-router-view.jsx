@@ -1589,11 +1589,15 @@ export class RouterView extends Component {
     if (!fromPoint) {
       return;
     }
-    let tmpCoords = transform(fromPoint.getCoordinates(), 'EPSG:4326', 'EPSG:3857');
-    let circle = new Circle(tmpCoords, this.state.detourArea * 1000);
-    let feature = new Feature(circle);
-    this.areaCircleSource.clear();
-    this.areaCircleSource.addFeature(feature);
+    let drawCircle = this.mapData.drawCircle;
+    if (drawCircle){
+      let tmpCoords = transform(fromPoint.getCoordinates(), 'EPSG:4326', 'EPSG:3857');
+      let circle = new Circle(tmpCoords, this.state.detourArea * 1000);
+      let feature = new Feature(circle);
+      this.areaCircleSource.clear();
+      this.areaCircleSource.addFeature(feature);
+    }
+
     let fromCoord = [fromPoint.getCoordinates()[1], fromPoint.getCoordinates()[0]];
     let profileId = this.props.mapController.data.profile;
     let url = 'con4gis/areaService/' + profileId + '/' + this.state.layerArea + '/' + this.state.detourArea + '/' + fromCoord;
