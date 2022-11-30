@@ -35,6 +35,8 @@ $GLOBALS['TL_LANG']['tl_module']['element_type_refs']['results'] = "Search resul
 //$GLOBALS['TL_LANG']['tl_module']['element_type_refs']['overviewmap'] = "Overview map";
 $GLOBALS['TL_LANG']['tl_module']['element_type_refs']['filter'] = "Map filter";
 $GLOBALS['TL_LANG']['tl_module']['element_type_refs']['popup'] = "Popup";
+$GLOBALS['TL_LANG']['tl_module']['element_type_refs']['routing'] = "Router";
+$GLOBALS['TL_LANG']['tl_module']['element_type_refs']['routingResults'] = "Router results";
 
 /**
  * Legend

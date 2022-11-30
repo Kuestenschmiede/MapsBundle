@@ -222,15 +222,17 @@ export class RouterView extends Component {
       switcherButtons.push(<button id="c4g-router-button-instructions" className={(this.state.resultMode === "instr" && this.state.openResults) ? "c4g-active" : "c4g-inactive"}
                                    onMouseUp={this.setResultInstr} key={2} title={"Routenhinweise anzeigen"} />);
     }
-    if (switcherButtons.length > 0) {
+    if (!this.props.mapController.data.routerResultDiv) {
+      switcherButtons.unshift(<button className={"c4g-router-hide-form-button " + (this.state.openSettings ? "c4g-active" : "c4g-inactive")}
+                                  onMouseUp={() => {this.setState({openSettings: !this.state.openSettings})}} title={this.languageConstants.ROUTER_SETTINGS}/>)
+    }
+    if (switcherButtons.length > 1) {
       resultSwitcher = (
-        <React.Fragment>
-          <button className={"c4g-router-hide-form-button " + (this.state.openSettings ? "c4g-active" : "c4g-inactive")} onMouseUp={() => {this.setState({openSettings: !this.state.openSettings})}} title={this.languageConstants.ROUTER_SETTINGS}/>
+        <div>
             {switcherButtons}
-        </React.Fragment>
+        </div>
       );
     }
-
     return (
       <div className={"c4g-router-wrapper"}>
         <Suspense fallback={<div>Loading...</div>}>
@@ -240,13 +242,11 @@ export class RouterView extends Component {
         <React.Fragment>
           {modeSwitcher}
           <div className={"c4g-router-switcher"}>
-            <div>
-              {resultSwitcher}
-            </div>
+            {resultSwitcher}
           </div>
         </React.Fragment>
         <Suspense fallback={<div>"loading"</div>}>
-          <RouterControls router={this} open={this.state.open && this.state.openSettings} setOpen={this.openControls} profiles={this.state.profiles} className={"c4g-router-panel"}
+          <RouterControls router={this} open={this.props.mapController.data.routerResultDiv || (this.state.open && this.state.openSettings)} setOpen={this.openControls} profiles={this.state.profiles} className={"c4g-router-panel"}
                           objSettings={this.state.objSettings} objFunctions={this.objFunctions} overSettings={overSettings} enableOverPoints={this.props.mapController.data.enableOverPoints}
                           sources={sources} layers={this.props.mapController.data.routerLayers} containerAddresses={this.state.containerAddresses} resetFunctions={resetFunctions}
                           mapController={this.props.mapController} currentProfile={this.state.currentProfile} fromAddress={this.state.fromAddress} switchTargets={this.props.mapController.data.enableTargetSwitch}
@@ -254,7 +254,7 @@ export class RouterView extends Component {
           />
         </Suspense>
         <Suspense fallback={<div>"loading"</div>}>
-          <RouterResultContainer visible={this.state.open} open={this.state.open && this.state.openResults} setOpen={this.setOpen} direction={"bottom"} className={"c4g-router-result-container"} mapController={this.props.mapController}
+          <RouterResultContainer visible={this.state.open} open={this.props.mapController.data.routerResultDiv || (this.state.open && this.state.openResults)} setOpen={this.setOpen} direction={"bottom"} className={"c4g-router-result-container"} mapController={this.props.mapController}
                                  mode={this.state.mode} setResultFeat={this.setResultFeat} routerInstructions={this.state.routerInstructions} featureList={this.state.featureList} routerWaySource={this.state.routerWaySource} detour={this.state.detourArea}
                                  layerRoute={this.state.layerRoute} layerValueRoute={this.state.layerValueRoute} layerArea={this.state.layerArea} resultMode={this.state.resultMode} router={this}
                                  layerValueArea={this.state.layerValueArea} routerHintSource={this.state.routerHintSource} featureSource={this.state.featureSource} profile={this.state.currentProfile}

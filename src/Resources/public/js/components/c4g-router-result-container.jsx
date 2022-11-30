@@ -13,6 +13,7 @@ import GPX from "ol/format/GPX";
 import GeoJSON from "ol/format/GeoJSON";
 import {toHumanDistance, toHumanTime} from "../c4g-router-time-conversions";
 import {Titlebar} from "./c4g-titlebar.jsx";
+import ReactDOM from "react-dom";
 const RouterInstructionsContainer = React.lazy(() => import('./c4g-router-instructions-container.jsx'));
 const RouterFeatureList = React.lazy(() => import('./c4g-router-feature-list.jsx'));
 
@@ -164,12 +165,21 @@ export class RouterResultContainer extends Component {
         </Suspense>
     }
     if (this.props.open) {
-      return (
-        <div className={this.props.className + (this.props.open ? " c4g-open" : " c4g-close")
-        + (this.props.open ? " c4g-details-open" : "")}>
+      let element = document.querySelector("." + this.props.mapController.data.routerResultDiv);
+      if (element) {
+        let portal = ReactDOM.createPortal(<div className={this.props.className + (this.props.open ? " c4g-open" : " c4g-close")
+            + (this.props.open ? " c4g-details-open" : "")}>
           {result}
-        </div>
-      );
+        </div>, element);
+
+        return portal;
+      } else {
+        return (<div className={this.props.className + (this.props.open ? " c4g-open" : " c4g-close")
+            + (this.props.open ? " c4g-details-open" : "")}>
+          {result}
+        </div>);
+      }
+
     } else {
       return null;
     }

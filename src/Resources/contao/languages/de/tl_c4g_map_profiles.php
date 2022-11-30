@@ -246,12 +246,10 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['baselayer'] = "
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['permalink'] = "Permalink";
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['search'] = "Suche";
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['results'] = "Suchergebnisse";
-//$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['measuretools'] = "Messwerkzeuge";
-//$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['legend'] = "Legende";
-//$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['overviewmap'] = "Übersichtskarte";
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['filter'] = "Kartenfilter";
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['popup'] = "Popup";
-
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['routing'] = "Router";
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['routingResults'] = "Router-Ergebnisse";
 
 /**
  * Info text
@@ -284,4 +282,3 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['location_legend'] = 'Position Nutzer
 /** references */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['routing'] = ['Router', 'Fügt einen Button in der Karte hinzu, mit dem der Router geöffnet werden kann.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp']['refs']['routing'] = 'Router';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['routing'] = "Router";

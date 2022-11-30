@@ -60,6 +60,9 @@ class LoadMapDataListener
         if ($externalComponents && in_array('routing', $externalComponents)) {
             $mapData['router_div'] = $externalClasses['routing'];
         }
+        if ($externalComponents && in_array('routingResults', $externalComponents)) {
+            $mapData['routerResultDiv'] = $externalClasses['routingResults'];
+        }
         if ($enabled) {
             $routerConfig = $this->entityManager->getRepository(RoutingConfiguration::class)
                 ->findOneBy(['id' => $profile->routerConfig]);

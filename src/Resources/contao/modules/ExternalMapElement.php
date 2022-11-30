@@ -30,7 +30,8 @@ class ExternalMapElement extends Module
         'filter' => "c4g-external-filter-container",
         'routing' => "c4g-external-router-container",
         'popup' => "c4g-external-popup-container",
-        'results' => "c4g-external-results-container"
+        'results' => "c4g-external-results-container",
+        'routingResults' => "c4g-external-router-results-container"
     ];
     
     /**

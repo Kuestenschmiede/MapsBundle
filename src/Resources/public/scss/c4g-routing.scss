@@ -743,8 +743,18 @@ button.c4g-router-input-clear:before {
     max-height: calc(var(--map-height) - .4em - ((32px + .4em) * 2));
     overflow-y: auto;
 }
+.c4g-external-router-results-container > .c4g-router-result-container {
+    width: 100%;
+    transition: all 0.3s;
+    max-height: var(--map-height);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.c4g-external-router-results-container {
+    height: var(--map-height);
+}
 
-.c4g-router-content {
+    .c4g-router-content {
     width: calc(100% - .8em);
 }
 

@@ -248,11 +248,10 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['baselayer'] = "
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['permalink'] = "Permalink";
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['search'] = "Search";
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['results'] = "Search results";
-//$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['measuretools'] = "Measuretools";
-//$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['legend'] = "Legend";
-//$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['overviewmap'] = "Overview map";
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['filter'] = "Mapfilter";
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['popup'] = "Popup";
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['routing'] = "Router";
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['routingResults'] = "Router results";
 
 
 /**

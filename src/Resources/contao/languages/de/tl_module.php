@@ -35,6 +35,8 @@ $GLOBALS['TL_LANG']['tl_module']['element_type_refs']['results'] = "Suchergebnis
 //$GLOBALS['TL_LANG']['tl_module']['element_type_refs']['overviewmap'] = "Übersichtskarte";
 $GLOBALS['TL_LANG']['tl_module']['element_type_refs']['filter'] = "Kartenfilter";
 $GLOBALS['TL_LANG']['tl_module']['element_type_refs']['popup'] = "Popup";
+$GLOBALS['TL_LANG']['tl_module']['element_type_refs']['routing'] = "Router";
+$GLOBALS['TL_LANG']['tl_module']['element_type_refs']['routingResults'] = "Routing-Ergebnisse";
 
 /**
  * Legend

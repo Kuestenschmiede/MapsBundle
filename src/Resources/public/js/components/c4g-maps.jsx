@@ -395,7 +395,7 @@ export default class MapController extends Component {
     // check userposition
     if (mapData.geolocation && !permalink) {
       let funcLocation = function (evt) {
-        view.setCenter(this.geolocation.getPosition());
+        view.setCenter(this.getPosition());
         if (mapData.geolocation_zoom) {
           view.setZoom(parseInt(mapData.geolocation_zoom, 10));
         }
