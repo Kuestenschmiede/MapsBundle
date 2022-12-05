@@ -947,9 +947,9 @@ export default class MapController extends Component {
     let newLayerState = this.state.arrLayerStates;
     for (let stateId in newLayerState) {
       if (newLayerState.hasOwnProperty(stateId)) {
-        if (this.state.objLayers[stateId].activateWithBl !== "all") {
+        if (this.state.objLayers[stateId].activeForBaselayers !== "all") {
           let oldState = newLayerState[stateId].active;
-          newLayerState[stateId].active = !!this.state.objLayers[stateId].activateWithBl.find((element) => element === baseLayerId);
+          newLayerState[stateId].active = !!this.state.objLayers[stateId].activeForBaselayers.find((element) => element === baseLayerId);
           if (oldState !== newLayerState[stateId].active) {
             if (newLayerState[stateId].active) {
               this.proxy.layerController.show(this.state.objLayers[stateId].id, this.state.objLayers[stateId].features || this.state.objLayers[stateId].vectorLayer)
@@ -972,9 +972,9 @@ export default class MapController extends Component {
   }
 
   changeActiveLayerChilds (childState, child, baseLayerId) {
-    if (child.activateWithBl !== "all") {
+    if (child.activeForBaselayers !== "all") {
       let oldState = childState.active;
-      childState.active = !!child.activateWithBl.find((element) => element === baseLayerId);
+      childState.active = !!child.activeForBaselayers.find((element) => element === baseLayerId);
       if (oldState !== childState.active) {
         if (childState.active) {
           this.proxy.layerController.show(child.id, child.features || child.vectorLayer)

@@ -763,17 +763,17 @@ export class BetterLayerController {
       for (let featureId in features) {
         if (features.hasOwnProperty(featureId)) {
           childs.push({
-            "features"        : [features[featureId]],
-            "vectorLayer"     : false,
-            "zoom"            : layer.zoom,
-            "initial_opened"  : layer.initial_opened,
-            "locstyle"        : possibleLocstyle,
-            "zoomTo"          : zoomTo,
-            "activateWithBl"  : layer.activeForBaselayers,
-            "id"              : features[featureId].ol_uid,
-            "name"            : features[featureId].get(nameField),
-            "hide"            : hide,
-            "childs"          : []
+            "features"            : [features[featureId]],
+            "vectorLayer"         : false,
+            "zoom"                : layer.zoom,
+            "initial_opened"      : layer.initial_opened,
+            "locstyle"            : possibleLocstyle,
+            "zoomTo"              : zoomTo,
+            "activeForBaselayers" : layer.activeForBaselayers,
+            "id"                  : features[featureId].ol_uid,
+            "name"                : features[featureId].get(nameField),
+            "hide"                : hide,
+            "childs"              : []
           })
         }
       }
@@ -1058,20 +1058,20 @@ export class BetterLayerController {
     }
     else {
       return {
-        "features"        : features,
-        "vectorLayer"     : vectorLayer,
-        "loader"          : loaderId,
-        "zoom"            : layer.zoom,
-        "initial_opened"  : layer.initial_opened,
-        "locstyle"        : possibleLocstyle,
-        "activateWithBl"  : layer.activeForBaselayers,
-        "popup"           : popup || layer.popup,
-        "id"              : layer.id,
-        "name"            : layer.name,
-        "tags"            : layer.tags,
-        "hide"            : hide,
-        "childs"          : childs,
-        "zoomTo"          : layer.zoomTo
+        "features"            : features,
+        "vectorLayer"         : vectorLayer,
+        "loader"              : loaderId,
+        "zoom"                : layer.zoom,
+        "initial_opened"      : layer.initial_opened,
+        "locstyle"            : possibleLocstyle,
+        "activeForBaselayers" : layer.activeForBaselayers,
+        "popup"               : popup || layer.popup,
+        "id"                  : layer.id,
+        "name"                : layer.name,
+        "tags"                : layer.tags,
+        "hide"                : hide,
+        "childs"              : childs,
+        "zoomTo"              : layer.zoomTo
       };
     }
   }

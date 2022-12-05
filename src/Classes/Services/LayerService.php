@@ -373,7 +373,8 @@ class LayerService
         }
 
         if ($objLayer->filterByBaseLayer && \Contao\StringUtil::deserialize($objLayer->filterByBaseLayer)) {
-            $arrLayerData['activeForBaselayers'] = \Contao\StringUtil::deserialize($objLayer->filterByBaseLayer);
+            $arrFilter = \Contao\StringUtil::deserialize($objLayer->filterByBaseLayer);
+            $arrLayerData['activeForBaselayers'] = array_map('intval', $arrFilter);
         } else {
             $arrLayerData['activeForBaselayers'] = 'all';
         }
@@ -434,14 +435,15 @@ class LayerService
 
         if ($arrLayerData['activeForBaselayers'] === 'all' && $parentLayer) {
             if ($parentLayer->filterByBaseLayer) {
-                $arrLayerData['activeForBaselayers'] = \Contao\StringUtil::deserialize($parentLayer->filterByBaseLayer);
+                $arrFilter = \Contao\StringUtil::deserialize($parentLayer->filterByBaseLayer);
+                $arrLayerData['activeForBaselayers'] = array_map('intval', $arrFilter);
             } else {
                 // check parents if they have a baselayer filter
                 $layer = C4gMapsModel::findByPk($parentLayer->id);
                 while ($layer->pid != 0) {
                     if ($layer->filterByBaseLayer) {
-                        $arrLayerData['activeForBaselayers'] = \Contao\StringUtil::deserialize($layer->filterByBaseLayer);
-
+                        $arrFilter = \Contao\StringUtil::deserialize($layer->filterByBaseLayer);
+                        $arrLayerData['activeForBaselayers'] = array_map('intval', $arrFilter);
                         break;
                     }
                     $layer = C4gMapsModel::findByPk($layer->pid);
@@ -489,8 +491,8 @@ class LayerService
 
         // set baselayer filter
         if ($linkedLayer->filterByBaseLayer) {
-            $arrLayerData['activeForBaselayers'] = \Contao\StringUtil::deserialize($linkedLayer->filterByBaseLayer);
-        }
+            $arrFilter = \Contao\StringUtil::deserialize($linkedLayer->filterByBaseLayer);
+            $arrLayerData['activeForBaselayers'] = array_map('intval', $arrFilter);        }
 
         // set zooms of links
         if ($linkedLayer->loc_minzoom > 0 || $linkedLayer->loc_maxzoom > 0) {
