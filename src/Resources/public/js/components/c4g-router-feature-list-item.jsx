@@ -123,6 +123,7 @@ export class RouterFeatureListItem extends Component {
         let layerValue = this.props.routeMode === "route" ? this.props.layerValueRoute : this.props.layerValueArea;
         objHook =  {
           entry: "",
+          id: this.props.counter,
           feature: this.props.feature,
           // values: values,
           labels: ['name'],

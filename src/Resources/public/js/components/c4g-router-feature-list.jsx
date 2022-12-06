@@ -42,7 +42,7 @@ export default class RouterFeatureList extends Component {
             return <RouterFeatureListItem feature={feature} refProp={this.features[feature.id]} type={this.props.featureList.type} active={this.props.activeId === feature.id}
                                           setActiveId={this.props.setActiveId} routeMode={this.props.routeMode} mapController={this.props.mapController}
                                           layerRoute={this.props.layerRoute} layerArea={this.props.layerArea} featureSource={this.props.featureSource}
-                                          key={index} layerValueRoute={this.props.layerValueRoute} layerValueArea={this.props.layerValueArea}/>
+                                          counter={index} key={index} layerValueRoute={this.props.layerValueRoute} layerValueArea={this.props.layerValueArea}/>
           })}
         </ul>
       </div>
