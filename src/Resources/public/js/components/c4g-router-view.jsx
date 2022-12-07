@@ -276,8 +276,7 @@ export class RouterView extends Component {
   }
 
   close() {
-    this.openControls(false);
-    jQuery(this.props.mapController.routerContainer).removeClass("c4g-open").addClass("c4g-close");
+    this.setState({open: false});
   }
 
   getProfileById(id) {
@@ -1895,11 +1894,11 @@ export class RouterView extends Component {
             contentFeature.set('styleId', locstyle);
             if (self.props.mapController.data.hideFeaturesWithoutLabel) {
               if (label && label !== "") {
-                unstyledFeatures.push(contentFeature);
+                contentFeatures.push(contentFeature);
                 missingStyles[locstyle] = locstyle;
               }
             } else {
-              unstyledFeatures.push(contentFeature);
+              contentFeatures.push(contentFeature);
               missingStyles[locstyle] = locstyle;
             }
           }
@@ -1949,13 +1948,12 @@ export class RouterView extends Component {
     if (missingStyles && missingStyles.length > 0) {
       self.props.mapController.proxy.locationStyleController.loadLocationStyles(missingStyles, {
         done: function () {
-          for (let i = 0; i < unstyledFeatures.length; i++) {
-            var styleId = unstyledFeatures[i].get('styleId');
+          for (let i = 0; i < contentFeatures.length; i++) {
+            var styleId = contentFeatures[i].get('styleId');
             if (!self.props.mapController.proxy.locationStyleController.arrLocStyles[styleId].style) {
               self.props.mapController.proxy.locationStyleController.arrLocStyles[styleId].style = self.props.mapController.proxy.locationStyleController.arrLocStyles[styleId].getStyleFunction();
             }
-            unstyledFeatures[i].setStyle(self.props.mapController.proxy.locationStyleController.arrLocStyles[styleId].style);
-            self.routerFeaturesSource.addFeature(unstyledFeatures[i]);
+            contentFeatures[i].setStyle(self.props.mapController.proxy.locationStyleController.arrLocStyles[styleId].style);
           }
           self.setState({
             featureSource: self.routerFeaturesSource

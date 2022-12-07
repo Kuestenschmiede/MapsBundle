@@ -22,9 +22,54 @@ export class RouterFeatureListItem extends Component {
 
   constructor(props) {
     super(props);
+    const scope = this;
     this.popupFunctions = props.mapController.data.lang === "de" ? popupFunctionsDE : popupFunctionsEN;
     this.clickFeature = this.clickFeature.bind(this);
+    let currentFeature = null;
+    if (props.featureSource && props.featureSource.forEachFeature) {
+      props.featureSource.forEachFeature(function (feature) {
+        if (feature.get('tid') === scope.props.feature.id) {
+          currentFeature = feature;
+        }
+      });
+    }
+    let featureEntryContent = "";
+    let objHook = null;
+    let element = null;
+    if (currentFeature) {
+      if (props.type === "overpass") {
+        if (currentFeature.get('locstyle')) {
+          let styleId = currentFeature.get('locstyle');
+          let styleSrc = '';
+          let locstyle = props.mapController.proxy.locationStyleController.arrLocStyles[styleId];
+          if (locstyle && locstyle.locStyleArr) {
+            styleSrc = locstyle.locStyleArr.styletype === "cust_icon" ? locstyle.locStyleArr.icon_src : locstyle.locStyleArr.styletype === "cust_icon_svg" ? locstyle.locStyleArr.svgSrc : "";
+          }
+          featureEntryContent = this.popupFunctions.fnStandardInfoPopup(currentFeature, styleSrc);
+        }
+      } else if (props.type === "notOverpass") {
+        if (props.feature && props.feature.popup) {
+          featureEntryContent = props.feature.popup;
+        }
+      } else {
+        let layerValue = props.routeMode === "route" ? props.layerValueRoute : props.layerValueArea;
+        objHook =  {
+          entry: "",
+          id: props.counter,
+          feature: props.feature,
+          // values: values,
+          labels: ['name'],
+          activeLayerValue: layerValue
+        };
+        utils.callHookFunctions(window.c4gMapsHooks.routePluginEntry, objHook);
+        featureEntryContent = objHook.entry;
+      }
+      element = {__html: featureEntryContent + "<br>"};
 
+    }
+    this.state = {
+      element: element
+    };
   }
   clickFeature (event) {
     const scope = this;
@@ -91,51 +136,10 @@ export class RouterFeatureListItem extends Component {
     jQuery(this).addClass(cssConstants.ACTIVE).removeClass(cssConstants.INACTIVE);
     // jQuery("div.c4g-portside-content-container").animate({scrollTop: entry.offsetTop - 300});
   }
-
   render() {
-    const scope = this;
-    let currentFeature = null;
-    if (this.props.featureSource && this.props.featureSource.forEachFeature) {
-      this.props.featureSource.forEachFeature(function (feature) {
-        if (feature.get('tid') === scope.props.feature.id) {
-          currentFeature = feature;
-        }
-      });
-    }
-    let featureEntryContent = "";
-    let objHook = null;
-    if (currentFeature) {
-      if (this.props.type === "overpass") {
-        if (currentFeature.get('locstyle')) {
-          let styleId = currentFeature.get('locstyle');
-          let styleSrc = '';
-          let locstyle = this.props.mapController.proxy.locationStyleController.arrLocStyles[styleId];
-          if (locstyle && locstyle.locStyleArr) {
-            styleSrc = locstyle.locStyleArr.styletype === "cust_icon" ? locstyle.locStyleArr.icon_src : locstyle.locStyleArr.styletype === "cust_icon_svg" ? locstyle.locStyleArr.svgSrc : "";
-          }
-          featureEntryContent = this.popupFunctions.fnStandardInfoPopup(currentFeature, styleSrc);
-        }
-      } else if (this.props.type === "notOverpass") {
-        if (this.props.feature && this.props.feature.popup) {
-          featureEntryContent = this.props.feature.popup;
-        }
-      } else {
-        let layerValue = this.props.routeMode === "route" ? this.props.layerValueRoute : this.props.layerValueArea;
-        objHook =  {
-          entry: "",
-          id: this.props.counter,
-          feature: this.props.feature,
-          // values: values,
-          labels: ['name'],
-          // router: scope,
-          activeLayerValue: layerValue
-        };
-        utils.callHookFunctions(window.c4gMapsHooks.routePluginEntry, objHook);
-        featureEntryContent = objHook.entry;
-      }
-      let element = {__html: featureEntryContent + "<br>"};
+    if (this.state.element) {
       return (
-        <li ref={this.props.refProp} dangerouslySetInnerHTML={element} className={this.props.active ? "route-features-list-element c4g-active": "route-features-list-element c4g-inactive"} onMouseUp={this.clickFeature}/>
+          <li ref={this.props.refProp} dangerouslySetInnerHTML={this.state.element} className={this.props.active ? "route-features-list-element c4g-active": "route-features-list-element c4g-inactive"} onMouseUp={this.clickFeature}/>
       );
     }
     return null;
