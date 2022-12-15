@@ -185,7 +185,22 @@ export class RouterResultContainer extends Component {
     }
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps, prevState) {
+    if (!prevProps.open && this.props.open) {
+      let element = document.querySelector("." + this.props.mapController.data.routerResultDiv);
+      if (element) {
+        element.parentElement.className = element.parentElement.className.replace("c4g-close", "") + " c4g-open"
+      }
+    }
+    else if (prevProps.open && !this.props.open) {
+      if (!prevProps.open && this.props.open) {
+        let element = document.querySelector("." + this.props.mapController.data.routerResultDiv);
+        if (element) {
+          element.parentElement.className =element.parentElement.className.replace("c4g-open", "") + " c4g-close"
+        }
+      }
+    }
+
     let className = this.props.className + (this.props.open ? " c4g-open" : " c4g-close");
     let container = document.getElementsByClassName(className)[0];
     let controlContainer = document.querySelector(".c4g-router-panel.c4g-open");

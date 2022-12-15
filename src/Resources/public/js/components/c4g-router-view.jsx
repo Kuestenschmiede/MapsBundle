@@ -254,7 +254,7 @@ export class RouterView extends Component {
           />
         </Suspense>
         <Suspense fallback={<div>"loading"</div>}>
-          <RouterResultContainer visible={this.state.open} open={this.props.mapController.data.routerResultDiv || (this.state.open && this.state.openResults)} setOpen={this.setOpen} direction={"bottom"} className={"c4g-router-result-container"} mapController={this.props.mapController}
+          <RouterResultContainer visible={this.state.open} open={(this.state.open && this.state.openResults)} setOpen={this.setOpen} direction={"bottom"} className={"c4g-router-result-container"} mapController={this.props.mapController}
                                  mode={this.state.mode} setResultFeat={this.setResultFeat} routerInstructions={this.state.routerInstructions} featureList={this.state.featureList} routerWaySource={this.state.routerWaySource} detour={this.state.detourArea}
                                  layerRoute={this.state.layerRoute} layerValueRoute={this.state.layerValueRoute} layerArea={this.state.layerArea} resultMode={this.state.resultMode} router={this}
                                  layerValueArea={this.state.layerValueArea} routerHintSource={this.state.routerHintSource} featureSource={this.state.featureSource} profile={this.state.currentProfile}
