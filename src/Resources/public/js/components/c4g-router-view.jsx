@@ -989,7 +989,8 @@ export class RouterView extends Component {
           stroke: new Stroke({
             color: 'rgba(0, 51, 119, 0.9)',
             width: 4
-          })
+          }),
+          zIndex: -1
         })
       ]
     });
