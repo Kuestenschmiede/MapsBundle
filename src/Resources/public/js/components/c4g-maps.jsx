@@ -13,6 +13,7 @@ import {cssConstants} from "../c4g-maps-constant";
 import {Spinner} from "../c4g-maps-misc-spinner";
 import {MapHover} from "../c4g-maps-misc-maphover";
 import {Group as LayerGroup} from 'ol/layer';
+import Control from 'ol/control/Control';
 import {utils} from "../c4g-maps-utils";
 import {MapsControls} from "../c4g-maps-controls";
 import {getLanguage} from "../c4g-maps-i18n";
@@ -855,6 +856,16 @@ export default class MapController extends Component {
     });
     if (mapData.userLocation) {
       let geolocation = new UserPosition(this);
+    }
+
+    if (window.c4gMapsHooks.addControls) {
+      let arrResult = [];
+      utils.callHookFunctions(window.c4gMapsHooks.addControls, arrResult);
+      for (let i in arrResult) {
+        if (arrResult.hasOwnProperty(i)) {
+          this.map.addControl(new Control(arrResult[i]));
+        }
+      }
     }
   }
 
