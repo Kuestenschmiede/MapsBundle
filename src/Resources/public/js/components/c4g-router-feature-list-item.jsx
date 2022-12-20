@@ -25,8 +25,12 @@ export class RouterFeatureListItem extends Component {
     const scope = this;
     this.popupFunctions = props.mapController.data.lang === "de" ? popupFunctionsDE : popupFunctionsEN;
     this.clickFeature = this.clickFeature.bind(this);
+    let element = null;
+    if (props.layerValueRoute || props.layerValueArea) {
+      element = this.getElement();
+    }
     this.state = {
-      element: null
+      element: element
     };
   }
   clickFeature (event) {
@@ -98,54 +102,56 @@ export class RouterFeatureListItem extends Component {
     if (!this.state.element ||
         this.props.layerValueRoute !== prevProps.layerValueRoute ||
         this.props.layerValueArea !== prevProps.layerValueArea){ //only get popup if not already set or layer changes
-      const scope = this;
-      let currentFeature = null;
-      if (this.props.featureSource && this.props.featureSource.forEachFeature) {
-        this.props.featureSource.forEachFeature(function (feature) {
-          if (feature.get('tid') === scope.props.feature.id) {
-            currentFeature = feature;
-          }
-        });
-      }
-      let featureEntryContent = "";
-      let objHook = null;
-      if (currentFeature) {
-        if (this.props.type === "overpass") {
-          if (currentFeature.get('locstyle')) {
-            let styleId = currentFeature.get('locstyle');
-            let styleSrc = '';
-            let locstyle = this.props.mapController.proxy.locationStyleController.arrLocStyles[styleId];
-            if (locstyle && locstyle.locStyleArr) {
-              styleSrc = locstyle.locStyleArr.styletype === "cust_icon" ? locstyle.locStyleArr.icon_src : locstyle.locStyleArr.styletype === "cust_icon_svg" ? locstyle.locStyleArr.svgSrc : "";
-            }
-            featureEntryContent = this.popupFunctions.fnStandardInfoPopup(currentFeature, styleSrc);
-          }
-        } else if (this.props.type === "notOverpass") {
-          if (this.props.feature && this.props.feature.popup) {
-            featureEntryContent = this.props.feature.popup;
-          }
-        } else {
-          let layerValue = this.props.routeMode === "route" ? this.props.layerValueRoute : this.props.layerValueArea;
-          objHook =  {
-            entry: "",
-            id: this.props.counter,
-            feature: this.props.feature,
-            // values: values,
-            labels: ['name'],
-            activeLayerValue: layerValue
-          };
-          utils.callHookFunctions(window.c4gMapsHooks.routePluginEntry, objHook);
-          featureEntryContent = objHook.entry;
-        }
-        let element = {__html: featureEntryContent + "<br>"};
-        this.setState({
-          element: element
-        });
-      }
+      this.setState({
+        element: this.getElement()
+      })
     }
 
   }
-
+  getElement () {
+    const scope = this;
+    let currentFeature = null;
+    if (this.props.featureSource && this.props.featureSource.forEachFeature) {
+      this.props.featureSource.forEachFeature(function (feature) {
+        if (feature.get('tid') === scope.props.feature.id) {
+          currentFeature = feature;
+        }
+      });
+    }
+    let featureEntryContent = "";
+    let objHook = null;
+    if (currentFeature) {
+      if (this.props.type === "overpass") {
+        if (currentFeature.get('locstyle')) {
+          let styleId = currentFeature.get('locstyle');
+          let styleSrc = '';
+          let locstyle = this.props.mapController.proxy.locationStyleController.arrLocStyles[styleId];
+          if (locstyle && locstyle.locStyleArr) {
+            styleSrc = locstyle.locStyleArr.styletype === "cust_icon" ? locstyle.locStyleArr.icon_src : locstyle.locStyleArr.styletype === "cust_icon_svg" ? locstyle.locStyleArr.svgSrc : "";
+          }
+          featureEntryContent = this.popupFunctions.fnStandardInfoPopup(currentFeature, styleSrc);
+        }
+      } else if (this.props.type === "notOverpass") {
+        if (this.props.feature && this.props.feature.popup) {
+          featureEntryContent = this.props.feature.popup;
+        }
+      } else {
+        let layerValue = this.props.routeMode === "route" ? this.props.layerValueRoute : this.props.layerValueArea;
+        objHook =  {
+          entry: "",
+          id: this.props.counter,
+          feature: this.props.feature,
+          // values: values,
+          labels: ['name'],
+          activeLayerValue: layerValue
+        };
+        utils.callHookFunctions(window.c4gMapsHooks.routePluginEntry, objHook);
+        featureEntryContent = objHook.entry;
+      }
+      let element = {__html: featureEntryContent + "<br>"};
+      return element;
+    }
+  }
   render() {
     if (this.state.element) {
       return (
