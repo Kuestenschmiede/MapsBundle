@@ -184,19 +184,20 @@ export class RouterResultContainer extends Component {
       return null;
     }
   }
-
   componentDidUpdate(prevProps, prevState) {
     if (!prevProps.open && this.props.open) {
       let element = document.querySelector("." + this.props.mapController.data.routerResultDiv);
       if (element) {
-        element.parentElement.className = element.parentElement.className.replace("c4g-close", "") + " c4g-open"
+        element.parentElement.className = element.parentElement.className.replace("c4g-close", "") + " c4g-open";
+        this.props.mapController.map.updateSize();
       }
     }
     else if (prevProps.open && !this.props.open) {
       if (!prevProps.open && this.props.open) {
         let element = document.querySelector("." + this.props.mapController.data.routerResultDiv);
         if (element) {
-          element.parentElement.className =element.parentElement.className.replace("c4g-open", "") + " c4g-close"
+          element.parentElement.className = element.parentElement.className.replace("c4g-open", "") + " c4g-close";
+          this.props.mapController.map.updateSize();
         }
       }
     }
