@@ -25,6 +25,12 @@ class FeatureFilter implements \JsonSerializable
     private $image = '';
 
     /**
+     * Path to the link.
+     * @var string
+     */
+    private $link = '';
+
+    /**
      * The options for the filter field.
      * ToDo why this new translation way?
      * @var array
@@ -61,6 +67,7 @@ class FeatureFilter implements \JsonSerializable
             'name' => $this->fieldName,
             'image' => $this->image,
             'filters' => $this->filters,
+            'link' => $this->link,
             'width' => $this->image && getimagesize($this->image) ? getimagesize($this->image)[0] : '100%',
             'height' => $this->image && getimagesize($this->image) ? getimagesize($this->image)[1] : '100%',
 
@@ -97,6 +104,22 @@ class FeatureFilter implements \JsonSerializable
     public function setImage(string $image): void
     {
         $this->image = $image;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLink(): string
+    {
+        return $this->link;
+    }
+
+    /**
+     * @param string $link
+     */
+    public function setLink(string $link): void
+    {
+        $this->link = $link;
     }
 
     /**

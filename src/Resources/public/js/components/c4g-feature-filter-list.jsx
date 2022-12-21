@@ -47,12 +47,25 @@ export class FeatureFilterList extends Component {
             let liClass = "c4g-item-checked c4g-item-"+utils.removeUmlauts(this.props.feature.name);
             liClass += this.props.checkedItem.identifier === "all" ? "" : " clicked";
             let img = null;
+            let clickEvent = null;
+            if (!this.props.feature.link) {
+                clickEvent = (evt) => {
+                    this.props.filterLayers(this.props.feature.filters[1].identifier !== this.props.checkedItem.identifier ? this.props.feature.filters[1].identifier : "all", this.props.id, this.props.feature.filters[1].identifier !== this.props.checkedItem.identifier ? this.props.feature.filters[1].value :undefined, this.props.feature.filters[1].identifier !== this.props.checkedItem.identifier ? this.props.feature.filters[1].field : undefined);
+                    evt.stopPropagation();
+                    evt.preventDefault()
+                };
+            }
+            else {
+                clickEvent = (evt) => {
+                    window.open(this.props.feature.link, "_self");
+                }
+            }
             if (this.props.feature.image) {
                 img = <img src={this.props.feature.image} title={this.props.feature.name} width={this.props.feature.width} height={this.props.feature.height}/>;
             }
             return (<li className={liClass}>
                 {img}
-                <strong className={className} onMouseUp={(evt) => {this.props.filterLayers(this.props.feature.filters[1].identifier !== this.props.checkedItem.identifier ? this.props.feature.filters[1].identifier : "all", this.props.id, this.props.feature.filters[1].identifier !== this.props.checkedItem.identifier ? this.props.feature.filters[1].value :undefined, this.props.feature.filters[1].identifier !== this.props.checkedItem.identifier ? this.props.feature.filters[1].field : undefined); evt.stopPropagation(); evt.preventDefault();}}>{utils.decodeHTML(this.props.feature.name)}</strong>
+                <strong className={className} onMouseUp={clickEvent}>{utils.decodeHTML(this.props.feature.name)}</strong>
             </li>);
         }
     }
