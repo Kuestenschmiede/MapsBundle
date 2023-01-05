@@ -442,7 +442,6 @@ class LayerContentService
         $pidOption = '';
         $whereClause = '';
         $qWhere = '';
-        $addBeWhereClause = '';
         $and = '';
         $objConfig = C4gMapTablesModel::findByPk($objLayer->tab_source);
         $sourceTable = $objConfig->tableSource;
@@ -483,7 +482,11 @@ class LayerContentService
                             //ToDo filter after select
                         } else {
                             $arrPtableField = \Contao\StringUtil::deserialize($ptableField);
-                            $pidOption .= $and . "$ptableField = $sourcePid ";
+                            if (count($arrPtableField)) {
+                                $pidOption .= $and . "$arrPtableField[0] = $sourcePid ";
+                            } else {
+                                $pidOption .= $and . "$ptableField = $sourcePid ";
+                            }
                         }
                     } else {
                         $pidOption .= "`pid` = '$sourcePid'  ";
@@ -491,9 +494,7 @@ class LayerContentService
                 }
             }
         }
-        if ($objLayer->tab_whereclause) {
-            $addBeWhereClause = ' WHERE ' . $objLayer->tab_whereclause;
-        }
+
         $stmt = '';
 
         if ($objLayer->tab_filter_alias) {
@@ -527,13 +528,24 @@ class LayerContentService
                     $stmt .= ' (pid = "' . $sourcePid . '")';
                 }
             }
+
+            if ($stmt && $objLayer->tab_whereclause) {
+                $stmt .= ' ('.$objLayer->tab_whereclause.')';
+            } else if ($objLayer->tab_whereclause) {
+                if ($qWhere && $pidOption) {
+                    $stmt = ' AND';
+                } elseif (!$qWhere) {
+                    $stmt = ' WHERE';
+                }
+                $stmt .= ' ('.$objLayer->tab_whereclause.')';
+            }
         }
         if ($sourceTable) {
-            $queryCount = "SELECT COUNT(*) AS count FROM `$sourceTable`" . $qWhere . $pidOption . $and . $whereClause . $addBeWhereClause . $stmt;
+            $queryCount = "SELECT COUNT(*) AS count FROM `$sourceTable`" . $qWhere . $pidOption . $and . $whereClause . $stmt;
             $resultCount = \Database::getInstance($connectionParams)->prepare($queryCount)->execute()->fetchAssoc()['count'];
 
             if ($resultCount < 45000) {
-                $query = "SELECT * FROM `$sourceTable`" . $qWhere . $pidOption . $and . $whereClause . $addBeWhereClause . $stmt;
+                $query = "SELECT * FROM `$sourceTable`" . $qWhere . $pidOption . $and . $whereClause . $stmt;
                 $result = \Database::getInstance($connectionParams)->prepare($query)->execute();
             }
             //ToDo ???
@@ -697,7 +709,7 @@ class LayerContentService
                                 $link = $url . '/{{article_url::' . $arrResult['pid'] . '}}';
                             }
                         }
-                    } elseif ($sourceTable == 'tl_event') {
+                    } elseif ($sourceTable == 'tl_calendar_events') {
                         if ($arrResult['id']) {
                             $link = $url . '/{{event_url::' . $arrResult['id'] . '}}';
                         }
