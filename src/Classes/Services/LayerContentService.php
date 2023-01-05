@@ -482,7 +482,7 @@ class LayerContentService
                             //ToDo filter after select
                         } else {
                             $arrPtableField = \Contao\StringUtil::deserialize($ptableField);
-                            if (count($arrPtableField)) {
+                            if (is_array($arrPtableField) && count($arrPtableField)) {
                                 $pidOption .= $and . "$arrPtableField[0] = $sourcePid ";
                             } else {
                                 $pidOption .= $and . "$ptableField = $sourcePid ";
