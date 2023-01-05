@@ -766,7 +766,7 @@ class LayerContentService
                             'refresh' => false,
                             'crossOrigine' => false,
                             'boundingBox' => false,
-                            'cluster' => $objLayer->cluster_locations ? ($objLayer->cluster_distance ? $objLayer->cluster_distance : 20) : false,
+                            'cluster' => $objLayer->cluster_locations ? ($objLayer->cluster_distance ?: 20) : false,
                         ],
                     ];
 
