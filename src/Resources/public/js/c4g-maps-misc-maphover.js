@@ -136,7 +136,7 @@ export class MapHover {
         canvas = document.querySelector(".ol-viewport");
         jQuery(canvas).css('cursor', 'default');
         if (mapData.hover_popups === '1' && mapData.hover_popups_stay != '1') {
-          window.c4gMapsPopup.$popup.removeClass(cssConstants.ACTIVE);
+          self.options.mapController.proxy.popupController.removePopup();
         }
 
         if (self.lastHoveredFeature && self.lastFeatureStyle) {
@@ -363,58 +363,7 @@ export class MapHover {
           coord = self.map.getCoordinateFromPixel(event.pixel);
           coord = [(extent[0] + extent[2]) / 2, (extent[1] + extent[3]) / 2];
         }
-
-        window.c4gMapsPopup.popup.setPosition(coord);
-
-        if (popupInfos.content) {
-          self.options.mapController.proxy.popupController.addPopUp(popupInfos.content);
-          if (self.options.mapController.proxy.mapData.popupHandling !== '3') {
-            window.c4gMapsPopup.$content.html('');
-            window.c4gMapsPopup.$popup.addClass(cssConstants.ACTIVE).addClass(cssConstants.LOADING);
-            window.c4gMapsPopup.spinner.show();
-          }
-
-          if (popupInfos.async === false || popupInfos.async == '0') {
-            let objPopup = {};
-            objPopup.popup = popupInfos;
-            objPopup.feature = hovered.feature;
-            objPopup.layer = hovered.layer;
-            // Call the popup hook for plugin specific popup content
-            if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_fillPopup === 'object') {
-              utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, {popup: objPopup, mapController: self.options.mapController});
-            }
-            self.options.mapController.proxy.popupController.setPopup(objPopup);
-          } else {
-            jQuery.ajax({
-              dataType: "json",
-              url: self.options.mapController.proxy.api_infowindow_url + '/' + popupInfos.content
-            }).done(function(data) {
-              var popupInfo = {
-                async: popupInfos.async,
-                content: data.content,
-                popup: popupInfos.popup,
-                routing_link: popupInfos.routing_link
-              };
-
-              let objPopup = {};
-              objPopup.popup = popupInfo;
-              objPopup.feature = hovered.feature;
-              objPopup.layer = hovered.layer;
-
-              // Call the popup hook for plugin specific popup content
-              if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_fillPopup === 'object') {
-                utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, {popup: objPopup, mapController: self.options.mapController});
-              }
-              self.options.mapController.proxy.popupController.setPopup(objPopup);
-            });
-          }
-        } else {
-          if (self.options.mapController.proxy.mapData.popupHandling !== '3') {
-            window.c4gMapsPopup.$popup.removeClass(cssConstants.ACTIVE);
-          } else {
-            self.options.mapController.proxy.popupController.close();
-          }
-        }
+        self.options.mapController.proxy.handlePopup(hovered.feature, hovered.layer);
       }
 
 
