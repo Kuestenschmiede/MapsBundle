@@ -528,17 +528,16 @@ class LayerContentService
                     $stmt .= ' (pid = "' . $sourcePid . '")';
                 }
             }
-
-            if ($stmt && $objLayer->tab_whereclause) {
-                $stmt .= ' ('.$objLayer->tab_whereclause.')';
-            } else if ($objLayer->tab_whereclause) {
-                if ($qWhere && $pidOption) {
-                    $stmt = ' AND';
-                } elseif (!$qWhere) {
-                    $stmt = ' WHERE';
-                }
-                $stmt .= ' ('.$objLayer->tab_whereclause.')';
+        }
+        if ($stmt && $objLayer->tab_whereclause) {
+            $stmt .= ' ('.$objLayer->tab_whereclause.')';
+        } else if ($objLayer->tab_whereclause) {
+            if ($qWhere && $pidOption) {
+                $stmt = ' AND';
+            } elseif (!$qWhere) {
+                $stmt = ' WHERE';
             }
+            $stmt .= ' ('.$objLayer->tab_whereclause.')';
         }
         if ($sourceTable) {
             $queryCount = "SELECT COUNT(*) AS count FROM `$sourceTable`" . $qWhere . $pidOption . $and . $whereClause . $stmt;
