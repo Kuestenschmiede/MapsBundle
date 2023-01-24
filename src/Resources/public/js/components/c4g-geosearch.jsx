@@ -84,8 +84,9 @@ export default class GeoSearch extends Component {
     this.controlElement = element;
 
     let control = new Control({element: element, target: props.target});
-    props.mapController.map.addControl(control);
-
+    let index = props.mapController.arrComponents.findIndex(element => element.name === "geosearch");
+    props.mapController.arrComponents[index].control = control;
+    props.mapController.mapsControls.controls.geosearch = control;
     // end control
 
     // prepare search-configuration

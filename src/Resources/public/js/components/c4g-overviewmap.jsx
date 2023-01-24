@@ -65,8 +65,9 @@ export default class OverviewMap extends Component {
       target: props.target
     });
     this.baseLayerIds = [];
+    let index = this.mapController.arrComponents.findIndex(element => element.name === "overview");
+    this.mapController.arrComponents[index].control = control;
     this.mapController.mapsControls.controls.overviewMap = control;
-    this.mapController.map.addControl(control);
   }
 
   render() {

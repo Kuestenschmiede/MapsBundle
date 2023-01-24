@@ -54,8 +54,9 @@ export default class Measuretools extends Component {
     });
     let mapController = props.mapController;
     let control = new Control({element: element, target: props.target});
+    let index = mapController.arrComponents.findIndex(element => element.name === "measuretools");
+    mapController.arrComponents[index].control = control;
     mapController.mapsControls.controls.measuretools = control;
-    mapController.map.addControl(control);
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
     this.addMeasuredFeature = this.addMeasuredFeature.bind(this);

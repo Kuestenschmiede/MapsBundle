@@ -77,11 +77,12 @@ export default class Grid extends Component {
 
     let control = new Control({
       element: element,
-      target: this.props.target
+      target: props.target
     });
     props.mapController.map.addLayer(objGrid);
+    let index = mapController.arrComponents.findIndex(element => element.name === "graticule");
+    mapController.arrComponents[index].control = control;
     mapController.mapsControls.controls.graticule = control;
-    mapController.map.addControl(control);
 
   }
 

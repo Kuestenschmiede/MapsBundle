@@ -106,9 +106,9 @@ export default class ZoomHome extends Component {
       element: element,
       target: this.props.target
     });
-
+    let index = mapController.arrComponents.findIndex(element => element.name === "zoomHome");
+    mapController.arrComponents[index].control = control;
     mapController.mapsControls.controls.zoomHome = control;
-    mapController.map.addControl(control);
   }
 
   render() {

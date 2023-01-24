@@ -1059,7 +1059,7 @@ export default class MapController extends Component {
     const scope = this;
     const mapData = this.data;
     let target = document.querySelector('#' + mapData.mapDiv + ' .c4g-control-container-top-left');
-    let components = [
+    this.arrComponents = this.arrComponents || [
       {name: "layerswitcher", sort: mapData.layerswitcher.enable},
       {name: "geosearch", sort: mapData.geosearch.enable},
       {name: "legend", sort: mapData.legend.enable},
@@ -1192,11 +1192,14 @@ export default class MapController extends Component {
     }
 
     let result = [];
-    components.sort(function(a, b) {
+    this.arrComponents.sort(function(a, b) {
       return (a.sort > b.sort) ? 1 : -1;
     });
-    for (let i = 0; i < components.length; i++) {
-      switch (components[i].name) {
+    this.arrComponents = this.arrComponents.filter(function(element) {
+      return element.sort && element.sort > 0;
+    });
+    for (let i = 0; i < this.arrComponents.length; i++) {
+      switch (this.arrComponents[i].name) {
         case "measuretools":
           result.push(measurePortal);
           break;
@@ -1458,6 +1461,19 @@ export default class MapController extends Component {
 
   componentDidMount() {
     this._isMounted = true;
+  }
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    for (let i in this.arrComponents) {
+      if (this.arrComponents.hasOwnProperty(i)) {
+        if (this.arrComponents[i].control) {
+          this.map.addControl(this.arrComponents[i].control);
+        }
+        else {
+          break;
+        }
+      }
+    }
+
   }
 
   componentWillUnmount() {

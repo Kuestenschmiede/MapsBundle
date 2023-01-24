@@ -45,8 +45,9 @@ export default class StarboardPanel extends Component {
     });
     let mapController = props.mapController;
     let control = new Control({element: element, target: props.target});
+    let index = mapController.arrComponents.findIndex(element => element.name === "layerswitcher");
+    mapController.arrComponents[index].control = control;
     mapController.mapsControls.controls.horizontalPanel = control;
-    mapController.map.addControl(control);
     this.open = this.open.bind(this);
     this.slideOutCollidingElements = this.slideOutCollidingElements.bind(this);
     this.resizeFunction = this.resizeFunction.bind(this);

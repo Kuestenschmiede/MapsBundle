@@ -76,8 +76,9 @@ export default class EditorComponent extends Component {
     }
     if (!mapController.mapsControls.controls.editor) {
       mapController.mapsControls.controls.editor = control;
-      mapController.map.addControl(control);
     }
+    let index = mapController.arrComponents.findIndex(element => element.name === "editor");
+    mapController.arrComponents[index].control = control;
     this.modes = ["select", "Point", "LineString", "Polygon", "Circle"];
     let features;
     if (this.props.inputField && $(this.props.inputField).val() && $(this.props.inputField).val().length > 50) {

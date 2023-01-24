@@ -27,8 +27,9 @@ export default class Zoom extends Component {
     });
 
     let mapController = props.mapController;
+    let index = mapController.arrComponents.findIndex(element => element.name === "zoom");
+    mapController.arrComponents[index].control = control;
     mapController.mapsControls.controls.zoom = control;
-    mapController.map.addControl(control);
   }
 
   render() {

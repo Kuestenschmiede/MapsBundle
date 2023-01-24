@@ -29,8 +29,9 @@ export default class Rotate extends Component {
     });
 
     let mapController = props.mapController;
+    let index = mapController.arrComponents.findIndex(element => element.name === "rotate");
+    mapController.arrComponents[index].control = control;
     mapController.mapsControls.controls.rotate = control;
-    mapController.map.addControl(control);
   }
 
   render() {

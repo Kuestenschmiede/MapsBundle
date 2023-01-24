@@ -88,8 +88,9 @@ export default class Print extends Component {
     });
 
     let mapController = props.mapController;
+    let index = mapController.arrComponents.findIndex(element => element.name === "print");
+    mapController.arrComponents[index].control = control;
     mapController.mapsControls.controls.print = control;
-    mapController.map.addControl(control)
   }
 
   render() {

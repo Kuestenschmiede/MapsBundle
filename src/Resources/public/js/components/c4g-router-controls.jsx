@@ -28,7 +28,8 @@ export default class RouterControls extends HorizontalPanel {
     this.close = this.close.bind(this);
 
     this.langConstants = getLanguage(props.mapController.data);
-
+    let index = props.mapController.arrComponents.findIndex(element => element.name === "router");
+    props.mapController.arrComponents[index].control = this.control;
     if (props.mapController.data.router_div) {
       document.querySelector(".c4g-router-panel-button-top").className += " c4g-external";
     }

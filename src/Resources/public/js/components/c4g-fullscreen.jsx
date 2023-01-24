@@ -28,8 +28,9 @@ export default class Fullscreen extends Component {
     });
 
     let mapController = props.mapController;
+    let index = mapController.arrComponents.findIndex(element => element.name === "fullscreen");
+    mapController.arrComponents[index].control = control;
     mapController.mapsControls.controls.fullscreen = control;
-    mapController.map.addControl(control);
   }
 
   render() {

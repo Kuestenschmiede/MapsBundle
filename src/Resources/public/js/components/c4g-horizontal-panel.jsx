@@ -30,7 +30,7 @@ export class HorizontalPanel extends Component {
     jQuery(button).on('click', this.clickControl);
     let mapController = props.mapController;
     let control = new Control({element: element, target: props.target});
-    mapController.map.addControl(control);
+    this.control = control;
     this.state = {
       // either "top" or "bottom"
       direction: props.direction || "top",

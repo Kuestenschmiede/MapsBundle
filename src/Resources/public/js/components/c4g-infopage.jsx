@@ -44,8 +44,9 @@ export default class Infopage extends Component {
     });
     let mapController = props.mapController;
     let control = new Control({element: element, target: props.target});
+    let index = mapController.arrComponents.findIndex(element => element.name === "infopage");
+    mapController.arrComponents[index].control = control;
     mapController.mapsControls.controls.infoPage = control;
-    mapController.map.addControl(control);
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
     this.state = {

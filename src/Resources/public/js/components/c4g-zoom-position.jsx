@@ -67,9 +67,9 @@ export default class ZoomPosition extends Component {
       element: element,
       target: this.props.target
     });
-
+    let index = mapController.arrComponents.findIndex(element => element.name === "zoomPosition");
+    mapController.arrComponents[index].control = control;
     mapController.mapsControls.controls.zoomPosition = control;
-    mapController.map.addControl(control);
   }
 
   render() {
