@@ -347,27 +347,27 @@ class tl_c4g_map_tables extends Backend
     public function getParentTablesFields(DataContainer $dc) {
         $tableNames = \Contao\StringUtil::deserialize($dc->activeRecord->ptable);
         $options = [];
+        if (!$tableNames) {
+            return $options;
+        }
         if ($dc->activeRecord->customDB) {
             foreach ($tableNames as $tableName) {
-                if ($tableName) {
-                    $result = \Database::getInstance([dbDatabase => $dc->activeRecord->customDB])->prepare("SHOW COLUMNS FROM " . $tableName)->execute();
-                    $arrResult = $result->fetchAllAssoc();
-                    foreach ($arrResult as $element) {
-                        $options[$tableName . '.' . $element['Field']] = $tableName . '.' . $element['Field'];
-                    }
+                $result = \Database::getInstance([dbDatabase => $dc->activeRecord->customDB])->prepare("SHOW COLUMNS FROM " . $tableName)->execute();
+                $arrResult = $result->fetchAllAssoc();
+                foreach ($arrResult as $element) {
+                    $options[$tableName . '.' . $element['Field']] = $tableName . '.' . $element['Field'];
                 }
             }
 
         }
         else {
             foreach ($tableNames as $tableName){
-                if ($tableName) {
-                    $tableOptions = $this->Database->getFieldNames($tableName);
-                    foreach ($tableOptions as $tableOption){
-                        $options[$tableName.'.'.$tableOption] = $tableName.'.'.$tableOption;
-                    }
+                $tableOptions = $this->Database->getFieldNames($tableName);
+                foreach ($tableOptions as $tableOption){
+                    $options[$tableName.'.'.$tableOption] = $tableName.'.'.$tableOption;
                 }
             }
+
         }
         return $options;
     }

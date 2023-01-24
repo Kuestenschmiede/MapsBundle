@@ -563,6 +563,7 @@ class tl_c4g_map_locstyles extends Backend
      */
     public function addIcon($row, $label, Contao\DataContainer $dc, $args)
     {
+        $image = null;
         if ($row) {
             if ($row['styletype'] == 'cust_icon_svg') {
                 $svg_src = $row['svgSrc'];
@@ -584,7 +585,9 @@ class tl_c4g_map_locstyles extends Backend
                 }
             }
         }
-        $args[0] = '<img src="'.$image.'" width="16" alt="">';
+        if ($image) {
+            $args[0] = '<img src="'.$image.'" width="16" alt="">';
+        }
         return $args;
     }
 
