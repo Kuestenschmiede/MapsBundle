@@ -114,3 +114,5 @@ $GLOBALS['TL_LANG'][$strName]['delete']     = ['Routing-Konfiguration löschen',
 $GLOBALS['TL_LANG'][$strName]['show']       = ['Details', 'Die Details des Routing-Konfiguration ID %s anzeigen'];
 
 $GLOBALS['TL_LANG']['tl_c4g_routing_configuration']['editMaps'] = 'Kartenstuktur bearbeiten';
+
+$GLOBALS['TL_LANG']['tl_c4g_routing_configuration']['editLocstyles'] = 'Lokationsstile bearbeiten';

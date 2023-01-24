@@ -178,6 +178,7 @@ class TlC4gRoutingConfiguration
 
     public function configurationLink(DC_Table $dc)
     {
-        return ' <a href="contao/main.php?do=c4g_routing_configuration&amp;table=tl_c4g_routing_configuration&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . REQUEST_TOKEN . '" title="' . StringUtil::specialchars($GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editRoutingConfiguration']) . '" onclick="Backend.openModalIframe({\'title\':\'' . StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editRoutingConfiguration'])) . '\',\'url\':this.href});return false">' . Image::getHtml('edit.svg') . '</a>';
+        $str = $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editRoutingConfiguration'];
+        return ' <a href="contao/main.php?do=c4g_routing_configuration&amp;table=tl_c4g_routing_configuration&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . REQUEST_TOKEN . '" title="' . StringUtil::specialchars($str) . '" onclick="Backend.openModalIframe({\'title\':\'' . StringUtil::specialchars(str_replace("'", "\\'", $str)) . '\',\'url\':this.href});return false">' . Image::getHtml('edit.svg') . '</a>';
     }
 }

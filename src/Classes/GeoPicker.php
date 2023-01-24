@@ -38,7 +38,7 @@ class GeoPicker extends \Backend
         $this->loadLanguageFile('default');
 
         //Load required JavaScript (for backend)
-        if (!$GLOBALS['TL_JAVASCRIPT']['c4g-maps-backend']) {
+        if (!isset($GLOBALS['TL_JAVASCRIPT']['c4g-maps-backend'])) {
             $GLOBALS['TL_JAVASCRIPT']['c4g-maps-backend'] = 'bundles/con4gismaps/js/c4g-maps-backend.js';
         }
     }

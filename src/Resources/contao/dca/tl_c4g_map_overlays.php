@@ -348,7 +348,7 @@ class tl_c4g_map_overlays extends Backend
             return '';
         }
         
-        $href .= '&amp;id='.$this->Input->get('id').'&amp;tid='.$row['id'].'&amp;state='.$row[''];
+        $href .= '&amp;id='.$this->Input->get('id').'&amp;tid='.$row['id'].'&amp;state='.($row['published'] ? '' : 1);
         
         if (!$row['published'])
         {
