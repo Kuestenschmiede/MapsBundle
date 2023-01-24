@@ -71,7 +71,7 @@
     "ol-ext": "^4.0.4",
     "ol-mapbox-style": "^9.4.0",
     "opening_hours": "^3.8.0",
-    "proj4": "^2.8.0",
+    "proj4": "^2.8.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   }
