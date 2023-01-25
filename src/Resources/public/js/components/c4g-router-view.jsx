@@ -22,6 +22,7 @@ import {Vector, Group} from "ol/layer";
 import {Vector as VectorSource} from "ol/source";
 import {Collection} from "ol";
 import {LineString, Circle} from "ol/geom";
+import {circular} from 'ol/geom/Polygon';
 import {Modify, Select} from "ol/interaction";
 import OSMXML from 'ol/format/OSMXML';
 import {RoutingPermalink} from "./../c4g-routing-permalink";
@@ -1592,7 +1593,9 @@ export class RouterView extends Component {
     let drawCircle = this.mapData.drawCircle;
     if (drawCircle){
       let tmpCoords = transform(fromPoint.getCoordinates(), 'EPSG:4326', 'EPSG:3857');
-      let circle = new Circle(tmpCoords, this.state.detourArea * 1000);
+     // let circle = new Circle(tmpCoords, this.state.detourArea * 1000);
+
+      let circle = circular(fromPoint.getCoordinates(), this.state.detourArea * 1000).transform('EPSG:4326', 'EPSG:3857');
       let feature = new Feature(circle);
       this.areaCircleSource.clear();
       this.areaCircleSource.addFeature(feature);
@@ -1965,6 +1968,10 @@ export class RouterView extends Component {
     }
     if (contentFeatures && contentFeatures.length > 0) {
       this.routerFeaturesSource.addFeatures(contentFeatures);
+    }
+    if (this.mapData.drawCircle) {
+      let tempFeature = this.areaCircleSource.getFeatures()[0];
+      extent = extend(extent, tempFeature.getGeometry().getExtent());
     }
     if (getArea(extent) > 0) {
       let width = jQuery(".c4g-sideboard.c4g-open").css('width');
