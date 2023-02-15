@@ -1595,7 +1595,7 @@ export class RouterView extends Component {
       let tmpCoords = transform(fromPoint.getCoordinates(), 'EPSG:4326', 'EPSG:3857');
      // let circle = new Circle(tmpCoords, this.state.detourArea * 1000);
 
-      let circle = circular(fromPoint.getCoordinates(), this.state.detourArea * 1000).transform('EPSG:4326', 'EPSG:3857');
+      let circle = circular(fromPoint.getCoordinates(), this.state.detourArea * 1000, 64).transform('EPSG:4326', 'EPSG:3857');
       let feature = new Feature(circle);
       this.areaCircleSource.clear();
       this.areaCircleSource.addFeature(feature);
