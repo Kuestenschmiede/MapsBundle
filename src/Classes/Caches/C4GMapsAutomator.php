@@ -29,7 +29,7 @@ class C4GMapsAutomator extends C4GAutomator
     /**
      * Purge the con4gis cache for the baselayerService.
      */
-    public function purgeBaselayerApiCache()
+    public static function purgeBaselayerApiCache()
     {
         C4GBaselayerApiCache::getInstance(System::getContainer())->clearCache();
         C4gLogModel::addLogEntry('maps', 'cleared baselayer api cache');

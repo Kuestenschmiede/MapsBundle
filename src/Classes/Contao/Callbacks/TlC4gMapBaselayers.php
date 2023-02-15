@@ -14,6 +14,7 @@ use Contao\Backend;
 use Contao\DataContainer;
 use Contao\Image;
 use con4gis\MapsBundle\Classes\Utils;
+use con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator;
 class TlC4gMapBaselayers extends Backend
 {
     public function pasteElement(DataContainer $dc, $row, $table, $cr, $arrClipboard=null)
@@ -40,7 +41,9 @@ class TlC4gMapBaselayers extends Backend
 
         if (strlen($this->Input->get('tid')))
         {
-            $this->toggleVisibility($this->Input->get('tid'), ($this->Input->get('state') == 0));
+            $state = $this->Input->get('state');
+            $tid = $this->Input->get('tid');
+            $this->toggleVisibility($this->Input->get('tid'), ($this->Input->get('state') === ''));
             $this->redirect($this->getReferer());
         }
 
@@ -84,7 +87,7 @@ class TlC4gMapBaselayers extends Backend
         $this->Database->prepare("UPDATE tl_c4g_map_baselayers SET tstamp=". time() .", published='" . ($blnPublished ? '' : '1') . "' WHERE id=?")
             ->execute($intId);
         $this->createNewVersion('tl_c4g_map_baselayers', $intId);
-        con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator::purgeBaselayerApiCache();
+        C4GMapsAutomator::purgeBaselayerApiCache();
     }
     public function groupColumns( $multiColumnWizard){
         $arrColumnBaselayers = array(
