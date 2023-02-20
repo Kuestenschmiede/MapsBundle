@@ -843,7 +843,9 @@ export default class MapController extends Component {
         let feature = new Feature();
         feature.set('popup', popupInfos);
         let layer = new Vector();
-        this.proxy.handlePopup(feature, layer);
+        window.setTimeout(() => {
+          this.proxy.handlePopup(feature, layer);
+        }, 100)
       }
     }
 
