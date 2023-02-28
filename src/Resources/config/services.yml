@@ -24,6 +24,12 @@ services:
         arguments:
             - "@con4gis.profile_service"
 
+    con4gis.layer_contentdata_service:
+        class: con4gis\MapsBundle\Classes\Services\LayerContentDataService
+        public: true
+        arguments:
+            - "@event_dispatcher"
+
     con4gis.filter_service:
         class: con4gis\MapsBundle\Classes\Services\FilterService
         public: true
@@ -67,7 +73,6 @@ services:
         arguments:
             - "@con4gis.filter_service"
 
-    con4gis\MapsBundle\Mapbox\DatasetMapBox:
     con4gis.route_service:
         class: con4gis\MapsBundle\Classes\Services\RouteService
         public: true

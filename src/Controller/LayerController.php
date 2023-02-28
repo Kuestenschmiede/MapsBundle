@@ -12,11 +12,12 @@ namespace con4gis\MapsBundle\Controller;
 
 use con4gis\CoreBundle\Controller\BaseController;
 use con4gis\MapsBundle\Classes\Caches\C4GLayerApiCache;
+use con4gis\MapsBundle\Classes\Events\LoadLayerContentDataEvent;
 use con4gis\MapsBundle\Classes\Events\LoadLayersEvent;
 use con4gis\MapsBundle\Classes\Services\LayerContentService;
+use con4gis\MapsBundle\Classes\Services\LayerContentDataService;
 use con4gis\MapsBundle\Classes\Services\LayerService;
 use con4gis\MapsBundle\Classes\Utils;
-use con4gis\MapsBundle\Resources\contao\modules\api\LayerContentDataApi;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -110,8 +111,16 @@ class LayerController extends BaseController
     public function layerContentDataAction(Request $request, $layerId, $extent)
     {
         $response = new JsonResponse();
-        $layerDataApi = new LayerContentDataApi();
-        $this->responseData = $layerDataApi->generate($layerId,$extent);
+        $this->initializeContao();
+        $this->initialize(false);
+
+        //$layerDataService = new LayerContentDataService();
+        $layerDataService = $this->get('con4gis.layer_contentdata_service');
+        $this->responseData = $layerDataService->generate($layerId,$extent);
+        $event = new LoadLayerContentDataEvent();
+        $event->setLayerData($this->responseData);
+        $this->eventDispatcher->dispatch($event, $event::NAME);
+        $this->responseData = $event->getLayerData();
         $response->setData($this->responseData);
         
         return $response;

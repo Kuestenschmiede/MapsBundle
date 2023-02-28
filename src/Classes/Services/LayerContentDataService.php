@@ -8,7 +8,7 @@
  * @copyright (c) 2010-2022, by Küstenschmiede GmbH Software & Design
  * @link https://www.con4gis.org
  */
-namespace con4gis\MapsBundle\Resources\contao\modules\api;
+namespace con4gis\MapsBundle\Classes\Services;
 
 
 use con4gis\CoreBundle\Classes\C4GUtils;
@@ -19,10 +19,10 @@ use Contao\Controller;
 use Contao\Frontend;
 
 /**
- * Class LayerContentDataApi
- * @package con4gis\MapsBundle\Resources\contao\modules\api
+ * Class LayerContentDataService
+ * @package con4gis\MapsBundle\Classes\Services
  */
-class LayerContentDataApi extends Frontend
+class LayerContentDataService extends Frontend
 {
     /**
      * Fetches the content data with a certain bounding box.
@@ -120,7 +120,7 @@ class LayerContentDataApi extends Frontend
                     if (substr($value, 0, 1) == '{' && substr($value, -1, 1) == '}') {
                         // we have an inserttag
                         $replacedValue = str_replace('[id]', $arrElement['id'], $value);
-                        $popupContent .= $this->replaceInsertTags($replacedValue) . ' ';
+                        $popupContent .= $this->replaceInsertTags($replacedValue) . ' LayerContentDataApi.php';
                     } else if (substr($value, 0, 1) == '[' && substr($value, -1, 1) == ']') {
                         // no insert tag
                         $replacedValue = str_replace('[', '', $value);

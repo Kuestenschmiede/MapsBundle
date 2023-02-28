@@ -19,7 +19,7 @@ use con4gis\MapsBundle\Resources\contao\models\C4gMapSettingsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapTablesModel;
 use con4gis\MapsBundle\Resources\contao\modules\api\InfoWindowApi;
-use con4gis\MapsBundle\Resources\contao\modules\api\LayerContentDataApi;
+use con4gis\MapsBundle\Resources\contao\modules\api\LayerContentDataService;
 
 class LayerContentService
 {
@@ -724,7 +724,7 @@ class LayerContentService
                     }
                     if ($objConfig->popupSwitch !== 'off') {
                         // process expert popup
-                        $lcdApi = new LayerContentDataApi();
+                        $lcdApi = new LayerContentDataService();
                         $popup = $lcdApi->getPopup($objConfig, $arrResult);
                         if ($objLayer->tab_directlink && !$objLayer->loc_linkurl && $popup['tmpDirectLink']) {
                             $link = $popup['tmpDirectLink'];
