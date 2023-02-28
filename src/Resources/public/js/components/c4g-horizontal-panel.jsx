@@ -18,18 +18,18 @@ export class HorizontalPanel extends Component {
     super(props);
     const scope = this;
     // create control to toggle the panel
-    let element = document.createElement('div');
+    this.element = document.createElement('div');
     let button = document.createElement('button');
     if (props.title) {
       button.title = props.title;
     }
-    element.className = (props.className || "c4g-horizontal-panel") + "-button-" + (props.direction || "top") + " ol-control " + "ol-unselectable";
-    element.appendChild(button);
+    this.element.className = (props.className || "c4g-horizontal-panel") + "-button-" + (props.direction || "top") + " ol-control " + "ol-unselectable";
+    this.element.appendChild(button);
     button.title = props.title;
     this.clickControl = this.clickControl.bind(this);
     jQuery(button).on('click', this.clickControl);
     let mapController = props.mapController;
-    let control = new Control({element: element, target: props.target});
+    let control = new Control({element: this.element, target: props.target});
     this.control = control;
     this.state = {
       // either "top" or "bottom"
