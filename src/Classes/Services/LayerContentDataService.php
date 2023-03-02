@@ -49,6 +49,9 @@ class LayerContentDataService extends Frontend
     protected function getLayerData($intId, $extent)
     {
         $objLayer = C4gMapsModel::findById($intId);
+        if ($objLayer->location_type !== "table") {
+            return [];
+        }
         $objConfig = C4gMapTablesModel::findByPk($objLayer->tab_source);
         $minX = explode(',',explode(';',$extent)[0])[0];
         $minY = explode(',',explode(';',$extent)[0])[1];

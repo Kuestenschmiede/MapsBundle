@@ -17,6 +17,8 @@ class LoadLayerContentDataEvent extends Event
     const NAME = 'maps.layercontent.load';
 
     private $layerData = [];
+    private $layerId = 0;
+    private $extent = [];
 
     /**
      * @return array
@@ -32,5 +34,37 @@ class LoadLayerContentDataEvent extends Event
     public function setLayerData(array $layerData)
     {
         $this->layerData = $layerData;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLayerId(): int
+    {
+        return $this->layerId;
+    }
+
+    /**
+     * @param int $layerId
+     */
+    public function setLayerId(int $layerId): void
+    {
+        $this->layerId = $layerId;
+    }
+
+    /**
+     * @return array
+     */
+    public function getExtent(): array
+    {
+        return $this->extent;
+    }
+
+    /**
+     * @param array $extent
+     */
+    public function setExtent(array $extent): void
+    {
+        $this->extent = $extent;
     }
 }

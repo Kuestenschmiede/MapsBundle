@@ -119,6 +119,14 @@ class LayerController extends BaseController
         $this->responseData = $layerDataService->generate($layerId,$extent);
         $event = new LoadLayerContentDataEvent();
         $event->setLayerData($this->responseData);
+        $event->setLayerId($layerId);
+        $arrExtent = [
+            explode(",", explode(";", $extent)[0])[0],
+            explode(",", explode(";", $extent)[1])[0],
+            explode(",", explode(";", $extent)[0])[1],
+            explode(",", explode(";", $extent)[1])[1]
+        ];
+        $event->setExtent($arrExtent);
         $this->eventDispatcher->dispatch($event, $event::NAME);
         $this->responseData = $event->getLayerData();
         $response->setData($this->responseData);
