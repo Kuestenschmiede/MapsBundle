@@ -724,7 +724,7 @@ class LayerContentService
                     }
                     if ($objConfig->popupSwitch !== 'off') {
                         // process expert popup
-                        $lcdApi = new LayerContentDataService();
+                        $lcdApi = new \con4gis\MapsBundle\Classes\Services\LayerContentDataService();
                         $popup = $lcdApi->getPopup($objConfig, $arrResult);
                         if ($objLayer->tab_directlink && !$objLayer->loc_linkurl && $popup['tmpDirectLink']) {
                             $link = $popup['tmpDirectLink'];
