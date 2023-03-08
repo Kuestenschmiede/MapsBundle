@@ -1595,7 +1595,7 @@ export class RouterView extends Component {
       let tmpCoords = transform(fromPoint.getCoordinates(), 'EPSG:4326', 'EPSG:3857');
      // let circle = new Circle(tmpCoords, this.state.detourArea * 1000);
 
-      let circle = circular(fromPoint.getCoordinates(), this.state.detourArea * 1000, 64).transform('EPSG:4326', 'EPSG:3857');
+      let circle = circular(fromPoint.getCoordinates(), this.state.detourArea * 1000, 128).transform('EPSG:4326', 'EPSG:3857');
       let feature = new Feature(circle);
       this.areaCircleSource.clear();
       this.areaCircleSource.addFeature(feature);
@@ -1971,7 +1971,9 @@ export class RouterView extends Component {
     }
     if (this.mapData.drawCircle) {
       let tempFeature = this.areaCircleSource.getFeatures()[0];
-      extent = extend(extent, tempFeature.getGeometry().getExtent());
+      if (tempFeature && tempFeature.getGeometry() && tempFeature.getGeometry().getExent()) {
+        extent = extend(extent, tempFeature.getGeometry().getExtent());
+      }
     }
     if (getArea(extent) > 0) {
       let width = jQuery(".c4g-sideboard.c4g-open").css('width');

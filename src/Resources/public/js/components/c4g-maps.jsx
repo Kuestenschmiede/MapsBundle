@@ -1050,7 +1050,7 @@ export default class MapController extends Component {
     let components = this.components;
     let activeComps = [];
     for (let key in components) {
-      if (components.hasOwnProperty(key) && components[key].state.open) {
+      if (components.hasOwnProperty(key) && components[key] && components[key].state.open) {
         activeComps.push(components[key]);
       }
     }
