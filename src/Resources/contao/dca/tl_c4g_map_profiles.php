@@ -172,7 +172,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'options'                 => ['zoom', 'zoomPosition','zoomHome','zoomExtent','fullscreen','print','rotate','graticule', 'layerswitcher', 'starboardscope', 'baselayerswitcher', 'geosearch', 'legend', 'measure', 'overview', 'permalink', 'routing'],
                 'eval'                    => ['multiple'=>true, 'helpwizard'=>true],
                 'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference'],
-                'sql'                     => "text NOT NULL default 'a:1:{i:0;s:4:\"zoom\";}'"
+                'sql'                     => "text NOT NULL"
             ],
         'initial_open_comp' =>
             [
