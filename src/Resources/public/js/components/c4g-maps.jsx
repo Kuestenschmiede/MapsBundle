@@ -1465,13 +1465,18 @@ export default class MapController extends Component {
     this._isMounted = true;
   }
   componentDidUpdate(prevProps, prevState, snapshot) {
+    let controls = this.map.getControls().getArray();
     for (let i in this.arrComponents) {
       if (this.arrComponents.hasOwnProperty(i)) {
         if (this.arrComponents[i].control) {
-          this.map.addControl(this.arrComponents[i].control);
-        }
-        else {
-          break;
+          const found = controls.find((elem) => {
+            let element = elem.element;
+            let control = this.arrComponents[i].control.element;
+            return element.className == control.className;
+          });
+          if (!found) {
+            this.map.addControl(this.arrComponents[i].control);
+          }
         }
       }
     }
