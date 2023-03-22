@@ -149,8 +149,14 @@ class RoutingConfiguration extends BaseEntity
      * @var string
      * @ORM\Column(type="string", length=1)
      */
+    protected $layerChanger = '';
+
+        /**
+     * @var string
+     * @ORM\Column(type="string", length=1)
+     */
     protected $hideFeaturesWithoutLabel = '';
-    
+
     /**
      * @var float
      * @ORM\Column(type="float", precision=5, scale=2)
@@ -629,6 +635,22 @@ class RoutingConfiguration extends BaseEntity
     public function setRouterLayers($routerLayers): void
     {
         $this->routerLayers = $routerLayers;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLayerChanger(): string
+    {
+        return $this->layerChanger;
+    }
+
+    /**
+     * @param string $layerChanger
+     */
+    public function setLayerChanger(string $layerChanger): void
+    {
+        $this->layerChanger = $layerChanger;
     }
     
     /**

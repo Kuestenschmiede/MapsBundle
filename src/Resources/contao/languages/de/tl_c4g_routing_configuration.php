@@ -29,6 +29,7 @@ $GLOBALS['TL_LANG'][$strName]['routerLayer']['key'] = ['Feldname','Feldname (key
 $GLOBALS['TL_LANG'][$strName]['routerLayer']['value'] = ['Buttontext','Die Bezeichnung wird am entsprechenden Button für die Auswahl dargestellt.'];
 $GLOBALS['TL_LANG'][$strName]['routerLayer']['label'] = ['Label','Label für die Kartenelemente.'];
 $GLOBALS['TL_LANG'][$strName]['routerLayer']['mapLabel'] = ['Labelfeld','Feldname für die Labelgenerierung.'];
+$GLOBALS['TL_LANG'][$strName]['layerChanger'] = ['Layer-Auswahl als Select-Box', 'Wählen Sie ob die Layer-Auswahl als Select-Box statt als Buttons dargestellt werden soll.'];
 
 $GLOBALS['TL_LANG'][$strName]['customProfiles'] = ['Eigene Routingprofile', 'Geben Sie eigene Profile für das Routing ein (eigener OSRM-Server).'];
 $GLOBALS['TL_LANG'][$strName]['customProfile']['profileKey'] = ['Schlüssel für das Profil','Schlüssel für das Profil bei der Ansprache der API.'];

@@ -87,7 +87,7 @@ $GLOBALS['TL_DCA'][$strName] = array
         '__selector__'                => array('router_api_selection', 'areaSearch'),
         'default'                     => '{general_legend},name,router_api_selection,router_viaroute_url,router_from_locstyle,router_to_locstyle,router_point_locstyle;'
                                         .'{extended_legend:hide},routerHeadline,router_attribution,router_interim_locstyle,router_alternative,enableOverPoints,enableTargetSwitch,routeStartButton,closeAfterSearch,showInstructions,instructionLabel;'
-                                        .'{search_legend:hide},areaSearch,showFeatures,featureLabel,initialMode,initialResultMode,initialPosition,initialDestination,routerLayers,hideFeaturesWithoutLabel,minDetourArea,maxDetourArea,initialDetourArea,minDetourRoute,maxDetourRoute,initialDetourRoute,clickLocstyle,areaCenterLocstyle,priorityFeatures,priorityLocstyle,usePermalink;'
+                                        .'{search_legend:hide},areaSearch,showFeatures,featureLabel,initialMode,initialResultMode,initialPosition,initialDestination,routerLayers,layerChanger,hideFeaturesWithoutLabel,minDetourArea,maxDetourArea,initialDetourArea,minDetourRoute,maxDetourRoute,initialDetourRoute,clickLocstyle,areaCenterLocstyle,priorityFeatures,priorityLocstyle,usePermalink;'
     ),
     'subpalettes' => array
     (
@@ -241,6 +241,12 @@ $GLOBALS['TL_DCA'][$strName] = array
                 'columnsCallback'     => [$callbackClass,'getRouterLayer']
             ],
             'xlabel' => [['tl_c4g_routing_configuration', 'mapsLink']],
+            'sql'                     => null
+        ],
+        'layerChanger' => [
+            'exclude'                 => true,
+            'default'                 => false,
+            'inputType'               => 'checkbox',
             'sql'                     => null
         ],
         'customProfiles' => [

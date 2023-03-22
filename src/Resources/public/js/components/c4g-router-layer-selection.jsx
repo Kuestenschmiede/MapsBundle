@@ -17,6 +17,7 @@ export class RouterLayerSelection extends Component {
 
     this.setLayer = this.setLayer.bind(this);
     this.setLayerValue = this.setLayerValue.bind(this);
+    this.setLayerOrValue = this.setLayerOrValue.bind(this);
   }
 
   setLayer(event) {
@@ -27,6 +28,14 @@ export class RouterLayerSelection extends Component {
   setLayerValue(event) {
     let value = event.target.value;
     this.props.router.setLayerValue(value);
+  }
+  setLayerOrValue (event) {
+    let value = JSON.parse(event.target.value);
+    let currentLayer = this.props.router.state.mode === "route" ? this.props.router.state.layerRoute : this.props.router.state.layerArea;
+    if (parseInt(value.id) !== parseInt(currentLayer)) {
+      this.props.router.setLayer(parseInt(value.id, 10));
+    }
+    this.props.router.setLayerValue(value.name);
   }
 
   render() {
@@ -39,29 +48,60 @@ export class RouterLayerSelection extends Component {
     }
     const arrLayers = scope.props.router.objLayers;
     let layerValueSelection = "";
-    if (this.props.layers && (Object.keys(this.props.layers[defaultLayer]).length > 1)) {
-      layerValueSelection = <div className={"c4g-router-layer-value-selection"}>
-        {Object.keys(this.props.layers[defaultLayer]).map((name) => {
-          return <button className={this.props.activeLayerValue === name ? "c4g-active" : "c4g-inactive"} onMouseUp={this.setLayerValue} key={this.props.layers[defaultLayer][name].mapLabel} value={name} title={name}>{name}</button>
-        })}
-      </div>;
+    if (!this.props.router.props.mapController.data.layerChanger) {
+      if (this.props.layers && (Object.keys(this.props.layers[defaultLayer]).length > 1)) {
+        layerValueSelection = <div className={"c4g-router-layer-value-selection"}>
+          {Object.keys(this.props.layers[defaultLayer]).map((name) => {
+            return <button className={this.props.activeLayerValue === name ? "c4g-active" : "c4g-inactive"} onMouseUp={this.setLayerValue} key={this.props.layers[defaultLayer][name].mapLabel} value={name} title={name}>{name}</button>
+          })}
+        </div>;
+      }
+
+      if (this.props.layers && (Object.keys(this.props.layers).length > 1)) {
+        return (
+            <React.Fragment>
+              <select className="c4g-router-layer-selection" onChange={this.setLayer} defaultValue={defaultLayer}>
+                {Object.keys(this.props.layers).map((id) => {
+                  let layer = arrLayers[id].layerData;
+
+                  return <option key={id} value={id}>{layer.name}</option>
+                })}
+              </select>
+              {layerValueSelection}
+            </React.Fragment>
+        );
+      } else {
+        return (<React.Fragment>{layerValueSelection}</React.Fragment>);
+      }
     }
-
-    if (this.props.layers && (Object.keys(this.props.layers).length > 1)) {
-      return (
-        <React.Fragment>
-          <select className="c4g-router-layer-selection" onChange={this.setLayer} defaultValue={defaultLayer}>
-            {Object.keys(this.props.layers).map((id) => {
-              let layer = arrLayers[id].layerData;
-
-              return <option key={id} value={id}>{layer.name}</option>
+    else {
+      let options = [];
+      if (Object.keys(this.props.layers).length > 1) {
+        options = Object.keys(this.props.layers).map((id) => {
+          let layer = arrLayers[id].layerData;
+          return <optgroup key={id} style={{color: "var(--main-color)"}} label={layer.name}>
+            {Object.keys(this.props.layers[id]).map((name) => {
+              let option = this.props.layers[id][name];
+              return <option key={name} style={{color: "var(--main-color)"}} value={JSON.stringify({id: id, name: name})}>{name}</option>
             })}
-          </select>
-          {layerValueSelection}
-        </React.Fragment>
+          </optgroup>;
+        });
+      }
+      else {
+        options = Object.keys(this.props.layers).map((id) => {
+          let layer = arrLayers[id].layerData;
+          return Object.keys(this.props.layers[id]).map((name) => {
+            let option = this.props.layers[id][name];
+            return <option key={name} style={{color: "var(--main-color)"}} value={JSON.stringify({id: id, name: name})}>{name}</option>
+          });
+        });
+      }
+
+      return (
+        <select className="c4g-router-layer-selection" onChange={this.setLayerOrValue} defaultValue={defaultLayer}>
+          {options}
+      </select>
       );
-    } else {
-      return (<React.Fragment>{layerValueSelection}</React.Fragment>);
     }
   }
 }

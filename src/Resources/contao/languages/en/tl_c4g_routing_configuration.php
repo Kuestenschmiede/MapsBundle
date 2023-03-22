@@ -30,6 +30,8 @@ $GLOBALS['TL_LANG'][$strName]['routerLayer']['value'] = ['Button Text','The text
 $GLOBALS['TL_LANG'][$strName]['routerLayer']['label'] = ['Label','Label for the map elements.'];
 $GLOBALS['TL_LANG'][$strName]['routerLayer']['mapLabel'] = ['Label Field','Fieldname for the label generation.'];
 
+$GLOBALS['TL_LANG'][$strName]['layerChanger'] = ['Layer selection as select box', 'Choose if you want to display the layer selection as as select-box instead of buttons.'];
+
 $GLOBALS['TL_LANG'][$strName]['customProfiles'] = ['Eigene Routingprofile', 'Own Routing Profiles'];
 $GLOBALS['TL_LANG'][$strName]['customProfile']['profileKey'] = ['Key for the profile','Key for the profile when addressing the API.'];
 $GLOBALS['TL_LANG'][$strName]['customProfile']['showName'] = ['Display name','Name of the profile for display in the frontend.'];

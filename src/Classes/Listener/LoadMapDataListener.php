@@ -136,6 +136,7 @@ class LoadMapDataListener
                 $mapData['initialDestination'] = $routerConfig->getInitialDestination();
                 $mapData['usePermalink'] = $routerConfig->getUsePermalink();
                 $mapData['hideFeaturesWithoutLabel'] = $routerConfig->getHideFeaturesWithoutLabel();
+                $mapData['layerChanger'] = $routerConfig->getLayerChanger() === "1";
                 $objSettings = C4gMapSettingsModel::findOnly();
                 if ($objSettings->con4gisIoUrl && $objSettings->con4gisIoKey) {
                     if ($key = C4GUtils::getKey($objSettings, 7)) {
