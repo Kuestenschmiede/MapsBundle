@@ -137,6 +137,12 @@ class LoadMapDataListener
                 $mapData['usePermalink'] = $routerConfig->getUsePermalink();
                 $mapData['hideFeaturesWithoutLabel'] = $routerConfig->getHideFeaturesWithoutLabel();
                 $mapData['layerChanger'] = $routerConfig->getLayerChanger() === "1";
+                $mapData['detourElement'] = $routerConfig->getDetourElement() === "1";
+                if ($mapData['detourElement']) {
+                    $mapData['arrDetourOptionsRoute'] = explode(',', $routerConfig->getArrDetourOptionsArea());
+                    $mapData['arrDetourOptionsArea'] = explode(',', $routerConfig->getArrDetourOptionsArea());
+                }
+                
                 $objSettings = C4gMapSettingsModel::findOnly();
                 if ($objSettings->con4gisIoUrl && $objSettings->con4gisIoKey) {
                     if ($key = C4GUtils::getKey($objSettings, 7)) {

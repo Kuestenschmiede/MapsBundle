@@ -16,7 +16,7 @@ export class RouterDetourSlider extends Component {
 
   constructor(props) {
     super(props);
-
+    this.handleChange = this.handleChange.bind(this);
     this.updated = false;
   }
 
@@ -50,13 +50,27 @@ export class RouterDetourSlider extends Component {
 
   render() {
     const scope = this;
-
-    return (
-      <div className={"c4g-router-detour-range"}>
-        <p>{routingConstants.ROUTE_DETOUR}</p>
+    let detourElement = null
+    if (this.props.router.props.mapController.data.detourElement) {
+      detourElement = <React.Fragment>
         <input type="range" className={routingConstants.ROUTE_TOGGLE}
                min={this.props.min} max={this.props.max} defaultValue={this.props.value} step={0.5}/>
         <output className={routingConstants.OUTPUT_DETOUR}>{this.props.value + " km"}</output>
+      </React.Fragment>
+    }
+    else {
+      let arrOptions = scope.props.router.state.mode === "route"? this.props.router.props.mapController.data.arrDetourOptionsRoute : this.props.router.props.mapController.data.arrDetourOptionsArea;
+      let options = arrOptions.map((elem) => {
+        return <option key={elem} value={elem}>{elem} km</option>
+      })
+      
+      detourElement = <select className="c4g-router-detour-selection" onChange={this.handleChange} defaultValue={this.props.value}>{options}
+      </select>;
+    }
+    return (
+      <div className={"c4g-router-detour-range"}>
+        <p>{routingConstants.ROUTE_DETOUR}</p>
+        {detourElement}
       </div>
     );
   }
@@ -89,6 +103,16 @@ export class RouterDetourSlider extends Component {
       });
       jQuery(element).trigger('input');
       this.updated = true;
+    }
+  }
+  handleChange (event) {
+    let value = event.target.value;
+    if (this.props.router.state.mode === "route") {
+      this.props.router.setState({detourRoute: value}, this.props.router.recalculateRoute);
+    } else {
+      this.props.router.setState({detourArea: value}, () => {
+        this.props.router.performArea(this.props.router.state.areaValue);
+      });
     }
   }
 }

@@ -332,7 +332,25 @@ class RoutingConfiguration extends BaseEntity
      * @ORM\Column(type="string", length=1)
      */
     protected $pirate = '';
-    
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=1)
+     */
+    protected $detourElement = '';
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    protected $arrDetourOptionsRoute = '';
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    protected $arrDetourOptionsArea = '';
+
     /**
      * @return int
      */
@@ -1099,5 +1117,53 @@ class RoutingConfiguration extends BaseEntity
     public function setRouterProfilesInitial(string $routerProfilesInitial): void
     {
         $this->routerProfilesInitial = $routerProfilesInitial;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDetourElement(): string
+    {
+        return $this->detourElement;
+    }
+
+    /**
+     * @param string $detourElement
+     */
+    public function setDetourElement(string $detourElement): void
+    {
+        $this->detourElement = $detourElement;
+    }
+
+    /**
+     * @return string
+     */
+    public function getArrDetourOptionsRoute(): string
+    {
+        return $this->arrDetourOptionsRoute;
+    }
+
+    /**
+     * @param string $arrDetourOptionsRoute
+     */
+    public function setArrDetourOptionsRoute(string $arrDetourOptionsRoute): void
+    {
+        $this->arrDetourOptionsRoute = $arrDetourOptionsRoute;
+    }
+
+    /**
+     * @return string
+     */
+    public function getArrDetourOptionsArea(): string
+    {
+        return $this->arrDetourOptionsArea;
+    }
+
+    /**
+     * @param string $arrDetourOptionsArea
+     */
+    public function setArrDetourOptionsArea(string $arrDetourOptionsArea): void
+    {
+        $this->arrDetourOptionsArea = $arrDetourOptionsArea;
     }
 }

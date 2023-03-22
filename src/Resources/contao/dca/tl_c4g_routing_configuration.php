@@ -84,10 +84,10 @@ $GLOBALS['TL_DCA'][$strName] = array
     ),
     'palettes' => array
     (
-        '__selector__'                => array('router_api_selection', 'areaSearch'),
+        '__selector__'                => array('router_api_selection', 'areaSearch', 'detourElement'),
         'default'                     => '{general_legend},name,router_api_selection,router_viaroute_url,router_from_locstyle,router_to_locstyle,router_point_locstyle;'
                                         .'{extended_legend:hide},routerHeadline,router_attribution,router_interim_locstyle,router_alternative,enableOverPoints,enableTargetSwitch,routeStartButton,closeAfterSearch,showInstructions,instructionLabel;'
-                                        .'{search_legend:hide},areaSearch,showFeatures,featureLabel,initialMode,initialResultMode,initialPosition,initialDestination,routerLayers,layerChanger,hideFeaturesWithoutLabel,minDetourArea,maxDetourArea,initialDetourArea,minDetourRoute,maxDetourRoute,initialDetourRoute,clickLocstyle,areaCenterLocstyle,priorityFeatures,priorityLocstyle,usePermalink;'
+                                        .'{search_legend:hide},areaSearch,showFeatures,featureLabel,initialMode,initialResultMode,initialPosition,initialDestination,routerLayers,layerChanger,hideFeaturesWithoutLabel,detourElement,clickLocstyle,areaCenterLocstyle,priorityFeatures,priorityLocstyle,usePermalink;'
     ),
     'subpalettes' => array
     (
@@ -96,7 +96,9 @@ $GLOBALS['TL_DCA'][$strName] = array
         'router_api_selection_3' => 'router_api_key,router_profiles,router_profiles_initial',
         'router_api_selection_4' => 'router_api_key,router_profiles,router_profiles_initial,pirate',
         'router_api_selection_5' => 'router_profiles,router_profiles_initial',
-        'areaSearch'             => 'areaHeadline,areaSearchOnly,drawCircle,areaCircleColor'
+        'areaSearch'             => 'areaHeadline,areaSearchOnly,drawCircle,areaCircleColor',
+        'detourElement_0'        => 'minDetourArea,maxDetourArea,initialDetourArea,minDetourRoute,maxDetourRoute,initialDetourRoute',
+        'detourElement_1'        => 'initialDetourArea,initialDetourRoute,arrDetourOptionsRoute,arrDetourOptionsArea'
     ),
     'fields' => array
     (
@@ -211,6 +213,27 @@ $GLOBALS['TL_DCA'][$strName] = array
             'default'                 => '',
             'inputType'               => 'checkbox',
             'sql'                     => null
+        ],
+        'detourElement' => [
+            'exclude'                 => true,
+            'default'                 => '',
+            'inputType'               => 'checkbox',
+            'eval'                    => ['submitOnChange' => true],
+            'sql'                     => null
+        ],
+         'arrDetourOptionsRoute' => [
+             'filter'                  => false,
+             'inputType'               => 'text',
+             'default'                 => '',
+             'eval'                    => [ 'tl_class'=>'w50'],
+             'sql'                     => null
+        ],
+        'arrDetourOptionsArea' => [
+             'filter'                  => false,
+             'inputType'               => 'text',
+             'default'                 => '',
+             'eval'                    => [ 'tl_class'=>'w50'],
+             'sql'                     => null
         ],
         'minDetourArea' => [
             'filter'                  => false,
