@@ -102,9 +102,12 @@ export class RouterFeatureListItem extends Component {
     if (!this.state.element ||
         this.props.layerValueRoute !== prevProps.layerValueRoute ||
         this.props.layerValueArea !== prevProps.layerValueArea){ //only get popup if not already set or layer changes
-      this.setState({
-        element: this.getElement()
-      })
+      let element = this.getElement();
+      if (element) {
+        this.setState({
+          element: this.getElement()
+        })
+      }
     }
 
   }
