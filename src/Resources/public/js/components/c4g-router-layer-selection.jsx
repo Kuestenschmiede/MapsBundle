@@ -79,12 +79,21 @@ export class RouterLayerSelection extends Component {
       if (Object.keys(this.props.layers).length > 1) {
         options = Object.keys(this.props.layers).map((id) => {
           let layer = arrLayers[id].layerData;
-          return <optgroup key={id} style={{color: "var(--main-color)"}} label={layer.name}>
-            {Object.keys(this.props.layers[id]).map((name) => {
+          if (Object.keys(this.props.layers[id]).length > 1) {
+            return <optgroup key={id} style={{color: "var(--main-color)"}} label={layer.name}>
+              {Object.keys(this.props.layers[id]).map((name) => {
+                let option = this.props.layers[id][name];
+                return <option key={name} style={{color: "var(--main-color)"}} value={JSON.stringify({id: id, name: name})}>{name}</option>
+              })}
+            </optgroup>;
+          }
+          else {
+            return Object.keys(this.props.layers[id]).map((name) => {
               let option = this.props.layers[id][name];
               return <option key={name} style={{color: "var(--main-color)"}} value={JSON.stringify({id: id, name: name})}>{name}</option>
-            })}
-          </optgroup>;
+            })
+          }
+
         });
       }
       else {
