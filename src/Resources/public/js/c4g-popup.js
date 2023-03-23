@@ -130,13 +130,42 @@ export class C4gPopup {
         }
     }
     setPosition (geometry) {
+        let map = this.popupController.mapController.map;
+        let element = this.popup.getElement();
+        let coordinates = null;
         if (geometry.getType() === 'Point') {
-            this.popup.setPosition(geometry.getCoordinates());
+            coordinates = geometry.getCoordinates();
         }
         else {
             let extent = geometry.getExtent();
-            let center = [(extent[0] + extent[2]) / 2, (extent[1] + extent[3]) / 2,];
-            this.popup.setPosition(center);
+            coordinates = [(extent[0] + extent[2]) / 2, (extent[1] + extent[3]) / 2,];
         }
+        let center = map.getView().getCenter();
+        let positioning = "";
+        let offset = [0,0];
+        if (center[1] > coordinates[1]) {
+            positioning += "bottom";
+        }
+        else {
+            offset[1] = 10;
+            positioning += "top";
+        }
+        if (center[0] > coordinates[0]) {
+            offset[0] = -50;
+            positioning += "-left"
+        }
+        else {
+            offset[0] = 100;
+            positioning += "-right"
+        }
+        $(element).removeClass("nose-top-left")
+            .removeClass("nose-top-right")
+            .removeClass("nose-bottom-left")
+            .removeClass("nose-bottom-right");
+        $(element).addClass("nose-" + positioning)
+        this.popup.setPositioning(positioning);
+        this.popup.setOffset(offset);
+        this.popup.setPosition(coordinates);
+
     }
 }

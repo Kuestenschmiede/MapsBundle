@@ -513,13 +513,35 @@ span.c4g-starboard-locstyle {
     pointer-events: none;
     content: " ";
     position: absolute;
+    margin-left: -10px;
+    margin-bottom: 10px;
+    border: 10px solid transparent;
+}
+.ol-selectable div.c4g-popup-wrapper.nose-bottom-left:before {
     bottom: -30px;
     left: 48px;
     height: 0;
     width: 0;
-    margin-left: -10px;
-    margin-bottom: 10px;
-    border: 10px solid transparent;
+}
+.ol-selectable div.c4g-popup-wrapper.nose-top-left:before {
+    top: -20px;
+    rotate: 180deg;
+    left: 48px;
+    height: 0;
+    width: 0;
+}
+.ol-selectable div.c4g-popup-wrapper.nose-bottom-right:before {
+    bottom: -30px;
+    right: 70px;
+    height: 0;
+    width: 0;
+}
+.ol-selectable div.c4g-popup-wrapper.nose-top-right:before {
+    top: -20px;
+    rotate: 180deg;
+    right: 70px;
+    height: 0;
+    width: 0;
 }
 
 .ol-selectable div.c4g-popup-wrapper-nonose:before {
