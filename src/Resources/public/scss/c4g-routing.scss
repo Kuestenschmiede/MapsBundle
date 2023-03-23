@@ -308,16 +308,16 @@ button.c4g-router-profile-car.c4g-active {
 .c4g-router-layer-value-selection button:last-child {
     margin-bottom: 10px;
 }
-
+select.c4g-detour-selection,
 select.c4g-router-layer-selection {
     display: inline-block;
-    width: 100%;
     padding: .2em .4em;
     border: none;
     outline: none;
     background-color: var(--font-color);
     color: var(--main-color);
     margin: .4em 0;
+    margin-right: 5px;
     vertical-align: text-bottom;
 }
 
@@ -1133,6 +1133,9 @@ ul.c4g-autocomplete {
     max-width: calc(100% - ((32px + .2em) * 2));
     z-index: 1;
     box-sizing: border-box;
+}
+.c4g-autocomplete-wrapper > input {
+    min-height: 25px;
 }
 ul.c4g-autocomplete > li.c4g-autocomplete-item {
     border-style: solid;

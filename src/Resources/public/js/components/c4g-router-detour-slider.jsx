@@ -51,28 +51,23 @@ export class RouterDetourSlider extends Component {
   render() {
     const scope = this;
     let detourElement = null
-    if (this.props.router.props.mapController.data.detourElement) {
-      detourElement = <React.Fragment>
+    if (!this.props.router.props.mapController.data.detourElement) {
+      detourElement = <div className={"c4g-router-detour-range"}>
+        <p>{routingConstants.ROUTE_DETOUR}</p>
         <input type="range" className={routingConstants.ROUTE_TOGGLE}
                min={this.props.min} max={this.props.max} defaultValue={this.props.value} step={0.5}/>
         <output className={routingConstants.OUTPUT_DETOUR}>{this.props.value + " km"}</output>
-      </React.Fragment>
+      </div>;
     }
     else {
       let arrOptions = scope.props.router.state.mode === "route"? this.props.router.props.mapController.data.arrDetourOptionsRoute : this.props.router.props.mapController.data.arrDetourOptionsArea;
       let options = arrOptions.map((elem) => {
         return <option key={elem} value={elem}>{elem} km</option>
-      })
-      
-      detourElement = <select className="c4g-router-detour-selection" onChange={this.handleChange} defaultValue={this.props.value}>{options}
+      });
+      detourElement = <select className="c4g-detour-selection" onChange={this.handleChange} defaultValue={this.props.value}>{options}
       </select>;
     }
-    return (
-      <div className={"c4g-router-detour-range"}>
-        <p>{routingConstants.ROUTE_DETOUR}</p>
-        {detourElement}
-      </div>
-    );
+    return detourElement;
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {

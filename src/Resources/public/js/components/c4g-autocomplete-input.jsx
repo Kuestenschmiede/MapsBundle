@@ -125,7 +125,7 @@ export class AutocompleteInput extends Component {
             listAutocomplete = <ul className={"c4g-autocomplete"}>{listAdresses}</ul>
         }
         return (
-            <div ref={this.wrapperRef}>
+            <div className={'c4g-autocomplete-wrapper'} ref={this.wrapperRef}>
                 <input id={this.props.cssId} type="search" defaultValue={this.props.value} onKeyDown={enterListener}
                        autoComplete="off"/>
                 {listAutocomplete}

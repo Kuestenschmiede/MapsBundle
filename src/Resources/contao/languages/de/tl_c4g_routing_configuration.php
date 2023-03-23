@@ -51,9 +51,9 @@ $GLOBALS['TL_LANG'][$strName]['drawCircle'] = ['Umkreis darstellen', 'Wählen Si
 $GLOBALS['TL_LANG'][$strName]['areaCircleColor'] = ['Farbe des Umkreis', 'Wählen Sie die Farbe des Umkreis.'];
 $GLOBALS['TL_LANG'][$strName]['areaHeadline'] = ['Überschrift Umkreissuche', 'Standard: Umkreissuche'];
 $GLOBALS['TL_LANG'][$strName]['areaHeadlineDefault'] = "Umkreissuche";
-$GLOBALS['TL_LANG'][$strName]['detourArea'] =  ['Umweg als Select-Box', 'Darstellung des Umweges als Select-Box'];
+$GLOBALS['TL_LANG'][$strName]['detourElement'] =  ['Umweg als Select-Box', 'Darstellung des Umweges'];
 $GLOBALS['TL_LANG'][$strName]['arrDetourOptionsArea'] =  ['Optionen Umkreissuche', 'Kommagetrennte Liste von Umkreisen'];
-$GLOBALS['TL_LANG'][$strName]['arrDetourOptionsArea'] =  ['Optionen Routensuche', 'Kommagetrennte Liste von Uwegen'];
+$GLOBALS['TL_LANG'][$strName]['arrDetourOptionsRoute'] =  ['Optionen Routensuche', 'Kommagetrennte Liste von Uwegen'];
 $GLOBALS['TL_LANG'][$strName]['featureLabel'] = ['Buttontext für Ergebnisliste', 'Hier können sie den Buttontext für die Anzeige der Ergebnisliste angeben.'];
 $GLOBALS['TL_LANG'][$strName]['initialMode'] = ['Initiale Sicht', 'Wählen Sie aus, welche Sicht im Router initial angezeigt werden soll.'];
 $GLOBALS['TL_LANG'][$strName]['initialPosition'] = ['Initiale Position', 'Der Startpunkt wird automatisch auf den Standort des Nutzers gesetzt.'];
@@ -86,6 +86,9 @@ $GLOBALS['TL_LANG'][$strName]['references_router_api_selection']['2'] = 'OpenRou
 $GLOBALS['TL_LANG'][$strName]['references_router_api_selection']['3'] = 'Graphhopper (<a href="https://www.graphhopper.com" target="_blank" rel="noopener">Nutzungsbestimmungen</a>)';
 $GLOBALS['TL_LANG'][$strName]['references_router_api_selection']['4'] = 'Valhalla (<a href="http://valhalla.github.io/demos/routing" target="_blank" rel="noopener">Nutzungsbestimmungen</a>)';
 $GLOBALS['TL_LANG'][$strName]['references_router_api_selection']['5'] = 'con4gis.io Kartendienste (<a href="https://con4gis.io" target="_blank" rel="noopener">Nutzungsbestimmungen</a>)';
+
+$GLOBALS['TL_LANG'][$strName]['referencesDetourElement']['0'] = 'Darstellung als Slider';
+$GLOBALS['TL_LANG'][$strName]['referencesDetourElement']['1'] = 'Darstellung als Select-Box';
 
 $GLOBALS['TL_LANG'][$strName]['references_router_profiles']['0'] = 'Auto';
 $GLOBALS['TL_LANG'][$strName]['references_router_profiles']['1'] = 'Lastwagen';

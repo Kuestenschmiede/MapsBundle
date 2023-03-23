@@ -52,9 +52,9 @@ $GLOBALS['TL_LANG'][$strName]['areaCircleColor'] = ['Color of the radius', 'Choo
 $GLOBALS['TL_LANG'][$strName]['areaSearchOnly'] = ['Disable route search', 'If this is checked, the search along the route is deactivated.'];
 $GLOBALS['TL_LANG'][$strName]['areaHeadline'] = ['Headline area search', 'Default: Area search'];
 $GLOBALS['TL_LANG'][$strName]['areaHeadlineDefault'] = "Area search";
-$GLOBALS['TL_LANG'][$strName]['detourArea'] =  ['Detour as Select-Box', 'Display the detour as select box'];
-$GLOBALS['TL_LANG'][$strName]['arrDetourOptionsArea'] =  ['Options area search', 'Comma seprerated list of area options'];
-$GLOBALS['TL_LANG'][$strName]['arrDetourOptionsArea'] =  ['Options route search', 'Comma seprerated list of route options'];
+$GLOBALS['TL_LANG'][$strName]['detourElement'] =  ['Display detour', 'Choose how to display the detour'];
+$GLOBALS['TL_LANG'][$strName]['arrDetourOptionsArea'] =  ['Options area search', 'Comma seperated list of area options'];
+$GLOBALS['TL_LANG'][$strName]['arrDetourOptionsRoute'] =  ['Options route search', 'Comma seperated list of route options'];
 $GLOBALS['TL_LANG'][$strName]['featureLabel'] = ['Result list button caption', 'Enter a caption for the result list button.'];
 $GLOBALS['TL_LANG'][$strName]['initialMode'] = ['Initial view', 'Choose the initial view in the router.'];
 $GLOBALS['TL_LANG'][$strName]['initialPosition'] = ['Initial position', 'The start is set to the users position.'];
@@ -90,6 +90,8 @@ $GLOBALS['TL_LANG'][$strName]['references_router_api_selection']['3'] = 'Graphho
 $GLOBALS['TL_LANG'][$strName]['references_router_api_selection']['4'] = 'Valhalla (<a href="http://valhalla.github.io/demos/routing" target="_blank" rel="noopener">usage policy</a>)';
 $GLOBALS['TL_LANG'][$strName]['references_router_api_selection']['5'] = 'con4gis.io mapservices (<a href="https://con4gis.io" target="_blank" rel="noopener">usage policy</a>)';
 
+$GLOBALS['TL_LANG'][$strName]['referencesDetourElement']['0'] = 'Display as slider';
+$GLOBALS['TL_LANG'][$strName]['referencesDetourElement']['1'] = 'Display as select-box';
 
 $GLOBALS['TL_LANG'][$strName]['references_router_profiles']['0'] = 'Car';
 $GLOBALS['TL_LANG'][$strName]['references_router_profiles']['1'] = 'Truck';

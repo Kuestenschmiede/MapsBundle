@@ -217,7 +217,9 @@ $GLOBALS['TL_DCA'][$strName] = array
         'detourElement' => [
             'exclude'                 => true,
             'default'                 => '',
-            'inputType'               => 'checkbox',
+            'options'                 => [0,1],
+            'reference'               => &$GLOBALS['TL_LANG'][$strName]['referencesDetourElement'],
+            'inputType'               => 'radio',
             'eval'                    => ['submitOnChange' => true],
             'sql'                     => null
         ],
