@@ -40,7 +40,7 @@ export class C4gPopup {
             });
             popupController.mapController.map.addOverlay(this.popup);
         } else if (popupController.popupHandling === 2) {
-            $(popUpElement).addClass('c4g-popup-wrapper-nonose');
+            jQuery(popUpElement).addClass('c4g-popup-wrapper-nonose');
             let center = popupController.mapController.map.getView().getCenter();
             this.popup = new Overlay({
                 position: center,
@@ -158,11 +158,11 @@ export class C4gPopup {
             offset[0] = 100;
             positioning += "-right"
         }
-        $(element).removeClass("nose-top-left")
+        jQuery(element).removeClass("nose-top-left")
             .removeClass("nose-top-right")
             .removeClass("nose-bottom-left")
             .removeClass("nose-bottom-right");
-        $(element).addClass("nose-" + positioning)
+        jQuery(element).addClass("nose-" + positioning)
         this.popup.setPositioning(positioning);
         this.popup.setOffset(offset);
         this.popup.setPosition(coordinates);
