@@ -8,7 +8,8 @@
  * @copyright (c) 2010-2022, by Küstenschmiede GmbH Software & Design
  * @link https://www.con4gis.org
  */
-
+use Contao\Backend;
+use Contao\DC_Table;
 if (method_exists('\System', 'getContainer')) {
     $filteredSizes = [];
     $imageSizes = \System::getContainer()->get('contao.image.image_sizes')->getAllOptions();
@@ -28,7 +29,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
     'config' =>
         [
         'label'                       => &$GLOBALS['TL_LANG']['MOD']['c4g_map_locstyles'][0],
-        'dataContainer'               => 'Table',
+        'dataContainer'               => DC_Table::class,
         'enableVersioning'            => true,
         'markAsCopy'                  => 'name',
         'onsubmit_callback'           => [

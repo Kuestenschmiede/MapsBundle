@@ -15,12 +15,14 @@ namespace con4gis\MapsBundle\Classes\Contao;
 use con4gis\CoreBundle\Classes\ResourceLoader;
 use con4gis\MapsBundle\Classes\MapDataConfigurator;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
+use Contao\BackendUser;
+use Contao\System;
 
 /**
  * Class GeoEditor
  * @package con4gis\MapsBundle\Resources\contao\classes
  */
-class GeoEditor extends \Contao\Backend
+class GeoEditor extends Contao\Backend
 {
     private $layerId;
 
@@ -36,17 +38,19 @@ class GeoEditor extends \Contao\Backend
     public function __construct($layerId = 0)
     {
         parent::__construct();
-        $this->import('BackendUser', 'User');
+        $this->import(BackendUser::class, 'User');
         $this->layerId = $layerId;
         $this->loadLanguageFile('default');
     }
 
     public function getEditorLink(\Contao\DataContainer $dc)
     {
+        $requestToken = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
         $strField = 'ctrl_' . $dc->field . (($this->Input->get('act') == 'editAll') ? '_' . $dc->id : '');
         ResourceLoader::loadJavaScriptResource('bundles/con4gismaps/build/' . 'c4g-backend-helper.js', \con4gis\CoreBundle\Classes\ResourceLoader::JAVASCRIPT, 'c4g-backend-helper');
-        // return ($dc->value < 1) ? '' : ' <a href="bundles/con4gismaps/be/geoeditor.php?rt=' . REQUEST_TOKEN . '" title="' . $GLOBALS['TL_LANG']['c4g_maps']['geoeditor'] . '" style="padding-left:3px" onclick="c4g.maps.backend.showGeoEditor(this.href,' . $strFieldX . ',' . $strFieldY . ', {title:\'' . $GLOBALS['TL_LANG']['c4g_maps']['geoeditor']. '\'});return false">' . \Image::getHtml('bundles/con4gismaps/images/be-icons/geopicker.png', $GLOBALS['TL_LANG']['tl_content']['editalias'][0], 'style="vertical-align:top"') . '</a>';
-        return ' <a href="con4gis/beEditorService/' . $dc->id . '?rt=' . REQUEST_TOKEN . '" title="' . $GLOBALS['TL_LANG']['c4g_maps']['geoeditor'] . '" style="padding-left:3px" onclick="window.showGeoEditor(this.href,' . $strField . ', {title:\'' . $GLOBALS['TL_LANG']['c4g_maps']['geoeditor'] . '\'}, ' . $dc->id . ');return false">' . \Image::getHtml('bundles/con4gismaps/images/be-icons/geopicker.svg', $GLOBALS['TL_LANG']['tl_content']['editalias'][0], 'style="vertical-align:top; width: 32px; height: 32px;"') . '</a>';
+        $requestToken = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
+        return ($dc->value < 1) ? '' : ' <a href="bundles/con4gismaps/be/geoeditor.php?rt=' . $requestToken . '" title="' . $GLOBALS['TL_LANG']['c4g_maps']['geoeditor'] . '" style="padding-left:3px" onclick="c4g.maps.backend.showGeoEditor(this.href,' . $strFieldX . ',' . $strFieldY . ', {title:\'' . $GLOBALS['TL_LANG']['c4g_maps']['geoeditor']. '\'});return false">' . \Image::getHtml('bundles/con4gismaps/images/be-icons/geopicker.png', $GLOBALS['TL_LANG']['tl_content']['editalias'][0], 'style="vertical-align:top"') . '</a>';
+        return ' <a href="con4gis/beEditorService/' . $dc->id . '?rt=' . $requestToken . '" title="' . $GLOBALS['TL_LANG']['c4g_maps']['geoeditor'] . '" style="padding-left:3px" onclick="window.showGeoEditor(this.href,' . $strField . ', {title:\'' . $GLOBALS['TL_LANG']['c4g_maps']['geoeditor'] . '\'}, ' . $dc->id . ');return false">' . \Image::getHtml('bundles/con4gismaps/images/be-icons/geopicker.svg', $GLOBALS['TL_LANG']['tl_content']['editalias'][0], 'style="vertical-align:top; width: 32px; height: 32px;"') . '</a>';
     }
 
     /**

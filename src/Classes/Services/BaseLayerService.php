@@ -17,7 +17,9 @@ use con4gis\MapsBundle\Resources\contao\models\C4gMapOverlaysModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapSettingsModel;
 use Contao\Database;
+use Contao\StringUtil;
 use Contao\FilesModel;
+use Contao\System;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class BaseLayerService
@@ -53,7 +55,7 @@ class BaseLayerService
         if ($mapsProfileModel !== null) {
             if ($mapsProfileModel->baselayers) {
                 $blnProfileBaselayerFilter = true;
-                $arrProfileBaselayerFilter = deserialize($mapsProfileModel->baselayers, true);
+                $arrProfileBaselayerFilter = StringUtil::deserialize($mapsProfileModel->baselayers, true);
             }
         }
 
@@ -83,7 +85,7 @@ class BaseLayerService
                 }
                 if ($objBaseLayers->protect_baselayer) {
                     if (FE_USER_LOGGED_IN && !empty($objBaseLayers->permitted_groups)) {
-                        if (sizeof(array_intersect($this->User->groups, deserialize($objBaseLayers->permitted_groups))) <= 0) {
+                        if (sizeof(array_intersect($this->User->groups, StringUtil::deserialize($objBaseLayers->permitted_groups))) <= 0) {
                             continue;
                         }
                     } else {
@@ -138,11 +140,11 @@ class BaseLayerService
 
         $arrOverlayData['id'] = $objOverlay->id;
         $arrOverlayData['pid'] = $objOverlay->pid;
-        $arrOverlayData['name'] = \Contao\Controller::replaceInsertTags($stringClass::decodeEntities($objOverlay->name));
+        $arrOverlayData['name'] = System::getContainer()->get('contao.insert_tag.parser')->replace($stringClass::decodeEntities($objOverlay->name));
 
         $arrOverlayData['provider'] = $objOverlay->provider;
         $arrOverlayData['opacity'] = $objOverlay->opacity;
-        $arrOverlayData['attribution'] = \Contao\Controller::replaceInsertTags($stringClass::decodeEntities($objOverlay->attribution));
+        $arrOverlayData['attribution'] = System::getContainer()->get('contao.insert_tag.parser')->replace($stringClass::decodeEntities($objOverlay->attribution));
 
         switch ($objOverlay->provider) {
             case 'custom':
@@ -207,7 +209,7 @@ class BaseLayerService
 
         $arrBaseLayer['id'] = $objBaseLayer->id;
         $decodedName = $stringClass::decodeEntities($objBaseLayer->display_name ?: $objBaseLayer->name);
-        $arrBaseLayer['name'] = Utils::replaceInsertTags($decodedName, $lang);
+        $arrBaseLayer['name'] = System::getContainer()->get('contao.insert_tag.parser')->replace($decodedName, $lang);;
 
         $arrBaseLayer['provider'] = $objBaseLayer->provider;
 
@@ -360,7 +362,7 @@ class BaseLayerService
 
                     break;
                 case 'group':
-                    $layerGroup = \Contao\StringUtil::deserialize($objBaseLayer->layerGroup);
+                    $layerGroup = StringUtil::deserialize($objBaseLayer->layerGroup);
                     foreach ($layerGroup as $key => $layer) {
                         $objChildLayer = $this->Database->prepare('SELECT * FROM tl_c4g_map_baselayers WHERE id=?')->execute($layer['baselayers']);
                         $layer['entry'] = $this->parseBaseLayer($objChildLayer, $lang);
@@ -396,7 +398,7 @@ class BaseLayerService
         }
 
         if (!empty($objBaseLayer->attribution)) {
-            $arrBaseLayer['attribution'] = \Contao\Controller::replaceInsertTags($stringClass::decodeEntities($objBaseLayer->attribution));
+            $arrBaseLayer['attribution'] = System::getContainer()->get('contao.insert_tag.parser')->replace($stringClass::decodeEntities($objBaseLayer->attribution));
         }
         if (!empty($objBaseLayer->minzoomlevel)) {
             $arrBaseLayer['minZoom'] = $objBaseLayer->minzoomlevel;

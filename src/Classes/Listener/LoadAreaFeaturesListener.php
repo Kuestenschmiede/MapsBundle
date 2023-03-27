@@ -19,6 +19,7 @@ use con4gis\MapsBundle\Classes\LatLng;
 use con4gis\MapsBundle\Classes\Services\AreaService;
 use con4gis\MapsBundle\Entity\RoutingConfiguration;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Contao\Database;
 
 class LoadAreaFeaturesListener
 {
@@ -75,7 +76,7 @@ class LoadAreaFeaturesListener
                 $sqlWhere = $objConfig->sqlwhere ? $objConfig->sqlwhere : '';
                 $sqlAnd = $sqlWhere ? ' AND ' : '';
                 $strQuery = 'SELECT ' . $sourceTable . '.id,' . $sqlSelect . ' FROM ' . $sourceTable . $onClause . $sqlLoc . $sqlAnd . $sqlWhere . $andbewhereclause ;
-                $pointFeatures = \Contao\Database::getInstance()->prepare($strQuery)->execute()->fetchAllAssoc();
+                $pointFeatures = Database::getInstance()->prepare($strQuery)->execute()->fetchAllAssoc();
                 $responseFeatures = [];
                 $locations = [];
                 $locations[] = [$point->getLng(), $point->getLat()];

@@ -17,6 +17,7 @@ use con4gis\MapsBundle\Classes\Events\LoadMapResourcesEvent;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapThemesModel;
 use Contao\System;
+use Contao\StringUtil;
 
 /**
  * Class ResourceLoader
@@ -153,7 +154,7 @@ class ResourceLoader extends coreResourceLoader
             }
         }
 
-        $mapFunctions = \Contao\StringUtil::deserialize($profile->mapFunctions, true);
+        $mapFunctions = StringUtil::deserialize($profile->mapFunctions, true);
         $buttons = array_flip($mapFunctions);
 
         // check which resources are needed
@@ -205,26 +206,26 @@ class ResourceLoader extends coreResourceLoader
         $themeData = [];
 
         if ($theme->buttonradius) {
-            $themeData['buttonradius'] = deserialize($theme->buttonradius)['value'];
+            $themeData['buttonradius'] = StringUtil::deserialize($theme->buttonradius)['value'];
         }
 
         if ($theme->buttonsize) {
-            $themeData['buttonsize'] = deserialize($theme->buttonsize)['value'];
+            $themeData['buttonsize'] = StringUtil::deserialize($theme->buttonsize)['value'];
         }
 
         if ($theme->button_fontsize) {
-            $themeData['fontsize'] = deserialize($theme->button_fontsize)['value'];
+            $themeData['fontsize'] = StringUtil::deserialize($theme->button_fontsize)['value'];
         }
 
         if ($theme->maincolor) {
-            $maincolor = \Contao\StringUtil::deserialize($theme->maincolor);
+            $maincolor = StringUtil::deserialize($theme->maincolor);
             if ($maincolor[0]) {
                 $themeData['maincolor'] = $maincolor[0];
                 $themeData['mainopacity'] = $maincolor[1];
             }
         }
         if ($theme->fontcolor) {
-            $fontcolor = \Contao\StringUtil::deserialize($theme->fontcolor);
+            $fontcolor = StringUtil::deserialize($theme->fontcolor);
             if ($fontcolor[0]) {
                 $themeData['fontcolor'] = $fontcolor[0];
                 $themeData['fontopacity'] = $fontcolor[1];
@@ -232,19 +233,19 @@ class ResourceLoader extends coreResourceLoader
         }
 
         if ($theme->popupMaincolor) {
-            $popupMaincolor = \Contao\StringUtil::deserialize($theme->popupMaincolor);
+            $popupMaincolor = StringUtil::deserialize($theme->popupMaincolor);
             if ($popupMaincolor[0]) {
                 $themeData['popupMaincolor'] = $popupMaincolor[0];
                 $themeData['popupMainopacity'] = $popupMaincolor[1];
             } elseif ($theme->maincolor) {
-                $maincolor = \Contao\StringUtil::deserialize($theme->maincolor);
+                $maincolor = StringUtil::deserialize($theme->maincolor);
                 if ($maincolor[0]) {
                     $themeData['popupMaincolor'] = $maincolor[0];
                     $themeData['popupMainopacity'] = $maincolor[1];
                 }
             }
         } elseif ($theme->maincolor) {
-            $maincolor = \Contao\StringUtil::deserialize($theme->maincolor);
+            $maincolor = StringUtil::deserialize($theme->maincolor);
             if ($maincolor[0]) {
                 $themeData['popupMaincolor'] = $maincolor[0];
                 $themeData['popupMainopacity'] = $maincolor[1];
@@ -252,19 +253,19 @@ class ResourceLoader extends coreResourceLoader
         }
 
         if ($theme->popupFontcolor) {
-            $popupFontcolor = \Contao\StringUtil::deserialize($theme->popupFontcolor);
+            $popupFontcolor = StringUtil::deserialize($theme->popupFontcolor);
             if ($popupFontcolor[0]) {
                 $themeData['popupFontcolor'] = $popupFontcolor[0];
                 $themeData['popupFontopacity'] = $popupFontcolor[1];
             } elseif ($theme->fontcolor) {
-                $fontcolor = \Contao\StringUtil::deserialize($theme->fontcolor);
+                $fontcolor = StringUtil::deserialize($theme->fontcolor);
                 if ($fontcolor[0]) {
                     $themeData['popupMaincolor'] = $fontcolor[0];
                     $themeData['popupMainopacity'] = $fontcolor[1];
                 }
             }
         } elseif ($theme->fontcolor) {
-            $fontcolor = \Contao\StringUtil::deserialize($theme->fontcolor);
+            $fontcolor = StringUtil::deserialize($theme->fontcolor);
             if ($fontcolor[0]) {
                 $themeData['popupMaincolor'] = $fontcolor[0];
                 $themeData['popupMainopacity'] = $fontcolor[1];
@@ -272,7 +273,7 @@ class ResourceLoader extends coreResourceLoader
         }
 
         if ($theme->shadowcolor) {
-            $shadowcolor = \Contao\StringUtil::deserialize($theme->shadowcolor);
+            $shadowcolor = StringUtil::deserialize($theme->shadowcolor);
             if ($shadowcolor[0]) {
                 $themeData['shadowcolor'] = $shadowcolor[0];
                 $themeData['shadowopacity'] = $shadowcolor[1];
@@ -280,7 +281,7 @@ class ResourceLoader extends coreResourceLoader
         }
 
         if ($theme->popupMaxWidth) {
-            $popupMaxWidth = \Contao\StringUtil::deserialize($theme->popupMaxWidth);
+            $popupMaxWidth = StringUtil::deserialize($theme->popupMaxWidth);
             if ($popupMaxWidth['value']) {
                 $themeData['popupMaxWidth'] = $popupMaxWidth['value'];
             }

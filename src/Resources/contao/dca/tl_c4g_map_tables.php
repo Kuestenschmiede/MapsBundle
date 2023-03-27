@@ -8,12 +8,15 @@
  * @copyright (c) 2010-2022, by Küstenschmiede GmbH Software & Design
  * @link https://www.con4gis.org
  */
+use Contao\Backend;
+use Contao\Database;
+use Contao\DC_Table;
 
 $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
 [
     'config' =>
     [
-        'dataContainer'               => 'Table',
+        'dataContainer'               => DC_Table::class,
         'enableVersioning'            => true,
         'markAsCopy'                  => 'name',
         'sql'                         =>
@@ -304,7 +307,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
 class tl_c4g_map_tables extends Backend
 {
     public function getDatabases(DataContainer $dc) {
-        $result = \Database::getInstance()->prepare("SHOW DATABASES")->execute();
+        $result = Database::getInstance()->prepare("SHOW DATABASES")->execute();
         $arrResult = $result->fetchAllAssoc();
         $options = [];
         foreach ($arrResult as $element) {
@@ -314,7 +317,7 @@ class tl_c4g_map_tables extends Backend
     }
     public function getDatabaseTables(DataContainer $dc) {
         if ($dc->activeRecord->customDB) {
-            $result = \Database::getInstance([dbDatabase => $dc->activeRecord->customDB])->prepare("SHOW TABLES")->execute();
+            $result = Database::getInstance([dbDatabase => $dc->activeRecord->customDB])->prepare("SHOW TABLES")->execute();
             $arrResult = $result->fetchAllAssoc();
             $options = [];
             foreach ($arrResult as $element) {
@@ -331,7 +334,7 @@ class tl_c4g_map_tables extends Backend
         $tableName = $dc->activeRecord->tableSource;
         $options = [];
         if ($dc->activeRecord->customDB && $tableName && $tableName !== "") {
-            $result = \Database::getInstance([dbDatabase => $dc->activeRecord->customDB])->prepare("SHOW COLUMNS FROM " . $tableName)->execute();
+            $result = Database::getInstance([dbDatabase => $dc->activeRecord->customDB])->prepare("SHOW COLUMNS FROM " . $tableName)->execute();
             $arrResult = $result->fetchAllAssoc();
             $options = [];
             foreach ($arrResult as $element) {
@@ -352,7 +355,7 @@ class tl_c4g_map_tables extends Backend
         }
         if ($dc->activeRecord->customDB) {
             foreach ($tableNames as $tableName) {
-                $result = \Database::getInstance([dbDatabase => $dc->activeRecord->customDB])->prepare("SHOW COLUMNS FROM " . $tableName)->execute();
+                $result = Database::getInstance([dbDatabase => $dc->activeRecord->customDB])->prepare("SHOW COLUMNS FROM " . $tableName)->execute();
                 $arrResult = $result->fetchAllAssoc();
                 foreach ($arrResult as $element) {
                     $options[$tableName . '.' . $element['Field']] = $tableName . '.' . $element['Field'];

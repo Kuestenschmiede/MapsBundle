@@ -61,7 +61,8 @@ class LayerController extends BaseController
         
         if (!self::$outputFromCache) {
             /* @var LayerService $layerService */
-            $layerService = $this->get('con4gis.layer_service');
+
+            $layerService = $this->container->get('con4gis.layer_service');
             $this->responseData = $layerService->generate($mapId, $lang);
             $modifiedData = $this->responseData;
             // dispatch event for custom layer content

@@ -8,12 +8,14 @@
  * @copyright (c) 2010-2022, by Küstenschmiede GmbH Software & Design
  * @link https://www.con4gis.org
  */
+use Contao\Backend;
+use Contao\DC_Table;
 
 $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
     [
     'config' =>
         [
-        'dataContainer'               => 'Table',
+        'dataContainer'               => DC_Table::class,
         'enableVersioning'            => true,
         'markAsCopy'                  => 'name',
         'onload_callback' => [['tl_c4g_map_themes', 'showInfoMessage']],

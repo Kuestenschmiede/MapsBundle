@@ -17,6 +17,7 @@ use con4gis\MapsBundle\Resources\contao\models\C4gMapSettingsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapTablesModel;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Contao\Database;
 
 class LoadRouteFeaturesListener
 {
@@ -54,7 +55,7 @@ class LoadRouteFeaturesListener
                 $sqlWhere = $objConfig->sqlwhere ? $objConfig->sqlwhere : '';
                 $sqlAnd = $sqlWhere ? ' AND ' : '';
                 $strQuery = 'SELECT ' . $objConfig->tableSource . '.id,' . $sqlSelect . ' FROM ' . $objConfig->tableSource . $onClause . $sqlLoc . $sqlAnd . $sqlWhere . $andbewhereclause ;
-                $featurePoint = \Contao\Database::getInstance()->prepare($strQuery)->execute()->fetchAllAssoc();
+                $featurePoint = Database::getInstance()->prepare($strQuery)->execute()->fetchAllAssoc();
                 if (!$this->checkIfArrayContainsFeature($featurePoint[0], $features)) {
                     $features = array_merge($features, $featurePoint);
                 }
@@ -79,7 +80,7 @@ class LoadRouteFeaturesListener
             $lineStringWKT .= ')';
             //,ST_Buffer_Strategy('end_flat'),ST_Buffer_Strategy('join_round', 10)
             $selectBuffer = "SELECT ST_AsText(ST_Buffer(ST_GeomFromText('" . $lineStringWKT . "')," . $detour / 113.139 . '))';
-            $db = \Contao\Database::getInstance();
+            $db = Database::getInstance();
             $result = array_shift($db->prepare($selectBuffer)->execute()->fetchAssoc());
             $polygon = \geoPHP::load($result, 'wkt');
             $jsonPolygon = $polygon->out('json');

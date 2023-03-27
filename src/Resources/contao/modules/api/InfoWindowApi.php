@@ -12,6 +12,7 @@ namespace con4gis\MapsBundle\Resources\contao\modules\api;
 use con4gis\CoreBundle\Classes\HttpResultHelper;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use Contao\Frontend;
+use Contao\System;
 
 /**
  * Class InfoWindowApi
@@ -89,7 +90,8 @@ class InfoWindowApi extends Frontend
                         }
 
                         $strInfoWindowContent = $this->replaceInsertTags($strInfoWindowContent, false);
-                        $strInfoWindowContent = str_replace(array('{{request_token}}', '[{]', '[}]'), array(REQUEST_TOKEN, '{{', '}}'), $strInfoWindowContent);
+                        $requestToken = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
+                        $strInfoWindowContent = str_replace(array('{{request_token}}', '[{]', '[}]'), array($requestToken, '{{', '}}'), $strInfoWindowContent);
                         $strInfoWindowContent = $this->replaceDynamicScriptTags($strInfoWindowContent); // see #4203
                     }
                 }

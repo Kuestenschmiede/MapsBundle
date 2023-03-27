@@ -15,6 +15,8 @@ use Contao\DataContainer;
 use Contao\Image;
 use con4gis\MapsBundle\Classes\Utils;
 use con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator;
+use Contao\BackendUser;
+
 class TlC4gMapBaselayers extends Backend
 {
     public function pasteElement(DataContainer $dc, $row, $table, $cr, $arrClipboard=null)
@@ -37,7 +39,7 @@ class TlC4gMapBaselayers extends Backend
 
     public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
     {
-        $this->import('BackendUser', 'User');
+        $this->import(BackendUser::class, 'User');
 
         if (strlen($this->Input->get('tid')))
         {
@@ -141,7 +143,7 @@ class TlC4gMapBaselayers extends Backend
                 $responses = [];
             }
             $arrReturn= [];
-            $language = \Contao\BackendUser::getInstance()->language;
+            $language = BackendUser::getInstance()->language;
             foreach ($responses as $response){
                 if ($response->name && $response->name) {
                     $arrReturn[$response->id] = Utils::replaceInsertTags($response->name, $language);

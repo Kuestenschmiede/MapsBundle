@@ -11,12 +11,13 @@
 namespace con4gis\MapsBundle\Resources\contao\modules;
 
 use con4gis\MapsBundle\Classes\MapDataConfigurator;
-
+use Contao\Module;
+use Contao\System;
 /**
  * Class ContentC4gMaps
  * @package \con4gis\MapsBundle\Resources\contao\modules
  */
-class ContentC4gMaps extends \Module
+class ContentC4gMaps extends Module
 {
     /**
      * Template
@@ -24,12 +25,17 @@ class ContentC4gMaps extends \Module
      */
     protected $strTemplate = 'c4g_maps';
 
+    public function __construct($objModule, $strColumn = 'main')
+    {
+        parent::__construct($objModule, $strColumn);
+    }
+
     /**
      * Generate content element
      */
     public function generate()
     {
-        if (TL_MODE == 'BE') {
+        if (System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest(System::getContainer()->get('request_stack')->getCurrentRequest() ?? Request::create(''))) {
             $objMap = $this->Database->prepare("SELECT * FROM tl_c4g_maps WHERE id=?")
                            ->limit(1)
                            ->execute($this->c4g_map_id);

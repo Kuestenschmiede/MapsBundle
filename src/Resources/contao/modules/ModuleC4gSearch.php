@@ -18,8 +18,9 @@ use con4gis\CoreBundle\Resources\contao\models\C4gSettingsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use Contao\Controller;
 use Contao\System;
+use Contao\Module;
 
-class ModuleC4gSearch extends \Module
+class ModuleC4gSearch extends Module
 {
     /**
      * Template

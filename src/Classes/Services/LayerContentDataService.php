@@ -17,6 +17,7 @@ use con4gis\MapsBundle\Resources\contao\models\C4gMapTablesModel;
 use Contao\Config;
 use Contao\Controller;
 use Contao\Frontend;
+use Contao\Database;
 
 /**
  * Class LayerContentDataService
@@ -80,7 +81,7 @@ class LayerContentDataService extends Frontend
         ] : [];
         // for non-utf8 charsets
         $connectionParams['dbCharset'] = "utf8mb4";
-        $result = \Database::getInstance($connectionParams)->prepare($strQuery)->execute()->fetchAllAssoc();
+        $result = Database::getInstance($connectionParams)->prepare($strQuery)->execute()->fetchAllAssoc();
         foreach ($result as $key => $arrResult) {
             $arrResult['popup'] = $this->getPopup($objConfig, $arrResult);
             $arrCoords = explode(",", $arrResult['geolocation']);

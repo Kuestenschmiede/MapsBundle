@@ -91,12 +91,10 @@ class Utils
         $id = Database::getInstance()->prepare('SELECT id FROM tl_page WHERE language = ? LIMIT 1')->execute($lang)->fetchAssoc();
         $objPage = $objPage ?: PageModel::findByPk($id['id']);
         $objPage->title = '';
-        /*
-         * // Controller::replaceInsertTags is deleted with Contao 5.0
+
         $parser = System::getContainer()->get('contao.insert_tag.parser');
         $result = html_entity_decode($parser->replace($result));
-        */
-        $result = html_entity_decode(Controller::replaceInsertTags($result));
+
         if ($pageWasNull) {
             $objPage = null;
         }

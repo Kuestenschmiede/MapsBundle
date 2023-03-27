@@ -10,12 +10,15 @@
  */
 
 use Contao\Image;
+use Contao\Backend;
+use Contao\BackendUser;
+use Contao\DC_Table;
 
 $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
 [
     'config' =>
     [
-        'dataContainer'               => 'Table',
+        'dataContainer'               => DC_Table::class,
         'ptable'                      => 'tl_c4g_map_baselayers',
         'enableVersioning'            => true,
         'onsubmit_callback'             => [
@@ -334,7 +337,7 @@ class tl_c4g_map_overlays extends Backend
     
     public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
     {
-        $this->import('BackendUser', 'User');
+        $this->import(BackendUser::class, 'User');
         
         if (strlen($this->Input->get('tid')))
         {
