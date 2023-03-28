@@ -10,9 +10,13 @@
  */
 use Contao\Backend;
 use Contao\DC_Table;
-if (method_exists('\System', 'getContainer')) {
+use Contao\Validator;
+use Contao\FilesModel;
+use Contao\System;
+use Contao\Message;
+if (method_exists('System', 'getContainer')) {
     $filteredSizes = [];
-    $imageSizes = \System::getContainer()->get('contao.image.image_sizes')->getAllOptions();
+    $imageSizes = System::getContainer()->get('contao.image.image_sizes')->getAllOptions();
     $just = 'proportional';
     foreach ($imageSizes as $group => $sizes) {
         foreach ($sizes as $key => $size) {
@@ -539,7 +543,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
             ],
     ]
 ];
-
 /**
  * Class tl_c4g_map_locstyles
  */
@@ -557,19 +560,19 @@ class tl_c4g_map_locstyles extends Backend
      *
      * @param array                $row
      * @param string               $label
-     * @param Contao\DataContainer $dc
+     * @param DC_TABLE $dc
      * @param array                $args
      *
      * @return array
      */
-    public function addIcon($row, $label, Contao\DataContainer $dc, $args)
+    public function addIcon($row, $label, DC_TABLE $dc, $args)
     {
         $image = null;
         if ($row) {
             if ($row['styletype'] == 'cust_icon_svg') {
                 $svg_src = $row['svgSrc'];
-                if (\Validator::isUuid($svg_src)) {
-                    $iconSrc = \FilesModel::findByUuid($svg_src);
+                if (Validator::isUuid($svg_src)) {
+                    $iconSrc = FilesModel::findByUuid($svg_src);
                     if ($iconSrc) {
                         $image = $iconSrc->path;
                     }
@@ -578,8 +581,8 @@ class tl_c4g_map_locstyles extends Backend
 
             if ($row['styletype'] == 'cust_icon') {
                 $icon_src = $row['icon_src'];
-                if (\Validator::isUuid($icon_src)) {
-                    $iconSrc = \FilesModel::findByUuid($icon_src);
+                if (Validator::isUuid($icon_src)) {
+                    $iconSrc = FilesModel::findByUuid($icon_src);
                     if ($iconSrc) {
                         $image = $iconSrc->path;
                     }
@@ -594,10 +597,10 @@ class tl_c4g_map_locstyles extends Backend
 
 
     /**
-     * @param \Contao\DataContainer $dc
+     * @param DC_TABLE $dc
      */
-    public function showInfoMessage(Contao\DataContainer $dc)
+    public function showInfoMessage(DC_TABLE $dc)
     {
-        \Contao\Message::addInfo($GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['infotext']);
+        Message::addInfo($GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['infotext']);
     }
 }

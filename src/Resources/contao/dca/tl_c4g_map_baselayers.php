@@ -10,7 +10,7 @@
  */
 
 use Contao\DC_Table;
-$cbClass = \con4gis\MapsBundle\Classes\Contao\Callbacks\TlC4gMapBaselayers::class;
+$cbClass = con4gis\MapsBundle\Classes\Contao\Callbacks\TlC4gMapBaselayers::class;
 $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
     [
     'config' =>
@@ -21,7 +21,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
         'enableVersioning'            => true,
         'markAsCopy'                  => 'name',
         'onsubmit_callback'           => [
-            [\con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator::class, 'purgeBaselayerApiCache']
+            [con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator::class, 'purgeBaselayerApiCache']
         ],
         'onload_callback' => [[$cbClass, 'showInfoMessage']],
         'sql' =>

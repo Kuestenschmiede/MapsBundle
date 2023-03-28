@@ -10,7 +10,9 @@
  */
 namespace con4gis\MapsBundle\Classes\Contao\Callbacks;
 
-class TlC4gMapSettings extends \Backend
+use Contao\Backend;
+
+class TlC4gMapSettings extends Backend
 {
     public function addDefaultTables($dc)
     {
