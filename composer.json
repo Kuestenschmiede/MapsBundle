@@ -29,7 +29,7 @@
     "contao/core-bundle": "^4.9",
     "con4gis/core": "^6.0.22",
     "phayes/geophp": "^1.2",
-    "menatwork/contao-multicolumnwizard-bundle": "^3.5",
+    "menatwork/contao-multicolumnwizard-bundle": "^3.6",
     "bugbuster/contao-mobiledetection-bundle": "^1.0",
     "contao-components/jquery": "^3.6"
   },
