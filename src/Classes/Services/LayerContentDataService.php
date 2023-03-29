@@ -115,7 +115,7 @@ class LayerContentDataService extends Frontend
         $popupElements = explode(',', $popupString);
         $maxLength = intval($config->cutTextAtLength);
         if ($config->tableSource === 'tl_content') {
-            $popupContent = Controller::getContentElement($arrElement['id']) ? Controller::replaceInsertTags(Controller::getContentElement($arrElement['id'])) : $popupContent;
+            $popupContent = Controller::getContentElement($arrElement['id']) ? System::getContainer()->get('contao.insert_tag.parser')->replace(Controller::getContentElement($arrElement['id'])) : $popupContent;
             $popupContent = str_replace('TL_FILES_URL', '', $popupContent);
         } else {
             if ($config->popupSwitch === 'expert') {
@@ -124,7 +124,7 @@ class LayerContentDataService extends Frontend
                     if (substr($value, 0, 1) == '{' && substr($value, -1, 1) == '}') {
                         // we have an inserttag
                         $replacedValue = str_replace('[id]', $arrElement['id'], $value);
-                        $popupContent .= $this->replaceInsertTags($replacedValue) . ' LayerContentDataApi.php';
+                        $popupContent .= System::getContainer()->get('contao.insert_tag.parser')->replace($replacedValue) . ' LayerContentDataApi.php';
                     } else if (substr($value, 0, 1) == '[' && substr($value, -1, 1) == ']') {
                         // no insert tag
                         $replacedValue = str_replace('[', '', $value);
@@ -169,7 +169,7 @@ class LayerContentDataService extends Frontend
                                 }
                                 $aliasOrId = $arrElement[$column];
                                 if (!$additionalParam2) {
-                                    $link = $this->replaceInsertTags('{{link_url::' . $aliasOrId . '}}');
+                                    $link = System::getContainer()->get('contao.insert_tag.parser')->replace('{{link_url::' . $aliasOrId . '}}');
                                 } else {
                                     if ($column == 'subdomain') {
                                         $link = 'https://' . $aliasOrId . '.' . $additionalParam2;
@@ -207,7 +207,7 @@ class LayerContentDataService extends Frontend
                                 }
                                 $aliasOrId = $arrElement[$column];
                                 if (!$additionalParam2) {
-                                    $link = $this->replaceInsertTags('{{link_url::' . $aliasOrId . '}}');
+                                    $link = System::getContainer()->get('contao.insert_tag.parser')->replace('{{link_url::' . $aliasOrId . '}}');
                                 } else {
                                     if ($column == 'subdomain') {
                                         $link = 'https://' . $aliasOrId . '.' . $additionalParam2;

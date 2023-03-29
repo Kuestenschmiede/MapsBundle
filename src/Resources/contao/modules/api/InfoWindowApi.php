@@ -41,13 +41,13 @@ class InfoWindowApi extends Frontend
         if ($objLayer->popupType == "popup_info")
         {
             $objLayer->popup_info = '${FNfnStandardInfoPopup}';
-            $arrData['content'] = \Contao\Controller::replaceInsertTags($objLayer->popup_info);
+            $arrData['content'] = System::getContainer()->get('contao.insert_tag.parser')->replace($objLayer->popup_info);
             $arrData['routing_link'] = $objLayer->routing_to;
             $arrData['async'] = false;
         }
         else if ($objLayer->popup_info)
         {
-            $arrData['content'] = \Contao\Controller::replaceInsertTags($objLayer->popup_info);
+            $arrData['content'] = System::getContainer()->get('contao.insert_tag.parser')->replace($objLayer->popup_info);
             $arrData['routing_link'] = $objLayer->routing_to;
             $arrData['async'] = false;
         }
@@ -89,7 +89,7 @@ class InfoWindowApi extends Frontend
                             $strInfoWindowContent = $stringClass::toHtml5($strInfoWindowContent);
                         }
 
-                        $strInfoWindowContent = $this->replaceInsertTags($strInfoWindowContent, false);
+                        $strInfoWindowContent = System::getContainer()->get('contao.insert_tag.parser')->replace($strInfoWindowContent, false);
                         $requestToken = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
                         $strInfoWindowContent = str_replace(array('{{request_token}}', '[{]', '[}]'), array($requestToken, '{{', '}}'), $strInfoWindowContent);
                         $strInfoWindowContent = $this->replaceDynamicScriptTags($strInfoWindowContent); // see #4203

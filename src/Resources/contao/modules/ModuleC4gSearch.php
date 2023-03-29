@@ -51,13 +51,13 @@ class ModuleC4gSearch extends Module
     protected function compile()
     {
         $pageId = $this->mapPage;
-        $pageUrl = Controller::replaceInsertTags("{{link_url::" . $pageId . "}}");
+        $pageUrl = System::getContainer()->get('contao.insert_tag.parser')->replace(("{{link_url::" . $pageId . "}}");
         ResourceLoader::loadJavaScriptDeferred('c4g-search', "/bundles/con4gismaps/build/c4g-search.js");
         ResourceLoader::loadCssResourceDeferred("/bundles/con4gismaps/dist/css/c4g-search-general.min.css");
         $template = $this->Template;
         $objSettings = C4gSettingsModel::findSettings();
         $objMapsProfile = C4gMapProfilesModel::findByPk($objSettings->defaultprofile);
-        $urlMap = Controller::replaceInsertTags("{{link_url::" . $this->c4g_map_site_id . "}}");
+        $urlMap = System::getContainer()->get('contao.insert_tag.parser')->replace("{{link_url::" . $this->c4g_map_site_id . "}}");
         $arrSettings = [];
         if($objMapsProfile->geosearchParams){
             $arrSettings['geosearchParams'] = [];

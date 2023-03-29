@@ -121,7 +121,7 @@ class GeoEditor extends Contao\Backend
 
     public function repInsertTags($str)
     {
-        return parent::replaceInsertTags($str);
+        return System::getContainer()->get('contao.insert_tag.parser')->replace($str);
     }
 
     public function import($strClass, $strKey = false, $blnForce = false)

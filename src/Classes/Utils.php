@@ -113,7 +113,7 @@ class Utils
             $result = str_replace($match, $replacement, $result);
         }
 
-        return Controller::replaceInsertTags($result);
+        return System::getContainer()->get('contao.insert_tag.parser')->replace($result);
     }
 
     private static function replaceSingleLangTag($toReplace, $lang)

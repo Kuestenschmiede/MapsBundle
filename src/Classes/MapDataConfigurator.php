@@ -458,7 +458,7 @@ class MapDataConfigurator
                     $mapData['attribution']['div'] = $profile->div_attribution;
                 }
                 if ($profile->add_attribution) {
-                    $mapData['attribution']['additional'] = \Contao\Controller::replaceInsertTags($profile->add_attribution);
+                    $mapData['attribution']['additional'] = System::getContainer()->get('contao.insert_tag.parser')->replace($profile->add_attribution);
                 }
             }
             //$mapData['overviewmap'] = $profile->overviewmap;
@@ -486,7 +486,7 @@ class MapDataConfigurator
                 $mapData['geosearch']['geosearch_engine'] = $profile->geosearch_engine;
 
                 if ($profile->geosearch_customengine_attribution) {
-                    $mapData['geosearch']['custom_attribution'] = \Contao\Controller::replaceInsertTags($profile->geosearch_customengine_attribution);
+                    $mapData['geosearch']['custom_attribution'] = System::getContainer()->get('contao.insert_tag.parser')->replace($profile->geosearch_customengine_attribution);
                 }
                 $mapData['geosearch']['results'] = $profile->geosearch_results;
                 $mapData['geosearch']['result_count'] = $profile->geosearch_result_count;
@@ -526,7 +526,7 @@ class MapDataConfigurator
                         break;
                     case '3':
                         if ($profile->attribution && $profile->geosearch_customengine_attribution) {
-                            $mapData['attribution']['geosearch'] = \Contao\Controller::replaceInsertTags($profile->geosearch_customengine_attribution);
+                            $mapData['attribution']['geosearch'] = System::getContainer()->get('contao.insert_tag.parser')->replace($profile->geosearch_customengine_attribution);
                         }
 
                         break;
