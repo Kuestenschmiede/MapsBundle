@@ -18,6 +18,7 @@ use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapTablesModel;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Contao\Database;
+use Symfony\Component\HttpClient\HttpClient;
 
 class LoadRouteFeaturesListener
 {
@@ -95,16 +96,27 @@ class LoadRouteFeaturesListener
                 $strSearch = strrpos($query, '(bbox)') ? '(bbox)' : '{{bbox}}';
                 $query = str_replace($strSearch, $strBBox, $query);
                 $query = str_replace('out:json', 'out:xml', $query);
-                $REQUEST = new \Contao\Request();
+                $client = HttpClient::create();
+                $headers = [];
                 if ($_SERVER['HTTP_REFERER']) {
-                    $REQUEST->setHeader('Referer', $_SERVER['HTTP_REFERER']);
+                    $headers['Referer'] = $_SERVER['HTTP_REFERER'];
                 }
                 if ($_SERVER['HTTP_USER_AGENT']) {
-                    $REQUEST->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
+                    $headers['User-Agent'] = $_SERVER['HTTP_USER_AGENT'];
                 }
-                $REQUEST->send($url, $query);
-                if ($REQUEST->response) {
-                    $features = $REQUEST->response;
+                if (!strpos($query, 'json')) {
+                    $event->setFeatures([]);
+
+                    return null;
+                }
+                $request = $client->request('GET', $url, [
+                    'headers'   => $headers,
+                    'query'     => $query
+                ]);
+                //ToDo check response
+                $response = $request->getContent();
+                if ($response) {
+                    $features = $response;
                 }
 
                 if ($jsonPolygon) {

@@ -21,6 +21,7 @@ use con4gis\MapsBundle\Resources\contao\models\C4gMapTablesModel;
 use con4gis\MapsBundle\Resources\contao\modules\api\InfoWindowApi;
 use con4gis\MapsBundle\Resources\contao\modules\api\LayerContentDataService;
 use Contao\Database;
+use Symfony\Component\HttpClient\HttpClient;
 
 class LayerContentService
 {
@@ -935,16 +936,19 @@ class LayerContentService
                     $objLayer->data_file = $objFile ? (TL_ROOT . '/' . $objFile->path) : false;
                     $data = file_exists($objLayer->data_file) ? file_get_contents($objLayer->data_file) : false;
                 } elseif ($objLayer->data_url) {
-                    $REQUEST = new \Request();
+                    $client = HttpClient::create();
+                    $headers = [];
                     if ($_SERVER['HTTP_REFERER']) {
-                        $REQUEST->setHeader('Referer', $_SERVER['HTTP_REFERER']);
+                        $headers['Referer'] = $_SERVER['HTTP_REFERER'];
                     }
                     if ($_SERVER['HTTP_USER_AGENT']) {
-                        $REQUEST->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
+                        $headers['User-Agent'] = $_SERVER['HTTP_USER_AGENT'];
                     }
-                    $REQUEST->send($objLayer->data_url);
-
-                    $data = $REQUEST->response;
+                    $request = $client->request('GET', $objLayer->data_url, [
+                        'headers' => $headers
+                    ]);
+                    
+                    $data = $request->getContent();
                 }
 
                 // use data_content if other method failed

@@ -19,7 +19,9 @@ use con4gis\MapsBundle\Classes\Polyline;
 use con4gis\MapsBundle\Entity\RoutingConfiguration;
 use Contao\Frontend;
 use Contao\System;
+use Contao\Input;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpClient\HttpClient;
 
 class RouteService extends Frontend
 {
@@ -43,14 +45,14 @@ class RouteService extends Frontend
     {
         $strParams = '';
         foreach ($_GET as $key => $value) {
-            if (\Input::get($key)) {
+            if (Input::get($key)) {
                 if (strlen($strParams) > 0) {
                     $strParams .= '&';
                 }
                 if ($key == 'loc_to' || $key == 'loc_from') {
-                    $strParams .= 'loc=' . \Input::get($key);
+                    $strParams .= 'loc=' . Input::get($key);
                 } else {
-                    $strParams .= $key . '=' . \Input::get($key);
+                    $strParams .= $key . '=' . Input::get($key);
                 }
             }
         }
@@ -153,18 +155,22 @@ class RouteService extends Frontend
                 $strInput .= $elementInput . ';';
             }
             $strInput = rtrim($strInput, ';');
-            $REQUEST = new \Request();
+            $client = HttpClient::create();
+            $headers = [
+                'Content-Type' => 'application/json'
+            ];
             if ($_SERVER['HTTP_REFERER']) {
-                $REQUEST->setHeader('Referer', $_SERVER['HTTP_REFERER']);
+                $headers['Referer'] = $_SERVER['HTTP_REFERER'];
             }
             if ($_SERVER['HTTP_USER_AGENT']) {
-                $REQUEST->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
+                $headers['User-Agent'] = $_SERVER['HTTP_USER_AGENT'];
             }
-            $REQUEST->setHeader('Content-Type', 'application/json');
-            $REQUEST->method = 'GET';
+
             $sendUrl = rtrim($objSettings->con4gisIoUrl, '/') . '/' . 'routing.php?input=' . $strInput . '&language=' . $language . '&profile=' . $profile . '&key=' . $objSettings->con4gisIoKey;
-            $REQUEST->send($sendUrl);
-            $response = $REQUEST->response;
+            $request = $client->request('GET', $sendUrl, [
+                'headers' => $headers
+            ]);
+            $response = $request->getContent();
 
             try {
                 $response = \GuzzleHttp\json_decode($response, true);
@@ -264,15 +270,17 @@ class RouteService extends Frontend
                 'units' => 'meters',
                 'language' => $language,
             ];
-            $REQUEST = new \Request();
+            $client = HttpClient::create();
+            $headers = [
+                'Content-Type' => 'application/json'
+            ];
             if ($_SERVER['HTTP_REFERER']) {
-                $REQUEST->setHeader('Referer', $_SERVER['HTTP_REFERER']);
+                $headers['Referer'] = $_SERVER['HTTP_REFERER'];
             }
             if ($_SERVER['HTTP_USER_AGENT']) {
-                $REQUEST->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
+                $headers['User-Agent'] = $_SERVER['HTTP_USER_AGENT'];
             }
-            $REQUEST->setHeader('Content-Type', 'application/json');
-            $REQUEST->method = 'POST';
+
             $routeData = [
                 'locations' => $locations,
                 'costing' => $costing,
@@ -288,9 +296,11 @@ class RouteService extends Frontend
             }
             $encodedData = \GuzzleHttp\json_encode($routeData);
 
-            $REQUEST->send($strRoutingUrl, $encodedData);
-            $response = $REQUEST->response;
-
+            $request = $client->request('POST', $sendUrl, [
+                'headers' => $headers,
+                'query'     => $encodedData
+            ]);
+            $response = $request->getContent();
             try {
                 $response = \GuzzleHttp\json_decode($response, true);
             } catch (\Exception $exception) {
@@ -338,9 +348,18 @@ class RouteService extends Frontend
                 $url .= '&algorithm=alternative_route&ch.disable=true';
             }
             $url .= $apiKey;
-            $request = $this->createRequest();
-            $request->send($url);
-            $response = $request->response;
+            $client = HttpClient::create();
+            $headers = [];
+            if ($_SERVER['HTTP_REFERER']) {
+                $headers['Referer'] = $_SERVER['HTTP_REFERER'];
+            }
+            if ($_SERVER['HTTP_USER_AGENT']) {
+                $headers['User-Agent'] = $_SERVER['HTTP_USER_AGENT'];
+            }
+            $request = $client->request('GET', $url, [
+                'headers' => $headers
+            ]);
+            $response = $request->getContent();
 
             try {
                 $response = \GuzzleHttp\json_decode($response, true);
@@ -372,18 +391,31 @@ class RouteService extends Frontend
             }
         }
 
-        $request = $this->createRequest();
+        $client = HttpClient::create();
+        $headers = [];
+        if ($_SERVER['HTTP_REFERER']) {
+            $headers['Referer'] = $_SERVER['HTTP_REFERER'];
+        }
+        if ($_SERVER['HTTP_USER_AGENT']) {
+            $headers['User-Agent'] = $_SERVER['HTTP_USER_AGENT'];
+        }
+
         if ($routerConfig && $routerConfig->getRouterApiSelection() == '1') {
             $url = '';
             for ($i = 0; $i < sizeof($arrInput); $i++) {
                 $url = $url . explode(',', $arrInput[$i])[1] . ',' . explode(',', $arrInput[$i])[0] . ';';
             }
             $url = substr($url, 0, strlen($url) - 1);
-            $request->send($strRoutingUrl . 'route/v1/' . $profile . '/' . $url . '?steps=true&overview=full&alternatives=true');
+            $request = $client->request('GET', $strRoutingUrl . 'route/v1/' . $profile . '/' . $url . '?steps=true&overview=full&alternatives=true', [
+                'headers' => $headers
+            ]);
+
         } else {
-            $request->send($strRoutingUrl . '?' . $strParams);
+            $request = $client->request('GET', $strRoutingUrl . '?' . $strParams, [
+                'headers' => $headers
+            ]);
         }
-        $response = $request->response;
+        $response = $request->getContent();
 
         try {
             $response = \GuzzleHttp\json_decode($response, true);
@@ -431,13 +463,25 @@ class RouteService extends Frontend
                 'language' => $language,
             ];
             $url = $strRoutingUrl . $profile;
-            $request = $this->createRequest();
-            $request->method = 'POST';
+            $client = HttpClient::create();
+            $headers = [
+                'Authorization' => $routerConfig->getRouterApiKey(),
+                'Content-Type'  => 'application/json'
+            ];
+            if ($_SERVER['HTTP_REFERER']) {
+                $headers['Referer'] = $_SERVER['HTTP_REFERER'];
+            }
+            if ($_SERVER['HTTP_USER_AGENT']) {
+                $headers['User-Agent'] = $_SERVER['HTTP_USER_AGENT'];
+            }
+
             $data = \GuzzleHttp\json_encode($body);
-            $request->setHeader('Authorization', $routerConfig->getRouterApiKey());
-            $request->setHeader('Content-Type', 'application/json');
-            $request->send($url, $data);
-            $response = $request->response;
+
+            $request = $client->request('POST', $url, [
+                'headers'    => $headers,
+                'query'      => $data
+            ]);
+            $response = $request->getContent();
 
             try {
                 $response = \GuzzleHttp\json_decode($response, true);
@@ -451,9 +495,14 @@ class RouteService extends Frontend
             // error handling
             if ($response['error'] && $response['error']['code'] === 2004) {
                 // try again with another preference
-                $url = str_replace('preference=recommended', 'preference=fastest', $url);
-                $request->send($url);
-                $response = $request->response;
+                $body['preference'] = 'fastest';
+                $data = \GuzzleHttp\json_encode($body);
+
+                $request = $client->request('POST', $url, [
+                    'headers'    => $headers,
+                    'query'      => $data
+                ]);
+                $response = $request->getContent();
                 if ($response) {
                     $response = json_decode($response, true);
                     if ($response['error'] && $response['error']['code'] === 2004) {
@@ -463,37 +512,19 @@ class RouteService extends Frontend
             }
 
             if ($routerConfig->getRouterAlternative() == '1') {
-                $request = $this->createRequest();
-                $request->method = 'POST';
+
                 $body['preference'] = 'shortest';
                 $data = \GuzzleHttp\json_encode($body);
-                $request->setHeader('Authorization', $routerConfig->getRouterApiKey());
-                $request->setHeader('Content-Type', 'application/json');
-                $url = str_replace('preference=recommended', 'preference=shortest', $url);
-                $request->send($url, $data);
-                if ($request->response) {
-                    $response['routes'][1] = \GuzzleHttp\json_decode($request->response, true)['routes'][0];
+                $request = $client->request('POST', $url, [
+                    'headers'    => $headers,
+                    'query'      => $data
+                ]);
+                $response = $request->getContent();
+                if ($response) {
+                    $response['routes'][1] = \GuzzleHttp\json_decode($response, true)['routes'][0];
                 }
             }
-
             return $response;
         }
-    }
-
-    /**
-     * Helper function for creating a request and setting default headers.
-     * @return \Request
-     */
-    private function createRequest()
-    {
-        $request = new \Request();
-        if ($_SERVER['HTTP_REFERER']) {
-            $request->setHeader('Referer', $_SERVER['HTTP_REFERER']);
-        }
-        if ($_SERVER['HTTP_USER_AGENT']) {
-            $request->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
-        }
-
-        return $request;
     }
 }
