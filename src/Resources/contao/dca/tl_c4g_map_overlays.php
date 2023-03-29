@@ -13,6 +13,8 @@ use Contao\Image;
 use Contao\Backend;
 use Contao\BackendUser;
 use Contao\DC_Table;
+use Contao\Input;
+use Contao\StringUtil;
 
 $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
 [
@@ -339,9 +341,9 @@ class tl_c4g_map_overlays extends Backend
     {
         $this->import(BackendUser::class, 'User');
         
-        if (strlen($this->Input->get('tid')))
+        if (strlen(Input::get('tid')))
         {
-            $this->toggleVisibility($this->Input->get('tid'), ($this->Input->get('state') == 0));
+            $this->toggleVisibility(Input::get('tid'), (Input::get('state') == 0));
             $this->redirect($this->getReferer());
         }
         
@@ -351,14 +353,14 @@ class tl_c4g_map_overlays extends Backend
             return '';
         }
         
-        $href .= '&amp;id='.$this->Input->get('id').'&amp;tid='.$row['id'].'&amp;state='.($row['published'] ? '' : 1);
+        $href .= '&amp;id='.Input::get('id').'&amp;tid='.$row['id'].'&amp;state='.($row['published'] ? '' : 1);
         
         if (!$row['published'])
         {
             $icon = 'invisible.svg';
         }
         
-        return '<a href="'.$this->addToUrl($href).'" title="'.specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label).'</a> ';
+        return '<a href="'.$this->addToUrl($href).'" title="'.StringUtil::specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label).'</a> ';
     }
     
     public function toggleVisibility($intId, $blnPublished)
