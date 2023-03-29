@@ -202,6 +202,9 @@ class ResourceLoader extends coreResourceLoader
         if ($themeId != -1) {
             $theme = C4gMapThemesModel::findByPk($themeId);
         }
+       else {
+           return;
+       }
 
         $themeData = [];
 
