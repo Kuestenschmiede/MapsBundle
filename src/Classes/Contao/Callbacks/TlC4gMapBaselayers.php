@@ -15,6 +15,11 @@ use Contao\DataContainer;
 use Contao\Image;
 use con4gis\MapsBundle\Classes\Utils;
 use con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator;
+use Contao\BackendUser;
+use Contao\Input;
+use Contao\StringUtil;
+use Symfony\Component\HttpClient\HttpClient;
+
 class TlC4gMapBaselayers extends Backend
 {
     public function pasteElement(DataContainer $dc, $row, $table, $cr, $arrClipboard=null)
@@ -22,28 +27,28 @@ class TlC4gMapBaselayers extends Backend
         if ($row['id'] > 0) {
             $imagePasteAfter = Image::getHtml('pasteafter.svg', sprintf($GLOBALS['TL_LANG'][$table]['pasteafter'][1], $row['id']));
             return '<a href="'.$this->addToUrl('act='.$arrClipboard["mode"].'&mode=1&childs=1&pid='.$row['id']).'" title="'.
-                specialchars(sprintf($GLOBALS['TL_LANG'][$table]['pasteafter'][1], $row['id'])).'" onclick="Backend.getScrollOffset()">'.$imagePasteAfter.'</a> ';
+                StringUtil::specialchars(sprintf($GLOBALS['TL_LANG'][$table]['pasteafter'][1], $row['id'])).'" onclick="Backend.getScrollOffset()">'.$imagePasteAfter.'</a> ';
         } else {
             $imagePasteInto = Image::getHtml('pasteinto.svg', sprintf($GLOBALS['TL_LANG'][$table]['pasteinto'][1], $row['id']));
             return '<a href="'.$this->addToUrl('act='.$arrClipboard["mode"].'&mode=2&childs=1&pid='.$row['id']).'" title="'.
-                specialchars(sprintf($GLOBALS['TL_LANG'][$table]['pasteafter'][1], $row['id'])).'" onclick="Backend.getScrollOffset()">'.$imagePasteInto.'</a> ';
+                StringUtil::specialchars(sprintf($GLOBALS['TL_LANG'][$table]['pasteafter'][1], $row['id'])).'" onclick="Backend.getScrollOffset()">'.$imagePasteInto.'</a> ';
         }
     }
 
     public function addIcon($row, $label, DataContainer $dc=null, $imageAttribute='', $blnReturnImage=false, $blnProtected=false)
     {
-        return \Image::getHtml('bundles/con4gismaps/images/be-icons/baselayers.svg', '', $imageAttribute).' '.$label;
+        return Image::getHtml('bundles/con4gismaps/images/be-icons/baselayers.svg', '', $imageAttribute).' '.$label;
     }
 
     public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
     {
-        $this->import('BackendUser', 'User');
+        $this->import(BackendUser::class, 'User');
 
-        if (strlen($this->Input->get('tid')))
+        if (strlen(Input::get('tid')))
         {
-            $state = $this->Input->get('state');
-            $tid = $this->Input->get('tid');
-            $this->toggleVisibility($this->Input->get('tid'), ($this->Input->get('state') === ''));
+            $state = Input::get('state');
+            $tid = Input::get('tid');
+            $this->toggleVisibility(Input::get('tid'), (Input::get('state') === ''));
             $this->redirect($this->getReferer());
         }
 
@@ -53,14 +58,14 @@ class TlC4gMapBaselayers extends Backend
             return '';
         }
 
-        $href .= '&amp;id='.$this->Input->get('id').'&amp;tid='.$row['id'].'&amp;state='.($row['published'] ? '' : 1);
+        $href .= '&amp;id='.Input::get('id').'&amp;tid='.$row['id'].'&amp;state='.($row['published'] ? '' : 1);
 
         if (!$row['published'])
         {
             $icon = 'invisible.svg';
         }
 
-        return '<a href="'.$this->addToUrl($href).'" title="'.specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label).'</a> ';
+        return '<a href="'.$this->addToUrl($href).'" title="'.StringUtil::specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label).'</a> ';
     }
     public function toggleVisibility($intId, $blnPublished)
     {
@@ -127,21 +132,24 @@ class TlC4gMapBaselayers extends Backend
         if ($objSettings->con4gisIoUrl && $objSettings->con4gisIoKey) {
             $baselayerUrl = rtrim($objSettings->con4gisIoUrl, "/") . "/" . "getBaselayers.php";
             $baselayerUrl .= "?key=" . $objSettings->con4gisIoKey;
-            $REQUEST = new \Request();
-            if ($_SERVER['HTTP_REFERER']) {
-                $REQUEST->setHeader('Referer', $_SERVER['HTTP_REFERER']);
-            }
-            if ($_SERVER['HTTP_USER_AGENT']) {
-                $REQUEST->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
-            }
-            $REQUEST->send($baselayerUrl);
-            if ($REQUEST->response) {
-                $responses = \GuzzleHttp\json_decode($REQUEST->response);
+            $client = HttpClient::create();
+            $return = $client->request(
+                'GET',
+                $baselayerUrl,
+                [
+                    'headers' => [
+                        'Referer'       => $_SERVER['HTTP_REFERER'],
+                        'User-Agent'    =>     $_SERVER['HTTP_USER_AGENT']
+                    ]
+                ]
+            );
+            if ($return->getContent()) {
+                $responses = \GuzzleHttp\json_decode($return->getContent());
             } else {
                 $responses = [];
             }
             $arrReturn= [];
-            $language = \Contao\BackendUser::getInstance()->language;
+            $language = BackendUser::getInstance()->language;
             foreach ($responses as $response){
                 if ($response->name && $response->name) {
                     $arrReturn[$response->id] = Utils::replaceInsertTags($response->name, $language);

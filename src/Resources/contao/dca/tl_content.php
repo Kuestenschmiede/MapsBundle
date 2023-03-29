@@ -10,6 +10,7 @@
  */
 
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
+use Contao\Backend;
 
 $GLOBALS['TL_DCA']['tl_content']['palettes']['c4g_maps'] = '{type_legend},type,headline;'.
     '{c4g_map_legend},c4g_map_id;'.
@@ -90,10 +91,10 @@ class tl_content_c4g_maps extends Backend
     protected $firstMapId = null;
 
     /**
-     * @param DataContainer $dc
+     * @param Contao\DC_Table $dcTable
      * @return array
      */
-    public function get_maps(DataContainer $dc)
+    public function get_maps(Contao\DC_Table $dcTable)
     {
         $maps = $this->Database->prepare ( "SELECT * FROM tl_c4g_maps WHERE location_type='map' AND published=1" )->execute ();
         if ($maps->numRows > 0) {
@@ -107,7 +108,12 @@ class tl_content_c4g_maps extends Backend
         }
         return $return;
     }
-    public function getLocStyles(\DataContainer $dc)
+
+    /**
+     * @param Contao\DC_Table $dcTable
+     * @return array
+     */
+    public function getLocStyles(Contao\DC_Table $dcTable)
     {
         $locStyles = $this->Database->prepare("SELECT id,name FROM tl_c4g_map_locstyles ORDER BY name")
             ->execute();
@@ -151,12 +157,12 @@ class tl_content_c4g_maps extends Backend
 
     public function locstylesLink(Contao\DataContainer $dc)
     {
-        return ' <a href="contao/main.php?do=c4g_map_locstyles&amp;table=tl_c4g_map_locstyles&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . REQUEST_TOKEN . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_content']['editLocstyles']) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_content']['editLocstyles'])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
+        return ' <a href="contao/main.php?do=c4g_map_locstyles&amp;table=tl_c4g_map_locstyles&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_content']['editLocstyles']) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_content']['editLocstyles'])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
     }
 
     public function mapsLink(Contao\DataContainer $dc)
     {
-        return ' <a href="contao/main.php?do=c4g_maps&amp;table=tl_c4g_maps&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . REQUEST_TOKEN . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_content']['editMaps']) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_content']['editMaps'])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
+        return ' <a href="contao/main.php?do=c4g_maps&amp;table=tl_c4g_maps&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_content']['editMaps']) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_content']['editMaps'])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
     }
 
 }

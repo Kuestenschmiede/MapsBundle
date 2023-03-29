@@ -47,7 +47,7 @@ class BaselayerController extends BaseController
         }
 
         if (!self::$outputFromCache) {
-            $baseLayerService = $this->get('con4gis.baselayer_service');
+            $baseLayerService = $this->container->get('con4gis.baselayer_service');
             $this->responseData = $baseLayerService->generate($profileId, $lang);
             if (self::$useCache) {
                 $this->storeDataInCache($request);

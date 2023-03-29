@@ -20,6 +20,8 @@ use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapTablesModel;
 use con4gis\MapsBundle\Resources\contao\modules\api\InfoWindowApi;
 use con4gis\MapsBundle\Resources\contao\modules\api\LayerContentDataService;
+use Contao\Database;
+use Symfony\Component\HttpClient\HttpClient;
 
 class LayerContentService
 {
@@ -472,7 +474,7 @@ class LayerContentService
                 //if there is a compare Field instead of the id field (parent table) we have change the parent id
                 if ($ptable && $sourcePid && $ptableCompareField && ($ptableCompareField != 'id')) {
                     $query = "SELECT * FROM `$ptable` WHERE id = $sourcePid";
-                    $result = \Database::getInstance($connectionParams)->prepare($query)->limit(1)->execute();
+                    $result = Database::getInstance($connectionParams)->prepare($query)->limit(1)->execute();
                     $sourcePid = intval($result->$ptableCompareField);
                 }
 
@@ -516,7 +518,7 @@ class LayerContentService
                 }
             } elseif ($alias && ($sourceTable == 'tl_content')) {
                 $query = "SELECT * FROM `$ptableArr[0]` WHERE alias = ?";
-                $result = \Database::getInstance($connectionParams)->prepare($query)->limit(1)->execute(strval($alias));
+                $result = Database::getInstance($connectionParams)->prepare($query)->limit(1)->execute(strval($alias));
                 $sourcePid = intval($result->id);
 
                 if ($sourcePid) {
@@ -541,11 +543,11 @@ class LayerContentService
         }
         if ($sourceTable) {
             $queryCount = "SELECT COUNT(*) AS count FROM `$sourceTable`" . $qWhere . $pidOption . $and . $whereClause . $stmt;
-            $resultCount = \Database::getInstance($connectionParams)->prepare($queryCount)->execute()->fetchAssoc()['count'];
+            $resultCount = Database::getInstance($connectionParams)->prepare($queryCount)->execute()->fetchAssoc()['count'];
 
             if ($resultCount < 45000) {
                 $query = "SELECT * FROM `$sourceTable`" . $qWhere . $pidOption . $and . $whereClause . $stmt;
-                $result = \Database::getInstance($connectionParams)->prepare($query)->execute();
+                $result = Database::getInstance($connectionParams)->prepare($query)->execute();
             }
             //ToDo ???
         }
@@ -603,7 +605,7 @@ class LayerContentService
 
                         if ($blobfield && $sourcePid && $ptableCompareField && ($ptableCompareField != 'id')) {
                             $query2 = "SELECT * FROM `$ptable` WHERE id = $sourcePid";
-                            $result2 = \Database::getInstance($connectionParams)->prepare($query2)->limit(1)->execute();
+                            $result2 = Database::getInstance($connectionParams)->prepare($query2)->limit(1)->execute();
                             $sourcePid = intval($result2->$ptableCompareField);
                         }
 
@@ -809,7 +811,7 @@ class LayerContentService
             $layerNames[] = $layers->name;
         }
         $arrBoards = deserialize($objLayer->forums, true);
-        $objBoardPosts = \Database::getInstance()->prepare(
+        $objBoardPosts = Database::getInstance()->prepare(
             'SELECT tl_c4g_forum_post.*,
             tl_c4g_forum_thread.name as threadName,
             tl_c4g_forum.map_tooltip as tooltipSource
@@ -934,16 +936,19 @@ class LayerContentService
                     $objLayer->data_file = $objFile ? (TL_ROOT . '/' . $objFile->path) : false;
                     $data = file_exists($objLayer->data_file) ? file_get_contents($objLayer->data_file) : false;
                 } elseif ($objLayer->data_url) {
-                    $REQUEST = new \Request();
+                    $client = HttpClient::create();
+                    $headers = [];
                     if ($_SERVER['HTTP_REFERER']) {
-                        $REQUEST->setHeader('Referer', $_SERVER['HTTP_REFERER']);
+                        $headers['Referer'] = $_SERVER['HTTP_REFERER'];
                     }
                     if ($_SERVER['HTTP_USER_AGENT']) {
-                        $REQUEST->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
+                        $headers['User-Agent'] = $_SERVER['HTTP_USER_AGENT'];
                     }
-                    $REQUEST->send($objLayer->data_url);
-
-                    $data = $REQUEST->response;
+                    $request = $client->request('GET', $objLayer->data_url, [
+                        'headers' => $headers
+                    ]);
+                    
+                    $data = $request->getContent();
                 }
 
                 // use data_content if other method failed

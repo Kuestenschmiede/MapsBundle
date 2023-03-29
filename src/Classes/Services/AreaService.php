@@ -15,6 +15,7 @@ use con4gis\MapsBundle\Resources\contao\models\C4gMapSettingsModel;
 use con4gis\MapsBundle\Classes\Events\LoadAreaFeaturesEvent;
 use con4gis\MapsBundle\Entity\RoutingConfiguration;
 use Contao\System;
+use Symfony\Component\HttpClient\HttpClient;
 
 //include_once(System::getContainer()->getParameter('kernel.project_dir')."/vendor/phayes/geophp/geoPHP.inc");
 
@@ -122,16 +123,22 @@ class AreaService
             };
             $matrixUrl = substr($matrixUrl, 0, strlen($matrixUrl) - 1);
             $matrixUrl .= '?sources=0&annotations=duration,distance';
-            $REQUEST = new \Request();
+            $client = HttpClient::create();
+            $headers = [];
             if ($_SERVER['HTTP_REFERER']) {
-                $REQUEST->setHeader('Referer', $_SERVER['HTTP_REFERER']);
+                $headers['Referer'] = $_SERVER['HTTP_REFERER'];
             }
             if ($_SERVER['HTTP_USER_AGENT']) {
-                $REQUEST->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
+                $headers['User-Agent'] = $_SERVER['HTTP_USER_AGENT'];
             }
-            $REQUEST->send($matrixUrl);
-
-            return $REQUEST->response;
+            $return = $client->request(
+                'GET',
+                $matrixUrl,
+                [
+                    'headers' => $headers
+                ]
+            );
+            return $return->getContent();
         }
     }
 
@@ -148,26 +155,29 @@ class AreaService
                 'metrics' => ['distance'],
                 'units' => 'km',
             ];
-
-            $REQUEST = new \Request();
-            $REQUEST->setHeader('Authorization', $routerConfig->getRouterApiKey());
-            $REQUEST->setHeader('Content-Type', 'application/json');
-
+            $client = HttpClient::create();
+            $headers = [
+                'Authorization' => $routerConfig->getRouterApiKey(),
+                'Content-Type'  => 'application/json'
+            ];
             if ($_SERVER['HTTP_REFERER']) {
-                $REQUEST->setHeader('Referer', $_SERVER['HTTP_REFERER']);
+                $headers['Referer'] = $_SERVER['HTTP_REFERER'];
             }
             if ($_SERVER['HTTP_USER_AGENT']) {
-                $REQUEST->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
+                $headers['User-Agent'] = $_SERVER['HTTP_USER_AGENT'];
             }
-            $REQUEST->method = 'POST';
-
             $result = [];
             if ($matrixData) {
                 $encodedData = \GuzzleHttp\json_encode($matrixData);
-                $REQUEST->send($matrixUrl, $encodedData);
-                if ($REQUEST->response) {
-                    $result = $REQUEST->response;
-                }
+                $return = $client->request(
+                    'POST',
+                    $matrixUrl,
+                    [
+                        'headers'   => $headers,
+                        'query'     => $encodedData
+                    ]
+                );
+                $result = $return->getContent();
             }
 
             return $result;
@@ -190,22 +200,28 @@ class AreaService
                 'to_points' => $locations,
                 'out_arrays' => ['distances'],
             ];
-            $REQUEST = new \Request();
+            $client = HttpClient::create();
+            $headers = [
+                'Content-Type'  => 'application/json'
+            ];
             if ($_SERVER['HTTP_REFERER']) {
-                $REQUEST->setHeader('Referer', $_SERVER['HTTP_REFERER']);
+                $headers['Referer'] = $_SERVER['HTTP_REFERER'];
             }
             if ($_SERVER['HTTP_USER_AGENT']) {
-                $REQUEST->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
+                $headers['User-Agent'] = $_SERVER['HTTP_USER_AGENT'];
             }
-            $REQUEST->setHeader('Content-Type', 'application/json');
-            $REQUEST->method = 'POST';
             $result = [];
             if ($matrixData) {
                 $encodedData = \GuzzleHttp\json_encode($matrixData);
-                $REQUEST->send($matrixUrl, $encodedData);
-                if ($REQUEST->response) {
-                    $result = $REQUEST->response;
-                }
+                $return = $client->request(
+                    'POST',
+                    $matrixUrl,
+                    [
+                        'headers'   => $headers,
+                        'query'     => $encodedData
+                    ]
+                );
+                $result = $return->getContent();
             }
 
             return $result;
@@ -222,23 +238,27 @@ class AreaService
                     $language = 'en-US';
                 }
             }
-
-            $REQUEST = new \Request();
+            $client = HttpClient::create();
+            $headers = [
+                'Content-Type'  => 'application/x-www-form-urlencoded'
+            ];
             if ($_SERVER['HTTP_REFERER']) {
-                $REQUEST->setHeader('Referer', $_SERVER['HTTP_REFERER']);
+                $headers['Referer'] = $_SERVER['HTTP_REFERER'];
             }
             if ($_SERVER['HTTP_USER_AGENT']) {
-                $REQUEST->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
-            }
-            $REQUEST->setHeader('Content-Type', 'application/x-www-form-urlencoded');
+                $headers['User-Agent'] = $_SERVER['HTTP_USER_AGENT'];
+            }            
             $sendUrl = rtrim($objSettings->con4gisIoUrl, '/') . '/' . 'matrix.php?&language=' . $language . '&profile=auto&key=' . $objSettings->con4gisIoKey;
-            $REQUEST->method = 'POST';
-
             $encLocs = 'locations=' . json_encode($locations);
-            $REQUEST->send($sendUrl, $encLocs);
-            $response = $REQUEST->response;
-
-            return $response;
+            $return = $client->request(
+                'POST',
+                $matrixUrl,
+                [
+                    'headers'   => $headers,
+                    'query'     => $encLocs
+                ]
+            );
+            return $return->getContent();
         }
     }
     protected function performMatrixValhalla($routerConfig, $routingProfile, $locations, $opt_options = null)
@@ -263,25 +283,30 @@ class AreaService
                 'targets' => $latLonLocations,
                 'costing' => 'auto',
             ];
-
-            $REQUEST = new \Request();
+            
+            $client = HttpClient::create();
+            $headers = [
+                'Content-Type'  => 'application/json'
+            ];
             if ($_SERVER['HTTP_REFERER']) {
-                $REQUEST->setHeader('Referer', $_SERVER['HTTP_REFERER']);
+                $headers['Referer'] = $_SERVER['HTTP_REFERER'];
             }
             if ($_SERVER['HTTP_USER_AGENT']) {
-                $REQUEST->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
+                $headers['User-Agent'] = $_SERVER['HTTP_USER_AGENT'];
             }
-            $REQUEST->setHeader('Content-Type', 'application/json');
-            $REQUEST->method = 'POST';
             $result = [];
             if ($matrixData) {
                 $encodedData = \GuzzleHttp\json_encode($matrixData);
-                $REQUEST->send($matrixUrl, $encodedData);
-                if ($REQUEST->response) {
-                    $result = $REQUEST->response;
-                }
+                $return = $client->request(
+                    'POST',
+                    $matrixUrl,
+                    [
+                        'headers'   => $headers,
+                        'query'     => $encodedData
+                    ]
+                );
+                $result = $return->getContent();
             }
-
             return $result;
         }
     }

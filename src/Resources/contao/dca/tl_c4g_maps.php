@@ -16,15 +16,21 @@ use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapTablesModel;
 use con4gis\MapsBundle\Classes\Utils;
 use Contao\Image;
+use Contao\StringUtil;
+use Contao\Backend;
+use Contao\BackendUser;
+use Contao\DC_Table;
+use Contao\System;
+use Contao\Input;
 
-\Contao\System::loadLanguageFile('tl_c4g_maps');
+System::loadLanguageFile('tl_c4g_maps');
 
 $GLOBALS['TL_DCA']['tl_c4g_maps'] =
     [
     'config' =>
         [
         'label'                       => &$GLOBALS['TL_LANG']['MOD']['c4g_maps'][0],
-        'dataContainer'               => 'Table',
+        'dataContainer'               => DC_Table::class,
         'enableVersioning'            => true,
         'markAsCopy'                  => 'name',
         'onload_callback'             => [['tl_c4g_maps', 'updateDCA'], ['tl_c4g_maps', 'showInfoMessage']],
@@ -1136,7 +1142,7 @@ class tl_c4g_maps extends Backend
     {
         parent::__construct();
 
-        $this->import('BackendUser', 'User');
+        $this->import(BackendUser::class, 'User');
     }
 
     /**
@@ -1158,7 +1164,7 @@ class tl_c4g_maps extends Backend
                                       ->execute($row['id']);
 
         if ($objSubpages->numRows > 0) {
-            return '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label).'</a> ';
+            return '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.StringUtil::specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label).'</a> ';
         } else {
             return Image::getHtml(preg_replace('/\.svg/i', '_.svg', $icon)).' ';
         }
@@ -1169,7 +1175,7 @@ class tl_c4g_maps extends Backend
      * @param object
      * @return array
      */
-    public function getLocStyles(DataContainer $dc)
+    public function getLocStyles(DC_TABLE $dc)
     {
         $locStyles = $this->Database->prepare("SELECT id,name FROM tl_c4g_map_locstyles ORDER BY name")->execute();
         while ($locStyles->next()) {
@@ -1242,11 +1248,11 @@ class tl_c4g_maps extends Backend
      * @param object
      * @return array
      */
-    public function getTabSources(DataContainer $dc)
+    public function getTabSources(DC_TABLE $dc)
     {
         $return = [];
         $objTables = C4gMapTablesModel::findAll();
-        $language = \Contao\BackendUser::getInstance()->language;
+        $language = BackendUser::getInstance()->language;
         while ($objTables && $objTables->next()) {
             if ($objTables->id && $objTables->name) {
                 $return[$objTables->id] = Utils::replaceInsertTags($objTables->name, $language);
@@ -1260,7 +1266,7 @@ class tl_c4g_maps extends Backend
      * @param object
      * @return array
      */
-    public function getLocationTypes(DataContainer $dc)
+    public function getLocationTypes(DC_TABLE $dc)
     {
         $return = \con4gis\MapsBundle\Classes\Utils::getLocationTypes();
         if (C4GVersionProvider::isInstalled('con4gis/forum')) {
@@ -1272,7 +1278,7 @@ class tl_c4g_maps extends Backend
         }
         return $return;
     }
-    public function getC4gIoDropdown(DataContainer $dc) {
+    public function getC4gIoDropdown(DC_TABLE $dc) {
         $currentType = $dc->activeRecord->c4gioType;
         $response = [];
         if ($currentType == 2) {
@@ -1304,7 +1310,7 @@ class tl_c4g_maps extends Backend
      * @param object
      * @return array
      */
-    public function getMapForums(DataContainer $dc)
+    public function getMapForums(DC_TABLE $dc)
     {
         //ToDo what if forum not installed?
         $forumHelper = new \con4gis\ForumBundle\Classes\C4GForumHelper($this->Database);
@@ -1320,7 +1326,7 @@ class tl_c4g_maps extends Backend
      * @param object
      * @return array
      */
-    public function getTabParentList(DataContainer $dc)
+    public function getTabParentList(DC_TABLE $dc)
     {
         $return = [];
         if ($dc->activeRecord->tab_source<>'') {
@@ -1348,7 +1354,7 @@ class tl_c4g_maps extends Backend
      * @param object
      * @return array
      */
-    public function getTabParentList1(DataContainer $dc)
+    public function getTabParentList1(DC_TABLE $dc)
     {
         $return = [];
         if ($dc->activeRecord->tab_source<>'') {
@@ -1391,7 +1397,7 @@ class tl_c4g_maps extends Backend
      * @param object
      * @return array
      */
-    public function get_link_items(DataContainer $dc)
+    public function get_link_items(DC_TABLE $dc)
     {
 
         $maps = $this->Database->prepare ( "SELECT id,pid,name FROM tl_c4g_maps WHERE published=1 AND location_type<>'link' ORDER BY pid,sorting" )->execute ();
@@ -1498,7 +1504,7 @@ class tl_c4g_maps extends Backend
     /**
      * Update the palette information that depend on other values
      */
-    public function updateDCA(DataContainer $dc)
+    public function updateDCA(DC_Table $dc)
     {
         if (!$dc->id) return;
 
@@ -1582,7 +1588,7 @@ class tl_c4g_maps extends Backend
     /**
      * determine the default profile
      */
-    public function getDefaultProfile($varValue, DataContainer $dc)
+    public function getDefaultProfile($varValue, DC_TABLE $dc)
     {
         if (!$varValue) {
             if ($dc->activeRecord->pid) {
@@ -1614,7 +1620,7 @@ class tl_c4g_maps extends Backend
     /**
      * Validate Center Lon
      */
-    public function setCenterLon($varValue, DataContainer $dc)
+    public function setCenterLon($varValue, DC_TABLE $dc)
     {
         if ($dc->activeRecord->show_locations > 0) {
             if (!\con4gis\MapsBundle\Classes\Utils::validateLon($varValue)) {
@@ -1627,7 +1633,7 @@ class tl_c4g_maps extends Backend
     /**
      * Validate Center Lat
      */
-    public function setCenterLat($varValue, DataContainer $dc)
+    public function setCenterLat($varValue, DC_TABLE $dc)
     {
         if ($dc->activeRecord->show_locations > 0) {
             if (!\con4gis\MapsBundle\Classes\Utils::validateLat($varValue)) {
@@ -1641,7 +1647,7 @@ class tl_c4g_maps extends Backend
     /**
      * Validate restricted Lon
      */
-    public function setRestrLon($varValue, DataContainer $dc)
+    public function setRestrLon($varValue, DC_TABLE $dc)
     {
         if ($dc->activeRecord->restrict_area) {
             if (!\con4gis\MapsBundle\Classes\Utils::validateLon($varValue)) {
@@ -1654,7 +1660,7 @@ class tl_c4g_maps extends Backend
     /**
      * Validate restricted Lat
      */
-    public function setRestrLat($varValue, DataContainer $dc)
+    public function setRestrLat($varValue, DC_TABLE $dc)
     {
         if ($dc->activeRecord->restrict_area) {
             if (!\con4gis\MapsBundle\Classes\Utils::validateLat($varValue)) {
@@ -1667,7 +1673,7 @@ class tl_c4g_maps extends Backend
     /**
      * Validate Location Lon
      */
-    public function setLocLon($varValue, DataContainer $dc)
+    public function setLocLon($varValue, DC_TABLE $dc)
     {
         if (!\con4gis\MapsBundle\Classes\Utils::validateLon($varValue)) {
             throw new Exception($GLOBALS['TL_LANG']['c4g_maps']['geox_invalid']);
@@ -1678,7 +1684,7 @@ class tl_c4g_maps extends Backend
     /**
      * Validate Location Lat
      */
-    public function setLocLat($varValue, DataContainer $dc)
+    public function setLocLat($varValue, DC_TABLE $dc)
     {
         if (!\con4gis\MapsBundle\Classes\Utils::validateLat($varValue)) {
             throw new Exception($GLOBALS['TL_LANG']['c4g_maps']['geoy_invalid']);
@@ -1691,10 +1697,10 @@ class tl_c4g_maps extends Backend
      */
     public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
     {
-        if (strlen($this->Input->get('tid'))) {
-            $this->toggleVisibility($this->Input->get('tid'), ($this->Input->get('state') == 1));
-            $this->redirect($this->getReferer());
-        }
+//        if (strlen($this->Input->get('tid'))) {
+//            $this->toggleVisibility($this->Input->get('tid'), ($this->Input->get('state') == 1));
+//            $this->redirect($this->getReferer());
+//        }
 
         // Check permissions AFTER checking the tid, so hacking attempts are logged
         if (!$this->User->isAdmin && !$this->User->hasAccess('tl_c4g_maps::published', 'alexf')) {
@@ -1707,7 +1713,7 @@ class tl_c4g_maps extends Backend
             $icon = 'invisible.svg';
         }
 
-        return '<a href="'.$this->addToUrl($href).'" title="'.specialchars($title).'"'.$attributes.'>'.\Image::getHtml($icon, $label).'</a> ';
+        return '<a href="'.$this->addToUrl($href).'" title="'. StringUtil::specialchars($title) .'"'.$attributes.'>'.Image::getHtml($icon, $label).'</a> ';
     }
 
 
@@ -1716,7 +1722,7 @@ class tl_c4g_maps extends Backend
      * @param integer
      * @param boolean
      */
-    public function toggleVisibility($intId, $blnVisible, Contao\DataContainer $dc=null)
+    public function toggleVisibility($intId, $blnVisible, DC_TABLE $dc=null)
     {
         // Check permissions to publish
         if (!$this->User->isAdmin && !$this->User->hasAccess('tl_c4g_maps::published', 'alexf')) {
@@ -1775,22 +1781,23 @@ class tl_c4g_maps extends Backend
 
     /**
      * Return the page pick wizard for the linkUrl
-     * @param DataContainer $dc
+     * @param DC_TABLE $dc
      */
-    public function pickUrl(DataContainer $dc)
+    public function pickUrl(DC_TABLE $dc)
     {
-        return ' <a href="contao/page.php?do='.Input::get('do').'&amp;table='.$dc->table.'&amp;field='.$dc->field.'&amp;value='.str_replace(array('{{link_url::', '}}'), '', $dc->value).'" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['pagepicker']).'" onclick="Backend.getScrollOffset();Backend.openModalSelector({\'width\':765,\'title\':\''.specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['MOD']['page'][0])).'\',\'url\':this.href,\'id\':\''.$dc->field.'\',\'tag\':\'ctrl_'.$dc->field . ((Input::get('act') == 'editAll') ? '_' . $dc->id : '').'\',\'self\':this});return false">' . Image::getHtml('pickpage.svg', $GLOBALS['TL_LANG']['MSC']['pagepicker'], 'style="vertical-align:top;cursor:pointer"') . '</a>';
+        return ' <a href="contao/page.php?do='.Input::get('do').'&amp;table='.$dc->table.'&amp;field='.$dc->field.'&amp;value='.str_replace(array('{{link_url::', '}}'), '', $dc->value).'" title="'.StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['pagepicker']).'" onclick="Backend.getScrollOffset();Backend.openModalSelector({\'width\':765,\'title\':\''.StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['MOD']['page'][0])).'\',\'url\':this.href,\'id\':\''.$dc->field.'\',\'tag\':\'ctrl_'.$dc->field . ((Input::get('act') == 'editAll') ? '_' . $dc->id : '').'\',\'self\':this});return false">' . Image::getHtml('pickpage.svg', $GLOBALS['TL_LANG']['MSC']['pagepicker'], 'style="vertical-align:top;cursor:pointer"') . '</a>';
     }
 
     //editLocationType
     /**
    	 * Return the edit location style wizard
-   	 * @param \DataContainer
+   	 * @param DC_TABLE
    	 * @return string
    	 */
-   	public function editLocationStyle(DataContainer $dc)
+   	public function editLocationStyle(DC_TABLE $dc)
    	{
-   		return ($dc->value < 1) ? '' : ' <a href="contao/main.php?do=c4g_map_locstyles&amp;act=edit&amp;id=' . $dc->value . '&amp;popup=1&amp;nb=1&amp;rt=' . REQUEST_TOKEN . '" title="' . sprintf(specialchars($GLOBALS['TL_LANG']['tl_c4g_maps']['editalias'][1]), $dc->value) . '" style="padding-left:3px" onclick="Backend.openModalIframe({\'width\':768,\'title\':\'' . specialchars(str_replace("'", "\\'", sprintf($GLOBALS['TL_LANG']['tl_c4g_maps']['editalias'][1], $dc->value))) . '\',\'url\':this.href});return false">' . Image::getHtml('alias.svg', $GLOBALS['TL_LANG']['tl_c4g_maps']['editalias'][0], 'style="vertical-align:top"') . '</a>';
+        $requestToken = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
+        return ($dc->value < 1) ? '' : ' <a href="contao/main.php?do=c4g_map_locstyles&amp;act=edit&amp;id=' . $dc->value . '&amp;popup=1&amp;nb=1&amp;rt=' . $requestToken . '" title="' . sprintf(StringUtil::specialchars($GLOBALS['TL_LANG']['tl_c4g_maps']['editalias'][1]), $dc->value) . '" style="padding-left:3px" onclick="Backend.openModalIframe({\'width\':768,\'title\':\'' . StringUtil::specialchars(str_replace("'", "\\'", sprintf($GLOBALS['TL_LANG']['tl_c4g_maps']['editalias'][1], $dc->value))) . '\',\'url\':this.href});return false">' . Image::getHtml('alias.svg', $GLOBALS['TL_LANG']['tl_c4g_maps']['editalias'][0], 'style="vertical-align:top"') . '</a>';
    	}
 
     /**
@@ -1802,7 +1809,7 @@ class tl_c4g_maps extends Backend
     {
         return $this->getTemplateGroup('popup_');
     }
-    public function getAllBaseLayers(DataContainer $dc)
+    public function getAllBaseLayers(DC_TABLE $dc)
     {
         $baseLayers = $this->Database->prepare("SELECT id,name FROM tl_c4g_map_baselayers ORDER BY name")
             ->execute();
@@ -1812,26 +1819,29 @@ class tl_c4g_maps extends Backend
         return $return;
     }
 
-    public function baselayersLink(Contao\DataContainer $dc)
+    public function baselayersLink(DC_TABLE $dc)
     {
-        return ' <a href="contao/main.php?do=c4g_map_baselayers&amp;table=tl_c4g_map_baselayers&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . REQUEST_TOKEN . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_c4g_maps']['editBaselayers']) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_c4g_maps']['editBaselayers'])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
+        $requestToken = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
+        return ' <a href="contao/main.php?do=c4g_map_baselayers&amp;table=tl_c4g_map_baselayers&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . $requestToken . '" title="' . StringUtil::specialchars($GLOBALS['TL_LANG']['tl_c4g_maps']['editBaselayers']) . '" onclick="Backend.openModalIframe({\'title\':\'' . StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_c4g_maps']['editBaselayers'])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
     }
 
-    public function locstylesLink(Contao\DataContainer $dc)
+    public function locstylesLink(DC_TABLE $dc)
     {
-        return ' <a href="contao/main.php?do=c4g_map_locstyles&amp;table=tl_c4g_map_locstyles&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . REQUEST_TOKEN . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_c4g_maps']['editLocstyles']) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_c4g_maps']['editLocstyles'])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
+        $requestToken = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
+        return ' <a href="contao/main.php?do=c4g_map_locstyles&amp;table=tl_c4g_map_locstyles&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . $requestToken . '" title="' . StringUtil::specialchars($GLOBALS['TL_LANG']['tl_c4g_maps']['editLocstyles']) . '" onclick="Backend.openModalIframe({\'title\':\'' . StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_c4g_maps']['editLocstyles'])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
     }
 
-    public function profilesLink(Contao\DataContainer $dc)
+    public function profilesLink(DC_TABLE $dc)
     {
-        return ' <a href="contao/main.php?do=c4g_map_profiles&amp;table=tl_c4g_map_profiles&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . REQUEST_TOKEN . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_c4g_maps']['editProfiles']) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_c4g_maps']['editProfiles'])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
+        $requestToken = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
+        return ' <a href="contao/main.php?do=c4g_map_profiles&amp;table=tl_c4g_map_profiles&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . $requestToken . '" title="' . StringUtil::specialchars($GLOBALS['TL_LANG']['tl_c4g_maps']['editProfiles']) . '" onclick="Backend.openModalIframe({\'title\':\'' . StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_c4g_maps']['editProfiles'])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
     }
 
 
     /**
-     * @param \Contao\DataContainer $dc
+     * @param \Contao\DC_TABLE $dc
      */
-    public function showInfoMessage(Contao\DataContainer $dc)
+    public function showInfoMessage(DC_TABLE $dc)
     {
         \Contao\Message::addInfo($GLOBALS['TL_LANG']['tl_c4g_maps']['infotext']);
     }

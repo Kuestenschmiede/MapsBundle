@@ -8,7 +8,7 @@
  * @copyright (c) 2010-2022, by Küstenschmiede GmbH Software & Design
  * @link https://www.con4gis.org
  */
-
+use Contao\Backend;
 use con4gis\CoreBundle\Classes\C4GVersionProvider;
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_maps'] = '{title_legend},name,headline,type;'.

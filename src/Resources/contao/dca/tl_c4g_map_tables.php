@@ -8,12 +8,16 @@
  * @copyright (c) 2010-2022, by Küstenschmiede GmbH Software & Design
  * @link https://www.con4gis.org
  */
+use Contao\Backend;
+use Contao\Database;
+use Contao\DC_Table;
+use Contao\StringUtil;
 
 $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
 [
     'config' =>
     [
-        'dataContainer'               => 'Table',
+        'dataContainer'               => DC_Table::class,
         'enableVersioning'            => true,
         'markAsCopy'                  => 'name',
         'sql'                         =>
@@ -303,8 +307,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
 
 class tl_c4g_map_tables extends Backend
 {
-    public function getDatabases(DataContainer $dc) {
-        $result = \Database::getInstance()->prepare("SHOW DATABASES")->execute();
+    public function getDatabases(DC_Table $dc) {
+        $result = Database::getInstance()->prepare("SHOW DATABASES")->execute();
         $arrResult = $result->fetchAllAssoc();
         $options = [];
         foreach ($arrResult as $element) {
@@ -312,9 +316,9 @@ class tl_c4g_map_tables extends Backend
         }
         return $options;
     }
-    public function getDatabaseTables(DataContainer $dc) {
+    public function getDatabaseTables(DC_TABLE $dc) {
         if ($dc->activeRecord->customDB) {
-            $result = \Database::getInstance([dbDatabase => $dc->activeRecord->customDB])->prepare("SHOW TABLES")->execute();
+            $result = Database::getInstance([dbDatabase => $dc->activeRecord->customDB])->prepare("SHOW TABLES")->execute();
             $arrResult = $result->fetchAllAssoc();
             $options = [];
             foreach ($arrResult as $element) {
@@ -327,11 +331,11 @@ class tl_c4g_map_tables extends Backend
         return $options;
     }
     
-    public function getSourceTableFields(DataContainer $dc) {
+    public function getSourceTableFields(DC_TABLE $dc) {
         $tableName = $dc->activeRecord->tableSource;
         $options = [];
         if ($dc->activeRecord->customDB && $tableName && $tableName !== "") {
-            $result = \Database::getInstance([dbDatabase => $dc->activeRecord->customDB])->prepare("SHOW COLUMNS FROM " . $tableName)->execute();
+            $result = Database::getInstance([dbDatabase => $dc->activeRecord->customDB])->prepare("SHOW COLUMNS FROM " . $tableName)->execute();
             $arrResult = $result->fetchAllAssoc();
             $options = [];
             foreach ($arrResult as $element) {
@@ -339,20 +343,24 @@ class tl_c4g_map_tables extends Backend
             }
         }
         else if ($tableName && $tableName !== "") {
-            $options = $this->Database->getFieldNames($tableName);
+            $options = $this->Database->listFields($tableName);
+            $arrReturn = [];
+            foreach ($options as $option) {
+                $arrReturn[$option['name']] = $option['name'];
+            }
         }
-        return $options;
+        return $arrReturn;
     }
     
-    public function getParentTablesFields(DataContainer $dc) {
-        $tableNames = \Contao\StringUtil::deserialize($dc->activeRecord->ptable);
+    public function getParentTablesFields(DC_TABLE $dc) {
+        $tableNames = StringUtil::deserialize($dc->activeRecord->ptable);
         $options = [];
         if (!$tableNames) {
             return $options;
         }
         if ($dc->activeRecord->customDB) {
             foreach ($tableNames as $tableName) {
-                $result = \Database::getInstance([dbDatabase => $dc->activeRecord->customDB])->prepare("SHOW COLUMNS FROM " . $tableName)->execute();
+                $result = Database::getInstance([dbDatabase => $dc->activeRecord->customDB])->prepare("SHOW COLUMNS FROM " . $tableName)->execute();
                 $arrResult = $result->fetchAllAssoc();
                 foreach ($arrResult as $element) {
                     $options[$tableName . '.' . $element['Field']] = $tableName . '.' . $element['Field'];
@@ -362,24 +370,25 @@ class tl_c4g_map_tables extends Backend
         }
         else {
             foreach ($tableNames as $tableName){
-                $tableOptions = $this->Database->getFieldNames($tableName);
-                foreach ($tableOptions as $tableOption){
-                    $options[$tableName.'.'.$tableOption] = $tableName.'.'.$tableOption;
+                if ($tableName) {
+                    $tableOptions = $this->Database->listFields($tableName);
+                    foreach ($tableOptions as $tableOption){
+                        $options[$tableName.'.'.$tableOption['name']] = $tableName.'.'.$tableOption['name'];
+                    }
                 }
             }
-
         }
         return $options;
     }
     
-    public function serializeResult($varValue, \Contao\DataContainer $dc)
+    public function serializeResult($varValue, DC_Table $dc)
     {
         return serialize($varValue);
     }
     
     public function concatResult($varValue)
     {
-        $varValue = implode(",", \Contao\StringUtil::deserialize($varValue));
+        $varValue = implode(",", StringUtil::deserialize($varValue));
         return $varValue;
     }
     
@@ -393,12 +402,12 @@ class tl_c4g_map_tables extends Backend
      *
      * @param array                $row
      * @param string               $label
-     * @param Contao\DataContainer $dc
+     * @param DC_TABLE $dc
      * @param array                $args
      *
      * @return array
      */
-    public function addIcon($row, $label, Contao\DataContainer $dc, $args)
+    public function addIcon($row, $label, DC_TABLE $dc, $args)
     {
         $image = 'bundles/con4gismaps/images/be-icons/sourcetables.svg';
         $args[0] = '<div class="list_icon_new" style="background-image:url('.$image.')" data-icon="'.$image.'">&nbsp;</div>';
@@ -407,9 +416,9 @@ class tl_c4g_map_tables extends Backend
 
 
     /**
-     * @param \Contao\DataContainer $dc
+     * @param DC_TABLE $dc
      */
-    public function showInfoMessage(Contao\DataContainer $dc)
+    public function showInfoMessage(DC_TABLE $dc)
     {
         \Contao\Message::addInfo($GLOBALS['TL_LANG']['tl_c4g_map_tables']['infotext']);
     }

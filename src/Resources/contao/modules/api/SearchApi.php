@@ -12,12 +12,15 @@ namespace con4gis\MapsBundle\Resources\contao\modules\api;
 use con4gis\CoreBundle\Classes\HttpResultHelper;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapSettingsModel;
+use Contao\Frontend;
+use Contao\System;
+use Symfony\Component\HttpClient\HttpClient;
 
 /**
  * Class NominatimApi
  * @package con4gis\MapsBundle\Resources\contao\modules\api
  */
-class SearchApi extends \Frontend
+class SearchApi extends Frontend
 {
     /**
      * Determines the request method and selects the appropriate data result.
@@ -146,21 +149,33 @@ class SearchApi extends \Frontend
                 }
             }
         }
+        $client = HttpClient::create();
 
-        $REQUEST = new \Request();
-        if ($_SERVER['HTTP_REFERER']) {
-            $REQUEST->setHeader('Referer', $_SERVER['HTTP_REFERER']);
-        }
-        if ($_SERVER['HTTP_USER_AGENT']) {
-            $REQUEST->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
-        }
         if ($intSearchEngine < 5) {
-            $REQUEST->send($strSearchUrl . '?' . $strParams);
+            $return = $client->request(
+                'GET',
+                $strSearchUrl . '?' . $strParams,
+                [
+                    'headers' => [
+                        'Referer'       => $_SERVER['HTTP_REFERER'],
+                        'User-Agent'    =>     $_SERVER['HTTP_USER_AGENT']
+                    ]
+                ]
+            );
         }
         else if ($intSearchEngine == 5) {
-            $REQUEST->send($strSearchUrl);
+            $return = $client->request(
+                'GET',
+                $strSearchUrl,
+                [
+                        'headers' => [
+                        'Referer'       => $_SERVER['HTTP_REFERER'],
+                        'User-Agent'    =>     $_SERVER['HTTP_USER_AGENT']
+                    ]
+                ]
+            );
         }
-        $response = $REQUEST->response;
+        $response = $return->getContent();
         if ($response) {
             $decoded = json_decode($response);
             if (is_array($decoded) && array_key_exists('features', $decoded)) {

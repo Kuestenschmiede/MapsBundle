@@ -8,7 +8,7 @@
  * @copyright (c) 2010-2022, by Küstenschmiede GmbH Software & Design
  * @link https://www.con4gis.org
  */
-
+$GLOBALS['BE_MOD']['con4gis'] = $GLOBALS['BE_MOD']['con4gis'] ?: [];
 $GLOBALS['BE_MOD']['con4gis'] = array_merge($GLOBALS['BE_MOD']['con4gis'], [
         'c4g_map_baselayers' =>
         [
@@ -80,10 +80,15 @@ asort($GLOBALS['FE_MOD']['con4gis']);
 /**
  * Content elements
  */
-array_insert($GLOBALS['TL_CTE']['con4gis'], 1,
-    [
-        'c4g_maps' => 'con4gis\MapsBundle\Resources\contao\modules\ContentC4gMaps',
-    ]);
+//$GLOBALS['TL_CTE']['con4gis'] = array_slice($GLOBALS['TL_CTE']['con4gis'], 0, 1, true) +
+//    [
+//        [
+//            'c4g_maps' => 'con4gis\MapsBundle\Resources\contao\modules\ContentC4gMaps',
+//        ]
+//    ] +
+//    array_slice($GLOBALS['TL_CTE']['con4gis'], 1, count($GLOBALS['TL_CTE']['con4gis']) - 1, true);
+
+$GLOBALS['TL_CTE']['con4gis']['c4g_maps'] = 'con4gis\MapsBundle\Resources\contao\modules\ContentC4gMaps';
 
 $apiBaseUrl = 'con4gis';
 
@@ -135,6 +140,6 @@ $GLOBALS['TL_PURGE']['folders']['con4gis_locationstyle'] =
     'affected' => ['var/cache/prod/con4gis_locationstyleService']
     ];
 
-if(TL_MODE == "BE") {
-    $GLOBALS['TL_CSS'][] = '/bundles/con4gismaps/dist/css/c4g-backend.min.css';
-}
+//if(TL_MODE == "BE") {
+//    $GLOBALS['TL_CSS'][] = '/bundles/con4gismaps/dist/css/c4g-backend.min.css';
+//}

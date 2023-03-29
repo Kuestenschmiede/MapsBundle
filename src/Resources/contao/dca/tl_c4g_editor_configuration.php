@@ -10,7 +10,7 @@
   * @copyright 	Küstenschmiede GmbH Software & Design
   * @link       https://www.con4gis.org
   */
-
+use Contao\DC_Table;
 $strName = 'tl_c4g_editor_configuration';
 $cbClass = \con4gis\MapsBundle\Classes\Contao\Callbacks\TlEditorConfiguration::class;
 
@@ -18,7 +18,7 @@ $GLOBALS['TL_DCA'][$strName] = array
 (
     'config' => array
     (
-        'dataContainer'     => 'Table',
+        'dataContainer'     => DC_Table::class,
         'enableVersioning'  => 'true',
     ),
     'list' => array

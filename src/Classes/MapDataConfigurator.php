@@ -10,7 +10,6 @@
  */
 namespace con4gis\MapsBundle\Classes;
 
-use BugBuster\MobileDetection\Mobile_Detection;
 use con4gis\CoreBundle\Classes\C4GUtils;
 use con4gis\CoreBundle\Resources\contao\models\C4gSettingsModel;
 use con4gis\MapsBundle\Classes\Events\LoadMapdataEvent;
@@ -26,6 +25,7 @@ use Contao\Input;
 use Contao\Model\Collection;
 use Contao\StringUtil;
 use Contao\System;
+use Detection\MobileDetect;
 
 /**
  * Class MapDataConfigurator
@@ -56,7 +56,7 @@ class MapDataConfigurator
             $map = new C4gMapsModel();
             $map->id = 0;
         }
-        $language = Controller::replaceInsertTags('{{page::language}}') ?  Controller::replaceInsertTags('{{page::language}}') : substr($GLOBALS['_SERVER']['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+        $language = $GLOBALS['objPage']->language  ?  $GLOBALS['objPage']->language : substr($GLOBALS['_SERVER']['HTTP_ACCEPT_LANGUAGE'], 0, 2);
         $mapData['id'] = $map->id;
         $mapData['lang'] = $language;
 
@@ -70,7 +70,7 @@ class MapDataConfigurator
         }
         // check for mobile-profile
         $isMobile = false;
-        $mobileDetection = new Mobile_Detection();
+        $mobileDetection = new MobileDetect();
         if ($mobileDetection->isMobile() && ($map->profile_mobile > 0)) {
             $isMobile = true;
             $profileId = $map->profile_mobile;
@@ -96,8 +96,10 @@ class MapDataConfigurator
         }
 
         // check for special-profile
-        if ((FE_USER_LOGGED_IN) && ($map->use_specialprofile)) {
-            $groupMatch = array_intersect($objThis->User->groups, deserialize($map->specialprofile_groups));
+        $hasFrontendUser = System::getContainer()->get('contao.security.token_checker')->hasFrontendUser();
+
+        if (($hasFrontendUser) && ($map->use_specialprofile)) {
+            $groupMatch = array_intersect($objThis->User->groups, \Contao\StringUtil::deserialize($map->specialprofile_groups));
             if (!empty($groupMatch)) {
                 if (($isMobile) && ($map->specialprofile_mobile)) {
                     $profileId = $map->specialprofile_mobile;
@@ -108,7 +110,7 @@ class MapDataConfigurator
         }
 
         //check for profile manipulation by another bundle
-        $profileService = \System::getContainer()->get('con4gis.profile_service');
+        $profileService = System::getContainer()->get('con4gis.profile_service');
         if ($profileService) {
             $profileId = $profileService->getProfileId($profileId);
         }
@@ -227,37 +229,37 @@ class MapDataConfigurator
         if ($map->id != 0) {
             // map-center
             if (!empty($map->center_geox)) {
-                $mapData['center']['lon'] = \Contao\Controller::replaceInsertTags($map->center_geox);
+                $mapData['center']['lon'] = $map->center_geox;
             }
             if (!empty($map->center_geoy)) {
-                $mapData['center']['lat'] = \Contao\Controller::replaceInsertTags($map->center_geoy);
+                $mapData['center']['lat'] = $map->center_geoy;
             }
             if (!empty($map->center_rotation)) {
                 $mapData['center']['rotation'] = $map->center_rotation / 180 * pi();
             }
             // map-zoom
             if (!empty($map->zoom)) {
-                $mapData['center']['zoom'] = \Contao\Controller::replaceInsertTags($map->zoom);
+                $mapData['center']['zoom'] = $map->zoom;
             }
 
             // geolocation (use user-location, if possible)
             if ($map->geolocation) {
                 $mapData['geolocation'] = true;
-                $mapData['geolocation_zoom'] = \Contao\Controller::replaceInsertTags($map->geolocation_zoom);
+                $mapData['geolocation_zoom'] = $map->geolocation_zoom;
             }
 
             // map-size
-            $mapWidth = deserialize($map->width);
+            $mapWidth = \Contao\StringUtil::deserialize($map->width);
             if (is_array($mapWidth) && ($mapWidth['value'] != 0) && !empty($mapWidth['unit'])) {
                 $mapData['width'] = $mapWidth['value'] . $mapWidth['unit'];
             }
-            $mapHeight = deserialize($map->height);
+            $mapHeight = \Contao\StringUtil::deserialize($map->height);
             if (is_array($mapHeight) && ($mapHeight['value'] != 0) && !empty($mapHeight['unit'])) {
                 $mapData['height'] = $mapHeight['value'] . $mapHeight['unit'];
             }
 
             // map-margin
-            $mapMargin = deserialize($map->margin);
+            $mapMargin = \Contao\StringUtil::deserialize($map->margin);
             if (is_array($mapMargin) && !empty($mapMargin['unit'])) {
                 // [note]: inspired by contaos stylesheet-handling
 
@@ -308,11 +310,11 @@ class MapDataConfigurator
             $mapData['center']['zoom'] = $objThis->c4g_map_zoom;
         }
         // override map-size from structure, with values from CE/FE, if set
-        $mapWidth = deserialize($objThis->c4g_map_width);
+        $mapWidth = \Contao\StringUtil::deserialize($objThis->c4g_map_width);
         if (is_array($mapWidth) && ($mapWidth['value'] != 0) && !empty($mapWidth['unit'])) {
             $mapData['width'] = $mapWidth['value'] . $mapWidth['unit'];
         }
-        $mapHeight = deserialize($objThis->c4g_map_height);
+        $mapHeight = \Contao\StringUtil::deserialize($objThis->c4g_map_height);
         if (is_array($mapHeight) && ($mapHeight['value'] != 0) && !empty($mapHeight['unit'])) {
             $mapData['height'] = $mapHeight['value'] . $mapHeight['unit'];
         }
@@ -395,7 +397,7 @@ class MapDataConfigurator
             //if (array_key_exists('starboard',$buttons)) { //ToDo
             $mapData['starboard']['enable'] = 1; //ToDo
             $mapData['starboard']['open'] = $profile->starboard_open;
-            $mapData['starboard']['label'] = \Contao\Controller::replaceInsertTags($profile->starboard_label);
+            $mapData['starboard']['label'] = $profile->starboard_label;
             $mapData['starboard']['div'] = (is_array($externalElements) && in_array('starboard', $externalElements)) ? $externalClasses['starboard'] : '';
             $mapData['starboard']['button'] = $profile->starboard_button;
             $mapData['starboard']['showLocstyles'] = $profile->starboard_locstyles;
@@ -418,13 +420,13 @@ class MapDataConfigurator
             if (is_array($buttons) && array_key_exists('layerswitcher', $buttons)) {
                 // Layerswitcher
                 //$mapData['layerswitcher']['enable'] = $profile->layerswitcher;
-                $mapData['layerswitcher']['label'] = \Contao\Controller::replaceInsertTags($profile->layerswitcher_label);
+                $mapData['layerswitcher']['label'] = $profile->layerswitcher_label;
                 $mapData['layerswitcher']['filter'] = $profile->starboard_filter;
             }
             if (is_array($buttons) && array_key_exists('baselayerswitcher', $buttons)) {
                 // Baselayerswitcher
                 //$mapData['baselayerswitcher']['enable'] = $profile->baselayerswitcher;
-                $mapData['baselayerswitcher']['label'] = \Contao\Controller::replaceInsertTags($profile->baselayerswitcher_label);
+                $mapData['baselayerswitcher']['label'] = $profile->baselayerswitcher_label;
                 $mapData['baselayerswitcher']['filter'] = $profile->baselayer_filter;
                 $mapData['baselayerswitcher']['div'] = (is_array($externalElements) && in_array('baselayer', $externalElements)) ? $externalClasses['baselayer'] : '';
             }
@@ -456,7 +458,7 @@ class MapDataConfigurator
                     $mapData['attribution']['div'] = $profile->div_attribution;
                 }
                 if ($profile->add_attribution) {
-                    $mapData['attribution']['additional'] = \Contao\Controller::replaceInsertTags($profile->add_attribution);
+                    $mapData['attribution']['additional'] = System::getContainer()->get('contao.insert_tag.parser')->replace($profile->add_attribution);
                 }
             }
             //$mapData['overviewmap'] = $profile->overviewmap;
@@ -484,7 +486,7 @@ class MapDataConfigurator
                 $mapData['geosearch']['geosearch_engine'] = $profile->geosearch_engine;
 
                 if ($profile->geosearch_customengine_attribution) {
-                    $mapData['geosearch']['custom_attribution'] = \Contao\Controller::replaceInsertTags($profile->geosearch_customengine_attribution);
+                    $mapData['geosearch']['custom_attribution'] = System::getContainer()->get('contao.insert_tag.parser')->replace($profile->geosearch_customengine_attribution);
                 }
                 $mapData['geosearch']['results'] = $profile->geosearch_results;
                 $mapData['geosearch']['result_count'] = $profile->geosearch_result_count;
@@ -499,8 +501,8 @@ class MapDataConfigurator
                 $mapData['geosearch']['animate_duration'] = $profile->geosearch_animate_duration;
                 $mapData['geosearch']['markresult'] = $profile->geosearch_markresult;
                 $mapData['geosearch']['result_duration'] = $profile->geosearch_result_duration;
-                $mapData['geosearch']['popup'] = \Contao\Controller::replaceInsertTags($profile->geosearch_popup);
-                $mapData['geosearch']['attribution'] = \Contao\Controller::replaceInsertTags($profile->geosearch_attribution);
+                $mapData['geosearch']['popup'] = $profile->geosearch_popup;
+                $mapData['geosearch']['attribution'] = $profile->geosearch_attribution;
                 if ($profile->geosearch_engine == '4') {
                     $keyParams[] = ['2', ''];
                     $keyParams[] = ['3', ''];
@@ -524,7 +526,7 @@ class MapDataConfigurator
                         break;
                     case '3':
                         if ($profile->attribution && $profile->geosearch_customengine_attribution) {
-                            $mapData['attribution']['geosearch'] = \Contao\Controller::replaceInsertTags($profile->geosearch_customengine_attribution);
+                            $mapData['attribution']['geosearch'] = System::getContainer()->get('contao.insert_tag.parser')->replace($profile->geosearch_customengine_attribution);
                         }
 
                         break;
@@ -619,7 +621,7 @@ class MapDataConfigurator
             }
             // miscellaneous
             //
-            $mapData['infopage'] = \Contao\Controller::replaceInsertTags($profile->infopage);
+            $mapData['infopage'] = $profile->infopage;
             $mapData['legend']['div'] = (is_array($externalElements) && in_array('legend', $externalElements)) ? $externalClasses['legend'] : '';
             $mapData['initial_open_comp'] = $profile->initial_open_comp;
             $mapData['link_newwindow'] = $profile->link_newwindow;

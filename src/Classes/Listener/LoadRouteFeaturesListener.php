@@ -17,6 +17,8 @@ use con4gis\MapsBundle\Resources\contao\models\C4gMapSettingsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapTablesModel;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Contao\Database;
+use Symfony\Component\HttpClient\HttpClient;
 
 class LoadRouteFeaturesListener
 {
@@ -54,7 +56,7 @@ class LoadRouteFeaturesListener
                 $sqlWhere = $objConfig->sqlwhere ? $objConfig->sqlwhere : '';
                 $sqlAnd = $sqlWhere ? ' AND ' : '';
                 $strQuery = 'SELECT ' . $objConfig->tableSource . '.id,' . $sqlSelect . ' FROM ' . $objConfig->tableSource . $onClause . $sqlLoc . $sqlAnd . $sqlWhere . $andbewhereclause ;
-                $featurePoint = \Contao\Database::getInstance()->prepare($strQuery)->execute()->fetchAllAssoc();
+                $featurePoint = Database::getInstance()->prepare($strQuery)->execute()->fetchAllAssoc();
                 if (!$this->checkIfArrayContainsFeature($featurePoint[0], $features)) {
                     $features = array_merge($features, $featurePoint);
                 }
@@ -79,7 +81,7 @@ class LoadRouteFeaturesListener
             $lineStringWKT .= ')';
             //,ST_Buffer_Strategy('end_flat'),ST_Buffer_Strategy('join_round', 10)
             $selectBuffer = "SELECT ST_AsText(ST_Buffer(ST_GeomFromText('" . $lineStringWKT . "')," . $detour / 113.139 . '))';
-            $db = \Contao\Database::getInstance();
+            $db = Database::getInstance();
             $result = array_shift($db->prepare($selectBuffer)->execute()->fetchAssoc());
             $polygon = \geoPHP::load($result, 'wkt');
             $jsonPolygon = $polygon->out('json');
@@ -94,16 +96,27 @@ class LoadRouteFeaturesListener
                 $strSearch = strrpos($query, '(bbox)') ? '(bbox)' : '{{bbox}}';
                 $query = str_replace($strSearch, $strBBox, $query);
                 $query = str_replace('out:json', 'out:xml', $query);
-                $REQUEST = new \Contao\Request();
+                $client = HttpClient::create();
+                $headers = [];
                 if ($_SERVER['HTTP_REFERER']) {
-                    $REQUEST->setHeader('Referer', $_SERVER['HTTP_REFERER']);
+                    $headers['Referer'] = $_SERVER['HTTP_REFERER'];
                 }
                 if ($_SERVER['HTTP_USER_AGENT']) {
-                    $REQUEST->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
+                    $headers['User-Agent'] = $_SERVER['HTTP_USER_AGENT'];
                 }
-                $REQUEST->send($url, $query);
-                if ($REQUEST->response) {
-                    $features = $REQUEST->response;
+                if (!strpos($query, 'json')) {
+                    $event->setFeatures([]);
+
+                    return null;
+                }
+                $request = $client->request('GET', $url, [
+                    'headers'   => $headers,
+                    'query'     => $query
+                ]);
+                //ToDo check response
+                $response = $request->getContent();
+                if ($response) {
+                    $features = $response;
                 }
 
                 if ($jsonPolygon) {

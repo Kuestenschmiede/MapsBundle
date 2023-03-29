@@ -13,6 +13,7 @@ namespace con4gis\MapsBundle\Classes;
 use con4gis\CoreBundle\Resources\contao\models\C4gSettingsModel;
 use Contao\BackendUser;
 use Contao\ContentModel;
+use Contao\System;
 
 /**
  * Class GeoPicker
@@ -31,7 +32,7 @@ class GeoPicker extends \Backend
      */
     public function __construct()
     {
-        $this->import('BackendUser', 'User');
+        $this->import(BackendUser::class, 'User');
         parent::__construct();
 
         $this->User->authenticate();
@@ -62,8 +63,8 @@ class GeoPicker extends \Backend
         }
 
         $url = $GLOBALS['con4gis']['maps']['api']['geopicker'] . '?rt=';
-
-        return ' <a href="' . $url . REQUEST_TOKEN .
+        $requestToken = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
+        return ' <a href="' . $url . $requestToken .
         '" title="' . $GLOBALS['TL_LANG']['c4g_maps']['geopicker'] .
         '" style="padding-left:3px" onclick="c4g.maps.backend.showGeoPicker(this.href,' .
         $strFieldX . ',' . $strFieldY . ', {title:\'' . $GLOBALS['TL_LANG']['c4g_maps']['geopicker'] . '\'});return false">' .
@@ -138,7 +139,7 @@ class GeoPicker extends \Backend
 
     public function repInsertTags($str)
     {
-        return parent::replaceInsertTags($str);
+        return System::getContainer()->get('contao.insert_tag.parser')->replace($str);
     }
 
     public function import($strClass, $strKey = false, $blnForce = false)

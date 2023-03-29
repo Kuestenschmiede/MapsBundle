@@ -9,19 +9,19 @@
  * @link https://www.con4gis.org
  */
 
-
-$cbClass = \con4gis\MapsBundle\Classes\Contao\Callbacks\TlC4gMapBaselayers::class;
+use Contao\DC_Table;
+$cbClass = con4gis\MapsBundle\Classes\Contao\Callbacks\TlC4gMapBaselayers::class;
 $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
     [
     'config' =>
         [
         'label'                       => &$GLOBALS['TL_LANG']['MOD']['c4g_map_baselayers'][0],
-        'dataContainer'               => 'Table',
+        'dataContainer'               => DC_Table::class,
         'ctable'                      => ['tl_c4g_map_overlays'],
         'enableVersioning'            => true,
         'markAsCopy'                  => 'name',
         'onsubmit_callback'           => [
-            [\con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator::class, 'purgeBaselayerApiCache']
+            [con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator::class, 'purgeBaselayerApiCache']
         ],
         'onload_callback' => [[$cbClass, 'showInfoMessage']],
         'sql' =>

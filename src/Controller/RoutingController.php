@@ -14,6 +14,7 @@ namespace con4gis\MapsBundle\Controller;
 
 use con4gis\CoreBundle\Controller\BaseController;
 use Contao\CoreBundle\Framework\ContaoFramework;
+use Contao\System;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -51,7 +52,7 @@ class RoutingController extends BaseController
             $profile = $request->query->get('profile');
         }
         $locations = explode(";",$locations);
-        $routeService = $this->get("con4gis.route_service");
+        $routeService = System::getContainer()->get("con4gis.route_service");
         $response ->setContent($routeService->getResponse($profileId, $layerId, $locations, $detour, $profile, $language));
         $response->headers->set('Content-Type', 'application/json');
         return $response;

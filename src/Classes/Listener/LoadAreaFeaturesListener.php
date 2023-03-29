@@ -19,6 +19,8 @@ use con4gis\MapsBundle\Classes\LatLng;
 use con4gis\MapsBundle\Classes\Services\AreaService;
 use con4gis\MapsBundle\Entity\RoutingConfiguration;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Contao\Database;
+use Symfony\Component\HttpClient\HttpClient;
 
 class LoadAreaFeaturesListener
 {
@@ -75,7 +77,7 @@ class LoadAreaFeaturesListener
                 $sqlWhere = $objConfig->sqlwhere ? $objConfig->sqlwhere : '';
                 $sqlAnd = $sqlWhere ? ' AND ' : '';
                 $strQuery = 'SELECT ' . $sourceTable . '.id,' . $sqlSelect . ' FROM ' . $sourceTable . $onClause . $sqlLoc . $sqlAnd . $sqlWhere . $andbewhereclause ;
-                $pointFeatures = \Contao\Database::getInstance()->prepare($strQuery)->execute()->fetchAllAssoc();
+                $pointFeatures = Database::getInstance()->prepare($strQuery)->execute()->fetchAllAssoc();
                 $responseFeatures = [];
                 $locations = [];
                 $locations[] = [$point->getLng(), $point->getLat()];
@@ -122,23 +124,27 @@ class LoadAreaFeaturesListener
                     : $bounds['lower']->getLat() . ',' . $bounds['left']->getLng() . ',' . $bounds['upper']->getLat() . ',' . $bounds['right']->getLng();
                 $strSearch = strrpos($query, '(bbox)') ? '(bbox)' : '{{bbox}}';
                 $query = str_replace($strSearch, $strBBox, $query);
-                $REQUEST = new \Contao\Request();
-                $REQUEST->setHeader('Content-Type', 'POST');
+                $client = HttpClient::create();
+                $headers = [];
                 if ($_SERVER['HTTP_REFERER']) {
-                    $REQUEST->setHeader('Referer', $_SERVER['HTTP_REFERER']);
+                    $headers['Referer'] = $_SERVER['HTTP_REFERER'];
                 }
                 if ($_SERVER['HTTP_USER_AGENT']) {
-                    $REQUEST->setHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
+                    $headers['User-Agent'] = $_SERVER['HTTP_USER_AGENT'];
                 }
                 if (!strpos($query, 'json')) {
                     $event->setReturnData([]);
 
                     return null;
                 }
-                $REQUEST->send($url, $query);
+                $request = $client->request('GET', $url, [
+                    'headers'   => $headers,
+                    'query'     => $query
+                ]);
                 //ToDo check response
-                if ($REQUEST->response) {
-                    $requestData = \GuzzleHttp\json_decode($REQUEST->response, true);
+                $response = $request->getContent();
+                if ($response) {
+                    $requestData = \GuzzleHttp\json_decode($response, true);
                     $locations = [];
                     $locations[] = [floatval($point->getLng()), floatval($point->getLat())];
                     foreach ($requestData['elements'] as $element) {
