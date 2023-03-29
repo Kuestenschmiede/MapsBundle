@@ -93,6 +93,8 @@ services:
     con4gis\MapsBundle\Controller\RoutingController:
         class: con4gis\MapsBundle\Controller\RoutingController
         public: true
+        calls:
+            - setContainer: [ '@service_container' ]
         arguments:
             - "@service_container"
             - "@contao.framework"
