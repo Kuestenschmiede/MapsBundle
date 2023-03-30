@@ -21,6 +21,8 @@ use con4gis\MapsBundle\Resources\contao\models\C4gMapTablesModel;
 use con4gis\MapsBundle\Resources\contao\modules\api\InfoWindowApi;
 use con4gis\MapsBundle\Resources\contao\modules\api\LayerContentDataService;
 use Contao\Database;
+use Contao\FilesModel;
+use Contao\Validator;
 use Symfony\Component\HttpClient\HttpClient;
 
 class LayerContentService
@@ -786,9 +788,9 @@ class LayerContentService
             $strUrl = $objLayer->data_url;
         }
         if ($objLayer->data_file) {
-            if (\Validator::isUuid($objLayer->data_file)) {
+            if (Validator::isUuid($objLayer->data_file)) {
                 // add ressource link
-                $objFile = \FilesModel::findByUuid($objLayer->data_file);
+                $objFile = FilesModel::findByUuid($objLayer->data_file);
                 if ($objFile !== null) {
                     $strUrl = $objFile->path;
                 }
@@ -932,7 +934,7 @@ class LayerContentService
 
                 // check if there is a file to load the content from
                 if ($objLayer->data_file) {
-                    $objFile = \FilesModel::findByUuid($objLayer->data_file);
+                    $objFile = FilesModel::findByUuid($objLayer->data_file);
                     $objLayer->data_file = $objFile ? (TL_ROOT . '/' . $objFile->path) : false;
                     $data = file_exists($objLayer->data_file) ? file_get_contents($objLayer->data_file) : false;
                 } elseif ($objLayer->data_url) {
@@ -1201,9 +1203,9 @@ class LayerContentService
     {
         $strFolder = '';
         if ($objLayer->data_folder) {
-            if (\Validator::isUuid($objLayer->data_folder)) {
+            if (Validator::isUuid($objLayer->data_folder)) {
                 // add ressource folder
-                $objFolder = \FilesModel::findByUuid($objLayer->data_folder);
+                $objFolder = FilesModel::findByUuid($objLayer->data_folder);
                 if ($objFolder !== null) {
                     $strFolder = $objFolder->path;
                 }

@@ -18,6 +18,7 @@ use Contao\Config;
 use Contao\Controller;
 use Contao\Frontend;
 use Contao\Database;
+use Contao\FilesModel;
 
 /**
  * Class LayerContentDataService
@@ -234,7 +235,7 @@ class LayerContentDataService extends Frontend
                                 if ($additionalParam1) {
                                     $responsiveImage = $additionalParam1;
                                 }
-                                $file = \FilesModel::findByUuid($arrElement[$column]);
+                                $file = FilesModel::findByUuid($arrElement[$column]);
                                 if ($file) {
                                     if (!$responsiveImage) {
                                         $image = \Image::get($file->path, 360, 240);

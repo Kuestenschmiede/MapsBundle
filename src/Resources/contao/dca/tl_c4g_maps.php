@@ -23,6 +23,7 @@ use Contao\DC_Table;
 use Contao\System;
 use Contao\Input;
 use Contao\Versions;
+use Contao\FilesModel;
 
 System::loadLanguageFile('tl_c4g_maps');
 
@@ -1203,7 +1204,7 @@ class tl_c4g_maps extends Backend
             $arrGeojson = json_decode($dataContent, true) ;
         }
         else {
-            $objFile = \FilesModel::findByUuid($dataFile);
+            $objFile = FilesModel::findByUuid($dataFile);
             $dataFile = $objFile ? (TL_ROOT . '/' . $objFile->path) : false;
             $data = file_exists($dataFile) ? file_get_contents($dataFile) : false;
             $arrGeojson = json_decode($data, true);

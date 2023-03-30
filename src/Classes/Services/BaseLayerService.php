@@ -189,7 +189,7 @@ class BaseLayerService
 
                 break;
             case 'geoimage':
-                $objFile = \FilesModel::findByUuid($objOverlay->image_src);
+                $objFile = FilesModel::findByUuid($objOverlay->image_src);
                 if ($objFile && $objFile->path) {
                     $arrOverlayData['image_src'] = $objFile->path;
                     $jsonGeoRef = $objOverlay->geoimage_json;
@@ -372,14 +372,14 @@ class BaseLayerService
 
                     break;
                 case 'image':
-                    $objFile = \FilesModel::findByUuid($objBaseLayer->image_src);
+                    $objFile = FilesModel::findByUuid($objBaseLayer->image_src);
                     if ($objFile && $objFile->path) {
                         $arrBaseLayer['image_src'] = $objFile->path;
                     }
 
                     break;
                 case 'geoimage':
-                    $objFile = \FilesModel::findByUuid($objBaseLayer->image_src);
+                    $objFile = FilesModel::findByUuid($objBaseLayer->image_src);
                     if ($objFile && $objFile->path) {
                         $arrBaseLayer['image_src'] = $objFile->path;
                         $jsonGeoRef = $objBaseLayer->geoimage_json;

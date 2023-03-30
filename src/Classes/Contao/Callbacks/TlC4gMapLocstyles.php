@@ -13,6 +13,7 @@ namespace con4gis\MapsBundle\Classes\Contao\Callbacks;
 use Contao\Backend;
 use Contao\DataContainer;
 use Contao\FilesModel;
+use Contao\Validator;
 use Contao\ImagineSvg\Imagine;
 
 class TlC4gMapLocstyles extends Backend
@@ -57,8 +58,8 @@ class TlC4gMapLocstyles extends Backend
             $icon_size = \Contao\StringUtil::deserialize($dc->activeRecord->icon_size);
             $id = $dc->id;
             if ($icon_src && !($icon_size && $icon_size[0])) {
-                if (\Validator::isUuid($icon_src)) {
-                    $iconSrc = \FilesModel::findByUuid($icon_src);
+                if (Validator::isUuid($icon_src)) {
+                    $iconSrc = FilesModel::findByUuid($icon_src);
                     list($width, $height, $type, $attr) = getimagesize($iconSrc->path);
                     $icon_size = 'a:3:{i:0;s:' . strlen($width) . ':"' . $width . '";i:1;s:' . strlen($height) . ':"' . $height . '";i:2;s:2:"px";}';
                     $dc->activeRecord->icon_size = $icon_size;
@@ -76,8 +77,8 @@ class TlC4gMapLocstyles extends Backend
             $icon_src = $dc->activeRecord->svgSrc;
             $icon_size = $dc->activeRecord->icon_size;
             if ($icon_src && ! $icon_size) {
-                if (\Validator::isUuid($icon_src)) {
-                    $iconSrc = \FilesModel::findByUuid($icon_src);
+                if (Validator::isUuid($icon_src)) {
+                    $iconSrc = FilesModel::findByUuid($icon_src);
                     //list($width, $height, $type, $attr) = getimagesize($iconSrc->path);
                     $size = (new Contao\ImagineSvg\Imagine)->open($iconSrc->path)->getSize();
                     $width = $size->getWidth();

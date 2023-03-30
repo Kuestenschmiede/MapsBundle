@@ -17,6 +17,8 @@ use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
 use con4gis\MapsBundle\Classes\Utils;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use Contao\FrontendUser;
+use Contao\Validator;
+use Contao\FilesModel;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class LayerService
@@ -455,7 +457,7 @@ class LayerService
         }
 
         if ($objLayer->icon_src) {
-            $objFile = \FilesModel::findByUuid($objLayer->icon_src);
+            $objFile = FilesModel::findByUuid($objLayer->icon_src);
             if ($objFile && $objFile->path) {
                 $arrLayerData['icon_src'] = $objFile->path;
                 $arrLayerData['content'] = [0 => true,
@@ -636,9 +638,9 @@ class LayerService
         $strUrl = '';
 
         if ($objLayer->data_folder) {
-            if (\Validator::isUuid($objLayer->data_folder)) {
+            if (Validator::isUuid($objLayer->data_folder)) {
                 // add ressource folder
-                $objFolder = \FilesModel::findByUuid($objLayer->data_folder);
+                $objFolder = FilesModel::findByUuid($objLayer->data_folder);
                 if ($objFolder !== null) {
                     $strUrl = $objFolder->path;
                 }
