@@ -97,7 +97,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                 [
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['toggle'],
                 'icon'                => 'visible.svg',
-                'attributes'          => 'onclick="Backend.getScrollOffset(); return AjaxRequest.toggleVisibility(this, %s);"',
                 'button_callback'     => [$cbClass, 'toggleIcon']
                 ],
             'show' =>

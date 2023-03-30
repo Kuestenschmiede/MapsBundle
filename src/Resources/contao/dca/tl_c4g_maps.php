@@ -22,6 +22,7 @@ use Contao\BackendUser;
 use Contao\DC_Table;
 use Contao\System;
 use Contao\Input;
+use Contao\Versions;
 
 System::loadLanguageFile('tl_c4g_maps');
 
@@ -123,7 +124,6 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 [
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['toggle'],
                 'icon'                => 'visible.svg',
-                'attributes'          => 'onclick="Backend.getScrollOffset(); return AjaxRequest.toggleVisibility(this, %s);"',
                 'button_callback'     => ['tl_c4g_maps', 'toggleIcon']
                 ],
             'show' =>
@@ -1697,10 +1697,10 @@ class tl_c4g_maps extends Backend
      */
     public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
     {
-//        if (strlen($this->Input->get('tid'))) {
-//            $this->toggleVisibility($this->Input->get('tid'), ($this->Input->get('state') == 1));
-//            $this->redirect($this->getReferer());
-//        }
+        if (strlen(Input::get('tid'))) {
+            $this->toggleVisibility(Input::get('tid'), (Input::get('state') == 1));
+            $this->redirect($this->getReferer());
+        }
 
         // Check permissions AFTER checking the tid, so hacking attempts are logged
         if (!$this->User->isAdmin && !$this->User->hasAccess('tl_c4g_maps::published', 'alexf')) {

@@ -19,6 +19,7 @@ use Contao\BackendUser;
 use Contao\Input;
 use Contao\StringUtil;
 use Symfony\Component\HttpClient\HttpClient;
+use Contao\Versions;
 
 class TlC4gMapBaselayers extends Backend
 {
@@ -75,8 +76,8 @@ class TlC4gMapBaselayers extends Backend
             $this->log('Not enough permissions to show/hide record ID "'.$intId.'"', 'tl_c4g_map_baselayers toggleVisibility', TL_ERROR);
             $this->redirect('contao/main.php?act=error');
         }
-
-        $this->createInitialVersion('tl_c4g_map_baselayers', $intId);
+        $objVersions = new Versions('tl_c4g_map_baselayers', $intId);
+        $objVersions->initialize();
 
         // Trigger the save_callback
         if (is_array($GLOBALS['TL_DCA']['tl_c4g_map_baselayers']['fields']['published']['save_callback']))
@@ -91,7 +92,8 @@ class TlC4gMapBaselayers extends Backend
         // Update the database
         $this->Database->prepare("UPDATE tl_c4g_map_baselayers SET tstamp=". time() .", published='" . ($blnPublished ? '' : '1') . "' WHERE id=?")
             ->execute($intId);
-        $this->createNewVersion('tl_c4g_map_baselayers', $intId);
+        $objVersions = new Versions('tl_c4g_map_baselayers', $intId);
+        $objVersions->initialize();
         C4GMapsAutomator::purgeBaselayerApiCache();
     }
     public function groupColumns( $multiColumnWizard){
