@@ -174,7 +174,7 @@ class AreaService
                     $matrixUrl,
                     [
                         'headers'   => $headers,
-                        'query'     => $encodedData
+                        'body'     => $encodedData
                     ]
                 );
                 $result = $return->getContent();
@@ -218,7 +218,7 @@ class AreaService
                     $matrixUrl,
                     [
                         'headers'   => $headers,
-                        'query'     => $encodedData
+                        'body'     => $encodedData
                     ]
                 );
                 $result = $return->getContent();
@@ -252,10 +252,10 @@ class AreaService
             $encLocs = 'locations=' . json_encode($locations);
             $return = $client->request(
                 'POST',
-                $matrixUrl,
+                $sendUrl,
                 [
                     'headers'   => $headers,
-                    'query'     => $encLocs
+                    'body'     => $encLocs
                 ]
             );
             return $return->getContent();
@@ -302,7 +302,7 @@ class AreaService
                     $matrixUrl,
                     [
                         'headers'   => $headers,
-                        'query'     => $encodedData
+                        'body'     => $encodedData
                     ]
                 );
                 $result = $return->getContent();

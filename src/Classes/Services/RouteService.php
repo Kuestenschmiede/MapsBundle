@@ -298,7 +298,7 @@ class RouteService extends Frontend
 
             $request = $client->request('POST', $sendUrl, [
                 'headers' => $headers,
-                'query'     => $encodedData
+                'body'     => $encodedData
             ]);
             $response = $request->getContent();
             try {
@@ -479,7 +479,7 @@ class RouteService extends Frontend
 
             $request = $client->request('POST', $url, [
                 'headers'    => $headers,
-                'query'      => $data
+                'body'      => $data
             ]);
             $response = $request->getContent();
 
@@ -500,7 +500,7 @@ class RouteService extends Frontend
 
                 $request = $client->request('POST', $url, [
                     'headers'    => $headers,
-                    'query'      => $data
+                    'body'      => $data
                 ]);
                 $response = $request->getContent();
                 if ($response) {
@@ -517,7 +517,7 @@ class RouteService extends Frontend
                 $data = \GuzzleHttp\json_encode($body);
                 $request = $client->request('POST', $url, [
                     'headers'    => $headers,
-                    'query'      => $data
+                    'body'      => $data
                 ]);
                 $response = $request->getContent();
                 if ($response) {
