@@ -32,7 +32,8 @@ class LocationstyleController extends BaseController
     {
         $response = new JsonResponse();
         $locStyleApi = new LocationStyleApi();
-        $arrIds = $request->query->get('ids');
+        $query = $request->query;
+        $arrIds = $query->all()['ids'];
         if ($arrIds) {
 
             $this->checkForCacheSettings('locationStyleService');

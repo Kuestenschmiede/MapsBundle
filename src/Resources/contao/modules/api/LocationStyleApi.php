@@ -11,6 +11,9 @@
 namespace con4gis\MapsBundle\Resources\contao\modules\api;
 use con4gis\CoreBundle\Classes\HttpResultHelper;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapLocstylesModel;
+use Contao\StringUtil;
+use Contao\Validator;
+use Contao\FilesModel;
 
 /**
  * Class LocationStyleApi
@@ -71,14 +74,14 @@ class LocationStyleApi
                 unset($arrData[$key]);
                 continue;
             }
-           if (is_array(deserialize($value))){
-                $arrData[$key] = deserialize($value);
+           if (is_array(StringUtil::deserialize($value))){
+                $arrData[$key] = StringUtil::deserialize($value);
             }
 
-            if (\Validator::isUuid($value))
+            if (Validator::isUuid($value))
             {
                 // add ressource link
-                $objFile = \FilesModel::findByUuid($value);
+                $objFile = FilesModel::findByUuid($value);
                 if ($objFile !== null) {
                     $arrData[$key] =  $objFile->path;
                 } else {
