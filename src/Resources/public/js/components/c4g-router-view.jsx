@@ -1911,7 +1911,9 @@ export class RouterView extends Component {
               contentFeature.set(tag, feature.tags[tag]);
             }
           }
-          extent = extend(extent, contentFeature.getGeometry().getExtent());
+          if (contentFeature && contentFeature.getGeometry() && contentFeature.getGeometry().getExtent()) {
+            extent = extend(extent, contentFeature.getGeometry().getExtent());
+          }
         }
     } else {
       const mapProj = self.props.mapController.map.getView().getProjection();
@@ -1943,7 +1945,9 @@ export class RouterView extends Component {
             }
             contentFeatures[id].setStyle(self.props.mapController.proxy.locationStyleController.arrLocStyles[layer.locstyle].style);
           }
-          extent = extend(extent, contentFeatures[id].getGeometry().getExtent());
+          if (contentFeatures[id] && contentFeatures[id].getGeometry().getExtent()) {
+            extent = extend(extent, contentFeatures[id].getGeometry().getExtent());
+          }
         }
       }
       varReturn = arrOvp;
@@ -1971,7 +1975,7 @@ export class RouterView extends Component {
     }
     if (this.mapData.drawCircle) {
       let tempFeature = this.areaCircleSource.getFeatures()[0];
-      if (tempFeature && tempFeature.getGeometry() && tempFeature.getGeometry().getExent()) {
+      if (tempFeature && tempFeature.getGeometry() && tempFeature.getGeometry().getExtent()) {
         extent = extend(extent, tempFeature.getGeometry().getExtent());
       }
     }
