@@ -111,7 +111,7 @@ $GLOBALS['con4gis']['dafaultData'] = ['Table'=>'Table'];
  * Specialized Widgets for Text Input and Image Sizes
  */
 // @TODO maybe move to core
-$GLOBALS['BE_FFL']['c4g_text'] = '\TextField';
+$GLOBALS['BE_FFL']['c4g_text'] = 'Contao\TextField';
 
 $GLOBALS['TL_MODELS']['tl_c4g_maps'] = 'con4gis\MapsBundle\Resources\contao\models\C4gMapsModel';
 $GLOBALS['TL_MODELS']['tl_c4g_map_profiles'] = 'con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel';

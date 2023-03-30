@@ -12,14 +12,19 @@ namespace con4gis\MapsBundle\Classes;
 
 use con4gis\CoreBundle\Resources\contao\models\C4gSettingsModel;
 use Contao\BackendUser;
+use Contao\BackendTemplate;
+use Contao\Backend;
 use Contao\ContentModel;
 use Contao\System;
+use Contao\DC_Table;
+use Contao\Input;
+use Contao\Image;
 
 /**
  * Class GeoPicker
  * @package con4gis\MapsBundle\Classes
  */
-class GeoPicker extends \Backend
+class GeoPicker extends Backend
 {
     /**
      * Initialize the controller
@@ -32,10 +37,6 @@ class GeoPicker extends \Backend
      */
     public function __construct()
     {
-        $this->import(BackendUser::class, 'User');
-        parent::__construct();
-
-        $this->User->authenticate();
         $this->loadLanguageFile('default');
 
         //Load required JavaScript (for backend)
@@ -44,9 +45,9 @@ class GeoPicker extends \Backend
         }
     }
 
-    public function getPickerLink(\DataContainer $dc)
+    public function getPickerLink(DC_Table $dc)
     {
-        $strField = 'ctrl_' . $dc->field . (($this->Input->get('act') == 'editAll') ? '_' . $dc->id : '');
+        $strField = 'ctrl_' . $dc->field . ((Input::get('act') == 'editAll') ? '_' . $dc->id : '');
         if (strtoupper(substr($strField, -1, 1)) === 'Y') {
             $strFieldX = substr($strField, 0, -1) . 'x';
             $strFieldY = $strField;
@@ -68,7 +69,7 @@ class GeoPicker extends \Backend
         '" title="' . $GLOBALS['TL_LANG']['c4g_maps']['geopicker'] .
         '" style="padding-left:3px" onclick="c4g.maps.backend.showGeoPicker(this.href,' .
         $strFieldX . ',' . $strFieldY . ', {title:\'' . $GLOBALS['TL_LANG']['c4g_maps']['geopicker'] . '\'});return false">' .
-        \Image::getHtml('bundles/con4gismaps/images/be-icons/geopicker.svg',
+        Image::getHtml('bundles/con4gismaps/images/be-icons/geopicker.svg',
             $GLOBALS['TL_LANG']['tl_content']['editalias'][0], 'style="vertical-align:top"') . '</a>';
     }
 
@@ -77,7 +78,7 @@ class GeoPicker extends \Backend
      */
     public function run()
     {
-        $this->Template = new \BackendTemplate('c4g_geopicker');
+        $this->Template = new BackendTemplate('c4g_geopicker');
 
         $this->Template->theme = $this->getTheme();
         $this->Template->base = $this->Environment->base;
@@ -103,7 +104,7 @@ class GeoPicker extends \Backend
 
     public function generate()
     {
-        $this->Template = new \BackendTemplate('c4g_geopicker');
+        $this->Template = new BackendTemplate('c4g_geopicker');
 
         $this->Template->theme = $this->getTheme();
         $this->Template->base = $this->Environment->base;
