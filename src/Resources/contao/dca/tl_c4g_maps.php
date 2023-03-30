@@ -11,6 +11,7 @@
 
 use Contao\DC_Table;
 use Contao\System;
+use Contao\DataContainer;
 use con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator;
 use con4gis\MapsBundle\Classes\Contao\Callbacks\TlC4gMaps;
 use con4gis\MapsBundle\Classes\GeoPicker;
@@ -45,11 +46,13 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
         [
         'sorting' =>
             [
-            'mode'                    => 5,
             'icon'                    => 'bundles/con4giscore/images/be-icons/con4gis_blue.svg',
-            'fields'                  => ['name','profile'],
-            'panelLayout'             => 'filter;sort,search,limit',
-            'flag'                    => 1
+            'panelLayout'             => 'filter;search',
+            'mode'                    => DataContainer::MODE_TREE,
+			'rootPaste'               => true,
+			'showRootTrails'          => true,
+//			'paste_button_callback'   => array('tl_page', 'pastePage'),
+			'defaultSearchField'      => 'name'
             ],
         'label' =>
             [
