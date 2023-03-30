@@ -18,14 +18,16 @@ if (method_exists('System', 'getContainer')) {
     $filteredSizes = [];
     $imageSizes = System::getContainer()->get('contao.image.image_sizes')->getAllOptions();
     $just = 'proportional';
-    foreach ($imageSizes as $group => $sizes) {
-        foreach ($sizes as $key => $size) {
-            if ($size == $just) {
-                $filteredSizes[$group][$key] = $size;
+    if ($imageSizes) {
+        foreach ($imageSizes as $group => $sizes) {
+            foreach ($sizes as $key => $size) {
+                if ($size == $just) {
+                    $filteredSizes[$group][$key] = $size;
+                }
             }
         }
+        $imageSizes = $filteredSizes;
     }
-    $imageSizes = $filteredSizes;
 }
 
 $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
