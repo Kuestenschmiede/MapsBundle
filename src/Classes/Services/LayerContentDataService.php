@@ -19,6 +19,7 @@ use Contao\Controller;
 use Contao\Frontend;
 use Contao\Database;
 use Contao\FilesModel;
+use Contao\System;
 
 /**
  * Class LayerContentDataService
