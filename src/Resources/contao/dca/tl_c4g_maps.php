@@ -51,7 +51,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             'mode'                    => DataContainer::MODE_TREE,
 			'rootPaste'               => true,
 			'showRootTrails'          => true,
-//			'paste_button_callback'   => array('tl_page', 'pastePage'),
+//			'paste_button_callback'   => ['tl_page', 'pastePage'),
 			'defaultSearchField'      => 'name'
             ],
         'label' =>
@@ -427,10 +427,9 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             'load_callback'           => [[$cbClass,'getDefaultProfile']],
             'relation'                => ['type'=>'belongsTo', 'load'=>'eager'],
             'sql'                     => "int(10) unsigned NOT NULL default '0'",
-            'xlabel' => array
-            (
-                array($cbClass, 'profilesLink')
-            )
+            'xlabel' => [
+                [$cbClass, 'profilesLink']
+            ]
 
             ],
         'profile_mobile' =>
@@ -444,10 +443,9 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                                             'includeBlankOption'=>true
             ],
             'sql'                     => "int(10) unsigned NOT NULL default '0'",
-            'xlabel' => array
-            (
-                array($cbClass, 'profilesLink')
-            )
+            'xlabel' => [
+                [$cbClass, 'profilesLink']
+            ]
             ],
         'use_specialprofile' =>
             [
@@ -465,10 +463,9 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 'eval'                    => ['tl_class'=>'long','submitOnChange' => true, 'alwaysSave' => true,  'chosen' => true],
                 'load_callback'           => [[$cbClass,'getDefaultProfile']],
                 'sql'                     => "int(10) unsigned NOT NULL default '0'",
-                'xlabel' => array
-                (
-                    array($cbClass, 'profilesLink')
-                )
+                'xlabel' => [
+                    [$cbClass, 'profilesLink']
+                ]
             ],
         'specialprofile_mobile' =>
             [
@@ -477,10 +474,9 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 'foreignKey'              => 'tl_c4g_map_profiles.name',
                 'eval'                    => ['tl_class'=>'long', 'includeBlankOption'=>true,  'chosen' => true],
                 'sql'                     => "int(10) unsigned NOT NULL default '0'",
-                'xlabel' => array
-                (
-                    array($cbClass, 'profilesLink')
-                )
+                'xlabel' => [
+                    [$cbClass, 'profilesLink']
+                ]
             ],
         'specialprofile_groups' =>
             [
@@ -523,10 +519,9 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             'options_callback'        => [$cbClass,'getAllBaselayers'],
             'eval'                    => ['tl_class'=>'clr', 'chosen' => true, 'includeBlankOption'=>true, 'multiple' => true],
             'sql'                     => "blob NULL",
-            'xlabel' => array
-            (
-                array('tl_c4g_maps', $cbClass)
-            )
+            'xlabel' => [
+                ['tl_c4g_maps', $cbClass]
+            ]
         ],
         'loc_geox' =>
             [
@@ -777,7 +772,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                     ],
                 'sql'                     => "int(10) unsigned NOT NULL default '0'",
                 'xlabel' => [
-                    ['$cbClass', 'locstylesLink']
+                    [$cbClass, 'locstylesLink']
                 ]
             ],
         'locstyleGeoJson' => [
@@ -1051,7 +1046,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 'exclude'                 => true,
                 'inputType'               => 'text',
                 'default'                 => '',
-                'eval'                    => array('rgxp'=>'datim', 'datepicker'=>true, 'tl_class'=>'w50 wizard'),
+                'eval'                    => ['rgxp'=>'datim', 'datepicker'=>true, 'tl_class'=>'w50 wizard'],
                 'sql'                     => "varchar(10) NOT NULL default ''"
             ],
         'publishStop' =>
@@ -1059,7 +1054,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 'exclude'                 => true,
                 'inputType'               => 'text',
                 'default'                 => '',
-                'eval'                    => array('rgxp'=>'datim', 'datepicker'=>true, 'tl_class'=>'w50 wizard'),
+                'eval'                    => ['rgxp'=>'datim', 'datepicker'=>true, 'tl_class'=>'w50 wizard'],
                 'sql'                     => "varchar(10) NOT NULL default ''"
             ],
         'excludeFromSingleLayer' =>
