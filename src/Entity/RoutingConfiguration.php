@@ -282,7 +282,7 @@ class RoutingConfiguration extends BaseEntity
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=6)
+     * @ORM\Column(type="string", length=64)
      */
     protected $areaCircleColor = '';
     

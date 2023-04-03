@@ -976,9 +976,10 @@ export class RouterView extends Component {
     this.routerWaySource = new VectorSource();
     this.areaCircleSource = new VectorSource();
     let color = this.mapData.areaCircleColor;
+    let opacity = parseInt(this.mapData.areaCircleOpacity) || parseInt(this.mapData.areaCircleOpacity) === 0? this.mapData.areaCircleOpacity : 50;
     let style = new Style({
       fill: new Fill({
-        color: utils.getRgbaFromHexAndOpacity(color, 50)
+        color: utils.getRgbaFromHexAndOpacity(color, opacity)
       })
     });
     this.areaCircleLayer = new Vector({

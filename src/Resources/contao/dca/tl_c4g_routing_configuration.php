@@ -418,9 +418,9 @@ $GLOBALS['TL_DCA'][$strName] = array
         'areaCircleColor' =>
         [
             'exclude'                 => true,
-            'default'                 => 'ee0016',
             'inputType'               => 'text',
-            'eval'                    => ['maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'],
+            'default'                 => 'ee0016',
+            'eval'                    => array('maxlength'=>6, 'multiple'=>true, 'size'=>2, 'colorpicker'=>true, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'long wizard'),
             'sql'                     => null
         ],
 

@@ -124,7 +124,9 @@ class LoadMapDataListener
                 $mapData['areaSearch'] = $routerConfig->getAreaSearch();
                 $mapData['areaSearchOnly'] = $routerConfig->getAreaSearchOnly();
                 $mapData['drawCircle'] = !!$routerConfig->getDrawCircle();
-                $mapData['areaCircleColor'] = $routerConfig->getAreaCircleColor();
+                $areaCircleColor = unserialize($routerConfig->getAreaCircleColor());
+                $mapData['areaCircleColor'] = $areaCircleColor[0];
+                $mapData['areaCircleOpacity'] = $areaCircleColor[1];
                 $mapData['areaHeadline'] = $routerConfig->getAreaHeadline();
                 $mapData['featureLabel'] = $routerConfig->getFeatureLabel();
                 $mapData['showInstructions'] = $routerConfig->getShowInstructions();
