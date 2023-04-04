@@ -970,8 +970,13 @@ export class RouterView extends Component {
       this.props.mapController.data.areaCenterLocstyle,
       this.props.mapController.data.clickLocstyle
     ];
-    if (this.props.mapController.data.priorityFeatures && this.props.mapController.data.priorityLocstyle) {
-      styles.push(this.props.mapController.data.priorityLocstyle);
+    if (this.props.mapController.data.priorityFeatures) {
+      if (this.props.mapController.data.priorityLocstyle) {
+        styles.push(this.props.mapController.data.priorityLocstyle);
+      }
+      if (this.props.mapController.data.negativePriorityLocstyle) {
+        styles.push(this.props.mapController.data.negativePriorityLocstyle);
+      }
     }
     // check and load location styles via map-proxy
     this.props.mapController.proxy.locationStyleController.loadLocationStyles(styles);
@@ -1835,7 +1840,9 @@ export class RouterView extends Component {
 
     const priceSortedFeatures = features.length ? features.slice() : features.elements.slice();
     let bestFeatures = [];
+    let worstFeatures = [];
     this.bestFeatureIds = [];
+    this.worstFeatureIds = [];
     if (mapData.priorityFeatures && mapData.priorityLocstyle && features.length > 0) {
       // sort by selected value for the map label ascending
       priceSortedFeatures.sort(function (a, b) {
@@ -1843,9 +1850,14 @@ export class RouterView extends Component {
       });
       let featureCount = parseInt(mapData.priorityFeatures, 10);
       let upperBound = featureCount > priceSortedFeatures.length ? priceSortedFeatures.length : featureCount;
+      let lowerBound = featureCount + upperBound > priceSortedFeatures.length ? priceSortedFeatures.length - upperBound : featureCount;
       for (let i = 0; i < upperBound; i++) {
         bestFeatures[i] = priceSortedFeatures[i];
         this.bestFeatureIds.push(priceSortedFeatures[i]['id']);
+      }
+      for (let j = priceSortedFeatures.length - 1; j > priceSortedFeatures.length - 1 - lowerBound; j--) {
+        worstFeatures[j] = priceSortedFeatures[j];
+        this.worstFeatureIds.push(priceSortedFeatures[j]['id']);
       }
     }
     varReturn = priceSortedFeatures;
@@ -1893,11 +1905,15 @@ export class RouterView extends Component {
             if (bestFeatures.includes(feature)) {
               locstyle = mapData.priorityLocstyle;
             }
+            else if (mapData.negativePriorityLocstyle && worstFeatures.includes(feature)) {
+              locstyle = mapData.negativePriorityLocstyle;
+            }
           }
           contentFeature.set('locationStyle', locstyle);
+          contentFeature.set('locstyle', locstyle);
           contentFeature.set('zIndex', i);
           contentFeature.set('label', label);
-          if (locstyle && self.props.mapController.proxy.locationStyleController.arrLocStyles[locstyle] && self.props.mapController.proxy.locationStyleController.arrLocStyles[locstyle].style) {
+          if (locstyle && self.props.mapController.proxy.locationStyleController.arrLocStyles[locstyle]) {
             if (!self.props.mapController.proxy.locationStyleController.arrLocStyles[locstyle].style) {
               self.props.mapController.proxy.locationStyleController.arrLocStyles[locstyle].style = self.props.mapController.proxy.locationStyleController.arrLocStyles[locstyle].getStyleFunction();
             }
@@ -1972,7 +1988,7 @@ export class RouterView extends Component {
       self.props.mapController.proxy.locationStyleController.loadLocationStyles(missingStyles, {
         done: function () {
           for (let i = 0; i < contentFeatures.length; i++) {
-            var styleId = contentFeatures[i].get('styleId');
+            var styleId = contentFeatures[i].get('locstyle');
             if (!self.props.mapController.proxy.locationStyleController.arrLocStyles[styleId].style) {
               self.props.mapController.proxy.locationStyleController.arrLocStyles[styleId].style = self.props.mapController.proxy.locationStyleController.arrLocStyles[styleId].getStyleFunction();
             }

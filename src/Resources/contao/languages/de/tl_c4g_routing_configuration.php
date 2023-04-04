@@ -70,6 +70,7 @@ $GLOBALS['TL_LANG'][$strName]['clickLocstyle'] = ['Lokationsstil aktives Element
 $GLOBALS['TL_LANG'][$strName]['areaCenterLocstyle'] = ['Lokationsstil Zentrum (Umkreissuche)', 'Geben Sie hier einen Lokationsstil an, in dem bei der Umkreissuche ein Marker auf das ausgewählte Zentrum gesetzt wird.'];
 $GLOBALS['TL_LANG'][$strName]['priorityFeatures'] = ['Priorisierte Features', 'Die hier angegebene Anzahl an Features mit dem niedrigsten Wert für das Kartenlabel werden in der Karte anders dargestellt.'];
 $GLOBALS['TL_LANG'][$strName]['priorityLocstyle'] = ['Lokationsstil priorisierte Features', 'Geben Sie hier einen Lokationsstil an, in dem die priorisierten Features dargestellt werden.'];
+$GLOBALS['TL_LANG'][$strName]['negativePriorityLocstyle'] = ['Lokationsstil negativ priorisierte Features', 'Geben Sie hier einen Lokationsstil an, falls Sie die letzen Features in der Priorisierung gesondert darstellen wollen.'];
 $GLOBALS['TL_LANG'][$strName]['usePermalink'] = ['Router-Permalink generieren', 'Aktivieren Sie diese Checkbox, um die aktuelle Routen- bzw. Umkreissuche in der URL zu speichern.'];
 $GLOBALS['TL_LANG'][$strName]['pirate'] = ['Piratensprache einschalten', 'Sprache auf Pirat (Englisch) festsetzen.'];
 /**

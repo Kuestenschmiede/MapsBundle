@@ -71,6 +71,7 @@ $GLOBALS['TL_LANG'][$strName]['clickLocstyle'] = ['Location Style active element
 $GLOBALS['TL_LANG'][$strName]['areaCenterLocstyle'] = ['Location Style Center (Area Search)', 'Choose the location style which will place a marker in the center of the search.'];
 $GLOBALS['TL_LANG'][$strName]['priorityFeatures'] = ['Prioritized Features', 'The number of features with the lowest value to be displayed differently on the map.'];
 $GLOBALS['TL_LANG'][$strName]['priorityLocstyle'] = ['Location Style prioritized features', 'Location Style for prioritized features.'];
+$GLOBALS['TL_LANG'][$strName]['priorityLocstyle'] = ['Location Style negative prioritized features', 'Location Style for negative prioritized features.'];
 $GLOBALS['TL_LANG'][$strName]['usePermalink'] = ['Generate router permalink', 'Check this to save the current search parameters in the URL.'];
 $GLOBALS['TL_LANG'][$strName]['pirate'] = ['Arrrrr you a pirate?', 'Set language to pirate.'];
 

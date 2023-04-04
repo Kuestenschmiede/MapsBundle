@@ -216,6 +216,11 @@ class RoutingConfiguration extends BaseEntity
      * @ORM\Column(type="integer")
      */
     protected $priorityLocstyle = 0;
+    /**
+     * @var int
+     * @ORM\Column(type="integer")
+     */
+    protected $negativePriorityLocstyle = 0;
     
     /**
      * @var string
@@ -866,6 +871,22 @@ class RoutingConfiguration extends BaseEntity
     public function setPriorityLocstyle(int $priorityLocstyle): void
     {
         $this->priorityLocstyle = $priorityLocstyle;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNegativePriorityLocstyle(): int
+    {
+        return $this->negativePriorityLocstyle;
+    }
+
+    /**
+     * @param int $negativePriorityLocstyle
+     */
+    public function setNegativePriorityLocstyle(int $negativePriorityLocstyle): void
+    {
+        $this->negativePriorityLocstyle = $negativePriorityLocstyle;
     }
     
     /**

@@ -366,6 +366,15 @@ $GLOBALS['TL_DCA'][$strName] = array
             'xlabel'                  => [['tl_c4g_routing_configuration', 'locstylesLink']],
             'sql'                     => null
         ],
+        'negativePriorityLocstyle' => [
+            'exclude'                 => true,
+            'inputType'               => 'select',
+            'default'                 => 0,
+            'options_callback'        => [$callbackClass,'getLocStyles'],
+            'eval'                    => ['tl_class'=>'clr', 'chosen' => true],
+            'xlabel'                  => [['tl_c4g_routing_configuration', 'locstylesLink']],
+            'sql'                     => null
+        ],
         'closeAfterSearch' => [
             'exclude'                 => true,
             'default'                 => false,
