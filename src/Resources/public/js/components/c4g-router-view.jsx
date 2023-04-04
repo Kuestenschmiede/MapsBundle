@@ -376,6 +376,20 @@ export class RouterView extends Component {
         utils.storeValue('panel', "");
       }
     }
+    if (prevState.activeId !== this.state.activeId) {
+      if (prevState.activeId) {
+        let oldFeature = this.routerFeaturesSource.getFeatureById(prevState.activeId)
+        let style = oldFeature.get('oldStyle');
+        oldFeature.setStyle(style);
+      }
+      let activeFeature = this.routerFeaturesSource.getFeatureById(this.state.activeId);
+      if (!this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.clickLocstyle].style) {
+        this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.clickLocstyle].style = this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.clickLocstyle].getStyleFunction();
+      }
+      activeFeature.set('oldStyle', activeFeature.getStyle());
+      let style = this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.clickLocstyle].style;
+      activeFeature.setStyle(style);
+    }
 
   }
 
