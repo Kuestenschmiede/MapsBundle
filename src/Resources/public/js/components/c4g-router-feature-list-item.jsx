@@ -80,10 +80,16 @@ export class RouterFeatureListItem extends Component {
               width = 50;
             }
             let padding = [50, width, 50, 50];
-            scope.props.mapController.map.getView().fit(extent, {
-              padding: padding,
-              maxZoom: 16
-            });
+            if (!scope.props.mapController.proxy.mapData.preventZoomResults) {
+              scope.props.mapController.map.getView().fit(extent, {
+                padding: padding,
+                maxZoom: scope.props.mapController.map.getView().getZoom || 16
+              });
+            }
+            else {
+              scope.props.mapController.map.getView().setCenter([extent[0], extent[1]])
+            }
+
           }
         }
 

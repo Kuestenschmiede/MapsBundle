@@ -326,6 +326,11 @@ class RoutingConfiguration extends BaseEntity
      * @var string
      * @ORM\Column(type="string", length=1)
      */
+    protected $preventZoomResults = '';
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=1)
+     */
     protected $usePermalink = '';
     /**
      * @var string
@@ -1021,6 +1026,22 @@ class RoutingConfiguration extends BaseEntity
     public function setInitialResultMode(string $initialResultMode): void
     {
         $this->initialResultMode = $initialResultMode;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPreventZoomResults(): string
+    {
+        return $this->preventZoomResults;
+    }
+
+    /**
+     * @param string $preventZoomResults
+     */
+    public function setPreventZoomResults(string $preventZoomResults): void
+    {
+        $this->preventZoomResults = $preventZoomResults;
     }
     
     /**

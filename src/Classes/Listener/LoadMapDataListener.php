@@ -137,6 +137,7 @@ class LoadMapDataListener
                 $mapData['initialPosition'] = $routerConfig->getInitialPosition();
                 $mapData['initialDestination'] = $routerConfig->getInitialDestination();
                 $mapData['usePermalink'] = $routerConfig->getUsePermalink();
+                $mapData['preventZoomResults'] = $routerConfig->getPreventZoomResults();
                 $mapData['hideFeaturesWithoutLabel'] = $routerConfig->getHideFeaturesWithoutLabel();
                 $mapData['layerChanger'] = $routerConfig->getLayerChanger() === "1";
                 $mapData['detourElement'] = $routerConfig->getDetourElement() === "1";

@@ -60,6 +60,7 @@ $GLOBALS['TL_LANG'][$strName]['initialMode'] = ['Initial view', 'Choose the init
 $GLOBALS['TL_LANG'][$strName]['initialPosition'] = ['Initial position', 'The start is set to the users position.'];
 $GLOBALS['TL_LANG'][$strName]['initialDestination'] = ['Initial destination', 'The destination is set to the center of the map.'];
 $GLOBALS['TL_LANG'][$strName]['initialResultMode'] = ['Initial result view', 'Choose the initial view in the router results (feature list or route instructions).'];
+$GLOBALS['TL_LANG'][$strName]['preventZoomResults'] = ['Prevent zoom on results', 'Prevent zooming on locations from resul list.'];
 $GLOBALS['TL_LANG'][$strName]['minDetourArea'] = ['Minimum Radius Area Search (km)', 'The minimum radius to search.'];
 $GLOBALS['TL_LANG'][$strName]['maxDetourArea'] = ['Maximum Radius Area Search (km)', 'The maximum radius to search.'];
 $GLOBALS['TL_LANG'][$strName]['initialDetourArea'] = ['Initial Radius Area Search (km)', 'The initial radius to search.'];

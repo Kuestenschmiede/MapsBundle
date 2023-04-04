@@ -59,6 +59,7 @@ $GLOBALS['TL_LANG'][$strName]['initialMode'] = ['Initiale Sicht', 'Wählen Sie a
 $GLOBALS['TL_LANG'][$strName]['initialPosition'] = ['Initiale Position', 'Der Startpunkt wird automatisch auf den Standort des Nutzers gesetzt.'];
 $GLOBALS['TL_LANG'][$strName]['initialDestination'] = ['Initiales Ziel', 'Das Ziel wird automatisch auf die Mitte der Karte gesetzt.'];
 $GLOBALS['TL_LANG'][$strName]['initialResultMode'] = ['Initiale Ergebnis-Sicht', 'Wählen Sie, ob nach einer Suche zunächst die Ergebnisliste oder die Routenhinweise angezeigt werden sollen.'];
+$GLOBALS['TL_LANG'][$strName]['preventZoomResults'] = ['Zoom aus Ergebnisliste verhindern', 'Verhindert das Hereinzommen auf ein Ergebnis aus der Liste.'];
 $GLOBALS['TL_LANG'][$strName]['minDetourArea'] = ['Minimaler Radius Gebietssuche (km)', 'Ab welcher Entfernung zum Standort soll gesucht werden?'];
 $GLOBALS['TL_LANG'][$strName]['maxDetourArea'] = ['Maximaler Radius Gebietssuche (km)', 'Bis zu welcher Entfernung zum Standort soll gesucht werden?'];
 $GLOBALS['TL_LANG'][$strName]['initialDetourArea'] = ['Initialer Radius Gebietssuche (km)', 'Welche Entfernung soll standardmäßig verwendet werden?'];
