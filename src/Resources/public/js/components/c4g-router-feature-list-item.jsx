@@ -36,67 +36,27 @@ export class RouterFeatureListItem extends Component {
   clickFeature (event) {
     const scope = this;
     scope.props.setActiveId(scope.props.feature.id);
-    scope.props.featureSource.forEachFeature((tmpFeature) => {
-      let layer = undefined;
-      let routerLayers = scope.props.mapController.data.routerLayers;
-      if (scope.props.routeMode === "area") {
-        layer = routerLayers[scope.props.layerArea][scope.props.layerValueArea].layerData;
-      } else if (scope.props.routeMode === "route") {
-        layer = routerLayers[scope.props.layerRoute][scope.props.layerValueRoute].layerData;
-      }
-      if (tmpFeature.get('tid') === scope.props.feature.id) {
-        let clickStyleId = scope.props.mapController.data.clickLocstyle;
-        if (clickStyleId) {
-          if (!scope.props.mapController.proxy.locationStyleController.arrLocStyles[clickStyleId]) {
-            scope.props.mapController.proxy.locationStyleController.loadLocationStyles([clickStyleId], {
-              done: function () {
-                if (!scope.props.mapController.proxy.locationStyleController.arrLocStyles[clickStyleId].style) {
-                  scope.props.mapController.proxy.locationStyleController.arrLocStyles[clickStyleId].style = scope.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.router_from_locstyle].getStyleFunction();
-                }
-                let style = scope.props.mapController.proxy.locationStyleController.arrLocStyles[clickStyleId].style;
-                // check if feature is still clicked
-                scope.mapSelectInteraction.getFeatures().forEach(function (elem, index, array) {
-                  if (elem === tmpFeature) {
-                    // feature is still clicked, style it accordingly
-                    tmpFeature.setStyle(style);
-                  }
-                });
-              }
-            });
-          } else {
-            if (!scope.props.mapController.proxy.locationStyleController.arrLocStyles[clickStyleId].style) {
-              scope.props.mapController.proxy.locationStyleController.arrLocStyles[clickStyleId].style = scope.props.mapController.proxy.locationStyleController.arrLocStyles[clickStyleId].getStyleFunction();
-            }
-            let style = scope.props.mapController.proxy.locationStyleController.arrLocStyles[clickStyleId].style;
-            tmpFeature.setStyle(style);
-            let extent = tmpFeature.getGeometry().getExtent();
-            let width = jQuery(".c4g-sideboard.c4g-open").css('width');
-            if (width) {
-              width = width.split(".");
-              width = Array.isArray(width) ? width[0] : width;
-              width = parseInt(width) +  50;
-            }
-            else {
-              width = 50;
-            }
-            let padding = [50, width, 50, 50];
-            if (!scope.props.mapController.proxy.mapData.preventZoomResults) {
-              scope.props.mapController.map.getView().fit(extent, {
-                padding: padding,
-                maxZoom: scope.props.mapController.map.getView().getZoom || 16
-              });
-            }
-            else {
-              scope.props.mapController.map.getView().setCenter([extent[0], extent[1]])
-            }
-
-          }
-        }
-
-      } else {
-        tmpFeature.setStyle(scope.props.mapController.proxy.locationStyleController.arrLocStyles[layer.locstyle].style);
-      }
-    });
+    let feature = scope.props.featureSource.getFeatureById(scope.props.feature.id)
+    let extent = feature.getGeometry().getExtent();
+    let width = jQuery(".c4g-sideboard.c4g-open").css('width');
+    if (width) {
+      width = width.split(".");
+      width = Array.isArray(width) ? width[0] : width;
+      width = parseInt(width) +  50;
+    }
+    else {
+      width = 50;
+    }
+    let padding = [50, width, 50, 50];
+    if (!scope.props.mapController.proxy.mapData.preventZoomResults) {
+      scope.props.mapController.map.getView().fit(extent, {
+        padding: padding,
+        maxZoom: scope.props.mapController.map.getView().getZoom || 16
+      });
+    }
+    else {
+      scope.props.mapController.map.getView().setCenter([extent[0], extent[1]])
+    }
     // refresh css classes
     jQuery(this).parent().children('li').each(function (index, element) {
       jQuery(element).addClass(cssConstants.INACTIVE).removeClass(cssConstants.ACTIVE);
