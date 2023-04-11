@@ -525,7 +525,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             'eval'                    => ['tl_class'=>'clr', 'chosen' => true, 'includeBlankOption'=>true, 'multiple' => true],
             'sql'                     => "blob NULL",
             'xlabel' => [
-                ['tl_c4g_maps', $cbClass]
+                [$cbClass, 'profilesLink']
             ]
         ],
         'loc_geox' =>
@@ -643,7 +643,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 'exclude'                 => true,
                 'inputType'               => 'text',
                 'eval'                    => ['rgxp'=>'url', 'decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'wizard'],
-                'wizard'                  => [['tl_c4g_maps', 'pickUrl']],
+                'wizard'                  => [[$cbClass, 'pickUrl']],
                 'sql'                     => "varchar(255) NOT NULL default ''"
             ],
         'split_geojson' =>
