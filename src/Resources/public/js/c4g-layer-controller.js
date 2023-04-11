@@ -10,6 +10,9 @@
 import {Cluster, Vector as VectorSource} from "ol/source";
 import {transform, transformExtent} from "ol/proj";
 import OSMXML from "ol/format/OSMXML";
+import GML3 from "ol/format/GML3";
+import GML32 from "ol/format/GML32";
+import GML2 from "ol/format/GML2";
 import {bbox, all} from "ol/loadingstrategy";
 import {Vector} from "ol/layer";
 import * as olFormats from "ol/format";
@@ -24,7 +27,10 @@ import Feature from 'ol/Feature';
 import * as olExtent from 'ol/extent';
 
 let olFormat = jQuery.extend({
-  OSMXML: OSMXML
+  OSMXML: OSMXML,
+  GML2: GML2,
+  GML32: GML32,
+  GML3: GML3,
 }, olFormats);
 
 export class BetterLayerController {
@@ -1015,12 +1021,45 @@ export class BetterLayerController {
             featureProjection: featureProjection,
             dataProjection: dataProjection
           });
-
-          vectorSource = new VectorSource({
-            format: format,
-            url: content.data.url
-          });
-          popup = content.data && content.data.popup ? content.data.popup : false;
+          if (layer.type === "wfs") {
+            vectorSource = new VectorSource({
+              format: new olFormat['WFS']({
+                version: content.data.version,
+                gmlFormat: format
+              }),
+              loader: function(extent, resolution, projection, success, failure) {
+                const proj = projection.getCode();
+                const url = content.data.url + '&srsname=' + proj + '&' +
+                    'bbox=' + extent.join(',') + ',' + proj;
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', url);
+                const onError = function() {
+                  vectorSource.removeLoadedExtent(extent);
+                  failure();
+                }
+                xhr.onerror = onError;
+                xhr.onload = function() {
+                  if (xhr.status == 200) {
+                    const features = format.readFeatures(xhr.responseText);
+                    vectorSource.addFeatures(features);
+                    success(features);
+                  } else {
+                    onError();
+                  }
+                }
+                xhr.send();
+              },
+              strategy: bbox
+            });
+            popup = content.data && content.data.popup ? content.data.popup : false;
+          }
+          else {
+            vectorSource = new VectorSource({
+              format: format,
+              url: content.data.url
+            });
+            popup = content.data && content.data.popup ? content.data.popup : false;
+          }
         }
         
       }

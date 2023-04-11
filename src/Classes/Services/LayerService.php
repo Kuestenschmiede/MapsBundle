@@ -423,7 +423,7 @@ class LayerService
 
         $arrLayerData['excludeFromSingleLayer'] = false;
         if ($objLayer->excludeFromSingleLayer) {
-            if (($objLayer->excludeFromSingleLayer === '1') || in_array($objLayer->location_type, ['table','gpx','kml','geojson','con4gisio','overpass','folder'])) {
+            if (($objLayer->excludeFromSingleLayer === '1') || in_array($objLayer->location_type, ['table','gpx','kml','geojson','wfs','con4gisio','overpass','folder'])) {
                 $arrLayerData['excludeFromSingleLayer'] = true;
             }
         }

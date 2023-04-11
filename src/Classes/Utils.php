@@ -155,6 +155,6 @@ class Utils
      */
     public static function getLocationTypes()
     {
-        return ['map','none','single','table','gpx','kml','geojson','osm','folder','overpass','link','con4gisio', 'startab'];
+        return ['map','none','single','table','gpx','kml','geojson','osm','folder','overpass','wfs','link','con4gisio', 'startab'];
     }
 }

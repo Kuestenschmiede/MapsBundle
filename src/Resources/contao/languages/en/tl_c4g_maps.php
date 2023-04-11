@@ -74,6 +74,8 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['geojson_zoom'] = array('Zoombutton for geoJs
 $GLOBALS['TL_LANG']['tl_c4g_maps']['data_projection'] = array('Projection');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['ovp_request'] = array('Request to Overpass API (XML-,QL-Format)', 'Request is sent via AJAX through a proxy (C4GOverpass.php) to the Overpass API. Format: see  <a href="https://www.overpass-api.de" rel="noopener" target="_blank">www.overpass-api.de</a>.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['ovp_bbox_limited'] = array('Request to Overpass API bounding box limited.', 'Sends the request on change of the displayed area (bounding box). The request itself has to contain the placeholder "(bbox)", which will be replaced by a "bbox-query" tag on runtime.');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['wfsCapabilities'] = array('WFS-Capabilities', 'Enter the url for the WFS getCapabilities-request.');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['wfsLayers'] = array('Layer of the WFS service', 'Select the desired layer of the WFS service.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['data_forcenodes'] = array('Convert ways to nodes', 'Converts OSM-ways to nodes. Especially useful when POIs are inside the OSM data, some represented as ways (building shape), others as nodes.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['data_additionalgeometries'] = array('Show additional Geometries', 'OSM-data sometimes has additional geometries, such as "entries". Check this option if you want to display them, too.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['data_layername'] = array('Layer name', 'Enter a name if you want this layer to be selectable in the starboard layer switcher.');
@@ -160,6 +162,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['geojson']   = 'GeoJSON';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['osm']   	  = 'OSM';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['folder']    = 'Data in the directory';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['overpass']  = 'Overpass API request (OSM)';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['wfs']       = 'Web Feature Service';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['link']      = 'Link to other map structure item';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['c4gForum']  = 'Forums from con4gis-Forum';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['startab']   = 'Additional Starboard tab';

@@ -203,6 +203,11 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                                          '{protection_legend:hide},protect_element;'.
                                          '{publish_legend:hide},published,publishStart,publishStop;'.
                                          '{expert_legend:hide},excludeFromSingleLayer,be_optimize_checkboxes_limit;',
+        'wfs'                         => '{general_legend},name,location_type;'.
+                                         '{location_legend},data_layername,wfsCapabilities,wfsLayers,hide_child,initial_opened,addZoom,locstyle,zIndex,loc_label,tooltip,tooltip_length,hide_when_in_tab,cssClass;'.
+                                         '{protection_legend:hide},protect_element;'.
+                                         '{publish_legend:hide},published,publishStart,publishStop;'.
+                                         '{expert_legend:hide},excludeFromSingleLayer,be_optimize_checkboxes_limit;',
 
         'startab'                     => '{general_legend},name,location_type;' .
                                          '{location_legend},data_layername,hide_child,initial_opened,exemptFromRealFilter,exemptFromFilter,filterByBaseLayer,data_hidelayer,hideInStarboard,addZoom,awesomeicon;'.
@@ -682,6 +687,22 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 'default'                 => true,
                 'inputType'               => 'checkbox',
                 'sql'                     => "char(1) NOT NULL default '1'"
+            ],
+        'wfsCapabilities' =>
+            [
+                'exclude'                 => true,
+                'filter'                  => false,
+                'inputType'               => 'text',
+                'eval'                    => ['submitOnChange' => true, 'decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'long'],
+                'sql'                     => "varchar(255) NOT NULL default ''"
+            ],
+        'wfsLayers' =>
+            [
+                'exclude'                 => true,
+                'inputType'               => 'select',
+                'options_callback'        => [$cbClass, 'getWfsOptions'],
+                'eval'                    => ['chosen' => true],
+                'sql'                     => "blob NULL"
             ],
         'link_id' =>
             [

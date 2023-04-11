@@ -283,7 +283,25 @@ class TlC4gMaps extends Backend
         }
         return $return;
     }
-
+    /**
+     * Return options from WFS getCapabilties
+     * @param object
+     * @return array
+     */
+    public function getWfsOptions (DC_Table $dc) {
+        $return = [];
+        $return[0] = "-";
+        if ($dc->activeRecord->wfsCapabilities) {
+            $feed = simplexml_load_file($dc->activeRecord->wfsCapabilities);
+            if ($feed && $feed->FeatureTypeList && $feed->FeatureTypeList->FeatureType)
+            foreach ($feed->FeatureTypeList->FeatureType as $element) {
+                $key = trim($element->Name);
+                $value = trim($element->Title);
+                $return[$key] = $value;
+            }
+        }
+        return $return;
+    }
     /**
      * Return all map items ready to be linked
      * @param object

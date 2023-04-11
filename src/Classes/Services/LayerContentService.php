@@ -134,6 +134,8 @@ class LayerContentService
                 return $this->getCon4gisIoLayerContent($objLayer);
 
                 break;
+            case 'wfs':
+                return $this->getWfsLayer($objLayer);
             default:
                 return [];
         }
@@ -439,6 +441,97 @@ class LayerContentService
 
             ],
         ]];
+    }
+    private function getWfsLayer($objLayer) {
+        if ($objLayer->wfsCapabilities) {
+            $feed = simplexml_load_file($objLayer->wfsCapabilities);
+            if ($feed && $feed->FeatureTypeList && $feed->FeatureTypeList->FeatureType) {
+                $version = $feed->attributes->version;
+                foreach ($feed->FeatureTypeList->FeatureType as $element) {
+                    if ($element->Name && trim($element->Name) === $objLayer->wfsLayers) { //same element
+                        $outputFormats = $element->OutputFormats->Format;
+                        foreach ($outputFormats as $value) {
+                            if (str_contains($value, "application")) {
+                                $format = explode(";", trim($value))[0];
+                                $version = explode(";", trim($value))[1];
+                                $shortFormat = strtoupper(explode('/', explode('+',$format)[0])[1]);
+                                if ($shortFormat === "GML") {
+                                    switch ($version) {
+                                        case " version=3.2":
+                                            $shortFormat .= "32";
+                                            break;
+                                        case "version=3.1.1":
+                                            $shortFormat .= "3";
+                                            break;
+                                        case "version=2.1":
+                                            $shortFormat .= "2";
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                            }
+                            else if (str_contains($value, "text/xml")) {
+                                $format = explode(";", trim($value))[1];
+                                $version = explode("/", trim($format))[1];
+                                $shortFormat = strtoupper(explode("/",explode('=', $format)[1])[0]);
+                                if ($shortFormat === "GML") {
+                                    switch ($version) {
+                                        case "3.2.1":
+                                            $shortFormat .= '32';
+                                            break;
+                                        case "3.1.1":
+                                            $shortFormat .= '3';
+                                            break;
+                                        case "2.1.2":
+                                            $shortFormat .= '2';
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                            }
+
+                        }
+                        if (!$shortFormat) {
+                            continue;
+                        }
+                        $url = str_ireplace('getcapabilities', 'getFeature',$objLayer->wfsCapabilities);
+                        $url .= "&typename=" . $objLayer->wfsLayers . "&";
+//                        $url .= "&typename=" . $objLayer->wfsLayers . "&outputFormat=". $format . "&srsname=EPSG:3857&";
+                        return [[
+                            'id' => $objLayer->id,
+                            'type' => 'wfs',
+                            'format' => $shortFormat,
+                            'origType' => 'con4gisio',
+                            'locationStyle' => $objLayer->locstyle,
+                            'cluster_fillcolor' => $objLayer->cluster_fillcolor,
+                            'cluster_fontcolor' => $objLayer->cluster_fontcolor,
+                            'cluster_zoom' => $objLayer->cluster_zoom,
+                            'hover_location' => $objLayer->hover_location,
+                            'hover_style' => $objLayer->hover_style,
+                            'data' => [
+                                'version' => $version,
+                                'url' => $url,
+                                'popup' => false,
+                                'tooltip' => $objLayer->tooltip,
+                                'tooltip_length' => $objLayer->tooltip_length,
+                                'label' => $objLayer->loc_label,
+                                'zoom_onclick' => $objLayer->loc_onclick_zoomto,
+                            ],
+                            'settings' => [
+                                'loadAsync' => true,
+                                'refresh' => false,
+                                'crossOrigine' => false,
+                                'boundingBox' => false,
+                                'cluster' => $objLayer->cluster_locations ? ($objLayer->cluster_distance ? $objLayer->cluster_distance : 20) : false,
+
+                            ]
+                        ]];
+                    }
+                }
+            }
+        }
     }
     private function getTableLayerContent($objLayer, $lang)
     {

@@ -76,6 +76,8 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['data_forcenodes'] = array('Flächen und Wege
 $GLOBALS['TL_LANG']['tl_c4g_maps']['data_additionalgeometries'] = array('Zusätzliche Geometrien anzeigen', 'OSM-Daten liefern manchmal zusätzliche Geometrien, wie z.B. "Eingänge" mit. Mit dieser Option werden diese Daten ebenfalls auf der Karte angezeigt.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['ovp_request'] = array('Anfrage an Overpass API (XML-,QL-Format)', 'Diese Anfrage wird via AJAX browserseitig über einen Proxy (C4GOverpass.php) an die Overpass API geschickt. Doku zum Format: <a href="https://www.overpass-api.de" rel="noopener" target="_blank">www.overpass-api.de</a>.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['ovp_bbox_limited'] = array('Anfrage an Overpass API auf den angezeigten Kartenbereich (BBOX) beschränken.', 'Sendet die Anfrage immer, wenn sich der Kartenausschnitt durch Benutzereingaben ändert. In der Anfrage muss an geeigneter Stelle der Platzhalter "(bbox)" eingetragen sein. Dieser wird dann durch ein "bbox-query"-Tag ersetzt.');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['wfsCapabilities'] = array('WFS-Capabilities', 'Tragen Sie an dieser Stelle die zu nutzenden Abfrage der WFS-Capabilities ein.');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['wfsLayers'] = array('Layer des WFS-Services', 'Wählen Sie den aus den capabilities ermittelten darzustellenden Layer des WFS-Services.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['data_layername'] = array('Bezeichnung im Starboard', 'Falls Sie die Daten dieser Ebene im Starboard schaltbar machen möchten, dann geben Sie hier den Namen ein, der im Starboard angezeigt werden soll.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['hide_child'] = array('Kinder im Starboard ausblenden', 'Untergeordnete Kartenstrukturelemente werden im Starboard ausgeblendet. Sie werden als Kinder dieses Elements aktivert und deaktiviert.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['data_hidelayer'] = array('Initial ausblenden', 'Falls dieses Element initial in der Karte nicht angezeigt werden soll, dann setzen Sie die Checkbox. Die Ebene wird dann erst nach Aktivierung im Starboard auf der Karte sichtbar.');
@@ -163,6 +165,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['geojson']   = 'Daten im GeoJSO
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['osm']   	  = 'Daten im OSM-Format';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['folder']    = 'Daten im Verzeichnis';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['overpass']  = 'Anfrage an Overpass API (OSM)';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['wfs']       = 'Web Feature Service';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['link']      = 'Verknüpfung zu anderem Kartenstrukturelement';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['c4gForum']  = 'Forenbereiche aus con4gis-Forum';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['startab']   = 'Eigener Starboardreiter';
