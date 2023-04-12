@@ -26,7 +26,7 @@
   },
   "require": {
     "php": "^7.4 || ^8.0",
-    "con4gis/core": "^6.0.22",
+    "con4gis/core": "^7.0.0",
     "phayes/geophp": "^1.2",
     "menatwork/contao-multicolumnwizard-bundle": "^3.6",
     "mobiledetect/mobiledetectlib": "^3.74"

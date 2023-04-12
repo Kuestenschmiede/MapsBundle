@@ -16,9 +16,10 @@ use Contao\System;
 use Contao\Message;
 if (method_exists('System', 'getContainer')) {
     $filteredSizes = [];
-    $imageSizes = System::getContainer()->get('contao.image.image_sizes')->getAllOptions();
+    $imageSizes = System::getContainer() && System::getContainer()->get('contao.image.image_sizes') ? System::getContainer()->get('contao.image.image_sizes')->getAllOptions() : false;
     $just = 'proportional';
-    if ($imageSizes) {
+
+    if ($imageSizes !== false) {
         foreach ($imageSizes as $group => $sizes) {
             foreach ($sizes as $key => $size) {
                 if ($size == $just) {
@@ -201,7 +202,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
                 'exclude'                 => true,
                 'default'                 => ['0','0'],
                 'inputType'               => 'imageSize',
-                'options'                 => $imageSizes,
+                'options'                 => $imageSizes ?: [],
                 'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'long'],
                 'sql'                     => "varchar(100) NOT NULL default ''"
             ],
@@ -273,7 +274,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
                 'exclude'                 => true,
                 'default'                 => ['0','0'],
                 'inputType'               => 'imageSize',
-                'options'                 => $imageSizes,
+                'options'                 => $imageSizes ?: [],
                 'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'long'],
                 'sql'                     => "varchar(100) NOT NULL default ''"
             ],
@@ -366,7 +367,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
                 'exclude'                 => true,
                 'default'                 => ['0','0'],
                 'inputType'               => 'imageSize',
-                'options'                  => $imageSizes,
+                'options'                  => $imageSizes ?: [],
                 'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
                 'sql'                     => "varchar(100) NOT NULL default ''"
             ],
@@ -474,7 +475,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
                 'default'                 => ['200','200'],
                 'exclude'                 => true,
                 'inputType'               => 'imageSize',
-                'options'                  => $imageSizes,
+                'options'                  => $imageSizes ?: [],
                 'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'w50', 'mandatory'=>true],
                 'sql'                     => "varchar(100) NOT NULL default ''"
             ],
@@ -483,7 +484,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
                 'exclude'                 => true,
                 'default'                 => ['0','0'],
                 'inputType'               => 'imageSize',
-                'options'                  => $imageSizes,
+                'options'                  => $imageSizes ?: [],
                 'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'w50'],
                 'sql'                     => "varchar(100) NOT NULL default ''"
             ],
