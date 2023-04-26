@@ -16,13 +16,14 @@ use con4gis\CoreBundle\Classes\ResourceLoader;
 use con4gis\MapsBundle\Classes\MapDataConfigurator;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use Contao\BackendUser;
+use Contao\Backend;
 use Contao\System;
 
 /**
  * Class GeoEditor
  * @package con4gis\MapsBundle\Resources\contao\classes
  */
-class GeoEditor extends Contao\Backend
+class GeoEditor extends Backend
 {
     private $layerId;
 

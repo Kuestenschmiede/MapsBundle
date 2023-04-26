@@ -13,13 +13,14 @@ use con4gis\MapsBundle\Classes\Utils;
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
 use Contao\Backend;
 use Contao\System;
+use Contao\DC_Table;
 
 if (
     @class_exists("tl_member")
 ) {
     PaletteManipulator::create()
-        ->addLegend('c4g_maps_legend', 'homedir_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_BEFORE)
-        ->addField(array('c4g_loc_geox', 'c4g_loc_geoy', 'c4g_loc_label', 'c4g_locstyle'), 'c4g_maps_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_APPEND)
+        ->addLegend('c4g_maps_legend', 'homedir_legend', PaletteManipulator::POSITION_BEFORE)
+        ->addField(array('c4g_loc_geox', 'c4g_loc_geoy', 'c4g_loc_label', 'c4g_locstyle'), 'c4g_maps_legend', PaletteManipulator::POSITION_APPEND)
         ->applyToPalette('default', 'tl_member');
 
     $GLOBALS['TL_DCA']['tl_member']['fields']['c4g_loc_geox'] = [
@@ -63,10 +64,10 @@ if (
 class tl_member_c4g_maps extends Backend
 {
     /**
-     * @param DataContainer $dc
+     * @param DC_Table $dc
      * @return array
      */
-    public function getLocStyles(\DataContainer $dc)
+    public function getLocStyles(DC_Table $dc)
     {
         $locStyles = $this->Database->prepare("SELECT id,name FROM tl_c4g_map_locstyles ORDER BY name")
             ->execute();

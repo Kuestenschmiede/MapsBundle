@@ -17,6 +17,7 @@ use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
 use con4gis\MapsBundle\Classes\Utils;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use Contao\FrontendUser;
+use Contao\StringUtil;
 use Contao\Validator;
 use Contao\FilesModel;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
@@ -224,7 +225,7 @@ class LayerService
                 // do not return protected layers, to users without permission
                 if ($objLayers->protect_element) {
                     if (C4GUtils::checkFrontendUserLogin() && !empty($objLayers->permitted_groups)) {
-                        $permittedGroups = deserialize($objLayers->permitted_groups);
+                        $permittedGroups = StringUtil::deserialize($objLayers->permitted_groups);
                         $userGroups = FrontendUser::getInstance()->groups;
                         if (sizeof(array_intersect($userGroups, $permittedGroups)) <= 0) {
                             continue;

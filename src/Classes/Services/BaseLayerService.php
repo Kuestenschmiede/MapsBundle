@@ -17,6 +17,7 @@ use con4gis\MapsBundle\Resources\contao\models\C4gMapOverlaysModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapSettingsModel;
 use Contao\Database;
+use Contao\FrontendUser;
 use Contao\StringUtil;
 use Contao\FilesModel;
 use Contao\System;
@@ -37,6 +38,7 @@ class BaseLayerService
     {
         $this->eventDispatcher = $eventDispatcher;
         $this->Database = Database::getInstance();
+        $this->User = FrontendUser::getInstance();
     }
     /**
      * Determines the request method and selects the appropriate data result.
@@ -84,7 +86,16 @@ class BaseLayerService
                     continue;
                 }
                 if ($objBaseLayers->protect_baselayer) {
-                    if (FE_USER_LOGGED_IN && !empty($objBaseLayers->permitted_groups)) {
+                    $hasFrontendUser = null;
+                    if (System::getContainer()->has('contao.security.token_checker')) {
+                        $tokenChecker = System::getContainer()->get('contao.security.token_checker');
+                        $hasFrontendUser = $tokenChecker->hasFrontendUser();
+                    }
+                    else {
+                        $hasFrontendUser = FE_USER_LOGGED_IN;
+                    }
+
+                    if ($hasFrontendUser && !empty($objBaseLayers->permitted_groups)) {
                         if (sizeof(array_intersect($this->User->groups, StringUtil::deserialize($objBaseLayers->permitted_groups))) <= 0) {
                             continue;
                         }

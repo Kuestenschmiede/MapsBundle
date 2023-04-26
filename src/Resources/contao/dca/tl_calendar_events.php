@@ -14,6 +14,7 @@ use con4gis\MapsBundle\Classes\Utils;
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
 use Contao\Backend;
 use Contao\System;
+use Contao\DC_Table;
 
 if (
     @class_exists("Contao\CalendarBundle\ContaoCalendarBundle")
@@ -95,7 +96,7 @@ if (
         /**
          * Validate Longitude
          */
-        public function setLocLon($varValue, \DataContainer $dc)
+        public function setLocLon($varValue, DC_Table $dc)
         {
             if ($varValue != 0)
             {
