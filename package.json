@@ -67,7 +67,7 @@
     "minimist": "^1.2.8",
     "moment": "^2.29.4",
     "ol": "^7.3.0",
-    "ol-cesium": "^2.13.1",
+    "ol-cesium": "^2.14.0",
     "ol-ext": "^4.0.7",
     "ol-mapbox-style": "^9.7.0",
     "opening_hours": "^3.8.0",
