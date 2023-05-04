@@ -391,7 +391,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 'inputType'               => 'c4g_text',
                 'eval'                    => ['maxlength'=>20, 'tl_class'=>'w50 wizard', 'require_input'=>true],
                 'save_callback'           => [[$cbClass,'setRestrLon']],
-                'wizard'                  => [['con4gis\MapsBundle\Classes\GeoPicker', 'getPickerLink']],
+                'wizard'                  => [[GeoPicker::class, 'getPickerLink']],
                 'sql'                     => "varchar(20) NOT NULL default ''"
             ],
         'restr_bottomleft_geoy' =>

@@ -10,6 +10,7 @@
  */
 use Contao\Backend;
 use Contao\DC_Table;
+use Contao\System;
 
 $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
     [
@@ -208,9 +209,10 @@ class tl_c4g_map_themes extends Backend
 {
     private function getFileArray($subDir) {
         $result = array();
-        $maps3Path = TL_ROOT . '/web/bundles/con4gismaps/css/themes/'.$subDir.'/';
+        $rootDir = System::getContainer()->getParameter('kernel.project_dir');
+        $maps3Path = $rootDir . '/web/bundles/con4gismaps/css/themes/'.$subDir.'/';
         if (!is_dir($maps3Path)) {
-            $maps3Path = TL_ROOT . '/public/bundles/con4gismaps/css/themes/'.$subDir.'/';
+            $maps3Path = $rootDir . '/public/bundles/con4gismaps/css/themes/'.$subDir.'/';
         }
 
         if (is_dir($maps3Path)) {

@@ -159,9 +159,6 @@ export class MapHover {
           hovered.feature = hovered.feature.get('features')[0];
         }
       }
-      if (hovered.feature.getGeometry() && hovered.feature.getGeometry().getType() === 'LineString') {
-        return false;
-      }
       if (hovered.feature.get("hover_location") || (self.lastHoveredFeature && self.lastHoveredFeature.get("hover_location"))) {
         if (self.lastHoveredFeature && hovered.feature === self.lastHoveredFeature) {
           return false;
@@ -231,6 +228,9 @@ export class MapHover {
               hovered.feature.setStyle(Function("feature", "data", "map", proxy.locationStyleController.arrLocStyles[hovered.feature.get("hover_style")].fnStyleFunction)(hovered.feature));
             }
             else {
+              if (!proxy.locationStyleController.arrLocStyles[hovered.feature.get("hover_style")].style) {
+                proxy.locationStyleController.arrLocStyles[hovered.feature.get("hover_style")].style = proxy.locationStyleController.arrLocStyles[hovered.feature.get("hover_style")].getStyleFunction();
+              }
               let style = proxy.locationStyleController.arrLocStyles[hovered.feature.get("hover_style")].style(hovered.feature);
               hovered.feature.setStyle(style);
             }
