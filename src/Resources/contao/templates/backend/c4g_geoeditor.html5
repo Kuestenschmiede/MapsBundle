@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="<?php echo $this->language; ?>">
+<!--<!DOCTYPE html>--><html lang="<?php echo $this->language; ?>">
 <head>
 
   <meta charset="<?php echo $this->charset; ?>">
