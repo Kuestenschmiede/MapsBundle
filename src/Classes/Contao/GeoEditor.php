@@ -16,8 +16,11 @@ use con4gis\CoreBundle\Classes\ResourceLoader;
 use con4gis\MapsBundle\Classes\MapDataConfigurator;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use Contao\BackendUser;
+use Contao\BackendTemplate;
 use Contao\Backend;
+use Contao\DC_Table;
 use Contao\System;
+use Contao\Input;
 
 /**
  * Class GeoEditor
@@ -44,10 +47,10 @@ class GeoEditor extends Backend
         $this->loadLanguageFile('default');
     }
 
-    public function getEditorLink(\Contao\DataContainer $dc)
+    public function getEditorLink(DC_Table $dc)
     {
         $requestToken = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
-        $strField = 'ctrl_' . $dc->field . (($this->Input->get('act') == 'editAll') ? '_' . $dc->id : '');
+        $strField = 'ctrl_' . $dc->field . ((Input::get('act') == 'editAll') ? '_' . $dc->id : '');
         ResourceLoader::loadJavaScriptResource('bundles/con4gismaps/build/' . 'c4g-backend-helper.js', \con4gis\CoreBundle\Classes\ResourceLoader::JAVASCRIPT, 'c4g-backend-helper');
         $requestToken = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
         return ($dc->value < 1) ? '' : ' <a href="bundles/con4gismaps/be/geoeditor.php?rt=' . $requestToken . '" title="' . $GLOBALS['TL_LANG']['c4g_maps']['geoeditor'] . '" style="padding-left:3px" onclick="c4g.maps.backend.showGeoEditor(this.href,' . $strFieldX . ',' . $strFieldY . ', {title:\'' . $GLOBALS['TL_LANG']['c4g_maps']['geoeditor']. '\'});return false">' . \Image::getHtml('bundles/con4gismaps/images/be-icons/geopicker.png', $GLOBALS['TL_LANG']['tl_content']['editalias'][0], 'style="vertical-align:top"') . '</a>';

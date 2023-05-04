@@ -21,6 +21,7 @@ use con4gis\MapsBundle\Resources\contao\models\C4gMapTablesModel;
 use con4gis\MapsBundle\Resources\contao\modules\api\InfoWindowApi;
 use con4gis\MapsBundle\Resources\contao\modules\api\LayerContentDataService;
 use Contao\Database;
+use Contao\System;
 use Contao\FilesModel;
 use Contao\Validator;
 use Symfony\Component\HttpClient\HttpClient;
@@ -1028,7 +1029,8 @@ class LayerContentService
                 // check if there is a file to load the content from
                 if ($objLayer->data_file) {
                     $objFile = FilesModel::findByUuid($objLayer->data_file);
-                    $objLayer->data_file = $objFile ? (TL_ROOT . '/' . $objFile->path) : false;
+                    $rootDir = System::getContainer()->getParameter('kernel.project_dir');
+                    $objLayer->data_file = $objFile ? ($rootDir . '/' . $objFile->path) : false;
                     $data = file_exists($objLayer->data_file) ? file_get_contents($objLayer->data_file) : false;
                 } elseif ($objLayer->data_url) {
                     $client = HttpClient::create();
@@ -1155,7 +1157,8 @@ class LayerContentService
         if (!$key) {
             $key = $objLayer->id;
         }
-        $folderPath = realpath(TL_ROOT . '/' . $folder);
+        $rootDir = System::getContainer()->getParameter('kernel.project_dir');
+        $folderPath = realpath($rootDir . '/' . $folder);
         $countFiles = 2050;
 
         if (is_dir($folderPath)) {
@@ -1164,7 +1167,7 @@ class LayerContentService
 
             foreach ($dict as $value) {
 //                $value = utf8_encode($value);
-                $path = realpath(TL_ROOT . '/' . $folder . '/' . $value);
+                $path = realpath($rootDir . '/' . $folder . '/' . $value);
                 if (is_dir($path)) {
                     $fileFolder = pathinfo($path);
                     $arrSubFolder = $this->getFolderContent($objLayer, $fileFolder, $key, $count);

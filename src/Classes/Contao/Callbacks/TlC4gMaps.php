@@ -96,7 +96,8 @@ class TlC4gMaps extends Backend
         }
         else {
             $objFile = FilesModel::findByUuid($dataFile);
-            $dataFile = $objFile ? (TL_ROOT . '/' . $objFile->path) : false;
+            $rootDir = System::getContainer()->getParameter('kernel.project_dir');
+            $dataFile = $objFile ? ($rootDir . '/' . $objFile->path) : false;
             $data = file_exists($dataFile) ? file_get_contents($dataFile) : false;
             $arrGeojson = json_decode($data, true);
         }
