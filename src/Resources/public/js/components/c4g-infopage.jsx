@@ -92,10 +92,13 @@ export default class Infopage extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (this.props.mapController.data.caching && !this.state.open) {
+    if (this.props.mapController.data.caching) {
       let panelVal = utils.getValue('panel');
-      if (panelVal === this.constructor.name) {
+      if (panelVal === "Infopage" && !this.state.open) {
         utils.storeValue('panel', "");
+      }
+      else if (panelVal !== "Infopage" && this.state.open) {
+        utils.storeValue('panel', "Infopage")
       }
     }
   }

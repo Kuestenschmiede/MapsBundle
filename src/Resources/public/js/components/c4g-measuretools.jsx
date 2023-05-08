@@ -213,10 +213,13 @@ export default class Measuretools extends Component {
       }
       this.addTooltips();
     }
-    if (this.props.mapController.data.caching && !this.state.open) {
+    if (this.props.mapController.data.caching) {
       let panelVal = utils.getValue('panel');
-      if (panelVal === this.constructor.name) {
+      if (panelVal === "Measuretools" && !this.state.open) {
         utils.storeValue('panel', "");
+      }
+      else if (panelVal !== "Measuretools" && this.state.open) {
+        utils.storeValue('panel', "Measuretools")
       }
     }
   }

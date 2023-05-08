@@ -85,10 +85,13 @@ export default class Permalink extends Component {
     if (prevState.open && !this.state.open) {
       jQuery(".c4g-permalink-container").removeClass(cssConstants.OPEN).addClass(cssConstants.CLOSE);
     }
-    if (this.props.mapController.data.caching && !this.state.open) {
+    if (this.props.mapController.data.caching) {
       let panelVal = utils.getValue('panel');
-      if (panelVal === this.constructor.name) {
+      if (panelVal === "Permalink" && !this.state.open) {
         utils.storeValue('panel', "");
+      }
+      else if (panelVal !== "Permalink" && this.state.open) {
+        utils.storeValue('panel', "Permalink")
       }
     }
     if (this.state.open) {

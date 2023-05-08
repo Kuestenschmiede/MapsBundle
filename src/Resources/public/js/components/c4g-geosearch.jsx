@@ -220,10 +220,13 @@ export default class GeoSearch extends Component {
       } else {
         jQuery(".c4g-geosearch-container-right").addClass("c4g-close").removeClass("c4g-open");
       }
-      if (this.props.mapController.data.caching && !this.state.open) {
+      if (this.props.mapController.data.caching) {
         let panelVal = utils.getValue('panel');
-        if (panelVal === this.constructor.name) {
+        if (panelVal === "GeoSearch" && !this.state.open) {
           utils.storeValue('panel', "");
+        }
+        else if (panelVal !== "GeoSearch" && this.state.open) {
+          utils.storeValue('panel', "GeoSearch")
         }
       }
     }

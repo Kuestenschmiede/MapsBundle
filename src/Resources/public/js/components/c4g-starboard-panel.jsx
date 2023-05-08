@@ -168,10 +168,13 @@ export default class StarboardPanel extends Component {
     } else {
       this.slideInCollidingElements();
     }
-    if (this.props.mapController.data.caching && !this.state.open) {
+    if (this.props.mapController.data.caching) {
       let panelVal = utils.getValue('panel');
-      if (panelVal === this.constructor.name) {
+      if (panelVal === "StarboardPanel" && !this.state.open) {
         utils.storeValue('panel', "");
+      }
+      else if (panelVal !== "StarboardPanel" && this.state.open) {
+        utils.storeValue('panel', "StarboardPanel")
       }
     }
   }

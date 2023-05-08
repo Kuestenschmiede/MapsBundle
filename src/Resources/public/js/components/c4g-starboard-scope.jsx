@@ -240,10 +240,13 @@ export default class StarboardScope extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (this.props.mapController.data.caching && !this.state.open) {
+    if (this.props.mapController.data.caching) {
       let panelVal = utils.getValue('panel');
-      if (panelVal === this.constructor.name) {
+      if (panelVal === "StarboardScope" && !this.state.open) {
         utils.storeValue('panel', "");
+      }
+      else if (panelVal !== "StarboardScope" && this.state.open) {
+        utils.storeValue('panel', "StarboardScope")
       }
     }
   }

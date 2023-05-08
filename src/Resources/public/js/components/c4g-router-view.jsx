@@ -370,10 +370,13 @@ export class RouterView extends Component {
     if (this.state.mode === "route" && (!this.state.fromAddress || !this.state.toAddress) && this.state.openResults && prevState.mode === "area") {
       this.setState({openResults: false});
     }
-    if (this.props.mapController.data.caching && !this.state.open) {
+    if (this.props.mapController.data.caching) {
       let panelVal = utils.getValue('panel');
-      if (panelVal === this.constructor.name) {
+      if (panelVal === "RouterView" && !this.state.open) {
         utils.storeValue('panel', "");
+      }
+      else if (panelVal !== "RouterView" && this.state.open) {
+        utils.storeValue('panel', "RouterView")
       }
     }
     if (prevState.activeId !== this.state.activeId) {

@@ -1455,9 +1455,6 @@ export default class MapController extends Component {
           }
         }
       }
-      if (scope.data.caching) {
-        utils.storeValue('panel', component.constructor.name);
-      }
     });
   }
 
