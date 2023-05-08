@@ -19,6 +19,8 @@ use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use Contao\Controller;
 use Contao\System;
 use Contao\Module;
+use Contao\StringUtil;
+use Contao\BackendTemplate;
 
 class ModuleC4gSearch extends Module
 {
@@ -35,7 +37,7 @@ class ModuleC4gSearch extends Module
     {
         if (System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest(System::getContainer()->get('request_stack')->getCurrentRequest() ?? Request::create('')))
         {
-            $objTemplate = new \BackendTemplate('be_wildcard');
+            $objTemplate = new BackendTemplate('be_wildcard');
             $objTemplate->wildcard = '### '.$GLOBALS['TL_LANG']['FMD']['c4g_travel_costs'][0].' ###';
             $objTemplate->title = $this->headline;
             $objTemplate->id = $this->id;
@@ -52,7 +54,7 @@ class ModuleC4gSearch extends Module
     protected function compile()
     {
         $pageId = $this->mapPage;
-        $pageUrl = System::getContainer()->get('contao.insert_tag.parser')->replace(("{{link_url::" . $pageId . "}}");
+        $pageUrl = System::getContainer()->get('contao.insert_tag.parser')->replace("{{link_url::" . $pageId . "}}");
         ResourceLoader::loadJavaScriptDeferred('c4g-search', "/bundles/con4gismaps/build/c4g-search.js");
         ResourceLoader::loadCssResourceDeferred("/bundles/con4gismaps/dist/css/c4g-search-general.min.css");
         $template = $this->Template;
@@ -62,7 +64,7 @@ class ModuleC4gSearch extends Module
         $arrSettings = [];
         if($objMapsProfile->geosearchParams){
             $arrSettings['geosearchParams'] = [];
-            foreach(\Contao\StringUtil::deserialize($objMapsProfile->geosearchParams) as $geosearchParam){
+            foreach(StringUtil::deserialize($objMapsProfile->geosearchParams) as $geosearchParam){
                 $arrSettings['geosearchParams'] = array_merge($arrSettings['geosearchParams'], [$geosearchParam['keys'] => $geosearchParam['params']]);
             }
         }
