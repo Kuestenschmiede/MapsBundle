@@ -13,7 +13,6 @@
     $objCombiner->add('system/themes/'. $this->theme .'/main.css');
     echo $objCombiner->getCombinedFile();
   ?>">
-  <!--[if IE]><link rel="stylesheet" href="<?php echo TL_ASSETS_URL; ?>system/themes/<?php echo $this->theme; ?>/iefixes.css"><![endif]-->
   <?php echo $this->stylesheets; ?>
 
   <script><?php echo $this->getLocaleString(); ?></script>
@@ -27,7 +26,6 @@
     echo $objCombiner->getCombinedFile();
    ?>"></script>
     <?php echo $this->javascripts; ?>
-  <!--[if lt IE 9]><script src="<?php echo TL_ASSETS_URL; ?>assets/html5shiv/<?php echo $GLOBALS['TL_ASSETS']['HTML5SHIV']; ?>/html5shiv.js"></script><![endif]-->
 
 </head>
 <body class="<?php echo $this->ua; ?> popup">
