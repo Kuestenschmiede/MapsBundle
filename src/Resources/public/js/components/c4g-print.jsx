@@ -95,8 +95,7 @@ export default class Print extends Component {
             let arrReturn = utils.callHookFunctions(window.c4gMapsHooks.printMap, dataURL);
           }
           else {
-            let arrReturn = utils.callHookFunctions(window.c4gMapsHooks.printMap, blob);
-            saveAs(blob, 'map.png');
+            saveAs(dataURL, 'map.png');
           }
         });
 
