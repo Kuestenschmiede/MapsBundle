@@ -1391,8 +1391,19 @@ export class RouterView extends Component {
   async performGeoSearch(address) {
     const scope = this;
     let url = scope.geoSearchApi + '?format=json&limit=1&q=' + encodeURI(address);
+    const map = scope.props.mapController.map;
+    let bounds = map.getView().calculateExtent(map.getSize());
+    bounds = transformExtent(bounds, map.getView().getProjection(), 'EPSG:4326');
+    let viewbox = '&viewbox=' + bounds[0] + ',' + bounds[1] + ',' + bounds[2] + ',' + bounds[3];
     if (this.mapData && this.mapData.geosearch && this.mapData.geosearch.searchKey && this.mapData.geosearch.url) {
-      url = this.mapData.geosearch.url + "search.php?key=" + this.mapData.geosearch.searchKey + '&format=json&limit=1&q=' + encodeURI(address);
+      url = this.mapData.geosearch.url + "search.php?key=" + this.mapData.geosearch.searchKey + '&format=json&limit=1&q=' + encodeURI(address) + viewbox;
+    }
+    if (this.mapData.geosearch.params) {
+      for (let param in this.mapData.geosearch.params) {
+        if (this.mapData.geosearch.params.hasOwnProperty(param)) {
+          url += "&" + param + "=" + this.mapData.geosearch.params[param];
+        }
+      }
     }
 
     return await fetch(url).then(function (response) {

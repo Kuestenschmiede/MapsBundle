@@ -51,7 +51,7 @@ export class RouterFeatureListItem extends Component {
     if (!scope.props.mapController.proxy.mapData.preventZoomResults) {
       scope.props.mapController.map.getView().fit(extent, {
         padding: padding,
-        maxZoom: scope.props.mapController.map.getView().getZoom || 16
+        maxZoom: scope.props.mapController.map.getView().getZoom() || 16
       });
     }
     else {
