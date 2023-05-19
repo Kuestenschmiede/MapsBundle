@@ -126,7 +126,7 @@ class LayerContentDataService extends Frontend
                     if (substr($value, 0, 1) == '{' && substr($value, -1, 1) == '}') {
                         // we have an inserttag
                         $replacedValue = str_replace('[id]', $arrElement['id'], $value);
-                        $popupContent .= System::getContainer()->get('contao.insert_tag.parser')->replace($replacedValue) . ' LayerContentDataApi.php';
+                        $popupContent .= System::getContainer()->get('contao.insert_tag.parser')->replace($replacedValue);// . ' LayerContentDataApi.php';
                     } else if (substr($value, 0, 1) == '[' && substr($value, -1, 1) == ']') {
                         // no insert tag
                         $replacedValue = str_replace('[', '', $value);
