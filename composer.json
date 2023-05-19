@@ -30,7 +30,7 @@
     "con4gis/core": "^6.0 || ^7.0",
     "phayes/geophp": "^1.2",
     "menatwork/contao-multicolumnwizard-bundle": "^3.6",
-    "mobiledetect/mobiledetectlib": "^3.74"
+    "mobiledetect/mobiledetectlib": "^2.8 || ^3.74"
   },
   "suggest": {
     "con4gis/data": "With Data you can maintain your own individual data and display it in maps and lists.",
