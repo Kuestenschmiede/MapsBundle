@@ -62,7 +62,7 @@ class GeoEditor extends Backend
      */
     public function run()
     {
-        $this->Template = new \BackendTemplate('c4g_geoeditor');
+        $this->Template = new BackendTemplate('c4g_geoeditor');
 
         $this->Template->theme = $this->getTheme();
         $this->Template->base = $this->Environment->base;

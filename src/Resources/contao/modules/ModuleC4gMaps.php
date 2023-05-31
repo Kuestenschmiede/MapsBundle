@@ -13,6 +13,7 @@ namespace con4gis\MapsBundle\Resources\contao\modules;
 use con4gis\MapsBundle\Classes\MapDataConfigurator;
 use Contao\Module;
 use Contao\System;
+use Contao\BackendTemplate;
 
 /**
  * Class ModuleC4gMaps
@@ -33,7 +34,7 @@ class ModuleC4gMaps extends Module
     public function generate()
     {
         if (System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest(System::getContainer()->get('request_stack')->getCurrentRequest() ?? Request::create(''))) {
-            $objTemplate = new \BackendTemplate('be_wildcard');
+            $objTemplate = new BackendTemplate('be_wildcard');
 
             $objTemplate->wildcard = '### ' . $GLOBALS['TL_LANG']['FMD']['c4g_maps'][0] . ' ###<img src="bundles/con4gismaps/images/be-icons/logo_con4gis-maps.svg" style="float:right">';
             $objTemplate->title = $this->headline;

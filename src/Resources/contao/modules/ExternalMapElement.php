@@ -14,6 +14,7 @@ namespace con4gis\MapsBundle\Resources\contao\modules;
 
 use Contao\Module;
 use Contao\System;
+use Contao\BackendTemplate;
 
 class ExternalMapElement extends Module
 {
@@ -43,7 +44,7 @@ class ExternalMapElement extends Module
     {
         if (System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest(System::getContainer()->get('request_stack')->getCurrentRequest() ?? Request::create('')))
         {
-            $objTemplate = new \BackendTemplate('be_wildcard');
+            $objTemplate = new BackendTemplate('be_wildcard');
             
             $objTemplate->wildcard = '### ' . $GLOBALS['TL_LANG']['FMD']['c4g_external_map_element'][0] . ' ###';
             $objTemplate->title = $this->headline;
