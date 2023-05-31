@@ -579,7 +579,18 @@ export default class MapController extends Component {
       // drag pan and kinetic scrolling
       if (mapData.mouse_nav.drag_pan) {
         kinetic = mapData.mouse_nav.kinetic ? new Kinetic(-0.005, 0.05, 100) : null;
-        this.map.addInteraction(new DragPan({kinetic: kinetic}));
+        this.map.addInteraction(new DragPan({
+          kinetic: kinetic,
+          condition:(event) => {
+            const origEvent = event.originalEvent;
+            if (origEvent.pointerType !== 'mouse') {
+              if (event.activePointers && event.activePointers.length === 1) {
+                return false;
+              }
+            }
+            return true;
+          }
+        }));
       }
       // mousewheel zoom
       if (mapData.mouse_nav.wheel_zoom) {
