@@ -165,7 +165,7 @@ export class RoutingPermalink {
         if (routerLayers.hasOwnProperty(i)) {
           for (let j in routerLayers[i]) {
             if (routerLayers[i].hasOwnProperty(j)) {
-              if (routerLayers[i][j].keys.includes(searchtype)) {
+              if (routerLayers[i][j].keys.includes(searchtype) || routerLayers[i][j].labels.includes(searchtype)) {
                 this.router.setState({
                   layerArea: i,
                   layerValueArea: j
@@ -209,7 +209,24 @@ export class RoutingPermalink {
       this.updateLinkFragments("toAddress", toAddress);
     }
     if (searchtype) {
-      this.updateLinkFragments("searchType", objParams.s);
+      let routerLayers = this.router.mapData.routerLayers;
+      loopLayers:
+          for (let i in routerLayers) {
+            if (routerLayers.hasOwnProperty(i)) {
+              for (let j in routerLayers[i]) {
+                if (routerLayers[i].hasOwnProperty(j)) {
+                  if (routerLayers[i][j].keys.includes(searchtype) || routerLayers[i][j].labels.includes(searchtype)) {
+                    this.router.setState({
+                      layerRoute: i,
+                      layerValueRoute: j
+                    });
+                    break loopLayers;
+                  }
+                }
+              }
+            }
+          }
+      this.updateLinkFragments("searchType", searchtype);
     }
     if (forceStart) {
       this.updateLinkFragments("forceStart", objParams.f);
