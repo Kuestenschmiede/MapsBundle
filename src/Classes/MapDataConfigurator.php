@@ -386,6 +386,7 @@ class MapDataConfigurator
             if ($profile->touch_nav) {
                 $mapData['touch_nav']['rotate'] = $profile->touch_nav;
                 $mapData['touch_nav']['zoom'] = $profile->touch_nav;
+                $mapData['touch_nav']['twoFingers'] = $profile->twoFingers;
             }
             if ($profile->keyboard_nav) {
                 $mapData['keyboard_nav']['pan'] = $profile->keyboard_nav;

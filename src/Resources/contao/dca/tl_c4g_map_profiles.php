@@ -99,7 +99,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         [
         '__selector__'                => ['resize_locstyles_zoom', 'mouse_nav','cluster_all','attribution','hover_popups','overpassEngine', 'cesium', 'popupHandling','geopicker','consentBanner', 'userLocation'],
         'default'                     => '{general_legend},name,theme,mapFunctions,initial_open_comp;'.
-                                         '{navigation_legend:hide},mouse_nav,touch_nav,keyboard_nav;'.
+                                         '{navigation_legend:hide},mouse_nav,touch_nav,twoFingers,keyboard_nav;'.
                                          '{click_legend:hide},tooltipOrientation,link_newwindow,link_open_on,hover_popups,popupHandling;'.
                                          '{baselayer_legend:hide},baselayers, default_baselayer,dummyBaselayer,baselayerswitcher_label,baselayer_filter;'.
                                          '{starboard_legend:hide},layerswitcher_label,starboard_filter,starboard_label,starboard_button,starboard_locstyles,starboardInvertZoomActivate,colorZoomMarker,maxZoomStarboard,openPopup,cluster_all;'.
@@ -231,6 +231,14 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'inputType'               => 'checkbox',
                 'sql'                     => "char(1) NOT NULL default '1'"
             ],
+        'twoFingers' =>
+            [
+                'exclude'                 => true,
+                'default'                 => true,
+                'inputType'               => 'checkbox',
+                'sql'                     => "char(1) NOT NULL default '1'"
+            ],
+
         'keyboard_nav' =>
             [
                 'exclude'                 => true,

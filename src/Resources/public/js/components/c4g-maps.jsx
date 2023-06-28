@@ -582,10 +582,12 @@ export default class MapController extends Component {
         this.map.addInteraction(new DragPan({
           kinetic: kinetic,
           condition:(event) => {
-            const origEvent = event.originalEvent;
-            if (origEvent.pointerType !== 'mouse') {
-              if (event.activePointers && event.activePointers.length === 1) {
-                return false;
+            if (mapData.touch_nav.twoFingers) {
+              const origEvent = event.originalEvent;
+              if (origEvent.pointerType !== 'mouse') {
+                if (event.activePointers && event.activePointers.length === 1) {
+                  return false;
+                }
               }
             }
             return true;

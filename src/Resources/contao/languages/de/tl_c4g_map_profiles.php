@@ -43,6 +43,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouse_nav_doubleclick_zoom'] = ['Dop
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouse_nav_zoombox'] = ['Zoombox mit [Shift + Klick]', 'Aktiviert die Möglichkeit, mit Hilfe der Shift- und der linken Maustaste ein Rechteck aufzuziehen, um in die Karte hineinzuzoomen.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouse_nav_kinetic'] = ['Kinetisches Scrollen nach Verschieben mit der Maus','Wenn gesetzt, dann wird nach dem Verschieben des Kartenausschnitts mit der Maus die Scrollbewegung auslaufend fortgesetzt.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['touch_nav'] = ['Touch-Navigation', 'Touch-Navigation zum zoomen & drehen der Karte mit zwei Fingern erlauben (erfordert einen Touchbildschirm).'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['twoFingers'] = ['Touch-Navigation nur mit zwei Fingern', 'Bewegung der Karte mit einem Finger verhindern.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['keyboard_nav'] = ['Navigation mit der Tastatur', 'Aktiviert die Möglichkeit, mit Hilfe der Tastatur zu navigieren (Pfeiltasten zum Verschieben, Zoomen mit den Tasten "+" und "-").'];
 
 /** Kartenstruktur */
