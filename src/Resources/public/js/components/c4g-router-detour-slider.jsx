@@ -64,7 +64,7 @@ export class RouterDetourSlider extends Component {
       let options = arrOptions.map((elem) => {
         return <option key={elem} value={elem}>{elem} km</option>
       });
-      detourElement = <select className="c4g-detour-selection" onChange={this.handleChange} defaultValue={this.props.value}>{options}
+      detourElement = <select className="c4g-detour-selection" onChange={this.handleChange} value={this.props.value}>{options}
       </select>;
     }
     return detourElement;

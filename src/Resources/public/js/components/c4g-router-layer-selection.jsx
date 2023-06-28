@@ -61,7 +61,7 @@ export class RouterLayerSelection extends Component {
       if (this.props.layers && (Object.keys(this.props.layers).length > 1)) {
         return (
             <React.Fragment>
-              <select className="c4g-router-layer-selection" onChange={this.setLayer} defaultValue={defaultLayer}>
+              <select className="c4g-router-layer-selection" onChange={this.setLayer} value={defaultLayer}>
                 {Object.keys(this.props.layers).map((id) => {
                   let layer = arrLayers[id].layerData;
 
@@ -113,7 +113,7 @@ export class RouterLayerSelection extends Component {
       }
 
       return (
-        <select className="c4g-router-layer-selection" onChange={this.setLayerOrValue} defaultValue={defaultLayer}>
+        <select className="c4g-router-layer-selection" onChange={this.setLayerOrValue} value={defaultLayer}>
           {options}
       </select>
       );
