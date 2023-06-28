@@ -67,7 +67,8 @@ export class RouterFeatureListItem extends Component {
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (!this.state.element ||
         this.props.layerValueRoute !== prevProps.layerValueRoute ||
-        this.props.layerValueArea !== prevProps.layerValueArea){ //only get popup if not already set or layer changes
+        this.props.layerValueArea !== prevProps.layerValueArea ||
+        this.props.feature !== prevProps.feature){ //only get popup if not already set or layer changes
       let element = this.getElement();
       if (element) {
         this.setState({
