@@ -382,16 +382,20 @@ export class RouterView extends Component {
     if (prevState.activeId !== this.state.activeId) {
       if (prevState.activeId) {
         let oldFeature = this.routerFeaturesSource.getFeatureById(prevState.activeId)
-        let style = oldFeature.get('oldStyle');
-        oldFeature.setStyle(style);
+        if (oldFeature) {
+          let style = oldFeature.get('oldStyle');
+          oldFeature.setStyle(style);
+        }
       }
       let activeFeature = this.routerFeaturesSource.getFeatureById(this.state.activeId);
       if (!this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.clickLocstyle].style) {
         this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.clickLocstyle].style = this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.clickLocstyle].getStyleFunction();
       }
-      activeFeature.set('oldStyle', activeFeature.getStyle());
-      let style = this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.clickLocstyle].style;
-      activeFeature.setStyle(style);
+      if (activeFeature) {
+        activeFeature.set('oldStyle', activeFeature.getStyle());
+        let style = this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.clickLocstyle].style;
+        activeFeature.setStyle(style);
+      }
     }
 
   }
@@ -1652,7 +1656,7 @@ export class RouterView extends Component {
           // const routerLayers = self.options.mapController.data.routerLayers;
           // const chosenOption = self.activeLayerValueArea;
           // this should be changed soon, as it totally messes up the logic of the structure
-          let sortedFeatures = self.showFeatures(response[0], response[1], "area");
+          let sortedFeatures = self.showFeatures(response[0], response[1], "area", false);
           self.setState({
             "featureList": {
               "features": sortedFeatures,
@@ -1660,7 +1664,7 @@ export class RouterView extends Component {
             },
             "featureSource": self.routerFeaturesSource,
             "openResults": true
-          });
+          }, () => {self.showFeatures(response[0], response[1], "area", false);});
 
         }
 

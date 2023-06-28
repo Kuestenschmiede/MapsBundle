@@ -37,25 +37,27 @@ export class RouterFeatureListItem extends Component {
     const scope = this;
     scope.props.setActiveId(scope.props.feature.id);
     let feature = scope.props.featureSource.getFeatureById(scope.props.feature.id)
-    let extent = feature.getGeometry().getExtent();
-    let width = jQuery(".c4g-sideboard.c4g-open").css('width');
-    if (width) {
-      width = width.split(".");
-      width = Array.isArray(width) ? width[0] : width;
-      width = parseInt(width) +  50;
-    }
-    else {
-      width = 50;
-    }
-    let padding = [50, width, 50, 50];
-    if (!scope.props.mapController.proxy.mapData.preventZoomResults) {
-      scope.props.mapController.map.getView().fit(extent, {
-        padding: padding,
-        maxZoom: scope.props.mapController.map.getView().getZoom() || 16
-      });
-    }
-    else {
-      scope.props.mapController.map.getView().setCenter([extent[0], extent[1]])
+    if (feature) {
+      let extent = feature.getGeometry().getExtent();
+      let width = jQuery(".c4g-sideboard.c4g-open").css('width');
+      if (width) {
+        width = width.split(".");
+        width = Array.isArray(width) ? width[0] : width;
+        width = parseInt(width) +  50;
+      }
+      else {
+        width = 50;
+      }
+      let padding = [50, width, 50, 50];
+      if (!scope.props.mapController.proxy.mapData.preventZoomResults) {
+        scope.props.mapController.map.getView().fit(extent, {
+          padding: padding,
+          maxZoom: scope.props.mapController.map.getView().getZoom() || 16
+        });
+      }
+      else {
+        scope.props.mapController.map.getView().setCenter([extent[0], extent[1]])
+      }
     }
     // refresh css classes
     jQuery(this).parent().children('li').each(function (index, element) {
