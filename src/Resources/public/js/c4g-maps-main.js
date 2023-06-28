@@ -206,7 +206,7 @@ window.initMaps = function(mapData) {
                 <Suspense fallback={<div>Loading...</div>}>
                   <MapController mapData={mapData[key]}/>
                 </Suspense>,
-                jQuery("#c4g-map-container-" + mapData[key].mapId)[0]
+                entry.target
               );
             }
           });
