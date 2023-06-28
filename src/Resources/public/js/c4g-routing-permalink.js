@@ -159,6 +159,23 @@ export class RoutingPermalink {
       this.router.setAreaPoint(parseFloat(center[0]), parseFloat(center[1]));
     }
     if (searchtype) {
+      let routerLayers = this.router.mapData.routerLayers;
+      loopLayers:
+      for (let i in routerLayers) {
+        if (routerLayers.hasOwnProperty(i)) {
+          for (let j in routerLayers[i]) {
+            if (routerLayers[i].hasOwnProperty(j)) {
+              if (routerLayers[i][j].keys.includes(searchtype)) {
+                this.router.setState({
+                  layerArea: i,
+                  layerValueArea: j
+                });
+                break loopLayers;
+              }
+            }
+          }
+        }
+      }
       this.updateLinkFragments("searchType", searchtype);
     }
     if (forceStart) {

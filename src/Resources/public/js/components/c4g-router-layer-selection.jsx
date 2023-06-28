@@ -41,14 +41,15 @@ export class RouterLayerSelection extends Component {
   render() {
     const scope = this;
     let defaultLayer = 0;
-    if (this.props.router.state.mode === "route") {
-      defaultLayer = this.props.router.state.layerRoute;
-    } else if (this.props.router.state.mode === "area") {
-      defaultLayer = this.props.router.state.layerArea;
-    }
+
     const arrLayers = scope.props.router.objLayers;
     let layerValueSelection = "";
     if (!this.props.router.props.mapController.data.layerChanger) {
+      if (this.props.router.state.mode === "route") {
+        defaultLayer = this.props.router.state.layerRoute;
+      } else if (this.props.router.state.mode === "area") {
+        defaultLayer = this.props.router.state.layerArea;
+      }
       if (this.props.layers && (Object.keys(this.props.layers[defaultLayer]).length > 1)) {
         layerValueSelection = <div className={"c4g-router-layer-value-selection"}>
           {Object.keys(this.props.layers[defaultLayer]).map((name) => {
@@ -75,6 +76,11 @@ export class RouterLayerSelection extends Component {
       }
     }
     else {
+      if (this.props.router.state.mode === "route") {
+        defaultLayer = JSON.stringify({id: this.props.router.state.layerRoute, name: this.props.router.state.layerValueRoute})
+      } else if (this.props.router.state.mode === "area") {
+        defaultLayer = JSON.stringify({id: this.props.router.state.layerArea, name: this.props.router.state.layerValueArea})
+      }
       let options = [];
       if (Object.keys(this.props.layers).length > 1) {
         options = Object.keys(this.props.layers).map((id) => {
