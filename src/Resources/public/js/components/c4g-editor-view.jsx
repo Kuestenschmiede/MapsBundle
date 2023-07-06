@@ -132,7 +132,7 @@ export default class EditorView extends Component {
           let geometry = feature.getGeometry().clone().transform("EPSG:3857", "EPSG:4326");
           let center = geometry.getCenter();
           let radius = feature.getGeometry().getRadius();
-          let realRadius = utils.measureGeometry(event.feature.getGeometry()).rawValue;
+          let realRadius = utils.measureGeometry(feature.getGeometry()).rawValue;
           geojson = {
             type: "Feature",
             geometry: {
