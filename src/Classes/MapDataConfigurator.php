@@ -587,9 +587,6 @@ class MapDataConfigurator
             if ($profile->overpassEngine === '2') {
                 $keyParams[] = ['5', ''];
             }
-            if ($profile->custom_div) {
-                $mapData['mapDiv'] = $profile->custom_div;
-            }
             // check baselayers if a key is needed
             $keyParams = static::checkBaselayers($profile, $objSettings, $keyParams);
             if ($keyParams && count($keyParams) > 0) {
