@@ -21,7 +21,8 @@ window.initMap = function(mapData) {
   let mapDiv = null;
   if (mapData.mapDiv) {
     mapDiv = document.querySelector("#" + mapData.mapDiv);
-  } else {
+  }
+  if (!mapDiv) {
     mapDiv = jQuery("#c4g_map_" + mapData.mapId)[0];
   }
 
@@ -116,7 +117,7 @@ window.initMaps = function(mapData) {
       if (mapData[key].mapDiv) {
         mapDiv = jQuery(mapData[key].mapDiv)[0] || jQuery("#" + mapData[key].mapDiv)[0] || jQuery( "." + mapData[key].mapDiv)[0]
       }
-      else {
+      if (!mapDiv) {
         mapDiv = jQuery("#c4g_map_" + mapData[key].mapId)[0];
       }
       if (mapDiv) {
