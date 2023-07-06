@@ -1846,6 +1846,27 @@ export class RouterView extends Component {
     }
     // interim clear of feature selection
     if (!features || features.length === 0) {
+      let extent;
+      if (this.mapData.drawCircle) {
+        let tempFeature = this.areaCircleSource.getFeatures()[0];
+        if (tempFeature && tempFeature.getGeometry() && tempFeature.getGeometry().getExtent()) {
+          extent = tempFeature.getGeometry().getExtent();
+        }
+        if (extent && getArea(extent) > 0) {
+          let width = jQuery(".c4g-sideboard.c4g-open").css('width');
+          if (width) {
+            width = width.split(".");
+            width = Array.isArray(width) ? width[0] : width;
+            width = parseInt(width) +  50;
+          }
+          else {
+            width = 50;
+          }
+          let padding = [50, width, 50, 50];
+          this.props.mapController.map.getView().fit(extent, {padding: padding});
+        }
+      }
+
       return [];
     }
     const mapData = this.mapData;
