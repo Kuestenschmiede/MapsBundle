@@ -128,20 +128,10 @@
   margin-left: .3em
 }
 .fa-spin {
-  -webkit-animation: fa-spin 2s infinite linear;
   animation: fa-spin 2s infinite linear
 }
 .fa-pulse {
-  -webkit-animation: fa-spin 1s infinite steps(8);
   animation: fa-spin 1s infinite steps(8)
-}
-@-webkit-keyframes fa-spin {
-  0% {
-    transform: rotate(0)
-  }
-  100% {
-    transform: rotate(360deg)
-  }
 }
 @keyframes fa-spin {
   0% {
@@ -4702,7 +4692,6 @@
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: none;
-  -ms-user-select: none;
   user-select: none;
   -webkit-tap-highlight-color: transparent
 }
@@ -4718,16 +4707,13 @@
   -webkit-touch-callout: default;
   -webkit-user-select: text;
   -moz-user-select: text;
-  -ms-user-select: text;
   user-select: text
 }
 .ol-grabbing {
-  cursor: -webkit-grabbing;
   cursor: grabbing
 }
 .ol-grab {
   cursor: move;
-  cursor: -webkit-grab;
   cursor: grab
 }
 /*!
@@ -4740,11 +4726,6 @@
  * @link https://www.con4gis.org
  */
 .mod_c4g_maps > div:-webkit-full-screen {
-  width: 100%!important;
-  height: 100%!important;
-  margin: 0!important
-}
-.mod_c4g_maps > div:-ms-fullscreen {
   width: 100%!important;
   height: 100%!important;
   margin: 0!important
@@ -5139,7 +5120,6 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
 .c4g-sideboard:not(.c4g-measuretools-container):not(.c4g-popup-container) {
   max-width: 80vw;
   width: var(--popup-max-width);
-  min-width: -webkit-min-content;
   min-width: -moz-min-content;
   min-width: min-content
 }
@@ -5163,7 +5143,6 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
   vertical-align: middle;
   -webkit-user-select: none;
   -moz-user-select: none;
-  -ms-user-select: none;
   user-select: none;
   padding: 5px;
   cursor: pointer
@@ -5270,17 +5249,11 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
 .c4g-sideboard > div > div[class*=filter] input::-moz-placeholder {
   padding-left: .2em
 }
-.c4g-sideboard > div > div[class*=filter] input:-ms-input-placeholder {
-  padding-left: .2em
-}
 .c4g-geosearch-form input,
 .c4g-sideboard > div > div[class*=filter] input::placeholder {
   padding-left: .2em
 }
 .c4g-sideboard > div > div[class*=filter] input:focus::-moz-placeholder {
-  color: transparent
-}
-.c4g-sideboard > div > div[class*=filter] input:focus:-ms-input-placeholder {
   color: transparent
 }
 .c4g-geosearch-form input,
@@ -5449,16 +5422,10 @@ span.c4g-starboard-locstyle-triangle:before {
 .c4g-sideboard > div > div[class*=content] div[class*=filter] input::-moz-placeholder {
   padding-left: .2em
 }
-.c4g-sideboard > div > div[class*=content] div[class*=filter] input:-ms-input-placeholder {
-  padding-left: .2em
-}
 .c4g-sideboard > div > div[class*=content] div[class*=filter] input::placeholder {
   padding-left: .2em
 }
 .c4g-sideboard > div > div[class*=content] div[class*=filter] input:focus::-moz-placeholder {
-  color: transparent
-}
-.c4g-sideboard > div > div[class*=content] div[class*=filter] input:focus:-ms-input-placeholder {
   color: transparent
 }
 .c4g-sideboard > div > div[class*=content] div[class*=filter] input:focus::placeholder {
@@ -5644,16 +5611,10 @@ button.c4g-geosearch-start {
 .c4g-external > div > div[class*=filter] input::-moz-placeholder {
   padding-left: .2em
 }
-.c4g-external > div > div[class*=filter] input:-ms-input-placeholder {
-  padding-left: .2em
-}
 .c4g-external > div > div[class*=filter] input::placeholder {
   padding-left: .2em
 }
 .c4g-external > div > div[class*=filter] input:focus::-moz-placeholder {
-  color: transparent
-}
-.c4g-external > div > div[class*=filter] input:focus:-ms-input-placeholder {
   color: transparent
 }
 .c4g-external > div > div[class*=filter] input:focus::placeholder {
@@ -5678,16 +5639,10 @@ button.c4g-geosearch-start {
 .c4g-sideboard > div > div[class*=content] div[class*=filter] input::-moz-placeholder {
   padding-left: .2em
 }
-.c4g-sideboard > div > div[class*=content] div[class*=filter] input:-ms-input-placeholder {
-  padding-left: .2em
-}
 .c4g-sideboard > div > div[class*=content] div[class*=filter] input::placeholder {
   padding-left: .2em
 }
 .c4g-sideboard > div > div[class*=content] div[class*=filter] input:focus::-moz-placeholder {
-  color: transparent
-}
-.c4g-sideboard > div > div[class*=content] div[class*=filter] input:focus:-ms-input-placeholder {
   color: transparent
 }
 .c4g-sideboard > div > div[class*=content] div[class*=filter] input:focus::placeholder {
@@ -5792,13 +5747,11 @@ ul.c4g-feature-filter-list li {
   padding: 0 10px
 }
 div#filter_block input {
-  width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
   margin-right: 10px
 }
 .c4g-feature-filter input[type=radio] {
-  width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
   margin: 20px
@@ -6950,7 +6903,6 @@ button.c4g-starboardscope-close:before {
   pointer-events: all
 }
 .c4g-control-container-bottom-left.ol-unselectable div {
-  width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
   margin: .2em 0 0
@@ -7340,9 +7292,6 @@ c4g-infopage-container {
 .c4g-sideboard > div div[class*=filter] input::-moz-placeholder {
   color: var(--main-color)
 }
-.c4g-sideboard > div div[class*=filter] input:-ms-input-placeholder {
-  color: var(--main-color)
-}
 .c4g-geosearch-form input,
 .c4g-sideboard > div div[class*=filter] input::placeholder {
   color: var(--main-color)
@@ -7417,20 +7366,10 @@ c4g-infopage-container {
 * @link https://www.con4gis.org
 */
 .c4g-animation-spin {
-  -webkit-animation: icon-spin 2s infinite linear;
   animation: icon-spin 2s infinite linear
 }
 .c4g-animation-spin-pulse {
-  -webkit-animation: icon-spin 1s infinite steps(8);
   animation: icon-spin 1s infinite steps(8)
-}
-@-webkit-keyframes icon-spin {
-  0% {
-    transform: rotate(0)
-  }
-  100% {
-    transform: rotate(359deg)
-  }
 }
 @keyframes icon-spin {
   0% {
@@ -7503,7 +7442,6 @@ c4g-infopage-container {
   vertical-align: middle;
   -webkit-user-select: none;
   -moz-user-select: none;
-  -ms-user-select: none;
   user-select: none;
   padding: 5px;
   cursor: pointer

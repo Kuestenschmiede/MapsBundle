@@ -112,20 +112,10 @@
   margin-left: .3em
 }
 .fa-spin {
-  -webkit-animation: fa-spin 2s infinite linear;
   animation: fa-spin 2s infinite linear
 }
 .fa-pulse {
-  -webkit-animation: fa-spin 1s infinite steps(8);
   animation: fa-spin 1s infinite steps(8)
-}
-@-webkit-keyframes fa-spin {
-  0% {
-    transform: rotate(0)
-  }
-  100% {
-    transform: rotate(360deg)
-  }
 }
 @keyframes fa-spin {
   0% {

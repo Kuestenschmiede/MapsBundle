@@ -620,7 +620,6 @@ button.c4g-router-input-clear:before {
   width: calc(100% - .8em)
 }
 .c4g-router-result-container.c4g-close {
-  height: -webkit-max-content;
   height: -moz-max-content;
   height: max-content
 }
