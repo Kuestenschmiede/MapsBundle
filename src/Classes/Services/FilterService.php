@@ -44,19 +44,20 @@ class FilterService
 
         $mapsProfileModel = C4gMapProfilesModel::findById($profileId);
         $filterIds = \Contao\StringUtil::deserialize($mapsProfileModel->filters);
-
-        foreach ($filterIds as $filterId) {
-            $filter = $tags = $database->prepare('SELECT * FROM tl_c4g_map_filters WHERE id=' . $filterId)
-                ->execute()->fetchAssoc();
-            $objFilter = new FeatureFilter();
-            $objFilter->setFieldName($filter['name']);
-            $childs = \Contao\StringUtil::deserialize($filter['filters']);
-            foreach ($childs as $child) {
-                $objFilter->addFilterValue($child);
+        if ($filterIds) {
+            foreach ($filterIds as $filterId) {
+                $filter = $tags = $database->prepare('SELECT * FROM tl_c4g_map_filters WHERE id=' . $filterId)
+                    ->execute()->fetchAssoc();
+                $objFilter = new FeatureFilter();
+                $objFilter->setFieldName($filter['name']);
+                $childs = \Contao\StringUtil::deserialize($filter['filters']);
+                foreach ($childs as $child) {
+                    $objFilter->addFilterValue($child);
+                }
+                $return[] = $objFilter;
             }
-            $return[] = $objFilter;
-        }
 
-        return $return;
+            return $return;
+        }
     }
 }

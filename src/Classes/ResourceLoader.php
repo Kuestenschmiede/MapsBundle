@@ -207,39 +207,46 @@ class ResourceLoader extends coreResourceLoader
        }
 
         $themeData = [];
-
-        if ($theme->buttonradius) {
-            $themeData['buttonradius'] = StringUtil::deserialize($theme->buttonradius)['value'];
-        }
-
-        if ($theme->buttonsize) {
-            $themeData['buttonsize'] = StringUtil::deserialize($theme->buttonsize)['value'];
-        }
-
-        if ($theme->button_fontsize) {
-            $themeData['fontsize'] = StringUtil::deserialize($theme->button_fontsize)['value'];
-        }
-
-        if ($theme->maincolor) {
-            $maincolor = StringUtil::deserialize($theme->maincolor);
-            if ($maincolor[0]) {
-                $themeData['maincolor'] = $maincolor[0];
-                $themeData['mainopacity'] = $maincolor[1];
+        if ($theme) {
+            if ($theme->buttonradius) {
+                $themeData['buttonradius'] = StringUtil::deserialize($theme->buttonradius)['value'];
             }
-        }
-        if ($theme->fontcolor) {
-            $fontcolor = StringUtil::deserialize($theme->fontcolor);
-            if ($fontcolor[0]) {
-                $themeData['fontcolor'] = $fontcolor[0];
-                $themeData['fontopacity'] = $fontcolor[1];
-            }
-        }
 
-        if ($theme->popupMaincolor) {
-            $popupMaincolor = StringUtil::deserialize($theme->popupMaincolor);
-            if ($popupMaincolor[0]) {
-                $themeData['popupMaincolor'] = $popupMaincolor[0];
-                $themeData['popupMainopacity'] = $popupMaincolor[1];
+            if ($theme->buttonsize) {
+                $themeData['buttonsize'] = StringUtil::deserialize($theme->buttonsize)['value'];
+            }
+
+            if ($theme->button_fontsize) {
+                $themeData['fontsize'] = StringUtil::deserialize($theme->button_fontsize)['value'];
+            }
+
+            if ($theme->maincolor) {
+                $maincolor = StringUtil::deserialize($theme->maincolor);
+                if ($maincolor[0]) {
+                    $themeData['maincolor'] = $maincolor[0];
+                    $themeData['mainopacity'] = $maincolor[1];
+                }
+            }
+            if ($theme->fontcolor) {
+                $fontcolor = StringUtil::deserialize($theme->fontcolor);
+                if ($fontcolor[0]) {
+                    $themeData['fontcolor'] = $fontcolor[0];
+                    $themeData['fontopacity'] = $fontcolor[1];
+                }
+            }
+
+            if ($theme->popupMaincolor) {
+                $popupMaincolor = StringUtil::deserialize($theme->popupMaincolor);
+                if ($popupMaincolor[0]) {
+                    $themeData['popupMaincolor'] = $popupMaincolor[0];
+                    $themeData['popupMainopacity'] = $popupMaincolor[1];
+                } elseif ($theme->maincolor) {
+                    $maincolor = StringUtil::deserialize($theme->maincolor);
+                    if ($maincolor[0]) {
+                        $themeData['popupMaincolor'] = $maincolor[0];
+                        $themeData['popupMainopacity'] = $maincolor[1];
+                    }
+                }
             } elseif ($theme->maincolor) {
                 $maincolor = StringUtil::deserialize($theme->maincolor);
                 if ($maincolor[0]) {
@@ -247,19 +254,19 @@ class ResourceLoader extends coreResourceLoader
                     $themeData['popupMainopacity'] = $maincolor[1];
                 }
             }
-        } elseif ($theme->maincolor) {
-            $maincolor = StringUtil::deserialize($theme->maincolor);
-            if ($maincolor[0]) {
-                $themeData['popupMaincolor'] = $maincolor[0];
-                $themeData['popupMainopacity'] = $maincolor[1];
-            }
-        }
 
-        if ($theme->popupFontcolor) {
-            $popupFontcolor = StringUtil::deserialize($theme->popupFontcolor);
-            if ($popupFontcolor[0]) {
-                $themeData['popupFontcolor'] = $popupFontcolor[0];
-                $themeData['popupFontopacity'] = $popupFontcolor[1];
+            if ($theme->popupFontcolor) {
+                $popupFontcolor = StringUtil::deserialize($theme->popupFontcolor);
+                if ($popupFontcolor[0]) {
+                    $themeData['popupFontcolor'] = $popupFontcolor[0];
+                    $themeData['popupFontopacity'] = $popupFontcolor[1];
+                } elseif ($theme->fontcolor) {
+                    $fontcolor = StringUtil::deserialize($theme->fontcolor);
+                    if ($fontcolor[0]) {
+                        $themeData['popupMaincolor'] = $fontcolor[0];
+                        $themeData['popupMainopacity'] = $fontcolor[1];
+                    }
+                }
             } elseif ($theme->fontcolor) {
                 $fontcolor = StringUtil::deserialize($theme->fontcolor);
                 if ($fontcolor[0]) {
@@ -267,30 +274,24 @@ class ResourceLoader extends coreResourceLoader
                     $themeData['popupMainopacity'] = $fontcolor[1];
                 }
             }
-        } elseif ($theme->fontcolor) {
-            $fontcolor = StringUtil::deserialize($theme->fontcolor);
-            if ($fontcolor[0]) {
-                $themeData['popupMaincolor'] = $fontcolor[0];
-                $themeData['popupMainopacity'] = $fontcolor[1];
-            }
-        }
 
-        if ($theme->shadowcolor) {
-            $shadowcolor = StringUtil::deserialize($theme->shadowcolor);
-            if ($shadowcolor[0]) {
-                $themeData['shadowcolor'] = $shadowcolor[0];
-                $themeData['shadowopacity'] = $shadowcolor[1];
+            if ($theme->shadowcolor) {
+                $shadowcolor = StringUtil::deserialize($theme->shadowcolor);
+                if ($shadowcolor[0]) {
+                    $themeData['shadowcolor'] = $shadowcolor[0];
+                    $themeData['shadowopacity'] = $shadowcolor[1];
+                }
             }
-        }
 
-        if ($theme->popupMaxWidth) {
-            $popupMaxWidth = StringUtil::deserialize($theme->popupMaxWidth);
-            if ($popupMaxWidth['value']) {
-                $themeData['popupMaxWidth'] = $popupMaxWidth['value'];
+            if ($theme->popupMaxWidth) {
+                $popupMaxWidth = StringUtil::deserialize($theme->popupMaxWidth);
+                if ($popupMaxWidth['value']) {
+                    $themeData['popupMaxWidth'] = $popupMaxWidth['value'];
+                }
             }
-        }
 
-        $themeData['useglobal'] = $theme->useglobal;
+            $themeData['useglobal'] = $theme->useglobal;
+        }
 
         return $themeData;
     }

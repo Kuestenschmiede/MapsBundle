@@ -48,7 +48,7 @@ class FilterController extends BaseController
         $this->initializeContao();
         $GLOBALS['TL_LANGUAGE'] = $lang;
         $this->initialize(false);
-        $filters = $this->filterService->createFilters($profileId);
+        $filters = $this->filterService->createFilters($profileId) ?: [];
         $event = new LoadFeatureFiltersEvent();
         $event->setProfileId($profileId);
         $event->setFilters($filters);

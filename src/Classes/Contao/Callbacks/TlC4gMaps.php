@@ -645,7 +645,8 @@ class TlC4gMaps extends Backend
         $objVersions->initialize();
 
         // Trigger the save_callback
-        if (is_array($GLOBALS['TL_DCA']['tl_c4g_maps']['fields']['published']['save_callback'])) {
+        if (array_key_exists('save_callback', $GLOBALS['TL_DCA']['tl_c4g_maps']['fields']['published']) &&
+        is_array($GLOBALS['TL_DCA']['tl_c4g_maps']['fields']['published']['save_callback'])) {
             foreach ($GLOBALS['TL_DCA']['tl_c4g_maps']['fields']['published']['save_callback'] as $callback) {
                 $str_class = $callback[0];
                 $str_function = $callback[1];
