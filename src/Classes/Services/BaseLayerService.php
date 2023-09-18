@@ -174,7 +174,7 @@ class BaseLayerService
 
                 break;
             case 'wms':
-                $arrOverlayData['url'] = $objOverlay->wms_url;
+                $arrOverlayData['url'] = html_entity_decode($objOverlay->wms_url);
 
                 $arrOverlayData['params'] = [];
                 $arrOverlayData['params']['layers'] = $objOverlay->wms_params_layers;
@@ -353,7 +353,7 @@ class BaseLayerService
 
                     break;
                 case 'wms':
-                    $arrBaseLayer['url'] = $objBaseLayer->wms_url;
+                    $arrBaseLayer['url'] = html_entity_decode($objBaseLayer->wms_url);
 
                     $arrBaseLayer['params'] = [];
                     $arrBaseLayer['params']['layers'] = $objBaseLayer->wms_params_layers;
