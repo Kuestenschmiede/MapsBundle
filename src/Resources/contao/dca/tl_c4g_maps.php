@@ -48,7 +48,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             [
             'icon'                    => 'bundles/con4giscore/images/be-icons/con4gis_blue.svg',
             'panelLayout'             => 'filter;search',
-            'mode'                    => DataContainer::MODE_TREE,
+            'mode'                    => 5,
 			'rootPaste'               => true,
 			'showRootTrails'          => true,
 //			'paste_button_callback'   => ['tl_page', 'pastePage'),
