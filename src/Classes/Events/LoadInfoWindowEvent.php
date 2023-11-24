@@ -27,6 +27,12 @@ class LoadInfoWindowEvent
     private $popupString = '';
 
     /**
+     * The request string for the popup
+     * @var string
+     */
+    private $scope = '';
+
+    /**
      * @return array
      */
     public function getPopup(): array
@@ -56,5 +62,15 @@ class LoadInfoWindowEvent
     public function setPopupString(string $popupString): void
     {
         $this->popupString = $popupString;
+    }
+
+    public function getScope(): string
+    {
+        return $this->scope;
+    }
+
+    public function setScope(string $scope): void
+    {
+        $this->scope = $scope;
     }
 }
