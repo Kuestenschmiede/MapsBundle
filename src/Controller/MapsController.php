@@ -54,9 +54,14 @@ class MapsController extends BaseController
             $infoWindowApi = new InfoWindowApi();
             $returnData = $infoWindowApi->generate($popupString);
 
+
             $event = new LoadInfoWindowEvent();
             $event->setPopupString($popupString);
             $event->setPopup($returnData);
+            $scope = $request->get("scope");
+            if ($scope) {
+                $event->setScope($scope);
+            }
             $this->eventDispatcher->dispatch($event, $event::NAME);
             $returnData = $event->getPopup();
             $response->setData($returnData);
