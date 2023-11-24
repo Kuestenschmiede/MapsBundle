@@ -26,6 +26,7 @@ $GLOBALS['TL_LANG']['tl_module']['c4g_element_type'] = array('Art des Elements',
 $GLOBALS['TL_LANG']['tl_module']['editMaps'] = ['Strukturelemente bearbeiten'];
 
 $GLOBALS['TL_LANG']['tl_module']['element_type_refs']['starboard'] = "Starboard";
+$GLOBALS['TL_LANG']['tl_module']['element_type_refs']['starboardscope'] = "Elemente im Kartenausschnitt";
 $GLOBALS['TL_LANG']['tl_module']['element_type_refs']['baselayer'] = "Baselayerswitcher";
 $GLOBALS['TL_LANG']['tl_module']['element_type_refs']['permalink'] = "Permalink";
 $GLOBALS['TL_LANG']['tl_module']['element_type_refs']['search'] = "Suche";

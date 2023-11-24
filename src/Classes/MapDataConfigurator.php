@@ -541,6 +541,8 @@ class MapDataConfigurator
                 }
             }
             if (is_array($buttons) && array_key_exists('starboardscope', $buttons)) {
+                $mapData['starboardscope']['div'] = (is_array($externalElements) && in_array('starboardscope', $externalElements)) ? $externalClasses['starboardscope'] : '';
+                $mapData['starboardscope']['open'] = (is_array($externalElements) && in_array('starboardscope', $externalElements));
                 if ($key2 = C4GUtils::getKey($objSettings, 6)) {
                     $mapData['proxyUrl'] = $objSettings->con4gisIoUrl;
                     $mapData['matrixKey'] = $key2;

@@ -19,6 +19,7 @@ import {utils} from "../c4g-maps-utils";
 import {Geolocation} from "ol";
 import {LineString} from "ol/geom";
 import {toLonLat} from 'ol/proj';
+import {getLength} from "ol/sphere";
 
 
 export default class StarboardScope extends Component {
@@ -121,13 +122,26 @@ export default class StarboardScope extends Component {
   }
   sortFeatures (features) {
     if (this.props.mapController.geolocation) {
-      if (this.props.mapController.data.matrixKey) {
+      let position = this.props.mapController.geolocation.getPosition();
+      if (!position) {
+        return false;
+      }
+      let maxDistance = 0;
+      features.sort((a, b) => {
+        let lineStringA = new LineString([position, a.getGeometry().getCoordinates()])
+        let distanceA = getLength(lineStringA);
+        a.set('distance', distanceA);
+
+        let lineStringB = new LineString([position, b.getGeometry().getCoordinates()])
+        let distanceB = getLength(lineStringB);
+
+        maxDistance = distanceA > maxDistance ? distanceA : maxDistance;
+        maxDistance = distanceB > maxDistance ? distanceB : maxDistance;
+        return distanceA - distanceB;
+      });
+      if (maxDistance < 30000 && this.props.mapController.data.matrixKey) {
         let objMissDist = [];
         let arrLocations = [];
-        let position = this.props.mapController.geolocation.getPosition();
-        if (!position) {
-          return false;
-        }
         arrLocations.push(toLonLat(position));
         for (let i in features) {
           if (features.hasOwnProperty(i) && !features[i].get('distanceMatrix')) {
@@ -162,28 +176,6 @@ export default class StarboardScope extends Component {
           });
         }
       }
-      let position = this.props.mapController.geolocation.getPosition();
-      features.sort((a, b) => {
-            let distanceA = 0;
-            let distanceB = 0;
-            if (a.get('distanceMatrix') || a.get('distance')) {
-              distanceA = a.get('distanceMatrix')|| a.get('distance');
-            } else {
-              let featureGeometry = a.getGeometry();
-              distanceA = this.getDistance(toLonLat(position), toLonLat(featureGeometry.getCoordinates()));
-              a.set('distance', distanceA);
-            }
-            if (b.get('distanceMatrix') || b.get('distance')) {
-              distanceB = b.get('distanceMatrix') || b.get('distance');
-            } else {
-              let featureGeometry = b.getGeometry();
-              distanceB = this.getDistance(toLonLat(position), toLonLat(featureGeometry.getCoordinates()));
-              b.set('distance', distanceB);
-            }
-            return distanceA - distanceB;
-          }
-        );
-
     }
     return features;
   }

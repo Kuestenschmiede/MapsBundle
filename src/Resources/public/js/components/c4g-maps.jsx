@@ -688,11 +688,22 @@ export default class MapController extends Component {
         this.baselayerContainer.className += " c4g-close";
       }
     }
-    if (true || mapData.starboardscope.enable) {
-      this.starboardscopeContainer = document.createElement('div');
-      this.starboardscopeContainer.className = "c4g-sideboard c4g-starboardscope-container ol-unselectable";
-      this.$overlaycontainer_stopevent.append(this.starboardscopeContainer);
-      if (false && mapData.starboardscope.open) {
+    if (mapData.starboardscope.enable) {
+      if (mapData.starboardscope.div) {
+        this.starboardscopeContainer = document.querySelector("." + mapData.starboardscope.div);
+        if (!this.starboardscopeContainer) {
+          this.starboardscopeContainer = document.createElement('div');
+          this.starboardscopeContainer.className = "c4g-sideboard c4g-starboard-container ol-unselectable";
+          this.$overlaycontainer_stopevent.append(this.starboardscopeContainer);
+        } else {
+          this.starboardscopeContainer.className += " c4g-external ol-unselectable";
+        }
+      } else {
+        this.starboardscopeContainer = document.createElement('div');
+        this.starboardscopeContainer.className = "c4g-sideboard c4g-starboard-container ol-unselectable";
+        this.$overlaycontainer_stopevent.append(this.starboardscopeContainer);
+      }
+      if (mapData.starboardscope.open) {
         this.starboardscopeContainer.className += " c4g-open";
       } else {
         this.starboardscopeContainer.className += " c4g-close";
@@ -1101,7 +1112,7 @@ export default class MapController extends Component {
     }
     if (mapData.layerswitcher.enable) {
       sbPortal = ReactDOM.createPortal(
-          <Suspense fallback={<div>"Loool</div>}>
+          <Suspense fallback={<div>"Loading..."</div>}>
             <StarboardPanel ref={(node) => {
               this.components.starboard = node;
             }} target={target}
@@ -1120,7 +1131,7 @@ export default class MapController extends Component {
         this.components.geosearch = node;
       };
       searchPortal = ReactDOM.createPortal(
-          <Suspense fallback={<div>"Loading........................................</div>}>
+          <Suspense fallback={<div>"Loading..."</div>}>
             <GeoSearch {...geoSearchOptions}/>
           </Suspense>,
         this.searchContainer

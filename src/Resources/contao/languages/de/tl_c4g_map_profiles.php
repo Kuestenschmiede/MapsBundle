@@ -243,6 +243,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['expert_legend'] = 'Experteneinstellu
 $GLOBALS['TL_LANG']['MSC']['ow_value'] = 'Label im Editor';
 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['starboard'] = "Starboard";
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['starboardscope'] = 'Elemente im Kartenausschnitt';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['baselayer'] = "Baselayerswitcher";
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['permalink'] = "Permalink";
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs']['search'] = "Suche";

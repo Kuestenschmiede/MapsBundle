@@ -23,6 +23,7 @@ class ExternalMapElement extends Module
     
     public static $arrClasses = [
         'starboard' => "c4g-external-starboard-container",
+        'starboardscope' => "c4g-external-starboardscope-container",
         'baselayer' => "c4g-external-baselayer-container",
         'permalink' => "c4g-external-permalink-container",
         'search' => "c4g-external-search-container",

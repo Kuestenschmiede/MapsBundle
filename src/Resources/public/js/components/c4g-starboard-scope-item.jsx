@@ -18,8 +18,29 @@ export class StarboardScopeItem extends Component {
     super(props);
     const scope = this;
     this.state = {
+      html: "<div>Loading...</div>"
     };
+    this.loadPopup();
     this.highlightFeature = this.highlightFeature.bind(this);
+  }
+  loadPopup() {
+    let popup = this.props.feature.get('popup');
+    if (popup.async) {
+      popup.async = false;
+      let url = this.props.mapController.proxy.api_infowindow_url + '/' + popup.content;
+      url += url.includes("?") ? "&" : "?";
+      url += "scope=starboardscope";
+      fetch(url)
+          .then(response => response.json())
+          .then(data => {
+            if (data && data.content) {
+              this.setState({
+                'html': data.content
+              });
+            }
+            // this.props.setSingleFeature(this.props.feature, this.props.index);
+          });
+    }
   }
   highlightFeature () {
     this.props.feature.set("markLocstyle", true);
@@ -29,37 +50,15 @@ export class StarboardScopeItem extends Component {
   }
 
   render() {
-    let popup = this.props.feature.get('popup');
-    if (popup.async) {
-      popup.async = false;
-      fetch(this.props.mapController.proxy.api_infowindow_url + '/' + popup.content)
-        .then(response => response.json())
-        .then(data => {
-          this.props.feature.set('popup', data);
-          // this.props.setSingleFeature(this.props.feature, this.props.index);
-        });
-    }
     let distance = null;
-    // let featureGeometry = this.props.feature.getGeometry();
-    // if (this.props.userPosition && featureGeometry.getType() === "Point") {
-    //   let coordinates = [
-    //       this.props.userPosition,
-    //       featureGeometry.getCoordinates()
-    //   ];
-    //   let lineString = new LineString(coordinates);
-    //   distance = <div className={"c4g-element-distance"}>
-    //       {this.props.langConstants.DIST}: {toHumanDistance(lineString.getLength())}
-    //   </div>
-    // }
     if (this.props.feature.get('distance')) {
       distance = <div className={"c4g-element-distance"}>
           {this.props.langConstants.DIST}: {toHumanDistance(this.props.feature.get('distanceMatrix') || this.props.feature.get('distance'))}
       </div>
     }
-
     return (
         <li onMouseUp={this.highlightFeature}>
-          <div className={"c4g-popup-wrapper"} dangerouslySetInnerHTML={{__html: this.props.feature.get('popup').content}}/>
+          <div className={"c4g-popup-wrapper"} dangerouslySetInnerHTML={{__html: this.state.html}}/>
             {distance}
         </li>
     );
