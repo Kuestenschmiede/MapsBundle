@@ -108,24 +108,7 @@ export default class StarboardScope extends Component {
       });
     }
   }
-  getDistance (point1, point2)
-  {
-    const R = 6371; // km
-    let dLat = this.toRad(point2[0]-point1[0]);
-    let dLon = this.toRad(point2[1]-point1[1]);
-    let lat1 = this.toRad(point1[0]);
-    let lat2 = this.toRad(point2[0]);
-    let a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-        Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2);
-    let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    let d = R * c;
-    return d * 1000;
-  }
-
-  toRad (value)
-  {
-    return value * Math.PI / 180;
-  }
+  
   sortFeatures (features) {
     if (this.props.mapController.geolocation) {
       let position = this.props.mapController.geolocation.getPosition();
@@ -206,7 +189,7 @@ export default class StarboardScope extends Component {
         <div className={"c4g-starboardscope-content-container"}>
           <ul>
             {this.state.features.map((feature, index) => {
-              if (index < 20) {
+              if (index < 20) { 
                 return <StarboardScopeItem mapController={this.props.mapController} langConstants={this.langConstants}
                                            index={index} key={index} feature={feature}/>
               }

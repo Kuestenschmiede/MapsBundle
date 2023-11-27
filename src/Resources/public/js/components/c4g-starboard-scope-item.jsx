@@ -60,6 +60,11 @@ export class StarboardScopeItem extends Component {
       this.props.feature.set("markLocstyle", false);
     }, 3000);
   }
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.props.feature.getId() !== prevProps.feature.getId()) {
+      this.loadPopup()
+    }
+  }
 
   render() {
     if (this.ref.current && !this.observer) {
