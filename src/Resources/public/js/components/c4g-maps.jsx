@@ -693,14 +693,14 @@ export default class MapController extends Component {
         this.starboardscopeContainer = document.querySelector("." + mapData.starboardscope.div);
         if (!this.starboardscopeContainer) {
           this.starboardscopeContainer = document.createElement('div');
-          this.starboardscopeContainer.className = "c4g-sideboard c4g-starboard-container ol-unselectable";
+          this.starboardscopeContainer.className = "c4g-sideboard c4g-starboardscope-container ol-unselectable";
           this.$overlaycontainer_stopevent.append(this.starboardscopeContainer);
         } else {
-          this.starboardscopeContainer.className += " c4g-external ol-unselectable";
+          this.starboardscopeContainer.className += " c4g-external c4g-starboardscope-container ol-unselectable";
         }
       } else {
         this.starboardscopeContainer = document.createElement('div');
-        this.starboardscopeContainer.className = "c4g-sideboard c4g-starboard-container ol-unselectable";
+        this.starboardscopeContainer.className = "c4g-sideboard c4g-starboardscope-container ol-unselectable";
         this.$overlaycontainer_stopevent.append(this.starboardscopeContainer);
       }
       if (mapData.starboardscope.open) {
