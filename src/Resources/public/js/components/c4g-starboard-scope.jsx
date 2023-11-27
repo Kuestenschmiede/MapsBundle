@@ -49,10 +49,13 @@ export default class StarboardScope extends Component {
       }
     });
     let mapController = props.mapController;
-    let control = new Control({element: element, target: props.target});
-    let index = mapController.arrComponents.findIndex(element => element.name === "starboardscope");
-    mapController.arrComponents[index].control = control;
-    mapController.mapsControls.controls.baselayerSwitcher = control;
+    let control = null;
+    if (!mapController.data.starboardscope.div) {
+      control = new Control({element: element, target: props.target});
+      let index = mapController.arrComponents.findIndex(element => element.name === "starboardscope");
+      mapController.arrComponents[index].control = control;
+      mapController.mapsControls.controls.baselayerSwitcher = control;
+    }
     this.open = this.open.bind(this);
     this.close = this.close.bind(this);
 
@@ -61,7 +64,10 @@ export default class StarboardScope extends Component {
     this.view = props.mapController.map.getView();
     let layerController = props.mapController.proxy.layerController;
     this.vectorSource = layerController.vectorSource instanceof Cluster ? layerController.vectorSource.getSource(): layerController.vectorSource;
-    this.view.on('change', (evt) => {
+    this.view.on('change:center', (evt) => {
+      this.getFeaturesInScope()
+    });
+    this.view.on('change:resolution', (evt) => {
       this.getFeaturesInScope()
     });
     window.c4gMapsHooks.layer_loaded = window.c4gMapsHooks.layer_loaded || [];
@@ -139,7 +145,7 @@ export default class StarboardScope extends Component {
         maxDistance = distanceB > maxDistance ? distanceB : maxDistance;
         return distanceA - distanceB;
       });
-      if (maxDistance < 30000 && this.props.mapController.data.matrixKey) {
+      if (maxDistance < 30 && this.props.mapController.data.matrixKey) {
         let objMissDist = [];
         let arrLocations = [];
         arrLocations.push(toLonLat(position));
@@ -181,12 +187,14 @@ export default class StarboardScope extends Component {
   }
 
   render() {
-    if (this.state.open) {
-      jQuery(this.state.control.element).addClass("c4g-open").removeClass("c4g-close");
-      jQuery(".c4g-starboardscope-container").addClass("c4g-open").removeClass("c4g-close");
-    } else {
-      jQuery(this.state.control.element).removeClass("c4g-open").addClass("c4g-close");
-      jQuery(".c4g-starboardscope-container").removeClass("c4g-open").addClass("c4g-close");
+    if (this.state.control) {
+      if (this.state.open) {
+        jQuery(this.state.control.element).addClass("c4g-open").removeClass("c4g-close");
+        jQuery(".c4g-starboardscope-container").addClass("c4g-open").removeClass("c4g-close");
+      } else {
+        jQuery(this.state.control.element).removeClass("c4g-open").addClass("c4g-close");
+        jQuery(".c4g-starboardscope-container").removeClass("c4g-open").addClass("c4g-close");
+      }
     }
 
     return (
@@ -200,7 +208,7 @@ export default class StarboardScope extends Component {
             {this.state.features.map((feature, index) => {
               if (index < 20) {
                 return <StarboardScopeItem mapController={this.props.mapController} langConstants={this.langConstants}
-                                            index={index} key={index} feature={feature}/>
+                                           index={index} key={index} feature={feature}/>
               }
             })}
           </ul>

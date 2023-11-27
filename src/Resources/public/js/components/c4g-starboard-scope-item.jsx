@@ -20,26 +20,38 @@ export class StarboardScopeItem extends Component {
     this.state = {
       html: "<div>Loading...</div>"
     };
-    this.loadPopup();
     this.highlightFeature = this.highlightFeature.bind(this);
+    this.ref = React.createRef();
+    this.loadPopup = this.loadPopup.bind(this);
   }
   loadPopup() {
     let popup = this.props.feature.get('popup');
     if (popup.async) {
-      popup.async = false;
       let url = this.props.mapController.proxy.api_infowindow_url + '/' + popup.content;
       url += url.includes("?") ? "&" : "?";
       url += "scope=starboardscope";
       fetch(url)
           .then(response => response.json())
           .then(data => {
-            if (data && data.content) {
-              this.setState({
-                'html': data.content
-              });
+            if (data) {
+              this.props.feature.set('popup', data);
+              if (data.content) {
+                this.setState({
+                  'html': data.content
+                });
+              }
+
             }
             // this.props.setSingleFeature(this.props.feature, this.props.index);
+          })
+          .catch((err) => {
+            console.log(err)
           });
+    }
+    else {
+      this.setState({
+        'html': popup.content
+      });
     }
   }
   highlightFeature () {
@@ -50,6 +62,10 @@ export class StarboardScopeItem extends Component {
   }
 
   render() {
+    if (this.ref.current && !this.observer) {
+      this.observer = new IntersectionObserver(this.loadPopup);
+      this.observer.observe(this.ref.current)
+    }
     let distance = null;
     if (this.props.feature.get('distance')) {
       distance = <div className={"c4g-element-distance"}>
@@ -57,7 +73,7 @@ export class StarboardScopeItem extends Component {
       </div>
     }
     return (
-        <li onMouseUp={this.highlightFeature}>
+        <li ref={this.ref} onMouseUp={this.highlightFeature}>
           <div className={"c4g-popup-wrapper"} dangerouslySetInnerHTML={{__html: this.state.html}}/>
             {distance}
         </li>
