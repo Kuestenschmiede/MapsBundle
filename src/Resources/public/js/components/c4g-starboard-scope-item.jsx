@@ -34,8 +34,9 @@ export class StarboardScopeItem extends Component {
           .then(response => response.json())
           .then(data => {
             if (data) {
-              this.props.feature.set('popup', data);
               if (data.content) {
+                popup.async = false;
+                popup.content = data.content
                 this.setState({
                   'html': data.content
                 });
@@ -61,7 +62,7 @@ export class StarboardScopeItem extends Component {
     }, 3000);
   }
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (this.props.feature.getId() !== prevProps.feature.getId()) {
+    if (this.props.feature.ol_uid !== prevProps.feature.ol_uid) {
       this.loadPopup()
     }
   }
