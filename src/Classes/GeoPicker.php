@@ -70,7 +70,7 @@ class GeoPicker extends Backend
         '" style="padding-left:3px" onclick="c4g.maps.backend.showGeoPicker(this.href,' .
         $strFieldX . ',' . $strFieldY . ', {title:\'' . $GLOBALS['TL_LANG']['c4g_maps']['geopicker'] . '\'});return false">' .
         Image::getHtml('bundles/con4gismaps/images/be-icons/geopicker.svg',
-            $GLOBALS['TL_LANG']['tl_content']['editalias'][0], 'style="vertical-align:top"') . '</a>';
+            $GLOBALS['TL_LANG']['tl_content']['editalias'][0] ?? null, 'style="vertical-align:top"') . '</a>';
     }
 
     /**
