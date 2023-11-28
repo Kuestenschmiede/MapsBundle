@@ -405,144 +405,6 @@ export default class GeoSearch extends Component {
             map.getView().setZoom(this.config.zoomlevel);
           }
         }
-
-        var pixel = map.getPixelFromCoordinate(resultCoordinate);
-        var feature = map.forEachFeatureAtPixel(pixel,
-            function (feature, layer) {
-              return feature;
-            }, {hitTolerance: 4});
-        var layer = map.forEachFeatureAtPixel(pixel,
-            function (feature, layer) {
-              return layer;
-            }, {hitTolerance: 4});
-        feature = feature && feature.get('features') && feature.get('features').length > 0 ? feature.get('features')[0] : feature;
-        if (this.config.popup) {
-          var popupInfos = {};
-          if (feature && feature.get('popup')) {
-            // single POI
-            popupInfos = feature.get('popup');
-          } else if (layer && layer.popup) {
-            popupInfos = layer.popup;
-          } else {
-            feature = false;
-          }
-          var objPopup;
-          const scope = this;
-          if (feature) {
-            var geometry = feature.getGeometry();
-            if (geometry instanceof Point) {
-              var coord = geometry.getCoordinates();
-            } else {
-              var coord = resultCoordinate;
-            }
-
-            window.c4gMapsPopup.popup.setPosition(coord);
-            let mapData = this.props.mapController.data;
-            if (popupInfos.content) {
-              if (mapData.popupHandling !== '3') {
-                window.c4gMapsPopup.$content ? window.c4gMapsPopup.$content.html('') : false;
-                window.c4gMapsPopup.$popup ? window.c4gMapsPopup.$popup.addClass(cssConstants.ACTIVE).addClass(cssConstants.LOADING) : false;
-                window.c4gMapsPopup.spinner.show();
-              }
-
-              if (popupInfos.async === false || popupInfos.async == '0') {
-                objPopup = {};
-                objPopup.popup = popupInfos;
-                objPopup.feature = feature;
-                objPopup.layer = layer;
-                // Call the popup hook for plugin specific popup content
-                if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_fillPopup === 'object') {
-                  utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, {
-                    popup: objPopup,
-                    mapController: this.props.mapController
-                  });
-                }
-                if (!this.props.mapController.proxy.popupController.currentPopup) {
-                  this.props.mapController.proxy.popupController.addPopUp(false);
-                }
-                this.props.mapController.proxy.popupController.setPopup(objPopup);
-              } else {
-                jQuery.ajax({
-                  dataType: "json",
-                  url: this.props.mapController.proxy.api_infowindow_url + '/' + popupInfos.content
-                }).done(function (data) {
-                  var popupInfo = {
-                    async: popupInfos.async,
-                    content: data.content,
-                    popup: popupInfos.popup,
-                    routing_link: popupInfos.routing_link
-                  };
-
-                  objPopup = {};
-                  objPopup.popup = popupInfo;
-                  objPopup.feature = feature;
-                  objPopup.layer = layer;
-
-                  // Call the popup hook for plugin specific popup content
-                  if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_fillPopup === 'object') {
-                    utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, {
-                      popup: objPopup,
-                      mapController: scope.props.mapController
-                    });
-                  }
-                  if (!scope.props.mapController.proxy.popupController.currentPopup) {
-                    scope.props.mapController.proxy.popupController.addPopUp(false);
-                  }
-                  scope.props.mapController.proxy.popupController.setPopup(objPopup);
-                });
-              }
-            }
-            //
-            //   window.c4gMapsPopup.$content.html('');
-            //   window.c4gMapsPopup.$popup.addClass(cssConstants.ACTIVE).addClass(cssConstants.LOADING);
-            //   window.c4gMapsPopup.spinner.show();
-            //
-            //   if (popupInfos.async === false || popupInfos.async == '0') {
-            //     var objPopup = {};
-            //     objPopup.popup = popupInfos;
-            //     objPopup.feature = feature;
-            //     objPopup.layer = layer;
-            //     // Call the popup hook for plugin specific popup content
-            //     if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_fillPopup === 'object') {
-            //       utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, objPopup);
-            //     }
-            //     this.config.mapController.proxy.setPopup(objPopup);
-            //   } else {
-            //     jQuery.ajax({
-            //       dataType: "json",
-            //       url: this.api_infowindow_url + '/' + popupInfos.content,
-            //       done: function (data) {
-            //         var popupInfo = {
-            //           async: popupInfos.async,
-            //           content: data.content,
-            //           popup: popupInfos.popup,
-            //           routing_link: popupInfos.routing_link
-            //         };
-            //
-            //         objPopup = {};
-            //         objPopup.popup = popupInfo;
-            //         objPopup.feature = feature;
-            //         objPopup.layer = layer;
-            //
-            //         // Call the popup hook for plugin specific popup content
-            //         if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_fillPopup === 'object') {
-            //           utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, objPopup);
-            //         }
-            //
-            //         this.setPopup(objPopup);
-            //       }
-            //     });
-            //   }
-            // } else {
-            //   window.c4gMapsPopup.popup.removeClass(cssConstants.ACTIVE);
-            // }
-
-          } else if (window && window.c4gMapsPopup && window.c4gMapsPopup.popup) {
-            jQuery(window.c4gMapsPopup.popup).removeClass(cssConstants.ACTIVE);
-          }
-        }
-
-
         if (this.config.autopick && this.config.mapController.geopicker && typeof this.config.mapController.geopicker.pick === 'function') {
           this.config.mapController.geopicker.pick(resultCoordinate);
         }
@@ -561,7 +423,6 @@ export default class GeoSearch extends Component {
         this.props.mapController.setOpenComponent(this);
       }
     }
-
   }
 
   flyTo(map, location, zoomlevel, zoombounds, boundingbox, markResult, resultDuration, animate, animateDuration, mapView) {
@@ -749,6 +610,16 @@ export default class GeoSearch extends Component {
       }
 
     }// end of result marker & animation handling
+    if (this.config.popup) {
+      let pixel = this.props.mapController.map.getPixelFromCoordinate(resultCoordinate);
+      window.setTimeout(()=> {
+        this.props.mapController.map.dispatchEvent({
+          type: 'click',
+          pixel: pixel,
+        },100);
+      })
+
+    }
   }
 
   /**
@@ -773,7 +644,6 @@ export default class GeoSearch extends Component {
 
     result = scope.results[index];
     resultCoordinate = transform([parseFloat(result.lon), parseFloat(result.lat)], 'EPSG:4326', 'EPSG:3857');
-
     if (this.config.animate) {
       var resolution = mapView.getResolution();
       var viewExtent = mapView.calculateExtent(map.getSize());
