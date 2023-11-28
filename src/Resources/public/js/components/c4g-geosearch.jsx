@@ -414,12 +414,8 @@ export default class GeoSearch extends Component {
         alert(langConstants.SEARCH_NOT_FOUND);
       }
       if (this.results) {
-        let results = [];
-        for (var i = 0; i < this.results.length; i++) {
-          results.push(this.results[i].display_name);
-        }
         this.props.mapController.hideOtherComponents(this);
-        this.setState({results: results, open: true, currentCoordinate: currentCoordinate, openResults: true, currentResult: results[0]});
+        this.setState({results: this.results, open: true, currentCoordinate: currentCoordinate, openResults: true, currentResult: results[0]});
         this.props.mapController.setOpenComponent(this);
       }
     }

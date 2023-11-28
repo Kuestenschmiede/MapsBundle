@@ -32,7 +32,12 @@ export default class GeoSearchResults extends Component {
         if (element === scope.props.currentResult) {
           buttonClass += " c4g-active";
         }
-        return (<li key={index}><button key={index} id={index} className={buttonClass} name={element} onMouseUp={() => scope.props.zoomFunc(index)}>{element}</button></li>)
+        let func = element.href ? () => {
+          window.open(element.href)
+        } : () => {
+          scope.props.zoomFunc(index)
+        };
+        return (<li key={index}><button key={index} id={index} className={buttonClass} name={element.display_name} onMouseUp={() => func()}>{element.display_name}</button></li>)
       })}
     </ul>;
 
