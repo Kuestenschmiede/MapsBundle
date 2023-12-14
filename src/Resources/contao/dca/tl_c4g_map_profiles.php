@@ -97,7 +97,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         ],
     'palettes' =>
         [
-        '__selector__'                => ['resize_locstyles_zoom', 'mouse_nav','cluster_all','attribution','hover_popups','overpassEngine', 'cesium', 'popupHandling','geopicker','consentBanner', 'userLocation'],
+        '__selector__'                => ['resize_locstyles_zoom', 'mouse_nav','cluster_all','attribution','hover_popups','overpassEngine', 'cesium','starboard_filter', 'popupHandling','geopicker','consentBanner', 'userLocation'],
         'default'                     => '{general_legend},name,theme,mapFunctions,initial_open_comp;'.
                                          '{navigation_legend:hide},mouse_nav,touch_nav,twoFingers,keyboard_nav;'.
                                          '{click_legend:hide},tooltipOrientation,link_newwindow,link_open_on,hover_popups,popupHandling;'.
@@ -119,6 +119,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         'attribution'                 => 'always_show_attribution,collapsed_attribution,add_attribution,cfg_logo_attribution,div_attribution',
         'hover_popups'                => 'hover_popups_stay',
         'cesium'                      => 'cesium_always',
+        'starboard_filter'            => 'starboard_filter_placeholder',
         'overpassEngine_1'            => 'overpass_url',
         'overpassEngine_2'            => '',
         'overpassEngine_3'            => '',
@@ -366,6 +367,13 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'default'                 => false,
                 'inputType'               => 'checkbox',
                 'sql'                     => "char(1) NOT NULL default '0'"
+            ],
+        'starboard_filter_placeholder' =>
+            [
+                'exclude'                 => true,
+                'inputType'               => 'text',
+                'eval'                    => ['maxlength'=>254],
+                'sql'                     => "varchar(254) NOT NULL default ''"
             ],
         'starboard_label' =>
             [

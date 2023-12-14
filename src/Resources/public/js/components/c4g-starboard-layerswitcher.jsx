@@ -159,8 +159,9 @@ export class StarboardLayerswitcher extends Component {
 
     filter = '';
     if (this.props.mapController.data.layerswitcher.filter) {
+      let placeholder = this.props.mapController.data.layerswitcher.filter_placeholder || "\uf002";
       filter = <div className={"c4g-starboard-layertree-filter without-button"}>
-               <input className={"c4g-starboard-layertree-filter-field"} type="text" onInput={this.setLayerFilter} placeholder={"\uf002"}/>
+               <input className={"c4g-starboard-layertree-filter-field"} type="text" onInput={this.setLayerFilter} placeholder={placeholder}/>
                </div>
     }
 

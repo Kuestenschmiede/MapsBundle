@@ -423,6 +423,7 @@ class MapDataConfigurator
                 //$mapData['layerswitcher']['enable'] = $profile->layerswitcher;
                 $mapData['layerswitcher']['label'] = $profile->layerswitcher_label;
                 $mapData['layerswitcher']['filter'] = $profile->starboard_filter;
+                $mapData['layerswitcher']['filter_placeholder'] = $profile->starboard_filter_placeholder;
             }
             if (is_array($buttons) && array_key_exists('baselayerswitcher', $buttons)) {
                 // Baselayerswitcher
