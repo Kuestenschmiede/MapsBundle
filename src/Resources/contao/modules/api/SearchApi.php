@@ -215,9 +215,9 @@ class SearchApi extends Frontend
 
         return $response;
     }
-    public static function searchDatabase($strSearch, $arrColumns, $strTable, $database, $whereClause = "") {
-        $strSearch = searchApi::updateSearchStringForNonExactSearch($strSearch);
-        $sql = "SELECT *, ";
+    public static function searchDatabase($strSearch, $arrColumns, $strTable, $database, $whereClause = "", $arrJoin = []) {
+        $strSearch = self::updateSearchStringForNonExactSearch($strSearch);
+        $sql = "SELECT $strTable.*, ";
         if ($whereClause) {
             $whereClause .= " AND (";
         }
@@ -225,15 +225,28 @@ class SearchApi extends Frontend
             $whereClause = "(";
         }
         foreach($arrColumns as $column) {
-            $name = $column['name'];
+            if (str_contains($column['name'], '.')) {
+                $name = $column['name'];
+                $position = strpos($name, ".");
+                $name = substr_replace($name, "`", $position+1, 0);
+                $name .= '`';
+            }
+            else {
+                $name = $strTable . ".`". $column['name'] . "`";
+            } ;
             $weight = $column['weight'];
-            $sql .= "IF (`$name` LIKE ?, $weight, 0) +";
-            $whereClause .= "`$name` LIKE ? OR ";
+            $sql .= "IF ($name LIKE ?, $weight, 0) +";
+            $whereClause .= "$name LIKE ? OR ";
+        }
+        $strJoin = "";
+        foreach ($arrJoin as $join) {
+            $strJoin .= "LEFT JOIN " . $join['table']. " ON " . $join['columnLeft'] . "=" . $join['columnRight'] . " ";
         }
         $sql = rtrim($sql, "+");
         $whereClause = rtrim($whereClause, "OR ");
         $whereClause .= ")";
         $sql .= "AS weight FROM $strTable ";
+        $sql .= $strJoin;
         $sql .= "WHERE " . $whereClause;
         $sql .= "ORDER BY weight DESC";
         $request = $database->prepare($sql);
