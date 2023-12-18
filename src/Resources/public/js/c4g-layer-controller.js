@@ -570,11 +570,11 @@ export class BetterLayerController {
             self.mapController.map.getView().setZoom(getZoom + 0.265);
             // self.mapController.map.getView().setZoom(getZoom);
 
-          }, 200);
+          }, 100);
           window.setTimeout(()=> {
             let getZoom = self.mapController.map.getView().getZoom();
             self.mapController.map.getView().setZoom(getZoom - 0.265);
-          }, 201);
+          }, 300);
         });
       }});
       self.vectorCollection.extend(features);
