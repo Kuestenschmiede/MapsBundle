@@ -18,6 +18,8 @@ export class StarboardLayerswitcher extends Component {
     super(props);
     const scope = this;
 
+    let index = props.mapController.arrComponents.findIndex(element => element.name === "layerswitcher");
+    props.mapController.arrComponents[index].component = this;
     this.setLayerFilter = this.setLayerFilter.bind(this);
     this.toggleAllLayers = this.toggleAllLayers.bind(this);
     this.changeCollapseState = this.changeCollapseState.bind(this);
@@ -103,7 +105,7 @@ export class StarboardLayerswitcher extends Component {
     return show;
   }
 
-  toggleAllLayers() {
+  toggleAllLayers(bool = null, ids = []) {
     const scope = this;
     let states = this.props.layerStates;
     let layers = this.props.objLayers;
@@ -122,6 +124,9 @@ export class StarboardLayerswitcher extends Component {
     }
     function deactivateLayers(layers, states) {
       for (let i = 0; i < states.length; i++) {
+        if (ids.includes(layers[i].id)) {
+          break;
+        }
         if (states[i].active) {
           scope.props.mapController.proxy.layerController.hide(layers[i].loader, layers[i].features || layers[i].vectorLayer);
         }
@@ -133,11 +138,36 @@ export class StarboardLayerswitcher extends Component {
       scope.buttonEnabled = false;
       return states;
     }
-
-    if (!scope.buttonEnabled) {
-      states = activateLayers(layers, states);
-    } else {
-      states = deactivateLayers(layers, states);
+    function activateSpecificLayers(layers, states) {
+      for (let i = 0; i < states.length; i++) {
+        if (ids.includes(layers[i].id)) {
+          if (!states[i].active) {
+            scope.props.mapController.proxy.layerController.show(layers[i].loader, layers[i].features || layers[i].vectorLayer);
+          }
+          states[i].active = true;
+        }
+        else {
+          if (states[i].active) {
+            scope.props.mapController.proxy.layerController.hide(layers[i].loader, layers[i].features || layers[i].vectorLayer);
+          }
+          states[i].active = false;
+        }
+        if (states[i].childStates && states[i].childStates.length > 0) {
+          states[i].childStates = activateSpecificLayers(layers[i].childs, states[i].childStates);
+        }
+      }
+      scope.buttonEnabled = false;
+      return states;
+    }
+    if (bool) {
+      states = activateSpecificLayers(layers, states);
+    }
+    else {
+      if (scope.buttonEnabled) {
+        states = deactivateLayers(layers, states);
+      } else {
+        states = activateLayers(layers, states);
+      }
     }
 
     this.props.parentCallback(states);

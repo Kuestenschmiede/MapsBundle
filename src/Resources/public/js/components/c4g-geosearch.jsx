@@ -24,6 +24,7 @@ import {Point} from "ol/geom";
 import {getVectorContext} from "ol/render";
 import {unByKey} from "ol/Observable";
 import {utils} from "../c4g-maps-utils";
+import {boundingExtent} from "ol/extent";
 import {containsCoordinate, getHeight, getWidth} from "ol/extent";
 const Titlebar = React.lazy(() => import("./c4g-titlebar.jsx"));
 
@@ -358,6 +359,11 @@ export default class GeoSearch extends Component {
             .always(function () {
               scope.config.mapController.spinner.hide();
             });
+        let index = mapController.arrComponents.findIndex(element => element.name === "layerswitcher");
+        let component = mapController.arrComponents[index].component;
+        if (component.buttonEnabled) {
+          component.toggleAllLayers();
+        }
       }
 
     } else {
@@ -387,28 +393,58 @@ export default class GeoSearch extends Component {
 
     if (results && results.length && results.length > 0){
       mapView = map.getView();
-
+     
       if (results[0]) {
         result = results[0];
         this.results = results;
-        currentCoordinate = mapView.getCenter();
-        resultCoordinate = transform([parseFloat(result.lon), parseFloat(result.lat)], 'EPSG:4326', 'EPSG:3857');
+        if (result.hasOwnProperty('uuid')) {
+          let index = mapController.arrComponents.findIndex(element => element.name === "layerswitcher");
+          let component = mapController.arrComponents[index].component;
+          let ids = [];
+          let coordinates = [];
+          for (let i in this.results) {
+            if (this.results.hasOwnProperty(i)) {
+              if (this.results[i].hasOwnProperty('uuid')) {
+                ids.push(this.results[i].uuid);
+              }
+              if (this.results[i].hasOwnProperty('lon') && this.results[i].hasOwnProperty('lat')) {
+                coordinates.push(transform([parseFloat(this.results[i].lon),parseFloat(this.results[i].lat)],'EPSG:4326', 'EPSG:3857'))
+              }
+            }
+          }
+          component.toggleAllLayers(true, ids);
+          let size = map.getSize();
+          let extent = boundingExtent(coordinates);
+          let fitOptions = {
+            duration: 250,
+            padding: [
+                size[1]/10,
+                size[0]/10,
+                size[1]/10,
+                size[0]/10,
+            ]
+          }
+          map.getView().fit(extent, fitOptions);
+        } 
+        else {
+          currentCoordinate = mapView.getCenter();
+          resultCoordinate = transform([parseFloat(result.lon), parseFloat(result.lat)], 'EPSG:4326', 'EPSG:3857');
 
-        if (animate) {
-          this.flyTo(
-              map, resultCoordinate, this.config.zoomlevel, this.config.zoombounds, result.bounding_box,
-              markResult, this.config.resultDuration, animate, this.config.animateDuration, map.getView());
-        } else {
-          this.completeSearch(this.config.markResult, this.config.animate, zoomType, this.config.animateDuration, resultCoordinate, this.config.resultDuration);
-          mapView.setCenter(resultCoordinate);
-          if (this.config.zoomlevel >= 0) {
-            map.getView().setZoom(this.config.zoomlevel);
+          if (animate) {
+            this.flyTo(
+                map, resultCoordinate, this.config.zoomlevel, this.config.zoombounds, result.bounding_box,
+                markResult, this.config.resultDuration, animate, this.config.animateDuration, map.getView());
+          } else {
+            this.completeSearch(this.config.markResult, this.config.animate, zoomType, this.config.animateDuration, resultCoordinate, this.config.resultDuration);
+            mapView.setCenter(resultCoordinate);
+            if (this.config.zoomlevel >= 0) {
+              map.getView().setZoom(this.config.zoomlevel);
+            }
+          }
+          if (this.config.autopick && this.config.mapController.geopicker && typeof this.config.mapController.geopicker.pick === 'function') {
+            this.config.mapController.geopicker.pick(resultCoordinate);
           }
         }
-        if (this.config.autopick && this.config.mapController.geopicker && typeof this.config.mapController.geopicker.pick === 'function') {
-          this.config.mapController.geopicker.pick(resultCoordinate);
-        }
-
       } else {
         let langConstants = getLanguage(this.options.mapController.data);
         alert(langConstants.SEARCH_NOT_FOUND);

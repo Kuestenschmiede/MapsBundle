@@ -50,7 +50,12 @@ export default class StarboardScope extends Component {
     });
     let mapController = props.mapController;
     let control = null;
-    if (!mapController.data.starboardscope.div) {
+    let open = props.open || false
+    if (mapController.data.starboardscope.div) {
+      this.close = () => {};
+      open = true;
+    }
+    else {
       control = new Control({element: element, target: props.target});
       let index = mapController.arrComponents.findIndex(element => element.name === "starboardscope");
       mapController.arrComponents[index].control = control;
@@ -71,11 +76,11 @@ export default class StarboardScope extends Component {
       this.getFeaturesInScope()
     });
     window.c4gMapsHooks.layer_loaded = window.c4gMapsHooks.layer_loaded || [];
-    window.c4gMapsHooks.layer_loaded.push((lol)=> {
+    window.c4gMapsHooks.layer_loaded.push((element)=> {
       this.getFeaturesInScope();
     });
     this.state = {
-      open: props.open || false,
+      open: open,
       className: props.className || "c4g-starboardscope-panel",
       control: control,
       features: []
