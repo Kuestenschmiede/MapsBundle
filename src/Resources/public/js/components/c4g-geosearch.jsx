@@ -401,8 +401,9 @@ export default class GeoSearch extends Component {
         this.results = results;
         if (result.hasOwnProperty('uuid')) {
           let index = mapController.arrComponents.findIndex(element => element.name === "layerswitcher");
+          let component = false;
           if (index && mapController.arrComponents[index]) {
-            let component = mapController.arrComponents[index].component;
+            component = mapController.arrComponents[index].component;
           }
           let ids = [];
           let coordinates = [];
@@ -416,7 +417,7 @@ export default class GeoSearch extends Component {
               }
             }
           }
-          if (index && mapController.arrComponents[index]) {
+          if (component) {
             component.toggleAllLayers(true, ids);
           }
           let size = map.getSize();

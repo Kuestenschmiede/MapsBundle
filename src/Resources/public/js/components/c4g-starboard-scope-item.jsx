@@ -38,7 +38,7 @@ export class StarboardScopeItem extends Component {
                 popup.async = false;
                 popup.content = data.content
                 this.setState({
-                  'html': data.content
+                  'html': popup.content
                 });
               }
 
