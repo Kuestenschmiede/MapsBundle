@@ -360,9 +360,11 @@ export default class GeoSearch extends Component {
               scope.config.mapController.spinner.hide();
             });
         let index = mapController.arrComponents.findIndex(element => element.name === "layerswitcher");
-        let component = mapController.arrComponents[index].component;
-        if (component.buttonEnabled) {
-          component.toggleAllLayers();
+        if (index && mapController.arrComponents[index]) {
+          let component = mapController.arrComponents[index].component;
+          if (component.buttonEnabled) {
+            component.toggleAllLayers();
+          }
         }
       }
 
@@ -399,7 +401,9 @@ export default class GeoSearch extends Component {
         this.results = results;
         if (result.hasOwnProperty('uuid')) {
           let index = mapController.arrComponents.findIndex(element => element.name === "layerswitcher");
-          let component = mapController.arrComponents[index].component;
+          if (index && mapController.arrComponents[index]) {
+            let component = mapController.arrComponents[index].component;
+          }
           let ids = [];
           let coordinates = [];
           for (let i in this.results) {
@@ -412,7 +416,9 @@ export default class GeoSearch extends Component {
               }
             }
           }
-          component.toggleAllLayers(true, ids);
+          if (index && mapController.arrComponents[index]) {
+            component.toggleAllLayers(true, ids);
+          }
           let size = map.getSize();
           let extent = boundingExtent(coordinates);
           let fitOptions = {
