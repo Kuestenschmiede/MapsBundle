@@ -63,7 +63,7 @@ export default class StarboardScope extends Component {
     }
     this.open = this.open.bind(this);
     this.close = this.close.bind(this);
-
+    this.loadMore = this.loadMore.bind(this);
 
     this.getFeaturesInScope = this.getFeaturesInScope.bind(this);
     this.view = props.mapController.map.getView();
@@ -83,7 +83,8 @@ export default class StarboardScope extends Component {
       open: open,
       className: props.className || "c4g-starboardscope-panel",
       control: control,
-      features: []
+      features: [],
+      maxElements: 20
     };
   }
 
@@ -194,9 +195,9 @@ export default class StarboardScope extends Component {
         <div className={"c4g-starboardscope-content-container"}>
           <ul>
             {this.state.features.map((feature, index) => {
-              if (index < 20) { 
+              if (index < this.state.maxElements) {
                 return <StarboardScopeItem mapController={this.props.mapController} langConstants={this.langConstants}
-                                           index={index} key={index} feature={feature}/>
+                                           index={index} key={index} feature={feature} lastElement={index === this.state.maxElements -1} loadMore={this.loadMore}/>
               }
             })}
           </ul>
@@ -216,6 +217,9 @@ export default class StarboardScope extends Component {
 
   close() {
     this.setState({open: false});
+  }
+  loadMore() {
+    this.setState({maxElements: this.state.maxElements + 20});
   }
   componentDidMount() {
     this._isMounted = true;

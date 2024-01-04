@@ -23,6 +23,18 @@ export class StarboardScopeItem extends Component {
     this.highlightFeature = this.highlightFeature.bind(this);
     this.ref = React.createRef();
     this.loadPopup = this.loadPopup.bind(this);
+    this.observerFunction = this.observerFunction.bind(this);
+  }
+  observerFunction (entries, observer) {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        if (this.props.lastElement && this.props.loadMore) {
+          this.props.loadMore();
+        }
+        this.loadPopup();
+        observer.unobserve(this.ref.current)
+      }
+    })
   }
   loadPopup() {
     let popup = this.props.feature.get('popup');
@@ -69,7 +81,7 @@ export class StarboardScopeItem extends Component {
 
   render() {
     if (this.ref.current && !this.observer) {
-      this.observer = new IntersectionObserver(this.loadPopup);
+      this.observer = new IntersectionObserver(this.observerFunction, {root:document, threshold: 0.1});
       this.observer.observe(this.ref.current)
     }
     let distance = null;
