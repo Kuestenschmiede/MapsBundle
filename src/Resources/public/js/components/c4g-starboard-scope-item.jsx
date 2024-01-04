@@ -24,6 +24,10 @@ export class StarboardScopeItem extends Component {
     this.ref = React.createRef();
     this.loadPopup = this.loadPopup.bind(this);
     this.observerFunction = this.observerFunction.bind(this);
+    if (this.ref.current && !this.observer) {
+      this.observer = new IntersectionObserver(this.observerFunction, {root:document, threshold: 0.1});
+      this.observer.observe(this.ref.current)
+    }
   }
   observerFunction (entries, observer) {
     entries.forEach((entry) => {
@@ -80,10 +84,6 @@ export class StarboardScopeItem extends Component {
   }
 
   render() {
-    if (this.ref.current && !this.observer) {
-      this.observer = new IntersectionObserver(this.observerFunction, {root:document, threshold: 0.1});
-      this.observer.observe(this.ref.current)
-    }
     let distance = null;
     if (this.props.feature.get('distance')) {
       distance = <div className={"c4g-element-distance"}>
