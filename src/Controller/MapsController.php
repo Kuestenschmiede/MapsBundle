@@ -51,20 +51,29 @@ class MapsController extends BaseController
             $response->setStatusCode(400);
             return $response;
         } else {
-            $infoWindowApi = new InfoWindowApi();
-            $returnData = $infoWindowApi->generate($popupString);
-
-
-            $event = new LoadInfoWindowEvent();
-            $event->setPopupString($popupString);
-            $event->setPopup($returnData);
-            $scope = $request->get("scope");
-            if ($scope) {
-                $event->setScope($scope);
+            $this->checkForCacheSettings('infoWindowService');
+            if (self::$useCache) {
+                $this->checkAndStoreCachedData($request);
             }
-            $this->eventDispatcher->dispatch($event, $event::NAME);
-            $returnData = $event->getPopup();
-            $response->setData($returnData);
+            if (!self::$outputFromCache) {
+                $infoWindowApi = new InfoWindowApi();
+                $this->responseData = $infoWindowApi->generate($popupString);
+
+                $event = new LoadInfoWindowEvent();
+                $event->setPopupString($popupString);
+                $event->setPopup($this->responseData);
+                $scope = $request->get("scope");
+                if ($scope) {
+                    $event->setScope($scope);
+                }
+                $this->eventDispatcher->dispatch($event, $event::NAME);
+                $this->responseData = $event->getPopup();
+                if (self::$useCache) {
+                    $this->storeDataInCache($request);
+                }
+            }
+            $response->setData($this->responseData);
+
             return $response;
         }
     }
