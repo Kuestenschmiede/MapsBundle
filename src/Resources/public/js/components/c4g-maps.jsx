@@ -1047,7 +1047,12 @@ export default class MapController extends Component {
     for (let key in components) {
       if (components.hasOwnProperty(key)) {
         if (components[key] && (components[key] !== objComponent)) {
-          components[key].setState({open:false});
+          if (components[key].close) {
+            components[key].close();
+          }
+          else {
+            components[key].setState({open:false});
+          }
         }
       }
     }
@@ -1475,7 +1480,12 @@ export default class MapController extends Component {
         if (this.components.hasOwnProperty(key)) {
           let currentComp = this.components[key];
           if (currentComp && (currentComp !== component)) {
-            currentComp.setState({open: false});
+            if (currentComp.close) {
+              currentComp.close();
+            }
+            else {
+              currentComp.setState({open:false});
+            }
           }
         }
       }
