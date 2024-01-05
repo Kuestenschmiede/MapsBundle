@@ -259,6 +259,17 @@ export default class GeoSearch extends Component {
       }
       return false;
     }
+    else if (event.which === 8) {
+      let searchInput = jQuery("#c4g-geosearch-input");
+      let value = searchInput.val();
+      if (value.length < 2) {
+        let index = this.props.mapController.arrComponents.findIndex(element => element.name === "layerswitcher");
+        if (index && this.props.mapController.arrComponents[index]) {
+          let component = this.props.mapController.arrComponents[index].component;
+          component.toggleAllLayers(false);
+        }
+      }
+    }
   }
 
   clickControl(disregardState) {
