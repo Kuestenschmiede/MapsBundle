@@ -68,7 +68,7 @@ class PerformSearchEvent
     /**
      * @return array
      */
-    public function getResponse()
+    public function getResponse() :array
     {
         return $this->response;
     }
@@ -76,7 +76,7 @@ class PerformSearchEvent
     /**
      * @param array $response
      */
-    public function setResponse($response)
+    public function setResponse(array $response)
     {
         $this->response = $response;
     }

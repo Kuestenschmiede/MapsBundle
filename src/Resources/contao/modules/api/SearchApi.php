@@ -177,7 +177,7 @@ class SearchApi extends Frontend
         }
         $response = $return->getContent();
         if ($response) {
-            $decoded = json_decode($response);
+            $decoded = json_decode($response, true);
             if (is_array($decoded) && array_key_exists('features', $decoded)) {
                 $arrResponse = $decoded['features'] ?? [];
             } elseif (is_object($decoded) && property_exists($decoded, 'features')) {

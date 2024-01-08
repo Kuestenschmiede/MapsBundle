@@ -89,7 +89,7 @@ class MapsController extends BaseController
         $searchApi = new SearchApi();
         $returnData = $searchApi->generate($profileId, $getParams);
         if (getType($returnData) === "string") {
-            $returnData = json_decode($returnData);
+            $returnData = json_decode($returnData, true);
         }
         $event->setResponse($returnData);
         $this->eventDispatcher->dispatch($event, $event::NAME);
