@@ -145,8 +145,7 @@ span.c4g-active ul li.c4g-active:before{
     display: none;
     transition: visibility 0.1s, opacity 0.5s linear;
   }
-  &:hover,
-  &:focus {
+  &:hover {
     white-space: nowrap;
     width: fit-content;
     padding-left: 5px;

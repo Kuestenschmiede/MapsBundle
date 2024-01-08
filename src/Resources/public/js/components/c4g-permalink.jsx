@@ -28,11 +28,11 @@ export default class Permalink extends Component {
     let langConstants = getLanguage(props.mapController.data);
     if (true) {
       let span = document.createElement('span');
-      span.innerText = langConstants.CTRL_OVERVIEWMAP;
+      span.innerText = langConstants.CTRL_PERMALINK;
       button.appendChild(span);
     }
     else {
-      button.title = langConstants.CTRL_OVERVIEWMAP;
+      button.title = langConstants.CTRL_PERMALINK;
     }
     element.className = "c4g-permalink-control ol-unselectable ol-control ";
     if (props.open) {
