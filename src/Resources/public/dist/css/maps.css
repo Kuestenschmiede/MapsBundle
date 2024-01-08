@@ -5974,9 +5974,10 @@ span.c4g-active ul li.c4g-active:before {
 }
 .ol-control > button:hover {
   white-space: nowrap;
+  padding-left: 5px;
   width: -moz-fit-content;
   width: fit-content;
-  padding-left: 5px
+  min-width: var(--button-size-pixel)
 }
 .ol-control > button:hover span {
   padding-left: 5px;
@@ -6375,6 +6376,17 @@ button.c4g-beach-options:before {
 .ol-control button:focus,
 .ol-control button:hover {
   text-decoration: none
+}
+.ol-control button:hover {
+  padding: 0 9px;
+  background: var(--shadow-color);
+  transition: ease-in-out .3s;
+  box-shadow: 5px 5px 10px -6px rgba(0,0,0,.5)
+}
+.ol-control > button:hover span {
+  padding-left: 15px;
+  visibility: visible;
+  display: inline
 }
 .c4g-control-container-top-right {
   position: absolute;
