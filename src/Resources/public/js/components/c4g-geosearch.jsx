@@ -53,6 +53,7 @@ export default class GeoSearch extends Component {
       let input = document.querySelector(props.mapController.data.geosearch.inputCssSelector);
       input.setAttribute('id', "c4g-geosearch-input");
       input.addEventListener('keydown',(event) => {this.inputCallback(event)});
+      input.addEventListener('input',(event) => {this.deleteCallback(event)});
       this.input = input;
     }
     else {
@@ -66,6 +67,7 @@ export default class GeoSearch extends Component {
       }
 
       input.addEventListener('keydown',(event) => {this.inputCallback(event)});
+      input.addEventListener('input',(event) => {this.deleteCallback(event)});
       element.appendChild(input);
       this.input = input;
 
@@ -78,7 +80,6 @@ export default class GeoSearch extends Component {
       element.appendChild(span);
     }
 
-    // input.onkeydown = (event) => {this.inputCallback(event)};
 
 
 
@@ -146,6 +147,7 @@ export default class GeoSearch extends Component {
     };
 
     this.inputCallback = this.inputCallback.bind(this);
+    this.deleteCallback = this.deleteCallback.bind(this);
     this.startSearch = this.startSearch.bind(this);
     this.zoomTo = this.zoomTo.bind(this);
     this.closeResults = this.closeResults.bind(this);
@@ -180,7 +182,7 @@ export default class GeoSearch extends Component {
     let input = null
     if (this.props.external) {
       input = <div className={"c4g-geosearch-filter"}>
-        <input type="text" onKeyDown={this.inputCallback} id={"c4g-geosearch-input"} placeholder={this.config.placeholder} aria-label={this.config.placeholder}/>
+        <input type="text" onInput={this.deleteCallback} onKeyDown={this.inputCallback} id={"c4g-geosearch-input"} placeholder={this.config.placeholder} aria-label={this.config.placeholder}/>
         <button className={cssConstants.GEOSEARCH_START} type={"button"} title={this.langConstants.CTRL_START_SEARCH} onMouseUp={this.startSearch}/>
       </div>;
     }
@@ -259,10 +261,14 @@ export default class GeoSearch extends Component {
       }
       return false;
     }
-    else if (event.which === 8) {
-      let searchInput = jQuery("#c4g-geosearch-input");
-      let value = searchInput.val();
-      if (value.length < 2) {
+  }
+  deleteCallback(event) {
+    event.stopPropagation();
+    let searchInput = jQuery("#c4g-geosearch-input");
+    let value = searchInput.val();
+    if (this.lastVal !== value) {
+      this.lastVal = value;
+      if (value.length < 1) {
         let index = this.props.mapController.arrComponents.findIndex(element => element.name === "layerswitcher");
         if (index && this.props.mapController.arrComponents[index]) {
           let component = this.props.mapController.arrComponents[index].component;
