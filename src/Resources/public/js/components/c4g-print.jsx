@@ -43,7 +43,9 @@ export default class Print extends Component {
     let toggle = function (event) {
       event.stopPropagation();
       if (map.getTarget()) {
+        this.forcePrint = true;
         map.once('rendercomplete', function () {
+          this.forcePrint = false;
           const mapCanvas = document.createElement('canvas');
           const size = map.getSize();
           mapCanvas.width = size[0];
@@ -98,9 +100,11 @@ export default class Print extends Component {
             saveAs(dataURL, 'map.png');
           }
         });
-
-        
-     
+        window.setTimeout(()=> {
+          if (this.forcePrint) {
+            map.dispatchEvent('rendercomplete');
+          }
+        }, 200)
       }
     };
 
