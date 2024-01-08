@@ -26,6 +26,17 @@ export default class Fullscreen extends Component {
       tipLabel: langConstants.CTRL_FULLSCREEN,
       target: this.props.target
     });
+    if (control && control.element && control.element.children) {
+      if (control.element.children[0]) {
+        let button = control.element.children[0];
+        if (true) {
+          let span = document.createElement('span');
+          button.title = "";
+          span.innerText = langConstants.CTRL_FULLSCREEN;
+          button.appendChild(span);
+        }
+      }
+    }
 
     let mapController = props.mapController;
     let index = mapController.arrComponents.findIndex(element => element.name === "fullscreen");

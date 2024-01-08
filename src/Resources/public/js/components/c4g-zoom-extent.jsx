@@ -25,7 +25,17 @@ export default class ZoomExtent extends Component {
       tipLabel: langConstants.CTRL_ZOOM_EXT,
       target: this.props.target
     });
-
+    if (control && control.element && control.element.children) {
+      if (control.element.children[0]) {
+        let button = control.element.children[0];
+        if (true) {
+          let span = document.createElement('span');
+          button.title = "";
+          span.innerText = langConstants.CTRL_ZOOM_EXT;
+          button.appendChild(span);
+        }
+      }
+    }
     let mapController = props.mapController;
     let index = mapController.arrComponents.findIndex(element => element.name === "zoomExtent");
     mapController.arrComponents[index].control = control;

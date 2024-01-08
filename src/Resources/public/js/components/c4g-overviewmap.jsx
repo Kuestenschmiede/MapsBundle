@@ -44,12 +44,19 @@ export default class OverviewMap extends Component {
     // props.target.appendChild(element);
 
     trigger = document.createElement('button');
-    trigger.title = this.langConstants.CTRL_OVERVIEWMAP;
+    if (true) {
+      let span = document.createElement('span');
+      span.innerText = this.langConstants.CTRL_OVERVIEWMAP;
+      trigger.appendChild(span);
+    }
+    else {
+      trigger.title = this.langConstants.CTRL_OVERVIEWMAP;
+    }
     element.appendChild(trigger);
 
-    triggerIcon = document.createElement('span');
-    triggerIcon.className = cssConstants.ICON;
-    trigger.appendChild(triggerIcon);
+    // triggerIcon = document.createElement('span');
+    // triggerIcon.className = cssConstants.ICON;
+    // trigger.appendChild(triggerIcon);
 
     jQuery(trigger).click(function () {
       if (!scope.state.open) {

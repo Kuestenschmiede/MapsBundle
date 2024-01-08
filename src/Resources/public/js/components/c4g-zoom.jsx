@@ -19,13 +19,38 @@ export default class Zoom extends Component {
     // let controlContainerTopLeft = document.querySelector('.' + cssConstants.CONTROL_CONTAINER_TL + '.' + cssConstants.OL_UNSELECTABLE);
     let langConstants = getLanguage(props.mapController.data);
     let control = new OlZoom({
-      zoomInLabel: ' ',
-      zoomOutLabel: ' ',
       zoomInTipLabel: langConstants.CTRL_ZOOM_IN,
       zoomOutTipLabel: langConstants.CTRL_ZOOM_OUT,
+      zoomInLabel: " ",
+      zoomOutLabel: " ",
       target: this.props.target
     });
-
+    if (control && control.element && control.element.children) {
+      if (control.element.children[0]) {
+        let button = control.element.children[0];
+        if (true) {
+          let span = document.createElement('span');
+          button.title = "";
+          span.innerText = langConstants.CTRL_ZOOM_IN;
+          button.appendChild(span);
+        }
+        else {
+          button.title = langConstants.CTRL_ZOOM_IN;
+        }
+      }
+      if (control.element.children[1]) {
+        let button = control.element.children[1];
+        if (true) {
+          let span = document.createElement('span');
+          button.title = "";
+          span.innerText = langConstants.CTRL_ZOOM_OUT;
+          button.appendChild(span);
+        }
+        else {
+          button.title = langConstants.CTRL_ZOOM_OUT;
+        }
+      }
+    }
     let mapController = props.mapController;
     let index = mapController.arrComponents.findIndex(element => element.name === "zoom");
     mapController.arrComponents[index].control = control;

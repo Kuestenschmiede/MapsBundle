@@ -28,7 +28,14 @@ export default class Measuretools extends Component {
     let element = document.createElement('div');
     let button = document.createElement('button');
     this.langConstants = getLanguage(props.mapController.data);
-    button.title = this.langConstants.CTRL_MEASURETOOLS;
+    if (true) {
+      let span = document.createElement('span');
+      span.innerText = this.langConstants.CTRL_MEASURETOOLS;
+      button.appendChild(span);
+    }
+    else {
+      button.title = this.langConstants.CTRL_MEASURETOOLS;
+    }
     element.className = "c4g-measuretools-control ol-unselectable ol-control ";
     if (props.open) {
       element.className += "c4g-open";

@@ -24,9 +24,18 @@ export default class StarboardPanel extends Component {
     // create control to toggle the panel
     let element = document.createElement('div');
     let button = document.createElement('button');
-    this.langConstants = getLanguage(props.mapController.data);
-    button.title = this.langConstants.CTRL_STARBOARD;
     element.className = "c4g-starboard-control ol-unselectable ol-control ";
+    this.langConstants = getLanguage(props.mapController.data);
+
+    if (true) {
+      let span = document.createElement('span');
+      span.innerText = this.langConstants.CTRL_STARBOARD;
+      button.appendChild(span);
+    }
+    else {
+      button.title = this.langConstants.CTRL_STARBOARD;
+    }
+
     if (props.open) {
       element.className += "c4g-open";
     } else {

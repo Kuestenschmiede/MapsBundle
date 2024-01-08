@@ -55,7 +55,14 @@ export default class ZoomPosition extends Component {
 
     // button
     button = document.createElement('button');
-    button.title = langConstants.CTRL_ZOOM_POS;
+    if (true) {
+      let span = document.createElement('span');
+      span.innerText = langConstants.CTRL_ZOOM_POS;
+      button.appendChild(span);
+    }
+    else {
+      button.title = langConstants.CTRL_ZOOM_POS;
+    }
     element.appendChild(button);
 
     // set onClick to the toggle-function

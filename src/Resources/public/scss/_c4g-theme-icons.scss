@@ -139,6 +139,23 @@ span.c4g-active ul li.c4g-active:before{
   font-weight: 900;
   font-size: 14px;
 }
+.ol-control > button {
+  span:not(.ol-compass) {
+    visibility: hidden;
+    display: none;
+    transition: visibility 0.1s, opacity 0.5s linear;
+  }
+  &:hover {
+    white-space: nowrap;
+    width: fit-content;
+    padding-left: 5px;
+    span {
+      padding-left: 5px;
+      visibility: visible;
+      display: inline;
+    }
+  }
+}
 
 .c4g-measuretools-control > button:before {
   content: "\f545";
@@ -347,7 +364,7 @@ button.c4g-geosearch-results-close:before {
 }
 
 /* Overviemap */
-.c4g-overviewmap span.c4g-icon:before {
+.c4g-overviewmap button:before {
   content: "\f0ac";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;

@@ -37,7 +37,6 @@ export default class Grid extends Component {
     };
     const scope = this;
     const objGrid = new Graticule(options);
-
     // function to enable the grid
     var enable = function () {
       objGrid.setVisible(true);
@@ -67,7 +66,14 @@ export default class Grid extends Component {
     element.className = cssConstants.GRATICULE + ' ' + cssConstants.OL_UNSELECTABLE + ' ' + cssConstants.OL_CONTROL;
     // button
     button = document.createElement('button');
-    button.title = langConstants.CTRL_GRID;
+    if (true) {
+      let span = document.createElement('span');
+      span.innerText = langConstants.CTRL_GRID;
+      button.appendChild(span);
+    }
+    else {
+      button.title = langConstants.CTRL_GRID;
+    }
     element.appendChild(button);
 
     // set onClick to the toggle-function

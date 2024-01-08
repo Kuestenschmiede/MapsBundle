@@ -93,7 +93,14 @@ export default class ZoomHome extends Component {
     element.className = cssConstants.OL_ZOOM_HOME+' '+cssConstants.OL_CONTROL + ' ' + cssConstants.OL_UNSELECTABLE;
     // button
     button = document.createElement('button');
-    button.title = langConstants.CTRL_ZOOM_HOME;
+    if (true) {
+      let span = document.createElement('span');
+      span.innerText = langConstants.CTRL_ZOOM_HOME;
+      button.appendChild(span);
+    }
+    else {
+      button.title = langConstants.CTRL_ZOOM_HOME;
+    }
     element.appendChild(button);
 
     // set onClick to the toggle-function

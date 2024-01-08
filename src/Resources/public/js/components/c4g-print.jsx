@@ -110,7 +110,14 @@ export default class Print extends Component {
 
     // button
     button = document.createElement('button');
-    button.title = langConstants.CTRL_PRINT;
+    if (true) {
+      let span = document.createElement('span');
+      span.innerText = langConstants.CTRL_PRINT;
+      button.appendChild(span);
+    }
+    else {
+      button.title = langConstants.CTRL_PRINT;
+    }
     button.className = cssConstants.PRINT;
     element.appendChild(button);
 

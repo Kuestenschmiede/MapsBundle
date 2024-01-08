@@ -24,7 +24,16 @@ export default class Infopage extends Component {
     let element = document.createElement('div');
     let button = document.createElement('button');
     this.langConstants = getLanguage(props.mapController.data);
-    button.title = this.langConstants.CTRL_INFOAREA;
+
+    if (true) {
+      let span = document.createElement('span');
+      span.innerText = this.langConstants.CTRL_INFOAREA;
+      button.appendChild(span);
+    }
+    else {
+      button.title = this.langConstants.CTRL_INFOAREA;
+    }
+
     element.className = "c4g-infopage-control ol-unselectable ol-control ";
     if (props.open) {
       element.className += "c4g-open";

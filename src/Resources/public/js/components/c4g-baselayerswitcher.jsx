@@ -24,7 +24,16 @@ export default class BaselayerSwitcher extends Component {
     let element = document.createElement('div');
     let button = document.createElement('button');
     this.langConstants = getLanguage(props.mapController.data);
-    button.title = this.langConstants.CTRL_BASELAYER;
+
+    if (true) {
+      let span = document.createElement('span');
+      span.innerText = this.langConstants.CTRL_BASELAYER;
+      button.appendChild(span);
+    }
+    else {
+      button.title = this.langConstants.CTRL_BASELAYER;
+    }
+
     element.className = "c4g-baselayer-control ol-unselectable ol-control ";
     if (props.open) {
       element.className += "c4g-open";

@@ -156,7 +156,7 @@ export class StarboardLayerswitcher extends Component {
           states[i].childStates = activateSpecificLayers(layers[i].childs, states[i].childStates);
         }
       }
-      scope.buttonEnabled = false;
+      scope.buttonEnabled = !scope.buttonEnabled;
       return states;
     }
     if (bool) {
