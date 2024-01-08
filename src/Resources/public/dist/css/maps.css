@@ -4725,11 +4725,6 @@
  * @copyright (c) 2010-2022, by Küstenschmiede GmbH Software & Design
  * @link https://www.con4gis.org
  */
-.mod_c4g_maps > div:-webkit-full-screen {
-  width: 100%!important;
-  height: 100%!important;
-  margin: 0!important
-}
 .mod_c4g_maps > div:fullscreen {
   width: 100%!important;
   height: 100%!important;
@@ -4885,9 +4880,6 @@ div.c4g-control-container-top-left > div.c4g-external {
 }
 .c4g-overviewmap.c4g-close .ol-overviewmap-map {
   opacity: 0
-}
-.c4g-overviewmap span.c4g-icon:before {
-  content: "O"
 }
 .c4g-overviewmap-container.c4g-close {
   right: -100%
@@ -5975,6 +5967,22 @@ span.c4g-active ul li.c4g-active:before {
   font-weight: 900;
   font-size: 14px
 }
+.ol-control > button span:not(.ol-compass) {
+  visibility: hidden;
+  display: none;
+  transition: visibility .1s,opacity .5s linear
+}
+.ol-control > button:hover {
+  white-space: nowrap;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding-left: 5px
+}
+.ol-control > button:hover span {
+  padding-left: 5px;
+  visibility: visible;
+  display: inline
+}
 .c4g-measuretools-control > button:before {
   content: "\f545";
   font-family: "Font Awesome 5 Free";
@@ -6144,7 +6152,7 @@ button.c4g-geosearch-results-close:before {
   font-weight: 900;
   font-size: inherit
 }
-.c4g-overviewmap span.c4g-icon:before {
+.c4g-overviewmap button:before {
   content: "\f0ac";
   font-family: "Font Awesome 5 Free";
   font-weight: 900;
