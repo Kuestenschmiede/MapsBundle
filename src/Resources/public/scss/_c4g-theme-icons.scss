@@ -147,8 +147,9 @@ span.c4g-active ul li.c4g-active:before{
   }
   &:hover {
     white-space: nowrap;
-    width: fit-content;
     padding-left: 5px;
+    width: fit-content;
+    min-width: var(--button-size-pixel);
     span {
       padding-left: 5px;
       visibility: visible;

@@ -25,7 +25,7 @@ export default class BaselayerSwitcher extends Component {
     let button = document.createElement('button');
     this.langConstants = getLanguage(props.mapController.data);
 
-    if (true) {
+    if (props.mapController.data.themeData.controlLabels) {
       let span = document.createElement('span');
       span.innerText = this.langConstants.CTRL_BASELAYER;
       button.appendChild(span);

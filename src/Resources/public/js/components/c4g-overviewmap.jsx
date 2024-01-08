@@ -44,7 +44,7 @@ export default class OverviewMap extends Component {
     // props.target.appendChild(element);
 
     trigger = document.createElement('button');
-    if (true) {
+    if (props.mapController.data.themeData.controlLabels) {
       let span = document.createElement('span');
       span.innerText = this.langConstants.CTRL_OVERVIEWMAP;
       trigger.appendChild(span);

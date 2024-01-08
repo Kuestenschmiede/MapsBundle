@@ -27,7 +27,7 @@ export default class StarboardPanel extends Component {
     element.className = "c4g-starboard-control ol-unselectable ol-control ";
     this.langConstants = getLanguage(props.mapController.data);
 
-    if (true) {
+    if (props.mapController.data.themeData.controlLabels) {
       let span = document.createElement('span');
       span.innerText = this.langConstants.CTRL_STARBOARD;
       button.appendChild(span);

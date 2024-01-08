@@ -40,8 +40,17 @@ export default class GeoSearch extends Component {
     this.doneFunction = this.doneFunction.bind(this);
     let element = document.createElement('div');
     let button = document.createElement('button');
-    button.setAttribute('aria-label', this.langConstants.CTRL_GEOSEARCH);
-    button.setAttribute('title', this.langConstants.CTRL_GEOSEARCH);
+
+    if (props.mapController.data.themeData.controlLabels) {
+      let span = document.createElement('span');
+      span.innerText = this.langConstants.CTRL_GEOSEARCH;
+      button.appendChild(span);
+    }
+    else {
+      button.setAttribute('aria-label', this.langConstants.CTRL_GEOSEARCH);
+      button.setAttribute('title', this.langConstants.CTRL_GEOSEARCH);
+    }
+
     element.className = "c4g-geosearch" + " ol-control " + "ol-unselectable";
     element.appendChild(button);
     jQuery(button).on('click', ()=> {this.clickControl()});

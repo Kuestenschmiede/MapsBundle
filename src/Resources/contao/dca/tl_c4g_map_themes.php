@@ -93,7 +93,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
         ],
     'palettes' =>
         [
-        'default' => '{theme_legend}, name; {colors_legend}, maincolor, fontcolor, shadowcolor, popupMaincolor, popupFontcolor; {buttons_legend}, buttonradius, buttonsize, button_fontsize; {expert_legend}, popupMaxWidth, useglobal;',
+        'default' => '{theme_legend}, name; {colors_legend}, maincolor, fontcolor, shadowcolor, popupMaincolor, popupFontcolor; {buttons_legend}, buttonradius, buttonsize, button_fontsize, controlLabels; {expert_legend}, popupMaxWidth, useglobal;',
         ],
     'fields' =>
         [
@@ -191,6 +191,13 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
                 'options'                 => ['%'],
                 'eval'                    => ['tl_class'=>'long', 'mandatory'=>false],
                 'sql'                     => "varchar(100) NOT NULL default 'a:2:{s:4:\"unit\";s:1:\"%\";s:5:\"value\";s:2:\"42\";}'"
+            ],
+        'controlLabels' =>
+            [
+                'exclude'                 => true,
+                'default'                 => false,
+                'inputType'               => 'checkbox',
+                'sql'                     => "char(1) NOT NULL default ''"
             ],
         'useglobal' =>
             [

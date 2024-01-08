@@ -289,7 +289,7 @@ class ResourceLoader extends coreResourceLoader
                     $themeData['popupMaxWidth'] = $popupMaxWidth['value'];
                 }
             }
-
+            $themeData['controlLabels'] = $theme->controlLabels;
             $themeData['useglobal'] = $theme->useglobal;
         }
 

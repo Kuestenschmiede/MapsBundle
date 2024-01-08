@@ -20,6 +20,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_themes']['show']    = array('Show layout', 'Show
  */
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['name']        = array('Name', 'Please choose a name for the layout.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['useglobal']   = array('Set global', 'Some css vars, like colors, will provided outside the map.');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['controlLabels']   = array('Improved Labels for Controls', 'Improved labels for controls.');
 
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['buttonradius']  = array('Button radius', 'Button radius in percent.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['buttonsize'] = array('Button size', 'Specify the size of the buttons (controls on the left) in pixel here. Default is 36 px.');

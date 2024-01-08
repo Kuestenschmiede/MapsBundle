@@ -20,6 +20,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_themes']['show']    = array('Kartenlayout anzeig
  */
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['name']        = array('Name', 'Bitte geben Sie den Namen des Kartenlayouts an.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['useglobal']   = array('Einstellungen global setzen', 'Einige Einstellungen wie Farben und Formen werden im CSS als Variable gesetzt und können auch global, also außerhalb der Karte, zur Verfügung gestellt werden.');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['controlLabels']   = array('Verbesserte Labels für Controls', 'Verbesserte Labels für Controls.');
 
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['buttonradius']  = array('Radius der Button', 'Geben Sie den Radius für die Button in Prozent ein. 0 = eckig');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['buttonsize'] = array('Größe der Button', 'Geben Sie die Größe der Button (Bedienelemente links) in Pixel an. Standard ist 36 px.');

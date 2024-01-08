@@ -26,7 +26,7 @@ export default class Permalink extends Component {
     let element = document.createElement('div');
     let button = document.createElement('button');
     let langConstants = getLanguage(props.mapController.data);
-    if (true) {
+    if (props.mapController.data.themeData.controlLabels) {
       let span = document.createElement('span');
       span.innerText = langConstants.CTRL_PERMALINK;
       button.appendChild(span);

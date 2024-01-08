@@ -28,7 +28,7 @@ export default class ZoomExtent extends Component {
     if (control && control.element && control.element.children) {
       if (control.element.children[0]) {
         let button = control.element.children[0];
-        if (true) {
+        if (props.mapController.data.themeData.controlLabels) {
           let span = document.createElement('span');
           button.title = "";
           span.innerText = langConstants.CTRL_ZOOM_EXT;
