@@ -38,7 +38,7 @@ export class StarboardScopeItem extends Component {
   }
   loadPopup() {
     let popup = this.props.feature.get('popup');
-    if (popup.async) {
+    if (!popup.contentStarboard && popup.async) {
       let url = this.props.mapController.proxy.api_infowindow_url + '/' + popup.content;
       url += url.includes("?") ? "&" : "?";
       url += "scope=starboardscope";
@@ -47,10 +47,9 @@ export class StarboardScopeItem extends Component {
           .then(data => {
             if (data) {
               if (data.content) {
-                popup.async = false;
-                popup.content = data.content
+                popup.contentStarboard = data.content
                 this.setState({
-                  'html': popup.content
+                  'html': popup.contentStarboard
                 });
               }
 
@@ -63,7 +62,7 @@ export class StarboardScopeItem extends Component {
     }
     else {
       this.setState({
-        'html': popup.content
+        'html': popup.contentStarboard || popup.content
       });
     }
   }
