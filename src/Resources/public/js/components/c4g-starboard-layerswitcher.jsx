@@ -11,18 +11,20 @@
 import React, {Component} from "react";
 import {cssConstants} from "./../c4g-maps-constant.js";
 import {C4gStarboardLayerElement} from "./c4g-starboard-layer-element";
+import structuredClone from '@ungap/structured-clone';
 
 export class StarboardLayerswitcher extends Component {
 
   constructor(props) {
     super(props);
     const scope = this;
-
     let index = props.mapController.arrComponents.findIndex(element => element.name === "layerswitcher");
     props.mapController.arrComponents[index].component = this;
     this.setLayerFilter = this.setLayerFilter.bind(this);
     this.toggleAllLayers = this.toggleAllLayers.bind(this);
+    this.toggleSpecificLayers = this.toggleSpecificLayers.bind(this);
     this.changeCollapseState = this.changeCollapseState.bind(this);
+    this.states = {};
     this.state = {
       initialized: false,
       layerFilter: ""
@@ -104,39 +106,36 @@ export class StarboardLayerswitcher extends Component {
     }
     return show;
   }
-
-  toggleAllLayers(bool = null, ids = []) {
+  applyOldState (context) {
     const scope = this;
-    let states = this.props.layerStates;
     let layers = this.props.objLayers;
-    function activateLayers(layers, states) {
+    let states = this.props.layerStates;
+    let oldStates = this.states[context];
+
+    function handleLayers (layers, states, oldStates) {
       for (let i = 0; i < states.length; i++) {
-        if (!states[i].active) {
-          scope.props.mapController.proxy.layerController.show(layers[i].loader, layers[i].features || layers[i].vectorLayer);
+        if (states[i].active !== oldStates[i].active) {
+          if (oldStates[i].active) {
+            scope.props.mapController.proxy.layerController.show(layers[i].loader, layers[i].features || layers[i].vectorLayer);
+          }
+          else {
+            scope.props.mapController.proxy.layerController.hide(layers[i].loader, layers[i].features || layers[i].vectorLayer);
+          }
         }
-        states[i].active = true;
         if (states[i].childStates && states[i].childStates.length > 0) {
-          states[i].childStates = activateLayers(layers[i].childs, states[i].childStates);
+          handleLayers(layers[i].childs, states[i].childStates, oldStates[i].childStates);
         }
       }
-      scope.buttonEnabled = true;
-      return states;
     }
-    function deactivateLayers(layers, states) {
-      for (let i = 0; i < states.length; i++) {
-        if (ids.includes(layers[i].id)) {
-          break;
-        }
-        if (states[i].active) {
-          scope.props.mapController.proxy.layerController.hide(layers[i].loader, layers[i].features || layers[i].vectorLayer);
-        }
-        states[i].active = false;
-        if (states[i].childStates && states[i].childStates.length > 0) {
-          states[i].childStates = deactivateLayers(layers[i].childs, states[i].childStates);
-        }
-      }
-      scope.buttonEnabled = false;
-      return states;
+    handleLayers(layers, states, oldStates)
+    this.props.parentCallback(oldStates);
+  }
+  toggleSpecificLayers (ids, context = null) {
+    const scope = this;
+    let layers = this.props.objLayers;
+    let states = this.props.layerStates;
+    if (context) {
+      this.states[context] = structuredClone(states);
     }
     function activateSpecificLayers(layers, states) {
       for (let i = 0; i < states.length; i++) {
@@ -156,19 +155,56 @@ export class StarboardLayerswitcher extends Component {
           states[i].childStates = activateSpecificLayers(layers[i].childs, states[i].childStates);
         }
       }
-      scope.buttonEnabled = !scope.buttonEnabled;
       return states;
     }
-    if (bool) {
-      states = activateSpecificLayers(layers, states);
+    states = activateSpecificLayers(layers, states);
+    this.props.parentCallback(states);
+  }
+  toggleAllLayers(context = null) {
+    const scope = this;
+    let states = this.props.layerStates;
+    let layers = this.props.objLayers;
+    if (context) {
+      this.states[context] = structuredClone(states);
     }
-    else {
-      if (scope.buttonEnabled) {
-        states = deactivateLayers(layers, states);
-      } else {
-        states = activateLayers(layers, states);
+    function activateLayers(layers, states) {
+      for (let i = 0; i < states.length; i++) {
+        if (!states[i].active) {
+          scope.props.mapController.proxy.layerController.show(layers[i].loader, layers[i].features || layers[i].vectorLayer);
+        }
+        states[i].active = true;
+        if (states[i].childStates && states[i].childStates.length > 0) {
+          states[i].childStates = activateLayers(layers[i].childs, states[i].childStates);
+        }
       }
+      scope.buttonEnabled = true;
+      return states;
     }
+    function deactivateLayers(layers, states) {
+      for (let i = 0; i < states.length; i++) {
+        if (states[i].active) {
+          if (layers[i].vectorLayer ||layers[i].loader) {
+            scope.props.mapController.proxy.layerController.hide(layers[i].loader, layers[i].vectorLayer);
+          }
+        }
+        states[i].active = false;
+        if (states[i].childStates && states[i].childStates.length > 0) {
+          states[i].childStates = deactivateLayers(layers[i].childs, states[i].childStates);
+        }
+      }
+      scope.buttonEnabled = false;
+      return states;
+    }
+    if (scope.buttonEnabled) {
+      scope.props.mapController.map.getView().dispatchEvent({
+        type: "change:resolution"
+      });
+      scope.props.mapController.proxy.layerController.vectorCollection.clear();
+      states = deactivateLayers(layers, states);
+    } else {
+      states = activateLayers(layers, states);
+    }
+
 
     this.props.parentCallback(states);
   }
@@ -177,6 +213,7 @@ export class StarboardLayerswitcher extends Component {
   }
   render() {
     if (this.props.layerStates && this.props.layerStates.length > 0 && !(this.initialCounterOff && this.initialCounterOn)) {
+      this.states.initial = structuredClone(this.props.layerStates);
       this.buttonEnabled = this.getInitialStates();
     }
 

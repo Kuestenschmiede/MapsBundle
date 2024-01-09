@@ -281,7 +281,7 @@ export default class GeoSearch extends Component {
         let index = this.props.mapController.arrComponents.findIndex(element => element.name === "layerswitcher");
         if (index && this.props.mapController.arrComponents[index]) {
           let component = this.props.mapController.arrComponents[index].component;
-          component.toggleAllLayers(false);
+          component.applyOldState("searchResults");
         }
       }
     }
@@ -389,7 +389,7 @@ export default class GeoSearch extends Component {
         if (index && mapController.arrComponents[index]) {
           let component = mapController.arrComponents[index].component;
           if (component.buttonEnabled) {
-            component.toggleAllLayers();
+            component.toggleAllLayers("searchResults");
           }
         }
       }
@@ -444,7 +444,7 @@ export default class GeoSearch extends Component {
             }
           }
           if (component) {
-            component.toggleAllLayers(true, ids);
+            component.toggleSpecificLayers(ids);
           }
           let size = map.getSize();
           let extent = boundingExtent(coordinates);
