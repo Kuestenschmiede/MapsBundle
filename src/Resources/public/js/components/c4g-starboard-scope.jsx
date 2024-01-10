@@ -66,7 +66,6 @@ export default class StarboardScope extends Component {
       control = new Control({element: element, target: props.target});
       let index = mapController.arrComponents.findIndex(element => element.name === "starboardscope");
       mapController.arrComponents[index].control = control;
-      mapController.mapsControls.controls.baselayerSwitcher = control;
     }
     this.open = this.open.bind(this);
     this.close = this.close.bind(this);
