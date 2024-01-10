@@ -64,7 +64,7 @@ export class PopupContainer extends Component {
             <div className={"c4g-popup-wrapper"}>
               <Suspense fallback={<div>Loading...</div>}>
                 <Titlebar wrapperClass={headerClass} headerClass={"c4g-popup-header-headline"} header={this.props.mapData.popupHeadline || ""}
-                          closeBtnClass={"c4g-titlebar-close"} closeBtnCb={this.close} closeBtnTitle={this.language.CLOSE}
+                          closeBtnClass={"c4g-titlebar-close"} closeBtnCb={() => {this.close(true)}} closeBtnTitle={this.language.CLOSE}
                           detailBtnClass={""} detailBtnCb={""}>
                   {addButtons}
                 </Titlebar>
@@ -101,11 +101,11 @@ export class PopupContainer extends Component {
     });
   }
 
-  close() {
+  close(boolean = false) {
     if (this.props.mapData.caching) {
       utils.storeValue('popupInfos', "");
     }
-    if (this.state.activeComps) {
+    if (boolean && this.state.activeComps) {
       for (let i in this.state.activeComps) {
         if (this.state.activeComps.hasOwnProperty(i)) {
           let comp = this.state.activeComps[i];

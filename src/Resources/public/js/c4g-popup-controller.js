@@ -41,7 +41,7 @@ export class C4gPopupController {
       this.mapData.map.removeOverlay(this.popups[0].popup);
     }
     else if (this.popups[0] && this.popups[0].popupComponent) {
-      this.popups[0].popupComponent.close();
+      this.popups[0].popupComponent.close(true);
     }
   }
 }
