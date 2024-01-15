@@ -30,6 +30,7 @@ class LayerController extends BaseController
      * @var ContainerInterface
      */
     protected $container = null;
+    private $preventCaching = false;
     
     /**
      * LayerController constructor.
@@ -70,7 +71,7 @@ class LayerController extends BaseController
                 $modifiedData['layer'][$key] = $this->addCustomLogic($layer, $lang);
             }
             $this->responseData = $modifiedData;
-            if (self::$useCache) {
+            if (self::$useCache && !$this->preventCaching) {
                 $this->storeDataInCache($request);
             }
         }
@@ -94,6 +95,9 @@ class LayerController extends BaseController
                 $event->setAdditionalData(["language" => $lang]);
                 $this->eventDispatcher->dispatch($event, $event::NAME);
                 $arrLayerData = $event->getLayerData();
+                if ($event->isPreventCaching()) {
+                    $this->preventCaching = $event->isPreventCaching();
+                }
             }
         }
         return $arrLayerData;
