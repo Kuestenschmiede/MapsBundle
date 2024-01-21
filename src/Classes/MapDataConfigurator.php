@@ -624,7 +624,8 @@ class MapDataConfigurator
             }
             // miscellaneous
             //
-            $mapData['infopage'] = $profile->infopage;
+            $parser = System::getContainer()->get('contao.insert_tag.parser');
+            $mapData['infopage'] = $parser->replace($profile->infopage);
             $mapData['legend']['div'] = (is_array($externalElements) && in_array('legend', $externalElements)) ? $externalClasses['legend'] : '';
             $mapData['initial_open_comp'] = $profile->initial_open_comp;
             $mapData['link_newwindow'] = $profile->link_newwindow;
