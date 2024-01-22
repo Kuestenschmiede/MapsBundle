@@ -91,11 +91,14 @@ export class StarboardScopeItem extends Component {
           {this.props.langConstants.DIST}: {toHumanDistance(this.props.feature.get('distanceMatrix') || this.props.feature.get('distance'))}
       </div>
     }
-    return (
-        <li ref={this.ref} onMouseUp={this.highlightFeature}>
-          <div className={"c4g-popup-wrapper"} dangerouslySetInnerHTML={{__html: this.state.html}}/>
+    if (this.state.html) {
+      return (
+          <li ref={this.ref} onMouseUp={this.highlightFeature}>
+            <div className={"c4g-popup-wrapper"} dangerouslySetInnerHTML={{__html: this.state.html}}/>
             {distance}
-        </li>
-    );
+          </li>
+      );
+    }
+    return null;
   }
 }
