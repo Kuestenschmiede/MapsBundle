@@ -11,6 +11,7 @@
 import React, {Component, Suspense} from "react";
 import {cssConstants} from "./../c4g-maps-constant.js";
 import {toHumanDistance} from "./../c4g-router-time-conversions";
+import {utils} from "../c4g-maps-utils";
 
 export class StarboardScopeItem extends Component {
 
@@ -50,6 +51,9 @@ export class StarboardScopeItem extends Component {
                 popup.contentStarboard = data.content
                 this.setState({
                   'html': popup.contentStarboard
+                }, ()=> {
+                  utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, {popup: popup, mapController: this.props.mapController});
+
                 });
               }
 
