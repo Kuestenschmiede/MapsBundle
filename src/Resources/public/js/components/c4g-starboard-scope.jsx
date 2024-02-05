@@ -79,6 +79,15 @@ export default class StarboardScope extends Component {
       this.getFeaturesInScope()
     });
     this.view.on('change:resolution', (evt) => {
+      if (props.mapController.data.minZoomStarboardScope && this.view.getZoom() < props.mapController.data.minZoomStarboardScope) {
+        this.setState({
+          disable: true
+        });
+      } else if (props.mapController.data.minZoomStarboardScope && this.state.disable) {
+        this.setState({
+          disable: false
+        });
+      }
       this.getFeaturesInScope()
     });
     window.c4gMapsHooks.layer_loaded = window.c4gMapsHooks.layer_loaded || [];
@@ -87,6 +96,7 @@ export default class StarboardScope extends Component {
     });
     this.state = {
       open: open,
+      disable: false,
       className: props.className || "c4g-starboardscope-panel",
       control: control,
       features: [],
@@ -99,7 +109,12 @@ export default class StarboardScope extends Component {
     const mapController = this.props.mapController;
     const layerController = mapController.proxy.layerController;
 
-    if (this.state.open && this._isMounted && timestamp > this.lastTime + 250) {
+    if (this.state.open && !this.state.disable && this._isMounted && timestamp > this.lastTime + 250) {
+      if (mapController.data.minZoomStarboardScope && this.view.getZoom() < mapController.data.minZoomStarboardScope) {
+        this.setState({
+          features: []
+        });
+      }
       this.lastTime = timestamp;
       let extent = this.view.calculateExtent();
       let features = this.vectorSource.getFeaturesInExtent(extent);
@@ -191,24 +206,30 @@ export default class StarboardScope extends Component {
         jQuery(".c4g-starboardscope-container").removeClass("c4g-open").addClass("c4g-close");
       }
     }
+    let list =  null;
+    if (!this.state.disable) {
+      list = <div className={"c4g-starboardscope-content-container"}>
+        <ul>
+          {this.state.features.map((feature, index) => {
+            if (index < this.state.maxElements) {
+              return <StarboardScopeItem mapController={this.props.mapController} langConstants={this.langConstants}
+                                         index={index} key={index} feature={feature}
+                                         lastElement={index === this.state.maxElements - 1} loadMore={this.loadMore}/>
+            }
+          })}
+        </ul>
+      </div>;
+    }
 
     return (
-      <div className={cssConstants.STARBOARD_WRAPPER}>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Titlebar wrapperClass={"c4g-starboardscope-header"} headerClass={"c4g-starboardscope-headline"}
-                    header={this.langConstants.ELEMENTS_SCOPE} closeBtnClass={"c4g-starboardscope-close"} closeBtnCb={this.close} closeBtnTitle={this.langConstants.CLOSE}/>
-        </Suspense>
-        <div className={"c4g-starboardscope-content-container"}>
-          <ul>
-            {this.state.features.map((feature, index) => {
-              if (index < this.state.maxElements) {
-                return <StarboardScopeItem mapController={this.props.mapController} langConstants={this.langConstants}
-                                           index={index} key={index} feature={feature} lastElement={index === this.state.maxElements -1} loadMore={this.loadMore}/>
-              }
-            })}
-          </ul>
+        <div className={cssConstants.STARBOARD_WRAPPER}>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Titlebar wrapperClass={"c4g-starboardscope-header"} headerClass={"c4g-starboardscope-headline"}
+                      header={this.langConstants.ELEMENTS_SCOPE} closeBtnClass={"c4g-starboardscope-close"}
+                      closeBtnCb={this.close} closeBtnTitle={this.langConstants.CLOSE}/>
+          </Suspense>
+          {list}
         </div>
-      </div>
     );
   }
 

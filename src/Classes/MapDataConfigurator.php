@@ -584,6 +584,9 @@ class MapDataConfigurator
                 $mapData['cesium']['enable'] = $profile->cesium;
                 $mapData['cesium']['always'] = $profile->cesium_always;
             }
+            if ($profile->minZoomStarboardScope) {
+                $mapData['minZoomStarboardScope'] = (int) $profile->minZoomStarboardScope;
+            }
 
             // overpass handling
             //
@@ -625,7 +628,7 @@ class MapDataConfigurator
             // miscellaneous
             //
             $parser = System::getContainer()->get('contao.insert_tag.parser');
-            $mapData['infopage'] = $parser->replace($profile->infopage);
+            $mapData['infopage'] = $parser->replace($profile->infopage ?? "");
             $mapData['legend']['div'] = (is_array($externalElements) && in_array('legend', $externalElements)) ? $externalClasses['legend'] : '';
             $mapData['initial_open_comp'] = $profile->initial_open_comp;
             $mapData['link_newwindow'] = $profile->link_newwindow;

@@ -110,7 +110,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                                          '{attribution_legend:hide},attribution;'.
                                          '{information_legend:hide},scaleline,mouseposition,permalink_get_param,permalinkSaveId,permalinkWithoutGenerator,zoomlevel,infopage;'.
                                          '{locstyle_legend:hide},label_color,resize_locstyles_zoom;'.
-                                         '{expert_legend:hide},overpassEngine,caching,cesium,external_elements,custom_div,geopicker,filters,filterHandling,filterResetButton,be_optimize_checkboxes_limit,consentBanner;'
+                                         '{expert_legend:hide},overpassEngine,caching,cesium,external_elements,minZoomStarboardScope,custom_div,geopicker,filters,filterHandling,filterResetButton,be_optimize_checkboxes_limit,consentBanner;'
         ],
     'subpalettes' =>
     [
@@ -834,6 +834,14 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'options'                 => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs'],
                 'eval'                    => ['mandatory'=>false, 'multiple'=>true],
                 'sql'                     => "blob NULL"
+            ],
+        'minZoomStarboardScope' =>
+            [
+                'default'                 => '0',
+                'exclude'                 => true,
+                'inputType'               => 'c4g_text',
+                'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
+                'sql'                     => "int(10) unsigned NOT NULL default '0'"
             ],
         'filters' =>
             [

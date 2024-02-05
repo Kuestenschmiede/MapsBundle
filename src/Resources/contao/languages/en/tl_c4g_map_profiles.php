@@ -139,6 +139,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['popupMultiple'] = ['Multiple Popups'
 /** Experteneinstellungen */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overpassEngine'] = ['Overpass Server Technology', 'Choose your preferred Overpass Server Technology'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['overpass_url'] = ['URL of Overpass-API'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['minZoomStarboardScope'] = ['Minimal Zoom for Elements in Scope', 'Minimal zoom for elements in scope.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['custom_div'] = ['Div element for Map', 'If given, the map is placed within a div element with the given id.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['caching'] = ['Remember Map Situation', 'If checked, button states and map situation (center, zoom, layers, filters) are stored in the localstorage.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['be_optimize_checkboxes_limit'] = ['Convert large checkbox lists to Chosen Fields', 'If at least this many entries are in the list, it are converted to a chosen field. Select 0 to disable. this function.'];
