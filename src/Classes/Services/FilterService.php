@@ -14,6 +14,7 @@ use con4gis\MapsBundle\Classes\Filter\FeatureFilter;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use Contao\Database;
+use Detection\MobileDetect;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class FilterService
@@ -40,7 +41,14 @@ class FilterService
         $return = [];
         $database = Database::getInstance();
         $layer = C4gMapsModel::findByPk($layerId);
-        $profileId = $layer->profile;
+        $mobileDetection = new MobileDetect();
+        if ($mobileDetection->isMobile() && ($layer->profile_mobile > 0)) {
+            $isMobile = true;
+            $profileId = $layer->profile_mobile;
+        }
+        else {
+            $profileId = $layer->profile;
+        }
 
         $mapsProfileModel = C4gMapProfilesModel::findById($profileId);
         $filterIds = \Contao\StringUtil::deserialize($mapsProfileModel->filters);
