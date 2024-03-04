@@ -14,21 +14,20 @@ use Contao\Validator;
 use Contao\FilesModel;
 use Contao\System;
 use Contao\Message;
-if (method_exists('System', 'getContainer')) {
-    $filteredSizes = [];
-    $imageSizes = System::getContainer() && System::getContainer()->get('contao.image.image_sizes') ? System::getContainer()->get('contao.image.image_sizes')->getAllOptions() : false;
-    $just = 'proportional';
 
-    if ($imageSizes !== false) {
-        foreach ($imageSizes as $group => $sizes) {
-            foreach ($sizes as $key => $size) {
-                if ($size == $just) {
-                    $filteredSizes[$group][$key] = $size;
-                }
+$filteredSizes = [];
+$imageSizes = System::getContainer() && System::getContainer()->get('contao.image.image_sizes') ? System::getContainer()->get('contao.image.image_sizes')->getAllOptions() : false;
+$just = 'proportional';
+
+if ($imageSizes !== false) {
+    foreach ($imageSizes as $group => $sizes) {
+        foreach ($sizes as $key => $size) {
+            if ($size == $just) {
+                $filteredSizes[$group][$key] = $size;
             }
         }
-        $imageSizes = $filteredSizes;
     }
+    $imageSizes = $filteredSizes;
 }
 
 $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
