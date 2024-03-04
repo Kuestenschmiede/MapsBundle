@@ -98,7 +98,7 @@ class MapDataConfigurator
         // check for special-profile
         $hasFrontendUser = System::getContainer()->get('contao.security.token_checker')->hasFrontendUser();
 
-        if (($hasFrontendUser) && ($map->use_specialprofile)) {
+        if (($hasFrontendUser) && ($map->use_specialprofile) && $objThis->User && $objThis->User->groups) {
             $groupMatch = array_intersect($objThis->User->groups, \Contao\StringUtil::deserialize($map->specialprofile_groups));
             if (!empty($groupMatch)) {
                 if (($isMobile) && ($map->specialprofile_mobile)) {
