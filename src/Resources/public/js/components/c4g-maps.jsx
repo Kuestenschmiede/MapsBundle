@@ -1211,7 +1211,7 @@ export default class MapController extends Component {
       let source;
       if (this.proxy.baselayers_loaded) {
         let layer = this.proxy.baselayerController.arrBaselayers[this.state.activeBaselayerId].layer;
-        source = layer instanceof LayerGroup ? layer.getArray()[0].getSource() : layer.getSource();
+        source = layer instanceof LayerGroup ? layer.getLayers().getArray()[0].getSource() : layer.getSource();
       }
       overviewPortal = ReactDOM.createPortal(
           <Suspense fallback={<div>Loading...</div>}>
