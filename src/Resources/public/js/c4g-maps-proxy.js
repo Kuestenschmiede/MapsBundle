@@ -291,6 +291,7 @@ export class MapProxy {
               }
 
               let stringLayer = new Vector({
+                zIndex: 9000001,
                 source: stringSource,
                 style: styleFunction
               });
