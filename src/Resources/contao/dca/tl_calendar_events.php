@@ -9,15 +9,17 @@
  * @link https://www.con4gis.org
  */
 
-use \con4gis\MapsBundle\Classes\GeoPicker;
+use con4gis\MapsBundle\Classes\GeoPicker;
 use con4gis\MapsBundle\Classes\Utils;
-use Contao\CoreBundle\DataContainer\PaletteManipulator;
 use Contao\Backend;
-use Contao\System;
+use Contao\CalendarBundle\ContaoCalendarBundle;
+use Contao\CoreBundle\DataContainer\PaletteManipulator;
+use Contao\DataContainer;
 use Contao\DC_Table;
+use Contao\System;
 
 if (
-    @class_exists("Contao\CalendarBundle\ContaoCalendarBundle")
+    @class_exists(ContaoCalendarBundle::class)
 ) {
 
     /**
@@ -26,8 +28,8 @@ if (
 
     try {
         PaletteManipulator::create()
-            ->addLegend('c4g_maps_legend', 'expert_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_BEFORE)
-            ->addField(array('c4g_loc_geox', 'c4g_loc_geoy', 'c4g_loc_label', 'c4g_locstyle'), 'c4g_maps_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_APPEND)
+            ->addLegend('c4g_maps_legend', 'expert_legend', PaletteManipulator::POSITION_BEFORE)
+            ->addField(array('c4g_loc_geox', 'c4g_loc_geoy', 'c4g_loc_label', 'c4g_locstyle'), 'c4g_maps_legend', PaletteManipulator::POSITION_APPEND)
             ->applyToPalette('default', 'tl_calendar_events');
     } catch (\Exception $e) {}
 
@@ -37,7 +39,7 @@ if (
         'inputType'               => 'c4g_text',
         'eval'                    => ['mandatory'=>false, 'maxlength'=>20, 'tl_class'=>'w50 wizard'],
         'save_callback'           => [['tl_calendar_events_c4g_maps','setLocLon']],
-        'wizard'                  => [['\con4gis\MapsBundle\Classes\GeoPicker', 'getPickerLink']],
+        'wizard'                  => [[GeoPicker::class, 'getPickerLink']],
         'sql'                     => "varchar(20) NOT NULL default ''"
         ];
 
@@ -47,7 +49,7 @@ if (
         'inputType'               => 'c4g_text',
         'eval'                    => ['mandatory'=>false, 'maxlength'=>20, 'tl_class'=>'w50 wizard'],
         'save_callback'           => [['tl_calendar_events_c4g_maps','setLocLat']],
-        'wizard'                  => [['\con4gis\MapsBundle\Classes\GeoPicker', 'getPickerLink']],
+        'wizard'                  => [[GeoPicker::class, 'getPickerLink']],
         'sql'                     => "varchar(20) NOT NULL default ''"
         ];
 
@@ -81,7 +83,7 @@ if (
          * @param DataContainer $dc
          * @return array
          */
-        public function getLocStyles(\DataContainer $dc)
+        public function getLocStyles(DataContainer $dc)
         {
             $locStyles = $this->Database->prepare("SELECT id,name FROM tl_c4g_map_locstyles ORDER BY name")
                 ->execute();
@@ -111,7 +113,7 @@ if (
         /**
          * Validate Latitude
          */
-        public function setLocLat($varValue, \DataContainer $dc)
+        public function setLocLat($varValue, DataContainer $dc)
         {
             if ($varValue != 0)
             {
@@ -123,7 +125,7 @@ if (
             return $varValue;
         }
 
-        public function locstylesLink(Contao\DataContainer $dc)
+        public function locstylesLink(DataContainer $dc)
         {
             $requestToken = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
             return ' <a href="contao/main.php?do=c4g_map_locstyles&amp;table=tl_c4g_map_locstyles&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . $requestToken . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_calendar_events']['editLocstyles']) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_calendar_events']['editLocstyles'])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
