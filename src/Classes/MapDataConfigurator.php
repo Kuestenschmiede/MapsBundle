@@ -741,8 +741,10 @@ class MapDataConfigurator
             else if ($baseLayer['provider'] == 'group') {
                 $layerGroup = StringUtil::deserialize($baseLayer['layerGroup']);
                 foreach ($layerGroup as $key => $layer) {
-                    $objChildLayer = C4gMapBaselayersModel::findByPk($layer['id']);
-                    $arrKeyParams[] = ['4', $layer['id'], $layer['id']];
+                    $objChildLayer = C4gMapBaselayersModel::findByPk($layer['baselayers']);
+                    if ($objChildLayer->provider == "con4gisIo") {
+                        $arrKeyParams[] = ['4', $objChildLayer->con4gisIo, $objChildLayer->id];
+                    }
                 }
             }
         }
