@@ -16,7 +16,7 @@ use Contao\System;
 use Contao\Message;
 
 $filteredSizes = [];
-$imageSizes = System::getContainer() && System::getContainer()->get('contao.image.image_sizes') ? System::getContainer()->get('contao.image.image_sizes')->getAllOptions() : false;
+$imageSizes = System::getContainer() && System::getContainer()->has('contao.image.sizes') ? System::getContainer()->get('contao.image.sizes')->getAllOptions() : false;
 $just = 'proportional';
 
 if ($imageSizes !== false) {
