@@ -742,7 +742,7 @@ class MapDataConfigurator
                 $layerGroup = StringUtil::deserialize($baseLayer['layerGroup']);
                 foreach ($layerGroup as $key => $layer) {
                     $objChildLayer = C4gMapBaselayersModel::findByPk($layer['id']);
-                    $arrKeyParams[] = ['4', $objChildLayer->id, $objChildLayer->id];
+                    $arrKeyParams[] = ['4', $layer['id'], $layer['id']];
                 }
             }
         }
