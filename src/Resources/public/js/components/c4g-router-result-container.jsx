@@ -165,7 +165,7 @@ export class RouterResultContainer extends Component {
         </Suspense>
     }
     if (this.props.open) {
-      let element = document.querySelector("." + this.props.mapController.data.routerResultDiv);
+      let element = this.props.mapController.data.routerResultDiv ? document.querySelector("." + this.props.mapController.data.routerResultDiv) : null;
       if (element) {
         let portal = ReactDOM.createPortal(<div className={this.props.className + (this.props.open ? " c4g-open" : " c4g-close")
             + (this.props.open ? " c4g-details-open" : "")}>
