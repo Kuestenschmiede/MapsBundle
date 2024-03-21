@@ -18,7 +18,7 @@ import {utils} from "../c4g-maps-utils";
 import {MapsControls} from "../c4g-maps-controls";
 import {getLanguage} from "../c4g-maps-i18n";
 import {Geolocation, Kinetic, Map, View} from "ol";
-import {transform, transformExtent} from "ol/proj";
+import {fromLonLat, transform, transformExtent} from "ol/proj";
 import {
   defaults as interactionDefaults,
   DoubleClickZoom,
@@ -36,7 +36,7 @@ import {Group} from "ol/layer";
 import {Point} from "ol/geom";
 import Feature from "ol/Feature";
 import {Vector} from "ol/layer";
-import {boundingExtent, getBottomLeft, getBottomRight, getTopLeft, getTopRight} from "ol/extent";
+import {boundingExtent, containsCoordinate, getBottomLeft, getBottomRight, getTopLeft, getTopRight} from "ol/extent";
 import {shiftKeyOnly} from "ol/events/condition";
 import ReactDOM from "react-dom";
 import React, {Component, Suspense} from "react";
@@ -396,7 +396,16 @@ export default class MapController extends Component {
     // check userposition
     if (mapData.geolocation && !permalink) {
       let funcLocation = function (evt) {
-        view.setCenter(this.getPosition());
+        let position = this.getPosition();
+        if (mapData.geolocation_extent) {
+          const bottomLeft = fromLonLat([mapData.geolocation_extent[0],mapData.geolocation_extent[1]]);
+          const topRight = fromLonLat([mapData.geolocation_extent[2],mapData.geolocation_extent[3]]);
+          const extent = boundingExtent([bottomLeft, topRight]);
+          if (!containsCoordinate(extent, position)) {
+            return;
+          }
+        }
+        view.setCenter(position);
         if (mapData.geolocation_zoom) {
           view.setZoom(parseInt(mapData.geolocation_zoom, 10));
         }

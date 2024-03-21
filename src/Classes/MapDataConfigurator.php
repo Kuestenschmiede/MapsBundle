@@ -246,6 +246,17 @@ class MapDataConfigurator
             if ($map->geolocation) {
                 $mapData['geolocation'] = true;
                 $mapData['geolocation_zoom'] = $map->geolocation_zoom;
+                if ($map->geolocation_bottomleft_geox != 0 ||
+                    $map->geolocation_bottomleft_geoy != 0 ||
+                    $map->geolocation_topright_geox != 0 ||
+                    $map->geolocation_topright_geoy != 0) {
+                    $mapData['geolocation_extent'] = [
+                        $map->geolocation_bottomleft_geox,
+                        $map->geolocation_bottomleft_geoy,
+                        $map->geolocation_topright_geox,
+                        $map->geolocation_topright_geoy,
+                    ];
+                }
             }
 
             // map-size
