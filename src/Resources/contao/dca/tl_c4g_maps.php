@@ -377,6 +377,42 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
                 'sql'                     => "int(10) unsigned NOT NULL default '16'"
             ],
+        'geolocation_bottomleft_geox' =>
+            [
+                'exclude'                 => true,
+                'inputType'               => 'c4g_text',
+                'eval'                    => ['maxlength'=>20, 'tl_class'=>'w50 wizard', 'require_input'=>true],
+                'save_callback'           => [[$cbClass,'setLocLon']],
+                'wizard'                  => [[GeoPicker::class, 'getPickerLink']],
+                'sql'                     => "varchar(20) NOT NULL default ''"
+            ],
+        'geolocation_bottomleft_geoy' =>
+            [
+                'exclude'                 => true,
+                'inputType'               => 'c4g_text',
+                'eval'                    => ['maxlength'=>20, 'tl_class'=>'w50 wizard', 'require_input'=>true],
+                'save_callback'           => [[$cbClass,'setLocLat']],
+                'wizard'                  => [[GeoPicker::class, 'getPickerLink']],
+                'sql'                     => "varchar(20) NOT NULL default ''"
+            ],
+        'geolocation_topright_geox' =>
+            [
+                'exclude'                 => true,
+                'inputType'               => 'c4g_text',
+                'eval'                    => ['maxlength'=>20, 'tl_class'=>'w50 wizard', 'require_input'=>true],
+                'save_callback'           => [[$cbClass,'setLocLon']],
+                'wizard'                  => [[GeoPicker::class, 'getPickerLink']],
+                'sql'                     => "varchar(20) NOT NULL default ''"
+            ],
+        'geolocation_topright_geoy' =>
+            [
+                'exclude'                 => true,
+                'inputType'               => 'c4g_text',
+                'eval'                    => ['maxlength'=>20, 'tl_class'=>'w50 wizard', 'require_input'=>true],
+                'save_callback'           => [[$cbClass,'setLocLat']],
+                'wizard'                  => [[GeoPicker::class, 'getPickerLink']],
+                'sql'                     => "varchar(20) NOT NULL default ''"
+            ],
         'restrict_area' =>
             [
                 'exclude'                 => true,

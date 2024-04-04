@@ -172,6 +172,7 @@ export default class FeatureFilter extends Component {
         }
       }
     }
+    this.props.mapController.map.getView().dispatchEvent('change:center');
   }
   filterLayersMulti (property, listId, value) {
     let newState = this.state.arrChecked;

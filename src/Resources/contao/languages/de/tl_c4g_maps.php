@@ -88,6 +88,11 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['forum_jumpto'] = array('Weiterleitungsseite 
 $GLOBALS['TL_LANG']['tl_c4g_maps']['forum_reassign_layer'] = array('Forum - in andere Ebene verschieben','Wählen Sie eine Methode, um bestimmte Foreneinträge in andere, bereits definierte Ebenen zu verschieben.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['geolocation'] = array('Aktuelle Position ermitteln','Wenn die Karte geöffnet wird, wird versucht, über die HTML5 Geolocation API vom Browser die aktuellen Geokoordinaten zu ermitteln. Funktioniert nur auf sicheren Seiten (https).');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['geolocation_zoom'] = array('Aktuelle Position - Zoomlevel','Konnte vom Browser die aktuelle Position ermittelt werden, dann zoomt die Karte automatisch zu den erhaltenen Koordinaten mit dem angegebenen Zoomlevel');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['geolocation_bottomleft_geox'] = array('Geolocation einschränken X-Koordinate links', 'Geo X-Koordinate (Breitengrad, WGS-84) der linken, unteren Ecke für die eingeschränkte Geolocation.');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['geolocation_bottomleft_geoy'] = array('Geolocation einschränken Y-Koordinate unten', 'Geo Y-Koordinate (Längengrad, WGS-84) der linken, unteren Ecke für die eingeschränkte Geolocation.');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['geolocation_topright_geox'] = array('Geolocation einschränken X-Koordinate rechts', 'Geo X-Koordinate (Breitengrad, WGS-84) der rechten, oberen Ecke für die eingeschränkte Geolocation.');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['geolocation_topright_geoy'] = array('Geolocation einschränken Y-Koordinate oben', 'Geo Y-Koordinate (Längengrad, WGS-84) der rechten, oberen Ecke für die eingeschränkte Geolocation.');
+
 $GLOBALS['TL_LANG']['tl_c4g_maps']['include_sublocations'] = array('Hierarchisch untergeordnete Kartenstrukturelemente berücksichtigen', 'Bei Deaktivierung dieser Einstellung werden nur Elemente der ersten Ebene auf der Karte dargestellt.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['link_id'] = array('Kartenstrukturelement', 'Zu verknüpfendes Kartenstrukturelement.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['protect_element'] = array('Diesen Eintrag schützen', 'Macht diesen Eintrag nur für ausgewählte Gruppen sichtbar.');

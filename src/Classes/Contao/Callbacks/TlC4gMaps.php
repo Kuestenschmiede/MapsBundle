@@ -441,7 +441,7 @@ class TlC4gMaps extends Backend
             }
 
             if ($objMap->location_type == 'map' && $objMap->geolocation) {
-                $geolocationFields = 'geolocation_zoom,';
+                $geolocationFields = 'geolocation_zoom,geolocation_bottomleft_geox,geolocation_bottomleft_geoy,geolocation_topright_geox,geolocation_topright_geoy,';
                 $GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['map'] = str_replace(",geolocation,", ",geolocation,".$geolocationFields, $GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['map']);
             }
 
