@@ -42,7 +42,7 @@ export default class EditorComponent extends Component {
     let element = document.createElement('div');
     let button = document.createElement('button');
 
-    if (props.mapController.data.themeData.controlLabels) {
+    if (props.mapController.data.themeData && props.mapController.data.themeData.controlLabels) {
       let span = document.createElement('span');
       span.innerText = "Editor";
       button.appendChild(span);

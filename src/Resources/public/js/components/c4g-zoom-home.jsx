@@ -93,7 +93,7 @@ export default class ZoomHome extends Component {
     element.className = cssConstants.OL_ZOOM_HOME+' '+cssConstants.OL_CONTROL + ' ' + cssConstants.OL_UNSELECTABLE;
     // button
     button = document.createElement('button');
-    if (props.mapController.data.themeData.controlLabels) {
+    if (props.mapController.data.themeData && props.mapController.data.themeData.controlLabels) {
       let span = document.createElement('span');
       span.innerText = langConstants.CTRL_ZOOM_HOME;
       button.appendChild(span);

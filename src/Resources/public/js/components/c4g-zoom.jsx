@@ -28,7 +28,7 @@ export default class Zoom extends Component {
     if (control && control.element && control.element.children) {
       if (control.element.children[0]) {
         let button = control.element.children[0];
-        if (props.mapController.data.themeData.controlLabels) {
+        if (props.mapController.data.themeData && props.mapController.data.themeData.controlLabels) {
           let span = document.createElement('span');
           button.title = "";
           span.innerText = langConstants.CTRL_ZOOM_IN;
@@ -40,7 +40,7 @@ export default class Zoom extends Component {
       }
       if (control.element.children[1]) {
         let button = control.element.children[1];
-        if (props.mapController.data.themeData.controlLabels) {
+        if (props.mapController.data.themeData && props.mapController.data.themeData.controlLabels) {
           let span = document.createElement('span');
           button.title = "";
           span.innerText = langConstants.CTRL_ZOOM_OUT;

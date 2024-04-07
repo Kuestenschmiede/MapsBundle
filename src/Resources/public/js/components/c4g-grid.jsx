@@ -66,7 +66,7 @@ export default class Grid extends Component {
     element.className = cssConstants.GRATICULE + ' ' + cssConstants.OL_UNSELECTABLE + ' ' + cssConstants.OL_CONTROL;
     // button
     button = document.createElement('button');
-    if (props.mapController.data.themeData.controlLabels) {
+    if (props.mapController.data.themeData && props.mapController.data.themeData.controlLabels) {
       let span = document.createElement('span');
       span.innerText = langConstants.CTRL_GRID;
       button.appendChild(span);
