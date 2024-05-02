@@ -35,6 +35,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_geox'] = array('GEO latitude', 'Enter th
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_geoy'] = array('GEO longitude', 'Enter the GEO Y-coordinate (longitude, WGS-84) of the map center.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['locstyle'] = array('Location style', 'The location style, which is defined in the map profiles, defines the design of the location marker. Without location styles defined, a red dot is drawn for every location by default.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['locstyleGeoJson'] = array('Location styles for GeoJson', 'Select location styles corresponding to specific key/value-pairings of features.');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['locstyleWfs'] = array('Location styles for WFS', 'Select location styles corresponding to specific key/value-pairings of features.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['zIndex'] = array('Z-Index', 'Here you can set a z index for the map structure element. Note: This is not the CSS-Z index, but a Z index that only applies to the map structure elements.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_only_in_parent'] = array('Display location only as child of a parent map', 'If you do NOT select this option, the location is displayed also if this item is displayed as a map.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['exemptFromFilter'] = ['Exempt location from filter in starboard','If checked, this location will be ignored by the filter in starboard.'];
@@ -210,6 +211,10 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['con4gisio_legend']      = 'Con4gis-IO settin
  */
 $GLOBALS['TL_LANG']['tl_c4g_maps']['locstyleGeoJson']['keys']   = ['Key', 'Key for the property of the feature'];
 $GLOBALS['TL_LANG']['tl_c4g_maps']['locstyleGeoJson']['props']  = ['Value', 'Corresponding value'];
+
+$GLOBALS['TL_LANG']['tl_c4g_maps']['locstyleWfs']['key']   = ['Key', 'Key for the property of the feature'];
+$GLOBALS['TL_LANG']['tl_c4g_maps']['locstyleWfs']['compare']   = ['Compare type', 'Type for the comparison of the values    '];
+$GLOBALS['TL_LANG']['tl_c4g_maps']['locstyleWfs']['value']  = ['Value', 'Corresponding value'];
 
 $GLOBALS['TL_LANG']['tl_c4g_maps']['editalias'] = array('Edit source element', 'Edit the source element ID %s');
 

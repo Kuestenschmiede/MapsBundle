@@ -204,7 +204,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                                          '{publish_legend:hide},published,publishStart,publishStop;'.
                                          '{expert_legend:hide},excludeFromSingleLayer,be_optimize_checkboxes_limit;',
         'wfs'                         => '{general_legend},name,location_type;'.
-                                         '{location_legend},data_layername,wfsCapabilities,wfsLayers,hide_child,initial_opened,addZoom,locstyle,zIndex,loc_label,tooltip,tooltip_length,hide_when_in_tab,cssClass;'.
+                                         '{location_legend},data_layername,wfsCapabilities,wfsLayers,gmlVersion,wfsProxy,hide_child,initial_opened,addZoom,locstyle,locstyleWfs,zIndex,loc_label,tooltip,tooltip_length,enablePopup,hide_when_in_tab,cssClass;'.
                                          '{protection_legend:hide},protect_element;'.
                                          '{publish_legend:hide},published,publishStart,publishStop;'.
                                          '{expert_legend:hide},excludeFromSingleLayer,be_optimize_checkboxes_limit;',
@@ -740,6 +740,19 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 'eval'                    => ['chosen' => true],
                 'sql'                     => "blob NULL"
             ],
+        'gmlVersion' =>
+            [
+                'exclude'                 => true,
+                'inputType'               => 'text',
+                'sql'                     => "varchar(255) NOT NULL default ''"
+            ],
+        'wfsProxy' =>
+            [
+                'exclude'                 => true,
+                'default'                 => true,
+                'inputType'               => 'checkbox',
+                'sql'                     => "char(1) NOT NULL default '1'"
+            ],
         'link_id' =>
             [
                 'exclude'                 => true,
@@ -841,6 +854,15 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 ],
                 'sql'                     => 'blob'
            ],
+        'locstyleWfs' => [
+                'exclude'                 => true,
+                'default'                 => 'a:0:{}',
+                'inputType'               => 'multiColumnWizard',
+                'eval'                    => [
+                    'columnsCallback'     => [$cbClass, 'locstyleWfs']
+                ],
+                'sql'                     => 'blob'
+            ],
         'zIndex' =>
             [
                 'exclude'                 => true,

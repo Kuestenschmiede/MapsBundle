@@ -42,6 +42,11 @@ infowindow_service:
         popupString: .*
     controller: con4gis\MapsBundle\Controller\MapsController::infoWindowAction
 
+wfs_service:
+    path: /con4gis/wfsService/{id}/{extent}
+    methods: [GET]
+    controller: con4gis\MapsBundle\Controller\MapsController::wfsAction
+
 locationstyle_service:
     path: /con4gis/locationStyleService/
     controller: con4gis\MapsBundle\Controller\LocationstyleController::locationStyleAction

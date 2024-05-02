@@ -446,7 +446,24 @@ class LayerContentService
     private function getWfsLayer($objLayer) {
         if ($objLayer->wfsCapabilities) {
             $feed = simplexml_load_file($objLayer->wfsCapabilities);
-            if ($feed && $feed->FeatureTypeList && $feed->FeatureTypeList->FeatureType) {
+            if ($objLayer->gmlVersion) {
+                $version = $objLayer->gmlVersion;
+                $shortFormat = "GML";
+                switch ($version) {
+                    case "3.2":
+                        $shortFormat .= "32";
+                        break;
+                    case "3.1.1":
+                        $shortFormat .= "3";
+                        break;
+                    case " 2.1":
+                        $shortFormat .= "2";
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else if ($feed && $feed->FeatureTypeList && $feed->FeatureTypeList->FeatureType) {
                 $version = $feed->attributes->version;
                 foreach ($feed->FeatureTypeList->FeatureType as $element) {
                     if ($element->Name && trim($element->Name) === $objLayer->wfsLayers) { //same element
@@ -497,41 +514,46 @@ class LayerContentService
                         if (!$shortFormat) {
                             continue;
                         }
-                        $url = str_ireplace('getcapabilities', 'getFeature',$objLayer->wfsCapabilities);
-                        $url .= "&typename=" . $objLayer->wfsLayers . "&";
-//                        $url .= "&typename=" . $objLayer->wfsLayers . "&outputFormat=". $format . "&srsname=EPSG:3857&";
-                        return [[
-                            'id' => $objLayer->id,
-                            'type' => 'wfs',
-                            'format' => $shortFormat,
-                            'origType' => 'con4gisio',
-                            'locationStyle' => $objLayer->locstyle,
-                            'cluster_fillcolor' => $objLayer->cluster_fillcolor,
-                            'cluster_fontcolor' => $objLayer->cluster_fontcolor,
-                            'cluster_zoom' => $objLayer->cluster_zoom,
-                            'hover_location' => $objLayer->hover_location,
-                            'hover_style' => $objLayer->hover_style,
-                            'data' => [
-                                'version' => $version,
-                                'url' => $url,
-                                'popup' => false,
-                                'tooltip' => $objLayer->tooltip,
-                                'tooltip_length' => $objLayer->tooltip_length,
-                                'label' => $objLayer->loc_label,
-                                'zoom_onclick' => $objLayer->loc_onclick_zoomto,
-                            ],
-                            'settings' => [
-                                'loadAsync' => true,
-                                'refresh' => false,
-                                'crossOrigine' => false,
-                                'boundingBox' => false,
-                                'cluster' => $objLayer->cluster_locations ? ($objLayer->cluster_distance ? $objLayer->cluster_distance : 20) : false,
 
-                            ]
-                        ]];
                     }
                 }
             }
+
+            $url = str_ireplace('getcapabilities', 'getFeature',$objLayer->wfsCapabilities);
+            $url .= "&typenames=" . $objLayer->wfsLayers . "&version=2.0.0&BBOX=";
+            return [[
+                'id' => $objLayer->id,
+                'type' => 'wfs',
+                'format' => $objLayer->wfsProxy ? "GeoJSON" : $shortFormat,
+                'origType' => 'wfs',
+                'locationStyle' => $objLayer->locstyle,
+                'locstyleWfs' => $objLayer->locstyleWfs ? \Contao\StringUtil::deserialize($objLayer->locstyleWfs) : false,
+                'cluster_fillcolor' => $objLayer->cluster_fillcolor,
+                'cluster_fontcolor' => $objLayer->cluster_fontcolor,
+                'cluster_zoom' => $objLayer->cluster_zoom,
+                'hover_location' => $objLayer->hover_location,
+                'hover_style' => $objLayer->hover_style,
+                'data' => [
+                    'version' => $version,
+                    'url' => $objLayer->wfsProxy ? "con4gis/wfsService/" . $objLayer->id . "/" :$url,
+                    'popup' => [
+                        'async' => false,
+                        'content' => $objLayer->popup_info
+                    ],
+                    'tooltip' => $objLayer->tooltip,
+                    'tooltip_length' => $objLayer->tooltip_length,
+                    'label' => $objLayer->loc_label,
+                    'zoom_onclick' => $objLayer->loc_onclick_zoomto,
+                ],
+                'settings' => [
+                    'loadAsync' => true,
+                    'refresh' => false,
+                    'crossOrigine' => false,
+                    'boundingBox' => false,
+                    'cluster' => $objLayer->cluster_locations ? ($objLayer->cluster_distance ? $objLayer->cluster_distance : 20) : false,
+
+                ]
+            ]];
         }
     }
     private function getTableLayerContent($objLayer, $lang)

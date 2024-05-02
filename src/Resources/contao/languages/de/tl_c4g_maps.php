@@ -35,6 +35,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_geox'] = array('Geo X-Koordinate', 'Gebe
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_geoy'] = array('Geo Y-Koordinate', 'Geben Sie hier die Y-Koordinate (Längengrad, WGS-84) der Lokation ein.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['locstyle'] = array('Lokationsstil', 'Über den Lokationsstil, der beim Kartenprofil definiert wird, legen Sie das Aussehen der Lokation fest. Ist kein Lokationsstil definiert, dann wird standardmäßig ein roter Punkt gezeichnet. ');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['locstyleGeoJson'] = ['Lokationsstile für GeoJson', 'Ermöglicht das Spezifizieren von Lokationsstile für Features mit bestimmten Schlüssel-Parameter-Paaren, ist nichts angegeben, wird der normale Lokationsstil genutzt.'];
+$GLOBALS['TL_LANG']['tl_c4g_maps']['locstyleWfs'] = ['Lokationsstile für WFS', 'Ermöglicht das Spezifizieren von Lokationsstile für Features mit bestimmten Schlüssel-Parameter-Paaren, ist nichts angegeben, wird der normale Lokationsstil genutzt.'];
 $GLOBALS['TL_LANG']['tl_c4g_maps']['zIndex'] = array('Z-Index', 'Hier können Sie einen z-Index für das Kartenstrukturelement setzen. Hinweis: hierbei handelt es sich nicht um den CSS-Z-Index, sondern um einen Z-Index, der nur für die Kartenstrukturelemente gilt.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['loc_only_in_parent'] = array('Lokation nur in übergeordneten Karten anzeigen', 'Wenn Sie diese Checkbox NICHT setzen, dann wird diese Lokation auch angezeigt, sobald Sie dieses Element als Karte darstellen lassen.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['exemptFromFilter'] = ['Lokation von Starboard-Filter ausnehmen','Bei gesetzter Checkbox, wird diese Lokation vom Starboard-Filter ignoriert.'];
@@ -78,6 +79,8 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['ovp_request'] = array('Anfrage an Overpass A
 $GLOBALS['TL_LANG']['tl_c4g_maps']['ovp_bbox_limited'] = array('Anfrage an Overpass API auf den angezeigten Kartenbereich (BBOX) beschränken.', 'Sendet die Anfrage immer, wenn sich der Kartenausschnitt durch Benutzereingaben ändert. In der Anfrage muss an geeigneter Stelle der Platzhalter "(bbox)" eingetragen sein. Dieser wird dann durch ein "bbox-query"-Tag ersetzt.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['wfsCapabilities'] = array('WFS-Capabilities', 'Tragen Sie an dieser Stelle die zu nutzenden Abfrage der WFS-Capabilities ein.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['wfsLayers'] = array('Layer des WFS-Services', 'Wählen Sie den aus den capabilities ermittelten darzustellenden Layer des WFS-Services.');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['gmlVersion'] = array('GML-Version', 'Manuelles festsetzen der GML-Version.');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['wfsProxy'] = array('WFS-Proxy', 'Laden von WFS-Request über den eigenen Server.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['data_layername'] = array('Bezeichnung im Starboard', 'Falls Sie die Daten dieser Ebene im Starboard schaltbar machen möchten, dann geben Sie hier den Namen ein, der im Starboard angezeigt werden soll.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['hide_child'] = array('Kinder im Starboard ausblenden', 'Untergeordnete Kartenstrukturelemente werden im Starboard ausgeblendet. Sie werden als Kinder dieses Elements aktivert und deaktiviert.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['data_hidelayer'] = array('Initial ausblenden', 'Falls dieses Element initial in der Karte nicht angezeigt werden soll, dann setzen Sie die Checkbox. Die Ebene wird dann erst nach Aktivierung im Starboard auf der Karte sichtbar.');
@@ -217,8 +220,12 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['con4gisio_legend']      = 'Con4gis-IO Einste
 /**
  * Multicolumnwizard
  */
-$GLOBALS['TL_LANG']['tl_c4g_maps']['locstyleGeoJson']['keys']   = ['Schlüssel', 'Schlüssel des Features'];
-$GLOBALS['TL_LANG']['tl_c4g_maps']['locstyleGeoJson']['props']  = ['Wert', 'Wert für den zugeordneten Schlüssel'];
+$GLOBALS['TL_LANG']['tl_c4g_maps']['locstyleGeoJson']['key']   = ['Schlüssel', 'Schlüssel des Features'];
+$GLOBALS['TL_LANG']['tl_c4g_maps']['locstyleGeoJson']['value']  = ['Wert', 'Wert für den zugeordneten Schlüssel'];
+
+$GLOBALS['TL_LANG']['tl_c4g_maps']['locstyleWfs']['key']   = ['Schlüssel', 'Schlüssel des Features'];
+$GLOBALS['TL_LANG']['tl_c4g_maps']['locstyleWfs']['compare']   = ['Vergleichsoperation', 'Wählen Sie aus, welche Vergleichsoperation verwendet werden soll.'];
+$GLOBALS['TL_LANG']['tl_c4g_maps']['locstyleWfs']['value']  = ['Wert', 'Wert für den zugeordneten Schlüssel'];
 
 $GLOBALS['TL_LANG']['tl_c4g_maps']['editalias'] = array('Quellelement bearbeiten', 'Das Quellelement ID %s bearbeiten');
 

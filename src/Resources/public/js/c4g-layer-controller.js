@@ -1022,6 +1022,17 @@ export class BetterLayerController {
             dataProjection: dataProjection
           });
           if (layer.type === "wfs") {
+            if (content.locstyleWfs) {
+              for (let i in content.locstyleWfs) {
+                if (content.locstyleWfs.hasOwnProperty(i)) {
+                  let locstyle = content.locstyleWfs[i].locstyle;
+                  let checkLocstyle = this.arrLocstyles.findIndex((element) => element === locstyle);
+                  if (checkLocstyle === -1 && locstyle) {
+                    this.arrLocstyles.push(locstyle);
+                  }
+                }
+              }
+            }
             vectorSource = new VectorSource({
               format: new olFormat['WFS']({
                 version: content.data.version,
@@ -1029,28 +1040,38 @@ export class BetterLayerController {
               }),
               loader: function(extent, resolution, projection, success, failure) {
                 const proj = projection.getCode();
-                const url = content.data.url + '&srsname=' + proj + '&' +
-                    'bbox=' + extent.join(',') + ',' + proj;
-                const xhr = new XMLHttpRequest();
-                xhr.open('GET', url);
-                const onError = function() {
+                let newExt = transformExtent(extent, projection, "EPSG:4326");
+                newExt = [newExt[1], newExt[0], newExt[3], newExt[2]];
+                const url = content.data.url + newExt.join(',');
+
+                fetch (url, {
+                  headers: {
+                    "Content-Type": "application/json"
+                  }
+                }).then((response) => {
+                  response.json().then((data) => {
+                    const features = format.readFeatures(data);
+                    for (let i in features) {
+                      if (features.hasOwnProperty(i)) {
+                        let feature = features[i];
+                        let locstyle = scope.getWfsStyle(feature, content);
+                        feature.set('locstyle', locstyle)
+                        let id = feature.getId();
+                        if (!vectorSource.getFeatureById(id)) {
+                          vectorSource.addFeature(feature);
+                        }
+                      }
+                    }
+                    success(features);
+                  });
+                }).catch(() => {
                   vectorSource.removeLoadedExtent(extent);
                   failure();
-                }
-                xhr.onerror = onError;
-                xhr.onload = function() {
-                  if (xhr.status == 200) {
-                    const features = format.readFeatures(xhr.responseText);
-                    vectorSource.addFeatures(features);
-                    success(features);
-                  } else {
-                    onError();
-                  }
-                }
-                xhr.send();
+                });
               },
               strategy: bbox
             });
+            customStyleFunc = false;
             popup = content.data && content.data.popup ? content.data.popup : false;
           }
           else {
@@ -1564,5 +1585,32 @@ export class BetterLayerController {
   compareZoom(layerZoom) {
     let zoom = this.mapController.map.getView().getZoom();
     return (parseInt(layerZoom.min, 10) < zoom && parseInt(layerZoom.max, 10) > zoom);
+  }
+  getWfsStyle (feature, content) {
+    let locstyleWfs = content.locstyleWfs;
+    for (let i in locstyleWfs) {
+      if (locstyleWfs.hasOwnProperty(i)) {
+        let element = locstyleWfs[i];
+        let value = feature.get(element.key);
+        switch (element.compare) {
+          case "==":
+            if (value == element.value) {
+              return element.locstyle;
+            }
+            break;
+          case ">":
+            if (value > element.value) {
+              return element.locstyle;
+            }
+            break;
+          case "<":
+            if (value < element.value) {
+              return element.locstyle;
+            }
+            break;
+        }
+      }
+    }
+    return content.locationStyle;
   }
 }

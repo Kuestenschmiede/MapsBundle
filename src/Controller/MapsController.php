@@ -14,11 +14,13 @@ use con4gis\CoreBundle\Controller\BaseController;
 use con4gis\MapsBundle\Classes\Events\LoadInfoWindowEvent;
 use con4gis\MapsBundle\Classes\Events\PerformSearchEvent;
 use con4gis\MapsBundle\Classes\GeoPicker;
+use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use con4gis\MapsBundle\Resources\contao\modules\api\InfoWindowApi;
 use con4gis\MapsBundle\Resources\contao\modules\api\SearchApi;
 use con4gis\MapsBundle\Resources\contao\modules\api\ReverseSearchApi;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -76,6 +78,28 @@ class MapsController extends BaseController
 
             return $response;
         }
+    }
+    public function wfsAction(Request $request, $id, $extent) {
+        $this->initialize();
+        $wfsLayer = C4gMapsModel::findByPk($id);
+        $url = str_ireplace('getcapabilities', 'getFeature',$wfsLayer->wfsCapabilities);
+        $url .= "&outputFormat=application/json&VERSION=2.0.0&TYPENAMES=" . $wfsLayer->wfsLayers . "&BBOX=" .$extent;
+
+        $client = HttpClient::create();
+        $response = new JsonResponse();
+        $data = $client->request(
+            'GET',
+            $url,
+            [
+                'headers' => [
+                    'Referer'       => $_SERVER['HTTP_REFERER'],
+                    'User-Agent'    =>     $_SERVER['HTTP_USER_AGENT'],
+                    'Content-Type'  => "application/json"
+                ]
+            ]
+        )->getContent();
+        $response->setData(json_decode($data));
+        return $response;
     }
 
     public function searchAction(Request $request, $profileId)

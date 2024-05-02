@@ -135,6 +135,47 @@ class TlC4gMaps extends Backend
         ];
         return $return;
     }
+        public function locstyleWfs($multiColumnWizard) {
+        $activeRecord = $multiColumnWizard->__get('activeRecord');
+        $arrLocstyles = $this->Database->prepare('SELECT * FROM tl_c4g_map_locstyles')
+            ->execute()->fetchAllAssoc();
+        $arrOptions = [];
+        foreach ($arrLocstyles as $arrLocstyle) {
+            $arrOptions[$arrLocstyle['id']] = $arrLocstyle['name'];
+        }
+        $arrColumnLocstyles =  [
+            'label'     => &$GLOBALS['TL_LANG']['tl_c4g_maps']['locstyle'],
+            'inputType' => 'select',
+            'eval'      => ['chosen' => true, 'includeBlankOption' => true, 'style' => 'min-width:200px;width:200px;'],
+            'options'   => $arrOptions
+        ];
+        $arrColumnKey = [
+            'label'     => &$GLOBALS['TL_LANG']['tl_c4g_maps']['locstyleWfs']['key'],
+            'inputType' => 'text'
+        ];
+        $arrCompareItem =  [
+            'label'     => &$GLOBALS['TL_LANG']['tl_c4g_maps']['locstyleWfs']['compare'],
+            'inputType' => 'select',
+            'eval'      => ['chosen' => true, 'style' => 'min-width:150px;width:150px;'],
+            'options'   => [
+                "==",
+                ">",
+                "<"
+            ]
+        ];
+        $arrColumnValue = [
+            'label'     => &$GLOBALS['TL_LANG']['tl_c4g_maps']['locstyleWfs']['value'],
+            'inputType' => 'text'
+        ];
+
+        $return = [
+            'key'       => $arrColumnKey,
+            'compare'   => $arrCompareItem,
+            'value'     => $arrColumnValue,
+            'locstyle'  => $arrColumnLocstyles
+        ];
+        return $return;
+    }
 
     /**
      * Return all available Sources for Maps
