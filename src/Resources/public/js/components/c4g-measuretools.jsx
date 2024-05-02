@@ -28,7 +28,7 @@ export default class Measuretools extends Component {
     let element = document.createElement('div');
     let button = document.createElement('button');
     this.langConstants = getLanguage(props.mapController.data);
-    if (props.mapController.data.themeData.controlLabels) {
+    if (props.mapController.data.themeData && props.mapController.data.themeData.controlLabels) {
       let span = document.createElement('span');
       span.innerText = this.langConstants.CTRL_MEASURETOOLS;
       button.appendChild(span);

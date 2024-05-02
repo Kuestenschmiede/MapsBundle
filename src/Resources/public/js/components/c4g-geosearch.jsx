@@ -41,7 +41,7 @@ export default class GeoSearch extends Component {
     let element = document.createElement('div');
     let button = document.createElement('button');
 
-    if (props.mapController.data.themeData.controlLabels) {
+    if (props.mapController.data.themeData && props.mapController.data.themeData.controlLabels) {
       let span = document.createElement('span');
       span.innerText = this.langConstants.CTRL_GEOSEARCH;
       button.appendChild(span);

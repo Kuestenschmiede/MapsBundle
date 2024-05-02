@@ -54,7 +54,7 @@ class FilterService
         $filterIds = \Contao\StringUtil::deserialize($mapsProfileModel->filters);
         if ($filterIds) {
             foreach ($filterIds as $filterId) {
-                $filter = $tags = $database->prepare('SELECT * FROM tl_c4g_map_filters WHERE id=' . $filterId)
+                $filter = $database->prepare('SELECT * FROM tl_c4g_map_filters WHERE id=' . $filterId)
                     ->execute()->fetchAssoc();
                 $objFilter = new FeatureFilter();
                 $objFilter->setFieldName($filter['name']);

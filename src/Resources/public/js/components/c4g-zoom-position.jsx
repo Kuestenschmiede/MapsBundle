@@ -55,7 +55,7 @@ export default class ZoomPosition extends Component {
 
     // button
     button = document.createElement('button');
-    if (props.mapController.data.themeData.controlLabels) {
+    if (props.mapController.data.themeData && props.mapController.data.themeData.controlLabels) {
       let span = document.createElement('span');
       span.innerText = langConstants.CTRL_ZOOM_POS;
       button.appendChild(span);
