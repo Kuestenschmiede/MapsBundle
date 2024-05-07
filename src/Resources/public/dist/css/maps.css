@@ -4941,6 +4941,10 @@ div.c4g-active.c4g-popup-wrapper :last-child {
 .c4g-tooltip-popup {
   z-index: 20
 }
+.c4g-horizontal.c4g-tooltip-popup {
+  margin-left: 10px;
+  max-width: 220px
+}
 .c4g-popup-content .name,
 .c4g_popup_header_featurename {
   font-size: 1.4em
