@@ -284,7 +284,8 @@ export default class FeatureFilter extends Component {
         return featureHours.getState();
       }
       catch (error) {
-        console.warn(error);
+        //ToDo
+        //console.warn(error);
         return false;
       }
     }
