@@ -310,7 +310,7 @@ span.c4g-icon + span[class*=locstyle] + a {
 
 .c4g-content-layertree span[class*=locstyle] {
     width: 25px;
-    line-height: 43px;
+    //line-height: 43px;
 }
 
 .c4g-content-layertree span[class*=locstyle]:not(.c4g-starboard-locstyle-triangle):not(.c4g-starboard-locstyle-square):not(.c4g-starboard-locstyle-point) {
@@ -377,11 +377,11 @@ span.c4g-icon + span[class*=locstyle] + a {
 
 .c4g-layertree span:not(.c4g-starboard-locstyle), .c4g-layertree a,
 .c4g-layertree span:not(.c4g-starboard-locstyle), .c4g-layertree .c4g-starboard-text {
-    height: 43px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+    //height: 43px;
+    //white-space: nowrap;
+    //text-overflow: ellipsis;
     overflow: hidden;
-    line-height: 43px;
+    line-height: normal;
 }
 
 .c4g-starboard-list-element .c4g-starboard-text {

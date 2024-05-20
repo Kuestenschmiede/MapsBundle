@@ -4903,6 +4903,9 @@ li.c4g-close ul {
   position: fixed;
   transition: all .5s
 }
+li.c4g-open ul {
+  margin-bottom: 1em
+}
 .ol-zoom-with-extent button,
 .ol-zoom-with-home button,
 .ol-zoom-with-position button {
@@ -5163,9 +5166,7 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
   width: calc(100% - 1.2em - 32px);
   padding: 0 .4em;
   font-size: 20px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap
+  overflow: hidden
 }
 .c4g-sideboard > div > div[class*=header] button[class*=close] {
   width: 32px;
@@ -5219,8 +5220,6 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
 }
 .c4g-geosearch-form,
 .c4g-sideboard > div > div[class*=filter] {
-  line-height: calc(32px + .4em);
-  height: calc(32px + .4em);
   padding: 0 .4em;
   margin: 0
 }
@@ -6252,7 +6251,7 @@ button.c4g-starboard-view-trigger-layerswitcher:before {
 }
 .c4g-baselayertree-content .c4g-open > span,
 .c4g-layertree .c4g-open > span.c4g-icon {
-  transform: rotate(90deg)
+  transform: translateX(-75%) translateY(-25%) rotate(90deg)
 }
 input.c4g-baselayer-filter-field,
 input.c4g-starboard-layerswitcher-filter-field {
@@ -6562,8 +6561,7 @@ span.c4g-icon + span[class*=locstyle] + a {
   width: calc(100% - 35px - 21px - 1.75em - .2em)
 }
 .c4g-content-layertree span[class*=locstyle] {
-  width: 25px;
-  line-height: 43px
+  width: 25px
 }
 .c4g-content-layertree span[class*=locstyle]:not(.c4g-starboard-locstyle-triangle):not(.c4g-starboard-locstyle-square):not(.c4g-starboard-locstyle-point) {
   text-align: center
@@ -6622,11 +6620,8 @@ span.c4g-icon + span[class*=locstyle] + a {
 .c4g-layertree .c4g-starboard-text,
 .c4g-layertree a,
 .c4g-layertree span:not(.c4g-starboard-locstyle) {
-  height: 43px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
   overflow: hidden;
-  line-height: 43px
+  line-height: normal
 }
 .c4g-starboard-list-element .c4g-starboard-text {
   float: left;

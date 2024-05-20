@@ -263,6 +263,10 @@ li.c4g-close ul {
   transition: all 0.5s;
 }
 
+li.c4g-open ul {
+  margin-bottom: 1em;
+}
+
 /*
  * Zoom buttons
  */
@@ -671,9 +675,9 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
   width: calc(100% - 1.2em - 32px);
   padding: 0 .4em;
   font-size: 20px;
-  text-overflow: ellipsis;
+  //text-overflow: ellipsis;
   overflow: hidden;
-  white-space: nowrap;
+  //white-space: nowrap;
 }
 
 .c4g-sideboard > div > div[class*=header] button[class*=close] {
@@ -750,8 +754,8 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
 /*-----------filter-----------*/
 
 .c4g-geosearch-form, .c4g-sideboard > div > div[class*=filter] {
-  line-height: calc(32px + .4em);
-  height: calc(32px + .4em);
+  //line-height: calc(32px + .4em);
+  //height: calc(32px + .4em);
   padding: 0 .4em;
   margin: 0;
 }

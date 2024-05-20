@@ -479,8 +479,8 @@ button.c4g-starboard-view-trigger-layerswitcher:before {
 /*  background: #ccc;*/
 }
 .c4g-layertree .c4g-open > span.c4g-icon,
-.c4g-baselayertree-content .c4g-open > span{
-  transform: rotate(90deg);
+.c4g-baselayertree-content .c4g-open > span {
+  transform: translateX(-75%) translateY(-25%) rotate(90deg);
 }
 input.c4g-starboard-layerswitcher-filter-field,
 input.c4g-baselayer-filter-field {
