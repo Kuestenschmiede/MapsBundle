@@ -1,6 +1,11 @@
 .c4g-starboardscope-content-container {
 
   > ul {
+    list-style-type: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-gap: 1em;
+
     > li {
       padding-top: 20px;
       padding-bottom: 30px;
@@ -30,3 +35,8 @@
   }
 }
 
+@media (max-width: 370px) {
+  .c4g-starboardscope-content-container ul {
+    display: block;
+  }
+}
