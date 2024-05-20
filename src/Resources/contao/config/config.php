@@ -139,6 +139,11 @@ $GLOBALS['TL_PURGE']['folders']['con4gis_locationstyle'] =
     'callback' => ['\con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator', 'purgeLocationstyleApiCache'],
     'affected' => ['var/cache/prod/con4gis_locationstyleService']
     ];
+$GLOBALS['TL_PURGE']['folders']['con4gis_popup'] =
+    [
+        'callback' => ['\con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator', 'purgePopupApiCache'],
+        'affected' => ['var/cache/prod/con4gis_Popup']
+    ];
 
 //if(TL_MODE == "BE") {
 //    $GLOBALS['TL_CSS'][] = '/bundles/con4gismaps/dist/css/c4g-backend.min.css';
