@@ -7440,6 +7440,12 @@ c4g-infopage-container {
 .c4g-popup-wrapper .c4g-tile-content .contacts .entry-content i:before {
   font-size: 24px
 }
+.c4g-starboardscope-content-container > ul {
+  list-style-type: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(350px,1fr));
+  grid-gap: 1em
+}
 .c4g-starboardscope-content-container > ul > li {
   padding-top: 20px;
   padding-bottom: 30px
@@ -7464,4 +7470,9 @@ c4g-infopage-container {
   user-select: none;
   padding: 5px;
   cursor: pointer
+}
+@media (max-width:370px) {
+  .c4g-starboardscope-content-container ul {
+    display: block
+  }
 }
