@@ -88,6 +88,10 @@ export class StarboardScopeItem extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.observer = null;
+  }
+
   render() {
     let distance = null;
     if (this.props.feature.get('distance')) {

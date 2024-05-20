@@ -401,7 +401,7 @@ export default class MapController extends Component {
           const bottomLeft = fromLonLat([mapData.geolocation_extent[0],mapData.geolocation_extent[1]]);
           const topRight = fromLonLat([mapData.geolocation_extent[2],mapData.geolocation_extent[3]]);
           const extent = boundingExtent([bottomLeft, topRight]);
-          if (!containsCoordinate(extent, position)) {
+          if (!position || !containsCoordinate(extent, position)) {
             return;
           }
         }

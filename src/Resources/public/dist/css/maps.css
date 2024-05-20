@@ -6801,6 +6801,13 @@ div.c4g-tooltip-popup:before {
   cursor: pointer;
   outline: 0
 }
+.c4g-sideboard.c4g-popup-container .btn {
+  margin-right: .25em
+}
+.c4g-external a.btn.btn-primary.put-on-wishlist,
+.c4g-external a.btn.btn-warning.remove-from-wishlist.on-wishlist {
+  margin-right: .25em
+}
 .c4g-spinner {
   position: absolute;
   left: 50%;
