@@ -505,8 +505,9 @@ export class C4gBaselayerController {
           let baseLayerGroup = [];
           for (let index in baseLayerConfig['layerGroup']) {
             if (baseLayerConfig['layerGroup'].hasOwnProperty(index)) {
-
-              let element = this.createBaseLayer(null, baseLayerConfig['layerGroup'][index], sourceConfigs);
+              let groupLayerOptions = {};
+              groupLayerOptions = this.getAttributions(groupLayerOptions, baseLayerConfig['layerGroup'][index], sourceConfigs);
+              let element = this.createBaseLayer(groupLayerOptions, baseLayerConfig['layerGroup'][index], sourceConfigs);
               let maxZoom = this.proxy.options.mapController.map.getView().getResolutionForZoom(baseLayerConfig['layerGroup'][index]['minZoom']);
               let minZoom = this.proxy.options.mapController.map.getView().getResolutionForZoom(baseLayerConfig['layerGroup'][index]['maxZoom']);
               element.setMinResolution(minZoom);
@@ -643,6 +644,129 @@ export class C4gBaselayerController {
 
   }
 
+  getAttributions(layerOptions, baseLayerConfig, sourceConfigs) {
+    var i;
+
+    if (baseLayerConfig.attribution) {
+      if (layerOptions.attributions) {
+        layerOptions.attributions = layerOptions.attributions + ' ' + baseLayerConfig.attribution;
+      } else {
+        layerOptions.attributions = OSM_REL_ATTRIBUTION + ' ' + baseLayerConfig.attribution;
+      }
+    } else if (!layerOptions.attributions) {
+      switch (baseLayerConfig.provider) {
+        case 'osm':
+          if (sourceConfigs.osm[baseLayerConfig.style]) {
+            layerOptions.attributions = sourceConfigs.osm[baseLayerConfig.style].attributions;
+          } else {
+            layerOptions.attributions = OSM_REL_ATTRIBUTION;
+          }
+          break;
+        case 'stamen':
+          layerOptions.attributions = sourceConfigs.stamen[baseLayerConfig.style].attributions;
+          break;
+        case 'mapbox':
+          layerOptions.attributions = sourceConfigs.mapbox[baseLayerConfig.mapbox_type].attributions;
+          break;
+        case 'mapz':
+          layerOptions.url = baseLayerConfig.url;
+          layerOptions.attributions = sourceConfigs.mapz.attributions;
+          break;
+        case 'otm':
+          layerOptions.url = baseLayerConfig.url;
+          layerOptions.attributions = sourceConfigs.otm.attributions;
+          break;
+        case 'klokan':
+          layerOptions.attributions = sourceConfigs.klokan[baseLayerConfig.klokan_type].attributions;
+          break;
+        case 'here':
+          layerOptions.attributions = sourceConfigs.here[baseLayerConfig.here_type].attributions;
+          break;
+        case 'thunder':
+          layerOptions.attributions = sourceConfigs.thunderforest[baseLayerConfig.thunderforest_type].attributions;
+          break;
+        case 'con4gisIo':
+          layerOptions.attributions = 'Mapservices via <a href="https://con4gis.io" target="_blank" rel="noopener">con4gis.io</a>. '+ OSM_REL_ATTRIBUTION;
+          break;
+        default:
+          layerOptions.attributions = OSM_REL_ATTRIBUTION;
+          break;
+      }
+    }
+
+    //ToDo helper class for attributions
+
+    //additional attribution
+    if (this.mapController.data && this.mapController.data.attribution && this.mapController.data.attribution.additional) {
+      if (layerOptions.attributions) {
+        let additionalAttribution = this.mapController.data.attribution.additional;
+
+        exists = false;
+        for (i = 0; i < layerOptions.attributions.length; i += 1) {
+          if (layerOptions.attributions[i] === additionalAttribution) {
+            exists = true;
+            break;
+          }
+        }
+
+        if (!exists) {
+          layerOptions.attributions = layerOptions.attributions + ' ' + additionalAttribution;
+        }
+      } else {
+        layerOptions.attributions = this.mapController.data.attribution.additional;
+      }
+    }
+
+    //ToDo type class for geosearch_engine
+    //geosearch attribution
+    if (this.mapController.data.geosearch) {
+
+      if (this.mapController.data &&
+          this.mapController.data.attribution) {
+
+        let geosearchAttribution = this.mapController.data.attribution.geosearch ? this.mapController.data.attribution.geosearch : "";
+        var exists = false;
+        if (!layerOptions.attributions) {
+          layerOptions.attributions = [];
+        }
+        for (i = 0; i < layerOptions.attributions.length; i += 1) {
+          if (layerOptions.attributions[i] === geosearchAttribution) {
+            exists = true;
+            break;
+          }
+        }
+
+        if (!exists) {
+          layerOptions.attributions = layerOptions.attributions + ' ' + geosearchAttribution;
+        }
+        else {
+          layerOptions.attributions = geosearchAttribution;
+        }
+
+        let routerAttribution = this.mapController.data.attribution.router ? " - " + this.mapController.data.attribution.router : "";
+        var exists = false;
+        if (!layerOptions.attributions) {
+          layerOptions.attributions = [];
+        }
+        for (i = 0; i < layerOptions.attributions.length; i += 1) {
+          if (layerOptions.attributions[i] === routerAttribution) {
+            exists = true;
+            break;
+          }
+        }
+
+        if (!exists) {
+          layerOptions.attributions = layerOptions.attributions + ' ' + routerAttribution;
+        }
+        else {
+          layerOptions.attributions = routerAttribution;
+        }
+      }
+    }
+
+    return layerOptions;
+  }
+
   showBaseLayer(baseLayerUid) {
 
     let self = this,
@@ -684,122 +808,7 @@ export class C4gBaselayerController {
 
       layerOptions = {};
 
-      if (baseLayerConfig.attribution) {
-        if (layerOptions.attributions) {
-          layerOptions.attributions = layerOptions.attributions + ' ' + baseLayerConfig.attribution;
-        } else {
-          layerOptions.attributions = OSM_REL_ATTRIBUTION + ' ' + baseLayerConfig.attribution;
-        }
-      } else if (!layerOptions.attributions) {
-        switch (baseLayerConfig.provider) {
-          case 'osm':
-            if (sourceConfigs.osm[baseLayerConfig.style]) {
-              layerOptions.attributions = sourceConfigs.osm[baseLayerConfig.style].attributions;
-            } else {
-              layerOptions.attributions = OSM_REL_ATTRIBUTION;
-            }
-            break;
-          case 'stamen':
-            layerOptions.attributions = sourceConfigs.stamen[baseLayerConfig.style].attributions;
-            break;
-          case 'mapbox':
-            layerOptions.attributions = sourceConfigs.mapbox[baseLayerConfig.mapbox_type].attributions;
-            break;
-          case 'mapz':
-            layerOptions.url = baseLayerConfig.url;
-            layerOptions.attributions = sourceConfigs.mapz.attributions;
-            break;
-          case 'otm':
-            layerOptions.url = baseLayerConfig.url;
-            layerOptions.attributions = sourceConfigs.otm.attributions;
-            break;
-          case 'klokan':
-            layerOptions.attributions = sourceConfigs.klokan[baseLayerConfig.klokan_type].attributions;
-            break;
-          case 'here':
-            layerOptions.attributions = sourceConfigs.here[baseLayerConfig.here_type].attributions;
-            break;
-          case 'thunder':
-            layerOptions.attributions = sourceConfigs.thunderforest[baseLayerConfig.thunderforest_type].attributions;
-            break;
-          case 'con4gisIo':
-            layerOptions.attributions = 'Mapservices via <a href="https://con4gis.io" target="_blank" rel="noopener">con4gis.io</a>. '+ OSM_REL_ATTRIBUTION;
-            break;
-          default:
-            layerOptions.attributions = OSM_REL_ATTRIBUTION;
-            break;
-        }
-      }
-
-      //ToDo helper class for attributions
-
-      //additional attribution
-      if (this.mapController.data && this.mapController.data.attribution && this.mapController.data.attribution.additional) {
-        if (layerOptions.attributions) {
-          let additionalAttribution = this.mapController.data.attribution.additional;
-
-          exists = false;
-          for (i = 0; i < layerOptions.attributions.length; i += 1) {
-            if (layerOptions.attributions[i] === additionalAttribution) {
-              exists = true;
-              break;
-            }
-          }
-
-          if (!exists) {
-            layerOptions.attributions = layerOptions.attributions + ' ' + additionalAttribution;
-          }
-        } else {
-          layerOptions.attributions = this.mapController.data.attribution.additional;
-        }
-      }
-
-      //ToDo type class for geosearch_engine
-      //geosearch attribution
-      if (this.mapController.data.geosearch) {
-
-        if (this.mapController.data &&
-          this.mapController.data.attribution) {
-
-         let geosearchAttribution = this.mapController.data.attribution.geosearch ? this.mapController.data.attribution.geosearch : "";
-          var exists = false;
-          if (!layerOptions.attributions) {
-            layerOptions.attributions = [];
-          }
-          for (i = 0; i < layerOptions.attributions.length; i += 1) {
-            if (layerOptions.attributions[i] === geosearchAttribution) {
-              exists = true;
-              break;
-            }
-          }
-
-          if (!exists) {
-            layerOptions.attributions = layerOptions.attributions + ' ' + geosearchAttribution;
-          }
-          else {
-            layerOptions.attributions = geosearchAttribution;
-          }
-
-          let routerAttribution = this.mapController.data.attribution.router ? " - " + this.mapController.data.attribution.router : "";
-          var exists = false;
-          if (!layerOptions.attributions) {
-            layerOptions.attributions = [];
-          }
-          for (i = 0; i < layerOptions.attributions.length; i += 1) {
-            if (layerOptions.attributions[i] === routerAttribution) {
-              exists = true;
-              break;
-            }
-          }
-
-          if (!exists) {
-            layerOptions.attributions = layerOptions.attributions + ' ' + routerAttribution;
-          }
-          else {
-            layerOptions.attributions = routerAttribution;
-          }
-        }
-      }
+      layerOptions = this.getAttributions(layerOptions, baseLayerConfig, sourceConfigs);
 
       if (baseLayerConfig.sorting) {
         layerOptions.sort = baseLayerConfig.sorting;
