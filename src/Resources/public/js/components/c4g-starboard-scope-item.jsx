@@ -33,7 +33,10 @@ export class StarboardScopeItem extends Component {
           this.props.loadMore();
         }
         this.loadPopup();
-        observer.unobserve(this.ref.current)
+
+        if (this.ref && this.ref.current) {
+          observer.unobserve(this.ref.current);
+        }
       }
     })
   }
