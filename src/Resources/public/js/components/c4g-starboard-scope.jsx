@@ -180,7 +180,7 @@ export default class StarboardScope extends Component {
           }).then(function (response) {
             scope.preventAddReqs = false;
             return response.json().then(function(jsonData) {
-              let distances = jsonData.sources_to_targets[0];
+              let distances = jsonData && jsonData.sources_to_targets ? jsonData.sources_to_targets[0] : [];
               for(let i in distances) {
                 if (distances.hasOwnProperty(i) && objMissDist.hasOwnProperty(i)) {
                   objMissDist[i].set('distanceMatrix', distances[i].distance * 1000);
