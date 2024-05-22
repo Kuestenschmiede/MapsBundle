@@ -258,6 +258,7 @@ export class C4gLocationStyle {
   createImageStyle(styleData, strokeStyle, fillStyle) {
     let imageStyle;
     // image
+
     switch (styleData.styletype) {
       case 'square':
         imageStyle = new RegularShape({
@@ -272,7 +273,7 @@ export class C4gLocationStyle {
         imageStyle = new RegularShape({
           fill: fillStyle,
           stroke: strokeStyle,
-          radius1: styleData.radius.value || 10,
+          radius: styleData.radius.value || 10,
           radius2: styleData.radius.value ? Math.floor(styleData.radius.value * 0.5) : 4,
           points: 5,
           angle: 0
@@ -280,7 +281,6 @@ export class C4gLocationStyle {
         break;
       case 'x':
         imageStyle = new RegularShape({
-          fill: fillStyle,
           stroke: strokeStyle,
           points: 4,
           radius: styleData.radius.value || 10,
@@ -290,7 +290,6 @@ export class C4gLocationStyle {
         break;
       case 'cross':
         imageStyle = new RegularShape({
-          fill: fillStyle,
           stroke: strokeStyle,
           points: 4,
           radius: styleData.radius.value || 10,
