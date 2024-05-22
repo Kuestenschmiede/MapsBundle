@@ -45,6 +45,15 @@ class C4GMapsAutomator extends C4GAutomator
     }
 
     /**
+     * Purge the con4gis cache for the popupService.
+     */
+    public function purgePopupApiCache()
+    {
+        C4GPopupApiCache::getInstance(System::getContainer())->clearCache();
+        C4gLogModel::addLogEntry('maps', 'cleared popup api cache');
+    }
+
+    /**
      * Purge the con4gis map caches.
      */
     public function purgeMapApiCache()
@@ -52,5 +61,6 @@ class C4GMapsAutomator extends C4GAutomator
         $this->purgeLayerApiCache();
         $this->purgeBaselayerApiCache();
         $this->purgeLocationstyleApiCache();
+        $this->purgePopupApiCache();
     }
 }

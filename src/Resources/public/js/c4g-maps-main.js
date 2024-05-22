@@ -200,19 +200,40 @@ window.initMaps = function(mapData) {
           }
         }
 
-        let observer = new IntersectionObserver(entries => {
-          entries.forEach(entry => {
-            if (entry.intersectionRatio > 0) {
-              return ReactDOM.render(
-                <Suspense fallback={<div>Loading...</div>}>
-                  <MapController mapData={mapData[key]}/>
-                </Suspense>,
-                entry.target
-              );
-            }
+        mapData[key].renderAsObserver = true;
+
+        if (Object.keys(mapData).length > 1) {
+          // two maps
+          if (Object.keys(mapData)[0] === key) {
+            mapData[key].renderAsObserver = true;
+          } else {
+            mapData[key].renderAsObserver = false;
+          }
+        }
+
+        if (mapData[key].renderAsObserver) {
+          let observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+              if (entry.intersectionRatio > 0) {
+                ReactDOM.render(
+                    <Suspense fallback={<div>Loading...</div>}>
+                      <MapController mapData={mapData[key]}/>
+                    </Suspense>,
+                    entry.target
+                );
+              }
+            });
+
           });
-        });
-        observer.observe(mapDiv);
+          observer.observe(mapDiv);
+        } else {
+          ReactDOM.render(
+              <Suspense fallback={<div>Loading...</div>}>
+                <MapController mapData={mapData[key]}/>
+              </Suspense>,
+              document.querySelector("#c4g-map-container-" + mapData[key].mapId)
+          );
+        }
       }
     }
   }

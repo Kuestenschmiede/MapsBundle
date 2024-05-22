@@ -7,9 +7,17 @@
 } ?>
 
 <?php if (!isset($this->mapData['mapDiv']) || !$this->mapData['mapDiv']): ?>
-<div id="<?php echo 'c4g_map_' . $this->mapData['mapId'] ?>" class="c4g_map">
-    <div id="<?php echo 'c4g-map-container-' . $this->mapData['mapId'] ?>"></div>
-</div>
+
+    <?php if (isset($this->mapData['height']) || isset($this->mapData['width'])): ?>
+        <div id="<?php echo 'c4g_map_' . $this->mapData['mapId'] ?>" class="c4g_map" style="width: <?= $this->mapData['width'] ?> ; height: <?= $this->mapData['height'] ?>;">
+            <div id="<?php echo 'c4g-map-container-' . $this->mapData['mapId'] ?>"></div>
+        </div>
+    <?php else: ?>
+        <div id="<?php echo 'c4g_map_' . $this->mapData['mapId'] ?>" class="c4g_map">
+            <div id="<?php echo 'c4g-map-container-' . $this->mapData['mapId'] ?>"></div>
+        </div>
+    <?php  endif; ?>
+
 <?php  endif; ?>
 
 <?php if (\Contao\Environment::get('isAjaxRequest')): ?>

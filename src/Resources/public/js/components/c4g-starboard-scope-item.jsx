@@ -33,7 +33,10 @@ export class StarboardScopeItem extends Component {
           this.props.loadMore();
         }
         this.loadPopup();
-        observer.unobserve(this.ref.current)
+
+        if (this.ref && this.ref.current) {
+          observer.unobserve(this.ref.current);
+        }
       }
     })
   }
@@ -86,6 +89,10 @@ export class StarboardScopeItem extends Component {
       this.observer = new IntersectionObserver(this.observerFunction, {root:document, threshold: 0.1});
       this.observer.observe(this.ref.current)
     }
+  }
+
+  componentWillUnmount() {
+    this.observer = null;
   }
 
   render() {
