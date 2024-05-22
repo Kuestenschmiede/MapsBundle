@@ -70,7 +70,7 @@ export class C4gLocationStyle {
       color: utils.getRgbaFromHexAndOpacity(styleData.fillcolor[0], styleData.fillcolor[1])
     });
 
-    imageStyle = this.createImageStyle(styleData, strokeStyle, fillStyle);
+      imageStyle = this.createImageStyle(styleData, strokeStyle, fillStyle);
 
     // build function
     styleFunction = function (feature, projection, getId) {
@@ -337,12 +337,11 @@ export class C4gLocationStyle {
           let anchorX = 1 / (parseInt(width) / (parseInt(offsetX) * -1));
           let anchorY = 1 / (parseInt(height) / (parseInt(offsetY) * -1));
 
-          let img = new Image(width,height);
-          img.src = styleData.svgSrc;
+          // size was deprecated with new ol version and is no longer needed
           imageStyle = new Icon({
             anchor: [anchorX, anchorY],
-            img: img,
-            imgSize: [width, height]
+            src: styleData.svgSrc,
+            crossOrigin: 'anonymous'
           });
         }
 

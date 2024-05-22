@@ -158,7 +158,8 @@ export class BetterLayerController {
           }
           if (scope.proxy.mapData.cluster_fillcolor) {
             let countFeatures = scope.vectorCollection.getLength();
-            let scaleForCount = (size/countFeatures - 1/countFeatures) * 2
+            // let scaleForCount = (size/countFeatures - 1/countFeatures) * 2;
+            let scaleForCount = ((size - 1)/countFeatures);
             scale += scaleForCount;
           }
         }
