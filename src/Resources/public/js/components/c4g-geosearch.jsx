@@ -387,7 +387,7 @@ export default class GeoSearch extends Component {
             });
         if (mapController.data.geosearch.showOnlyResults) {
           let index = mapController.arrComponents.findIndex(element => element.name === "layerswitcher");
-          if (index && mapController.arrComponents[index]) {
+          if (index > -1 && mapController.arrComponents[index]) {
             let component = mapController.arrComponents[index].component;
             if (component.buttonEnabled) {
               component.toggleAllLayers("searchResults");
@@ -430,7 +430,7 @@ export default class GeoSearch extends Component {
         if (result.hasOwnProperty('uuid')) {
           let index = mapController.arrComponents.findIndex(element => element.name === "layerswitcher");
           let component = false;
-          if (index && mapController.arrComponents[index]) {
+          if (index > -1 && mapController.arrComponents[index]) {
             component = mapController.arrComponents[index].component;
           }
           let ids = [];
