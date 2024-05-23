@@ -6324,6 +6324,9 @@ button.c4g-beach-options:before {
   font-weight: 700;
   margin-left: 10px
 }
+.c4g-active.c4g-starboard-checkbox-icon {
+  justify-content: end
+}
 /*!
  * This file is part of con4gis, the gis-kit for Contao CMS.
  * @package con4gis
