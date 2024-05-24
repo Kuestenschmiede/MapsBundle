@@ -279,7 +279,7 @@ export default class GeoSearch extends Component {
       this.lastVal = value;
       if (value.length < 1) {
         let index = this.props.mapController.arrComponents.findIndex(element => element.name === "layerswitcher");
-        if (index && this.props.mapController.arrComponents[index]) {
+        if (index > -1 && this.props.mapController.arrComponents[index]) {
           let component = this.props.mapController.arrComponents[index].component;
           component.applyOldState("searchResults");
         }
