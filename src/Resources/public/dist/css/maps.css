@@ -5529,7 +5529,10 @@ button.c4g-geosearch-start {
   transition: .3s
 }
 .c4g-sideboard.c4g-popup-container img {
-  max-height: calc(var(--map-height) - .4em - (32px + .4em) - .4em)
+  max-height: calc(var(--map-height)/ 2);
+  -o-object-fit: cover;
+  object-fit: cover;
+  width: 100%
 }
 .c4g-layertree > ul {
   margin: .4em 0 0 0
@@ -6324,7 +6327,8 @@ button.c4g-beach-options:before {
   font-weight: 700;
   margin-left: 10px
 }
-.c4g-active.c4g-starboard-checkbox-icon {
+.c4g-active.c4g-starboard-checkbox-icon,
+.c4g-inactive.c4g-starboard-checkbox-icon {
   justify-content: end
 }
 /*!
