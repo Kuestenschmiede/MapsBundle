@@ -1130,7 +1130,9 @@ button.c4g-geosearch-start {
 /*-----Popup------*/
 
 .c4g-sideboard.c4g-popup-container img {
-  max-height: calc((var(--map-height) - .4em) - (32px + .4em) - .4em);
+  max-height: calc(var(--map-height) / 2);
+  object-fit: cover;
+  width: 100%;
 }
 
 /*----------------*/

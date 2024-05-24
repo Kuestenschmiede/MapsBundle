@@ -5840,6 +5840,12 @@ button.c4g-maps-consent-button.btn {
   background: var(--main-color);
   cursor: pointer
 }
+.c4g-layertree li {
+  margin-bottom: .5em
+}
+.c4g-layertree span {
+  display: inline-block!important
+}
 /*!
  * This file is part of con4gis, the gis-kit for Contao CMS.
  * @package con4gis
@@ -6318,6 +6324,9 @@ button.c4g-beach-options:before {
   font-weight: 700;
   margin-left: 10px
 }
+.c4g-active.c4g-starboard-checkbox-icon {
+  justify-content: end
+}
 /*!
  * This file is part of con4gis, the gis-kit for Contao CMS.
  * @package con4gis
@@ -6614,8 +6623,7 @@ span.c4g-icon + span[class*=locstyle] + a {
 .c4g-layertree span {
   min-height: 43px;
   padding-top: 0;
-  padding-bottom: 0;
-  display: block
+  padding-bottom: 0
 }
 .c4g-layertree .c4g-starboard-text,
 .c4g-layertree a,

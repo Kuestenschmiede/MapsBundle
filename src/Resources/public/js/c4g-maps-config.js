@@ -57,7 +57,7 @@ export var config = {
   stamen: {
     Toner: {
       attributions: 'Map tiles by <a target="_blank" rel="noopener" href="https://stamen.com">Stamen Design</a>, under <a  target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a  target="_blank" rel="noopener" href="http://openstreetmap.org">OpenStreetMap</a>, under <a  target="_blank" rel="noopener" href="http://www.openstreetmap.org/copyright">ODbL</a>.',
-      layer: 'toner',
+      layer: 'stamen_toner',
       minZoom: 0,
       maxZoom: 18,
       crossOrigin: 'anonymous',
@@ -65,7 +65,7 @@ export var config = {
 
     TonerLabels: {
       attributions: 'Map tiles by <a target="_blank" rel="noopener" href="https://stamen.com">Stamen Design</a>, under <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a target="_blank" rel="noopener" href="http://openstreetmap.org">OpenStreetMap</a>, under <a target="_blank" rel="noopener" href="http://www.openstreetmap.org/copyright">ODbL</a>.',
-      layer: 'toner-labels',
+      layer: 'stamen_toner_labels',
       minZoom: 0,
       maxZoom: 18,
       crossOrigin: 'anonymous',
@@ -73,7 +73,7 @@ export var config = {
 
     TonerLines: {
       attributions: 'Map tiles by <a target="_blank" rel="noopener" href="https://stamen.com">Stamen Design</a>, under <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a target="_blank" rel="noopener" href="http://openstreetmap.org">OpenStreetMap</a>, under <a target="_blank" rel="noopener" href="http://www.openstreetmap.org/copyright">ODbL</a>.',
-      layer: 'toner-lines',
+      layer: 'stamen_toner_lines',
       minZoom: 0,
       maxZoom: 18,
       crossOrigin: 'anonymous',
@@ -81,7 +81,7 @@ export var config = {
 
     Terrain: {
       attributions: 'Map tiles by <a target="_blank" rel="noopener" href="https://stamen.com">Stamen Design</a>, under <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a target="_blank" rel="noopener" href="http://openstreetmap.org">OpenStreetMap</a>, under <a target="_blank" rel="noopener" href="http://www.openstreetmap.org/copyright">ODbL</a>.',
-      layer: 'terrain',
+      layer: 'stamen_terrain',
       minZoom: 0,
       maxZoom: 18,
       crossOrigin: 'anonymous',

@@ -14,7 +14,7 @@ import {config} from "./c4g-maps-config";
 import {utils} from "./c4g-maps-utils";
 import TileLayer from "ol/layer/Tile";
 import TileJSON from "ol/source/TileJSON";
-import {BingMaps, ImageStatic, OSM, Stamen, TileWMS, XYZ} from "ol/source";
+import {BingMaps, ImageStatic, OSM, TileWMS, XYZ, StadiaMaps} from "ol/source";
 import {default as VectorTileSource} from "ol/source/VectorTile";
 import {Group as LayerGroup, Image} from "ol/layer";
 import Collection from 'ol/Collection';
@@ -223,15 +223,15 @@ export class C4gBaselayerController {
                 layers: [new TileLayer(),
                   new TileLayer()]
               });
-              source1 = new Stamen({
-                layer: 'watercolor'
+              source1 = new StadiaMaps({
+                layer: 'stamen_watercolor'
               });
-              source2 = new Stamen({
-                layer: 'terrain-labels'
+              source2 = new StadiaMaps({
+                layer: 'stamen_terrain_labels'
               });
             } else {
               newBaselayer = new TileLayer();
-              source1 = new Stamen(
+              source1 = new StadiaMaps(
                   jQuery.extend(
                       sourceConfigs.stamen[baseLayerConfig.style]
                   )
