@@ -33,8 +33,15 @@ export class UserPosition {
         if (this.mapController.data && this.mapController.data.userLocationStyle) {
             this.mapController.proxy.locationStyleController.loadLocationStyles([this.mapController.data.userLocationStyle], {"done": () =>
                 {
-                    let style = this.mapController.proxy.locationStyleController.arrLocStyles[this.mapController.data.userLocationStyle].style;
-                    this.feature.setStyle(style);
+                    if (scope.mapController.proxy.locationStyleController.arrLocStyles[scope.mapController.data.userLocationStyle].style) {
+                        let style = scope.mapController.proxy.locationStyleController.arrLocStyles[scope.mapController.data.userLocationStyle].style;
+                        scope.feature.setStyle(style);
+                    }
+                    else {
+                        let style = scope.mapController.proxy.locationStyleController.arrLocStyles[scope.mapController.data.userLocationStyle].getStyleFunction();
+                        scope.mapController.proxy.locationStyleController.arrLocStyles[scope.mapController.data.userLocationStyle].style = style;
+                        scope.feature.setStyle(style);
+                    }
                 }
             });
         }
