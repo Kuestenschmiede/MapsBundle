@@ -13,27 +13,21 @@ namespace con4gis\MapsBundle\Controller;
 
 use con4gis\CoreBundle\Controller\BaseController;
 use con4gis\MapsBundle\Classes\Contao\GeoEditor;
+use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\System;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class EditorController extends BaseController
+class EditorController
 {
     /**
      * EditorController constructor.
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(ContaoFramework $contaoFramework)
     {
-        parent::__construct($container);
-        $container->get('contao.framework')->initialize();
-    }
-
-    protected function initialize($withEntityManager = true)
-    {
-        $container = System::getContainer();
-        parent::initialize($withEntityManager);
+        $contaoFramework->initialize();
     }
 
 //    public function configEditorBackendAction(Request $request, $configId)

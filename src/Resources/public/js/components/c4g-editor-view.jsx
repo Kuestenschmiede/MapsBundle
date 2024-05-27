@@ -13,7 +13,7 @@ import {Vector as VectorSource} from "ol/source";
 import {GeoJSON} from "ol/format";
 import {Collection} from "ol";
 import {Point, LineString, Polygon, Circle} from 'ol/geom'
-import {Draw, Select, Modify} from "ol/interaction";
+import {Draw, Select, Modify, Snap} from "ol/interaction";
 import {Feature} from "ol";
 import {utils} from "./../c4g-maps-utils";
 import {C4gStarboardStyle} from "./c4g-starboard-style.jsx";
@@ -90,8 +90,7 @@ export default class EditorView extends Component {
                 realRadius: realRadius
               }
             }
-          }
-          else {
+          } else {
             geojson = new GeoJSON().writeFeatureObject(event.feature, {
               dataProjection: "EPSG:4326",
               featureProjection: "EPSG:3857"
@@ -108,7 +107,10 @@ export default class EditorView extends Component {
           this.props.countEditorId();
         }
       );
+
+      // add interaction to map
       this.props.mapController.map.addInteraction(this.interaction);
+
     } else if (this.props.mode === "select" && this.props.active) {
       this.resetInteraction();
       this.interaction = [];
@@ -121,10 +123,12 @@ export default class EditorView extends Component {
         // source: this.props.editorLayer.getSource(),
         pixelTolerance: 20
       }));
+
       this.interaction[0].on('select', (e) => {
         let feature = e.selected[0];
         this.setState({selectedFeature: feature});
       });
+      
       this.interaction[1].on('modifyend', (e) => {
         let feature = e.features.getArray()[0];
         let geojson;
@@ -147,8 +151,7 @@ export default class EditorView extends Component {
               realRadius: realRadius
             }
           }
-        }
-        else {
+        } else {
           geojson = new GeoJSON().writeFeatureObject(feature, {
             dataProjection: "EPSG:4326",
             featureProjection: "EPSG:3857"
@@ -166,8 +169,7 @@ export default class EditorView extends Component {
       this.props.mapController.map.addInteraction(this.interaction[0]);
       this.props.mapController.map.addInteraction(this.interaction[1]);
 
-    }
-    else {
+    } else {
       this.resetInteraction();
     }
     let elements = null;
@@ -231,6 +233,7 @@ export default class EditorView extends Component {
       }
 
     }
+
     return (
       <React.Fragment>
         <div>
@@ -257,6 +260,7 @@ export default class EditorView extends Component {
       }
     }
   }
+
   removeActiveFeature () {
     let geojson = new GeoJSON().writeFeatureObject(this.state.selectedFeature, {
       dataProjection: "EPSG:4326",
@@ -269,6 +273,7 @@ export default class EditorView extends Component {
       selectedFeature: false
     })
   }
+
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.props.elements[0] && prevProps.mode !== this.props.mode) {
       if (this.state.activeElement === 0) {

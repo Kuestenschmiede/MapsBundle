@@ -167,6 +167,7 @@ export default class EditorComponent extends Component {
     });
     this.props.mapController.setOpenComponent(this);
   }
+
   close() {
     jQuery(this.props.mapController.editorContainer).removeClass("c4g-open").addClass("c4g-close");
 //    this.props.mapController.map.removeLayer(this.editorLayer);
@@ -174,12 +175,14 @@ export default class EditorComponent extends Component {
       open: false
     });
   }
+
   countEditorId () {
     let newCount = this.state.editorId + 1;
     this.setState({
       editorId: newCount
     })
   }
+
   getConfiguration (id, frontend = true) {
     let url;
     if (frontend) {
@@ -197,6 +200,7 @@ export default class EditorComponent extends Component {
           })
       })
   }
+
   handleConfig (json) {
     for (let i in json.drawStyles) {
       if (json.drawStyles.hasOwnProperty(i)) {
@@ -222,9 +226,13 @@ export default class EditorComponent extends Component {
       }
     })
   }
+
   reRender(){
     try{
       if (this.state.features.length > 50) {
+        // replace html special chars in geojson string
+        this.state.features = this.state.features.replaceAll('&#34;', '"');
+
         this.linkInput();
         let geojson = JSON.parse(this.state.features);
         let features = new GeoJSON({
@@ -258,12 +266,14 @@ export default class EditorComponent extends Component {
       selection.addRange(range);
     }
   }
+
   changeJSON(event) {
     let range = window.getSelection().getRangeAt(0).startOffset;
     this.setState({features: event.target.innerText, range: range}, () => {
       this.reRender();
     })
   }
+
   addFeature (feature) {
     let arrFeatures = JSON.parse(this.state.features);
 
@@ -273,6 +283,7 @@ export default class EditorComponent extends Component {
       features: features
     }, () => {this.linkInput()});
   }
+
   removeFeature (geojson) {
     let editorId = geojson.properties.editorId;
     let arrFeatures = JSON.parse(this.state.features);
@@ -286,6 +297,7 @@ export default class EditorComponent extends Component {
     }, () => {this.linkInput()});
     utils.callHookFunctions(window.c4gMapsHooks.hook_editor_remove, geojson);
   }
+
   modifyFeature (geojson) {
     let editorId = geojson.properties.editorId;
     let objGeojson = JSON.parse(this.state.features);
@@ -299,17 +311,20 @@ export default class EditorComponent extends Component {
       features: features
     }, () => {this.linkInput()});
   }
+
   linkInput () {
     if (this.props.inputField && this.state.features.length > 50) {
       $(this.props.inputField).val(this.state.features); //link to inputField
     }
   }
+
   setAddComps(conststr, config) {
     this.setState({
       config: config,
       conststr: conststr
     });
   }
+
   render() {
     const scope = this;
     let addComps;
@@ -347,12 +362,14 @@ export default class EditorComponent extends Component {
       </div>
     )
   }
+
   componentDidUpdate(prevProps, prevState, snapshot) {
     if ((prevProps.open && !this.props.open) || (prevState.open && !this.state.open)) {
       jQuery(this.props.mapController.editorContainer).removeClass("c4g-open").addClass("c4g-close");
 //      this.props.mapController.map.removeLayer(this.editorLayer);
     }
   }
+
   componentDidMount() {
     if (window.c4gMapsHooks.hook_editor_components && window.c4gMapsHooks.hook_editor_components.length > 0) {
       utils.callHookFunctions(window.c4gMapsHooks.hook_editor_components, {comp: this, container: "#c4g-editor-portal"});

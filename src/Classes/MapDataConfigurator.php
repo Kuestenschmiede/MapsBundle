@@ -128,7 +128,7 @@ class MapDataConfigurator
             $mapData['editor']['type'] = 'backend';
 
             $em = System::getContainer()->get('doctrine.orm.default_entity_manager');
-            $config = $em->getRepository(EditorConfiguration::class)->findOneById($profile->editorProfile);
+            $config = $em->getRepository(EditorConfiguration::class)->findOneById($profile->editorConfig);
             $mapData['editor']['config']['drawStyles'] = [
                 'Point' => ['elements' => []],
                 'LineString' => ['elements' => []],
