@@ -114,21 +114,22 @@ class MapDataConfigurator
         if ($profileService) {
             $profileId = $profileService->getProfileId($profileId);
         }
-        // get appropriate profile from database
-        $profile = C4gMapProfilesModel::findByPk($profileId);
 
         //check if we are in backend mode
         if (isset($options['geoeditor']) && $options['geoeditor']) {
             // select selected backend profile
-            $result = C4gSettingsModel::findSettings();
-            $profileId = $result->row();
-            $profileId = $profileId['editorprofile'];
+            $profileSettings = C4gSettingsModel::findSettings();
+            $profileId = $profileSettings->editorprofile ?: $profileId;
+
+            // get appropriate profile from database
+            $profile = C4gMapProfilesModel::findByPk($profileId);
+
             $mapData['editor'] = [];
             $mapData['editor']['enable'] = true;
             $mapData['editor']['type'] = 'backend';
 
             $em = System::getContainer()->get('doctrine.orm.default_entity_manager');
-            $config = $em->getRepository(EditorConfiguration::class)->findOneById($profile->editorConfig);
+            $config = $em->getRepository(EditorConfiguration::class)->findOneById($profile->editorProfile);
             $mapData['editor']['config']['drawStyles'] = [
                 'Point' => ['elements' => []],
                 'LineString' => ['elements' => []],
@@ -177,6 +178,9 @@ class MapDataConfigurator
             $mapFunctions = \Contao\StringUtil::deserialize($profile->mapFunctions);
             $buttons = array_flip($mapFunctions);
             $mapData['editor']['enable'] = is_array($buttons) && array_key_exists('editor', $buttons) ? $buttons['editor'] + 1 : 0;
+        } else {
+            // get appropriate profile from database
+            $profile = C4gMapProfilesModel::findByPk($profileId);
         }
         // use default if the profile was not found
         if (!$profile) {
