@@ -203,12 +203,15 @@ window.initMaps = function(mapData) {
         mapData[key].renderAsObserver = true;
 
         if (Object.keys(mapData).length > 1) {
-          // two maps
-          if (Object.keys(mapData)[0] === key) {
-            mapData[key].renderAsObserver = true;
-          } else {
-            mapData[key].renderAsObserver = false;
-          }
+          // multiple maps
+          // if (Object.keys(mapData)[0] === key) {
+          //   mapData[key].renderAsObserver = true;
+          // } else {
+          //   mapData[key].renderAsObserver = false;
+          // }
+          // TODO this should be true for optimal page performance
+          // TODO that leads to errors with certain configurations though
+          mapData[key].renderAsObserver = false;
         }
 
         if (mapData[key].renderAsObserver) {
