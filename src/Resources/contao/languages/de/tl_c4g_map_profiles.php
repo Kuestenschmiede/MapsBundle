@@ -271,7 +271,10 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['routerConfig'] = ['Routing-Konfigura
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editRoutingConfiguration'] = 'Routing-Konfigurationen bearbeiten';
 
 /** Editor */
-$GLOBALS['TL_LANG']["tl_c4g_map_profiles"]['editorProfile'] = ['Editor-Konfiguration', 'Bitte wählen Sie die entsprechende Editor-Konfiguration aus. Diese können Sie im Backend-Modul "Editor" anlegen.'];
+$GLOBALS['TL_LANG']["tl_c4g_map_profiles"]['editorConfig'] = ['Editorkonfiguration',
+    'Bitte wählen Sie die entsprechende Editor-Konfiguration aus. Diese können Sie im Backend-Modul "Editor" anlegen. Wichtig! Der Editor findet aktuell nur in wenigen plugins Verwendung und kann in der Standard-Version '.
+    'ausschließlich im Backend über das geoJson Kartenstrukturelement verwendet werden. Die Profilverknüpfung dafür findet du in den con4gis Dashboard Einstellungen.'];
+
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editEditorConfiguration'] = 'Editor-Konfigurationen bearbeiten';
 
 /** Position Nutzer */

@@ -104,7 +104,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                                          '{baselayer_legend:hide},baselayers, default_baselayer,dummyBaselayer,baselayerswitcher_label,baselayer_filter;'.
                                          '{starboard_legend:hide},layerswitcher_label,starboard_filter,starboard_label,starboard_button,starboard_locstyles,starboardInvertZoomActivate,colorZoomMarker,maxZoomStarboard,openPopup,cluster_all;'.
                                          '{geosearch_legend:hide},geosearch_headline,geosearch_engine,geosearchParams,geosearch_result_locstyle,geosearch_placeholder,geosearch_results,geosearch_zoomto,geosearch_zoombounds,geosearch_animate,geosearch_markresult,geosearch_attribution,geosearch_popup,geosearch_animate_duration,geosearch_result_duration;'.
-                                         '{editor_legend:hide},editorProfile;'.
+                                         '{editor_legend:hide},editorConfig;'.
                                          '{routing_legend::hide},routerConfig;'.
                                          '{location_legend::hide},userLocation;'.
                                          '{attribution_legend:hide},attribution;'.
@@ -995,7 +995,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                     array('tl_c4g_map_profiles', 'locstylesLink')
                 )
             ],
-        'editorProfile' => [
+        'editorConfig' => [
             'exclude'                 => true,
             'inputType'               => 'select',
             'options_callback'        => array('\con4gis\MapsBundle\Classes\Contao\Callbacks\TlEditorConfiguration', 'getEditorProfiles'),

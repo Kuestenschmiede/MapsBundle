@@ -50,7 +50,7 @@
     "gulp-sass": "^5.1.0",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-uglify": "^3.0.2",
-    "sass": "^1.77.2",
+    "sass": "^1.77.3",
     "webpack": "^5.89.0",
     "webpack-cli": "^4.10.0"
   },
@@ -67,7 +67,7 @@
     "jsbi": "^3.2.5",
     "minimist": "^1.2.8",
     "moment": "^2.29.4",
-    "ol": "^9.2.3",
+    "ol": "^9.2.4",
     "ol-cesium": "2.14.0",
     "ol-ext": "^4.0.18",
     "ol-mapbox-style": "^12.3.2",
