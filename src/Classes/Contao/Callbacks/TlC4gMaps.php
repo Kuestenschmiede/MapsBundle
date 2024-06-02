@@ -3,6 +3,7 @@
 namespace con4gis\MapsBundle\Classes\Contao\Callbacks;
 
 
+use Contao\Database;
 use Contao\Input;
 use Contao\Versions;
 use Contao\FilesModel;
