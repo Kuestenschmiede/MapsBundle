@@ -440,7 +440,7 @@ export default class GeoSearch extends Component {
               if (this.results[i].hasOwnProperty('uuid')) {
                 ids.push(this.results[i].uuid);
               }
-              if (this.results[i].hasOwnProperty('lon') && this.results[i].hasOwnProperty('lat')) {
+              if (this.results[i].hasOwnProperty('lon') && this.results[i].hasOwnProperty('lat') && this.results[i].lon && this.results[i].lat) {
                 coordinates.push(transform([parseFloat(this.results[i].lon),parseFloat(this.results[i].lat)],'EPSG:4326', 'EPSG:3857'))
               }
             }
@@ -459,8 +459,11 @@ export default class GeoSearch extends Component {
                 size[0]/10,
             ]
           }
-          map.getView().fit(extent, fitOptions);
-        } 
+
+          if (map.getView() && (coordinates.length > 0) && extent && fitOptions) {
+            map.getView().fit(extent, fitOptions);
+          }
+        }
         else {
           currentCoordinate = mapView.getCenter();
           resultCoordinate = transform([parseFloat(result.lon), parseFloat(result.lat)], 'EPSG:4326', 'EPSG:3857');
