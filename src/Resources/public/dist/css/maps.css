@@ -12,7 +12,7 @@
  * Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
  */
-.c4g-feature-filter-list .c4g-item-checked.clicked > strong:after,
+.c4g-feature-filter-list .c4g-item-checked span.clicked > strong:after,
 .c4g-starboardscope-control.c4g-open button,
 .fa,
 .fab,
@@ -28,7 +28,7 @@
   text-rendering: auto;
   line-height: 1
 }
-.c4g-feature-filter-list .c4g-item-checked.clicked > strong:after,
+.c4g-feature-filter-list .c4g-item-checked span.clicked > strong:after,
 .c4g-starboardscope-control.c4g-open button {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -109,7 +109,7 @@
 .fa-pull-right {
   float: right
 }
-.c4g-feature-filter-list .c4g-item-checked.clicked > strong.fa-pull-left:after,
+.c4g-feature-filter-list .c4g-item-checked span.clicked > strong.fa-pull-left:after,
 .c4g-starboardscope-control.c4g-open button.fa-pull-left,
 .fa.fa-pull-left,
 .fab.fa-pull-left,
@@ -118,7 +118,7 @@
 .fas.fa-pull-left {
   margin-right: .3em
 }
-.c4g-feature-filter-list .c4g-item-checked.clicked > strong.fa-pull-right:after,
+.c4g-feature-filter-list .c4g-item-checked span.clicked > strong.fa-pull-right:after,
 .c4g-starboardscope-control.c4g-open button.fa-pull-right,
 .fa.fa-pull-right,
 .fab.fa-pull-right,
@@ -4615,7 +4615,7 @@
   src: url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-regular-400.eot);
   src: url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-regular-400.eot?#iefix) format("embedded-opentype"),url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-regular-400.woff2) format("woff2"),url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-regular-400.woff) format("woff"),url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-regular-400.ttf) format("truetype"),url(../../../../bundles/con4giscore/vendor/fontawesome/webfonts/fa-regular-400.svg#fontawesome) format("svg")
 }
-.c4g-feature-filter-list .c4g-item-checked.clicked > strong:after,
+.c4g-feature-filter-list .c4g-item-checked span.clicked > strong:after,
 .far {
   font-family: "Font Awesome 5 Free";
   font-weight: 400
@@ -5731,7 +5731,7 @@ ul.c4g-feature-filter-list li > strong > span {
 ul.c4g-feature-filter-list li > strong.c4g-open > span {
   transform: rotate(90deg)
 }
-ul.c4g-feature-filter-list li > strong > span:after {
+ul.c4g-feature-filter-list li > strong > span > span:after {
   content: "\f054";
   font-family: "Font Awesome 5 Free";
   font-weight: 900
@@ -5778,7 +5778,7 @@ div#filter_block input {
 ul.c4g-feature-filter-list::-webkit-scrollbar {
   height: 0
 }
-li.c4g-item-checked > img {
+li.c4g-item-checked span > img {
   width: 32px;
   margin-right: 8px
 }
@@ -5808,15 +5808,17 @@ ul.c4g-feature-filter-list li.c4g-item-checked > strong {
   padding: 0 10px;
   transition: ease-in-out 250ms
 }
-.c4g-feature-filter-list .c4g-item-checked {
-  transition: ease-in-out 250ms
+.c4g-feature-filter-list .c4g-item-checked span {
+  transition: ease-in-out 250ms;
+  padding-left: 2px;
+  padding-right: 2px
 }
-.c4g-feature-filter-list .c4g-item-checked:active,
-.c4g-feature-filter-list .c4g-item-checked:focus,
-.c4g-feature-filter-list .c4g-item-checked:hover {
+.c4g-feature-filter-list .c4g-item-checked span:active,
+.c4g-feature-filter-list .c4g-item-checked span:focus,
+.c4g-feature-filter-list .c4g-item-checked span:hover {
   background-color: var(--shadow-color)
 }
-.c4g-feature-filter-list .c4g-item-checked.clicked > strong:after {
+.c4g-feature-filter-list .c4g-item-checked span.clicked > strong:after {
   content: "\f057";
   margin-left: 8px
 }
