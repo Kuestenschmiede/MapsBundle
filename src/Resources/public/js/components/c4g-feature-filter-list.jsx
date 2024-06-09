@@ -20,6 +20,7 @@ export class FeatureFilterList extends Component {
         const scope = this;
         let form = null;
         let className = "";
+        let classNameText = "";
         if (this.props.feature.filters.length > 2) {
             if (this.props.open) {
                 className = "c4g-open";
@@ -43,7 +44,8 @@ export class FeatureFilterList extends Component {
             );
         }
         else {
-            className = " fi_" + utils.removeUmlauts(this.props.feature.name);
+            className = "fi_" + utils.removeUmlauts(this.props.feature.name);
+            classNameText = "fi_" + utils.removeUmlauts(this.props.feature.name) + "_text";
             let liClass = "c4g-item-checked c4g-item-"+utils.removeUmlauts(this.props.feature.name);
             liClass += this.props.checkedItem.identifier === "all" ? "" : " clicked";
             let img = null;
@@ -64,8 +66,7 @@ export class FeatureFilterList extends Component {
                 img = <img src={this.props.feature.image} title={this.props.feature.name} width={this.props.feature.width} height={this.props.feature.height}/>;
             }
             return (<li className={liClass}>
-                {img}
-                <strong className={className} onMouseUp={clickEvent}>{utils.decodeHTML(this.props.feature.name)}</strong>
+                <strong className={className} onMouseUp={clickEvent}>{img}<span className={classNameText}>{utils.decodeHTML(this.props.feature.name)}</span></strong>
             </li>);
         }
     }

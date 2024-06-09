@@ -1391,7 +1391,7 @@ ul.c4g-feature-filter-list li > strong.c4g-open > span {
   transform: rotate(90deg);
 }
 
-ul.c4g-feature-filter-list li > strong > span:after {
+ul.c4g-feature-filter-list li > strong > span > span:after {
   content: "\f054";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
@@ -1445,7 +1445,7 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
   height: 0px;
 }
 
-li.c4g-item-checked > img {
+li.c4g-item-checked span > img {
   width: 32px;
   margin-right: 8px;
 }
@@ -1504,8 +1504,11 @@ ul.c4g-feature-filter-list li.c4g-item-checked > strong {
 
 .c4g-feature-filter-list {
 
-  .c4g-item-checked {
+  .c4g-item-checked span {
     transition: ease-in-out 250ms;
+
+    padding-left: 2px;
+    padding-right: 2px;
 
     &:hover,
     &:focus,

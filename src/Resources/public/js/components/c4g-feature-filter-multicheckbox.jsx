@@ -19,7 +19,7 @@ export class FeatureFilterMultiCheckbox extends Component {
     render() {
         const scope = this;
         let form = null;
-        let className;
+        let className, classNameText;
         if (this.props.feature.filters.length > 2) {
             if (this.props.open) {
                 className = "c4g-open";
@@ -51,7 +51,8 @@ export class FeatureFilterMultiCheckbox extends Component {
             );
         }
         else {
-            className += " fi_" + utils.removeUmlauts(this.props.feature.name);
+            className = "fi_" + utils.removeUmlauts(this.props.feature.name);
+            classNameText = "fi_" + utils.removeUmlauts(this.props.feature.name) + "_text";
             let liClass =  "c4g-item-checked c4g-item-"+utils.removeUmlauts(this.props.feature.name);
             liClass += this.props.checkedItems.length === 0 ? "" : " clicked";
             let clickEvent;
@@ -73,8 +74,7 @@ export class FeatureFilterMultiCheckbox extends Component {
             }
             return (
                 <li className={liClass}>
-                    {img}
-                    <strong className={className} onMouseUp={clickEvent}>{utils.decodeHTML(this.props.feature.name)}</strong>
+                    <strong className={className} onMouseUp={clickEvent}><span className={classNameText}>{img}{utils.decodeHTML(this.props.feature.name)}</span></strong>
                 </li>
             );
         }
