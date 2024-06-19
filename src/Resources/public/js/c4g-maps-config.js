@@ -54,50 +54,6 @@ export var config = {
     NONE: '' // last line
   },
 
-  stamen: {
-    Toner: {
-      attributions: 'Map tiles by <a target="_blank" rel="noopener" href="https://stamen.com">Stamen Design</a>, under <a  target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a  target="_blank" rel="noopener" href="http://openstreetmap.org">OpenStreetMap</a>, under <a  target="_blank" rel="noopener" href="http://www.openstreetmap.org/copyright">ODbL</a>.',
-      layer: 'stamen_toner',
-      minZoom: 0,
-      maxZoom: 18,
-      crossOrigin: 'anonymous',
-    },
-
-    TonerLabels: {
-      attributions: 'Map tiles by <a target="_blank" rel="noopener" href="https://stamen.com">Stamen Design</a>, under <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a target="_blank" rel="noopener" href="http://openstreetmap.org">OpenStreetMap</a>, under <a target="_blank" rel="noopener" href="http://www.openstreetmap.org/copyright">ODbL</a>.',
-      layer: 'stamen_toner_labels',
-      minZoom: 0,
-      maxZoom: 18,
-      crossOrigin: 'anonymous',
-    },
-
-    TonerLines: {
-      attributions: 'Map tiles by <a target="_blank" rel="noopener" href="https://stamen.com">Stamen Design</a>, under <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a target="_blank" rel="noopener" href="http://openstreetmap.org">OpenStreetMap</a>, under <a target="_blank" rel="noopener" href="http://www.openstreetmap.org/copyright">ODbL</a>.',
-      layer: 'stamen_toner_lines',
-      minZoom: 0,
-      maxZoom: 18,
-      crossOrigin: 'anonymous',
-    },
-
-    Terrain: {
-      attributions: 'Map tiles by <a target="_blank" rel="noopener" href="https://stamen.com">Stamen Design</a>, under <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a target="_blank" rel="noopener" href="http://openstreetmap.org">OpenStreetMap</a>, under <a target="_blank" rel="noopener" href="http://www.openstreetmap.org/copyright">ODbL</a>.',
-      layer: 'stamen_terrain',
-      minZoom: 0,
-      maxZoom: 18,
-      crossOrigin: 'anonymous',
-    },
-
-    Watercolor: {
-      attributions: 'Map tiles by <a target="_blank" rel="noopener" href="https://stamen.com">Stamen Design</a>, under <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a target="_blank" rel="noopener" href="http://openstreetmap.org">OpenStreetMap</a>, under <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.',
-      layer: 'watercolor',
-      minZoom: 0,
-      maxZoom: 18,
-      crossOrigin: 'anonymous',
-    },
-
-    NONE: ''
-  },
-
   stadiaMaps: {
     alidade_smooth: {
       attributions: [

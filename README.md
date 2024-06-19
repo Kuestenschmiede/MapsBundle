@@ -12,14 +12,13 @@ __Main features include:__
 * Configure baselayer 
     - OSM Mapnik (*default*)
     - OSM German
-    - Stamen (Toner, Terrain & Watercolor)
     - MapBox (Studio & Classic Styles)
     - HERE (6 Styles)
     - Thunderforest (9 Styles)
     - Klokan Technologies (OpenMapTiles & 8 MapTiler Styles)
     - Bing (3 Styles)
     - Mapz (7 Styles)
-    - Stadia Maps (8 Styles)
+    - Stadia Maps with Stamen (8 Styles)
     - Layergroup (depending on zoom level)
     - Georeferenced image
     - Custom

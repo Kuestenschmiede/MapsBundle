@@ -213,42 +213,6 @@ export class C4gBaselayerController {
             console.warn('unsupported osm-style -> switch to default');
           }
           break;
-        case 'stamen':
-          if (sourceConfigs.stamen[baseLayerConfig.style]) {
-            // Stamen
-            let source1,
-                source2;
-            if (baseLayerConfig.style === 'Watercolor') {
-              newBaselayer = new LayerGroup({
-                layers: [new TileLayer(),
-                  new TileLayer()]
-              });
-              source1 = new StadiaMaps({
-                layer: 'stamen_watercolor'
-              });
-              source2 = new StadiaMaps({
-                layer: 'stamen_terrain_labels'
-              });
-            } else {
-              newBaselayer = new TileLayer();
-              source1 = new StadiaMaps(
-                  jQuery.extend(
-                      sourceConfigs.stamen[baseLayerConfig.style]
-                  )
-              )
-            }
-            if (newBaselayer instanceof LayerGroup) {
-              let array = newBaselayer.getLayers().getArray();
-              array[0].setSource(source1);
-              array[1].setSource(source2);
-            } else {
-              newBaselayer.setSource(source1);
-            }
-
-          } else {
-            console.warn('unsupported osm-style -> switch to default');
-          }
-          break;
         case 'stadiaMaps':
           let source1,
               source2;
@@ -701,9 +665,6 @@ export class C4gBaselayerController {
             layerOptions.attributions = OSM_REL_ATTRIBUTION;
           }
           break;
-        case 'stamen':
-          layerOptions.attributions = sourceConfigs.stamen[baseLayerConfig.style].attributions;
-          break;
         case 'stadiaMaps':
           layerOptions.attributions = sourceConfigs.stadiaMaps[baseLayerConfig.style].attributions;
           break;
@@ -835,7 +796,6 @@ export class C4gBaselayerController {
     if ((typeof baseLayerConfig !== "undefined") && !baseLayerConfig.layer) {
       // create layer
       sourceConfigs.osm = config.osm;
-      sourceConfigs.stamen = config.stamen;
       sourceConfigs.stadiaMaps = config.stadiaMaps;
       sourceConfigs.otm = config.otm;
       //mapQuestSourceConfigs = c4g.maps.config.mapquest;

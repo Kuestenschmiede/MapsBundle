@@ -273,13 +273,6 @@ class BaseLayerService
                     }
 
                     break;
-                case 'stamen':
-                    $arrBaseLayer['style'] = $objBaseLayer->stamen_style;
-                    if (!empty($objBaseLayer->osm_keyname)) {
-                        $arrBaseLayer['apiKey'] = $objBaseLayer->osm_keyname;
-                    }
-
-                    break;
                 case 'stadiaMaps':
                     $arrBaseLayer['style'] = $objBaseLayer->stadiaMaps_style;
                     if (!empty($objBaseLayer->osm_keyname)) {

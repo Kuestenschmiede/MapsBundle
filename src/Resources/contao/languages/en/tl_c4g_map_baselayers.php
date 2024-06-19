@@ -20,7 +20,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['display_name']   		= array('Name i
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['sort']   		  		= array('Sort', 'Enter a number here to define a user defined order for the base layers in the layer switcher control.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider']       		= array('Provider', 'Select the provider of the base layer.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['osm_style']      		= array('OSM style', 'Please select from the given OpenStreetMap styles. Please take attention to the terms of use, given by the provider.');
-$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['stamen_style']  		= array('Stamen style', 'Please select from the given Stamen styles. Please take attention to the terms of use, given by Stamen.');
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['stadiaMaps_style']  	= array('Stadia maps style', 'Please select from the given SStedia Maps styles. Please take attention to the terms of use, given by Stedia Maps.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['osm_style_url1'] 		= array('URL 1', 'Please provide the 1st URL for the Style.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['osm_style_url2'] 		= array('URL 2', 'Please provide the 2nd URL for the Style (optional)');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['osm_style_url3'] 		= array('URL 3', 'Please provide the 3rd URL for the Style (optional)');
@@ -73,7 +73,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['consentId']               = ['Cons
  */
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm']    = 'OpenStreetMap (<a href="https://operations.osmfoundation.org/policies/tiles" rel="noopener" target="_blank">usage policy</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_otm']    = 'OpenTopoMap (<a href="https://https://opentopomap.org/about" rel="noopener" target="_blank">usage policy</a>)';
-$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stamen'] = 'Stamen (<a href="http://maps.stamen.com" rel="noopener" target="_blank">usage policy</a>)';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stadiaMaps'] = 'Stadia Maps (<a href="http://stadiamaps.com" rel="noopener" target="_blank">usage policy</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_here']   = 'HERE (<a href="https://developer.here.com" rel="noopener" target="_blank">usage policy</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapbox'] = 'Mapbox (<a href="https://www.mapbox.com" rel="noopener" target="_blank">usage policy</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapz']   = 'Mapz (<a href="https://www.mapz.com" rel="noopener" target="_blank">usage policy</a>)';
@@ -94,11 +94,6 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm_german'] 			= 'German
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm_german_transport']  	= 'Transport Map (memomaps.de)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm_transport']  		= 'Transport Map (opencyclemap.org)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm_landscape']  		= 'Landscape Map (opencyclemap.org)';
-$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm_toner'] 				= 'Toner (maps.stamen.com)';
-$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm_tonerlines'] 		= 'Toner, only lines (maps.stamen.com)';
-$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm_tonerlabels'] 		= 'Toner, only labels (maps.stamen.com)';
-$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm_terrain'] 		    = 'Terrain (maps.stamen.com)';
-$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm_watercolor'] 		= 'Watercolor (maps.stamen.com)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm_custom'] 			= 'Custom';
 
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapbox_studio']             = 'Mapbox Studio Style or style url';

@@ -9,7 +9,7 @@
  */
 
 import {config} from "./c4g-maps-config";
-import {OSM, Stamen, StadiaMaps, TileWMS, XYZ} from "ol/source";
+import {OSM, StadiaMaps, TileWMS, XYZ} from "ol/source";
 import {Image, Tile} from "ol/layer";
 import GeoImage from 'ol-ext/source/GeoImage';
 
@@ -58,17 +58,7 @@ export class C4gOverlayController {
               )
             )
           });
-        } else if (stamenSourceConfigs[overlayLayerConfig.style]) {
-          // Stamen
-          overlayLayer = new Tile({
-            source: new Stamen(
-              jQuery.extend(
-                stamenSourceConfigs[overlayLayerConfig.style],
-                layerOptions
-              )
-            )
-          });
-        }  else if (stadiaMapsSourceConfigs[overlayLayerConfig.style]) {
+        } else if (stadiaMapsSourceConfigs[overlayLayerConfig.style]) {
           // Stadia maps
           overlayLayer = new Tile({
             source: new StadiaMaps(

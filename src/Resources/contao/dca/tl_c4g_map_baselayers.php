@@ -122,8 +122,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                                          '{protection_legend:hide},protect_baselayer,published,consentId;',
         'opentopomap'                 => '{general_legend},name,display_name,provider,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
                                          '{protection_legend:hide},protect_baselayer,published,consentId;',
-        'stamen'                      => '{general_legend},name,display_name,provider,stamen_style,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
-                                         '{protection_legend:hide},protect_baselayer,published,consentId;',
         'stadiaMaps'                  => '{general_legend},name,display_name,provider,stadiaMaps_style,api_key,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
                                          '{protection_legend:hide},protect_baselayer,published,consentId;',
         'con4gisIo'                   => '{general_legend},name,display_name,provider,con4gisIo,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
@@ -156,9 +154,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
         'protect_baselayer' => 'permitted_groups',
         'osm_style_Mapnik' => '',
         'osm_style_German' => '',
-        'stamen_style_Toner'=> '',
-        'stamen_style_Terrain'=> '',
-        'stamen_style_Watercolor'=> '',
         'stadiaMaps_style_alidadeSmooth'=>'apikey',
         'stadiaMaps_style_alidadeSmoothDark'=>'apikey',
         'stadiaMaps_style_alidadeSmoothSatellite'=>'apikey',
@@ -235,7 +230,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                 'mapbox' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapbox'],
                 'mapz' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapz'],
                 'otm' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_otm'],
-                'stamen' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stamen'],
                 'stadiaMaps' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stadiaMaps'],
                 'thunder' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_thunderforest'],
                 'wms' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_wms'],
