@@ -181,11 +181,11 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['default_theme']   = 'c
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine']['1'] = 'Nominatim by Openstreetmap (<a href="https://operations.osmfoundation.org/policies/nominatim/" rel="noopener" target="_blank">usage policy</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine']['2'] = 'Nominatim by MapQuest (<a href="http://developer.mapquest.com/web/products/open/nominatim" rel="noopener" target="_blank">usage policy</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine']['3'] = 'Custom';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine']['4'] = 'con4gis.io mapservices (<a href="https://con4gis.io" rel="noopener" target="_blank">usage policy</a>)';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine']['4'] = 'con4gis mapservices (<a href="https://con4gis.support" rel="noopener" target="_blank">usage policy</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine']['5'] = 'Pelias (<a href="https://pelias.io/" rel="noopener" target="_blank">usage policy</a>)';
 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['referencesOverpassEngine']['1'] = 'Custom overpass server';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['referencesOverpassEngine']['2'] = 'con4gis.io mapservices (<a href="https://con4gis.io" rel="noopener" target="_blank">usage policy</a>)';
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['referencesOverpassEngine']['2'] = 'con4gis mapservices (<a href="https://con4gis.support" rel="noopener" target="_blank">usage policy</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['referencesOverpassEngine']['3'] = 'Public overpass server (<a href="http://overpass-api.de/" rel="noopener" target="_blank">usage policy</a>)';
 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearchParams']['keys']       = ['Key','e.g.:countrycodes'];

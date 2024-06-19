@@ -18,11 +18,12 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['sort']   		   			= array('Sortieru
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider']       			= array('Anbieter', 'Bitte wählen Sie den Anbieter der Basiskarte aus.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['osm_style']      			= array('OSM Kartenstil', 'Bitte wählen Sie den Kartenstil von OpenStreetMap aus. Beachten Sie bitte die geltenden Nutzungsbedingungen der Anbieter.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['stamen_style']      	    = array('Stamen Kartenstil', 'Bitte wählen Sie den Kartenstil von Stamen aus. Beachten Sie bitte die geltenden Nutzungsbedingungen von Stamen.');
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['stadiaMaps_style']  	    = array('Stadia Maps Kartenstil', 'Bitte wählen Sie den Kartenstil von Stadia Maps aus. Beachten Sie bitte die geltenden Nutzungsbedingungen von Stadia Maps.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['osm_style_url1'] 			= array('URL 1', 'Bitte geben Sie die 1. URL des Kartenstils ein.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['osm_style_url2'] 			= array('URL 2', 'Bitte geben Sie die 2. URL des Kartenstils ein (optional).');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['osm_style_url3'] 			= array('URL 3', 'Bitte geben Sie die 3. URL des Kartenstils ein (optional).');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['osm_style_url4'] 			= array('URL 4', 'Bitte geben Sie die 4. URL des Kartenstils ein (optional).');
-$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['con4gisIo'] 			    = array('con4gis.io Basiskarten', 'Bitte wählen Sie die den Kartenstil von con4gis.io (API-Key erforderlich).');
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['con4gisIo'] 			    = array('con4gis Basiskarten', 'Bitte wählen Sie die den Kartenstil von con4gis (API-Key erforderlich).');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['extend']                  = array('extend', 'Zusätzliche extend Informationen (optional).');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['osm_style_zoomlevels']  	= array('Zoom-Stufen', 'Bitte geben Sie die Anzahl der verfügbaren Zoom-Stufen des Kartenstils an (optional).');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['osm_keyname']    			= array('Keyname', 'Bitte geben Sie den internen Keyname an (optional).');
@@ -67,6 +68,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['baselayerGroup']['maxZoom']       
  */
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm']    = 'OpenStreetMap (<a href="https://operations.osmfoundation.org/policies/tiles" rel="noopener" target="_blank">Nutzungsbestimmungen</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stamen'] = 'Stamen (<a href="https://maps.stamen.com" rel="noopener" target="_blank">Nutzungsbestimmungen</a>)';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stadiaMaps'] = 'Stadia Maps (<a href="https://stadiamaps.com" rel="noopener" target="_blank">Nutzungsbestimmungen</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_here']   = 'HERE (<a href="https://developer.here.com" rel="noopener" target="_blank">Nutzungsbestimmungen</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapbox'] = 'Mapbox Studio Style bzw. style url (<a href="https://www.mapbox.com" rel="noopener" target="_blank">Nutzungsbestimmungen</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapz'] = 'Mapz (<a href="https://www.mapz.com" rel="noopener" target="_blank">Nutzungsbestimmungen</a>)';
@@ -75,7 +77,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_bing']   = 'Bing Maps (<a
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_otm']    = 'OpenTopoMap (<a href="https://https://opentopomap.org/about" rel="noopener" target="_blank">Nutzungsbestimmungen</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_klokan'] = 'Klokan Maptiler / OpenMapTiles (<a href="https://www.maptiler.com" rel="noopener" target="_blank">Nutzungsbestimmungen</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_wms']    = 'WMS';
-$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_con4gisIo']    = 'con4gis.io Kartendienste (<a href="https://con4gis.io" rel="noopener" target="_blank">Nutzungsbestimmungen</a>)';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_con4gisIo']    = 'con4gis Kartendienste (<a href="https://con4gis.org" rel="noopener" target="_blank">Nutzungsbestimmungen</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_owm']    = 'OpenWeatherMap (<a href="https://openweathermap.org/api" rel="noopener" target="_blank">Nutzungsbestimmungen</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_group']  = 'Gruppe von Layern';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_geoimage']  = 'Georeferenziertes Bild';
@@ -94,6 +96,15 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm_tonerlabels'] 		= 'Sc
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm_terrain'] 		    = 'Gelände (maps.stamen.com)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm_watercolor'] 		= 'Wasserfarben (maps.stamen.com)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm_custom'] 			= 'Benutzerdefiniert';
+
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stadiaMaps_smooth']      = 'Smooth';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stadiaMaps_dark']        = 'Dark';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stadiaMaps_satellite']   = 'Satellite';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stadiaMaps_outdoors']    = 'Outdoors';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stadiaMaps_toner']       = 'Toner';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stadiaMaps_terrain']     = 'Terrain';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stadiaMaps_watercolor']  = 'Watercolor';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stadiaMaps_osmBright']   = 'OSM Bright';
 
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapz_softcolor_transport']   = 'Softcolor Transport';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapz_multicolor_blind']      = 'Multicolor Blind';

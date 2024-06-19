@@ -9,7 +9,7 @@
  */
 
 import {config} from "./c4g-maps-config";
-import {OSM, Stamen, TileWMS, XYZ} from "ol/source";
+import {OSM, Stamen, StadiaMaps, TileWMS, XYZ} from "ol/source";
 import {Image, Tile} from "ol/layer";
 import GeoImage from 'ol-ext/source/GeoImage';
 
@@ -30,6 +30,7 @@ export class C4gOverlayController {
       overlayLayerConfig,
       osmSourceConfigs = config.osm,
       stamenSourceConfigs = config.stamen,
+      stadiaMapsSourceConfigs = config.stadiaMaps,
       layerOptions,
       overlayLayer,
       noUrl;
@@ -65,6 +66,16 @@ export class C4gOverlayController {
                 stamenSourceConfigs[overlayLayerConfig.style],
                 layerOptions
               )
+            )
+          });
+        }  else if (stadiaMapsSourceConfigs[overlayLayerConfig.style]) {
+          // Stadia maps
+          overlayLayer = new Tile({
+            source: new StadiaMaps(
+                jQuery.extend(
+                    stadiaMapsSourceConfigs[overlayLayerConfig.style],
+                    layerOptions
+                )
             )
           });
         } else if (overlayLayerConfig.style === 'osm_custom') {

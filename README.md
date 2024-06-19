@@ -19,6 +19,7 @@ __Main features include:__
     - Klokan Technologies (OpenMapTiles & 8 MapTiler Styles)
     - Bing (3 Styles)
     - Mapz (7 Styles)
+    - Stadia Maps (8 Styles)
     - Layergroup (depending on zoom level)
     - Georeferenced image
     - Custom

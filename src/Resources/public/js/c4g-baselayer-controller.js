@@ -249,6 +249,45 @@ export class C4gBaselayerController {
             console.warn('unsupported osm-style -> switch to default');
           }
           break;
+        case 'stadiaMaps':
+          let source1,
+              source2;
+          if (sourceConfigs.stadiaMaps[baseLayerConfig.style]) {
+            if (baseLayerConfig.style === 'Watercolor') {
+              newBaselayer = new LayerGroup({
+                layers: [new TileLayer(),
+                  new TileLayer()]
+              });
+              source1 = new StadiaMaps({
+                layer: 'stamen_watercolor'
+              });
+              source2 = new StadiaMaps({
+                layer: 'stamen_terrain_labels'
+              });
+            } else {
+              newBaselayer = new TileLayer();
+
+              source1 = new StadiaMaps(
+                  jQuery.extend(
+                      sourceConfigs.stadiaMaps[baseLayerConfig.style]
+                  )
+              )
+            }
+
+            source1.apiKey = baseLayerConfig.api_key;
+
+            if (newBaselayer instanceof LayerGroup) {
+              let array = newBaselayer.getLayers().getArray();
+              array[0].setSource(source1);
+              array[1].setSource(source2);
+            } else {
+              newBaselayer.setSource(source1);
+            }
+
+          } else {
+            console.warn('unsupported osm-style -> switch to default');
+          }
+          break;
         case 'con4gisIo':
           if (this.baseKeys[baseLayerConfig.id]) {
             let config = this.baseKeys[baseLayerConfig.id];
@@ -665,6 +704,9 @@ export class C4gBaselayerController {
         case 'stamen':
           layerOptions.attributions = sourceConfigs.stamen[baseLayerConfig.style].attributions;
           break;
+        case 'stadiaMaps':
+          layerOptions.attributions = sourceConfigs.stadiaMaps[baseLayerConfig.style].attributions;
+          break;
         case 'mapbox':
           layerOptions.attributions = sourceConfigs.mapbox[baseLayerConfig.mapbox_type].attributions;
           break;
@@ -686,7 +728,7 @@ export class C4gBaselayerController {
           layerOptions.attributions = sourceConfigs.thunderforest[baseLayerConfig.thunderforest_type].attributions;
           break;
         case 'con4gisIo':
-          layerOptions.attributions = 'Mapservices via <a href="https://con4gis.io" target="_blank" rel="noopener">con4gis.io</a>. '+ OSM_REL_ATTRIBUTION;
+          layerOptions.attributions = 'Mapservices via <a href="https://con4gis.org" target="_blank" rel="noopener">con4gis Supporter</a>. '+ OSM_REL_ATTRIBUTION;
           break;
         default:
           layerOptions.attributions = OSM_REL_ATTRIBUTION;
@@ -794,6 +836,7 @@ export class C4gBaselayerController {
       // create layer
       sourceConfigs.osm = config.osm;
       sourceConfigs.stamen = config.stamen;
+      sourceConfigs.stadiaMaps = config.stadiaMaps;
       sourceConfigs.otm = config.otm;
       //mapQuestSourceConfigs = c4g.maps.config.mapquest;
       sourceConfigs.mapbox = config.mapbox;

@@ -124,6 +124,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                                          '{protection_legend:hide},protect_baselayer,published,consentId;',
         'stamen'                      => '{general_legend},name,display_name,provider,stamen_style,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
                                          '{protection_legend:hide},protect_baselayer,published,consentId;',
+        'stadiaMaps'                  => '{general_legend},name,display_name,provider,stadiaMaps_style,api_key,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
+                                         '{protection_legend:hide},protect_baselayer,published,consentId;',
         'con4gisIo'                   => '{general_legend},name,display_name,provider,con4gisIo,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
                                          '{protection_legend:hide},protect_baselayer,published,consentId;',
         'mapbox'                      => '{general_legend},name,display_name,provider,mapbox_type,app_id,api_key,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
@@ -157,6 +159,14 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
         'stamen_style_Toner'=> '',
         'stamen_style_Terrain'=> '',
         'stamen_style_Watercolor'=> '',
+        'stadiaMaps_style_alidadeSmooth'=>'apikey',
+        'stadiaMaps_style_alidadeSmoothDark'=>'apikey',
+        'stadiaMaps_style_alidadeSmoothSatellite'=>'apikey',
+        'stadiaMaps_style_outdoors'=>'apikey',
+        'stadiaMaps_style_stamenToner'=> 'api_key',
+        'stadiaMaps_style_stamenTerrain'=> 'api_key',
+        'stadiaMaps_style_stamenWatercolor'=> 'api_key',
+        'stadiaMaps_style_osmBright'=> 'api_key',
         'klokan_type_OpenMapTiles' => 'style_url',
         'klokan_type_basic'      => 'api_key',
         'klokan_type_bright'      => 'api_key',
@@ -226,6 +236,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                 'mapz' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapz'],
                 'otm' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_otm'],
                 'stamen' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stamen'],
+                'stadiaMaps' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stadiaMaps'],
                 'thunder' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_thunderforest'],
                 'wms' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_wms'],
                 'geoimage' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_geoimage'],
@@ -361,6 +372,25 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                     'Toner'           => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm_toner'],
                     'Terrain'         => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm_terrain'],
                     'Watercolor'      => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm_watercolor'],
+                ],
+                'eval'                    => ['submitOnChange'=>true, 'tl_class'=>'clr'],
+                'sql'                     => "varchar(30) NOT NULL default ''"
+            ],
+        'stadiaMaps_style' =>
+            [
+                'exclude'                 => true,
+                'filter'                  => false,
+                'inputType'               => 'select',
+                'default'                 => 'Toner',
+                'options'                 => [
+                    'alidade_smooth'      => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stadiaMaps_smooth'],
+                    'alidade_smooth_dark' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stadiaMaps_dark'],
+                    'alidade_satellite'   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stadiaMaps_satellite'],
+                    'outdoors'            => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stadiaMaps_outdoors'],
+                    'stamen_toner'        => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stadiaMaps_toner'],
+                    'stamen_terrain'      => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stadiaMaps_terrain'],
+                    'stamen_watercolor'   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stadiaMaps_watercolor'],
+                    'osm_bright'          => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stadiaMaps_osmBright'],
                 ],
                 'eval'                    => ['submitOnChange'=>true, 'tl_class'=>'clr'],
                 'sql'                     => "varchar(30) NOT NULL default ''"

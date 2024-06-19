@@ -280,6 +280,13 @@ class BaseLayerService
                     }
 
                     break;
+                case 'stadiaMaps':
+                    $arrBaseLayer['style'] = $objBaseLayer->stadiaMaps_style;
+                    if (!empty($objBaseLayer->osm_keyname)) {
+                        $arrBaseLayer['apiKey'] = $objBaseLayer->osm_keyname;
+                    }
+
+                    break;
                 case 'con4gisIo':
                     $objSettings = C4gMapSettingsModel::findOnly();
                     $arrBaseLayer['url'] = rtrim($objSettings->con4gisIoUrl, '/') . '/' . 'tiles.php?key={key}&z={z}&x={x}&y={y}';

@@ -25,7 +25,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['osm_style_url1'] 		= array('URL 1'
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['osm_style_url2'] 		= array('URL 2', 'Please provide the 2nd URL for the Style (optional)');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['osm_style_url3'] 		= array('URL 3', 'Please provide the 3rd URL for the Style (optional)');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['osm_style_url4'] 		= array('URL 4', 'Please provide the 4th URL for the Style (optional)');
-$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['con4gisIo'] 			= array('con4gis.io basemaps', 'Please choose your layer from con4gis.io. (API key required)');
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['con4gisIo'] 			= array('con4gis basemaps', 'Please choose your layer from con4gis Supporter (API key required)');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['extend']              = array('extend', 'Additional extend informations (optional).');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['osm_style_zoomlevels']  	= array('Zoom steps', 'Please enter the zoom step count (optional).');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['osm_keyname']    		= array('Keyname', 'Please enter the internal Keyname (optional).');
@@ -81,7 +81,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_thunderforest'] = 'Thunde
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_bing']   = 'Bing Maps (<a href="https://www.bingmapsportal.com" rel="noopener" target="_blank">usage policy</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_klokan'] = 'Klokan Maptiler / OpenMapTiles (<a href="https://www.maptiler.com" rel="noopener" target="_blank">usage policy</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_wms']    = 'WMS';
-$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_con4gisIo']    = 'con4gis.io mapservices (<a href="https://con4gis.io" rel="noopener" target="_blank">usage policy</a>)';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_con4gisIo']    = 'con4gis mapservices (<a href="https://con4gis.support" rel="noopener" target="_blank">usage policy</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_owm']    = 'OpenWeatherMap (<a href="https://openweathermap.org/api" rel="noopener" target="_blank">usage policy</a>)';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_group']  = 'Groups of layers';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_geoimage']  = 'Georeferenced image';
@@ -103,6 +103,15 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm_custom'] 			= 'Custom
 
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapbox_studio']             = 'Mapbox Studio Style or style url';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapbox_classic']     = 'Mapbox Studio Classic, Editor or map ID';
+
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stadiaMaps_smooth']      = 'Smooth';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stadiaMaps_dark']        = 'Dark';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stadiaMaps_satellite']   = 'Satellite';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stadiaMaps_outdoors']    = 'Outdoors';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stadiaMaps_toner']       = 'Toner';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stadiaMaps_terrain']     = 'Terrain';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stadiaMaps_watercolor']  = 'Watercolor';
+$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stadiaMaps_osmBright']   = 'OSM Bright';
 
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapz_softcolor_transport']   = 'Softcolor Transport';
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_mapz_multicolor_blind']      = 'Multicolor Blind';

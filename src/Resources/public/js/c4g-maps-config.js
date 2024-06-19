@@ -98,6 +98,115 @@ export var config = {
     NONE: ''
   },
 
+  stadiaMaps: {
+    alidade_smooth: {
+      attributions: [
+        '<a href="https://stadiamaps.com/" target="_blank">Stadia Maps</a>',
+        '<a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a>',
+        '<a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>'
+      ],
+      layer: 'alidade_smooth',
+      minZoom: 0,
+      maxZoom: 20,
+      retina: true,
+      crossOrigin: 'anonymous',
+    },
+
+    alidade_smooth_dark: {
+      attributions: [
+        '<a href="https://stadiamaps.com/" target="_blank">Stadia Maps</a>',
+        '<a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a>',
+        '<a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>'
+      ],
+      layer: 'alidade_smooth_dark',
+      minZoom: 0,
+      maxZoom: 20,
+      retina: true,
+      crossOrigin: 'anonymous',
+    },
+
+    alidade_satellite: {
+      attributions: [
+        '<a href="https://stadiamaps.com/" target="_blank">Stadia Maps</a>',
+        '<a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a>',
+        '<a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>'
+      ],
+      layer: 'alidade_satellite',
+      minZoom: 0,
+      maxZoom: 20,
+      retina: true,
+      crossOrigin: 'anonymous',
+    },
+
+    outdoors: {
+      attributions: [
+        '<a href="https://stadiamaps.com/" target="_blank">Stadia Maps</a>',
+        '<a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a>',
+        '<a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>'
+      ],
+      layer: 'outdoors',
+      minZoom: 0,
+      maxZoom: 20,
+      retina: true,
+      crossOrigin: 'anonymous',
+    },
+
+    stamen_toner: {
+      attributions: [
+        '<a href="https://stadiamaps.com/" target="_blank">Stadia Maps</a>',
+        '<a href="https://stamen.com/" target="_blank">Stamen Design</a>',
+        '<a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a>',
+        '<a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>'
+      ],
+      layer: 'stamen_toner',
+      minZoom: 0,
+      maxZoom: 16,
+      retina: true,
+      crossOrigin: 'anonymous',
+    },
+
+    stamen_terrain: {
+      attributions: [
+        '<a href="https://stadiamaps.com/" target="_blank">Stadia Maps</a>',
+        '<a href="https://stamen.com/" target="_blank">Stamen Design</a>',
+        '<a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a>',
+        '<a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>'
+      ],
+      layer: 'stamen_terrain',
+      minZoom: 0,
+      retina: true,
+      crossOrigin: 'anonymous',
+    },
+
+    stamen_watercolor: {
+      attributions: [
+        '<a href="https://stadiamaps.com/" target="_blank">Stadia Maps</a>',
+        '<a href="https://stamen.com/" target="_blank">Stamen Design</a>',
+        '<a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a>',
+        '<a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>'
+      ],
+      layer: 'stamen_watercolor',
+      minZoom: 0,
+      maxZoom: 16,
+      crossOrigin: 'anonymous',
+    },
+
+    osm_bright: {
+      attributions: [
+        '<a href="https://stadiamaps.com/" target="_blank">Stadia Maps</a>',
+        '<a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a>',
+        '<a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>'
+      ],
+      layer: 'osm_bright',
+      minZoom: 0,
+      maxZoom: 20,
+      tilePixelRatio: 2,
+      crossOrigin: 'anonymous',
+    },
+
+    NONE: ''
+  },
+
   mapquest: {
 
    MapQuestOpen: {

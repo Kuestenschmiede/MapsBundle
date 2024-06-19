@@ -87,7 +87,7 @@ $GLOBALS['TL_LANG'][$strName]['references_router_api_selection']['1'] = 'OpenSou
 $GLOBALS['TL_LANG'][$strName]['references_router_api_selection']['2'] = 'OpenRouteService (<a href="https://openrouteservice.org" target="_blank" rel="noopener">Nutzungsbestimmungen</a>)';
 $GLOBALS['TL_LANG'][$strName]['references_router_api_selection']['3'] = 'Graphhopper (<a href="https://www.graphhopper.com" target="_blank" rel="noopener">Nutzungsbestimmungen</a>)';
 $GLOBALS['TL_LANG'][$strName]['references_router_api_selection']['4'] = 'Valhalla (<a href="http://valhalla.github.io/demos/routing" target="_blank" rel="noopener">Nutzungsbestimmungen</a>)';
-$GLOBALS['TL_LANG'][$strName]['references_router_api_selection']['5'] = 'con4gis.io Kartendienste (<a href="https://con4gis.io" target="_blank" rel="noopener">Nutzungsbestimmungen</a>)';
+$GLOBALS['TL_LANG'][$strName]['references_router_api_selection']['5'] = 'con4gis Kartendienste (<a href="https://con4gis.support/" target="_blank" rel="noopener">Nutzungsbestimmungen</a>)';
 
 $GLOBALS['TL_LANG'][$strName]['referencesDetourElement']['0'] = 'Darstellung als Slider';
 $GLOBALS['TL_LANG'][$strName]['referencesDetourElement']['1'] = 'Darstellung als Select-Box';
