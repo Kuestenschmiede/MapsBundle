@@ -187,6 +187,10 @@ class LoadMapDataListener
                 $attributionRouting = $keyRouting->attribution;
 
                 break;
+            case '6':
+                $attributionRouting = '<a target="_blank" href="https://stadiamaps.com/">Stadia Maps</a>';
+
+                break;
         }
         if ($routerConfig->getRouterAttribution()) {
             $attributionRouting .= ' ' . $routerConfig->getRouterAttribution() . ' ';

@@ -68,6 +68,9 @@ class ReverseSearchApi extends Frontend
         $strParams = "";
 
         switch ($intSearchEngine) {
+            case '6':
+                $strSearchUrl = 'https://api.stadiamaps.com/geocoding/v1/reverse?api_key=' . $objMapsProfile->geosearch_key;
+                break;
             case '5':
                 if (!empty($objMapsProfile->geosearch_key) && !$objMapsProfile->geosearch_customengine_url) {
                     $strSearchUrl = 'https://api.openrouteservice.org/geocode/reverse?api_key=' . $objMapsProfile->geosearch_key;
@@ -144,10 +147,10 @@ class ReverseSearchApi extends Frontend
                 $strParams .= $strKey . "=" . urlencode($strValue);
             }
         }
-        else if ($intSearchEngine === "5") {
+        else if (($intSearchEngine === "5") || ($intSearchEngine === "6")) {
             foreach ($arrParams as $strKey => $strValue) {
 
-                if (substr($strSearchUrl, -1) != "?") {
+                if (substr($strSearchUrl, -1) != "?" && substr($strSearchUrl, -1) != "&") {
                     $strSearchUrl .= '&';
                 }
                 if ($strKey === "lat") {
@@ -169,19 +172,19 @@ class ReverseSearchApi extends Frontend
                 [
                     'headers' => [
                         'Referer'       => $_SERVER['HTTP_REFERER'],
-                        'User-Agent'    =>     $_SERVER['HTTP_USER_AGENT']
+                        'User-Agent'    => $_SERVER['HTTP_USER_AGENT']
                     ]
                 ]
             );
         }
-        else if ($intSearchEngine == 5) {
+        else if (($intSearchEngine == 5) || ($intSearchEngine == 6)) {
             $return = $client->request(
                 'GET',
                 $strSearchUrl,
                 [
                     'headers' => [
                         'Referer'       => $_SERVER['HTTP_REFERER'],
-                        'User-Agent'    =>     $_SERVER['HTTP_USER_AGENT']
+                        'User-Agent'    => $_SERVER['HTTP_USER_AGENT']
                     ]
                 ]
             );

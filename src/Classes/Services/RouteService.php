@@ -88,6 +88,8 @@ class RouteService extends Frontend
                     $points = $polyline->fromEncodedString($routeData['paths'][0]['points']);
                 } elseif ($routerConfig->getRouterApiSelection() == '4' || $routeData['routeType'] == '4') {
                     $points = $polyline->fromEncodedString($routeData['trip']['legs'][0]['shape'], 1e-6);
+                } elseif ($routerConfig->getRouterApiSelection() == '6' || $routeData['routeType'] == '6') {
+                    $points = $polyline->fromEncodedString($routeData['trip']['legs'][0]['shape'], 1e-6);
                 }
                 $points = $polyline->tunePolyline($points, 0.1, 0.4)->getPoints();
                 $event = new LoadRouteFeaturesEvent();
@@ -134,6 +136,8 @@ class RouteService extends Frontend
                 $response = $this->getValhallaResponse($arrInput, $strParams, $routerConfig, $language, $profile);
             } elseif ($routerConfig->getRouterApiSelection() == '5') {
                 $response = $this->getCon4gisIOResponse($arrInput, $strParams, $routerConfig, $language, $profile);
+            } elseif ($routerConfig->getRouterApiSelection() == '6') {
+                $response = $this->getStadiaMapsResponse($arrInput, $strParams, $routerConfig, $language, $profile);
             }
 
             return $response;
@@ -296,7 +300,135 @@ class RouteService extends Frontend
             }
             $encodedData = \GuzzleHttp\json_encode($routeData);
 
-            $request = $client->request('POST', $sendUrl, [
+            $request = $client->request('POST', $strRoutingUrl, [
+                'headers' => $headers,
+                'body'     => $encodedData
+            ]);
+            $response = $request->getContent();
+            try {
+                $response = \GuzzleHttp\json_decode($response, true);
+            } catch (\Exception $exception) {
+                $response = [];
+                $response['error'] = 'ROUTER_ERROR_POLYLINE';
+
+                return $response;
+            }
+
+            return $response;
+        }
+    }
+
+    private function getStadiaMapsResponse($arrInput, $strParams, $routerConfig, $language, $profile = null)
+    {
+        if ($routerConfig instanceof RoutingConfiguration) {
+            $strRoutingUrl = $routerConfig->getRouterViarouteUrl() ? $routerConfig->getRouterViarouteUrl() : 'https://api.stadiamaps.com/route/v1';
+            $strRoutingUrl .= $routerConfig->getRouterApiKey() ? '?api_key=' . $routerConfig->getRouterApiKey() : '';
+
+            $locations = [];
+            for ($i = 0; $i < sizeof($arrInput); $i++) {
+                $location = [];
+                $location['lat'] = explode(',', $arrInput[$i])[0];
+                $location['lon'] = explode(',', $arrInput[$i])[1];
+                $location['type'] = 'through';
+                $locations[] = $location;
+            }
+            $locations[0]['type'] = 'break';
+            $locations[sizeof($locations) - 1]['type'] = 'break';
+            switch ($profile) {
+                case 0:
+                    $costing = 'auto';
+
+                    break;
+                case 1:
+                    $costing = 'truck';
+
+                    break;
+                case 2:
+                    $costing = 'bicycle';
+
+                    break;
+                case 3:
+                    $costing = 'bicycle';
+                    $costing_options = [
+                        'bicycle' => [
+                            'bicycle_type' => 'Road',
+                        ],
+                    ];
+
+                    break;
+                case 5:
+                    $costing = 'bicycle';
+                    $costing_options = [
+                        'bicycle' => [
+                            'bicycle_type' => 'Mountain',
+                        ],
+                    ];
+
+                    break;
+                case 8:
+                    $costing = 'pedestrian';
+
+                    break;
+                case 12:
+                    $costing = 'motor_scooter';
+
+                    break;
+                case 13:
+                    $costing = 'motorcycle';
+                    $costing_options = [
+                        'motorcycle' => [
+                            'use_highways' => 0.4,
+                            'use_trails' => 0.8,
+                        ],
+                    ];
+
+                    break;
+                default:
+                    $costing = 'auto';
+
+                    break;
+            }
+
+            if (!substr_count('ca-ES, cs-CZ, de-DE, en-US, en-US-x-pirate, es-ES, fr-FR, hi-IN, it-IT, pt-PT, ru-RU, sl-SI, sv-SE', $language)) {
+                $language = $GLOBALS['TL_LANGUAGE'];
+                if (!substr_count('ca-ES, cs-CZ, de-DE, en-US,C, es-ES, fr-FR, hi-IN, it-IT, pt-PT, ru-RU, sl-SI, sv-SE', $language)) {
+                    $language = 'en-US';
+                }
+            }
+            if ($routerConfig->getPirate()) {
+                $language = 'en-US-x-pirate';
+            }
+            $directionOptions = [
+                'units' => 'meters',
+                'language' => $language,
+            ];
+            $client = HttpClient::create();
+            $headers = [
+                'Content-Type' => 'application/json'
+            ];
+            if ($_SERVER['HTTP_REFERER']) {
+                $headers['Referer'] = $_SERVER['HTTP_REFERER'];
+            }
+            if ($_SERVER['HTTP_USER_AGENT']) {
+                $headers['User-Agent'] = $_SERVER['HTTP_USER_AGENT'];
+            }
+
+            $routeData = [
+                'locations' => $locations,
+                'costing' => $costing,
+                'directions_options' => $directionOptions,
+            ];
+            if ($costing_options) {
+                $routeData = [
+                    'locations' => $locations,
+                    'costing' => $costing,
+                    'directions_options' => $directionOptions,
+                    'costing_options' => $costing_options,
+                ];
+            }
+            $encodedData = \GuzzleHttp\json_encode($routeData);
+
+            $request = $client->request('GET', $strRoutingUrl, [
                 'headers' => $headers,
                 'body'     => $encodedData
             ]);

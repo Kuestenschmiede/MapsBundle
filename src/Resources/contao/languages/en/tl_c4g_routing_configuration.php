@@ -90,7 +90,8 @@ $GLOBALS['TL_LANG'][$strName]['references_router_api_selection']['1'] = 'OpenSou
 $GLOBALS['TL_LANG'][$strName]['references_router_api_selection']['2'] = 'OpenRouteService (<a href="https://openrouteservice.org" target="_blank" rel="noopener">usage policy</a>)';
 $GLOBALS['TL_LANG'][$strName]['references_router_api_selection']['3'] = 'Graphhopper (<a href="https://www.graphhopper.com" target="_blank" rel="noopener">usage policy</a>)';
 $GLOBALS['TL_LANG'][$strName]['references_router_api_selection']['4'] = 'Valhalla (<a href="http://valhalla.github.io/demos/routing" target="_blank" rel="noopener">usage policy</a>)';
-$GLOBALS['TL_LANG'][$strName]['references_router_api_selection']['5'] = 'con4gis mapservices (<a href="https://con4gis.support" target="_blank" rel="noopener">usage policy</a>)';
+$GLOBALS['TL_LANG'][$strName]['references_router_api_selection']['5'] = 'con4gis support (<a href="https://con4gis.org/support" target="_blank" rel="noopener">usage policy</a>)';
+$GLOBALS['TL_LANG'][$strName]['references_router_api_selection']['6'] = 'Stadia Maps (<a href="https://stadiamaps.com" target="_blank" rel="noopener">usage policy</a>)';
 
 $GLOBALS['TL_LANG'][$strName]['referencesDetourElement']['0'] = 'Display as slider';
 $GLOBALS['TL_LANG'][$strName]['referencesDetourElement']['1'] = 'Display as select-box';

@@ -82,12 +82,13 @@ $GLOBALS['TL_LANG'][$strName]['references_router_modes']['route'] = "Routensuche
 $GLOBALS['TL_LANG'][$strName]['references_router_result_modes']['feat'] = "Ergebnisse";
 $GLOBALS['TL_LANG'][$strName]['references_router_result_modes']['instr'] = "Routenhinweise";
 
-$GLOBALS['TL_LANG'][$strName]['references_router_api_selection']['0'] = 'OpenSourceRoutingMachine (API 4.x) (<a href="http://project-osrm.org" target="_blank" rel="noopener">Nutzungsbestimmungen</a>)';
-$GLOBALS['TL_LANG'][$strName]['references_router_api_selection']['1'] = 'OpenSourceRoutingMachine (API 5.x) (<a href="http://project-osrm.org" target="_blank" rel="noopener">Nutzungsbestimmungen</a>)';
+$GLOBALS['TL_LANG'][$strName]['references_router_api_selection']['0'] = 'OpenSourceRoutingMachine (API 4.x) (<a href="https://project-osrm.org" target="_blank" rel="noopener">Nutzungsbestimmungen</a>)';
+$GLOBALS['TL_LANG'][$strName]['references_router_api_selection']['1'] = 'OpenSourceRoutingMachine (API 5.x) (<a href="https://project-osrm.org" target="_blank" rel="noopener">Nutzungsbestimmungen</a>)';
 $GLOBALS['TL_LANG'][$strName]['references_router_api_selection']['2'] = 'OpenRouteService (<a href="https://openrouteservice.org" target="_blank" rel="noopener">Nutzungsbestimmungen</a>)';
 $GLOBALS['TL_LANG'][$strName]['references_router_api_selection']['3'] = 'Graphhopper (<a href="https://www.graphhopper.com" target="_blank" rel="noopener">Nutzungsbestimmungen</a>)';
-$GLOBALS['TL_LANG'][$strName]['references_router_api_selection']['4'] = 'Valhalla (<a href="http://valhalla.github.io/demos/routing" target="_blank" rel="noopener">Nutzungsbestimmungen</a>)';
-$GLOBALS['TL_LANG'][$strName]['references_router_api_selection']['5'] = 'con4gis Kartendienste (<a href="https://con4gis.support/" target="_blank" rel="noopener">Nutzungsbestimmungen</a>)';
+$GLOBALS['TL_LANG'][$strName]['references_router_api_selection']['4'] = 'Valhalla (<a href="https://valhalla.github.io/demos/routing" target="_blank" rel="noopener">Nutzungsbestimmungen</a>)';
+$GLOBALS['TL_LANG'][$strName]['references_router_api_selection']['5'] = 'con4gis Support (<a href="https://con4gis.org/support" target="_blank" rel="noopener">Nutzungsbestimmungen</a>)';
+$GLOBALS['TL_LANG'][$strName]['references_router_api_selection']['6'] = 'Stadia Maps (<a href="https://stadiamaps.com" target="_blank" rel="noopener">Nutzungsbestimmungen</a>)';
 
 $GLOBALS['TL_LANG'][$strName]['referencesDetourElement']['0'] = 'Darstellung als Slider';
 $GLOBALS['TL_LANG'][$strName]['referencesDetourElement']['1'] = 'Darstellung als Select-Box';

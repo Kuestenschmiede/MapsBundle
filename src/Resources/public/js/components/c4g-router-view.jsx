@@ -1340,7 +1340,7 @@ export class RouterView extends Component {
           "routerWaySource": routerWaySource,
           "routerHintSource": routerHintSource
         });
-      } else if (this.props.mapController.data.router_api_selection == '4' || routeResponse.routeType == '4') { //Valhalla
+      } else if (this.props.mapController.data.router_api_selection == '4' || routeResponse.routeType == '4' || this.props.mapController.data.router_api_selection == '6' || routeResponse.routeType == '6') { //Valhalla
         total_distance = routeResponse.trip.summary.length *1000;
         total_time = routeResponse.trip.summary.time ;
         this.routeInstructions[routeNumber] = {

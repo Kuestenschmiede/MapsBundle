@@ -492,10 +492,10 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'exclude'                 => true,
                 'default'                 => '4',
                 'inputType'               => 'radio',
-                'options'                 => ['4','1','2','5','3'],
+                'options'                 => ['4','1','2','5','6','3'],
                 'eval'                    => ['submitOnChange' => true,'includeBlankOption' => false],
                 'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references_geosearch_engine'],
-                'sql'                     => "char(1) NOT NULL default '3'"
+                'sql'                     => "char(1) NOT NULL default '4'"
             ],
         'geosearch_customengine_url' =>
             [
@@ -1083,6 +1083,10 @@ class tl_c4g_map_profiles extends Backend
             } elseif ($objProfile->geosearch_engine == '5') {
                 $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['palettes']['default'] =
                     str_replace('geosearch_engine,','geosearch_engine,geosearch_customengine_url,',
+                        $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['palettes']['default']);
+            } elseif ($objProfile->geosearch_engine == '6') {
+                $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['palettes']['default'] =
+                    str_replace('geosearch_engine,','geosearch_engine,geosearch_key,',
                         $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['palettes']['default']);
             }
             

@@ -99,6 +99,7 @@ $GLOBALS['TL_DCA'][$strName] = array
         'router_api_selection_3' => 'router_api_key,router_profiles,router_profiles_initial',
         'router_api_selection_4' => 'router_api_key,router_profiles,router_profiles_initial,pirate',
         'router_api_selection_5' => 'router_profiles,router_profiles_initial',
+        'router_api_selection_6' => 'router_api_key,router_profiles,router_profiles_initial,pirate',
         'areaSearch'             => 'areaHeadline,areaSearchOnly,drawCircle,areaCircleColor',
         'detourElement_0'        => 'minDetourArea,maxDetourArea,initialDetourArea,minDetourRoute,maxDetourRoute,initialDetourRoute',
         'detourElement_1'        => 'initialDetourArea,initialDetourRoute,arrDetourOptionsRoute,arrDetourOptionsArea'
@@ -141,7 +142,7 @@ $GLOBALS['TL_DCA'][$strName] = array
             'exclude'                 => true,
             'inputType'               => 'radio',
             'default'                 => '5',
-            'options'                 => ['5','3','2','1','4'],
+            'options'                 => ['5','3','2','1','4','6'],
             'reference'               => &$GLOBALS['TL_LANG'][$strName]['references_router_api_selection'],
             'eval'                    => ['tl_class'=>'clr long','submitOnChange' => true],
             'sql'                     => null

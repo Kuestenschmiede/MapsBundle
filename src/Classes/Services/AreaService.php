@@ -83,7 +83,15 @@ class AreaService
                     }
 
                     break;
+                case 6:
+                    for ($i = 0; $i < count($matrixResponse['sources_to_targets'][0]); $i++) {
+                        if ($matrixResponse['sources_to_targets'][0][$i]['distance'] < $distance) {
+                            $requestData[$i]['distance'] = $matrixResponse['sources_to_targets'][0][$i]['distance'];
+                            $features[] = $requestData[$i];
+                        }
+                    }
 
+                    break;
             }
 
             return json_encode([$features, $eventResponse[3]]);
@@ -109,6 +117,8 @@ class AreaService
                 return $this->performMatrixValhalla($routerConfig, $routingProfile, $locations, $opt_options);
             } elseif ($routerConfig->getRouterApiSelection() == '5') {
                 return $this->performMatrixCon4gisIO($routerConfig, $routingProfile, $locations, $opt_options);
+            } elseif ($routerConfig->getRouterApiSelection() == '6') {
+                return $this->performMatrixStadiaMaps($routerConfig, $routingProfile, $locations, $opt_options);
             }
         }
     }
@@ -299,6 +309,55 @@ class AreaService
                 $encodedData = \GuzzleHttp\json_encode($matrixData);
                 $return = $client->request(
                     'POST',
+                    $matrixUrl,
+                    [
+                        'headers'   => $headers,
+                        'body'     => $encodedData
+                    ]
+                );
+                $result = $return->getContent();
+            }
+            return $result;
+        }
+    }
+    protected function performMatrixStadiaMaps($routerConfig, $routingProfile, $locations, $opt_options = null)
+    {
+        if ($routerConfig instanceof RoutingConfiguration) {
+            $matrixUrl = $routerConfig->getRouterViarouteUrl() ? $routerConfig->getRouterViarouteUrl() : 'https://api.stadiamaps.com/matrix/v1/';
+            $matrixUrl .= 'sources_to_targets';
+            $matrixUrl .= $routerConfig->getRouterApiKey() ? '?api_key=' . $routerConfig->getRouterApiKey() : '';
+
+            $latLonLocations = [];
+            foreach ($locations as $location) {
+                $latLonLocations[] = [
+                    'lon' => $location[0],
+                    'lat' => $location[1],
+                ];
+            }
+
+            $startlocation = [$latLonLocations[0]];
+            array_splice($latLonLocations, 0, 1);
+            $matrixData = [
+                'sources' => $startlocation,
+                'targets' => $latLonLocations,
+                'costing' => 'auto',
+            ];
+
+            $client = HttpClient::create();
+            $headers = [
+                'Content-Type'  => 'application/json'
+            ];
+            if ($_SERVER['HTTP_REFERER']) {
+                $headers['Referer'] = $_SERVER['HTTP_REFERER'];
+            }
+            if ($_SERVER['HTTP_USER_AGENT']) {
+                $headers['User-Agent'] = $_SERVER['HTTP_USER_AGENT'];
+            }
+            $result = [];
+            if ($matrixData) {
+                $encodedData = \GuzzleHttp\json_encode($matrixData);
+                $return = $client->request(
+                    'GET',
                     $matrixUrl,
                     [
                         'headers'   => $headers,

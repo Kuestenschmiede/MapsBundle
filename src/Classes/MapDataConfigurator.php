@@ -550,6 +550,9 @@ class MapDataConfigurator
                     case '4':
 
                         break;
+                    case '6':
+                        //$mapData['attribution']['geosearch'] = System::getContainer()->get('contao.insert_tag.parser')->replace('ToDo');
+                        break;
                     default:
                         $mapData['attribution']['geosearch'] = 'Nominatim Search Courtesy of <a href="https://operations.osmfoundation.org/policies/nominatim/" target="_blank" rel="noopener">OpenStreetMap</a>';
 

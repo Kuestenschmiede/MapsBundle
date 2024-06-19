@@ -62,6 +62,9 @@ class SearchApi extends Frontend
         $strParams = "";
 
         switch ($intSearchEngine) {
+            case '6':
+                $strSearchUrl = "https://api.stadiamaps.com/geocoding/v1/search?api_key=".$objMapsProfile->geosearch_key;
+                break;
             case '5':
                 if ($objMapsProfile->geosearch_customengine_url) {
                     $strSearchUrl = $objMapsProfile->geosearch_customengine_url . "v1/search?";
@@ -137,8 +140,8 @@ class SearchApi extends Frontend
                     }
                 }
             }
-            if ($intSearchEngine == '5') {
-                if (substr($strSearchUrl, -1) != "?") {
+            if (($intSearchEngine == '5') || ($intSearchEngine == '6')) {
+                if (substr($strSearchUrl, -1) != "?" && substr($strSearchUrl, -1) != "&") {
                     $strSearchUrl .= '&';
                 }
                 if ($arrParams['q']) {
@@ -158,19 +161,19 @@ class SearchApi extends Frontend
                 [
                     'headers' => [
                         'Referer'       => $_SERVER['HTTP_REFERER'],
-                        'User-Agent'    =>     $_SERVER['HTTP_USER_AGENT']
+                        'User-Agent'    => $_SERVER['HTTP_USER_AGENT']
                     ]
                 ]
             );
         }
-        else if ($intSearchEngine == 5) {
+        else if (($intSearchEngine == 5) || ($intSearchEngine == 6)) {
             $return = $client->request(
                 'GET',
                 $strSearchUrl,
                 [
-                        'headers' => [
+                    'headers' => [
                         'Referer'       => $_SERVER['HTTP_REFERER'],
-                        'User-Agent'    =>     $_SERVER['HTTP_USER_AGENT']
+                        'User-Agent'    => $_SERVER['HTTP_USER_AGENT']
                     ]
                 ]
             );
@@ -187,27 +190,52 @@ class SearchApi extends Frontend
             }
             $arrNominatim = [];
             foreach ($arrResponse as $elementResponse) {
-                $name = $elementResponse->properties->name;
-                if ($elementResponse->properties->county && $elementResponse->properties->county != $name) {
-                    $name .= ', ' . $elementResponse->properties->county;
+                if (is_object($elementResponse)) {
+                    $name = $elementResponse->properties->name;
+                    if ($elementResponse->properties->county && $elementResponse->properties->county != $name) {
+                        $name .= ', ' . $elementResponse->properties->county;
+                    }
+                    if ($elementResponse->properties->region && $elementResponse->properties->county != $elementResponse->properties->region) {
+                        $name .= ', ' . $elementResponse->properties->region;
+                    }
+                    if ($elementResponse->properties->country) {
+                        $name .= ', ' . $elementResponse->properties->country;
+                    }
+                    $elementNominatim = [
+                        "lon"           => $elementResponse->geometry->coordinates[0],
+                        "lat"           => $elementResponse->geometry->coordinates[1],
+                        "display_name"  => $name,
+                        "bounding_box"  => [
+                            $elementResponse->bbox[1],
+                            $elementResponse->bbox[3],
+                            $elementResponse->bbox[0],
+                            $elementResponse->bbox[2],
+                        ]
+                    ];
+                } else {
+                    $name = $elementResponse['properties']['name'];
+                    if ($elementResponse['properties']['county'] && $elementResponse['properties']['county'] != $name) {
+                        $name .= ', ' . $elementResponse['properties']['county'];
+                    }
+                    if ($elementResponse['properties']['region'] && $elementResponse['properties']['county'] != $elementResponse['properties']['region']) {
+                        $name .= ', ' . $elementResponse['properties']['region'];
+                    }
+                    if ($elementResponse['properties']['country']) {
+                        $name .= ', ' . $elementResponse['properties']['country'];
+                    }
+                    $elementNominatim = [
+                        "lon"           => $elementResponse['geometry']['coordinates'][0],
+                        "lat"           => $elementResponse['geometry']['coordinates'][1],
+                        "display_name"  => $name,
+                        "bounding_box"  => [
+                        $elementResponse['bbox'][1],
+                            $elementResponse['bbox'][3],
+                            $elementResponse['bbox'][0],
+                            $elementResponse['bbox'][2],
+                        ]
+                    ];
                 }
-                if ($elementResponse->properties->region && $elementResponse->properties->county != $elementResponse->properties->region) {
-                    $name .= ', ' . $elementResponse->properties->region;
-                }
-                if ($elementResponse->properties->country) {
-                    $name .= ', ' . $elementResponse->properties->country;
-                }
-                $elementNominatim = [
-                    "lon"           => $elementResponse->geometry->coordinates[0],
-                    "lat"           => $elementResponse->geometry->coordinates[1],
-                    "display_name"  => $name,
-                    "bounding_box"  => [
-                        $elementResponse->bbox[1],
-                        $elementResponse->bbox[3],
-                        $elementResponse->bbox[0],
-                        $elementResponse->bbox[2],
-                    ]
-                ];
+
                 $arrNominatim[] = $elementNominatim;
             }
             $response = $arrNominatim;

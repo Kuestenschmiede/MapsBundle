@@ -91,7 +91,7 @@ class TlC4gRoutingConfiguration
             return ['0','1','2','3','4','5','6','8','9','10'];
         } elseif ($activeAPI == 3) {
             return ['0', '1', '2', '3', '5', '8', '9', '11', '12'];
-        } elseif ($activeAPI == 4 || $activeAPI == 5) {
+        } elseif ($activeAPI == 4 || $activeAPI == 5 || $activeAPI == 6) {
             return ['0', '1', '2', '3', '5', '8', '12', '13'];
         }
     }
