@@ -50,8 +50,8 @@
     "gulp-sass": "^5.1.0",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-uglify": "^3.0.2",
-    "sass": "^1.77.4",
-    "webpack": "^5.89.0",
+    "sass": "^1.77.6",
+    "webpack": "^5.92.1",
     "webpack-cli": "^4.10.0"
   },
   "dependencies": {

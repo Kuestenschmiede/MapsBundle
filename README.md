@@ -52,6 +52,8 @@ __Main features include:__
         - switchable filter field
         - switchable select all button
         - optional structure tabs
+    - Router
+    - Editor
     - Measuretools (ways, areas, radius, freehand)
     - Editable attributions
     - Export map
@@ -70,6 +72,7 @@ __Main features include:__
     - Zoom-Panel
     - Zoom-Button for world, browser and initial position
     - Zoom-Level
+    - ...
 - configurate ***Location types***:
     - GeoJSON
     - GPX
@@ -84,16 +87,13 @@ __Main features include:__
     - default layout (sample)
     - BE layout manager (custom CSS styling) 
 
-**Extendable:**
-- [DataBundle](https://github.com/Kuestenschmiede/DataBundle/releases) (*latest stable release*)
-  
-**And with all other con4gis and Contao bundles**  
+**Extendable with all other con4gis and Contao bundles**  
 con4gis is not a connectable application. It's a collection of content 
 elements for your website. So you can build your own individual and limitless web applications.
 
 
 **Contains:**
-- [OpenLayers 6.5] (https://github.com/openlayers/openlayers)
+- [OpenLayers 9](https://github.com/openlayers/openlayers)
 
 ## Installation
 Via composer:
@@ -103,9 +103,7 @@ composer require con4gis/maps
 Alternatively, you can use the Contao Manager to install the con4gis-MapsBundle.
 
 ## Requirements:
-- [Contao](https://github.com/contao/core-bundle) (***>=4.9.x***)
-For Contao 3 you can use [con4gis_maps3](https://github.com/Kuestenschmiede/con4gis_maps3/releases) Extension.
-- [CoreBundle](https://github.com/Kuestenschmiede/CoreBundle/releases) (*latest stable release*)
+- [Contao](https://github.com/contao/core-bundle) (***>= 4.9.x***)
 
 ## Documentation
 Visit [docs.con4gis.org](https://docs.con4gis.org) for a user documentation. You can also contact us via the support forum there.
