@@ -224,11 +224,11 @@ class SearchApi extends Frontend
                         $name .= ', ' . $elementResponse['properties']['country'];
                     }
                     $elementNominatim = [
-                        "lon"           => $elementResponse['geometry']['coordinates'][0],
-                        "lat"           => $elementResponse['geometry']['coordinates'][1],
-                        "display_name"  => $name,
-                        "bounding_box"  => [
-                        $elementResponse['bbox'][1],
+                            "lon"           => $elementResponse['geometry']['coordinates'][0],
+                            "lat"           => $elementResponse['geometry']['coordinates'][1],
+                            "display_name"  => $name,
+                            "bounding_box"  => [
+                            $elementResponse['bbox'][1],
                             $elementResponse['bbox'][3],
                             $elementResponse['bbox'][0],
                             $elementResponse['bbox'][2],

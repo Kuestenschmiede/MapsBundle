@@ -43,7 +43,7 @@ export class RouterAddressField extends Component {
   render() {
     let positionButton = null;
     if (this.props.withPosition) {
-      positionButton = <button className="c4g-router-position" onMouseUp={this.getPosition} title={this.languageConstants.ROUTE_POSITION}/>;
+      positionButton = <button className="btn-primary c4g-router-position" onMouseUp={this.getPosition} title={this.languageConstants.ROUTE_POSITION}/>;
     }
     return (
       <div className={this.props.className}>
@@ -52,7 +52,7 @@ export class RouterAddressField extends Component {
         <AutocompleteInput type="search" className={this.props.class} name={this.props.name}
                            cssId={this.props.cssId} objFunctions={this.props.objFunctions} objSettings={this.props.objSettings} popup={this.props.popup}
                            containerAddresses={this.props.containerAddresses} router={this.props.router} value={this.props.value} index={this.props.index}/>
-        <button className={"c4g-router-input-clear"} onMouseUp={this.removeContent} title={this.languageConstants.REMOVE_ADDRESS}/>
+        <button className={"btn-primary c4g-router-input-clear"} onMouseUp={this.removeContent} title={this.languageConstants.REMOVE_ADDRESS}/>
       </div>
     );
   }

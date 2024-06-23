@@ -43,9 +43,12 @@ export class RouterAddressInput extends Component {
     const scope = this;
 
     let overForm = "";
+
     if (this.props.enableOverPoints && this.props.mode === "route") {
+
+
       overForm = Object.keys(this.props.overSettings.overPoints).map((item) => {
-          return <RouterAddressField className={"c4g-router-input-over-" + item} name={"overPoint-" + item} label={this.langConstants.ROUTER_Label_Interim}
+          return <RouterAddressField className={"btn-primary c4g-router-input-over c4g-router-input-over-" + item} name={"overPoint-" + item} label={this.langConstants.ROUTER_Label_Interim}
                                      cssId={"routingOver-" + item} objFunctions={this.props.overSettings.objFunctions} objSettings={this.props.objSettings}
                                      containerAddresses={this.props.containerAddresses} value={this.props.overSettings.overAddresses[item]}
                                      router={this.props.router} key={item} index={item} clearInput={() => {this.props.overSettings.objFunctions[item].deleteFunction();}}/>

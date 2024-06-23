@@ -944,10 +944,11 @@ button.c4g-router-over, button.c4g-router-switch {
     right: 4px;
 }
 .c4g-router-profile-wrapper.c4g-popup + .c4g-router-input-content {
-    margin-top: 35px;
+    margin-top: 45px;
 }
-.c4g-router-input-from, .c4g-router-input-area {
-    margin-top: 15px;
+.c4g-router-input-from, .c4g-router-input-to, .c4g-router-input-over, .c4g-router-input-area {
+    margin-top: 8px;
+    margin-bottom: 8px;
 }
 
 .c4g-router-input-content > div > label {
@@ -956,7 +957,7 @@ button.c4g-router-over, button.c4g-router-switch {
 }
 
 .c4g-router-input-content > div {
-    display: inline-flex;
+    display: grid;
     flex-wrap: wrap;
 
     &.buttonbar {
@@ -1133,6 +1134,9 @@ ul.c4g-autocomplete {
     max-width: calc(100% - ((32px + .2em) * 2));
     z-index: 1;
     box-sizing: border-box;
+}
+.c4g-autocomplete-wrapper {
+    display: contents;
 }
 .c4g-autocomplete-wrapper > input {
     min-height: 25px;
