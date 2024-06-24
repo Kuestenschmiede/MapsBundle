@@ -40,19 +40,20 @@ export class FeatureFilterMultiCheckbox extends Component {
                 numberSpan = <span className={"sum"}> {number} </span>
             }
 
-            className += " fi_" + utils.removeUmlauts(this.props.feature.name);
+            className += " c4g-filter-item fi_" + utils.removeUmlauts(this.props.feature.name);
+            classNameText = "c4g-filter-item-text fi_" + utils.removeUmlauts(this.props.feature.name) + "_text";
             let liClass =  "c4g-item-checked c4g-item-"+utils.removeUmlauts(this.props.feature.name);
             return (
                 <li className={liClass}>
-                    <strong className={className} onMouseUp={(evt) => {this.props.setOpen(this.props.id); evt.stopPropagation(); evt.preventDefault();}}><span/>{utils.decodeHTML(this.props.feature.name)}</strong>
+                    <strong className={className} onMouseUp={(evt) => {this.props.setOpen(this.props.id); evt.stopPropagation(); evt.preventDefault();}} className={classNameText}><span/>{utils.decodeHTML(this.props.feature.name)}</strong>
                     {numberSpan}
                     {form}
                 </li>
             );
         }
         else {
-            className = "fi_" + utils.removeUmlauts(this.props.feature.name);
-            classNameText = "fi_" + utils.removeUmlauts(this.props.feature.name) + "_text";
+            className = "c4g-filter-item fi_" + utils.removeUmlauts(this.props.feature.name);
+            classNameText = "c4g-filter-item-text fi_" + utils.removeUmlauts(this.props.feature.name) + "_text";
             let liClass =  "c4g-item-checked c4g-item-"+utils.removeUmlauts(this.props.feature.name);
             liClass += this.props.checkedItems.length === 0 ? "" : " clicked";
             let clickEvent;

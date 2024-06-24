@@ -1517,12 +1517,6 @@ ul.c4g-feature-filter-list li.c4g-item-checked > strong {
     }
 
     &.clicked {
-      //background-color: rgba($primary, .7);
-
-      //&:hover {
-      //  background-color: darken($primary, 10%);
-      //}
-
       > strong {
         &:after {
           @extend %fa-icon;
@@ -1570,4 +1564,30 @@ button.c4g-maps-consent-button.btn {
 
 .c4g-layertree span {
   display: inline-block!important;
+}
+
+/** additional feature filter settings **/
+li.c4g-item-checked img {
+  display: inline;
+  margin-right: 5px;
+}
+
+.c4g-filter-item:hover {
+  transition: ease-in-out 250ms;
+  padding-left: 2px;
+  padding-right: 2px;
+  background: var(--shadow-color);
+  color: var(--font-color);
+}
+
+ul.c4g-feature-filter-list li.c4g-item-checked.clicked .c4g-filter-item {
+  background: var(--shadow-color);
+  color: var(--font-color);
+  line-height: 44px;
+}
+
+ul.c4g-feature-filter-list li.c4g-item-checked.clicked .c4g-filter-item:after {
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 400;
+  content: "\f057";
 }
