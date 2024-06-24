@@ -299,10 +299,6 @@ export default class FeatureFilter extends Component {
     }
   }
 
-  checkFeatureMulti (feature, objChecked) {
-
-  }
-
   hideFeature(feature, source) {
     if (feature.get('features')){
       let features = feature.get('features');
@@ -350,6 +346,8 @@ export default class FeatureFilter extends Component {
                 if ((objChecked.value && objChecked.value === featureProperty) || !objChecked.value) {
                   show = true;
                 }
+              } else {
+                show = this.checkFeature(feature, objChecked);
               }
             }
           }
