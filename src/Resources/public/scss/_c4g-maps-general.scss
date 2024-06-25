@@ -612,7 +612,7 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
   right: 0;
   top: .2em;
   max-height: calc(var(--map-height) - .4em);
-  height: 100%;
+  height: auto;
   min-width: 240px;
   z-index: 91;
   transition: .5s;
