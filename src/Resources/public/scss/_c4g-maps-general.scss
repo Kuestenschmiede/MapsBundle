@@ -68,7 +68,7 @@
 
     > .c4g-geosearch:not(.c4g-external) {
 
-      position: absolute;
+      //position: absolute;
       width: 300px;
       display: flex;
       align-items: center;
@@ -81,14 +81,14 @@
 
       > span {
         position: absolute;
-        right: 1.5em;
+        right: 2em;
         cursor: pointer;
         color: var(--main-color);
       }
 
-      + div {
-        margin-top: calc(var(--button-size-pixel) + 4px);
-      }
+      //+ div {
+      //  margin-top: calc(var(--button-size-pixel) + 4px);
+      //}
     }
   }
 
