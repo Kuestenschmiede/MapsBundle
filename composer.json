@@ -25,9 +25,9 @@
     "docs": "https://docs.con4gis.org/con4gis-maps"
   },
   "require": {
-    "php": "^7.4 || ^8.0",
-    "contao/core-bundle": "^4.9 || ^5.0",
-    "con4gis/core": "^6.0 || ^7.0 || ^8.0rc1",
+    "php": "^8.0",
+    "contao/core-bundle": "^4.13 || ^5.0",
+    "con4gis/core": "^7.1",
     "phayes/geophp": "^1.2",
     "menatwork/contao-multicolumnwizard-bundle": "^3.5",
     "mobiledetect/mobiledetectlib": "^2.8 || ^3.74"
