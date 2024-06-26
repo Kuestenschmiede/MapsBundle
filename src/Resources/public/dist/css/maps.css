@@ -4750,7 +4750,7 @@
 }
 .c4g-control-container-top-left {
   position: absolute;
-  top: .2em;
+  top: 1em;
   left: 0;
   width: var(--button-size-pixel);
   height: 100%;
@@ -4767,7 +4767,6 @@
   transform: none
 }
 .c4g-control-container-top-left > .c4g-geosearch:not(.c4g-external) {
-  position: absolute;
   width: 300px;
   display: flex;
   align-items: center;
@@ -4779,12 +4778,9 @@
 }
 .c4g-control-container-top-left > .c4g-geosearch:not(.c4g-external) > span {
   position: absolute;
-  right: 20px;
+  right: 2em;
   cursor: pointer;
   color: var(--main-color)
-}
-.c4g-control-container-top-left > .c4g-geosearch:not(.c4g-external) + div {
-  margin-top: calc(var(--button-size-pixel) + 8px)
 }
 .c4g-close ~ .searchSpan {
   display: none
@@ -5111,7 +5107,7 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
   right: 0;
   top: .2em;
   max-height: calc(var(--map-height) - .4em);
-  height: 100%;
+  height: auto;
   min-width: 240px;
   z-index: 91;
   transition: .5s
@@ -5585,7 +5581,6 @@ button.c4g-geosearch-start {
 }
 .c4g-external > div > div[class*=filter] {
   line-height: calc(32px + .4em);
-  height: calc(32px + .4em);
   padding: 0 .4em;
   margin: 0
 }
