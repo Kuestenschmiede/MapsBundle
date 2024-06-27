@@ -90,7 +90,7 @@ export class RouterAddressInput extends Component {
       <RouterAddressField className={"c4g-router-input-to" + toClsAddition} name="routingTo" label={this.langConstants.ROUTER_TO} key={idx + 1}
                           cssId="routingTo" objFunctions={this.props.objFunctions.toFunctions} objSettings={this.props.objSettings} clearInput={this.props.resetFunctions.to}
                           containerAddresses={this.props.containerAddresses} withPosition={this.props.withPosition} value={this.props.toAddress} router={this.props.router}/>
-      <RouterAddressField className={"c4g-router-input-area" + areaClsAddition} name="areaFrom" label={this.langConstants.ROUTER_CENTER} key={idx + 2}
+      <RouterAddressField className={"c4g-router-input-area" + areaClsAddition} name="areaInput" label={this.langConstants.ROUTER_CENTER} key={idx + 2}
                           cssId="areaInput" objFunctions={this.props.objFunctions.areaFunctions} objSettings={this.props.objSettings} clearInput={this.props.resetFunctions.area}
                           containerAddresses={this.props.containerAddresses} withPosition={this.props.withPosition} value={this.props.areaAddress} router={this.props.router}/>
     </React.Fragment>;

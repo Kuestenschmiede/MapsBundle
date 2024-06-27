@@ -23,7 +23,7 @@ export class RouterAddressField extends Component {
 
     this.getPosition = this.getPosition.bind(this);
     this.removeContent = this.removeContent.bind(this);
-    if (props.router.mapData.initialPosition && (props.name === "routingFrom" || props.name === "areaFrom")) {
+    if (props.router.mapData.initialPosition && (props.name === "routingFrom" || props.name === "areaInput")) {
       this.getPosition();
     }
     else if (props.router.mapData.initialDestination && props.name === "routingTo") {
@@ -90,7 +90,7 @@ export class RouterAddressField extends Component {
     else if (this.props.name === "routingTo") {
       this.props.router.setRouteTo(coords.longitude, coords.latitude);
     }
-    if (this.props.name === "areaFrom") {
+    if (this.props.name === "areaInput") {
       this.props.router.setAreaPoint(coords.longitude, coords.latitude);
     }
     this.props.router.recalculateRoute();

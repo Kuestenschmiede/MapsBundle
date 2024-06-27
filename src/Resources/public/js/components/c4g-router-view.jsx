@@ -1582,8 +1582,8 @@ export class RouterView extends Component {
           switch (stateProp) {
             case "areaAddress":
               self.setState({areaAddress: value}, function() {
-                if (jQuery("#areaFrom").val() === "") {
-                  jQuery("#areaFrom").val(value);
+                if (jQuery("#areaInput").val() === "") {
+                  jQuery("#areaInput").val(value);
                 }
               });
               // self.updateLinkFragments("addressArea", value);

@@ -139,7 +139,7 @@ class LoadAreaFeaturesListener
                 }
                 $request = $client->request('GET', $url, [
                     'headers'   => $headers,
-                    'query'     => $query
+                    'body'     => $query
                 ]);
                 //ToDo check response
                 $response = $request->getContent();
