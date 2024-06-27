@@ -82,7 +82,8 @@ class LoadRouteFeaturesListener
             //,ST_Buffer_Strategy('end_flat'),ST_Buffer_Strategy('join_round', 10)
             $selectBuffer = "SELECT ST_AsText(ST_Buffer(ST_GeomFromText('" . $lineStringWKT . "')," . $detour / 113.139 . '))';
             $db = Database::getInstance();
-            $result = array_shift($db->prepare($selectBuffer)->execute()->fetchAssoc());
+            $result = $db->prepare($selectBuffer)->execute()->fetchAssoc();
+            $result = array_shift($result);
             $polygon = \geoPHP::load($result, 'wkt');
             $jsonPolygon = $polygon->out('json');
             if ($jsonPolygon) {
