@@ -167,7 +167,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['wfs']       = 'Web Feature Ser
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['link']      = 'Link to other map structure item';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['c4gForum']  = 'Forums from con4gis-Forum';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['startab']   = 'Additional Starboard tab';
-$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['con4gisio'] = 'con4gis Supporter data';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['con4gisio'] = 'con4gis Support data';
 
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['OFF']       = 'No display';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['1ST']       = 'Show one item';

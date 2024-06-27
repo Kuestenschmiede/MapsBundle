@@ -689,7 +689,7 @@ export class C4gBaselayerController {
           layerOptions.attributions = sourceConfigs.thunderforest[baseLayerConfig.thunderforest_type].attributions;
           break;
         case 'con4gisIo':
-          layerOptions.attributions = 'Mapservices via <a href="https://con4gis.org" target="_blank" rel="noopener">con4gis Supporter</a>. '+ OSM_REL_ATTRIBUTION;
+          layerOptions.attributions = 'Mapservices via <a href="https://con4gis.org/support" target="_blank" rel="noopener">con4gis Support</a>. '+ OSM_REL_ATTRIBUTION;
           break;
         default:
           layerOptions.attributions = OSM_REL_ATTRIBUTION;
