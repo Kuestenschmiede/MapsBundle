@@ -22,6 +22,8 @@ import OLCesium from 'olcs/OLCesium';
 // import {applyStyle} from 'ol-mapbox-style';
 import VectorTileLayer from 'ol/layer/VectorTile.js'
 import ol_source_GeoImage from "ol-ext/source/GeoImage";
+import GeoTIFF from "ol/source/GeoTIFF";
+import WebGLTileLayer from 'ol/layer/WebGLTile.js';
 import Projection from "ol/proj/Projection";
 
 //copy link to add noopener
@@ -482,18 +484,41 @@ export class C4gBaselayerController {
           //   self.mapController.map.getView().setZoom(18);
           //   }, 3000);
 
-
           break;
         case 'geoimage':
-          let arrSource = JSON.parse(baseLayerConfig.geoImageJson);
-          arrSource.url = baseLayerConfig.imageSrc ? baseLayerConfig.imageSrc : arrSource.url;
+          let imageSource = JSON.parse(baseLayerConfig.geoImageJson);
+          imageSource.url = baseLayerConfig.imageSrc ? baseLayerConfig.imageSrc : arrSource.url;
           newBaselayer = new Image(
               jQuery.extend({
                 source: new ol_source_GeoImage(
-                    arrSource
+                    imageSource
                 )
               }, layerOptions)
           );
+          break;
+        case 'geotiff':
+
+          // const tiffProjection = new Projection({
+          //   code: 'EPSG:4326',
+          //   units: 'm',
+          // });
+
+          let tiffSources = [
+            {
+              url: baseLayerConfig.imageSrc ? baseLayerConfig.imageSrc : ''/*,
+              projection: tiffProjection*/
+            }
+          ];
+
+          newBaselayer = new WebGLTileLayer(
+              jQuery.extend({
+                source: new GeoTIFF({
+                  sources: tiffSources,
+                  nodata: 0, //without overviews
+                }),
+              }, layerOptions)
+          );
+
           break;
         case 'owm':
           newBaselayer = new TileLayer({
@@ -534,7 +559,7 @@ export class C4gBaselayerController {
       if (typeof klaro !== "undefined" && klaro.getManager && klaro.getManager()) {
         let manager = klaro.getManager();
         let watcher;
-        if (newBaselayer instanceof TileLayer) {
+        if ((newBaselayer instanceof TileLayer) || (newBaselayer instanceof WebGLTileLayer)) {
           source = newBaselayer.getSource();
           if (!manager.getConsent(baseLayerConfig['consentId'])) {
             newBaselayer.setSource(dummySource);
@@ -569,7 +594,7 @@ export class C4gBaselayerController {
         manager.watch(watcher);
       }
       else if (typeof HofffConsentManager !== "undefined") {
-        if (newBaselayer instanceof TileLayer) {
+        if ((newBaselayer instanceof TileLayer) || (newBaselayer instanceof WebGLTileLayer)) {
           source = newBaselayer.getSource();
           HofffConsentManager.addEventListener('consent:accepted', function (event) {
             if (event.consentId == baseLayerConfig['consentId']) {
@@ -603,7 +628,7 @@ export class C4gBaselayerController {
         }
       }
     }
-    if (newBaselayer instanceof TileLayer) {
+    if ((newBaselayer instanceof TileLayer) || (newBaselayer instanceof WebGLTileLayer)) {
       newBaselayer.setZIndex(-2);
     }
     return newBaselayer;
@@ -687,6 +712,10 @@ export class C4gBaselayerController {
           break;
         case 'thunder':
           layerOptions.attributions = sourceConfigs.thunderforest[baseLayerConfig.thunderforest_type].attributions;
+          break;
+        case 'geoimage':
+          break;
+        case 'geotiff':
           break;
         case 'con4gisIo':
           layerOptions.attributions = 'Mapservices via <a href="https://con4gis.org/support" target="_blank" rel="noopener">con4gis Support</a>. '+ OSM_REL_ATTRIBUTION;

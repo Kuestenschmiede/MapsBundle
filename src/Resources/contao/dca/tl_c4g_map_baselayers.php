@@ -142,6 +142,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                                          '{protection_legend:hide},protect_baselayer,published,consentId;',
         'geoimage'                    => '{general_legend},name,display_name,provider,image_src,geoimage_json,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
                                          '{protection_legend:hide},protect_baselayer,published,consentId;',
+        'geotiff'                     => '{general_legend},name,display_name,provider,image_src,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
+                                         '{protection_legend:hide},protect_baselayer,published,consentId;',
         'owm'                         => '{general_legend},name,display_name,provider,app_id,api_key,attribution,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
                                          '{protection_legend:hide},protect_baselayer,published,consentId;',
         'group'                       => '{general_legend},name,display_name,provider,attribution,layerGroup,preview_image;'.
@@ -234,6 +236,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                 'thunder' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_thunderforest'],
                 'wms' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_wms'],
                 'geoimage' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_geoimage'],
+                'geotiff' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_geotiff'],
                 'group' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_group'],
                 'custom' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_custom'],
             ],
@@ -469,7 +472,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             [
                 'exclude'                 => true,
                 'inputType'               => 'fileTree',
-                'eval'                    => ['fieldType'=>'radio', 'files'=>true, 'extensions'=>'gif,jpg,jpeg,png', 'tl_class'=>'clr', 'mandatory'=>true,'submitOnChange' => true],
+                'eval'                    => ['fieldType'=>'radio', 'files'=>true, 'extensions'=>'gif,jpg,jpeg,png,tif,tiff', 'tl_class'=>'clr', 'mandatory'=>true,'submitOnChange' => true],
                 'sql'                     => "binary(16) NULL"
             ],
         'geoimage_json' =>

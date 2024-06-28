@@ -114,7 +114,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
         'provider_wms' => 'wms_url,wms_params_layers,wms_params_version,wms_params_format,wms_params_transparent,wms_params_srs,wms_gutter',
         'provider_owm' => 'api_key,app_id,api_port',
         'provider_sea' => '',
-        'provider_geoimage' => 'image_src,geoimage_json'
+        'provider_geoimage' => 'image_src,geoimage_json',
+        'provider_geotiff' => 'image_src'
     ],
     'fields' =>
     [
@@ -158,7 +159,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
                 'wms'       => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider_wms'],
                 'owm'       => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider_owm'],
                 'sea'       => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider_sea'],
-                'geoimage'  => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider_geoimage']
+                'geoimage'  => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider_geoimage'],
+                'geotiff'   => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['provider_geotiff']
             ],
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['references'],
             'eval'                    => ['submitOnChange' => true],
@@ -256,7 +258,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
             [
                 'exclude'                 => true,
                 'inputType'               => 'fileTree',
-                'eval'                    => ['fieldType'=>'radio', 'files'=>true, 'extensions'=>'gif,jpg,jpeg,png', 'tl_class'=>'clr', 'mandatory'=>true,'submitOnChange' => true],
+                'eval'                    => ['fieldType'=>'radio', 'files'=>true, 'extensions'=>'gif,jpg,jpeg,png,tif,tiff', 'tl_class'=>'clr', 'mandatory'=>true,'submitOnChange' => true],
                 'sql'                     => "binary(16) NULL"
             ],
         'geoimage_json' =>

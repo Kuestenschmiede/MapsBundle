@@ -12,6 +12,9 @@ import {config} from "./c4g-maps-config";
 import {OSM, StadiaMaps, TileWMS, XYZ} from "ol/source";
 import {Image, Tile} from "ol/layer";
 import GeoImage from 'ol-ext/source/GeoImage';
+import GeoTIFF from 'ol/source/GeoTIFF';
+import TileLayer from 'ol/layer/WebGLTile.js';
+import Projection from "ol/proj/Projection";
 
 //copy link to add noopener
 export const OSM_REL_ATTRIBUTION = '&#169; ' +
@@ -135,11 +138,33 @@ export class C4gOverlayController {
         });
         break;
       case 'geoimage':
-        let objSource = JSON.parse(overlayLayerConfig.geoImageJson);
-        objSource.url = overlayLayerConfig.imageSrc ? overlayLayerConfig.imageSrc : objSource.url;
-        objSource.attributions = overlayLayerConfig.attribution;
+        let imageSource = JSON.parse(overlayLayerConfig.geoImageJson);
+        imageSource.url = overlayLayerConfig.imageSrc ? overlayLayerConfig.imageSrc : imageSource.url;
+        imageSource.attributions = overlayLayerConfig.attribution;
         overlayLayer = new Image({
-          source: new GeoImage(objSource)
+          source: new GeoImage(imageSource)
+        });
+        break;
+      case 'geotiff':
+
+        // const tiffProjection = new Projection({
+        //   code: 'EPSG:4326',
+        //   units: 'm',
+        // });
+
+        let tiffSources = [
+          {
+            url: overlayLayerConfig.imageSrc ? overlayLayerConfig.imageSrc : '',/*
+            projection: tiffProjection*/
+          }
+        ];
+
+        overlayLayer = new TileLayer({
+          source: new GeoTIFF({
+            sources: tiffSources,
+            nodata: 0 //without overviews
+          }),
+          zIndex: 10000,
         });
         break;
       default:

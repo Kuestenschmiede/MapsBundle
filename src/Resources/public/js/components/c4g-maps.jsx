@@ -1394,6 +1394,7 @@ export default class MapController extends Component {
                 jQuery(".ol-overlaycontainer-stopevent").append(this.routerContainer);
               }
             }
+
             if (RouterView && routerControlProps) {
               let view = React.createElement(RouterView, routerControlProps);
               if (view && this && this.routerContainer) {
