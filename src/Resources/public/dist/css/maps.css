@@ -4763,7 +4763,6 @@
   display: none
 }
 .c4g-control-container-top-left {
-  width: auto;
   transform: none
 }
 .c4g-control-container-top-left > .c4g-geosearch:not(.c4g-external) {
