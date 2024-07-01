@@ -1019,9 +1019,9 @@ span.c4g-starboard-locstyle-triangle:before {
   bottom: 0;
   left: 0;
   margin: auto;
-  width: 60%;
+  width: max-content;
   height: 35px;
-  line-height: 35px;
+  line-height: inherit;
   text-align: center;
   text-overflow: ellipsis;
   overflow: hidden;
