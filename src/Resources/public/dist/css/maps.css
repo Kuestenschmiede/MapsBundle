@@ -5118,10 +5118,20 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
   min-width: min-content
 }
 .c4g-sideboard.c4g-measuretools-container {
-  max-width: 240px
+  width: -moz-max-content;
+  width: max-content;
+  max-width: var(--popup-max-width)
+}
+.c4g-sideboard.c4g-baselayer-container {
+  width: -moz-max-content;
+  width: max-content;
+  max-width: var(--popup-max-width)
 }
 .c4g-measuretools-content input {
   max-width: calc(100% - .4em)
+}
+.c4g-measuretools-content sub {
+  bottom: .75em
 }
 .c4g-sideboard.c4g-popup-container {
   max-width: 100%;
@@ -5437,9 +5447,10 @@ span.c4g-starboard-locstyle-triangle:before {
   bottom: 0;
   left: 0;
   margin: auto;
-  width: 60%;
+  width: -moz-max-content;
+  width: max-content;
   height: 35px;
-  line-height: 35px;
+  line-height: inherit;
   text-align: center;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -5471,11 +5482,13 @@ ul.c4g-overlays input {
   opacity: 1
 }
 ul.c4g-overlays span {
-  display: inline-block;
-  max-width: calc(100% - .2em - 15px - (100px - 1.75em));
+  display: block;
+  max-width: -moz-max-content;
+  max-width: max-content;
   text-overflow: ellipsis;
   overflow-x: hidden;
-  padding-left: 15px
+  padding-left: 15px;
+  padding-bottom: 15px
 }
 ul.c4g-overlays input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
@@ -6250,7 +6263,7 @@ button.c4g-starboard-view-trigger-layerswitcher:before {
 }
 .c4g-baselayertree-content input[type=range] {
   -webkit-appearance: none;
-  position: absolute;
+  position: relative;
   top: 0;
   bottom: 0;
   right: 0;

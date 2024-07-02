@@ -21,14 +21,15 @@ __Main features include:__
     - Stadia Maps with Stamen (8 Styles)
     - Layergroup (depending on zoom level)
     - Georeferenced image
+    - GeoTIFF
+    - WMS
     - Custom
-    - other
-        - WMS
 - configurate ***Overlays***:
     - WMS
     - OpenWeatherMap
     - OpenSeaMap
     - Georeferenced image
+    - GeoTIFF
     - Custom
 - configurate ***Interactions***:
     - keyboard-navigation
@@ -89,7 +90,7 @@ __Main features include:__
 
 **Extendable with all other con4gis and Contao bundles**  
 con4gis is not a connectable application. It's a collection of content 
-elements for your website. So you can build your own individual and limitless web applications.
+elements for your website. So you can simply build your own individual and limitless web applications.
 
 
 **Contains:**
@@ -111,8 +112,8 @@ Visit [docs.con4gis.org](https://docs.con4gis.org) for a user documentation. You
 ## Third Party License
 
 ### Font Awesome
-Wir nutzen zur Darstellung der Icons das Font-Set von [Font Awesome](https://fontawesome.com) die Lizensierung ist unter [License](https://fontawesome.com/license/free) (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) einzusehen.
+We use the font set from [Font Awesome](https://fontawesome.com) to display the icons. The license can be viewed under [License](https://fontawesome.com/license/free) (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License).
 
-__Bitte klären Sie, mit Ihrem Rechtsbeistand, ob und wie eine Nennung in der Datenschutzerklärung notwendig ist!__
+Please clarify with your legal advisor whether and how a mention in the privacy policy is necessary.
 
-Die Daten werden lokal vom Server ausgeliefert und nicht über einen CDN geladen, daher werden keine Daten an Dritte weitergegeben.
+The data is delivered locally from the server and not loaded via a CDN, therefore no data is passed on to third parties.
