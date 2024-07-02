@@ -625,7 +625,13 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
 }
 
 .c4g-sideboard.c4g-measuretools-container {
-  max-width: 240px;
+  width: max-content;
+  max-width: var(--popup-max-width);
+}
+
+.c4g-sideboard.c4g-baselayer-container {
+  width: max-content;
+  max-width: var(--popup-max-width);
 }
 
 .c4g-measuretools-content input {
@@ -751,6 +757,7 @@ div.ol-attribution-ext-div.ol-control.ol-uncollapsible {
 }
 
 /*----------------------------*/
+
 /*-----------filter-----------*/
 
 .c4g-geosearch-form, .c4g-sideboard > div > div[class*=filter] {
@@ -1061,11 +1068,12 @@ ul.c4g-overlays input {
 }
 
 ul.c4g-overlays span {
-  display: inline-block;
-  max-width: calc(100% - .2em - 15px - (100px - 1.75em));
+  display: block;
+  max-width: max-content;
   text-overflow: ellipsis;
   overflow-x: hidden;
   padding-left: 15px;
+  padding-bottom: 15px;
 }
 
 ul.c4g-overlays input[type=range]::-webkit-slider-thumb {
