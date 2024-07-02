@@ -396,16 +396,17 @@ export default class MapController extends Component {
     // check userposition
     if (mapData.geolocation && !permalink) {
       let funcLocation = function (evt) {
-        let position = this.getPosition();
-        if (mapData.geolocation_extent) {
+        let position =  this.getPosition();
+        if (mapData.geolocation_extent && mapData.geolocation_extent[0]) {
           const bottomLeft = fromLonLat([mapData.geolocation_extent[0],mapData.geolocation_extent[1]]);
           const topRight = fromLonLat([mapData.geolocation_extent[2],mapData.geolocation_extent[3]]);
           const extent = boundingExtent([bottomLeft, topRight]);
           if (!position || !containsCoordinate(extent, position)) {
             return;
           }
+        } else if (position) {
+          view.setCenter(position);
         }
-        view.setCenter(position);
         if (mapData.geolocation_zoom) {
           view.setZoom(parseInt(mapData.geolocation_zoom, 10));
         }
