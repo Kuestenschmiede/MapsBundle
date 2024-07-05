@@ -59,10 +59,10 @@ export class UserPosition {
         this.mapController.geolocation.on('change', funcLocation);
         if (this.mapController.geolocation.getTracking()) {
             this.mapController.geolocation.dispatchEvent('change');
-        }
+        }/*
         else {
             this.mapController.geolocation.setTracking(true)
-        }
+        }*/
     }
 
 }

@@ -250,9 +250,9 @@ export default class StarboardScope extends Component {
   }
   componentDidMount() {
     this._isMounted = true;
-    if (!this.props.mapController.geolocation.getTracking()) {
-      this.props.mapController.geolocation.setTracking(true);
-    }
+    // if (!this.props.mapController.geolocation.getTracking()) {
+    //   this.props.mapController.geolocation.setTracking(true);
+    // }
   }
   componentWillUnmount() {
     this._isMounted = false;
