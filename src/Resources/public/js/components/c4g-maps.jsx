@@ -725,13 +725,15 @@ export default class MapController extends Component {
     if (mapData.filterDiv) {
       mapData.filterDiv = mapData.filterDiv[0] === "." || mapData.filterDiv[0] === "#" ? mapData.filterDiv : "." + mapData.filterDiv;
       this.filterContainerParent = document.querySelector(mapData.filterDiv);
-      this.filterContainerParent.className += ' c4g-external';
-      this.filterContainer = document.createElement("div");
-      ReactDOM.render(
-        <Suspense fallback={<div>"loading..."</div>}>
-          <FeatureFilter target={document.querySelector(mapData.filterDiv)} mapController={this} direction={"top"} className={"c4g-feature-filter"}/>
-        </Suspense>, this.filterContainer);
-      this.filterContainerParent.append(this.filterContainer);
+      if (this.filterContainerParent) {
+        this.filterContainerParent.className += ' c4g-external';
+        this.filterContainer = document.createElement("div");
+        ReactDOM.render(
+            <Suspense fallback={<div>"loading..."</div>}>
+              <FeatureFilter target={document.querySelector(mapData.filterDiv)} mapController={this} direction={"top"} className={"c4g-feature-filter"}/>
+            </Suspense>, this.filterContainer);
+        this.filterContainerParent.append(this.filterContainer);
+      }
     }
 
     // infopage container
