@@ -388,13 +388,18 @@ export class RouterView extends Component {
         }
       }
       let activeFeature = this.routerFeaturesSource.getFeatureById(this.state.activeId);
-      if (!this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.clickLocstyle].style) {
+      if (this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.clickLocstyle] &&
+          !this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.clickLocstyle].style
+      ) {
         this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.clickLocstyle].style = this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.clickLocstyle].getStyleFunction();
       }
       if (activeFeature) {
-        activeFeature.set('oldStyle', activeFeature.getStyle());
-        let style = this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.clickLocstyle].style;
-        activeFeature.setStyle(style);
+        // only attempt style update when click style is set
+        if (this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.clickLocstyle]) {
+          activeFeature.set('oldStyle', activeFeature.getStyle());
+          let style = this.props.mapController.proxy.locationStyleController.arrLocStyles[this.props.mapController.data.clickLocstyle].style;
+          activeFeature.setStyle(style);
+        }
       }
     }
 
@@ -1987,11 +1992,27 @@ export class RouterView extends Component {
         }
     } else {
       const mapProj = self.props.mapController.map.getView().getProjection();
-      const format = new OSMXML();
-      contentFeatures = format.readFeatures(features, {
-        dataProjection: 'EPSG:4326',
-        featureProjection: mapProj
-      });
+      let useOvpXmlFormat = false; // ToDo check actual format of data
+      if (useOvpXmlFormat) {
+        const format = new OSMXML();
+        contentFeatures = format.readFeatures(features, {
+          dataProjection: 'EPSG:4326',
+          featureProjection: mapProj
+        });
+      } else {
+        // convert features to ol.Features
+        for (let i = 0; i < features.length; i++) {
+          let feature = new Feature();
+          feature.set('tid', features[i].id);
+          feature.set('id', features[i].id);
+          feature.setGeometry(new Point(fromLonLat([features[i].lon, features[i].lat])));
+          feature.set('tags', features[i].tags);
+          feature.setId("" + features[i].id);
+
+          contentFeatures.push(feature);
+        }
+      }
+
       let labelKey = mapData.routerLayers[layerId][activeLayer]['mapLabel'];
       const arrOvp = [];
       for (let id in contentFeatures) {
@@ -2001,10 +2022,11 @@ export class RouterView extends Component {
           contentFeatures[id].set('hover_location', layer.hover_location);
           contentFeatures[id].set('hover_style', layer.hover_style);
           contentFeatures[id].set('zoom_onclick', layer.zoom_onclick);
-          if (contentFeatures[id].get('id') && contentFeatures[id].get('id').includes('/')) { //id from out:json is not transformed correctly
+          // check if id is in array format
+          if (contentFeatures[id].get('id') && Array.isArray(contentFeatures[id].get('id')) && contentFeatures[id].get('id').includes('/')) {
+            //id from out:json is not transformed correctly
             contentFeatures[id].set('tid', parseInt(contentFeatures[id].get('id').split('/')[1]));
-          }
-          else {
+          } else {
             contentFeatures[id].set('tid', contentFeatures[id].getId());
           }
           arrOvp.push({id: contentFeatures[id].get('tid')});

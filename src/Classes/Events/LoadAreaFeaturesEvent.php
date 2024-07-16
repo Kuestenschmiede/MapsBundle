@@ -27,7 +27,7 @@ class LoadAreaFeaturesEvent extends Event
 
     private $profile = '';
 
-    private $returnData = '';
+    private $returnData = [];
 
     /**
      * @return int
@@ -110,7 +110,7 @@ class LoadAreaFeaturesEvent extends Event
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getReturnData()
     {
@@ -118,7 +118,7 @@ class LoadAreaFeaturesEvent extends Event
     }
 
     /**
-     * @param string $returnData
+     * @param array $returnData
      */
     public function setReturnData($returnData)
     {

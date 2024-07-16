@@ -161,7 +161,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
                 'exclude'                 => true,
                 'inputType'               => 'inputUnit',
                 'default'                 => '0',
-                'options'                 => ['%'],
+                'options'                 => ['%', 'px'],
                 'eval'                    => ['rgxp'=>'prcnt', 'tl_class'=>'long', 'mandatory'=>true],
                 'sql'                     => "varchar(100) NOT NULL default ''"
             ],

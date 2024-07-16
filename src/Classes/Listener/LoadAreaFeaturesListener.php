@@ -118,6 +118,7 @@ class LoadAreaFeaturesListener
 
                 $event->setReturnData([$requestData, $responseFeatures, $type, 'notOverpass']);
             } elseif ($objLayer->location_type == 'overpass') {
+                $type = $routerConfig->getRouterApiSelection();
                 $url = $objMapsProfile->overpass_url ? $objMapsProfile->overpass_url : 'http://overpass-api.de/api/interpreter';
                 $query = $objLayer->ovp_request;
                 $strBBox = strrpos($query, '(bbox)') ? '<bbox-query s="' . $bounds['lower']->getLat() . '" n="' . $bounds['upper']->getLat() . '" w="' . $bounds['left']->getLng() . '" e="' . $bounds['lower']->getLng() . '"/>'
@@ -250,7 +251,8 @@ class LoadAreaFeaturesListener
 
                             break;
                     }
-                    $event->setReturnData(\GuzzleHttp\json_encode([$features,'overpass']));
+//                    $event->setReturnData(\GuzzleHttp\json_encode([$features,'overpass', $matrixResponse]));
+                    $event->setReturnData([$matrixResponse, $features, $type, 'overpass']);
                 } else {
                     $event->setReturnData([]);
                 }

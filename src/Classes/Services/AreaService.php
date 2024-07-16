@@ -75,14 +75,6 @@ class AreaService
 
                     break;
                 case 4:
-                    for ($i = 0; $i < count($matrixResponse['sources_to_targets'][0]); $i++) {
-                        if ($matrixResponse['sources_to_targets'][0][$i]['distance'] < $distance) {
-                            $requestData[$i]['distance'] = $matrixResponse['sources_to_targets'][0][$i]['distance'];
-                            $features[] = $requestData[$i];
-                        }
-                    }
-
-                    break;
                 case 6:
                     for ($i = 0; $i < count($matrixResponse['sources_to_targets'][0]); $i++) {
                         if ($matrixResponse['sources_to_targets'][0][$i]['distance'] < $distance) {
