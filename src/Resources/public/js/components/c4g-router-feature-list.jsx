@@ -54,7 +54,7 @@ export default class RouterFeatureList extends Component {
         const ref = this.features[this.props.activeId];
         // ref.current.scrollIntoView({behavior: 'smooth', block: 'start'});
         let scrollElement = document.querySelector(".c4g-router-result-container");
-        scrollElement.scrollTo(0, ref.current.offsetTop);
+        scrollElement.scrollTo(0, ref.current.offsetTop - 100);
       }
     }
   }

@@ -96,7 +96,7 @@ class LoadRouteFeaturesListener
                 $query = $objLayer->ovp_request;
                 $strSearch = strrpos($query, '(bbox)') ? '(bbox)' : '{{bbox}}';
                 $query = str_replace($strSearch, $strBBox, $query);
-                $query = str_replace('out:json', 'out:xml', $query);
+//                $query = str_replace('out:json', 'out:xml', $query);
                 $client = HttpClient::create();
                 $headers = [];
                 if ($_SERVER['HTTP_REFERER']) {
@@ -105,14 +105,16 @@ class LoadRouteFeaturesListener
                 if ($_SERVER['HTTP_USER_AGENT']) {
                     $headers['User-Agent'] = $_SERVER['HTTP_USER_AGENT'];
                 }
-                if (!strpos($query, 'json')) {
-                    $event->setFeatures([]);
+                // only works for overpass ql, not xml
+//                if (!strpos($query, 'json')) {
+//                    $event->setFeatures([]);
+//
+//                    return null;
+//                }
 
-                    return null;
-                }
                 $request = $client->request('GET', $url, [
                     'headers'   => $headers,
-                    'query'     => $query
+                    'body'     => $query
                 ]);
                 //ToDo check response
                 $response = $request->getContent();

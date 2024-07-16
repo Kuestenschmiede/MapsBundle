@@ -225,7 +225,7 @@ export class RouterView extends Component {
     }
     if (!this.props.mapController.data.routerResultDiv) {
       switcherButtons.unshift(<button className={"c4g-router-hide-form-button " + (this.state.openSettings ? "c4g-active" : "c4g-inactive")}
-                                  onMouseUp={() => {this.setState({openSettings: !this.state.openSettings})}} title={this.languageConstants.ROUTER_SETTINGS}/>)
+                                  onMouseUp={() => {this.setState({openSettings: !this.state.openSettings})}} key={3} title={this.languageConstants.ROUTER_SETTINGS}/>)
     }
     if (switcherButtons.length > 1) {
       resultSwitcher = (
@@ -236,7 +236,7 @@ export class RouterView extends Component {
     }
     return (
       <div className={"c4g-router-wrapper"}>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense key={0} fallback={<div>Loading...</div>}>
           <Titlebar wrapperClass={"c4g-router-header"} header={headline} headerClass={"c4g-router-headline"}
                     detailBtnClass={"c4g-router-extended-options"} hideContainer={".c4g-router-container-right"} detailBtnCb={this.toggleDetails} closeBtnClass={"c4g-router-close"} closeBtnCb={this.close} closeBtnTitle={this.languageConstants.CLOSE}/>
         </Suspense>
@@ -246,7 +246,7 @@ export class RouterView extends Component {
             {resultSwitcher}
           </div>
         </React.Fragment>
-        <Suspense fallback={<div>"loading"</div>}>
+        <Suspense key={1} fallback={<div>"loading"</div>}>
           <RouterControls router={this} open={this.props.mapController.data.routerResultDiv || (this.state.open && this.state.openSettings)} setOpen={this.openControls} profiles={this.state.profiles} className={"c4g-router-panel"}
                           objSettings={this.state.objSettings} objFunctions={this.objFunctions} overSettings={overSettings} enableOverPoints={this.props.mapController.data.enableOverPoints}
                           sources={sources} layers={this.props.mapController.data.routerLayers} containerAddresses={this.state.containerAddresses} resetFunctions={resetFunctions}
@@ -254,7 +254,7 @@ export class RouterView extends Component {
                           toAddress={this.state.toAddress} areaAddress={this.state.areaAddress} mode={this.state.mode} sliderOptions={sliderOptions} title={this.languageConstants.CTRL_ROUTER} target={this.props.target}
           />
         </Suspense>
-        <Suspense fallback={<div>"loading"</div>}>
+        <Suspense key={2} fallback={<div>"loading"</div>}>
           <RouterResultContainer visible={this.state.open} open={(this.state.open && this.state.openResults)} setOpen={this.setOpen} direction={"bottom"} className={"c4g-router-result-container"} mapController={this.props.mapController}
                                  mode={this.state.mode} setResultFeat={this.setResultFeat} routerInstructions={this.state.routerInstructions} featureList={this.state.featureList} routerWaySource={this.state.routerWaySource} detour={this.state.detourArea}
                                  layerRoute={this.state.layerRoute} layerValueRoute={this.state.layerValueRoute} layerArea={this.state.layerArea} resultMode={this.state.resultMode} router={this}
@@ -2004,7 +2004,7 @@ export class RouterView extends Component {
         for (let i = 0; i < features.length; i++) {
           let feature = new Feature();
           feature.set('tid', features[i].id);
-          feature.set('id', features[i].id);
+          feature.set('id', "" + features[i].id);
           feature.setGeometry(new Point(fromLonLat([features[i].lon, features[i].lat])));
           feature.set('tags', features[i].tags);
           feature.setId("" + features[i].id);

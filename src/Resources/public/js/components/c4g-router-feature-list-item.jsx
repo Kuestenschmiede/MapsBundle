@@ -33,6 +33,7 @@ export class RouterFeatureListItem extends Component {
       element: element
     };
   }
+
   clickFeature (event) {
     const scope = this;
     scope.props.setActiveId(scope.props.feature.id);
@@ -63,17 +64,21 @@ export class RouterFeatureListItem extends Component {
       }
     }
     // refresh css classes
-    jQuery(this).parent().children('li').each(function (index, element) {
-      jQuery(element).addClass(cssConstants.INACTIVE).removeClass(cssConstants.ACTIVE);
-    });
-    jQuery(this).addClass(cssConstants.ACTIVE).removeClass(cssConstants.INACTIVE);
+    // console.log(jQuery(this));
+    // this.props.setActiveId()
+    // jQuery(this).parent().children('li').each(function (index, element) {
+    //   jQuery(element).addClass(cssConstants.INACTIVE).removeClass(cssConstants.ACTIVE);
+    // });
+    // jQuery(this).addClass(cssConstants.ACTIVE).removeClass(cssConstants.INACTIVE);
     // jQuery("div.c4g-portside-content-container").animate({scrollTop: entry.offsetTop - 300});
   }
+
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (!this.state.element ||
         this.props.layerValueRoute !== prevProps.layerValueRoute ||
         this.props.layerValueArea !== prevProps.layerValueArea ||
-        this.props.feature !== prevProps.feature){ //only get popup if not already set or layer changes
+        this.props.feature !== prevProps.feature
+    ) { //only get popup if not already set or layer changes
       let element = this.getElement();
       if (element) {
         this.setState({
@@ -81,8 +86,8 @@ export class RouterFeatureListItem extends Component {
         })
       }
     }
-
   }
+
   getElement () {
     const scope = this;
     let currentFeature = null;
@@ -127,10 +132,16 @@ export class RouterFeatureListItem extends Component {
       return element;
     }
   }
+
   render() {
     if (this.state.element) {
       return (
-          <li ref={this.props.refProp} dangerouslySetInnerHTML={this.state.element} className={this.props.active ? "route-features-list-element c4g-active": "route-features-list-element c4g-inactive"} onMouseUp={this.clickFeature}/>
+          <React.Fragment>
+            <span>{this.props.feature.id}</span>
+            <li ref={this.props.refProp} dangerouslySetInnerHTML={this.state.element}
+                className={this.props.active ? "route-features-list-element c4g-active" : "route-features-list-element c4g-inactive"}
+                onMouseDown={this.clickFeature}/>
+          </React.Fragment>
       );
     }
     return null;

@@ -100,6 +100,14 @@ class RouteService extends Frontend
                 $event->setType($objLayer->location_type === 'overpass' ? 'overpass' : 'notOverpass');
                 $this->eventDispatcher->dispatch($event, $event::NAME);
                 $routeData['features'] = $event->getFeatures();
+                // check if features are json encoded
+                if (!is_array($routeData['features'])) {
+                    $tmpFeatures = \Safe\json_decode($routeData['features'], true);
+                    if ($tmpFeatures) {
+                        $routeData['features'] = $tmpFeatures['elements'];
+                    }
+                }
+
                 $routeData['bbox'] = $event->getBbox();
                 $routeData['type'] = $event->getType();
             } catch (\InvalidArgumentException $exception) {
