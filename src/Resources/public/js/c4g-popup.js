@@ -44,6 +44,7 @@ export class C4gPopup {
             let center = popupController.mapController.map.getView().getCenter();
             this.popup = new Overlay({
                 position: center,
+                positioning: 'center-center',
                 element: popUpElement,
                 positioning: 'center-center',
                 offset: [-50, 0],
@@ -107,6 +108,9 @@ export class C4gPopup {
             this.popupContent.appendChild(divPopup);
             if (this.popupController.popupHandling < 2) {
                 this.setPosition(feature.getGeometry());
+            } else if (this.popupController.popupHandling == 2) {
+                let center = this.popupController.mapController.map.getView().getCenter();
+                this.setPosition(center);
             }
         }
         else {
