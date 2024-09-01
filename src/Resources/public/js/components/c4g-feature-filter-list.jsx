@@ -34,20 +34,18 @@ export class FeatureFilterList extends Component {
             else {
                 className = "c4g-close";
             }
-            className += " c4g-filter-item fi_" + utils.removeUmlauts(this.props.feature.name);
-            classNameText = "c4g-filter-item-text fi_" + utils.removeUmlauts(this.props.feature.name) + "_text";
-
+            className += " fi_" + utils.removeUmlauts(this.props.feature.name);
             let liClass = this.props.checkedItem.identifier === "all c4g-item-"+utils.removeUmlauts(this.props.feature.name) ? "" : "c4g-item-checked c4g-item-"+utils.removeUmlauts(this.props.feature.name);
             return (
                 <li className={liClass}>
-                    <strong className={className} onMouseUp={(evt) => {this.props.setOpen(this.props.id); evt.stopPropagation(); evt.preventDefault();}} className={classNameText} ><span/>{utils.decodeHTML(this.props.feature.name)}</strong>
+                    <strong className={className} onMouseUp={(evt) => {this.props.setOpen(this.props.id); evt.stopPropagation(); evt.preventDefault();}}><span/>{utils.decodeHTML(this.props.feature.name)}</strong>
                     {form}
                 </li>
             );
         }
         else {
-            className = "c4g-filter-item fi_" + utils.removeUmlauts(this.props.feature.name);
-            classNameText = "c4g-filter-item-text fi_" + utils.removeUmlauts(this.props.feature.name) + "_text";
+            className = "fi_" + utils.removeUmlauts(this.props.feature.name);
+            classNameText = "fi_" + utils.removeUmlauts(this.props.feature.name) + "_text";
             let liClass = "c4g-item-checked c4g-item-"+utils.removeUmlauts(this.props.feature.name);
             liClass += this.props.checkedItem.identifier === "all" ? "" : " clicked";
             let img = null;
@@ -68,7 +66,7 @@ export class FeatureFilterList extends Component {
                 img = <img src={this.props.feature.image} title={this.props.feature.name} width={this.props.feature.width} height={this.props.feature.height}/>;
             }
             return (<li className={liClass}>
-                <strong className={className} onMouseUp={clickEvent}><span className={classNameText}>{img}{utils.decodeHTML(this.props.feature.name)}</span></strong>
+                <strong className={className} onMouseUp={clickEvent}>{img}<span className={classNameText}>{utils.decodeHTML(this.props.feature.name)}</span></strong>
             </li>);
         }
     }
