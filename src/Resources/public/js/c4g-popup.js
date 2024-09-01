@@ -29,14 +29,14 @@ export class C4gPopup {
             let autoPan = popupController.popupHandling === 1;
             this.popup = new Overlay({
                 element: popUpElement,
-                positioning: 'bottom-left',
-                offset: [-50, 0],
+                positioning: 'center-center',//'bottom-left',
+                offset: [0, 0], //-50, 0
                 insertFirst: false,
                 autoPan: autoPan,
                 autoPanAnimation: {
                     duration: 250
                 },
-                autoPanMargin: 20
+                autoPanMargin: 200
             });
             popupController.mapController.map.addOverlay(this.popup);
         } else if (popupController.popupHandling === 2) {
