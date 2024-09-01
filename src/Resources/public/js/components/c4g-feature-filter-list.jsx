@@ -45,7 +45,7 @@ export class FeatureFilterList extends Component {
         }
         else {
             className = "fi_" + utils.removeUmlauts(this.props.feature.name);
-            classNameText = "fi_" + utils.removeUmlauts(this.props.feature.name) + "_text";
+            classNameText = "fi_text fi_" + utils.removeUmlauts(this.props.feature.name) + "_text";
             let liClass = "c4g-item-checked c4g-item-"+utils.removeUmlauts(this.props.feature.name);
             liClass += this.props.checkedItem.identifier === "all" ? "" : " clicked";
             let img = null;
