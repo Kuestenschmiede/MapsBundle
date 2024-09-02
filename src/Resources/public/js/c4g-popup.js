@@ -30,7 +30,7 @@ export class C4gPopup {
             this.popup = new Overlay({
                 element: popUpElement,
                 positioning: 'center-center',//'bottom-left',
-                offset: [0, 0], //-50, 0
+                offset: [-50, 50], //-50, 0
                 insertFirst: false,
                 autoPan: autoPan,
                 autoPanAnimation: {

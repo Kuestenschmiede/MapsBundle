@@ -509,6 +509,7 @@ span.c4g-starboard-locstyle {
 .ol-selectable div.c4g-active.c4g-popup-wrapper {
     display: block;
     min-width: 100px;
+    //max-width: var(--popup-max-width);
     margin-bottom: 10px;
     border-radius: 15px;
     border: 1px solid;
