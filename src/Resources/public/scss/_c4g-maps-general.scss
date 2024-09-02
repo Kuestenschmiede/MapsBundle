@@ -1331,6 +1331,34 @@ button.c4g-geosearch-start {
 
 /*-------external-filter---------*/
 
+
+/** additional feature filter settings **/
+//li.c4g-item-checked img {
+//  display: inline;
+//  margin-right: 5px;
+//}
+//
+//.c4g-filter-item:hover {
+//  transition: ease-in-out 250ms;
+//  padding-left: 2px;
+//  padding-right: 2px;
+//  background: var(--shadow-color);
+//  color: var(--font-color);
+//}
+//
+//ul.c4g-feature-filter-list li.c4g-item-checked.clicked .c4g-filter-item {
+//  background: var(--shadow-color);
+//  color: var(--font-color);
+//  line-height: 44px;
+//}
+//
+//ul.c4g-feature-filter-list li.c4g-item-checked.clicked .c4g-filter-item:after {
+//  font-family: 'Font Awesome 5 Free';
+//  font-weight: 400;
+//  content: "\f057";
+//}
+
+
 .c4g-feature-filter {
   height: 45px;
   margin-top: 35px;
@@ -1388,7 +1416,7 @@ ul.c4g-feature-filter-list li span.sum {
 
 /*-------Icons for the header------*/
 
-ul.c4g-feature-filter-list li > strong > span {
+ul.c4g-feature-filter-list li > .fi_wrapper > span {
   position: relative;
   /*width: 45px;*/
   /*height: 40px;*/
@@ -1398,11 +1426,11 @@ ul.c4g-feature-filter-list li > strong > span {
   transition: ease-in-out 0.3s;
 }
 
-ul.c4g-feature-filter-list li > strong.c4g-open > span {
+ul.c4g-feature-filter-list li > .fi_wrapper.c4g-open > span {
   transform: rotate(90deg);
 }
 
-ul.c4g-feature-filter-list li > strong > span > span:after {
+ul.c4g-feature-filter-list li > .fi_wrapper > span > span:after {
   content: "\f054";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
@@ -1442,12 +1470,12 @@ div#filter_block input {
   text-align: left;
 }
 
-.c4g-feature-filter strong::selection,
+.c4g-feature-filter .fi_wrapper::selection,
 .c4g-feature-filter label::selection {
   background: none;
 }
 
-.c4g-feature-filter strong:hover,
+.c4g-feature-filter .fi_wrapper:hover,
 .c4g-feature-filter label:hover {
   cursor: pointer;
 }
@@ -1456,7 +1484,7 @@ ul.c4g-feature-filter-list::-webkit-scrollbar {
   height: 0px;
 }
 
-li.c4g-item-checked span > img {
+li.c4g-item-checked .fi_wrapper > img {
   width: 32px;
   margin-right: 8px;
 }
@@ -1507,7 +1535,7 @@ ul.c4g-feature-filter-list li.c4g-item-checked {
   text-align: left;
 }
 
-ul.c4g-feature-filter-list li.c4g-item-checked > strong {
+ul.c4g-feature-filter-list li.c4g-item-checked > .fi_wrapper {
   display: inline-block;
   padding: 0 10px;
   transition: ease-in-out 250ms;

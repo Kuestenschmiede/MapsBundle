@@ -710,9 +710,9 @@ div.c4g-tooltip-popup:before {
     font-family: "Font Awesome 5 Free";
     font-weight: bold;
     font-size: 30px;
-    z-index: 1;
+    z-index: 100;
 }
-
+/*
 .c4g-feature-filter button.c4g-btn-nav-previous {
     border-right: 1px solid #ffffff;
 }
@@ -720,7 +720,7 @@ div.c4g-tooltip-popup:before {
 .c4g-feature-filter button.c4g-btn-nav-next {
     border-left: 1px solid #ffffff;
 }
-
+*/
 .c4g-feature-filter button.c4g-btn-nav-previous:active:before, .c4g-feature-filter button.c4g-btn-nav-next:active:before {
     font-size: 20px;
     vertical-align: middle;

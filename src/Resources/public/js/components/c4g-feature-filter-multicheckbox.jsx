@@ -40,18 +40,18 @@ export class FeatureFilterMultiCheckbox extends Component {
                 numberSpan = <span className={"sum"}> {number} </span>
             }
 
-            className += " fi_" + utils.removeUmlauts(this.props.feature.name);
+            className += " fi_wrapper fi_" + utils.removeUmlauts(this.props.feature.name);
             let liClass =  "c4g-item-checked c4g-item-"+utils.removeUmlauts(this.props.feature.name);
             return (
                 <li className={liClass}>
-                    <strong className={className} onMouseUp={(evt) => {this.props.setOpen(this.props.id); evt.stopPropagation(); evt.preventDefault();}}><span/>{utils.decodeHTML(this.props.feature.name)}</strong>
+                    <div className={className} onMouseUp={(evt) => {this.props.setOpen(this.props.id); evt.stopPropagation(); evt.preventDefault();}}><span/>{utils.decodeHTML(this.props.feature.name)}</div>
                     {numberSpan}
                     {form}
                 </li>
             );
         }
         else {
-            className = "fi_" + utils.removeUmlauts(this.props.feature.name);
+            className = "fi_wrapper fi_" + utils.removeUmlauts(this.props.feature.name);
             classNameText = "fi_text fi_" + utils.removeUmlauts(this.props.feature.name) + "_text";
             let liClass =  "c4g-item-checked c4g-item-"+utils.removeUmlauts(this.props.feature.name);
             liClass += this.props.checkedItems.length === 0 ? "" : " clicked";
@@ -74,7 +74,7 @@ export class FeatureFilterMultiCheckbox extends Component {
             }
             return (
                 <li className={liClass}>
-                    <strong className={className} onMouseUp={clickEvent}><span className={classNameText}>{img}{utils.decodeHTML(this.props.feature.name)}</span></strong>
+                    <div className={className} onMouseUp={clickEvent}><span className={classNameText}>{img}{utils.decodeHTML(this.props.feature.name)}</span></div>
                 </li>
             );
         }

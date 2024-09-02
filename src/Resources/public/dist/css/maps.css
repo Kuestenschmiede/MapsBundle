@@ -5728,17 +5728,17 @@ ul.c4g-feature-filter-list li span.sum {
   border-top-left-radius: 50%;
   border-top-right-radius: 50%
 }
-ul.c4g-feature-filter-list li > strong > span {
+ul.c4g-feature-filter-list li > .fi_wrapper > span {
   position: relative;
   text-align: center;
   float: left;
   margin-right: 10px;
   transition: ease-in-out .3s
 }
-ul.c4g-feature-filter-list li > strong.c4g-open > span {
+ul.c4g-feature-filter-list li > .fi_wrapper.c4g-open > span {
   transform: rotate(90deg)
 }
-ul.c4g-feature-filter-list li > strong > span > span:after {
+ul.c4g-feature-filter-list li > .fi_wrapper > span > span:after {
   content: "\f054";
   font-family: "Font Awesome 5 Free";
   font-weight: 900
@@ -5770,22 +5770,22 @@ div#filter_block input {
 .c4g-filter-form-element {
   text-align: left
 }
-.c4g-feature-filter label::-moz-selection,
-.c4g-feature-filter strong::-moz-selection {
+.c4g-feature-filter .fi_wrapper::-moz-selection,
+.c4g-feature-filter label::-moz-selection {
   background: 0 0
 }
-.c4g-feature-filter label::selection,
-.c4g-feature-filter strong::selection {
+.c4g-feature-filter .fi_wrapper::selection,
+.c4g-feature-filter label::selection {
   background: 0 0
 }
-.c4g-feature-filter label:hover,
-.c4g-feature-filter strong:hover {
+.c4g-feature-filter .fi_wrapper:hover,
+.c4g-feature-filter label:hover {
   cursor: pointer
 }
 ul.c4g-feature-filter-list::-webkit-scrollbar {
   height: 0
 }
-li.c4g-item-checked span > img {
+li.c4g-item-checked .fi_wrapper > img {
   width: 32px;
   margin-right: 8px
 }
@@ -5810,7 +5810,7 @@ li.c4g-item-checked {
 ul.c4g-feature-filter-list li.c4g-item-checked {
   text-align: left
 }
-ul.c4g-feature-filter-list li.c4g-item-checked > strong {
+ul.c4g-feature-filter-list li.c4g-item-checked > .fi_wrapper {
   display: inline-block;
   padding: 0 10px;
   transition: ease-in-out 250ms
@@ -6902,13 +6902,7 @@ div.c4g-tooltip-popup:before {
   font-family: "Font Awesome 5 Free";
   font-weight: 700;
   font-size: 30px;
-  z-index: 1
-}
-.c4g-feature-filter button.c4g-btn-nav-previous {
-  border-right: 1px solid #fff
-}
-.c4g-feature-filter button.c4g-btn-nav-next {
-  border-left: 1px solid #fff
+  z-index: 100
 }
 .c4g-feature-filter button.c4g-btn-nav-next:active:before,
 .c4g-feature-filter button.c4g-btn-nav-previous:active:before {
