@@ -375,7 +375,12 @@ export class BetterLayerController {
       this.loaders[id].arrExtents = [];
     }
     if (features) {
-      this.vectorCollection.extend(features);
+      try {
+        //ToDo check features
+        this.vectorCollection.extend(features);
+      } catch (e) {
+        console.warn('Duplicated feature in vector collection');
+      }
     }
     else if (vectorLayer) {
       this.mapController.map.addLayer(vectorLayer);

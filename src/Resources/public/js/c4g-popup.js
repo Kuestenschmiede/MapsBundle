@@ -108,7 +108,7 @@ export class C4gPopup {
             this.popupContent.appendChild(divPopup);
             if (this.popupController.popupHandling < 2) {
                 if (feature.getGeometry()) {
-                    geometry = feature.getGeometry();
+                    let geometry = feature.getGeometry();
                     this.setPosition(geometry);
                 } else {
                     //ToDO load feature coordinates for geometry
