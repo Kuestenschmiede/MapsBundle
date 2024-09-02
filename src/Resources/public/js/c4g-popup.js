@@ -3,6 +3,7 @@ import {utils} from './c4g-maps-utils';
 import ReactDOM from 'react-dom';
 import {PopupContainer} from "./components/c4g-popup-container";
 import * as React from "react";
+import {Point} from "ol/geom";
 export class C4gPopup {
     constructor(popupController) {
         const scope = this;
@@ -46,7 +47,6 @@ export class C4gPopup {
                 position: center,
                 positioning: 'center-center',
                 element: popUpElement,
-                positioning: 'center-center',
                 offset: [-50, 0],
                 autoPan: false,
             });
@@ -107,9 +107,15 @@ export class C4gPopup {
             this.popupContent.innerHTML = '';
             this.popupContent.appendChild(divPopup);
             if (this.popupController.popupHandling < 2) {
-                this.setPosition(feature.getGeometry());
+                if (feature.getGeometry()) {
+                    geometry = feature.getGeometry();
+                    this.setPosition(geometry);
+                } else {
+                    //ToDO load feature coordinates for geometry
+                }
             } else if (this.popupController.popupHandling == 2) {
                 let center = this.popupController.mapController.map.getView().getCenter();
+                let geometry = new Point(center);
                 this.setPosition(center);
             }
         }
@@ -137,24 +143,26 @@ export class C4gPopup {
         let map = this.popupController.mapController.map;
         let element = this.popup.getElement();
         let coordinates = null;
-        if (geometry.getType() === 'Point') {
+        if (geometry && geometry.getType() === 'Point') {
             coordinates = geometry.getCoordinates();
         }
-        else {
+        else if (geometry) {
             let extent = geometry.getExtent();
             coordinates = [(extent[0] + extent[2]) / 2, (extent[1] + extent[3]) / 2,];
+        } else {
+            coordinates = map.getView().getCenter();
         }
         let center = map.getView().getCenter();
         let positioning = "";
         let offset = [0,0];
-        if (center[1] > coordinates[1]) {
+        if (center[1] >= coordinates[1]) {
             positioning += "bottom";
         }
         else {
             offset[1] = 10;
             positioning += "top";
         }
-        if (center[0] > coordinates[0]) {
+        if (center[0] >= coordinates[0]) {
             offset[0] = -50;
             positioning += "-left"
         }
