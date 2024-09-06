@@ -13,7 +13,10 @@
 namespace con4gis\MapsBundle\Classes\Contao;
 
 use con4gis\CoreBundle\Classes\ResourceLoader;
+use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
 use con4gis\MapsBundle\Classes\MapDataConfigurator;
+use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
+use con4gis\MapsBundle\Resources\contao\models\C4gMapSettingsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use Contao\BackendUser;
 use Contao\BackendTemplate;
@@ -84,12 +87,26 @@ class GeoEditor extends Backend
             $this->c4g_map_id = $mapId;
         } else {
             // get any map
-            $mapId = C4gMapsModel::findBy('location_type', 'map')->id;
+            $mapId = C4gMapsModel::findOneBy('location_type', 'map');
             if ($mapId) {
                 $this->id = $mapId;
                 $this->c4g_map_id = $mapId;
             }
         }
+
+        $settings = C4gMapSettingsModel::findOnly();
+        if ($settings) {
+            $editorProfile = $settings->editorprofile;
+            if ($editorProfile) {
+                $profile = C4gMapProfilesModel::findByPk($editorProfile);
+                if (!$profile->editorConfig) {
+                    C4gLogModel::addLogEntry('maps', "Please set editor config to to editor profile.");
+                }
+            } else {
+                C4gLogModel::addLogEntry('maps', "Please add editor profile to dashboard settings.");
+            }
+        }
+
         // we have to set these here so the map data will be configured correctly
         $objMapData = MapDataConfigurator::prepareMapData($this, $this->Database, ['geoeditor' => true]);
         ResourceLoader::loadCssResource('bundles/con4gismaps/dist/css/c4g-project-editor.min.css');
