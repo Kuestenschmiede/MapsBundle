@@ -304,7 +304,7 @@ export class BetterLayerController {
       vectorLayer = hideElement
     }
     else {
-      features = this.objIds[layerKey];
+      features = this.objIds[layerId];
     }
     if (features) {
       this.mapController.map.getView().dispatchEvent({
@@ -364,7 +364,7 @@ export class BetterLayerController {
         }
       }
     } else {
-      features = this.objIds[layerKey];
+      features = this.objIds[layerId];
     }
 
     if (id >= 0 && this.loaders[id] && this.loaders[id].preventLoading) {
@@ -378,10 +378,21 @@ export class BetterLayerController {
       this.loaders[id].arrExtents = [];
     }
     if (features) {
-      try {
-        this.vectorCollection.extend(features);
-      } catch (e) {
-        console.warn('Duplicated features. Check your map content.');
+       for (let i in features) {
+        if (features.hasOwnProperty(i)) {
+          let mapArr = this.vectorCollection.getArray();
+          let found = false;
+          for (let j in mapArr) {
+            if (mapArr[j].ol_uid == features[i].ol_uid) {
+              found = true;
+            }
+          }
+
+          if (!found) {
+            this.vectorCollection.push(features[i]);
+          }
+
+        }
       }
     }
     else if (vectorLayer) {
@@ -399,7 +410,7 @@ export class BetterLayerController {
       }
     }
     if (!layer.features || layer.features.length === 0) {
-      features = this.objIds[layer.key];
+      features = this.objIds[layer.id];
     }
     else {
       features = layer.features;
@@ -488,7 +499,7 @@ export class BetterLayerController {
     return extent;
   }
   getExtentForLayer(extent, layerKey) {
-    let features = this.objIds[layerKey];
+    let features = this.objIds[layerId];
     if (features && features.length) {
       for (let i in features) {
         if (features.hasOwnProperty(i)) {
@@ -1283,9 +1294,9 @@ export class BetterLayerController {
         }
       }
     }
-    if (!this.objIds.hasOwnProperty(layer.key)) {
+    if (!this.objIds.hasOwnProperty(layer.id)) {
       if (!layer.split_geojson) {
-        this.objIds[layer.key] = features;
+        this.objIds[layer.id] = features;
       }
       return features;
     }
