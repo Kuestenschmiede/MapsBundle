@@ -293,7 +293,8 @@ export class BetterLayerController {
     window.c4gMapsHooks.hook_map_zoom = window.c4gMapsHooks.hook_map_zoom || [];
     window.c4gMapsHooks.hook_map_zoom.push(this.handleZoom);
   }
-  hide (id, hideElement, layerId) {
+
+  hide (id, hideElement, layerId, layerKey) {
     let features,
         vectorLayer;
     if (Array.isArray(hideElement)) {
@@ -303,7 +304,7 @@ export class BetterLayerController {
       vectorLayer = hideElement
     }
     else {
-      features = this.objIds[layerId];
+      features = this.objIds[layerKey];
     }
     if (features) {
       this.mapController.map.getView().dispatchEvent({
@@ -330,11 +331,13 @@ export class BetterLayerController {
       this.mapController.map.removeLayer(vectorLayer);
     }
   }
-  show (id, hideElement, layerId) {
+
+  show (id, showElement, layerId, layerKey) {
+
     let features,
         vectorLayer;
-    if (Array.isArray(hideElement)) {
-      features = hideElement;
+    if (Array.isArray(showElement)) {
+      features = showElement;
       this.currentZoomLevel++;
       for (let i in features) {
         if (features.hasOwnProperty(i)) {
@@ -350,8 +353,8 @@ export class BetterLayerController {
         }
       }
     }
-    else if (hideElement instanceof Vector){
-      vectorLayer = hideElement;
+    else if (showElement instanceof Vector){
+      vectorLayer = showElement;
       if (this.mapController.filter) {
         if (!!parseFloat(this.mapController.data.filterHandling)) {
           this.mapController.filter.filterLayerMulti(vectorLayer);
@@ -360,10 +363,10 @@ export class BetterLayerController {
           this.mapController.filter.filterLayer(vectorLayer);
         }
       }
+    } else {
+      features = this.objIds[layerKey];
     }
-    else {
-      features = this.objIds[layerId];
-    }
+
     if (id >= 0 && this.loaders[id] && this.loaders[id].preventLoading) {
       this.loaders[id].preventLoading = false;
       for (let extentId in this.loaders[id].arrExtents) {
@@ -376,10 +379,9 @@ export class BetterLayerController {
     }
     if (features) {
       try {
-        //ToDo check features
         this.vectorCollection.extend(features);
       } catch (e) {
-        console.warn('Duplicated feature in vector collection');
+        console.warn('Duplicated features. Check your map content.');
       }
     }
     else if (vectorLayer) {
@@ -397,7 +399,7 @@ export class BetterLayerController {
       }
     }
     if (!layer.features || layer.features.length === 0) {
-      features = this.objIds[layer.id];
+      features = this.objIds[layer.key];
     }
     else {
       features = layer.features;
@@ -481,12 +483,12 @@ export class BetterLayerController {
       }
     }
     else {
-      extent = this.getExtentForLayer(extent, child.id);
+      extent = this.getExtentForLayer(extent, child.key);
     }
     return extent;
   }
-  getExtentForLayer(extent, layerId) {
-    let features = this.objIds[layerId];
+  getExtentForLayer(extent, layerKey) {
+    let features = this.objIds[layerKey];
     if (features && features.length) {
       for (let i in features) {
         if (features.hasOwnProperty(i)) {
@@ -783,6 +785,7 @@ export class BetterLayerController {
             "zoomTo"              : zoomTo,
             "activeForBaselayers" : layer.activeForBaselayers,
             "id"                  : features[featureId].ol_uid,
+            "key"                 : layer.key,
             "name"                : features[featureId].get(nameField),
             "hide"                : hide,
             "childs"              : []
@@ -889,6 +892,7 @@ export class BetterLayerController {
                             "zoomTo"          : true,
                             "activateWithBl"  : false,
                             "id"              : features[featureId].get("positionId"),
+                            "key"             : layer.key,
                             "name"            : features[featureId].get(nameField),
                             "childs"          : []
                           });
@@ -1133,6 +1137,7 @@ export class BetterLayerController {
         "activeForBaselayers" : layer.activeForBaselayers,
         "popup"               : popup || layer.popup,
         "id"                  : layer.id,
+        "key"                 : layer.key,
         "name"                : layer.name,
         "tags"                : layer.tags,
         "hide"                : hide,
@@ -1278,9 +1283,9 @@ export class BetterLayerController {
         }
       }
     }
-    if (!this.objIds.hasOwnProperty(layer.id)) {
+    if (!this.objIds.hasOwnProperty(layer.key)) {
       if (!layer.split_geojson) {
-        this.objIds[layer.id] = features;
+        this.objIds[layer.key] = features;
       }
       return features;
     }

@@ -28,7 +28,6 @@ export class C4gStarboardLayerElement extends Component {
     this.parentCallback = this.parentCallback.bind(this);
   }
 
-
   showLayer(showElements = null) {
     const scope = this;
     let features = false;
@@ -46,12 +45,13 @@ export class C4gStarboardLayerElement extends Component {
     features = features || scope.props.layer.features;
     let layerController = scope.props.mapController.proxy.layerController;
     if (features && features.length > 0) {
-      layerController.show(scope.props.layer.loader, features,scope.props.id);
+      layerController.show(scope.props.layer.loader, features,scope.props.id, scope.props.layerKey ? scope.props.layerKey : scope.props.id);
     } else if (vectorLayer){
-      layerController.show(scope.props.layer.loader, vectorLayer, scope.props.id);
-    }
-    else {
-      layerController.show(false, false, scope.props.id);
+      layerController.show(scope.props.layer.loader, vectorLayer, scope.props.id, scope.props.layerKey ? scope.props.layerKey : scope.props.id);
+    } else if (showElements) {
+      layerController.show(scope.props.layer.loader, showElements, showElements.id, showElements.key ? showElements.key : showElements.id);
+    } else {
+      layerController.show(false, false, scope.props.id, scope.props.layerKey ? scope.props.layerKey : scope.props.id);
     }
     scope.props.mapController.setLayerStateWithId(scope.props.id, true)
   }
@@ -72,12 +72,13 @@ export class C4gStarboardLayerElement extends Component {
     }
     let layerController = scope.props.mapController.proxy.layerController;
     if (features && features.length > 0) {
-      layerController.hide(scope.props.layer.loader, features, scope.props.id);
+      layerController.hide(scope.props.layer.loader, features, scope.props.id, scope.props.layerKey ? scope.props.layerKey : scope.props.id);
     } else if (vectorLayer) {
-      layerController.hide(scope.props.layer.loader, vectorLayer, scope.props.id);
-    }
-    else {
-      layerController.hide(false, false, scope.props.id);
+      layerController.hide(scope.props.layer.loader, vectorLayer, scope.props.id, scope.props.layerKey ? scope.props.layerKey : scope.props.id);
+    } else if (hideElements) {
+      layerController.hide(scope.props.layer.loader, hideElements, hideElements.id, hideElements.key ? hideElements.key : hideElements.id);
+    } else {
+      layerController.hide(false, false, scope.props.id, scope.props.layerKey ? scope.props.layerKey : scope.props.id);
     }
     scope.props.mapController.setLayerStateWithId(scope.props.id, false)
   }
@@ -106,7 +107,6 @@ export class C4gStarboardLayerElement extends Component {
     let newState = this.props.layerStates;
     newState.childStates[key] = newChildState;
     if (newState.active != newChildState.active) {
-      // newState.active = newChildState.active;
       if (newChildState.active) {
         this.showLayer();
       }
@@ -127,8 +127,10 @@ export class C4gStarboardLayerElement extends Component {
     if (this.props.layerStates.greyed) {
       return false;
     }
+    let show = false;
     if (!this.props.layerStates.active) {
       this.showLayer();
+      show = true;
       if (this.props.layerStates.collapsed) {
         let layerState = this.props.layerStates;
         layerState.collapsed = false;
@@ -144,13 +146,14 @@ export class C4gStarboardLayerElement extends Component {
       for (let childId in layerChilds) {
         if (layerChilds.hasOwnProperty(childId)) {
           let currentChildState = newState.childStates[childId].active;
-          if (currentChildState !== newState.active) {
-            newState.childStates[childId] = this.changeChildState(layerChilds[childId], newState.childStates[childId], newState.active);
-          }
+            if (show) {
+              this.showLayer(layerChilds[childId]);
+            } else {
+              this.hideLayer(layerChilds[childId]);
+            }
         }
       }
     }
-    // this.props.parentCallback(this.props.keyId, newState)
   }
   layerZoomTo(e) {
     if (!this.props.layerStates.active) {
@@ -241,7 +244,7 @@ export class C4gStarboardLayerElement extends Component {
           <ul>
             {objChilds.map((item, id) => {
               if (this.props.byPassChilds || this.props.filterFunc(this.props.strFilter, item, this.props.layerStates.childStates[id])) {
-                return <C4gStarboardLayerElement key={id} keyId={id} id={item.id} mapController={this.props.mapController}
+                return <C4gStarboardLayerElement key={id} keyId={id} id={item.id} layerKey={item.key} mapController={this.props.mapController}
                                           parentCallback={this.parentCallback}
                                           strFilter={this.props.strFilter}
                                           filterFunc={this.props.filterFunc}

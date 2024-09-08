@@ -351,6 +351,7 @@ class LayerService
         $stringClass = $GLOBALS['con4gis']['stringClass'];
         $arrLayerData = [];
         $arrLayerData['id'] = $objLayer->id;
+        $arrLayerData['key'] = $objLayer->key;
         $arrLayerData['pid'] = $objLayer->pid;
         $arrLayerData['name'] = Utils::replaceInsertTags($stringClass::decodeEntities($objLayer->name), $lang);
         $arrLayerData['zoom_locations'] = $objLayer->zoom_locations;

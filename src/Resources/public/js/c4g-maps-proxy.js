@@ -444,64 +444,64 @@ export class MapProxy {
    *
    * @return  {[type]}               [description]
    */
-  checkLocationStyles(opt_options) {
-
-    var options,
-      neededLayerStyles,
-      getLayerStyles,
-      self = this;
-
-    if (opt_options && typeof opt_options === "object") {
-      options = opt_options;
-    } else {
-      options = {};
-    }
-
-    this.locationStyleController.arrLocStyles= this.locationStyleController.arrLocStyles || {};
-
-    neededLayerStyles = [];
-    getLayerStyles = function (layers) {
-      var i,
-        element,
-        index;
-
-      // ToDo: Rekursion integrieren (test mit forum)
-      for (index in layers) {
-        if (layers.hasOwnProperty(index)) {
-          element = layers[index];
-
-          if (element.content) {
-            for (i = 0; i < element.content.length; i += 1) {
-
-              if (element.content[i]) {
-                if (
-                  element.content[i].locationStyle
-                  && element.content[i].locationStyle !== "0"
-                  && neededLayerStyles.indexOf(element.content[i].locationStyle) === -1
-                  && (
-                    !self.locationStyleController.arrLocStyles[element.content[i].locationStyle]
-                    || self.locationStyleController.arrLocStyles[element.content[i].locationStyle].style === undefined
-                  )
-                ) {
-                  neededLayerStyles.push(element.content[i].locationStyle);
-                }
-              }
-            }
-          }
-        }
-      }
-    };
-
-    getLayerStyles(this.layerController.arrLayers);
-
-    if (neededLayerStyles.length > 0) {
-      this.locationStyleController.loadLocationStyles(neededLayerStyles, options);
-    } else {
-      if (options.done && typeof options.done === "function") {
-        options.done();
-      }
-    }
-  } // end of "checkLocationStyles()"
+  // checkLocationStyles(opt_options) {
+  //
+  //   var options,
+  //     neededLayerStyles,
+  //     getLayerStyles,
+  //     self = this;
+  //
+  //   if (opt_options && typeof opt_options === "object") {
+  //     options = opt_options;
+  //   } else {
+  //     options = {};
+  //   }
+  //
+  //   this.locationStyleController.arrLocStyles= this.locationStyleController.arrLocStyles || {};
+  //
+  //   neededLayerStyles = [];
+  //   getLayerStyles = function (layers) {
+  //     var i,
+  //       element,
+  //       index;
+  //
+  //     // ToDo: Rekursion integrieren (test mit forum)
+  //     for (index in layers) {
+  //       if (layers.hasOwnProperty(index)) {
+  //         element = layers[index];
+  //
+  //         if (element.content) {
+  //           for (i = 0; i < element.content.length; i += 1) {
+  //
+  //             if (element.content[i]) {
+  //               if (
+  //                 element.content[i].locationStyle
+  //                 && element.content[i].locationStyle !== "0"
+  //                 && neededLayerStyles.indexOf(element.content[i].locationStyle) === -1
+  //                 && (
+  //                   !self.locationStyleController.arrLocStyles[element.content[i].locationStyle]
+  //                   || self.locationStyleController.arrLocStyles[element.content[i].locationStyle].style === undefined
+  //                 )
+  //               ) {
+  //                 neededLayerStyles.push(element.content[i].locationStyle);
+  //               }
+  //             }
+  //           }
+  //         }
+  //       }
+  //     }
+  //   };
+  //
+  //   getLayerStyles(this.layerController.arrLayers);
+  //
+  //   if (neededLayerStyles.length > 0) {
+  //     this.locationStyleController.loadLocationStyles(neededLayerStyles, options);
+  //   } else {
+  //     if (options.done && typeof options.done === "function") {
+  //       options.done();
+  //     }
+  //   }
+  // } // end of "checkLocationStyles()"
 
   checkLayerIsActiveForZoom(layerId, opt_zoom) {
     var layer,
