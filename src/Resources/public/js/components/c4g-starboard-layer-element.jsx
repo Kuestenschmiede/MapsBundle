@@ -146,11 +146,16 @@ export class C4gStarboardLayerElement extends Component {
       for (let childId in layerChilds) {
         if (layerChilds.hasOwnProperty(childId)) {
           let currentChildState = newState.childStates[childId].active;
+
+          if (layerChilds[childId].key && (layerChilds[childId].key != layerChilds[childId].id)) {
             if (show) {
               this.showLayer(layerChilds[childId]);
             } else {
               this.hideLayer(layerChilds[childId]);
             }
+          } else {
+            newState.childStates[childId] = this.changeChildState(layerChilds[childId], newState.childStates[childId], newState.active);
+          }
         }
       }
     }
