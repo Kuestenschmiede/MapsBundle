@@ -40,6 +40,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                 'mode'                    => 5,
                 'icon'                    => 'bundles/con4giscore/images/be-icons/con4gis_blue.svg',
                 'panelLayout'             => 'search',
+                'rootPaste'               => true,
+                'showRootTrails'          => true,
                 'paste_button_callback'   => [$cbClass, 'pasteElement']
             ],
         'label' =>
@@ -216,7 +218,6 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             'eval'                    => ['maxlength'=>254, 'tl_class'=>'w50'],
             'sql'                     => "varchar(254) NOT NULL default ''"
             ],
-
         'provider' =>
             [
             'exclude'                 => true,
