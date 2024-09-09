@@ -138,7 +138,8 @@ class MapsController extends BaseController
     {
         $geopicker = new GeoPicker();
         $strResponse = $geopicker->generate();
-        $response = new Response($strResponse['data'], 200, array('Content-Type: Document'));
+        $response = new Response($strResponse, 200, array('Content-Type: Document'));
         return $response;
+
     }
 }

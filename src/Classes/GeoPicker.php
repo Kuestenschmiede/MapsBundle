@@ -134,8 +134,7 @@ class GeoPicker extends Backend
         //$objMapData['starboard']['enable'] = false;
 
         $this->Template->mapData = $objMapData;
-
-        return ['data' => $this->Template->output(), '' => ''];
+        return $this->Template->getResponse();
     }
 
     public function repInsertTags($str)

@@ -1,8 +1,10 @@
-<!--<!DOCTYPE html>--><html lang="<?php echo $this->language; ?>">
+<!--<!DOCTYPE html>--><html lang="<?php use Contao\Combiner;
+
+echo $this->language; ?>">
 <head>
 
   <meta charset="<?php echo $this->charset; ?>">
-  <title><?php echo $this->title; ?> - Contao Open Source CMS <?php echo VERSION; ?></title>
+  <title><?php echo $this->title; ?> - Contao Open Source CMS</title>
   <base href="<?php echo $this->base; ?>">
   <meta name="generator" content="Contao Open Source CMS">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -36,13 +38,13 @@
 
             <div class="w50" style="margin-left:16px" >
               <h3><label>X-Koordinate</label></h3>
-                <input id="c4gGeoPickerGeoX" class="tl_text" type="text" value="<?php echo $this->Input->get('geoX') ?>" name="geoX" readonly>
+                <input id="c4gGeoPickerGeoX" class="tl_text" type="text" value="<?php echo $this->mapData['geopicker']['input_geo_x'] ?>" name="geoX" readonly>
                 <p class="tl_help tl_tip" title="">X-Koordinate</p>
             </div>
 
             <div class="w50" style="margin-left:16px" >
                 <h3><label>Y-Koordinate</label></h3>
-                <input id="c4gGeoPickerGeoY" class="tl_text" type="text" value="<?php echo $this->Input->get('geoY') ?>" name="geoY" readonly>
+                <input id="c4gGeoPickerGeoY" class="tl_text" type="text" value="<?php echo  $this->mapData['geopicker']['input_geo_y'] ?>" name="geoY" readonly>
                 <p class="tl_help tl_tip" title="">Y-Koordinate</p>
             </div>
         </fieldset>
