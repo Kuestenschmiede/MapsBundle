@@ -89,7 +89,7 @@ export class StarboardLayerswitcher extends Component {
       if (strFilter && state) {
         state.collapsed = false;
       }
-    } else if(layer.tags && layer.tags.find((element) => {return element.toLowerCase().indexOf(strFilter.toLowerCase()) !== -1})){
+    } else if (layer.tags && layer.tags.find && layer.tags.find((element) => {return element.toLowerCase().indexOf(strFilter.toLowerCase()) !== -1})){
       show = true
       if (strFilter && state) {
         state.collapsed = false;
