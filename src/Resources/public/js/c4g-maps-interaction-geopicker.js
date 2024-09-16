@@ -14,6 +14,7 @@ import {Circle, Fill, Stroke, Style} from "ol/style";
 import {Vector} from "ol/layer";
 import {Vector as VectorSource} from "ol/source";
 import {fromLonLat, toLonLat} from "ol/proj";
+import {isEmpty} from 'ol/extent';
 
 'use strict';
 
@@ -95,7 +96,10 @@ export class GeoPicker extends Interaction {
 
       this.opticLayerSource.addFeature(this.opticLayerFeature);
 
-      mapContainer.map.getView().fit(this.opticLayerSource.getExtent(), mapContainer.map.getSize());
+      if (!isEmpty(this.opticLayerSource.getExtent())) {
+        mapContainer.map.getView().fit(this.opticLayerSource.getExtent(), mapContainer.map.getSize());
+      }
+
       // set zoom so we can see some tiles without error
       mapContainer.map.getView().setZoom(15);
     } else if (mapData.geoLocation && typeof mapData.geoLocation.setTracking === 'function') {
