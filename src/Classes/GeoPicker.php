@@ -15,6 +15,7 @@ use Contao\BackendUser;
 use Contao\BackendTemplate;
 use Contao\Backend;
 use Contao\ContentModel;
+use Contao\FrontendTemplate;
 use Contao\System;
 use Contao\DC_Table;
 use Contao\Input;
@@ -93,13 +94,16 @@ class GeoPicker extends Backend
             'type' => 'backend',
             'input_geo_x' => '[name="geoX"]',
             'input_geo_y' => '[name="geoY"]',
+            'value_geoX' => Input::get('geoX'),
+            'value_geoY' => Input::get('geoY')
         ];
 
         //ToDo check if this could be useful in backend (show other elements)
         //$objMapData['starboard']['enable'] = false;
 
         $this->Template->mapData = $objMapData;
-        $this->Template->getResponse();
+        $response = $this->Template->getResponse();
+        $response->sendContent();
     }
 
     public function generate()
@@ -128,13 +132,16 @@ class GeoPicker extends Backend
             'type' => 'backend',
             'input_geo_x' => '[name="geoX"]',
             'input_geo_y' => '[name="geoY"]',
+            'value_geoX' => Input::get('geoX'),
+            'value_geoY' => Input::get('geoY')
         ];
 
         //ToDo check if this could be useful in backend (show other elements)
         //$objMapData['starboard']['enable'] = false;
 
         $this->Template->mapData = $objMapData;
-        return $this->Template->getResponse();
+        $response = $this->Template->getResponse();
+        $response->sendContent();
     }
 
     public function repInsertTags($str)
