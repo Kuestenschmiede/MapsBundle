@@ -22,6 +22,7 @@ use Contao\BackendUser;
 use Contao\BackendTemplate;
 use Contao\Backend;
 use Contao\DC_Table;
+use Contao\Image;
 use Contao\System;
 use Contao\Input;
 
@@ -56,7 +57,7 @@ class GeoEditor extends Backend
         ResourceLoader::loadJavaScriptResource('bundles/con4gismaps/build/' . 'c4g-backend-helper.js', \con4gis\CoreBundle\Classes\ResourceLoader::JAVASCRIPT, 'c4g-backend-helper');
         $requestToken = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
 
-        return ' <a href="con4gis/beEditorService/' . $dc->id . '?rt=' . $requestToken . '" title="' . $GLOBALS['TL_LANG']['c4g_maps']['geoeditor'] . '" style="padding-left:3px" onclick="window.showGeoEditor(this.href,' . $strField . ', {title:\'' . $GLOBALS['TL_LANG']['c4g_maps']['geoeditor'] . '\'}, ' . $dc->id . ');return false">' . \Image::getHtml('bundles/con4gismaps/images/be-icons/geopicker.svg', $GLOBALS['TL_LANG']['tl_content']['editalias'][0], 'style="vertical-align:top; width: 32px; height: 32px;"') . '</a>';
+        return ' <a href="con4gis/beEditorService/' . $dc->id . '?rt=' . $requestToken . '" title="' . $GLOBALS['TL_LANG']['c4g_maps']['geoeditor'] . '" style="padding-left:3px" onclick="window.showGeoEditor({{env::path}}{{env::request}},' . $strField . ', {title:\'' . $GLOBALS['TL_LANG']['c4g_maps']['geoeditor'] . '\'}, ' . $dc->id . ');return false">' . Image::getHtml('bundles/con4gismaps/images/be-icons/geopicker.svg', $GLOBALS['TL_LANG']['tl_content']['editalias'][0], 'style="vertical-align:top; width: 32px; height: 32px;"') . '</a>';
     }
 
     /**
@@ -75,7 +76,7 @@ class GeoEditor extends Backend
         $this->c4g_map_layer_switcher = true;
 
         // get base64 encoded geoData
-        $editedLayerId = $this->Input->get('layerId');
+        $editedLayerId = Input::get('layerId');
         $editedLayer = C4gMapsModel::findByPk($editedLayerId);
         $geoData = base64_encode($editedLayer->data_content);
         // $this->Template->geoData = base64_decode(chunk_split($geoData));

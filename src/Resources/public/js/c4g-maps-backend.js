@@ -89,9 +89,12 @@ this.c4g.maps.backend = this.c4g.maps.backend || {};
 
         this.hide();
       });
+
+      console.log(options.url);
+
       modalWindow.show({
         'title': options.title || '',
-        'contents': '<iframe src="' + options.url + '" width="100%" height="' + options.height + '" frameborder="0" id="geo_picker_iframe"></iframe>',
+        'contents': '<iframe src="' + options.url + '" width="100%" height="' + options.height + '" frameborder="0" id="geo_picker_iframe" name="simple-modal-iframe"></iframe>',
         'model': 'modal'
       });
     }

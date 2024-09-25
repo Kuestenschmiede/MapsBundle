@@ -1,4 +1,4 @@
-<!--<!DOCTYPE html>--><html lang="<?php use Contao\Combiner;
+<html lang="<?php use Contao\Combiner;
 
 echo $this->language; ?>">
 <head>
