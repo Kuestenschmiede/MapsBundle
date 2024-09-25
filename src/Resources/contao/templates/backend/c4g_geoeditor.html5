@@ -1,6 +1,4 @@
-<html lang="<?php use Contao\Combiner;
-
-echo $this->language; ?>">
+<html lang="<?php echo $this->language; ?>">
 <head>
 
   <meta charset="<?php echo $this->charset; ?>">
@@ -10,7 +8,7 @@ echo $this->language; ?>">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
   <link rel="stylesheet" href="<?php
-    $objCombiner = new Combiner();
+    $objCombiner = new Contao\Combiner();
     $objCombiner->add('system/themes/'. $this->theme .'/basic.css');
     $objCombiner->add('system/themes/'. $this->theme .'/main.css');
     echo $objCombiner->getCombinedFile();
