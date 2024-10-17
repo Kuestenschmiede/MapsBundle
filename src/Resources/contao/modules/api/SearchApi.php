@@ -224,10 +224,10 @@ class SearchApi extends Frontend
                         $name .= ', ' . $elementResponse['properties']['country'];
                     }
                     $elementNominatim = [
-                            "lon"           => $elementResponse['geometry']['coordinates'][0],
-                            "lat"           => $elementResponse['geometry']['coordinates'][1],
-                            "display_name"  => $name,
-                            "bounding_box"  => [
+                        "lon"           => $elementResponse['geometry']['coordinates'][0],
+                        "lat"           => $elementResponse['geometry']['coordinates'][1],
+                        "display_name"  => $name,
+                        "bounding_box"  => [
                             $elementResponse['bbox'][1],
                             $elementResponse['bbox'][3],
                             $elementResponse['bbox'][0],
@@ -263,8 +263,18 @@ class SearchApi extends Frontend
                 $name = $strTable . ".`". $column['name'] . "`";
             } ;
             $weight = $column['weight'];
-            $sql .= "IF ($name LIKE ?, $weight, 0) +";
-            $whereClause .= "$name LIKE ? OR ";
+
+            $likeParam = '';
+            foreach($strSearch as $searchParam) {
+                if ($likeParam) {
+                    $likeParam .= " OR LOWER(".$name.") LIKE '".$searchParam."'";
+                } else {
+                    $likeParam = "LIKE '".$searchParam."'";
+                }
+            }
+
+            $sql .= "IF (LOWER(".$name.") ".$likeParam.", ".$weight.", 0) +";
+            $whereClause .= "LOWER(".$name.") ".$likeParam." OR ";
         }
         $strJoin = "";
         foreach ($arrJoin as $join) {
@@ -278,22 +288,41 @@ class SearchApi extends Frontend
         $sql .= "WHERE " . $whereClause;
         $sql .= "ORDER BY weight DESC";
         $request = $database->prepare($sql);
-        $countQuestion = substr_count($sql, "?");
-        $arrValues = [];
-        for ($i = 0; $i < $countQuestion; $i++) {
-            $arrValues[] = $strSearch;
-        }
-        $response = $request->execute($arrValues)->fetchAllAssoc();
+        $response = $request->execute()->fetchAllAssoc();
         return $response;
     }
     private static function updateSearchStringForNonExactSearch($searchString)
     {
-        $arrTerms = explode(' ', $searchString);
-        $result = '%';
+        $searchString = str_replace(array("."),'', $searchString);
+        $arrTerms = explode(' ',
+            str_replace(array("(", ")", "[", "]", "{", "}", ",", "-"),' ',$searchString));
+        $result = "%";
         foreach ($arrTerms as $term) {
-            $result .= $term . '%';
+            $result .= strtolower($term) . "%";
         }
 
-        return $result;
+        $resultList[] = $result;
+
+        //ToDo add every combinations
+        if (count($arrTerms) > 1) {
+            $result = "%";
+            foreach (array_reverse($arrTerms) as $term) {
+                $result .= strtolower($term) . "%";
+            }
+
+            $resultList[] = $result;
+        }
+
+        if (count($arrTerms) > 2) {
+            $result = "%";
+            $result .= strtolower($arrTerms[1]) . "%" . strtolower($arrTerms[2]) . "%" . strtolower($arrTerms[0]) . "%";
+            $resultList[] = $result;
+
+            $result = "%";
+            $result .= strtolower($arrTerms[0]) . "%" . strtolower($arrTerms[2]) . "%" . strtolower($arrTerms[1]) . "%";
+            $resultList[] = $result;
+        }
+
+        return $resultList;
     }
 }
