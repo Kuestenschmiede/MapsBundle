@@ -93,10 +93,6 @@ beEditor_service:
     requirements:
         mapId: \d+
 
-controllers:
-    resource: '../../Controller/'
-    type: attribute
-
 routing_area:
     path: /con4gis/areaService/{profileId}/{layerId}/{distance}/{center}
     controller: con4gis\MapsBundle\Controller\RoutingController::getAreaAction
