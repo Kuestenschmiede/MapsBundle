@@ -44,6 +44,9 @@ services:
         arguments:
             - "@service_container"
             - "@contao.framework"
+        tags:
+            - controller.service_arguments
+            - container.service_subscriber
 
     con4gis\MapsBundle\Controller\BaselayerController:
         class: con4gis\MapsBundle\Controller\BaselayerController

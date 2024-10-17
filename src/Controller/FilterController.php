@@ -35,14 +35,12 @@ class FilterController extends BaseController
     {
         $this->filterService = $filterService;
     }
-    
-    /**
-     * @Route("/con4gis/filterService/{profileId}/{lang}", name="filter_service", methods={"GET"})
-     * @param Request $request
-     * @param $profileId
-     * @param $lang
-     * @return JsonResponse
-     */
+
+    #[Route(
+        '/con4gis/filterService/{profileId}/{lang}',
+        name: 'filter_service',
+        methods: ['GET']
+    )]
     public function filterAction(Request $request, $profileId, $lang)
     {
         $this->initializeContao();

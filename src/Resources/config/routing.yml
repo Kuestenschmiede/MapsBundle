@@ -95,7 +95,7 @@ beEditor_service:
 
 controllers:
     resource: '../../Controller/'
-    type:     annotation
+    type: attribute
 
 routing_area:
     path: /con4gis/areaService/{profileId}/{layerId}/{distance}/{center}
