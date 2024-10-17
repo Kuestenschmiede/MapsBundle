@@ -24,11 +24,6 @@ use Symfony\Component\HttpFoundation\Response;
 class BaselayerController extends BaseController
 {
     /**
-     * @var ContainerInterface
-     */
-    protected ContainerInterface $container;
-    
-    /**
      * BaselayerController constructor.
      */
     public function __construct(ContainerInterface $container)

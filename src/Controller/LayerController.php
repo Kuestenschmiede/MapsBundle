@@ -27,7 +27,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class LayerController extends BaseController
 {
 
-    protected ContainerInterface $container;
     private $preventCaching = false;
     
     /**

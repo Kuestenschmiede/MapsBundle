@@ -12,8 +12,7 @@ namespace con4gis\MapsBundle\Classes\Caches;
 
 use con4gis\CoreBundle\Classes\C4GApiCache;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
+use Psr\Container\ContainerInterface;
 class C4GLayerApiCache extends C4GApiCache
 {
     /**
