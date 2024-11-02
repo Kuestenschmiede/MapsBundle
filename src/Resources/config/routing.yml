@@ -13,12 +13,12 @@ baselayer_tile_service:
 
 layer_service:
     path: /con4gis/layerService/{mapId}/{lang}
-    controller: con4gis\MapsBundle\Controller\LayerController::layer
+    controller: con4gis\MapsBundle\Controller\LayerController::layerAction
     methods: GET
 
 filter_service:
     path: /con4gis/filterService/{profileId}/{lang}
-    controller: con4gis\MapsBundle\Controller\FilterController::filter
+    controller: con4gis\MapsBundle\Controller\FilterController::filterAction
     methods: GET
 
 layer_content_service:
