@@ -29,7 +29,6 @@ var config = {
     modules: [
       'node_modules',
       'src/Resources/public/js',
-      '../../../../../RoutingBundle/Resources/public/js'
     ],
     extensions: ['.jsx', '.js', '.ts'],
     fallback: {

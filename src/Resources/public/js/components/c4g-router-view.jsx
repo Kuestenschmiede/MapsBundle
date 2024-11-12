@@ -1849,6 +1849,8 @@ export class RouterView extends Component {
     if (!noClear) {
       this.routerFeaturesSource.clear();
     }
+
+    features = features.elements;
     // interim clear of feature selection
     if (!features || features.length === 0) {
       let extent;
@@ -2008,6 +2010,9 @@ export class RouterView extends Component {
           feature.setGeometry(new Point(fromLonLat([features[i].lon, features[i].lat])));
           feature.set('tags', features[i].tags);
           feature.setId("" + features[i].id);
+          if (features[i].distance) {
+            feature.set('distance', features[i].distance);
+          }
 
           contentFeatures.push(feature);
         }
@@ -2029,7 +2034,14 @@ export class RouterView extends Component {
           } else {
             contentFeatures[id].set('tid', contentFeatures[id].getId());
           }
-          arrOvp.push({id: contentFeatures[id].get('tid')});
+
+          let ovpObj = {id: contentFeatures[id].get('tid'), tags: contentFeatures[id].get('tags')};
+          if (contentFeatures[id].get('distance')) {
+            ovpObj.distance = contentFeatures[id].get('distance');
+          }
+          arrOvp.push(ovpObj);
+
+
           contentFeatures[id].set('label', contentFeatures[id].get(labelKey));
           if (self.props.mapController.proxy.locationStyleController.arrLocStyles[layer.locstyle]) {
             if (!self.props.mapController.proxy.locationStyleController.arrLocStyles[layer.locstyle].style) {

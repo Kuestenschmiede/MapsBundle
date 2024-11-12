@@ -192,67 +192,90 @@ class LoadAreaFeaturesListener
                         }
                     }
                     //ToDo check performMatrix result
-                    $matrixResponse = \GuzzleHttp\json_decode($this->areaService->performMatrix($objMapsProfile, $profile, $locations), true);
+
+//                    $matrixResponse = \GuzzleHttp\json_decode($this->areaService->performMatrix($objMapsProfile, $profile, $locations), true);
+                    // calc distances
+
+                    $startPoint = $locations[0];
+                    $distances = [];
+
+                    for ($i = 1; $i < count($locations); $i++) {
+                        $distances[] = $this->areaService->calculateDistance($startPoint, $locations[$i]);
+                    }
+
                     $features = $requestData;
                     $features['elements'] = [];
-                    $type = $matrixResponse['responseType'] ? $matrixResponse['responseType'] : $routerConfig->getRouterApiSelection();
+//                    $type = $matrixResponse['responseType'] ? $matrixResponse['responseType'] : $routerConfig->getRouterApiSelection();
+                    $type = 4;
                     switch ($type) {
-                        case 1:
-                        case 3:
-                            for ($i = 1; $i < count($matrixResponse['distances'][0]); $i++) {
-                                if ($matrixResponse['distances'][0][$i] < $distance * 1000) {
-                                    $requestData['elements'][$i - 1]['distance'] = $matrixResponse['distances'][0][$i];
-                                    $features['elements'][] = $requestData['elements'][$i - 1];
-                                }
-                            }
-
-                            break;
-                        case 2:
-                            for ($i = 1; $i < count($matrixResponse['distances'][0]); $i++) {
-                                if ($matrixResponse['distances'][0][$i] < $distance) {
-                                    $requestData['elements'][$i - 1]['distance'] = $matrixResponse['distances'][0][$i];
-                                    $features['elements'][] = $requestData['elements'][$i - 1];
-                                }
-                            }
-
-                            break;
-
-//                            for($i = 1; $i < count($matrixResponse['distances'][0]); $i++) {
+//                        case 1:
+//                        case 3:
+//                            for ($i = 1; $i < count($distances['distances'][0]); $i++) {
 //                                if ($matrixResponse['distances'][0][$i] < $distance * 1000) {
-//                                    $requestData['elements'][$i-1]['distance'] = $matrixResponse['distances'][0][$i];
-//                                    $features['elements'][] = $requestData['elements'][$i-1];
+//                                    $requestData['elements'][$i - 1]['distance'] = $matrixResponse['distances'][0][$i];
+//                                    $features['elements'][] = $requestData['elements'][$i - 1];
 //                                }
 //                            }
-                            break;
+//
+//                            break;
+//                        case 2:
+//                            for ($i = 1; $i < count($distances['distances'][0]); $i++) {
+//                                if ($matrixResponse['distances'][0][$i] < $distance) {
+//                                    $requestData['elements'][$i - 1]['distance'] = $matrixResponse['distances'][0][$i];
+//                                    $features['elements'][] = $requestData['elements'][$i - 1];
+//                                }
+//                            }
+//
+//                            break;
+//
+////                            for($i = 1; $i < count($matrixResponse['distances'][0]); $i++) {
+////                                if ($matrixResponse['distances'][0][$i] < $distance * 1000) {
+////                                    $requestData['elements'][$i-1]['distance'] = $matrixResponse['distances'][0][$i];
+////                                    $features['elements'][] = $requestData['elements'][$i-1];
+////                                }
+////                            }
+//                            break;
                         case 4:
-                            for ($i = 1; $i < count($matrixResponse['sources_to_targets'][0]); $i++) {
-                                if ($matrixResponse['sources_to_targets'][0][$i]['distance'] < $distance) {
-                                    $requestData['elements'][$i - 1]['distance'] = $matrixResponse['sources_to_targets'][0][$i]['distance'];
-                                    $features['elements'][] = $requestData['elements'][$i - 1];
-                                    if ($requestData['elements'][$i - 1]['type'] === 'way') {
-                                        foreach ($requestData['elements'][$i - 1]['nodes'] as $nodeId) {
-                                            $node = $requestData['elements'][array_search($nodeId, array_Column($requestData['elements'], 'id'))];
-                                            $features['elements'][] = $node;
-                                        }
-                                    } elseif ($requestData['elements'][$i - 1]['type'] === 'relation') {
-                                        foreach ($requestData['elements'][$i - 1]['members'] as $memberId) {
-                                            $member = $requestData['elements'][array_search($memberId['ref'], array_Column($requestData['elements'], 'id'))];
-                                            $features['elements'][] = $member;
-                                            if ($member['type'] === 'way') {
-                                                foreach ($member['nodes'] as $nodeId) {
-                                                    $node = $requestData['elements'][array_search($nodeId, array_Column($requestData['elements'], 'id'))];
-                                                    $features['elements'][] = $node;
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
+                        case 6:
+//                            for ($i = 1; $i < count($matrixResponse['sources_to_targets'][0]); $i++) {
+//                                if ($matrixResponse['sources_to_targets'][0][$i]['distance'] < $distance) {
+//                                    $requestData['elements'][$i - 1]['distance'] = $matrixResponse['sources_to_targets'][0][$i]['distance'];
+//                                    $features['elements'][] = $requestData['elements'][$i - 1];
+//                                    if ($requestData['elements'][$i - 1]['type'] === 'way') {
+//                                        foreach ($requestData['elements'][$i - 1]['nodes'] as $nodeId) {
+//                                            $node = $requestData['elements'][array_search($nodeId, array_Column($requestData['elements'], 'id'))];
+//                                            $features['elements'][] = $node;
+//                                        }
+//                                    } elseif ($requestData['elements'][$i - 1]['type'] === 'relation') {
+//                                        foreach ($requestData['elements'][$i - 1]['members'] as $memberId) {
+//                                            $member = $requestData['elements'][array_search($memberId['ref'], array_Column($requestData['elements'], 'id'))];
+//                                            $features['elements'][] = $member;
+//                                            if ($member['type'] === 'way') {
+//                                                foreach ($member['nodes'] as $nodeId) {
+//                                                    $node = $requestData['elements'][array_search($nodeId, array_Column($requestData['elements'], 'id'))];
+//                                                    $features['elements'][] = $node;
+//                                                }
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//                            }
+
+                            if (count($distances) !== count($requestData['elements'])) {
+                                throw new \Exception("HNIJAHGdj");
                             }
+
+                            for ($i = 0; $i < count($distances); $i++) {
+                                $requestData['elements'][$i]['distance'] = $distances[$i];
+                                $features['elements'][] = $requestData['elements'][$i];
+                            }
+
+
 
                             break;
                     }
 //                    $event->setReturnData(\GuzzleHttp\json_encode([$features,'overpass', $matrixResponse]));
-                    $event->setReturnData([$matrixResponse, $features, $type, 'overpass']);
+                    $event->setReturnData([$distances, $features, $type, 'overpass']);
                 } else {
                     $event->setReturnData([]);
                 }

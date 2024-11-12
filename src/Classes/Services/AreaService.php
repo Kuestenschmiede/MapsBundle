@@ -42,54 +42,55 @@ class AreaService
         $event->setProfile($profile);
         $this->eventDispatcher->dispatch($event, $event::NAME);
         $eventResponse = $event->getReturnData();
-        $matrixResponse = $eventResponse[0];
-        if ($matrixResponse !== '[') {
-            $requestData = $eventResponse[1];
-            $requestData = $requestData['elements'] ?: $requestData;
-            switch ($eventResponse[2]) {
-                case 1:
-                    for ($i = 1; $i < count($matrixResponse['distances'][0]); $i++) {
-                        if ($matrixResponse['distances'][0][$i] < $distance * 1000) {
-                            $requestData[$i - 1]['distance'] = $matrixResponse['distances'][0][$i];
-                            $features[] = $requestData[$i - 1];
-                        }
-                    }
+//        $matrixResponse = $eventResponse[0];
+//        if ($matrixResponse !== '[') {
+//            $requestData = $eventResponse[1];
+//            $requestData = $requestData['elements'] ?: $requestData;
+//            switch ($eventResponse[2]) {
+//                case 1:
+//                    for ($i = 1; $i < count($matrixResponse['distances'][0]); $i++) {
+//                        if ($matrixResponse['distances'][0][$i] < $distance * 1000) {
+//                            $requestData[$i - 1]['distance'] = $matrixResponse['distances'][0][$i];
+//                            $features[] = $requestData[$i - 1];
+//                        }
+//                    }
+//
+//                    break;
+//                case 2:
+//                    for ($i = 1; $i < count($matrixResponse['distances'][0]); $i++) {
+//                        if ($matrixResponse['distances'][0][$i] < $distance) {
+//                            $requestData[$i - 1]['distance'] = $matrixResponse['distances'][0][$i];
+//                            $features[] = $requestData[$i - 1];
+//                        }
+//                    }
+//
+//                    break;
+//                case 3:
+//                    for ($i = 1; $i < count($matrixResponse['distances'][0]); $i++) {
+//                        if ($matrixResponse['distances'][0][$i] < $distance * 1000) {
+//                            $requestData[$i - 1]['distance'] = $matrixResponse['distances'][0][$i];
+//                            $features[] = $requestData['elements'][$i - 1];
+//                        }
+//                    }
+//
+//                    break;
+//                case 4:
+//                case 6:
+//                    for ($i = 0; $i < count($matrixResponse['sources_to_targets'][0]); $i++) {
+//                        if ($matrixResponse['sources_to_targets'][0][$i]['distance'] < $distance) {
+//                            $requestData[$i]['distance'] = $matrixResponse['sources_to_targets'][0][$i]['distance'];
+//                            $features[] = $requestData[$i];
+//                        }
+//                    }
+//
+//                    break;
+//            }
+//
+//            return json_encode([$features, $eventResponse[3]]);
+//        }
 
-                    break;
-                case 2:
-                    for ($i = 1; $i < count($matrixResponse['distances'][0]); $i++) {
-                        if ($matrixResponse['distances'][0][$i] < $distance) {
-                            $requestData[$i - 1]['distance'] = $matrixResponse['distances'][0][$i];
-                            $features[] = $requestData[$i - 1];
-                        }
-                    }
-
-                    break;
-                case 3:
-                    for ($i = 1; $i < count($matrixResponse['distances'][0]); $i++) {
-                        if ($matrixResponse['distances'][0][$i] < $distance * 1000) {
-                            $requestData[$i - 1]['distance'] = $matrixResponse['distances'][0][$i];
-                            $features[] = $requestData['elements'][$i - 1];
-                        }
-                    }
-
-                    break;
-                case 4:
-                case 6:
-                    for ($i = 0; $i < count($matrixResponse['sources_to_targets'][0]); $i++) {
-                        if ($matrixResponse['sources_to_targets'][0][$i]['distance'] < $distance) {
-                            $requestData[$i]['distance'] = $matrixResponse['sources_to_targets'][0][$i]['distance'];
-                            $features[] = $requestData[$i];
-                        }
-                    }
-
-                    break;
-            }
-
-            return json_encode([$features, $eventResponse[3]]);
-        }
-
-        return $eventResponse;
+        // return features and type
+        return json_encode([$eventResponse[1], $eventResponse[3]]);
     }
 
     public function performMatrix($mapsProfile, $routingProfile, $locations, $opt_options = null)
@@ -360,5 +361,26 @@ class AreaService
             }
             return $result;
         }
+    }
+
+    public function calculateDistance($point1, $point2)
+    {
+        // calculate distance between two points using the haversine formula
+        // formula source: https://www.movable-type.co.uk/scripts/latlong.html
+        //  "* M_PI / 180" is needed to convert from radians to metres
+        $lon1 = $point1[0];
+        $lon2 = $point2[0];
+        $r = 6371000; // radius of earth in metres
+
+        $lat1 = $point1[1] * M_PI / 180.0;
+        $lat2 = $point2[1] * M_PI / 180.0;
+
+        $dlat = ($point2[1] - $point1[1]) * M_PI / 180.0; // phi
+        $dlon = ($lon2 - $lon1) * M_PI / 180.0; // lambda
+        $a = pow((sin($dlat / 2)), 2) + cos($lat1) * cos($lat2) * pow(sin($dlon / 2), 2);
+        $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
+        $distance = $r * $c;
+
+        return $distance;
     }
 }
