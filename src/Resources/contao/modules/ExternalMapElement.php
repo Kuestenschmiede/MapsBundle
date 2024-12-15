@@ -66,5 +66,9 @@ class ExternalMapElement extends Module
     {
         $elementType = $this->c4g_element_type;
         $this->Template->className = self::$arrClasses[$elementType];
+        if ($this->headline) {
+            $this->Template->headline = $this->headline;
+            $this->Template->hl = $this->hl;
+        }
     }
 }

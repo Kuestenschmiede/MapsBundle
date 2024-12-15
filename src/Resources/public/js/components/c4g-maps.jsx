@@ -1199,6 +1199,11 @@ export default class MapController extends Component {
       //     </Suspense>,
       //     this.baselayerContainer
       // );
+
+      var scopeHeadline = document.querySelector(".c4g-external-headline");
+      if (this.starboardscopeContainer && scopeHeadline) {
+        scopeHeadline.style.display = '';
+      }
     }
     let measurePortal = "";
     if (mapData.measuretools.enable) {

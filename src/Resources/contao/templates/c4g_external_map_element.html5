@@ -1,3 +1,7 @@
 <div class="<?php echo $this->className ?>">
-
+    <?php if ($this->headline): ?>
+        <div class="c4g-external-headline" style="display: none;">
+            <<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
+        </div>
+    <?php endif; ?>
 </div>
