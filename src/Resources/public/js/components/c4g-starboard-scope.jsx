@@ -221,6 +221,11 @@ export default class StarboardScope extends Component {
       </div>;
     }
 
+    var externalHeadline = document.querySelector(".c4g-external-headline");
+    if (externalHeadline) {
+      this.langConstants.ELEMENTS_SCOPE = externalHeadline.textContent.trim();
+    }
+
     return (
         <div className={cssConstants.STARBOARD_WRAPPER}>
           <Suspense fallback={<div>Loading...</div>}>

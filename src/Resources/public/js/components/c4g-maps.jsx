@@ -1190,20 +1190,6 @@ export default class MapController extends Component {
           </Suspense>,
           this.starboardscopeContainer
       );
-      // scpPortal = ReactDOM.createPortal(
-      //     <Suspense fallback={<div>"Loading..."</div>}>
-      //       <StarboardScope ref={(node) => {
-      //         this.components.starboardScope = node;
-      //       }} target={target} open={mapData.initial_open_comp === "starboardscope"} external={this.starboardScopeContainer.className.indexOf("c4g-external") !== -1}
-      //                          mapController={this} />
-      //     </Suspense>,
-      //     this.baselayerContainer
-      // );
-
-      var scopeHeadline = document.querySelector(".c4g-external-headline");
-      if (this.starboardscopeContainer && scopeHeadline) {
-        scopeHeadline.style.display = '';
-      }
     }
     let measurePortal = "";
     if (mapData.measuretools.enable) {
