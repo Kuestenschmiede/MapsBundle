@@ -1035,6 +1035,7 @@ class tl_c4g_map_profiles extends Backend
     {
         $locStyles = $this->Database->prepare("SELECT id,name FROM tl_c4g_map_locstyles ORDER BY name")
             ->execute();
+        $return = [];
         while ($locStyles->next()) {
             $return[$locStyles->id] = $locStyles->name;
         }
@@ -1050,6 +1051,7 @@ class tl_c4g_map_profiles extends Backend
     {
         $baseLayers = $this->Database->prepare("SELECT id,name FROM tl_c4g_map_baselayers ORDER BY sorting")
             ->execute();
+        $return = [];
         while ($baseLayers->next()) {
             $return[$baseLayers->id] = $baseLayers->name;
         }
@@ -1229,18 +1231,30 @@ class tl_c4g_map_profiles extends Backend
 
     public function baselayersLink(DC_TABLE $dc)
     {
+        if (!($dc->activeRecord->pid ?? null)) {
+            return '';
+        }
+
         $requestToken = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
         return ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'/main.php?do=c4g_map_baselayers&amp;table=tl_c4g_map_baselayers&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . $requestToken . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editBaselayers'][0]) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editBaselayers'][0])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
     }
 
     public function themesLink(DC_TABLE $dc)
     {
+        if (!($dc->activeRecord->pid ?? null)) {
+            return '';
+        }
+
         $requestToken = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
         return ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'/main.php?do=c4g_map_themes&amp;table=tl_c4g_map_themes&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . $requestToken . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editThemes'][0]) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editThemes'][0])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
     }
 
     public function locstylesLink(DC_TABLE $dc)
     {
+        if (!($dc->activeRecord->pid ?? null)) {
+            return '';
+        }
+
         $requestToken = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
         return ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'/main.php?do=c4g_map_locstyles&amp;table=tl_c4g_map_locstyles&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . $requestToken . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editLocstyles'][0]) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editLocstyles'][0])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
     }
