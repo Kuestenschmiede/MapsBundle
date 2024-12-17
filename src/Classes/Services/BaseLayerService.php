@@ -157,6 +157,9 @@ class BaseLayerService
         $arrOverlayData['opacity'] = $objOverlay->opacity;
         $arrOverlayData['attribution'] = System::getContainer()->get('contao.insert_tag.parser')->replace($stringClass::decodeEntities($objOverlay->attribution));
 
+        $arrOverlayData['infopage'] = System::getContainer()->get('contao.insert_tag.parser')->replace($stringClass::decodeEntities($objOverlay->infopage));
+
+
         switch ($objOverlay->provider) {
             case 'custom':
                 /* this values work for the js-code */
@@ -430,6 +433,9 @@ class BaseLayerService
 
         if (!empty($objBaseLayer->attribution)) {
             $arrBaseLayer['attribution'] = System::getContainer()->get('contao.insert_tag.parser')->replace($stringClass::decodeEntities($objBaseLayer->attribution));
+        }
+        if (!empty($objBaseLayer->infopage)) {
+            $arrBaseLayer['infopage'] = System::getContainer()->get('contao.insert_tag.parser')->replace($stringClass::decodeEntities($objBaseLayer->infopage));
         }
         if (!empty($objBaseLayer->minzoomlevel)) {
             $arrBaseLayer['minZoom'] = $objBaseLayer->minzoomlevel;

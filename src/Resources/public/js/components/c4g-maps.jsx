@@ -1158,11 +1158,30 @@ export default class MapController extends Component {
       );
     }
     let infoPortal = "";
-    if (mapData.infopage && mapData.legend.enable) {
+
+
+    let baselayer = undefined;
+    let overlay = undefined;
+    if (this.proxy.baselayers_loaded) {
+      baselayer = this.proxy.baselayerController.arrBaselayers[this.state.activeBaselayerId];
+      if (baselayer && baselayer.hasOverlays) {
+        overlay = baselayer.overlays[0];
+      }
+    }
+
+    let infopage = mapData.infopage;
+    if (baselayer && baselayer.infopage) {
+      infopage = infopage + "<br/>" + baselayer.infopage;
+    }
+    if (overlay && overlay.infopage) {
+      infopage = infopage + "<br/>" + overlay.infopage;
+    }
+
+    if (infopage && mapData.legend.enable) {
       infoPortal = ReactDOM.createPortal(
         <Suspense fallback={<div>"Loading..."</div>}>
           <Infopage ref={(node) => {this.components.infopage = node;}} target={target} external={this.infoPageContainer.className.indexOf("c4g-external") !== -1}
-                  infoContent={mapData.infopage} mapController={this} open={mapData.initial_open_comp === "legend" || storedPanel === "Infopage"}/>
+                  infoContent={infopage} mapController={this} open={mapData.initial_open_comp === "legend" || storedPanel === "Infopage"}/>
         </Suspense>,
         this.infoPageContainer
       );

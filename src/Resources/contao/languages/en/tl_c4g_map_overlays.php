@@ -19,6 +19,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['url2'] 			= array('URL 2', 'Please p
 $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['url3'] 			= array('URL 3', 'Please provide the 3rd URL for the tiles using format "http://path.to/overlaytiles/${z}/${x}/${y}.ext".');
 $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['url4'] 			= array('URL 4', 'Please provide the 4th URL for the tiles using format "http://path.to/overlaytiles/${z}/${x}/${y}.ext".');
 $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['attribution'] 	= array('Custom attribution', 'Enter a custom attribution here if needed (optional).');
+$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['infopage']      = ['Info page (legend)', 'The info page can be filled here. The information comes from the profile, from the base map and from the overlay.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['opacity']       = array('Initial opacity', 'Set the initial opacity, which can be modified in the starboard.');
 $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['api_key']    	= array('API Key, AppID', 'Please insert key for your user account.');
 $GLOBALS['TL_LANG']['tl_c4g_map_overlays']['app_id']     	= array('Key', 'Please insert key for your application.');

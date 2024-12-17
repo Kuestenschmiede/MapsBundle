@@ -79,7 +79,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['div_attribution'] = ['DIV für Copyr
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['scaleline'] = ['Maßstabsleiste', 'Zeigt eine Leiste, die den aktuellen Kartenmaßstab visualisiert.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mouseposition'] = ['Mauskoordinaten', 'Blendet die Geo-Koordinaten des Punktes ein, der sich unterhalb des Mauszeigers befindet.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['zoomlevel'] = ['Zoom-Level anzeigen', 'Zeigt den aktuellen Zoom-Level an.'];
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['infopage'] = ['Infoseite (Legende)', 'Hier kann die Infoseite befüllt werden.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['infopage'] = ['Infoseite (Legende)', 'Hier kann die Infoseite befüllt werden. Die Infos kommen aus dem Profil, aus der Basiskarte und aus dem Overlay.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp'] = ['Initial geöffnetes Kartenelement', 'Hier können Sie auswählen, ob ein Element initial geöffnet dargestellt werden soll und wenn ja welches.'];
 
 /** Kartenwerkzeuge */

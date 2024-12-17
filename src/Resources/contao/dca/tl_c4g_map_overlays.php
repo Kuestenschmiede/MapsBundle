@@ -106,7 +106,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
     'palettes' =>
     [
         '__selector__'                => ['provider'],
-        'default'                     => 'name,provider,opacity,attribution,published',
+        'default'                     => 'name,provider,opacity,attribution,infopage,published',
     ],
     
     'subpalettes' => [
@@ -309,6 +309,15 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
             'eval'                    => ['maxlength'=>255, 'tl_class'=>'long clr', 'allowHtml' => true],
             'sql'                     => "varchar(255) NOT NULL default ''"
         ],
+        'infopage' =>
+            [
+                'exclude'               => true,
+                'search'				=> false,
+                'inputType'				=> 'textarea',
+                'eval'                  => ['mandatory'=>false, 'rte'=>'tinyMCE', 'helpwizard'=>true],
+                'explanation'           => 'insertTags',
+                'sql'                   => "text NULL"
+            ],
         'published' =>
             [
                 'exclude'                 => true,

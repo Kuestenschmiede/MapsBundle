@@ -19,6 +19,7 @@ export class C4gOverlay {
     this.urls          = overlayArr['urls'];
     this.opacity       = overlayArr['opacity'];
     this.attribution   = overlayArr['attribution'];
+    this.infopage      = overlayArr['infopage'];
     this.gutter        = overlayArr['gutter'];
     this.params        = overlayArr['params'];
     this.imageSrc      = overlayArr['image_src'];

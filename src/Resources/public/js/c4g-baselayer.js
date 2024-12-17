@@ -26,6 +26,7 @@ export class C4gBaselayer{
         this.bing_style = baselayerArr['bing_style'];
         this.style = baselayerArr['style'];
         this.attribution = baselayerArr['attribution'];
+        this.infopage = baselayerArr['infopage'];
         this.params = baselayerArr['params'];
         this.wms_gutter = baselayerArr['wms_gutter'];
         this.minZoom = baselayerArr['minZoom'];

@@ -373,7 +373,7 @@ class MapDataConfigurator
             $mapData['baselayerswitcher']['enable'] = is_array($buttons) && array_key_exists('baselayerswitcher', $buttons) ? $buttons['baselayerswitcher'] + 1 : 0;
             $mapData['starboardscope']['enable'] = is_array($buttons) && array_key_exists('starboardscope', $buttons) ? $buttons['starboardscope'] + 1 : 0;
             $mapData['geosearch']['enable'] = is_array($buttons) && array_key_exists('geosearch', $buttons) ? $buttons['geosearch'] + 1 : 0;
-            $mapData['legend']['enable'] = is_array($buttons) && array_key_exists('legend', $buttons) && $profile->infopage ? $buttons['legend'] + 1 : 0;
+            $mapData['legend']['enable'] = is_array($buttons) && array_key_exists('legend', $buttons) ? $buttons['legend'] + 1 : 0;
             $mapData['measuretools']['enable'] = is_array($buttons) && array_key_exists('measure', $buttons) ? $buttons['measure'] + 1 : 0;
             $mapData['overviewmap'] = is_array($buttons) && array_key_exists('overview', $buttons) ? $buttons['overview'] + 1 : 0;
             $mapData['permalink']['enable'] = is_array($buttons) && array_key_exists('permalink', $buttons) ? $buttons['permalink'] + 1 : 0;

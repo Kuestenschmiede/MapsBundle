@@ -41,6 +41,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['image_src']   			= ['Choose pictur
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['geoimage_json']           = ['JSON to georeference. Please enter a <a href="https://www.json.org/" rel="noopener" target="_blank">JSON</a> to locate the picture. You may use <a href="http://viglino.github.io/Map-georeferencer/">this tool</a> or you set the parameters "imageCenter", "imageRotate" und "imageScale" on your own.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['google_style']   		= array('Google Maps style', 'Please select from the given Google Maps styles.');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['attribution']    		= array('Custom attribution', 'Enter a custom attribution here if needed (optional).');
+$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['infopage']              = ['Info page (legend)', 'The info page can be filled here. The information comes from the profile, from the base map and from the overlay.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['minzoomlevel']   		= array('Minimum zoomlevel', 'Enter a custom minimum zoomlevel here if needed (0 means minimum zoomlevel of the map as default)');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['maxzoomlevel']   		= array('Maximum zoomlevel', 'Enter a custom maximum zoomlevel here if needed (19 means maximum zoomlevel of the map as default)');
 $GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['preview_image']   		= array('Preview image', 'Select a preview image that will be displayed in the baselayer switcher below this baselayer.');
