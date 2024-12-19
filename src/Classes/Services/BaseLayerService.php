@@ -232,7 +232,7 @@ class BaseLayerService
 
         $arrBaseLayer['id'] = $objBaseLayer->id;
         $decodedName = $stringClass::decodeEntities($objBaseLayer->display_name ?: $objBaseLayer->name);
-        $arrBaseLayer['name'] = System::getContainer()->get('contao.insert_tag.parser')->replace($decodedName, $lang);;
+        $arrBaseLayer['name'] = System::getContainer()->get('contao.insert_tag.parser')->replace($decodedName, $lang);
 
         $arrBaseLayer['provider'] = $objBaseLayer->provider;
 
