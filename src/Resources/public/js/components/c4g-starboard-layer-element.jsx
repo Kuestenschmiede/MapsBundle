@@ -221,9 +221,6 @@ export class C4gStarboardLayerElement extends Component {
     if (this.props.layerStates.greyed) {
       cssClass += " " + cssConstants.DISABLED;
     }
-    if (this.props.layer.cssClass) {
-      cssClass += " " + this.props.layer.cssClass;
-    }
     let openClose = this.props.layerStates.collapsed ? cssConstants.CLOSE : cssConstants.OPEN;
     let objChilds = this.props.layer.childs;
     let linkText;
@@ -239,11 +236,16 @@ export class C4gStarboardLayerElement extends Component {
       linkText = <a tabIndex={1} title={this.props.layer.name} alt={this.props.lang.STARBOARD_ELEMENT_TRIGGER_1+this.props.layer.name+this.props.lang.STARBOARD_ELEMENT_TRIGGER_2} className={cssClass} onKeyPress={(event) => this.layerEnter(event)} onMouseUp={(event) => this.layerClick(event)}><span className={"c4g-starboard-list-element__text"}>{this.props.layer.name}</span></a>;
     }
 
+    let cssElementClass = "";
+    if (this.props.layer.cssClass) {
+      cssElementClass = " " + this.props.layer.cssClass;
+    }
+
     if (objChilds && objChilds.length) {
       let span = <span alt={this.props.lang.STARBOARD_ELEMENT_CHILDS} className={cssConstants.ICON} onMouseUp={(event) => this.spanClick(event)}/>;
 
       return (
-        <li data-layer-id={this.props.id} className={openClose + " c4g-starboard-list-element"}>
+        <li data-layer-id={this.props.id} className={openClose + " c4g-starboard-list-element" + cssElementClass}>
           {span}
           {stylePicture}
           {spanZoom}
@@ -278,7 +280,7 @@ export class C4gStarboardLayerElement extends Component {
         linkSwitch = null;
       }
       return (
-          <li data-layer-id={this.props.id} tabIndex={1} className={openClose + " c4g-starboard-list-element"}>
+          <li data-layer-id={this.props.id} tabIndex={1} className={openClose + " c4g-starboard-list-element" + cssElementClass}>
             {stylePicture}
             {spanZoom}
             {linkText}
