@@ -221,6 +221,9 @@ export class C4gStarboardLayerElement extends Component {
     if (this.props.layerStates.greyed) {
       cssClass += " " + cssConstants.DISABLED;
     }
+    if (this.props.layer.cssClass) {
+      cssClass += " " + this.props.layer.cssClass;
+    }
     let openClose = this.props.layerStates.collapsed ? cssConstants.CLOSE : cssConstants.OPEN;
     let objChilds = this.props.layer.childs;
     let linkText;

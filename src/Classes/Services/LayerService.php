@@ -235,8 +235,7 @@ class LayerService
                     }
                 }
                 if ($arrGetLayerData = $this->parseLayer($objLayers, $lang)) {
-                    $arrLayerData = $arrGetLayerData;//$this->parseLayer($objLayers);
-                    $arrLayerData['cssClass'] = $objLayers->cssClass;
+                    $arrLayerData = $arrGetLayerData;
 
                     if ($childLayerList = $this->getLayerList($arrLayerData['id'], $lang, true)) {
                         $arrLayerData['hasChilds'] = true;
@@ -365,6 +364,7 @@ class LayerService
         $arrLayerData['locstyle'] = $objLayer->locstyle;
         $arrLayerData['initial_opened'] = $objLayer->initial_opened;
         $arrLayerData['zIndex'] = $objLayer->zIndex;
+        $arrLayerData['cssClass'] = $objLayer->cssClass;
 
         if ($objLayer->cluster_locations) {
             $arrLayerData['cluster'] = [

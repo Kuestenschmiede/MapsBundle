@@ -654,7 +654,8 @@ export class BetterLayerController {
       collapsed: !parseFloat(layer.initial_opened),
       greyed: layer.zoom && !this.compareZoom(layer.zoom),
       id: layer.id,
-      childStates: childStates
+      childStates: childStates,
+      cssClass: layer.cssClass,
     }
   }
   getFeaturesFromStruct(structure) {
@@ -799,7 +800,8 @@ export class BetterLayerController {
             "key"                 : layer.key,
             "name"                : features[featureId].get(nameField),
             "hide"                : hide,
-            "childs"              : []
+            "childs"              : [],
+            "cssClass"            : layer.cssClass
           })
         }
       }
@@ -905,7 +907,8 @@ export class BetterLayerController {
                             "id"              : features[featureId].get("positionId"),
                             "key"             : layer.key,
                             "name"            : features[featureId].get(nameField),
-                            "childs"          : []
+                            "childs"          : [],
+                            "cssClass"        : layer.cssClass,
                           });
                           arrLayers[index].ignoreChilds = true;
                           arrLayerStates[index].childStates.push({
@@ -1153,7 +1156,8 @@ export class BetterLayerController {
         "tags"                : layer.tags,
         "hide"                : hide,
         "childs"              : childs,
-        "zoomTo"              : layer.zoomTo
+        "zoomTo"              : layer.zoomTo,
+        "cssClass"            : layer.cssClass,
       };
     }
   }

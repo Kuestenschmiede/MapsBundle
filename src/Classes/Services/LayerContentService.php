@@ -1042,6 +1042,7 @@ class LayerContentService
                         'loc_linkurl' => Utils::replaceInsertTags($objLayer->loc_linkurl ?: '', $lang),
                         'hover_location' => $objLayer->hover_location,
                         'hover_style' => $objLayer->hover_style,
+                        'cssClass' => $objLayer->cssClass,
                     ],
                 ];
 
@@ -1102,6 +1103,7 @@ class LayerContentService
                         'tooltip' => Utils::replaceInsertTags($objLayer->tooltip ?: '', $lang),
                         'tooltip_length' => $objLayer->tooltip_length,
                         'label' => Utils::replaceInsertTags($objLayer->loc_label ?: '', $lang),
+                        'cssClass' => $objLayer->cssClass,
                     ];
                 } elseif ($data) {
                     // OL3 needs a feature or feature-collection
@@ -1121,6 +1123,7 @@ class LayerContentService
                             'loc_linkurl' => Utils::replaceInsertTags($objLayer->loc_linkurl ?: '', $lang),
                             'hover_location' => $objLayer->hover_location,
                             'hover_style' => $objLayer->hover_style,
+                            'cssClass' => $objLayer->cssClass,
                         ],
                     ];
                 }
