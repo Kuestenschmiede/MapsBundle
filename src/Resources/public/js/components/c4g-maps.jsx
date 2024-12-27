@@ -1170,11 +1170,15 @@ export default class MapController extends Component {
     }
 
     let infopage = mapData.infopage;
-    if (baselayer && baselayer.infopage) {
+    if (infopage && baselayer && baselayer.infopage) {
       infopage = infopage + "<br/>" + baselayer.infopage;
+    } else if (baselayer && baselayer.infopage) {
+      infopage = baselayer.infopage;
     }
-    if (overlay && overlay.infopage) {
+    if (infopage && overlay && overlay.infopage) {
       infopage = infopage + "<br/>" + overlay.infopage;
+    } else if (overlay && overlay.infopage) {
+      infopage = overlay.infopage;
     }
 
     if (infopage && mapData.legend.enable) {
