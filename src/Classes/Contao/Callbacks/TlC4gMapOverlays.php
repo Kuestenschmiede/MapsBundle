@@ -7,6 +7,7 @@ use Contao\Backend;
 use Contao\BackendUser;
 use Contao\Input;
 use Contao\StringUtil;
+use Contao\System;
 use Contao\Versions;
 use con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator;
 
@@ -59,7 +60,7 @@ class TlC4gMapOverlays extends Backend
         if (!$this->User->isAdmin && !$this->User->hasAccess('tl_c4g_map_overlays::published', 'alexf'))
         {
             $this->log('Not enough permissions to show/hide record ID "'.$intId.'"', 'tl_c4g_map_overlays toggleVisibility', TL_ERROR);
-            $this->redirect('contao/main.php?act=error');
+            $this->redirect(System::getContainer()->get('router')->generate('contao_backend').'/main.php?act=error');
         }
 
         $objVersions = new Versions('tl_c4g_map_overlays', $intId);

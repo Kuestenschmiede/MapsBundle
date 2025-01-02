@@ -680,7 +680,7 @@ class TlC4gMaps extends Backend
         // Check permissions to publish
         if (!$this->User->isAdmin && !$this->User->hasAccess('tl_c4g_maps::published', 'alexf')) {
             C4gLogModel::addLogEntry('maps','Not enough permissions to publish/unpublish con4gis\MapsBundle\Classes\Utils ID "'.$intId.'"');
-            $this->redirect('contao/main.php?act=error');
+            $this->redirect(System::getContainer()->get('router')->generate('contao_backend').'/main.php?act=error');
         }
 
         $objVersions = new Versions('tl_c4g_maps', $intId);

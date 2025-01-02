@@ -18,6 +18,7 @@ use con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator;
 use Contao\BackendUser;
 use Contao\Input;
 use Contao\StringUtil;
+use Contao\System;
 use Symfony\Component\HttpClient\HttpClient;
 use Contao\Versions;
 
@@ -74,7 +75,7 @@ class TlC4gMapBaselayers extends Backend
         if (!$this->User->isAdmin && !$this->User->hasAccess('tl_c4g_map_baselayers::published', 'alexf'))
         {
             $this->log('Not enough permissions to show/hide record ID "'.$intId.'"', 'tl_c4g_map_baselayers toggleVisibility', TL_ERROR);
-            $this->redirect('contao/main.php?act=error');
+            $this->redirect(System::getContainer()->get('router')->generate('contao_backend').'/main.php?act=error');
         }
         $objVersions = new Versions('tl_c4g_map_baselayers', $intId);
         $objVersions->initialize();
