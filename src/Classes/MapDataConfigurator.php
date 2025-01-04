@@ -56,7 +56,7 @@ class MapDataConfigurator
             $map = new C4gMapsModel();
             $map->id = 0;
         }
-        $language = $GLOBALS['objPage']->language  ?  $GLOBALS['objPage']->language : substr($GLOBALS['_SERVER']['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+        $language = key_exists('objPage', $GLOBALS) && $GLOBALS['objPage']->language ? $GLOBALS['objPage']->language : substr($GLOBALS['_SERVER']['HTTP_ACCEPT_LANGUAGE'], 0, 2);
         $mapData['id'] = $map->id;
         $mapData['lang'] = $language;
 

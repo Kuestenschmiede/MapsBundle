@@ -61,7 +61,7 @@
     "@fortawesome/fontawesome-free": "^5.15.4",
     "@ungap/structured-clone": "^1.2.1",
     "browser": "^0.2.6",
-    "cesium": "^1.124.0",
+    "cesium": "^1.125.0",
     "dom-to-image-more": "2.8.0",
     "elm-pep": "^1.0.6",
     "file-saver": "^2.0.5",

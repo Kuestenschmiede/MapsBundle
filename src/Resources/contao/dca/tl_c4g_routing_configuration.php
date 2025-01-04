@@ -502,14 +502,20 @@ class tl_c4g_routing_configuration extends Backend
     {
         $str = $GLOBALS['TL_LANG']['tl_c4g_routing_configuration']['editLocstyles'];
         $requestToken = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
-        return ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'/main.php?do=c4g_map_locstyles&amp;table=tl_c4g_map_locstyles&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . $requestToken . '" title="' . Contao\StringUtil::specialchars($str) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'", "\\'", $str)) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
+        if ($dc->activeRecord && property_exists($dc->activeRecord, 'pid')) {
+            return ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'/main.php?do=c4g_map_locstyles&amp;table=tl_c4g_map_locstyles&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . $requestToken . '" title="' . Contao\StringUtil::specialchars($str) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'", "\\'", $str)) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
+        }
+        return '';
     }
 
     public function mapsLink(Contao\DataContainer $dc)
     {
         $str = $GLOBALS['TL_LANG']['tl_c4g_routing_configuration']['editMaps'];
         $requestToken = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
-        return ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'/main.php?do=c4g_maps&amp;table=tl_c4g_maps&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . $requestToken . '" title="' . Contao\StringUtil::specialchars($str) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'", "\\'", $str)) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
+        if ($dc->activeRecord && property_exists($dc->activeRecord, 'pid')) {
+            return ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'/main.php?do=c4g_maps&amp;table=tl_c4g_maps&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . $requestToken . '" title="' . Contao\StringUtil::specialchars($str) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'", "\\'", $str)) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
+        }
+        return '';
     }
 
 }
