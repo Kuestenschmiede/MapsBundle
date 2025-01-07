@@ -118,6 +118,7 @@ class TlC4gMapLocstyles extends Backend
         return $return;
     }
 
+    //ToDo Rework without proportional
     public static function getFilteredSizes() {
         $filteredSizes = [];
         $imageSizes = System::getContainer()->get('contao.image.sizes')->getOptionsForUser(BackendUser::getInstance());
@@ -125,15 +126,23 @@ class TlC4gMapLocstyles extends Backend
 
         if ($imageSizes !== false) {
             foreach ($imageSizes as $group => $custom) {
-                if ($group !== 'custom') {
+                if (key_exists('custom', $custom) && $group !== 'custom') {
                     continue;
                 }
                 foreach ($custom as $key => $size) {
+                    //Contao 5
                     if ($size == $just) {
                         $filteredSizes[$group][$size] = $size;
+                        break;
+                    }
+                    //Contao 4
+                    if ($key == $just) {
+                        $filteredSizes[$group][$size] = $size;
+                        break;
                     }
                 }
             }
+
             $imageSizes = $filteredSizes;
         }
 
