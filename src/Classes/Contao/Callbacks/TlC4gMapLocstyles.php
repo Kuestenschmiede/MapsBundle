@@ -11,8 +11,10 @@
 namespace con4gis\MapsBundle\Classes\Contao\Callbacks;
 
 use Contao\Backend;
+use Contao\BackendUser;
 use Contao\DataContainer;
 use Contao\FilesModel;
+use Contao\System;
 use Contao\Validator;
 use Contao\ImagineSvg\Imagine;
 
@@ -114,5 +116,27 @@ class TlC4gMapLocstyles extends Backend
         }
 
         return $return;
+    }
+
+    public static function getFilteredSizes() {
+        $filteredSizes = [];
+        $imageSizes = System::getContainer()->get('contao.image.sizes')->getOptionsForUser(BackendUser::getInstance());
+        $just = 'proportional';
+
+        if ($imageSizes !== false) {
+            foreach ($imageSizes as $group => $custom) {
+                if ($group !== 'custom') {
+                    continue;
+                }
+                foreach ($custom as $key => $size) {
+                    if ($size == $just) {
+                        $filteredSizes[$group][$size] = $size;
+                    }
+                }
+            }
+            $imageSizes = $filteredSizes;
+        }
+
+        return $imageSizes;
     }
 }

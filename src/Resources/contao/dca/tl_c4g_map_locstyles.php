@@ -8,27 +8,15 @@
  * @copyright (c) 2010-2024, by Küstenschmiede GmbH Software & Design
  * @link https://www.con4gis.org
  */
+
+use con4gis\MapsBundle\Classes\Contao\Callbacks\TlC4gMapLocstyles;
 use Contao\Backend;
+use Contao\BackendUser;
 use Contao\DC_Table;
 use Contao\Validator;
 use Contao\FilesModel;
 use Contao\System;
 use Contao\Message;
-
-$filteredSizes = [];
-$imageSizes = System::getContainer() && System::getContainer()->has('contao.image.sizes') ? System::getContainer()->get('contao.image.sizes')->getAllOptions() : false;
-$just = 'proportional';
-
-if ($imageSizes !== false) {
-    foreach ($imageSizes as $group => $sizes) {
-        foreach ($sizes as $key => $size) {
-            if ($size == $just) {
-                $filteredSizes[$group][$key] = $size;
-            }
-        }
-    }
-    $imageSizes = $filteredSizes;
-}
 
 $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
     [
@@ -201,9 +189,10 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
                 'exclude'                 => true,
                 'default'                 => ['0','0'],
                 'inputType'               => 'imageSize',
-                'options'                 => $imageSizes ?: [],
-                'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'long'],
-                'sql'                     => "varchar(100) NOT NULL default ''"
+                'reference'               => &$GLOBALS['TL_LANG']['MSC'],
+                'options'                 => TlC4gMapLocstyles::getFilteredSizes() ?: [],
+                'eval'                    => ['rgxp'=>'natural', 'includeBlankOption' => true, 'nospace' => true, 'tl_class'=>'long'],
+                'sql'                     => "varchar(128) NOT NULL default ''"
             ],
         'svgSrc' =>
             [
@@ -273,7 +262,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
                 'exclude'                 => true,
                 'default'                 => ['0','0'],
                 'inputType'               => 'imageSize',
-                'options'                 => $imageSizes ?: [],
+                'options'                 => TlC4gMapLocstyles::getFilteredSizes() ?: [],
                 'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'long'],
                 'sql'                     => "varchar(100) NOT NULL default ''"
             ],
@@ -366,7 +355,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
                 'exclude'                 => true,
                 'default'                 => ['0','0'],
                 'inputType'               => 'imageSize',
-                'options'                  => $imageSizes ?: [],
+                'options'                  => TlC4gMapLocstyles::getFilteredSizes() ?: [],
                 'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
                 'sql'                     => "varchar(100) NOT NULL default ''"
             ],
@@ -474,7 +463,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
                 'default'                 => ['200','200'],
                 'exclude'                 => true,
                 'inputType'               => 'imageSize',
-                'options'                  => $imageSizes ?: [],
+                'options'                  => TlC4gMapLocstyles::getFilteredSizes() ?: [],
                 'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'w50', 'mandatory'=>true],
                 'sql'                     => "varchar(100) NOT NULL default ''"
             ],
@@ -483,7 +472,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
                 'exclude'                 => true,
                 'default'                 => ['0','0'],
                 'inputType'               => 'imageSize',
-                'options'                  => $imageSizes ?: [],
+                'options'                  => TlC4gMapLocstyles::getFilteredSizes() ?: [],
                 'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'w50'],
                 'sql'                     => "varchar(100) NOT NULL default ''"
             ],
