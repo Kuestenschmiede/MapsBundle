@@ -36,8 +36,15 @@ class FilterController extends BaseController
         $this->filterService = $filterService;
     }
 
+    /**
+    * @Route(
+    *     path="/con4gis/filterService/{profileId}/{lang}",
+    *     name="filter_service",
+    *     methods={"GET"}
+    * )
+    */
     #[Route(
-        '/con4gis/filterService/{profileId}/{lang}',
+        path: '/con4gis/filterService/{profileId}/{lang}',
         name: 'filter_service',
         methods: ['GET']
     )]

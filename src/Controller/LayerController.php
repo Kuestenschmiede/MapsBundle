@@ -38,8 +38,15 @@ class LayerController extends BaseController
         $framework->initialize();
     }
 
+    /**
+     * @Route(
+     *     path="/con4gis/layerService/{mapId}/{lang}",
+     *     name="layer_service",
+     *     methods={"GET"}
+     * )
+     */
     #[Route(
-        '/con4gis/layerService/{mapId}/{lang}',
+        path: '/con4gis/layerService/{mapId}/{lang}',
         name: 'layer_service',
         methods: ['GET']
     )]
