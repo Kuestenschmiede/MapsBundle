@@ -107,11 +107,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                                          '{geosearch_legend:hide},geosearch_headline,geosearch_engine,geosearchParams,geosearch_result_locstyle,geosearch_placeholder,geosearch_results,geosearch_zoomto,geosearch_zoombounds,geosearch_animate,geosearch_markresult,geosearch_attribution,geosearch_popup,geosearch_animate_duration,geosearch_result_duration;'.
                                          '{editor_legend:hide},editorConfig;'.
                                          '{routing_legend::hide},routerConfig;'.
-                                         '{location_legend::hide},userLocation;'.
-                                         '{attribution_legend:hide},attribution;'.
-                                         '{information_legend:hide},scaleline,mouseposition,permalink_get_param,permalinkSaveId,permalinkWithoutGenerator,zoomlevel,infopage;'.
-                                         '{locstyle_legend:hide},label_color,resize_locstyles_zoom;'.
-                                         '{expert_legend:hide},overpassEngine,caching,cesium,external_elements,minZoomStarboardScope,custom_div,geopicker,filters,filterHandling,filterResetButton,be_optimize_checkboxes_limit,consentBanner;'
+                                         '{information_legend:hide},attribution,scaleline,mouseposition,permalink_get_param,permalinkSaveId,permalinkWithoutGenerator,zoomlevel,infopage,label_color,resize_locstyles_zoom;'.
+                                         '{expert_legend:hide},userLocation,overpassEngine,caching,cesium,external_elements,minZoomStarboardScope,custom_div,geopicker,filters,filterHandling,filterResetButton,be_optimize_checkboxes_limit,consentBanner;'
         ],
     'subpalettes' =>
     [

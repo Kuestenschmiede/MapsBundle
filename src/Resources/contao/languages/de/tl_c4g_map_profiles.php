@@ -230,13 +230,10 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editThemes'] = ['Kartenlayout bearbe
  */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['general_legend'] = 'Allgemeine Daten';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayer_legend'] = 'Basiskarten (Kartenbilder wechseln)';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['locstyle_legend'] = 'Lokationsstile';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['navigation_legend'] = 'Navigation';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_legend'] = 'Starboard (Karteninhalte schalten)';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['attribution_legend'] = 'Copyright Informationen (Attributionen)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['information_legend'] = 'Zusätzliche Karteninformationen';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_legend'] = 'Kartensuche';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium_legend'] = 'Cesium (Globusdarstellung)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['click_legend'] = 'Einstellungen zum Klick-Verhalten';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['expert_legend'] = 'Experteneinstellungen';
 

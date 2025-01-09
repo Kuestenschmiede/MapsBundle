@@ -232,13 +232,10 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editThemes'] = ['Edit themes'];
  */
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['general_legend'] = 'General';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['baselayer_legend'] = 'Base layers (base map switcher)';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['locstyle_legend'] = 'Location styles';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['navigation_legend'] = 'Navigation';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['starboard_legend'] = 'Starboard (map content switcher)';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['attribution_legend'] = 'Copyright informations (attributions)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['information_legend'] = 'Additional map informations';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['geosearch_legend'] = 'Geosearch';
-$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cesium_legend'] = 'Cesium (globe view)';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['click_legend'] = 'Click settings';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['expert_legend'] = 'Expert settings';
 
