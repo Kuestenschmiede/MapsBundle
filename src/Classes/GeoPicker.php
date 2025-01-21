@@ -15,6 +15,7 @@ use Contao\BackendUser;
 use Contao\BackendTemplate;
 use Contao\Backend;
 use Contao\ContentModel;
+use Contao\Environment;
 use Contao\FrontendTemplate;
 use Contao\System;
 use Contao\DC_Table;
@@ -82,11 +83,11 @@ class GeoPicker extends Backend
         $this->Template = new BackendTemplate('c4g_geopicker');
 
         $this->Template->theme = $this->getTheme();
-        $this->Template->base = $this->Environment->base;
+        $this->Template->base = Environment::get('base');
         $this->Template->language = $GLOBALS['TL_LANGUAGE'];
-        $this->Template->title = $GLOBALS['TL_CONFIG']['websiteTitle'];
+        $this->Template->title = Environment::get('websiteTitle');
         $this->Template->headline = $GLOBALS['TL_LANG']['c4g_maps']['geopicker'];
-        $this->Template->charset = $GLOBALS['TL_CONFIG']['characterSet'];
+        $this->Template->charset = Environment::get('characterSet');
 
         $objMapData = MapDataConfigurator::prepareMapData($this, $this->Database, ['backend' => true, 'type' => 'geopicker']);
 
@@ -111,11 +112,11 @@ class GeoPicker extends Backend
         $this->Template = new BackendTemplate('c4g_geopicker');
 
         $this->Template->theme = $this->getTheme();
-        $this->Template->base = $this->Environment->base;
+        $this->Template->base = Environment::get('base');
         $this->Template->language = $GLOBALS['TL_LANGUAGE'];
-        $this->Template->title = $GLOBALS['TL_CONFIG']['websiteTitle'];
+        $this->Template->title = Environment::get('websiteTitle');
         $this->Template->headline = $GLOBALS['TL_LANG']['c4g_maps']['geopicker'];
-        $this->Template->charset = $GLOBALS['TL_CONFIG']['characterSet'];
+        $this->Template->charset = Environment::get('characterSet');
 
         $c4gSettings = C4gSettingsModel::findSettings();
         $objMap = ContentModel::findByPk($c4gSettings->position_map);
