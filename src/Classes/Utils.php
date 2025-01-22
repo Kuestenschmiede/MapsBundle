@@ -89,9 +89,11 @@ class Utils
         global $objPage;
         $pageWasNull = $objPage === null;
         $id = Database::getInstance()->prepare('SELECT id FROM tl_page WHERE language = ? LIMIT 1')->execute($lang)->fetchAssoc();
-        $objPage = $objPage ?: PageModel::findByPk($id['id']);
-        if ($objPage) {
-            $objPage->title = '';
+        if ($id) {
+            $objPage = $objPage ?: PageModel::findByPk($id['id']);
+            if ($objPage && $objPage !== null) {
+                $objPage->title = '';
+            }
         }
 
         $parser = System::getContainer()->get('contao.insert_tag.parser');

@@ -21,6 +21,8 @@ use con4gis\CoreBundle\Entity\BaseEntity;
  * @ORM\Table(name="tl_c4g_routing_configuration")
  * @package con4gis\MapsBundle\Entity
  */
+#[ORM\Table(name: "tl_c4g_routing_configuration")]
+#[ORM\Entity]
 class RoutingConfiguration extends BaseEntity
 {
     /**
@@ -29,221 +31,260 @@ class RoutingConfiguration extends BaseEntity
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: "integer")]
     protected $id = 0;
     
     /**
      * @var int
      * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: "integer")]
     protected $tstamp = 0;
 
     /**
      * @var int
      * @ORM\Column(type="integer", options={"default":0})
      */
+    #[ORM\Column(type: "integer", options: ['default' => 0])]
     protected $importId = 0;
 
     /**
      * @var string
      * @ORM\Column(type="string")
      */
+    #[ORM\Column(type: "string")]
     protected $name = '';
     
     /**
      * @var string
      * @ORM\Column(type="string", length=255, name="router_viaroute_url")
      */
+    #[ORM\Column(type: "string", length: 255, name: 'router_viaroute_url')]
     protected $routerViarouteUrl = '';
     
     /**
      * @var string
      * @ORM\Column(type="string", length=255, name="router_attribution")
      */
+    #[ORM\Column(type: "string", length: 255, name: 'router_attribution')]
     protected $routerAttribution = '';
     
     /**
      * @var string
      * @ORM\Column(type="string", name="router_api_selection")
      */
+    #[ORM\Column(type: "string", name: 'router_api_selection')]
     protected $routerApiSelection = '';
     
     /**
      * @var string
      * @ORM\Column(type="string", length=1, name="router_alternative")
      */
+    #[ORM\Column(type: "string", name: 'router_alternative')]
     protected $routerAlternative = '';
     
     /**
      * @var string
      * @ORM\Column(type="string", length=255, name="router_api_key")
      */
+    #[ORM\Column(type: "string", name: 'router_api_key', length: 255)]
     protected $routerApiKey = '';
     
     /**
      * @var int
      * @ORM\Column(type="integer", name="router_from_locstyle", options={"default" : 0})
      */
+    #[ORM\Column(type: "integer", name: 'router_from_locstyle', options: ['default' => 0])]
     protected $routerFromLocstyle = 0;
     
     /**
      * @var int
      * @ORM\Column(type="integer", name="router_to_locstyle", options={"default" : 0})
      */
+    #[ORM\Column(type: "integer", name: 'router_to_locstyle', options: ['default' => 0])]
     protected $routerToLocstyle = 0;
     
     /**
      * @var int
      * @ORM\Column(type="integer", name="router_point_locstyle", options={"default" : 0})
      */
+    #[ORM\Column(type: "integer", name: 'router_point_locstyle', options: ['default' => 0])]
     protected $routerPointLocstyle = 0;
     
     /**
      * @var int
      * @ORM\Column(type="integer", name="router_interim_locstyle", options={"default" : 0})
      */
+    #[ORM\Column(type: "integer", name: 'router_interim_locstyle', options: ['default' => 0])]
     protected $routerInterimLocstyle = 0;
     
     /**
      * @var array
      * @ORM\Column(type="array", name="router_profiles")
      */
+    #[ORM\Column(type: "array", name: 'router_profiles')]
     protected $routerProfiles = [];
 
     /**
      * @var string
      * @ORM\Column(type="string", name="router_profiles_initial", length=1)
      */
+    #[ORM\Column(type: "string", name: 'router_profiles_initial', length: 1)]
     protected $routerProfilesInitial = '';
 
     /**
      * @var array
      * @ORM\Column(type="array")
      */
+    #[ORM\Column(type: "array")]
     protected $customProfiles = [];
     
     /**
      * @var float
      * @ORM\Column(type="float", precision=5, scale=2)
      */
+    #[ORM\Column(type: "float", precision: 5, scale: 2)]
     protected $minDetourArea = 0.0;
     
     /**
      * @var float
      * @ORM\Column(type="float", precision=5, scale=2)
      */
+    #[ORM\Column(type: "float", precision: 5, scale: 2)]
     protected $maxDetourArea = 0.0;
     
     /**
      * @var float
      * @ORM\Column(type="float", precision=5, scale=2)
      */
+    #[ORM\Column(type: "float", precision: 5, scale: 2)]
     protected $initialDetourArea = 0.0;
     
     /**
      * @var null
      * @ORM\Column(type="array")
      */
+    #[ORM\Column(type: "array")]
     protected $routerLayers = [];
     
     /**
      * @var string
      * @ORM\Column(type="string", length=1)
      */
+    #[ORM\Column(type: "string", length: 1)]
     protected $layerChanger = '';
 
-        /**
+    /**
      * @var string
      * @ORM\Column(type="string", length=1)
      */
+    #[ORM\Column(type: "string", length: 1)]
     protected $hideFeaturesWithoutLabel = '';
 
     /**
      * @var float
      * @ORM\Column(type="float", precision=5, scale=2)
      */
+    #[ORM\Column(type: "float", precision: 5, scale: 2)]
     protected $minDetourRoute = 0.0;
     
     /**
      * @var float
      * @ORM\Column(type="float", precision=5, scale=2)
      */
+    #[ORM\Column(type: "float", precision: 5, scale: 2)]
     protected $maxDetourRoute = 0.0;
     
     /**
      * @var float
      * @ORM\Column(type="float", precision=5, scale=2)
      */
+    #[ORM\Column(type: "float", precision: 5, scale: 2)]
     protected $initialDetourRoute = 0.0;
     
     /**
      * @var int
      * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: "integer")]
     protected $clickLocstyle = 0;
     
     /**
      * @var int
      * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: "integer")]
     protected $areaCenterLocstyle = 0;
     
     /**
      * @var string
      * @ORM\Column(type="string", length=1)
      */
+    #[ORM\Column(type: "string", length: 1)]
     protected $enableOverPoints = '';
     
     /**
      * @var string
      * @ORM\Column(type="string", length=1)
      */
+    #[ORM\Column(type: "string", length: 1)]
     protected $enableTargetSwitch = '';
     
     /**
      * @var string
      * @ORM\Column(type="string", length=255)
      */
+    #[ORM\Column(type: "string", length: 255)]
     protected $routerHeadline = '';
     
     /**
      * @var int
      * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: "integer")]
     protected $priorityFeatures = 0;
     
     /**
      * @var int
      * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: "integer")]
     protected $priorityLocstyle = 0;
     /**
      * @var int
      * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: "integer")]
     protected $negativePriorityLocstyle = 0;
     
     /**
      * @var string
      * @ORM\Column(type="string", length=1)
      */
+    #[ORM\Column(type: "string", length: 1)]
     protected $closeAfterSearch = '';
     
     /**
      * @var string
      * @ORM\Column(type="string", length=1)
      */
+    #[ORM\Column(type: "string", length: 1)]
     protected $routeStartButton = '';
 
     /**
      * @var string
      * @ORM\Column(type="string", length=1)
      */
+    #[ORM\Column(type: "string", length: 1)]
     protected $initialPosition = '';
 
     /**
      * @var string
      * @ORM\Column(type="string", length=1)
      */
+    #[ORM\Column(type: "string", length: 1)]
     protected $initialDestination = '';
 
     /**

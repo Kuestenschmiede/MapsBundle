@@ -136,9 +136,9 @@ class MapDataConfigurator
                 'Polygon' => ['elements' => []],
                 'Circle' => ['elements' => []],
             ];
-            $mapData['editor']['config']['editorVars'] = $config->getEditorVars();
+            $mapData['editor']['config']['editorVars'] = $config?->getEditorVars();
             $counter = 1;
-            foreach ($config->getTypes() as $type) {
+            foreach ($config?->getTypes() as $type) {
                 $counter++;
                 switch ($type['type']) {
                     case 'point':

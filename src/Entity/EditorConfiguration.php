@@ -13,7 +13,7 @@
 
 namespace con4gis\MapsBundle\Entity;
 
-use \Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping as ORM;
 use con4gis\CoreBundle\Entity\BaseEntity;
 
 /**
@@ -23,6 +23,8 @@ use con4gis\CoreBundle\Entity\BaseEntity;
  * @ORM\Table(name="tl_c4g_editor_configuration")
  * @package con4gis\MapsBundle\Entity
  */
+#[ORM\Table(name: "tl_c4g_editor_configuration")]
+#[ORM\Entity]
 class EditorConfiguration extends BaseEntity
 {
     /**
@@ -31,48 +33,58 @@ class EditorConfiguration extends BaseEntity
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: "integer")]
     protected $id = 0;
 
     /**
      * @var int
      * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: "integer")]
     protected $tstamp = 0;
 
     /**
      * @var int
      * @ORM\Column(type="integer", options={"default":0})
      */
+    #[ORM\Column(type: "integer", options: ['default' => 0])]
     protected $importId = 0;
 
     /**
      * @var string
      * @ORM\Column(type="string")
      */
+    #[ORM\Column(type: "string")]
     protected $name = '';
 
     /**
      * @var null
      * @ORM\Column(type="array")
      */
+    #[ORM\Column(type: "array")]
     protected $types = [];
 
     /**
      * @var null
      * @ORM\Column(type="array")
      */
+    #[ORM\Column(type: "array")]
     protected $editor_vars = [];
 
     /**
      * @var string
      * @ORM\Column(type="string", name="editor_helpurl")
      */
+    #[ORM\Column(type: "string", name: 'editor_helpurl')]
     protected $editorHelpUrl = '';
 
     /**
      * @var int
      * @ORM\Column(type="integer", name="editor_project_group")
      */
+    #[ORM\Column(type: "string", name: 'editor_project_group')]
     protected $editorProjectGroup = 0;
 
     /**

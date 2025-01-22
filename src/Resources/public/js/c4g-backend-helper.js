@@ -49,7 +49,7 @@ var showGeoEditor = function(href, dataField, opt_options, layerId) {
   modalWindow = new SimpleModal({
     'width': options.width.toString(),
     'btn_ok': Contao.lang.close,
-    'draggable': false,
+    'draggable': true,
     'overlayOpacity': 0.5,
     'onShow': function () {
       document.body.setStyle('overflow', 'hidden');
@@ -64,13 +64,13 @@ var showGeoEditor = function(href, dataField, opt_options, layerId) {
   });
   modalWindow.addButton(Contao.lang.apply, 'btn primary', function () {
 
-    dataField.value = document.getElementById('geo_editor_iframe').contentWindow.document.getElementById('c4gGeoEditorGeoData').value;
+    dataField.value = document.getElementById('geo_editor_iframe').contentWindow.document.getElementById('c4gGeoEditorGeoDataContent').innerText;
     this.hide();
     document.getElementById('tl_c4g_maps').submit();
   });
   modalWindow.show({
     'title': options.title || '',
-    'contents': '<iframe src="' + options.url + '" width="100%" height="' + options.height + '" frameborder="0" id="geo_editor_iframe"></iframe>',
+    'contents': '<iframe src="' + options.url + '" width="100%" height="' + options.height + '" frameborder="0" id="geo_editor_iframe" name="simple-modal-iframe"></iframe>',
     'model': 'modal'
   });
 };

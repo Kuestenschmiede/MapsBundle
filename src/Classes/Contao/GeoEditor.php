@@ -22,6 +22,7 @@ use Contao\BackendUser;
 use Contao\BackendTemplate;
 use Contao\Backend;
 use Contao\DC_Table;
+use Contao\Environment;
 use Contao\Image;
 use Contao\System;
 use Contao\Input;
@@ -68,11 +69,11 @@ class GeoEditor extends Backend
         $this->Template = new BackendTemplate('c4g_geoeditor');
 
         $this->Template->theme = $this->getTheme();
-        $this->Template->base = $this->Environment->base;
+        $this->Template->base = Environment::get('base');
         $this->Template->language = $GLOBALS['TL_LANGUAGE'];
-        $this->Template->title = $GLOBALS['TL_CONFIG']['websiteTitle'];
+        $this->Template->title = Environment::get('websiteTitle');
         $this->Template->headline = $GLOBALS['TL_LANG']['c4g_maps']['geoeditor'];
-        $this->Template->charset = $GLOBALS['TL_CONFIG']['characterSet'];
+        $this->Template->charset = Environment::get('characterSet');
         $this->c4g_map_layer_switcher = true;
 
         // get base64 encoded geoData
@@ -121,6 +122,7 @@ class GeoEditor extends Backend
         $objMapData['editor']['type'] = 'backend';
         $objMapData['editor']['open'] = true;
         $objMapData['editor']['data_field'] = '[name="geoData"]';
+        $objMapData['editor']['inputField'] = 'input[name="data_content"]';
         $objMapData['lang'] = $GLOBALS['TL_LANGUAGE'];
 
         $this->Template->mapData = $objMapData;

@@ -90,11 +90,13 @@ export default class EditorComponent extends Component {
     mapController.arrComponents[index].control = control;
     this.modes = ["select", "Point", "LineString", "Polygon", "Circle"];
     let features;
-    if (this.props.inputField && $(this.props.inputField).val() && $(this.props.inputField).val().length > 50) {
+    if (this.props.inputField && $(this.props.inputField) && $(this.props.inputField).val() && $(this.props.inputField).val().length > 50) {
       features = $(this.props.inputField).val();
-      setTimeout(()=> {
-        this.reRender();
-      }, 200)
+      if (this.rendered) {
+        setTimeout(()=> {
+          this.reRender();
+        }, 200)
+      }
     }
     else {
       features = '{"type": "FeatureCollection", "features": []}'
@@ -313,7 +315,7 @@ export default class EditorComponent extends Component {
   }
 
   linkInput () {
-    if (this.props.inputField && this.state.features.length > 50) {
+    if (this.props.inputField && $(this.props.inputField) && this.state.features.length > 50) {
       $(this.props.inputField).val(this.state.features); //link to inputField
     }
   }
@@ -356,7 +358,7 @@ export default class EditorComponent extends Component {
                     addFeature={this.addFeature} editorLayer={this.editorLayer} editorId={this.state.editorId} countEditorId={this.countEditorId}
                     updateFeatures={this.updateFeatures} mapController={this.props.mapController} editor={this} lang={this.langConstants}/>
         <div className={"c4g-editor-content"} style={{display: "none"}}>
-          <pre contentEditable={true} style={{overflowY: "scroll", overflowX: "none"}} suppressContentEditableWarning={true} onInput={this.changeJSON}>{this.state.features}</pre>
+          <pre id={"c4gGeoEditorGeoDataContent"} contentEditable={true} style={{overflowY: "scroll", overflowX: "none"}} suppressContentEditableWarning={true} onInput={this.changeJSON}>{this.state.features}</pre>
         </div>
         {addComps}
       </div>
@@ -374,5 +376,6 @@ export default class EditorComponent extends Component {
     if (window.c4gMapsHooks.hook_editor_components && window.c4gMapsHooks.hook_editor_components.length > 0) {
       utils.callHookFunctions(window.c4gMapsHooks.hook_editor_components, {comp: this, container: "#c4g-editor-portal"});
     }
+    this.rendered = true;
   }
 }

@@ -173,7 +173,7 @@ export default class EditorView extends Component {
       this.resetInteraction();
     }
     let elements = null;
-    if (this.props.elements && this.props.elements.length > 1) {
+    if (this.props.elements && this.props.elements.length > 0) {
       elements = this.props.elements.map((element) => {
         let color, styleTriggerLabel;
         let locstyle = this.props.styleData.arrLocStyles[element.styleId];
