@@ -14,6 +14,7 @@ import {cssConstants} from "../c4g-maps-constant";
 import {getLanguage} from "../c4g-maps-i18n";
 import LayerGroup from "ol/layer/Group";
 import TileLayer from "ol/layer/Tile";
+import OSM from "ol/source/OSM";
 const Titlebar = React.lazy(() => import("./c4g-titlebar.jsx"));
 
 export default class OverviewMap extends Component {
@@ -33,7 +34,7 @@ export default class OverviewMap extends Component {
     this.mapController = props.mapController;
     this.open = this.open.bind(this);
     this.close = this.close.bind(this);
-    this.layer = new TileLayer();
+    this.layer = new TileLayer({ source: new OSM() });
     element = document.createElement('div');
     element.className = cssConstants.OVERVIEWMAP + ' ' + cssConstants.OL_UNSELECTABLE + ' ' + cssConstants.OL_CONTROL;
     if (props.collapsed) {

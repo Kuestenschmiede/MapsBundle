@@ -7137,9 +7137,6 @@ span.c4g-active ul li.c4g-active {
   background-color: var(--font-color);
   border-color: var(--shadow-color)
 }
-.ol-overviewmap-box {
-  color: var(--main-color)
-}
 div.c4g-active.c4g-popup-wrapper,
 div.c4g-tooltip-popup {
   color: var(--pu-font-color);

@@ -683,7 +683,13 @@ export class BetterLayerController {
     let childs = [];
     let hide = !!layer.hide;
     if (scope.mapController.data.layers && scope.mapController.data.layers.length > 0) { //hide or show according to permalink - overwrites layerService
-      let arrLayerIds = scope.mapController.data.layers.split(',');
+      let arrLayerIds;
+      if (typeof scope.mapController.data.layers === "string" || scope.mapController.data.layers instanceof String) {
+        arrLayerIds = scope.mapController.data.layers.split(',');
+      } else {
+        arrLayerIds = scope.mapController.data.layers;
+      }
+
       let funcLayerIds = (value) => {
         return value == layer.id
       }
