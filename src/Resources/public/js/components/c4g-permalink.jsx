@@ -186,7 +186,8 @@ export default class Permalink extends Component {
       // delta-decode if there are more than one layer
       if (layers.length > 1) {
         // do not delta encode uuids
-        if (layers[0].indexOf("{") === -1) {
+        let containsUuids = (typeof layers[0] === 'string' || layers[0] instanceof String) && (layers[0].indexOf("{") === -1);
+        if (containsUuids) {
           layers = utils.deltaEncode(layers);
         }
         layers = layers.join(':');
