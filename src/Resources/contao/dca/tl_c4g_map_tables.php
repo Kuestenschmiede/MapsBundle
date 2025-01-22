@@ -318,7 +318,7 @@ class tl_c4g_map_tables extends Backend
     }
     public function getDatabaseTables(DC_TABLE $dc) {
         if ($dc->activeRecord->customDB) {
-            $result = Database::getInstance([dbDatabase => $dc->activeRecord->customDB])->prepare("SHOW TABLES")->execute();
+            $result = Database::getInstance(['dbDatabase' => $dc->activeRecord->customDB])->prepare("SHOW TABLES")->execute();
             $arrResult = $result->fetchAllAssoc();
             $options = [];
             foreach ($arrResult as $element) {
@@ -335,7 +335,7 @@ class tl_c4g_map_tables extends Backend
         $tableName = $dc->activeRecord->tableSource;
         $options = [];
         if ($dc->activeRecord->customDB && $tableName && $tableName !== "") {
-            $result = Database::getInstance([dbDatabase => $dc->activeRecord->customDB])->prepare("SHOW COLUMNS FROM " . $tableName)->execute();
+            $result = Database::getInstance(['dbDatabase' => $dc->activeRecord->customDB])->prepare("SHOW COLUMNS FROM " . $tableName)->execute();
             $arrResult = $result->fetchAllAssoc();
             $options = [];
             foreach ($arrResult as $element) {
@@ -360,7 +360,7 @@ class tl_c4g_map_tables extends Backend
         }
         if ($dc->activeRecord->customDB) {
             foreach ($tableNames as $tableName) {
-                $result = Database::getInstance([dbDatabase => $dc->activeRecord->customDB])->prepare("SHOW COLUMNS FROM " . $tableName)->execute();
+                $result = Database::getInstance(['dbDatabase' => $dc->activeRecord->customDB])->prepare("SHOW COLUMNS FROM " . $tableName)->execute();
                 $arrResult = $result->fetchAllAssoc();
                 foreach ($arrResult as $element) {
                     $options[$tableName . '.' . $element['Field']] = $tableName . '.' . $element['Field'];
@@ -388,7 +388,7 @@ class tl_c4g_map_tables extends Backend
     
     public function concatResult($varValue)
     {
-        $varValue = implode(",", StringUtil::deserialize($varValue));
+        $varValue = implode(",", StringUtil::deserialize($varValue, true));
         return $varValue;
     }
     
