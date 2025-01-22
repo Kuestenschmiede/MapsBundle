@@ -287,33 +287,46 @@ export default class MapController extends Component {
     // add view observer to update permalink on center change, if a permalink exists
     // use other permalink variable to avoid interference with the actual permalink mechanism
     window.c4gMapsHooks.map_center_changed = window.c4gMapsHooks.map_center_changed || [];
+    let mapCenterChangeHandle = null;
     window.c4gMapsHooks.map_center_changed.push(function (center) {
-      let currentPermalink = utils.getUrlParam(mapData.permalink.get_parameter);
-      if (currentPermalink) {
+      if (mapCenterChangeHandle) {
+        window.clearTimeout(mapCenterChangeHandle);
+      }
+      mapCenterChangeHandle = window.setTimeout(() => {
+        let currentPermalink = utils.getUrlParam(mapData.permalink.get_parameter);
         if (currentPermalink) {
-          currentPermalink = currentPermalink.split('/');
-          if (currentPermalink.length >= 3) {
-            center = transform(center, "EPSG:3857", "EPSG:4326");
-            currentPermalink[0] = center[0];
-            currentPermalink[1] = center[1];
-            utils.setUrlParam(currentPermalink.join('/'), mapData.permalink.get_parameter, true)
+          if (currentPermalink) {
+            currentPermalink = currentPermalink.split('/');
+            if (currentPermalink.length >= 3) {
+              center = transform(center, "EPSG:3857", "EPSG:4326");
+              currentPermalink[0] = center[0];
+              currentPermalink[1] = center[1];
+              utils.setUrlParam(currentPermalink.join('/'), mapData.permalink.get_parameter, true)
+            }
           }
         }
-      }
+      }, 100)
     });
 
     window.c4gMapsHooks.hook_map_zoom = window.c4gMapsHooks.hook_map_zoom || [];
+    let mapZoomHandle = null;
     window.c4gMapsHooks.hook_map_zoom.push(function (proxy) {
-      let currentPermalink = utils.getUrlParam(mapData.permalink.get_parameter);
-      if (currentPermalink) {
+      if (mapZoomHandle) {
+        window.clearTimeout(mapZoomHandle);
+      }
+      mapZoomHandle = window.setTimeout(() => {
+        let currentPermalink = utils.getUrlParam(mapData.permalink.get_parameter);
         if (currentPermalink) {
-          currentPermalink = currentPermalink.split('/');
-          if (currentPermalink.length >= 3) {
-            currentPermalink[2] = parseInt(view.getZoom(), 10) || currentPermalink[2];
-            utils.setUrlParam(currentPermalink.join('/'), mapData.permalink.get_parameter, true)
+          if (currentPermalink) {
+            currentPermalink = currentPermalink.split('/');
+            if (currentPermalink.length >= 3) {
+              currentPermalink[2] = parseInt(view.getZoom(), 10) || currentPermalink[2];
+              utils.setUrlParam(currentPermalink.join('/'), mapData.permalink.get_parameter, true)
+            }
           }
         }
-      }
+      }, 100);
+
     });
     if (mapData.permalink.withoutGenerator) {
       let currentPermalink = utils.getUrlParam(mapData.permalink.get_parameter);
