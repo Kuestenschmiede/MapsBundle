@@ -288,118 +288,121 @@ class RoutingConfiguration extends BaseEntity
     protected $initialDestination = '';
 
     /**
-     * @return string
-     */
-    public function getInitialDestination(): string
-    {
-        return $this->initialDestination;
-    }
-
-    /**
-     * @param string $initialDestination
-     */
-    public function setInitialDestination(string $initialDestination): void
-    {
-        $this->initialDestination = $initialDestination;
-    }
-
-    /**
      * @var string
      * @ORM\Column(type="string", length=1)
      */
+    #[ORM\Column(type: "string", length: 1)]
     protected $showFeatures = '';
     
     /**
      * @var string
      * @ORM\Column(type="string", length=1)
      */
+    #[ORM\Column(type: "string", length: 1)]
     protected $areaSearch = '';
     
     /**
      * @var string
      * @ORM\Column(type="string", length=1)
      */
+    #[ORM\Column(type: "string", length: 1)]
     protected $areaSearchOnly = '';
     /**
      * @var string
      * @ORM\Column(type="string", length=1)
      */
+    #[ORM\Column(type: "string", length: 1)]
     protected $drawCircle = '';
 
     /**
      * @var string
      * @ORM\Column(type="string", length=64)
      */
+    #[ORM\Column(type: "string", length: 64)]
     protected $areaCircleColor = '';
     
     /**
      * @var string
      * @ORM\Column(type="string", length=255)
      */
+    #[ORM\Column(type: "string", length: 255)]
     protected $areaHeadline = '';
     
     /**
      * @var string
      * @ORM\Column(type="string", length=100)
      */
+    #[ORM\Column(type: "string", length: 100)]
     protected $featureLabel = '';
     
     /**
      * @var string
      * @ORM\Column(type="string", length=1)
      */
+    #[ORM\Column(type: "string", length: 100)]
     protected $showInstructions = '';
     
     /**
      * @var string
      * @ORM\Column(type="string", length=100)
      */
+    #[ORM\Column(type: "string", length: 100)]
     protected $instructionLabel = '';
     
     /**
      * @var string
      * @ORM\Column(type="string", length=10)
      */
+    #[ORM\Column(type: "string", length: 10)]
     protected $initialMode = '';
     
     /**
      * @var string
      * @ORM\Column(type="string", length=10)
      */
+    #[ORM\Column(type: "string", length: 10)]
     protected $initialResultMode = '';
     
     /**
      * @var string
      * @ORM\Column(type="string", length=1)
      */
+    #[ORM\Column(type: "string", length: 1)]
     protected $preventZoomResults = '';
+
     /**
      * @var string
      * @ORM\Column(type="string", length=1)
      */
+    #[ORM\Column(type: "string", length: 1)]
     protected $usePermalink = '';
+
     /**
      * @var string
      * @ORM\Column(type="string", length=1)
      */
+    #[ORM\Column(type: "string", length: 1)]
     protected $pirate = '';
 
     /**
      * @var string
      * @ORM\Column(type="string", length=1)
      */
+    #[ORM\Column(type: "string", length: 1)]
     protected $detourElement = '';
 
     /**
      * @var string
      * @ORM\Column(type="string")
      */
+    #[ORM\Column(type: "string")]
     protected $arrDetourOptionsRoute = '';
 
     /**
      * @var string
      * @ORM\Column(type="string")
      */
+    #[ORM\Column(type: "string")]
     protected $arrDetourOptionsArea = '';
 
     /**
@@ -1248,5 +1251,21 @@ class RoutingConfiguration extends BaseEntity
     public function setArrDetourOptionsArea(string $arrDetourOptionsArea): void
     {
         $this->arrDetourOptionsArea = $arrDetourOptionsArea;
+    }
+
+    /**
+     * @return string
+     */
+    public function getInitialDestination(): string
+    {
+        return $this->initialDestination;
+    }
+
+    /**
+     * @param string $initialDestination
+     */
+    public function setInitialDestination(string $initialDestination): void
+    {
+        $this->initialDestination = $initialDestination;
     }
 }
