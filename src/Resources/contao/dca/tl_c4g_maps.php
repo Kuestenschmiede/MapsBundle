@@ -224,7 +224,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
     'subpalettes' =>
         [
         'use_specialprofile'          => 'specialprofile, specialprofile_mobile, specialprofile_groups',
-        'enablePopup'                 => 'popup_info,routing_to',
+        'enablePopup'                 => 'popup_info,routing_to,popup_share_button,popup_share_type,popup_share_destination',
         'protect_element'             => 'permitted_groups',
         'popup_extend'                => 'forums',
         'cluster_locations'           => 'cluster_distance, cluster_fillcolor, cluster_fontcolor, cluster_zoom,cluster_popup',
@@ -984,6 +984,40 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 'eval'                    => ['submitOnChange' => true],
                 'sql'                     => "char(1) NOT NULL default '1'"
             ],
+        'popup_share_button' => [
+            'exclude'                 => true,
+            'default'                 => true,
+            'inputType'               => 'checkbox',
+            'eval'                    => ['submitOnChange' => true],
+            'sql'                     => "char(1) NOT NULL default '1'"
+        ],
+        'popup_share_type' => [
+            'exclude'                 => true,
+            'default'                 => 'text',
+            'inputType'               => 'copylink',
+            'options'                 => ['whatsapp', 'email', 'copylink'],
+            'eval'                    => ['mandatory'=>false, 'chosen' => true],
+            'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['popup_share_type'],
+            'sql'                     => "char(10) NOT NULL default 'text'"
+        ],
+        'popup_share_destination' => [
+            'exclude'                 => true,
+            'default'                 => 'text',
+            'inputType'               => 'select',
+            'options'                 => [
+                'con4gis_map',
+                'con4gis_map_external',
+                'con4gis_routing',
+                'con4gis_routing_external',
+                'osm',
+                'osm_routing',
+                'google_map',
+                'google_map_routing',
+            ],
+            'eval'                    => ['mandatory'=>false],
+            'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['popup_share_destination'],
+            'sql'                     => "varchar(30) NOT NULL default 'con4gis_map'"
+        ],
         'popupType' =>
             [
                 'exclude'                 => true,
