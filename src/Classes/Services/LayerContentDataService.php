@@ -16,9 +16,12 @@ use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapTablesModel;
 use Contao\Config;
 use Contao\Controller;
+use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\Frontend;
 use Contao\Database;
 use Contao\FilesModel;
+use Contao\Image;
+use Contao\StringUtil;
 use Contao\System;
 
 /**
@@ -34,8 +37,9 @@ class LayerContentDataService extends Frontend
      * @return mixed           JSON data
      */
 
-    public function __construct()
+    public function __construct(ContaoFramework $framework)
     {
+        $framework->initialize();
         $this->import('con4gis\MapsBundle\Resources\contao\modules\api\InfoWindowApi');
     }
 
@@ -236,20 +240,26 @@ class LayerContentDataService extends Frontend
                                 if ($additionalParam1) {
                                     $responsiveImage = $additionalParam1;
                                 }
-                                $file = FilesModel::findByUuid($arrElement[$column]);
-                                if ($file) {
-                                    if (!$responsiveImage) {
-                                        $image = \Image::get($file->path, 360, 240);
-                                    } else {
-                                        $image = \Image::get($file->path, '', '', $responsiveImage);
+                                if ($arrElement[$column]) {
+                                    $file = FilesModel::findByUuid($arrElement[$column]);
+                                    if (!$file) {
+                                        $file = FilesModel::findByUuid(StringUtil::binToUuid($arrElement[$column]));
                                     }
-                                    if ($image) {
-                                        $popupContent .= '<img src="' . $image . '">';
+                                    if ($file) {
+                                        if (!$responsiveImage) {
+                                            $image = Image::getPath($file->path, 360, 240);
+                                        } else {
+                                            $image = Image::getPath($file->path, '', '', $responsiveImage);
+                                        }
+                                        if ($image) {
+                                            $popupContent .= '<img src="' . $image . '">';
+                                        }
+                                    }
+                                    else{
+                                        $popupContent .= '<img src="' . $arrElement[$column] . '">';
                                     }
                                 }
-                                else{
-                                    $popupContent .= '<img src="' . $arrElement[$column] . '">';
-                                }
+
                                 break;
                             case 'label':
                                 if ($replacedValue) {

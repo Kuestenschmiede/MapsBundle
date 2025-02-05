@@ -23,12 +23,13 @@ services:
         public: true
         arguments:
             - "@con4gis.profile_service"
+            - "@con4gis.layer_contentdata_service"
 
     con4gis.layer_contentdata_service:
         class: con4gis\MapsBundle\Classes\Services\LayerContentDataService
         public: true
         arguments:
-            - "@event_dispatcher"
+            - "@contao.framework"
 
     con4gis.filter_service:
         class: con4gis\MapsBundle\Classes\Services\FilterService
@@ -44,6 +45,7 @@ services:
         arguments:
             - "@service_container"
             - "@contao.framework"
+            - "@con4gis.layer_contentdata_service"
         tags:
             - controller.service_arguments
             - container.service_subscriber

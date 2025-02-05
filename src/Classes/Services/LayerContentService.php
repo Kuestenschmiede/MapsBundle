@@ -19,7 +19,6 @@ use con4gis\MapsBundle\Resources\contao\models\C4gMapSettingsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapTablesModel;
 use con4gis\MapsBundle\Resources\contao\modules\api\InfoWindowApi;
-use con4gis\MapsBundle\Resources\contao\modules\api\LayerContentDataService;
 use Contao\Database;
 use Contao\System;
 use Contao\FilesModel;
@@ -43,15 +42,18 @@ class LayerContentService
      */
     private $resolvedLinks = [];
 
+    private $layerContentDataService;
+
     /**
      * LayerContentService constructor.
      * @param ProfileService $profileService
      */
-    public function __construct(ProfileService $profileService)
+    public function __construct(ProfileService $profileService, LayerContentDataService $layerContentDataService )
     {
         // ToDo infoWindowService
         $this->infoWindowApi = new InfoWindowApi();
         $this->profileService = $profileService;
+        $this->layerContentDataService = $layerContentDataService;
     }
 
     /**
@@ -844,8 +846,7 @@ class LayerContentService
                     }
                     if ($objConfig->popupSwitch !== 'off') {
                         // process expert popup
-                        $lcdApi = new \con4gis\MapsBundle\Classes\Services\LayerContentDataService();
-                        $popup = $lcdApi->getPopup($objConfig, $arrResult);
+                        $popup = $this->layerContentDataService->getPopup($objConfig, $arrResult);
                         if ($objLayer->tab_directlink && !$objLayer->loc_linkurl && $popup['tmpDirectLink']) {
                             $link = $popup['tmpDirectLink'];
                             unset($popup['tmpDirectLink']);

@@ -28,14 +28,20 @@ class LayerController extends BaseController
 {
 
     private $preventCaching = false;
-    
+
+    private $layerContentDataService;
+
     /**
      * LayerController constructor.
      */
-    public function __construct(ContainerInterface $container, ContaoFramework $framework)
-    {
+    public function __construct(
+        ContainerInterface $container,
+        ContaoFramework $framework,
+        LayerContentDataService $layerContentDataService
+    ) {
         $this->cacheInstance = C4GLayerApiCache::getInstance($container);
         $framework->initialize();
+        $this->layerContentDataService = $layerContentDataService;
     }
 
     /**
@@ -122,8 +128,7 @@ class LayerController extends BaseController
         $this->initialize(false);
 
         //$layerDataService = new LayerContentDataService();
-        $layerDataService = $this->get('con4gis.layer_contentdata_service');
-        $this->responseData = $layerDataService->generate($layerId,$extent);
+        $this->responseData = $this->layerContentDataService->generate($layerId,$extent);
         $event = new LoadLayerContentDataEvent();
         $event->setLayerData($this->responseData);
         $event->setLayerId($layerId);
