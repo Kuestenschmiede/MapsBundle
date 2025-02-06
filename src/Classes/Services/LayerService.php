@@ -458,6 +458,12 @@ class LayerService
             }
         }
 
+        if ($objLayer->enablePopup && $objLayer->popup_share_button) {
+            $shareMethods = StringUtil::deserialize($objLayer->popup_share_type, true);
+            $shareDest = $objLayer->popup_share_destination;
+
+        }
+
         if ($objLayer->icon_src) {
             $objFile = FilesModel::findByUuid($objLayer->icon_src);
             if ($objFile && $objFile->path) {

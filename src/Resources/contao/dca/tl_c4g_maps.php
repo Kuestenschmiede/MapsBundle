@@ -993,16 +993,16 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
         ],
         'popup_share_type' => [
             'exclude'                 => true,
-            'default'                 => 'text',
-            'inputType'               => 'copylink',
+            'default'                 => 'copylink',
+            'inputType'               => 'select',
             'options'                 => ['whatsapp', 'email', 'copylink'],
-            'eval'                    => ['mandatory'=>false, 'chosen' => true],
+            'eval'                    => ['mandatory'=>false, 'chosen' => true, 'multiple' => true],
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['popup_share_type'],
-            'sql'                     => "char(10) NOT NULL default 'text'"
+            'sql'                     => "blob NULL"
         ],
         'popup_share_destination' => [
             'exclude'                 => true,
-            'default'                 => 'text',
+            'default'                 => 'con4gis_map',
             'inputType'               => 'select',
             'options'                 => [
                 'con4gis_map',
