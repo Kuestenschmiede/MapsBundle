@@ -287,7 +287,11 @@ class LayerContentDataService extends Frontend
                         // other stuff put in as text
                         $popupContent .= $value . ' ';
                     }
-                    $popupContent = mb_convert_encoding($popupContent, 'UTF-8', mb_detect_encoding($popupContent));
+                    $supportedEncodings = ['UTF-8', 'ISO-8859-1', 'ASCII', 'Windows-1252'];
+                    $currentEncoding = mb_detect_encoding($popupContent);
+                    if (in_array($currentEncoding, $supportedEncodings)) {
+                        $popupContent = mb_convert_encoding($popupContent, 'UTF-8', $currentEncoding);
+                    }
                 }
             }
         }

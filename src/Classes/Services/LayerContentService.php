@@ -697,12 +697,20 @@ class LayerContentService
             $blobCount = 0;
 
             //set locstyle
-            $locstyle = mb_convert_encoding($arrResult[$locstyleField], 'UTF-8', mb_detect_encoding($arrResult[$locstyleField]));
-            if (!$locstyle) {
-                $locstyle = $objLayer->locstyle;
+            if ($locstyleField) {
+                $locstyle = mb_convert_encoding($arrResult[$locstyleField], 'UTF-8', mb_detect_encoding($arrResult[$locstyleField]));
+                if (!$locstyle) {
+                    $locstyle = $objLayer->locstyle;
+                }
             }
-            $tooltip = mb_convert_encoding($arrResult[$tooltipField], 'UTF-8', mb_detect_encoding($arrResult[$tooltipField]));
-            $label = mb_convert_encoding($arrResult[$labelField], 'UTF-8', mb_detect_encoding($arrResult[$labelField]));
+
+            if ($tooltipField) {
+                $tooltip = mb_convert_encoding($arrResult[$tooltipField], 'UTF-8', mb_detect_encoding($arrResult[$tooltipField]));
+            }
+
+            if ($labelField) {
+                $label = mb_convert_encoding($arrResult[$labelField], 'UTF-8', mb_detect_encoding($arrResult[$labelField]));
+            }
 
             //check blob fields
             if ($objConfig->ptable) {
