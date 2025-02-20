@@ -195,7 +195,7 @@ class LayerService
 
         if (!$blnIsSubLayer) {
             // Find the requested map
-            $objMap = C4gMapsModel::findById($intId);
+            $objMap = C4gMapsModel::findByPk($intId);
 
             // Only return map entries
             if ($objMap == null || !$objMap->location_type == 'map') {
@@ -462,6 +462,33 @@ class LayerService
             $shareMethods = StringUtil::deserialize($objLayer->popup_share_type, true);
             $shareDest = $objLayer->popup_share_destination;
 
+            switch ($shareDest) {
+                case "con4gis_map":
+                case "con4gis_routing":
+                    $shareBaseUrl = "";
+                    break;
+                case "con4gis_map_external":
+                case "con4gis_routing_external":
+                case "osm":
+                case "osm_routing":
+                    $shareBaseUrl = $objLayer->popup_share_external_link;
+                    break;
+                case "google_map":
+                    $shareBaseUrl = "https://www.google.com/maps/dir/";
+                    break;
+                case "google_map_routing":
+                    $shareBaseUrl = "https://www.google.com/maps/dir/";
+                    break;
+                default:
+                    $shareBaseUrl = "";
+            }
+
+            $popupShare = [
+                'methods' => $shareMethods,
+                'baseUrl' => $shareBaseUrl,
+                'destType' => $shareDest
+            ];
+            $arrLayerData['popup_share'] = $popupShare;
         }
 
         if ($objLayer->icon_src) {

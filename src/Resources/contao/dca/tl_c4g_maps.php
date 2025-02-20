@@ -224,7 +224,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
     'subpalettes' =>
         [
         'use_specialprofile'          => 'specialprofile, specialprofile_mobile, specialprofile_groups',
-        'enablePopup'                 => 'popup_info,routing_to,popup_share_button,popup_share_type,popup_share_destination',
+        'enablePopup'                 => 'popup_info,routing_to,popup_share_button',
         'protect_element'             => 'permitted_groups',
         'popup_extend'                => 'forums',
         'cluster_locations'           => 'cluster_distance, cluster_fillcolor, cluster_fontcolor, cluster_zoom,cluster_popup',
@@ -986,10 +986,10 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             ],
         'popup_share_button' => [
             'exclude'                 => true,
-            'default'                 => true,
+            'default'                 => false,
             'inputType'               => 'checkbox',
             'eval'                    => ['submitOnChange' => true],
-            'sql'                     => "char(1) NOT NULL default '1'"
+            'sql'                     => "char(1) NOT NULL default '0'"
         ],
         'popup_share_type' => [
             'exclude'                 => true,
@@ -1014,9 +1014,16 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 'google_map',
                 'google_map_routing',
             ],
-            'eval'                    => ['mandatory'=>false],
+            'eval'                    => ['mandatory'=>false, 'submitOnChange' => true],
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['popup_share_destination'],
             'sql'                     => "varchar(30) NOT NULL default 'con4gis_map'"
+        ],
+        'popup_share_external_link' => [
+            'exclude'                 => true,
+            'inputType'               => 'text',
+            'default'                 => '',
+            'eval'                    => ['tl_class'=>'long'],
+            'sql'                     => "varchar(255) NOT NULL default ''"
         ],
         'popupType' =>
             [

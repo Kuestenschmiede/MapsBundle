@@ -136,7 +136,9 @@ class TlC4gMaps extends Backend
         ];
         return $return;
     }
-        public function locstyleWfs($multiColumnWizard) {
+
+    public function locstyleWfs($multiColumnWizard)
+    {
         $activeRecord = $multiColumnWizard->__get('activeRecord');
         $arrLocstyles = $this->Database->prepare('SELECT * FROM tl_c4g_map_locstyles')
             ->execute()->fetchAllAssoc();
@@ -461,7 +463,7 @@ class TlC4gMaps extends Backend
     {
         if (!$dc->id) return;
 
-        $objMap = $this->Database->prepare("SELECT location_type, show_locations, hover_location, restrict_area, geolocation, be_optimize_checkboxes_limit, popupType FROM tl_c4g_maps WHERE id=?")
+        $objMap = $this->Database->prepare("SELECT location_type, show_locations, hover_location, restrict_area, geolocation, be_optimize_checkboxes_limit, popupType, popup_share_button, popup_share_destination FROM tl_c4g_maps WHERE id=?")
             ->limit(1)
             ->execute($dc->id);
         
@@ -519,6 +521,28 @@ class TlC4gMaps extends Backend
                     break;
                 default:
                     break;
+            }
+
+            if ($objMap->popup_share_button) {
+
+                $fields = "popup_share_button,popup_share_type,popup_share_destination";
+
+                $externalDestinations = [
+                    'con4gis_map_external',
+                    'con4gis_routing_external',
+                    'osm',
+                    'osm_routing',
+                ];
+                if (in_array($objMap->popup_share_destination, $externalDestinations)) {
+                    $fields .= ",popup_share_external_link";
+                }
+
+                $GLOBALS['TL_DCA']['tl_c4g_maps']['subpalettes']['enablePopup'] = str_replace(
+                    'popup_share_button',
+                    $fields,
+                    $GLOBALS['TL_DCA']['tl_c4g_maps']['subpalettes']['enablePopup']
+                );
+
             }
 
             // convert checkboxes to chosenfields, if there are to many locationstyles

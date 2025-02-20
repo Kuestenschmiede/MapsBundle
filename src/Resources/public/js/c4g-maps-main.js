@@ -10,11 +10,14 @@
 
 // import {MapController} from "components/c4g-maps.jsx";
 
+import {utils} from "./c4g-maps-utils";
+
 const MapController = React.lazy(() => import("./components/c4g-maps.jsx"));
 const ConsentBanner = React.lazy(() => import("./components/c4g-consent-banner.jsx"));
 import {getLanguage} from "./c4g-maps-i18n";
 import ReactDOM from "react-dom";
 import React, {Suspense} from "react";
+import {toLonLat} from 'ol/proj';
 import 'elm-pep';
 
 window.initMap = function(mapData) {
@@ -241,6 +244,157 @@ window.initMaps = function(mapData) {
     }
   }
 };
+
+window.c4gMapsHooks = window.c4gMapsHooks || {};
+window.c4gMapsHooks.proxy_appendPopup = window.c4gMapsHooks.proxy_appendPopup || [];
+window.c4gMapsHooks.proxy_appendPopup.push(function(objPopup) {
+  let feature = objPopup.popup.feature;
+  let featureName = feature.get('name');
+  let layerUid = objPopup.popup.layer.get('ol_uid') || objPopup.popup.layer.ol_uid;
+  let featureId = feature.get('ol_uid') || feature.ol_uid;
+  if (layerUid || featureId) {
+    let layer = {};
+    let layerId = null;
+
+    let layers = objPopup.mapController.proxy.layerController.arrLayers;
+    for (let i = 0; i < layers.length; i++) {
+      if (layers[i].vectorLayer) {
+        if (layers[i].vectorLayer && layers[i].vectorLayer.get('ol_uid') === layerUid) {
+          layerId = layers[i].id;
+          break;
+        } else if (layers[i].vectorLayer && layers[i].vectorLayer.ol_uid === layerUid) {
+          layerId = layers[i].id;
+          break;
+        }
+      } else if (layers[i].features && layers[i].features.length > 0) {
+        for (let j = 0; j < layers[i].features.length; j++) {
+          if (layers[i].features[j].get('ol_uid') === featureId) {
+            layerId = layers[i].id;
+            break;
+          } else if (layers[i].features[j].ol_uid === featureId) {
+            layerId = layers[i].id;
+            break;
+          }
+        }
+      }
+
+    }
+
+    let objLayers = objPopup.mapController.proxy.layerController.objLayers;
+    for (let i = 0; i < objLayers.length; i++) {
+      if (objLayers[i].id === layerId) {
+        layer = objLayers[i];
+      }
+    }
+
+    if (layer.popup_share) {
+
+      let destUrl = "";
+      let methods = layer.popup_share.methods || ['whatsapp', 'copylink', 'email'];
+      let destType = layer.popup_share.destType || "google_map";
+      let addCoords = true;
+      let mapData = objPopup.mapController.data;
+      let permalink = [];
+
+      let geom = feature.getGeometry();
+      let coords;
+      if (addCoords) {
+        if (geom.getType() === "Point") {
+          coords = geom.getCoordinates();
+          coords = toLonLat(coords);
+        } else if (geom.getType() === "Circle") {
+          coords = geom.getCenter();
+          coords = toLonLat(coords);
+        }
+      }
+
+      switch (destType) {
+        case "google_map":
+          destUrl = layer.popup_share.baseUrl || "https://www.google.com/maps/dir/";
+          break;
+        case "con4gis_map":
+          permalink.push(coords[0]);
+          permalink.push(coords[1]);
+          permalink.push(mapData.center.zoom);
+          utils.setUrlParam(permalink.join('/'), mapData.permalink.get_parameter, true);
+          destUrl = window.location;
+          addCoords = false; // since we do it already in the permalink
+          break;
+        case "con4gis_map_external":
+          permalink.push(coords[0]);
+          permalink.push(coords[1]);
+          permalink.push(mapData.center.zoom);
+          destUrl = layer.popup_share.baseUrl + "#" + permalink.join('/');
+          addCoords = false; // since we do it already in the permalink
+          break;
+        case "osm":
+        case "osm_routing":
+          destUrl = layer.popup_share.baseUrl + "?lon=" + coords[1] + "&lat=" + coords[0];
+          addCoords = false;
+          break;
+
+        default:
+          destUrl = layer.popup_share.baseUrl;
+      }
+
+      if (addCoords) {
+        destUrl += coords[1] + "," + coords[0] + "";
+      }
+
+      let buttonNodes = document.createElement('div');
+      buttonNodes.classList.add("c4g-popup-share-button-wrapper");
+      for (let i = 0; i < methods.length; i++) {
+
+        let node = null;
+        switch (methods[i]) {
+          case "whatsapp":
+            let waUrl = "https://api.whatsapp.com/send?text=" + encodeURIComponent(destUrl);
+            node = document.createElement('a');
+            node.href = waUrl;
+            node.classList.add("c4g-popup-share-btn");
+            node.innerText = "Auf WhatsApp teilen";
+            buttonNodes.appendChild(node);
+            break;
+          case "email":
+            let mailUrl = "mailto:?subject=&body=" + encodeURIComponent(destUrl);
+            node = document.createElement('a');
+            node.href = mailUrl;
+            node.classList.add("c4g-popup-share-btn");
+            node.innerText = "Per E-Mail senden";
+            buttonNodes.appendChild(node);
+            break;
+          case "copylink":
+            let button = document.createElement('a');
+            button.innerText = "Link kopieren";
+            button.href = "#";
+            button.classList.add("c4g-popup-share-btn");
+            button.id = "copylink-button";
+            buttonNodes.appendChild(button);
+            break;
+        }
+      }
+
+      objPopup.callback = () => {
+        let copyButton = document.querySelector("#copylink-button");
+        if (copyButton) {
+          copyButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            if (navigator.clipboard) {
+              navigator.clipboard.writeText(destUrl).then(() => {
+                console.log("copied to clipboard!");
+              });
+            } else {
+              console.warn("clipboard not supported in this context...");
+            }
+          });
+        }
+      }
+      objPopup.div.appendChild(buttonNodes);
+    }
+  }
+});
+
 jQuery(document).ready(function() {
   if (typeof window.mapData !== "undefined") {
     window.initMaps(window.mapData);

@@ -123,6 +123,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['popupTemplate'] = array("Popup Template","Po
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popup_share_button'] = array("Teilen-Button im Popup anzeigen","Gibt an, ob ein Teilen-Button im Popup angezeigt werden soll.");
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popup_share_type'] = array("Erlaubte Arten die Lokation zu teilen","Wählen Sie die Arten aus, wie die Lokation geteilt werden darf.");
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popup_share_destination'] = array("Link-Ziel","Wohin soll der Link zeigen?");
+$GLOBALS['TL_LANG']['tl_c4g_maps']['popup_share_external_link'] = array("Externe Karten-URL","Hier kann die URL für die externe Karte angegeben werden.");
 
 
 
@@ -213,10 +214,10 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['popup_share_destination'] = [
     'con4gis_map_external' => "con4gis-Karte (extern)",
     'con4gis_routing' => "con4gis Routing (diese Karte)",
     'con4gis_routing_external' => "con4gis Routing (extern)",
-    'osm' => "OpenStreetMap-Karte",
-    'osm_routing' => "OpenStreetMap-Routing",
-    'google_map' => "GoogleMaps-Karte",
-    'google_map_routing' => "GoogleMaps-Routing",
+    'osm' => "OpenStreetMap-Karte (extern)",
+    'osm_routing' => "OpenStreetMap-Routing (extern)",
+    'google_map' => "Google-Maps-Karte",
+    'google_map_routing' => "Google-Maps-Routing",
 ];
 
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['excludeFromSingleLayer']['0'] = "Deaktiviert";
