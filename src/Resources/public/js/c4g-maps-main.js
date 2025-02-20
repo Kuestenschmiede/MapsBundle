@@ -343,12 +343,14 @@ window.c4gMapsHooks.proxy_appendPopup.push(function(objPopup) {
 
       let buttonNodes = document.createElement('div');
       buttonNodes.classList.add("c4g-popup-share-button-wrapper");
+      let additionalMessage = layer.popup_share.additionalMessage || "";
+      let destLink = `<a href='${destUrl}'>${destUrl}</a>`
       for (let i = 0; i < methods.length; i++) {
 
         let node = null;
         switch (methods[i]) {
           case "whatsapp":
-            let waUrl = "https://api.whatsapp.com/send?text=" + encodeURIComponent(destUrl);
+            let waUrl = "https://api.whatsapp.com/send?text=" + additionalMessage + " " + encodeURIComponent(destUrl);
             node = document.createElement('a');
             node.href = waUrl;
             node.classList.add("c4g-popup-share-btn");
@@ -356,7 +358,7 @@ window.c4gMapsHooks.proxy_appendPopup.push(function(objPopup) {
             buttonNodes.appendChild(node);
             break;
           case "email":
-            let mailUrl = "mailto:?subject=&body=" + encodeURIComponent(destUrl);
+            let mailUrl = "mailto:?subject=&body=" + additionalMessage + " " + encodeURIComponent(destUrl);
             node = document.createElement('a');
             node.href = mailUrl;
             node.classList.add("c4g-popup-share-btn");

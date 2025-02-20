@@ -124,6 +124,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['popup_share_button'] = array("Teilen-Button 
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popup_share_type'] = array("Erlaubte Arten die Lokation zu teilen","Wählen Sie die Arten aus, wie die Lokation geteilt werden darf.");
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popup_share_destination'] = array("Link-Ziel","Wohin soll der Link zeigen?");
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popup_share_external_link'] = array("Externe Karten-URL","Hier kann die URL für die externe Karte angegeben werden.");
+$GLOBALS['TL_LANG']['tl_c4g_maps']['popup_share_message'] = array("Nachricht zum Teilen","Hier können Sie eine optionale Nachricht eingeben, die zusammen mit dem Link geteilt werden soll. Der Link wird dann hinter der Nachricht eingefügt.");
 
 
 

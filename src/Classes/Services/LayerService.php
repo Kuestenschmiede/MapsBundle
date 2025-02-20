@@ -486,7 +486,8 @@ class LayerService
             $popupShare = [
                 'methods' => $shareMethods,
                 'baseUrl' => $shareBaseUrl,
-                'destType' => $shareDest
+                'destType' => $shareDest,
+                'additionalMessage' => $objLayer->popup_share_message
             ];
             $arrLayerData['popup_share'] = $popupShare;
         }

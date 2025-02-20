@@ -536,6 +536,7 @@ class TlC4gMaps extends Backend
                 if (in_array($objMap->popup_share_destination, $externalDestinations)) {
                     $fields .= ",popup_share_external_link";
                 }
+                $fields .= ",popup_share_message";
 
                 $GLOBALS['TL_DCA']['tl_c4g_maps']['subpalettes']['enablePopup'] = str_replace(
                     'popup_share_button',

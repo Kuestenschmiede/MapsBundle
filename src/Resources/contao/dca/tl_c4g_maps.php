@@ -1025,6 +1025,13 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             'eval'                    => ['tl_class'=>'long'],
             'sql'                     => "varchar(255) NOT NULL default ''"
         ],
+        'popup_share_message' => [
+            'exclude'                 => true,
+            'inputType'               => 'text',
+            'default'                 => '',
+            'eval'                    => ['tl_class'=>'long'],
+            'sql'                     => "varchar(255) NOT NULL default ''"
+        ],
         'popupType' =>
             [
                 'exclude'                 => true,
