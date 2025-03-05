@@ -25,6 +25,8 @@ import {Fill, Style, Text, Circle} from 'ol/style';
 import {Point} from "ol/geom";
 import Feature from 'ol/Feature';
 import * as olExtent from 'ol/extent';
+import {fromLonLat} from 'ol/proj';
+
 
 let olFormat = jQuery.extend({
   OSMXML: OSMXML,
@@ -542,6 +544,8 @@ export class BetterLayerController {
       dataType: this.mapController.data.jsonp ? "jsonp" : "json"
 
     }).done(function (data) {
+      data.map = self.mapController.map;
+      data.map.fromLonLat = fromLonLat;
       utils.callHookFunctions(window.c4gMapsHooks.hook_layer, data);
       utils.callHookFunctions(window.c4gMapsHooks.loaded, self.proxy);
       self.objLayers = data.layer;
