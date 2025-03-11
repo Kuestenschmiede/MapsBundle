@@ -33,7 +33,7 @@ layer_content_data_service:
     controller: con4gis\MapsBundle\Controller\LayerController::layerContentDataAction
     methods: [GET]
     requirements:
-        layerId: \d+
+        layerId: .*
 
 infowindow_service:
     path: /con4gis/infoWindowService/{popupString}

@@ -538,11 +538,21 @@ class TlC4gMaps extends Backend
                 }
                 $fields .= ",popup_share_message";
 
-                $GLOBALS['TL_DCA']['tl_c4g_maps']['subpalettes']['enablePopup'] = str_replace(
-                    'popup_share_button',
-                    $fields,
-                    $GLOBALS['TL_DCA']['tl_c4g_maps']['subpalettes']['enablePopup']
-                );
+                if ($objMap->location_type === "table") {
+                    $GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['table'] = str_replace(
+                        'popup_share_button',
+                        $fields,
+                        $GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['table']
+                    );
+                } else {
+                    $GLOBALS['TL_DCA']['tl_c4g_maps']['subpalettes']['enablePopup'] = str_replace(
+                        'popup_share_button',
+                        $fields,
+                        $GLOBALS['TL_DCA']['tl_c4g_maps']['subpalettes']['enablePopup']
+                    );
+                }
+
+
 
             }
 
