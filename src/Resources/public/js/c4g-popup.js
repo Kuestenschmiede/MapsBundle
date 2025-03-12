@@ -103,6 +103,7 @@ export class C4gPopup {
             popupContent = utils.replaceAllPlaceholders(popupConfig.popup.content, feature, layer, this.popupController.mapController.data.lang);
         }
 
+
         divPopup = document.createElement('div');
         let objPopup
         if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_appendPopup === 'object') {
@@ -142,7 +143,6 @@ export class C4gPopup {
                 this.setPosition(center);
             }
         } else {
-
             if (this.popupComponent) {
                 let activeComps = this.popupController.mapController.getActiveComponents();
                 if (!this.popupComponent.state.open) {

@@ -1499,7 +1499,7 @@ export class BetterLayerController {
     this.controllers[requestData.layerId] = new AbortController();
     const signal = this.controllers[requestData.layerId].signal;
     fetch(url, {signal}).then((response) => {
-      response.json().then(responseFunc).catch((error) => {console.log(error.message)});
+      response.json().then(responseFunc).catch((error) => {console.log(error)});
     })
     .catch((error) => {
       if (error.code && error.code !== 20) {
@@ -1566,7 +1566,7 @@ export class BetterLayerController {
       let arrChain = chain.split(',');
       let i = 1;
       layer = scope.arrLayers[arrChain[0]];
-      while(chain[i]) {
+      while(arrChain[i]) {
         layer = layer.childs[arrChain[i]];
         i++;
       }
@@ -1574,6 +1574,7 @@ export class BetterLayerController {
     else {
       layer = scope.arrLayers[chain]
     }
+
     if (layer.features) {
       layer.features = layer.features.concat(addedFeatures);
     }

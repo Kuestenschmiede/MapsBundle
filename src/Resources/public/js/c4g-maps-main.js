@@ -253,8 +253,9 @@ window.c4gMapsHooks.proxy_appendPopup.push(function(objPopup) {
   let layerUid = objPopup.popup.layer.get('ol_uid') || objPopup.popup.layer.ol_uid;
   let featureId = feature.get('ol_uid') || feature.ol_uid;
   if (layerUid || featureId) {
-    let layer = {};
+    let layer = null;
     let layerId = null;
+    let checkChilds = false;
 
     let layers = objPopup.mapController.proxy.layerController.arrLayers;
     for (let i = 0; i < layers.length; i++) {
@@ -280,14 +281,81 @@ window.c4gMapsHooks.proxy_appendPopup.push(function(objPopup) {
 
     }
 
-    let objLayers = objPopup.mapController.proxy.layerController.objLayers;
-    for (let i = 0; i < objLayers.length; i++) {
-      if (objLayers[i].id === layerId) {
-        layer = objLayers[i];
+    if (layerId === null) {
+
+      const searchLayerId = (layer) => {
+        let layerId = null;
+        // check if layer has features
+        if (layer.features.length > 0) {
+          for (let k = 0; k < layer.features.length; k++) {
+            if (layer.features[k].ol_uid === featureId) {
+              // match found, exit loop
+              layerId = layer.id;
+              break;
+            }
+            if (layer.features[k].get('ol_uid') === featureId) {
+              // match found, exit loop
+              layerId = layer.id;
+              break;
+            }
+          }
+        }
+
+        if (layerId) {
+          return layerId;
+        }
+
+        if (layer.childs.length > 0) {
+          for (let i = 0; i < layer.childs.length; i++) {
+            layerId = searchLayerId(layer.childs[i]);
+            if (layerId) {
+              break;
+            }
+          }
+        }
+
+        return layerId;
+      }; //
+
+      // traverse layer tree and look for layerId match
+      for (let i = 0; i < layers.length; i++) {
+        layerId = searchLayerId(layers[i]);
+        if (layerId) {
+          checkChilds = true;
+          break;
+        }
       }
     }
 
-    if (layer.popup_share) {
+    let objLayers = objPopup.mapController.proxy.layerController.objLayers;
+
+    const searchLayer = (layerId, layers) => {
+      for (let i = 0; i < layers.length; i++) {
+        if (layers[i].id === layerId) {
+          return layers[i];
+        }
+        if (layers[i].childs && layers[i].childs.length > 0) {
+          let res = searchLayer(layerId, layers[i].childs);
+          if (res !== null) {
+            return res;
+          }
+        }
+      }
+      return null;
+    }; //
+
+    if (checkChilds) {
+      layer = searchLayer(layerId, objLayers);
+    } else {
+      for (let i = 0; i < objLayers.length; i++) {
+        if (objLayers[i].id === layerId) {
+          layer = objLayers[i];
+          break;
+        }
+      }
+    }
+
+    if (layer && layer.popup_share) {
 
       let destUrl = "";
       let methods = layer.popup_share.methods || ['whatsapp', 'copylink', 'email'];
