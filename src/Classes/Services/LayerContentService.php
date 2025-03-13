@@ -65,7 +65,7 @@ class LayerContentService
     public function getLayerData($intId, $secondFetch = false, $lang = 'de')
     {
         // Find the requested layer
-        $objLayer = C4gMapsModel::findById($intId);
+        $objLayer = C4gMapsModel::findByPk($intId);
 
         // TODO: Check force-nodes for more structure elements
 

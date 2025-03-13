@@ -4957,6 +4957,17 @@ div.c4g-active.c4g-popup-wrapper {
 .c4g-popup-content img {
   max-width: 100%
 }
+.c4g-popup-share-button-wrapper {
+  padding: .75rem;
+  margin-bottom: .75rem
+}
+.c4g-popup-share-btn {
+  margin: 1em;
+  border: 1px solid;
+  border-radius: 3px;
+  padding: .5rem;
+  text-decoration: none
+}
 button.c4g-editor-view-trigger-select:before {
   content: "S"
 }

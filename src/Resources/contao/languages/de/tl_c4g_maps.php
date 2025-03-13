@@ -120,6 +120,14 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['hover_location'] = array('Hover-Effekt bei L
 $GLOBALS['TL_LANG']['tl_c4g_maps']['hover_style'] = array('Lokationsstil bei Hover-Effekt','Lokationsstil, der beim Hovern über die Lokation angezeigt werden soll.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popupType'] = array("Art der Popup-Generierung","Art der Popup-Generierung");
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popupTemplate'] = array("Popup Template","Popupinformationen aus einem Template laden");
+$GLOBALS['TL_LANG']['tl_c4g_maps']['popup_share_button'] = array("Teilen-Button im Popup anzeigen","Gibt an, ob ein Teilen-Button im Popup angezeigt werden soll.");
+$GLOBALS['TL_LANG']['tl_c4g_maps']['popup_share_type'] = array("Erlaubte Arten die Lokation zu teilen","Wählen Sie die Arten aus, wie die Lokation geteilt werden darf.");
+$GLOBALS['TL_LANG']['tl_c4g_maps']['popup_share_destination'] = array("Link-Ziel","Wohin soll der Link zeigen?");
+$GLOBALS['TL_LANG']['tl_c4g_maps']['popup_share_external_link'] = array("Externe Karten-URL","Hier kann die URL für die externe Karte angegeben werden.");
+$GLOBALS['TL_LANG']['tl_c4g_maps']['popup_share_message'] = array("Nachricht zum Teilen","Hier können Sie eine optionale Nachricht eingeben, die zusammen mit dem Link geteilt werden soll. Der Link wird dann hinter der Nachricht eingefügt.");
+
+
+
 $GLOBALS['TL_LANG']['tl_c4g_maps']['awesomeicon'] = array('Icon für den Reiter', 'Hier können Sie einen Unicode eingeben, der in ein Awesome-Font Icon umgewandelt wird (<a href="https://fontawesome.com/icons/" rel="noopener" target="_blank">fontawesome.com/icons/</a>).');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['hide_when_in_tab'] = array("Ausblenden wenn im Starboard-Reiter", "Wenn Sie diese Checkbox setzen, wird die Ebene im Starboard nicht angezeigt, wenn es in einem eigenen Starboardreiter liegt. Das ist hilfreich, wenn Sie das Elternelement einer bereits vorhandenen Strukturebene im Reiter nicht anzeigen wollen.");
 $GLOBALS['TL_LANG']['tl_c4g_maps']['hideInStarboard'] = array("Im Starboard nicht darstellen", "Wenn Sie diese Checkbox setzen, wird die Ebene im Starboard nicht angezeigt. Darunter liegende Kindelemente werden aber normal dargestellt.");
@@ -195,6 +203,23 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['THREAD']   = 'Verschieben, wen
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['popupType']['text'] = "Text";
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['popupType']['template'] = "Template-Datei";
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['popupType']['popup_info'] = "con4gis Vorgaben";
+
+$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['popup_share_type'] = [
+    'whatsapp' => "WhatsApp",
+    'email' => "E-Mail",
+    'copylink' => "Link kopieren"
+];
+
+$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['popup_share_destination'] = [
+    'con4gis_map' => "con4gis-Karte (diese)",
+    'con4gis_map_external' => "con4gis-Karte (extern)",
+    'con4gis_routing' => "con4gis Routing (diese Karte)",
+    'con4gis_routing_external' => "con4gis Routing (extern)",
+    'osm' => "OpenStreetMap-Karte (extern)",
+    'osm_routing' => "OpenStreetMap-Routing (extern)",
+    'google_map' => "Google-Maps-Karte",
+    'google_map_routing' => "Google-Maps-Routing",
+];
 
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['excludeFromSingleLayer']['0'] = "Deaktiviert";
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['excludeFromSingleLayer']['1'] = "Aktiviert";

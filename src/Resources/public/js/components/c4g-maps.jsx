@@ -1037,7 +1037,7 @@ export default class MapController extends Component {
   }
 
   changeActiveLayerChilds (childState, child, baseLayerId) {
-    if (child.activeForBaselayers !== "all") {
+    if (child.activeForBaselayers && child.activeForBaselayers !== "all") {
       let oldState = childState.active;
       childState.active = !!child.activeForBaselayers.find((element) => element === baseLayerId);
       if (oldState !== childState.active) {

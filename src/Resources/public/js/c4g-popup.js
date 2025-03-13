@@ -4,7 +4,9 @@ import ReactDOM from 'react-dom';
 import {PopupContainer} from "./components/c4g-popup-container";
 import * as React from "react";
 import {Point} from "ol/geom";
+
 export class C4gPopup {
+
     constructor(popupController) {
         const scope = this;
         this.popupController = popupController;
@@ -85,11 +87,13 @@ export class C4gPopup {
             popupController.mapController.components.popup = this.popupComponent;
         }
     }
+
     setContent (popupConfig) {
         let feature = popupConfig.feature;
         let layer = popupConfig.layer;
         let popupContent;
         let divPopup;
+
         if (feature.get('features')) {
             let features = feature.get('features');
             for (let i = 0; i < features.length; i++) {
@@ -98,11 +102,31 @@ export class C4gPopup {
         } else {
             popupContent = utils.replaceAllPlaceholders(popupConfig.popup.content, feature, layer, this.popupController.mapController.data.lang);
         }
+
+
         divPopup = document.createElement('div');
+        let objPopup
+        if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_appendPopup === 'object') {
+            objPopup = {
+                popup: popupConfig,
+                content: popupContent,
+                mapController: this.popupController.mapController,
+                comp: this.popupComponent || null,
+                div: divPopup,
+                callback: null
+            };
+            utils.callHookFunctions(window.c4gMapsHooks.proxy_appendPopup, objPopup);
+            if (popupContent !== objPopup.content) {
+
+            }
+            popupContent = objPopup.content;
+        }
+
         if (this.popupController.popupHandling < 3) {
             if (!this.popup.getMap()) { //popup not already in the map
                 this.popupController.mapController.map.addOverlay(this.popup);
             }
+
             divPopup.innerHTML = popupContent;
             this.popupContent.innerHTML = '';
             this.popupContent.appendChild(divPopup);
@@ -118,27 +142,28 @@ export class C4gPopup {
                 let geometry = new Point(center);
                 this.setPosition(center);
             }
-        }
-        else {
+        } else {
             if (this.popupComponent) {
                 let activeComps = this.popupController.mapController.getActiveComponents();
                 if (!this.popupComponent.state.open) {
                     this.popupComponent.open(activeComps);
                 }
-
-                this.popupComponent.setContent(popupContent);
+                if (divPopup.children.length > 0) {
+                    let contentNode = document.createElement('div');
+                    contentNode.innerHTML = popupContent;
+                    divPopup.appendChild(contentNode);
+                    this.popupComponent.setContent(divPopup.outerHTML);
+                    if (objPopup && objPopup.callback && typeof objPopup.callback === "function") {
+                        objPopup.callback();
+                    }
+                } else {
+                    this.popupComponent.setContent(popupContent, popupConfig);
+                }
             }
         }
-        if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_appendPopup === 'object') {
-            utils.callHookFunctions(window.c4gMapsHooks.proxy_appendPopup, {
-                popup: popupConfig,
-                content: popupContent,
-                mapController: this.popupController.mapController,
-                comp: this.popupComponent || null,
-                div: divPopup
-            });
-        }
+
     }
+
     setPosition (geometry) {
         let map = this.popupController.mapController.map;
         let element = this.popup.getElement();

@@ -152,7 +152,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                                          '{expert_legend:hide},excludeFromSingleLayer,be_optimize_checkboxes_limit;',
 
         'table'                       => '{general_legend},name,location_type;'.
-                                         '{location_legend},data_layername,hide_child,initial_opened,exemptFromRealFilter,exemptFromFilter,filterByBaseLayer,data_hidelayer,hideInStarboard,addZoom,tab_source,tab_pid,tab_pid1,tab_labeldisplay,tab_tooltipdisplay,tab_directlink,tab_force_target_blank,tab_whereclause,tabJoinclause,tab_orderby,tab_filter_alias,routing_to,locstyle,zIndex,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,cluster_locations,async_content,zoom_locations,hover_location,hide_when_in_tab,cssClass;'.
+                                         '{location_legend},data_layername,hide_child,initial_opened,exemptFromRealFilter,exemptFromFilter,filterByBaseLayer,data_hidelayer,hideInStarboard,addZoom,tab_source,tab_pid,tab_pid1,tab_labeldisplay,tab_tooltipdisplay,tab_directlink,tab_force_target_blank,tab_whereclause,tabJoinclause,tab_orderby,tab_filter_alias,routing_to,popup_share_button,locstyle,zIndex,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,cluster_locations,async_content,zoom_locations,hover_location,hide_when_in_tab,cssClass;'.
                                          '{protection_legend:hide},protect_element;'.
                                          '{publish_legend:hide},published,publishStart,publishStop;'.
                                          '{expert_legend:hide},excludeFromSingleLayer,be_optimize_checkboxes_limit;',
@@ -224,7 +224,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
     'subpalettes' =>
         [
         'use_specialprofile'          => 'specialprofile, specialprofile_mobile, specialprofile_groups',
-        'enablePopup'                 => 'popup_info,routing_to',
+        'enablePopup'                 => 'popup_info,routing_to,popup_share_button',
         'protect_element'             => 'permitted_groups',
         'popup_extend'                => 'forums',
         'cluster_locations'           => 'cluster_distance, cluster_fillcolor, cluster_fontcolor, cluster_zoom,cluster_popup',
@@ -671,7 +671,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             [
                 'exclude'                 => true,
                 'inputType'               => 'fileTree',
-                'eval'                    => ['trailingSlash' => false, 'extensions' => 'geojson,kml,gpx,osm', 'files' => true, 'fieldType' => 'radio'],
+                'eval'                    => ['trailingSlash' => false, 'extensions' => 'geojson,kml,gpx,osm,json', 'files' => true, 'fieldType' => 'radio'],
                 'sql'                     => "binary(16) NULL"
             ],
         'data_url' =>
@@ -984,6 +984,54 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 'eval'                    => ['submitOnChange' => true],
                 'sql'                     => "char(1) NOT NULL default '1'"
             ],
+        'popup_share_button' => [
+            'exclude'                 => true,
+            'default'                 => false,
+            'inputType'               => 'checkbox',
+            'eval'                    => ['submitOnChange' => true],
+            'sql'                     => "char(1) NOT NULL default '0'"
+        ],
+        'popup_share_type' => [
+            'exclude'                 => true,
+            'default'                 => 'copylink',
+            'inputType'               => 'select',
+            'options'                 => ['whatsapp', 'email', 'copylink'],
+            'eval'                    => ['mandatory'=>false, 'chosen' => true, 'multiple' => true],
+            'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['popup_share_type'],
+            'sql'                     => "blob NULL"
+        ],
+        'popup_share_destination' => [
+            'exclude'                 => true,
+            'default'                 => 'con4gis_map',
+            'inputType'               => 'select',
+            'options'                 => [
+                'con4gis_map',
+                'con4gis_map_external',
+                'con4gis_routing',
+                'con4gis_routing_external',
+                'osm',
+                'osm_routing',
+                'google_map',
+                'google_map_routing',
+            ],
+            'eval'                    => ['mandatory'=>false, 'submitOnChange' => true],
+            'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['popup_share_destination'],
+            'sql'                     => "varchar(30) NOT NULL default 'con4gis_map'"
+        ],
+        'popup_share_external_link' => [
+            'exclude'                 => true,
+            'inputType'               => 'text',
+            'default'                 => '',
+            'eval'                    => ['tl_class'=>'long'],
+            'sql'                     => "varchar(255) NOT NULL default ''"
+        ],
+        'popup_share_message' => [
+            'exclude'                 => true,
+            'inputType'               => 'text',
+            'default'                 => '',
+            'eval'                    => ['tl_class'=>'long'],
+            'sql'                     => "varchar(255) NOT NULL default ''"
+        ],
         'popupType' =>
             [
                 'exclude'                 => true,

@@ -58,6 +58,9 @@ export class PopupContainer extends Component {
       headerClass += " c4g-routing";
       addButtons = <this.state.conststr config={this.state.config}/>;
     }
+
+
+
     if (this.state.content) {
       return (
           <div className={className}>
@@ -70,7 +73,6 @@ export class PopupContainer extends Component {
                 </Titlebar>
               </Suspense>
               <div className={"c4g-popup-content"} dangerouslySetInnerHTML={{__html: this.state.content}}/>
-
             </div>
           </div>
       );
@@ -87,7 +89,7 @@ export class PopupContainer extends Component {
     });
   }
 
-  setContent(content) {
+  setContent(content, popupConfig) {
     this.setState({content: content});
   }
 

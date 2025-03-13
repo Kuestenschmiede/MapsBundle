@@ -821,12 +821,12 @@ export class BetterLayerController {
       let customStyleFunc = false;
       let vectorSource = new VectorSource();
       if (layer.async_content && layer.async_content !== "0") {
-        let strategy = layer.type === "table" || (layer.content && layer.content[0].settings.boundingBox) ? bbox : all;
+        let strategy = layer.type === "table" || (layer.content && layer.content[0].settings && layer.content[0].settings.boundingBox) ? bbox : all;
         vectorSource = new VectorSource({"strategy": strategy});
         const scope = this;
 
         let loaderFunc = function(extent, resolution, projection) {
-          if (layer.content && layer.content[0].settings.boundingBox && (extent[0] === Infinity || extent[0] === -Infinity)) {
+          if (layer.content && layer.content[0].settings && layer.content[0].settings.boundingBox && (extent[0] === Infinity || extent[0] === -Infinity)) {
             vectorSource.removeLoadedExtent();
           }
           else if (layer.type === "overpass") {
@@ -1503,7 +1503,7 @@ export class BetterLayerController {
     this.controllers[requestData.layerId] = new AbortController();
     const signal = this.controllers[requestData.layerId].signal;
     fetch(url, {signal}).then((response) => {
-      response.json().then(responseFunc).catch((error) => {console.log(error.message)});
+      response.json().then(responseFunc).catch((error) => {console.log(error)});
     })
     .catch((error) => {
       if (error.code && error.code !== 20) {
@@ -1570,7 +1570,7 @@ export class BetterLayerController {
       let arrChain = chain.split(',');
       let i = 1;
       layer = scope.arrLayers[arrChain[0]];
-      while(chain[i]) {
+      while(arrChain[i]) {
         layer = layer.childs[arrChain[i]];
         i++;
       }
@@ -1578,6 +1578,7 @@ export class BetterLayerController {
     else {
       layer = scope.arrLayers[chain]
     }
+
     if (layer.features) {
       layer.features = layer.features.concat(addedFeatures);
     }

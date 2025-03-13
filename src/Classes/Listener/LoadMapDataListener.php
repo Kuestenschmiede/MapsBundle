@@ -51,7 +51,7 @@ class LoadMapDataListener
     {
         $mapData = $event->getMapData();
         System::loadLanguageFile('tl_c4g_routing_configuration');
-        $profile = C4gMapProfilesModel::findById($mapData['profile']);
+        $profile = C4gMapProfilesModel::findByPk($mapData['profile']);
         $mapFunctions = \Contao\StringUtil::deserialize($profile->mapFunctions, true);
         $buttons = array_flip($mapFunctions);
         $enabled = array_key_exists('routing', $buttons) ? $buttons['routing'] + 1 : 0;

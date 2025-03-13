@@ -24,7 +24,6 @@ export class C4gStarboardStyle extends Component {
         }
     }
     render() {
-
         // Create label for interaction-trigger
         let styleTriggerLabel = null;
         let locstyle = this.props.styleData.arrLocStyles[this.props.styleId];

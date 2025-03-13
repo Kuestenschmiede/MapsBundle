@@ -39,7 +39,7 @@ class LoadLayerContentDataEvent extends Event
     /**
      * @return int
      */
-    public function getLayerId(): int
+    public function getLayerId(): int|string
     {
         return $this->layerId;
     }
@@ -47,7 +47,7 @@ class LoadLayerContentDataEvent extends Event
     /**
      * @param int $layerId
      */
-    public function setLayerId(int $layerId): void
+    public function setLayerId(int|string $layerId): void
     {
         $this->layerId = $layerId;
     }
