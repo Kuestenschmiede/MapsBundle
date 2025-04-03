@@ -26,6 +26,7 @@ export class StarboardScopeItem extends Component {
     this.loadPopup = this.loadPopup.bind(this);
     this.observerFunction = this.observerFunction.bind(this);
   }
+  
   observerFunction (entries, observer) {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
@@ -38,8 +39,9 @@ export class StarboardScopeItem extends Component {
           observer.unobserve(this.ref.current);
         }
       }
-    })
+    });
   }
+
   loadPopup() {
     let popup = this.props.feature.get('popup');
     if (!popup.contentStarboard && popup.async) {
@@ -73,25 +75,23 @@ export class StarboardScopeItem extends Component {
       });
     }
   }
+
   highlightFeature () {
     this.props.feature.set("markLocstyle", true);
     window.setTimeout(() => {
       this.props.feature.set("markLocstyle", false);
     }, 3000);
   }
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (this.props.feature.ol_uid !== prevProps.feature.ol_uid) {
-      this.loadPopup()
-    }
-  }
+
   componentDidMount() {
     if (this.ref.current && !this.observer) {
       this.observer = new IntersectionObserver(this.observerFunction, {root:document, threshold: 0.1});
-      this.observer.observe(this.ref.current)
+      this.observer.observe(this.ref.current);
     }
   }
 
   componentWillUnmount() {
+    this.observer.unobserve(this.ref.current);
     this.observer = null;
   }
 

@@ -1570,7 +1570,7 @@ export class BetterLayerController {
       let arrChain = chain.split(',');
       let i = 1;
       layer = scope.arrLayers[arrChain[0]];
-      while(arrChain[i]) {
+      while(layer && arrChain[i]) {
         layer = layer.childs[arrChain[i]];
         i++;
       }
@@ -1579,10 +1579,10 @@ export class BetterLayerController {
       layer = scope.arrLayers[chain]
     }
 
-    if (layer.features) {
+    if (layer && layer.features) {
       layer.features = layer.features.concat(addedFeatures);
     }
-    else if (layer.vectorLayer) {
+    else if (layer && layer.vectorLayer) {
       let source = layer.vectorLayer.getSource().getSource();
       source.addFeatures(features);
     }
