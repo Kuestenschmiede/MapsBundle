@@ -22,6 +22,7 @@ import 'elm-pep';
 
 window.initMap = function(mapData) {
   let mapDiv = null;
+
   if (mapData.mapDiv) {
     mapDiv = document.querySelector("#" + mapData.mapDiv);
   }
@@ -114,8 +115,10 @@ window.initMap = function(mapData) {
 };
 
 window.initMaps = function(mapData) {
+  let renderMap = true;
   for (let key in mapData) {
     if (mapData.hasOwnProperty(key)) {
+      renderMap = true;
       let mapDiv;
       if (mapData[key].mapDiv) {
         mapDiv = jQuery(mapData[key].mapDiv)[0] || jQuery("#" + mapData[key].mapDiv)[0] || jQuery( "." + mapData[key].mapDiv)[0]
@@ -193,13 +196,14 @@ window.initMaps = function(mapData) {
               });
               return null;
             }
-            return ReactDOM.render(
+            ReactDOM.render(
                 <Suspense fallback={<div>Loading...</div>}>
                   <ConsentBanner mapData={mapData[key]}/>
                   <MapController mapData={mapData[key]}/>
                 </Suspense>,
                 jQuery("#c4g-map-container-" + mapData[key].mapId)[0]
             );
+            renderMap = false;
           }
         }
 
@@ -217,28 +221,30 @@ window.initMaps = function(mapData) {
           mapData[key].renderAsObserver = false;
         }
 
-        if (mapData[key].renderAsObserver) {
-          let observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-              if (entry.intersectionRatio > 0) {
-                ReactDOM.render(
-                    <Suspense fallback={<div>Loading...</div>}>
-                      <MapController mapData={mapData[key]}/>
-                    </Suspense>,
-                    entry.target
-                );
-              }
-            });
+        if (renderMap) {
+          if (mapData[key].renderAsObserver) {
+            let observer = new IntersectionObserver(entries => {
+              entries.forEach(entry => {
+                if (entry.intersectionRatio > 0) {
+                  ReactDOM.render(
+                      <Suspense fallback={<div>Loading...</div>}>
+                        <MapController mapData={mapData[key]}/>
+                      </Suspense>,
+                      entry.target
+                  );
+                }
+              });
 
-          });
-          observer.observe(mapDiv);
-        } else {
-          ReactDOM.render(
-              <Suspense fallback={<div>Loading...</div>}>
-                <MapController mapData={mapData[key]}/>
-              </Suspense>,
-              document.querySelector("#c4g-map-container-" + mapData[key].mapId)
-          );
+            });
+            observer.observe(mapDiv);
+          } else {
+            ReactDOM.render(
+                <Suspense fallback={<div>Loading...</div>}>
+                  <MapController mapData={mapData[key]}/>
+                </Suspense>,
+                document.querySelector("#c4g-map-container-" + mapData[key].mapId)
+            );
+          }
         }
       }
     }
