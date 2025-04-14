@@ -578,6 +578,8 @@ class LayerContentService
         // for non-utf8 charsets
         $connectionParams['dbCharset'] = 'utf8mb4';
 
+
+
         //check parent values
         if ($ptableArr && $ptableField && $ptableCompareFieldArr) {
             foreach ($ptableArr as $key => $ptable) {
@@ -617,6 +619,7 @@ class LayerContentService
             }
         }
 
+
         $stmt = '';
 
         if ($objLayer->tab_filter_alias) {
@@ -651,6 +654,7 @@ class LayerContentService
                 }
             }
         }
+
         if ($stmt && $objLayer->tab_whereclause) {
             $stmt .= ' ('.$objLayer->tab_whereclause.')';
         } else if ($objLayer->tab_whereclause) {
@@ -661,7 +665,13 @@ class LayerContentService
             }
             $stmt .= ' ('.$objLayer->tab_whereclause.')';
         }
+
         if ($sourceTable) {
+
+            if (!$pidOption) {
+                $qWhere = "";
+            }
+
             $queryCount = "SELECT COUNT(*) AS count FROM `$sourceTable`" . $qWhere . $pidOption . $and . $whereClause . $stmt;
             $resultCount = Database::getInstance($connectionParams)->prepare($queryCount)->execute()->fetchAssoc()['count'];
 

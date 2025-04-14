@@ -23,6 +23,7 @@ use Contao\FilesModel;
 use Contao\Image;
 use Contao\StringUtil;
 use Contao\System;
+use Contao\Validator;
 
 /**
  * Class LayerContentDataService
@@ -99,6 +100,10 @@ class LayerContentDataService extends Frontend
                 // hotfix
                 if (!is_array($value)) {
                     $arrResult[$idx] = mb_convert_encoding($value, 'UTF-8', mb_detect_encoding($value));
+                }
+                if (Validator::isBinaryUuid($value)) {
+                    // unset binary fields as they break the json encoding
+                    unset($arrResult[$idx]);
                 }
             }
             $result[$key] = $arrResult;
@@ -254,8 +259,7 @@ class LayerContentDataService extends Frontend
                                         if ($image) {
                                             $popupContent .= '<img src="' . $image . '">';
                                         }
-                                    }
-                                    else{
+                                    } else if (!Validator::isBinaryUuid($arrElement[$column])) {
                                         $popupContent .= '<img src="' . $arrElement[$column] . '">';
                                     }
                                 }

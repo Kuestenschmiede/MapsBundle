@@ -625,6 +625,7 @@ class LayerService
             }
         } catch (\Exception $e) {
             C4gLogModel::addLogEntry('map', 'Error while loading the location type ' . $objLayer->location_type);
+            C4gLogModel::addLogEntry('map', $e->getMessage());
 
             return false;
         }
