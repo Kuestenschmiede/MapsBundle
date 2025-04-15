@@ -80,8 +80,20 @@ class LayerContentDataService extends Frontend
         $sqlSelect .= $this->addPopupFields($objConfig);
         
         if ($objLayer->tab_pid && $objConfig->ptableField) {
-            $whereParent = " AND " . $objConfig->ptableField . " = " . $objLayer->tab_pid;
+            $pTableFields = StringUtil::deserialize($objConfig->ptableField, true);
+            if (count($pTableFields) === 1) {
+                $whereParent = " AND " . $pTableFields[0] . " = " . $objLayer->tab_pid;
+            } else if (count($pTableFields) === 0) {
+                $whereParent = "";
+            } else {
+                // multiple pid fields
+                $whereParent = "";
+                foreach ($pTableFields as $pTableField) {
+                    $whereParent .= " AND " . $pTableField . " = " . $objLayer->tab_pid;
+                }
+            }
         }
+
         $strQuery = "SELECT ".$objConfig->tableSource.".id,". $sqlSelect ." FROM ".$objConfig->tableSource . $onClause . $sqlLoc . $andbewhereclause . $whereParent;
         $connectionParams = $objConfig->customDB ?[
             'dbDatabase' => $objConfig->customDB
