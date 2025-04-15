@@ -668,7 +668,7 @@ class LayerContentService
 
         if ($sourceTable) {
 
-            if (!$pidOption) {
+            if (!$pidOption && !$stmt) {
                 $qWhere = "";
             }
 
