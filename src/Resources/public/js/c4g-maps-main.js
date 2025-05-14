@@ -418,36 +418,37 @@ window.c4gMapsHooks.proxy_appendPopup.push(function(objPopup) {
       let buttonNodes = document.createElement('div');
       buttonNodes.classList.add("c4g-popup-share-button-wrapper");
       let additionalMessage = layer.popup_share.additionalMessage || "";
-      let destLink = `<a href='${destUrl}'>${destUrl}</a>`
-      for (let i = 0; i < methods.length; i++) {
+      let destLink = `<a href='${destUrl}'>${destUrl}</a>`;
 
+      for (let i = 0; i < methods.length; i++) {
         let node = null;
+
         switch (methods[i]) {
           case "whatsapp":
             let waUrl = "https://api.whatsapp.com/send?text=" + additionalMessage + " " + encodeURIComponent(destUrl);
             node = document.createElement('a');
             node.href = waUrl;
-            node.classList.add("c4g-popup-share-btn");
+            node.classList.add("btn", "btn-primary", "whatsapp");
             node.innerText = "Auf WhatsApp teilen";
-            buttonNodes.appendChild(node);
             break;
           case "email":
             let mailUrl = "mailto:?subject=&body=" + additionalMessage + " " + encodeURIComponent(destUrl);
             node = document.createElement('a');
             node.href = mailUrl;
-            node.classList.add("c4g-popup-share-btn");
+            node.classList.add("btn", "btn-primary", "email");
             node.innerText = "Per E-Mail senden";
-            buttonNodes.appendChild(node);
             break;
           case "copylink":
-            let button = document.createElement('a');
-            button.innerText = "Link kopieren";
-            button.href = "#";
-            button.classList.add("c4g-popup-share-btn");
-            button.id = "copylink-button";
-            buttonNodes.appendChild(button);
+            node = document.createElement('a');
+            node.innerText = "Link kopieren";
+            node.href = "#";
+            node.classList.add("btn", "btn-primary", "clipboard");
+            node.id = "copylink-button";
             break;
         }
+
+        buttonNodes.appendChild(node);
+
       }
 
       objPopup.callback = () => {

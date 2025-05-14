@@ -152,7 +152,7 @@ export class C4gPopup {
                     let contentNode = document.createElement('div');
                     contentNode.innerHTML = popupContent;
                     divPopup.appendChild(contentNode);
-                    this.popupComponent.setContent(divPopup.outerHTML);
+                    this.popupComponent.setContent(divPopup.innerHTML);
                     if (objPopup && objPopup.callback && typeof objPopup.callback === "function") {
                         objPopup.callback();
                     }
