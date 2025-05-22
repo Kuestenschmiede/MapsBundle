@@ -15,6 +15,7 @@ use con4gis\CoreBundle\Classes\C4GUtils;
 use con4gis\CoreBundle\Classes\HttpResultHelper;
 use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
 use con4gis\MapsBundle\Classes\Utils;
+use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use Contao\FrontendUser;
 use Contao\StringUtil;
@@ -415,6 +416,24 @@ class LayerService
         if ($objLayer->addZoom) {
             $arrLayerData['zoomTo'] = true;
         }
+
+        $layerPid = $objLayer->pid;
+        $profile = null;
+
+        while ($layer = C4gMapsModel::findById($layerPid)) {
+
+            if ($layer->location_type === "map") {
+                $profile = C4gMapProfilesModel::findById($layer->profile);
+                break;
+            }
+
+            $layerPid = $layer->pid;
+        }
+
+        if ($profile !== null && $profile->starboardInvertZoomActivate) {
+            $arrLayerData['zoomTo'] = true;
+        }
+
         // hide when element is rendered in starboard tab
         if ($objLayer->hide_when_in_tab) {
             $arrLayerData['hide_when_in_tab'] = true;
