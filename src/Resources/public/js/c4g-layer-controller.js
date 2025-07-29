@@ -507,7 +507,7 @@ export class BetterLayerController {
     return extent;
   }
   getExtentForLayer(extent, layerKey) {
-    let features = this.objIds[layerId];
+    let features = this.objIds[layerKey];
     if (features && features.length) {
       for (let i in features) {
         if (features.hasOwnProperty(i)) {
