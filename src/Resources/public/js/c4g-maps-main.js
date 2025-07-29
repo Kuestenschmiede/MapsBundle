@@ -263,7 +263,7 @@ window.c4gMapsHooks.proxy_appendPopup.push(function(objPopup) {
     let layerId = null;
     let checkChilds = false;
 
-    let layers = objPopup.mapController.proxy.layerController.arrLayers;
+    let layers = objPopup.mapController.proxy.layerController.arrLayers || [];
     for (let i = 0; i < layers.length; i++) {
       if (layers[i].vectorLayer) {
         if (layers[i].vectorLayer && layers[i].vectorLayer.get('ol_uid') === layerUid) {
@@ -334,6 +334,10 @@ window.c4gMapsHooks.proxy_appendPopup.push(function(objPopup) {
     }
 
     let objLayers = objPopup.mapController.proxy.layerController.objLayers;
+    if (!objLayers) {
+      // shouldn't happen
+      return;
+    }
 
     const searchLayer = (layerId, layers) => {
       for (let i = 0; i < layers.length; i++) {

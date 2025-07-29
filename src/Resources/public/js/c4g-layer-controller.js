@@ -115,24 +115,7 @@ export class BetterLayerController {
         size = features.length;
         feature = features[0];
       }
-      if (feature && feature.getStyle()) {
-        returnStyle = feature.getStyle();
-      }
-      else if (feature && feature.get && feature.get('locstyle')) {
-        let locstyle = feature.get('locstyle');
-        if (scope.proxy.locationStyleController.arrLocStyles && scope.proxy.locationStyleController.arrLocStyles[locstyle]) {
-          if (!scope.proxy.locationStyleController.arrLocStyles[locstyle].style) {
-            scope.proxy.locationStyleController.arrLocStyles[locstyle].style = scope.proxy.locationStyleController.arrLocStyles[locstyle].getStyleFunction();
-          }
-          let style = scope.proxy.locationStyleController.arrLocStyles[locstyle].style;
-          if (typeof style === "function") {
-            returnStyle = style(feature, resolution, false);
-          }
-          else {
-            returnStyle = scope.proxy.locationStyleController.arrLocStyles[locstyle].style;
-          }
-        }
-      }
+
       if (size > 1 && returnStyle && Array.isArray(returnStyle)) {
         let zIndex = 0;
         if (returnStyle[0] && returnStyle[0].setZIndex && feature.get('zindex')) {
@@ -211,6 +194,7 @@ export class BetterLayerController {
               zIndex: zIndex
             })
         );
+
         if (feature && feature.get("markLocstyle")) {
           let color = "#" + scope.proxy.mapData.starboard.colorZoomMarker;
           let markFill = new Fill({
@@ -236,12 +220,31 @@ export class BetterLayerController {
           });
           returnStyle.push(markStyle);
         }
-      }
-      else if (returnStyle && Array.isArray(returnStyle)) {
+      } else if (returnStyle && Array.isArray(returnStyle)) {
         let zIndex = 0;
+
+        if (feature && feature.getStyle()) {
+          returnStyle = feature.getStyle();
+        } else if (feature && feature.get && feature.get('locstyle')) {
+          let locstyle = feature.get('locstyle');
+          if (scope.proxy.locationStyleController.arrLocStyles && scope.proxy.locationStyleController.arrLocStyles[locstyle]) {
+            if (!scope.proxy.locationStyleController.arrLocStyles[locstyle].style) {
+              scope.proxy.locationStyleController.arrLocStyles[locstyle].style = scope.proxy.locationStyleController.arrLocStyles[locstyle].getStyleFunction();
+            }
+            let style = scope.proxy.locationStyleController.arrLocStyles[locstyle].style;
+            if (typeof style === "function") {
+              returnStyle = style(feature, resolution, false);
+            }
+            else {
+              returnStyle = scope.proxy.locationStyleController.arrLocStyles[locstyle].style;
+            }
+          }
+        }
+
         if (returnStyle[0] && returnStyle[0].setZIndex && feature.get('zindex')) {
           zIndex += feature.get('zindex');
         }
+
         if (returnStyle[0] &&returnStyle[0].setZIndex) {
           let geometry = feature.getGeometry().clone().transform("EPSG:3857", "EPSG:4326").getCoordinates();
           geometry = typeof geometry[0] == "number" ? geometry : geometry[0];
@@ -249,22 +252,23 @@ export class BetterLayerController {
           zIndex += 100 - geometry[1];
           returnStyle[0].setZIndex(zIndex);
         }
+
         if (feature && feature.get("markLocstyle")) {
           let color = "#" + scope.proxy.mapData.starboard.colorZoomMarker;
           let markFill = new Fill({
             color: color
           });
           let radius;
+
           if (returnStyle[0].getImage() && returnStyle[0].getImage().getRadius && returnStyle[0].getImage().getRadius()) {
             radius = parseInt(returnStyle[0].getImage().getRadius());
-          }
-          else if (returnStyle[0].getImage() && returnStyle[0].getImage().getIcon && returnStyle[0].getImage() && returnStyle[0].getImage().getIcon()) {
+          } else if (returnStyle[0].getImage() && returnStyle[0].getImage().getIcon && returnStyle[0].getImage() && returnStyle[0].getImage().getIcon()) {
             radius = returnStyle[0].getImage().getIcon().getSize();
             radius = radius[0];
-          }
-          else {
+          } else {
             radius = 25
           }
+
           let markStyle = new Style({
             image: new Circle({
               fill: markFill,
@@ -278,6 +282,7 @@ export class BetterLayerController {
 
       return returnStyle
     };
+
     if (this.mapController.data.cluster_all) {
       this.vectorSource = new Cluster({
         source: this.vectorSource,
@@ -285,10 +290,12 @@ export class BetterLayerController {
         distance: this.mapController.data.cluster_distance || 20
       });
     }
+
     this.vectorLayer = new Vector({
       source: this.vectorSource,
       zIndex: 10
     });
+
     this.vectorLayers = [];
     this.layerRequests = {};
     this.ovpKey = this.mapController.data.ovp_key;
@@ -299,15 +306,15 @@ export class BetterLayerController {
   hide (id, hideElement, layerId, layerKey) {
     let features,
         vectorLayer;
+
     if (Array.isArray(hideElement)) {
       features = hideElement;
-    }
-    else if (hideElement instanceof Vector) {
+    } else if (hideElement instanceof Vector) {
       vectorLayer = hideElement
-    }
-    else {
+    } else {
       features = this.objIds[layerId];
     }
+
     if (features) {
       this.mapController.map.getView().dispatchEvent({
         type: "change:resolution"
@@ -328,8 +335,7 @@ export class BetterLayerController {
           }
         }
       }
-    }
-    else if (vectorLayer) {
+    } else if (vectorLayer) {
       this.mapController.map.removeLayer(vectorLayer);
     }
   }
@@ -1546,6 +1552,11 @@ export class BetterLayerController {
     contentFeature.set('tid', contentData['id']);
     let locstyle = contentData['locstyle'] || layer.locstyle;
     contentFeature.set('locstyle', locstyle);
+
+    if (layer.cluster_fillcolor && layer.cluster_fontcolor) {
+      contentFeature.set('cluster_fillcolor', contentData.cluster_fillcolor);
+      contentFeature.set('cluster_fontcolor', contentData.cluster_fontcolor);
+    }
 
     if (this.mapController.filter) {
       if (!!parseFloat(this.mapController.data.filterHandling)) {
