@@ -110,14 +110,34 @@ export class BetterLayerController {
     this.clusterStyleFunction = function(feature, resolution) {
       let size = false;
       let returnStyle = [];
+
       if (feature && feature.get && feature.get('features')) {
         let features = feature.get('features');
         size = features.length;
         feature = features[0];
       }
 
+      if (feature && feature.getStyle()) {
+        returnStyle = feature.getStyle();
+      } else if (feature && feature.get && feature.get('locstyle')) {
+        let locstyle = feature.get('locstyle');
+        if (scope.proxy.locationStyleController.arrLocStyles && scope.proxy.locationStyleController.arrLocStyles[locstyle]) {
+          if (!scope.proxy.locationStyleController.arrLocStyles[locstyle].style) {
+            scope.proxy.locationStyleController.arrLocStyles[locstyle].style = scope.proxy.locationStyleController.arrLocStyles[locstyle].getStyleFunction();
+          }
+          let style = scope.proxy.locationStyleController.arrLocStyles[locstyle].style;
+          if (typeof style === "function") {
+            returnStyle = style(feature, resolution, false);
+          }
+          else {
+            returnStyle = scope.proxy.locationStyleController.arrLocStyles[locstyle].style;
+          }
+        }
+      }
+
       if (size > 1 && returnStyle && Array.isArray(returnStyle)) {
         let zIndex = 0;
+
         if (returnStyle[0] && returnStyle[0].setZIndex && feature.get('zindex')) {
           zIndex += feature.get('zindex');
         }
@@ -141,11 +161,14 @@ export class BetterLayerController {
             scale = returnStyle[0].getImage().getScale();
             iconOffset = [iconOffset[0] * scale, iconOffset[1] * scale];
           }
+
           if (scope.proxy.mapData.cluster_fillcolor) {
             let countFeatures = scope.vectorCollection.getLength();
             // let scaleForCount = (size/countFeatures - 1/countFeatures) * 2;
             let scaleForCount = ((size - 1)/countFeatures);
-            scale += scaleForCount;
+            if (scaleForCount !== Infinity) {
+              scale += scaleForCount;
+            }
           }
         }
 
@@ -222,24 +245,6 @@ export class BetterLayerController {
         }
       } else if (returnStyle && Array.isArray(returnStyle)) {
         let zIndex = 0;
-
-        if (feature && feature.getStyle()) {
-          returnStyle = feature.getStyle();
-        } else if (feature && feature.get && feature.get('locstyle')) {
-          let locstyle = feature.get('locstyle');
-          if (scope.proxy.locationStyleController.arrLocStyles && scope.proxy.locationStyleController.arrLocStyles[locstyle]) {
-            if (!scope.proxy.locationStyleController.arrLocStyles[locstyle].style) {
-              scope.proxy.locationStyleController.arrLocStyles[locstyle].style = scope.proxy.locationStyleController.arrLocStyles[locstyle].getStyleFunction();
-            }
-            let style = scope.proxy.locationStyleController.arrLocStyles[locstyle].style;
-            if (typeof style === "function") {
-              returnStyle = style(feature, resolution, false);
-            }
-            else {
-              returnStyle = scope.proxy.locationStyleController.arrLocStyles[locstyle].style;
-            }
-          }
-        }
 
         if (returnStyle[0] && returnStyle[0].setZIndex && feature.get('zindex')) {
           zIndex += feature.get('zindex');
