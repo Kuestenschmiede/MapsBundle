@@ -61,7 +61,7 @@ export class BackendEditor extends Sideboard {
     this.langConstants = jQuery.extend(getLanguage(options.mapController.data), getEditorLanguage(options.mapController.data));
 
     if (!this.options.mapController) {
-      console.warn('Coul not initiallize Editor, without valid mapController.');
+      console.warn('Could not initiallize Editor, without valid mapController.');
       return false;
     }
 

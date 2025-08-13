@@ -121,7 +121,8 @@ class TlC4gMapLocstyles extends Backend
     //ToDo Rework without proportional
     public static function getFilteredSizes() {
         $filteredSizes = [];
-        $imageSizes = System::getContainer()->get('contao.image.sizes')->getOptionsForUser(BackendUser::getInstance());
+
+        $imageSizes = \Contao\System::getContainer()->get('contao.image.sizes')->getOptionsForUser(BackendUser::getInstance());
         $just = 'proportional';
 
         if ($imageSizes !== false) {
