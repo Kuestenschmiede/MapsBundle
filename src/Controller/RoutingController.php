@@ -13,36 +13,41 @@ namespace con4gis\MapsBundle\Controller;
 
 
 use con4gis\CoreBundle\Controller\BaseController;
+use con4gis\MapsBundle\Classes\Services\AreaService;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\System;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class RoutingController extends BaseController
 {
+    private AreaService $areaService;
+
     /**
      * MapsController constructor.
      */
     public function __construct(
         ContainerInterface $container,
-        ContaoFramework $framework
+        ContaoFramework $framework,
+        AreaService $areaService
     ) {
         parent::__construct($container);
         $framework->initialize(true);
+        $this->areaService = $areaService;
     }
     
     public function getAreaAction(Request $request, $profileId, $layerId, $distance, $center)
     {
-        $response = new Response();
         if ($request->query->get('profile') !== null) {
             $profile = $request->query->get('profile');
         }
-        $areaService = $this->get('con4gis.area_service');
-        $response ->setContent($areaService->getResponse($profileId, $layerId, $distance, $center, $profile));
-        $response->headers->set('Content-Type', 'application/json');
-        return $response;
-        
+
+        return new JsonResponse(
+            $this->areaService
+                ->getResponse($profileId, $layerId, $distance, $center, $profile)
+        );
     }
     
     public function getRouteAction(Request $request, $language, $profileId, $layerId, $detour, $locations)

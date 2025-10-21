@@ -18,6 +18,7 @@ use con4gis\MapsBundle\Classes\Events\LoadAreaFeaturesEvent;
 use con4gis\MapsBundle\Classes\LatLng;
 use con4gis\MapsBundle\Classes\Services\AreaService;
 use con4gis\MapsBundle\Entity\RoutingConfiguration;
+use Contao\System;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Contao\Database;
 use Symfony\Component\HttpClient\HttpClient;
@@ -51,7 +52,7 @@ class LoadAreaFeaturesListener
         $bounds = $point->getLatLngBounds($point, $distance);
 
         $objLayer = C4gMapsModel::findById($layerId);
-        $routerConfigRepo = \System::getContainer()->get('doctrine.orm.default_entity_manager')
+        $routerConfigRepo = System::getContainer()->get('doctrine.orm.default_entity_manager')
             ->getRepository(RoutingConfiguration::class);
         $routerConfig = $routerConfigRepo->findOneBy(['id' => $objMapsProfile->routerConfig]);
         if ($routerConfig instanceof RoutingConfiguration) {
@@ -144,6 +145,7 @@ class LoadAreaFeaturesListener
                 ]);
                 //ToDo check response
                 $response = $request->getContent();
+
                 if ($response) {
                     $requestData = \GuzzleHttp\json_decode($response, true);
                     $locations = [];
@@ -261,8 +263,9 @@ class LoadAreaFeaturesListener
 //                                }
 //                            }
 
+
                             if (count($distances) !== count($requestData['elements'])) {
-                                throw new \Exception("HNIJAHGdj");
+                                throw new \Exception("Anzahl der Distanzen stimmt nicht mit der Anzahl an Lokationen überein.");
                             }
 
                             for ($i = 0; $i < count($distances); $i++) {
@@ -270,10 +273,9 @@ class LoadAreaFeaturesListener
                                 $features['elements'][] = $requestData['elements'][$i];
                             }
 
-
-
                             break;
                     }
+
 //                    $event->setReturnData(\GuzzleHttp\json_encode([$features,'overpass', $matrixResponse]));
                     $event->setReturnData([$distances, $features, $type, 'overpass']);
                 } else {

@@ -103,6 +103,7 @@ services:
         arguments:
             - "@service_container"
             - "@contao.framework"
+            - "@con4gis.area_service"
 
     ## routing
     routing.onLoadRouteFeaturesGetFeatures:

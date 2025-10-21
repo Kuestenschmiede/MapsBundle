@@ -90,7 +90,7 @@ class AreaService
 //        }
 
         // return features and type
-        return json_encode([$eventResponse[1], $eventResponse[3]]);
+        return [$eventResponse[1], $eventResponse[3]];
     }
 
     public function performMatrix($mapsProfile, $routingProfile, $locations, $opt_options = null)
