@@ -1032,6 +1032,42 @@ class LayerContentService
             $popup_content = Utils::replaceInsertTags($objLayer->popup_info ?: '', $lang);
         }
 
+        $linkUrl = Utils::replaceInsertTags($objLayer->loc_linkurl ?: '', $lang);
+
+        if ($objLayer->singleSRC && $objLayer->size && $objLayer->floating) {
+            $singleSrc = $objLayer->singleSRC;
+            $cssClass = 'c4g-popup-image';
+            if ($objLayer->floating == 'left') {
+                $cssClass .= ' float_left';
+            } elseif ($objLayer->floating == 'right') {
+                $cssClass .= ' float_right';
+            }
+
+            $figure = System::getContainer()
+                ->get('contao.image.studio')
+                ->createFigureBuilder()
+                ->from($singleSrc)
+                ->setSize($objLayer->size)
+                ->setOptions(['attr' => ['class' => $cssClass]])
+                ->buildIfResourceExists();
+
+            //->setLinkHref($linkUrl ?: '') //ToDO additional image link field
+
+            if (null !== $figure) {
+                $figureHtml = System::getContainer()
+                    ->get('twig')
+                    ->render('@ContaoCore/Image/Studio/figure.html.twig', ['figure' => $figure]);
+
+                if ($figureHtml) {
+                    if ($objLayer->floating == 'below') {
+                        $popup_content = $popup_content . $figureHtml;
+                    } else {
+                        $popup_content = $figureHtml . $popup_content;
+                    }
+                }
+            }
+        }
+
         $locGeox = Utils::replaceInsertTags($objLayer->loc_geox ?: '', $lang);
         $locGeoy = Utils::replaceInsertTags($objLayer->loc_geoy ?: '', $lang);
         switch ($objLayer->location_type) {
@@ -1058,7 +1094,7 @@ class LayerContentService
                         'tooltip_length' => $objLayer->tooltip_length,
                         'label' => Utils::replaceInsertTags($objLayer->loc_label ?: '', $lang),
                         'zoom_onclick' => $objLayer -> loc_onclick_zoomto,
-                        'loc_linkurl' => Utils::replaceInsertTags($objLayer->loc_linkurl ?: '', $lang),
+                        'loc_linkurl' => $linkUrl,
                         'hover_location' => $objLayer->hover_location,
                         'hover_style' => $objLayer->hover_style,
                         'cssClass' => $objLayer->cssClass,
@@ -1139,7 +1175,7 @@ class LayerContentService
                             'tooltip' => $objLayer->tooltip,
                             'label' => $objLayer->loc_label,
                             'zoom_onclick' => $objLayer -> loc_onclick_zoomto,
-                            'loc_linkurl' => Utils::replaceInsertTags($objLayer->loc_linkurl ?: '', $lang),
+                            'loc_linkurl' => $linkUrl,
                             'hover_location' => $objLayer->hover_location,
                             'hover_style' => $objLayer->hover_style,
                             'cssClass' => $objLayer->cssClass,

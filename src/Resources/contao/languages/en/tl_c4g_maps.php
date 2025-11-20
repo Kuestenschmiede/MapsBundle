@@ -124,6 +124,8 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['c4gioDropdown'] = array("Area selection", "S
 
 $GLOBALS['TL_LANG']['tl_c4g_maps']['excludeFromSingleLayer'] = array("Handle structure element separately.", "This parameter has the best possible default settings. Only in individual cases, especially with mass data, can it be useful to change the selection.");
 
+$GLOBALS['TL_LANG']['tl_c4g_maps']['singleSRC'] = array("Popup Image file", "Please select a file or folder from the files directory.");
+$GLOBALS['TL_LANG']['tl_c4g_maps']['floating'] = array("Image alignment", "Please specify how to align the image.");
 
 /**
  * Buttons

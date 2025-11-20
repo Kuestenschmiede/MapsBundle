@@ -17,6 +17,7 @@ use con4gis\MapsBundle\Classes\Contao\Callbacks\TlC4gMaps;
 use con4gis\MapsBundle\Classes\GeoPicker;
 use con4gis\MapsBundle\Classes\Contao\GeoEditor;
 use con4gis\CoreBundle\Classes\Helper\DcaHelper;
+use Contao\BackendUser;
 
 System::loadLanguageFile('tl_c4g_maps');
 $cbClass = TlC4gMaps::class;
@@ -224,7 +225,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
     'subpalettes' =>
         [
         'use_specialprofile'          => 'specialprofile, specialprofile_mobile, specialprofile_groups',
-        'enablePopup'                 => 'popup_info,routing_to,popup_share_button',
+        'enablePopup'                 => 'popup_info,routing_to,popup_share_button,singleSRC,size,floating',
         'protect_element'             => 'permitted_groups',
         'popup_extend'                => 'forums',
         'cluster_locations'           => 'cluster_distance, cluster_fillcolor, cluster_fontcolor, cluster_zoom,cluster_popup',
@@ -1070,6 +1071,31 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 'inputType'               => 'checkbox',
                 'eval'                    => ['submitOnChange' => true],
                 'sql'                     => "char(1) NOT NULL default '0'"
+            ],
+        'singleSRC' =>
+            [
+                'inputType'               => 'fileTree',
+                'eval'                    => array('fieldType'=>'radio', 'filesOnly'=>true, 'extensions'=>'%contao.image.valid_extensions%', 'mandatory'=>false),
+                'sql'                     => "binary(16) NULL"
+            ],
+        'size' =>
+            [
+                'label'                   => &$GLOBALS['TL_LANG']['MSC']['imgSize'],
+                'inputType'               => 'imageSize',
+                'reference'               => &$GLOBALS['TL_LANG']['MSC'],
+                'eval'                    => array('rgxp'=>'natural', 'includeBlankOption'=>true, 'nospace'=>true, 'helpwizard'=>true, 'tl_class'=>'w50 clr'),
+                'options_callback' => static function () {
+                    return System::getContainer()->get('contao.image.sizes')->getOptionsForUser(BackendUser::getInstance());
+                },
+                'sql'                     => "varchar(64) NOT NULL default ''"
+            ],
+        'floating' =>
+            [
+                'inputType'               => 'radioTable',
+                'options'                 => array('above', 'left', 'right', 'below'),
+                'eval'                    => array('cols'=>4, 'tl_class'=>'w50'),
+                'reference'               => &$GLOBALS['TL_LANG']['MSC'],
+                'sql'                     => "varchar(12) NOT NULL default 'above'"
             ],
         'loc_linkurl' =>
             [

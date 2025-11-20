@@ -125,8 +125,8 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['popup_share_type'] = array("Erlaubte Arten d
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popup_share_destination'] = array("Link-Ziel","Wohin soll der Link zeigen?");
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popup_share_external_link'] = array("Externe Karten-URL","Hier kann die URL für die externe Karte angegeben werden.");
 $GLOBALS['TL_LANG']['tl_c4g_maps']['popup_share_message'] = array("Nachricht zum Teilen","Hier können Sie eine optionale Nachricht eingeben, die zusammen mit dem Link geteilt werden soll. Der Link wird dann hinter der Nachricht eingefügt.");
-
-
+$GLOBALS['TL_LANG']['tl_c4g_maps']['singleSRC'] = array("Popup Bilddatei", "Bitte wählen Sie eine Datei oder einen Ordner aus der Dateiübersicht.");
+$GLOBALS['TL_LANG']['tl_c4g_maps']['floating'] = array("Bildausrichtung", "Bitte legen Sie fest, wie das Bild ausgerichtet werden soll.");
 
 $GLOBALS['TL_LANG']['tl_c4g_maps']['awesomeicon'] = array('Icon für den Reiter', 'Hier können Sie einen Unicode eingeben, der in ein Awesome-Font Icon umgewandelt wird (<a href="https://fontawesome.com/icons/" rel="noopener" target="_blank">fontawesome.com/icons/</a>).');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['hide_when_in_tab'] = array("Ausblenden wenn im Starboard-Reiter", "Wenn Sie diese Checkbox setzen, wird die Ebene im Starboard nicht angezeigt, wenn es in einem eigenen Starboardreiter liegt. Das ist hilfreich, wenn Sie das Elternelement einer bereits vorhandenen Strukturebene im Reiter nicht anzeigen wollen.");

@@ -1160,6 +1160,12 @@ button.c4g-geosearch-start {
   width: 100%;
 }
 
+.c4g-sideboard.c4g-popup-container .c4g-popup-image img {
+  max-height: calc(var(--map-height) / 2);
+  object-fit: unset;
+  width: unset;
+}
+
 /*----------------*/
 
 /*---Starboard-----*/

@@ -5553,6 +5553,12 @@ button.c4g-geosearch-start {
   object-fit: cover;
   width: 100%
 }
+.c4g-sideboard.c4g-popup-container .c4g-popup-image img {
+  max-height: calc(var(--map-height)/ 2);
+  -o-object-fit: unset;
+  object-fit: unset;
+  width: unset
+}
 .c4g-layertree > ul {
   margin: .4em 0 0 0
 }
