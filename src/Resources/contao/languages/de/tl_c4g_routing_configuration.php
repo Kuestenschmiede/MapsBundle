@@ -73,6 +73,8 @@ $GLOBALS['TL_LANG'][$strName]['priorityLocstyle'] = ['Lokationsstil priorisierte
 $GLOBALS['TL_LANG'][$strName]['negativePriorityLocstyle'] = ['Lokationsstil negativ priorisierte Features', 'Geben Sie hier einen Lokationsstil an, falls Sie die letzen Features in der Priorisierung gesondert darstellen wollen.'];
 $GLOBALS['TL_LANG'][$strName]['usePermalink'] = ['Router-Permalink generieren', 'Aktivieren Sie diese Checkbox, um die aktuelle Routen- bzw. Umkreissuche in der URL zu speichern.'];
 $GLOBALS['TL_LANG'][$strName]['pirate'] = ['Piratensprache einschalten', 'Sprache auf Pirat (Englisch) festsetzen.'];
+$GLOBALS['TL_LANG'][$strName]['shortenOvpRequest'] = ['Overpass Request begrenzen', 'Begrenzt den Overpass-Request bei Suche entlang der Route auf eine maximale Größe. Dies kann bei manchen Servern erforderlich sein, die eine maximale Länge von GET-Requests haben, da sonst die bounding box für die Route länger wird als die zugelassene maximale Länge.'];
+
 /**
  * References
  */

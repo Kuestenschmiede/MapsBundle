@@ -90,7 +90,7 @@ $GLOBALS['TL_DCA'][$strName] = array
         '__selector__'                => array('router_api_selection', 'areaSearch', 'detourElement'),
         'default'                     => '{general_legend},name,router_api_selection,router_viaroute_url,router_from_locstyle,router_to_locstyle,router_point_locstyle;'
                                         .'{extended_legend:hide},routerHeadline,router_attribution,router_interim_locstyle,router_alternative,enableOverPoints,enableTargetSwitch,routeStartButton,closeAfterSearch,showInstructions,instructionLabel;'
-                                        .'{search_legend:hide},areaSearch,showFeatures,featureLabel,initialMode,initialResultMode,preventZoomResults,initialPosition,initialDestination,routerLayers,layerChanger,hideFeaturesWithoutLabel,detourElement,clickLocstyle,areaCenterLocstyle,priorityFeatures,priorityLocstyle,negativePriorityLocstyle,usePermalink;'
+                                        .'{search_legend:hide},areaSearch,showFeatures,featureLabel,initialMode,initialResultMode,preventZoomResults,initialPosition,initialDestination,routerLayers,shortenOvpRequest,layerChanger,hideFeaturesWithoutLabel,detourElement,clickLocstyle,areaCenterLocstyle,priorityFeatures,priorityLocstyle,negativePriorityLocstyle,usePermalink;'
     ),
     'subpalettes' => array
     (
@@ -485,6 +485,12 @@ $GLOBALS['TL_DCA'][$strName] = array
             'sql'                     => null
         ],
         'usePermalink' => [
+            'exclude'                 => true,
+            'default'                 => false,
+            'inputType'               => 'checkbox',
+            'sql'                     => null
+        ],
+        'shortenOvpRequest' => [
             'exclude'                 => true,
             'default'                 => false,
             'inputType'               => 'checkbox',

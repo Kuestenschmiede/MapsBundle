@@ -406,6 +406,13 @@ class RoutingConfiguration extends BaseEntity
     protected $arrDetourOptionsArea = '';
 
     /**
+     * @var string
+     * @ORM\Column(type="string", length=1)
+     */
+    #[ORM\Column(type: "string", length: 1)]
+    protected $shortenOvpRequest = '';
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -1267,5 +1274,15 @@ class RoutingConfiguration extends BaseEntity
     public function setInitialDestination(string $initialDestination): void
     {
         $this->initialDestination = $initialDestination;
+    }
+
+    public function getShortenOvpRequest(): string
+    {
+        return $this->shortenOvpRequest;
+    }
+
+    public function setShortenOvpRequest(string $shortenOvpRequest): void
+    {
+        $this->shortenOvpRequest = $shortenOvpRequest;
     }
 }

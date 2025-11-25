@@ -91,7 +91,9 @@ class RouteService extends Frontend
                 } elseif ($routerConfig->getRouterApiSelection() == '6' || $routeData['routeType'] == '6') {
                     $points = $polyline->fromEncodedString($routeData['trip']['legs'][0]['shape'], 1e-6);
                 }
-                $points = $polyline->tunePolyline($points, 0.1, 0.4)->getPoints();
+                $tmpPoints = $points;
+                $points = $polyline->tunePolyline($points, 1, 2)->getPoints();
+//                dd(['before' => $tmpPoints, 'after' => $points]);
                 $event = new LoadRouteFeaturesEvent();
                 $event->setLayerId($layer);
                 $event->setProfileId($profileId);
@@ -102,7 +104,7 @@ class RouteService extends Frontend
                 $routeData['features'] = $event->getFeatures();
                 // check if features are json encoded
                 if (!is_array($routeData['features'])) {
-                    $tmpFeatures = \Safe\json_decode($routeData['features'], true);
+                    $tmpFeatures = json_decode($routeData['features'], true);
                     if ($tmpFeatures) {
                         $routeData['features'] = $tmpFeatures['elements'];
                     }

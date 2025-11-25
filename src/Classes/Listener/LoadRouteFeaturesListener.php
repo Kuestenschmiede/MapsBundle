@@ -66,7 +66,10 @@ class LoadRouteFeaturesListener
             if ($objMapsProfile->overpassEngine === "2") {
                 $settings = C4gMapSettingsModel::findOnly();
                 $url = $settings->con4gisIoUrl;
-                $url .= "/osm.php?key=" . $settings->con4gisIoKey;
+                if (!str_ends_with($url, "/")) {
+                    $url .= "/";
+                }
+                $url .= "osm.php?key=" . $settings->con4gisIoKey;
             } else {
                 $url = $objMapsProfile->overpass_url ? $objMapsProfile->overpass_url : 'http://overpass-api.de/api/interpreter';
             }
@@ -89,8 +92,21 @@ class LoadRouteFeaturesListener
             if ($jsonPolygon) {
                 $jsonPolygon = \GuzzleHttp\json_decode($jsonPolygon);
                 $strBBox = 'poly:"';
+
+                $arrRoutingConfig = Database::getInstance()
+                    ->prepare("SELECT * FROM tl_c4g_routing_configuration WHERE `id` = ?")
+                    ->execute($objMapsProfile->routerConfig)
+                    ->fetchAssoc();
+
+                $limitOvpRequest = is_array($arrRoutingConfig) && $arrRoutingConfig['shortenOvpRequest'];
+
                 foreach ($jsonPolygon->coordinates[0] as $coordinate) {
                     $strBBox .= $coordinate[1] . ' ' . $coordinate[0] . ' ';
+
+                    if ($limitOvpRequest && (strlen($strBBox) >= 3500)) {
+                        // exit early to prevent too long request
+                        break;
+                    }
                 }
                 $strBBox = rtrim($strBBox) . '"';
                 $query = $objLayer->ovp_request;
