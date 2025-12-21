@@ -44,13 +44,6 @@ class LayerController extends BaseController
         $this->layerContentDataService = $layerContentDataService;
     }
 
-    /**
-     * @Route(
-     *     path="/con4gis/layerService/{mapId}/{lang}",
-     *     name="layer_service",
-     *     methods={"GET"}
-     * )
-     */
     #[Route(
         path: '/con4gis/layerService/{mapId}/{lang}',
         name: 'layer_service',
