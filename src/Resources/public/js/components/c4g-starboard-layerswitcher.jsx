@@ -86,21 +86,12 @@ export class StarboardLayerswitcher extends Component {
     if (layer && layer.name && (layer.name.toLowerCase().indexOf(strFilter.toLowerCase()) !== -1
         || layer.name.toUpperCase().indexOf(strFilter.toUpperCase()) !== -1)) {
       show = true;
-      if (strFilter && state) {
-        state.collapsed = false;
-      }
     } else if (layer.tags && layer.tags.find && layer.tags.find((element) => {return element.toLowerCase().indexOf(strFilter.toLowerCase()) !== -1})){
       show = true
-      if (strFilter && state) {
-        state.collapsed = false;
-      }
     } else if (digDeeper) {
       for (let childId in layer.childs) {
         if (layer.childs.hasOwnProperty(childId) && !show) {
-          show = this.filterFunc(strFilter, layer.childs[childId], state.childStates[childId]);
-          if (strFilter && show && state) {
-            state.collapsed = false;
-          }
+          show = this.filterFunc(strFilter, layer.childs[childId], state.childStates ? state.childStates[childId] : {});
         }
       }
     }
