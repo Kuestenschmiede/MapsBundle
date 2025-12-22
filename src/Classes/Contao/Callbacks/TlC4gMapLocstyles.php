@@ -122,7 +122,11 @@ class TlC4gMapLocstyles extends Backend
     public static function getFilteredSizes() {
         $filteredSizes = [];
 
-        $imageSizes = \Contao\System::getContainer()->get('contao.image.sizes')->getOptionsForUser(BackendUser::getInstance());
+        $user = BackendUser::getInstance();
+        if (!$user instanceof BackendUser || !$user->id) {
+            return [];
+        }
+        $imageSizes = \Contao\System::getContainer()->get('contao.image.sizes')->getOptionsForUser($user);
         $just = 'proportional';
 
         if ($imageSizes !== false) {
