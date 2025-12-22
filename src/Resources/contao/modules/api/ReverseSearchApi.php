@@ -189,7 +189,11 @@ class ReverseSearchApi extends Frontend
                 ]
             );
         }
-        $response = $return->getContent();
+        try {
+            $response = $return->getContent();
+        } catch (\Exception $e) {
+            return "";
+        }
         if ($response) {
             $decoded = json_decode($response);
             if (is_array($decoded) && array_key_exists('features', $decoded)) {
