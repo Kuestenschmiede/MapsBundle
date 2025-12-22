@@ -71,9 +71,9 @@ export class StarboardLayerswitcher extends Component {
   }
 
   callbackFunction = (key, newState) => {
-    let newStates = this.props.layerStates;
+    let newStates = structuredClone(this.props.layerStates);
     newStates[key] = newState;
-    this.props.parentCallback(newStates)
+    this.props.parentCallback(newStates);
   };
 
   setLayerFilter() {
@@ -162,18 +162,19 @@ export class StarboardLayerswitcher extends Component {
   }
   toggleAllLayers(context = null) {
     const scope = this;
-    let states = this.props.layerStates;
+    if (this.chunkTimer) {
+      cancelAnimationFrame(this.chunkTimer);
+      this.chunkTimer = null;
+    }
+    let states = structuredClone(this.props.layerStates);
     let layers = this.props.objLayers;
     if (context) {
       this.states[context] = structuredClone(states);
     }
     function activateLayers(layers, states) {
       for (let i = 0; i < states.length; i++) {
-        if (!states[i].active) {
-          scope.props.mapController.proxy.layerController.show(layers[i].loader, layers[i].features || layers[i].vectorLayer);
-        }
         states[i].active = true;
-        if (states[i].childStates && states[i].childStates.length > 0) {
+        if (states[i].childStates && states[i].childStates.length > 0 && layers[i] && layers[i].childs) {
           states[i].childStates = activateLayers(layers[i].childs, states[i].childStates);
         }
       }
@@ -182,13 +183,8 @@ export class StarboardLayerswitcher extends Component {
     }
     function deactivateLayers(layers, states) {
       for (let i = 0; i < states.length; i++) {
-        if (states[i].active) {
-          if (layers[i].vectorLayer ||layers[i].loader) {
-            scope.props.mapController.proxy.layerController.hide(layers[i].loader, layers[i].vectorLayer);
-          }
-        }
         states[i].active = false;
-        if (states[i].childStates && states[i].childStates.length > 0) {
+        if (states[i].childStates && states[i].childStates.length > 0 && layers[i] && layers[i].childs) {
           states[i].childStates = deactivateLayers(layers[i].childs, states[i].childStates);
         }
       }
@@ -197,19 +193,90 @@ export class StarboardLayerswitcher extends Component {
     }
     if (scope.buttonEnabled) {
       scope.props.mapController.map.getView().dispatchEvent({
-        type: "change:resolution"
+        type: 'change:resolution'
       });
-      scope.props.mapController.proxy.layerController.vectorCollection.clear();
       states = deactivateLayers(layers, states);
+      this.props.parentCallback(states);
+      // Processing layers asynchronously to prevent browser freeze
+      const allLayerOperations = [];
+      function collectDeactivateOperations(layers, states) {
+        for (let i = 0; i < states.length; i++) {
+          allLayerOperations.push({
+            loader: layers[i].loader,
+            data: layers[i].features || layers[i].vectorLayer,
+            show: false
+          });
+          if (states[i].childStates && states[i].childStates.length > 0 && layers[i] && layers[i].childs) {
+            collectDeactivateOperations(layers[i].childs, states[i].childStates);
+          }
+        }
+      }
+      collectDeactivateOperations(layers, states);
+
+      const chunkSize = 25;
+      let currentIndex = 0;
+
+      const processChunks = () => {
+        const end = Math.min(currentIndex + chunkSize, allLayerOperations.length);
+        for (let i = currentIndex; i < end; i++) {
+          const op = allLayerOperations[i];
+          if (op.loader || op.data) {
+            scope.props.mapController.proxy.layerController.hide(op.loader, op.data);
+          }
+        }
+        currentIndex = end;
+        if (currentIndex < allLayerOperations.length) {
+          scope.chunkTimer = requestAnimationFrame(processChunks);
+        } else {
+          scope.chunkTimer = null;
+        }
+      };
+      scope.chunkTimer = requestAnimationFrame(processChunks);
     } else {
       states = activateLayers(layers, states);
+      // Processing layers asynchronously to prevent browser freeze
+      const allLayerOperations = [];
+      function collectActivateOperations(layers, states) {
+        for (let i = 0; i < states.length; i++) {
+          allLayerOperations.push({
+            loader: layers[i].loader,
+            data: layers[i].features || layers[i].vectorLayer,
+            show: true
+          });
+          if (states[i].childStates && states[i].childStates.length > 0 && layers[i] && layers[i].childs) {
+            collectActivateOperations(layers[i].childs, states[i].childStates);
+          }
+        }
+      }
+      collectActivateOperations(layers, states);
+
+      const chunkSize = 25;
+      let currentIndex = 0;
+
+      const processChunks = () => {
+        const end = Math.min(currentIndex + chunkSize, allLayerOperations.length);
+        for (let i = currentIndex; i < end; i++) {
+          const op = allLayerOperations[i];
+          if (op.loader || op.data) {
+            scope.props.mapController.proxy.layerController.show(op.loader, op.data);
+          }
+        }
+        currentIndex = end;
+        if (currentIndex < allLayerOperations.length) {
+          scope.chunkTimer = requestAnimationFrame(processChunks);
+        } else {
+          scope.chunkTimer = null;
+        }
+      };
+
+      this.props.parentCallback(states);
+      scope.chunkTimer = requestAnimationFrame(processChunks);
     }
-
-
-    this.props.parentCallback(states);
   }
   changeCollapseState(id, state) {
-
+    let newStates = structuredClone(this.props.layerStates);
+    newStates[id] = state;
+    this.props.changeCollapseState(id, state);
   }
   render() {
     if (this.props.layerStates && this.props.layerStates.length > 0 && !(this.initialCounterOff && this.initialCounterOn)) {
@@ -252,7 +319,7 @@ export class StarboardLayerswitcher extends Component {
                                                  parentCallback={this.callbackFunction}
                                                  layer={item}
                                                  styleData={this.props.styleData}
-                                                 changeCollapseState={this.props.changeCollapseState}
+                                                 changeCollapseState={this.changeCollapseState}
                                                  layerStates={states[id]}
                                                  lang={this.props.lang}
                                                  byPassChilds={this.filterFunc(this.state.layerFilter, item,false, false)}

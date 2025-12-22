@@ -49,8 +49,8 @@ class MapsController extends BaseController
     {
         $this->initialize(false);
         $response = new JsonResponse();
-        if (strpos($popupString, ":") === false) {
-            $response->setStatusCode(400);
+        if ($popupString === 'undefined' || strpos($popupString, ":") === false) {
+            $response->setData(['content' => '']);
             return $response;
         } else {
             $this->checkForCacheSettings('infoWindowService');

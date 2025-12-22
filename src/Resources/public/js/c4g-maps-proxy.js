@@ -400,33 +400,35 @@ export class MapProxy {
         this.popupController.setPopup(objPopup);
       }
     } else {
-      jQuery.ajax({
-        dataType: "json",
-        url: this.api_infowindow_url + '/' + popupInfos.content
-      }).done(function(data) {
-        var popupInfo = {
-          async: popupInfos.async,
-          content: data.content,
-          popup: popupInfos.popup,
-          routing_link: popupInfos.routing_link
-        };
+      if (popupInfos.content && (typeof popupInfos.content === 'string') && popupInfos.content.indexOf(':') !== -1) {
+        jQuery.ajax({
+          dataType: "json",
+          url: this.api_infowindow_url + '/' + popupInfos.content
+        }).done(function(data) {
+          var popupInfo = {
+            async: popupInfos.async,
+            content: data.content,
+            popup: popupInfos.popup,
+            routing_link: popupInfos.routing_link
+          };
 
-        let objPopup = {};
-        objPopup.popup = popupInfo;
-        objPopup.feature = feature;
-        objPopup.layer = layer;
+          let objPopup = {};
+          objPopup.popup = popupInfo;
+          objPopup.feature = feature;
+          objPopup.layer = layer;
 
-        // Call the popup hook for plugin specific popup content
-        if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_fillPopup === 'object') {
-          utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, {popup: objPopup, mapController: scope.options.mapController});
-        }
-        if (scope.mapData.popupMultiple) {
-          scope.popupController.addPopup(objPopup);
-        }
-        else {
-          scope.popupController.setPopup(objPopup);
-        }
-      });
+          // Call the popup hook for plugin specific popup content
+          if (window.c4gMapsHooks !== undefined && typeof window.c4gMapsHooks.proxy_fillPopup === 'object') {
+            utils.callHookFunctions(window.c4gMapsHooks.proxy_fillPopup, {popup: objPopup, mapController: scope.options.mapController});
+          }
+          if (scope.mapData.popupMultiple) {
+            scope.popupController.addPopup(objPopup);
+          }
+          else {
+            scope.popupController.setPopup(objPopup);
+          }
+        });
+      }
     }
   }
   activateClickObserver() {

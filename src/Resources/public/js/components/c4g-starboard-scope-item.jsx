@@ -44,7 +44,7 @@ export class StarboardScopeItem extends Component {
 
   loadPopup() {
     let popup = this.props.feature.get('popup');
-    if (!popup.contentStarboard && popup.async) {
+    if (!popup.contentStarboard && popup.async && popup.content && (typeof popup.content === 'string') && popup.content.indexOf(':') !== -1) {
       let url = this.props.mapController.proxy.api_infowindow_url + '/' + popup.content;
       url += url.includes("?") ? "&" : "?";
       url += "scope=starboardscope";

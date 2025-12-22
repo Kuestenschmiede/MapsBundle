@@ -986,7 +986,7 @@ export default class MapController extends Component {
     return ids;
   }
   setLayerStateWithId (id, active) {
-    let arrLayerStates = this.state.arrLayerStates;
+    let arrLayerStates = structuredClone(this.state.arrLayerStates);
     for (let i in arrLayerStates) {
       if (arrLayerStates.hasOwnProperty(i)) {
         arrLayerStates[i] = this.getLayerStateWithId(arrLayerStates[i], id, active);
@@ -1086,7 +1086,7 @@ export default class MapController extends Component {
     }
   }
   changeCollapseState(id, state){
-    let newState = this.state.arrLayerStates;
+    let newState = [...this.state.arrLayerStates];
     newState[id] = state;
     this.setState({
       arrLayerStates: newState

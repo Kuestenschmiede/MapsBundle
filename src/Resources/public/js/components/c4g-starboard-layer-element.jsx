@@ -14,6 +14,7 @@ import {cssConstants} from "./../c4g-maps-constant.js";
 import {C4gStarboardStyle} from "./c4g-starboard-style";
 import {Vector} from "ol/layer";
 import Feature from 'ol/Feature';
+import structuredClone from '@ungap/structured-clone';
 
 export class C4gStarboardLayerElement extends Component {
 
@@ -26,6 +27,22 @@ export class C4gStarboardLayerElement extends Component {
     this.spanClick = this.spanClick.bind(this);
     this.changeCollapseState = this.changeCollapseState.bind(this);
     this.parentCallback = this.parentCallback.bind(this);
+  }
+
+  shouldComponentUpdate(nextProps) {
+    if (this.props.layerStates !== nextProps.layerStates) {
+      return true;
+    }
+    if (this.props.strFilter !== nextProps.strFilter) {
+      return true;
+    }
+    if (this.props.byPassChilds !== nextProps.byPassChilds) {
+      return true;
+    }
+    if (this.props.layer !== nextProps.layer) {
+      return true;
+    }
+    return false;
   }
 
   showLayer(showElements = null) {
@@ -53,7 +70,6 @@ export class C4gStarboardLayerElement extends Component {
     } else {
       layerController.show(false, false, scope.props.id, scope.props.layerKey ? scope.props.layerKey : scope.props.id);
     }
-    scope.props.mapController.setLayerStateWithId(scope.props.id, true)
   }
 
   hideLayer(hideElements = null) {
@@ -80,7 +96,6 @@ export class C4gStarboardLayerElement extends Component {
     } else {
       layerController.hide(false, false, scope.props.id, scope.props.layerKey ? scope.props.layerKey : scope.props.id);
     }
-    scope.props.mapController.setLayerStateWithId(scope.props.id, false)
   }
   changeChildState (child, childState, active) {
     if (active) {
@@ -92,29 +107,26 @@ export class C4gStarboardLayerElement extends Component {
     if (child.childs && child.childs.length > 0) {
       for (let childId in child.childs) {
         if (child.childs.hasOwnProperty(childId)) {
-          let currentChildState = childState.childStates[childId].active;
-          if (currentChildState !== active) {
-            childState.childStates[childId] = this.changeChildState(child.childs[childId], childState.childStates[childId], active);
-          }
+          childState.childStates[childId] = this.changeChildState(child.childs[childId], childState.childStates[childId], active);
         }
       }
     }
-    this.props.mapController.setLayerStateWithId(childState.id, active)
     childState.active = active;
     return childState;
   }
   parentCallback (key, newChildState) {
-    let newState = this.props.layerStates;
+    let newState = structuredClone(this.props.layerStates);
     newState.childStates[key] = newChildState;
-    if (newState.active != newChildState.active) {
+    if (newState.active !== newChildState.active) {
       if (newChildState.active) {
         this.showLayer();
       }
       else {
         this.hideLayer();
       }
+      newState.active = newChildState.active;
     }
-    this.props.parentCallback(this.props.keyId, newState)
+    this.props.parentCallback(this.props.keyId, newState);
   }
   layerEnter(e) {
     if (e.which === 13) {
@@ -128,37 +140,35 @@ export class C4gStarboardLayerElement extends Component {
       return false;
     }
     let show = false;
+    let newState = structuredClone(this.props.layerStates);
     if (!this.props.layerStates.active) {
       this.showLayer();
       show = true;
       if (this.props.layerStates.collapsed) {
-        let layerState = this.props.layerStates;
-        layerState.collapsed = false;
-        this.props.changeCollapseState(this.props.keyId, layerState);
+        newState.collapsed = false;
       }
+      newState.active = true;
     }
     else {
       this.hideLayer();
+      newState.active = false;
     }
-    let newState = this.props.layerStates;
     if (this.props.layer.childs && this.props.layer.childs.length > 0 && !this.props.layer.ignoreChilds) {
       let layerChilds = this.props.layer.childs;
       for (let childId in layerChilds) {
         if (layerChilds.hasOwnProperty(childId)) {
-          let currentChildState = newState.childStates[childId].active;
-
-          if (layerChilds[childId].key && (layerChilds[childId].key != layerChilds[childId].id)) {
+          if (layerChilds[childId].key && (layerChilds[childId].key !== layerChilds[childId].id)) {
             if (show) {
               this.showLayer(layerChilds[childId]);
             } else {
               this.hideLayer(layerChilds[childId]);
             }
-          } else {
-            newState.childStates[childId] = this.changeChildState(layerChilds[childId], newState.childStates[childId], newState.active);
           }
+          newState.childStates[childId] = this.changeChildState(layerChilds[childId], newState.childStates[childId], newState.active);
         }
       }
     }
+    this.props.parentCallback(this.props.keyId, newState);
   }
   layerZoomTo(e) {
     if (!this.props.layerStates.active) {
@@ -192,14 +202,16 @@ export class C4gStarboardLayerElement extends Component {
     }
   }
   changeCollapseState(id, state) {
-    this.props.layerStates.childStates[id] = state;
-    this.props.changeCollapseState(this.props.keyId, this.props.layerStates);
+    let newState = structuredClone(this.props.layerStates);
+    newState.childStates[id] = state;
+    this.props.changeCollapseState(this.props.keyId, newState);
   }
   spanClick(e) {
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
-    this.props.layerStates.collapsed = !this.props.layerStates.collapsed;
-    this.props.changeCollapseState(this.props.keyId, this.props.layerStates)
+    let newState = structuredClone(this.props.layerStates);
+    newState.collapsed = !this.props.layerStates.collapsed;
+    this.props.changeCollapseState(this.props.keyId, newState);
   }
   render() {
     const scope = this;
