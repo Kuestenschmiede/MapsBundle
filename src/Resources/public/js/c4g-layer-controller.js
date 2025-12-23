@@ -114,10 +114,10 @@ export class BetterLayerController {
       if (feature && feature.get && feature.get('features')) {
         let features = feature.get('features');
         size = features.length;
-        feature = features[0];
+        feature = features.length > 0 ? features[0] : null;
       }
 
-      if (feature && feature.getStyle()) {
+      if (feature && feature.getStyle && feature.getStyle()) {
         returnStyle = feature.getStyle();
       } else if (feature && feature.get && feature.get('locstyle')) {
         let locstyle = feature.get('locstyle');
@@ -141,9 +141,14 @@ export class BetterLayerController {
         if (returnStyle[0] && returnStyle[0].setZIndex && feature.get('zindex')) {
           zIndex += feature.get('zindex');
         }
-        if (returnStyle[0] &&returnStyle[0].setZIndex) {
-          let geometry = feature.getGeometry().clone().transform("EPSG:3857", "EPSG:4326").getCoordinates();
-          zIndex += 100 - geometry[1];
+        if (returnStyle[0] && returnStyle[0].setZIndex) {
+          let geometry = feature.getGeometry() ? feature.getGeometry().clone().transform('EPSG:3857', 'EPSG:4326').getCoordinates() : null;
+          if (geometry && Array.isArray(geometry)) {
+            geometry = typeof geometry[0] == 'number' ? geometry : (Array.isArray(geometry[0]) ? geometry[0] : (Array.isArray(geometry[0][0]) ? geometry[0][0] : geometry));
+            if (geometry && typeof geometry[1] === 'number') {
+              zIndex += 100 - geometry[1];
+            }
+          }
           returnStyle[0].setZIndex(zIndex);
         }
         let iconOffset = [0, 0];
@@ -229,7 +234,7 @@ export class BetterLayerController {
           }
           else if (returnStyle[0].getImage() && returnStyle[0].getImage().getIcon && returnStyle[0].getImage() && returnStyle[0].getImage().getIcon()) {
             radius = returnStyle[0].getImage().getIcon().getSize();
-            radius = radius[0];
+            radius = radius ? radius[0] : 25;
           }
           else {
             radius = 25
@@ -250,11 +255,14 @@ export class BetterLayerController {
           zIndex += feature.get('zindex');
         }
 
-        if (returnStyle[0] &&returnStyle[0].setZIndex) {
-          let geometry = feature.getGeometry().clone().transform("EPSG:3857", "EPSG:4326").getCoordinates();
-          geometry = typeof geometry[0] == "number" ? geometry : geometry[0];
-          geometry = typeof geometry[0] == "number" ? geometry : geometry[0];
-          zIndex += 100 - geometry[1];
+        if (returnStyle[0] && returnStyle[0].setZIndex) {
+          let geometry = feature.getGeometry() ? feature.getGeometry().clone().transform('EPSG:3857', 'EPSG:4326').getCoordinates() : null;
+          if (geometry && Array.isArray(geometry)) {
+            geometry = typeof geometry[0] == 'number' ? geometry : (Array.isArray(geometry[0]) ? geometry[0] : (Array.isArray(geometry[0][0]) ? geometry[0][0] : geometry));
+            if (geometry && typeof geometry[1] === 'number') {
+              zIndex += 100 - geometry[1];
+            }
+          }
           returnStyle[0].setZIndex(zIndex);
         }
 
@@ -269,7 +277,7 @@ export class BetterLayerController {
             radius = parseInt(returnStyle[0].getImage().getRadius());
           } else if (returnStyle[0].getImage() && returnStyle[0].getImage().getIcon && returnStyle[0].getImage() && returnStyle[0].getImage().getIcon()) {
             radius = returnStyle[0].getImage().getIcon().getSize();
-            radius = radius[0];
+            radius = radius ? radius[0] : 25;
           } else {
             radius = 25
           }
@@ -430,11 +438,14 @@ export class BetterLayerController {
     }
     for (let i in features) {
       if (features.hasOwnProperty(i)) {
-        if (!extent) {
-          extent = features[i].getGeometry().clone().getExtent();
-        }
-        else {
-          extent = olExtent.extend(extent, features[i].getGeometry().clone().getExtent());
+        let geometry = (features[i].getGeometry() && typeof features[i].getGeometry().getExtent === 'function') ? features[i].getGeometry().getExtent() : null;
+        if (geometry && Array.isArray(geometry) && geometry.length >= 4) {
+          if (!extent) {
+            extent = geometry;
+          }
+          else {
+            extent = olExtent.extend(extent, geometry);
+          }
         }
       }
     }
@@ -456,17 +467,21 @@ export class BetterLayerController {
       let fnCallback = (bool) => {
         if (bool) {
           window.setTimeout(() => {
-            let extent = features[0].getGeometry().clone().getExtent();
+          let extent = (features[0] && features[0].getGeometry()) ? features[0].getGeometry().clone().getExtent() : null;
+          if (extent && Array.isArray(extent) && extent.length >= 4) {
             let pixel = this.mapController.map.getPixelFromCoordinate([(extent[0] + extent[2]) / 2, (extent[1] + extent[3]) / 2]);
             let featuresAtPixel = this.mapController.map.getFeaturesAtPixel(pixel, {hitTolerance: 10});
             if (featuresAtPixel && featuresAtPixel[0] && featuresAtPixel[0].get('features') && featuresAtPixel[0].get('features').length > 1) {
-              let coords = featuresAtPixel[0].getGeometry().getCoordinates();
-              // pixel = this.mapController.map.getPixelFromCoordinate(coords);
-              this.mapController.map.dispatchEvent({
-                type: "click",
-                pixel: pixel
-              });
+              let coords = (featuresAtPixel[0].getGeometry() && typeof featuresAtPixel[0].getGeometry().getCoordinates === 'function') ? featuresAtPixel[0].getGeometry().getCoordinates() : null;
+              if (coords) {
+                // pixel = this.mapController.map.getPixelFromCoordinate(coords);
+                this.mapController.map.dispatchEvent({
+                  type: "click",
+                  pixel: pixel
+                });
+              }
             }
+          }
           }, 100);
         }
       }
@@ -497,11 +512,14 @@ export class BetterLayerController {
     if (child.features && child.features.length) {
       for (let i in child.features) {
         if (child.features.hasOwnProperty(i)) {
-          if (!extent) {
-            extent = child.features[i].getGeometry().clone().getExtent();
-          }
-          else {
-            extent = olExtent.extend(extent, child.features[i].getGeometry().clone().getExtent())
+          let geometry = (child.features[i].getGeometry() && typeof child.features[i].getGeometry().getExtent === 'function') ? child.features[i].getGeometry().getExtent() : null;
+          if (geometry && Array.isArray(geometry) && geometry.length >= 4) {
+            if (!extent) {
+              extent = geometry;
+            }
+            else {
+              extent = olExtent.extend(extent, geometry);
+            }
           }
         }
       }
@@ -516,11 +534,14 @@ export class BetterLayerController {
     if (features && features.length) {
       for (let i in features) {
         if (features.hasOwnProperty(i)) {
-          if (!extent) {
-            extent = features[i].getGeometry().getExtent();
-          }
-          else {
-            extent = olExtent.extend(extent,features[i].getGeometry().getExtent());
+          let geometry = (features[i].getGeometry() && typeof features[i].getGeometry().getExtent === 'function') ? features[i].getGeometry().getExtent() : null;
+          if (geometry && Array.isArray(geometry) && geometry.length >= 4) {
+            if (!extent) {
+              extent = geometry;
+            }
+            else {
+              extent = olExtent.extend(extent, geometry);
+            }
           }
         }
       }
@@ -783,12 +804,12 @@ export class BetterLayerController {
             childs = newChild.childs ? childs.concat(newChild.childs) : childs;
             features = newChild.features ? features.concat(newChild.features) : features;
 
-            if (this.mapController.filter) {
+            if (this.mapController.filter && newChild.vectorLayer) {
               if (!!parseFloat(this.mapController.data.filterHandling)) {
-                this.mapController.filter.filterLayerMulti(vectorLayer);
+                this.mapController.filter.filterLayerMulti(newChild.vectorLayer);
               }
               else {
-                this.mapController.filter.filterLayer(vectorLayer);
+                this.mapController.filter.filterLayer(newChild.vectorLayer);
               }
             }
           }
@@ -1129,7 +1150,9 @@ export class BetterLayerController {
         }
         
       }
-      this.vectorSources.push(vectorSource);
+      if (!layer.hideInStarboard) {
+        this.vectorSources.push(vectorSource);
+      }
       if (layer.cluster) {
         vectorSource = new Cluster({
           source: vectorSource,
@@ -1158,6 +1181,7 @@ export class BetterLayerController {
       return {
         childs: childs,
         features: features,
+        vectorLayer: vectorLayer,
         hide_in_starboard: true
       }
     }
@@ -1301,21 +1325,22 @@ export class BetterLayerController {
     }
     if (this.proxy.mapData.calc_extent === "LOCATIONS" || this.proxy.mapData.calc_extent === "CENTERLOCS") {
       for (let i in features) {
-        if (features.hasOwnProperty(i)) {
+        if (features.hasOwnProperty(i) && features[i].getGeometry() && typeof features[i].getGeometry().getExtent === 'function') {
           let extent = features[i].getGeometry().getExtent();
-          if (this.extent.maxX < extent[2]) {
-            this.extent.maxX = extent[2];
+          if (extent && extent.length >= 4) {
+            if (this.extent.maxX < extent[2]) {
+              this.extent.maxX = extent[2];
+            }
+            if (this.extent.maxY < extent[3]) {
+              this.extent.maxY = extent[3];
+            }
+            if (this.extent.minX > extent[0]) {
+              this.extent.minX = extent[0];
+            }
+            if (this.extent.minY > extent[1]) {
+              this.extent.minY = extent[1];
+            }
           }
-          if (this.extent.maxY < extent[3]) {
-            this.extent.maxY = extent[3];
-          }
-          if (this.extent.minX > extent[0]) {
-            this.extent.minX = extent[0];
-          }
-          if (this.extent.minY > extent[1]) {
-            this.extent.minY = extent[1];
-          }
-
         }
       }
     }
@@ -1436,25 +1461,27 @@ export class BetterLayerController {
     let requestDatas = (layer.content && layer.content[0].settings) ? layer.content[0].settings: {};
     for (let featureId in features) {
       if (features.hasOwnProperty(featureId)) {
-        if (features[featureId].getGeometry().getType() === "Polygon") {
-          if (requestDatas.forceNodes) {
-            features[featureId].setGeometry(features[featureId].getGeometry().getInteriorPoint());
+        if (features[featureId].getGeometry() && typeof features[featureId].getGeometry().getType === 'function') {
+          if (features[featureId].getGeometry().getType() === "Polygon") {
+            if (requestDatas.forceNodes && typeof features[featureId].getGeometry().getInteriorPoint === 'function') {
+              features[featureId].setGeometry(features[featureId].getGeometry().getInteriorPoint());
+            }
+            if (!features[featureId].getId().includes('way')) {
+              features[featureId].set('osm_type', 'way');
+            }
           }
-          if (!features[featureId].getId().includes('way')) {
-            features[featureId].set('osm_type', 'way');
+          else if (features[featureId].getGeometry().getType() === "MultiPolygon") {
+            if (requestDatas.forceNodes && Array.isArray(features[featureId].getGeometry()) && features[featureId].getGeometry()[0] && typeof features[featureId].getGeometry()[0].getInteriorPoint === 'function') {
+              features[featureId].setGeometry(features[featureId].getGeometry()[0].getInteriorPoint());
+            }
+            if (!features[featureId].getId().includes('relation')) {
+              features[featureId].set('osm_type', 'relation');
+            }
           }
-        }
-        else if (features[featureId].getGeometry().getType() === "MultiPolygon") {
-          if (requestDatas.forceNodes) {
-            features[featureId].setGeometry(features[featureId].getGeometry()[0].getInteriorPoint());
-          }
-          if (!features[featureId].getId().includes('relation')) {
-            features[featureId].set('osm_type', 'relation');
-          }
-        }
-        else if (features[featureId].getGeometry().getType() === "Point") {
-          if (!features[featureId].getId().includes('node')) {
-            features[featureId].set('osm_type', 'node');
+          else if (features[featureId].getGeometry().getType() === "Point") {
+            if (!features[featureId].getId().includes('node')) {
+              features[featureId].set('osm_type', 'node');
+            }
           }
         }
 

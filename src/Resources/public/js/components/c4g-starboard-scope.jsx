@@ -125,13 +125,29 @@ export default class StarboardScope extends Component {
           features = features.concat(singleFeatures);
         }
       }
+
+      // deduplicate features by 'tid' or 'uuid' or fallback to openlayers uid
+      let uniqueFeatures = [];
+      let featureIds = [];
+      for (let i = 0; i < features.length; i++) {
+        let feature = features[i];
+        let tid = feature.get('tid') || (feature.get('popup') ? feature.get('popup').content : null) || feature.ol_uid;
+        if (tid && featureIds.indexOf(tid) === -1) {
+          featureIds.push(tid);
+          uniqueFeatures.push(feature);
+        } else if (!tid) {
+          uniqueFeatures.push(feature);
+        }
+      }
+      features = uniqueFeatures;
+
       let featuresSorted = this.sortFeatures(features);
-      if (!featuresSorted) {
+      if (featuresSorted === false && this.props.mapController.geolocation) {
         this.lastTime = -Infinity;
         window.setTimeout(()=>{this.getFeaturesInScope()}, 200);
       }
       this.setState({
-        features: features
+        features: featuresSorted || features
       });
     }
   }
@@ -144,11 +160,21 @@ export default class StarboardScope extends Component {
       }
       let maxDistance = 0;
       features.sort((a, b) => {
-        let lineStringA = new LineString([position, a.getGeometry().getCoordinates()])
+        let geomA = (typeof a.getGeometry === 'function') ? a.getGeometry() : null;
+        let geomB = (typeof b.getGeometry === 'function') ? b.getGeometry() : null;
+        if (!geomA || !geomB || typeof geomA.getCoordinates !== 'function' || typeof geomB.getCoordinates !== 'function') {
+          return 0;
+        }
+        let coordsA = geomA.getCoordinates();
+        let coordsB = geomB.getCoordinates();
+        if (!coordsA || !coordsB || !Array.isArray(coordsA) || !Array.isArray(coordsB)) {
+          return 0;
+        }
+        let lineStringA = new LineString([position, coordsA])
         let distanceA = getLength(lineStringA);
         a.set('distance', distanceA);
 
-        let lineStringB = new LineString([position, b.getGeometry().getCoordinates()])
+        let lineStringB = new LineString([position, coordsB])
         let distanceB = getLength(lineStringB);
 
         maxDistance = distanceA > maxDistance ? distanceA : maxDistance;
@@ -160,9 +186,11 @@ export default class StarboardScope extends Component {
         let arrLocations = [];
         arrLocations.push(toLonLat(position));
         for (let i in features) {
-          if (features.hasOwnProperty(i) && !features[i].get('distanceMatrix')) {
+          let geom = (typeof features[i].getGeometry === 'function') ? features[i].getGeometry() : null;
+          let coords = (geom && typeof geom.getCoordinates === 'function') ? geom.getCoordinates() : null;
+          if (features.hasOwnProperty(i) && !features[i].get('distanceMatrix') && coords && Array.isArray(coords)) {
             objMissDist.push(features[i]);
-            arrLocations.push(toLonLat(features[i].getGeometry().getCoordinates()));
+            arrLocations.push(toLonLat(coords));
           }
         }
         if (arrLocations.length > 2 && !this.preventAddReqs) {
@@ -180,9 +208,9 @@ export default class StarboardScope extends Component {
           }).then(function (response) {
             scope.preventAddReqs = false;
             return response.json().then(function(jsonData) {
-              let distances = jsonData && jsonData.sources_to_targets ? jsonData.sources_to_targets[0] : [];
+              let distances = (jsonData && jsonData.sources_to_targets && jsonData.sources_to_targets.length > 0) ? jsonData.sources_to_targets[0] : [];
               for(let i in distances) {
-                if (distances.hasOwnProperty(i) && objMissDist.hasOwnProperty(i)) {
+                if (distances.hasOwnProperty(i) && objMissDist.hasOwnProperty(i) && distances[i]) {
                   objMissDist[i].set('distanceMatrix', distances[i].distance * 1000);
                 }
               }
