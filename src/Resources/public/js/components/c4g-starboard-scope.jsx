@@ -143,8 +143,13 @@ export default class StarboardScope extends Component {
 
       let featuresSorted = this.sortFeatures(features);
       if (featuresSorted === false && this.props.mapController.geolocation) {
-        this.lastTime = -Infinity;
-        window.setTimeout(()=>{this.getFeaturesInScope()}, 200);
+        if (!this.pendingScopeUpdate) {
+          this.pendingScopeUpdate = true;
+          window.setTimeout(()=>{
+            this.pendingScopeUpdate = false;
+            this.getFeaturesInScope();
+          }, 1000);
+        }
       }
       this.setState({
         features: featuresSorted || features

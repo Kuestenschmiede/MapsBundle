@@ -56,9 +56,16 @@ export class C4gLocationStyleController {
           for (i = 0; i < data.length; i += 1) {
             styleData = data[i];
             let style = new C4gLocationStyle(styleData, self);
-            self.arrLocStyles[styleData.id] = style;
+          self.arrLocStyles[styleData.id] = style;
           }
-          self.proxy.layerController.vectorLayer.setStyle(self.proxy.layerController.clusterStyleFunction);
+          if (self.proxy.layerController.vectorLayer) {
+            self.proxy.layerController.vectorLayer.setStyle(self.proxy.layerController.clusterStyleFunction);
+          }
+          if (self.proxy.layerController.vectorLayers) {
+            for (let layer of self.proxy.layerController.vectorLayers) {
+              layer.changed();
+            }
+          }
         }
         if (index) {
           success[index] = true;
@@ -76,7 +83,9 @@ export class C4gLocationStyleController {
           // call hooks
           utils.callHookFunctions(self.proxy.hook_locstyles_loaded, {locstyleController: self})
         }
-        self.proxy.layerController.vectorLayer.changed();
+        if (self.proxy.layerController.vectorLayer) {
+          self.proxy.layerController.vectorLayer.changed();
+        }
       }).always(function (jXhr, strStatus) {
         var completed = true;
 

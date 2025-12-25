@@ -43,17 +43,76 @@ class LocationstyleController extends BaseController
             }
 
             if (!self::$outputFromCache) {
-                $this->responseData = $locStyleApi->generate($arrIds);
+                try {
+                    $this->responseData = $locStyleApi->generate($arrIds);
+                } catch (\Throwable $e) {
+                    if (class_exists(\Contao\System::class)) {
+                        try {
+                            \Contao\System::getContainer()->get('monolog.logger.contao')->error("LocationstyleController error during generation: " . $e->getMessage());
+                        } catch (\Throwable $e2) {}
+                    }
+                    $this->responseData = [];
+                }
                 if (self::$useCache) {
                     $this->storeDataInCache($request);
                 }
             }
 
-            $response->setData($this->responseData);
+            if (!is_array($this->responseData)) {
+                $this->responseData = [];
+            }
+            
+            try {
+                $this->responseData = $this->cleanDataRecursive($this->responseData);
+                // Last resort check if JsonResponse will fail
+                $json = json_encode($this->responseData);
+                if ($json === false) {
+                    throw new \Exception(json_last_error_msg());
+                }
+                $response->setData($this->responseData);
+            } catch (\Throwable $e) {
+                if (class_exists(\Contao\System::class)) {
+                    try {
+                        \Contao\System::getContainer()->get('monolog.logger.contao')->error("LocationstyleController critical JSON error: " . $e->getMessage());
+                    } catch (\Throwable $e2) {}
+                }
+                $response->setData([]);
+            }
+            
             return $response;
         } else {
             $response->setStatusCode(400);
             return $response;
         }
+    }
+
+    private function cleanDataRecursive(array $data): array
+    {
+        $clean = [];
+        foreach ($data as $key => $value) {
+            $cleanKey = $key;
+            if (is_string($key) && !mb_check_encoding($key, 'UTF-8')) {
+                $cleanKey = bin2hex($key);
+            }
+
+            if (is_array($value)) {
+                $clean[$cleanKey] = $this->cleanDataRecursive($value);
+            } elseif (is_string($value)) {
+                if (!mb_check_encoding($value, 'UTF-8')) {
+                    $clean[$cleanKey] = bin2hex($value);
+                } else {
+                    $clean[$cleanKey] = $value;
+                }
+            } elseif (is_object($value)) {
+                if (method_exists($value, 'row')) {
+                    $clean[$cleanKey] = $this->cleanDataRecursive($value->row());
+                } else {
+                    // objects are not allowed in JsonResponse data
+                }
+            } elseif (is_scalar($value) || $value === null) {
+                $clean[$cleanKey] = $value;
+            }
+        }
+        return $clean;
     }
 }

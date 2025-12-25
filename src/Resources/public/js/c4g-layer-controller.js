@@ -21,7 +21,8 @@ import {register} from 'ol/proj/proj4';
 import Projection from 'ol/proj/Projection';
 import Collection from 'ol/Collection';
 import {utils} from './c4g-maps-utils';
-import {Fill, Style, Text, Circle} from 'ol/style';
+import {Fill, Style, Text, Stroke} from 'ol/style';
+import CircleStyle from 'ol/style/Circle';
 import {Point} from "ol/geom";
 import Feature from 'ol/Feature';
 import * as olExtent from 'ol/extent';
@@ -119,9 +120,19 @@ export class BetterLayerController {
 
       if (feature && feature.getStyle && feature.getStyle()) {
         returnStyle = feature.getStyle();
-      } else if (feature && feature.get && feature.get('locstyle')) {
-        let locstyle = feature.get('locstyle');
-        if (scope.proxy.locationStyleController.arrLocStyles && scope.proxy.locationStyleController.arrLocStyles[locstyle]) {
+      } else {
+        let locstyle = feature ? feature.get('locstyle') : null;
+        if (!locstyle && feature && feature.get('locationStyle')) {
+          locstyle = feature.get('locationStyle');
+        }
+        // Fallback to layer locstyle if feature has none
+        if (!locstyle && feature && feature.get('layerId')) {
+           let layer = scope.objLayers.find(l => l.id == feature.get('layerId'));
+           if (layer) {
+             locstyle = layer.locstyle;
+           }
+        }
+        if (locstyle && scope.proxy.locationStyleController.arrLocStyles && scope.proxy.locationStyleController.arrLocStyles[locstyle]) {
           if (!scope.proxy.locationStyleController.arrLocStyles[locstyle].style) {
             scope.proxy.locationStyleController.arrLocStyles[locstyle].style = scope.proxy.locationStyleController.arrLocStyles[locstyle].getStyleFunction();
           }
@@ -135,13 +146,26 @@ export class BetterLayerController {
         }
       }
 
+      if (!returnStyle || (Array.isArray(returnStyle) && returnStyle.length === 0)) {
+        // Fallback to a default circle if style is missing and it's a single feature
+        if (!size || size === 1) {
+           returnStyle = [new Style({
+             image: new CircleStyle({
+               radius: 5,
+               fill: new Fill({color: 'red'}),
+               stroke: new Stroke({color: 'white', width: 2})
+             })
+           })];
+        }
+      }
+
       if (size > 1 && returnStyle && Array.isArray(returnStyle)) {
         let zIndex = 0;
 
-        if (returnStyle[0] && returnStyle[0].setZIndex && feature.get('zindex')) {
+        if (feature && returnStyle[0] && returnStyle[0].setZIndex && feature.get('zindex')) {
           zIndex += feature.get('zindex');
         }
-        if (returnStyle[0] && returnStyle[0].setZIndex) {
+        if (feature && returnStyle[0] && returnStyle[0].setZIndex) {
           let geometry = feature.getGeometry() ? feature.getGeometry().clone().transform('EPSG:3857', 'EPSG:4326').getCoordinates() : null;
           if (geometry && Array.isArray(geometry)) {
             geometry = typeof geometry[0] == 'number' ? geometry : (Array.isArray(geometry[0]) ? geometry[0] : (Array.isArray(geometry[0][0]) ? geometry[0][0] : geometry));
@@ -183,13 +207,13 @@ export class BetterLayerController {
         });
 
         let fontcolor = scope.proxy.mapData.cluster_fontcolor;
-        if (feature.get('cluster_fillcolor')) {
+        if (feature && feature.get('cluster_fillcolor')) {
           fillcolor = utils.getRgbaFromHexAndOpacity(feature.get('cluster_fillcolor'),{
             unit: '%',
             value: 70
           });
         }
-        if (feature.get('cluster_fontcolor')) {
+        if (feature && feature.get('cluster_fontcolor')) {
           fontcolor = feature.get('cluster_fontcolor');
         }
         fontcolor = utils.getRgbaFromHexAndOpacity(fontcolor);
@@ -240,7 +264,7 @@ export class BetterLayerController {
             radius = 25
           }
           let markStyle = new Style({
-            image: new Circle({
+            image: new CircleStyle({
               fill: markFill,
               radius: radius
             }),
@@ -251,11 +275,11 @@ export class BetterLayerController {
       } else if (returnStyle && Array.isArray(returnStyle)) {
         let zIndex = 0;
 
-        if (returnStyle[0] && returnStyle[0].setZIndex && feature.get('zindex')) {
+        if (feature && returnStyle[0] && returnStyle[0].setZIndex && feature.get('zindex')) {
           zIndex += feature.get('zindex');
         }
 
-        if (returnStyle[0] && returnStyle[0].setZIndex) {
+        if (feature && returnStyle[0] && returnStyle[0].setZIndex) {
           let geometry = feature.getGeometry() ? feature.getGeometry().clone().transform('EPSG:3857', 'EPSG:4326').getCoordinates() : null;
           if (geometry && Array.isArray(geometry)) {
             geometry = typeof geometry[0] == 'number' ? geometry : (Array.isArray(geometry[0]) ? geometry[0] : (Array.isArray(geometry[0][0]) ? geometry[0][0] : geometry));
@@ -283,7 +307,7 @@ export class BetterLayerController {
           }
 
           let markStyle = new Style({
-            image: new Circle({
+            image: new CircleStyle({
               fill: markFill,
               radius: radius
             }),
@@ -596,6 +620,12 @@ export class BetterLayerController {
             if (newChild.hide_in_starboard) {
               structure = newChild.childs ? structure.concat(newChild.childs) : structure;
               features = newChild.features ? features.concat(newChild.features) : features;
+              if (newChild.vectorLayer) {
+                self.vectorLayers.push(newChild.vectorLayer);
+                if (!newChild.hide && !newChild.greyed) {
+                  self.mapController.map.addLayer(newChild.vectorLayer);
+                }
+              }
             } else {
               structure.push(newChild);
             }
@@ -637,6 +667,10 @@ export class BetterLayerController {
       self.mapController.setLayersInitial(self.arrLayers, arrStates);
       self.mapController.setTabLayers(tabStructures, tabStates);
       if (self.proxy.mapData.calc_extent === "LOCATIONS" || self.proxy.mapData.calc_extent === "CENTERLOCS") {
+        let extentFeatures = features;
+        if (!extentFeatures || extentFeatures.length === 0) {
+          extentFeatures = self.objIds[layer.id] || [];
+        }
         if (self.extent && !(self.extent.maxX === Infinity || self.extent.maxX === -Infinity)) {
           let view = self.mapController.map.getView();
           let padding = [
@@ -1324,10 +1358,14 @@ export class BetterLayerController {
       }
     }
     if (this.proxy.mapData.calc_extent === "LOCATIONS" || this.proxy.mapData.calc_extent === "CENTERLOCS") {
-      for (let i in features) {
-        if (features.hasOwnProperty(i) && features[i].getGeometry() && typeof features[i].getGeometry().getExtent === 'function') {
-          let extent = features[i].getGeometry().getExtent();
-          if (extent && extent.length >= 4) {
+      let extentFeatures = features;
+      if (!extentFeatures || extentFeatures.length === 0) {
+        extentFeatures = this.objIds[layer.id] || [];
+      }
+      for (let i in extentFeatures) {
+        if (extentFeatures.hasOwnProperty(i) && extentFeatures[i].getGeometry() && typeof extentFeatures[i].getGeometry().getExtent === 'function') {
+          let extent = extentFeatures[i].getGeometry().getExtent();
+          if (extent && Array.isArray(extent) && extent.length >= 4) {
             if (this.extent.maxX < extent[2]) {
               this.extent.maxX = extent[2];
             }
@@ -1355,9 +1393,23 @@ export class BetterLayerController {
     }
   }
   geometryFunction (feature) {
+    if (!feature || !feature.getGeometry) {
+      return null;
+    }
     let geometry = feature.getGeometry();
     if (geometry instanceof Point) {
       return geometry;
+    }
+    else if (geometry && typeof geometry.getInteriorPoint === 'function') {
+      return geometry.getInteriorPoint();
+    }
+    else if (geometry && typeof geometry.getClosestPoint === 'function') {
+      // fallback for geometries that don't have interior point (like LineString)
+      const center = this.mapController.map.getView().getCenter();
+      if (center) {
+        return new Point(geometry.getClosestPoint(center));
+      }
+      return null;
     }
     else {
       return null;
@@ -1667,6 +1719,9 @@ export class BetterLayerController {
     return (parseInt(layerZoom.min, 10) < zoom && parseInt(layerZoom.max, 10) > zoom);
   }
   getWfsStyle (feature, content) {
+    if (!feature || !feature.get) {
+      return content.locationStyle;
+    }
     let locstyleWfs = content.locstyleWfs;
     for (let i in locstyleWfs) {
       if (locstyleWfs.hasOwnProperty(i)) {
