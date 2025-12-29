@@ -32,7 +32,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_themes']['fontcolor']  = array('Schriftfarbe und
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['popupMaincolor']  = array('Popup Hintergrundfarbe und Deckkraft', 'Gilt nur für klassisches Popup. Die Deckkraft in % angeben. Überschreibt die voreingestellten con4gis CSS-Einstellungen. Wenn dieser Wert leer bleibt, wird automatisch die Hauptfarbe auch für das Popup gesetzt.');
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['popupFontcolor']  = array('Popup Schriftfarbe und Deckkraft', 'Gilt nur für klassisches Popup. Die Deckkraft in % angeben. Überschreibt die voreingestellten con4gis CSS-Einstellungen. Wenn dieser Wert leer bleibt, wird automatisch die Schriftfarbe auch für das Popup gesetzt.');
 
-$GLOBALS['TL_LANG']['tl_c4g_map_themes']['popupMaxWidth'] = array('Maximale Sideboard-Breite (auch Popup)', 'Gilt für alle Sideboards (also auch das Standard-Popup). Standard: 42%');
+$GLOBALS['TL_LANG']['tl_c4g_map_themes']['popupMaxWidth'] = array('Maximale Sideboard-Breite (auch Popup)', 'Gilt für alle Sideboards (also auch das Standard-Popup). Standard: 42% (Angaben in %, px oder vw möglich)');
 
 $GLOBALS['TL_LANG']['tl_c4g_map_themes']['shadowcolor']  = array('Zweitfarbe und Deckkraft', 'Zum Beispiel für Hover-Effekte, Rahmen oder Formularelemente. Die Deckkraft in % angeben. Überschreibt die voreingestellten con4gis CSS-Einstellungen.');
 

@@ -827,10 +827,11 @@ export default class MapController extends Component {
     // }
     //themeData
     if (mapData.themeData) {
-      domMapDiv = document.getElementById(mapData.mapDiv);
+      let domThemeDiv = document.getElementById(mapData.mapDiv);
       if (mapData.themeData['useglobal']) {
-        domMapDiv = document.getElementById('wrapper');
+        domThemeDiv = document.getElementById('wrapper') || document.documentElement;
       }
+      domMapDiv = document.getElementById(mapData.mapDiv);
 
       let mapWidth = "100%";
       let mapHeight = "100%";
@@ -860,30 +861,30 @@ export default class MapController extends Component {
         var popupMainColor = utils.getRgbaFromHexAndOpacity(mapData.themeData['popupMaincolor'], mapData.themeData['popupMainopacity']);
         var popupFontColor = utils.getRgbaFromHexAndOpacity(mapData.themeData['popupFontcolor'], mapData.themeData['popupFontopacity']);
 
-        if (domMapDiv && domMapDiv.style) {
-          domMapDiv.style.setProperty('--main-color', mainColor);
-          domMapDiv.style.setProperty('--font-color', fontColor);
-          domMapDiv.style.setProperty('--pu-main-color', popupMainColor);
-          domMapDiv.style.setProperty('--pu-font-color', popupFontColor);
-          domMapDiv.style.setProperty('--shadow-color', shadowColor);
+        if (domThemeDiv && domThemeDiv.style) {
+          domThemeDiv.style.setProperty('--main-color', mainColor);
+          domThemeDiv.style.setProperty('--font-color', fontColor);
+          domThemeDiv.style.setProperty('--pu-main-color', popupMainColor);
+          domThemeDiv.style.setProperty('--pu-font-color', popupFontColor);
+          domThemeDiv.style.setProperty('--shadow-color', shadowColor);
         }
       }
 
-      if (domMapDiv && mapData.themeData['buttonradius']) {
-        domMapDiv.style.setProperty('--button-radius-percent', mapData.themeData['buttonradius'] + '%');
-        domMapDiv.style.setProperty('--button-radius-pixel', mapData.themeData['buttonradius'] + 'px');
+      if (domThemeDiv && mapData.themeData['buttonradius']) {
+        domThemeDiv.style.setProperty('--button-radius-percent', mapData.themeData['buttonradius'] + '%');
+        domThemeDiv.style.setProperty('--button-radius-pixel', mapData.themeData['buttonradius'] + 'px');
       }
 
-      if (domMapDiv && mapData.themeData['buttonsize']) {
-        domMapDiv.style.setProperty('--button-size-pixel', mapData.themeData['buttonsize'] + 'px');
+      if (domThemeDiv && mapData.themeData['buttonsize']) {
+        domThemeDiv.style.setProperty('--button-size-pixel', mapData.themeData['buttonsize'] + 'px');
       }
 
-      if (domMapDiv && mapData.themeData['fontsize']) {
-        domMapDiv.style.setProperty('--button-fontsize-pixel', mapData.themeData['fontsize'] + 'px');
+      if (domThemeDiv && mapData.themeData['fontsize']) {
+        domThemeDiv.style.setProperty('--button-fontsize-pixel', mapData.themeData['fontsize'] + 'px');
       }
 
-      if (domMapDiv && mapData.themeData['popupMaxWidth']) {
-        domMapDiv.style.setProperty('--popup-max-width', mapData.themeData['popupMaxWidth'] + '%');
+      if (domThemeDiv && mapData.themeData['popupMaxWidth']) {
+        domThemeDiv.style.setProperty('--popup-max-width', mapData.themeData['popupMaxWidth']);
       }
     }
 

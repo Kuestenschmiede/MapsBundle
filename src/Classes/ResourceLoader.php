@@ -286,7 +286,7 @@ class ResourceLoader extends coreResourceLoader
             if ($theme->popupMaxWidth) {
                 $popupMaxWidth = StringUtil::deserialize($theme->popupMaxWidth);
                 if ($popupMaxWidth['value']) {
-                    $themeData['popupMaxWidth'] = $popupMaxWidth['value'];
+                    $themeData['popupMaxWidth'] = $popupMaxWidth['value'] . $popupMaxWidth['unit'];
                 }
             }
             $themeData['controlLabels'] = $theme->controlLabels;
