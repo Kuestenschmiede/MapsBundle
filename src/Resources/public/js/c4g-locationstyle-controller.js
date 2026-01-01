@@ -112,6 +112,7 @@ export class C4gLocationStyleController {
     };
 
     // split arrIds if it's too long
+    arrIds = arrIds.filter(id => id && id !== "0" && id !== 0);
     if (arrIds.length > 100) {
       var n = 100;
       while(arrIds.length > 0) {

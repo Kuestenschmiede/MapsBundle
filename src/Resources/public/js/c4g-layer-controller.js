@@ -40,6 +40,7 @@ export class BetterLayerController {
 
   constructor(proxy) {
     this.handleZoom = this.handleZoom.bind(this);
+    this.geometryFunction = this.geometryFunction.bind(this);
     const scope = this;
     this.proxy = proxy;
     this.loaders = [];
@@ -330,7 +331,7 @@ export class BetterLayerController {
 
     this.vectorLayer = new Vector({
       source: this.vectorSource,
-      zIndex: 10
+      zIndex: 100
     });
 
     this.vectorLayers = [];
@@ -600,6 +601,14 @@ export class BetterLayerController {
       dataType: this.mapController.data.jsonp ? "jsonp" : "json"
 
     }).done(function (data) {
+      if (self.proxy.mapData.layers) {
+        data.layer = data.layer || {};
+        self.proxy.mapData.layers.forEach(l => {
+          if (l.id) {
+            data.layer[l.id] = l;
+          }
+        });
+      }
       data.map = self.mapController.map;
       data.map.fromLonLat = fromLonLat;
       utils.callHookFunctions(window.c4gMapsHooks.hook_layer, data);
@@ -623,7 +632,10 @@ export class BetterLayerController {
               if (newChild.vectorLayer) {
                 self.vectorLayers.push(newChild.vectorLayer);
                 if (!newChild.hide && !newChild.greyed) {
-                  self.mapController.map.addLayer(newChild.vectorLayer);
+                  // check if layer is already on map
+                  if (self.mapController.map.getLayers().getArray().indexOf(newChild.vectorLayer) === -1) {
+                    self.mapController.map.addLayer(newChild.vectorLayer);
+                  }
                 }
               }
             } else {
@@ -662,14 +674,33 @@ export class BetterLayerController {
           }, 300);
         });
       }});
-      self.vectorCollection.extend(features);
-      self.mapController.map.addLayer(self.vectorLayer);
+      if (features && Array.isArray(features)) {
+        const currentFeatures = self.vectorCollection.getArray();
+        const existingIds = new Set();
+        currentFeatures.forEach(f => {
+          if (typeof f.getId === 'function' && f.getId()) existingIds.add(f.getId());
+        });
+        const uniqueFeatures = features.filter(f => {
+          return currentFeatures.indexOf(f) === -1 && 
+                 (typeof f.getId !== 'function' || !f.getId() || !existingIds.has(f.getId())) &&
+                 (!f.ol_uid || currentFeatures.every(cf => cf.ol_uid !== f.ol_uid));
+        });
+        self.vectorCollection.extend(uniqueFeatures);
+      }
+      if (self.mapController.map.getLayers().getArray().indexOf(self.vectorLayer) === -1) {
+        self.mapController.map.addLayer(self.vectorLayer);
+      }
       self.mapController.setLayersInitial(self.arrLayers, arrStates);
       self.mapController.setTabLayers(tabStructures, tabStates);
-      if (self.proxy.mapData.calc_extent === "LOCATIONS" || self.proxy.mapData.calc_extent === "CENTERLOCS") {
+      if (self.proxy.mapData.calc_extent === 'LOCATIONS' || self.proxy.mapData.calc_extent === 'CENTERLOCS') {
         let extentFeatures = features;
         if (!extentFeatures || extentFeatures.length === 0) {
-          extentFeatures = self.objIds[layer.id] || [];
+          extentFeatures = [];
+          for (let layerKey in self.objIds) {
+            if (self.objIds.hasOwnProperty(layerKey)) {
+              extentFeatures = extentFeatures.concat(self.objIds[layerKey]);
+            }
+          }
         }
         if (self.extent && !(self.extent.maxX === Infinity || self.extent.maxX === -Infinity)) {
           let view = self.mapController.map.getView();
@@ -686,7 +717,7 @@ export class BetterLayerController {
               self.extent.maxY
           ];
 
-          if (self.proxy.mapData.calc_extent === "CENTERLOCS") {
+          if (self.proxy.mapData.calc_extent === 'CENTERLOCS') {
             // ssss
             view.fit(extent, {
               maxZoom:self.mapController.data.center.zoom
@@ -751,6 +782,8 @@ export class BetterLayerController {
     let popup = false;
     let features = [];
     let childs = [];
+    let vectorLayer;
+    let loaderId;
     let hide = !!layer.hide;
     if (scope.mapController.data.layers && scope.mapController.data.layers.length > 0) { //hide or show according to permalink - overwrites layerService
       let arrLayerIds;
@@ -763,7 +796,7 @@ export class BetterLayerController {
       let funcLayerIds = (value) => {
         return value == layer.id
       }
-      if (arrLayerIds.find(funcLayerIds)) { //in permalink
+      if (arrLayerIds.find(funcLayerIds) || layer.id === 'current_geojson') { //in permalink or current_geojson
         hide = false;
       }
       else { //not in permalink
@@ -774,17 +807,17 @@ export class BetterLayerController {
       let found = layer.activeForBaselayers.includes(scope.mapController.state.activeBaselayerId || scope.mapController.data.default_baselayer);
       hide = !found;
     }
-    let vectorLayer = false;
-    let loaderId = -1;
     let possibleLocstyle = layer.locstyle;
     if (layer.content && layer.content.length > 0) {
       features = this.getFeaturesForLayer(layer);
-      possibleLocstyle = layer.locstyle || layer.content[0].locationStyle
+      possibleLocstyle = layer.locstyle || layer.content[0].locationStyle;
     }
 
-    let checkLocstyle = this.arrLocstyles.findIndex((element) => element === possibleLocstyle);
-    if (checkLocstyle === -1 && possibleLocstyle) {
-      this.arrLocstyles.push(possibleLocstyle);
+    if (possibleLocstyle && possibleLocstyle !== '0') {
+      let checkLocstylePossible = this.arrLocstyles.findIndex((element) => element === possibleLocstyle);
+      if (checkLocstylePossible === -1) {
+        this.arrLocstyles.push(possibleLocstyle);
+      }
     }
     if (layer.async_content && layer.async_content != 0 && !layer.excludeFromSingleLayer) {
       let url = "";
@@ -808,9 +841,11 @@ export class BetterLayerController {
         forceNodes = layer.content[0].settings.forceNodes;
         showAddGeoms = !!layer.content[0].settings.showAdditionalGeometries;
       }
-      checkLocstyle = this.arrLocstyles.findIndex((element) => element === locstyleId);
-      if (checkLocstyle === -1 && locstyleId) {
-        this.arrLocstyles.push(locstyleId);
+      if (locstyleId && locstyleId !== '0') {
+        let checkLocstyleAsync = this.arrLocstyles.findIndex((element) => element === locstyleId);
+        if (checkLocstyleAsync === -1) {
+          this.arrLocstyles.push(locstyleId);
+        }
       }
       loaderId = this.loaders.length;
       this.loaders.push({
@@ -1206,8 +1241,21 @@ export class BetterLayerController {
       });
       let greyed = layer.zoom && !this.compareZoom(layer.zoom);
       if (!hide && !greyed) {
-        // vectorLayer.setZIndex(1);
-        this.mapController.map.addLayer(vectorLayer);
+        // check if layer is already on map
+        if (this.mapController.map.getLayers().getArray().indexOf(vectorLayer) === -1) {
+          this.mapController.map.addLayer(vectorLayer);
+        }
+      }
+      if (features) {
+        features.forEach(f => {
+          const currentFeatures = vectorSource.getFeatures();
+          const alreadyExists = currentFeatures.indexOf(f) !== -1 || 
+                               (typeof f.getId === 'function' && f.getId() && vectorSource.getFeatureById(f.getId())) ||
+                               (f.ol_uid && currentFeatures.some(cf => cf.ol_uid === f.ol_uid));
+          if (!alreadyExists) {
+            vectorSource.addFeature(f);
+          }
+        });
       }
       features = false;
     }
@@ -1259,40 +1307,47 @@ export class BetterLayerController {
               code: contentData.properties.projection
             });
           }
+          let formatType = layer.content[contentId].type || layer.type || 'GeoJSON';
           let format;
-          if (layer.content[contentId].type === "urlData") {
-            if (layer.type === "kml") {
-              return false
-            }
-            else if (layer.type === "gpx") {
-              return false;
-            }
-          }
-          else if (contentData.properties){
-            format = new olFormat[layer.content[contentId].type]({
+          try {
+            format = new olFormat[formatType]({
               featureProjection: featureProjection,
-              dataProjection: contentData.properties.projection
+              dataProjection: dataProjection
             });
+          } catch (e) {
+            console.error("Error creating format for type", formatType, e);
+            continue;
+          }
+          if (!format) {
+            console.error("Could not find format for type", formatType);
+            continue;
           }
 
           let locstyle = content.locationStyle || layer.locstyle;
-          let checkLocstyle = this.arrLocstyles.findIndex((element) => element === locstyle);
-          if (checkLocstyle === -1 && locstyle) {
-            this.arrLocstyles.push(locstyle);
+          if (locstyle && locstyle !== '0') {
+            let checkLocstyleContent = this.arrLocstyles.findIndex((element) => element === locstyle);
+            if (checkLocstyleContent === -1) {
+              this.arrLocstyles.push(locstyle);
+            }
           }
-          if (layer.content[contentId].type === "GeoJSON") {
+          let isGeoJson = (layer.content[contentId].type === "GeoJSON" || layer.type === "GeoJSON");
+          if (isGeoJson) {
             if (contentData.type === "FeatureCollection") {
               for (let i in contentData.features) {
                 if (contentData.features.hasOwnProperty(i)) {
                   let singleFeature = format.readFeature(contentData.features[i]);
                   if (!singleFeature.get('locstyle')) {
-                    singleFeature.set('locstyle', locstyle);
+                    singleFeature.set('locstyle', (contentData.features[i].properties && (contentData.features[i].properties.locstyle || contentData.features[i].properties.styleId || contentData.features[i].properties.locationStyle)) || locstyle);
                   }
-                  else {
-                    checkLocstyle = this.arrLocstyles.findIndex((element) => element === singleFeature.get('locstyle'));
-                    if (checkLocstyle === -1 && singleFeature.get('locstyle')) {
-                      this.arrLocstyles.push(singleFeature.get('locstyle'));
+                  let featureLocstyle = singleFeature.get('locstyle');
+                  if (featureLocstyle && featureLocstyle !== '0') {
+                    let checkLocstyleFeature = this.arrLocstyles.findIndex((element) => element === featureLocstyle);
+                    if (checkLocstyleFeature === -1) {
+                      this.arrLocstyles.push(featureLocstyle);
                     }
+                  }
+                  if (!singleFeature.get('zindex') && contentData.features[i].properties && contentData.features[i].properties.zindex) {
+                    singleFeature.set('zindex', contentData.features[i].properties.zindex);
                   }
                   if (content.hover_location) {
                     singleFeature.set('hover_style', content.hover_style);
@@ -1318,7 +1373,19 @@ export class BetterLayerController {
             }
             else if (contentData && contentData.type) {
               let feature = format.readFeature(contentData);
-              feature.set('locstyle', locstyle);
+              if (!feature.get('locstyle')) {
+                feature.set('locstyle', (contentData.properties && (contentData.properties.locstyle || contentData.properties.styleId || contentData.properties.locationStyle)) || locstyle);
+              }
+              let featureLocstyle = feature.get('locstyle');
+              if (featureLocstyle && featureLocstyle !== '0') {
+                let checkLocstyleFeature = this.arrLocstyles.findIndex((element) => element === featureLocstyle);
+                if (checkLocstyleFeature === -1) {
+                  this.arrLocstyles.push(featureLocstyle);
+                }
+              }
+              if (!feature.get('zindex') && contentData.properties && contentData.properties.zindex) {
+                feature.set('zindex', contentData.properties.zindex);
+              }
               feature.set('noFilter', layer.noRealFilter);
               if (content.hover_location) {
                 feature.set('hover_style', content.hover_style);
@@ -1357,7 +1424,7 @@ export class BetterLayerController {
         }
       }
     }
-    if (this.proxy.mapData.calc_extent === "LOCATIONS" || this.proxy.mapData.calc_extent === "CENTERLOCS") {
+    if (this.proxy.mapData.calc_extent === 'LOCATIONS' || this.proxy.mapData.calc_extent === 'CENTERLOCS') {
       let extentFeatures = features;
       if (!extentFeatures || extentFeatures.length === 0) {
         extentFeatures = this.objIds[layer.id] || [];
@@ -1405,9 +1472,11 @@ export class BetterLayerController {
     }
     else if (geometry && typeof geometry.getClosestPoint === 'function') {
       // fallback for geometries that don't have interior point (like LineString)
-      const center = this.mapController.map.getView().getCenter();
-      if (center) {
-        return new Point(geometry.getClosestPoint(center));
+      if (this.mapController && this.mapController.map && this.mapController.map.getView()) {
+        const center = this.mapController.map.getView().getCenter();
+        if (center) {
+          return new Point(geometry.getClosestPoint(center));
+        }
       }
       return null;
     }
@@ -1658,7 +1727,17 @@ export class BetterLayerController {
     let layer;
     let oldLength = scope.vectorCollection.getLength(); //necesarry to distinct redundant features
 
-    scope.vectorCollection.extend(features);
+    if (features && Array.isArray(features)) {
+      const currentFeatures = scope.vectorCollection.getArray();
+      const existingIds = new Set();
+      currentFeatures.forEach(f => {
+        if (typeof f.getId === 'function' && f.getId()) existingIds.add(f.getId());
+      });
+      const uniqueFeatures = features.filter(f => {
+        return currentFeatures.indexOf(f) === -1 && (typeof f.getId !== 'function' || !f.getId() || !existingIds.has(f.getId()));
+      });
+      scope.vectorCollection.extend(uniqueFeatures);
+    }
     addedFeatures = scope.vectorCollection.getArray().slice(oldLength);
 
     if (typeof chain === "string") {
