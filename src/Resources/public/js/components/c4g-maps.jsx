@@ -1123,7 +1123,13 @@ export default class MapController extends Component {
   render() {
     const scope = this;
     const mapData = this.data;
+    if (!mapData || !mapData.mapDiv) {
+      return null;
+    }
     let target = document.querySelector('#' + mapData.mapDiv + ' .c4g-control-container-top-left');
+    if (!target || !this.$overlaycontainer_stopevent || !this.$overlaycontainer_stopevent.length) {
+      return null;
+    }
     this.arrComponents = this.arrComponents || [
       {name: "layerswitcher", sort: mapData.layerswitcher.enable},
       {name: "geosearch", sort: mapData.geosearch.enable},
@@ -1165,7 +1171,7 @@ export default class MapController extends Component {
     }
     let searchPortal = "";
     if (mapData.geosearch.enable) {
-      let geoSearchOptions = this.createGeosearchOptions();
+      let geoSearchOptions = this.createGeosearchOptions(target);
       geoSearchOptions.ref = (node) => {
         this.components.geosearch = node;
       };
@@ -1400,8 +1406,12 @@ export default class MapController extends Component {
               }
             }
 
+    let routerTarget = target;
+    if (!routerTarget) {
+        break;
+    }
             let routerControlProps = {
-              target: document.querySelector('#' + this.data.mapDiv + ' .c4g-control-container-top-left'),
+              target: routerTarget,
               mapController: this,
               direction: "top",
               withPosition: false,
@@ -1421,14 +1431,22 @@ export default class MapController extends Component {
                 if (!this.routerContainer) {
                   this.routerContainer = document.createElement('div');
                   this.routerContainer.className = "c4g-sideboard c4g-router-container-right " + (openRouter ? "c4g-open" : "c4g-close");
-                  jQuery(".ol-overlaycontainer-stopevent").append(this.routerContainer);
+                  if (this.$overlaycontainer_stopevent && this.$overlaycontainer_stopevent.length) {
+                    this.$overlaycontainer_stopevent.append(this.routerContainer);
+                  } else {
+                    jQuery(".ol-overlaycontainer-stopevent").append(this.routerContainer);
+                  }
                 } else {
                   this.routerContainer.className += " c4g-external";
                 }
               } else {
                 this.routerContainer = document.createElement('div');
                 this.routerContainer.className = "c4g-sideboard c4g-router-container-right " + (openRouter ? "c4g-open" : "c4g-close");
-                jQuery(".ol-overlaycontainer-stopevent").append(this.routerContainer);
+                if (this.$overlaycontainer_stopevent && this.$overlaycontainer_stopevent.length) {
+                  this.$overlaycontainer_stopevent.append(this.routerContainer);
+                } else {
+                  jQuery(".ol-overlaycontainer-stopevent").append(this.routerContainer);
+                }
               }
             }
 
@@ -1455,7 +1473,11 @@ export default class MapController extends Component {
                 if (!this.editorContainer) {
                   this.editorContainer = document.createElement('div');
                   this.editorContainer.className = "c4g-sideboard c4g-editor-container-right " + (openEditor ? "c4g-open": "c4g-close");
-                  jQuery(".ol-overlaycontainer-stopevent").append(this.editorContainer);
+                  if (this.$overlaycontainer_stopevent && this.$overlaycontainer_stopevent.length) {
+                    this.$overlaycontainer_stopevent.append(this.editorContainer);
+                  } else {
+                    jQuery(".ol-overlaycontainer-stopevent").append(this.editorContainer);
+                  }
                 } else {
                   this.editorContainer.className += " c4g-external";
                 }
@@ -1463,14 +1485,22 @@ export default class MapController extends Component {
                 let openEditor = mapData.initial_open_comp === "editor"  || storedPanel === "EditorView";
                 this.editorContainer = document.createElement('div');
                 this.editorContainer.className = "c4g-sideboard c4g-editor-container-right " + (openEditor ? "c4g-open": "c4g-close");
-                jQuery(".ol-overlaycontainer-stopevent").append(this.editorContainer);
+                if (this.$overlaycontainer_stopevent && this.$overlaycontainer_stopevent.length) {
+                  this.$overlaycontainer_stopevent.append(this.editorContainer);
+                } else {
+                  jQuery(".ol-overlaycontainer-stopevent").append(this.editorContainer);
+                }
               }
+            }
+            let targetElement = mapData.editor.target || target;
+            if (!targetElement) {
+                break;
             }
             let editorProps = {
               tipLabel: langConstants.CTRL_EDITOR,
               type: mapData.editor.type || 'frontend',
               inputField: mapData.editor.inputField || false,
-              target: mapData.editor.target || document.querySelector('#' + this.data.mapDiv + ' .c4g-control-container-top-left'),
+              target: targetElement,
               initOpen: mapData.editor.open || false,
               config: mapData.editor.config || false,
               dataField: mapData.editor.data_field || false,
@@ -1498,11 +1528,15 @@ export default class MapController extends Component {
                 jQuery(".ol-overlaycontainer-stopevent").append(this.editorContainer);
               }
             }
+            let targetElementBackend = mapData.editor.target || target;
+            if (!targetElementBackend) {
+                break;
+            }
             let editorProps = {
               tipLabel: langConstants.CTRL_EDITOR,
               type: mapData.editor.type || 'frontend',
               inputField: mapData.editor.inputField || "#c4gGeoEditorGeoData",
-              target: mapData.editor.target || document.querySelector('#' + this.data.mapDiv + ' .c4g-control-container-top-left'),
+              target: targetElementBackend,
               initOpen: mapData.editor.open || false,
               config: mapData.editor.config || false,
               dataField: mapData.editor.data_field || false,
@@ -1567,12 +1601,16 @@ export default class MapController extends Component {
     this._isMounted = false;
   }
 
-  createGeosearchOptions() {
+  createGeosearchOptions(target) {
     const mapData = this.data;
     // geosearch
     let geosearchOptions = {};
     if ((mapData.geosearch && mapData.geosearch.enable)) {
 
+      let geosearchTarget = target;
+      if (!geosearchTarget) {
+          return {};
+      }
       if (!this.searchContainer) {
         if (mapData.geosearch.div) {
           this.searchContainer = document.querySelector("." + mapData.geosearch.div);
@@ -1594,7 +1632,7 @@ export default class MapController extends Component {
       }
       geosearchOptions = {
         mapController: this,
-        target: document.querySelector('#' + mapData.mapDiv + ' .c4g-control-container-top-left'),
+        target: geosearchTarget,
         extDiv: mapData.geosearch.div || false,
         extResultsDiv: mapData.geosearch.div_results || false,
         collapsible: true,

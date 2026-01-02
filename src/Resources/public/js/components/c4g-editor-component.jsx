@@ -79,15 +79,20 @@ export default class EditorComponent extends Component {
     }
 
     this.langConstants = getEditorLanguage(mapController.data);
-    let control = new Control({element: element, target: props.target});
-    control.isOpen = () => {
-      return false;
+    let control = null;
+    if (props.target) {
+        control = new Control({element: element, target: props.target});
+        control.isOpen = () => {
+            return false;
+        }
+        if (!mapController.mapsControls.controls.editor) {
+            mapController.mapsControls.controls.editor = control;
+        }
+        let index = mapController.arrComponents.findIndex(element => element.name === "editor");
+        if (index !== -1) {
+            mapController.arrComponents[index].control = control;
+        }
     }
-    if (!mapController.mapsControls.controls.editor) {
-      mapController.mapsControls.controls.editor = control;
-    }
-    let index = mapController.arrComponents.findIndex(element => element.name === "editor");
-    mapController.arrComponents[index].control = control;
     this.modes = ["select", "Point", "LineString", "Polygon", "Circle"];
     let features;
     if (this.props.inputField && $(this.props.inputField) && $(this.props.inputField).val() && $(this.props.inputField).val().length > 50) {
@@ -354,7 +359,7 @@ export default class EditorComponent extends Component {
         </div>
         <EditorView className={"c4g-editor-view"} styleFunction={this.styleFunction} mode={this.state.currentMode} styleData={this.state.styleData}
                     elements={this.config[this.state.currentMode] ? this.config[this.state.currentMode]: []} active={this.state.open}
-                    features={this.features} editorVars={this.props.config.editorVars} removeFeature={this.removeFeature} modifyFeature={this.modifyFeature}
+                    features={this.features} editorVars={this.props.config ? this.props.config.editorVars : (this.config.editorVars || {})} removeFeature={this.removeFeature} modifyFeature={this.modifyFeature}
                     addFeature={this.addFeature} editorLayer={this.editorLayer} editorId={this.state.editorId} countEditorId={this.countEditorId}
                     updateFeatures={this.updateFeatures} mapController={this.props.mapController} editor={this} lang={this.langConstants}/>
         <div className={"c4g-editor-content"} style={{display: "none"}}>

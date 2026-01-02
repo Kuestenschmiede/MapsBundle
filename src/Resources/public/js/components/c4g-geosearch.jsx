@@ -60,10 +60,12 @@ export default class GeoSearch extends Component {
     }
     if (props.mapController.data.geosearch.inputCssSelector) {
       let input = document.querySelector(props.mapController.data.geosearch.inputCssSelector);
-      input.setAttribute('id', "c4g-geosearch-input");
-      input.addEventListener('keydown',(event) => {this.inputCallback(event)});
-      input.addEventListener('input',(event) => {this.deleteCallback(event)});
-      this.input = input;
+      if (input) {
+        input.setAttribute('id', "c4g-geosearch-input");
+        input.addEventListener('keydown',(event) => {this.inputCallback(event)});
+        input.addEventListener('input',(event) => {this.deleteCallback(event)});
+        this.input = input;
+      }
     }
     else {
       let input = document.createElement('input');
