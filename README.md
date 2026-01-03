@@ -94,7 +94,7 @@ elements for your website. So you can simply build your own individual and limit
 
 
 **Contains:**
-- [OpenLayers 9](https://github.com/openlayers/openlayers)
+- [OpenLayers 10](https://github.com/openlayers/openlayers)
 
 ## Installation
 Via composer:
@@ -104,7 +104,7 @@ composer require con4gis/maps
 Alternatively, you can use the Contao Manager to install the con4gis-MapsBundle.
 
 ## Requirements:
-- [Contao](https://github.com/contao/core-bundle) (***>= 4.9.x***)
+- [Contao](https://github.com/contao/core-bundle) (***>= 4.13.x***, ***>= 5.3.x***)
 
 ## Documentation
 Visit [docs.con4gis.org](https://docs.con4gis.org) for a user documentation. You can also contact us via the support forum there.
