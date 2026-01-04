@@ -71,6 +71,7 @@ class LayerController extends BaseController
                 $modifiedData['layer'][$key] = $this->addCustomLogic($layer, $lang);
             }
             $this->responseData = $modifiedData;
+            $this->responseData = $this->normalizeLayerData($this->responseData);
             if (self::$useCache && !$this->preventCaching) {
                 $this->storeDataInCache($request);
             }
@@ -103,12 +104,59 @@ class LayerController extends BaseController
         return $arrLayerData;
     }
 
+    /**
+     * Normalizes layer data to prevent frontend errors.
+     *
+     * @param mixed $data
+     * @return mixed
+     */
+    private function normalizeLayerData($data)
+    {
+        if (is_string($data)) {
+            if (!mb_check_encoding($data, 'UTF-8')) {
+                $data = mb_convert_encoding($data, 'UTF-8', 'UTF-8');
+            }
+            return $data;
+        }
+
+        if (is_array($data)) {
+            foreach ($data as $key => $value) {
+                if ($key === 'type' || $key === 'format') {
+                    if ($value === 'urlData' && isset($data['format'])) {
+                        $data[$key] = $data['format'];
+                        $value = $data['format'];
+                    } elseif (in_array($value, ['gutesElem', 'gutesPart', 'gutes', 'urlData'])) {
+                        $data[$key] = 'GeoJSON';
+                        $value = 'GeoJSON';
+                    }
+                }
+                $data[$key] = $this->normalizeLayerData($value);
+            }
+        } elseif (is_object($data)) {
+            foreach ($data as $key => $value) {
+                if ($key === 'type' || $key === 'format') {
+                    if ($value === 'urlData' && isset($data->format)) {
+                        $data->$key = $data->format;
+                        $value = $data->format;
+                    } elseif (in_array($value, ['gutesElem', 'gutesPart', 'gutes', 'urlData'])) {
+                        $data->$key = 'GeoJSON';
+                        $value = 'GeoJSON';
+                    }
+                }
+                $data->$key = $this->normalizeLayerData($value);
+            }
+        }
+
+        return $data;
+    }
+
     public function layerContentAction(Request $request, $layerId)
     {
         $response = new JsonResponse();
         /* @var LayerContentService $layerContentService */
         $layerContentService = $this->get('con4gis.layer_content_service');
         $this->responseData = $layerContentService->getLayerData($layerId);
+        $this->responseData = $this->normalizeLayerData($this->responseData);
         $response->setData($this->responseData);
         
         return $response;
@@ -133,6 +181,7 @@ class LayerController extends BaseController
         $event->setExtent($arrExtent);
         $this->eventDispatcher->dispatch($event, $event::NAME);
         $this->responseData = $event->getLayerData();
+        $this->responseData = $this->normalizeLayerData($this->responseData);
         $response->setData($this->responseData);
         
         return $response;

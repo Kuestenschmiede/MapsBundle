@@ -1400,9 +1400,7 @@ export class BetterLayerController {
           else if (format) {
             fetch(contentData.url).then((response) => {
               response.text().then((text) => {
-                let parser = new DOMParser();
-                let data = parser.parseFromString(text, "text/xml");
-                let tempFeatures = format.readFeature(data.childNodes[0].outerHTML);
+                let tempFeatures = format.readFeatures(text);
                 for (let featId in tempFeatures) {
                   if (tempFeatures.hasOwnProperty(featId)) {
                     let feature = tempFeatures[featId];

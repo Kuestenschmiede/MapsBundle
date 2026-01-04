@@ -302,7 +302,7 @@ class LayerService
             if ($layer['name'] == $name && $layer['type'] == 'overpass') {
                 $return[] = &$layer;
             }
-            if ($layer['hasChilds']) {
+            if (isset($layer['hasChilds']) && $layer['hasChilds']) {
                 $recursiveResult = &$this->searchOverpassLayerByName($name, $layer['childs']);
                 if ($recursiveResult) {
                     foreach ($recursiveResult as &$r) {
@@ -328,7 +328,7 @@ class LayerService
             foreach ($childList as $index => $child) {
                 if ($parentLayer->data_hidelayer) {
                     $child['hide'] = $parentLayer->data_hidelayer;
-                    if ($child['hasChilds']) {
+                    if (isset($child['hasChilds']) && $child['hasChilds']) {
                         $child['childs'] = $this->setChildHide($child['childs'], $parentLayer);
                     }
                 }
