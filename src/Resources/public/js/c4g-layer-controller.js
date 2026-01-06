@@ -1065,7 +1065,7 @@ export class BetterLayerController {
       else if (features && features.length){
         vectorSource.addFeatures(features);
       }
-      else {
+      else if (layer.content) {
         let content = layer.content[0];
         let featureProjection = "EPSG:3857";
         let dataProjection = "EPSG:4326";
