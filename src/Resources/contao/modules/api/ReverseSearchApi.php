@@ -11,6 +11,7 @@ namespace con4gis\MapsBundle\Resources\contao\modules\api;
 
 use con4gis\CoreBundle\Classes\C4GUtils;
 use con4gis\CoreBundle\Classes\HttpResultHelper;
+use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapSettingsModel;
 use Contao\Frontend;
@@ -190,7 +191,9 @@ class ReverseSearchApi extends Frontend
         }
         try {
             $response = $return->getContent();
+//            $response = $return->getContent(false);
         } catch (\Exception $e) {
+            C4gLogModel::addLogEntry("maps", "Fehler in ReverseSeachApi: " . $e->getMessage());
             return "";
         }
         if ($response) {
