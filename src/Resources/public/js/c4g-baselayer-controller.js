@@ -135,6 +135,7 @@ export class C4gBaselayerController {
     let cookie = 1;
     var mapData = this.mapController.data;
     if (mapData.cookie) {
+      // TODO hier auch ccm19 abfragen, wenn enabled
       cookie = 0;
       let arrCoookies = document.cookie.split(";");
       for (let i in arrCoookies) {
@@ -144,6 +145,11 @@ export class C4gBaselayerController {
               cookie = 2;
             }
           }
+        }
+      }
+      if (mapData.enableCCM19 && typeof window.CCM !== "undefined") {
+        if (window.CCM.acceptedCookies.includes(mapData[key]['cookie']['name'])) {
+          cookie = 1;
         }
       }
     }

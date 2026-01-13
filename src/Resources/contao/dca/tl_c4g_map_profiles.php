@@ -97,7 +97,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         ],
     'palettes' =>
         [
-        '__selector__'                => ['resize_locstyles_zoom', 'mouse_nav','cluster_all','attribution','hover_popups','overpassEngine', 'cesium','starboard_filter', 'popupHandling','geopicker','consentBanner', 'userLocation'],
+        '__selector__'                => ['resize_locstyles_zoom', 'mouse_nav','cluster_all','attribution','hover_popups','overpassEngine', 'cesium','starboard_filter', 'popupHandling','geopicker','consentBanner', 'userLocation', 'enableCCM19'],
         'default'                     => '{general_legend},name,theme,mapFunctions,initial_open_comp;'.
                                          '{navigation_legend:hide},mouse_nav,touch_nav,twoFingers,keyboard_nav;'.
                                          '{click_legend:hide},tooltipOrientation,link_newwindow,link_open_on,hover_popups,popupHandling;'.
@@ -107,7 +107,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                                          '{editor_legend:hide},editorConfig;'.
                                          '{routing_legend::hide},routerConfig;'.
                                          '{information_legend:hide},attribution,scaleline,mouseposition,permalink_get_param,permalinkSaveId,permalinkWithoutGenerator,zoomlevel,infopage,label_color,resize_locstyles_zoom;'.
-                                         '{expert_legend:hide},userLocation,overpassEngine,caching,cesium,external_elements,minZoomStarboardScope,custom_div,geopicker,filters,filterHandling,filterResetButton,be_optimize_checkboxes_limit,consentBanner;'
+                                         '{expert_legend:hide},userLocation,overpassEngine,caching,cesium,external_elements,minZoomStarboardScope,custom_div,geopicker,filters,filterHandling,filterResetButton,be_optimize_checkboxes_limit,consentBanner,enableCCM19;'
         ],
     'subpalettes' =>
     [
@@ -126,6 +126,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         'popupHandling_1'             => 'popupMultiple',
         'popupHandling_3'             => 'popupHeadline',
         'consentBanner'               => 'cookieInfo,cookieName,cookieValue',
+        'enableCCM19'                 => 'CCM19serviceName,CCM19cookieHint',
         'userLocation'                => 'userLocationStyle'
     ],
     'fields' =>
@@ -958,6 +959,29 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'default'                 => '',
             'inputType'               => 'text',
             'sql'                     => "varchar(255) NOT NULL default ''"
+        ],
+
+        'enableCCM19' => [
+            'exclude'                 => true,
+            'default'                 => '',
+            'inputType'               => 'checkbox',
+            'eval'                    => ['submitOnChange' => true],
+            'sql'                     => "char(1) NOT NULL default ''"
+        ],
+
+        'CCM19serviceName' => [
+            'exclude'                 => true,
+            'default'                 => '',
+            'inputType'               => 'text',
+            'sql'                     => "varchar(255) NOT NULL default ''"
+        ],
+
+        'CCM19cookieHint' => [
+            'exclude'                 => true,
+            'default'                 => '',
+            'inputType'               => 'textarea',
+            'eval'                    => ['rte' => 'tinyMCE'],
+            'sql'                     => "text NULL"
         ],
     
         'routerConfig' => [

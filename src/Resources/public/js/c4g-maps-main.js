@@ -35,6 +35,7 @@ window.initMap = function(mapData) {
       viewport.remove();
       $('*[class^="c4g-external"]').empty();
     }
+
     if (mapData["cookie"]) {
       let cookie = false;
       let arrCoookies = document.cookie.split(";");
@@ -87,7 +88,12 @@ window.initMap = function(mapData) {
               window.initMap(mapData);
             }
           });
+        } else if (typeof window.CCM !== "undefined") {
+          window.addEventListener("ccm19EmbeddingAccepted", (event) => {
+            console.log(event);
+          });
         }
+        console.log(window);
         return ReactDOM.render(
             <Suspense fallback={<div>Loading...</div>}>
               <ConsentBanner mapData={mapData}/>
@@ -138,11 +144,56 @@ window.initMaps = function(mapData) {
               }
             }
           }
-          if (!cookie) {
-            if (typeof klaro !== "undefined" && klaro.getManager && klaro.getManager()) {
-              let manager = klaro.getManager();
-              let watcher = {
-                update: (watcher, action, consentStatus) => {
+
+          // handle ccm19 first since it requires different handling and uses their own cookie widget
+          if (typeof window.CCM !== "undefined" && mapData[key]['cookie'].enableCCM19) {
+            let acceptedCookies = window.CCM.acceptedCookies;
+            if (acceptedCookies.includes(mapData[key]['cookie']['name'])) {
+              cookie = true;
+              document.cookie = mapData[key]['cookie']['name'] + "=1; Secure; Session";
+            } else {
+              window.addEventListener("ccm19EmbeddingAccepted", (event) => {
+                document.cookie = mapData[key]['cookie']['name'] + "=1; Secure; Session";
+                window.initMap(mapData[key]);
+              });
+              renderMap = false;
+
+              ReactDOM.render(
+                  <Suspense fallback={<div>Loading...</div>}>
+                    <ConsentBanner mapData={mapData[key]} hintOnly={true}/>
+                    <MapController mapData={mapData[key]}/>
+                  </Suspense>,
+                  jQuery("#c4g-map-container-" + mapData[key].mapId)[0]
+              );
+
+              return null;
+            }
+          } else {
+            if (!cookie) {
+              if (typeof klaro !== "undefined" && klaro.getManager && klaro.getManager()) {
+                let manager = klaro.getManager();
+                let watcher = {
+                  update: (watcher, action, consentStatus) => {
+                    let cookie = false;
+                    let arrCoookies = document.cookie.split(";");
+                    for (let i in arrCoookies) {
+                      if (arrCoookies.hasOwnProperty(i)) {
+                        if (arrCoookies[i].indexOf(mapData[key]["cookie"]["name"]) > -1) { //the cookies exists
+                          if (!mapData[key]["cookie"]["value"] || arrCoookies[i].indexOf(mapData[key]["cookie"]["value"]) > -1) { //no value provided or matching value
+                            cookie = true;
+                          }
+                        }
+                      }
+                    }
+                    if (cookie) {
+                      window.initMap(mapData[key]);
+                    }
+                  }
+                }
+                manager.watch(watcher);
+              }
+              else if (typeof HofffConsentManager !== "undefined") {
+                HofffConsentManager.addEventListener('consent:accepted', function (event) {
                   let cookie = false;
                   let arrCoookies = document.cookie.split(";");
                   for (let i in arrCoookies) {
@@ -157,52 +208,36 @@ window.initMaps = function(mapData) {
                   if (cookie) {
                     window.initMap(mapData[key]);
                   }
-                }
+                });
               }
-              manager.watch(watcher);
-            }
-            else if (typeof HofffConsentManager !== "undefined") {
-              HofffConsentManager.addEventListener('consent:accepted', function (event) {
-                let cookie = false;
-                let arrCoookies = document.cookie.split(";");
-                for (let i in arrCoookies) {
-                  if (arrCoookies.hasOwnProperty(i)) {
-                    if (arrCoookies[i].indexOf(mapData[key]["cookie"]["name"]) > -1) { //the cookies exists
-                      if (!mapData[key]["cookie"]["value"] || arrCoookies[i].indexOf(mapData[key]["cookie"]["value"]) > -1) { //no value provided or matching value
-                        cookie = true;
-                      }
-                    }
+              else if (typeof cookiebar !== "undefined") {
+                const language = getLanguage(mapData[key]);
+                cookiebar.addModule(parseInt(mapData[key]["cookie"]["value"]), () => {
+                  mapData[key]['cookie'] = false;
+                  window.initMap(mapData[key])
+                }, {
+                  selector: "#c4g-map-container-" + mapData[key].mapId,
+                  message: mapData[key]['cookie']['info'],
+                  button: {
+                    show: true,                 // Extends the output by a confirmation button,
+                    text: language.ACCEPT, // Button text
+                    type: 'button',             // Button type
                   }
-                }
-                if (cookie) {
-                  window.initMap(mapData[key]);
-                }
-              });
+                });
+                return null;
+              }
             }
-            else if (typeof cookiebar !== "undefined") {
-              const language = getLanguage(mapData[key]);
-              cookiebar.addModule(parseInt(mapData[key]["cookie"]["value"]), () => {
-                mapData[key]['cookie'] = false;
-                window.initMap(mapData[key])
-              }, {
-                selector: "#c4g-map-container-" + mapData[key].mapId,
-                message: mapData[key]['cookie']['info'],
-                button: {
-                  show: true,                 // Extends the output by a confirmation button,
-                  text: language.ACCEPT, // Button text
-                  type: 'button',             // Button type
-                }
-              });
-              return null;
+
+            if (!cookie && !mapData[key]['cookie'].enableCCM19) {
+              ReactDOM.render(
+                  <Suspense fallback={<div>Loading...</div>}>
+                    <ConsentBanner mapData={mapData[key]}/>
+                    <MapController mapData={mapData[key]}/>
+                  </Suspense>,
+                  jQuery("#c4g-map-container-" + mapData[key].mapId)[0]
+              );
+              renderMap = false;
             }
-            ReactDOM.render(
-                <Suspense fallback={<div>Loading...</div>}>
-                  <ConsentBanner mapData={mapData[key]}/>
-                  <MapController mapData={mapData[key]}/>
-                </Suspense>,
-                jQuery("#c4g-map-container-" + mapData[key].mapId)[0]
-            );
-            renderMap = false;
           }
         }
 
@@ -221,6 +256,7 @@ window.initMaps = function(mapData) {
         }
 
         if (renderMap) {
+          console.log("renderMap true");
           if (mapData[key].renderAsObserver) {
             let observer = new IntersectionObserver(entries => {
               entries.forEach(entry => {
@@ -231,6 +267,7 @@ window.initMaps = function(mapData) {
                       </Suspense>,
                       entry.target
                   );
+                  console.log("map rendered");
                 }
               });
 

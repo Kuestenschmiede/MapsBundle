@@ -20,10 +20,13 @@ export default class ConsentBanner extends Component {
 
     render() {
         let settings = this.props.mapData.cookie;
+        console.log(this.props.hintOnly);
+
         return <React.Fragment>
             <div className={"c4g-maps-consent-overlay"}>
                 <div className={"c4g-maps-consent-info"} dangerouslySetInnerHTML={{__html: settings.info}}></div>
-                <button className={"c4g-maps-consent-button btn"} onClick={()=> this.clickEvent(this)}> {this.language.ACCEPT}</button>
+                {(!this.props.hintOnly) && <button className={"c4g-maps-consent-button btn"}
+                         onClick={() => this.clickEvent(this)}> {this.language.ACCEPT}</button>}
             </div>
         </React.Fragment>
     }

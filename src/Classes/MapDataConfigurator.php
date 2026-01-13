@@ -684,6 +684,21 @@ class MapDataConfigurator
                     'value' => $profile->cookieValue,
                 ];
             }
+
+            if ($profile->enableCCM19) {
+
+                if (array_key_exists('cookie', $mapData)) {
+                    $mapData['cookie']['enableCCM19'] = 1;
+                    $mapData['cookie']['name'] = $profile->CCM19serviceName;
+                    $mapData['cookie']['info'] = $profile->CCM19cookieHint;
+                } else {
+                    $mapData['cookie'] = [
+                        'enableCCM19' => 1,
+                        'name' => $profile->CCM19serviceName,
+                        'info' => $profile->CCM19cookieHint
+                    ];
+                }
+            }
         }
 
         // mapservice

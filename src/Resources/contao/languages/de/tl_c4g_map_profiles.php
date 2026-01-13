@@ -151,6 +151,11 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['consentBanner'] = ['Consent-Banner',
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cookieInfo'] = ['Consent-Text', 'Geben Sie an dieser Stelle einen Text ein, der erklärt, womit der User einverstanden sein muss, um die Karte zu nutzen.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cookieName'] = ['Cookie Name', 'Falls Sie einen bestehenden Cookie verwenden wollen, passen Sie diesen Wert auf dessen Namen an.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cookieValue'] = ['Cookie Wert', 'Falls Sie einen bestehenden Cookie verwenden wollen, passen Sie diesen Wert auf einen enthaltenen String an, der im erwarteten Cookie enthalten ist. Nutzen Sie die <a href="https://www.oveleon.de/cookiebar.html">Oveleon Cookiebar</a> tragen Sie hier die ID ihres Cookies (Benutzerdefiniert Skript) ein.'];
+
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['enableCCM19'] = ['CCM19 Integration aktivieren', 'CCM19 Integration aktivieren. Hinweis: funktioniert nicht in Kombination mit dem Cookie-Banner oben.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['CCM19serviceName'] = ['Name des Embeddings/Services in CCM19', 'Geben Sie hier den Namen des Cookies für den Service an, der in CCM19 für die Karte definiert wurde.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['CCM19cookieHint'] = ['Cookie-Hinweis solange keine Zustimmung gegeben ist', 'Hier können Sie einen Hinweis angeben, der angezeigt wird, wenn der Cookie noch nicht akzeptiert bzw. abgelehnt wurde. Wenn kein Text angegeben ist, wird keine Meldung eingeblendet.'];
+
 /**
  * Reference
  */
