@@ -600,7 +600,7 @@ export class BetterLayerController {
       dataType: this.mapController.data.jsonp ? "jsonp" : "json"
 
     }).done(function (data) {
-      if (self.proxy.mapData.layers) {
+      if (self.proxy.mapData.layers && typeof self.proxy.mapData.layers.forEach === "function") {
         data.layer = data.layer || {};
         self.proxy.mapData.layers.forEach(l => {
           if (l.id) {
