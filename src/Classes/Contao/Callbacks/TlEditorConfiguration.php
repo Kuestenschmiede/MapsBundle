@@ -13,6 +13,7 @@
 namespace con4gis\MapsBundle\Classes\Contao\Callbacks;
 
 use Contao\Database;
+use Contao\StringUtil;
 use Contao\System;
 use con4gis\MapsBundle\Entity\EditorConfiguration;
 
@@ -104,5 +105,51 @@ class TlEditorConfiguration
         ];
 
         return $return;
+    }
+
+    public function saveTypes($value)
+    {
+        // multiColumnWizard saves value as serialized array
+        if (is_string($value) && str_contains($value, "a:")) {
+            $value = StringUtil::deserialize($value, true);
+        }
+
+        if (is_array($value)) {
+            $value = json_encode($value);
+        }
+
+        return $value;
+    }
+
+    public function loadTypes($value)
+    {
+        if (is_string($value) && strlen($value) > 0) {
+            $value = json_decode($value, true);
+        }
+
+        return $value;
+    }
+
+    public function saveEditorVars($value)
+    {
+        // multiColumnWizard saves value as serialized array
+        if (is_string($value) && str_contains($value, "a:")) {
+            $value = StringUtil::deserialize($value, true);
+        }
+
+        if (is_array($value)) {
+            $value = json_encode($value);
+        }
+
+        return $value;
+    }
+
+    public function loadEditorVars($value)
+    {
+        if (is_string($value) && strlen($value) > 0) {
+            $value = json_decode($value, true);
+        }
+
+        return $value;
     }
 }

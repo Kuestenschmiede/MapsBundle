@@ -9,9 +9,11 @@
   * @copyright 	Küstenschmiede GmbH Software & Design
   * @link       https://www.con4gis.org
   */
+
+use con4gis\MapsBundle\Classes\Contao\Callbacks\TlEditorConfiguration;
 use Contao\DC_Table;
 $strName = 'tl_c4g_editor_configuration';
-$cbClass = \con4gis\MapsBundle\Classes\Contao\Callbacks\TlEditorConfiguration::class;
+$cbClass = TlEditorConfiguration::class;
 
 $GLOBALS['TL_DCA'][$strName] = array
 (
@@ -108,6 +110,8 @@ $GLOBALS['TL_DCA'][$strName] = array
             'exclude'                 => true,
             'default'                 => 'a:0:{}',
             'inputType'               => 'multiColumnWizard',
+            'save_callback'           => [[TlEditorConfiguration::class, 'saveTypes']],
+            'load_callback'           => [[TlEditorConfiguration::class, 'loadTypes']],
             'eval'                    => [
                 'columnsCallback'     => [$cbClass,'getTypes']
             ],
@@ -125,6 +129,8 @@ $GLOBALS['TL_DCA'][$strName] = array
             'exclude'                 => true,
             'default'                 => 'a:0:{}',
             'inputType'               => 'multiColumnWizard',
+            'save_callback'           => [[TlEditorConfiguration::class, 'saveEditorVars']],
+            'load_callback'           => [[TlEditorConfiguration::class, 'loadEditorVars']],
             'eval'                    => [
                 'columnsCallback'     => [$cbClass,'getEditorVars']
             ],

@@ -198,8 +198,10 @@ $GLOBALS['TL_DCA'][$strName] = array
         ],
         'router_profiles' => [
             'exclude'                 => true,
-            'default'                 => 'a:0:{}',
+            'default'                 => [],
             'inputType'               => 'select',
+            'save_callback'           => [[$callbackClass, 'saveRouterProfiles']],
+            'load_callback'           => [[$callbackClass, 'loadRouterProfiles']],
             'options_callback'        => [$callbackClass, 'getRouterProfiles'],
             'reference'               => &$GLOBALS['TL_LANG'][$strName]['references_router_profiles'],
             'eval'                    => ['mandatory'=>false, 'multiple'=>true,'chosen'=>true, 'tl_class' => 'clr m12'],
@@ -263,8 +265,10 @@ $GLOBALS['TL_DCA'][$strName] = array
         ],
         'routerLayers' => [
             'exclude'                 => true,
-            'default'                 => 'a:0:{}',
+            'default'                 => "[]",
             'inputType'               => 'multiColumnWizard',
+            'save_callback'           => [[$callbackClass, 'saveRouterLayers']],
+            'load_callback'           => [[$callbackClass, 'loadRouterLayers']],
             'eval'                    => [
                 'columnsCallback'     => [$callbackClass,'getRouterLayer']
             ],
@@ -278,9 +282,11 @@ $GLOBALS['TL_DCA'][$strName] = array
             'sql'                     => null
         ],
         'customProfiles' => [
-            'default'                 => 'a:0:{}',
+            'default'                 => "[]",
             'exclude'                 => true,
             'inputType'               => 'multiColumnWizard',
+            'save_callback'           => [[$callbackClass, 'saveCustomProfiles']],
+            'load_callback'           => [[$callbackClass, 'loadCustomProfiles']],
             'eval'                    => [
                 'columnsCallback'     => [$callbackClass,'getCustomProfileStructure']
             ],

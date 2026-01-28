@@ -105,7 +105,7 @@ class RoutingConfiguration extends BaseEntity
     /**
      * @var array
      */
-    #[ORM\Column(type: "array", name: 'router_profiles')]
+    #[ORM\Column(type: "simple_array", name: 'router_profiles')]
     protected $routerProfiles = [];
 
     /**
@@ -117,7 +117,7 @@ class RoutingConfiguration extends BaseEntity
     /**
      * @var array
      */
-    #[ORM\Column(type: "array")]
+    #[ORM\Column(type: "json")]
     protected $customProfiles = [];
     
     /**
@@ -141,8 +141,8 @@ class RoutingConfiguration extends BaseEntity
     /**
      * @var null
      */
-    #[ORM\Column(type: "array")]
-    protected $routerLayers = [];
+    #[ORM\Column(type: "json")]
+    protected $routerLayers = "";
     
     /**
      * @var string

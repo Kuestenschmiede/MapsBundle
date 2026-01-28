@@ -185,4 +185,73 @@ class TlC4gRoutingConfiguration
         $str = $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editRoutingConfiguration'];
         return ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'?do=c4g_routing_configuration&amp;table=tl_c4g_routing_configuration&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . $requestToken . '" title="' . StringUtil::specialchars($str) . '" onclick="Backend.openModalIframe({\'title\':\'' . StringUtil::specialchars(str_replace("'", "\\'", $str)) . '\',\'url\':this.href});return false">' . Image::getHtml('edit.svg') . '</a>';
     }
+
+    public function loadRouterProfiles($value)
+    {
+        if (is_string($value) && str_contains($value, ",")) {
+            $value = explode(",", $value);
+        }
+
+        return $value;
+    }
+
+    public function saveRouterProfiles($value)
+    {
+        // select field saves value as serialized array
+        if (is_string($value) && str_contains($value, "a:")) {
+            $value = StringUtil::deserialize($value, true);
+        }
+
+        if (is_array($value)) {
+            $value = implode(",", $value);
+        }
+
+        return $value;
+    }
+
+    public function loadRouterLayers($value)
+    {
+        if (is_string($value) && strlen($value) > 0) {
+            $value = json_decode($value, true);
+        }
+
+        return $value;
+    }
+
+    public function saveRouterLayers($value)
+    {
+        // multiColumnWizard saves value as serialized array
+        if (is_string($value) && str_contains($value, "a:")) {
+            $value = StringUtil::deserialize($value, true);
+        }
+
+        if (is_array($value)) {
+            $value = json_encode($value);
+        }
+
+        return $value;
+    }
+
+    public function loadCustomProfiles($value)
+    {
+        if (is_string($value) && strlen($value) > 0) {
+            $value = json_decode($value, true);
+        }
+
+        return $value;
+    }
+
+    public function saveCustomProfiles($value)
+    {
+        // multiColumnWizard saves value as serialized array
+        if (is_string($value) && str_contains($value, "a:")) {
+            $value = StringUtil::deserialize($value, true);
+        }
+
+        if (is_array($value)) {
+            $value = json_encode($value);
+        }
+
+        return $value;
+    }
 }

@@ -53,13 +53,13 @@ class EditorConfiguration extends BaseEntity
     /**
      * @var null
      */
-    #[ORM\Column(type: "array")]
+    #[ORM\Column(type: "json")]
     protected $types = [];
 
     /**
      * @var null
      */
-    #[ORM\Column(type: "array")]
+    #[ORM\Column(type: "json")]
     protected $editor_vars = [];
 
     /**

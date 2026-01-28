@@ -132,3 +132,12 @@ services:
         public: true
         arguments:
             - "@contao.framework"
+
+    ## migrations
+
+    con4gis\MapsBundle\Migration\UpdateArraysMigration:
+        arguments:
+            - "@database_connection"
+            - "@logger"
+        tags:
+            - { name: contao.migration, priority: 0 }
