@@ -60,7 +60,7 @@
   "extra": {
     "contao-manager-plugin": "con4gis\\MapsBundle\\ContaoManager\\Plugin",
     "branch-alias": {
-      "dev-main": "10.0.x-dev"
+      "dev-main": "10.1.x-dev"
     }
   }
 }

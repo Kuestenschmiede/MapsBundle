@@ -35,6 +35,17 @@ class UpdateArraysMigration implements MigrationInterface
 
     public function shouldRun(): bool
     {
+        $schemaManager = $this->connection->createSchemaManager();
+
+        if (
+            !$schemaManager->tablesExist([
+                'tl_c4g_routing_configuration',
+                'tl_c4g_editor_configuration',
+            ])
+        ) {
+            return false;
+        }
+
         $sql = "SELECT router_profiles, customProfiles,routerLayers FROM tl_c4g_routing_configuration";
         $routingConfigs = $this->connection->executeQuery($sql)->fetchAllAssociative();
 
