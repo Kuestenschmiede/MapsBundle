@@ -67,45 +67,12 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             ],
         'operations' =>
             [
-            'edit' =>
-                [
-                'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['edit'],
-                'href'                => 'act=edit',
-                'icon'                => 'edit.svg',
-                ],
-            'copy' =>
-                [
-                'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['copy'],
-                'href'                => 'act=paste&amp;mode=copy',
-                'icon'                => 'copy.svg',
-                'attributes'          => 'onclick="Backend.getScrollOffset();"',
-                ],
-            'cut' =>
-                [
-                'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['cut'],
-                'href'                => 'act=paste&amp;mode=cut',
-                'icon'                => 'cut.svg',
-                'attributes'          => 'onclick="Backend.getScrollOffset();"',
-                ],
-            'delete' =>
-                [
-                'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['delete'],
-                'href'                => 'act=delete',
-                'icon'                => 'delete.svg',
-                'attributes'          => 'onclick="if (!confirm(\'' . ($GLOBALS['TL_LANG']['MSC']['deleteConfirm'] ?? null) . '\')) return false; Backend.getScrollOffset();"'
-                ],
-            'toggle' =>
-                [
-                'label'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['toggle'],
-                'icon'                => 'visible.svg',
-                'button_callback'     => [$cbClass, 'toggleIcon']
-                ],
-            'show' =>
-                [
-                'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['show'],
-                'href'                => 'act=show',
-                'icon'                => 'show.svg'
-                ],
+            'edit',
+            '!copy',
+            'cut',
+            '!delete',
+            'toggle',
+            '!show',
             'overlays' =>
                 [
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['overlays'],

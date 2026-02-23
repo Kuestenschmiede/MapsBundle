@@ -63,31 +63,10 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
             ],
         'operations' =>
             [
-            'edit' =>
-                [
-                'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['edit'],
-                'href'                => 'act=edit',
-                'icon'                => 'edit.svg',
-                ],
-            'copy' =>
-                [
-                'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['copy'],
-                'href'                => 'act=copy',
-                'icon'                => 'copy.svg'
-                ],
-            'delete' =>
-                [
-                'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['delete'],
-                'href'                => 'act=delete',
-                'icon'                => 'delete.svg',
-                'attributes'          => 'onclick="if (!confirm(\'' . ($GLOBALS['TL_LANG']['MSC']['deleteConfirm'] ?? null) . '\')) return false; Backend.getScrollOffset();"'
-                ],
-            'show' =>
-                [
-                'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_themes']['show'],
-                'href'                => 'act=show',
-                'icon'                => 'show.svg'
-                ]
+            'edit',
+            'copy',
+            'delete',
+            'show'
             ]
         ],
     'palettes' =>

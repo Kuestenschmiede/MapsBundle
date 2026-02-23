@@ -38,8 +38,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
                 ]
             ]
         ],
-    'list' =>
-        [
+    'list' => [
         'sorting' =>
             [
             'mode'                    => 1,
@@ -71,35 +70,13 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
                     'label'               => &$GLOBALS['TL_LANG']['MSC']['backBT'],
                 ],
             ],
-        'operations' =>
-            [
-            'edit' =>
-                [
-                'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['edit'],
-                'href'                => 'act=edit',
-                'icon'                => 'edit.svg',
-                ],
-            'copy' =>
-                [
-                'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['copy'],
-                'href'                => 'act=copy',
-                'icon'                => 'copy.svg'
-                ],
-            'delete' =>
-                [
-                'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['delete'],
-                'href'                => 'act=delete',
-                'icon'                => 'delete.svg',
-                'attributes'          => 'onclick="if (!confirm(\'' . ($GLOBALS['TL_LANG']['MSC']['deleteConfirm'] ?? null) . '\')) return false; Backend.getScrollOffset();"'
-                ],
-            'show' =>
-                [
-                'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['show'],
-                'href'                => 'act=show',
-                'icon'                => 'show.svg'
-                ]
-            ]
-        ],
+        'operations' => [
+            'edit',
+            'copy',
+            'delete',
+            'show'
+        ]
+    ],
     'palettes' =>
         [
         '__selector__'                => ['styletype','line_arrows', 'icon_resize_zoom'],

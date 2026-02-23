@@ -83,18 +83,8 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             ],
         'operations' =>
             [
-            'edit' =>
-                [
-                'label'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['edit'],
-                'href'                => 'act=edit',
-                'icon'                => 'edit.svg',
-                ],
-            'copy' =>
-                [
-                'label'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['copy'],
-                'href'                => 'act=paste&amp;mode=copy',
-                'icon'                => 'copy.svg'
-                ],
+            'edit',
+            'copy',
             'copyChilds' =>
                 [
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['copyChilds'],
@@ -103,32 +93,16 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 'attributes'          => 'onclick="Backend.getScrollOffset();"',
                 'button_callback'     => [$cbClass, 'copyPageWithSubpages']
                 ],
-            'cut' =>
-                [
-                'label'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['cut'],
-                'href'                => 'act=paste&amp;mode=cut',
-                'icon'                => 'cut.svg',
-                'attributes'          => 'onclick="Backend.getScrollOffset();"'
-                ],
-            'delete' =>
-                [
-                'label'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['delete'],
-                'href'                => 'act=delete',
-                'icon'                => 'delete.svg',
-                'attributes'          => 'onclick="if (!confirm(\'' . (isset($GLOBALS['TL_LANG']['MSC']['deleteConfirm']) ? $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] : null) . '\')) return false; Backend.getScrollOffset();"'
-                ],
+            '!cut',
+            '!delete',
             'toggle' =>
                 [
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['toggle'],
                 'icon'                => 'visible.svg',
-                'button_callback'     => [$cbClass, 'toggleIcon']
+                'button_callback'     => [$cbClass, 'toggleIcon'],
+                'primary' => true
                 ],
-            'show' =>
-                [
-                'label'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['show'],
-                'href'                => 'act=show',
-                'icon'                => 'show.svg'
-                ]
+            'show'
             ]
         ],
     'palettes' =>

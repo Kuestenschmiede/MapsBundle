@@ -65,27 +65,9 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
         
         'operations' =>
         [
-            'edit' =>
-            [
-                'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['edit'],
-                'href'                => 'act=edit',
-                'icon'                => 'edit.svg',
-            ],
-            
-            'copy' =>
-            [
-                'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['copy'],
-                'href'                => 'act=copy',
-                'icon'                => 'copy.svg'
-            ],
-            
-            'delete' =>
-            [
-                'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['delete'],
-                'href'                => 'act=delete',
-                'icon'                => 'delete.svg',
-                'attributes'          => 'onclick="if (!confirm(\'' . ($GLOBALS['TL_LANG']['MSC']['deleteConfirm'] ?? null) . '\')) return false; Backend.getScrollOffset();"'
-            ],
+            'edit',
+            'copy',
+            'delete',
     
             'toggle' =>
             [
@@ -94,12 +76,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
                 'button_callback'     => [$cbClass, 'toggleIcon']
             ],
             
-            'show' =>
-            [
-                'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['show'],
-                'href'                => 'act=show',
-                'icon'                => 'show.svg'
-            ]
+            'show'
         ]
     ],
     'palettes' =>

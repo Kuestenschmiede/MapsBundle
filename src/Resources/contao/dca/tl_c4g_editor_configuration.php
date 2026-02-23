@@ -56,31 +56,10 @@ $GLOBALS['TL_DCA'][$strName] = array
         ),
         'operations' => array
         (
-            'edit' => array
-            (
-                'label'         => &$GLOBALS['TL_LANG'][$strName]['edit'],
-                'href'          => 'act=edit',
-                'icon'          => 'edit.svg',
-            ),
-            'copy' => array
-            (
-                'label'         => &$GLOBALS['TL_LANG'][$strName]['copy'],
-                'href'          => 'act=copy',
-                'icon'          => 'copy.svg',
-            ),
-            'delete' => array
-            (
-                'label'         => &$GLOBALS['TL_LANG'][$strName]['delete'],
-                'href'          => 'act=delete',
-                'icon'          => 'delete.svg',
-                'attributes'    => 'onclick="if(!confirm(\'' . ($GLOBALS['TL_LANG']['MSC']['deleteConfirm'] ?? null) . '\')) return false;Backend.getScrollOffset()"',
-            ),
-            'show' => array
-            (
-                'label'         => &$GLOBALS['TL_LANG'][$strName]['show'],
-                'href'          => 'act=show',
-                'icon'          => 'show.svg',
-            )
+            'edit',
+            'copy',
+            'delete',
+            'show'
         )
     ),
     'palettes' => array
