@@ -752,7 +752,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'inputType'               => 'text',
                 'default'                 => '1.0',
                 'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
-                'sql'                     => "double NOT NULL default 1.0"
+                'sql'                     => "double NOT NULL default 1"
             ],
         'overpassEngine' =>
             [

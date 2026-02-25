@@ -186,12 +186,12 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
             ],
         'icon_scale' =>
             [
-                'default'                 => '1.00',
+                'default'                 => 1,
                 'exclude'                 => true,
                 'flag'                    => 1,
                 'inputType'               => 'text',
                 'eval'                    => ['tl_class'=>'long', 'rgxp'=>'digit', 'mandatory'=>true],
-                'sql'                     => "double NOT NULL default 1.0"
+                'sql'                     => "double NOT NULL default 1"
             ],
         'icon_resize_zoom' =>
             [
@@ -215,23 +215,23 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
                 'inputType'               => 'text',
                 'default'                 => 0,
                 'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
-                'sql'                     => "double NOT NULL default 1.0"
+                'sql'                     => "double NOT NULL default 1"
             ],
         'icon_resize_min_scale' =>
             [
                 'exclude'                 => true,
                 'inputType'               => 'text',
-                'default'                 => '0.1',
+                'default'                 => 0.1,
                 'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
-                'sql'                     => "double NOT NULL default 0.1"
+                'sql'                     => "double unsigned NOT NULL default 0.1"
             ],
         'icon_resize_max_scale' =>
             [
                 'exclude'                 => true,
                 'inputType'               => 'text',
-                'default'                 => '1.0',
+                'default'                 => 1.0,
                 'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
-                'sql'                     => "double NOT NULL default 1.0"
+                'sql'                     => "double unsigned NOT NULL default 1"
             ],
         'icon_offset' =>
             [
