@@ -26,7 +26,7 @@
   },
   "require": {
     "php": "^8.1",
-    "contao/core-bundle": "^4.13 || ^5.3",
+    "contao/core-bundle": "^5.3",
     "con4gis/core": "^8.0",
     "phayes/geophp": "^1.2",
     "menatwork/contao-multicolumnwizard-bundle": "^3.6",
