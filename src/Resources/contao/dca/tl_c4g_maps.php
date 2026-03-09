@@ -42,10 +42,8 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 ]
             ]
         ],
-    'list' =>
-        [
-        'sorting' =>
-            [
+    'list' => [
+        'sorting' => [
             'icon'                    => 'bundles/con4giscore/images/be-icons/con4gis_blue.svg',
             'panelLayout'             => 'filter;search',
             'mode'                    => 5,
@@ -53,58 +51,52 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
 			'showRootTrails'          => true,
 //			'paste_button_callback'   => ['tl_page', 'pastePage'),
 			'defaultSearchField'      => 'name'
-            ],
-        'label' =>
-            [
+        ],
+        'label' => [
             'fields'                  => ['name','profile:tl_c4g_map_profiles.name'],
             'format'                  => ' %s ('.$GLOBALS['TL_LANG']['tl_c4g_maps']['profile'][0].': %s)',
             'label_callback'          => [$cbClass,'generateLabel']
+        ],
+        'global_operations' => [
+            'toggleNodes' => [
+                'href'                => 'ptg=all',
+                'class'               => 'header_toggle',
+                'showOnSelect'        => true
             ],
-        'global_operations' =>
-            [
-                'toggleNodes' => [
-                    'href'                => 'ptg=all',
-                    'class'               => 'header_toggle',
-                    'showOnSelect'        => true
-                ],
-                'all' => [
-                    'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
-                    'href'                => 'act=select',
-                    'class'               => 'header_edit_all',
-                    'attributes'          => 'onclick="Backend.getScrollOffset();" accesskey="e"'
-                ],
-                'back' => [
-                    'href'                => 'key=back',
-                    'class'               => 'header_back',
-                    'button_callback'     => [DcaHelper::class, 'back'],
-                    'icon'                => 'back.svg',
-                    'label'               => &$GLOBALS['TL_LANG']['MSC']['backBT'],
-                ],
+            'all' => [
+                'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
+                'href'                => 'act=select',
+                'class'               => 'header_edit_all',
+                'attributes'          => 'onclick="Backend.getScrollOffset();" accesskey="e"'
             ],
-        'operations' =>
-            [
+            'back' => [
+                'href'                => 'key=back',
+                'class'               => 'header_back',
+                'button_callback'     => [DcaHelper::class, 'back'],
+                'icon'                => 'back.svg',
+                'label'               => &$GLOBALS['TL_LANG']['MSC']['backBT'],
+            ],
+        ],
+        'operations' => [
             'edit',
             'copy',
-            'copyChilds' =>
-                [
+            'copyChilds' => [
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['copyChilds'],
                 'href'                => 'act=paste&amp;mode=copy&amp;childs=1',
                 'icon'                => 'copychilds.svg',
                 'attributes'          => 'onclick="Backend.getScrollOffset();"',
                 'button_callback'     => [$cbClass, 'copyPageWithSubpages']
-                ],
+            ],
             '!cut',
             '!delete',
-            'toggle' =>
-                [
-                'label'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['toggle'],
-                'icon'                => 'visible.svg',
-                'button_callback'     => [$cbClass, 'toggleIcon'],
-                'primary' => true
-                ],
+            'toggle' => [
+                'icon' => 'visible.svg',
+                'primary' => true,
+                'button_callback' => [$cbClass, 'toggleIcon'],
+            ],
             'show'
-            ]
-        ],
+        ]
+    ],
     'palettes' =>
         [
         '__selector__'                => ['location_type', 'tab_source', 'show_locations', 'enablePopup', 'popup_extend', 'protect_element', 'use_specialprofile', 'cluster_locations', 'split_geojson', 'c4gioType'],

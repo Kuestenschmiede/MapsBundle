@@ -687,7 +687,7 @@ class TlC4gMaps extends Backend
     {
         if (strlen(Input::get('tid'))) {
             $this->toggleVisibility(Input::get('tid'), (Input::get('state') == 1));
-            $this->redirect($this->getReferer());
+            $this->redirect("/contao?do=c4g_maps&state=" .($row['published'] ? '' : 1) . "&rt=" . Input::get('rt'));
         }
 
         // Check permissions AFTER checking the tid, so hacking attempts are logged
