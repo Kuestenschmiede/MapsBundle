@@ -87,7 +87,7 @@ $GLOBALS['TL_DCA'][$strName] = array
         ],
         'types' => [
             'exclude'                 => true,
-            'default'                 => 'a:0:{}',
+            'default'                 => "[]",
             'inputType'               => 'multiColumnWizard',
             'save_callback'           => [[TlEditorConfiguration::class, 'saveTypes']],
             'load_callback'           => [[TlEditorConfiguration::class, 'loadTypes']],
@@ -106,7 +106,7 @@ $GLOBALS['TL_DCA'][$strName] = array
         ),
         'editor_vars' => [
             'exclude'                 => true,
-            'default'                 => 'a:0:{}',
+            'default'                 => "[]",
             'inputType'               => 'multiColumnWizard',
             'save_callback'           => [[TlEditorConfiguration::class, 'saveEditorVars']],
             'load_callback'           => [[TlEditorConfiguration::class, 'loadEditorVars']],
