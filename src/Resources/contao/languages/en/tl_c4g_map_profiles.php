@@ -151,7 +151,9 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['consentBanner'] = ['Consent-Banner',
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cookieInfo'] = ['Consent text', 'Enter your text to display inside the consent banner.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cookieName'] = ['Cookie name', 'If you want to use a existing cookie, enter its name here.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['cookieValue'] = ['Cookie value', 'If you want to use a existing cookie, enter its expected value here.  If you use the <a href="https://www.oveleon.de/cookiebar.html">Oveleon Cookiebar</a> enter the ID of the desired cookie.'];
-/**
+
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['enableLazyLoading'] = ['Enable lazy loading', 'Setting this checkbox enables lazy loading for the map and it will only be loaded once it becomes visible in the browser. Otherwise it will be loaded on page load.'];
+
 /**
  * Reference
  */

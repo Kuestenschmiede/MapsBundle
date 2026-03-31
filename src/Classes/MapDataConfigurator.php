@@ -699,6 +699,10 @@ class MapDataConfigurator
                     ];
                 }
             }
+
+            if ($profile->enableLazyLoading) {
+                $mapData['enableLazyLoading'] = $profile->enableLazyLoading;
+            }
         }
 
         // mapservice

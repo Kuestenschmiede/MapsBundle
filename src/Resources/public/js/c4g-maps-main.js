@@ -282,7 +282,9 @@ window.initMaps = function(mapData) {
           }
         }
 
-        mapData[key].renderAsObserver = true;
+        if (mapData[key].enableLazyLoading) {
+          mapData[key].renderAsObserver = true;
+        }
 
         if (Object.keys(mapData).length > 1) {
           // multiple maps

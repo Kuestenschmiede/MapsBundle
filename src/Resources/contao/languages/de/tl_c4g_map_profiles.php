@@ -156,6 +156,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['enableCCM19'] = ['CCM19 Integration 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['CCM19serviceName'] = ['Name des Embeddings/Services in CCM19', 'Geben Sie hier den Namen des Cookies für den Service an, der in CCM19 für die Karte definiert wurde.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['CCM19cookieHint'] = ['Cookie-Hinweis solange keine Zustimmung gegeben ist', 'Hier können Sie einen Hinweis angeben, der angezeigt wird, wenn der Cookie noch nicht akzeptiert bzw. abgelehnt wurde. Wenn kein Text angegeben ist, wird keine Meldung eingeblendet.'];
 
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['enableLazyLoading'] = ['Lazy-Loading aktivieren', 'Hier kann konfiguriert werden, ob die Karte sofort geladen werden soll, oder erst, wenn die Karte in den sichtbaren Bereich gescrollt wird (lazy loading). Standardmäßig ist das Lazy-Loading aktiv.'];
+
 /**
  * Reference
  */

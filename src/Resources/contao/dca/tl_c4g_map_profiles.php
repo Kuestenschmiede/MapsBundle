@@ -86,7 +86,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                                          '{editor_legend:hide},editorConfig;'.
                                          '{routing_legend::hide},routerConfig;'.
                                          '{information_legend:hide},attribution,scaleline,mouseposition,permalink_get_param,permalinkSaveId,permalinkWithoutGenerator,zoomlevel,infopage,label_color,resize_locstyles_zoom;'.
-                                         '{expert_legend:hide},userLocation,overpassEngine,caching,cesium,external_elements,minZoomStarboardScope,custom_div,geopicker,filters,filterHandling,filterResetButton,be_optimize_checkboxes_limit,consentBanner,enableCCM19;'
+                                         '{expert_legend:hide},enableLazyLoading,userLocation,overpassEngine,caching,cesium,external_elements,minZoomStarboardScope,custom_div,geopicker,filters,filterHandling,filterResetButton,be_optimize_checkboxes_limit,consentBanner,enableCCM19;'
         ],
     'subpalettes' =>
     [
@@ -1001,6 +1001,13 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'options_callback'        => array('\con4gis\MapsBundle\Classes\Contao\Callbacks\TlEditorConfiguration', 'getEditorProfiles'),
             'eval'                    => array('tl_class'=>'clr', 'chosen' => true, 'includeBlankOption' => true),
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
+        ],
+        'enableLazyLoading' => [
+            'exclude'                 => true,
+            'default'                 => '1',
+            'inputType'               => 'checkbox',
+            'eval'                    => ['submitOnChange' => true],
+            'sql'                     => "char(1) NOT NULL default '1'"
         ]
 
     ]
