@@ -26,7 +26,7 @@ export class StarboardScopeItem extends Component {
     this.loadPopup = this.loadPopup.bind(this);
     this.observerFunction = this.observerFunction.bind(this);
   }
-  
+
   observerFunction (entries, observer) {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
@@ -68,8 +68,7 @@ export class StarboardScopeItem extends Component {
           .catch((err) => {
             console.log(err)
           });
-    }
-    else if (popup) {
+    } else if (popup) {
       this.setState({
         'html': popup.contentStarboard || popup.content
       });
@@ -102,6 +101,7 @@ export class StarboardScopeItem extends Component {
           {this.props.langConstants.DIST}: {toHumanDistance(this.props.feature.get('distanceMatrix') || this.props.feature.get('distance'))}
       </div>
     }
+
     if (this.state.html) {
       return (
           <li ref={this.ref} onMouseUp={this.highlightFeature}>
