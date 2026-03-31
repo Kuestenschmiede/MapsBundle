@@ -59,8 +59,6 @@ export class PopupContainer extends Component {
       addButtons = <this.state.conststr config={this.state.config}/>;
     }
 
-
-
     if (this.state.content) {
       return (
           <div className={className}>

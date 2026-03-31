@@ -29,12 +29,14 @@ export class C4gPopupController {
       utils.storeValue('popupInfos', "");
     }
   } // end of "addPopUp()"
+
   setPopup(popupConfig) {
     if (!this.popups[0]) {
       this.popups.push(new C4gPopup(this));
     }
     this.popups[0].setContent(popupConfig);
   } // end of "setPopup()"
+
   removePopup() {
     if (this.popups[0] && this.popups[0].popup && this.popups[0].popup.getMap()) {
       this.mapData.map.removeOverlay(this.popups[0].popup);
@@ -42,5 +44,19 @@ export class C4gPopupController {
     else if (this.popups[0] && this.popups[0].popupComponent) {
       this.popups[0].popupComponent.close(true);
     }
+  }
+
+  hasPopup() {
+    const mapOverlays = this.mapData.map.getOverlays();
+    let popupActive = false;
+    mapOverlays.forEach((element, index) => {
+      for (let i = 0; i < this.popups.length; i++) {
+        if (element === this.popups[i].popup) {
+          popupActive = true;
+        }
+      }
+    });
+
+    return popupActive;
   }
 }

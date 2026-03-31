@@ -342,6 +342,11 @@ export class MapHover {
         self.hoverTooltip.hide();
       }
       if (mapData.hover_popups === '1' && !clustered && hovered.feature) {
+
+        if (self.options.mapController.proxy.popupController.hasPopup()) {
+          return false;
+        }
+
         var popupInfos = {};
 
         if (hovered.feature.get('popup')) {
