@@ -70,6 +70,7 @@ export default class StarboardScope extends Component {
     this.open = this.open.bind(this);
     this.close = this.close.bind(this);
     this.loadMore = this.loadMore.bind(this);
+    this.getKey = this.getKey.bind(this);
 
     this.getFeaturesInScope = this.getFeaturesInScope.bind(this);
     this.view = props.mapController.map.getView();
@@ -142,7 +143,7 @@ export default class StarboardScope extends Component {
       features = uniqueFeatures;
 
       let featuresSorted = this.sortFeatures(features);
-      if (featuresSorted === false && this.props.mapController.geolocation) {
+      if (featuresSorted === false && this.props.mapController.geolocation.getTracking()) {
         if (!this.pendingScopeUpdate) {
           this.pendingScopeUpdate = true;
           window.setTimeout(()=>{
@@ -151,6 +152,7 @@ export default class StarboardScope extends Component {
           }, 1000);
         }
       }
+
       this.setState({
         features: featuresSorted || features
       });
@@ -158,7 +160,7 @@ export default class StarboardScope extends Component {
   }
   
   sortFeatures (features) {
-    if (this.props.mapController.geolocation) {
+    if (this.props.mapController.geolocation.getTracking()) {
       let position = this.props.mapController.geolocation.getPosition();
       if (!position) {
         return false;
@@ -239,6 +241,7 @@ export default class StarboardScope extends Component {
         jQuery(".c4g-starboardscope-container").removeClass("c4g-open").addClass("c4g-close");
       }
     }
+
     let list =  null;
     if (!this.state.disable) {
       list = <div className={"c4g-starboardscope-content-container"}>
@@ -246,7 +249,7 @@ export default class StarboardScope extends Component {
           {this.state.features.map((feature, index) => {
             if (index < this.state.maxElements) {
               return <StarboardScopeItem mapController={this.props.mapController} langConstants={this.langConstants}
-                                         index={index} key={index} feature={feature}
+                                         index={index} key={this.getKey()} feature={feature}
                                          lastElement={index === this.state.maxElements - 1} loadMore={this.loadMore}/>
             }
           })}
@@ -283,15 +286,18 @@ export default class StarboardScope extends Component {
   close() {
     this.setState({open: false});
   }
+
   loadMore() {
     this.setState({maxElements: this.state.maxElements + 20});
   }
+
   componentDidMount() {
     this._isMounted = true;
     // if (!this.props.mapController.geolocation.getTracking()) {
     //   this.props.mapController.geolocation.setTracking(true);
     // }
   }
+
   componentWillUnmount() {
     this._isMounted = false;
   }
@@ -306,5 +312,9 @@ export default class StarboardScope extends Component {
         utils.storeValue('panel', "StarboardScope")
       }
     }
+  }
+
+  getKey() {
+    return (Math.random() * 999999 + 1);
   }
 }
