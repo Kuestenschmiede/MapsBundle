@@ -50,7 +50,7 @@ export default class Print extends Component {
           const size = map.getSize();
           mapCanvas.width = size[0];
           mapCanvas.height = size[1];
-          const mapContext = mapCanvas.getContext('2d');
+          const mapContext = mapCanvas.getContext('2d', {willReadFrequently: true});
           Array.prototype.forEach.call(
               map.getViewport().querySelectorAll('.ol-layer canvas, canvas.ol-layer'),
               function (canvas) {

@@ -99,7 +99,9 @@ export default class MapController extends Component {
       arrLayerStates: [],
       openComponent: null,
       objTabLayers: [],
-      styleData: {},
+      styleData: {
+        arrLocStyles: {}
+      },
       arrTabLayerStates: [],
       activeBaselayerId: null
     };
@@ -1017,7 +1019,7 @@ export default class MapController extends Component {
   changeActiveLayers (baseLayerId) {
     let newLayerState = this.state.arrLayerStates;
     for (let stateId in newLayerState) {
-      if (newLayerState.hasOwnProperty(stateId)) {
+      if (newLayerState.hasOwnProperty(stateId) && this.state.objLayers[stateId]) {
         if (this.state.objLayers[stateId].activeForBaselayers !== "all") {
           let oldState = newLayerState[stateId].active;
           newLayerState[stateId].active = !!this.state.objLayers[stateId].activeForBaselayers.find((element) => element === baseLayerId);
@@ -1031,7 +1033,7 @@ export default class MapController extends Component {
           }
         }
         for (let childId in newLayerState[stateId].childStates) {
-          if (newLayerState[stateId].childStates.hasOwnProperty(childId)) {
+          if (newLayerState[stateId].childStates.hasOwnProperty(childId) && this.state.objLayers[stateId].childs && this.state.objLayers[stateId].childs[childId]) {
             newLayerState[stateId].childStates[childId] = this.changeActiveLayerChilds(newLayerState[stateId].childStates[childId], this.state.objLayers[stateId].childs[childId], baseLayerId);
           }
         }
@@ -1056,7 +1058,7 @@ export default class MapController extends Component {
       }
     }
     for (let stateId in childState.childStates) {
-      if (childState.childStates.hasOwnProperty(stateId)) {
+      if (childState.childStates.hasOwnProperty(stateId) && child.childs && child.childs[stateId]) {
         childState.childStates[stateId] = this.changeActiveLayerChilds(childState.childStates[stateId], child.childs[stateId], baseLayerId);
       }
     }

@@ -106,8 +106,15 @@ export class MapHover {
   getHoverFunction() {
 
     var self = this;
+    let lastCall = 0;
+    const throttleDelay = 100; // ms
 
     return function (event) {
+      const now = Date.now();
+      if (now - lastCall < throttleDelay) {
+        return;
+      }
+      lastCall = now;
 
       var hovered,
         clustered,
@@ -158,7 +165,7 @@ export class MapHover {
           hovered.feature = hovered.feature.get('features')[0];
         }
       }
-      if (hovered.feature.get("hover_location") || (self.lastHoveredFeature && self.lastHoveredFeature.get("hover_location"))) {
+      if (hovered.feature && typeof hovered.feature.get === 'function' && (hovered.feature.get("hover_location") || (self.lastHoveredFeature && self.lastHoveredFeature.get("hover_location")))) {
         if (self.lastHoveredFeature && hovered.feature === self.lastHoveredFeature) {
           return false;
         }
@@ -190,7 +197,7 @@ export class MapHover {
           }
 
           //TODO get onhover style from db (vllt schon in proxy drin?)
-          if (hovered.feature.get('hover_style') && proxy.locationStyleController.arrLocStyles[hovered.feature.get("hover_style")]) {
+          if (hovered.feature.get('hover_style') && proxy.locationStyleController && proxy.locationStyleController.arrLocStyles && proxy.locationStyleController.arrLocStyles[hovered.feature.get("hover_style")]) {
             if (proxy.locationStyleController.arrLocStyles[hovered.feature.get("hover_style")].fnStyleFunction) {
               hovered.feature.setStyle(Function("feature", "data", "map", proxy.locationStyleController.arrLocStyles[hovered.feature.get("hover_style")].fnStyleFunction)(hovered.feature));
             }
@@ -216,10 +223,12 @@ export class MapHover {
           self.lastLayerStyle = hovered.layer.getStyle();
           self.lastFeatureStyle = self.lastLayerStyle(self.lastHoveredFeature);
           if (hovered.feature.get('hover_style')) {
-            if (!proxy.locationStyleController.arrLocStyles[hovered.feature.get("hover_style")]) {
-              var arrIds = [];
-              arrIds.push(hovered.feature.get("hover_style"));
-              proxy.locationStyleController.loadLocationStyles(arrIds);
+            if (!proxy.locationStyleController || !proxy.locationStyleController.arrLocStyles || !proxy.locationStyleController.arrLocStyles[hovered.feature.get("hover_style")]) {
+              if (proxy.locationStyleController) {
+                var arrIds = [];
+                arrIds.push(hovered.feature.get("hover_style"));
+                proxy.locationStyleController.loadLocationStyles(arrIds);
+              }
               self.lastHoveredFeature = null;
               return null;
             }
@@ -259,6 +268,7 @@ export class MapHover {
         // @TODO: Check & fix
       } else if (hovered.feature && typeof hovered.feature.getStyleFunction &&
         hovered.feature.get('locstyle') &&
+        proxy.locationStyleController &&
         proxy.locationStyleController.arrLocStyles &&
         proxy.locationStyleController.arrLocStyles[hovered.feature.get('locstyle')] &&
         proxy.locationStyleController.arrLocStyles[hovered.feature.get('locstyle')].tooltip) {
@@ -267,6 +277,7 @@ export class MapHover {
       } else if (hovered.layer && typeof hovered.layer.getStyleFunction &&
         typeof hovered.layer.getStyleFunction === 'function' &&
         typeof hovered.layer.getStyleFunction() === 'function' &&
+        proxy.locationStyleController &&
         proxy.locationStyleController.arrLocStyles &&
         proxy.locationStyleController.arrLocStyles[hovered.layer.getStyleFunction()()] &&
         proxy.locationStyleController.arrLocStyles[hovered.layer.getStyleFunction()()].tooltip) {
@@ -274,6 +285,7 @@ export class MapHover {
       } else if (hovered.layer &&
         typeof hovered.layer.getStyleFunction === 'function' &&
         typeof hovered.layer.getStyleFunction() === 'function' &&
+        proxy.locationStyleController &&
         proxy.locationStyleController.arrLocStyles &&
         proxy.locationStyleController.arrLocStyles[hovered.layer.getStyleFunction()(null, null, 1)] &&
         proxy.locationStyleController.arrLocStyles[hovered.layer.getStyleFunction()(null, null, 1)].tooltip) {

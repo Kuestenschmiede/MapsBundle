@@ -798,7 +798,7 @@ export class BackendEditor extends Sideboard {
       } else if (styleData.styletype === "cust_icon_svg" && svgSrc) {
         if (styleData.svgSrc && styleData.icon_scale && styleData.icon_size) {
           let canvas = document.createElement('canvas');
-          let ctx = canvas.getContext("2d");
+          let ctx = canvas.getContext("2d", {willReadFrequently: true});
           let height = (styleData.icon_size[0] * styleData.icon_scale);
           let width = (styleData.icon_size[1] * styleData.icon_scale);
 
@@ -943,9 +943,16 @@ export class BackendEditor extends Sideboard {
 
           // @TODO doku
           //
-          self.options.mapController.map.on('pointermove',
-            function (event) {
-              if (enableInstantMeasureCheckbox && enableInstantMeasureCheckbox.checked && activeSketch) {
+    let lastCall = 0;
+    const throttleDelay = 100; // ms
+    self.options.mapController.map.on('pointermove',
+      function (event) {
+        const now = Date.now();
+        if (now - lastCall < throttleDelay) {
+          return;
+        }
+        lastCall = now;
+        if (enableInstantMeasureCheckbox && enableInstantMeasureCheckbox.checked && activeSketch) {
                 if (activeTooltip && utils.measureGeometry(activeSketch.getGeometry(), true).rawValue && utils.measureGeometry(activeSketch.getGeometry(), true).rawValue === "0.00") {
                   activeTooltip.close();
                   activeTooltip = null;
@@ -975,8 +982,15 @@ export class BackendEditor extends Sideboard {
 
               // name the feature
               featureIdCount += 1;
-              name = self.proxy.locationStyleController.arrLocStyles[styleId].name.replace("&#40;", "(").replace("&#41;", ")");
-              activeSketch.set('tooltip', (self.proxy.locationStyleController.arrLocStyles[styleId].tooltip || name) + ' (' + featureIdCount + ')');
+              name = "";
+              if (self.proxy.locationStyleController && self.proxy.locationStyleController.arrLocStyles && self.proxy.locationStyleController.arrLocStyles[styleId]) {
+                name = self.proxy.locationStyleController.arrLocStyles[styleId].name.replace("&#40;", "(").replace("&#41;", ")");
+              }
+              let tooltipPrefix = "";
+              if (self.proxy.locationStyleController && self.proxy.locationStyleController.arrLocStyles && self.proxy.locationStyleController.arrLocStyles[styleId]) {
+                tooltipPrefix = self.proxy.locationStyleController.arrLocStyles[styleId].tooltip || name;
+              }
+              activeSketch.set('tooltip', tooltipPrefix + ' (' + featureIdCount + ')');
               // add styleId
               activeSketch.set('styleId', styleId);
               // add measurements to the feature
