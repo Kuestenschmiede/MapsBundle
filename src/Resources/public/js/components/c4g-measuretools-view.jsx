@@ -335,8 +335,15 @@ export class MeasuretoolsView extends Component {
           addMeasureFeature(activeSketch);
         }, scope);
 
+      let lastCall = 0;
+      const throttleDelay = 100; // ms
       scope.props.mapController.map.on('pointermove',
         function (event) {
+          const now = Date.now();
+          if (now - lastCall < throttleDelay) {
+            return;
+          }
+          lastCall = now;
           if (activeSketch && activeTooltip) {
             activeTooltip.setPosition(event.coordinate);
             updateMeasureFeature(activeSketch);

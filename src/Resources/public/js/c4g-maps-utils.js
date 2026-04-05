@@ -6,6 +6,21 @@
  * @copyright (c) 2010-2026, by Küstenschmiede GmbH Software & Design
  * @link https://www.con4gis.org
  */
+
+// Patch for Canvas2D performance warning
+(function() {
+  const originalGetContext = HTMLCanvasElement.prototype.getContext;
+  HTMLCanvasElement.prototype.getContext = function(type, attributes) {
+    if (type === '2d') {
+      attributes = attributes || {};
+      if (attributes.willReadFrequently === undefined) {
+        attributes.willReadFrequently = true;
+      }
+    }
+    return originalGetContext.call(this, type, attributes);
+  };
+})();
+
 import * as popupFunctionsDE from "./c4g-maps-popup-info-de";
 import * as popupFunctionsEN from "./c4g-maps-popup-info-en";
 import {Vector} from "ol/layer";

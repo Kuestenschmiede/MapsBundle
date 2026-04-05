@@ -107,6 +107,9 @@ export class C4gLocationStyleController {
         // }
       }).fail(function (jqXHR, textStatus, errorThrown ) {
         console.warn(errorThrown);
+        if (options.done && typeof options.done === "function") {
+          options.done(self);
+        }
       });
     };
 
