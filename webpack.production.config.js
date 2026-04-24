@@ -38,6 +38,12 @@ var config = {
   module: {
     rules: [
       {
+        test: /\.m?js/,
+        resolve: {
+          fullySpecified: false,
+        },
+      },
+      {
         test: /\.(js|jsx|ts)$/,
         exclude: /node_modules(?!\/ol)/,
         use: [{
