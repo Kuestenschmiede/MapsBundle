@@ -1430,6 +1430,10 @@ export class BetterLayerController {
         if (extentFeatures.hasOwnProperty(i) && extentFeatures[i].getGeometry() && typeof extentFeatures[i].getGeometry().getExtent === 'function') {
           let extent = extentFeatures[i].getGeometry().getExtent();
           if (extent && Array.isArray(extent) && extent.length >= 4) {
+            // ignore 0,0 coordinates
+            if (extent[0] === 0 && extent[1] === 0 && extent[2] === 0 && extent[3] === 0) {
+                continue;
+            }
             if (this.extent.maxX < extent[2]) {
               this.extent.maxX = extent[2];
             }
