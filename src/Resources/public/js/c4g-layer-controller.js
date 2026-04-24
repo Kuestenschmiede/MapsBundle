@@ -67,7 +67,9 @@ export class BetterLayerController {
                 for(let i = 0; i < data.length; i++){
                   let contentData = data[i];
                   let feature = scope.parseOwnData(contentData, layer);
-                  features.push(feature);
+                  if (feature) {
+                    features.push(feature);
+                  }
                 }
                 scope.addFeatures(features, requestData.chain);
                 scope.mapController.setObjLayers(scope.arrLayers);
@@ -464,6 +466,14 @@ export class BetterLayerController {
       if (features.hasOwnProperty(i)) {
         let geometry = (features[i].getGeometry() && typeof features[i].getGeometry().getExtent === 'function') ? features[i].getGeometry().getExtent() : null;
         if (geometry && Array.isArray(geometry) && geometry.length >= 4) {
+          // ignore empty or 0,0 coordinates
+          if (olExtent.isEmpty(geometry) || (geometry[0] === 0 && geometry[1] === 0 && geometry[2] === 0 && geometry[3] === 0)) {
+            continue;
+          }
+          // ignore coordinates that are practically 0,0 (e.g. through projection)
+          if (Math.abs(geometry[0]) < 0.001 && Math.abs(geometry[1]) < 0.001 && Math.abs(geometry[2]) < 0.001 && Math.abs(geometry[3]) < 0.001) {
+            continue;
+          }
           if (!extent) {
             extent = geometry;
           }
@@ -538,6 +548,14 @@ export class BetterLayerController {
         if (child.features.hasOwnProperty(i)) {
           let geometry = (child.features[i].getGeometry() && typeof child.features[i].getGeometry().getExtent === 'function') ? child.features[i].getGeometry().getExtent() : null;
           if (geometry && Array.isArray(geometry) && geometry.length >= 4) {
+            // ignore empty or 0,0 coordinates
+            if (olExtent.isEmpty(geometry) || (geometry[0] === 0 && geometry[1] === 0 && geometry[2] === 0 && geometry[3] === 0)) {
+              continue;
+            }
+            // ignore coordinates that are practically 0,0 (e.g. through projection)
+            if (Math.abs(geometry[0]) < 0.001 && Math.abs(geometry[1]) < 0.001 && Math.abs(geometry[2]) < 0.001 && Math.abs(geometry[3]) < 0.001) {
+              continue;
+            }
             if (!extent) {
               extent = geometry;
             }
@@ -560,6 +578,14 @@ export class BetterLayerController {
         if (features.hasOwnProperty(i)) {
           let geometry = (features[i].getGeometry() && typeof features[i].getGeometry().getExtent === 'function') ? features[i].getGeometry().getExtent() : null;
           if (geometry && Array.isArray(geometry) && geometry.length >= 4) {
+            // ignore empty or 0,0 coordinates
+            if (olExtent.isEmpty(geometry) || (geometry[0] === 0 && geometry[1] === 0 && geometry[2] === 0 && geometry[3] === 0)) {
+              continue;
+            }
+            // ignore coordinates that are practically 0,0 (e.g. through projection)
+            if (Math.abs(geometry[0]) < 0.001 && Math.abs(geometry[1]) < 0.001 && Math.abs(geometry[2]) < 0.001 && Math.abs(geometry[3]) < 0.001) {
+              continue;
+            }
             if (!extent) {
               extent = geometry;
             }
@@ -701,6 +727,42 @@ export class BetterLayerController {
             }
           }
         }
+        // update self.extent again from all features to be sure it's correct
+        self.extent = {
+          maxX: -Infinity,
+          maxY: -Infinity,
+          minX: Infinity,
+          minY: Infinity
+        };
+        for (let i in extentFeatures) {
+          if (extentFeatures.hasOwnProperty(i) && extentFeatures[i] && extentFeatures[i].getGeometry() && typeof extentFeatures[i].getGeometry().getExtent === 'function') {
+            let geometry = extentFeatures[i].getGeometry().getExtent();
+            if (geometry && Array.isArray(geometry) && geometry.length >= 4) {
+              if (olExtent.isEmpty(geometry) || (geometry[0] === 0 && geometry[1] === 0 && geometry[2] === 0 && geometry[3] === 0)) {
+                continue;
+              }
+              if (Math.abs(geometry[0]) < 0.001 && Math.abs(geometry[1]) < 0.001 && Math.abs(geometry[2]) < 0.001 && Math.abs(geometry[3]) < 0.001) {
+                continue;
+              }
+              if (Math.abs(geometry[0]) > 20037508.34 || Math.abs(geometry[1]) > 20037508.34) {
+                continue;
+              }
+              if (self.extent.maxX < geometry[2]) {
+                self.extent.maxX = geometry[2];
+              }
+              if (self.extent.maxY < geometry[3]) {
+                self.extent.maxY = geometry[3];
+              }
+              if (self.extent.minX > geometry[0]) {
+                self.extent.minX = geometry[0];
+              }
+              if (self.extent.minY > geometry[1]) {
+                self.extent.minY = geometry[1];
+              }
+            }
+          }
+        }
+
         if (self.extent && !(self.extent.maxX === Infinity || self.extent.maxX === -Infinity)) {
           let view = self.mapController.map.getView();
           let padding = [
@@ -953,7 +1015,9 @@ export class BetterLayerController {
               for(let i = 0; i < data.length; i++){
                 let contentData = data[i];
                 let feature = scope.parseOwnData(contentData, layer);
-                features.push(feature);
+                if (feature) {
+                  features.push(feature);
+                }
               }
               if (vectorSource instanceof Cluster) {
                 vectorSource.getSource().addFeatures(features);
@@ -1427,11 +1491,19 @@ export class BetterLayerController {
         extentFeatures = this.objIds[layer.id] || [];
       }
       for (let i in extentFeatures) {
-        if (extentFeatures.hasOwnProperty(i) && extentFeatures[i].getGeometry() && typeof extentFeatures[i].getGeometry().getExtent === 'function') {
+        if (extentFeatures.hasOwnProperty(i) && extentFeatures[i] && extentFeatures[i].getGeometry() && typeof extentFeatures[i].getGeometry().getExtent === 'function') {
           let extent = extentFeatures[i].getGeometry().getExtent();
           if (extent && Array.isArray(extent) && extent.length >= 4) {
-            // ignore 0,0 coordinates
-            if (extent[0] === 0 && extent[1] === 0 && extent[2] === 0 && extent[3] === 0) {
+            // ignore empty or 0,0 coordinates
+            if (olExtent.isEmpty(extent) || (extent[0] === 0 && extent[1] === 0 && extent[2] === 0 && extent[3] === 0)) {
+                continue;
+            }
+            // ignore coordinates that are practically 0,0 (e.g. through projection)
+            if (Math.abs(extent[0]) < 0.001 && Math.abs(extent[1]) < 0.001 && Math.abs(extent[2]) < 0.001 && Math.abs(extent[3]) < 0.001) {
+                continue;
+            }
+            // ignore extreme values (possible projection errors)
+            if (Math.abs(extent[0]) > 20037508.34 || Math.abs(extent[1]) > 20037508.34) {
                 continue;
             }
             if (this.extent.maxX < extent[2]) {
@@ -1681,7 +1753,13 @@ export class BetterLayerController {
     })
   }
   parseOwnData (contentData, layer) {
+    if (!contentData['geox'] || !contentData['geoy'] || parseFloat(contentData['geox']) === 0 || parseFloat(contentData['geoy']) === 0) {
+      return null;
+    }
     var resultCoordinate = transform([parseFloat(contentData['geox']), parseFloat(contentData['geoy'])], 'EPSG:4326', 'EPSG:3857')
+    if (!resultCoordinate || (resultCoordinate[0] === 0 && resultCoordinate[1] === 0) || (Math.abs(resultCoordinate[0]) < 0.001 && Math.abs(resultCoordinate[1]) < 0.001)) {
+      return null;
+    }
     var point = new Point(resultCoordinate);
     let contentFeature = new Feature(point);
     contentFeature.setId(contentData.id);
