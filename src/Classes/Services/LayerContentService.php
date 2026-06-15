@@ -599,27 +599,30 @@ class LayerContentService
                     $sourcePid = intval($result->$ptableCompareField);
                 }
 
-                if ($sourcePid) {
-                    if ($objConfig->ptableField) {
-                        if ($ptableBlobArr && $ptableBlobArr[$key] == 1) {
-                            //ToDo filter after select
-                        } else {
-                            $arrPtableField = \Contao\StringUtil::deserialize($ptableField);
-                            if (is_array($arrPtableField) && count($arrPtableField)) {
-                                $pidOption .= $and . "$arrPtableField[0] = $sourcePid ";
+                    if ($sourcePid) {
+                        if ($objConfig->ptableField) {
+                            if ($ptableBlobArr && $ptableBlobArr[$key] == 1) {
+                                //ToDo filter after select
                             } else {
-                                $pidOption .= $and . "$ptableField = $sourcePid ";
+                                $arrPtableField = \Contao\StringUtil::deserialize($ptableField);
+                                if (is_array($arrPtableField) && count($arrPtableField)) {
+                                    $pidOption .= $and . $arrPtableField[0] . " = ? ";
+                                } else {
+                                    $pidOption .= $and . $ptableField . " = ? ";
+                                }
+                                $arrParams[] = $sourcePid;
                             }
+                        } else {
+                            $pidOption .= "`pid` = ? ";
+                            $arrParams[] = $sourcePid;
                         }
-                    } else {
-                        $pidOption .= "`pid` = '$sourcePid'  ";
                     }
-                }
             }
         }
 
 
         $stmt = '';
+        $arrParams = [];
 
         if ($objLayer->tab_filter_alias) {
             //$alias = $this->getInput()->get($objConfig['alias_getparam']);
@@ -634,9 +637,12 @@ class LayerContentService
                     $stmt = ' WHERE';
                 }
                 if (is_numeric($alias)) {
-                    $stmt .= ' (( alias = "' . $alias . '" ) OR ( id = ' . $alias . ' ))';
+                    $stmt .= ' (( alias = ? ) OR ( id = ? ))';
+                    $arrParams[] = strval($alias);
+                    $arrParams[] = intval($alias);
                 } else {
-                    $stmt .= ' (alias = "' . $alias . '")';
+                    $stmt .= ' (alias = ?)';
+                    $arrParams[] = strval($alias);
                 }
             } elseif ($alias && ($sourceTable == 'tl_content')) {
                 $query = "SELECT * FROM `$ptableArr[0]` WHERE alias = ?";
@@ -649,7 +655,8 @@ class LayerContentService
                     } elseif (!$qWhere) {
                         $stmt = ' WHERE';
                     }
-                    $stmt .= ' (pid = "' . $sourcePid . '")';
+                    $stmt .= ' (pid = ?)';
+                    $arrParams[] = $sourcePid;
                 }
             }
         }
@@ -672,11 +679,11 @@ class LayerContentService
             }
 
             $queryCount = "SELECT COUNT(*) AS count FROM `$sourceTable`" . $qWhere . $pidOption . $and . $whereClause . $stmt;
-            $resultCount = Database::getInstance($connectionParams)->prepare($queryCount)->execute()->fetchAssoc()['count'];
+            $resultCount = Database::getInstance($connectionParams)->prepare($queryCount)->execute(...$arrParams)->fetchAssoc()['count'];
 
             if ($resultCount < 45000) {
                 $query = "SELECT * FROM `$sourceTable`" . $qWhere . $pidOption . $and . $whereClause . $stmt;
-                $result = Database::getInstance($connectionParams)->prepare($query)->execute();
+                $result = Database::getInstance($connectionParams)->prepare($query)->execute(...$arrParams);
             }
             //ToDo ???
         }
@@ -946,7 +953,7 @@ class LayerContentService
         while ($layers->next()) {
             $layerNames[] = $layers->name;
         }
-        $arrBoards = deserialize($objLayer->forums, true);
+        $arrBoards = \con4gis\ForumBundle\Classes\C4GForumHelper::deserializeIds($objLayer->forums);
         $objBoardPosts = Database::getInstance()->prepare(
             'SELECT tl_c4g_forum_post.*,
             tl_c4g_forum_thread.name as threadName,
@@ -954,8 +961,8 @@ class LayerContentService
                 FROM tl_c4g_forum_post
                 LEFT JOIN tl_c4g_forum_thread ON tl_c4g_forum_thread.id = tl_c4g_forum_post.pid
                 LEFT JOIN tl_c4g_forum ON tl_c4g_forum.id = forum_id
-                    WHERE forum_id IN(' . implode(',', $arrBoards) . ')'
-        )->execute();
+                    WHERE forum_id IN(' . implode(',', array_fill(0, count($arrBoards), '?')) . ')'
+        )->execute(...$arrBoards);
 
         if ($objBoardPosts->numRows) {
             while ($objBoardPosts->next()) {
