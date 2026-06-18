@@ -249,9 +249,12 @@ class TlC4gMaps extends Backend
      */
     public function getMapForums(DC_TABLE $dc)
     {
-        //ToDo what if forum not installed?
+        if (!C4GVersionProvider::isInstalled('con4gis/forum')) {
+            return [];
+        }
         $forumHelper = new \con4gis\ForumBundle\Classes\C4GForumHelper($this->Database);
         $forums = $forumHelper->getMapForums();
+        $return = [];
         foreach ($forums AS $forum) {
             $return[$forum['id']] = $forum['name'];
         }

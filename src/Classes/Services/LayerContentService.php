@@ -953,7 +953,7 @@ class LayerContentService
         while ($layers->next()) {
             $layerNames[] = $layers->name;
         }
-        $arrBoards = \con4gis\ForumBundle\Classes\C4GForumHelper::deserializeIds($objLayer->forums);
+        $arrBoards = \con4gis\CoreBundle\Classes\C4GUtils::deserializeIds($objLayer->forums);
         $objBoardPosts = Database::getInstance()->prepare(
             'SELECT tl_c4g_forum_post.*,
             tl_c4g_forum_thread.name as threadName,
