@@ -127,6 +127,15 @@ export class C4gPopup {
                 this.popupController.mapController.map.addOverlay(this.popup);
             }
 
+            if (feature.get('map_audio_src')) {
+                let audioPath = feature.get('map_audio_src');
+                popupContent += `<div class="c4g-popup-audio"><audio controls autoplay><source src="${audioPath}">Your browser does not support the audio element.</audio></div>`;
+            }
+            if (feature.get('map_video_src')) {
+                let videoPath = feature.get('map_video_src');
+                popupContent += `<div class="c4g-popup-video"><video controls autoplay><source src="${videoPath}">Your browser does not support the video element.</video></div>`;
+            }
+
             divPopup.innerHTML = popupContent;
             this.popupContent.innerHTML = '';
             this.popupContent.appendChild(divPopup);
@@ -148,16 +157,18 @@ export class C4gPopup {
                 if (!this.popupComponent.state.open) {
                     this.popupComponent.open(activeComps);
                 }
-                if (divPopup.children.length > 0) {
-                    let contentNode = document.createElement('div');
-                    contentNode.innerHTML = popupContent;
-                    divPopup.appendChild(contentNode);
-                    this.popupComponent.setContent(divPopup.innerHTML);
-                    if (objPopup && objPopup.callback && typeof objPopup.callback === "function") {
-                        objPopup.callback();
-                    }
-                } else {
-                    this.popupComponent.setContent(popupContent, popupConfig);
+
+                if (feature.get('map_audio_src')) {
+                    let audioPath = feature.get('map_audio_src');
+                    popupContent += `<div class="c4g-popup-audio"><audio controls autoplay><source src="${audioPath}">Your browser does not support the audio element.</audio></div>`;
+                }
+                if (feature.get('map_video_src')) {
+                    let videoPath = feature.get('map_video_src');
+                    popupContent += `<div class="c4g-popup-video"><video controls autoplay><source src="${videoPath}">Your browser does not support the video element.</video></div>`;
+                }
+                this.popupComponent.setContent(popupContent, popupConfig);
+                if (objPopup && objPopup.callback && typeof objPopup.callback === "function") {
+                    objPopup.callback();
                 }
             }
         }

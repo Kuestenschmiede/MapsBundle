@@ -349,6 +349,29 @@ div.c4g-active.c4g-popup-wrapper {
   max-width: 100%;
 }
 
+.c4g-popup-audio,
+.c4g-popup-video {
+  max-width: 800px;
+  max-height: calc(var(--map-height, 100vh) - 80px);
+  margin: 0 auto;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.c4g-popup-audio audio {
+  width: 100%;
+  display: block;
+}
+
+.c4g-popup-video video {
+  width: 100%;
+  height: auto;
+  max-height: calc(var(--map-height, 100vh) - 100px);
+  display: block;
+}
+
 .c4g-popup-share-button-wrapper {
   padding: 0.75rem;
   margin-bottom: 0.75rem;

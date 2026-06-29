@@ -628,6 +628,7 @@ class LayerService
                 case 'kml':
                 case 'osm':
                 case 'single':
+                case 'media':
                 case 'geojson':
                     return $this->layerContentService->getLayerData($objLayer->id, false, $lang);
 

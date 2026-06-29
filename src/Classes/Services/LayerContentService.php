@@ -138,6 +138,10 @@ class LayerContentService
                 break;
             case 'wfs':
                 return $this->getWfsLayer($objLayer);
+            case 'media':
+                $arrReturnData[] = $this->getMediaLayerContent($objLayer, $lang);
+
+                break;
             default:
                 return [];
         }
@@ -182,13 +186,55 @@ class LayerContentService
 
     private function getSingleLayerContent($objLayer, $lang)
     {
+        $data = $this->createGeoJsonResult($objLayer, 'tl_c4g_maps', $lang);
+        $data['properties']['layerId'] = $objLayer->id;
+        $data['properties']['locstyle'] = $objLayer->locstyle;
+        $data['properties']['locationStyle'] = $objLayer->locstyle;
         return [
             'id' => $objLayer->id,
             'type' => 'GeoJSON',
             'format' => 'GeoJSON',
             'origType' => 'single',
             'locationStyle' => $objLayer->locstyle,
-            'data' => $this->createGeoJsonResult($objLayer, 'tl_c4g_maps', $lang),
+            'data' => $data,
+            'loc_linkurl' => Utils::replaceInsertTags($objLayer->loc_linkurl ?: '', $lang),
+            'hover_location' => $objLayer->hover_location,
+            'hover_style' => $objLayer->hover_style,
+        ];
+    }
+
+    private function getMediaLayerContent($objLayer, $lang)
+    {
+        $data = $this->createGeoJsonResult($objLayer, 'tl_c4g_maps', $lang);
+        $data['properties']['layerId'] = $objLayer->id;
+        $data['properties']['locstyle'] = $objLayer->locstyle;
+        $data['properties']['locationStyle'] = $objLayer->locstyle;
+        if ($objLayer->media_type === 'audio' && $objLayer->map_audio_src) {
+            $objFile = FilesModel::findByUuid($objLayer->map_audio_src);
+            if ($objFile) {
+                $data['properties']['map_audio_src'] = $objFile->path;
+                if (!isset($data['properties']['popup']) || !trim($data['properties']['popup']['content'])) {
+                    $data['properties']['popup']['content'] = ' ';
+                    $data['properties']['popup']['async'] = false;
+                }
+            }
+        } elseif ($objLayer->media_type === 'video' && $objLayer->map_video_src) {
+            $objFile = FilesModel::findByUuid($objLayer->map_video_src);
+            if ($objFile) {
+                $data['properties']['map_video_src'] = $objFile->path;
+                if (!isset($data['properties']['popup']) || !trim($data['properties']['popup']['content'])) {
+                    $data['properties']['popup']['content'] = ' ';
+                    $data['properties']['popup']['async'] = false;
+                }
+            }
+        }
+        return [
+            'id' => $objLayer->id,
+            'type' => 'GeoJSON',
+            'format' => 'GeoJSON',
+            'origType' => 'media',
+            'locationStyle' => $objLayer->locstyle,
+            'data' => $data,
             'loc_linkurl' => Utils::replaceInsertTags($objLayer->loc_linkurl ?: '', $lang),
             'hover_location' => $objLayer->hover_location,
             'hover_style' => $objLayer->hover_style,
@@ -1078,6 +1124,7 @@ class LayerContentService
         $locGeoy = Utils::replaceInsertTags($objLayer->loc_geoy ?: '', $lang);
         switch ($objLayer->location_type) {
             case 'single':
+            case 'media':
 
                 $arrGeoJson = [
                     'type' => 'Feature',
@@ -1090,6 +1137,7 @@ class LayerContentService
                     ],
                     'properties' => [
                         'projection' => 'EPSG:4326',
+                        'layerId' => $objLayer->id,
                         'popup' => [
                             'async' => $popup_async,
                             'content' => $popup_content,
@@ -1103,6 +1151,8 @@ class LayerContentService
                         'loc_linkurl' => $linkUrl,
                         'hover_location' => $objLayer->hover_location,
                         'hover_style' => $objLayer->hover_style,
+                        'locstyle' => $objLayer->locstyle,
+                        'locationStyle' => $objLayer->locstyle,
                         'cssClass' => $objLayer->cssClass,
                     ],
                 ];

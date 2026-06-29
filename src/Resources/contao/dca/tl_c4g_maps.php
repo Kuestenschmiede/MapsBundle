@@ -99,7 +99,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
     ],
     'palettes' =>
         [
-        '__selector__'                => ['location_type', 'tab_source', 'show_locations', 'enablePopup', 'popup_extend', 'protect_element', 'use_specialprofile', 'cluster_locations', 'split_geojson', 'c4gioType'],
+        '__selector__'                => ['location_type', 'media_type', 'tab_source', 'show_locations', 'enablePopup', 'popup_extend', 'protect_element', 'use_specialprofile', 'cluster_locations', 'split_geojson', 'c4gioType'],
 
         'map'                         => '{general_legend},name,location_type;'.
                                          '{map_legend},width,height,margin,show_locations,center_geox,center_geoy,center_rotation,zoom,geolocation,restrict_area;'.
@@ -181,6 +181,12 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                                          '{publish_legend:hide},published,publishStart,publishStop;'.
                                          '{expert_legend:hide},be_optimize_checkboxes_limit;',
 
+        'media'                       => '{general_legend},name,location_type,media_type;'.
+                                         '{location_legend},data_layername,initial_opened,exemptFromRealFilter,exemptFromFilter,filterByBaseLayer,hide_child,data_hidelayer,hideInStarboard,addZoom,loc_geox,loc_geoy,locstyle,zIndex,loc_only_in_parent,loc_label,tooltip, tooltip_length,enablePopup,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations, hover_location,hide_when_in_tab,cssClass;'.
+                                         '{protection_legend:hide},protect_element;'.
+                                         '{publish_legend:hide},published,publishStart,publishStop;'.
+                                         '{expert_legend:hide},excludeFromSingleLayer,be_optimize_checkboxes_limit;',
+
         'folder'                      => '{general_legend},name,location_type;'.
                                          '{location_legend},data_layername,hide_child,initial_opened,data_hidelayer,hideInStarboard,addZoom,data_folder,locstyle,zIndex,loc_label,tooltip, tooltip_length,enablePopup,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,hide_when_in_tab,cssClass;'.
                                          '{protection_legend:hide},protect_element;'.
@@ -196,7 +202,11 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
         'cluster_locations'           => 'cluster_distance, cluster_fillcolor, cluster_fontcolor, cluster_zoom,cluster_popup',
         'split_geojson'               => 'geojson_attributes, geojson_zoom',
         'c4gioType_1'                 => 'c4gioString',
-        'c4gioType_2'                 => 'c4gioDropdown'
+        'c4gioType_2'                 => 'c4gioDropdown',
+        'audio'                       => 'map_audio_src',
+        'video'                       => 'map_video_src',
+        'media_type_audio'            => 'map_audio_src',
+        'media_type_video'            => 'map_video_src',
         ],
     'fields' =>
         [
@@ -638,6 +648,29 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 'exclude'                 => true,
                 'inputType'               => 'fileTree',
                 'eval'                    => ['trailingSlash' => false, 'extensions' => 'geojson,kml,gpx,osm,json', 'files' => true, 'fieldType' => 'radio'],
+                'sql'                     => "binary(16) NULL"
+            ],
+        'media_type' =>
+            [
+                'exclude'                 => true,
+                'inputType'               => 'select',
+                'options'                 => ['audio', 'video'],
+                'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_maps']['references'],
+                'eval'                    => ['includeBlankOption' => true, 'submitOnChange' => true, 'mandatory' => true, 'tl_class' => 'w50', 'chosen' => true],
+                'sql'                     => "varchar(32) NOT NULL default ''"
+            ],
+        'map_audio_src' =>
+            [
+                'exclude'                 => true,
+                'inputType'               => 'fileTree',
+                'eval'                    => ['trailingSlash' => false, 'extensions' => 'mp3,ogg,wav', 'files' => true, 'fieldType' => 'radio', 'tl_class' => 'clr'],
+                'sql'                     => "binary(16) NULL"
+            ],
+        'map_video_src' =>
+            [
+                'exclude'                 => true,
+                'inputType'               => 'fileTree',
+                'eval'                    => ['trailingSlash' => false, 'extensions' => 'mp4,webm,ogv', 'files' => true, 'fieldType' => 'radio', 'tl_class' => 'clr'],
                 'sql'                     => "binary(16) NULL"
             ],
         'data_url' =>
