@@ -13,29 +13,26 @@ use Contao\Backend;
 use Contao\DC_Table;
 use Contao\System;
 
-$GLOBALS['TL_DCA']['tl_content']['palettes']['c4g_maps'] = '{type_legend},type,headline;'.
-    '{c4g_map_legend},c4g_map_id;'.
-    '{protected_legend:hide},protected;'.
-    '{expert_legend:hide},guests,cssID,space';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['c4g_maps'] = '{type_legend},type,headline;' . '{c4g_map_legend},c4g_map_id;' . '{protected_legend:hide},protected;' . '{expert_legend:hide},guests,cssID,space';
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['c4g_map_id'] = [
     'exclude'                 => true,
     'inputType'               => 'select',
-    'options_callback'        => ['tl_content_c4g_maps', 'get_maps'],
+    'options_callback'        => ['tl_content_c4g_maps','get_maps'],
     'eval'                    => ['submitOnChange'=>true],
     'sql'                     => "int(10) unsigned NOT NULL default '0'",
-    'xlabel'                  => [['tl_content_c4g_maps', 'mapsLink']]
+    'xlabel'                  => [['tl_content_c4g_maps','mapsLink']]
 ];
 
 if (@class_exists("tl_content")) {
     try {
        PaletteManipulator::create()
-            ->addLegend('c4g_maps_legend', 'expert_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_BEFORE)
-            ->addField(array('c4g_loc_geox', 'c4g_loc_geoy', 'c4g_loc_tooltip', 'c4g_loc_label', 'c4g_locstyle'), 'c4g_maps_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_APPEND)
-            ->applyToPalette('text', 'tl_content')
-            ->applyToPalette('html', 'tl_content')
-            ->applyToPalette('module', 'tl_content')
-            ->applyToPalette('youtube', 'tl_content');
+            ->addLegend('c4g_maps_legend','expert_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_BEFORE)
+            ->addField(array('c4g_loc_geox','c4g_loc_geoy','c4g_loc_tooltip','c4g_loc_label','c4g_locstyle'),'c4g_maps_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_APPEND)
+            ->applyToPalette('text','tl_content')
+            ->applyToPalette('html','tl_content')
+            ->applyToPalette('module','tl_content')
+            ->applyToPalette('youtube','tl_content');
         error_log('try');
     } catch (\Exception $e) {
         error_log('catch');
@@ -44,18 +41,18 @@ if (@class_exists("tl_content")) {
     $GLOBALS['TL_DCA']['tl_content']['fields']['c4g_loc_geox'] = [
         'exclude' => true,
         'inputType' => 'c4g_text',
-        'eval' => ['mandatory' => false, 'maxlength' => 20, 'tl_class' => 'w50 wizard'],
-        'save_callback' => [['tl_content_c4g_maps', 'setLocLon']],
-        'wizard' => [['\con4gis\MapsBundle\Classes\GeoPicker', 'getPickerLink']],
+        'eval' => ['mandatory' => false,'maxlength' => 20,'tl_class' => 'w50 wizard'],
+        'save_callback' => [['tl_content_c4g_maps','setLocLon']],
+        'wizard' => [['\con4gis\MapsBundle\Classes\GeoPicker','getPickerLink']],
         'sql' => "varchar(20) NOT NULL default ''"
     ];
 
     $GLOBALS['TL_DCA']['tl_content']['fields']['c4g_loc_geoy'] = [
         'exclude' => true,
         'inputType' => 'c4g_text',
-        'eval' => ['mandatory' => false, 'maxlength' => 20, 'tl_class' => 'w50 wizard'],
-        'save_callback' => [['tl_content_c4g_maps', 'setLocLat']],
-        'wizard' => [['\con4gis\MapsBundle\Classes\GeoPicker', 'getPickerLink']],
+        'eval' => ['mandatory' => false,'maxlength' => 20,'tl_class' => 'w50 wizard'],
+        'save_callback' => [['tl_content_c4g_maps','setLocLat']],
+        'wizard' => [['\con4gis\MapsBundle\Classes\GeoPicker','getPickerLink']],
         'sql' => "varchar(20) NOT NULL default ''"
     ];
 
@@ -76,10 +73,10 @@ if (@class_exists("tl_content")) {
     $GLOBALS['TL_DCA']['tl_content']['fields']['c4g_locstyle'] = [
         'exclude' => true,
         'inputType' => 'select',
-        'options_callback' => ['tl_content_c4g_maps', 'getLocStyles'],
-        'eval' => ['chosen' => true, 'includeBlankOption'=>true],
+        'options_callback' => ['tl_content_c4g_maps','getLocStyles'],
+        'eval' => ['chosen' => true,'includeBlankOption'=>true],
         'sql' => "int(10) unsigned NOT NULL default '0'",
-        'xlabel' => [['tl_content_c4g_maps', 'locstylesLink']]
+        'xlabel' => [['tl_content_c4g_maps','locstylesLink']]
     ];
 }
     
@@ -158,12 +155,12 @@ class tl_content_c4g_maps extends Backend
 
     public function locstylesLink(DC_Table $dc)
     {
-        return ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'?do=c4g_map_locstyles&amp;table=tl_c4g_map_locstyles&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_content']['editLocstyles']) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_content']['editLocstyles'])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
+        return ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'?do=c4g_map_locstyles&amp;table=tl_c4g_map_locstyles&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_content']['editLocstyles']) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'","\\'", $GLOBALS['TL_LANG']['tl_content']['editLocstyles'])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
     }
 
     public function mapsLink(DC_Table $dc)
     {
-        return ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'?do=c4g_maps&amp;table=tl_c4g_maps&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_content']['editMaps']) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_content']['editMaps'])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
+        return ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'?do=c4g_maps&amp;table=tl_c4g_maps&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_content']['editMaps']) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'","\\'", $GLOBALS['TL_LANG']['tl_content']['editMaps'])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
     }
 
 }

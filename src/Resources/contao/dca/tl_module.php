@@ -11,20 +11,11 @@ use Contao\Backend;
 use con4gis\CoreBundle\Classes\C4GVersionProvider;
 use Contao\System;
 
-$GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_maps'] = '{title_legend},name,headline,type;'.
-    '{c4g_map_legend},c4g_map_id;'.
-    '{protected_legend:hide},protected;'.
-    '{expert_legend:hide},guests,cssID,space';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_maps'] = '{title_legend},name,headline,type;' . '{c4g_map_legend},c4g_map_id;' . '{protected_legend:hide},protected;' . '{expert_legend:hide},guests,cssID,space';
 
-$GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_search'] = '{title_legend},name,headline,type;'.
-    '{c4g_search_legend},c4g_map_site_id,c4g_map_zoomlevel,c4g_map_placeholder;'.
-    '{protected_legend:hide},protected;'.
-    '{expert_legend:hide},guests,cssID,space';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_search'] = '{title_legend},name,headline,type;' . '{c4g_search_legend},c4g_map_site_id,c4g_map_zoomlevel,c4g_map_placeholder;' . '{protected_legend:hide},protected;' . '{expert_legend:hide},guests,cssID,space';
 
-$GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_external_map_element'] = '{title_legend},name,headline,type;'.
-    '{c4g_external_legend},c4g_element_type;'.
-    '{protected_legend:hide},protected;'.
-    '{expert_legend:hide},guests,cssID,space';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_external_map_element'] = '{title_legend},name,headline,type;' . '{c4g_external_legend},c4g_element_type;' . '{protected_legend:hide},protected;' . '{expert_legend:hide},guests,cssID,space';
 
 if (C4GVersionProvider::isInstalled('con4gis/forum'))
 {
@@ -49,10 +40,10 @@ if (C4GVersionProvider::isInstalled('con4gis/forum'))
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_map_id'] = [
     'exclude'                 => true,
     'inputType'               => 'select',
-    'options_callback'        => ['tl_module_c4g_maps', 'get_maps'],
+    'options_callback'        => ['tl_module_c4g_maps','get_maps'],
     'eval'                    => ['submitOnChange'=>true],
     'sql'                     => "int(10) unsigned NOT NULL default '0'",
-    'xlabel'                  => [['tl_module_c4g_maps', 'mapsLink']]
+    'xlabel'                  => [['tl_module_c4g_maps','mapsLink']]
 ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_map_site_id'] = [
@@ -120,6 +111,6 @@ class tl_module_c4g_maps extends Backend
         }
 
         $requestToken = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
-        return ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'?do=c4g_maps&amp;table=tl_c4g_maps&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . $requestToken . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_module']['editMaps']) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_module']['editMaps'])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
+        return ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'?do=c4g_maps&amp;table=tl_c4g_maps&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . $requestToken . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_module']['editMaps']) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'","\\'", $GLOBALS['TL_LANG']['tl_module']['editMaps'])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
     }
 }

@@ -26,7 +26,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
                 'id' => 'primary'
             ]
         ],
-        'onload_callback' => [['con4gis\MapsBundle\Classes\Contao\Callbacks\TlC4gMapSettings','addDefaultTables'],['tl_c4g_map_tables', 'showInfoMessage']]
+        'onload_callback' => [['con4gis\MapsBundle\Classes\Contao\Callbacks\TlC4gMapSettings','addDefaultTables'],['tl_c4g_map_tables','showInfoMessage']]
     ],
     'list' =>
         [
@@ -41,7 +41,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
         'label' =>
             [
             'fields'                  => ['icon','name','tableSource'],
-            'label_callback'          => ['tl_c4g_map_tables', 'addIcon'],
+            'label_callback'          => ['tl_c4g_map_tables','addIcon'],
             'showColumns'             => true
             ],
         'global_operations' =>
@@ -50,12 +50,12 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
                     'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
                     'href'                => 'act=select',
                     'class'               => 'header_edit_all',
-                    'attributes'          => 'onclick="Backend.getScrollOffset();" accesskey="e"'
+                    'attributes'          => 'onclick="Backend.getScrollOffset()" accesskey="e"'
                 ],
             'back' => [
                     'href'                => 'key=back',
                     'class'               => 'header_back',
-                    'button_callback'     => ['\con4gis\CoreBundle\Classes\Helper\DcaHelper', 'back'],
+                    'button_callback'     => ['\con4gis\CoreBundle\Classes\Helper\DcaHelper','back'],
                     'icon'                => 'back.svg',
                     'label'               => &$GLOBALS['TL_LANG']['MSC']['backBT'],
                 ],
@@ -70,8 +70,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
         ],
     'palettes' =>
     [
-        '__selector__' => ['popupSwitch', 'dataType'],
-        'default' => '{defaultLegend},name,customDB,tableSource;{parentLegend},ptable,ptableOptions,ptableBackendField,ptableField,ptableCompareField;{geoLegend},dataType;{projLegend:hide},projName,projCode;{tableInformation},label,locstyle,tooltip,popupSwitch,cutTextAtLength;',
+        '__selector__' => ['popupSwitch','dataType'],
+        'default' => '{defaultLegend},name,customDB,tableSource;{parentLegend},ptable,ptableOptions,ptableBackendField,ptableField,ptableCompareField;{geoLegend},dataType;{projLegend:hide},projName,projCode;{tableInformation},label,locstyle,tooltip,popupSwitch,cutTextAtLength',
     ],
     'subpalettes' =>
     [
@@ -111,7 +111,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'inputType'               => 'select',
             'default'                 => '',
             'options_callback'        => ['tl_c4g_map_tables','getDatabases'],
-            'eval'                    => ['mandatory'=>false, 'multiple'=>false, 'chosen' => true, 'submitOnChange' => true, 'includeBlankOption' => true],
+            'eval'                    => ['mandatory'=>false,'multiple'=>false,'chosen' => true,'submitOnChange' => true,'includeBlankOption' => true],
             'sql'                     => "text NULL default ''"
         ],
         'tableSource' =>
@@ -120,7 +120,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'inputType'               => 'select',
             'default'                 => '',
             'options_callback'        => ['tl_c4g_map_tables','getDatabaseTables'],
-            'eval'                    => ['mandatory'=>false, 'multiple'=>false, 'chosen' => true, 'submitOnChange' => true, 'includeBlankOption' => true],
+            'eval'                    => ['mandatory'=>false,'multiple'=>false,'chosen' => true,'submitOnChange' => true,'includeBlankOption' => true],
             'sql'                     => "text NULL default ''"
         ],
         'ptable' =>
@@ -129,8 +129,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'inputType'               => 'select',
             'default'                 => '',
             'options_callback'        => ['tl_c4g_map_tables','getDatabaseTables'],
-            'save_callback'           => ['tl_c4g_map_tables', 'serializeResult'],
-            'eval'                    => ['mandatory'=>false, 'multiple'=>true, 'size' => 2, 'chosen' => true, 'submitOnChange' => true],
+            'save_callback'           => ['tl_c4g_map_tables','serializeResult'],
+            'eval'                    => ['mandatory'=>false,'multiple'=>true,'size' => 2,'chosen' => true,'submitOnChange' => true],
             'sql'                     => "text NULL default ''"
         ],
         'ptableOptions' =>
@@ -139,8 +139,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'inputType'               => 'select',
             'default'                 => '',
             'options_callback'        => ['tl_c4g_map_tables','getParentTablesFields'],
-            'save_callback'           => ['tl_c4g_map_tables', 'serializeResult'],
-            'eval'                    => ['mandatory'=>false, 'multiple'=>true,'size' => 2, 'chosen' => true, 'includeBlankOption' => true],
+            'save_callback'           => ['tl_c4g_map_tables','serializeResult'],
+            'eval'                    => ['mandatory'=>false,'multiple'=>true,'size' => 2,'chosen' => true,'includeBlankOption' => true],
             'sql'                     => "text NULL default ''"
         ],
         'ptableBlob' =>
@@ -153,8 +153,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'inputType'               => 'select',
             'default'                 => '',
             'options_callback'        => ['tl_c4g_map_tables','getSourceTableFields'],
-            'save_callback'           => ['tl_c4g_map_tables', 'serializeResult'],
-            'eval'                    => ['mandatory'=>false, 'chosen' => true, 'includeBlankOption' => true],
+            'save_callback'           => ['tl_c4g_map_tables','serializeResult'],
+            'eval'                    => ['mandatory'=>false,'chosen' => true,'includeBlankOption' => true],
             'sql'                     => "text NULL default ''"
         ],
         'ptableCompareField' => [
@@ -162,8 +162,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'inputType'               => 'select',
             'default'                 => '',
             'options_callback'        => ['tl_c4g_map_tables','getParentTablesFields'],
-            'save_callback'           => ['tl_c4g_map_tables', 'serializeResult'],
-            'eval'                    => ['mandatory'=>false, 'multiple'=>true, 'chosen' => true, 'size' => 2],
+            'save_callback'           => ['tl_c4g_map_tables','serializeResult'],
+            'eval'                    => ['mandatory'=>false,'multiple'=>true,'chosen' => true,'size' => 2],
             'sql'                     => "text NULL default ''"
         ],
         'dataType' => [
@@ -172,7 +172,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'inputType'               => 'radio',
             'options'                 => [1,2,3,4],
             'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['references']['dataType'],
-            'eval'                    => ['mandatory'=>true, 'multiple'=>false, 'submitOnChange'=>true],
+            'eval'                    => ['mandatory'=>true,'multiple'=>false,'submitOnChange'=>true],
             'sql'                     => "varchar(1) default 1"
         ],
         'geox' => [
@@ -180,7 +180,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'inputType'               => 'select',
             'default'                 => '',
             'options_callback'        => ['tl_c4g_map_tables','getSourceTableFields'],
-            'eval'                    => ['mandatory'=>false, 'multiple'=>false, 'includeBlankOption' => true],
+            'eval'                    => ['mandatory'=>false,'multiple'=>false,'includeBlankOption' => true],
             'sql'                     => "text NULL default ''"
         ],
         'geoy' => [
@@ -188,7 +188,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'inputType'               => 'select',
             'default'                 => '',
             'options_callback'        => ['tl_c4g_map_tables','getSourceTableFields'],
-            'eval'                    => ['mandatory'=>false, 'multiple'=>false, 'includeBlankOption' => true],
+            'eval'                    => ['mandatory'=>false,'multiple'=>false,'includeBlankOption' => true],
             'sql'                     => "text NULL default ''"
         ],
         'geolocation' => [
@@ -196,7 +196,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'default'                 => '',
             'inputType'               => 'select',
             'options_callback'        => ['tl_c4g_map_tables','getSourceTableFields'],
-            'eval'                    => ['mandatory'=>false, 'multiple'=>false, 'includeBlankOption' => true],
+            'eval'                    => ['mandatory'=>false,'multiple'=>false,'includeBlankOption' => true],
             'sql'                     => "text NULL default ''"
         ],
         'projName' => [
@@ -210,7 +210,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'exclude'                 => true,
             'inputType'               => 'text',
             'default'                 => '',
-            'eval'                    => ['mandatory'=>false, 'decodeEntities'=>true],
+            'eval'                    => ['mandatory'=>false,'decodeEntities'=>true],
             'sql'                     => "text NULL default ''"
         ],
         'label' => [
@@ -218,7 +218,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'default'                 => '',
             'inputType'               => 'select',
             'options_callback'        => ['tl_c4g_map_tables','getSourceTableFields'],
-            'eval'                    => ['mandatory'=>false, 'multiple'=>false, 'includeBlankOption' => true],
+            'eval'                    => ['mandatory'=>false,'multiple'=>false,'includeBlankOption' => true],
             'sql'                     => "text NULL default ''"
         ],
         'locstyle' => [
@@ -226,7 +226,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'inputType'               => 'select',
             'default'                 => '',
             'options_callback'        => ['tl_c4g_map_tables','getSourceTableFields'],
-            'eval'                    => ['mandatory'=>false, 'multiple'=>false, 'chosen' => true, 'includeBlankOption' => true],
+            'eval'                    => ['mandatory'=>false,'multiple'=>false,'chosen' => true,'includeBlankOption' => true],
             'sql'                     => "text NULL default ''"
         ],
         'tooltip' => [
@@ -234,7 +234,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'inputType'               => 'select',
             'default'                 => '',
             'options_callback'        => ['tl_c4g_map_tables','getSourceTableFields'],
-            'eval'                    => ['mandatory'=>false, 'multiple'=>false, 'chosen' => true, 'includeBlankOption' => true],
+            'eval'                    => ['mandatory'=>false,'multiple'=>false,'chosen' => true,'includeBlankOption' => true],
             'sql'                     => "text NULL default ''"
         ],
         'popupSwitch' => [
@@ -246,7 +246,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
                 'expert' => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['popupSwitch_expert'],
                 'off' => &$GLOBALS['TL_LANG']['tl_c4g_map_tables']['popupSwitch_off'],
             ],
-            'eval'                    => ['submitOnChange'=>true, 'tl_class'=>'clr'],
+            'eval'                    => ['submitOnChange'=>true,'tl_class'=>'clr'],
             'sql'                     => "varchar(10) NOT NULL default 'default'"
         ],
         'popupSelection' => [
@@ -254,9 +254,9 @@ $GLOBALS['TL_DCA']['tl_c4g_map_tables'] =
             'inputType'               => 'select',
             'default'                 => [],
             'options_callback'        => ['tl_c4g_map_tables','getSourceTableFields'],
-            'save_callback'           => [['tl_c4g_map_tables', 'concatResult']],
-            'load_callback'           => [['tl_c4g_map_tables', 'separateResult']],
-            'eval'                    => ['mandatory'=>false, 'multiple'=>true, 'chosen' => true, 'includeBlankOption' => true],
+            'save_callback'           => [['tl_c4g_map_tables','concatResult']],
+            'load_callback'           => [['tl_c4g_map_tables','separateResult']],
+            'eval'                    => ['mandatory'=>false,'multiple'=>true,'chosen' => true,'includeBlankOption' => true],
             'sql'                     => "text NULL default ''"
         ],
         'popup' => [
@@ -295,7 +295,7 @@ class tl_c4g_map_tables extends Backend
         return $options;
     }
     public function getDatabaseTables(DC_TABLE $dc) {
-        if ($dc->activeRecord->customDB) {
+        if ($dc->activeRecord && $dc->activeRecord->customDB) {
             $result = Database::getInstance(['dbDatabase' => $dc->activeRecord->customDB])->prepare("SHOW TABLES")->execute();
             $arrResult = $result->fetchAllAssoc();
             $options = [];
@@ -310,9 +310,9 @@ class tl_c4g_map_tables extends Backend
     }
     
     public function getSourceTableFields(DC_TABLE $dc) {
-        $tableName = $dc->activeRecord->tableSource;
+        $tableName = $dc->activeRecord ? $dc->activeRecord->tableSource : null;
         $options = [];
-        if ($dc->activeRecord->customDB && $tableName && $tableName !== "") {
+        if ($dc->activeRecord && $dc->activeRecord->customDB && $tableName && $tableName !== "") {
             $result = Database::getInstance(['dbDatabase' => $dc->activeRecord->customDB])->prepare("SHOW COLUMNS FROM " . $tableName)->execute();
             $arrResult = $result->fetchAllAssoc();
             $options = [];
@@ -331,12 +331,12 @@ class tl_c4g_map_tables extends Backend
     }
     
     public function getParentTablesFields(DC_TABLE $dc) {
-        $tableNames = StringUtil::deserialize($dc->activeRecord->ptable);
+        $tableNames = $dc->activeRecord ? StringUtil::deserialize($dc->activeRecord->ptable) : null;
         $options = [];
         if (!$tableNames) {
             return $options;
         }
-        if ($dc->activeRecord->customDB) {
+        if ($dc->activeRecord && $dc->activeRecord->customDB) {
             foreach ($tableNames as $tableName) {
                 $result = Database::getInstance(['dbDatabase' => $dc->activeRecord->customDB])->prepare("SHOW COLUMNS FROM " . $tableName)->execute();
                 $arrResult = $result->fetchAllAssoc();

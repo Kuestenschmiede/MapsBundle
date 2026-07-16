@@ -18,7 +18,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
         'dataContainer'               => DC_Table::class,
         'enableVersioning'            => true,
         'markAsCopy'                  => 'name',
-        'onload_callback' => [['tl_c4g_map_themes', 'showInfoMessage']],
+        'onload_callback' => [['tl_c4g_map_themes','showInfoMessage']],
         'sql'                         =>
             [
             'keys' =>
@@ -42,7 +42,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
         'label' =>
             [
             'fields'                  => ['icon','name','maincolor','shadowcolor','fontcolor'],
-            'label_callback'          => ['tl_c4g_map_themes', 'addIcon'],
+            'label_callback'          => ['tl_c4g_map_themes','addIcon'],
             'showColumns'             => true
             ],
         'global_operations' =>
@@ -51,12 +51,12 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
                 'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
                 'href'                => 'act=select',
                 'class'               => 'header_edit_all',
-                'attributes'          => 'onclick="Backend.getScrollOffset();" accesskey="e"'
+                'attributes'          => 'onclick="Backend.getScrollOffset()" accesskey="e"'
                 ],
                 'back' => [
                     'href'                => 'key=back',
                     'class'               => 'header_back',
-                    'button_callback'     => ['\con4gis\CoreBundle\Classes\Helper\DcaHelper', 'back'],
+                    'button_callback'     => ['\con4gis\CoreBundle\Classes\Helper\DcaHelper','back'],
                     'icon'                => 'back.svg',
                     'label'               => &$GLOBALS['TL_LANG']['MSC']['backBT'],
                 ],
@@ -71,7 +71,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
         ],
     'palettes' =>
         [
-        'default' => '{theme_legend}, name; {colors_legend}, maincolor, fontcolor, shadowcolor, popupMaincolor, popupFontcolor; {buttons_legend}, buttonradius, buttonsize, button_fontsize, controlLabels; {expert_legend}, popupMaxWidth, useglobal;',
+        'default' => '{theme_legend}, name; {colors_legend}, maincolor, fontcolor, shadowcolor, popupMaincolor, popupFontcolor; {buttons_legend}, buttonradius, buttonsize, button_fontsize, controlLabels; {expert_legend}, popupMaxWidth, useglobal',
         ],
     'fields' =>
         [
@@ -96,42 +96,42 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
                 'filter'                  => true,
                 'flag'                    => 1,
                 'inputType'               => 'text',
-                'eval'                    => ['mandatory'=>true, 'maxlength'=>75],
+                'eval'                    => ['mandatory'=>true,'maxlength'=>75],
                 'sql'                     => "varchar(100) NOT NULL default ''"
             ],
         'maincolor' =>
             [
                 'exclude'                 => true,
                 'inputType'               => 'text',
-                'eval'                    => array('maxlength'=>6, 'multiple'=>true, 'size'=>2, 'colorpicker'=>true, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'),
+                'eval'                    => array('maxlength'=>6,'multiple'=>true,'size'=>2,'colorpicker'=>true,'isHexColor'=>true,'decodeEntities'=>true,'tl_class'=>'w50 wizard'),
                 'sql'                     => "varchar(64) NOT NULL default ''"
             ],
         'fontcolor' =>
             [
                 'exclude'                 => true,
                 'inputType'               => 'text',
-                'eval'                    => array('maxlength'=>6, 'multiple'=>true, 'size'=>2, 'colorpicker'=>true, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'),
+                'eval'                    => array('maxlength'=>6,'multiple'=>true,'size'=>2,'colorpicker'=>true,'isHexColor'=>true,'decodeEntities'=>true,'tl_class'=>'w50 wizard'),
                 'sql'                     => "varchar(64) NOT NULL default ''"
             ],
         'shadowcolor' =>
             [
                 'exclude'                 => true,
                 'inputType'               => 'text',
-                'eval'                    => array('maxlength'=>6, 'multiple'=>true, 'size'=>2, 'colorpicker'=>true, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'),
+                'eval'                    => array('maxlength'=>6,'multiple'=>true,'size'=>2,'colorpicker'=>true,'isHexColor'=>true,'decodeEntities'=>true,'tl_class'=>'w50 wizard'),
                 'sql'                     => "varchar(64) NOT NULL default ''"
             ],
         'popupMaincolor' =>
             [
                 'exclude'                 => true,
                 'inputType'               => 'text',
-                'eval'                    => array('maxlength'=>6, 'multiple'=>true, 'size'=>2, 'colorpicker'=>true, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'),
+                'eval'                    => array('maxlength'=>6,'multiple'=>true,'size'=>2,'colorpicker'=>true,'isHexColor'=>true,'decodeEntities'=>true,'tl_class'=>'w50 wizard'),
                 'sql'                     => "varchar(64) NOT NULL default ''"
             ],
         'popupFontcolor' =>
             [
                 'exclude'                 => true,
                 'inputType'               => 'text',
-                'eval'                    => array('maxlength'=>6, 'multiple'=>true, 'size'=>2, 'colorpicker'=>true, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'),
+                'eval'                    => array('maxlength'=>6,'multiple'=>true,'size'=>2,'colorpicker'=>true,'isHexColor'=>true,'decodeEntities'=>true,'tl_class'=>'w50 wizard'),
                 'sql'                     => "varchar(64) NOT NULL default ''"
             ],
         'buttonradius' =>
@@ -139,8 +139,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
                 'exclude'                 => true,
                 'inputType'               => 'inputUnit',
                 'default'                 => '0',
-                'options'                 => ['%', 'px'],
-                'eval'                    => ['rgxp'=>'prcnt', 'tl_class'=>'long', 'mandatory'=>true],
+                'options'                 => ['%','px'],
+                'eval'                    => ['rgxp'=>'prcnt','tl_class'=>'long','mandatory'=>true],
                 'sql'                     => "varchar(100) NOT NULL default ''"
             ],
         'buttonsize' =>
@@ -149,7 +149,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
                 'inputType'               => 'inputUnit',
                 'default'                 => '36',
                 'options'                 => ['px'],
-                'eval'                    => ['tl_class'=>'long', 'mandatory'=>true],
+                'eval'                    => ['tl_class'=>'long','mandatory'=>true],
                 'sql'                     => "varchar(100) NOT NULL default 'a:2:{s:4:\"unit\";s:2:\"px\";s:5:\"value\";s:2:\"36\";}'"
             ],
         'button_fontsize' =>
@@ -158,7 +158,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
                 'inputType'               => 'inputUnit',
                 'default'                 => '18',
                 'options'                 => ['px'],
-                'eval'                    => ['tl_class'=>'long', 'mandatory'=>true],
+                'eval'                    => ['tl_class'=>'long','mandatory'=>true],
                 'sql'                     => "varchar(100) NOT NULL default 'a:2:{s:4:\"unit\";s:2:\"px\";s:5:\"value\";s:2:\"18\";}'"
             ],
         'popupMaxWidth' =>
@@ -166,8 +166,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_themes'] =
                 'exclude'                 => true,
                 'inputType'               => 'inputUnit',
                 'default'                 => '42',
-                'options'                 => ['%', 'px', 'vw'],
-                'eval'                    => ['tl_class'=>'long', 'mandatory'=>false],
+                'options'                 => ['%','px','vw'],
+                'eval'                    => ['tl_class'=>'long','mandatory'=>false],
                 'sql'                     => "varchar(100) NOT NULL default 'a:2:{s:4:\"unit\";s:1:\"%\";s:5:\"value\";s:2:\"42\";}'"
             ],
         'controlLabels' =>
@@ -263,20 +263,20 @@ class tl_c4g_map_themes extends Backend
         $image = 'bundles/con4gismaps/images/be-icons/maplayout.svg';
         $args[0] = '<div class="list_icon_new" style="background-image:url('.$image.')" data-icon="'.$image.'">&nbsp;</div>';
 
-        $maincolor = '#'.substr($args[2],0,strpos($args[2],','));
-        $mainopacity = substr($args[2],strpos($args[2],',')+1);
+        $maincolor = '#'.substr($args[2],0,strpos($args[2],''));
+        $mainopacity = substr($args[2],strpos($args[2],'')+1);
         $mainopacity = trim($mainopacity) ? ' / '.trim($mainopacity).'%' : ' / 100%';
-        $args[2] = '<div style="color:'.$maincolor.';text-shadow: 1px 1px #000000;">'.$maincolor.$mainopacity.'</div>';
+        $args[2] = '<div style="color:'.$maincolor.';text-shadow: 1px 1px #000000">'.$maincolor.$mainopacity.'</div>';
 
-        $shadowcolor = '#'.substr($args[3],0,strpos($args[3],','));
-        $shadowopacity = substr($args[3],strpos($args[3],',')+1);
+        $shadowcolor = '#'.substr($args[3],0,strpos($args[3],''));
+        $shadowopacity = substr($args[3],strpos($args[3],'')+1);
         $shadowopacity = trim($shadowopacity) ? ' / '.trim($shadowopacity).'%' : ' / 100%';
-        $args[3] = '<div style="color:'.$shadowcolor.';text-shadow: 1px 1px #000000;">'.$shadowcolor.$shadowopacity.'</div>';
+        $args[3] = '<div style="color:'.$shadowcolor.';text-shadow: 1px 1px #000000">'.$shadowcolor.$shadowopacity.'</div>';
 
-        $fontcolor = '#'.substr($args[4],0,strpos($args[4],','));
-        $fontopacity = substr($args[4],strpos($args[4],',')+1);
+        $fontcolor = '#'.substr($args[4],0,strpos($args[4],''));
+        $fontopacity = substr($args[4],strpos($args[4],'')+1);
         $fontopacity = trim($fontopacity) ? ' / '.trim($fontopacity).'%' : ' / 100%';
-        $args[4] = '<div style="color:'.$fontcolor.';text-shadow: 1px 1px #000000;">'.$fontcolor.$fontopacity.'</div>';
+        $args[4] = '<div style="color:'.$fontcolor.';text-shadow: 1px 1px #000000">'.$fontcolor.$fontopacity.'</div>';
 
         return $args;
     }

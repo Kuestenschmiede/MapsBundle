@@ -29,13 +29,13 @@ $GLOBALS['TL_DCA'][$strName] = array
             'mode'              => 2,
             'fields'            => array('name ASC'),
             'panelLayout'       => 'filter;sort,search,limit',
-            'headerFields'      => array('name', 'type'),
+            'headerFields'      => array('name','type'),
             'icon'              => 'bundles/con4giscore/images/be-icons/con4gis_blue.svg',
         ),
 
         'label' => array
         (
-            'fields'            => array('name', 'type'),
+            'fields'            => array('name','type'),
             'showColumns'       => true,
         ),
         'global_operations' => array
@@ -49,7 +49,7 @@ $GLOBALS['TL_DCA'][$strName] = array
             'back' => [
                 'href'                => 'key=back',
                 'class'               => 'header_back',
-                'button_callback'     => ['\con4gis\CoreBundle\Classes\Helper\DcaHelper', 'back'],
+                'button_callback'     => ['\con4gis\CoreBundle\Classes\Helper\DcaHelper','back'],
                 'icon'                => 'back.svg',
                 'label'               => &$GLOBALS['TL_LANG']['MSC']['backBT'],
             ],
@@ -65,7 +65,7 @@ $GLOBALS['TL_DCA'][$strName] = array
     'palettes' => array
     (
         '__selector__' => ['type'],
-        'default'   =>  '{data_legend},name,types,editor_helpurl,editor_vars;',
+        'default'   =>  '{data_legend},name,types,editor_helpurl,editor_vars',
     ),
     'fields' => array
     (
@@ -76,7 +76,7 @@ $GLOBALS['TL_DCA'][$strName] = array
             'default'           => '',
             'search'            => true,
             'inputType'         => 'text',
-            'eval'              => array('mandatory' => true, 'tl_class' => 'long'),
+            'eval'              => array('mandatory' => true,'tl_class' => 'long'),
             'sql'                     => null
         ),
         'importId' =>
@@ -89,8 +89,8 @@ $GLOBALS['TL_DCA'][$strName] = array
             'exclude'                 => true,
             'default'                 => "[]",
             'inputType'               => 'multiColumnWizard',
-            'save_callback'           => [[TlEditorConfiguration::class, 'saveTypes']],
-            'load_callback'           => [[TlEditorConfiguration::class, 'loadTypes']],
+            'save_callback'           => [[TlEditorConfiguration::class,'saveTypes']],
+            'load_callback'           => [[TlEditorConfiguration::class,'loadTypes']],
             'eval'                    => [
                 'columnsCallback'     => [$cbClass,'getTypes']
             ],
@@ -101,15 +101,15 @@ $GLOBALS['TL_DCA'][$strName] = array
             'exclude'                 => true,
             'default'                 => '',
             'inputType'               => 'text',
-            'eval'                    => array('rgxp'=>'url', 'decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'wizard'),
+            'eval'                    => array('rgxp'=>'url','decodeEntities'=>true,'maxlength'=>255,'tl_class'=>'wizard'),
             'sql'                     => null
         ),
         'editor_vars' => [
             'exclude'                 => true,
             'default'                 => "[]",
             'inputType'               => 'multiColumnWizard',
-            'save_callback'           => [[TlEditorConfiguration::class, 'saveEditorVars']],
-            'load_callback'           => [[TlEditorConfiguration::class, 'loadEditorVars']],
+            'save_callback'           => [[TlEditorConfiguration::class,'saveEditorVars']],
+            'load_callback'           => [[TlEditorConfiguration::class,'loadEditorVars']],
             'eval'                    => [
                 'columnsCallback'     => [$cbClass,'getEditorVars']
             ],
@@ -120,7 +120,7 @@ $GLOBALS['TL_DCA'][$strName] = array
             'default'                 => 0,
             'inputType'               => 'select',
             'foreignKey'              => 'tl_member_group.name',
-            'relation'                => array('type'=>'belongsToMany', 'load'=>'lazy'),
+            'relation'                => array('type'=>'belongsToMany','load'=>'lazy'),
             'eval'                    => array('tl_class'=>'clr'),
             'reference'               => &$GLOBALS['TL_LANG'][$strName]['references'],
             'sql'                     => null

@@ -22,9 +22,9 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         'dataContainer'               => DC_Table::class,
         'enableVersioning'            => true,
         'markAsCopy'                  => 'name',
-        'onload_callback'             => [['tl_c4g_map_profiles', 'updateDCA'],['tl_c4g_map_profiles', 'showInfoMessage']],
+        'onload_callback'             => [['tl_c4g_map_profiles','updateDCA'],['tl_c4g_map_profiles','showInfoMessage']],
         'onsubmit_callback'           => [
-            ['\con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator', 'purgeMapApiCache']
+            ['\con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator','purgeMapApiCache']
         ],
         'sql' =>
             [
@@ -56,12 +56,12 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                     'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
                     'href'                => 'act=select',
                     'class'               => 'header_edit_all',
-                    'attributes'          => 'onclick="Backend.getScrollOffset();" accesskey="e"'
+                    'attributes'          => 'onclick="Backend.getScrollOffset()" accesskey="e"'
                 ],
                 'back' => [
                     'href'                => 'key=back',
                     'class'               => 'header_back',
-                    'button_callback'     => ['\con4gis\CoreBundle\Classes\Helper\DcaHelper', 'back'],
+                    'button_callback'     => ['\con4gis\CoreBundle\Classes\Helper\DcaHelper','back'],
                     'icon'                => 'back.svg',
                     'label'               => &$GLOBALS['TL_LANG']['MSC']['backBT'],
                 ],
@@ -76,17 +76,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
         ],
     'palettes' =>
         [
-        '__selector__'                => ['resize_locstyles_zoom', 'mouse_nav','cluster_all','attribution','hover_popups','overpassEngine', 'cesium','starboard_filter', 'popupHandling','geopicker','consentBanner', 'userLocation', 'enableCCM19'],
-        'default'                     => '{general_legend},name,theme,mapFunctions,initial_open_comp;'.
-                                         '{navigation_legend:hide},mouse_nav,touch_nav,twoFingers,keyboard_nav;'.
-                                         '{click_legend:hide},tooltipOrientation,link_newwindow,link_open_on,hover_popups,popupHandling;'.
-                                         '{baselayer_legend:hide},baselayers, default_baselayer,dummyBaselayer,baselayerswitcher_label,baselayer_filter;'.
-                                         '{starboard_legend:hide},layerswitcher_label,starboard_filter,starboard_label,starboard_button,starboard_locstyles,starboardInvertZoomActivate,colorZoomMarker,maxZoomStarboard,openPopup,cluster_all;'.
-                                         '{geosearch_legend:hide},geosearch_headline,geosearch_engine,geosearchParams,geosearch_result_locstyle,geosearch_placeholder,geosearch_results,geosearch_zoomto,geosearch_zoombounds,geosearch_animate,geosearch_markresult,geosearch_attribution,geosearch_popup,geosearch_animate_duration,geosearch_result_duration;'.
-                                         '{editor_legend:hide},editorConfig;'.
-                                         '{routing_legend::hide},routerConfig;'.
-                                         '{information_legend:hide},attribution,scaleline,mouseposition,permalink_get_param,permalinkSaveId,permalinkWithoutGenerator,zoomlevel,infopage,label_color,resize_locstyles_zoom;'.
-                                         '{expert_legend:hide},enableLazyLoading,userLocation,overpassEngine,caching,cesium,external_elements,minZoomStarboardScope,custom_div,geopicker,filters,filterHandling,filterResetButton,be_optimize_checkboxes_limit,consentBanner,enableCCM19;'
+        '__selector__'                => ['resize_locstyles_zoom','mouse_nav','cluster_all','attribution','hover_popups','overpassEngine','cesium','starboard_filter','popupHandling','geopicker','consentBanner','userLocation','enableCCM19'],
+        'default'                     => '{general_legend},name,theme,mapFunctions,initial_open_comp;' . '{navigation_legend:hide},mouse_nav,touch_nav,twoFingers,keyboard_nav;' . '{click_legend:hide},tooltipOrientation,link_newwindow,link_open_on,hover_popups,popupHandling;' . '{baselayer_legend:hide},baselayers,default_baselayer,dummyBaselayer,baselayerswitcher_label,baselayer_filter;' . '{starboard_legend:hide},layerswitcher_label,starboard_filter,starboard_label,starboard_button,starboard_locstyles,starboardInvertZoomActivate,colorZoomMarker,maxZoomStarboard,openPopup,cluster_all;' . '{geosearch_legend:hide},geosearch_headline,geosearch_engine,geosearchParams,geosearch_result_locstyle,geosearch_placeholder,geosearch_results,geosearch_zoomto,geosearch_zoombounds,geosearch_animate,geosearch_markresult,geosearch_attribution,geosearch_popup,geosearch_animate_duration,geosearch_result_duration;' . '{editor_legend:hide},editorConfig;' . '{routing_legend:hide},routerConfig;' . '{information_legend:hide},attribution,scaleline,mouseposition,permalink_get_param,permalinkSaveId,permalinkWithoutGenerator,zoomlevel,infopage,label_color,resize_locstyles_zoom;' . '{expert_legend:hide},enableLazyLoading,userLocation,overpassEngine,caching,cesium,external_elements,minZoomStarboardScope,custom_div,geopicker,filters,filterHandling,filterResetButton,be_optimize_checkboxes_limit,consentBanner,enableCCM19'
         ],
     'subpalettes' =>
     [
@@ -128,7 +119,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'search'				  => true,
                 'exclude'                 => true,
                 'inputType'               => 'text',
-                'eval'                    => ['mandatory'=>true, 'tl_class'=>'long'],
+                'eval'                    => ['mandatory'=>true,'tl_class'=>'long'],
                 'sql'                     => "varchar(255) NOT NULL default ''"
             ],
         'theme' =>
@@ -136,13 +127,13 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'search'				  => true,
                 'exclude'                 => true,
                 'inputType'               => 'select',
-                'options_callback'        => ['tl_c4g_map_profiles', 'getAllThemes'],
-                'eval'                    => ['tl_class'=>'clr', 'includeBlankOption' => true, 'blankOptionLabel' => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['default_theme']],
+                'options_callback'        => ['tl_c4g_map_profiles','getAllThemes'],
+                'eval'                    => ['tl_class'=>'clr','includeBlankOption' => true,'blankOptionLabel' => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['default_theme']],
                 'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references'],
                 'sql'                     => "char(10) NOT NULL default ''",
                 'xlabel' => array
                 (
-                    array('tl_c4g_map_profiles', 'themesLink')
+                    array('tl_c4g_map_profiles','themesLink')
                 )
             ],
         'mapFunctions' =>
@@ -150,8 +141,8 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'exclude'                 => true,
                 'inputType'               => 'checkboxWizard',
                 'default'                 => ['zoom'],
-                'options'                 => ['zoom', 'zoomPosition','zoomHome','zoomExtent','fullscreen','print','rotate','graticule', 'layerswitcher', 'starboardscope', 'baselayerswitcher', 'geosearch', 'legend', 'measure', 'overview', 'permalink', 'routing'],
-                'eval'                    => ['multiple'=>true, 'helpwizard'=>true],
+                'options'                 => ['zoom','zoomPosition','zoomHome','zoomExtent','fullscreen','print','rotate','graticule','layerswitcher','starboardscope','baselayerswitcher','geosearch','legend','measure','overview','permalink','routing'],
+                'eval'                    => ['multiple'=>true,'helpwizard'=>true],
                 'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference'],
                 'sql'                     => "text NOT NULL"
             ],
@@ -161,7 +152,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'filter'                  => false,
                 'inputType'               => 'select',
                 'default'                 => '',
-                'options'                 => ['', 'starboard', 'search', 'baselayers','starboardscope', 'measuretools', 'legend', 'routing'],
+                'options'                 => ['','starboard','search','baselayers','starboardscope','measuretools','legend','routing'],
                 'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['initial_open_comp']['refs'],
                 'eval'                    => ['tl_class'=>'clr'],
                 'sql'                     => "varchar(30) NOT NULL default ''"
@@ -294,11 +285,11 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'exclude'                 => true,
                 'inputType'               => 'checkbox',
                 'options_callback'        => ['tl_c4g_map_profiles','getAllBaseLayers'],
-                'eval'                    => ['mandatory'=>false, 'multiple'=>true],
+                'eval'                    => ['mandatory'=>false,'multiple'=>true],
                 'sql'                     => "blob NULL",
                 'xlabel' => array
                 (
-                    array('tl_c4g_map_profiles', 'baselayersLink')
+                    array('tl_c4g_map_profiles','baselayersLink')
                 )
             ],
 
@@ -307,14 +298,14 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'exclude'                 => true,
                 'inputType'               => 'select',
                 'options_callback'        => ['tl_c4g_map_profiles','getAllBaseLayers'],
-                'eval'                    => ['mandatory'=>false, 'multiple'=>false],
+                'eval'                    => ['mandatory'=>false,'multiple'=>false],
                 'sql'                     => "blob NULL"
             ],
         'dummyBaselayer' =>
             [
                 'exclude'                 => true,
                 'inputType'               => 'fileTree',
-                'eval'                    => ['fieldType'=>'radio', 'files'=>true, 'extensions'=>'gif,jpg,jpeg,png', 'tl_class'=>'clr'],
+                'eval'                    => ['fieldType'=>'radio','files'=>true,'extensions'=>'gif,jpg,jpeg,png','tl_class'=>'clr'],
                 'sql'                     => "binary(16) NULL"
             ],
         'baselayerswitcher_label' =>
@@ -385,7 +376,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'exclude'                 => true,
                 'inputType'               => 'text',
                 'default'                 => '4975A8',
-                'eval'                    => ['maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'wizard'],
+                'eval'                    => ['maxlength'=>6,'isHexColor'=>true,'colorpicker'=>true,'decodeEntities'=>true,'tl_class'=>'wizard'],
                 'sql'                     => "varchar(6) NOT NULL default 'BADA55'"
             ],
         'maxZoomStarboard' =>
@@ -393,7 +384,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'exclude'                 => true,
                 'inputType'               => 'text',
                 'default'                 => 22,
-                'eval'                    => ['maxlength'=>22, 'rgxp' => 'digit'],
+                'eval'                    => ['maxlength'=>22,'rgxp' => 'digit'],
                 'sql'                     => "varchar(100) NOT NULL default '22'"
             ],
         'openPopup' =>
@@ -415,7 +406,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             [
                 'exclude'                 => true,
                 'inputType'               => 'text',
-                'eval'                    => ['maxlength'=>100, 'rgxp' => 'digit'],
+                'eval'                    => ['maxlength'=>100,'rgxp' => 'digit'],
                 'sql'                     => "varchar(100) NOT NULL default ''"
             ],
         'cluster_fillcolor' =>
@@ -423,7 +414,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'exclude'                 => true,
                 'inputType'               => 'text',
                 'default'                 => '4975A8',
-                'eval'                    => ['maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard', 'mandatory'=>true],
+                'eval'                    => ['maxlength'=>6,'isHexColor'=>true,'colorpicker'=>true,'decodeEntities'=>true,'tl_class'=>'w50 wizard','mandatory'=>true],
                 'sql'                     => "varchar(6) NOT NULL default '4975A8'"
             ],
         'cluster_fontcolor' =>
@@ -431,7 +422,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'exclude'                 => true,
                 'default'                 => 'ffffff',
                 'inputType'               => 'text',
-                'eval'                    => ['maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'],
+                'eval'                    => ['maxlength'=>6,'isHexColor'=>true,'colorpicker'=>true,'decodeEntities'=>true,'tl_class'=>'w50 wizard'],
                 'sql'                     => "varchar(6) NOT NULL default 'ffffff'"
             ],
         'cluster_zoom' =>
@@ -439,7 +430,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'default'                 => '17',
                 'exclude'                 => true,
                 'inputType'               => 'c4g_text',
-                'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
+                'eval'                    => ['rgxp'=>'digit','tl_class'=>'clr'],
                 'sql'                     => "int(10) unsigned NOT NULL default '17'"
             ],
         'cluster_dist_spider' =>
@@ -447,7 +438,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'default'                 => '20',
                 'exclude'                 => true,
                 'inputType'               => 'c4g_text',
-                'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
+                'eval'                    => ['rgxp'=>'digit','tl_class'=>'clr'],
                 'sql'                     => "int(10) unsigned NOT NULL default '20'"
             ],
         'cluster_scale' =>
@@ -513,7 +504,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'sql'                     => "int(11) NOT NULL default '0'",
                 'xlabel' => array
                 (
-                    array('tl_c4g_map_profiles', 'locstylesLink')
+                    array('tl_c4g_map_profiles','locstylesLink')
                 )
             ],
         'geosearch_placeholder' =>
@@ -575,7 +566,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             [
                 'inputType'         => 'text',
                 'default'           => '2000',
-                'eval'              => array('rgxp'=>'digit', 'mandatory'=>false, 'tl_class'=>'w50 clr'),
+                'eval'              => array('rgxp'=>'digit','mandatory'=>false,'tl_class'=>'w50 clr'),
                 'sql'               => "smallint(5) unsigned NOT NULL default 2000"
             ],
 
@@ -583,7 +574,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             [
                 'inputType'         => 'text',
                 'default'           => '3000',
-                'eval'              => array('rgxp'=>'digit', 'mandatory'=>false, 'tl_class'=>'w50'),
+                'eval'              => array('rgxp'=>'digit','mandatory'=>false,'tl_class'=>'w50'),
                 'sql'               => "smallint(5) unsigned NOT NULL default 3000"
             ],
 
@@ -638,7 +629,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',
-                'eval'                    => ['maxlength'=>255, 'tl_class'=>'long', 'allowHtml' => true],
+                'eval'                    => ['maxlength'=>255,'tl_class'=>'long','allowHtml' => true],
                 'sql'                     => "varchar(255) NOT NULL default ''"
             ],
         'cfg_logo_attribution' =>
@@ -702,7 +693,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'exclude'               => true,
                 'search'				=> false,
                 'inputType'				=> 'textarea',
-                'eval'                  => ['mandatory'=>false, 'rte'=>'tinyMCE', 'helpwizard'=>true],
+                'eval'                  => ['mandatory'=>false,'rte'=>'tinyMCE','helpwizard'=>true],
                 'explanation'           => 'insertTags',
                 'sql'                   => "text NULL"
             ],
@@ -711,7 +702,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'exclude'                 => true,
                 'default'                 => '',
                 'inputType'               => 'text',
-                'eval'                    => ['maxlength'=>6, 'isHexColor'=>true, 'colorpicker'=>true, 'decodeEntities'=>true, 'tl_class'=>'long wizard'],
+                'eval'                    => ['maxlength'=>6,'isHexColor'=>true,'colorpicker'=>true,'decodeEntities'=>true,'tl_class'=>'long wizard'],
                 'sql'                     => "varchar(6) NOT NULL default ''"
             ],
         'resize_locstyles_zoom' =>
@@ -727,7 +718,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'exclude'                 => true,
                 'inputType'               => 'text',
                 'default'                 => 18,
-                'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
+                'eval'                    => ['rgxp'=>'digit','tl_class'=>'clr'],
                 'sql'                     => "int(10) NOT NULL default '18'"
             ],
         'resize_scale_factor' =>
@@ -735,7 +726,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'exclude'                 => true,
                 'inputType'               => 'text',
                 'default'                 => '0.1',
-                'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
+                'eval'                    => ['rgxp'=>'digit','tl_class'=>'clr'],
                 'sql'                     => "double NOT NULL default 0.1"
             ],
         'resize_min_scale' =>
@@ -743,7 +734,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'exclude'                 => true,
                 'inputType'               => 'text',
                 'default'                 => '0.1',
-                'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
+                'eval'                    => ['rgxp'=>'digit','tl_class'=>'clr'],
                 'sql'                     => "double NOT NULL default 0.1"
             ],
         'resize_max_scale' =>
@@ -751,7 +742,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'exclude'                 => true,
                 'inputType'               => 'text',
                 'default'                 => '1.0',
-                'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
+                'eval'                    => ['rgxp'=>'digit','tl_class'=>'clr'],
                 'sql'                     => "double NOT NULL default 1"
             ],
         'overpassEngine' =>
@@ -768,7 +759,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             [
                 'exclude'                 => true,
                 'inputType'               => 'text',
-                'eval'                    => ['rgxp'=>'url', 'decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'long'],
+                'eval'                    => ['rgxp'=>'url','decodeEntities'=>true,'maxlength'=>255,'tl_class'=>'long'],
                 'sql'                     => "varchar(255) NOT NULL default ''"
             ],
         'caching' =>
@@ -809,7 +800,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'exclude'                 => true,
                 'inputType'               => 'checkbox',
                 'options'                 => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['element_type_refs'],
-                'eval'                    => ['mandatory'=>false, 'multiple'=>true],
+                'eval'                    => ['mandatory'=>false,'multiple'=>true],
                 'sql'                     => "blob NULL"
             ],
         'minZoomStarboardScope' =>
@@ -817,7 +808,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'default'                 => '0',
                 'exclude'                 => true,
                 'inputType'               => 'c4g_text',
-                'eval'                    => ['rgxp'=>'digit', 'tl_class'=>'clr'],
+                'eval'                    => ['rgxp'=>'digit','tl_class'=>'clr'],
                 'sql'                     => "int(10) unsigned NOT NULL default '0'"
             ],
         'filters' =>
@@ -825,7 +816,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'exclude'                 => true,
                 'inputType'               => 'select',
                 'options_callback'        => ["tl_c4g_map_profiles",'getFilters'],
-                'eval'                    => ['chosen' => true, 'multiple' => true],
+                'eval'                    => ['chosen' => true,'multiple' => true],
                 'sql'                     => "blob NULL"
             ],
         'filterHandling' =>
@@ -853,7 +844,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'default'                 => 'c4g_brick_geopicker_geox',
                 'exclude'                 => true,
                 'inputType'               => 'text',
-                'eval'                    => ['maxlength'=>30, 'mandatory'=>false],
+                'eval'                    => ['maxlength'=>30,'mandatory'=>false],
                 'sql'                     => "varchar(30) NOT NULL default 'c4g_brick_geopicker_geoy'"
             ],
         'geopicker_fieldy' =>
@@ -861,7 +852,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'default'                 => 'c4g_brick_geopicker_geoy',
                 'exclude'                 => true,
                 'inputType'               => 'text',
-                'eval'                    => ['maxlength'=>30, 'mandatory'=>false],
+                'eval'                    => ['maxlength'=>30,'mandatory'=>false],
                 'sql'                     => "varchar(30) NOT NULL default 'c4g_brick_geopicker_geoy'"
             ],
         'geopicker_searchdiv' =>
@@ -869,7 +860,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'default'                 => 'c4g_brick_geopicker',
                 'exclude'                 => true,
                 'inputType'               => 'text',
-                'eval'                    => ['maxlength'=>30, 'mandatory'=>false],
+                'eval'                    => ['maxlength'=>30,'mandatory'=>false],
                 'sql'                     => "varchar(30) NOT NULL default 'c4g_brick_geopicker'"
             ],
         'geopicker_attribution' =>
@@ -908,7 +899,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'exclude'                 => true,
                 'inputType'               => 'text',
                 'default'                 => '10',
-                'eval'                    => ['rgxp'=>'digit', 'submitOnChange' => true, "tl_class" => "clr m12"],
+                'eval'                    => ['rgxp'=>'digit','submitOnChange' => true,"tl_class" => "clr m12"],
                 'sql'                     => "int(10) unsigned NOT NULL default '10'"
             ],
         'router' => [
@@ -969,7 +960,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
             'options_callback'        => [\con4gis\MapsBundle\Classes\Contao\Callbacks\TlC4gRoutingConfiguration::class,'getRouterConfigs'],
             'eval'                    => ['tl_class'=>'clr','chosen' => true,'includeBlankOption'=>true],
             'sql'                     => "int(10) NOT NULL default '0'",
-            'xlabel'                  => [[\con4gis\MapsBundle\Classes\Contao\Callbacks\TlC4gRoutingConfiguration::class, 'configurationLink']]
+            'xlabel'                  => [[\con4gis\MapsBundle\Classes\Contao\Callbacks\TlC4gRoutingConfiguration::class,'configurationLink']]
         ],
         'userLocation' =>
             [
@@ -984,22 +975,22 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'exclude'                 => true,
                 'inputType'               => 'select',
                 'options_callback'        => ['tl_c4g_map_profiles','getAllLocStyles'],
-                'eval'                    => ['tl_class'=>'clr', 'chosen' => true],
+                'eval'                    => ['tl_class'=>'clr','chosen' => true],
                 'wizard' =>
                     [
-                        ['tl_c4g_map_profiles', 'editLocationStyle']
+                        ['tl_c4g_map_profiles','editLocationStyle']
                     ],
                 'sql'                     => "int(10) unsigned NOT NULL default '0'",
                 'xlabel' => array
                 (
-                    array('tl_c4g_map_profiles', 'locstylesLink')
+                    array('tl_c4g_map_profiles','locstylesLink')
                 )
             ],
         'editorConfig' => [
             'exclude'                 => true,
             'inputType'               => 'select',
-            'options_callback'        => array('\con4gis\MapsBundle\Classes\Contao\Callbacks\TlEditorConfiguration', 'getEditorProfiles'),
-            'eval'                    => array('tl_class'=>'clr', 'chosen' => true, 'includeBlankOption' => true),
+            'options_callback'        => array('\con4gis\MapsBundle\Classes\Contao\Callbacks\TlEditorConfiguration','getEditorProfiles'),
+            'eval'                    => array('tl_class'=>'clr','chosen' => true,'includeBlankOption' => true),
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
         ],
         'enableLazyLoading' => [
@@ -1101,7 +1092,7 @@ class tl_c4g_map_profiles extends Backend
             
             if ($objProfile->geosearch_results) {
                 $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['palettes']['default'] =
-                    str_replace(',geosearch_results,', ",geosearch_results,geosearch_results_headline,geosearch_result_count,",
+                    str_replace(',geosearch_results,',",geosearch_results,geosearch_results_headline,geosearch_result_count,",
                         $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['palettes']['default']);
             }
 
@@ -1128,7 +1119,7 @@ class tl_c4g_map_profiles extends Backend
 
             if (C4GVersionProvider::isInstalled('con4gis/projects')) {
                 $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['palettes']['default'] =
-                    str_replace(',external_elements', ', magnific_popup,external_elements',
+                    str_replace(',external_elements',', magnific_popup,external_elements',
                         $GLOBALS['TL_DCA']['tl_c4g_map_profiles']['palettes']['default']);
 
             }
@@ -1142,7 +1133,7 @@ class tl_c4g_map_profiles extends Backend
      */
     public function pickUrl(DC_TABLE $dc)
     {
-        return ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'/page.php?do='.\Contao\Input::get('do').'&amp;table='.$dc->table.'&amp;field='.$dc->field.'&amp;value='.str_replace(array('{{link_url::', '}}'), '', $dc->value).'" title="'.StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['pagepicker'][0]).'" onclick="Backend.getScrollOffset();Backend.openModalSelector({\'width\':765,\'title\':\''.StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['MOD']['page'][0])).'\',\'url\':this.href,\'id\':\''.$dc->field.'\',\'tag\':\'ctrl_'.$dc->field . ((\Contao\Input::get('act') == 'editAll') ? '_' . $dc->id : '').'\',\'self\':this});return false">' . Image::getHtml('pickpage.svg', $GLOBALS['TL_LANG']['MSC']['pagepicker'], 'style="vertical-align:top;cursor:pointer"') . '</a>';
+        return ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'/page.php?do='.\Contao\Input::get('do').'&amp;table='.$dc->table.'&amp;field='.$dc->field.'&amp;value='.str_replace(array('{{link_url::','}}'),'', $dc->value).'" title="'.StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['pagepicker'][0]).'" onclick="Backend.getScrollOffset();Backend.openModalSelector({\'width\':765,\'title\':\''.StringUtil::specialchars(str_replace("'","\\'", $GLOBALS['TL_LANG']['MOD']['page'][0])).'\',\'url\':this.href,\'id\':\''.$dc->field.'\',\'tag\':\'ctrl_'.$dc->field . ((\Contao\Input::get('act') == 'editAll') ? '_' . $dc->id : '').'\',\'self\':this});return false">' . Image::getHtml('pickpage.svg', $GLOBALS['TL_LANG']['MSC']['pagepicker'],'style="vertical-align:top;cursor:pointer"') . '</a>';
     }
 
     /**
@@ -1153,7 +1144,7 @@ class tl_c4g_map_profiles extends Backend
    	public function editLocationStyle(DC_TABLE $dc)
    	{
         $requestToken = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
-        return ($dc->value < 1) ? '' : ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'?do=c4g_map_locstyles&amp;act=edit&amp;id=' . $dc->value . '&amp;popup=1&amp;nb=1&amp;rt=' . $requestToken . '" title="' . sprintf(StringUtil::specialchars($GLOBALS['TL_LANG']['tl_c4g_maps']['editalias'][1]), $dc->value) . '" style="padding-left:3px" onclick="Backend.openModalIframe({\'width\':768,\'title\':\'' . StringUtil::specialchars(str_replace("'", "\\'", sprintf($GLOBALS['TL_LANG']['tl_c4g_maps']['editalias'][1], $dc->value))) . '\',\'url\':this.href});return false">' . Image::getHtml('alias.svg', $GLOBALS['TL_LANG']['tl_c4g_maps']['editalias'][0], 'style="vertical-align:top"') . '</a>';
+        return ($dc->value < 1) ? '' : ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'?do=c4g_map_locstyles&amp;act=edit&amp;id=' . $dc->value . '&amp;popup=1&amp;nb=1&amp;rt=' . $requestToken . '" title="' . sprintf(StringUtil::specialchars($GLOBALS['TL_LANG']['tl_c4g_maps']['editalias'][1]), $dc->value) . '" style="padding-left:3px" onclick="Backend.openModalIframe({\'width\':768,\'title\':\'' . StringUtil::specialchars(str_replace("'","\\'", sprintf($GLOBALS['TL_LANG']['tl_c4g_maps']['editalias'][1], $dc->value))) . '\',\'url\':this.href});return false">' . Image::getHtml('alias.svg', $GLOBALS['TL_LANG']['tl_c4g_maps']['editalias'][0],'style="vertical-align:top"') . '</a>';
    	}
 
     /**
@@ -1181,7 +1172,7 @@ class tl_c4g_map_profiles extends Backend
     public function editModule(DC_TABLE $dc)
     {
         $requestToken = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
-        return ($dc->value < 1) ? '' : ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'?do=themes&amp;table=tl_module&amp;act=edit&amp;id=' . $dc->value . '&amp;popup=1&amp;nb=1&amp;rt=' . $requestToken . '" title="' . sprintf(StringUtil::specialchars($GLOBALS['TL_LANG']['tl_content']['editalias'][1]), $dc->value) . '" onclick="Backend.openModalIframe({\'title\':\'' . StringUtil::specialchars(str_replace("'", "\\'", sprintf($GLOBALS['TL_LANG']['tl_content']['editalias'][1], $dc->value))) . '\',\'url\':this.href});return false">' . Image::getHtml('alias.svg', $GLOBALS['TL_LANG']['tl_content']['editalias'][0]) . '</a>';
+        return ($dc->value < 1) ? '' : ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'?do=themes&amp;table=tl_module&amp;act=edit&amp;id=' . $dc->value . '&amp;popup=1&amp;nb=1&amp;rt=' . $requestToken . '" title="' . sprintf(StringUtil::specialchars($GLOBALS['TL_LANG']['tl_content']['editalias'][1]), $dc->value) . '" onclick="Backend.openModalIframe({\'title\':\'' . StringUtil::specialchars(str_replace("'","\\'", sprintf($GLOBALS['TL_LANG']['tl_content']['editalias'][1], $dc->value))) . '\',\'url\':this.href});return false">' . Image::getHtml('alias.svg', $GLOBALS['TL_LANG']['tl_content']['editalias'][0]) . '</a>';
     }
 
     /**
@@ -1243,7 +1234,7 @@ class tl_c4g_map_profiles extends Backend
         }
 
         $requestToken = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
-        return ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'?do=c4g_map_baselayers&amp;table=tl_c4g_map_baselayers&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . $requestToken . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editBaselayers'][0]) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editBaselayers'][0])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
+        return ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'?do=c4g_map_baselayers&amp;table=tl_c4g_map_baselayers&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . $requestToken . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editBaselayers'][0]) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'","\\'", $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editBaselayers'][0])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
     }
 
     public function themesLink(DC_TABLE $dc)
@@ -1253,7 +1244,7 @@ class tl_c4g_map_profiles extends Backend
         }
 
         $requestToken = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
-        return ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'?do=c4g_map_themes&amp;table=tl_c4g_map_themes&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . $requestToken . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editThemes'][0]) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editThemes'][0])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
+        return ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'?do=c4g_map_themes&amp;table=tl_c4g_map_themes&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . $requestToken . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editThemes'][0]) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'","\\'", $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editThemes'][0])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
     }
 
     public function locstylesLink(DC_TABLE $dc)
@@ -1263,7 +1254,7 @@ class tl_c4g_map_profiles extends Backend
         }
 
         $requestToken = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
-        return ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'?do=c4g_map_locstyles&amp;table=tl_c4g_map_locstyles&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . $requestToken . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editLocstyles'][0]) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editLocstyles'][0])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
+        return ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'?do=c4g_map_locstyles&amp;table=tl_c4g_map_locstyles&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . $requestToken . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editLocstyles'][0]) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'","\\'", $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editLocstyles'][0])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
     }
 
     /**

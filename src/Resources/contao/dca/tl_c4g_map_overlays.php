@@ -20,7 +20,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
         'ptable'                      => 'tl_c4g_map_baselayers',
         'enableVersioning'            => true,
         'onsubmit_callback'             => [
-            [C4GMapsAutomator::class, 'purgeBaselayerApiCache']
+            [C4GMapsAutomator::class,'purgeBaselayerApiCache']
         ],
         'sql'                         =>
             [
@@ -40,7 +40,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
             'fields'                  => ['name'],
             'panelLayout'             => 'filter;sort,search,limit',
             'headerFields'            => ['name'],
-            'child_record_callback'   => [$cbClass, 'listOverlays'],
+            'child_record_callback'   => [$cbClass,'listOverlays'],
             'child_record_class'      => 'no_padding',
             'icon'                    => 'bundles/con4giscore/images/be-icons/con4gis_blue.svg',
             'markAsCopy'              => 'name',
@@ -59,7 +59,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
                 'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
                 'href'                => 'act=select',
                 'class'               => 'header_edit_all',
-                'attributes'          => 'onclick="Backend.getScrollOffset();" accesskey="e"'
+                'attributes'          => 'onclick="Backend.getScrollOffset()" accesskey="e"'
             ]
         ],
         
@@ -73,7 +73,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
             [
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_map_overlays']['toggle'],
                 'icon'                => 'visible.svg',
-                'button_callback'     => [$cbClass, 'toggleIcon']
+                'button_callback'     => [$cbClass,'toggleIcon']
             ],
             
             'show'
@@ -120,7 +120,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
             'filter'                  => true,
             'flag'                    => 1,
             'inputType'               => 'text',
-            'eval'                    => ['mandatory'=>true, 'maxlength'=>50],
+            'eval'                    => ['mandatory'=>true,'maxlength'=>50],
             'sql'                     => "varchar(100) NOT NULL default ''"
         ],
         'provider' =>
@@ -147,7 +147,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
             'exclude'                 => true,
             'filter'                  => false,
             'inputType'               => 'text',
-            'eval'                    => ['decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'long'],
+            'eval'                    => ['decodeEntities'=>true,'maxlength'=>255,'tl_class'=>'long'],
             'sql'                     => "varchar(255) NOT NULL default ''"
         ],
         'url2' =>
@@ -155,7 +155,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
             'exclude'                 => true,
             'filter'                  => false,
             'inputType'               => 'text',
-            'eval'                    => ['decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'long'],
+            'eval'                    => ['decodeEntities'=>true,'maxlength'=>255,'tl_class'=>'long'],
             'sql'                     => "varchar(255) NOT NULL default ''"
         ],
         'url3' =>
@@ -163,7 +163,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
             'exclude'                 => true,
             'filter'                  => false,
             'inputType'               => 'text',
-            'eval'                    => ['decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'long'],
+            'eval'                    => ['decodeEntities'=>true,'maxlength'=>255,'tl_class'=>'long'],
             'sql'                     => "varchar(255) NOT NULL default ''"
         ],
         'url4' =>
@@ -171,7 +171,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
             'exclude'                 => true,
             'filter'                  => false,
             'inputType'               => 'text',
-            'eval'                    => ['decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'long'],
+            'eval'                    => ['decodeEntities'=>true,'maxlength'=>255,'tl_class'=>'long'],
             'sql'                     => "varchar(255) NOT NULL default ''"
         ],
         'wms_url' =>
@@ -179,7 +179,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',
-                'eval'                    => ['maxlength'=>255, 'tl_class'=>'long', 'allowHtml' => true],
+                'eval'                    => ['maxlength'=>255,'tl_class'=>'long','allowHtml' => true],
                 'sql'                     => "varchar(255) NOT NULL default ''"
             ],
         'wms_params_layers' =>
@@ -187,7 +187,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',
-                'eval'                    => ['maxlength'=>255, 'tl_class'=>'w50', 'allowHtml' => true],
+                'eval'                    => ['maxlength'=>255,'tl_class'=>'w50','allowHtml' => true],
                 'sql'                     => "varchar(255) NOT NULL default ''"
             ],
         'wms_params_version' =>
@@ -195,7 +195,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',
-                'eval'                    => ['maxlength'=>255, 'tl_class'=>'w50', 'allowHtml' => true],
+                'eval'                    => ['maxlength'=>255,'tl_class'=>'w50','allowHtml' => true],
                 'sql'                     => "varchar(255) NOT NULL default ''"
             ],
         'wms_params_format' =>
@@ -203,7 +203,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',
-                'eval'                    => ['maxlength'=>255, 'tl_class'=>'w50', 'allowHtml' => true],
+                'eval'                    => ['maxlength'=>255,'tl_class'=>'w50','allowHtml' => true],
                 'sql'                     => "varchar(255) NOT NULL default ''"
             ],
         'wms_params_transparent' =>
@@ -211,7 +211,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
                 'exclude'                 => true,
                 'default'                 => false,
                 'inputType'               => 'checkbox',
-                'eval'                    => ['submitOnChange' => false, 'tl_class'=>'w50 m12'],
+                'eval'                    => ['submitOnChange' => false,'tl_class'=>'w50 m12'],
                 'sql'                     => "char(1) NOT NULL default ''"
             ],
         'wms_params_srs' =>
@@ -219,7 +219,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',
-                'eval'                    => ['maxlength'=>255, 'tl_class'=>'w50', 'allowHtml' => true],
+                'eval'                    => ['maxlength'=>255,'tl_class'=>'w50','allowHtml' => true],
                 'sql'                     => "varchar(255) NOT NULL default ''"
             ],
         'wms_gutter' =>
@@ -227,21 +227,21 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',
-                'eval'                    => ['maxlength'=>255, 'tl_class'=>'w50', 'allowHtml' => true],
+                'eval'                    => ['maxlength'=>255,'tl_class'=>'w50','allowHtml' => true],
                 'sql'                     => "varchar(255) NOT NULL default ''"
             ],
         'image_src' =>
             [
                 'exclude'                 => true,
                 'inputType'               => 'fileTree',
-                'eval'                    => ['fieldType'=>'radio', 'files'=>true, 'extensions'=>'gif,jpg,jpeg,png,tif,tiff', 'tl_class'=>'clr', 'mandatory'=>true,'submitOnChange' => true],
+                'eval'                    => ['fieldType'=>'radio','files'=>true,'extensions'=>'gif,jpg,jpeg,png,tif,tiff','tl_class'=>'clr','mandatory'=>true,'submitOnChange' => true],
                 'sql'                     => "binary(16) NULL"
             ],
         'geoimage_json' =>
             [
                 'exclude'                 => true,
                 'inputType'               => 'textarea',
-                'eval'                    => ['style'=>'height:120px;', 'preserveTags'=>true],
+                'eval'                    => ['style'=>'height:120px','preserveTags'=>true],
                 'sql'                     => "text NULL"
             ],
         'api_key' =>
@@ -249,7 +249,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',
-                'eval'                    => ['decodeEntities'=>true, 'maxlength'=>100, 'tl_class'=>'long', 'mandatory'=>'true'],
+                'eval'                    => ['decodeEntities'=>true,'maxlength'=>100,'tl_class'=>'long','mandatory'=>'true'],
                 'sql'                     => "varchar(100) NOT NULL default ''"
             ],
         'app_id' =>
@@ -257,7 +257,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',
-                'eval'                    => ['decodeEntities'=>true, 'maxlength'=>100, 'tl_class'=>'long', 'mandatory'=>'true'],
+                'eval'                    => ['decodeEntities'=>true,'maxlength'=>100,'tl_class'=>'long','mandatory'=>'true'],
                 'sql'                     => "varchar(100) NOT NULL default ''"
             ],
         'api_port' =>
@@ -266,7 +266,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
                 'filter'                  => false,
                 'default'                 => '8099',
                 'inputType'               => 'text',
-                'eval'                    => ['decodeEntities'=>true, 'maxlength'=>4, 'tl_class'=>'long', 'mandatory'=>'true'],
+                'eval'                    => ['decodeEntities'=>true,'maxlength'=>4,'tl_class'=>'long','mandatory'=>'true'],
                 'sql'                     => "varchar(4) NOT NULL default '8099'"
             ],
         'opacity' =>
@@ -282,7 +282,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
             'exclude'                 => true,
             'filter'                  => false,
             'inputType'               => 'text',
-            'eval'                    => ['maxlength'=>255, 'tl_class'=>'long clr', 'allowHtml' => true],
+            'eval'                    => ['maxlength'=>255,'tl_class'=>'long clr','allowHtml' => true],
             'sql'                     => "varchar(255) NOT NULL default ''"
         ],
         'infopage' =>
@@ -290,7 +290,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_overlays'] =
                 'exclude'               => true,
                 'search'				=> false,
                 'inputType'				=> 'textarea',
-                'eval'                  => ['mandatory'=>false, 'rte'=>'tinyMCE', 'helpwizard'=>true],
+                'eval'                  => ['mandatory'=>false,'rte'=>'tinyMCE','helpwizard'=>true],
                 'explanation'           => 'insertTags',
                 'sql'                   => "text NULL"
             ],

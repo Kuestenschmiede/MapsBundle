@@ -20,9 +20,9 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
         'enableVersioning'            => true,
         'markAsCopy'                  => 'name',
         'onsubmit_callback'           => [
-            [con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator::class, 'purgeBaselayerApiCache']
+            [con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator::class,'purgeBaselayerApiCache']
         ],
-        'onload_callback' => [[$cbClass, 'showInfoMessage']],
+        'onload_callback' => [[$cbClass,'showInfoMessage']],
         'sql' =>
             [
             'keys' =>
@@ -41,13 +41,13 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                 'panelLayout'             => 'search',
                 'rootPaste'               => true,
                 'showRootTrails'          => true,
-                'paste_button_callback'   => [$cbClass, 'pasteElement']
+                'paste_button_callback'   => [$cbClass,'pasteElement']
             ],
         'label' =>
             [
                 'fields'                  => ['name','display_name','minzoomlevel','maxzoomlevel'],
                 'format'                  => '<span style="color:#303E4D"><b>%s</b></span> -> %s [˅%s,˄%s]',
-                'label_callback'          => [$cbClass, 'addIcon']
+                'label_callback'          => [$cbClass,'addIcon']
             ],
         'global_operations' =>
             [
@@ -55,12 +55,12 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                 'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
                 'href'                => 'act=select',
                 'class'               => 'header_edit_all',
-                'attributes'          => 'onclick="Backend.getScrollOffset();" accesskey="e"'
+                'attributes'          => 'onclick="Backend.getScrollOffset()" accesskey="e"'
                 ],
             'back' => [
                 'href'                => 'key=back',
                 'class'               => 'header_back',
-                'button_callback'     => ['\con4gis\CoreBundle\Classes\Helper\DcaHelper', 'back'],
+                'button_callback'     => ['\con4gis\CoreBundle\Classes\Helper\DcaHelper','back'],
                 'icon'                => 'back.svg',
                 'label'               => &$GLOBALS['TL_LANG']['MSC']['backBT'],
                 ],
@@ -84,40 +84,23 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
     'palettes' =>
         [
         '__selector__'                => ['provider','osm_style','protect_baselayer','klokan_type'],
-        'default'                     => '{general_legend},name,display_name,provider,attribution,infopage,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
-                                         '{protection_legend:hide},protect_baselayer,published,consentId;',
-        'osm'                         => '{general_legend},name,display_name,provider,osm_style,attribution,infopage,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
-                                         '{protection_legend:hide},protect_baselayer,published,consentId;',
-        'opentopomap'                 => '{general_legend},name,display_name,provider,attribution,infopage,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
-                                         '{protection_legend:hide},protect_baselayer,published,consentId;',
-        'stadiaMaps'                  => '{general_legend},name,display_name,provider,stadiaMaps_style,api_key,attribution,infopage,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
-                                         '{protection_legend:hide},protect_baselayer,published,consentId;',
-        'con4gisIo'                   => '{general_legend},name,display_name,provider,con4gisIo,attribution,infopage,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
-                                         '{protection_legend:hide},protect_baselayer,published,consentId;',
-        'mapbox'                      => '{general_legend},name,display_name,provider,mapbox_type,app_id,api_key,attribution,infopage,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
-                                         '{protection_legend:hide},protect_baselayer,published,consentId;',
-        'mapz'                        => '{general_legend},name,display_name,provider,mapz_type,api_key,attribution,infopage,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
-                                         '{protection_legend:hide},protect_baselayer,published,consentId;',
-        'here'                        => '{general_legend},name,display_name,provider,here_type,app_id,api_key,attribution,infopage,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
-                                         '{protection_legend:hide},protect_baselayer,published,consentId;',
-        'thunder'                     => '{general_legend},name,display_name,provider,thunderforest_type,api_key,attribution,infopage,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
-                                         '{protection_legend:hide},protect_baselayer,published,consentId;',
-        'bing'                        => '{general_legend},name,display_name,provider,bing_style,bing_key,attribution,infopage,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
-                                         '{protection_legend:hide},protect_baselayer,published,consentId;',
-        'klokan'                      => '{general_legend},name,display_name,provider,klokan_type,url,attribution,infopage,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
-                                         '{protection_legend:hide},protect_baselayer,published,consentId;',
-        'wms'                         => '{general_legend},name,display_name,provider,wms_url,wms_params_layers,wms_params_version,wms_params_format,wms_params_transparent,wms_gutter,attribution,infopage,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
-                                         '{protection_legend:hide},protect_baselayer,published,consentId;',
-        'geoimage'                    => '{general_legend},name,display_name,provider,image_src,geoimage_json,attribution,infopage,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
-                                         '{protection_legend:hide},protect_baselayer,published,consentId;',
-        'geotiff'                     => '{general_legend},name,display_name,provider,image_src,attribution,infopage,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
-                                         '{protection_legend:hide},protect_baselayer,published,consentId;',
-        'owm'                         => '{general_legend},name,display_name,provider,app_id,api_key,attribution,infopage,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
-                                         '{protection_legend:hide},protect_baselayer,published,consentId;',
-        'group'                       => '{general_legend},name,display_name,provider,attribution,infopage,layerGroup,preview_image;'.
-                                         '{protection_legend:hide},protect_baselayer,published,consentId;',
-        'custom'                      => '{general_legend},name,display_name,provider,osm_style_url1,osm_style_url2,osm_style_url3,osm_style_url4,extend,osm_keyname,attribution,infopage,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;'.
-                                         '{protection_legend:hide},protect_baselayer,published,consentId;'
+        'default'                     => '{general_legend},name,display_name,provider,attribution,infopage,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;' . '{protection_legend:hide},protect_baselayer,published,consentId',
+        'osm'                         => '{general_legend},name,display_name,provider,osm_style,attribution,infopage,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;' . '{protection_legend:hide},protect_baselayer,published,consentId',
+        'opentopomap'                 => '{general_legend},name,display_name,provider,attribution,infopage,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;' . '{protection_legend:hide},protect_baselayer,published,consentId',
+        'stadiaMaps'                  => '{general_legend},name,display_name,provider,stadiaMaps_style,api_key,attribution,infopage,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;' . '{protection_legend:hide},protect_baselayer,published,consentId',
+        'con4gisIo'                   => '{general_legend},name,display_name,provider,con4gisIo,attribution,infopage,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;' . '{protection_legend:hide},protect_baselayer,published,consentId',
+        'mapbox'                      => '{general_legend},name,display_name,provider,mapbox_type,app_id,api_key,attribution,infopage,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;' . '{protection_legend:hide},protect_baselayer,published,consentId',
+        'mapz'                        => '{general_legend},name,display_name,provider,mapz_type,api_key,attribution,infopage,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;' . '{protection_legend:hide},protect_baselayer,published,consentId',
+        'here'                        => '{general_legend},name,display_name,provider,here_type,app_id,api_key,attribution,infopage,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;' . '{protection_legend:hide},protect_baselayer,published,consentId',
+        'thunder'                     => '{general_legend},name,display_name,provider,thunderforest_type,api_key,attribution,infopage,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;' . '{protection_legend:hide},protect_baselayer,published,consentId',
+        'bing'                        => '{general_legend},name,display_name,provider,bing_style,bing_key,attribution,infopage,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;' . '{protection_legend:hide},protect_baselayer,published,consentId',
+        'klokan'                      => '{general_legend},name,display_name,provider,klokan_type,url,attribution,infopage,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;' . '{protection_legend:hide},protect_baselayer,published,consentId',
+        'wms'                         => '{general_legend},name,display_name,provider,wms_url,wms_params_layers,wms_params_version,wms_params_format,wms_params_transparent,wms_gutter,attribution,infopage,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;' . '{protection_legend:hide},protect_baselayer,published,consentId',
+        'geoimage'                    => '{general_legend},name,display_name,provider,image_src,geoimage_json,attribution,infopage,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;' . '{protection_legend:hide},protect_baselayer,published,consentId',
+        'geotiff'                     => '{general_legend},name,display_name,provider,image_src,attribution,infopage,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;' . '{protection_legend:hide},protect_baselayer,published,consentId',
+        'owm'                         => '{general_legend},name,display_name,provider,app_id,api_key,attribution,infopage,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;' . '{protection_legend:hide},protect_baselayer,published,consentId',
+        'group'                       => '{general_legend},name,display_name,provider,attribution,infopage,layerGroup,preview_image;' . '{protection_legend:hide},protect_baselayer,published,consentId',
+        'custom'                      => '{general_legend},name,display_name,provider,osm_style_url1,osm_style_url2,osm_style_url3,osm_style_url4,extend,osm_keyname,attribution,infopage,minzoomlevel,maxzoomlevel,preview_image;{cesium_legend:hide},cesium;' . '{protection_legend:hide},protect_baselayer,published,consentId'
         ],
     'subpalettes' =>
         [
@@ -173,7 +156,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             'filter'                  => true,
             'flag'                    => 1,
             'inputType'               => 'text',
-            'eval'                    => ['mandatory'=>true, 'maxlength'=>254, 'tl_class'=>'w50'],
+            'eval'                    => ['mandatory'=>true,'maxlength'=>254,'tl_class'=>'w50'],
             'sql'                     => "varchar(254) NOT NULL default ''"
             ],
         'display_name' =>
@@ -181,7 +164,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             'exclude'                 => true,
             'search'                  => true,
             'inputType'               => 'text',
-            'eval'                    => ['maxlength'=>254, 'tl_class'=>'w50'],
+            'eval'                    => ['maxlength'=>254,'tl_class'=>'w50'],
             'sql'                     => "varchar(254) NOT NULL default ''"
             ],
         'provider' =>
@@ -207,7 +190,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                 'group' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_group'],
                 'custom' => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_custom'],
             ],
-            'eval'                    => ['submitOnChange'=>true, 'tl_class'=>'clr'],
+            'eval'                    => ['submitOnChange'=>true,'tl_class'=>'clr'],
             'sql'                     => "varchar(10) NOT NULL default ''"
             ],
         'con4gisIo' =>
@@ -215,7 +198,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'select',
-                'options_callback'        => [$cbClass, 'getCon4gisIoBaselayers'],
+                'options_callback'        => [$cbClass,'getCon4gisIoBaselayers'],
                 'sql'                     => "int NOT NULL default 0"
             ],
         'osm_style' =>
@@ -228,7 +211,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                     'Mapnik'          => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm_mapnik'],
                     'German'          => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm_german']
                 ],
-                'eval'                    => ['submitOnChange'=>true, 'tl_class'=>'clr'],
+                'eval'                    => ['submitOnChange'=>true,'tl_class'=>'clr'],
                 'sql'                     => "varchar(30) NOT NULL default ''"
             ],
         'bing_style' =>
@@ -248,7 +231,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',
-                'eval'                    => ['decodeEntities'=>true, 'maxlength'=>100, 'tl_class'=>'long', 'mandatory'=>'true'],
+                'eval'                    => ['decodeEntities'=>true,'maxlength'=>100,'tl_class'=>'long','mandatory'=>'true'],
                 'sql'                     => "varchar(100) NOT NULL default ''"
             ],
         'here_type' =>
@@ -337,7 +320,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                     'Terrain'         => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm_terrain'],
                     'Watercolor'      => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_osm_watercolor'],
                 ],
-                'eval'                    => ['submitOnChange'=>true, 'tl_class'=>'clr'],
+                'eval'                    => ['submitOnChange'=>true,'tl_class'=>'clr'],
                 'sql'                     => "varchar(30) NOT NULL default ''"
             ],
         'stadiaMaps_style' =>
@@ -356,7 +339,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                     'stamen_watercolor'   => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stadiaMaps_watercolor'],
                     'osm_bright'          => &$GLOBALS['TL_LANG']['tl_c4g_map_baselayers']['provider_stadiaMaps_osmBright'],
                 ],
-                'eval'                    => ['submitOnChange'=>true, 'tl_class'=>'clr'],
+                'eval'                    => ['submitOnChange'=>true,'tl_class'=>'clr'],
                 'sql'                     => "varchar(30) NOT NULL default ''"
             ],
         'thunderforest_type' =>
@@ -384,7 +367,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',
-                'eval'                    => ['maxlength'=>255, 'tl_class'=>'long', 'allowHtml' => true],
+                'eval'                    => ['maxlength'=>255,'tl_class'=>'long','allowHtml' => true],
                 'sql'                     => "varchar(255) NOT NULL default ''"
             ],
         'wms_params_layers' =>
@@ -392,7 +375,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',
-                'eval'                    => ['maxlength'=>255, 'tl_class'=>'w50', 'allowHtml' => true],
+                'eval'                    => ['maxlength'=>255,'tl_class'=>'w50','allowHtml' => true],
                 'sql'                     => "varchar(255) NOT NULL default ''"
             ],
         'wms_params_version' =>
@@ -400,7 +383,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',
-                'eval'                    => ['maxlength'=>255, 'tl_class'=>'w50', 'allowHtml' => true],
+                'eval'                    => ['maxlength'=>255,'tl_class'=>'w50','allowHtml' => true],
                 'sql'                     => "varchar(255) NOT NULL default ''"
             ],
         'wms_params_format' =>
@@ -408,7 +391,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',
-                'eval'                    => ['maxlength'=>255, 'tl_class'=>'w50', 'allowHtml' => true],
+                'eval'                    => ['maxlength'=>255,'tl_class'=>'w50','allowHtml' => true],
                 'sql'                     => "varchar(255) NOT NULL default ''"
             ],
         'wms_params_transparent' =>
@@ -416,7 +399,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                 'exclude'                 => true,
                 'default'                 => false,
                 'inputType'               => 'checkbox',
-                'eval'                    => ['submitOnChange' => false, 'tl_class'=>'w50 m12'],
+                'eval'                    => ['submitOnChange' => false,'tl_class'=>'w50 m12'],
                 'sql'                     => "char(1) NOT NULL default ''"
             ],
         'wms_params_srs' =>
@@ -424,7 +407,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',
-                'eval'                    => ['maxlength'=>255, 'tl_class'=>'w50', 'allowHtml' => true],
+                'eval'                    => ['maxlength'=>255,'tl_class'=>'w50','allowHtml' => true],
                 'sql'                     => "varchar(255) NOT NULL default ''"
             ],
         'wms_gutter' =>
@@ -432,21 +415,21 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',
-                'eval'                    => ['maxlength'=>255, 'tl_class'=>'w50', 'allowHtml' => true],
+                'eval'                    => ['maxlength'=>255,'tl_class'=>'w50','allowHtml' => true],
                 'sql'                     => "varchar(255) NOT NULL default ''"
             ],
         'image_src' =>
             [
                 'exclude'                 => true,
                 'inputType'               => 'fileTree',
-                'eval'                    => ['fieldType'=>'radio', 'files'=>true, 'extensions'=>'gif,jpg,jpeg,png,tif,tiff', 'tl_class'=>'clr', 'mandatory'=>true,'submitOnChange' => true],
+                'eval'                    => ['fieldType'=>'radio','files'=>true,'extensions'=>'gif,jpg,jpeg,png,tif,tiff','tl_class'=>'clr','mandatory'=>true,'submitOnChange' => true],
                 'sql'                     => "binary(16) NULL"
             ],
         'geoimage_json' =>
             [
                 'exclude'                 => true,
                 'inputType'               => 'textarea',
-                'eval'                    => ['style'=>'height:120px;', 'preserveTags'=>true],
+                'eval'                    => ['style'=>'height:120px','preserveTags'=>true],
                 'sql'                     => "text NULL"
             ],
         'layerGroup' =>
@@ -464,7 +447,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             'exclude'                 => true,
             'filter'                  => false,
             'inputType'               => 'text',
-            'eval'                    => ['decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'long'],
+            'eval'                    => ['decodeEntities'=>true,'maxlength'=>255,'tl_class'=>'long'],
             'sql'                     => "varchar(255) NOT NULL default ''"
             ],
         'osm_style_url2' =>
@@ -472,7 +455,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             'exclude'                 => true,
             'filter'                  => false,
             'inputType'               => 'text',
-            'eval'                    => ['decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'long'],
+            'eval'                    => ['decodeEntities'=>true,'maxlength'=>255,'tl_class'=>'long'],
             'sql'                     => "varchar(255) NOT NULL default ''"
             ],
         'osm_style_url3' =>
@@ -480,7 +463,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             'exclude'                 => true,
             'filter'                  => false,
             'inputType'               => 'text',
-            'eval'                    => ['decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'long'],
+            'eval'                    => ['decodeEntities'=>true,'maxlength'=>255,'tl_class'=>'long'],
             'sql'                     => "varchar(255) NOT NULL default ''"
             ],
         'osm_style_url4' =>
@@ -488,7 +471,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             'exclude'                 => true,
             'filter'                  => false,
             'inputType'               => 'text',
-            'eval'                    => ['decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'long'],
+            'eval'                    => ['decodeEntities'=>true,'maxlength'=>255,'tl_class'=>'long'],
             'sql'                     => "varchar(255) NOT NULL default ''"
             ],
         'extend' =>
@@ -496,7 +479,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
             'exclude'                 => true,
             'filter'                  => false,
             'inputType'               => 'text',
-            'eval'                    => ['decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'long'],
+            'eval'                    => ['decodeEntities'=>true,'maxlength'=>255,'tl_class'=>'long'],
             'sql'                     => "varchar(255) NOT NULL default ''"
             ],
         'osm_keyname' =>
@@ -512,7 +495,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',
-                'eval'                    => ['decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'long'],
+                'eval'                    => ['decodeEntities'=>true,'maxlength'=>255,'tl_class'=>'long'],
                 'sql'                     => "varchar(255) NOT NULL default ''"
             ],
         'api_key' =>
@@ -520,7 +503,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',
-                'eval'                    => ['decodeEntities'=>true, 'maxlength'=>100, 'tl_class'=>'long', 'mandatory'=>'true'],
+                'eval'                    => ['decodeEntities'=>true,'maxlength'=>100,'tl_class'=>'long','mandatory'=>'true'],
                 'sql'                     => "varchar(100) NOT NULL default ''"
             ],
 
@@ -529,7 +512,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',
-                'eval'                    => ['decodeEntities'=>true, 'maxlength'=>100, 'tl_class'=>'long', 'mandatory'=>'true'],
+                'eval'                    => ['decodeEntities'=>true,'maxlength'=>100,'tl_class'=>'long','mandatory'=>'true'],
                 'sql'                     => "varchar(100) NOT NULL default ''"
             ],
         'attribution' =>
@@ -537,7 +520,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                 'exclude'                 => true,
                 'filter'                  => false,
                 'inputType'               => 'text',
-                'eval'                    => ['maxlength'=>255, 'tl_class'=>'long clr', 'allowHtml' => true],
+                'eval'                    => ['maxlength'=>255,'tl_class'=>'long clr','allowHtml' => true],
                 'sql'                     => "varchar(255) NOT NULL default ''"
             ],
         'infopage' =>
@@ -545,7 +528,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                 'exclude'               => true,
                 'search'				=> false,
                 'inputType'				=> 'textarea',
-                'eval'                  => ['mandatory'=>false, 'rte'=>'tinyMCE', 'helpwizard'=>true],
+                'eval'                  => ['mandatory'=>false,'rte'=>'tinyMCE','helpwizard'=>true],
                 'explanation'           => 'insertTags',
                 'sql'                   => "text NULL"
             ],
@@ -555,7 +538,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                 'filter'                  => false,
                 'inputType'               => 'text',
                 'default'                 => '0',
-                'eval'                    => ['tl_class'=>'w50', 'rgxp'=>'digit'],
+                'eval'                    => ['tl_class'=>'w50','rgxp'=>'digit'],
                 'sql'                     => "int(10) NOT NULL default '0'"
             ],
         'maxzoomlevel' =>
@@ -564,14 +547,14 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                 'filter'                  => false,
                 'inputType'               => 'text',
                 'default'                 => '19',
-                'eval'                    => ['tl_class'=>'w50', 'rgxp'=>'digit'],
+                'eval'                    => ['tl_class'=>'w50','rgxp'=>'digit'],
                 'sql'                     => "int(10) NOT NULL default '19'"
             ],
         'preview_image' =>
             [
                 'exclude'                 => true,
                 'inputType'               => 'fileTree',
-                'eval'                    => ['fieldType'=>'radio', 'files'=>true, 'extensions'=>'gif,jpg,jpeg,png', 'tl_class'=>'clr', 'mandatory'=>false,'submitOnChange' => true],
+                'eval'                    => ['fieldType'=>'radio','files'=>true,'extensions'=>'gif,jpg,jpeg,png','tl_class'=>'clr','mandatory'=>false,'submitOnChange' => true],
                 'sql'                     => "binary(16) NULL"
             ],
         'cesium' =>
@@ -595,7 +578,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_baselayers'] =
                 'exclude'                 => true,
                 'inputType'               => 'checkbox',
                 'foreignKey'              => 'tl_member_group.name',
-                'eval'                    => ['mandatory'=>false, 'multiple'=>true],
+                'eval'                    => ['mandatory'=>false,'multiple'=>true],
                 'sql'                     => "blob NULL"
             ],
         'published' =>

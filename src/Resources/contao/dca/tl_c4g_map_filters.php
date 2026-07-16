@@ -16,7 +16,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_filters'] =
                 'dataContainer'               => DC_Table::class,
                 'enableVersioning'            => true,
                 'markAsCopy'                  => 'name',
-                'onload_callback' => [['tl_c4g_map_filters', 'showInfoMessage']],
+                'onload_callback' => [['tl_c4g_map_filters','showInfoMessage']],
                 'sql'                         =>
                     [
                         'keys' =>
@@ -37,7 +37,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_filters'] =
                 'label' =>
                     [
                         'fields'                  => ['icon','name'],
-                        'label_callback'          => ['tl_c4g_map_filters', 'addIcon'],
+                        'label_callback'          => ['tl_c4g_map_filters','addIcon'],
                         'showColumns'             => true
                     ],
                 'global_operations' =>
@@ -46,12 +46,12 @@ $GLOBALS['TL_DCA']['tl_c4g_map_filters'] =
                             'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
                             'href'                => 'act=select',
                             'class'               => 'header_edit_all',
-                            'attributes'          => 'onclick="Backend.getScrollOffset();" accesskey="e"'
+                            'attributes'          => 'onclick="Backend.getScrollOffset()" accesskey="e"'
                         ],
                         'back' => [
                             'href'                => 'key=back',
                             'class'               => 'header_back',
-                            'button_callback'     => ['\con4gis\CoreBundle\Classes\Helper\DcaHelper', 'back'],
+                            'button_callback'     => ['\con4gis\CoreBundle\Classes\Helper\DcaHelper','back'],
                             'icon'                => 'back.svg',
                             'label'               => &$GLOBALS['TL_LANG']['MSC']['backBT'],
                         ],
@@ -67,7 +67,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_filters'] =
         'palettes' =>
             [
                 '__selector__'                => [],
-                'default'                     => '{general_legend},name,filters;'
+                'default'                     => '{general_legend},name,filters'
             ],
         'subpalettes' =>
             [
@@ -92,7 +92,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_filters'] =
                     [
                         'exclude'                 => true,
                         'inputType'               => 'text',
-                        'eval'                    => ['mandatory'=>true, 'maxlength'=>30, 'tl_class'=>'clr'],
+                        'eval'                    => ['mandatory'=>true,'maxlength'=>30,'tl_class'=>'clr'],
                         'sql'                     => "varchar(255) NOT NULL default ''"
                     ],
                 'filters' =>
