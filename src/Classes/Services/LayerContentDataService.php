@@ -64,10 +64,11 @@ class LayerContentDataService extends Frontend
         $minY = explode(',',explode(';',$extent)[0])[1];
         $maxX = explode(',',explode(';',$extent)[1])[0];
         $maxY = explode(',',explode(';',$extent)[1])[1];
-        $andbewhereclause = $objLayer->tab_whereclause ? ' AND ' . htmlspecialchars_decode($objLayer->tab_whereclause) : '';
+        $andbewhereclause = $objLayer->tab_whereclause ? htmlspecialchars_decode($objLayer->tab_whereclause) : '';
         $onClause = $objLayer->tabJoinclause ? ' ' . htmlspecialchars_decode($objLayer->tabJoinclause) : '';
+        $where = [];
         if ($objConfig->geox && $objConfig->geoy) {
-            $sqlLoc = " WHERE ".$objConfig->geox.">".$minX." AND ".$objConfig->geox."<".$maxX." AND ".$objConfig->geoy.">".$minY." AND ".$objConfig->geoy."<".$maxY;
+            $where[] = $objConfig->geox.">".$minX." AND ".$objConfig->geox."<".$maxX." AND ".$objConfig->geoy.">".$minY." AND ".$objConfig->geoy."<".$maxY;
             $sqlSelect = $objConfig->tableSource.".". $objConfig->geox." AS geox,".$objConfig->tableSource.".".$objConfig->geoy." AS geoy";
         } else {
             $sqlSelect = $objConfig->tableSource.".". $objConfig->geolocation. " AS geolocation";
@@ -78,22 +79,23 @@ class LayerContentDataService extends Frontend
         $sqlSelect = $objConfig->tooltip ? $sqlSelect . ", ". $objConfig->tableSource."." . $objConfig->tooltip . " AS tooltip" : $sqlSelect;
         $sqlSelect .= $this->addPopupFields($objConfig);
         
+        if ($andbewhereclause) {
+            $where[] = $andbewhereclause;
+        }
+
         if ($objLayer->tab_pid && $objConfig->ptableField) {
             $pTableFields = StringUtil::deserialize($objConfig->ptableField, true);
-            if (count($pTableFields) === 1) {
-                $whereParent = " AND " . $pTableFields[0] . " = " . $objLayer->tab_pid;
-            } else if (count($pTableFields) === 0) {
-                $whereParent = "";
-            } else {
-                // multiple pid fields
-                $whereParent = "";
-                foreach ($pTableFields as $pTableField) {
-                    $whereParent .= " AND " . $pTableField . " = " . $objLayer->tab_pid;
-                }
+            foreach ($pTableFields as $pTableField) {
+                $where[] = $pTableField . " = " . $objLayer->tab_pid;
             }
         }
 
-        $strQuery = "SELECT ".$objConfig->tableSource.".id,". $sqlSelect ." FROM ".$objConfig->tableSource . $onClause . $sqlLoc . $andbewhereclause . $whereParent;
+        $strWhere = "";
+        if (!empty($where)) {
+            $strWhere = " WHERE " . implode(" AND ", $where);
+        }
+
+        $strQuery = "SELECT ".$objConfig->tableSource.".id,". $sqlSelect ." FROM ".$objConfig->tableSource . $onClause . $strWhere;
         $connectionParams = $objConfig->customDB ?[
             'dbDatabase' => $objConfig->customDB
         ] : [];
