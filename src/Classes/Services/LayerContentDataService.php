@@ -11,6 +11,7 @@ namespace con4gis\MapsBundle\Classes\Services;
 
 
 use con4gis\CoreBundle\Classes\C4GUtils;
+use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapTablesModel;
 use Contao\Config;
@@ -106,12 +107,28 @@ class LayerContentDataService extends Frontend
             $arrResult['popup'] = $this->getPopup($objConfig, $arrResult);
             $arrCoords = explode(",", $arrResult['geolocation']);
             if ($arrResult['geolocation']) {
-                $arrResult['geox'] = mb_convert_encoding($arrCoords[0], 'UTF-8', mb_detect_encoding($arrCoords[0]));
-                $arrResult['geoy'] = mb_convert_encoding($arrCoords[1], 'UTF-8', mb_detect_encoding($arrCoords[1]));
+                if ($objConfig->dataType == 3) {
+                    // WKT
+                    try {
+                        $geometry = \geoPHP::load($arrResult['geolocation'], 'wkt');
+                        $points = $geometry->asArray();
+                        if ($geometry->getGeomType() === "Point") {
+                            $arrResult['geox'] = $points[1];
+                            $arrResult['geoy'] = $points[0];
+                        } else {
+                            C4gLogModel::addLogEntry("maps", "Asynchrones Laden von WKT-Daten, die andere Geometrien als Punkte beinhalten, wird derzeit nicht unterstützt.");
+                        }
+                    } catch (\Throwable $e) {
+                        C4gLogModel::addLogEntry("maps", "Fehler beim Auslesen von WKT Daten: " . $e->getMessage());
+                    }
+                } else {
+                    $arrResult['geox'] = mb_convert_encoding($arrCoords[0], 'UTF-8', mb_detect_encoding($arrCoords[0]));
+                    $arrResult['geoy'] = mb_convert_encoding($arrCoords[1], 'UTF-8', mb_detect_encoding($arrCoords[1]));
+                }
             }
             foreach ($arrResult as $idx => $value) {
                 // hotfix
-                if (!is_array($value)) {
+                if (is_string($value)) {
                     $arrResult[$idx] = mb_convert_encoding($value, 'UTF-8', mb_detect_encoding($value));
                 }
                 if (Validator::isBinaryUuid($value)) {
