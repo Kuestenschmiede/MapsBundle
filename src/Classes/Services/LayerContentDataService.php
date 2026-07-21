@@ -316,7 +316,12 @@ class LayerContentDataService extends Frontend
                 foreach ($popupElements as $key => $value) {
                     // try to load other strings as columns
                     try {
-                        $popupContent .= $arrElement[$value] . "<br>";
+                        if (str_contains($arrElement[$value], "{{")) {
+                            $popupContent .= System::getContainer()->get('contao.insert_tag.parser')->replace($arrElement[$value]);
+                            $popupContent .= "<br>";
+                        } else {
+                            $popupContent .= $arrElement[$value] . "<br>";
+                        }
                     } catch(\Throwable $exception) {
                         // other stuff put in as text
                         $popupContent .= $value . ' ';
@@ -356,7 +361,12 @@ class LayerContentDataService extends Frontend
                     $addFieldsStr .= ", " .$config->tableSource."." . $arrElem[0] . " AS " . $arrElem[0];
                 }
             }
+        } else if ($config->popupSelection) {
+            $popupString = $config->popupSelection;
+
+            $addFieldsStr = ", " . $popupString;
         }
+
         return $addFieldsStr;
     }
 
