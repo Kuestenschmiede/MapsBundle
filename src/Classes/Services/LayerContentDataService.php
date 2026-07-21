@@ -113,8 +113,8 @@ class LayerContentDataService extends Frontend
                         $geometry = \geoPHP::load($arrResult['geolocation'], 'wkt');
                         $points = $geometry->asArray();
                         if ($geometry->getGeomType() === "Point") {
-                            $arrResult['geox'] = $points[1];
-                            $arrResult['geoy'] = $points[0];
+                            $arrResult['geox'] = $points[0];
+                            $arrResult['geoy'] = $points[1];
                         } else {
                             C4gLogModel::addLogEntry("maps", "Asynchrones Laden von WKT-Daten, die andere Geometrien als Punkte beinhalten, wird derzeit nicht unterstützt.");
                         }
