@@ -31,7 +31,8 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
         'markAsCopy'                  => 'name',
         'onload_callback'             => [[$cbClass,'updateDCA'], [$cbClass,'showInfoMessage']],
         'onsubmit_callback'             => [
-            [C4GMapsAutomator::class,'purgeLayerApiCache']
+            [C4GMapsAutomator::class,'purgeLayerApiCache'],
+            [$cbClass, 'sendPushNotification']
         ],
         'sql'                         =>
             [
@@ -101,19 +102,19 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
         [
         '__selector__'                => ['location_type','media_type','tab_source','show_locations','enablePopup','popup_extend','protect_element','use_specialprofile','cluster_locations','split_geojson','c4gioType'],
 
-        'map'                         => '{general_legend},name,location_type;' . '{map_legend},width,height,margin,show_locations,center_geox,center_geoy,center_rotation,zoom,geolocation,restrict_area;' . '{profile_legend},profile,profile_mobile,use_specialprofile',
+        'map'                         => '{general_legend},name,location_type;' . '{map_legend},width,height,margin,show_locations,center_geox,center_geoy,center_rotation,zoom,geolocation,restrict_area;' . '{audiotour_legend:hide},proximity_radius,proximity_autoplay,proximity_notification,proximity_vibrate,tour_offline_cache,pwa_subscription_types,pwa_push_on_publish;' . '{profile_legend},profile,profile_mobile,use_specialprofile',
 
         'none'                        => '{general_legend},name,location_type;' . '{location_legend},data_layername,initial_opened,exemptFromRealFilter,exemptFromFilter,filterByBaseLayer,hide_child,data_hidelayer,hideInStarboard,addZoom,cssClass;' . '{protection_legend:hide},protect_element;' . '{publish_legend:hide},published,publishStart,publishStop;' . '{expert_legend:hide},be_optimize_checkboxes_limit',
 
-        'single'                      => '{general_legend},name,location_type;' . '{location_legend},data_layername,initial_opened,exemptFromRealFilter,exemptFromFilter,filterByBaseLayer,hide_child,data_hidelayer,hideInStarboard,addZoom,loc_geox,loc_geoy,locstyle,zIndex,loc_only_in_parent,loc_label,tooltip,tooltip_length,enablePopup,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations,hover_location,hide_when_in_tab,cssClass;' . '{protection_legend:hide},protect_element;' . '{publish_legend:hide},published,publishStart,publishStop;' . '{expert_legend:hide},excludeFromSingleLayer,be_optimize_checkboxes_limit',
+        'single'                      => '{general_legend},name,location_type;' . '{location_legend},data_layername,initial_opened,exemptFromRealFilter,exemptFromFilter,filterByBaseLayer,hide_child,data_hidelayer,hideInStarboard,addZoom,loc_geox,loc_geoy,locstyle,zIndex,loc_only_in_parent,loc_label,tooltip,tooltip_length,enablePopup,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations,hover_location,hide_when_in_tab,cssClass;' . '{audiotour_legend:hide},proximity_radius,proximity_autoplay,proximity_notification,proximity_vibrate,tour_offline_cache;' . '{protection_legend:hide},protect_element;' . '{publish_legend:hide},published,publishStart,publishStop;' . '{expert_legend:hide},excludeFromSingleLayer,be_optimize_checkboxes_limit',
 
-        'table'                       => '{general_legend},name,location_type;' . '{location_legend},data_layername,hide_child,initial_opened,exemptFromRealFilter,exemptFromFilter,filterByBaseLayer,data_hidelayer,hideInStarboard,addZoom,tab_source,tab_pid,tab_pid1,tab_labeldisplay,tab_tooltipdisplay,tab_directlink,tab_force_target_blank,tab_whereclause,tabJoinclause,tab_orderby,tab_filter_alias,routing_to,popup_share_button,locstyle,zIndex,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,cluster_locations,async_content,zoom_locations,hover_location,hide_when_in_tab,cssClass;' . '{protection_legend:hide},protect_element;' . '{publish_legend:hide},published,publishStart,publishStop;' . '{expert_legend:hide},excludeFromSingleLayer,be_optimize_checkboxes_limit',
+        'table'                       => '{general_legend},name,location_type;' . '{location_legend},data_layername,hide_child,initial_opened,exemptFromRealFilter,exemptFromFilter,filterByBaseLayer,data_hidelayer,hideInStarboard,addZoom,tab_source,tab_pid,tab_pid1,tab_labeldisplay,tab_tooltipdisplay,tab_directlink,tab_force_target_blank,tab_whereclause,tabJoinclause,tab_orderby,tab_filter_alias,routing_to,popup_share_button,locstyle,zIndex,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,cluster_locations,async_content,zoom_locations,hover_location,hide_when_in_tab,cssClass;' . '{audiotour_legend:hide},proximity_radius,proximity_autoplay,proximity_notification,proximity_vibrate,tour_offline_cache;' . '{protection_legend:hide},protect_element;' . '{publish_legend:hide},published,publishStart,publishStop;' . '{expert_legend:hide},excludeFromSingleLayer,be_optimize_checkboxes_limit',
 
-        'gpx'                         => '{general_legend},name,location_type;' . '{location_legend},data_layername,hide_child,initial_opened,exemptFromRealFilter,exemptFromFilter,filterByBaseLayer,data_hidelayer,hideInStarboard,addZoom,data_file,data_url,locstyle,zIndex,loc_label,tooltip,tooltip_length,enablePopup,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations,hover_location,hide_when_in_tab,cssClass;' . '{protection_legend:hide},protect_element;' . '{publish_legend:hide},published,publishStart,publishStop;' . '{expert_legend:hide},excludeFromSingleLayer,be_optimize_checkboxes_limit',
+        'gpx'                         => '{general_legend},name,location_type;' . '{location_legend},data_layername,hide_child,initial_opened,exemptFromRealFilter,exemptFromFilter,filterByBaseLayer,data_hidelayer,hideInStarboard,addZoom,data_file,data_url,locstyle,zIndex,loc_label,tooltip,tooltip_length,enablePopup,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations,hover_location,hide_when_in_tab,cssClass;' . '{audiotour_legend:hide},proximity_radius,proximity_autoplay,proximity_notification,proximity_vibrate,tour_offline_cache;' . '{protection_legend:hide},protect_element;' . '{publish_legend:hide},published,publishStart,publishStop;' . '{expert_legend:hide},excludeFromSingleLayer,be_optimize_checkboxes_limit',
 
-        'kml'                         => '{general_legend},name,location_type;' . '{location_legend},data_layername,hide_child,initial_opened,exemptFromRealFilter,exemptFromFilter,filterByBaseLayer,data_hidelayer,hideInStarboard,addZoom,data_file,data_url,loc_label,tooltip,tooltip_length,enablePopup,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations,hover_location,hide_when_in_tab,cssClass;' . '{protection_legend:hide},protect_element;' . '{publish_legend:hide},published,publishStart,publishStop;' . '{expert_legend:hide},excludeFromSingleLayer,be_optimize_checkboxes_limit',
+        'kml'                         => '{general_legend},name,location_type;' . '{location_legend},data_layername,hide_child,initial_opened,exemptFromRealFilter,exemptFromFilter,filterByBaseLayer,data_hidelayer,hideInStarboard,addZoom,data_file,data_url,loc_label,tooltip,tooltip_length,enablePopup,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations,hover_location,hide_when_in_tab,cssClass;' . '{audiotour_legend:hide},proximity_radius,proximity_autoplay,proximity_notification,proximity_vibrate,tour_offline_cache;' . '{protection_legend:hide},protect_element;' . '{publish_legend:hide},published,publishStart,publishStop;' . '{expert_legend:hide},excludeFromSingleLayer,be_optimize_checkboxes_limit',
 
-        'geojson'                     => '{general_legend},name,location_type;' . '{location_legend},data_layername,hide_child,initial_opened,exemptFromRealFilter,exemptFromFilter,filterByBaseLayer,data_hidelayer,hideInStarboard,addZoom,data_file,split_geojson,data_content,data_projection,locstyleGeoJson,locstyle,zIndex,loc_label,tooltip,tooltip_length,enablePopup,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations,hover_location,hide_when_in_tab,cssClass;' . '{protection_legend:hide},protect_element;' . '{publish_legend:hide},published,publishStart,publishStop;' . '{expert_legend:hide},excludeFromSingleLayer,be_optimize_checkboxes_limit',
+        'geojson'                     => '{general_legend},name,location_type;' . '{location_legend},data_layername,hide_child,initial_opened,exemptFromRealFilter,exemptFromFilter,filterByBaseLayer,data_hidelayer,hideInStarboard,addZoom,data_file,split_geojson,data_content,data_projection,locstyleGeoJson,locstyle,zIndex,loc_label,tooltip,tooltip_length,enablePopup,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations,hover_location,hide_when_in_tab,cssClass;' . '{audiotour_legend:hide},proximity_radius,proximity_autoplay,proximity_notification,proximity_vibrate,tour_offline_cache;' . '{protection_legend:hide},protect_element;' . '{publish_legend:hide},published,publishStart,publishStop;' . '{expert_legend:hide},excludeFromSingleLayer,be_optimize_checkboxes_limit',
 
         'osm'                         => '{general_legend},name,location_type;' . '{location_legend},data_layername,hide_child,initial_opened,exemptFromRealFilter,exemptFromFilter,filterByBaseLayer,data_hidelayer,hideInStarboard,addZoom,data_file,data_url,data_forcenodes,locstyle,zIndex,loc_label,tooltip,tooltip_length,enablePopup,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,cluster_locations,zoom_locations,hover_location,hide_when_in_tab,cssClass;' . '{protection_legend:hide},protect_element;' . '{publish_legend:hide},published,publishStart,publishStop;' . '{expert_legend:hide},excludeFromSingleLayer,be_optimize_checkboxes_limit',
 
@@ -126,11 +127,11 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
 
         'startab'                     => '{general_legend},name,location_type;' . '{location_legend},data_layername,hide_child,initial_opened,exemptFromRealFilter,exemptFromFilter,filterByBaseLayer,data_hidelayer,hideInStarboard,addZoom,awesomeicon;' . '{protection_legend:hide},protect_element;' . '{publish_legend:hide},published,publishStart,publishStop;' . '{expert_legend:hide},be_optimize_checkboxes_limit',
 
-        'media'                       => '{general_legend},name,location_type,media_type;' . '{location_legend},data_layername,initial_opened,exemptFromRealFilter,exemptFromFilter,filterByBaseLayer,hide_child,data_hidelayer,hideInStarboard,addZoom,loc_geox,loc_geoy,locstyle,zIndex,loc_only_in_parent,loc_label,tooltip,tooltip_length,enablePopup,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations,hover_location,hide_when_in_tab,cssClass;' . '{protection_legend:hide},protect_element;' . '{publish_legend:hide},published,publishStart,publishStop;' . '{expert_legend:hide},excludeFromSingleLayer,be_optimize_checkboxes_limit',
+        'media'                       => '{general_legend},name,location_type,media_type;' . '{location_legend},data_layername,initial_opened,exemptFromRealFilter,exemptFromFilter,filterByBaseLayer,hide_child,data_hidelayer,hideInStarboard,addZoom,loc_geox,loc_geoy,locstyle,zIndex,loc_only_in_parent,loc_label,tooltip,tooltip_length,enablePopup,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations,hover_location,hide_when_in_tab,cssClass;' . '{audiotour_legend:hide},proximity_radius,proximity_autoplay,proximity_notification,proximity_vibrate,tour_offline_cache,pwa_subscription_types,pwa_push_on_publish;' . '{protection_legend:hide},protect_element;' . '{publish_legend:hide},published,publishStart,publishStop;' . '{expert_legend:hide},excludeFromSingleLayer,be_optimize_checkboxes_limit',
 
-        'image'                       => '{general_legend},name,location_type;' . '{image_legend},singleSRC,data_folder,image_lightbox;' . '{location_legend},data_layername,initial_opened,exemptFromRealFilter,exemptFromFilter,filterByBaseLayer,hide_child,data_hidelayer,hideInStarboard,addZoom,loc_geox,loc_geoy,locstyle,zIndex,loc_only_in_parent,loc_label,tooltip,tooltip_length,enablePopup,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations,hover_location,hide_when_in_tab,cssClass;' . '{protection_legend:hide},protect_element;' . '{publish_legend:hide},published,publishStart,publishStop;' . '{expert_legend:hide},excludeFromSingleLayer,be_optimize_checkboxes_limit',
+        'image'                       => '{general_legend},name,location_type;' . '{image_legend},singleSRC,data_folder,image_lightbox;' . '{location_legend},data_layername,initial_opened,exemptFromRealFilter,exemptFromFilter,filterByBaseLayer,hide_child,data_hidelayer,hideInStarboard,addZoom,loc_geox,loc_geoy,locstyle,zIndex,loc_only_in_parent,loc_label,tooltip,tooltip_length,enablePopup,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations,hover_location,hide_when_in_tab,cssClass;' . '{audiotour_legend:hide},proximity_radius,proximity_autoplay,proximity_notification,proximity_vibrate,tour_offline_cache,pwa_subscription_types,pwa_push_on_publish;' . '{protection_legend:hide},protect_element;' . '{publish_legend:hide},published,publishStart,publishStop;' . '{expert_legend:hide},excludeFromSingleLayer,be_optimize_checkboxes_limit',
 
-        'folder'                      => '{general_legend},name,location_type;' . '{location_legend},data_layername,hide_child,initial_opened,data_hidelayer,hideInStarboard,addZoom,data_folder,image_lightbox,locstyle,zIndex,loc_label,tooltip,tooltip_length,enablePopup,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,hide_when_in_tab,cssClass;' . '{protection_legend:hide},protect_element;' . '{publish_legend:hide},published,publishStart,publishStop;' . '{expert_legend:hide},be_optimize_checkboxes_limit',
+        'folder'                      => '{general_legend},name,location_type;' . '{location_legend},data_layername,hide_child,initial_opened,data_hidelayer,hideInStarboard,addZoom,data_folder,image_lightbox,locstyle,zIndex,loc_label,tooltip,tooltip_length,enablePopup,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,hide_when_in_tab,cssClass;' . '{audiotour_legend:hide},proximity_radius,proximity_autoplay,proximity_notification,proximity_vibrate,tour_offline_cache,pwa_subscription_types,pwa_push_on_publish;' . '{protection_legend:hide},protect_element;' . '{publish_legend:hide},published,publishStart,publishStop;' . '{expert_legend:hide},be_optimize_checkboxes_limit',
         ],
     'subpalettes' =>
         [
@@ -743,6 +744,62 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
                 'default'                 => false,
                 'inputType'               => 'checkbox',
                 'eval'                    => ['tl_class'=>'w50 m12'],
+                'sql'                     => "char(1) NOT NULL default ''"
+            ],
+        'proximity_radius' =>
+            [
+                'exclude'                 => true,
+                'default'                 => 20,
+                'inputType'               => 'text',
+                'eval'                    => ['rgxp' => 'digit', 'tl_class' => 'w50'],
+                'sql'                     => "int(10) unsigned NOT NULL default '20'"
+            ],
+        'proximity_autoplay' =>
+            [
+                'exclude'                 => true,
+                'default'                 => '',
+                'inputType'               => 'checkbox',
+                'eval'                    => ['tl_class' => 'w50 m12'],
+                'sql'                     => "char(1) NOT NULL default ''"
+            ],
+        'proximity_notification' =>
+            [
+                'exclude'                 => true,
+                'default'                 => '1',
+                'inputType'               => 'checkbox',
+                'eval'                    => ['tl_class' => 'w50 m12'],
+                'sql'                     => "char(1) NOT NULL default '1'"
+            ],
+        'proximity_vibrate' =>
+            [
+                'exclude'                 => true,
+                'default'                 => '1',
+                'inputType'               => 'checkbox',
+                'eval'                    => ['tl_class' => 'w50 m12'],
+                'sql'                     => "char(1) NOT NULL default '1'"
+            ],
+        'tour_offline_cache' =>
+            [
+                'exclude'                 => true,
+                'default'                 => '',
+                'inputType'               => 'checkbox',
+                'eval'                    => ['tl_class' => 'w50 m12'],
+                'sql'                     => "char(1) NOT NULL default ''"
+            ],
+        'pwa_subscription_types' =>
+            [
+                'exclude'                 => true,
+                'inputType'               => 'select',
+                'options_callback'        => class_exists('con4gis\PwaBundle\Classes\Callbacks\PushNotificationCallback') ? ['con4gis\PwaBundle\Classes\Callbacks\PushNotificationCallback', 'getSubscriptionTypes'] : null,
+                'eval'                    => ['multiple' => true, 'chosen' => true, 'tl_class' => 'w50'],
+                'sql'                     => "blob NULL"
+            ],
+        'pwa_push_on_publish' =>
+            [
+                'exclude'                 => true,
+                'default'                 => '',
+                'inputType'               => 'checkbox',
+                'eval'                    => ['tl_class' => 'w50 m12'],
                 'sql'                     => "char(1) NOT NULL default ''"
             ],
         'data_content' =>

@@ -12,6 +12,8 @@ import {C4gBaselayerController} from "./c4g-baselayer-controller";
 import {BetterLayerController} from "./c4g-layer-controller";
 import {C4gLocationStyleController} from "./c4g-locationstyle-controller";
 import {C4gPopupController} from "./c4g-popup-controller";
+import {C4gProximityTracker} from "./c4g-proximity-tracker";
+import {C4gAudiotourPlayer} from "./c4g-audiotour-player";
 import {c4gLightbox} from "./c4g-lightbox";
 import {utils} from "./c4g-maps-utils";
 import {cssConstants} from "./c4g-maps-constant";
@@ -95,6 +97,13 @@ export class MapProxy {
     this.layerController.loadLayers();
     this.locationStyleController = new C4gLocationStyleController(this);
     this.popupController = new C4gPopupController(this);
+    this.proximityTracker = new C4gProximityTracker(this);
+    this.audiotourPlayer = new C4gAudiotourPlayer(this);
+    if (this.options.mapController && this.options.mapController.data) {
+      if (this.options.mapController.data.geolocation || this.options.mapController.data.proximity_radius) {
+        this.proximityTracker.start();
+      }
+    }
 
     //TODO check this, nearly the same as below
     map.on('change:view', function () {

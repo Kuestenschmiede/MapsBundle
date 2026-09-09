@@ -88,6 +88,14 @@ class LayerService
         }
 
         $this->arrConfig['countAll'] = sizeof($arrLayers);
+        $objMap = C4gMapsModel::findByPk($intParentId);
+        if ($objMap) {
+            $this->arrConfig['proximity_radius'] = ($objMap->proximity_radius !== null && $objMap->proximity_radius !== '') ? (int)$objMap->proximity_radius : 20;
+            $this->arrConfig['proximity_autoplay'] = (bool)$objMap->proximity_autoplay;
+            $this->arrConfig['proximity_notification'] = ($objMap->proximity_notification !== null && $objMap->proximity_notification !== '') ? (bool)$objMap->proximity_notification : true;
+            $this->arrConfig['proximity_vibrate'] = ($objMap->proximity_vibrate !== null && $objMap->proximity_vibrate !== '') ? (bool)$objMap->proximity_vibrate : true;
+            $this->arrConfig['tour_offline_cache'] = (bool)$objMap->tour_offline_cache;
+        }
         $return = [
             'config' => $this->arrConfig,
             'layer' => $arrLayers,
@@ -365,6 +373,11 @@ class LayerService
         $arrLayerData['initial_opened'] = $objLayer->initial_opened;
         $arrLayerData['zIndex'] = $objLayer->zIndex;
         $arrLayerData['cssClass'] = $objLayer->cssClass;
+        $arrLayerData['proximity_radius'] = ($objLayer->proximity_radius !== null && $objLayer->proximity_radius !== '') ? (int)$objLayer->proximity_radius : 20;
+        $arrLayerData['proximity_autoplay'] = (bool)$objLayer->proximity_autoplay;
+        $arrLayerData['proximity_notification'] = ($objLayer->proximity_notification !== null && $objLayer->proximity_notification !== '') ? (bool)$objLayer->proximity_notification : true;
+        $arrLayerData['proximity_vibrate'] = ($objLayer->proximity_vibrate !== null && $objLayer->proximity_vibrate !== '') ? (bool)$objLayer->proximity_vibrate : true;
+        $arrLayerData['tour_offline_cache'] = (bool)$objLayer->tour_offline_cache;
 
         if ($objLayer->cluster_locations) {
             $arrLayerData['cluster'] = [

@@ -222,7 +222,9 @@ class LayerContentService
         if ($objLayer->media_type === 'audio' && $objLayer->map_audio_src) {
             $objFile = FilesModel::findByUuid($objLayer->map_audio_src);
             if ($objFile) {
-                $data['properties']['map_audio_src'] = $objFile->path;
+                $audioWebPath = '/' . ltrim($objFile->path, '/');
+                $data['properties']['map_audio_src'] = $audioWebPath;
+                $data['properties']['audio_src'] = $audioWebPath;
                 if (!isset($data['properties']['popup']) || !trim($data['properties']['popup']['content'])) {
                     $data['properties']['popup']['content'] = ' ';
                     $data['properties']['popup']['async'] = false;
@@ -231,7 +233,9 @@ class LayerContentService
         } elseif ($objLayer->media_type === 'video' && $objLayer->map_video_src) {
             $objFile = FilesModel::findByUuid($objLayer->map_video_src);
             if ($objFile) {
-                $data['properties']['map_video_src'] = $objFile->path;
+                $videoWebPath = '/' . ltrim($objFile->path, '/');
+                $data['properties']['map_video_src'] = $videoWebPath;
+                $data['properties']['video_src'] = $videoWebPath;
                 if (!isset($data['properties']['popup']) || !trim($data['properties']['popup']['content'])) {
                     $data['properties']['popup']['content'] = ' ';
                     $data['properties']['popup']['async'] = false;
@@ -302,6 +306,11 @@ class LayerContentService
                     'datetime' => $datetime,
                     'camera' => $camera,
                     'image_lightbox' => (bool)$objLayer->image_lightbox,
+                    'proximity_radius' => ($objLayer->proximity_radius !== null && $objLayer->proximity_radius !== '') ? (int)$objLayer->proximity_radius : null,
+                    'proximity_autoplay' => (bool)$objLayer->proximity_autoplay,
+                    'proximity_notification' => ($objLayer->proximity_notification !== null && $objLayer->proximity_notification !== '') ? (bool)$objLayer->proximity_notification : true,
+                    'proximity_vibrate' => ($objLayer->proximity_vibrate !== null && $objLayer->proximity_vibrate !== '') ? (bool)$objLayer->proximity_vibrate : true,
+                    'tour_offline_cache' => (bool)$objLayer->tour_offline_cache,
                     'tooltip' => Utils::replaceInsertTags($objLayer->tooltip ?: $title, $lang),
                     'tooltip_length' => $objLayer->tooltip_length,
                     'label' => Utils::replaceInsertTags($objLayer->loc_label ?: '', $lang),
@@ -1325,6 +1334,11 @@ class LayerContentService
                         'locstyle' => $objLayer->locstyle,
                         'locationStyle' => $objLayer->locstyle,
                         'image_lightbox' => (bool) $objLayer->image_lightbox,
+                        'proximity_radius' => ($objLayer->proximity_radius !== null && $objLayer->proximity_radius !== '') ? (int)$objLayer->proximity_radius : null,
+                        'proximity_autoplay' => (bool)$objLayer->proximity_autoplay,
+                        'proximity_notification' => ($objLayer->proximity_notification !== null && $objLayer->proximity_notification !== '') ? (bool)$objLayer->proximity_notification : true,
+                        'proximity_vibrate' => ($objLayer->proximity_vibrate !== null && $objLayer->proximity_vibrate !== '') ? (bool)$objLayer->proximity_vibrate : true,
+                        'tour_offline_cache' => (bool)$objLayer->tour_offline_cache,
                         'cssClass' => $objLayer->cssClass,
                     ],
                 ];
@@ -1335,6 +1349,24 @@ class LayerContentService
                         $imgWebPath = '/' . ltrim($objFile->path, '/');
                         $arrGeoJson['properties']['img'] = $imgWebPath;
                         $arrGeoJson['properties']['imageSrc'] = $imgWebPath;
+                    }
+                }
+
+                if ($objLayer->map_audio_src) {
+                    $objFile = FilesModel::findByUuid($objLayer->map_audio_src);
+                    if ($objFile) {
+                        $audioWebPath = '/' . ltrim($objFile->path, '/');
+                        $arrGeoJson['properties']['map_audio_src'] = $audioWebPath;
+                        $arrGeoJson['properties']['audio_src'] = $audioWebPath;
+                    }
+                }
+
+                if ($objLayer->map_video_src) {
+                    $objFile = FilesModel::findByUuid($objLayer->map_video_src);
+                    if ($objFile) {
+                        $videoWebPath = '/' . ltrim($objFile->path, '/');
+                        $arrGeoJson['properties']['map_video_src'] = $videoWebPath;
+                        $arrGeoJson['properties']['video_src'] = $videoWebPath;
                     }
                 }
 

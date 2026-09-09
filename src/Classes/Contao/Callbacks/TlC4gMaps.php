@@ -901,4 +901,40 @@ class TlC4gMaps extends Backend
         return $varValue;
     }
 
+    /**
+     * Sends push notification if con4gis/pwa is installed and configured on tour publish.
+     *
+     * @param DC_TABLE $dc
+     */
+    public function sendPushNotification(DC_TABLE $dc)
+    {
+        if (!class_exists('con4gis\PwaBundle\Classes\Events\PushNotificationEvent')) {
+            return;
+        }
+
+        $activeRecord = $dc->activeRecord;
+        if (!$activeRecord || !$activeRecord->published || !$activeRecord->pwa_push_on_publish) {
+            return;
+        }
+
+        $subscriptionTypes = StringUtil::deserialize($activeRecord->pwa_subscription_types, true);
+        if (empty($subscriptionTypes)) {
+            return;
+        }
+
+        try {
+            $event = new \con4gis\PwaBundle\Classes\Events\PushNotificationEvent();
+            $event->setSubscriptionTypes($subscriptionTypes);
+            $event->setTitle($activeRecord->name ?: 'Hörwanderung');
+            $event->setMessage($activeRecord->tooltip ?: 'Neue oder aktualisierte Station / Tour verfügbar.');
+            if ($activeRecord->loc_linkurl) {
+                $event->setClickUrl($activeRecord->loc_linkurl);
+            }
+            System::getContainer()->get('event_dispatcher')->dispatch($event, $event::NAME);
+            \Contao\Message::addInfo('Push-Benachrichtigung für die Hörwanderung wurde versendet.');
+        } catch (\Throwable $e) {
+            // ignore or log
+        }
+    }
+
 }
