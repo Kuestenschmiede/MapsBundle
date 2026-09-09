@@ -128,6 +128,8 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
 
         'media'                       => '{general_legend},name,location_type,media_type;' . '{location_legend},data_layername,initial_opened,exemptFromRealFilter,exemptFromFilter,filterByBaseLayer,hide_child,data_hidelayer,hideInStarboard,addZoom,loc_geox,loc_geoy,locstyle,zIndex,loc_only_in_parent,loc_label,tooltip,tooltip_length,enablePopup,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations,hover_location,hide_when_in_tab,cssClass;' . '{protection_legend:hide},protect_element;' . '{publish_legend:hide},published,publishStart,publishStop;' . '{expert_legend:hide},excludeFromSingleLayer,be_optimize_checkboxes_limit',
 
+        'image'                       => '{general_legend},name,location_type;' . '{image_legend},singleSRC,data_folder;' . '{location_legend},data_layername,initial_opened,exemptFromRealFilter,exemptFromFilter,filterByBaseLayer,hide_child,data_hidelayer,hideInStarboard,addZoom,loc_geox,loc_geoy,locstyle,zIndex,loc_only_in_parent,loc_label,tooltip,tooltip_length,enablePopup,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,zoom_locations,hover_location,hide_when_in_tab,cssClass;' . '{protection_legend:hide},protect_element;' . '{publish_legend:hide},published,publishStart,publishStop;' . '{expert_legend:hide},excludeFromSingleLayer,be_optimize_checkboxes_limit',
+
         'folder'                      => '{general_legend},name,location_type;' . '{location_legend},data_layername,hide_child,initial_opened,data_hidelayer,hideInStarboard,addZoom,data_folder,locstyle,zIndex,loc_label,tooltip,tooltip_length,enablePopup,loc_linkurl,loc_onclick_zoomto,loc_minzoom,loc_maxzoom,hide_when_in_tab,cssClass;' . '{protection_legend:hide},protect_element;' . '{publish_legend:hide},published,publishStart,publishStop;' . '{expert_legend:hide},be_optimize_checkboxes_limit',
         ],
     'subpalettes' =>
@@ -1011,6 +1013,7 @@ $GLOBALS['TL_DCA']['tl_c4g_maps'] =
             [
                 'inputType'               => 'fileTree',
                 'eval'                    => array('fieldType'=>'radio','filesOnly'=>true,'extensions'=>'%contao.image.valid_extensions%','mandatory'=>false),
+                'save_callback'           => [[$cbClass, 'extractImageCoordinates']],
                 'sql'                     => "binary(16) NULL"
             ],
         'size' =>

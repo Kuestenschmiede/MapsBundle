@@ -24,6 +24,7 @@ export class C4gLocationStyle {
     this.label     = locStyleArr['label'];
     this.minzoom   = locStyleArr['minzoom'];
     this.maxzoom   = locStyleArr['maxzoom'];
+    this.photoStyles = {};
     this.fnStyleFunction = locStyleArr['style_function_js'];
     if (this.fnStyleFunction && typeof this.fnStyleFunction === "string") {
       this.fnStyleFunction = this.fnStyleFunction.replace(/ol.Style./gi, "window.olStyle.");
@@ -152,10 +153,23 @@ export class C4gLocationStyle {
       }
 
 
-      // check if image has to be resized
-      if (imageStyle && newScale !== 0.0 && imageStyle.setScale) {
-        imageStyle.setScale(newScale);
+      // check if image has to be resized or if it is a dynamic photo
+      let currentImageStyle = imageStyle;
+      if (styleData.styletype === 'photo') {
+        let featImg = (feature && typeof feature.get === 'function') ? (feature.get('img') || feature.get('imageSrc')) : null;
+        let photoSrc = featImg || styleData.icon_src;
+        if (photoSrc) {
+          let kind = styleData.photoKind === 'round' ? 'circle' : (styleData.photoKind || 'default');
+          let crop = styleData.photo_crop === '0' || styleData.photo_crop === false ? false : true;
+          let shadow = (styleData.photo_shadow == '1' || styleData.photo_shadow === true || styleData.photo_shadow === 'true' || styleData.photo_shadow === 5) ? 5 : (styleData.photo_shadow === '0' || styleData.photo_shadow === false || styleData.photo_shadow === 0 ? 0 : 5);
+          let radius = parseFloat(styleData.radius && (styleData.radius.value || styleData.radius) ? (styleData.radius.value || styleData.radius) : 20, 10);
+          let opacity = styleData.icon_opacity ? (parseFloat(styleData.icon_opacity.value || styleData.icon_opacity, 10) / 100) : 1;
+          currentImageStyle = self.createPhotoIconStyle(photoSrc, kind, crop, shadow, radius, strokeStyle, opacity, newScale);
+        }
+      } else if (currentImageStyle && newScale !== 0.0 && currentImageStyle.setScale) {
+        currentImageStyle.setScale(newScale);
       }
+
       // check if label should be displayed
       let showLabelForZoom = false;
       let labelMinZoom = parseInt(self.locStyleArr.label_minzoom, 10);
@@ -172,7 +186,7 @@ export class C4gLocationStyle {
         }
         stylesArray.push(
           new Style({
-            image: imageStyle,
+            image: currentImageStyle,
             text: textStyle,
             stroke: strokeStyle,
             fill: fillStyle,
@@ -182,7 +196,7 @@ export class C4gLocationStyle {
       } else {
         stylesArray.push(
           new Style({
-            image: imageStyle,
+            image: currentImageStyle,
             stroke: strokeStyle,
             fill: fillStyle
           })
@@ -345,16 +359,12 @@ export class C4gLocationStyle {
 
         break;
       case 'photo' :
-        imageStyle = new ol_style_Photo({
-          kind: styleData.photoKind,
-          crop: true,
-          opacity: parseFloat(styleData.icon_opacity.value, 10) / 100,
-          radius: parseFloat(styleData.radius.value,10),
-          shadow: true,
-          stroke: strokeStyle,
-          src: styleData.icon_src
-        });
-
+        let kind = styleData.photoKind === 'round' ? 'circle' : (styleData.photoKind || 'default');
+        let crop = styleData.photo_crop === '0' || styleData.photo_crop === false ? false : true;
+        let shadow = (styleData.photo_shadow == '1' || styleData.photo_shadow === true || styleData.photo_shadow === 'true' || styleData.photo_shadow === 5) ? 5 : (styleData.photo_shadow === '0' || styleData.photo_shadow === false || styleData.photo_shadow === 0 ? 0 : 5);
+        let radius = parseFloat(styleData.radius && (styleData.radius.value || styleData.radius) ? (styleData.radius.value || styleData.radius) : 20, 10);
+        let opacity = styleData.icon_opacity ? (parseFloat(styleData.icon_opacity.value || styleData.icon_opacity, 10) / 100) : 1;
+        imageStyle = this.createPhotoIconStyle(styleData.icon_src || '', kind, crop, shadow, radius, strokeStyle, opacity, 1);
         break;
       case 'point':
         imageStyle = new CircleStyle({
@@ -371,6 +381,229 @@ export class C4gLocationStyle {
         });
     }
     return imageStyle;
+  }
+
+  createPhotoIconStyle(photoSrc, kind, crop, shadow, radius, strokeStyle, opacity, scale) {
+    const self = this;
+    if (!self.photoStyles) {
+      self.photoStyles = {};
+    }
+    if (!self.photoImageCache) {
+      self.photoImageCache = {};
+    }
+
+    let strokeWidth = 0;
+    let strokeColor = '#ffffff';
+    if (strokeStyle) {
+      if (typeof strokeStyle.getWidth === 'function') {
+        strokeWidth = strokeStyle.getWidth() || 0;
+      }
+      if (typeof strokeStyle.getColor === 'function') {
+        let col = strokeStyle.getColor();
+        if (col) {
+          strokeColor = typeof col === 'string' ? col : (Array.isArray(col) ? 'rgba(' + col.join(',') + ')' : col);
+        }
+      }
+    }
+    if (strokeWidth === 0 && self.locStyleArr && self.locStyleArr.strokewidth) {
+      strokeWidth = parseInt(self.locStyleArr.strokewidth.value || self.locStyleArr.strokewidth, 10) || 0;
+    }
+    if (!strokeWidth) {
+      strokeWidth = 3;
+    }
+    if (kind === 'folio') {
+      strokeWidth += 6;
+    }
+
+    let cacheKey = (photoSrc || '') + '_' + kind + '_' + (crop ? '1' : '0') + '_' + shadow + '_' + radius + '_' + strokeWidth + '_' + strokeColor + '_' + opacity;
+
+    let imgObj = photoSrc ? self.photoImageCache[photoSrc] : null;
+    let isLoaded = imgObj && imgObj.complete && imgObj.naturalWidth > 0;
+
+    if (!isLoaded && photoSrc) {
+      if (!imgObj) {
+        imgObj = new Image();
+        imgObj.crossOrigin = 'anonymous';
+        imgObj.src = photoSrc;
+        self.photoImageCache[photoSrc] = imgObj;
+        imgObj.onload = function() {
+          for (let key in self.photoStyles) {
+            if (key.startsWith(photoSrc + '_')) {
+              delete self.photoStyles[key];
+            }
+          }
+          if (self.controller && self.controller.mapController && self.controller.mapController.map) {
+            self.controller.mapController.map.render();
+          }
+        };
+        imgObj.onerror = function() {
+          console.warn('Could not load photo from ' + photoSrc);
+        };
+      }
+    }
+
+    if (self.photoStyles[cacheKey]) {
+      let cachedIcon = self.photoStyles[cacheKey];
+      if (scale && scale !== 0.0 && cachedIcon.setScale) {
+        cachedIcon.setScale(scale);
+      }
+      return cachedIcon;
+    }
+
+    let sanchor = (kind === 'anchored' ? 8 : 0);
+    let shadowVal = Number(shadow) || 0;
+    let innerSize = 2 * radius;
+    let width = innerSize + 2 * strokeWidth + sanchor + shadowVal;
+    let height = innerSize + 2 * strokeWidth + sanchor + shadowVal;
+
+    let canvas = document.createElement('canvas');
+    canvas.width = Math.ceil(width);
+    canvas.height = Math.ceil(height);
+    let ctx = canvas.getContext('2d');
+
+    if (shadowVal > 0) {
+      ctx.shadowColor = 'rgba(0,0,0,0.5)';
+      ctx.shadowBlur = shadowVal;
+      ctx.shadowOffsetX = shadowVal / 2;
+      ctx.shadowOffsetY = shadowVal / 2;
+    }
+
+    ctx.fillStyle = strokeColor || '#ffffff';
+    ctx.beginPath();
+
+    let drawRoundRect = function(context, x, y, w, h, r) {
+      if (!r) {
+        context.rect(x, y, w, h);
+      } else {
+        if (w < 2 * r) r = w / 2;
+        if (h < 2 * r) r = h / 2;
+        context.moveTo(x + r, y);
+        context.arcTo(x + w, y, x + w, y + h, r);
+        context.arcTo(x + w, y + h, x, y + h, r);
+        context.arcTo(x, y + h, x, y, r);
+        context.arcTo(x, y, x + w, y, r);
+      }
+    };
+
+    switch (kind) {
+      case 'square':
+        ctx.rect(0, 0, width - shadowVal, height - shadowVal);
+        break;
+      case 'circle':
+      case 'round':
+        ctx.arc(radius + strokeWidth, radius + strokeWidth, radius + strokeWidth, 0, 2 * Math.PI, false);
+        break;
+      case 'folio': {
+        let offset = 6;
+        let w = width - shadowVal - 2 * offset;
+        let a = Math.atan(6 / w);
+        ctx.save();
+        ctx.rotate(-a);
+        ctx.translate(-6, 2);
+        ctx.beginPath();
+        ctx.rect(offset, offset, w, w);
+        ctx.fill();
+        ctx.restore();
+        ctx.save();
+        ctx.translate(6, -1);
+        ctx.rotate(a);
+        ctx.beginPath();
+        ctx.rect(offset, offset, w, w);
+        ctx.fill();
+        ctx.restore();
+        ctx.beginPath();
+        ctx.rect(offset, offset, w, w);
+        break;
+      }
+      case 'anchored':
+        drawRoundRect(ctx, sanchor / 2, 0, width - sanchor - shadowVal, height - sanchor - shadowVal, strokeWidth || 3);
+        ctx.moveTo(width / 2 - sanchor / 2 - shadowVal / 2 - 6, height - sanchor - shadowVal);
+        ctx.lineTo(width / 2 - shadowVal / 2, height - shadowVal);
+        ctx.lineTo(width / 2 + sanchor / 2 - shadowVal / 2 + 6, height - sanchor - shadowVal);
+        break;
+      default:
+        drawRoundRect(ctx, 0, 0, width - shadowVal, height - shadowVal, strokeWidth || 3);
+        break;
+    }
+    ctx.closePath();
+    ctx.fill();
+
+    // Reset shadow
+    ctx.shadowColor = 'transparent';
+    ctx.shadowBlur = 0;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 0;
+
+    // Draw the inner photo / content
+    ctx.save();
+    if (kind === 'circle' || kind === 'round') {
+      ctx.beginPath();
+      ctx.arc(radius + strokeWidth, radius + strokeWidth, radius, 0, 2 * Math.PI, false);
+      ctx.clip();
+    } else if (kind === 'anchored') {
+      ctx.beginPath();
+      drawRoundRect(ctx, sanchor / 2 + strokeWidth, strokeWidth, innerSize, innerSize, 0);
+      ctx.clip();
+    } else if (kind === 'folio') {
+      let offset = 6;
+      let sWidth = strokeWidth - offset;
+      ctx.beginPath();
+      ctx.rect(sWidth + offset, sWidth + offset, innerSize, innerSize);
+      ctx.clip();
+    } else {
+      ctx.beginPath();
+      ctx.rect(strokeWidth, strokeWidth, innerSize, innerSize);
+      ctx.clip();
+    }
+
+    if (isLoaded) {
+      let s, sx, sy, sw, sh, dx, dy, dw, dh;
+      if (crop) {
+        s = Math.min(imgObj.naturalWidth / innerSize, imgObj.naturalHeight / innerSize);
+        sw = sh = s * innerSize;
+        sx = (imgObj.naturalWidth - sw) / 2;
+        sy = (imgObj.naturalHeight - sh) / 2;
+        dx = strokeWidth + (kind === 'anchored' ? sanchor / 2 : 0);
+        dy = strokeWidth;
+        dw = dh = innerSize;
+      } else {
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, width, height);
+        s = Math.min(innerSize / imgObj.naturalWidth, innerSize / imgObj.naturalHeight);
+        sw = imgObj.naturalWidth;
+        sh = imgObj.naturalHeight;
+        dw = s * sw;
+        dh = s * sh;
+        dx = strokeWidth + (kind === 'anchored' ? sanchor / 2 : 0) + (innerSize - dw) / 2;
+        dy = strokeWidth + (innerSize - dh) / 2;
+        sx = sy = 0;
+      }
+
+      ctx.drawImage(imgObj, sx, sy, sw, sh, dx, dy, dw, dh);
+    } else {
+      // Placeholder while loading
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, width, height);
+    }
+    ctx.restore();
+
+    let anchorX = 0.5;
+    let anchorY = 0.5;
+    if (kind === 'anchored') {
+      anchorY = (height - shadowVal) > 0 ? (height - shadowVal) / height : 1.0;
+    }
+
+    let iconStyle = new Icon({
+      src: canvas.toDataURL(),
+      anchor: [anchorX, anchorY],
+      opacity: typeof opacity === 'number' ? opacity : 1,
+      scale: (scale && scale !== 0.0) ? scale : 1
+    });
+
+    if (isLoaded) {
+      self.photoStyles[cacheKey] = iconStyle;
+    }
+    return iconStyle;
   }
 
   createLineArrowStyles(styleData, feature, strokeStyle, fillStyle) {

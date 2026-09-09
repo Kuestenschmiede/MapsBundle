@@ -11,6 +11,7 @@
 namespace con4gis\MapsBundle\Classes\Services;
 
 use con4gis\CoreBundle\Classes\C4GUtils;
+use con4gis\MapsBundle\Classes\Services\ImageMetadataService;
 use con4gis\MapsBundle\Classes\Utils;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapLocstylesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
@@ -142,19 +143,28 @@ class LayerContentService
                 $arrReturnData[] = $this->getMediaLayerContent($objLayer, $lang);
 
                 break;
+            case 'image':
+                $arrReturnData[] = $this->getImageLayerContent($objLayer, $lang);
+
+                break;
             default:
                 return [];
         }
-        // unset popup if not set in layer TODO prüfen und ausbauen
-        if ($objLayer->enablePopup == '') {
-            if (isset($arrReturnData[0]['data']['popup']) && is_array($arrReturnData[0]['data']['popup'])) {
-                foreach ($arrReturnData[0]['data']['popup'] as $key => $value) {
-                    unset($arrReturnData[0]['data']['popup'][$key]);
+        // unset popup if not set in layer
+        if (!$objLayer->enablePopup) {
+            if (isset($arrReturnData[0]['data']['popup'])) {
+                unset($arrReturnData[0]['data']['popup']);
+            }
+            if (isset($arrReturnData[0]['data']['properties']['popup'])) {
+                unset($arrReturnData[0]['data']['properties']['popup']);
+            }
+            if (isset($arrReturnData[0]['data']['features']) && is_array($arrReturnData[0]['data']['features'])) {
+                foreach ($arrReturnData[0]['data']['features'] as &$f) {
+                    if (isset($f['properties']['popup'])) {
+                        unset($f['properties']['popup']);
+                    }
                 }
-            } elseif (isset($arrReturnData[0]['data']['properties']['popup']) && is_array($arrReturnData[0]['data']['properties']['popup'])) {
-                foreach ($arrReturnData[0]['data']['properties']['popup'] as $key => $value) {
-                    unset($arrReturnData[0]['data']['properties']['popup'][$key]);
-                }
+                unset($f);
             }
         }
 
@@ -233,6 +243,160 @@ class LayerContentService
             'type' => 'GeoJSON',
             'format' => 'GeoJSON',
             'origType' => 'media',
+            'locationStyle' => $objLayer->locstyle,
+            'data' => $data,
+            'loc_linkurl' => Utils::replaceInsertTags($objLayer->loc_linkurl ?: '', $lang),
+            'hover_location' => $objLayer->hover_location,
+            'hover_style' => $objLayer->hover_style,
+        ];
+    }
+
+    private function getImageLayerContent($objLayer, $lang)
+    {
+        $rootDir = System::getContainer()->getParameter('kernel.project_dir');
+
+        if ($objLayer->data_folder) {
+            $images = ImageMetadataService::getImagesInFolder($objLayer->data_folder, $rootDir, $lang);
+            $features = [];
+            $linkUrl = Utils::replaceInsertTags($objLayer->loc_linkurl ?: '', $lang);
+
+            foreach ($images as $img) {
+                $gps = $img['metadata']['gps'] ?? null;
+                if (!$gps) {
+                    continue;
+                }
+
+                $webPath = '/' . ltrim($img['path'], '/');
+                $title = $img['metadata']['title'] ?: $img['filename'];
+                $description = $img['metadata']['description'] ?: '';
+                $datetime = $img['metadata']['datetime'] ?: '';
+                $camera = $img['metadata']['camera'] ?: '';
+
+                $popupContent = '';
+                if ($objLayer->enablePopup) {
+                    if ($objLayer->popup_info) {
+                        $popupContent = Utils::replaceInsertTags($objLayer->popup_info, $lang);
+                    } else {
+                        $popupContent = '<div class="c4g-image-popup">';
+                        $popupContent .= '<div class="c4g-image-popup-img"><img src="' . htmlspecialchars($webPath) . '" alt="' . htmlspecialchars($title) . '" style="max-width:100%;height:auto;" /></div>';
+                        if ($title) {
+                            $popupContent .= '<h4 class="c4g-image-popup-title">' . htmlspecialchars($title) . '</h4>';
+                        }
+                        if ($description) {
+                            $popupContent .= '<p class="c4g-image-popup-desc">' . nl2br(htmlspecialchars($description)) . '</p>';
+                        }
+                        if ($datetime || $camera) {
+                            $popupContent .= '<p class="c4g-image-popup-meta"><small>' . htmlspecialchars(trim($datetime . ($camera ? ' (' . $camera . ')' : ''))) . '</small></p>';
+                        }
+                        $popupContent .= '</div>';
+                    }
+                }
+
+                $featureProps = [
+                    'projection' => 'EPSG:4326',
+                    'layerId' => $objLayer->id,
+                    'img' => $webPath,
+                    'imageSrc' => $webPath,
+                    'title' => $title,
+                    'description' => $description,
+                    'datetime' => $datetime,
+                    'camera' => $camera,
+                    'tooltip' => Utils::replaceInsertTags($objLayer->tooltip ?: $title, $lang),
+                    'tooltip_length' => $objLayer->tooltip_length,
+                    'label' => Utils::replaceInsertTags($objLayer->loc_label ?: '', $lang),
+                    'zoom_onclick' => $objLayer->loc_onclick_zoomto,
+                    'loc_linkurl' => $linkUrl,
+                    'hover_location' => $objLayer->hover_location,
+                    'hover_style' => $objLayer->hover_style,
+                    'locstyle' => $objLayer->locstyle,
+                    'locationStyle' => $objLayer->locstyle,
+                    'cssClass' => $objLayer->cssClass,
+                ];
+
+                if ($objLayer->enablePopup) {
+                    $featureProps['popup'] = [
+                        'async' => false,
+                        'content' => $popupContent,
+                        'routing_link' => $objLayer->routing_to,
+                        'showPopupOnActive' => $objLayer->showPopupOnActive,
+                    ];
+                }
+
+                $features[] = [
+                    'type' => 'Feature',
+                    'geometry' => [
+                        'type' => 'Point',
+                        'coordinates' => [
+                            floatval($gps['lng']),
+                            floatval($gps['lat']),
+                        ],
+                    ],
+                    'properties' => $featureProps,
+                ];
+            }
+
+            $geoJson = [
+                'type' => 'FeatureCollection',
+                'features' => $features,
+                'properties' => [
+                    'layerId' => $objLayer->id,
+                    'locstyle' => $objLayer->locstyle,
+                    'locationStyle' => $objLayer->locstyle,
+                    'projection' => 'EPSG:4326',
+                ],
+            ];
+
+            return [
+                'id' => $objLayer->id,
+                'type' => 'GeoJSON',
+                'format' => 'GeoJSON',
+                'origType' => 'image',
+                'locationStyle' => $objLayer->locstyle,
+                'data' => $geoJson,
+                'loc_linkurl' => $linkUrl,
+                'hover_location' => $objLayer->hover_location,
+                'hover_style' => $objLayer->hover_style,
+            ];
+        }
+
+        // Single image
+        $data = $this->createGeoJsonResult($objLayer, 'tl_c4g_maps', $lang);
+        $data['properties']['layerId'] = $objLayer->id;
+        $data['properties']['locstyle'] = $objLayer->locstyle;
+        $data['properties']['locationStyle'] = $objLayer->locstyle;
+
+        if ($objLayer->singleSRC) {
+            $objFile = FilesModel::findByUuid($objLayer->singleSRC);
+            if ($objFile) {
+                $webPath = '/' . ltrim($objFile->path, '/');
+                $data['properties']['img'] = $webPath;
+                $data['properties']['imageSrc'] = $webPath;
+
+                if (empty($objLayer->loc_geox) && empty($objLayer->loc_geoy)) {
+                    if (!empty($objFile->c4g_loc_geox) && !empty($objFile->c4g_loc_geoy)) {
+                        $data['geometry']['coordinates'] = [
+                            floatval($objFile->c4g_loc_geox),
+                            floatval($objFile->c4g_loc_geoy),
+                        ];
+                    } else {
+                        $fullPath = $rootDir . '/' . $objFile->path;
+                        $gps = ImageMetadataService::extractGpsCoordinates($fullPath);
+                        if ($gps) {
+                            $data['geometry']['coordinates'] = [
+                                floatval($gps['lng']),
+                                floatval($gps['lat']),
+                            ];
+                        }
+                    }
+                }
+            }
+        }
+
+        return [
+            'id' => $objLayer->id,
+            'type' => 'GeoJSON',
+            'format' => 'GeoJSON',
+            'origType' => 'image',
             'locationStyle' => $objLayer->locstyle,
             'data' => $data,
             'loc_linkurl' => Utils::replaceInsertTags($objLayer->loc_linkurl ?: '', $lang),
@@ -1125,6 +1289,7 @@ class LayerContentService
         switch ($objLayer->location_type) {
             case 'single':
             case 'media':
+            case 'image':
 
                 $arrGeoJson = [
                     'type' => 'Feature',
@@ -1156,6 +1321,15 @@ class LayerContentService
                         'cssClass' => $objLayer->cssClass,
                     ],
                 ];
+
+                if ($objLayer->singleSRC) {
+                    $objFile = FilesModel::findByUuid($objLayer->singleSRC);
+                    if ($objFile) {
+                        $imgWebPath = '/' . ltrim($objFile->path, '/');
+                        $arrGeoJson['properties']['img'] = $imgWebPath;
+                        $arrGeoJson['properties']['imageSrc'] = $imgWebPath;
+                    }
+                }
 
                 break;
             case 'geojson':

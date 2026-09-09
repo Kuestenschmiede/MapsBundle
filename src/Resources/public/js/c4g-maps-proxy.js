@@ -383,6 +383,12 @@ export class MapProxy {
     if (this.mapData.caching && parseInt(this.mapData.popupHandling, 10)) {
       utils.storeValue('popupInfos', JSON.stringify(popupInfos));
     }
+    if (!popupInfos || (popupInfos.async !== true && popupInfos.async !== '1' && (!popupInfos.content || (typeof popupInfos.content === 'string' && !popupInfos.content.trim())) && (!feature || (!feature.get('map_audio_src') && !feature.get('map_video_src'))))) {
+      if (!this.mapData.popupMultiple) {
+        this.popupController.removePopup();
+      }
+      return;
+    }
     if (popupInfos.async === false || popupInfos.async == '0') {
       let objPopup = {};
       objPopup.popup = popupInfos;

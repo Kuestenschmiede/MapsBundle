@@ -629,6 +629,7 @@ class LayerService
                 case 'osm':
                 case 'single':
                 case 'media':
+                case 'image':
                 case 'geojson':
                     return $this->layerContentService->getLayerData($objLayer->id, false, $lang);
 

@@ -29,7 +29,18 @@ class TlC4gMapOverlays extends Backend
 
     public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
     {
+            if (is_array($title)) {
+                $title = $title[0] ?? '';
+            }
+            if (is_array($label)) {
+                $label = $label[0] ?? '';
+            }
+
         $this->import(BackendUser::class, 'User');
+
+        if (is_array($title)) {
+            $title = $title[0] ?? '';
+        }
 
         if (strlen(Input::get('tid')))
         {

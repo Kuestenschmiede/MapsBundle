@@ -86,7 +86,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
         'cust_icon'                   => 'name,styletype,icon_src,icon_scale,icon_size,icon_resize_zoom,icon_opacity,icon_offset;' . '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,label_outl_box,font_style,font_weight,label_minzoom,label_maxzoom;' . '{popup_legend},tooltip,popup_info;' . '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;' . '{editor_legend:hide},editor_icon,editor_icon_size,editor_sort,editor_vars,editor_collect',
         'cust_icon_svg'               => 'name,styletype,svgSrc,icon_size,icon_scale,icon_resize_zoom,icon_offset,svg_add_attributes;' . '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,label_outl_box,font_style,font_weight,label_minzoom,label_maxzoom;' . '{popup_legend},tooltip,popup_info;' . '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;' . '{editor_legend:hide},editor_icon,editor_icon_size,editor_sort,editor_vars,editor_collect',
         'style_function'              => 'name,styletype,style_function_js',
-        'photo'                       => 'name,styletype,radius,photoKind,icon_src,strokewidth,strokecolor,icon_opacity;' . '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,label_outl_box,font_style,font_weight,label_minzoom,label_maxzoom;' . '{popup_legend},tooltip,popup_info;' . '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;' . '{editor_legend:hide},editor_icon,editor_icon_size,editor_sort,editor_vars,editor_collect'
+        'photo'                       => 'name,styletype,radius,photoKind,photo_crop,photo_shadow,icon_src,strokewidth,strokecolor,icon_opacity,icon_resize_zoom;' . '{label_legend},label,label_align_hor,label_align_ver,label_offset,font_family,font_color,font_size,label_outl_color,label_outl_width,label_outl_box,font_style,font_weight,label_minzoom,label_maxzoom;' . '{popup_legend},tooltip,popup_info;' . '{zoom_legend:hide},onclick_zoomto,minzoom,maxzoom;' . '{editor_legend:hide},editor_icon,editor_icon_size,editor_sort,editor_vars,editor_collect'
         ],
     'subpalettes' =>
         [
@@ -134,7 +134,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
             [
                 'exclude'                 => true,
                 'inputType'               => 'fileTree',
-                'eval'                    => ['fieldType'=>'radio','files'=>true,'extensions'=>'gif,jpg,jpeg,png','tl_class'=>'clr','mandatory'=>true,'submitOnChange' => true],
+                'eval'                    => ['fieldType'=>'radio','files'=>true,'extensions'=>'gif,jpg,jpeg,png,webp','tl_class'=>'clr','mandatory'=>false,'submitOnChange' => true],
                 'sql'                     => "binary(16) NULL"
             ],
         'icon_size' =>
@@ -232,12 +232,28 @@ $GLOBALS['TL_DCA']['tl_c4g_map_locstyles'] =
         'photoKind' =>
             [
                 'exclude'                 => true,
-                'default'                 => 'popup_default',
+                'default'                 => 'default',
                 'inputType'               => 'select',
-                'options'                 => ['default','square','round','anchored','folio'],
+                'options'                 => ['default','square','circle','round','anchored','folio'],
                 'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references'],
-                'eval'                    => ['mandatore'=>true],
+                'eval'                    => ['mandatory'=>true],
                 'sql'                     => "varchar(64) NOT NULL default ''"
+            ],
+        'photo_shadow' =>
+            [
+                'exclude'                 => true,
+                'default'                 => '1',
+                'inputType'               => 'checkbox',
+                'eval'                    => ['tl_class'=>'w50'],
+                'sql'                     => "char(1) NOT NULL default '1'"
+            ],
+        'photo_crop' =>
+            [
+                'exclude'                 => true,
+                'default'                 => '1',
+                'inputType'               => 'checkbox',
+                'eval'                    => ['tl_class'=>'w50'],
+                'sql'                     => "char(1) NOT NULL default '1'"
             ],
         'style_function_js' =>
             [

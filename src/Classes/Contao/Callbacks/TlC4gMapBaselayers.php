@@ -38,12 +38,27 @@ class TlC4gMapBaselayers extends Backend
 
     public function addIcon($row, $label, DataContainer $dc=null, $imageAttribute='', $blnReturnImage=false, $blnProtected=false)
     {
+            if (is_array($label)) {
+                $label = $label[0] ?? '';
+            }
+
         return Image::getHtml('bundles/con4gismaps/images/be-icons/baselayers.svg', '', $imageAttribute).' '.$label;
     }
 
     public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
     {
+            if (is_array($title)) {
+                $title = $title[0] ?? '';
+            }
+            if (is_array($label)) {
+                $label = $label[0] ?? '';
+            }
+
         $this->import(BackendUser::class, 'User');
+
+        if (is_array($title)) {
+            $title = $title[0] ?? '';
+        }
 
         if (strlen(Input::get('tid')))
         {

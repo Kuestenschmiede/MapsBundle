@@ -489,6 +489,9 @@ class tl_c4g_routing_configuration extends Backend
     public function locstylesLink(Contao\DataContainer $dc)
     {
         $str = $GLOBALS['TL_LANG']['tl_c4g_routing_configuration']['editLocstyles'];
+        if (is_array($str)) {
+            $str = $str[0] ?? '';
+        }
         $requestToken = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
         if ($dc->activeRecord && property_exists($dc->activeRecord,'pid')) {
             return ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'?do=c4g_map_locstyles&amp;table=tl_c4g_map_locstyles&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . $requestToken . '" title="' . Contao\StringUtil::specialchars($str) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'","\\'", $str)) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
@@ -499,6 +502,9 @@ class tl_c4g_routing_configuration extends Backend
     public function mapsLink(Contao\DataContainer $dc)
     {
         $str = $GLOBALS['TL_LANG']['tl_c4g_routing_configuration']['editMaps'];
+        if (is_array($str)) {
+            $str = $str[0] ?? '';
+        }
         $requestToken = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
         if ($dc->activeRecord && property_exists($dc->activeRecord,'pid')) {
             return ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'?do=c4g_maps&amp;table=tl_c4g_maps&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . $requestToken . '" title="' . Contao\StringUtil::specialchars($str) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'","\\'", $str)) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';

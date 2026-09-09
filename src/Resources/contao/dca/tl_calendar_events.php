@@ -126,8 +126,13 @@ if (
 
         public function locstylesLink(DataContainer $dc)
         {
+            $str = $GLOBALS['TL_LANG']['tl_calendar_events']['editLocstyles'];
+            if (is_array($str)) {
+                $str = $str[0] ?? '';
+            }
             $requestToken = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
-            return ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'?do=c4g_map_locstyles&amp;table=tl_c4g_map_locstyles&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . $requestToken . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_calendar_events']['editLocstyles']) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'","\\'", $GLOBALS['TL_LANG']['tl_calendar_events']['editLocstyles'])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
+            $pid = $dc->activeRecord->pid ?? 0;
+            return ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'?do=c4g_map_locstyles&amp;table=tl_c4g_map_locstyles&amp;id=' . $pid . '&amp;popup=1&amp;nb=1&amp;rt=' . $requestToken . '" title="' . Contao\StringUtil::specialchars($str) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'","\\'", $str)) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
         }
     }
 }

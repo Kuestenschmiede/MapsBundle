@@ -12,6 +12,7 @@ use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
 use con4gis\CoreBundle\Resources\contao\models\C4gSettingsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapTablesModel;
+use con4gis\MapsBundle\Classes\Services\ImageMetadataService;
 use con4gis\MapsBundle\Classes\Utils;
 use Contao\Image;
 use Contao\StringUtil;
@@ -51,6 +52,16 @@ class TlC4gMaps extends Backend
      */
     public function copyPageWithSubpages($row, $href, $label, $title, $icon, $attributes, $table)
     {
+            if (is_array($title)) {
+                $title = $title[0] ?? '';
+            }
+            if (is_array($label)) {
+                $label = $label[0] ?? '';
+            }
+
+        if (is_array($title)) {
+            $title = $title[0] ?? '';
+        }
 
         $objSubpages = $this->Database->prepare("SELECT id FROM tl_c4g_maps WHERE pid=?")
             ->limit(1)
@@ -372,6 +383,10 @@ class TlC4gMaps extends Backend
      */
     public function generateLabel($row, $label, $dc)
     {
+            if (is_array($label)) {
+                $label = $label[0] ?? '';
+            }
+
         $image = 'bundles/con4gismaps/images/be-icons/';
 
         //Backwards compatibility (data < con4gis 7): so that maps are set as maps again. is_map can removed in later versions.
@@ -582,10 +597,11 @@ class TlC4gMaps extends Backend
     public function getDefaultProfile($varValue, DC_TABLE $dc)
     {
         if (!$varValue) {
-            if ($dc->activeRecord->pid) {
+            $pid = $dc->activeRecord->pid ?? 0;
+            if ($pid) {
                 // take default profile from parent entry
                 $objParent = $this->Database->prepare("SELECT profile FROM tl_c4g_maps WHERE id=?")
-                    ->limit(1)->execute($dc->activeRecord->pid);
+                    ->limit(1)->execute($pid);
                 if ($objParent->numRows > 0) {
                     $varValue = $objParent->profile;
                 }
@@ -688,6 +704,17 @@ class TlC4gMaps extends Backend
      */
     public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
     {
+            if (is_array($title)) {
+                $title = $title[0] ?? '';
+            }
+            if (is_array($label)) {
+                $label = $label[0] ?? '';
+            }
+
+        if (is_array($title)) {
+            $title = $title[0] ?? '';
+        }
+
         if (strlen(Input::get('tid'))) {
             $this->toggleVisibility(Input::get('tid'), (Input::get('state') == 1));
             $this->redirect("/contao?do=c4g_maps&state=" .($row['published'] ? '' : 1) . "&rt=" . Input::get('rt'));
@@ -814,19 +841,22 @@ class TlC4gMaps extends Backend
     public function baselayersLink(DC_TABLE $dc)
     {
         $requestToken = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
-        return ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'?do=c4g_map_baselayers&amp;table=tl_c4g_map_baselayers&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . $requestToken . '" title="' . StringUtil::specialchars($GLOBALS['TL_LANG']['tl_c4g_maps']['editBaselayers']) . '" onclick="Backend.openModalIframe({\'title\':\'' . StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_c4g_maps']['editBaselayers'])) . '\',\'url\':this.href});return false">' . Image::getHtml('edit.svg') . '</a>';
+        $pid = $dc->activeRecord->pid ?? 0;
+        return ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'?do=c4g_map_baselayers&amp;table=tl_c4g_map_baselayers&amp;id=' . $pid . '&amp;popup=1&amp;nb=1&amp;rt=' . $requestToken . '" title="' . StringUtil::specialchars($GLOBALS['TL_LANG']['tl_c4g_maps']['editBaselayers']) . '" onclick="Backend.openModalIframe({\'title\':\'' . StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_c4g_maps']['editBaselayers'])) . '\',\'url\':this.href});return false">' . Image::getHtml('edit.svg') . '</a>';
     }
 
     public function locstylesLink(DC_TABLE $dc)
     {
         $requestToken = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
-        return ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'?do=c4g_map_locstyles&amp;table=tl_c4g_map_locstyles&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . $requestToken . '" title="' . StringUtil::specialchars($GLOBALS['TL_LANG']['tl_c4g_maps']['editLocstyles']) . '" onclick="Backend.openModalIframe({\'title\':\'' . StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_c4g_maps']['editLocstyles'])) . '\',\'url\':this.href});return false">' . Image::getHtml('edit.svg') . '</a>';
+        $pid = $dc->activeRecord->pid ?? 0;
+        return ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'?do=c4g_map_locstyles&amp;table=tl_c4g_map_locstyles&amp;id=' . $pid . '&amp;popup=1&amp;nb=1&amp;rt=' . $requestToken . '" title="' . StringUtil::specialchars($GLOBALS['TL_LANG']['tl_c4g_maps']['editLocstyles']) . '" onclick="Backend.openModalIframe({\'title\':\'' . StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_c4g_maps']['editLocstyles'])) . '\',\'url\':this.href});return false">' . Image::getHtml('edit.svg') . '</a>';
     }
 
     public function profilesLink(DC_TABLE $dc)
     {
         $requestToken = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
-        return ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'?do=c4g_map_profiles&amp;table=tl_c4g_map_profiles&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . $requestToken . '" title="' . StringUtil::specialchars($GLOBALS['TL_LANG']['tl_c4g_maps']['editProfiles']) . '" onclick="Backend.openModalIframe({\'title\':\'' . StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_c4g_maps']['editProfiles'])) . '\',\'url\':this.href});return false">' . Image::getHtml('edit.svg') . '</a>';
+        $pid = $dc->activeRecord->pid ?? 0;
+        return ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'?do=c4g_map_profiles&amp;table=tl_c4g_map_profiles&amp;id=' . $pid . '&amp;popup=1&amp;nb=1&amp;rt=' . $requestToken . '" title="' . StringUtil::specialchars($GLOBALS['TL_LANG']['tl_c4g_maps']['editProfiles']) . '" onclick="Backend.openModalIframe({\'title\':\'' . StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_c4g_maps']['editProfiles'])) . '\',\'url\':this.href});return false">' . Image::getHtml('edit.svg') . '</a>';
     }
 
 
@@ -836,6 +866,39 @@ class TlC4gMaps extends Backend
     public function showInfoMessage(DC_TABLE $dc)
     {
         \Contao\Message::addInfo($GLOBALS['TL_LANG']['tl_c4g_maps']['infotext']);
+    }
+
+    /**
+     * Extracts GPS coordinates from single image when saved if geox/geoy are empty.
+     *
+     * @param mixed $varValue
+     * @param DC_TABLE $dc
+     * @return mixed
+     */
+    public function extractImageCoordinates($varValue, DC_TABLE $dc)
+    {
+        if ($dc->activeRecord && $dc->activeRecord->location_type === 'image' && $varValue) {
+            $objFile = FilesModel::findByUuid($varValue);
+            if ($objFile) {
+                $posX = Input::post('loc_geox');
+                $posY = Input::post('loc_geoy');
+                if (($posX === null || $posX === '') && ($posY === null || $posY === '')) {
+                    if (!empty($objFile->c4g_loc_geox) && !empty($objFile->c4g_loc_geoy)) {
+                        $this->Database->prepare("UPDATE tl_c4g_maps SET loc_geox=?, loc_geoy=? WHERE id=?")
+                            ->execute((string)$objFile->c4g_loc_geox, (string)$objFile->c4g_loc_geoy, $dc->id);
+                    } else {
+                        $rootDir = System::getContainer()->getParameter('kernel.project_dir');
+                        $fullPath = $rootDir . '/' . $objFile->path;
+                        $gps = ImageMetadataService::extractGpsCoordinates($fullPath);
+                        if ($gps) {
+                            $this->Database->prepare("UPDATE tl_c4g_maps SET loc_geox=?, loc_geoy=? WHERE id=?")
+                                ->execute((string)$gps['lng'], (string)$gps['lat'], $dc->id);
+                        }
+                    }
+                }
+            }
+        }
+        return $varValue;
     }
 
 }

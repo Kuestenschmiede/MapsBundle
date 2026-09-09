@@ -44,13 +44,13 @@ class MapDataConfigurator
     public static function prepareMapData($objThis, $database, $options = [], $preventResourceLoader = false)
     {
         $mapData = [];
-        $mapData['mapId'] = $objThis->id;
+        $mapData['mapId'] = $objThis->id ?? 0;
 
         $keyParams = [];
         //TODO: currently when in backend mode, not the correct things are loaded
         //TODO: no profile is found
         // get map
-        $map = C4gMapsModel::findByPk($objThis->c4g_map_id);
+        $map = C4gMapsModel::findByPk($objThis->c4g_map_id ?? 0);
         if (!$map) {
             $map = new C4gMapsModel();
             $map->id = 0;
@@ -79,7 +79,7 @@ class MapDataConfigurator
         if (isset($options['type']) && $options['type'] == 'geopicker') {
             // select selected backend profile
             $settings = C4gSettingsModel::findAll();
-            $profileId = $options && $options['profile'] ? $options['profile'] : ($settings[0]->beGeopickerProfile ? $settings[0]->beGeopickerProfile : $settings[0]->defaultprofile);
+            $profileId = $options && isset($options['profile']) && $options['profile'] ? $options['profile'] : ($settings[0]->beGeopickerProfile ? $settings[0]->beGeopickerProfile : $settings[0]->defaultprofile);
         }
 
         if (!$profileId) {
@@ -320,15 +320,15 @@ class MapDataConfigurator
             }
         }
         // override map-zoom from structure, with values from CE/FE, if set
-        if (is_numeric($objThis->c4g_map_zoom) && ($objThis->c4g_map_zoom > 0)) {
+        if (isset($objThis->c4g_map_zoom) && is_numeric($objThis->c4g_map_zoom) && ($objThis->c4g_map_zoom > 0)) {
             $mapData['center']['zoom'] = $objThis->c4g_map_zoom;
         }
         // override map-size from structure, with values from CE/FE, if set
-        $mapWidth = \Contao\StringUtil::deserialize($objThis->c4g_map_width);
+        $mapWidth = \Contao\StringUtil::deserialize($objThis->c4g_map_width ?? '');
         if (is_array($mapWidth) && ($mapWidth['value'] != 0) && !empty($mapWidth['unit'])) {
             $mapData['width'] = $mapWidth['value'] . $mapWidth['unit'];
         }
-        $mapHeight = \Contao\StringUtil::deserialize($objThis->c4g_map_height);
+        $mapHeight = \Contao\StringUtil::deserialize($objThis->c4g_map_height ?? '');
         if (is_array($mapHeight) && ($mapHeight['value'] != 0) && !empty($mapHeight['unit'])) {
             $mapData['height'] = $mapHeight['value'] . $mapHeight['unit'];
         }
@@ -706,7 +706,7 @@ class MapDataConfigurator
         }
 
         // mapservice
-        $baseLayer = C4gMapBaselayersModel::findById($objThis->c4g_map_default_mapservice);
+        $baseLayer = C4gMapBaselayersModel::findById($objThis->c4g_map_default_mapservice ?? 0);
         if ($baseLayer) {
             $mapData['baselayer'] = $baseLayer->id;
             $mapData['minZoom'] = $baseLayer->minzoomlevel;

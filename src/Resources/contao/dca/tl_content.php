@@ -33,9 +33,7 @@ if (@class_exists("tl_content")) {
             ->applyToPalette('html','tl_content')
             ->applyToPalette('module','tl_content')
             ->applyToPalette('youtube','tl_content');
-        error_log('try');
     } catch (\Exception $e) {
-        error_log('catch');
     }
 
     $GLOBALS['TL_DCA']['tl_content']['fields']['c4g_loc_geox'] = [
@@ -155,12 +153,14 @@ class tl_content_c4g_maps extends Backend
 
     public function locstylesLink(DC_Table $dc)
     {
-        return ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'?do=c4g_map_locstyles&amp;table=tl_c4g_map_locstyles&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_content']['editLocstyles']) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'","\\'", $GLOBALS['TL_LANG']['tl_content']['editLocstyles'])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
+        $pid = $dc->activeRecord->pid ?? 0;
+        return ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'?do=c4g_map_locstyles&amp;table=tl_c4g_map_locstyles&amp;id=' . $pid . '&amp;popup=1&amp;nb=1&amp;rt=' . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_content']['editLocstyles']) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'","\\'", $GLOBALS['TL_LANG']['tl_content']['editLocstyles'])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
     }
 
     public function mapsLink(DC_Table $dc)
     {
-        return ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'?do=c4g_maps&amp;table=tl_c4g_maps&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_content']['editMaps']) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'","\\'", $GLOBALS['TL_LANG']['tl_content']['editMaps'])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
+        $pid = $dc->activeRecord->pid ?? 0;
+        return ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'?do=c4g_maps&amp;table=tl_c4g_maps&amp;id=' . $pid . '&amp;popup=1&amp;nb=1&amp;rt=' . '" title="' . Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_content']['editMaps']) . '" onclick="Backend.openModalIframe({\'title\':\'' . Contao\StringUtil::specialchars(str_replace("'","\\'", $GLOBALS['TL_LANG']['tl_content']['editMaps'])) . '\',\'url\':this.href});return false">' . Contao\Image::getHtml('edit.svg') . '</a>';
     }
 
 }

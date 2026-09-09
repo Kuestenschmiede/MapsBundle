@@ -163,6 +163,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['media']    = 'Audio or video e
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['audio']    = 'Audio';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['video']    = 'Video';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['single']    = 'Single GEO coordinate';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['image']     = 'Image(s)';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['table']     = 'Source table';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['gpx']       = 'GPX';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['kml']       = 'KML';
@@ -204,6 +205,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['show_locations']['2'] = "Cente
  * Legends
  */
 $GLOBALS['TL_LANG']['tl_c4g_maps']['general_legend']		= 'General settings';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['image_legend']		    = 'Image data / Image directory';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['map_legend']		    = 'Map settings';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['profile_legend']		= 'Profile settings';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['location_legend']	    = 'Structure element settings';

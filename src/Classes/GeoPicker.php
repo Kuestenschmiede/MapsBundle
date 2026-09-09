@@ -18,6 +18,7 @@ use Contao\Environment;
 use Contao\FrontendTemplate;
 use Contao\System;
 use Contao\DC_Table;
+use Contao\DataContainer;
 use Contao\Input;
 use Contao\Image;
 
@@ -46,7 +47,7 @@ class GeoPicker extends Backend
         }
     }
 
-    public function getPickerLink(DC_Table $dc)
+    public function getPickerLink(DataContainer $dc)
     {
         $strField = 'ctrl_' . $dc->field . ((Input::get('act') == 'editAll') ? '_' . $dc->id : '');
         if (strtoupper(substr($strField, -1, 1)) === 'Y') {

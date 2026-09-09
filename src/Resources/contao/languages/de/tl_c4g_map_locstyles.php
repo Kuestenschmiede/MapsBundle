@@ -36,6 +36,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_offset']      = array('Positio
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_opacity']     = array('Deckkraft des Icons','Bitte wählen Sie die Deckkraft des Icons in % aus.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['iconcolor']        = array('Farbe des Icons','Hiermit können Sie die Icon-Farbe verändern.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['photoKind']        = array('Art des Fotostils','Bitte wählen Sie den Fotostil für den Lokationsstil ein.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['photo_shadow']     = array('Schattenwurf', 'Schatten für das Foto anzeigen.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['photo_crop']       = array('Quadratisch zuschneiden', 'Bild quadratisch zuschneiden (crop image within square).');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['onhover_locstyle'] = array('Lokationsstil bei Maus-Hover','Wählen Sie einen Lokationsstil aus, der eingestellt wird, während sich der Maus-Cursor über der Lokation befindet.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['style_function_js']   = array('Code für StyleFunction','Geben Sie hier Code für eine eigene StyleFunciton ein (Nur den Körper der Funktion. Rückgabe eines Ol-Styles)');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['line_arrows']      = array('Richtungspfeile aktivieren','Stellen Sie ein, ob bei der Darstellung von Strecken Richtungspfeile angezeigt werden sollen. Nur sinnvoll für Linien (Strecken).');
@@ -106,6 +108,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['vector']            =
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['pixel']             = 'Raster';
 
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['default']           = 'Standard';
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['circle']            = 'Kreis';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['round']             = 'abgerundet';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['anchored']          = 'verankert';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['folio']             = 'Portfolio';

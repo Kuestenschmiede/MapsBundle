@@ -36,6 +36,8 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_offset']          = array('Off
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['icon_opacity']         = array('Icon opacity','Enter the opacity of the icon in %.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['iconcolor']            = array('Icon color','Do you want to change the icon color?');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['photoKind']            = array('Kind of photo','Please choose the photo-style for your location.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['photo_shadow']        = array('Shadow', 'Display shadow for the photo.');
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['photo_crop']          = array('Crop image within square', 'Crop the image within a square.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['onhover_locstyle']     = array('Location style for mouse hover','Select the location style to be used when the mouse rests over a location.');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['style_function_js']    = array('Code for StyleFunction','Enter code for your custom OpenLayers StyleFunction (Enter only the function\'s body. Your function should change the feature\'s style or return an instance of ol.style)');
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['line_arrows']          = array('Activate line direction arrows','Arrows for lines (routes).');
@@ -104,6 +106,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['pixel']             =
 
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['default']           = 'Default';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['square']            = 'Square';
+$GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['circle']            = 'Circle';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['round']             = 'Round';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['anchored']          = 'Anchored';
 $GLOBALS['TL_LANG']['tl_c4g_map_locstyles']['references']['folio']             = 'Portfolio';

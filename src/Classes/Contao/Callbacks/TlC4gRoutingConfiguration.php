@@ -177,13 +177,17 @@ class TlC4gRoutingConfiguration
 
     public function configurationLink(DC_Table $dc)
     {
-        if (!($dc->getActiveRecord->pid ?? null)) {
+        $pid = $dc->activeRecord->pid ?? 0;
+        if (!$pid) {
             return '';
         }
 
         $requestToken = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
         $str = $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['editRoutingConfiguration'];
-        return ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'?do=c4g_routing_configuration&amp;table=tl_c4g_routing_configuration&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;nb=1&amp;rt=' . $requestToken . '" title="' . StringUtil::specialchars($str) . '" onclick="Backend.openModalIframe({\'title\':\'' . StringUtil::specialchars(str_replace("'", "\\'", $str)) . '\',\'url\':this.href});return false">' . Image::getHtml('edit.svg') . '</a>';
+        if (is_array($str)) {
+            $str = $str[0] ?? '';
+        }
+        return ' <a href="'.System::getContainer()->get('router')->generate('contao_backend') .'?do=c4g_routing_configuration&amp;table=tl_c4g_routing_configuration&amp;id=' . $pid . '&amp;popup=1&amp;nb=1&amp;rt=' . $requestToken . '" title="' . StringUtil::specialchars($str) . '" onclick="Backend.openModalIframe({\'title\':\'' . StringUtil::specialchars(str_replace("'", "\\'", $str)) . '\',\'url\':this.href});return false">' . Image::getHtml('edit.svg') . '</a>';
     }
 
     public function loadRouterProfiles($value)
