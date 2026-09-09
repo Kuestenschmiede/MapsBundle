@@ -12,6 +12,7 @@ import {C4gBaselayerController} from "./c4g-baselayer-controller";
 import {BetterLayerController} from "./c4g-layer-controller";
 import {C4gLocationStyleController} from "./c4g-locationstyle-controller";
 import {C4gPopupController} from "./c4g-popup-controller";
+import {c4gLightbox} from "./c4g-lightbox";
 import {utils} from "./c4g-maps-utils";
 import {cssConstants} from "./c4g-maps-constant";
 import {getLanguage} from "./c4g-maps-i18n";
@@ -349,7 +350,15 @@ export class MapProxy {
           map.getView().setZoom(layer.zoom_onclick);
           map.getView().setCenter(clickEvent.coordinate);
         }
-        self.handlePopup(feature, layer);
+
+        let isLightbox = (feature && (feature.get('image_lightbox') === true || feature.get('image_lightbox') === '1' || feature.get('image_lightbox') === 1)) ||
+                         (layer && (layer.image_lightbox === true || layer.image_lightbox === '1' || layer.image_lightbox === 1));
+
+        if (isLightbox && feature && (feature.get('img') || feature.get('imageSrc'))) {
+          self.handleLightbox(feature, layer);
+        } else {
+          self.handlePopup(feature, layer);
+        }
 
         // hooks
         utils.callHookFunctions(window.c4gMapsHooks.hook_map_click, clickEvent);
@@ -357,6 +366,57 @@ export class MapProxy {
     }); // end of "click-observer"
 
   } // end of "initial"*
+  handleLightbox(feature, layer) {
+    let currentSrc = feature.get('img') || feature.get('imageSrc') || '';
+    let currentTitle = feature.get('title') || feature.get('tooltip') || '';
+    let currentDesc = feature.get('description') || '';
+    let currentDatetime = feature.get('datetime') || '';
+    let currentCamera = feature.get('camera') || '';
+
+    let gallery = [];
+    let currentIndex = 0;
+
+    let olLayer = layer;
+    if (olLayer && typeof olLayer.getSource !== 'function' && layer.layerId && this.layerController && this.layerController.arrVectorLayers) {
+      olLayer = this.layerController.arrVectorLayers[layer.layerId];
+    }
+
+    if (olLayer && typeof olLayer.getSource === 'function') {
+      let source = olLayer.getSource();
+      if (source && typeof source.getFeatures === 'function') {
+        let features = source.getFeatures();
+        for (let i = 0; i < features.length; i++) {
+          let f = features[i];
+          let fSrc = f.get('img') || f.get('imageSrc');
+          if (fSrc) {
+            let item = {
+              src: fSrc,
+              title: f.get('title') || f.get('tooltip') || '',
+              description: f.get('description') || '',
+              datetime: f.get('datetime') || '',
+              camera: f.get('camera') || ''
+            };
+            if (f === feature || fSrc === currentSrc) {
+              currentIndex = gallery.length;
+            }
+            gallery.push(item);
+          }
+        }
+      }
+    }
+
+    if (!gallery.length && currentSrc) {
+      gallery.push({
+        src: currentSrc,
+        title: currentTitle,
+        description: currentDesc,
+        datetime: currentDatetime,
+        camera: currentCamera
+      });
+    }
+
+    c4gLightbox.open(gallery, currentIndex);
+  }
   handlePopup (feature, layer) {
     let popupInfos = {};
     const scope = this;

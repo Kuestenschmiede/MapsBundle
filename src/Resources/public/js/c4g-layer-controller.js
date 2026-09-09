@@ -1419,6 +1419,9 @@ export class BetterLayerController {
                   if (content.loc_linkurl) {
                     singleFeature.set('loc_linkurl', content.loc_linkurl);
                   }
+                  if (content.image_lightbox || (contentData.properties && contentData.properties.image_lightbox)) {
+                    singleFeature.set('image_lightbox', content.image_lightbox || contentData.properties.image_lightbox);
+                  }
                   if (contentData.properties) {
                     if (!singleFeature.get('tooltip')) {
                       singleFeature.set('tooltip', contentData.properties.tooltip)
@@ -1456,6 +1459,9 @@ export class BetterLayerController {
               }
               if (contentData.loc_linkurl) {
                 feature.set('loc_linkurl', contentData.loc_linkurl);
+              }
+              if (content.image_lightbox || (contentData.properties && contentData.properties.image_lightbox) || contentData.image_lightbox) {
+                feature.set('image_lightbox', content.image_lightbox || (contentData.properties && contentData.properties.image_lightbox) || contentData.image_lightbox);
               }
 
               features.push(feature);

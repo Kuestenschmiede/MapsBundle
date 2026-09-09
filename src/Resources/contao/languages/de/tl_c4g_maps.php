@@ -66,6 +66,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['tab_orderby'] = array('Sortierung', 'Geben S
 $GLOBALS['TL_LANG']['tl_c4g_maps']['tab_filter_alias'] = array('Nur aktuellen Eintrag anzeigen', 'Wenn Sie diesen Eintrag setzen, dann wird nur der Eintrag in der Tabelle angezeigt, bei dem der Inhalt des Alias-Feldes der ID der aktuellen Seite entspricht. So können Sie beispielsweise erreichen, dass beim Eventleser eine Karte nur mit dem aktuellen Event angezeigt wird.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['data_file'] = array('Datei', 'Falls Ihre Daten in einer Datei auf dem Server liegen, dann geben Sie diese hier an.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['data_folder'] = array('Verzeichnis', 'Falls Ihre Daten in einem Verzeichnis auf dem Server liegen, dann geben Sie diese hier an.');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['image_lightbox'] = array('Bei Klick in Lightbox darstellen', 'Zeigt das Bild bei Klick auf der Karte in einer großen Lightbox-Ansicht an.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['data_url'] = array('URL', 'Falls Ihre Daten von einer URL heruntergeladen werden sollen, dann geben Sie diese hier an.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['media_type'] = array('Medientyp', 'Wählen Sie aus, ob Sie eine Audio- oder eine Videodatei einbinden möchten.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['map_audio_src'] = array('Audiodatei', 'Wählen Sie hier eine Audiodatei (mp3, ogg, wav) aus.');

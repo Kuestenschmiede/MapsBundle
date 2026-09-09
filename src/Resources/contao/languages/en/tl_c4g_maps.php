@@ -66,6 +66,7 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['tab_orderby'] = array('Sorting', 'Define add
 $GLOBALS['TL_LANG']['tl_c4g_maps']['tab_filter_alias'] = array('Only show current entry', 'Set this to only show the table entry with the location that corresponds to the current "PageId" on pages hosting "Reader" modules. Helpful e.g. if you want to place a map together with an event reader, that displays only the current event. An alias field has to be available if you use this option!');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['data_file'] = array('File', 'If you have a server file containig your data, please select the file here.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['data_folder'] = array('Directory', 'If your data is located in a directory on the server, enter it here.');
+$GLOBALS['TL_LANG']['tl_c4g_maps']['image_lightbox'] = array('Show in lightbox on click', 'Displays the image in a large lightbox view when clicked on the map.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['data_url'] = array('URL', 'If you want the data to be loaded from an URL please enter it here.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['media_type'] = array('Media type', 'Choose whether you want to include an audio or a video file.');
 $GLOBALS['TL_LANG']['tl_c4g_maps']['map_audio_src'] = array('Audio file', 'Select an audio file (mp3, ogg, wav).');

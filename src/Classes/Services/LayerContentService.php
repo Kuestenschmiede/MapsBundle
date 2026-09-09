@@ -278,7 +278,7 @@ class LayerContentService
                         $popupContent = Utils::replaceInsertTags($objLayer->popup_info, $lang);
                     } else {
                         $popupContent = '<div class="c4g-image-popup">';
-                        $popupContent .= '<div class="c4g-image-popup-img"><img src="' . htmlspecialchars($webPath) . '" alt="' . htmlspecialchars($title) . '" style="max-width:100%;height:auto;" /></div>';
+                        $popupContent .= '<div class="c4g-image-popup-img"><img src="' . htmlspecialchars($webPath) . '" alt="' . htmlspecialchars($title) . '" style="max-width:100%;height:auto;cursor:pointer;" class="c4g-lightbox-trigger" /></div>';
                         if ($title) {
                             $popupContent .= '<h4 class="c4g-image-popup-title">' . htmlspecialchars($title) . '</h4>';
                         }
@@ -301,6 +301,7 @@ class LayerContentService
                     'description' => $description,
                     'datetime' => $datetime,
                     'camera' => $camera,
+                    'image_lightbox' => (bool)$objLayer->image_lightbox,
                     'tooltip' => Utils::replaceInsertTags($objLayer->tooltip ?: $title, $lang),
                     'tooltip_length' => $objLayer->tooltip_length,
                     'label' => Utils::replaceInsertTags($objLayer->loc_label ?: '', $lang),
@@ -343,6 +344,7 @@ class LayerContentService
                     'locstyle' => $objLayer->locstyle,
                     'locationStyle' => $objLayer->locstyle,
                     'projection' => 'EPSG:4326',
+                    'image_lightbox' => (bool) $objLayer->image_lightbox,
                 ],
             ];
 
@@ -352,6 +354,7 @@ class LayerContentService
                 'format' => 'GeoJSON',
                 'origType' => 'image',
                 'locationStyle' => $objLayer->locstyle,
+                'image_lightbox' => (bool) $objLayer->image_lightbox,
                 'data' => $geoJson,
                 'loc_linkurl' => $linkUrl,
                 'hover_location' => $objLayer->hover_location,
@@ -364,6 +367,7 @@ class LayerContentService
         $data['properties']['layerId'] = $objLayer->id;
         $data['properties']['locstyle'] = $objLayer->locstyle;
         $data['properties']['locationStyle'] = $objLayer->locstyle;
+        $data['properties']['image_lightbox'] = (bool) $objLayer->image_lightbox;
 
         if ($objLayer->singleSRC) {
             $objFile = FilesModel::findByUuid($objLayer->singleSRC);
@@ -371,6 +375,7 @@ class LayerContentService
                 $webPath = '/' . ltrim($objFile->path, '/');
                 $data['properties']['img'] = $webPath;
                 $data['properties']['imageSrc'] = $webPath;
+                $data['properties']['image_lightbox'] = (bool) $objLayer->image_lightbox;
 
                 if (empty($objLayer->loc_geox) && empty($objLayer->loc_geoy)) {
                     if (!empty($objFile->c4g_loc_geox) && !empty($objFile->c4g_loc_geoy)) {
@@ -398,6 +403,7 @@ class LayerContentService
             'format' => 'GeoJSON',
             'origType' => 'image',
             'locationStyle' => $objLayer->locstyle,
+            'image_lightbox' => (bool) $objLayer->image_lightbox,
             'data' => $data,
             'loc_linkurl' => Utils::replaceInsertTags($objLayer->loc_linkurl ?: '', $lang),
             'hover_location' => $objLayer->hover_location,
@@ -1318,6 +1324,7 @@ class LayerContentService
                         'hover_style' => $objLayer->hover_style,
                         'locstyle' => $objLayer->locstyle,
                         'locationStyle' => $objLayer->locstyle,
+                        'image_lightbox' => (bool) $objLayer->image_lightbox,
                         'cssClass' => $objLayer->cssClass,
                     ],
                 ];

@@ -5895,6 +5895,159 @@ button.c4g-maps-consent-button.btn {
 .c4g-layertree span {
   display: inline-block!important
 }
+body.c4g-lightbox-active {
+  overflow: hidden!important
+}
+.c4g-lightbox-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box
+}
+.c4g-lightbox-overlay .c4g-lightbox-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15,23,42,.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px)
+}
+.c4g-lightbox-overlay .c4g-lightbox-container {
+  position: relative;
+  max-width: 92vw;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1
+}
+.c4g-lightbox-overlay .c4g-lightbox-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 100%;
+  max-height: 90vh
+}
+.c4g-lightbox-overlay .c4g-lightbox-image-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  max-height: calc(85vh - 70px)
+}
+.c4g-lightbox-overlay .c4g-lightbox-image-wrap .c4g-lightbox-image {
+  max-width: 100%;
+  max-height: calc(85vh - 70px);
+  width: auto;
+  height: auto;
+  -o-object-fit: contain;
+  object-fit: contain;
+  border-radius: 6px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.7);
+  transition: opacity .2s ease-in-out
+}
+.c4g-lightbox-overlay .c4g-lightbox-caption {
+  margin-top: 12px;
+  text-align: center;
+  color: #f8fafc;
+  max-width: 800px;
+  padding: 0 16px
+}
+.c4g-lightbox-overlay .c4g-lightbox-caption .c4g-lightbox-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0,0,0,.8)
+}
+.c4g-lightbox-overlay .c4g-lightbox-caption .c4g-lightbox-desc {
+  font-size: .95rem;
+  margin: 0 0 4px 0;
+  color: #cbd5e1;
+  text-shadow: 0 1px 2px rgba(0,0,0,.8)
+}
+.c4g-lightbox-overlay .c4g-lightbox-caption .c4g-lightbox-meta {
+  font-size: .85rem;
+  color: #94a3b8
+}
+.c4g-lightbox-overlay .c4g-lightbox-caption .c4g-lightbox-counter {
+  font-size: .8rem;
+  color: #64748b;
+  margin-top: 4px
+}
+.c4g-lightbox-overlay .c4g-lightbox-close {
+  position: absolute;
+  top: -45px;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  background: rgba(255,255,255,.15);
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .2s,transform .2s
+}
+.c4g-lightbox-overlay .c4g-lightbox-close:hover {
+  background: rgba(255,255,255,.3);
+  transform: scale(1.1)
+}
+.c4g-lightbox-overlay .c4g-lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  background: rgba(0,0,0,.45);
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 50%;
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .2s,transform .2s;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none
+}
+.c4g-lightbox-overlay .c4g-lightbox-nav:hover {
+  background: rgba(0,0,0,.8);
+  transform: translateY(-50%) scale(1.1)
+}
+.c4g-lightbox-overlay .c4g-lightbox-nav.c4g-lightbox-prev {
+  left: -60px
+}
+.c4g-lightbox-overlay .c4g-lightbox-nav.c4g-lightbox-next {
+  right: -60px
+}
+@media (max-width:768px) {
+  .c4g-lightbox-overlay .c4g-lightbox-nav.c4g-lightbox-prev {
+    left: 10px
+  }
+  .c4g-lightbox-overlay .c4g-lightbox-nav.c4g-lightbox-next {
+    right: 10px
+  }
+  .c4g-lightbox-overlay .c4g-lightbox-close {
+    top: 10px;
+    right: 10px
+  }
+}
 /*!
  * This file is part of con4gis, the gis-kit for Contao CMS.
  * @package con4gis
