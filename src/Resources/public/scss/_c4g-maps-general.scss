@@ -2092,6 +2092,22 @@ body.c4g-lightbox-active {
   }
 }
 
+.ol-proximity,
+.c4g-proximity-control {
+  button.c4g-btn-proximity {
+    &.c4g-active {
+      background-color: #2563eb !important;
+      color: #ffffff !important;
+      border-color: #1d4ed8 !important;
+      animation: c4gPulse 2s infinite;
+
+      &:before {
+        color: #ffffff !important;
+      }
+    }
+  }
+}
+
 @keyframes c4gSlideUp {
   from {
     transform: translateX(-50%) translateY(100px);

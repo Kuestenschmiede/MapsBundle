@@ -141,7 +141,7 @@ $GLOBALS['TL_DCA']['tl_c4g_map_profiles'] =
                 'exclude'                 => true,
                 'inputType'               => 'checkboxWizard',
                 'default'                 => ['zoom'],
-                'options'                 => ['zoom','zoomPosition','zoomHome','zoomExtent','fullscreen','print','rotate','graticule','layerswitcher','starboardscope','baselayerswitcher','geosearch','legend','measure','overview','permalink','routing'],
+                'options'                 => ['zoom','zoomPosition','zoomHome','zoomExtent','fullscreen','print','rotate','graticule','layerswitcher','starboardscope','baselayerswitcher','geosearch','legend','measure','overview','permalink','routing','proximity'],
                 'eval'                    => ['multiple'=>true,'helpwizard'=>true],
                 'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference'],
                 'sql'                     => "text NOT NULL"

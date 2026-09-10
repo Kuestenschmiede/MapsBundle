@@ -261,6 +261,14 @@ button.ol-zoom-position:before {
   font-size: inherit;
 }
 
+.ol-proximity button:before,
+button.c4g-btn-proximity:before {
+  content: "\f14e";
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: inherit;
+}
+
 /*  Starboard */
 
 button.c4g-starboard-close:before{

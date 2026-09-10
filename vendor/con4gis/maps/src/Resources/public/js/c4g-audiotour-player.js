@@ -385,11 +385,11 @@ export class C4gAudiotourPlayer {
     const toastBtn = this.dom.toast.querySelector('.c4g-proximity-toast-play');
 
     if (toastTitle) {
-      toastTitle.textContent = station.title || 'Station erreicht';
+      toastTitle.textContent = station.title || 'In deiner Nähe';
     }
     if (toastDesc) {
       const distStr = distance ? `ca. ${Math.round(distance)} m entfernt` : 'In deiner Nähe';
-      toastDesc.textContent = distStr;
+      toastDesc.textContent = station.description ? `${distStr} · ${station.description}` : distStr;
     }
     if (toastImg) {
       if (station.img) {
@@ -400,17 +400,38 @@ export class C4gAudiotourPlayer {
       }
     }
 
+    const handleAction = () => {
+      self.hideProximityToast();
+      if (station.audio_src) {
+        self.loadStation(station, true);
+      } else if (station.linkUrl) {
+        window.location.href = station.linkUrl;
+      } else if (station.feature && self.mapController && self.mapController.proxy) {
+        self.mapController.proxy.handlePopup(station.feature);
+      }
+    };
+
     if (toastBtn) {
+      if (station.audio_src) {
+        toastBtn.textContent = 'Abspielen';
+        toastBtn.style.display = 'block';
+      } else if (station.linkUrl) {
+        toastBtn.textContent = 'Öffnen';
+        toastBtn.style.display = 'block';
+      } else if (station.popup) {
+        toastBtn.textContent = 'Details';
+        toastBtn.style.display = 'block';
+      } else {
+        toastBtn.style.display = 'none';
+      }
       toastBtn.onclick = (e) => {
         e.stopPropagation();
-        self.loadStation(station, true);
-        self.hideProximityToast();
+        handleAction();
       };
     }
 
     this.dom.toast.onclick = () => {
-      self.loadStation(station, true);
-      self.hideProximityToast();
+      handleAction();
     };
 
     this.dom.toast.classList.add('c4g-toast-visible');

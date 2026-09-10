@@ -56,6 +56,7 @@ export var langConstantsEnglish = {
   CTRL_PERMALINK: 'Generate Permalink',
   CTRL_FULLSCREEN: 'Toggle fullscreen-mode',
   CTRL_PRINT: 'Export map',
+  CTRL_PROXIMITY: 'PWA & Geofencing (Discover & Start tour)',
   CTRL_BASELAYER: 'Switch base map changer on/off',
   CTRL_INFOAREA: 'Open/close info area',
 

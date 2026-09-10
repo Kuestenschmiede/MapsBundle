@@ -58,6 +58,7 @@ export var langConstantsGerman = {
   CTRL_PERMALINK: 'Permalink generieren',
   CTRL_FULLSCREEN: 'Vollbildmodus ein-/ausschalten',
   CTRL_PRINT: 'Karte exportieren',
+  CTRL_PROXIMITY: 'PWA & Geofencing (Entdecken & Tour starten)',
   CTRL_BASELAYER: 'Basiskartenwechsler ein-/ausschalten',
   CTRL_INFOAREA: 'Infobereich öffnen/schließen',
 

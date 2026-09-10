@@ -173,6 +173,7 @@ $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['rotate'
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['measure'] = ['Measure tools','Hides a button that can be used to activate tools for measuring distances and areas.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['overview'] = ['Overview map','Creates the possibility to display a small map of the surroundings via a button on the right side of the map.'];
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['permalink'] = ['Permalink generator','Calculates a copyable link which represents the current map section of the map and which can be sent e.g. in e-mails.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['mapFunctions']['reference']['proximity'] = ['PWA & Geofencing (Discover & Start tour)', 'Displays a button to activate proximity tracking / audio tour and discover nearby media and highlights.'];
 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['CLICK']   = 'Single mouseclick';
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['references']['DBLCL']   = 'Double mouseclick';

@@ -58,6 +58,7 @@ const Rotate = React.lazy(() => import('./c4g-rotate.jsx'));
 const Fullscreen = React.lazy(() => import('./c4g-fullscreen.jsx'));
 const Print = React.lazy(() => import('./c4g-print.jsx'));
 const OverviewMap = React.lazy(() => import('./c4g-overviewmap.jsx'));
+const ProximityButton = React.lazy(() => import('./c4g-proximity.jsx'));
 //const RouterView = React.lazy(() => import("./c4g-router-view.jsx"));
 const EditorComponent = React.lazy(() => import("./c4g-editor-component.jsx"));
 import TileLayer from "ol/layer/Tile";
@@ -1149,6 +1150,7 @@ export default class MapController extends Component {
       {name: "rotate", sort: mapData.rotate},
       {name: "graticule", sort: mapData.graticule},
       {name: "overview", sort: mapData.overviewmap},
+      {name: "proximity", sort: mapData.proximity ? mapData.proximity.enable : 0},
       {name: "router", sort: mapData.router_enable},
       {name: "editor", sort: mapData.editor.enable}
     ];
@@ -1376,6 +1378,15 @@ export default class MapController extends Component {
         case 'overview':
           if (mapData.overviewmap) {
             result.push(overviewPortal);
+          }
+          break;
+        case 'proximity':
+          if (mapData.proximity && mapData.proximity.enable) {
+            result.push(
+                <Suspense key={i} fallback={<div>"loading...</div>}>
+                  <ProximityButton mapController={this} target={target} key={i}/>
+                </Suspense>
+            );
           }
           break;
         case 'router':

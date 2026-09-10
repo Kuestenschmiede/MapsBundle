@@ -6290,6 +6290,17 @@ body.c4g-lightbox-active {
 .c4g-audiotour-unlock-btn:hover {
   transform: scale(1.05)
 }
+.c4g-proximity-control button.c4g-btn-proximity.c4g-active,
+.ol-proximity button.c4g-btn-proximity.c4g-active {
+  background-color: #2563eb!important;
+  color: #fff!important;
+  border-color: #1d4ed8!important;
+  animation: c4gPulse 2s infinite
+}
+.c4g-proximity-control button.c4g-btn-proximity.c4g-active:before,
+.ol-proximity button.c4g-btn-proximity.c4g-active:before {
+  color: #fff!important
+}
 @keyframes c4gSlideUp {
   from {
     transform: translateX(-50%) translateY(100px);
@@ -6544,6 +6555,13 @@ button.ol-zoom-home:before {
 .ol-zoom-position button:before,
 button.ol-zoom-position:before {
   content: "\f05b";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size: inherit
+}
+.ol-proximity button:before,
+button.c4g-btn-proximity:before {
+  content: "\f14e";
   font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: inherit

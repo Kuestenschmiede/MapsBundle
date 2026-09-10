@@ -318,6 +318,16 @@ class MapDataConfigurator
                 $mapData['restr_topright_lon'] = $map->restr_topright_geox;
                 $mapData['restr_topright_lat'] = $map->restr_topright_geoy;
             }
+
+            // proximity & geofencing defaults
+            $mapData['proximity'] = [
+                'radius' => ($map->proximity_radius !== null && $map->proximity_radius !== '') ? (int)$map->proximity_radius : 20,
+                'autoplay' => (bool)$map->proximity_autoplay,
+                'notification' => ($map->proximity_notification !== null && $map->proximity_notification !== '') ? (bool)$map->proximity_notification : true,
+                'vibrate' => ($map->proximity_vibrate !== null && $map->proximity_vibrate !== '') ? (bool)$map->proximity_vibrate : true,
+                'offline_cache' => (bool)$map->tour_offline_cache,
+                'enable' => 0
+            ];
         }
         // override map-zoom from structure, with values from CE/FE, if set
         if (isset($objThis->c4g_map_zoom) && is_numeric($objThis->c4g_map_zoom) && ($objThis->c4g_map_zoom > 0)) {
@@ -376,6 +386,10 @@ class MapDataConfigurator
             $mapData['measuretools']['enable'] = is_array($buttons) && array_key_exists('measure', $buttons) ? $buttons['measure'] + 1 : 0;
             $mapData['overviewmap'] = is_array($buttons) && array_key_exists('overview', $buttons) ? $buttons['overview'] + 1 : 0;
             $mapData['permalink']['enable'] = is_array($buttons) && array_key_exists('permalink', $buttons) ? $buttons['permalink'] + 1 : 0;
+            if (!isset($mapData['proximity'])) {
+                $mapData['proximity'] = ['radius' => 20, 'autoplay' => false, 'notification' => true, 'vibrate' => true, 'offline_cache' => false];
+            }
+            $mapData['proximity']['enable'] = is_array($buttons) && array_key_exists('proximity', $buttons) ? $buttons['proximity'] + 1 : 0;
 
             // location-style resizing
             //
